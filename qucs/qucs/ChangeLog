@@ -1,7 +1,19 @@
+2004-04-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* small drawings at the mouse cursor to show the active
+	action
+
+2004-04-11  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* hinder keyboard input during element moving
+	* CTRL+I=Go into Subcircuit, CTRL+H=Pop outside subcircuit,
+	CTRL+B=set marker, CTRL+G=insert ground
+
 2004-04-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* strongly speed up reading of datasets
 	* speed up selecting of graphs
+	* CTRL-L=insert wire label
 
 2004-04-03  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 

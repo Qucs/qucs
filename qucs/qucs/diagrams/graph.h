@@ -42,7 +42,7 @@ public:
   Graph(const QString& _Line="");
   ~Graph();
 
-  void    paint(QPainter *p, int cx, int cy);
+  void    paint(QPainter *p, int x0, int y0);
   QString save();
   bool    load(const QString& Line);
   int     getSelected(int x, int y);

@@ -544,7 +544,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>attenuation</source>
-        <translation>Dämpfung</translation>
+        <translation type="obsolete">Dämpfung</translation>
     </message>
     <message>
         <source>reference impedance</source>
@@ -973,6 +973,10 @@ Unbekanntes Feld!</translation>
     <message>
         <source>Format Error:
 Wrong line start!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power attenuation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2554,6 +2558,24 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -101,6 +101,13 @@ public:
   void MMoveMoving2(QMouseEvent *Event);
   void MMovePaste(QMouseEvent *Event);
   void MMovePainting(QMouseEvent *Event);
+  void MMoveDelete(QMouseEvent *Event);
+  void MMoveLabel(QMouseEvent *Event);
+  void MMoveMarker(QMouseEvent *Event);
+  void MMoveMirrorY(QMouseEvent *Event);
+  void MMoveMirrorX(QMouseEvent *Event);
+  void MMoveRotate(QMouseEvent *Event);
+  void MMoveActivate(QMouseEvent *Event);
   void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to current mouse move method
 
   void MPressSelect(QMouseEvent *Event);
@@ -115,6 +122,7 @@ public:
   void MPressWire1(QMouseEvent *Event);
   void MPressWire2(QMouseEvent *Event);
   void MPressPainting(QMouseEvent *Event);
+  void MPressMarker(QMouseEvent *Event);
   void (QucsView::*MousePressAction) (QMouseEvent*); // pointer to current mouse press button method
 
   void MDoubleClickSelect(QMouseEvent *Event);
