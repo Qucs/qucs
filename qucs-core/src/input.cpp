@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.28 2004/08/15 12:25:38 ela Exp $
+ * $Id: input.cpp,v 1.29 2004/08/19 19:44:23 ela Exp $
  *
  */
 
@@ -311,6 +311,8 @@ circuit * input::createCircuit (char * type) {
     return new msgap ();
   else if (!strcmp (type, "MMBEND"))
     return new msmbend ();
+  else if (!strcmp (type, "MCOUPLED"))
+    return new mscoupled ();
   else if (!strcmp (type, "IProbe"))
     return new iprobe ();
   else if (!strcmp (type, "JFET"))

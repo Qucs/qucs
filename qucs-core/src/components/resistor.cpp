@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.12 2004/07/26 06:30:29 ela Exp $
+ * $Id: resistor.cpp,v 1.13 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -63,7 +63,7 @@ void resistor::initDC (dcsolver *) {
   nr_double_t r = getPropertyDouble ("R");
 
   // for non-zero resistances usual MNA entries
-  if (r != 0) {
+  if (r != 0.0) {
     nr_double_t g = 1.0 / r;
     setY (1, 1, +g); setY (2, 2, +g);
     setY (1, 2, -g); setY (2, 1, -g);
@@ -85,7 +85,7 @@ void resistor::calcDC (void) {
   nr_double_t r = getPropertyDouble ("R");
 
   // for non-zero resistances usual MNA entries
-  if (r != 0) {
+  if (r != 0.0) {
     nr_double_t g = 1.0 / r;
     setY (1, 1, +g); setY (2, 2, +g);
     setY (1, 2, -g); setY (2, 1, -g);

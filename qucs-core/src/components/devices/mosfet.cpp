@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.6 2004/08/14 15:41:56 ela Exp $
+ * $Id: mosfet.cpp,v 1.7 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -145,7 +145,7 @@ void mosfet::initDC (dcsolver * solver) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // possibly insert series resistance at source
-  if (Rs != 0) {
+  if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
@@ -158,7 +158,7 @@ void mosfet::initDC (dcsolver * solver) {
 
   // possibly insert series resistance at gate
   nr_double_t Rg = getPropertyDouble ("Rg");
-  if (Rg != 0) {
+  if (Rg != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rg = splitResistance (this, rg, solver->getNet (), "Rg", "gate", NODE_G);
     rg->setProperty ("Temp", T);
@@ -170,7 +170,7 @@ void mosfet::initDC (dcsolver * solver) {
   }
 
   // possibly insert series resistance at drain
-  if (Rd != 0) {
+  if (Rd != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);
@@ -266,9 +266,9 @@ void mosfet::initModel (void) {
     nr_double_t PhiMS, PhiG, Eg;
     // bandgap for silicon
     Eg = Egap (kelvin (T));
-    if (Tpg != 0) { // n-poly or p-poly
+    if (Tpg != 0.0) { // n-poly or p-poly
       PhiG = 4.15 + Eg / 2 - MOSpol * Tpg * Eg / 2;
-    } else {        // alumina
+    } else {          // alumina
       PhiG = 4.1;
     }
     PhiMS = PhiG - (4.15 + Eg / 2 + MOSpol * Phi / 2);
@@ -421,7 +421,7 @@ void mosfet::calcDC (void) {
   Uon = Vto * MOSpol + Ga * (Sarg - Sphi);
   nr_double_t Utst = ((MOSdir > 0) ? Ugs : Ugd) - Uon;
   // no infinite backgate transconductance (if non-zero Ga)
-  nr_double_t arg = (Sarg != 0) ? (Ga / Sarg / 2) : 0;
+  nr_double_t arg = (Sarg != 0.0) ? (Ga / Sarg / 2) : 0;
 
   // cutoff region
   if (Utst <= 0) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.13 2004/08/03 15:36:20 ela Exp $
+ * $Id: jfet.cpp,v 1.14 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -119,7 +119,7 @@ void jfet::initDC (dcsolver * solver) {
 
   // possibly insert series resistance at source
   nr_double_t Rs = getPropertyDouble ("Rs");
-  if (Rs != 0) {
+  if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
@@ -132,7 +132,7 @@ void jfet::initDC (dcsolver * solver) {
 
   // possibly insert series resistance at drain
   nr_double_t Rd = getPropertyDouble ("Rd");
-  if (Rd != 0) {
+  if (Rd != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);

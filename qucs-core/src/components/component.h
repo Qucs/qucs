@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.15 2004/08/07 10:48:47 margraf Exp $
+ * $Id: component.h,v 1.16 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -76,5 +76,6 @@
 #include "microstrip/msstep.h"
 #include "microstrip/msopen.h"
 #include "microstrip/msgap.h"
+#include "microstrip/mscoupled.h"
 
 #endif /* __COMPONENT_H__ */

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.5 2004/08/17 18:39:02 ela Exp $
+ * $Id: msmbend.cpp,v 1.6 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@
 
 msmbend::msmbend () : circuit (2) {
   type = CIR_MSMBEND;
+  setVoltageSources (1);
 }
 
 void msmbend::calcSP (nr_double_t frequency) {
@@ -92,6 +93,7 @@ void msmbend::calcSP (nr_double_t frequency) {
 }
 
 void msmbend::calcDC (void) {
+  // a DC short (voltage source V = 0 volts)
   setC (1, 1, +1.0); setC (1, 2, -1.0);
   setB (1, 1, +1.0); setB (2, 1, -1.0);
   setE (1, 0.0);

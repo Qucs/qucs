@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msgap.h,v 1.2 2004/08/17 18:39:02 ela Exp $
+ * $Id: msgap.h,v 1.3 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -31,7 +31,7 @@ class msgap : public circuit
  public:
   msgap ();
   void calcSP (nr_double_t);
-  void calcDC (void) { };
+  void calcDC (void) { }
 };
 
 #endif /* __MSGAP_H__ */

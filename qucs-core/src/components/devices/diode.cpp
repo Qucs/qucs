@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.9 2004/08/14 15:41:56 ela Exp $
+ * $Id: diode.cpp,v 1.10 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -102,7 +102,7 @@ void diode::initDC (dcsolver * solver) {
 
   // possibly insert series resistance
   nr_double_t Rs = getPropertyDouble ("Rs");
-  if (Rs != 0) {
+  if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", NODE_A);
     rs->setProperty ("Temp", T);

@@ -6042,8 +6042,10 @@ W/h \le 100$.
 
 with
 \begin{align}
-a &= 1 + \frac{1}{49}\cdot\ln{\left(\frac{u^{4} + \left(\dfrac{u}{52}\right)^{2}}{u^{4} + 0.432}\right)} + \frac{1}{18.7}\cdot\ln{\left(1 + \left(\frac{u}{18.1}\right)^{3}\right)}\\
-b &= 0.564\cdot\left(\frac{\varepsilon_{r} - 0.9}{\varepsilon_{r} + 3}\right)^{0.053}\\
+\label{eq:HandJa}
+a\left(u\right) &= 1 + \frac{1}{49}\cdot\ln{\left(\frac{u^{4} + \left(u/52\right)^{2}}{u^{4} + 0.432}\right)} + \frac{1}{18.7}\cdot\ln{\left(1 + \left(\frac{u}{18.1}\right)^{3}\right)}\\
+\label{eq:HandJb}
+b\left(\varepsilon_r\right) &= 0.564\cdot\left(\frac{\varepsilon_{r} - 0.9}{\varepsilon_{r} + 3}\right)^{0.053}\\
 u &= \frac{W}{h}
 \end{align}
 
@@ -6289,6 +6291,7 @@ the strip thickness exceeds three skin depths ($t > 3\delta$).
 with
 \begin{align}
 R^{\boxempty} &= \dfrac{\rho}{\delta} = \sqrt{\rho\cdot\dfrac{\omega \cdot \mu}{2}} = \sqrt{\rho\cdot\pi\cdot f \cdot \mu}\\
+\label{eq:HandJKi}
 K_i &= \exp{\left(-1.2\left(\dfrac{Z_L}{Z_{F0}}\right)^{0.7}\right)}\\
 K_r &= 1 + \dfrac{2}{\pi}\arctan{\left(1.4\left(\dfrac{\Delta}{\delta}\right)^2\right)}
 \end{align}
@@ -6645,6 +6648,90 @@ with $Z_L(f_n)$ being the frequency-dependent power-current
 characteristic impedance formulation of a single microstrip with width
 $W$ according to (another reference !!!).  Up to $f_n=20$, the numerical
 error of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is less than 2.5\%.
+
+\subsubsection{Hammerstad and Jensen}
+%\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}
+
+The equations given by E. Hammerstad and {\O}. Jensen
+\cite{Hammerstad} represent the first generally valid model of coupled
+microstrips with an acceptable accuracy.  The model equations have
+been validated in th range $0.1 \le u \le 10$ and $g \ge 0.01$, a
+range which should cover that used in practice.
+
+\addvspace{12pt}
+
+The homogeneous mode impedances are
+\begin{equation}
+Z_{L,e,o}\left(u, g\right) = \dfrac{Z_{L1}(u)}{1 - Z_{L1}(u)\cdot \Phi_{e,o}\left(u,g\right) / Z_{F0}}
+\end{equation}
+
+The effective dielectric constants are
+\begin{equation}
+\varepsilon_{eff,e,o}\left(u,g,\varepsilon_r\right) = \dfrac{\varepsilon_r+1}{2} + \dfrac{\varepsilon_r-1}{2}\cdot F_{e,o}\left(u,g,\varepsilon_r\right)
+\end{equation}
+
+with
+\begin{align}
+F_{e}\left(u,g,\varepsilon_r\right) &= \left(1+\dfrac{10}{\mu\left(u,g\right)}\right)^{-a(u)\cdot b\left(\varepsilon_r\right)}\\
+F_{o}\left(u,g,\varepsilon_r\right) &= f_o\left(u,g,\varepsilon_r\right)\cdot \left(1+\dfrac{10}{\mu\left(u,g\right)}\right)^{-a(u)\cdot b\left(\varepsilon_r\right)}
+\end{align}
+
+whence $a(u)$ and $b\left(\varepsilon_r\right)$ denote
+eqs. \eqref{eq:HandJa} and \eqref{eq:HandJb} of the single microstrip
+line.  The modifying equations for the even mode are as follows
+\begin{align}
+\Phi_e\left(u,g\right) &= \dfrac{\varphi(u)}{\Psi(g)\cdot \left(\alpha(g)\cdot u^{m(g)} +\left(1-\alpha(g)\right)\cdot u^{-m(g)}\right)}\\
+\varphi(u) &= 0.8645\cdot u^{0.172}\\
+\Psi(g) &= 1 + \dfrac{g}{1.45} + \dfrac{g^{2.09}}{3.95}\\
+\alpha(g) &= 0.5\cdot e^{-g}\\
+m(g) &= 0.2175+\left(4.113+\left(20.36/g\right)^6\right)^{-0.251} +\dfrac{1}{123}\cdot\ln{\left(\dfrac{g^{10}}{1+\left(g/13.8\right)^{10}}\right)}
+\end{align}
+
+The modifying equations for the odd mode are as follows
+\begin{align}
+\Phi_o\left(u,g\right) &= \Phi_e\left(u,g\right)-\dfrac{\theta(g)}{\Psi(g)}\cdot \exp{\left(\beta(g)\cdot u^{-n(g)}\cdot\ln{u}\right)}\\
+\theta(g) &= 1.729+1.175\cdot\ln{\left(1+\dfrac{0.627}{g+0.327\cdot g^{2.17}}\right)}\\
+\beta(g) &= 0.2306+\dfrac{1}{301.8}\cdot\ln{\left(\dfrac{g^{10}}{1+\left(g/3.73\right)^{10}}\right)} +\dfrac{1}{5.3}\cdot\ln{\left(1+0.646\cdot g^{1.175}\right)}\\
+n(g) &= \left(\dfrac{1}{17.7} + \exp{\left(-6.424 - 0.76\cdot \ln{g} - \left(g/0.23\right)^5\right)}\right)\cdot \ln{\left(\dfrac{10 + 68.3\cdot g^2}{1+32.5\cdot g^{3.093}}\right)}
+\end{align}
+
+Furthermore
+\begin{align}
+\mu\left(u,g\right) &= g\cdot e^{-g}+ u\cdot \dfrac{20+g^2}{10+g^2}\\
+f_o\left(u,g,\varepsilon_r\right) &= f_{o1}\left(g,\varepsilon_r\right)\cdot \exp{\left(p(g)\cdot \ln{u} + q(g)\cdot \sin{\left(\pi\cdot\dfrac{\ln{u}}{\ln{10}}\right)}\right)}\\
+p(g) &= \dfrac{\exp{\left(-0.745\cdot g^{0.295}\right)}}{\cosh{\left(g^{0.68}\right)}}\\
+q(g) &= \exp{\left(-1.366-g\right)}\\
+f_{o1}\left(g,\varepsilon_r\right) &= 1 - \exp{\left(-0.179\cdot g^{0.15} - \ln{\left(\dfrac{0.328\cdot g^{r\left(g,\varepsilon_r\right)}}{\ln{\left(e + \left(g/7\right)^{2.8}\right)}}\right)}\right)}\\
+r\left(g,\varepsilon_r\right) &= 1+0.15\cdot\left(1 - \dfrac{\exp{\left(1+\left(\varepsilon_r - 1\right)^2/8.2\right)}}{1+g^{-6}}\right)\\
+Z_{L1}(u) &= \dfrac{Z_{F0}}{u + 1.98\cdot u^{0.172}}
+\end{align}
+
+The errors in the even and odd mode impedances $Z_{L,e}$ and $Z_{L,e}$
+were found to be less than 0.8\% and less than 0.3\% for the
+wavelengths.
+
+\addvspace{12pt}
+
+The model does not include the effect of non-zero strip thickness or
+asymmetry.  Dispersion is also not included.  W. J. Getsinger
+\cite{Getsinger4} has proposed modifications to his single strip
+dispersion model, but unfortunately it is easily shown that the
+results are asymptotically wrong for extreme values of gap width.
+
+\subsection{Transmission losses}
+%\addcontentsline{toc}{subsection}{Transmission losses}
+
+The loss equations given by E. Hammerstad and {\O}. Jensen
+\cite{Hammerstad} for the single microstrip line are also valid for
+coupled microstrips, provided that the dielectric filling factor,
+homogeneous impedance, and current distribution factor of the actual
+mode are used.  The following approximation gives good results for odd
+and even current distribution factors (modification of
+eq. \eqref{eq:HandJKi}).
+
+\begin{equation}
+K_e = K_o = \exp{\left(-1.2\cdot\left(\dfrac{Z_{L,e} + Z_{L,o}}{2\cdot Z_{F0}}\right)^{0.7}\right)}
+\end{equation}
 
 \subsection{S-parameters of parallel coupled microstrip lines}
 %\addcontentsline{toc}{subsection}{S-parameters of parallel coupled microstrip lines}

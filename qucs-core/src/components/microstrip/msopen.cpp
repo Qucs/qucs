@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msopen.cpp,v 1.2 2004/08/16 21:49:55 ela Exp $
+ * $Id: msopen.cpp,v 1.3 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -100,11 +100,4 @@ void msopen::calcSP (nr_double_t frequency) {
     calcCend (frequency, W, h, t, er, SModel, DModel, Model);
 
   setS (1, 1, rect (-z0, z) / rect (+z0, z));
-}
-
-void msopen::calcDC (void) {
-  setC (1, 1,  0.0);
-  setB (1, 1, +1.0);
-  setE (1, 0.0);
-  setD (1, 1, +1.0);
 }

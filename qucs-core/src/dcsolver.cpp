@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.24 2004/08/16 21:49:53 ela Exp $
+ * $Id: dcsolver.cpp,v 1.25 2004/08/19 19:44:23 ela Exp $
  *
  */
 
@@ -144,7 +144,7 @@ void dcsolver::solve (void) {
     catch_exception () {
     case EXCEPTION_PIVOT: case EXCEPTION_WRONG_VOLTAGE:
       e = new qucs::exception (EXCEPTION_DC_FAILED);
-      d = top_exception()->getData ();
+      d = pop_exception()->getData ();
       if (d > countNodes ()) {
 	d -= countNodes ();
 	e->setText ("voltage source `%s' conflicts with some other voltage "
@@ -159,7 +159,7 @@ void dcsolver::solve (void) {
       error++;
       break;
     default:
-      error++;
+      estack.print ();
       break;
     }
 

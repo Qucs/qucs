@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.4 2004/08/12 13:59:54 ela Exp $
+ * $Id: mscorner.cpp,v 1.5 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@
 
 mscorner::mscorner () : circuit (2) {
   type = CIR_MSCORNER;
+  setVoltageSources (1);
 }
 
 void mscorner::initSP (spsolver *) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.15 2004/08/09 15:34:45 ela Exp $
+ * $Id: constants.h,v 1.16 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -56,6 +56,9 @@
 #endif
 #ifndef M_E
 #define M_E      2.7182818284590452353602874713526625
+#endif
+#ifndef M_LN10
+#define M_LN10   2.3025850929940456840179914546843642
 #endif
 
 #define C0   299792458.0              /* speed of light in vacuum  */

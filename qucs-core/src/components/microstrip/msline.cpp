@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.20 2004/08/17 18:39:02 ela Exp $
+ * $Id: msline.cpp,v 1.21 2004/08/19 19:44:24 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 
 msline::msline () : circuit (2) {
   type = CIR_MSLINE;
+  setVoltageSources (1);
 }
 
 void msline::calcSP (nr_double_t frequency) {
@@ -64,7 +65,7 @@ void msline::calcSP (nr_double_t frequency) {
 
   /* local variables */
   complex s11, s21, n, g;
-  nr_double_t z, y, a, b, k0, ds, Kr, Rs, Ki, ac, ad, l0;
+  nr_double_t z, y, a, b, k0, ac, ad;
   nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
 
   // quasi-static effective dielectric constant of substrate + line and
@@ -75,21 +76,11 @@ void msline::calcSP (nr_double_t frequency) {
   analyseDispersion (W, h, er, ZlEff, ErEff, frequency, DModel,
 		     ZlEffFreq, ErEffFreq);
 
-  // conductor losses: HAMMERSTAD and JENSEN
-  Rs = sqrt (M_PI * frequency * MU0 * rho); // skin resistance
-  ds = rho / Rs;                            // skin depth
-  // valid for t > 3 * ds
-  if (t < 3 * ds) {
-    logprint (LOG_STATUS, "line height t (%g) < 3 * skin depth (%g)\n", t, ds);
-  }
-  Ki = exp (-1.2 * pow (ZlEffFreq / Z0, 0.7)); // current distribution factor
-  Kr = 1 + M_2_PI * atan (1.4 * sqr (D / ds)); // D is RMS surface roughness
-  ac = Rs / (ZlEffFreq * W) * Ki * Kr;
+  // analyse losses of line
+  analyseLoss (W, t, er, rho, D, tand, ZlEffFreq, ZlEffFreq, ErEffFreq,
+	       frequency, "Hammerstad", ac, ad);
 
-  // dielectric losses
-  l0 = C0 / frequency;
-  ad = M_PI * er / (er - 1) * (ErEffFreq - 1) / sqrt (ErEffFreq) * tand / l0;
-
+  // calculate propagation constant and S-parameters
   z = ZlEffFreq / z0;
   y = 1 / z;
   k0 = 2 * M_PI * frequency / C0;
@@ -187,10 +178,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + sqr (2 / u1)));
     
     // compute effective dielectric constant
-    a = 1 +
-      1 / 49 * log ((quadr (ur) + sqr (ur / 52)) / (quadr (ur) + 0.432)) + 
-      1 / 18.7 * log (1 + cubic (ur / 18.1));
-    b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
+    HandJ_ab (ur, er, a, b);
     e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
 
     // compute final characteristic impedance and dielectric constant
@@ -312,4 +300,57 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
 
   ZlEffFreq = z;
   ErEffFreq = e;
+}
+
+void msline::HandJ_ab (nr_double_t u, nr_double_t er, nr_double_t& a,
+		       nr_double_t& b) {
+  a = 1 +
+    1 / 49 * log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) + 
+    1 / 18.7 * log (1 + cubic (u / 18.1));
+  b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
+}
+
+/* The function calculates the conductor and dielectric losses of a
+   single microstrip line. */
+void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
+			  nr_double_t rho, nr_double_t D, nr_double_t tand,
+			  nr_double_t ZlEff1, nr_double_t ZlEff2, 
+			  nr_double_t ErEff,
+			  nr_double_t frequency, char * Model,
+			  nr_double_t& ac, nr_double_t& ad) {
+  ac = ad = 0;
+
+  // HAMMERSTAD and JENSEN
+  if (!strcmp (Model, "Hammerstad")) {
+    nr_double_t Rs, ds, l0, Kr, Ki;
+
+    // conductor losses
+    if (t != 0.0) {
+      Rs = sqrt (M_PI * frequency * MU0 * rho); // skin resistance
+      ds = rho / Rs;                            // skin depth
+      // valid for t > 3 * ds
+      if (t < 3 * ds) {
+	logprint (LOG_STATUS,
+		  "WARNING: conductor loss calculation invalid for line "
+		  "height t (%g) < 3 * skin depth (%g)\n", t, 3 * ds);
+      }
+      // current distribution factor
+      Ki = exp (-1.2 * pow ((ZlEff1 + ZlEff2) / 2 / Z0, 0.7));
+      // D is RMS surface roughness
+      Kr = 1 + M_2_PI * atan (1.4 * sqr (D / ds));
+      ac = Rs / (ZlEff1 * W) * Ki * Kr;
+    }
+
+    // dielectric losses
+    l0 = C0 / frequency;
+    ad = M_PI * er / (er - 1) * (ErEff - 1) / sqrt (ErEff) * tand / l0;
+  }
+}
+
+void msline::calcDC (void) {
+  // a DC short (voltage source V = 0 volts)
+  setC (1, 1, +1.0); setC (1, 2, -1.0);
+  setB (1, 1, +1.0); setB (2, 1, -1.0);
+  setE (1, 0.0);
+  setD (1, 1, 0.0);
 }

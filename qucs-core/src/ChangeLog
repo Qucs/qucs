@@ -1,3 +1,11 @@
+2004-08-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* nodelist.cpp: Improved memory management for nodelist
+	entries.
+
+	* sweep.cpp: Fixed error due to numerical problems in a
+	linear sweep containing a real zero point.
+
 2004-08-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* matvec.cpp: Added matrix conversion routines to matrix

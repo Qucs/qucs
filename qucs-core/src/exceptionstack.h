@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exceptionstack.h,v 1.2 2004/07/05 21:41:46 ela Exp $
+ * $Id: exceptionstack.h,v 1.3 2004/08/19 19:44:23 ela Exp $
  *
  */
 
@@ -55,5 +55,6 @@ extern exceptionstack estack;
                                        switch (estack.top()->getCode ())
 #define throw_exception(e)   estack.push (e)
 #define top_exception()      estack.top ()
+#define pop_exception()      estack.pop ()
 
 #endif /* __EXCEPTIONSTACK_H__ */

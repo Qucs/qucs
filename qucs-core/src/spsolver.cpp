@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.28 2004/08/15 20:11:54 ela Exp $
+ * $Id: spsolver.cpp,v 1.29 2004/08/19 19:44:23 ela Exp $
  *
  */
 
@@ -573,7 +573,8 @@ void spsolver::solve (void) {
 
 #if SORTED_LIST
 #if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: %s: creating sorted nodelist\n", getName ());
+  logprint (LOG_STATUS, "NOTIFY: %s: creating sorted nodelist for "
+	    "SP analysis\n", getName ());
 #endif
   nlist = new nodelist (subnet);
   nlist->sort ();

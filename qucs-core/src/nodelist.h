@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.h,v 1.4 2004/08/15 12:25:38 ela Exp $
+ * $Id: nodelist.h,v 1.5 2004/08/19 19:44:23 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@ struct nodelist_t {
   char * name;
   node ** nodes;
   int nNodes;
+  int nAlloc;
   int internal;
   struct nodelist_t * next;
 };
