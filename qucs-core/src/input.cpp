@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.11 2004/03/20 16:58:49 ela Exp $
+ * $Id: input.cpp,v 1.12 2004/03/21 09:57:10 ela Exp $
  *
  */
 
@@ -98,6 +98,7 @@ int input::netlist (net * netlist) {
   check->findUndefined ();
   check->findDuplicate ();
   check->detectCycles ();
+  check->reorderEquations ();
 #if DEBUG
   check->list ();
 #endif /* DEBUG */
