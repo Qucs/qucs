@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.21 2004/10/25 21:01:31 ela Exp $
+ * $Id: nasolver.cpp,v 1.22 2004/10/27 18:45:19 ela Exp $
  *
  */
 
@@ -65,7 +65,8 @@ nasolver<nr_type_t>::nasolver () : analysis () {
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
-  attenuation = linesearch = fixpoint = 0;
+  convHelper = fixpoint = 0;
+  eqnAlgo = ALGO_LU_DECOMPOSITION;
   updateMatrix = 1;
   eqns = new eqnsys<nr_type_t> ();
 }
@@ -79,7 +80,8 @@ nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
-  attenuation = linesearch = fixpoint = 0;
+  convHelper = fixpoint = 0;
+  eqnAlgo = ALGO_LU_DECOMPOSITION;
   updateMatrix = 1;
   eqns = new eqnsys<nr_type_t> ();
 }
@@ -110,8 +112,8 @@ nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   vntol = o.vntol;
   desc = o.desc;
   calculate_func = o.calculate_func;
-  attenuation = o.attenuation;
-  linesearch = o.linesearch;
+  convHelper = o.convHelper;
+  eqnAlgo = o.eqnAlgo;
   updateMatrix = o.updateMatrix;
   fixpoint = o.fixpoint;
   eqns = new eqnsys<nr_type_t> (*(o.eqns));
@@ -262,7 +264,7 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
     else break;
   }
   while (!convergence &&
-	 run < MaxIterations * (1 + linesearch + attenuation));
+	 run < MaxIterations * (1 + convHelper ? 1 : 0));
 
   if (run >= MaxIterations || error) {
     e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
@@ -564,16 +566,18 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::runMNA (void) {
 
   // just solve the equation system here
-  eqns->setAlgo (ALGO_LU_DECOMPOSITION);
+  eqns->setAlgo (eqnAlgo);
   eqns->passEquationSys (updateMatrix ? A : NULL, x, z);
   eqns->solve ();
 
   // if damped Newton-Raphson is requested
   if (xprev != NULL && top_exception () == NULL) {
-    if (attenuation) {
+    if (convHelper == CONV_Attenuation) {
       applyAttenuation ();
-    } else if (linesearch) {
+    } else if (convHelper == CONV_LineSearch) {
       lineSearch ();
+    } else if (convHelper == CONV_SteepestDescent) {
+      steepestDescent ();
     }
   }
 }
@@ -649,6 +653,41 @@ void nasolver<nr_type_t>::lineSearch (void) {
   *x = *xprev + alpha * dx;
 }
 
+/* The function looks for the optimal gradient for the right hand side
+   vector using the so-called 'steepest descent' method.  Though
+   better than the one-dimensional linesearch (it doesn't push
+   iterations into local minimums) it converges painfully slow. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::steepestDescent (void) {
+  nr_double_t alpha = 1.0, slope;
+
+  // compute solution deviation vector
+  tvector<nr_type_t> dx = *x - *xprev;
+  tvector<nr_type_t> dz = *z - *zprev;
+  slope = real (sum (dz * -dz));
+
+  do {
+    // apply current damping factor and see what happens
+    *x = *xprev + alpha * dx;
+
+    // recalculate Jacobian and right hand side
+    saveSolution ();
+    calculate ();
+    createZVector ();
+
+    // check gradient criteria
+    dz = *z - *zprev;
+    slope = real (sum (dz * -dz));
+    if (norm (*z) < norm (*zprev) + alpha * slope)
+      break;
+    alpha *= 0.7;
+  }
+  while (alpha > 0.001);
+
+  // apply final damping factor
+  *x = *xprev + alpha * dx;
+}
+
 /* The function checks whether the iterative algorithm for linearizing
    the non-linear components in the network shows convergence.  It
    returns non-zero if it converges and zero otherwise. */
@@ -662,7 +701,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
     v_abs = abs (x->get (r) - xprev->get (r));
     v_rel = abs (x->get (r));
     if (v_abs >= vntol + reltol * v_rel) return 0;
-    if (!linesearch && !attenuation) {
+    if (!convHelper) {
       i_abs = abs (z->get (r) - zprev->get (r));
       i_rel = abs (z->get (r));
       if (i_abs >= abstol + reltol * i_rel) return 0;
@@ -672,7 +711,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
     i_abs = abs (x->get (r + N) - xprev->get (r + N));
     i_rel = abs (x->get (r + N));
     if (i_abs >= abstol + reltol * i_rel) return 0;
-    if (!linesearch && !attenuation) {
+    if (!convHelper) {
       v_abs = abs (z->get (r + N) - zprev->get (r + N));
       v_rel = abs (z->get (r + N));
       if (v_abs >= vntol + reltol * v_rel) return 0;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.14 2004/10/13 14:43:17 ela Exp $
+ * $Id: complex.cpp,v 1.15 2004/10/27 18:45:19 ela Exp $
  *
  */
 
@@ -336,6 +336,14 @@ int operator==(const complex z1, const complex z2) {
 
 int operator!=(const complex z1, const complex z2) {
   return (z1.r != z2.r) || (z1.i != z2.i);
+}
+
+int operator>=(const complex z1, const complex z2) {
+  return norm (z1) >= norm (z2);
+}
+
+int operator<=(const complex z1, const complex z2) {
+  return norm (z1) <= norm (z2);
 }
 
 complex operator/(const complex z1, const nr_double_t r2) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.20 2004/10/25 21:01:31 ela Exp $
+ * $Id: eqnsys.cpp,v 1.21 2004/10/27 18:45:19 ela Exp $
  *
  */
 
@@ -370,7 +370,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
 
   // decide here about possible convergence
   if ((crit = convergence_criteria ()) >= 1) {
-#if DEBUG
+#if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: convergence criteria: %g >= 1 (%dx%d)\n",
 	      crit, N, N);
 #endif
@@ -429,7 +429,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
 	      i, algo == ALGO_JACOBI ? "jacobi" : "gauss-seidel");
     solve_lu ();
   }
-#if DEBUG
+#if DEBUG && 0
   else {
     logprint (LOG_STATUS,
 	      "NOTIFY: %s convergence after %d iterations\n",
@@ -459,7 +459,7 @@ void eqnsys<nr_type_t>::solve_sor (void) {
 
   // decide here about possible convergence
   if ((crit = convergence_criteria ()) >= 1) {
-#if DEBUG
+#if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: convergence criteria: %g >= 1 (%dx%d)\n",
 	      crit, N, N);
 #endif
@@ -525,7 +525,7 @@ void eqnsys<nr_type_t>::solve_sor (void) {
 	      i, l);
     solve_lu ();
   }
-#if DEBUG
+#if DEBUG && 0
   else {
     logprint (LOG_STATUS,
 	      "NOTIFY: sor convergence after %d iterations\n", i);
