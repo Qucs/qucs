@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.27 2004-07-21 17:34:51 ela Exp $
+ * $Id: check_netlist.cpp,v 1.28 2004-07-24 00:10:28 ela Exp $
  *
  */
 
@@ -192,6 +192,24 @@ struct define_t definition_available[] =
     { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  },
+  /* noise voltage source */
+  { "Vnoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "u", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      PROP_NO_PROP },
+    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* noise current source */
+  { "Inoise", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "i", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      PROP_NO_PROP },
+    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
 
