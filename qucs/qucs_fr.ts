@@ -1137,7 +1137,7 @@ Wrong line start!</source>
     <name>QucsApp</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nouveau</translation>
     </message>
     <message>
         <source>&amp;Save</source>
