@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.c,v 1.1 2003/12/20 19:03:19 ela Exp $
+ * $Id: logging.c,v 1.2 2004/03/28 11:24:44 ela Exp $
  *
  */
 
@@ -35,13 +35,11 @@
 /* This function prints the given messages format and the appropriate
    arguments to a FILE stream depending on the given log level. */
 void logprint (int level, const char * format, ...) {
-  char str[256];
   FILE * f;
   va_list args;
 
   f = level == LOG_STATUS ? file_status : file_error;
   va_start (args, format);
-  vsprintf (str, format, args);
   vfprintf (f, format, args);
   va_end (args);
   fflush (f);

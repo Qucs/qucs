@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.1 2004/03/21 18:55:48 ela Exp $
+ * $Id: evaluate.cpp,v 1.2 2004/03/28 11:24:44 ela Exp $
  *
  */
 
@@ -48,26 +48,50 @@ using namespace eqn;
 #define M(con) ((constant *) (con))->m
 
 constant * evaluate::plus_d_d (constant * args) {
-  nr_double_t d1 = D (args->get (0));
-  nr_double_t d2 = D (args->get (1));
+  nr_double_t d1 = D (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_DOUBLE);
   res->d = d1 + d2;
   return res;
 }
 
 constant * evaluate::plus_c_d (constant * args) {
-  complex *   c1 = C (args->get (0));
-  nr_double_t d2 = D (args->get (1));
+  complex *   c1 = C (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_COMPLEX);
   res->c = new complex (*c1 + d2);
   return res;
 }
 
 constant * evaluate::plus_d_c (constant * args) {
-  nr_double_t d1 = D (args->get (0));
-  complex *   c2 = C (args->get (1));
+  nr_double_t d1 = D (args->getResult (0));
+  complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_COMPLEX);
   res->c = new complex (d1 + *c2);
+  return res;
+}
+
+constant * evaluate::plus_v_d (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (*v1 + d2);
+  return res;
+}
+
+constant * evaluate::plus_d_v (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  vector * v2    = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (*v2 + d1);
+  return res;
+}
+
+constant * evaluate::plus_v_v (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (*v1 + *v2);
   return res;
 }
 
@@ -76,5 +100,8 @@ struct application_t eqn::applications[] = {
   { "+", TAG_DOUBLE,  evaluate::plus_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "+", TAG_COMPLEX, evaluate::plus_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
   { "+", TAG_COMPLEX, evaluate::plus_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "+", TAG_VECTOR,  evaluate::plus_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "+", TAG_VECTOR,  evaluate::plus_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "+", TAG_VECTOR,  evaluate::plus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: vector.cpp,v 1.3 2004/03/28 11:24:44 ela Exp $
  *
  */
 
@@ -60,7 +60,7 @@ vector::vector (const vector & v) : object (v) {
   data = (complex *) malloc (sizeof (complex) * capacity);
   memcpy (data, v.data, sizeof (complex) * size);
   dependencies = new strlist (*v.dependencies);
-  origin = v.origin ? strdup (origin) : NULL;
+  origin = v.origin ? strdup (v.origin) : NULL;
 }
 
 // Destructor deletes a vector object.

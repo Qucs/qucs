@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: ucs.cpp,v 1.3 2004/03/28 11:24:44 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@ using namespace std;
 #include "net.h"
 #include "input.h"
 #include "dataset.h"
+#include "equation.h"
 #include "environment.h"
 
 int main (int argc, char ** argv) {
@@ -95,6 +96,7 @@ int main (int argc, char ** argv) {
   out = subnet->runAnalysis ();
 
   // evaluate output dataset
+  equation_solver (out);
   out->setFile (outfile);
   out->print ();
 

@@ -26,6 +26,7 @@ files.
 Version 0.0.2
 -------------
 
+ * implemented equation solver
  * parameter sweep
  * DC simulation for passive elements and controlled sources
  * implemented s-parameters of DC and AC components

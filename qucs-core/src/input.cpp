@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.13 2004/03/21 18:55:48 ela Exp $
+ * $Id: input.cpp,v 1.14 2004/03/28 11:24:44 ela Exp $
  *
  */
 
@@ -93,7 +93,7 @@ int input::netlist (net * netlist) {
 
   // check the equations
   logprint (LOG_STATUS, "checking equations...\n");
-  if (equation_checker () != 0)
+  if (equation_checker (0) != 0)
     return -1;
 
 #if DEBUG

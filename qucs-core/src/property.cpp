@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: property.cpp,v 1.3 2004/03/28 11:24:44 ela Exp $
  *
  */
 
@@ -70,6 +70,7 @@ property::property (char * n, nr_double_t val) {
   name = n ? strdup (n) : NULL;
   value = val;
   str = NULL;
+  var = NULL;
   next = NULL;
 }
 
@@ -86,9 +87,8 @@ property::property (char * n, variable * val) {
 /* The copy constructor creates a new instance of the property class
    based on the given property object. */
 property::property (const property & p) {
-  name = str = NULL;
-  if (p.name) name = strdup (p.name);
-  if (p.str) str = strdup (p.str);
+  name = p.name ? strdup (p.name) : NULL;
+  str = p.str ? strdup (p.str) : NULL;
   value = p.value;
   next = p.next;
   var = p.var;
