@@ -1,5 +1,8 @@
 2004-10-12  Stefan Jahn  <stefan@lkcc.org>
 
+	* evaluate.cpp: Added sec(), cosec(), sech() an cosech()
+	functions.
+
 	* vector.cpp: Found out that class& return values create
 	memory leaks.  That is why classes changed: vector, matrix,
 	matvec, tmatrix and *all* the callers.

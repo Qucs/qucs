@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.18 2004/10/12 18:13:08 ela Exp $
+ * $Id: evaluate.cpp,v 1.19 2004/10/12 20:33:58 ela Exp $
  *
  */
 
@@ -1042,6 +1042,50 @@ constant * evaluate::arccot_v (constant * args) {
   return res;
 }
 
+// ***************** secans *********************
+constant * evaluate::sec_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 1.0 / cos (d1);
+  return res;
+}
+
+constant * evaluate::sec_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (1.0 / cos (*c1));
+  return res;
+}
+
+constant * evaluate::sec_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (1.0 / cos (*v1));
+  return res;
+}
+
+// ***************** cosecans *********************
+constant * evaluate::cosec_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 1.0 / sin (d1);
+  return res;
+}
+
+constant * evaluate::cosec_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (1.0 / sin (*c1));
+  return res;
+}
+
+constant * evaluate::cosec_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (1.0 / sin (*v1));
+  return res;
+}
+
 // *********** sine hyperbolicus *******************
 constant * evaluate::sinh_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -1196,6 +1240,50 @@ constant * evaluate::coth_v (constant * args) {
   return res;
 }
 
+// ************** secans hyperbolicus *************
+constant * evaluate::sech_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = sech (d1);
+  return res;
+}
+
+constant * evaluate::sech_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (sech (*c1));
+  return res;
+}
+
+constant * evaluate::sech_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (sech (*v1));
+  return res;
+}
+
+// ************** cosecans hyperbolicus *************
+constant * evaluate::cosech_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = cosech (d1);
+  return res;
+}
+
+constant * evaluate::cosech_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (cosech (*c1));
+  return res;
+}
+
+constant * evaluate::cosech_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (cosech (*v1));
+  return res;
+}
+
 // ******* area cotangent hyperbolicus **********
 constant * evaluate::arcoth_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -1266,20 +1354,21 @@ constant * evaluate::rtoz_v (constant * args) {
 constant * evaluate::rtoswr_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = (1+ fabs (d1)) / (1 - fabs (d1));
+  res->d = (1 + fabs (d1)) / (1 - fabs (d1));
   return res;
 }
 
 constant * evaluate::rtoswr_c (constant * args) {
   complex *   c1 = C (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = (1+ abs (*c1)) / (1 - abs (*c1));
+  res->d = (1 + abs (*c1)) / (1 - abs (*c1));
   return res;
 }
 
 constant * evaluate::rtoswr_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (v1->getSize ());
   for (int i = 0; i < v1->getSize (); i++)
     res->v->set ((1 + abs (v1->get (i))) / (1 - abs (v1->get (i))), i);
   return res;
@@ -1728,6 +1817,14 @@ struct application_t eqn::applications[] = {
   { "arccot", TAG_COMPLEX, evaluate::arccot_c, 1, { TAG_COMPLEX } },
   { "arccot", TAG_VECTOR,  evaluate::arccot_v, 1, { TAG_VECTOR  } },
 
+  { "sec", TAG_DOUBLE,  evaluate::sec_d, 1, { TAG_DOUBLE  } },
+  { "sec", TAG_COMPLEX, evaluate::sec_c, 1, { TAG_COMPLEX } },
+  { "sec", TAG_VECTOR,  evaluate::sec_v, 1, { TAG_VECTOR  } },
+
+  { "cosec", TAG_DOUBLE,  evaluate::cosec_d, 1, { TAG_DOUBLE  } },
+  { "cosec", TAG_COMPLEX, evaluate::cosec_c, 1, { TAG_COMPLEX } },
+  { "cosec", TAG_VECTOR,  evaluate::cosec_v, 1, { TAG_VECTOR  } },
+
   { "sinh", TAG_DOUBLE,  evaluate::sinh_d, 1, { TAG_DOUBLE  } },
   { "sinh", TAG_COMPLEX, evaluate::sinh_c, 1, { TAG_COMPLEX } },
   { "sinh", TAG_VECTOR,  evaluate::sinh_v, 1, { TAG_VECTOR  } },
@@ -1755,6 +1852,14 @@ struct application_t eqn::applications[] = {
   { "coth", TAG_DOUBLE,  evaluate::coth_d, 1, { TAG_DOUBLE  } },
   { "coth", TAG_COMPLEX, evaluate::coth_c, 1, { TAG_COMPLEX } },
   { "coth", TAG_VECTOR,  evaluate::coth_v, 1, { TAG_VECTOR  } },
+
+  { "sech", TAG_DOUBLE,  evaluate::sech_d, 1, { TAG_DOUBLE  } },
+  { "sech", TAG_COMPLEX, evaluate::sech_c, 1, { TAG_COMPLEX } },
+  { "sech", TAG_VECTOR,  evaluate::sech_v, 1, { TAG_VECTOR  } },
+
+  { "cosech", TAG_DOUBLE,  evaluate::cosech_d, 1, { TAG_DOUBLE  } },
+  { "cosech", TAG_COMPLEX, evaluate::cosech_c, 1, { TAG_COMPLEX } },
+  { "cosech", TAG_VECTOR,  evaluate::cosech_v, 1, { TAG_VECTOR  } },
 
   { "arcoth", TAG_DOUBLE,  evaluate::arcoth_d, 1, { TAG_DOUBLE  } },
   { "arcoth", TAG_COMPLEX, evaluate::arcoth_c, 1, { TAG_COMPLEX } },

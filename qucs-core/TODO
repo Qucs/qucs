@@ -69,7 +69,8 @@ unfixed) have a look at the file BUGS.
 	  capacitor.
 	- Use LU decomposition for matrix inversion and determinants.  Done
 	  by Gaussian methods.
-- Implement sec(), cosec(), sech(), cosech(), si() and sign() functions.
+	- Implement sec(), cosec(), sech() and cosech() functions.
+- Implement si() and sign() functions.
 	- Fix dependency in dataset variables when e.g. using max().
 	- Add constants like pi to the available symbols in equations.
 - Implement list and logarithmic sweeps and merge them with the
