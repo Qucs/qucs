@@ -108,7 +108,6 @@ void SimMessage::slotDisplayMsg()
 // Is called when the process sends an output to stderr.
 void SimMessage::slotDisplayErr()
 {
-//qDebug("#");
   ErrText->insert(QString(SimProcess.readStderr()));
 }
 
