@@ -51,6 +51,7 @@ public:
   Wire*      selectedWire(int x, int y);
   Element*   selectElement(int x, int y, bool flag);
   void       deselectElements(Element *e);
+  void  NewMovingWires(QPtrList<Element> *p, Node *pn);
   void  copySelectedElements(QPtrList<Element> *p);
   void  selectComponents(int x1, int y1, int x2, int y2, bool flag);
   void  activateComponent(int x, int y);
@@ -64,12 +65,17 @@ public:
   bool  deleteElements();
   bool  createNetlist(QFile *NetlistFile);
 
+  QString copySelected(bool cut);
+  bool    paste(QTextStream *stream);
+
+  void  reloadGraphs();
   bool  save();
   bool  load();
   bool  loadProperties(QTextStream *stream);
-  bool  loadComponents(QTextStream *stream);
+  bool  loadComponents(QTextStream *stream, bool raw=true);
   bool  loadWires(QTextStream *stream);
   bool  loadDiagrams(QTextStream *stream);
+  bool  loadPaintings(QTextStream *stream);
 
   void setOnGrid(int& x, int& y);
 
@@ -84,6 +90,7 @@ public:
   QPtrList<Component> Comps;
   QPtrList<Diagram>   Diags;
 
+  bool SimOpenDpl;  // open data display after simulation ?
   QString DataSet;  // name of the default dataset
   QString DataDisplay; // name of the default data display
   int  GridX, GridY;

@@ -45,17 +45,17 @@ void PolarDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  Arcs.append(new Arc(cx, cy-y2, x2, y2, 0, 16*360, QPen(QPen::black,1)));
-  Texts.append(new Text(cx+(x2>>1), cy+15, QString::number(yg2)));
+  Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360, QPen(QPen::black,1)));
+  Texts.append(new Text(x2>>1, -15, QString::number(ymax)));
 
-  Lines.append(new Line(cx+(x2>>1), cy-y2, cx+(x2>>1), cy, QPen(QPen::lightGray,1)));  // y line
-  Lines.append(new Line(cx, cy-(y2>>1), cx+x2, cy-(y2>>1), QPen(QPen::lightGray,1)));  // x line
+  Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,1)));  // y line
+  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,1)));  // x line
 
   
   if(GridOn) {
     z=GridX;
     while(z < (x2>>1)) {
-      Arcs.append(new Arc(cx+z, cy-y2+z, x2-(z<<1), y2-(z<<1), 0, 16*360, QPen(QPen::lightGray,1)));
+      Arcs.append(new Arc(z, y2-z, x2-(z<<1), y2-(z<<1), 0, 16*360, QPen(QPen::lightGray,1)));
       z += GridX;
     }
   }
@@ -66,8 +66,8 @@ void PolarDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = cx+(x2>>1)+int(cp->yr/yg2*double(x2>>1));
-    *(p++) = cy-(y2>>1)-int(cp->yi/yg2*double(y2>>1));
+    *(p++) = (x2>>1)+int(cp->yr/ymax*double(x2>>1));
+    *(p++) = (y2>>1)+int(cp->yi/ymax*double(y2>>1));
   }
 
   calcDiagram();

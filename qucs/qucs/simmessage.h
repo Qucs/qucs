@@ -22,6 +22,8 @@
 
 #include <qtextedit.h>
 #include <qprocess.h>
+#include <qpushbutton.h>
+
 
 /**
   *@author Michael Margraf
@@ -35,14 +37,19 @@ public:
 
   bool startProcess(const QStringList& commands);
 
+signals:
+  void SimulationEnded();
+
 public slots:
   void slotDisplayMsg();
   void slotDisplayErr();
+  void slotSimEnded();
   void slotClose();
   
 public:
   QProcess   SimProcess;
   QTextEdit *ProgText, *ErrText;
+  QPushButton *Abort;
 
 };
 

@@ -64,6 +64,7 @@ static const char *smallsave_xpm[] = {
 "       zA       "};
 
 
+
 QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
 {
   GridX  = 10;
@@ -78,19 +79,19 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
     DataSet = Info.baseName()+".dat";   // name of the default dataset
     if(Info.extension(false) == "sch")
       DataDisplay = Info.baseName()+".dpl";   // name of the default data display
-    else
+    else {
       DataDisplay = Info.baseName()+".sch";   // name of the default data display
+      GridOn = false;     // data display without grid (per default)
+    }
   }
-
+  SimOpenDpl = true;
+  
   Bar = b;
   Bar->addTab(Tab);  // create tab in TabBar
 //  Bar->setCurrentTab(Tab);     // make it the current  ===>  CRASHES !!!???!!!
   Bar->repaint();
 
   DocChanged = false;
-
-//  focusWire = 0;  focusComp = 0;  focusDiag = 0;
-//focusElement = 0;
 
   Comps.setAutoDelete(true);
   Wires.setAutoDelete(true);
@@ -657,6 +658,85 @@ void QucsDoc::deselectElements(Element *e)
 }
 
 // ---------------------------------------------------
+// For moving elements: If the moving element is connected to a not moving element,
+// insert two wires. If the connected element is already a wire, use this wire.
+// Otherwise create new wire.
+void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
+{
+  if(pn->Connections.count() < 1) return;   // return, if connected node is also moving
+  Element *pe = pn->Connections.getFirst();
+  if(pe == (Element*)1) return;   // return, if it was already treated this way
+  pn->Connections.prepend((Element*)1);  // to avoid doubling
+  
+  if(pn->Connections.count() == 2)  // 2, because of prepend (Element*)1
+    if(pe->Type == isWire) {    // is it connected to exactly one wire ?
+
+      // .................................................
+      Wire *pw2=0, *pw = (Wire*)pe;
+
+      Node *pn2 = pw->Port1;
+      if(pn2 == pn) pn2 = pw->Port2;
+
+      if(pn2->Connections.count() == 2) {   // two existing wires connected ?
+        Element *pe2 = pn2->Connections.getFirst();
+        if(pe2 == pe) pe2 = pn2->Connections.getLast();
+        if(pe2 != (Element*)1)
+          if(pe2->Type == isWire)   // the connected wire is again connected to exactly one wire ?
+            pw2  = (Wire*)pe2;
+      }
+      
+      // .................................................
+      // reuse one wire
+      p->append(pw);
+      pw->Port1->Connections.removeRef(pw);   // remove connection 1
+      pw->Port2->Connections.removeRef(pw);   // remove connection 2
+      Wires.removeRef(pw);
+      int mask = 1;
+      if(pw->isHorizontal()) mask = 2;
+
+      if(pw->Port1 != pn) {
+        pw->Port1 = (Node*)mask;
+        pw->Port2 = (Node*)3;
+      }
+      else {
+        pw->Port1 = (Node*)3;
+        pw->Port2 = (Node*)mask;
+      }
+
+      // .................................................
+      // create new wire ?
+      if(pw2 == 0) {
+        if(pw->Port1 == (Node*)3)
+          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)mask, (Node*)0));
+        else
+          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)mask, (Node*)0));
+        return;
+      }
+
+      
+      // .................................................
+      // reuse a second wire
+      p->append(pw2);
+      pw2->Port1->Connections.removeRef(pw2);   // remove connection 1
+      pw2->Port2->Connections.removeRef(pw2);   // remove connection 2
+      Wires.removeRef(pw2);
+
+      if(pw2->Port1 != pn2) {
+        pw2->Port1 = (Node*)0;
+        pw2->Port2 = (Node*)mask;
+      }
+      else {
+        pw2->Port1 = (Node*)mask;
+        pw2->Port2 = (Node*)0;
+      }
+      return;
+    }
+                  
+  p->append(new Wire(pn->x, pn->y, pn->x, pn->y, (Node*)0, (Node*)1));  // only x2 moving
+  p->append(new Wire(pn->x, pn->y, pn->x, pn->y, (Node*)1, (Node*)3));  // x1, x2, y2 moving
+}
+
+// ---------------------------------------------------
 // For moving of elements: Copies all selected elements into the
 // list 'p' and deletes them from the document.
 void QucsDoc::copySelectedElements(QPtrList<Element> *p)
@@ -704,56 +784,43 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
     }
     else pd = Diags.next();
 
-  Comps.setAutoDelete(true);
-  Wires.setAutoDelete(true);
-  Diags.setAutoDelete(true);
-
   // ..............................................
   // Inserts wires, if a connection to a not moving element is found.
   for(pe = p->last(); pe!=0; pe = p->prev())  // go backwards in order not to test the new insertions
     switch(pe->Type) {
-      case isComponent: pc = (Component*)pe;
-                        for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
-                          if(pp->Connection->Connections.count() > 0)
-                            if(pp->Connection->Connections.getFirst() != (Element*)1) {
-                            p->append(new Wire(pp->Connection->x, pp->Connection->y,
-                                          pp->Connection->x, pp->Connection->y, (Node*)0, (Node*)1));
-                            p->append(new Wire(pp->Connection->x, pp->Connection->y,
-                                          pp->Connection->x, pp->Connection->y, (Node*)1, (Node*)0));
-                            p->findRef(pe);   // back to the real current pointer
-                            pp->Connection->Connections.prepend((Element*)1);  // to avoid doubling
-                          }
-                        break;
-      case isWire:      pw = (Wire*)pe;
-                        if(pw->Port1->Connections.count() > 0)
-                          if(pw->Port1->Connections.getFirst() != (Element*)1) {
-                          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)0, (Node*)1));
-                          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)1, (Node*)0));
-                          pw->Port1->Connections.prepend((Element*)1);  // to avoid doubling
-                        }
-                        if(pw->Port2->Connections.count() > 0)
-                          if(pw->Port2->Connections.getFirst() != (Element*)1) {
-                          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)0, (Node*)1));
-                          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)1, (Node*)0));
-                          pw->Port2->Connections.prepend((Element*)1);  // to avoid doubling
-                        }
-                        p->findRef(pe);   // back to the real current pointer
-                        break;
-      default:          ;  // avoid compiler warning
+      case isComponent:
+          pc = (Component*)pe;
+          for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+            NewMovingWires(p, pp->Connection);
+
+          p->findRef(pe);   // back to the real current pointer
+          break;
+      case isWire:
+          pw = (Wire*)pe;
+          NewMovingWires(p, pw->Port1);
+          NewMovingWires(p, pw->Port2);
+          p->findRef(pe);   // back to the real current pointer
+          break;
+      default:   ;  // avoid compiler warning
     }
 
+  Comps.setAutoDelete(true);
+  Wires.setAutoDelete(true);
+  Diags.setAutoDelete(true);
+
   // delete the unused nodes
-  for(pn = Nodes.first(); pn!=0; )
+  for(pn = Nodes.first(); pn!=0; ) {
+    if(pn->Connections.getFirst() == (Element*)1)
+      pn->Connections.removeFirst();  // delete tag
+
     if(pn->Connections.count() == 0) {
       Nodes.remove();
       pn = Nodes.current();
+      continue;
     }
-    else {
-      if(pn->Connections.getFirst() == (Element*)1)
-        pn->Connections.removeFirst();  // delete tag
 
-      pn = Nodes.next();
-    }
+    pn = Nodes.next();
+  }
 }
 
 // ---------------------------------------------------
@@ -945,7 +1012,7 @@ void QucsDoc::deleteWire(Wire *w)
 }
 
 // ---------------------------------------------------
-// Deletes all selected components.
+// Deletes all selected elements.
 bool QucsDoc::deleteElements()
 {
   bool sel = false;
@@ -982,6 +1049,83 @@ bool QucsDoc::deleteElements()
 }
 
 // ---------------------------------------------------
+void QucsDoc::reloadGraphs()
+{
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next())
+    pd->loadGraphData(DataSet);  // load graphs from data files
+}
+
+// ---------------------------------------------------
+QString QucsDoc::copySelected(bool cut)
+{
+  QString s("<Qucs Schematic " VERSION ">\n");
+
+  s += "<Components>\n";
+  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // save all components
+    if(ptr1->isSelected)
+      s += "   "+ptr1->save()+"\n";
+  s += "</Components>\n";
+
+  s += "<Wires>\n";
+  for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next())  // save all wires
+    if(ptr2->isSelected)
+      s += "   "+ptr2->save()+"\n";
+  s += "</Wires>\n";
+
+  s += "<Diagrams>\n";
+  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())  // save all diagrams
+    if(ptr3->isSelected)
+      s += ptr3->save()+"\n";
+  s += "</Diagrams>\n";
+
+  s += "<Paintings>\n";
+//  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())  // save all diagrams
+//    stream << ptr3->save() << "\n";
+  s += "</Paintings>\n";
+
+  if(cut) deleteElements();   // delete selected elements if wanted
+  return s;
+}
+
+// ---------------------------------------------------
+// Paste from clipboard.
+bool QucsDoc::paste(QTextStream *stream)
+{
+  QString Line;
+
+  Line = stream->readLine();
+  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
+    QMessageBox::critical(0, "Error", "Clipboard content is not a Qucs schematic!");
+    return false;
+  }
+
+  QString s = VERSION;
+  Line = Line.mid(16, Line.length()-17);
+  if(Line != s) {  // wrong version number ?
+    QMessageBox::critical(0, "Error", "Wrong document version: "+Line);
+    return false;
+  }
+
+  // read content *************************
+  while(!stream->atEnd()) {
+    Line = stream->readLine();
+    if(Line == "<Components>") { if(!loadComponents(stream, false)) return false; }
+    else
+    if(Line == "<Wires>") { if(!loadWires(stream)) return false; }
+    else
+    if(Line == "<Diagrams>") { if(!loadDiagrams(stream)) return false; }
+    else
+    if(Line == "<Paintings>") { if(!loadPaintings(stream)) return false; }
+    else {
+      QMessageBox::critical(0, "Error", "Clipboard Format Error:\nUnknown field!");
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// ---------------------------------------------------
 bool QucsDoc::save()
 {
   QFile file(DocName);
@@ -1000,6 +1144,7 @@ bool QucsDoc::save()
   stream << "   <GridOn=" << GridOn << ">\n";
   stream << "   <DataSet=" << DataSet << ">\n";
   stream << "   <DataDisplay=" << DataDisplay << ">\n";
+  stream << "   <OpenDisplay=" << SimOpenDpl << ">\n";
   stream << "</Properties>\n";
     
   stream << "<Components>\n";
@@ -1017,6 +1162,11 @@ bool QucsDoc::save()
     stream << ptr3->save() << "\n";
   stream << "</Diagrams>\n";
 
+  stream << "<Paintings>\n";
+//  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())  // save all diagrams
+//    stream << ptr3->save() << "\n";
+  stream << "</Paintings>\n";
+
   file.close();
   setChanged(false);
   return true;
@@ -1033,11 +1183,11 @@ bool QucsDoc::loadProperties(QTextStream *stream)
     Line = Line.stripWhiteSpace();
 
     if(Line.at(0) != '<') {
-      QMessageBox::critical(0, "Error", "File Format Error:\nWrong property field limiter!");
+      QMessageBox::critical(0, "Error", "Format Error:\nWrong property field limiter!");
       return false;
     }
     if(Line.at(Line.length()-1) != '>') {
-      QMessageBox::critical(0, "Error", "File Format Error:\nWrong property field limiter!");
+      QMessageBox::critical(0, "Error", "Format Error:\nWrong property field limiter!");
       return false;
     }
     Line = Line.mid(1, Line.length()-2);   // cut off start and end character
@@ -1049,21 +1199,23 @@ bool QucsDoc::loadProperties(QTextStream *stream)
     else if(cstr == "GridOn") if(nstr.toInt(&ok) == 0) GridOn = false; else GridOn = true;
     else if(cstr == "DataSet") DataSet = nstr;
     else if(cstr == "DataDisplay") DataDisplay = nstr;
+    else if(cstr == "OpenDisplay") if(nstr.toInt(&ok) == 0) SimOpenDpl = false; else SimOpenDpl = true;
     else {
-      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown property: "+cstr);
+      QMessageBox::critical(0, "Error", "Format Error:\nUnknown property: "+cstr);
       return false;
     }
     if(!ok) {
-      QMessageBox::critical(0, "Error", "File Format Error:\nNumber expected in property field!");
+      QMessageBox::critical(0, "Error", "Format Error:\nNumber expected in property field!");
       return false;
     }
   }
 
-  QMessageBox::critical(0, "Error", "File Format Error:\n'Property' field is not closed!");
+  QMessageBox::critical(0, "Error", "Format Error:\n'Property' field is not closed!");
   return false;
 }
 
-bool QucsDoc::loadComponents(QTextStream *stream)
+// if 'raw' is true, the component name is kept
+bool QucsDoc::loadComponents(QTextStream *stream, bool raw)
 {
   QString Line, cstr;
   Component *c;
@@ -1109,21 +1261,28 @@ bool QucsDoc::loadComponents(QTextStream *stream)
     else if(cstr == "<.HB") c = new HB_Sim();
     else if(cstr == "<.SW") c = new Param_Sweep();
     else {
-      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown component!");
+      QMessageBox::critical(0, "Error", "Format Error:\nUnknown component!");
       return false;
     }
 
     if(!c->load(Line)) {
-      QMessageBox::critical(0, "Error", "File Format Error:\nWrong 'component' line format!");
+      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'component' line format!");
       delete c;
       return false;
     }
     Line = c->Name;
-    insertComponent(c);
-    c->Name = Line;   // do not overwrite the name
+    if(raw) insertRawComponent(c);
+    else {
+      int z;
+      for(z=c->Name.length()-1; z>=0; z--)  // cut off number of component name
+        if(!c->Name.at(z).isDigit()) break;
+      c->Name = c->Name.left(z+1);
+      insertComponent(c);
+    }
+//    c->Name = Line;   // do not overwrite the name
   }
 
-  QMessageBox::critical(0, "Error", "File Format Error:\n'Component' field is not closed!");
+  QMessageBox::critical(0, "Error", "Format Error:\n'Component' field is not closed!");
   return false;
 }
 
@@ -1138,13 +1297,13 @@ bool QucsDoc::loadWires(QTextStream *stream)
     Line = Line.stripWhiteSpace();
     w = new Wire();
     if(!w->load(Line)) {
-      QMessageBox::critical(0, "Error", "File Format Error:\nWrong 'wire' line format!");
+      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'wire' line format!");
       return false;
     }
     insertWire(w);
   }
 
-  QMessageBox::critical(0, "Error", "File Format Error:\n'Wire' field is not closed!");
+  QMessageBox::critical(0, "Error", "Format Error:\n'Wire' field is not closed!");
   return false;
 }
 
@@ -1163,22 +1322,55 @@ bool QucsDoc::loadDiagrams(QTextStream *stream)
     else if(cstr == "<Tab") d = new TabDiagram();
     else if(cstr == "<Smith") d = new SmithDiagram();
     else {
-      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown diagram!");
+      QMessageBox::critical(0, "Error", "Format Error:\nUnknown diagram!");
       return false;
     }
 
-    if(!d->load(Line, stream)) {
-      QMessageBox::critical(0, "Error", "File Format Error:\nWrong 'diagram' line format!");
+    if(!d->load(Line, stream, DataSet)) {
+      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'diagram' line format!");
       delete d;
       return false;
     }
     Diags.append(d);
+    d->loadGraphData(DataSet);  // load graphs from data files
   }
 
-  QMessageBox::critical(0, "Error", "File Format Error:\n'Diagram' field is not closed!");
+  QMessageBox::critical(0, "Error", "Format Error:\n'Diagram' field is not closed!");
   return false;
 }
 
+bool QucsDoc::loadPaintings(QTextStream *stream)
+{
+//  Painting *p;
+  QString Line;//, cstr;
+  while(!stream->atEnd()) {
+    Line = stream->readLine();
+    if(Line == "</Paintings>") return true;
+    Line = Line.stripWhiteSpace();
+
+//    cstr = Line.section(' ',0,0);    // diagram type
+/*         if(cstr == "<Rect") d = new RectDiagram();
+    else if(cstr == "<Polar") d = new PolarDiagram();
+    else if(cstr == "<Tab") d = new TabDiagram();
+    else if(cstr == "<Smith") d = new SmithDiagram();
+    else {
+      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown painting!");
+      return false;
+    }*/
+
+//    if(!p->load(Line, stream)) {
+      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'painting' line format!");
+//      delete p;
+      return false;
+//    }
+//    Diags.append(d);
+  }
+
+  QMessageBox::critical(0, "Error", "Format Error:\n'Painting' field is not closed!");
+  return false;
+}
+
+// ......................................................................
 bool QucsDoc::load()
 {
   QFile file(DocName);
@@ -1222,6 +1414,8 @@ bool QucsDoc::load()
     if(Line == "<Wires>") { if(!loadWires(&stream)) { file.close(); return false; } }
     else
     if(Line == "<Diagrams>") { if(!loadDiagrams(&stream)) { file.close(); return false; } }
+    else
+    if(Line == "<Paintings>") { if(!loadPaintings(&stream)) { file.close(); return false; } }
     else {
       QMessageBox::critical(0, "Error", "File Format Error:\nUnknown field!");
       file.close();

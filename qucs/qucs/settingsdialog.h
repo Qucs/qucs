@@ -22,6 +22,7 @@
 
 #include <qdialog.h>
 #include <qlineedit.h>
+#include <qcheckbox.h>
 
 /**
   *@author Michael Margraf
@@ -41,6 +42,7 @@ public:
   QucsDoc *Doc;
 
   QLineEdit *Input_DataSet, *Input_DataDisplay;
+  QCheckBox *Check_OpenDpl;
 };
 
 #endif

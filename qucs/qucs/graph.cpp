@@ -24,7 +24,7 @@ Graph::Graph(const QString& _Line)
   count  = 0;    // no points in graph
   Points = 0;
   Thick  = 1;
-  Color  = QColor(0,0,255);
+  Color  = 0x0000ff;  // blue
   
   Points = 0;
   cPoints.setAutoDelete(true);
@@ -36,22 +36,15 @@ Graph::~Graph()
 }
 
 // ---------------------------------------------------------------------
-void Graph::paint(QPainter *p)
+void Graph::paint(QPainter *p, int cx, int cy)
 {
-//  QPoint *p1 = Points.first();
-//  if(p1 == 0) return;
-
   int *pp = Points;
   if(pp == 0) return;
-  p->setPen(QPen(Color, Thick, Qt::SolidLine));
-  p->drawPoint(*pp, *(pp+1));
+  p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
+  p->drawPoint(cx+(*pp), cy-(*(pp+1)));
 
-//  for(QPoint *p2 = Points.next(); p2 != 0; p2 = Points.next()) {
-//    p->drawLine(*p1, *p2);
-//    p1 = p2;
-//  }
   for(int n=count-1; n>0; n--) {
-    p->drawLine(*pp, *(pp+1), *(pp+2), *(pp+3));
+    p->drawLine(cx+(*pp), cy-(*(pp+1)), cx+(*(pp+2)), cy-(*(pp+3)));
     pp += 2;
   }
 }

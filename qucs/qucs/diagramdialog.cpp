@@ -29,11 +29,16 @@
 #include <qpoint.h>
 
 
-DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, const char *name )
+// standard colors: blue, red, magenta, green, cyan, yellow, black (white is only a dummy)
+static const QRgb DefaultColors[]
+          = {0x0000ff, 0xff0000, 0xff00ff, 0x00ff00, 0x00ffff, 0xffff00, 0xffffff, 0x000000};
+
+
+DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent, const char *name )
                                   : QDialog(parent, name, Qt::WDestructiveClose)
 {
   Diag = d;
-//  ProjDir = _ProjDir;
+  defaultDataSet = _DataSet;
   setCaption("Edit Diagram Properties");
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
@@ -64,7 +69,8 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, const char *name )
 
 
   QVButtonGroup *GraphGroup = new QVButtonGroup("Graph", Box1);
-  SelectedVars = new QListBox(GraphGroup);
+  GraphList = new QListBox(GraphGroup);
+  connect(GraphList, SIGNAL(highlighted(int)), SLOT(slotSelectGraph(int)));
   QPushButton *NewButt = new QPushButton("New Graph", GraphGroup);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
   QPushButton *DelButt = new QPushButton("Delete Graph", GraphGroup);
@@ -116,14 +122,17 @@ DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, const char *name )
   QDir ProjDir(".");
   QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
   QStringList::iterator it;
-  for(it = Elements.begin(); it != Elements.end(); ++it)
+  for(it = Elements.begin(); it != Elements.end(); ++it) {
     ChooseData->insertItem((*it).left((*it).length()-4));
+    if((*it) == defaultDataSet)
+      ChooseData->setCurrentItem(ChooseData->count()-1);  // default dataset should be the current
+  }
   slotReadVars(0);  // put variables into the ListView
 
   // ...........................................................
   // put all graphs into the ListBox
   for(Graph *ptr1 = Diag->Graphs.first(); ptr1 != 0; ptr1 = Diag->Graphs.next())
-    SelectedVars->insertItem(ptr1->Line);
+    GraphList->insertItem(ptr1->Line);
 }
 
 DiagramDialog::~DiagramDialog()
@@ -133,9 +142,7 @@ DiagramDialog::~DiagramDialog()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotReadVars(int)
 {
-//  QString DocName = ProjDir->absPath()+"/"+ChooseData->currentText()+".dat";
   QString DocName = ChooseData->currentText()+".dat";
-//    QMessageBox::critical(0, "Error", "Cannot load document: "+DocName);
   
   QFile file(DocName);
   if(!file.open(IO_ReadOnly)) {
@@ -171,30 +178,66 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
 }
 
 // --------------------------------------------------------------------------
-void DiagramDialog::slotApplyGraphInput()
+// Puts the text of the selected graph into the line edit.
+void DiagramDialog::slotSelectGraph(int index)
 {
-  if(GraphInput->text().isEmpty()) return;
-  if(SelectedVars->currentItem() == -1) {   // is item selected ?
-    SelectedVars->insertItem(GraphInput->text());
-
-    Graph *g = new Graph(GraphInput->text());   // create a new graph
-    Diag->Graphs.append(g);
-//    Diag->loadVarData(ProjDir->absPath()+"/"+ChooseData->currentText()+".dat");
-    Diag->loadVarData(ChooseData->currentText()+".dat");
-  }
-  else {
-//    SelectedVars->
-  }
+  GraphInput->setText(GraphList->text(index));
 }
 
 // --------------------------------------------------------------------------
+void DiagramDialog::slotApplyGraphInput()
+{
+  if(GraphInput->text().isEmpty()) return;
+  if(GraphList->currentItem() == -1) {   // is item selected ?
+    GraphList->insertItem(GraphInput->text());
+
+    int z=0;
+    Graph *g = Diag->Graphs.last();
+    if(g != 0) {
+      while(DefaultColors[z] != 0)  // find the next graph color
+        if(g->Color == QColor(DefaultColors[z++])) break;
+      if(DefaultColors[z] == 0) z = 0;
+    }
+
+    g = new Graph(GraphInput->text());   // create a new graph
+    g->Color = QColor(DefaultColors[z]);
+    Diag->Graphs.append(g);
+  }
+  else  // change the selected graph
+    GraphList->changeItem(GraphInput->text(), GraphList->currentItem());
+
+  GraphInput->setText("");  // erase input line
+}
+
+// --------------------------------------------------------------------------
+// Is called when the 'delelte graph' button is pressed.
 void DiagramDialog::slotDeleteGraph()
 {
+  int i = GraphList->currentItem();
+  if(i == -1) return;   // return, if no item selected
+
+  GraphList->removeItem(i);
+  Diag->Graphs.remove(i);
 }
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotNewGraph()
 {
+  if(GraphInput->text().isEmpty()) return;
+
+  GraphList->insertItem(GraphInput->text());
+
+  int z=0;
+  Graph *g = Diag->Graphs.last();
+  if(g != 0) {
+    while(DefaultColors[z] != 0)  // find the next graph color
+      if(g->Color == QColor(DefaultColors[z++])) break;
+    if(DefaultColors[z] == 0) z = 0;
+  }
+
+  g = new Graph(GraphInput->text());   // create a new graph
+  g->Color = QColor(DefaultColors[z]);
+  Diag->Graphs.append(g);
 }
 
 // --------------------------------------------------------------------------
@@ -207,6 +250,7 @@ void DiagramDialog::slotOK()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotApply()
 {
+  Diag->loadGraphData(defaultDataSet);
 }
 
 // --------------------------------------------------------------------------

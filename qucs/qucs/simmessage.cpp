@@ -21,7 +21,6 @@
 #include <qlayout.h>
 #include <qvgroupbox.h>
 #include <qhbox.h>
-#include <qpushbutton.h>
 #include <qtimer.h>
 
 
@@ -50,13 +49,14 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
 
 //  QHBox *Butts = new QHBox(this);
 //  all->addWidget(Butts);
-  QPushButton *Abort = new QPushButton("Abort", this);//Butts);
+  Abort = new QPushButton("Abort simulation", this);//Butts);
   all->addWidget(Abort);
   connect(Abort,SIGNAL(clicked()),SLOT(slotClose()));
   
   // ........................................................
   connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
   connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
+  connect(&SimProcess, SIGNAL(processExited()), SLOT(slotSimEnded()));
 }
 
 SimMessage::~SimMessage()
@@ -66,6 +66,7 @@ SimMessage::~SimMessage()
 // ------------------------------------------------------------------------
 bool SimMessage::startProcess(const QStringList& commands)
 {
+  SimProcess.blockSignals(false);
   if(SimProcess.isRunning()) return false;
 
   SimProcess.setArguments(commands);
@@ -89,12 +90,20 @@ void SimMessage::slotDisplayErr()
 }
 
 // ------------------------------------------------------------------------
+void SimMessage::slotSimEnded()
+{
+  Abort->setText("Close window");
+  emit SimulationEnded();
+}
+
+// ------------------------------------------------------------------------
 void SimMessage::slotClose()
 {
+  SimProcess.blockSignals(true);  // no 'processexited' signal, is set back in 'startProcess'
   if(SimProcess.isRunning()) {
     SimProcess.tryTerminate();
     QTimer::singleShot(2000,&SimProcess,SLOT(kill()));
   }
 
-  done(1);
+  close();
 }
