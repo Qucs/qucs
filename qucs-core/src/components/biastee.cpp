@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: biastee.cpp,v 1.5 2004-05-23 15:27:26 ela Exp $
+ * $Id: biastee.cpp,v 1.6 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -47,12 +47,18 @@ biastee::biastee () : circuit (3) {
   setS (3, 2, 0.0);
   setS (3, 3, 1.0);
   type = CIR_BIASTEE;
+}
+
+void biastee::initDC (void) {
+  clearB ();
+  clearC ();
+  voltageSource (1, 2, 3);
   setVoltageSources (1);
 }
 
-void biastee::calcDC (void) {
-  setB (1, 1, 0.0); setB (2, 1, +1.0); setB (3, 1, -1.0);
-  setC (1, 1, 0.0); setC (1, 2, +1.0); setC (1, 3, -1.0);
-  setD (1, 1, 0.0);
-  setE (1, +0.0);
+void biastee::initAC (void) {
+  clearB ();
+  clearC ();
+  voltageSource (1, 2, 1);
+  setVoltageSources (1);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.53 2004-09-12 14:09:18 ela Exp $
+ * $Id: check_netlist.cpp,v 1.54 2004-09-16 10:15:09 ela Exp $
  *
  */
 
@@ -112,7 +112,8 @@ struct define_t definition_available[] =
   },
   /* attenuator */
   { "Attenuator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", PROP_REAL, { 10, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "L", PROP_REAL, { 10, PROP_NO_STR }, { 1, PROP_VAL_MAX } },
+      PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }

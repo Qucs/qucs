@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcblock.cpp,v 1.3 2004-05-18 15:19:03 ela Exp $
+ * $Id: dcblock.cpp,v 1.4 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -42,4 +42,13 @@ dcblock::dcblock () : circuit (2) {
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
   type = CIR_DCBLOCK;
+}
+
+void dcblock::initDC (void) {
+  setVoltageSources (0);
+}
+
+void dcblock::initAC (void) {
+  voltageSource (1, 1, 2);
+  setVoltageSources (1);
 }

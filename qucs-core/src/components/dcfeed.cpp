@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcfeed.cpp,v 1.5 2004-05-23 15:27:26 ela Exp $
+ * $Id: dcfeed.cpp,v 1.6 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -42,12 +42,13 @@ dcfeed::dcfeed () : circuit (2) {
   setS (1, 2, 0.0);
   setS (2, 1, 0.0);
   type = CIR_DCFEED;
+}
+
+void dcfeed::initDC (void) {
+  voltageSource (1, 1, 2);
   setVoltageSources (1);
 }
 
-void dcfeed::calcDC (void) {
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+void dcfeed::initAC (void) {
+  setVoltageSources (0);
 }

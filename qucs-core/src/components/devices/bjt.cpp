@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.12 2004-09-12 14:09:20 ela Exp $
+ * $Id: bjt.cpp,v 1.13 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -55,6 +55,10 @@ bjt::bjt () : circuit (4) {
 }
 
 void bjt::calcSP (nr_double_t frequency) {
+  setMatrixS (ytos (calcMatrixY (frequency)));
+}
+
+matrix& bjt::calcMatrixY (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Cbe  = getOperatingPoint ("Cbe");
@@ -82,24 +86,25 @@ void bjt::calcSP (nr_double_t frequency) {
   complex gmf = polar (gmfr, -phase);
 
   // build admittance matrix and convert it to S-parameter matrix
-  matrix y = matrix (4);
-  y.set (NODE_B, NODE_B, Ybc + Ybe);
-  y.set (NODE_B, NODE_C, -Ybc);
-  y.set (NODE_B, NODE_E, -Ybe);
-  y.set (NODE_B, NODE_S, 0);
-  y.set (NODE_C, NODE_B, -Ybc + gmf - gmr);
-  y.set (NODE_C, NODE_C, Ybc + gmr + Ycs);
-  y.set (NODE_C, NODE_E, -gmf);
-  y.set (NODE_C, NODE_S, -Ycs);
-  y.set (NODE_E, NODE_B, -Ybe - gmf + gmr);
-  y.set (NODE_E, NODE_C, -gmr);
-  y.set (NODE_E, NODE_E, Ybe + gmf);
-  y.set (NODE_E, NODE_S, 0);
-  y.set (NODE_S, NODE_B, 0);
-  y.set (NODE_S, NODE_C, -Ycs);
-  y.set (NODE_S, NODE_E, 0);
-  y.set (NODE_S, NODE_S, Ycs);
-  setMatrixS (ytos (y));
+  matrix * y = new matrix (4);
+  y->set (NODE_B, NODE_B, Ybc + Ybe);
+  y->set (NODE_B, NODE_C, -Ybc);
+  y->set (NODE_B, NODE_E, -Ybe);
+  y->set (NODE_B, NODE_S, 0);
+  y->set (NODE_C, NODE_B, -Ybc + gmf - gmr);
+  y->set (NODE_C, NODE_C, Ybc + gmr + Ycs);
+  y->set (NODE_C, NODE_E, -gmf);
+  y->set (NODE_C, NODE_S, -Ycs);
+  y->set (NODE_E, NODE_B, -Ybe - gmf + gmr);
+  y->set (NODE_E, NODE_C, -gmr);
+  y->set (NODE_E, NODE_E, Ybe + gmf);
+  y->set (NODE_E, NODE_S, 0);
+  y->set (NODE_S, NODE_B, 0);
+  y->set (NODE_S, NODE_C, -Ycs);
+  y->set (NODE_S, NODE_E, 0);
+  y->set (NODE_S, NODE_S, Ycs);
+
+  return *y;
 }
 
 void bjt::calcNoise (nr_double_t frequency) {
@@ -445,4 +450,12 @@ void bjt::initSP (void) {
   else {
     disableCapacitance (this, cbcx, getNet ());
   }
+}
+
+void bjt::initAC (void) {
+  initSP ();
+}
+
+void bjt::calcAC (nr_double_t frequency) {
+  setMatrixY (calcMatrixY (frequency));
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.9 2004-08-22 15:38:28 ela Exp $
+ * $Id: attenuator.cpp,v 1.10 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -34,13 +34,13 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "matrix.h"
 #include "constants.h"
 #include "component_id.h"
 #include "attenuator.h"
 
 attenuator::attenuator () : circuit (2) {
   type = CIR_ATTENUATOR;
-  setVoltageSources (2);
 }
 
 void attenuator::calcSP (nr_double_t) {
@@ -67,13 +67,40 @@ void attenuator::calcNoise (nr_double_t) {
   setN (2, 1, +f * 2 * r * sqrt (l));
 }
 
+void attenuator::initDC (void) {
+  clearY ();
+  setVoltageSources (2);
+}
+
 void attenuator::calcDC (void) {
   nr_double_t a = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t z11 = z * (a + 1) / (a - 1);
-  nr_double_t z21 = z * (sqrt(a) * 2) / (a - 1);
+  nr_double_t z21 = z * (sqrt (a) * 2) / (a - 1);
   setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
   setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0); 
   setD (1, 1, +z11); setD (2, 2, +z11); setD (1, 2, +z21); setD (2, 1, +z21);
   setE (1, +0.0); setE (2, +0.0);
+}
+
+void attenuator::initAC (void) {
+  nr_double_t a = getPropertyDouble ("L");
+
+  if (a == 1.0) { // no attenuation
+    clearY ();
+    voltageSource (1, 1, 2);
+    setVoltageSources (1);
+  }
+  else {
+    // compute Z-parameters
+    nr_double_t zref = getPropertyDouble ("Zref");
+    nr_double_t z11 = zref * (a + 1) / (a - 1);
+    nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);
+  
+    // build Z-parameter matrix and convert it to Y-parameters
+    matrix z (2);
+    z.set (1, 1, z11); z.set (2, 2, z11);
+    z.set (1, 2, z21); z.set (2, 1, z21);
+    setMatrixY (ztoy (z));
+  }
 }

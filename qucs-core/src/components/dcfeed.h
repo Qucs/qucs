@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcfeed.h,v 1.4 2004-05-18 15:19:03 ela Exp $
+ * $Id: dcfeed.h,v 1.5 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -29,7 +29,8 @@ class dcfeed : public circuit
 {
  public:
   dcfeed ();
-  void calcDC (void);
+  void initDC (void);
+  void initAC (void);
 };
 
 #endif /* __DCFEED_H__ */

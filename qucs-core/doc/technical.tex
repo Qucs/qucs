@@ -4624,7 +4624,9 @@ V_L(t) = L\cdot \dfrac{d I_L}{d t}
 To calculate these quantities in a computer program numerical
 integration methods are required.  With the current-voltage relations
 of these components at hand it is possible to apply the modified nodal
-analysis algorithm in order to calculate the networks response.
+analysis algorithm in order to calculate the networks response.  This
+means the transient analysis attempts to find an approximation to the
+analytical solution at discrete time points using numeric integration.
 
 \section{Integration methods}
 %\addcontentsline{toc}{section}{Integration methods}
@@ -4650,10 +4652,10 @@ There are several linear single- and multi-step numerical integration
 methods available, each having advantages and disadvantages concerning
 aspects of stability and accuracy.  Integration methods can also be
 classified into implicit and explicit methods.  Explicit methods are
-inexpensive per step but limited in in stability and therefore not
-used in the field of circuit simulation.  Implicit methods are more
-expensive per step, have better stability and therefore suitable for
-circuit simulation.
+inexpensive per step but limited in stability and therefore not used
+in the field of circuit simulation to obtain a correct and stable
+solution.  Implicit methods are more expensive per step, have better
+stability and therefore suitable for circuit simulation.
 
 \subsection{Elementary Methods}
 %\addcontentsline{toc}{subsection}{Elementary Methods}
@@ -4743,11 +4745,11 @@ x^{n+1} = \sum^p_{i=0} a_i\cdot x^{n-i} + h \sum^p_{i=-1} b_i\cdot f(x^{n-i}, t^
 \end{equation}
 
 is used.  With $b_{-1} = 0$ the method is explicit and therefore not
-suitable for circuit simulation.  When $b_{-1} \ne 0$ the method is
-implicit and suitable for circuit simulation, i.e. suitable for
-solving stiff problems.  For differential equation systems describing
-electrical networks the eigenvalues strongly vary.  These kind of
-differential equation systems are called stiff.
+suitable for obtaining the correct and stable solution.  When $b_{-1}
+\ne 0$ the method is implicit and suitable for circuit simulation,
+i.e. suitable for solving stiff problems.  For differential equation
+systems describing electrical networks the eigenvalues strongly vary.
+These kind of differential equation systems are called stiff.
 
 \addvspace{12pt}
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.h,v 1.4 2004-04-26 13:50:03 ela Exp $
+ * $Id: circulator.h,v 1.5 2004-09-16 10:15:10 ela Exp $
  *
  */
 
@@ -30,7 +30,8 @@ class circulator : public circuit
  public:
   circulator ();
   void calcSP (nr_double_t);
-  void calcDC (void);
+  void initDC (void);
+  void initAC (void);
 };
 
 #endif /* __CIRCULATOR_H__ */
