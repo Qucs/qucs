@@ -36,7 +36,7 @@
 class DiagramDialog : public QDialog  {
 Q_OBJECT
 public: 
-	DiagramDialog(Diagram *d, QWidget *parent=0, const char *name=0);
+	DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent=0, const char *name=0);
 	~DiagramDialog();
 
   bool loadVarData(const QString& var);
@@ -44,6 +44,7 @@ public:
 public slots:
   void slotReadVars(int index);
   void slotTakeVar(QListViewItem *Item);
+  void slotSelectGraph(int index);
   void slotNewGraph();
   void slotDeleteGraph();
   void slotApplyGraphInput();
@@ -53,11 +54,11 @@ public slots:
 
 public:
   Diagram *Diag;
-//  QDir    *ProjDir;
-  
+  QString defaultDataSet;
+    
   QComboBox *ChooseData;
   QListView *ChooseVars;
-  QListBox  *SelectedVars;
+  QListBox  *GraphList;
 
   QLineEdit *GraphInput, *xLabel, *yLabel;
 };

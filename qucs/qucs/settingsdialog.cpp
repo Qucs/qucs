@@ -37,7 +37,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,2,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,3,2,5,5);
 
   QLabel *l1 = new QLabel("Data Display:", Tab1);
   gp->addWidget(l1,0,0);
@@ -49,6 +49,9 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   Input_DataSet = new QLineEdit(Tab1);
   gp->addWidget(Input_DataSet,1,1);
 
+  Check_OpenDpl = new QCheckBox("open data display after simulation",Tab1);
+  gp->addMultiCellWidget(Check_OpenDpl,2,2,0,1);
+  
   t->addTab(Tab1, "Simulation");
 
   // ...........................................................
@@ -78,7 +81,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
   Input_DataSet->setText(Doc->DataSet);
   Input_DataDisplay->setText(Doc->DataDisplay);
-  
+  Check_OpenDpl->setChecked(Doc->SimOpenDpl);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -104,6 +107,11 @@ void SettingsDialog::slotApply()
 
   if(Doc->DataDisplay != Input_DataDisplay->text()) {
     Doc->DataDisplay = Input_DataDisplay->text();
+    changed = true;
+  }
+
+  if(Doc->SimOpenDpl != Check_OpenDpl->isChecked()) {
+    Doc->SimOpenDpl = Check_OpenDpl->isChecked();
     changed = true;
   }
 

@@ -36,6 +36,7 @@ struct Text {
 };
 
 
+
 class Diagram : public Element {
 public: 
 	Diagram(int _cx=0, int _cy=0);
@@ -49,13 +50,13 @@ public:
   void    paint(QPainter *p);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();
-  bool    load(const QString& Line, QTextStream *stream);
+  bool    load(const QString& Line, QTextStream *stream, const QString& DataSet);
 
+  void loadGraphData(const QString& defaultDataSet);
   bool loadVarData(const QString& fileName);
   int  loadIndepVarData(const QString& var, const QString& fileName);
   
   QString Name;   // identity string for the diagram type (e.g. Polar)
-//  int     cx, cy;   // center of the diagram (screen coordinates in pixels)
   bool    GridOn;
   int     GridX, GridY;
   QPtrList<Graph> Graphs;
@@ -63,9 +64,7 @@ public:
   QPtrList<Line>  Lines;
   QPtrList<Text>  Texts;
 
-//  bool isSelected;
-
-  double xg1, yg1, xg2, yg2;    // least and greatest values of all graph data
+  double xmin, ymin, xmax, ymax;    // least and greatest values of all graph data
 };
 
 #endif

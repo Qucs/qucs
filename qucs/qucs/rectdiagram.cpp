@@ -55,40 +55,40 @@ void RectDiagram::calcDiagram()
   if(GridOn) {
     z=GridX;
     while(z < x2) {
-      Lines.append(new Line(cx+z, cy-y2, cx+z, cy, QPen(QPen::lightGray,1)));   // x grid
+      Lines.append(new Line(z, y2, z, 0, QPen(QPen::lightGray,1)));   // x grid
       z += GridX;
     }
     z=y2-GridY;
     while(z > 0) {
-      Lines.append(new Line(cx, cy-z, cx+x2, cy-z, QPen(QPen::lightGray,1)));   // y grid
+      Lines.append(new Line(0, z, x2, z, QPen(QPen::lightGray,1)));   // y grid
       z -= GridY;
     }
   }
 
   z=0;
   while(z < x2) {
-    Lines.append(new Line(cx+z, cy-5, cx+z, cy+5, QPen(QPen::black,1)));   // x axis marks
+    Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,1)));   // x axis marks
     z += GridX;
   }
-  Texts.append(new Text(cx,   cy+15, QString::number(xg1)));
-  Texts.append(new Text(cx+z, cy+15, QString::number(xg2)));
+  Texts.append(new Text(0, -15, QString::number(xmin)));
+  Texts.append(new Text(z, -15, QString::number(xmax)));
 
   z=y2-GridY;
   while(z >= 0) {
-    Lines.append(new Line(cx-5, cy-z, cx+5, cy-z, QPen(QPen::black,1)));   // y axis marks
+    Lines.append(new Line(-5, z, 5, z, QPen(QPen::black,1)));   // y axis marks
     z -= GridY;
   }
 
   // outer frame
-  Lines.append(new Line(cx, cy-y2, cx+x2, cy-y2, QPen(QPen::black,1)));
-  Lines.append(new Line(cx+x2, cy-y2, cx+x2, cy, QPen(QPen::black,1)));
-  Lines.append(new Line(cx, cy, cx+x2, cy, QPen(QPen::black,1)));
-  Lines.append(new Line(cx, cy-y2, cx, cy, QPen(QPen::black,1)));
+  Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::black,1)));
+  Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::black,1)));
+  Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,1)));
+  Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,1)));
 
-  Texts.append(new Text(cx-20, cy-y2, QString::number(yg2)));
-  Texts.append(new Text(cx-20, cy,    QString::number(yg1)));
+  Texts.append(new Text(-20, y2, QString::number(ymax)));
+  Texts.append(new Text(-20, 0,    QString::number(ymin)));
 
-/*  p->drawText(cx, cy+40, xLabel);
+/*  p->drawText(0, -40, xLabel);
   p->save();
   p->rotate(270);
   p->drawText(-cy, cx-30, yLabel);
@@ -100,8 +100,8 @@ void RectDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = cx+int((cp->x-xg1)/(xg2-xg1)*x2);
-    *(p++) = cy-int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-y1)/(yg2-yg1)*y2);
+    *(p++) = int((cp->x-xmin)/(xmax-xmin)*x2);
+    *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-y1)/(ymax-ymin)*y2);
 //QMessageBox::critical(0, "Error", QString::number(cp->x)+"  "+QString::number(cp->yr));
   }
 

@@ -18,6 +18,7 @@
 #include "diagram.h"
 
 #include <math.h>
+#include <float.h>
 
 #include <qtextstream.h>
 #include <qmessagebox.h>
@@ -28,10 +29,10 @@ Diagram::Diagram(int _cx, int _cy)
   cx = _cx;  cy = _cy;
   x1 = 0;  y1 = 0;
 
-//  isWire = false;
-//  isDiag = true;
+  ymin = xmin = DBL_MAX;
+  ymax = ymax = -DBL_MAX;
+
   Type = isDiagram;
-  
   isSelected = false;
   
   Graphs.setAutoDelete(true);
@@ -49,21 +50,21 @@ void Diagram::paint(QPainter *p)
 {
   for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {    // paint all lines
     p->setPen(pl->style);
-    p->drawLine(pl->x1, pl->y1, pl->x2, pl->y2);
+    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
 
   for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {    // paint all arcs
     p->setPen(pa->style);
-    p->drawArc(pa->x, pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+    p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
 
   if(Name[0] != 'T')   // no graph within tabulars
     for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-      pg->paint(p);
+      pg->paint(p, cx, cy);
 
   p->setPen(QPen(QPen::black,1));
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())    // write whole text
-    p->drawText(pt->x, pt->y, pt->s);
+    p->drawText(cx+pt->x, cy-pt->y, pt->s);
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
@@ -97,9 +98,23 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 // --------------------------------------------------------------------------
+void Diagram::loadGraphData(const QString& defaultDataSet)
+{
+  ymin = xmin = DBL_MAX;
+  ymax = ymax = -DBL_MAX;
+
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    loadVarData(defaultDataSet);    // load data and determine max and min values
+
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    calcData(pg);   // calculate graph coordinates
+}
+
+// --------------------------------------------------------------------------
 bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
+  if(g->Points != 0) delete[] g->Points;
   if(g->Line.isEmpty()) return false;
 
   QFile file(fileName);
@@ -134,7 +149,7 @@ bool Diagram::loadVarData(const QString& fileName)
 
   int i;
   bool ok;
-  double x, y, ymin=1e45, ymax=-1e45;
+  double x, y;
   Line = stream.readLine();
   while(Line.left(2) != "</") {
     Line = Line.stripWhiteSpace();
@@ -148,8 +163,6 @@ bool Diagram::loadVarData(const QString& fileName)
       if(i < 0) {
         x = tmp.toDouble(&ok);
         y = 0;
-//        p++;
-//        *(p++) = cy-int(x);
       }
       else {
         tmp0 = tmp.mid(i-1);  // imaginary part
@@ -157,8 +170,6 @@ bool Diagram::loadVarData(const QString& fileName)
         y = tmp0.toDouble(&ok);
         tmp = tmp.left(i-1);  // real part
         x = tmp.toDouble(&ok);
-//        p++;
-//        *(p++) = cy-int(sqrt(x*x+y*y));
       }
       p->yr = x;
       p->yi = y;
@@ -172,12 +183,7 @@ bool Diagram::loadVarData(const QString& fileName)
     Line = stream.readLine();
   }
 
-  yg1 = ymin; yg2 = ymax;
-//QMessageBox::critical(0, "Error", QString::number(ymin)+"  "+QString::number(ymax));
-
   file.close();
-
-  calcData(g);
   return true;
 }
 
@@ -214,6 +220,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
   
   Graph *g = Graphs.current();
 
+//  if(g->Points != 0) delete[] g->Points;
   int *p = new int[2*n];    // create memory for points
   g->Points = p;
   g->count  = n;
@@ -242,7 +249,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
     Line = stream.readLine();
   }
 
-  xg1 = xmin; xg2 = xmax;
+//  xg1 = xmin; xg2 = xmax;
 
   file.close();
   return n;
@@ -282,7 +289,7 @@ QString Diagram::save()
 }
 
 // ------------------------------------------------------------
-bool Diagram::load(const QString& Line, QTextStream *stream)
+bool Diagram::load(const QString& Line, QTextStream *stream, const QString& DataSet)
 {
   bool ok;
   QString s = Line;
@@ -330,10 +337,10 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
     Graph *g = new Graph();
     if(!g->load(s)) return false;
     Graphs.append(g);
-    n = ((QFile*)stream->device())->name();
-    n.replace(QString(".sch"),QString(".dat"));
-    if(!loadVarData(n)) calcDiagram();
+//    n = ((QFile*)stream->device())->name();
+//    n.replace(QString(".sch"),QString(".dat"));
 //QMessageBox::critical(0, "Error", n);
+    if(!loadVarData(DataSet)) calcDiagram();
   }
 
   return false;   // end tag missing

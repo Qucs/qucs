@@ -41,13 +41,14 @@ public:
 	Graph(const QString& _Line="");
 	~Graph();
 
-  void    paint(QPainter *p);
+  void    paint(QPainter *p, int cx, int cy);
   QString save();
   bool    load(const QString& Line);
 
   int  count, *Points;
   QPtrList<cPoint> cPoints;
   QString Line;
+//  QRgb    Color;
   QColor  Color;
   int     Thick;
   
