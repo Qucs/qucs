@@ -1,3 +1,12 @@
+2004-06-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* added qucshelp and qucsedit as independent programs
+	* added an "edit" button to the componentdialog
+	* fixed bug in enabling/disabling undo button
+	* fixed bug in creating subcircuit netlist
+	* "Type" parameter in "parameter sweep", "AC simulation",
+	"S parameter simulation"
+
 2004-06-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* changes current document by <tab> key.

@@ -120,6 +120,18 @@
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -276,15 +288,15 @@
     <name>FileShowDialog</name>
     <message>
         <source>File: </source>
-        <translation>Datei: </translation>
+        <translation type="obsolete">Datei: </translation>
     </message>
     <message>
         <source>ERROR: Cannot read file: </source>
-        <translation>FEHLER: Datei kann nicht gelesen werden: </translation>
+        <translation type="obsolete">FEHLER: Datei kann nicht gelesen werden: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
 </context>
 <context>
@@ -449,15 +461,15 @@
     <name>HelpDialog</name>
     <message>
         <source>Qucs Help System</source>
-        <translation>Qucs Hilfesystem</translation>
+        <translation type="obsolete">Qucs Hilfesystem</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Hilfeindex</translation>
+        <translation type="obsolete">Hilfeindex</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Schließen</translation>
+        <translation type="obsolete">Schließen</translation>
     </message>
 </context>
 <context>
@@ -750,7 +762,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>frequency steps in Hertz</source>
-        <translation>Frequenzschrittweite in Hertz</translation>
+        <translation type="obsolete">Frequenzschrittweite in Hertz</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
@@ -1002,7 +1014,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>step size for sweep</source>
-        <translation>Schrittweite für den Durchlauf</translation>
+        <translation type="obsolete">Schrittweite für den Durchlauf</translation>
     </message>
     <message>
         <source>resistor (US symbol)</source>
@@ -1240,7 +1252,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
-        <translation>Mikrostreifenmodell (Kirschning,Kobayashi,Yamashita)</translation>
+        <translation type="obsolete">Mikrostreifenmodell (Kirschning,Kobayashi,Yamashita)</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -1592,6 +1604,62 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Isr emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulation temperature in degree Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative tolerance for convergence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance for currents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance for voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put operating points into dataset (yes,no)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum number of iterations until error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put result into dataset (yes,no)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters (yes,no)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input port for noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>output port for noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sweep type (lin,log)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of simulation steps</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3288,6 +3356,14 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <source>ac Current Source</source>
         <translation type="obsolete">AC Stromquelle</translation>
     </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>
@@ -4287,7 +4363,7 @@ Setzt die Einstellungen der Applikation</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation>Ansicht</translation>
+        <translation type="obsolete">Ansicht</translation>
     </message>
     <message>
         <source>Default Values</source>
@@ -4300,6 +4376,14 @@ Setzt die Einstellungen der Applikation</translation>
     <message>
         <source>maximum undo operations:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>text editor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
     </message>
 </context>
 <context>

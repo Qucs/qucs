@@ -120,6 +120,18 @@
         <source>Select a file</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -265,21 +277,6 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FileShowDialog</name>
-    <message>
-        <source>File: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot read file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -430,21 +427,6 @@
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HelpDialog</name>
-    <message>
-        <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -653,10 +635,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>frequency steps in Hertz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -915,10 +893,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>microstrip mitered bend</source>
         <translation type="unfinished"></translation>
     </message>
@@ -960,10 +934,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>step size for sweep</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1482,6 +1452,62 @@ Wrong &apos;component&apos; line format!</source>
         <source>Isr emission coefficient</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>simulation temperature in degree Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative tolerance for convergence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance for currents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance for voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put operating points into dataset (yes,no)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum number of iterations until error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put result into dataset (yes,no)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters (yes,no)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input port for noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>output port for noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sweep type (lin,log)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of simulation steps</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -1964,6 +1990,14 @@ Go on ?</source>
     </message>
     <message>
         <source>filled Rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2849,10 +2883,6 @@ Sets properties of the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Design</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Default Values</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2862,6 +2892,14 @@ Sets properties of the application</source>
     </message>
     <message>
         <source>maximum undo operations:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>text editor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

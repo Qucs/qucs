@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.2 2004-02-17 15:30:58 ela Exp $
+ * $Id: phaseshifter.cpp,v 1.3 2004-06-26 07:05:54 margraf Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 
 phaseshifter::phaseshifter () : circuit (2) {
   type = CIR_PHASESHIFTER;
+  setVoltageSources (1);
 }
 
 void phaseshifter::calcSP (nr_double_t) {
@@ -53,4 +54,11 @@ void phaseshifter::calcSP (nr_double_t) {
   setS (2, 2, s11);
   setS (1, 2, s21);
   setS (2, 1, s21);
+}
+
+void phaseshifter::calcDC (void) {
+  setC (1, 1, +1.0); setC (1, 2, -1.0);
+  setB (1, 1, +1.0); setB (2, 1, -1.0);
+  setE (1, 0.0);
+  setD (1, 1, 0.0);
 }

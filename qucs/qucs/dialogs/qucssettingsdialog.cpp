@@ -15,6 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "qucssettingsdialog.h"
 #include "../main.h"
 
@@ -41,7 +45,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,3,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,4,2,5,5);
 
   QLabel *l1 = new QLabel(tr("Font (set after reload):"), Tab1);
   gp->addWidget(l1,0,0);
@@ -61,8 +65,13 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   undoNumEdit->setValidator(new QIntValidator(0, 200, undoNumEdit));
   gp->addWidget(undoNumEdit,2,1);
 
+  QLabel *l4 = new QLabel(tr("text editor:"), Tab1);
+  gp->addWidget(l4,3,0);
+  editorEdit = new QLineEdit(Tab1);
+  gp->addWidget(editorEdit,3,1);
 
-  t->addTab(Tab1, tr("Design"));
+
+  t->addTab(Tab1, tr("Settings"));
 
   // ...........................................................
 /*  QWidget *Tab2 = new QWidget(t);
@@ -107,6 +116,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   BGColorButton->setPaletteBackgroundColor(
 	App->view->viewport()->paletteBackgroundColor());
   undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
+  editorEdit->setText(QucsSettings.Editor);
 }
 
 QucsSettingsDialog::~QucsSettingsDialog()
@@ -144,6 +154,10 @@ void QucsSettingsDialog::slotApply()
     QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
     changed = true;
   }
+  if(QucsSettings.Editor != editorEdit->text()) {
+    QucsSettings.Editor = editorEdit->text();
+    changed = true;
+  }
 
   if(changed) {
     saveApplSettings(App);  // also sets the small and large font
@@ -176,6 +190,8 @@ void QucsSettingsDialog::slotDefaultValues()
 {
   Font = QFont("Helvetica", 12);
   FontButton->setText(Font.toString());
-
   BGColorButton->setPaletteBackgroundColor(QColor(255,250,225));
+
+  undoNumEdit->setText("20");
+  editorEdit->setText(BINARYDIR "qucsedit");
 }

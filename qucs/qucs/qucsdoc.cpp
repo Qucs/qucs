@@ -29,6 +29,7 @@
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qiconset.h>
+#include <qregexp.h>
 
 #include <limits.h>
 
@@ -100,10 +101,12 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
   SimOpenDpl = true;
 
   App = App_;
-  Bar = App->WorkView;
-  if(Bar != 0) {
-    Bar->addTab(Tab);  // create tab in TabBar
-    Bar->repaint();
+  if(App) {
+    Bar = App->WorkView;
+    if(Bar) {
+      Bar->addTab(Tab);  // create tab in TabBar
+      Bar->repaint();
+    }
   }
 
   DocChanged = false;
@@ -174,7 +177,7 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
     UndoStack.append(new QString(File.createUndoString(Op)));
 //qDebug("time: %d ms", t.elapsed());
     if(!App->undo->isEnabled()) App->undo->setEnabled(true);
-    if(App->redo->isEnabled())  App->undo->setEnabled(false);
+    if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
     while(UndoStack.count() > QucsSettings.maxUndo)  // "while..." because
       UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
@@ -2382,7 +2385,7 @@ bool QucsDoc::giveNodeNames(QTextStream *stream)
       if(pc->Model == "GND") pc->Ports.first()->Connection->Name = "gnd";
       else if(pc->Model.left(3) == "Sub") {
              QucsDoc *d = new QucsDoc(0, pc->Props.getFirst()->Value);
-             if(!d->load()) {    // load document if possible
+             if(!d->File.load()) {  // load document if possible
                delete d;
                return false;
              }
@@ -2460,9 +2463,10 @@ bool QucsDoc::createSubNetlist(QTextStream *stream)
   Component *pc;
   for(pc = Comps.first(); pc != 0; pc = Comps.next())
     if(pc->Model == "Port")
-      sl.append(pc->Props.first()->Value + ":" + pc->Ports.getFirst()->Connection->Name);
+      sl.append (pc->Props.first()->Value + ":" +
+		 pc->Ports.getFirst()->Connection->Name);
   sl.sort();
-  
+
 //  QTextStream stream(NetlistFile);
   (*stream) << "\nsubcircuit " << DocName << "  " << sl.join(" ") << "\n";
 

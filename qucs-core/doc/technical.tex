@@ -1109,7 +1109,10 @@ $\underline{x}$.
 
 Having the noise wave correlation matrix, one can easily compute the
 noise parameters \cite{Wedge}.  The following equations calculate them with regard
-to port 1 (input) and port 2 (output).
+to port 1 (input) and port 2 (output). (If one uses an n-port and want to calculate
+the noise parameters regarding to other ports, one has to replace the index numbers
+of S- and c-parameters accordingly. I.e. replace "1" with the number of the input
+port and "2" with the number of the output port.)
 
 \addvspace{12pt}
 
@@ -1183,6 +1186,40 @@ with
 K_x = \frac{4\cdot k\cdot T_0\cdot R_n}{Z_0\cdot|1+\Gamma_{opt}|^2}
 \end{equation}
 
+
+Once having the noise parameters, one can calculate the noise figure for
+every source admittance $Y_S=G_S+j\cdot B_s$, source impedance
+$Z_S=R_S+j\cdot X_s$, or source reflexion coefficient $r_S$.
+
+\begin{align}
+  F & = \frac{SNR_{in}}{SNR_{out}} = \frac{T_{equi}}{T_0} + 1\\
+    & = F_{min} + \frac{G_n}{R_S}\cdot\left( (R_S-R_{opt})^2 + (X_S-X_{opt})^2 \right)\\
+    & = F_{min} + \frac{G_n}{R_S}\cdot\left| \underline{Z}_S - \underline{Z}_{opt} \right| ^2\\
+    & = F_{min} + \frac{R_n}{G_S}\cdot\left( (G_S-G_{opt})^2 + (B_S-B_{opt})^2 \right)\\
+    & = F_{min} + \frac{R_n}{G_S}\cdot\left| \underline{Y}_S - \underline{Y}_{opt} \right| ^2\\
+    & = F_{min} + 4\cdot\frac{R_n}{Z_0}\cdot\frac{\left| \underline{\Gamma}_{opt}-\underline{r}_S\right| ^2}
+                  {\left( 1-|\underline{r}_S|^2\right)\cdot\left| 1+\underline{\Gamma}_{opt}\right| ^2}
+\end{align}
+
+Where $SNR_{in}$ and $SNR_{out}$ are the signal to noise ratios at the
+input and output, respectively, $T_{equi}$ is the equivalent (input) noise
+temperature. (Note that $G_S$ does not equal $1/R_S$.)\\
+All curves with constant noise figures are circles (in all planes, i.e.
+impedance, admittance and reflexion coefficient). A circle in the reflexion
+coefficient plane owns the following parameters.\\ \\
+
+Center:
+\begin{equation}
+\underline{r}_{center} = \frac{\Gamma_{opt}}{1+N}
+\end{equation}
+Radius:
+\begin{equation}
+R = \frac{\sqrt{N^2 + N\cdot(1-|\Gamma_{opt}|^2)}}{1+N}
+\end{equation}
+with
+\begin{equation}
+N = \frac{Z_0}{4\cdot R_n}\cdot (F-F_{min})\cdot |1+\Gamma_{opt}|^2
+\end{equation}
 
 
 \section{Noise Wave Correlation Matrix in CAE}
@@ -2859,6 +2896,22 @@ I_{2}\\
 0
 \end{bmatrix}
 \end{equation}
+
+
+\subsection{Phase Shifter}
+
+A phase shifter alters the phase of the input signal independently
+on the frequency. As a result the relation between input and output
+signal is complex. To get the DC model, some simulators use the AC
+formulas and create the real part or the magnitude. This procedure
+has no physical reason, because it uses an operation that is not
+defined for DC. But one can think in the following direction: As
+a DC quantity is constant, it doesn't change if it is phase-shifted.
+(An AC quantity doesn't change it magnitude, too.) Or to say it
+with other words, for a DC simulation the phase to shift is always
+zero. That leads to the result that the phase sifter is a short
+circuit for DC. So, this is true for all reference impedances.
+
 
 \subsection{Circulator}
 %\addcontentsline{toc}{subsection}{Circulator}
