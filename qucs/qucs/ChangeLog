@@ -1,6 +1,13 @@
+2005-02-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsview.cpp (drawContents): Fixed two more segfault bugs.
+
+	* docs/de/*.html: Fixed loads of typos.  Anyway, great
+	translation this.  Thanks a lot, Jens!
+
 2005-02-28  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
 
-	* docs/de/index.html: Committed german documentation translatted
+	* docs/de/index.html: Committed german documentation translated
 	by Jens Flucke.
 
 2005-02-26  Stefan Jahn  <stefan@lkcc.org>
