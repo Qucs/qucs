@@ -1716,7 +1716,7 @@ z
 \label{eq:MNAexample}
 \end{equation}
 
-In the example eq. (\ref{eq:MNAexample}) expands to:
+In the example eq. \eqref{eq:MNAexample} expands to:
 
 \begin{equation}
 \begin{bmatrix}
@@ -3001,6 +3001,95 @@ currents.
 
 \subsection{Convergence}
 %\addcontentsline{toc}{subsection}{Convergence}
+
+\chapter{Non-linear devices}
+%\addcontentsline{toc}{chapter}{Non-linear devices}
+
+\section{PN-Junction Diode}
+%\addcontentsline{toc}{section}{PN-Junction Diode}
+
+\section{Junction FET}
+%\addcontentsline{toc}{section}{Junction FET}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.3\linewidth]{jfet}
+\end{center}
+\caption{JFET large signal model}
+\label{fig:jfet}
+\end{figure}
+\FloatBarrier
+
+Shichman-Hodges equations:
+
+\begin{equation}
+g_{m} = \dfrac{\partial I_{d}}{\partial V_{GS}}
+\;\;\;\; \text{ and } \;\;\;\;
+g_{ds} = \dfrac{\partial I_{d}}{\partial V_{DS}}
+\;\;\;\; \text{ with } \;\;\;\;
+V_{GD} = V_{GS} - V_{DS}
+\end{equation}
+
+\begin{itemize}
+\item normal mode: $V_{DS} > 0$
+\begin{itemize}
+\item normal mode, cutoff region: $V_{GS} - V_{T} < 0$
+\begin{align}
+I_{d} &= 0\\
+g_{m} &= 0\\
+g_{ds} &= 0
+%\end{align}
+\intertext{
+\item normal mode, saturation region: $0 < V_{GS} - V_{T} < V_{DS}$
+}
+%\begin{align}
+I_{d} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot\left(V_{GS} - V_{T}\right)^{2}\\
+g_{m} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot 2\left(V_{GS} - V_{T}\right)\\
+g_{ds} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot \lambda\left(V_{GS} - V_{T}\right)^{2}
+%\end{align}
+\intertext{
+\item normal mode, linear region: $V_{DS} < V_{GS} - V_{T}$
+}
+%\begin{align}
+I_{d} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot\left(2 \left(V_{GS} - V_{T}\right) - V_{DS}\right)\cdot V_{DS}\\
+g_{m} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot 2\cdot V_{DS}\\
+g_{ds} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot 2\left(V_{GS} - V_{T} - V_{DS}\right) + \beta \cdot \lambda V_{DS}\cdot\left(2\left(V_{GS} - V_{T}\right) - V_{DS}\right)
+\end{align}
+\end{itemize}
+\item inverse mode: $V_{DS} < 0$
+\begin{itemize}
+\item inverse mode, cutoff region: $V_{GD} - V_{T} < 0$
+\begin{align}
+I_{d} &= 0\\
+g_{m} &= 0\\
+g_{ds} &= 0
+%\end{align}
+\intertext{
+\item inverse mode, saturation region: $0 < V_{GD} - V_{T} < -V_{DS}$
+}
+%\begin{align}
+I_{d} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot\left(V_{GD} - V_{T}\right)^{2}\\
+g_{m} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{T}\right)\\
+g_{ds} &= \beta \cdot\lambda \left(V_{GD} - V_{T}\right)^{2} + \beta\cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{T}\right)
+%\end{align}
+\intertext{
+\item inverse mode, linear region: $-V_{DS} < V_{GD} - V_{T}$
+}
+%\begin{align}
+I_{d} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot\left(2 \left(V_{GD} - V_{T}\right) + V_{DS}\right)\cdot V_{DS}\\
+g_{m} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot 2\cdot V_{DS}\\
+g_{ds} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot 2\left(V_{GD} - V_{T}\right) - \beta \cdot \lambda V_{DS}\cdot\left(2\left(V_{GD} - V_{T}\right) + V_{DS}\right)
+\end{align}
+\end{itemize}
+\end{itemize}
+
+Current vector:
+
+\begin{align}
+I_{Geq} &= -I_{GS} + g_{gs}\cdot V_{GS} -I_{GD} + g_{gd}\cdot V_{GD}\\
+I_{Deq} &= I_{GD} - g_{gd}\cdot V_{GD} - I_{d} + g_{m}\cdot V_{GS} + g_{ds}\cdot V_{DS}\\
+I_{Seq} &= I_{GS} - g_{gs}\cdot V_{GS} + I_{d} - g_{m}\cdot V_{GS} - g_{ds}\cdot V_{DS}
+\end{align}
 
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}

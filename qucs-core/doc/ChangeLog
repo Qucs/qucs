@@ -1,3 +1,8 @@
+2004-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{Junction FET}): Started to document
+	Shichman-Hodges equations and derivatives fo JFET model.
+
 2004-06-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Non-linear DC Analysis}): Started to

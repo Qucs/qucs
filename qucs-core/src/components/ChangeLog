@@ -1,3 +1,11 @@
+2004-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* jfet.cpp: Corrections in the jfet Shichman-Hodges equations
+	and derivatives.
+
+	* diode.cpp: Fixed a bug in splitting and disabling resitances
+	from devices.
+
 2004-06-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* jfet.h (class jfet): Started to implement the DC model of
