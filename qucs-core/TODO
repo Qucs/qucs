@@ -23,7 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Add charge-conversing model for MOS capacitances.
+- Add charge-conversing model for MOS capacitances (i.e. Simpson's
+  numerical integration rule).
 - Implement variable step-size coefficient for Adams-Bashford.
 	- Implement variable step-size coefficient calculations for
 	  transient integrators.
