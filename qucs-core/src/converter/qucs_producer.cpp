@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.4 2004-11-24 19:16:05 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.5 2004-11-24 20:16:22 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #include "netdefs.h"
 #include "check_spice.h"
