@@ -197,7 +197,7 @@
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation>Etichetta asse y:</translation>
+        <translation type="obsolete">Etichetta asse y:</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -289,7 +289,35 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation>Griglia logaritmica dell&apos;asse Y</translation>
+        <translation type="obsolete">Griglia logaritmica dell&apos;asse Y</translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -723,7 +751,7 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation>Tipo documento errato!</translation>
+        <translation type="obsolete">Tipo documento errato!</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -2239,6 +2267,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4734,7 +4766,7 @@ Qt universal circuit simulator
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation>Francese di Eric Marzolf
+        <translation type="obsolete">Francese di Eric Marzolf
 </translation>
     </message>
     <message>
@@ -4944,6 +4976,11 @@ Edits the symbol for this schematic</source>
         <source>Move Component Text
 
 Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

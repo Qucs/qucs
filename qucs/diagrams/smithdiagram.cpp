@@ -15,10 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "smithdiagram.h"
 #include "main.h"
 
@@ -43,7 +39,7 @@ SmithDiagram::~SmithDiagram()
 // ------------------------------------------------------------
 // calculate the screen coordinates for the graph data
 void SmithDiagram::calcCoordinate(double, double yr, double yi,
-				 int *px, int *py)
+				 int *px, int *py, Axis*)
 {
   *px = (x2>>1)+int(yr/ylAxis.up*double(x2>>1) + 0.5);
   *py = (y2>>1)+int(yi/ylAxis.up*double(y2>>1) + 0.5);
@@ -52,17 +48,17 @@ void SmithDiagram::calcCoordinate(double, double yr, double yi,
 
 // ------------------------------------------------------------
 // calculate the circles and arcs of the smith chart
-bool SmithDiagram::calcDiagram()
+int SmithDiagram::calcDiagram()
 {
-  if(!Lines.isEmpty()) Lines.clear();
-  if(!Texts.isEmpty()) Texts.clear();
-  if(!Arcs.isEmpty()) Arcs.clear();
+  Lines.clear();
+  Texts.clear();
+  Arcs.clear();
 
   xAxis.low = ylAxis.low = 0.0;
   if(ylAxis.max > 1.01) xAxis.up = ylAxis.up = 1.05*ylAxis.max;
   else xAxis.up = ylAxis.up = 1.0;
 
-if(GridOn) {
+if(xAxis.GridOn) {
   int dx2 = x2>>1;
 
   int GridX = 4;    // number of arcs with re(z)=const
@@ -168,7 +164,7 @@ if(GridOn) {
 
   // outer most circle
   Arcs.append(new Arc(0, x2, x2, x2, 0, 16*360, QPen(QPen::black,0)));
-  return true;
+  return 1;
 }
 
 // ------------------------------------------------------------

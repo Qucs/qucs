@@ -18,7 +18,11 @@
 #ifndef QUCSVIEW_H
 #define QUCSVIEW_H
 
-// include files for QT
+#include "components/component.h"
+#include "qucsdoc.h"
+#include "viewpainter.h"
+#include "main.h"
+
 #include <qscrollview.h>
 #include <qwidget.h>
 #include <qptrlist.h>
@@ -32,13 +36,7 @@
 #include <qdir.h>
 
 
-// application specific includes
-#include "components/component.h"
-#include "wire.h"
-#include "qucsdoc.h"
-#include "viewpainter.h"
-#include "main.h"
-
+class Wire;
 
 
 // **************************************************************************
@@ -71,7 +69,7 @@ public:
   QPtrList<Element> movingElements;
 
   // -------------------------------------------------------------------
-  QPtrList<QucsDoc>  Docs;  // instances of the documents (schematics, data displays)
+  QPtrList<QucsDoc>  Docs; // document instances (schematics, data displays)
 
 protected:
   void drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph);

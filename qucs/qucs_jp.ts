@@ -224,10 +224,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>y-Axis Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>show Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -252,10 +248,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>logarithmical Y Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -269,6 +261,34 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -606,10 +626,6 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wrong document type!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2079,6 +2095,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>OpAmp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3728,11 +3748,6 @@ Qt universal circuit simulator
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>French by Eric Marzolf
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Portuguese by Luciano Franca
 </source>
         <translation type="unfinished"></translation>
@@ -3744,6 +3759,11 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

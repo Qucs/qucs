@@ -18,12 +18,13 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "viewpainter.h"
 #include "element.h"
-#include "wirelabel.h"
 
-#include <qpainter.h>
 #include <qptrlist.h>
+
+class ViewPainter;
+class WireLabel;
+class QPainter;
 
 /**
   *@author Michael Margraf

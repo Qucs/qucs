@@ -19,7 +19,6 @@
 #define COMPONENTDIALOG_H
 
 #include "component.h"
-#include "qucsdoc.h"
 
 #include <qlabel.h>
 #include <qdialog.h>
@@ -30,7 +29,11 @@
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qptrlist.h>
+#include <qdir.h>
 
+class QucsDoc;
+class QGridLayout;
+class QValidator;
 
 /**
   *@author Michael Margraf
@@ -63,6 +66,8 @@ private slots:
 private:
   void correctDesc(QString &desc, QStringList *clst = 0);
 
+  QGridLayout *mainWidget;   // the mother of all widgets
+  QValidator  *Validator;
   QRegExp     Expr;
   QListView   *prop;
   QLineEdit   *edit, *NameEdit, *CompNameEdit;

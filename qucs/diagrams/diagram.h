@@ -36,6 +36,7 @@ struct Axis {
   bool    log;      // in "rectdiagram": logarithmic or linear
   QString Label;
   int     numGraphs;  // counts number of graphs using this axis
+  bool    GridOn;
 };
 
 
@@ -45,9 +46,9 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual bool calcDiagram();
-  virtual void calcCoordinate(double, double, double, int*, int*) {};
-  void    calcData(Graph*, bool);
+  virtual int  calcDiagram();
+  virtual void calcCoordinate(double, double, double, int*, int*, Axis*) {};
+  void    calcData(Graph*, int);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(QPainter*);
@@ -65,7 +66,6 @@ public:
   int  loadIndepVarData(const QString&, const QString&);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
-  bool    GridOn;
   QPen    GridPen;
 
   QPtrList<Graph>  Graphs;
@@ -73,6 +73,7 @@ public:
   QPtrList<Line>   Lines;
   QPtrList<Text>   Texts;
 
+  int x3, y3;
   Axis  xAxis, ylAxis, yrAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
 };

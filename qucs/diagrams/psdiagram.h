@@ -1,8 +1,8 @@
 /***************************************************************************
-                          smithdiagram.h  -  description
+                        psdiagram.h  -  description
                              -------------------
-    begin                : Sat Oct 18 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Sat Nov 6 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SMITHDIAGRAM_H
-#define SMITHDIAGRAM_H
+#ifndef PSDIAGRAM_H
+#define PSDIAGRAM_H
 
 #include "diagram.h"
 
@@ -25,15 +25,18 @@
   *@author Michael Margraf
   */
 
-class SmithDiagram : public Diagram  {
-public: 
-  SmithDiagram(int _cx=0, int _cy=0);
-  ~SmithDiagram();
+// mixed polar and smith diagram
+class PSDiagram : public Diagram  {
+public:
+  PSDiagram(int _cx=0, int _cy=0, bool _polarUp=true);
+  ~PSDiagram();
 
 
-  SmithDiagram* newOne();
+  PSDiagram* newOne();
   int   calcDiagram();
   void  calcCoordinate(double, double, double, int*, int*, Axis*);
+
+  bool polarUp;   // polar diagram upper half ?
 };
 
 #endif

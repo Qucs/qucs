@@ -748,7 +748,7 @@ void QucsInit::slotHelpAbout()
     tr("German by Stefan Jahn\n")+
     tr("Polish by Dariusz Pienkowski\n")+
     tr("Romanian by Radu Circa\n")+
-    tr("French by Eric Marzolf\n")+
+    tr("French by Vincent Habchi, F5RCS\n")+
     tr("Portuguese by Luciano Franca\n")+
     tr("Spanish by Jose L. Redrejo Rodriguez\n")+
     tr("Italian by Giorgio Luparia"));

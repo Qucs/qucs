@@ -193,7 +193,7 @@
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation>Titlul Axei Y:</translation>
+        <translation type="obsolete">Titlul Axei Y:</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -281,7 +281,35 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation>reţea logaritmica pe axa Y</translation>
+        <translation type="obsolete">reţea logaritmica pe axa Y</translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -627,7 +655,7 @@ Câmpul &apos;Painting&apos; nu este închis!</translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation>Tip greşit de document!</translation>
+        <translation type="obsolete">Tip greşit de document!</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -2179,6 +2207,10 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3788,7 +3820,7 @@ Qt universal circuit simulator
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation>Franceză de Eric Marzolf
+        <translation type="obsolete">Franceză de Eric Marzolf
 </translation>
     </message>
     <message>
@@ -4012,6 +4044,11 @@ Moves the property text of components</source>
         <translation>Mută Textul Componentei
 
 Mută proprietatea text al componentelor</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
