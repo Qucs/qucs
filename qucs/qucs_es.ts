@@ -2005,50 +2005,55 @@ Usage:  qucsedit [-r] filename
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Editor de texto muy simple para Qucs
+</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Use:  qucsedit [-r] archivo
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation type="unfinished"></translation>
+        <translation>    -h  muestra esta ayuda y sale
+</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de señal cuadrada de intensidad ideal</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>intensidad en el pulso alto</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>duración de los pulsos altos</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>duración de los pulsos bajos</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Intensidad Cuadrada</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de tensión cuadrada ideal</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>tensión de la señal alta</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión Cuadrada</translation>
     </message>
 </context>
 <context>
@@ -2602,25 +2607,27 @@ Errores:
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished">Edita los símbolos de este esquema</translation>
+        <translation>Edita los símbolos de este esquema</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished">Editar Símbolo del circuito
+        <translation>Editar Símbolo del circuito
 
 Edita los símbolos de este esquema</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Edita el esquema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar Esquema
+
+Edita el esquema</translation>
     </message>
 </context>
 <context>
@@ -2705,7 +2712,9 @@ editor de texto muy simple para Qucs
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Editor de texto muy simple para Qucs
+</translation>
     </message>
 </context>
 <context>
@@ -3860,7 +3869,7 @@ Simulador universal de circuitos Qt
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation>Deshacer por Giorgio Luparia</translation>
+        <translation>Italiano por Giorgio Luparia</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
