@@ -23,9 +23,10 @@
 
 class Phaseshifter : public Component  {
 public:
-	Phaseshifter();
-	~Phaseshifter();
-  Phaseshifter* newOne();
+  Phaseshifter();
+  ~Phaseshifter();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

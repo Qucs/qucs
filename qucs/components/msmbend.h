@@ -23,9 +23,10 @@
 
 class MSmbend : public Component  {
 public:
-	MSmbend();
-	~MSmbend();
-  MSmbend* newOne();
+  MSmbend();
+  ~MSmbend();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

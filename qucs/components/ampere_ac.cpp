@@ -53,7 +53,16 @@ Ampere_ac::~Ampere_ac()
 {
 }
 
-Ampere_ac* Ampere_ac::newOne()
+Component* Ampere_ac::newOne()
 {
   return new Ampere_ac();
+}
+
+Component* Ampere_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("ac Current Source");
+  BitmapFile = "ac_current";
+
+  if(getNewOne)  return new Ampere_ac();
+  return 0;
 }

@@ -39,14 +39,24 @@ Capacitor::Capacitor()
   Model = "C";
   Name  = "C";
 
-  Props.append(new Property("C", "1 pF", true, QObject::tr("capacitance in Farad")));
+  Props.append(new Property("C", "1 pF", true,
+		QObject::tr("capacitance in Farad")));
 }
 
 Capacitor::~Capacitor()
 {
 }
 
-Capacitor* Capacitor::newOne()
+Component* Capacitor::newOne()
 {
   return new Capacitor();
+}
+
+Component* Capacitor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Capacitor");
+  BitmapFile = "capacitor";
+
+  if(getNewOne)  return new Capacitor();
+  return 0;
 }

@@ -56,18 +56,32 @@ MScoupled::MScoupled()
   Model = "CMS";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, QObject::tr("name of substrate definition")));
-  Props.append(new Property("W", "1 mm", true, QObject::tr("width of the line")));
-  Props.append(new Property("L", "10 mm", true, QObject::tr("length of the line")));
-  Props.append(new Property("S", "1 mm", true, QObject::tr("spacing between the lines")));
-  Props.append(new Property("Model", "Kirschning", false, QObject::tr("microstrip model |Kirschning|Kobayashi|Yamashita")));
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("name of substrate definition")));
+  Props.append(new Property("W", "1 mm", true,
+		QObject::tr("width of the line")));
+  Props.append(new Property("L", "10 mm", true,
+		QObject::tr("length of the line")));
+  Props.append(new Property("S", "1 mm", true,
+		QObject::tr("spacing between the lines")));
+  Props.append(new Property("Model", "Kirschning", false,
+	QObject::tr("microstrip model |Kirschning|Kobayashi|Yamashita")));
 }
 
 MScoupled::~MScoupled()
 {
 }
 
-MScoupled* MScoupled::newOne()
+Component* MScoupled::newOne()
 {
   return new MScoupled();
+}
+
+Component* MScoupled::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Coupled Microstrip Line");
+  BitmapFile = "mscoupled";
+
+  if(getNewOne)  return new MScoupled();
+  return 0;
 }

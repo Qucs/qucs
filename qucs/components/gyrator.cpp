@@ -52,15 +52,26 @@ Gyrator::Gyrator()
   Model = "Gyrator";
   Name  = "X";
 
-  Props.append(new Property("R", "50 Ohm", true, QObject::tr("gyrator ratio")));
-  Props.append(new Property("Zref", "50 Ohm", false, QObject::tr("reference impedance")));
+  Props.append(new Property("R", "50 Ohm", true,
+		QObject::tr("gyrator ratio")));
+  Props.append(new Property("Zref", "50 Ohm", false,
+		QObject::tr("reference impedance")));
 }
 
 Gyrator::~Gyrator()
 {
 }
 
-Gyrator* Gyrator::newOne()
+Component* Gyrator::newOne()
 {
   return new Gyrator();
+}
+
+Component* Gyrator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Gyrator");
+  BitmapFile = "gyrator";
+
+  if(getNewOne)  return new Gyrator();
+  return 0;
 }

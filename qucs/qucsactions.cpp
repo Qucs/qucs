@@ -18,7 +18,9 @@
 #include "qucsactions.h"
 
 #include "qucs.h"
-
+#include "components/ground.h"
+#include "components/subcirport.h"
+#include "components/equation.h"
 
 
 QucsActions::QucsActions()

@@ -59,7 +59,8 @@ CCVS::CCVS()
   Model = "CCVS";
   Name  = "SRC";
 
-  Props.append(new Property("G", "1 Ohm", true, QObject::tr("forward transfer factor")));
+  Props.append(new Property("G", "1 Ohm", true,
+		QObject::tr("forward transfer factor")));
   Props.append(new Property("T", "0", true, QObject::tr("delay time")));
 }
 
@@ -67,7 +68,16 @@ CCVS::~CCVS()
 {
 }
 
-CCVS* CCVS::newOne()
+Component* CCVS::newOne()
 {
   return new CCVS();
+}
+
+Component* CCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Current Controlled Voltage Source");
+  BitmapFile = "ccvs";
+
+  if(getNewOne)  return new CCVS();
+  return 0;
 }

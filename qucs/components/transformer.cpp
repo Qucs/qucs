@@ -58,14 +58,24 @@ Transformer::Transformer()
   Model = "Tr";
   Name  = "Tr";
 
-  Props.append(new Property("T", "1", true, QObject::tr("voltage transformation ratio")));
+  Props.append(new Property("T", "1", true,
+		QObject::tr("voltage transformation ratio")));
 }
 
 Transformer::~Transformer()
 {
 }
 
-Transformer* Transformer::newOne()
+Component* Transformer::newOne()
 {
   return new Transformer();
+}
+
+Component* Transformer::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Transformer");
+  BitmapFile = "transformer";
+
+  if(getNewOne)  return new Transformer();
+  return 0;
 }

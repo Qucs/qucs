@@ -40,18 +40,32 @@ Diode::Diode()
   Model = "Diode";
   Name  = "D";
 
-  Props.append(new Property("Is", "1e-15 A", true, QObject::tr("saturation current")));
-  Props.append(new Property("n", "1", true, QObject::tr("emission coefficient")));
-  Props.append(new Property("Cj0", "10 fF", true, QObject::tr("zero-bias junction capacitance")));
-  Props.append(new Property("z", "0.5", true, QObject::tr("grading coefficient")));
-  Props.append(new Property("Vd", "0.7", true, QObject::tr("junction potential")));
+  Props.append(new Property("Is", "1e-15 A", true,
+		QObject::tr("saturation current")));
+  Props.append(new Property("n", "1", true,
+		QObject::tr("emission coefficient")));
+  Props.append(new Property("Cj0", "10 fF", true,
+		QObject::tr("zero-bias junction capacitance")));
+  Props.append(new Property("z", "0.5", true,
+		QObject::tr("grading coefficient")));
+  Props.append(new Property("Vd", "0.7", true,
+		QObject::tr("junction potential")));
 }
 
 Diode::~Diode()
 {
 }
 
-Diode* Diode::newOne()
+Component* Diode::newOne()
 {
   return new Diode();
+}
+
+Component* Diode::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Diode");
+  BitmapFile = "diode";
+
+  if(getNewOne)  return new Diode();
+  return 0;
 }

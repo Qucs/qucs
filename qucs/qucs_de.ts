@@ -1190,6 +1190,238 @@ Ungültiger Zeilenanfang!</translation>
         <source>Cannot save settings !</source>
         <translation>Einstellungen können nicht gespeichert werden !</translation>
     </message>
+    <message>
+        <source>npn bipolar junction transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polarity (npn,pnp)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>junction field-effect transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polarity (n,p)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MOS field-effect transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Harmonic balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S-parameter simulation</source>
+        <translation type="unfinished">S-Parameter Simulation</translation>
+    </message>
+    <message>
+        <source>Transient simulation</source>
+        <translation type="unfinished">Transientsimulation</translation>
+    </message>
+    <message>
+        <source>ac Current Source</source>
+        <translation type="unfinished">AC Stromquelle</translation>
+    </message>
+    <message>
+        <source>dc Current Source</source>
+        <translation type="unfinished">DC Stromquelle</translation>
+    </message>
+    <message>
+        <source>Noise Current Source</source>
+        <translation type="unfinished">Rauschstromquelle</translation>
+    </message>
+    <message>
+        <source>Attenuator</source>
+        <translation type="unfinished">Dämpfungsglied</translation>
+    </message>
+    <message>
+        <source>Bias T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished">Kondensator</translation>
+    </message>
+    <message>
+        <source>Current Controlled Current Source</source>
+        <translation type="unfinished">stromgesteuerte Stromquelle</translation>
+    </message>
+    <message>
+        <source>Current Controlled Voltage Source</source>
+        <translation type="unfinished">stromgesteuerte Spannungsquelle</translation>
+    </message>
+    <message>
+        <source>Circulator</source>
+        <translation type="unfinished">Zirkulator</translation>
+    </message>
+    <message>
+        <source>Coplanar Line</source>
+        <translation type="unfinished">Koplanarleitung</translation>
+    </message>
+    <message>
+        <source>dc Block</source>
+        <translation type="unfinished">DC-Sperre</translation>
+    </message>
+    <message>
+        <source>dc Feed</source>
+        <translation type="unfinished">DC-Zuführung</translation>
+    </message>
+    <message>
+        <source>Diode</source>
+        <translation type="unfinished">Diode</translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished">Masse</translation>
+    </message>
+    <message>
+        <source>Gyrator</source>
+        <translation type="unfinished">Gyrator</translation>
+    </message>
+    <message>
+        <source>Inductor</source>
+        <translation type="unfinished">Spule</translation>
+    </message>
+    <message>
+        <source>Current Probe</source>
+        <translation type="unfinished">Amperemeter</translation>
+    </message>
+    <message>
+        <source>Isolator</source>
+        <translation type="unfinished">Isolator</translation>
+    </message>
+    <message>
+        <source>n-JFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-MOSFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Corner</source>
+        <translation type="unfinished">Mikrostreifenwinkel</translation>
+    </message>
+    <message>
+        <source>Coupled Microstrip Line</source>
+        <translation type="unfinished">gekoppelte Mikrostreifenleitung</translation>
+    </message>
+    <message>
+        <source>Microstrip Cross</source>
+        <translation type="unfinished">Mikrostreifenkreuzung</translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished">Mikrostreifenleitung</translation>
+    </message>
+    <message>
+        <source>Microstrip Mitered Bend</source>
+        <translation type="unfinished">Abgeflachter Mikrostreifenwinkel</translation>
+    </message>
+    <message>
+        <source>Microstrip Open</source>
+        <translation type="unfinished">Offene Mikrostreifenleitung</translation>
+    </message>
+    <message>
+        <source>Microstrip Step</source>
+        <translation type="unfinished">Mikrostreifenabsatz</translation>
+    </message>
+    <message>
+        <source>Microstrip Tee</source>
+        <translation type="unfinished">Mikrostreifen T-Verzweigung</translation>
+    </message>
+    <message>
+        <source>Phase Shifter</source>
+        <translation type="unfinished">Phasenschieber</translation>
+    </message>
+    <message>
+        <source>Resistor</source>
+        <translation type="unfinished">Widerstand</translation>
+    </message>
+    <message>
+        <source>Resistor US</source>
+        <translation type="unfinished">Widerstand US</translation>
+    </message>
+    <message>
+        <source>Power Source</source>
+        <translation type="unfinished">Signalquelle</translation>
+    </message>
+    <message>
+        <source>1-port S parameter file</source>
+        <translation type="unfinished">1-Tor S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>Subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subcircuit Port</source>
+        <translation type="unfinished">Schaltkreis-Anschluß</translation>
+    </message>
+    <message>
+        <source>Substrate</source>
+        <translation type="unfinished">Substrat</translation>
+    </message>
+    <message>
+        <source>symmetric Transformer</source>
+        <translation type="unfinished">symmetrischer Transformator</translation>
+    </message>
+    <message>
+        <source>Transmission Line</source>
+        <translation type="unfinished">Übertragungsstrecke</translation>
+    </message>
+    <message>
+        <source>Transformer</source>
+        <translation type="unfinished">Transformator</translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Current Source</source>
+        <translation type="unfinished">spannungsgesteuerte Stromquelle</translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Voltage Source</source>
+        <translation type="unfinished">spannungsgesteuerte Spannungsquelle</translation>
+    </message>
+    <message>
+        <source>ac Voltage Source</source>
+        <translation type="unfinished">AC Spannungsquelle</translation>
+    </message>
+    <message>
+        <source>dc Voltage Source</source>
+        <translation type="unfinished">DC Spannungsquelle</translation>
+    </message>
+    <message>
+        <source>Noise Voltage Source</source>
+        <translation type="unfinished">Rauschspannungsquelle</translation>
+    </message>
+    <message>
+        <source>pnp transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p-JFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p-MOSFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>depletion MOS field-effect transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>depletion MOSFET</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2410,139 +2642,135 @@ Fehler:
     </message>
     <message>
         <source>Resistor</source>
-        <translation>Widerstand</translation>
+        <translation type="obsolete">Widerstand</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation>Widerstand US</translation>
+        <translation type="obsolete">Widerstand US</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation>Kondensator</translation>
+        <translation type="obsolete">Kondensator</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation>Spule</translation>
+        <translation type="obsolete">Spule</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation>Masse</translation>
+        <translation type="obsolete">Masse</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation>Schaltkreis-Anschluß</translation>
+        <translation type="obsolete">Schaltkreis-Anschluß</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation>Transformator</translation>
+        <translation type="obsolete">Transformator</translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation>symmetrischer Transformator</translation>
+        <translation type="obsolete">symmetrischer Transformator</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation>DC-Sperre</translation>
+        <translation type="obsolete">DC-Sperre</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation>DC-Zuführung</translation>
-    </message>
-    <message>
-        <source>Bias T</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">DC-Zuführung</translation>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation>Dämpfungsglied</translation>
+        <translation type="obsolete">Dämpfungsglied</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation>Isolator</translation>
+        <translation type="obsolete">Isolator</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation>Zirkulator</translation>
+        <translation type="obsolete">Zirkulator</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation>Gyrator</translation>
+        <translation type="obsolete">Gyrator</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation>Phasenschieber</translation>
+        <translation type="obsolete">Phasenschieber</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation>DC Spannungsquelle</translation>
+        <translation type="obsolete">DC Spannungsquelle</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation>DC Stromquelle</translation>
+        <translation type="obsolete">DC Stromquelle</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation>AC Spannungsquelle</translation>
+        <translation type="obsolete">AC Spannungsquelle</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation>Signalquelle</translation>
+        <translation type="obsolete">Signalquelle</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation>spannungsgesteuerte Stromquelle</translation>
+        <translation type="obsolete">spannungsgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation>stromgesteuerte Stromquelle</translation>
+        <translation type="obsolete">stromgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation>spannungsgesteuerte Spannungsquelle</translation>
+        <translation type="obsolete">spannungsgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation>stromgesteuerte Spannungsquelle</translation>
+        <translation type="obsolete">stromgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation>Übertragungsstrecke</translation>
+        <translation type="obsolete">Übertragungsstrecke</translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation>Substrat</translation>
+        <translation type="obsolete">Substrat</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation>Mikrostreifenleitung</translation>
+        <translation type="obsolete">Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation>gekoppelte Mikrostreifenleitung</translation>
+        <translation type="obsolete">gekoppelte Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation>Mikrostreifenabsatz</translation>
+        <translation type="obsolete">Mikrostreifenabsatz</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation>Mikrostreifenwinkel</translation>
+        <translation type="obsolete">Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation>Mikrostreifen T-Verzweigung</translation>
+        <translation type="obsolete">Mikrostreifen T-Verzweigung</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation>Mikrostreifenkreuzung</translation>
+        <translation type="obsolete">Mikrostreifenkreuzung</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation>Koplanarleitung</translation>
+        <translation type="obsolete">Koplanarleitung</translation>
     </message>
     <message>
         <source>Diode</source>
-        <translation>Diode</translation>
+        <translation type="obsolete">Diode</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -2570,7 +2798,7 @@ Fehler:
     </message>
     <message>
         <source>dc simulation</source>
-        <translation>DC-Simulation</translation>
+        <translation type="obsolete">DC-Simulation</translation>
     </message>
     <message>
         <source>Transienten simulation</source>
@@ -2578,19 +2806,15 @@ Fehler:
     </message>
     <message>
         <source>ac simulation</source>
-        <translation>AC-Simulation</translation>
+        <translation type="obsolete">AC-Simulation</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation>S-Parameter Simulation</translation>
-    </message>
-    <message>
-        <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">S-Parameter Simulation</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation>Parameterdurchlauf</translation>
+        <translation type="obsolete">Parameterdurchlauf</translation>
     </message>
     <message>
         <source>Line</source>
@@ -2706,23 +2930,23 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation>Amperemeter</translation>
+        <translation type="obsolete">Amperemeter</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation>Rauschspannungsquelle</translation>
+        <translation type="obsolete">Rauschspannungsquelle</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation>Rauschstromquelle</translation>
+        <translation type="obsolete">Rauschstromquelle</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation>Abgeflachter Mikrostreifenwinkel</translation>
+        <translation type="obsolete">Abgeflachter Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation>Offene Mikrostreifenleitung</translation>
+        <translation type="obsolete">Offene Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
@@ -2770,7 +2994,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation>Transientsimulation</translation>
+        <translation type="obsolete">Transientsimulation</translation>
     </message>
     <message>
         <source>Set Marker</source>
@@ -2890,7 +3114,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation>AC Stromquelle</translation>
+        <translation type="obsolete">AC Stromquelle</translation>
     </message>
 </context>
 <context>

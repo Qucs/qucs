@@ -42,14 +42,24 @@ Volt_dc::Volt_dc()
   Model = "Vdc";
   Name  = "V";
 
-  Props.append(new Property("U", "1 V", true, QObject::tr("voltage in Volts")));
+  Props.append(new Property("U", "1 V", true,
+		QObject::tr("voltage in Volts")));
 }
 
 Volt_dc::~Volt_dc()
 {
 }
 
-Volt_dc* Volt_dc::newOne()
+Component* Volt_dc::newOne()
 {
   return new Volt_dc();
+}
+
+Component* Volt_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("dc Voltage Source");
+  BitmapFile = "dc_voltage";
+
+  if(getNewOne)  return new Volt_dc();
+  return 0;
 }

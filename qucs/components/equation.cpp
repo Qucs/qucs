@@ -49,7 +49,16 @@ Equation::~Equation()
 {
 }
 
-Equation* Equation::newOne()
+Component* Equation::newOne()
 {
   return new Equation();
+}
+
+Component* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Equation");
+  BitmapFile = "";
+
+  if(getNewOne)  return new Equation();
+  return 0;
 }

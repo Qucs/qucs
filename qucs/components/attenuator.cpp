@@ -49,15 +49,26 @@ Attenuator::Attenuator()
   Model = "Attenuator";
   Name  = "X";
 
-  Props.append(new Property("L", "10 dB", true, QObject::tr("power attenuation")));
-  Props.append(new Property("Zref", "50 Ohm", false, QObject::tr("reference impedance")));
+  Props.append(new Property("L", "10 dB", true,
+		QObject::tr("power attenuation")));
+  Props.append(new Property("Zref", "50 Ohm", false,
+		QObject::tr("reference impedance")));
 }
 
 Attenuator::~Attenuator()
 {
 }
 
-Attenuator* Attenuator::newOne()
+Component* Attenuator::newOne()
 {
   return new Attenuator();
+}
+
+Component* Attenuator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Attenuator");
+  BitmapFile = "attenuator";
+
+  if(getNewOne)  return new Attenuator();
+  return 0;
 }

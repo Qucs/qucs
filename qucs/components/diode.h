@@ -23,9 +23,10 @@
 
 class Diode : public Component  {
 public:
-	Diode();
-	~Diode();
-  Diode* newOne();
+  Diode();
+  ~Diode();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

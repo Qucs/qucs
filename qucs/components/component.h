@@ -40,6 +40,7 @@ public:
   virtual ~Component();
 
   virtual Component* newOne();
+  virtual void recreate() {};
   void    paintScheme(QPainter *p);
   void    setCenter(int x, int y, bool relative=false);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);

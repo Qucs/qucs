@@ -40,14 +40,24 @@ Resistor::Resistor()
   Model = "R";
   Name  = "R";
 
-  Props.append(new Property("R", "50 Ohm", true, QObject::tr("ohmic resistance in Ohms")));
+  Props.append(new Property("R", "50 Ohm", true,
+		QObject::tr("ohmic resistance in Ohms")));
 }
 
 Resistor::~Resistor()
 {
 }
 
-Resistor* Resistor::newOne()
+Component* Resistor::newOne()
 {
   return new Resistor();
+}
+
+Component* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Resistor");
+  BitmapFile = "resistor";
+
+  if(getNewOne)  return new Resistor();
+  return 0;
 }

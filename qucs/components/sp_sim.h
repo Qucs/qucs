@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,9 +23,10 @@
 
 class SP_Sim : public Component  {
 public:
-	SP_Sim();
-	~SP_Sim();
-  SP_Sim* newOne();
+  SP_Sim();
+  ~SP_Sim();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

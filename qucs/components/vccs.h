@@ -23,9 +23,10 @@
 
 class VCCS : public Component  {
 public:
-	VCCS();
-	~VCCS();
-  VCCS* newOne();
+  VCCS();
+  ~VCCS();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

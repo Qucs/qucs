@@ -23,9 +23,10 @@
 
 class Equation : public Component  {
 public:
-	Equation();
-	~Equation();
-  Equation* newOne();
+  Equation();
+  ~Equation();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

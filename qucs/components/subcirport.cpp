@@ -36,14 +36,24 @@ SubCirPort::SubCirPort()
   Model = "";
   Name  = "P";
 
-  Props.append(new Property("Num", "1", true, QObject::tr("number of the port within the subcircuit")));
+  Props.append(new Property("Num", "1", true,
+		QObject::tr("number of the port within the subcircuit")));
 }
 
 SubCirPort::~SubCirPort()
 {
 }
 
-SubCirPort* SubCirPort::newOne()
+Component* SubCirPort::newOne()
 {
   return new SubCirPort();
+}
+
+Component* SubCirPort::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Subcircuit Port");
+  BitmapFile = "port";
+
+  if(getNewOne)  return new SubCirPort();
+  return 0;
 }

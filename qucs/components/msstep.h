@@ -23,9 +23,10 @@
 
 class MSstep : public Component  {
 public:
-	MSstep();
-	~MSstep();
-  MSstep* newOne();
+  MSstep();
+  ~MSstep();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

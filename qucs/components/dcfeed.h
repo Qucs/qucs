@@ -23,9 +23,10 @@
 
 class dcFeed : public Component  {
 public:
-	dcFeed();
-	~dcFeed();
-  dcFeed* newOne();
+  dcFeed();
+  ~dcFeed();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

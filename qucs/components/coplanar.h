@@ -23,9 +23,10 @@
 
 class Coplanar : public Component  {
 public:
-	Coplanar();
-	~Coplanar();
-  Coplanar* newOne();
+  Coplanar();
+  ~Coplanar();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif
