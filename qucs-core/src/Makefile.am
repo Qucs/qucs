@@ -63,6 +63,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
 	matvec.cpp matrix.cpp
 
+if MAINTAINER_MODE
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
 	parse_dataset.cpp tokens_dataset.h tokens_netlist.h           \
 	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp
@@ -84,6 +85,9 @@ parse_dataset.cpp: parse_dataset.y
 
 parse_touchstone.cpp: parse_touchstone.y
 	$(YACC) -v -o $@ --defines=tokens_touchstone.h $<
+else
+generated_FILES = 
+endif
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
