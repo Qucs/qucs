@@ -760,10 +760,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>equivalent current density in A/sqrt(Hz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>frequency exponent</source>
         <translation>esponente frequenza</translation>
     </message>
@@ -1196,10 +1192,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>equivalent voltage density in V/sqrt(Hz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1804,6 +1796,18 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current power spectral density in A^2/Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type (rectangular,polar)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage power spectral density in V^2/Hz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4253,6 +4257,16 @@ Distribute horizontally selected elements</source>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

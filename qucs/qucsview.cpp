@@ -584,7 +584,7 @@ void QucsView::MMoveDelete(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -608,7 +608,7 @@ void QucsView::MMoveLabel(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -637,12 +637,12 @@ void QucsView::MMoveLabel(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-// Paints a little triangle above the mouse cursor to show the set marker modus.
+// Paints a triangle above the mouse cursor to show the set marker modus.
 void QucsView::MMoveMarker(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -663,12 +663,13 @@ void QucsView::MMoveMarker(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-// Paints rounded arrows above the mouse cursor to show the "mirror about y axis" modus.
+// Paints rounded arrows above the mouse cursor to show the
+// "mirror about y axis" modus.
 void QucsView::MMoveMirrorY(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -693,12 +694,13 @@ void QucsView::MMoveMirrorY(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-// Paints rounded arrows beside the mouse cursor to show the "mirror about x axis" modus.
+// Paints rounded arrows beside the mouse cursor to show the
+// "mirror about x axis" modus.
 void QucsView::MMoveMirrorX(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -728,7 +730,7 @@ void QucsView::MMoveRotate(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -749,12 +751,12 @@ void QucsView::MMoveRotate(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-// Paints a a rectangle beside the mouse cursor to show the "activate" modus.
+// Paints a rectangle beside the mouse cursor to show the "activate" modus.
 void QucsView::MMoveActivate(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
-  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
   painter.scale(d->Scale, d->Scale);
   painter.translate(-d->ViewX1, -d->ViewY1);
   painter.setRasterOp(Qt::NotROP);  // background should not be erased
@@ -772,12 +774,44 @@ void QucsView::MMoveActivate(QMouseEvent *Event)
   MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
   MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
 
-    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3-9); // erase old
-    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3);
-    painter.drawLine(MAx3, MAy3-9, MAx3, MAy3);
-    painter.drawLine(MAx3+13, MAy3-9, MAx3+13, MAy3);
-    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3);
-    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
+  painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3-9); // paint new
+  painter.drawLine(MAx3, MAy3, MAx3+13, MAy3);
+  painter.drawLine(MAx3, MAy3-9, MAx3, MAy3);
+  painter.drawLine(MAx3+13, MAy3-9, MAx3+13, MAy3);
+  painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3);
+  painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
+}
+
+// -----------------------------------------------------------
+// Paints a grid beside the mouse cursor to show the "on grid" modus.
+void QucsView::MMoveOnGrid(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3+10, MAy3+ 3, MAx3+25, MAy3+3); // erase old
+    painter.drawLine(MAx3+10, MAy3+ 7, MAx3+25, MAy3+7);
+    painter.drawLine(MAx3+10, MAy3+11, MAx3+25, MAy3+11);
+    painter.drawLine(MAx3+13, MAy3, MAx3+13, MAy3+15);
+    painter.drawLine(MAx3+17, MAy3, MAx3+17, MAy3+15);
+    painter.drawLine(MAx3+21, MAy3, MAx3+21, MAy3+15);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3+10, MAy3+ 3, MAx3+25, MAy3+3); // paint new
+  painter.drawLine(MAx3+10, MAy3+ 7, MAx3+25, MAy3+7);
+  painter.drawLine(MAx3+10, MAy3+11, MAx3+25, MAy3+11);
+  painter.drawLine(MAx3+13, MAy3, MAx3+13, MAy3+15);
+  painter.drawLine(MAx3+17, MAy3, MAx3+17, MAy3+15);
+  painter.drawLine(MAx3+21, MAy3, MAx3+21, MAy3+15);
 }
 
 // ************************************************************************
@@ -1267,6 +1301,24 @@ void QucsView::MPressMarker(QMouseEvent *Event)
   }
   viewport()->repaint();
   drawn = false;
+}
+
+// -----------------------------------------------------------
+void QucsView::MPressOnGrid(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+
+  Element *pe = d->selectElement(int(Event->pos().x()/d->Scale)+d->ViewX1,
+				 int(Event->pos().y()/d->Scale)+d->ViewY1,
+				 false);
+  if(pe) {
+    pe->isSelected = true;
+    Docs.current()->elementsOnGrid();
+
+    d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
+    viewport()->repaint();
+    drawn = false;
+  }
 }
 
 

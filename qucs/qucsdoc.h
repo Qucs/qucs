@@ -99,6 +99,7 @@ public:
   bool  aligning(int);
   bool  distribHoriz();
   bool  distribVert();
+  int   elementsOnGrid();
 
   QString copySelected(bool);
   bool    paste(QTextStream*, QPtrList<Element>*);

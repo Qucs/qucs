@@ -108,6 +108,13 @@ void Component::setCenter(int x, int y, bool relative)
 }
 
 // -------------------------------------------------------
+void Component::getCenter(int& x, int& y)
+{
+  x = cx;
+  y = cy;
+}
+
+// -------------------------------------------------------
 bool Component::getSelected(int x_, int y_)
 {
   if(x_ >= x1+cx) if(x_ <= x2+cx) if(y_ >= y1+cy) if(y_ <= y2+cy)
