@@ -1646,6 +1646,162 @@ Wrong &apos;component&apos; line format!</source>
         <source>width of line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>forward emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reverse emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high current corner for forward beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high current corner for reverse beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward early voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reverse early voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-emitter leakage saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-emitter leakage emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-collector leakage saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-collector leakage emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reverse beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimum base resistance for high currents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current for base resistance midpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>collector ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emitter ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias base resistance (may be high-current dependent)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-emitter zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-emitter junction built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-emitter junction exponential factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-collector zero-bias depletion capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-collector junction built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>base-collector junction exponential factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fraction of Cjc that goes to internal base pin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias collector-substrate capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>substrate junction built-in potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>substrate junction exponential factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward-bias depletion capacitance coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal forward transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coefficient of bias-dependence for Tf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage dependence of Tf on base-collector voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>high-current effect on Tf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal reverse transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>flicker noise coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>flicker noise exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>flicker noise frequency exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>burst noise coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>burst noise exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>burst noise corner frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
