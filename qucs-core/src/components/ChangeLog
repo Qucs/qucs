@@ -1,3 +1,8 @@
+2004-06-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/jfet.cpp: Using 'Type' property for model polarity,
+	i.e. n-channel or p-channel junction fet.
+
 2004-06-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/jfet.cpp: Implemented non-ideal saturation current

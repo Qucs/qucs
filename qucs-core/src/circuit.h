@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.14 2004/06/20 11:29:34 ela Exp $
+ * $Id: circuit.h,v 1.15 2004/06/21 23:11:41 ela Exp $
  *
  */
 
@@ -67,6 +67,8 @@ class circuit : public object
   void setVoltageSources (int);
   int isOriginal (void) { return org; }
   void setOriginal (int o) { org = o; }
+  int getInserted (void) { return inserted; }
+  void setInserted (int i) { inserted = i; }
   int countCircuits (void);
   int countPorts (void);
   int countNodes (void);
@@ -107,6 +109,7 @@ class circuit : public object
   int nSources;
   int org;
   int internal;
+  int inserted;
   complex * MatrixS;
   complex * MatrixY;
   complex MatrixB[MAX_CIR_VSRCS * MAX_CIR_PORTS];

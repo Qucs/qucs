@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.2 2004/06/20 11:29:35 ela Exp $
+ * $Id: jfet.cpp,v 1.3 2004/06/21 23:11:42 ela Exp $
  *
  */
 
@@ -129,10 +129,11 @@ void jfet::calcDC (void) {
   nr_double_t beta = getPropertyDouble ("Beta");
 
   nr_double_t Ugs, Ugd, Ut, T, gm, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
-  nr_double_t Uds, ggs, Igs, ggd, Igd, Ids, gds, gtiny, pol;
+  nr_double_t Uds, ggs, Igs, ggd, Igd, Ids, gds, gtiny;
 
   // apply polarity of JFET
-  pol = getPropertyDouble ("type") ? -1 : 1;
+  char * type = getPropertyString ("Type");
+  nr_double_t pol = (type && !strcmp (type, "pfet")) ? -1 : 1;
 
   T = -K + 26.5;
   Ut = T * kB / Q;
@@ -250,10 +251,11 @@ void jfet::calcOperatingPoints (void) {
   nr_double_t Pb   = getPropertyDouble ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
   
-  nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd, pol;
+  nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd;
 
   // apply polarity of JFET
-  pol = getPropertyDouble ("type") ? -1 : 1;
+  char * type = getPropertyString ("Type");
+  nr_double_t pol = (type && !strcmp (type, "pfet")) ? -1 : 1;
 
   T = -K + 26.5;
   Ut = kB * T / Q;

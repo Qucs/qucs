@@ -18,11 +18,44 @@
 % Boston, MA 02111-1307, USA.  
 %
 
-gset terminal postscript eps "Times-Roman" 20;
-gset output "mszl.eps";
-hold off;
-gplot clear;
-gset nokey;
+H=100; W=H*4/3+25;
+
+eglobpar;                % access to global parameters
+ePageOrientation=0;      % set page orientation
+
+ePageWidth=W+40;         % set page size and ratio
+ePageHeight=H+25;
+eWinWidth=ePageWidth;
+eWinHeight=ePageHeight;
+
+eopen ("mszl.eps",ePageOrientation,ePageWidth,ePageHeight);
+
+% apply plot rectangle area
+ePlotAreaPos=[22 15];
+ePlotAreaHeight=H;
+ePlotAreaWidth=W;
+
+% set grid options
+eXGridVisible=1; eXGridDash=1;
+eYGridVisible=1; eYGridDash=1;
+
+% set axis layout
+eXAxisNorthValueVisible=0;
+eXAxisSouthScale=[0 1 5];
+eYAxisEastValueVisible=0;
+eYAxisWestScale=[0 50 250];
+eYAxisWestLabelDistance=8;
+
+% set axes options
+eAxesValueFontSize=5;
+eAxesLabelFontSize=eAxesValueFontSize;
+eAxesLabelTextFont=1;
+%eAxesTicShortLength=0;
+
+% set legend options
+ePlotLegendFontSize=eAxesValueFontSize;
+ePlotLegendTextFont=eAxesLabelTextFont;
+
 
 Z0     = 376.73031346958504364963;
 M_PI_2 = 1.5707963267948966192313216916397514;
@@ -34,11 +67,9 @@ M_1_PI = 0.3183098861837906715377675267450287;
 u = linspace(0.01,5.01,101);
 k = [1 2.1 2.5 3.78 9.8 12.9 16];
 
-gset xrange [0:5];
-gset yrange [0:250];
-gset grid;
-ylabel("impedance ZL in Ohm");
-xlabel("normalised strip width W/h");
+eXAxisSouthLabelText="normalised strip width W/h";
+eYAxisWestLabelText="impedance ZL in Ohm";
+eAxesLabelTextFont=1;
 
 for n = 1 : length (k)
   er = k(n);
@@ -55,6 +86,8 @@ for n = 1 : length (k)
     endif
     zl(i,n) = z;
   endfor
-  plot (u,zl(:,n),"-1;;");
-  hold on;
+  eplot (u,zl(:,n),"",0,[0 0 0],1);
 endfor
+
+eclose (1,0);
+%eview;
