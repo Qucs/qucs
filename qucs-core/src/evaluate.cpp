@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.20 2004-10-13 14:43:17 ela Exp $
+ * $Id: evaluate.cpp,v 1.21 2004-10-13 22:17:08 ela Exp $
  *
  */
 
@@ -67,17 +67,17 @@ using namespace eqn;
 
 // The following macro is meant to be used for some simple functions.
 #define MAKE_FUNC_DEFINITION(cfunc) \
-constant * QUCS_CONCAT3 (evaluate::,cfunc,_d) (constant * args) { \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
   nr_double_t d = D (args->getResult (0));			  \
   constant * res = new constant (TAG_DOUBLE);			  \
   res->d = cfunc (d); return res;				  \
 }								  \
-constant * QUCS_CONCAT3 (evaluate::,cfunc,_c) (constant * args) { \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) { \
   complex * c = C (args->getResult (0));			  \
   constant * res = new constant (TAG_COMPLEX);			  \
   res->c = new complex (cfunc (*c)); return res;		  \
 }								  \
-constant * QUCS_CONCAT3 (evaluate::,cfunc,_v) (constant * args) { \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
   vector * v = V (args->getResult (0));				  \
   constant * res = new constant (TAG_VECTOR);			  \
   res->v = new vector (cfunc (*v)); return res;			  \
