@@ -45,13 +45,13 @@ MSopen::MSopen()
   Props.append(new Property("W", "1 mm", true,
 	QObject::tr("width of the line")));
   Props.append(new Property("MSModel", "Hammerstad", false,
-	QObject::tr("quasi-static microstrip model"
-		    " (Hammerstad,Wheeler,Schneider)")));
+	QObject::tr("quasi-static microstrip model")+
+	" [Hammerstad, Wheeler, Schneider]"));
   Props.append(new Property("MSDispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model (Kirschning,Kobayashi,"
-		    "Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)")));
+	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
   Props.append(new Property("Model", "Kirschning", false,
-	QObject::tr("microstrip open end model (Kirschning,Hammerstad)")));
+	QObject::tr("microstrip open end model")+" [Kirschning, Hammerstad]"));
 }
 
 MSopen::~MSopen()

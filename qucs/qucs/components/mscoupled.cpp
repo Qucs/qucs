@@ -64,9 +64,10 @@ MScoupled::MScoupled()
   Props.append(new Property("S", "1 mm", true,
 	QObject::tr("spacing between the lines")));
   Props.append(new Property("Model", "Kirschning", false,
-	QObject::tr("microstrip model")+" (Kirschning,Hammerstad)"));
+	QObject::tr("microstrip model")+" [Kirschning, Hammerstad]"));
   Props.append(new Property("DispModel", "Kirschning", false,
-	QObject::tr("microstrip dispersion model")+" (Kirschning,Getsinger)"));
+	QObject::tr("microstrip dispersion model")+
+	" [Kirschning, Getsinger]"));
 }
 
 MScoupled::~MScoupled()

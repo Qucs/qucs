@@ -26,6 +26,7 @@
 #include <qpainter.h>
 #include <qptrlist.h>
 #include <qtextstream.h>
+#include <qvaluevector.h>
 
 class Diagram;
 
@@ -56,7 +57,8 @@ public:
 
   QPtrList<DataX>  cPointsX;
   double *cPointsY;
-  int    *Points, countY; // data in screen coordinates, countY = curves number
+  QValueVector<int> Points; // data in screen coordinates
+  int     countY; // curves number
   QString Var;
   QColor  Color;
   int     Thick;

@@ -49,6 +49,8 @@ Isolator::Isolator()
 		QObject::tr("reference impedance of input port")));
   Props.append(new Property("Z2", "50 Ohm", false,
 		QObject::tr("reference impedance of output port")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
 }
 
 Isolator::~Isolator()

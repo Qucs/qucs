@@ -52,6 +52,8 @@ Attenuator::Attenuator()
 		QObject::tr("power attenuation")));
   Props.append(new Property("Zref", "50 Ohm", false,
 		QObject::tr("reference impedance")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
 }
 
 Attenuator::~Attenuator()

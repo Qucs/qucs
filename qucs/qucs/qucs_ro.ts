@@ -113,10 +113,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Files (*.*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select a file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -134,6 +130,10 @@
     </message>
     <message>
         <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1137,10 +1137,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>polarity (npn,pnp)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>junction field-effect transistor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1409,14 +1405,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>schematic symbol (european,US)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>polarity (nfet,pfet)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>gate-junction recombination current parameter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1441,27 +1429,7 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>put operating points into dataset (yes,no)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>maximum number of iterations until error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>put result into dataset (yes,no)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate noise parameters (yes,no)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1470,10 +1438,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sweep type (lin,log)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1658,10 +1622,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>interpolation type (rectangular,polar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1857,7 +1817,39 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip open end model (Kirschning,Hammerstad)</source>
+        <source>sweep type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put operating points into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put result into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quasi-static microstrip model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open end model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

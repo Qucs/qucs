@@ -2,7 +2,7 @@
                           componentdialog.cpp  -  description
                              -------------------
     begin                : Tue Sep 9 2003
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -142,8 +142,9 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   for(Property *p = c->Props.last(); p != 0; p = c->Props.prev()) {
     if(p->display) s = tr("yes");
     else s = tr("no");
-    prop->insertItem(new QListViewItem(prop, p->Name, p->Value, s,
-		     p->Description));
+    QString str = p->Description;
+    correctDesc (str);
+    prop->insertItem(new QListViewItem(prop, p->Name, p->Value, s, str));
   }
 
   if(prop->childCount() > 0) {
@@ -157,6 +158,27 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
 ComponentDialog::~ComponentDialog()
 {
+}
+
+// -------------------------------------------------------------------------
+// Used to correct the given property description to handle special combobox
+// items.  If 'clst' is not NULL, then an appropriate ComboBox string list
+// is returned.
+void ComponentDialog::correctDesc(QString &desc, QStringList *clst)
+{
+  int b, e;
+  QString str;
+  QStringList List;
+  b = desc.find('[');
+  e = desc.findRev(']');
+  if (e-b > 2) {
+    str = desc.mid(b+1, e-b-1);
+    List = List.split(',',str);
+    desc = desc.left(b)+"["+List.join(",")+"]"+desc.mid(e+1);
+    for (QStringList::Iterator it = List.begin(); it != List.end(); ++it )
+      (*it).replace( QRegExp("[^a-zA-Z0-9_]"), "" );
+  }
+  if(clst != 0) *clst = List;
 }
 
 // -------------------------------------------------------------------------
@@ -179,7 +201,6 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
     BrowseButt->setEnabled(false);
   }
 
-  int i;
   QString PropDesc = item->text(3);
   if(PropDesc.isEmpty()) {
     // show two line edit fields (name and value)
@@ -208,21 +229,21 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
     NameEdit->setText(item->text(0));  // perhaps used for adding properties
     Description->setShown(true);
 
-    i = PropDesc.find('(');
-    QString s = PropDesc.left(i);
+    // handle special combobox items
+    QStringList List;
+    correctDesc( PropDesc, &List );
+
+    QString s = PropDesc;
     QFontMetrics  metrics(QucsSettings.font);   // get size of text
     while(metrics.width(s) > 270)   // if description too long, cut it
       s = s.left(s.findRev(' ', -1)) + "....";
     Description->setText(s);
 
-    PropDesc = PropDesc.mid(i+1);
-    PropDesc.remove(')');
-    QStringList List = List.split(',',PropDesc);
-    if(List.count() > 1) {    // ComboBox with value list or line edit ?
+    if(List.count() >= 1) {    // ComboBox with value list or line edit ?
       ComboEdit->clear();
       ComboEdit->insertStringList(List);
 
-      for(i=ComboEdit->count()-1; i>=0; i--)
+      for(int i=ComboEdit->count()-1; i>=0; i--)
        if(item->text(1) == ComboEdit->text(i)) {
          ComboEdit->setCurrentItem(i);
 	 break;
@@ -406,7 +427,7 @@ void ComponentDialog::slotApplyInput()
 void ComponentDialog::slotBrowseFile()
 {
   QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(),
-					tr("All Files (*.*)"),
+					tr("All Files")+" (*.*)",
 					this, "", tr("Select a file"));
   if(!s.isEmpty()) {
     // snip path if file in current directory

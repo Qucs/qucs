@@ -34,7 +34,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent, const char *name)
   g->addWidget(new QLabel(tr("Precision: "), this), 0,0);
   Precision = new QLineEdit(this);
   Precision->setText(QString::number(pMarker->Precision));
-  Precision->setValidator(new QIntValidator(0, 5, Precision));
+  Precision->setValidator(new QIntValidator(0, 12, this));
   g->addWidget(Precision, 0, 1);
 
   g->addWidget(new QLabel(tr("Number Notation: "), this), 1,0);
