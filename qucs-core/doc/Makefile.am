@@ -39,7 +39,7 @@ FIG2DEV = fig2dev
 
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
-  actrafo.fig opamp.fig gyrator.fig
+  actrafo.fig opamp.fig gyrator.fig msline.fig
 PSFILES = MNAexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
