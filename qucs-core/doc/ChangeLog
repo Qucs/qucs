@@ -2,6 +2,8 @@
 
 	* technical.tex (subsubsection{Mixed Two-Port matrix 
 	conversions}): Added S to H and its reverse transformation.
+	(subsubsection{Two-Port matrix conversion based on current 
+	and voltage}): Scribbled down the five different matrix forms.
 
 2004-07-02  Stefan Jahn  <stefan@lkcc.org>
 
