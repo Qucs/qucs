@@ -4495,6 +4495,48 @@ Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}\cdo
 \subsection{Conductor losses}
 %\addcontentsline{toc}{subsection}{Conductor losses}
 
+\section{Microstrip corner}
+%\addcontentsline{toc}{section}{Microstrip corner}
+
+The equivalent circuit of a microstrip corner is shown in fig.
+\ref{fig:MScorner}. The
+values of the components are as follows \cite{Kirschning4}.
+
+\begin{equation}
+C [\text{pF}] = W \cdot \left( (10.35\cdot\epsilon_r + 2.5) \cdot \frac{W}{H} +
+			       (2.6\cdot\epsilon_r + 5.64) \right)
+\end{equation}
+\begin{equation}
+L [\text{nH}] = 220\cdot H \cdot \left( 1 - 1.35\cdot\exp\left( -0.18\cdot
+		   \left( \frac{W}{H} \right)^{1.39} \right) \right)
+\end{equation}
+
+The values for a 50\% mitered bend are \cite{Kirschning4}.
+
+\begin{equation}
+C [\text{pF}] = W \cdot \left( (3.93\cdot\epsilon_r + 0.62) \cdot \frac{W}{H} +
+			       (7.6\cdot\epsilon_r + 3.80) \right)
+\end{equation}
+\begin{equation}
+L [\text{nH}] = 440\cdot H \cdot \left( 1 - 1.062\cdot\exp\left( -0.177\cdot
+		   \left( \frac{W}{H} \right)^{0.947} \right) \right)
+\end{equation}
+
+With $W$ being width of the microstrip line and $H$ height of the substrate.
+These formulas are valid for $W/H = $0.2 to 6.0 and for $\epsilon_r = $2.36 to 10.4
+and up to 14 GHz. The precision is approximately 0.3\%.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{mscorner}
+\end{center}
+\caption{microstrip corner (left), mitered corner (middle) and equivalent circuit (right)}
+\label{fig:MScorner}
+\end{figure}
+\FloatBarrier
+
+
+
 \nocite{*}
 
 \chapter*{Bibliography}
