@@ -468,11 +468,11 @@
     </message>
     <message>
         <source>Rotation around y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation um die y-Achse:</translation>
     </message>
     <message>
         <source>Rotation around z-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation um die z-Achse:</translation>
     </message>
 </context>
 <context>
@@ -3489,7 +3489,7 @@ About the application</source>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Über Qt</translation>
+        <translation type="obsolete">Über Qt</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
@@ -4453,11 +4453,11 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
+        <translation>3D-Kartesisch</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -5794,7 +5794,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>Über Qt...</translation>
     </message>
     <message>
         <source>Text editor</source>
@@ -5802,7 +5802,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
@@ -5822,7 +5822,7 @@ Startet den Qucs Texteditor</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation>Start das QucsFilter Programm</translation>
+        <translation>Startet das QucsFilter Programm</translation>
     </message>
     <message>
         <source>Filter synthesis
@@ -5845,24 +5845,26 @@ Startet das QucsFilter Programm</translation>
 </translation>
     </message>
     <message>
+        <source>Swedish by Markus Gothe
+</source>
+        <translation>Schwedisch von Markus Gothe
+</translation>
+    </message>
+    <message>
         <source>Line calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsberechnung</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
+        <translation>Startet das QucsTrans Programm</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swedish by Markus Gothe
-</source>
-        <translation>Schwedisch von Markus Gothe
-</translation>
+        <translation>Leitungsberechnung
+
+Startet das Programm für die Leitungsberechnung</translation>
     </message>
 </context>
 <context>
