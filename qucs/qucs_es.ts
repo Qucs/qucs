@@ -434,19 +434,19 @@
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar las propiedades del subcircuito</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prefijo:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Aceptar</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -485,7 +485,7 @@
     </message>
     <message>
         <source>transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>transparente</translation>
     </message>
 </context>
 <context>
@@ -2048,55 +2048,55 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de corriente cuadrada ideal</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>corriente en el pulso superior</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>duración de los pulsos superiores</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>duración de los pulsos inferiores</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corriente Cuadrada</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>fuente de tensión cuadrada ideal</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>tensión de la señal superior</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión Cuadrada</translation>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;inválido&gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>fase inicial en grados</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>tolerancia relativa del error de redondeo local</translation>
     </message>
     <message>
         <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>tolerancia absoluta del error de redondeo local</translation>
     </message>
     <message>
         <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>sobrestimación del error de redondeo local</translation>
     </message>
 </context>
 <context>
@@ -3922,13 +3922,15 @@ Simulador universal de circuitos Qt
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover Texto del Componente</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover Texto del componente
+
+Mueve la propiedad texto de los componentes</translation>
     </message>
 </context>
 <context>
