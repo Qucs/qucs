@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.9 2004/07/30 06:25:55 ela Exp $
+ * $Id: bjt.cpp,v 1.10 2004/08/16 10:29:56 ela Exp $
  *
  */
 
@@ -66,9 +66,11 @@ void bjt::calcSP (nr_double_t frequency) {
   nr_double_t Cbcx = getOperatingPoint ("Cbcx");
   nr_double_t gbc  = getOperatingPoint ("gmu");
   nr_double_t Ccs  = getOperatingPoint ("Ccs");
-  nr_double_t gmf  = getOperatingPoint ("gmf");
+  nr_double_t gmfr = getOperatingPoint ("gmf");
   nr_double_t gmr  = getOperatingPoint ("gmr");
   nr_double_t Rbb  = getOperatingPoint ("Rbb");
+  nr_double_t Ptf  = getPropertyDouble ("Ptf");
+  nr_double_t Tf   = getPropertyDouble ("Tf");
 
   // summarize internal and external base-collector capacitance
   if (Rbb == 0) Cbci += Cbcx;
@@ -77,6 +79,10 @@ void bjt::calcSP (nr_double_t frequency) {
   complex Ybe = rect (gbe, 2.0 * M_PI * frequency * Cbe);
   complex Ybc = rect (gbc, 2.0 * M_PI * frequency * Cbci);
   complex Ycs = rect (0.0, 2.0 * M_PI * frequency * Ccs);
+
+  // compute influence of excess pase
+  nr_double_t phase = rad (Ptf) * Tf * 2 * M_PI * frequency;
+  complex gmf = polar (gmfr, -phase);
 
   // build admittance matrix and convert it to S-parameter matrix
   matrix y = matrix (4);
@@ -182,7 +188,7 @@ void bjt::initDC (dcsolver * solver) {
   // possibly insert base series resistance
   nr_double_t Rb  = getPropertyDouble ("Rb");
   nr_double_t Rbm = getPropertyDouble ("Rbm");
-  if (Rbm == 0) Rbm = Rb; // Rbm defaults to Rb if zero
+  if (Rbm <= 0) Rbm = Rb; // Rbm defaults to Rb if zero
   if (Rb < Rbm) Rbm = Rb; // Rbm must be less or equal Rb
   setProperty ("Rbm", Rbm);
   if (Rbm != 0) {
