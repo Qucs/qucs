@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.h,v 1.4 2004/09/26 13:31:36 ela Exp $
+ * $Id: cross.h,v 1.5 2004/10/08 11:45:39 ela Exp $
  *
  */
 
@@ -31,6 +31,7 @@ class cross : public circuit
   cross ();
   void initDC (void);
   void initAC (void);
+  void initTR (void);
 };
 
 #endif /* __CROSS_H__ */

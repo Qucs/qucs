@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.12 2004/10/07 19:49:35 ela Exp $
+ * $Id: nasolver.cpp,v 1.13 2004/10/08 11:45:38 ela Exp $
  *
  */
 
@@ -305,8 +305,7 @@ void nasolver<nr_type_t>::createBMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  val = MatVal (vs->getB (n->nodes[i]->getPort (), c));
-	  break;
+	  val += MatVal (vs->getB (n->nodes[i]->getPort (), c));
 	}
       }
       // put value into B matrix
@@ -341,8 +340,7 @@ void nasolver<nr_type_t>::createCMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  val = MatVal (vs->getC (r, n->nodes[i]->getPort ()));
-	  break;
+	  val += MatVal (vs->getC (r, n->nodes[i]->getPort ()));
 	}
       }
       // put value into C matrix

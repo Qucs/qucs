@@ -1,3 +1,18 @@
+2004-10-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolver.cpp: Fixed a bug occurring when ports of a
+	component with built-in voltage sources were shorted.
+
+	* trsolver.cpp: Collecting some statistical data for evaluating
+	various integration methos, i.e. rejected time-steps, average
+	time-step and average Newton-Raphson iterations per step.
+	Consider convergence failure for each taken step (reduce step
+	then).
+	Implemented explicit Gear predictor integration method.
+
+	* transient.cpp: Implemented variable-step explicit Gear
+	coeffcients.  Fixed error constants for explicit Gear method.
+
 2004-10-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.cpp: Implemented variable-step Gear coefficients.

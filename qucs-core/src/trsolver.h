@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.10 2004/10/07 19:49:35 ela Exp $
+ * $Id: trsolver.h,v 1.11 2004/10/08 11:45:39 ela Exp $
  *
  */
 
@@ -54,6 +54,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void updateCoefficients (nr_double_t, int next = 0);
   void predictBashford (void);
   void predictEuler (void);
+  void predictGear (void);
 
  private:
   sweep * swp;
@@ -72,6 +73,9 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   int rejected;
   tmatrix<nr_double_t> * solution[8];
   nr_double_t current;
+  int statSteps;
+  int statRejected;
+  int statIterations;
 };
 
 #endif /* __TRSOLVER_H__ */

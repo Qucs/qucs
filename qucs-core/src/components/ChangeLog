@@ -1,3 +1,9 @@
+2004-10-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* cross.cpp, tee.cpp, gyrator.cpp, circulator.cpp,
+	isolator.cpp, attenuator.cpp, biastee.cpp, dcfeed.cpp,
+	dcblock.cpp: Implemented transient analysis functionality.
+
 2004-10-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp, devices/jfet.cpp, devices/bjt.cpp,

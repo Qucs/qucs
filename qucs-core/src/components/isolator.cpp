@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.8 2004/09/16 10:15:10 ela Exp $
+ * $Id: isolator.cpp,v 1.9 2004/10/08 11:45:39 ela Exp $
  *
  */
 
@@ -77,5 +77,9 @@ void isolator::initDC (void) {
 }
 
 void isolator::initAC (void) {
+  initDC ();
+}
+
+void isolator::initTR (void) {
   initDC ();
 }
