@@ -43,7 +43,6 @@ Circulator::Circulator()
 
   tx = x1+4;
   ty = y1-QucsSettings.font.pointSize()-4;
-  Sign  = "Circulator";
   Model = "Circulator";
   Name  = "X";
 

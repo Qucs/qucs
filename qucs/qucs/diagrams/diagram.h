@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -37,20 +37,20 @@ public:
 
   virtual Diagram* newOne();
   virtual void calcDiagram();
-  virtual void calcData(Graph *g);
-  void    setCenter(int x, int y, bool relative=false);
-  void    paintScheme(QPainter *p);
-  void    paint(QPainter *p);
-  void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
-  bool    getSelected(int x_, int y_);
-  bool    ResizeTouched(int& MAx1, int& MAy1, int& MAx2, int& MAy2);
+  virtual void calcData(Graph*);
+  void    setCenter(int, int, bool relative=false);
+  void    paintScheme(QPainter*);
+  void    paint(QPainter*);
+  void    Bounding(int&, int&, int&, int&);
+  bool    getSelected(int, int);
+  bool    ResizeTouched(int, int);
   QString save();
-  bool    load(const QString& Line, QTextStream *stream);
+  bool    load(const QString&, QTextStream*);
 
   void updateGraphData();
-  void loadGraphData(const QString& defaultDataSet);
-  bool loadVarData(const QString& fileName);
-  int  loadIndepVarData(const QString& var, const QString& FileString);
+  void loadGraphData(const QString&);
+  bool loadVarData(const QString&);
+  int  loadIndepVarData(const QString&, const QString&);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
@@ -64,6 +64,7 @@ public:
 
   double xmin, ymin, xmax, ymax; // least and greatest values of all graph data
   double xup, xlow, yup, ylow;   // the limits of the diagram
+  int State;
 };
 
 #endif

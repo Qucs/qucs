@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -39,8 +39,9 @@ void QucsActions::init(QucsApp *p_)
 }
 
 // ########################################################################
-// Is called when the rotate toolbar button is pressed.
-void QucsActions::slotEditRotate(bool on)
+// This function is called from all toggle actions.
+void QucsActions::performToggleAction(bool on, QAction *Action,
+	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc MousePress)
 {
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
@@ -51,10 +52,10 @@ void QucsActions::slotEditRotate(bool on)
     return;
   }
 
-  if(view->Docs.current()->rotateElements()) {
-    editRotate->blockSignals(true);
-    editRotate->setOn(false);  // release toolbar button
-    editRotate->blockSignals(false);
+  if((view->Docs.current()->*Function)()) {
+    Action->blockSignals(true);
+    Action->setOn(false);  // release toolbar button
+    Action->blockSignals(false);
   }
   else {
     if(App->activeAction) {
@@ -62,122 +63,55 @@ void QucsActions::slotEditRotate(bool on)
       App->activeAction->setOn(false);       // set last toolbar button off
       App->activeAction->blockSignals(false);
     }
-    App->activeAction = editRotate;
+    App->activeAction = Action;
 
-    view->MouseMoveAction = &QucsView::MMoveRotate;
-    view->MousePressAction = &QucsView::MPressRotate;
+    view->MouseMoveAction = MouseMove;
+    view->MousePressAction = MousePress;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
   view->viewport()->repaint();
   view->drawn = false;
+}
+
+// ########################################################################
+// Is called when the rotate toolbar button is pressed.
+void QucsActions::slotEditRotate(bool on)
+{
+  performToggleAction(on, editRotate, &QucsDoc::rotateElements,
+		&QucsView::MMoveRotate, &QucsView::MPressRotate);
 }
 
 // ######################################################################
 // Is called when the mirror toolbar button is pressed.
 void QucsActions::slotEditMirrorX(bool on)
 {
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-
-  if(view->Docs.current()->mirrorXComponents()) {
-    editMirror->blockSignals(true);
-    editMirror->setOn(false);  // release toolbar button
-    editMirror->blockSignals(false);
-  }
-  else {
-    if(App->activeAction) {
-      App->activeAction->blockSignals(true); // do not call toggle slot
-      App->activeAction->setOn(false);       // set last toolbar button off
-      App->activeAction->blockSignals(false);
-    }
-    App->activeAction = editMirror;
-
-    view->MouseMoveAction = &QucsView::MMoveMirrorX;
-    view->MousePressAction = &QucsView::MPressMirrorX;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-  }
-  view->viewport()->repaint();
-  view->drawn = false;
+  performToggleAction(on, editMirror, &QucsDoc::mirrorXComponents,
+		&QucsView::MMoveMirrorX, &QucsView::MPressMirrorX);
 }
 
 // ######################################################################
 // Is called when the mirror toolbar button is pressed.
 void QucsActions::slotEditMirrorY(bool on)
 {
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-
-  if(view->Docs.current()->mirrorYComponents()) {
-    editMirrorY->blockSignals(true);
-    editMirrorY->setOn(false);  // release toolbar button
-    editMirrorY->blockSignals(false);
-  }
-  else {
-    if(App->activeAction) {
-      App->activeAction->blockSignals(true); // do not call toggle slot
-      App->activeAction->setOn(false);       // set last toolbar button off
-      App->activeAction->blockSignals(false);
-    }
-    App->activeAction = editMirrorY;
-
-    view->MouseMoveAction = &QucsView::MMoveMirrorY;
-    view->MousePressAction = &QucsView::MPressMirrorY;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-  }
-  view->viewport()->repaint();
-  view->drawn = false;
+  performToggleAction(on, editMirrorY, &QucsDoc::mirrorYComponents,
+		&QucsView::MMoveMirrorY, &QucsView::MPressMirrorY);
 }
 
 // -----------------------------------------------------------------------
 // Is called when the activate/deactivate toolbar button is pressed.
 void QucsActions::slotEditActivate(bool on)
 {
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
+  performToggleAction(on, editActivate, &QucsDoc::activateComponents,
+		&QucsView::MMoveActivate, &QucsView::MPressActivate);
+}
 
-  if(view->Docs.current()->activateComponents()) {
-    editActivate->blockSignals(true);
-    editActivate->setOn(false);  // release toolbar button
-    editActivate->blockSignals(false);
-  }
-  else {
-    if(App->activeAction) {
-      App->activeAction->blockSignals(true); // do not call toggle slot
-      App->activeAction->setOn(false);       // set last toolbar button off
-      App->activeAction->blockSignals(false);
-    }
-    App->activeAction = editActivate;
-
-    // if no component is selected, activate the one that will be clicked on
-    view->MouseMoveAction = &QucsView::MMoveActivate;
-    view->MousePressAction = &QucsView::MPressActivate;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-  }
-
-  view->viewport()->repaint();
-  view->drawn = false;
+// ------------------------------------------------------------------------
+// Is called if "Delete"-Button is pressed.
+void QucsActions::slotEditDelete(bool on)
+{
+  performToggleAction(on, editDelete, &QucsDoc::deleteElements,
+		&QucsView::MMoveDelete, &QucsView::MPressDelete);
 }
 
 // -----------------------------------------------------------------------
@@ -206,42 +140,6 @@ void QucsActions::slotSetWire(bool on)
   view->MousePressAction = &QucsView::MPressWire1;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// ------------------------------------------------------------------------
-// Is called if "Delete"-Button is pressed.
-void QucsActions::slotEditDelete(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-
-  if(view->Docs.current()->deleteElements()) {
-    editDelete->blockSignals(true);
-    editDelete->setOn(false);  // release toolbar button
-    editDelete->blockSignals(false);
-  }
-  else {
-    if(App->activeAction) {
-      App->activeAction->blockSignals(true); // do not call toggle slot
-      App->activeAction->setOn(false);       // set last toolbar button off
-      App->activeAction->blockSignals(false);
-    }
-    App->activeAction = editDelete;
-
-    // if no component is selected, delete the one that will be clicked on
-    view->MouseMoveAction = &QucsView::MMoveDelete;
-    view->MousePressAction = &QucsView::MPressDelete;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-  }
-  view->viewport()->repaint();
-  view->drawn = false;
 }
 
 // -----------------------------------------------------------------------
@@ -301,14 +199,6 @@ void QucsActions::slotSetMarker(bool on)
 void QucsActions::slotSelect(bool on)
 {
   if(!on) {
-    // do not disturb diagram resize
-    if(view->MouseMoveAction == &QucsView::MMoveSelect) {
-      App->activeAction->blockSignals(true); // do not call toggle slot
-      App->activeAction->setOn(true);        // set back select on
-      App->activeAction->blockSignals(false);
-      return;
-    }
-
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
@@ -351,7 +241,7 @@ void QucsActions::slotInsertEquation(bool on)
   }
   App->activeAction = insEquation;
 
-  if(view->selComp != 0)
+  if(view->selComp)
     delete view->selComp;  // delete previously selected component
 
   view->selComp = new Equation();
@@ -383,7 +273,7 @@ void QucsActions::slotInsertGround(bool on)
   }
   App->activeAction = insGround;
 
-  if(view->selComp != 0)
+  if(view->selComp)
     delete view->selComp;  // delete previously selected component
 
   view->selComp = new Ground();
@@ -415,7 +305,7 @@ void QucsActions::slotInsertPort(bool on)
   }
   App->activeAction = insPort;
 
-  if(view->selComp != 0)
+  if(view->selComp)
     delete view->selComp;  // delete previously selected component
 
   view->selComp = new SubCirPort();
@@ -447,8 +337,6 @@ void QucsActions::slotEditPaste(bool on)
     return;   // if clipboard empty
   }
 
-  App->statusBar()->message(tr("Inserting clipboard contents..."));
-
   if(App->activeAction) {
     App->activeAction->blockSignals(true); // do not call toggle slot
     App->activeAction->setOn(false);       // set last toolbar button off
@@ -461,6 +349,4 @@ void QucsActions::slotEditPaste(bool on)
   view->MousePressAction = &QucsView::MouseDoNothing;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-
-  App->statusBar()->message(tr("Ready."));
 }

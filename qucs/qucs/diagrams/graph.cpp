@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -27,7 +27,8 @@ Graph::Graph(const QString& _Line)
   Var    = _Line;
   countY = 0;    // no points in graph
   Points = 0;
-  Thick  = 0;
+  Thick = numMode = 0;
+  Precision = 3;
   Color  = 0x0000ff;  // blue
   isSelected = false;
 
@@ -94,7 +95,8 @@ void Graph::paint(QPainter *p, int x0, int y0)
 QString Graph::save()
 {
   QString s = "      <\""+Var+"\" "+Color.name()+
-	      " "+QString::number(Thick)+">";
+	      " "+QString::number(Thick)+" "+QString::number(Precision)+
+	      " "+QString::number(numMode)+">";
   return s;
 }
 
@@ -120,6 +122,15 @@ bool Graph::load(const QString& _s)
   Thick = n.toInt(&ok);
   if(!ok) return false;
 
+  n  = s.section(' ',3,3);    // Precision
+  if(n.isEmpty()) return true;    // backward compatible
+  Precision = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',4,4);    // numMode
+  numMode = n.toInt(&ok);
+  if(!ok) return false;
+
   return true;
 }
 
@@ -143,12 +154,12 @@ int Graph::getSelected(int x, int y)
       dx  = x - x1;
       dx2 = (*pp);
       if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
-      else { if(x > dx2+5) continue; }
+      else { if(x > 5) if(x > dx2+5) continue; }
 
       dy  = y - y1;
       dy2 = (*(pp+1));
       if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
-      else { if(y > dy2+5) continue; }
+      else { if(y > 5) if(y > dy2+5) continue; }
 
       dx2 -= x1;
       dy2 -= y1;

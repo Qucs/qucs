@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -41,6 +41,8 @@ public:
   virtual void MouseMoving(int, int, int, int, QPainter*, bool) {};
   virtual bool MousePressing() { return false; };
   virtual void Bounding(int&, int&, int&, int&) {};
+  virtual bool ResizeTouched(int, int) { return false; };
+  virtual void MouseResizeMoving(int, int, QPainter*) {};
 
   virtual void rotate() {};
   virtual void mirrorX() {};

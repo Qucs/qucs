@@ -1,3 +1,7 @@
+2004-06-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
+
+	* check_netlist.cpp: Added parameter "Symbol" to "Resistor".
+
 2004-06-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_netlist.cpp: Renamed some diode parameters.

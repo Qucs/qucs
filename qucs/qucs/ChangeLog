@@ -1,3 +1,23 @@
+2004-06-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* resize function for paintings
+	* replaced filledrect, filledellipse and linedialog with
+	other classes
+	* fixed bug, that moved labels not correctly
+	* limit of scale factor: 0.01 ... 10
+	* markers can show complex numbers in different ways
+	* tabdiagram: in dialog one can change precision and number
+	mode
+	* fixed bug that doesn't load diagrams after undo
+	* all transistors can now be loaded
+	* put Resistor and Resistorus together to one component
+
+2004-06-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* for "move" action: only set "changed" if position really
+	changed
+	* implemented "undo" function
+
 2004-06-06  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* added components: BJT, JFET, MOSFET

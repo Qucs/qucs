@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -39,7 +39,6 @@ Ampere_ac::Ampere_ac()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "Iac";
   Model = "Iac";
   Name  = "I";
 

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -50,7 +50,6 @@ Subcircuit::Subcircuit(int No)
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Sub")+QString::number(No);
   Model = QString("Sub")+QString::number(No);
   Name  = "SUB";
 
@@ -64,7 +63,7 @@ Subcircuit::~Subcircuit()
 
 Component* Subcircuit::newOne()
 {
-  int z = Sign.mid(3).toInt();
+  int z = Model.mid(3).toInt();
   return new Subcircuit(z);
 }
 

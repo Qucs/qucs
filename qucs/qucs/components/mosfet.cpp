@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -47,7 +47,6 @@ MOSFET::MOSFET()
 
   tx = x2+4;
   ty = y1+4;
-  Sign  = "MOSFET";
   Model = "MOSFET";
   Name  = "T";
 

@@ -50,18 +50,18 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   Docs.setAutoDelete(true);
 
   connect(horizontalScrollBar(), SIGNAL(prevLine()),
-                                 SLOT(slotScrollLeft()));
+				 SLOT(slotScrollLeft()));
   connect(horizontalScrollBar(), SIGNAL(nextLine()),
-                                 SLOT(slotScrollRight()));
+				 SLOT(slotScrollRight()));
   connect(verticalScrollBar(), SIGNAL(prevLine()), SLOT(slotScrollUp()));
   connect(verticalScrollBar(), SIGNAL(nextLine()), SLOT(slotScrollDown()));
 
   // .......................................................................
   // to repair some strange  scrolling artefacts
   connect(this, SIGNAL(horizontalSliderReleased()),
-          viewport(), SLOT(repaint()));
+		viewport(), SLOT(repaint()));
   connect(this, SIGNAL(verticalSliderReleased()),
-          viewport(), SLOT(repaint()));
+		viewport(), SLOT(repaint()));
 }
 
 
@@ -70,24 +70,32 @@ QucsView::~QucsView()
 }
 
 // -----------------------------------------------------------
-// this function is called when the content (schematic or data display) has to be draw
+// Is called when the content (schematic or data display) has to be drawn.
 void QucsView::drawContents(QPainter *p, int, int, int, int)
 {
-  Docs.current()->paintGrid(p, contentsX(), contentsY(),
-                               visibleWidth(), visibleHeight());
+  QucsDoc *d = Docs.current();
+  d->paintGrid(p, contentsX(), contentsY(), visibleWidth(), visibleHeight());
 
-  p->scale(Docs.current()->Scale, Docs.current()->Scale);
-  p->translate(-Docs.current()->ViewX1, -Docs.current()->ViewY1);
-  Docs.current()->paint(p);
+  p->scale(d->Scale, d->Scale);
+  p->translate(-d->ViewX1, -d->ViewY1);
+  d->paint(p);
 //  drawn = false;
 }
 
 // -----------------------------------------------------------
 double QucsView::Zoom(double s)
 {
-  Docs.current()->Scale *= s;
-  resizeContents(int(contentsWidth()*s),int(contentsHeight()*s));
-  return Docs.current()->Scale;
+  QucsDoc *d = Docs.current();
+  double Scale = d->Scale;
+  Scale *= s;
+  if(Scale > 10.0) Scale = 10.0;
+  if(Scale < 0.01) Scale = 0.01;
+
+  d->Scale = Scale;
+  resizeContents(int(Scale*double(d->ViewX2 - d->ViewX1)),
+		 int(Scale*double(d->ViewY2 - d->ViewY1)));
+//  resizeContents(int(contentsWidth()*s),int(contentsHeight()*s));
+  return Scale;
 }
 
 // -----------------------------------------------------------
@@ -158,7 +166,8 @@ void QucsView::enlargeView(int x1, int y1, int x2, int y2)
 // -----------------------------------------------------------
 void QucsView::setPainter(QPainter *p, QucsDoc *d)
 {
-  p->translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  // contents to viewport transformation
+  p->translate(-contentsX(), -contentsY());
   p->scale(d->Scale, d->Scale);
   p->translate(-d->ViewX1, -d->ViewY1);
   p->setPen(Qt::DotLine);
@@ -253,6 +262,8 @@ void QucsView::endElementMoving()
 	d->insertRawComponent((Component*)pe);
 	break;
       case isMovingLabel:
+      case isHMovingLabel:
+      case isVMovingLabel:
 	d->insertNodeLabel((WireLabel*)pe);
 	break;
       case isMarker:
@@ -263,7 +274,8 @@ void QucsView::endElementMoving()
   }
 
   movingElements.clear();
-  d->setChanged(true, true);
+  if((MAx3 != 0) || (MAy3 != 0))  // moved or put at the same place ?
+    d->setChanged(true, true);
 
   // enlarge viewarea if components lie outside the view
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
@@ -408,14 +420,29 @@ void QucsView::MMoveSelect(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);   // erase old rectangle
+  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2); // erase old rectangle
   drawn = true;
   MAx2 = int(Event->pos().x()/d->Scale) + d->ViewX1 - MAx1;
   MAy2 = int(Event->pos().y()/d->Scale) + d->ViewY1 - MAy1;
   if(isMoveEqual)     // x and y size must be equal ?
-    if(abs(MAx2) > abs(MAy2)) { if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2); }
+    if(abs(MAx2) > abs(MAy2)) {
+      if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
+    }
     else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
   painter.drawRect(MAx1, MAy1, MAx2, MAy2); // paint new rectangle
+}
+
+// -----------------------------------------------------------
+void QucsView::MMoveResizePainting(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  setPainter(&painter, d);
+
+  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  Docs.current()->setOnGrid(MAx1, MAy1);
+  ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, &painter);
 }
 
 // -----------------------------------------------------------
@@ -430,17 +457,16 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
   MAy2 = int(Event->pos().y()/d->Scale) + d->ViewY1;
 
   d->setOnGrid(MAx2, MAy2);
-  MAx1 = MAx2 - MAx1;
-  MAy1 = MAy2 - MAy1;
+  MAx3 = MAx1 = MAx2 - MAx1;
+  MAy3 = MAy1 = MAy2 - MAy1;
 
   movingElements.clear();
-  this->grabKeyboard();      // hinders keyboard inputs during moving
   d->copySelectedElements(&movingElements);
   viewport()->repaint();
 
   Wire *pw;
   // Changes the position of all moving elements by dx/dy
-  for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+  for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
@@ -493,6 +519,7 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
   d->setOnGrid(MAx2, MAy2);
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
+  MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
 
   Wire *pw;
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
@@ -541,7 +568,7 @@ void QucsView::MMovePaste(QMouseEvent *Event)
   MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
   d->setOnGrid(MAx1, MAy1);
 
-  for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+  for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
     pe->setCenter(MAx1, MAy1, true);
     pe->paintScheme(&painter);
   }
@@ -847,40 +874,70 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
 
-  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)+Docs.current()->ViewX1;
-  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)+Docs.current()->ViewY1;
+  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)
+		+ Docs.current()->ViewX1;
+  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)
+		+ Docs.current()->ViewY1;
   focusElement = Docs.current()->selectElement(MAx1, MAy1, Ctrl);
+  isMoveEqual = false;   // moving not neccessarily square
+
+  if(focusElement)
+   if(focusElement->Type == isPaintingResize) {  // resize painting ?
+    focusElement->Type = isPainting;
+    MouseReleaseAction = &QucsView::MReleaseResizePainting;
+    MouseMoveAction = &QucsView::MMoveResizePainting;
+    MousePressAction = &QucsView::MouseDoNothing;
+    MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    this->grabKeyboard();  // no keyboard inputs during move actions
+    return;
+  }
+  else if(focusElement->Type == isDiagramResize) {  // resize diagram ?
+	 if(((Diagram*)focusElement)->Name == "Polar")
+	   isMoveEqual = true;  // diagram must be square
+	 else if(((Diagram*)focusElement)->Name == "Smith")
+		isMoveEqual = true;  // diagram must be square
+
+	 focusElement->Type = isDiagram;
+	 MAx1 = ((Diagram*)focusElement)->cx;
+	 MAx2 = ((Diagram*)focusElement)->x2;
+	 if(((Diagram*)focusElement)->State & 1) {
+	   MAx1 += MAx2;
+	   MAx2 *= -1;
+	 }
+	 MAy1 =  ((Diagram*)focusElement)->cy;
+	 MAy2 = -((Diagram*)focusElement)->y2;
+	 if(((Diagram*)focusElement)->State & 2) {
+	   MAy1 += MAy2;
+	   MAy2 *= -1;
+	 }
+
+//	 Docs.current()->setOnGrid(MAx1, MAy1);
+	 MouseReleaseAction = &QucsView::MReleaseResizeDiagram;
+	 MouseMoveAction = &QucsView::MMoveSelect;
+	 MousePressAction = &QucsView::MouseDoNothing;
+	 MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	 this->grabKeyboard(); // no keyboard inputs during move actions
+	 return;
+      }
+
+
   viewport()->repaint();
+  drawn = false;
   if(Event->button() != Qt::LeftButton) return;
+
+  MousePressAction = &QucsView::MouseDoNothing;
+  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  this->grabKeyboard();  // no keyboard inputs during move actions
+
   if(focusElement == 0) {
     MAx2 = 0;  // if not clicking on an element => open a rectangle
     MAy2 = 0;
     MouseReleaseAction = &QucsView::MReleaseSelect2;
     MouseMoveAction = &QucsView::MMoveSelect;
-    MousePressAction = &QucsView::MouseDoNothing;
-    MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
   else {  // element could be moved
-
-    if(focusElement->Type == isDiagram)   // resize diagram ?
-      if(((Diagram*)focusElement)->ResizeTouched(MAx1, MAy1, MAx2, MAy2)) {
-	if(((Diagram*)focusElement)->Name == "Polar")
-	  isMoveEqual = true;  // diagram must be square
-	else  if(((Diagram*)focusElement)->Name == "Smith")
-		isMoveEqual = true;  // diagram must be square
-
-	Docs.current()->setOnGrid(MAx1, MAy1);
-	MouseReleaseAction = &QucsView::MReleaseResizeDiagram;
-	MouseMoveAction = &QucsView::MMoveSelect;
-	MousePressAction = &QucsView::MouseDoNothing;
-	MouseDoubleClickAction = &QucsView::MouseDoNothing;
-	return;
-      }
-
     Docs.current()->setOnGrid(MAx1, MAy1);
     MouseMoveAction = &QucsView::MMoveMoving;
-    MousePressAction = &QucsView::MouseDoNothing;
-    MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
 }
 
@@ -1235,10 +1292,13 @@ void QucsView::MReleaseSelect(QMouseEvent *Event)
   if(focusElement != 0)
     if(Event->button() == LeftButton)
       if(focusElement->Type == isWire) {
-        Docs.current()->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
-        Docs.current()->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+        Docs.current()->selectWireLine(focusElement,
+				((Wire*)focusElement)->Port1, ctrl);
+        Docs.current()->selectWireLine(focusElement,
+				((Wire*)focusElement)->Port2, ctrl);
       }
 
+  this->releaseKeyboard();  // allow keyboard inputs again
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
@@ -1260,10 +1320,11 @@ void QucsView::MReleaseSelect2(QMouseEvent *Event)
   bool Ctrl;
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
-  
-   // selects all elements within the rectangle
+
+  // selects all elements within the rectangle
   d->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
 
+  this->releaseKeyboard();  // allow keyboard inputs again
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
@@ -1281,10 +1342,10 @@ void QucsView::MReleaseActivate(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);   // erase old rectangle
+  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);  // erase old rectangle
   drawn = false;
 
-   // activates all components within the rectangle
+  // activates all components within the rectangle
   d->activateComps(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
 
   MouseMoveAction = &QucsView::MMoveActivate;
@@ -1295,11 +1356,12 @@ void QucsView::MReleaseActivate(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+// Is called after moving selected elements.
 void QucsView::MReleaseMoving(QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
   endElementMoving();
-  this->releaseKeyboard();      // allow keyboard inputs again
+  this->releaseKeyboard();  // allow keyboard inputs again
 
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
@@ -1343,12 +1405,30 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
     pm->x1 += MAx3;      // correct changes due to move of diagram corner
     pm->y1 -= MAy3;
   }
-  isMoveEqual = false;
 
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+  this->releaseKeyboard();  // allow keyboard inputs again
+
+  viewport()->repaint();
+  drawn = false;
+  Docs.current()->setChanged(true, true);
+}
+
+// -----------------------------------------------------------
+void QucsView::MReleaseResizePainting(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+
+
+  MouseMoveAction = &QucsView::MouseDoNothing;
+  MousePressAction = &QucsView::MPressSelect;
+  MouseReleaseAction = &QucsView::MReleaseSelect;
+  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+  this->releaseKeyboard();  // allow keyboard inputs again
 
   viewport()->repaint();
   drawn = false;
@@ -1465,6 +1545,7 @@ void QucsView::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MDoubleClickSelect(QMouseEvent *Event)
 {
+  this->releaseKeyboard();  // allow keyboard inputs again
   if(focusElement == 0) return;
 
   Component *c;
@@ -1476,7 +1557,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
   switch(focusElement->Type) {
     case isComponent:
          c = (Component*)focusElement;
-         if(c->Sign == "GND") return;
+         if(c->Model == "GND") return;
          d = new ComponentDialog(c, this);  // is WDestructiveClose
          if(d->exec() == 1) {
            int x1, y1, x2, y2;
@@ -1545,10 +1626,11 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
   int delta = Event->delta() >> 1;     // use smaller steps
 
   // .....................................................................
-  if((Event->state() & Qt::ShiftButton) || (Event->orientation() == Horizontal)) { // scroll horizontally ?
+  if((Event->state() & Qt::ShiftButton) ||
+     (Event->orientation() == Horizontal)) { // scroll horizontally ?
       if(delta > 0) { if(ScrollLeft(delta)) scrollBy(-delta, 0); }
       else { if(ScrollRight(delta)) scrollBy(-delta, 0); }
-      viewport()->repaint();    // because QScrollView thinks nothing has changed
+      viewport()->repaint(); // because QScrollView thinks nothing has changed
       drawn = false;
   }
   // .....................................................................
@@ -1556,7 +1638,7 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
       double Scaling;
       if(delta < 0) Scaling = double(-delta)/80;
       else Scaling = 80/double(delta);
-      Zoom(Scaling);
+      Scaling = Zoom(Scaling);
       center(int(Event->x()*Scaling), int(Event->y()*Scaling));
       viewport()->repaint();
       drawn = false;
@@ -1565,7 +1647,7 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
   else {     // scroll vertically !
       if(delta > 0) { if(ScrollUp(delta)) scrollBy(0, -delta); }
       else { if(ScrollDown(delta)) scrollBy(0, -delta); }
-      viewport()->repaint();    // because QScrollView thinks nothing has changed
+      viewport()->repaint(); // because QScrollView thinks nothing has changed
       drawn = false;
   }
 

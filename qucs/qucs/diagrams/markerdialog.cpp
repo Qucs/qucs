@@ -3,7 +3,7 @@
                              -------------------
     begin                : Wed April 21 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,6 +20,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qvalidator.h>
 
 
 MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent, const char *name)
@@ -28,21 +29,30 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent, const char *name)
   setCaption(tr("Edit Marker Properties"));
   pMarker = pm_;
 
-  QGridLayout *g = new QGridLayout(this, 2, 2, 5, 5);
+  QGridLayout *g = new QGridLayout(this, 3,2,5,5);
 
-  g->addWidget(new QLabel(tr("Precision: "), this), 0, 0);
+  g->addWidget(new QLabel(tr("Precision: "), this), 0,0);
   Precision = new QLineEdit(this);
   Precision->setText(QString::number(pMarker->Precision));
+  Precision->setValidator(new QIntValidator(0, 5, Precision));
   g->addWidget(Precision, 0, 1);
+
+  g->addWidget(new QLabel(tr("Number Notation: "), this), 1,0);
+  NumberBox = new QComboBox(this);
+  NumberBox->insertItem(tr("real/imaginary"));
+  NumberBox->insertItem(tr("magnitude/angle (degree)"));
+  NumberBox->insertItem(tr("magnitude/angle (radian)"));
+  NumberBox->setCurrentItem(pMarker->numMode);
+  g->addWidget(NumberBox, 1, 1);
 
   // first => activated by pressing RETURN
   QPushButton *ButtOK = new QPushButton(tr("OK"),this);
   connect(ButtOK, SIGNAL(clicked()), SLOT(slotAcceptValues()));
-  g->addWidget(ButtOK, 1, 0);
+  g->addWidget(ButtOK, 2, 0);
 
   QPushButton *ButtCancel = new QPushButton(tr("Cancel"),this);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
-  g->addWidget(ButtCancel, 1, 1);
+  g->addWidget(ButtCancel, 2, 1);
 }
 
 MarkerDialog::~MarkerDialog()
@@ -56,6 +66,10 @@ void MarkerDialog::slotAcceptValues()
   int tmp = Precision->text().toInt();
   if(tmp != pMarker->Precision) {
     pMarker->Precision = tmp;
+    changed = true;
+  }
+  if(NumberBox->currentItem() != pMarker->numMode) {
+    pMarker->numMode = NumberBox->currentItem();
     changed = true;
   }
 

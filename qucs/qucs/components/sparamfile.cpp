@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -54,7 +54,6 @@ SParamFile::SParamFile(int No)
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("SPfile")+QString::number(No);
   Model = QString("SPfile")+QString::number(No);
   Name  = "X";
 
@@ -68,7 +67,7 @@ SParamFile::~SParamFile()
 
 Component* SParamFile::newOne()
 {
-  int z = Sign.mid(6).toInt();
+  int z = Model.mid(6).toInt();
   return new SParamFile(z);
 }
 

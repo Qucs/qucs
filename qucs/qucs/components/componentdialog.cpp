@@ -3,7 +3,7 @@
                              -------------------
     begin                : Tue Sep 9 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -49,11 +49,6 @@ ComponentDialog::ComponentDialog(Component *c,
 
   prop = new QListView(this);
   prop->setMinimumSize(200, 150);
-//  prop->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,
-//				  QSizePolicy::MinimumExpanding));
-//  prop->setSizePolicy(QSizePolicy(QSizePolicy::Preferred,
-//				  QSizePolicy::Preferred));
-//  prop->setMaximumSize(250, 500);
   prop->addColumn(tr("Name"));
   prop->addColumn(tr("Value"));
   prop->addColumn(tr("display"));
@@ -92,8 +87,7 @@ ComponentDialog::ComponentDialog(Component *c,
 
   QHBox *h3 = new QHBox(this);
   g->addWidget(h3,4,1);
-  QWidget *h = new QWidget(h3); // stretchable placeholder
-  h3->setStretchFactor(h,5);
+  h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
   BrowseButt = new QPushButton(tr("Browse"),h3);
   BrowseButt->setEnabled(false);
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -138,6 +132,8 @@ ComponentDialog::ComponentDialog(Component *c,
 
   connect(prop, SIGNAL(clicked(QListViewItem*)),
 	  SLOT(slotSelectProperty(QListViewItem*)));
+
+  resize(400, 250);
 }
 
 ComponentDialog::~ComponentDialog()

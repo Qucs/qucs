@@ -24,8 +24,6 @@
 #include <qwidget.h>
 #include <qpainter.h>
 
-#include <math.h>
-
 
 Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn)
 {
@@ -35,6 +33,7 @@ Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn)
   Diag   = Diag_;
   pGraph = pg_;
   Precision = 2;   // before createText()
+  numMode = 0;
   lookNfeel = 1;
   nVarPos = 0;
 
@@ -75,21 +74,20 @@ void Marker::initText(int n)
     nn /= pD->count;
   }
 
-  // dependent variable
-  QString Text_;
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
-  if(fabs(yi) < 1e-250) Text_ = QString::number(yr,'g',Precision);
-  else {
-    Text_ = QString::number(yi,'g',Precision);
-    if(Text_.at(0) == '-') { Text_.at(0) = 'j'; Text_ = '-'+Text_; }
-    else { Text_ = "+j"+Text_; }
-    Text_ = QString::number(yr,'g',Precision) + Text_;
+  Text += pGraph->Var + ": ";
+  switch(numMode) {
+    case 0: Text += complexRect(yr, yi, Precision);
+	    break;
+    case 1: Text += complexDeg(yr, yi, Precision);
+	    break;
+    case 2: Text += complexRad(yr, yi, Precision);
+	    break;
   }
-  Text += pGraph->Var + ": " + Text_;
 
   QFontMetrics  metrics(QucsSettings.font);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
+  QSize r = metrics.size(0, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
 }
@@ -128,21 +126,20 @@ void Marker::createText()
   cx = *pi;
   cy = *(pi+1);
 
-  // dependent variable
-  QString Text_;
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
-  if(fabs(yi) < 1e-250) Text_ = QString::number(yr,'g',Precision);
-  else {
-    Text_ = QString::number(yi,'g',Precision);
-    if(Text_.at(0) == '-') { Text_.at(0) = 'j'; Text_ = '-'+Text_; }
-    else { Text_ = "+j"+Text_; }
-    Text_ = QString::number(yr,'g',Precision) + Text_;
+  Text += pGraph->Var + ": ";
+  switch(numMode) {
+    case 0: Text += complexRect(yr, yi, Precision);
+	    break;
+    case 1: Text += complexDeg(yr, yi, Precision);
+	    break;
+    case 2: Text += complexRad(yr, yi, Precision);
+	    break;
   }
-  Text += pGraph->Var + ": " + Text_;
 
   QFontMetrics  metrics(QucsSettings.font);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
+  QSize r = metrics.size(0, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
 }
@@ -155,7 +152,7 @@ void Marker::makeInvalid()
   Text = QObject::tr("invalid");
 
   QFontMetrics  metrics(QucsSettings.font);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
+  QSize r = metrics.size(0, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
 }
@@ -338,8 +335,8 @@ QString Marker::save()
     s += QString::number(VarPos[i])+"/";
   s.at(s.length()-1) = ' ';
 
-  s += QString::number(x1) +" "+ QString::number(y1)+" "
-      +QString::number(Precision)+">";
+  s += QString::number(x1) +" "+ QString::number(y1) +" "
+      +QString::number(Precision) +" "+ QString::number(numMode) +">";
   return s;
 }
 
@@ -383,6 +380,12 @@ bool Marker::load(const QString& _s)
   n  = s.section(' ',5,5);      // Precision
   if(n.isEmpty()) return true;  //  is optional
   Precision = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',6,6);      // numMode
+  if(n.isEmpty()) return true;  //  is optional
+  numMode = n.toInt(&ok);
+  if(!ok) return false;
 
   return true;
 }

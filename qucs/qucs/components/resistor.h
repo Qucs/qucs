@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,10 +23,15 @@
 
 class Resistor : public Component  {
 public:
-  Resistor();
+  Resistor(bool european=true);
   ~Resistor();
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
+  static Component* info_us(QString&, char* &, bool getNewOne=false);
+  void recreate();
+
+private:
+  void createSymbol(bool european=true);
 };
 
 #endif

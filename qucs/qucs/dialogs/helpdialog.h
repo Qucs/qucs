@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun Jan 11 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************

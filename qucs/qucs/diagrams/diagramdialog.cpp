@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -31,6 +31,7 @@
 #include <qpoint.h>
 #include <qvalidator.h>
 #include <qcolordialog.h>
+#include <qvalidator.h>
 
 
 // standard colors: blue, red, magenta, green, cyan, yellow, black
@@ -66,18 +67,38 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 		      SLOT(slotResetToTake(const QString&)));
   QHBox *Box2 = new QHBox(InputGroup);
   Box2->setSpacing(5);
-  QLabel *l3 = new QLabel(tr("Color:"),Box2);
-  ColorButt = new QPushButton("        ",Box2);
-  connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
-  QLabel *l4 = new QLabel(tr("       Thickness:"),Box2);
-  Expr.setPattern("[0-9]{1}");  // valid expression for property input
+  Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
   QValidator *Validator = new QRegExpValidator(Expr, this);
-  GraphThick = new QLineEdit(Box2);
-  GraphThick->setValidator(Validator);
-  GraphThick->setMaximumWidth(20);
-  GraphThick->setText("0");
-  connect(GraphThick, SIGNAL(textChanged(const QString&)),
-		      SLOT(slotSetThick(const QString&)));
+
+  if(Diag->Name == "Tab") {
+    new QLabel(tr("Number Notation: "), Box2);
+    NumberBox = new QComboBox(Box2);
+    NumberBox->insertItem(tr("real/imaginary"));
+    NumberBox->insertItem(tr("magnitude/angle (degree)"));
+    NumberBox->insertItem(tr("magnitude/angle (radian)"));
+    connect(NumberBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
+    Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
+
+    new QLabel(tr("Precision:"), Box2);
+    Property2 = new QLineEdit(Box2);
+    Property2->setValidator(Validator);
+    Property2->setMaximumWidth(25);
+    Property2->setText("3");
+  }
+  else {
+    new QLabel(tr("Color:"),Box2);
+    ColorButt = new QPushButton("        ",Box2);
+    connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
+    Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
+
+    new QLabel(tr("Thickness:"),Box2);
+    Property2 = new QLineEdit(Box2);
+    Property2->setValidator(Validator);
+    Property2->setMaximumWidth(25);
+    Property2->setText("0");
+  }
+  connect(Property2, SIGNAL(textChanged(const QString&)),
+			SLOT(slotSetProp2(const QString&)));
 
   QHBox *Box1 = new QHBox(Tab1);
   Box1->setSpacing(5);
@@ -109,23 +130,29 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   t->addTab(Tab1, tr("Data"));
 
   // ...........................................................
-  QWidget *Tab2 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab2,6,2,5,5);
+  if(Diag->Name != "Tab") {
+    QWidget *Tab2 = new QWidget(t);
+    QGridLayout *gp = new QGridLayout(Tab2,6,2,5,5);
 
-  QLabel *l1 = new QLabel(tr("x-Axis Label:"), Tab2);
-  gp->addWidget(l1,0,0);
-  xLabel = new QLineEdit(Tab2);
-  gp->addWidget(xLabel,0,1);
+    gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), 0,0);
+    xLabel = new QLineEdit(Tab2);
+    gp->addWidget(xLabel,0,1);
 
-  QLabel *l2 = new QLabel(tr("y-Axis Label:"), Tab2);
-  gp->addWidget(l2,1,0);
-  yLabel = new QLineEdit(Tab2);
-  gp->addWidget(yLabel,1,1);
+    gp->addWidget(new QLabel(tr("y-Axis Label:"), Tab2), 1,0);
+    yLabel = new QLineEdit(Tab2);
+    gp->addWidget(yLabel,1,1);
 
-  GridOn = new QCheckBox(tr("show Grid"), Tab2);
-  gp->addMultiCellWidget(GridOn,2,2,0,1);
+    GridOn = new QCheckBox(tr("show Grid"), Tab2);
+    gp->addMultiCellWidget(GridOn,2,2,0,1);
 
-  t->addTab(Tab2, tr("Properties"));
+    t->addTab(Tab2, tr("Properties"));
+
+    // ...........................................................
+    // transfer the diagram properties to the dialog
+    xLabel->setText(Diag->xLabel);
+    yLabel->setText(Diag->yLabel);
+    GridOn->setChecked(Diag->GridOn);
+  }
 
   // ...........................................................
   QHBox *Butts = new QHBox(this);
@@ -162,23 +189,10 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   // put all graphs into the ListBox
   for(Graph *pg = Diag->Graphs.first(); pg != 0; pg = Diag->Graphs.next())
     GraphList->insertItem(pg->Var);
-  ColorButt->setPaletteBackgroundColor
-             (QColor(DefaultColors[GraphList->count()]));
 
-  // ...........................................................
-  // some differences between the different diagram types
-  if(Diag->Name == "Tab") {
-    ColorButt->setEnabled(false);
-    GraphThick->setEnabled(false);
-    l3->setEnabled(false);
-    l4->setEnabled(false);
-  }
-
-  // ...........................................................
-  // transfer the diagram properties to the dialog
-  xLabel->setText(Diag->xLabel);
-  yLabel->setText(Diag->yLabel);
-  GridOn->setChecked(Diag->GridOn);
+  if(Diag->Name != "Tab")
+    ColorButt->setPaletteBackgroundColor
+	(QColor(DefaultColors[GraphList->count()]));
 }
 
 DiagramDialog::~DiagramDialog()
@@ -239,12 +253,19 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
     GraphList->setSelected(GraphList->count()-1,true);
 
     Graph *g = new Graph(GraphInput->text());   // create a new graph
-    g->Color = ColorButt->paletteBackgroundColor();
-    g->Thick = GraphThick->text().toInt();
-    Diag->Graphs.append(g);
 
-    ColorButt->setPaletteBackgroundColor(
+    if(Diag->Name != "Tab") {
+      g->Color = ColorButt->paletteBackgroundColor();
+      g->Thick = Property2->text().toInt();
+      ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
+    }
+    else {
+      g->Precision = Property2->text().toInt();
+      g->numMode =   NumberBox->currentItem();
+    }
+
+    Diag->Graphs.append(g);
     changed = true;
     toTake  = true;
   }
@@ -267,8 +288,14 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
   GraphInput->blockSignals(false);
 
   Graph *g = Diag->Graphs.at(index);
-  GraphThick->setText(QString::number(g->Thick));
-  ColorButt->setPaletteBackgroundColor(g->Color);
+  if(Diag->Name != "Tab") {
+    Property2->setText(QString::number(g->Thick));
+    ColorButt->setPaletteBackgroundColor(g->Color);
+  }
+  else {
+    Property2->setText(QString::number(g->Precision));
+    NumberBox->setCurrentItem(g->numMode);
+  }
   toTake = false;
 }
 
@@ -283,9 +310,15 @@ void DiagramDialog::slotDeleteGraph()
   Diag->Graphs.remove(i);
 
   GraphInput->setText("");  // erase input line and back to default values
-  ColorButt->setPaletteBackgroundColor(
+  if(Diag->Name != "Tab") {
+    ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
-  GraphThick->setText("0");
+    Property2->setText("0");
+  }
+  else {
+    Property2->setText("3");
+    NumberBox->setCurrentItem(0);
+  }
   changed = true;
   toTake  = false;
 }
@@ -298,8 +331,14 @@ void DiagramDialog::slotNewGraph()
   GraphList->insertItem(GraphInput->text());
 
   Graph *g = new Graph(GraphInput->text());   // create a new graph
-  g->Color = ColorButt->paletteBackgroundColor();
-  g->Thick = GraphThick->text().toInt();
+  if(Diag->Name != "Tab") {
+    g->Color = ColorButt->paletteBackgroundColor();
+    g->Thick = Property2->text().toInt();
+  }
+  else {
+    g->Precision = Property2->text().toInt();
+    g->numMode   = NumberBox->currentItem();
+  }
   Diag->Graphs.append(g);
   changed = true;
   toTake  = false;
@@ -318,21 +357,23 @@ void DiagramDialog::slotOK()
 // Is called if "Apply" button is pressed.
 void DiagramDialog::slotApply()
 {
-  if(Diag->xLabel.isEmpty()) Diag->xLabel = ""; // can be non-Null and empty!
-  if(xLabel->text().isEmpty()) xLabel->setText("");
-  if(Diag->xLabel != xLabel->text()) {
-    Diag->xLabel = xLabel->text();
-    changed = true;
-  }
-  if(Diag->yLabel.isEmpty()) Diag->yLabel = ""; // can be non-Null and empty!
-  if(yLabel->text().isEmpty()) yLabel->setText("");
-  if(Diag->yLabel != yLabel->text()) {
-    Diag->yLabel = yLabel->text();
-    changed = true;
-  }
-  if(Diag->GridOn != GridOn->isChecked()) {
-    Diag->GridOn = GridOn->isChecked();
-    changed = true;
+  if(Diag->Name != "Tab") {
+    if(Diag->xLabel.isEmpty()) Diag->xLabel = ""; // can be not 0 and empty!
+    if(xLabel->text().isEmpty()) xLabel->setText("");
+    if(Diag->xLabel != xLabel->text()) {
+      Diag->xLabel = xLabel->text();
+      changed = true;
+    }
+    if(Diag->yLabel.isEmpty()) Diag->yLabel = ""; // can be not 0 and empty!
+    if(yLabel->text().isEmpty()) yLabel->setText("");
+    if(Diag->yLabel != yLabel->text()) {
+      Diag->yLabel = yLabel->text();
+      changed = true;
+    }
+    if(Diag->GridOn != GridOn->isChecked()) {
+      Diag->GridOn = GridOn->isChecked();
+      changed = true;
+    }
   }
 
   Diag->loadGraphData(defaultDataSet);
@@ -375,14 +416,28 @@ void DiagramDialog::slotResetToTake(const QString& s)
 }
 
 // --------------------------------------------------------------------------
-// Is called if the user changes the graph thickness.
-void DiagramDialog::slotSetThick(const QString& s)
+// Is called if the user changes the graph thickness or the precision.
+void DiagramDialog::slotSetProp2(const QString& s)
 {
   int i = GraphList->index(GraphList->selectedItem());
   if(i < 0) return;   // return, if no item selected
 
   Graph *g = Diag->Graphs.at(i);
-  g->Thick = s.toInt();
+  if(Diag->Name == "Tab") g->Precision = s.toInt();
+  else  g->Thick = s.toInt();
+  changed = true;
+  toTake  = false;
+}
+
+// --------------------------------------------------------------------------
+// Is called if the user changes the number mode.
+void DiagramDialog::slotSetNumMode(int Mode)
+{
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
+
+  Graph *g = Diag->Graphs.at(i);
+  g->numMode = Mode;
   changed = true;
   toTake  = false;
 }

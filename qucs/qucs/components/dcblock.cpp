@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -39,7 +39,6 @@ dcBlock::dcBlock()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "DCBlock";
   Model = "DCBlock";
   Name  = "C";
 }

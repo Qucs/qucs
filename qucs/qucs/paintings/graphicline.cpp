@@ -3,7 +3,7 @@
                              -------------------
     begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "graphicline.h"
-#include "linedialog.h"
+#include "filldialog.h"
 
 #include <math.h>
 
@@ -42,6 +42,10 @@ void GraphicLine::paint(QPainter *p)
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
     p->drawLine(cx, cy, cx+x2, cy+y2);
+
+    p->setPen(QPen(QPen::darkRed,2));
+    p->drawRect(cx-5, cy-5, 10, 10);  // markers for changing the size
+    p->drawRect(cx+x2-5, cy+y2-5, 10, 10);
     return;
   }
   p->setPen(Pen);
@@ -124,8 +128,38 @@ QString GraphicLine::save()
 {
   QString s = "   <Line "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
-  s += Pen.color().name()+" "+QString::number(Pen.width())+" "+QString::number(Pen.style())+">";
+  s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
+  s += QString::number(Pen.style())+">";
   return s;
+}
+
+// --------------------------------------------------------------------------
+// Checks if the resize area was clicked.
+bool GraphicLine::ResizeTouched(int x, int y)
+{
+  if(x < cx+5) if(x > cx-5) if(y < cy+5) if(y > cy-5) {
+    State = 1;
+    return true;
+  }
+
+  if(x < cx+x2+5) if(x > cx+x2-5) if(y < cy+y2+5) if(y > cy+y2-5) {
+    State = 2;
+    return true;
+  }
+
+  State = 0;
+  return false;
+}
+
+// --------------------------------------------------------------------------
+// Mouse move action during resize.
+void GraphicLine::MouseResizeMoving(int x, int y, QPainter *p)
+{
+  paintScheme(p);  // erase old painting
+  if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // move beginning
+  else { x2 = x-cx;  y2 = y-cy; }  // move ending
+
+  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -173,12 +207,12 @@ bool GraphicLine::MousePressing()
 bool GraphicLine::getSelected(int x, int y)
 {
   x  -= cx;
-  if(x < -5) { if(x < x2-5) return false; }    // lies point between x coordinates ?
-  else { if(x > x2+5) return false; }
+  if(x < -5) { if(x < x2-5) return false; } // is between x coordinates ?
+  else { if(x > 5) if(x > x2+5) return false; }
 
   y  -= cy;
-  if(y < -5) { if(y < y2-5) return false; }    // lies point between y coordinates ?
-  else { if(y > y2+5) return false; }
+  if(y < -5) { if(y < y2-5) return false; } // is between y coordinates ?
+  else { if(y > 5) if(y > y2+5) return false; }
 
   int A  = x2*y - x*y2;     // calculate the rectangle area spanned
   A *= A;                   // avoid the need for square root
@@ -234,7 +268,7 @@ bool GraphicLine::Dialog()
 {
   bool changed = false;
 
-  LineDialog *d = new LineDialog(QObject::tr("Edit Line Properties"));
+  FillDialog *d = new FillDialog(QObject::tr("Edit Line Properties"), false);
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());

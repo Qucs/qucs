@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.12 2004-06-09 23:55:41 ela Exp $
+ * $Id: check_netlist.cpp,v 1.13 2004-06-16 17:41:45 margraf Exp $
  *
  */
 
@@ -53,7 +53,7 @@ struct definition {
 struct definition definition_available[] =
   {
     /* resistor */
-    { "R", 2, 0, 0, 0, { "R", NULL }, { NULL } },
+    { "R", 2, 0, 0, 0, { "R", NULL }, { "Symbol", NULL } },
     /* inductor */
     { "L", 2, 0, 0, 0, { "L", NULL }, { NULL } },
     /* capacitor */

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -43,13 +43,16 @@ symTrafo::symTrafo()
   Lines.append(new Line(-10,-22,-10,-10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 10,-30, 10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 10,-10, 22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -1,-57, -1, 57,QPen(QPen::darkBlue,1))); // core lines
+
+  // core lines
+  Lines.append(new Line( -1,-57, -1, 57,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-57,  1, 57,QPen(QPen::darkBlue,1)));
 
   Texts.append(new Text(-23,-47,"T1"));
   Texts.append(new Text(-23, 32,"T2"));
 
-  Arcs.append(new Arc(-21,-64,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2))); // mark the turn direction
+  // mark the turn direction
+  Arcs.append(new Arc(-21,-64,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-21, 15,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
 
@@ -65,7 +68,6 @@ symTrafo::symTrafo()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "sTr";
   Model = "sTr";
   Name  = "Tr";
 

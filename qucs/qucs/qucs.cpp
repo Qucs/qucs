@@ -235,10 +235,11 @@ void QucsApp::slotCMenuRename()
   if(i == 0) return;
 
   QucsDoc *dc = view->Docs.current();
-  for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {  // search, if file is open
+  // search, if file is open
+  for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {
     if(d->DocName == QDir::current().path()+"/"+i->text(0)) {
       QMessageBox::critical(this, tr("Error"),
-                   tr("Cannot rename an open file!"));
+				  tr("Cannot rename an open file!"));
       view->Docs.findRef(dc);
       return;
     }
@@ -250,7 +251,7 @@ void QucsApp::slotCMenuRename()
 
   bool ok;
   QString s = QInputDialog::getText(tr("Rename file"), tr("Enter new name:"),
-                                    QLineEdit::Normal, Name.left(Name.length()-4), &ok, this);
+		QLineEdit::Normal, Name.left(Name.length()-4), &ok, this);
   if(!ok) return;
   if(s.isEmpty()) return;
 
@@ -303,8 +304,8 @@ void QucsApp::slotCMenuDelete()
 void QucsApp::readProjects()
 {
   QDir ProjDir;
-  if(!ProjDir.cd(QDir::homeDirPath()+"/.qucs"))   // is work directory already existing ?
-    if(!ProjDir.mkdir(QDir::homeDirPath()+"/.qucs")) {  // no, then create it
+  if(!ProjDir.cd(QDir::homeDirPath()+"/.qucs")) // work directory exists ?
+    if(!ProjDir.mkdir(QDir::homeDirPath()+"/.qucs")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
 			tr("Cannot create work directory !"));
       return;
@@ -322,7 +323,7 @@ void QucsApp::readProjects()
   // inserts all project directories
   for(it = PrDirs.begin(); it != PrDirs.end(); it++)
      if ((*it).right(4) == "_prj") {   // project directories end with "_prj"
-      (*it) = (*it).left((*it).length()-4);      // remove "_prj" from project name
+      (*it) = (*it).left((*it).length()-4);// remove "_prj" from project name
       Projects->insertItem(*it);
      }
 }
@@ -364,6 +365,27 @@ bool QucsApp::closeAllFiles()
   return true;
 }
 
+// ########################################################################
+// Is called when another document is selected via the TabBar.
+void QucsApp::slotChangeView(int id)
+{
+  QucsDoc *d = view->Docs.current();
+  d->PosX = view->contentsX();    // save position for old document
+  d->PosY = view->contentsY();
+
+  d = view->Docs.at(WorkView->indexOf(id));   // new current document
+  view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
+                       int(d->Scale*double(d->ViewY2-d->ViewY1)));
+  view->setContentsPos(d->PosX, d->PosY);
+
+  view->Docs.current()->reloadGraphs();  // load recent simulation data
+  view->viewport()->repaint();
+  view->drawn = false;
+
+  HierarchyHistory.clear();   // no subcircuit history
+  popH->setEnabled(false);
+}
+
 // #######################################################################
 // Changes to the document "Name" if possible.
 bool QucsApp::gotoPage(const QString& Name)
@@ -381,7 +403,7 @@ bool QucsApp::gotoPage(const QString& Name)
     WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));
     return true;
   }
-  
+
   d = new QucsDoc(WorkView, Name);
   view->Docs.append(d);   // create new page
 
@@ -395,7 +417,7 @@ bool QucsApp::gotoPage(const QString& Name)
 
   cNo = view->Docs.at();
   view->Docs.at(No);  // back to the last current
-  // make new document the current
+  // make new document the current (calls "slotChangeView()" indirectly)
   WorkView->setCurrentTab(WorkView->tabAt(cNo));
   // must be done before the next step, in order to call the change slot !
 
@@ -768,27 +790,6 @@ void QucsApp::slotPopHierarchy()
 }
 
 // ########################################################################
-// Is called when another document is selected via the TabBar.
-void QucsApp::slotChangeView(int id)
-{
-  QucsDoc *d = view->Docs.current();
-  d->PosX = view->contentsX();    // save position for old document
-  d->PosY = view->contentsY();
-
-  d = view->Docs.at(WorkView->indexOf(id));   // new current document
-  view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
-                       int(d->Scale*double(d->ViewY2-d->ViewY1)));
-  view->setContentsPos(d->PosX, d->PosY);
-
-  view->Docs.current()->reloadGraphs();  // load recent simulation data
-  view->viewport()->repaint();
-  view->drawn = false;
-
-  HierarchyHistory.clear();   // no subcircuit history
-  popH->setEnabled(false);
-}
-
-// ########################################################################
 void QucsApp::slotShowAll()
 {
   int x1 = view->Docs.current()->UsedX1;
@@ -803,6 +804,8 @@ void QucsApp::slotShowAll()
   double xScale = double(view->visibleWidth()) / double(x2-x1);
   double yScale = double(view->visibleHeight()) / double(y2-y1);
   if(xScale > yScale) xScale = yScale;
+  if(xScale > 10.0) xScale = 10.0;
+  if(xScale < 0.01) xScale = 0.01;
   view->Docs.current()->Scale = xScale;
 
   view->Docs.current()->ViewX1 = x1;
@@ -1214,7 +1217,7 @@ pInfoFunc Simulations[7] =
    &HB_Sim::info, &Param_Sweep::info, 0};
 
 pInfoFunc lumpedComponents[18] =
-  {&Resistor::info, &ResistorUS::info, &Capacitor::info, &Inductor::info,
+  {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
    &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
    &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
    &Isolator::info, &Circulator::info, &Gyrator::info, &Phaseshifter::info,
@@ -1350,22 +1353,22 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	 Infos = Simulations[CompComps->index(item)];
 	 break;
     case COMBO_Paints:
-          switch(CompComps->index(item)) {
-              case 0: view->selPaint = new GraphicLine();    break;
-              case 1: view->selPaint = new Arrow();          break;
-              case 2: view->selPaint = new GraphicText();    break;
-              case 3: view->selPaint = new Ellipse();        break;
-              case 4: view->selPaint = new Rectangle();      break;
-              case 5: view->selPaint = new FilledEllipse();  break;
-              case 6: view->selPaint = new FilledRect();     break;
-          }
-          if(view->drawn) view->viewport()->repaint();
-          view->drawn = false;
-          view->MouseMoveAction = &QucsView::MMovePainting;
-          view->MousePressAction = &QucsView::MPressPainting;
-          view->MouseReleaseAction = &QucsView::MouseDoNothing;
-          view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-          return;
+	 switch(CompComps->index(item)) {
+		case 0: view->selPaint = new GraphicLine();   break;
+		case 1: view->selPaint = new Arrow();         break;
+		case 2: view->selPaint = new GraphicText();   break;
+		case 3: view->selPaint = new Ellipse();       break;
+		case 4: view->selPaint = new Rectangle();     break;
+		case 5: view->selPaint = new Ellipse(true);   break;
+		case 6: view->selPaint = new Rectangle(true); break;
+	  }
+	  if(view->drawn) view->viewport()->repaint();
+	  view->drawn = false;
+	  view->MouseMoveAction = &QucsView::MMovePainting;
+	  view->MousePressAction = &QucsView::MPressPainting;
+	  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+	  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	  return;
     case COMBO_Diagrams:
           switch(CompComps->index(item)) {
               case 0: view->selDiag = new RectDiagram();  break;

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -41,12 +41,36 @@ JFET::JFET()
 
   tx = x2+4;
   ty = y1+4;
-  Sign  = "JFET";
   Model = "JFET";
   Name  = "T";
 
+  // this must be the first property in the list !!!
   Props.append(new Property("Type", "n", true,
-			QObject::tr("polarity (n,p)")));
+		QObject::tr("polarity (n,p)")));
+  Props.append(new Property("Vt0", "-2.0 V", true,
+		QObject::tr("threshold voltage")));
+  Props.append(new Property("Beta", "1e-4", true,
+		QObject::tr("transconductance parameter")));
+  Props.append(new Property("Lambda", "0.0", true,
+		QObject::tr("channel-length modulation parameter")));
+  Props.append(new Property("Rd", "0.0", false,
+		QObject::tr("parasitic drain resistance")));
+  Props.append(new Property("Rs", "0.0", false,
+		QObject::tr("parasitic source resistance")));
+  Props.append(new Property("Is", "1e-14", false,
+		QObject::tr("gate-junction saturation current")));
+  Props.append(new Property("N", "1.0", false,
+		QObject::tr("gate-junction emission coefficient")));
+  Props.append(new Property("Cgs", "0.0", false,
+		QObject::tr("zero-bias gate-source junction capacitance")));
+  Props.append(new Property("Cgd", "0.0", false,
+		QObject::tr("zero-bias gate-drain junction capacitance")));
+  Props.append(new Property("Pb", "1.0", false,
+		QObject::tr("gate-junction potential")));
+  Props.append(new Property("Fc", "0.5", false,
+		QObject::tr("forward-bias junction capacitance coefficient")));
+  Props.append(new Property("M", "0.5", false,
+		QObject::tr("gate P-N grading coefficient")));
 }
 
 JFET::~JFET()

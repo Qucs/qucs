@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -53,15 +53,15 @@ void RectDiagram::calcData(Graph *g)
   for(int i=g->countY; i>0; i--) {
     px = g->cPointsX.getFirst()->Points;
     for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
-      *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2 + 0.5);
+      *(p++) = int(((*(px++))-xlow)/(xup-xlow)*double(x2) + 0.5);
       // preserve negative values if not complex number
       if(fabs(*(py+1)) < 1e-250) {
-        *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2 + 0.5);
-        py++;   // do not use imaginary part
+	*(p++) = int(((*(py++))-ylow)/(yup-ylow)*double(y2) + 0.5);
+	py++;   // do not use imaginary part
       }
       else {  // calculate magnitude of complex number
-        *(p++) = int((sqrt((*py)*(*py) +
-                 (*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*y2 + 0.5);
+	*(p++) = int((sqrt((*py)*(*py) +
+		(*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*double(y2) + 0.5);
         py += 2;
       }
     }

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Oct 24 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -59,21 +59,22 @@ void TabDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
+  Graph *g = Graphs.first();
+  if(g == 0) return;
+  if(g->cPointsX.isEmpty()) return;
+
+  QSize r;
+  QFontMetrics  metrics(QucsSettings.font);
+  int tHeight = metrics.height();
+  QString Str;
+  int colWidth=0, x=8, y = y2-tHeight-6;
+
   // outer frame
   Lines.append(new Line(0, y2, x2, y2, QPen(QPen::black,0)));
   Lines.append(new Line(0, y2, 0, 0, QPen(QPen::black,0)));
   Lines.append(new Line(x2, y2, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
-  Lines.append(new Line(0, y2-16, x2, y2-16, QPen(QPen::black,2)));
-
-  Graph *g = Graphs.first();
-  if(g == 0) return;
-  if(g->cPointsX.isEmpty()) return;
-
-  QRect r;
-  QFontMetrics  metrics(QucsSettings.font);
-  QString Str;
-  int colWidth=0, x=8, y = y2-30;
+  Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
 
   // ................................................
   double *py, *px;
@@ -81,7 +82,7 @@ void TabDiagram::calcDiagram()
   counting = g->cPointsX.getFirst()->count * g->countY;
   for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
     Str = pD->Var;
-    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
+    r = metrics.size(0, Str); // width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
       if((x+colWidth) >= x2) {    // enough space for text ?
@@ -92,16 +93,16 @@ void TabDiagram::calcDiagram()
         return;
       }
     }
-    Texts.append(new Text(x-4, y2-13, Str));  // write independent variable
+    Texts.append(new Text(x-4, y2-tHeight-1, Str)); // independent variable
     if(pD->count != 0) {
-    y = y2-30;
+    y = y2-2*tHeight-6;
     counting /= pD->count;   // how many rows to be skipped
     for(int z1=0; z1<lastCount; z1++) {
       px = pD->Points;
       for(int z=pD->count; z>0; z--) {
 	if(y < 0) break;
 	Str = QString::number(*(px++));
-	r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
+	r = metrics.size(0, Str);  // width of text
 	if(r.width() > colWidth) {
           colWidth = r.width();
           if((x+colWidth) >= x2) {    // enough space for text ?
@@ -114,10 +115,11 @@ void TabDiagram::calcDiagram()
         }
 
         Texts.append(new Text( x, y, Str));
-        y -= 14*counting;
+        y -= (tHeight+2)*counting;
       }
       if(pD == g->cPointsX.getFirst())
-        Lines.append(new Line(0, y+12, x2, y+12, QPen(QPen::black,0)));
+        Lines.append(new Line(0, y+tHeight, x2, y+tHeight,
+			QPen(QPen::black,0)));
     }
     lastCount *= pD->count; }
     x += colWidth+10;
@@ -127,11 +129,11 @@ void TabDiagram::calcDiagram()
 
   // ................................................
   for(; g!=0; g = Graphs.next()) {    // write all dependent variables
-    y = y2-30;
+    y = y2-2*tHeight-6;
     colWidth = 0;
 
     Str = g->Var;
-    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
+    r = metrics.size(0, Str); // width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
       if((x+colWidth) >= x2) {    // enough space for text ?
@@ -142,23 +144,24 @@ void TabDiagram::calcDiagram()
         return;
       }
     }
-    Texts.append(new Text(x, y2-13, Str));   // write dependent variable
+    Texts.append(new Text(x, y2-tHeight-1, Str));  // dependent variable
 
 
     py = g->cPointsY;
     if (!g->cPointsX.getFirst()) return;
     for(int z=g->cPointsX.getFirst()->count * g->countY; z>0; z--) {
       if(y < 0) break;
-      if(fabs(*(py+1)) > 1e-250) {
-        Str = QString::number(*(py+1));
-        if(Str.at(0) == '-') { Str.at(0) = 'j'; Str = '-'+Str; }
-        else Str = "+j"+Str;
-        Str = QString::number(*py)+Str;
+      switch(g->numMode) {
+        case 0: Str = complexRect(*py, *(py+1), g->Precision);
+	        break;
+        case 1: Str = complexDeg(*py, *(py+1), g->Precision);
+	        break;
+        case 2: Str = complexRad(*py, *(py+1), g->Precision);
+	        break;
       }
-      else Str = QString::number(*py);
       py += 2;
 
-      r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
+      r = metrics.size(0, Str);  // width of text
       if(r.width() > colWidth) {
         colWidth = r.width();
         if((x+colWidth) >= x2) {    // enough space for text ?
@@ -171,7 +174,7 @@ void TabDiagram::calcDiagram()
       }
 
       Texts.append(new Text(x, y, Str));
-      y -= 14;
+      y -= tHeight+2;
     }
     x += colWidth+10;
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
