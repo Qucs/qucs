@@ -853,6 +853,67 @@ inverted matrix of $\left[\underline{X}\right]$\\& &\\
 \end{figure}
 \FloatBarrier
 
+\begin{center}
+\begin{figure}[ht]
+\fboxsep=6pt
+\begin{tabular}{|c|c|c|c|}
+\hline
+\fboxrule=0pt
+\fbox{\begin{minipage}[t]{0.22\linewidth}
+\centering
+parallel-parallel connection\\[1ex]
+\includegraphics[height=2.5cm]{twoportpp}
+\end{minipage}}
+&
+\begin{minipage}[t]{0.21\linewidth}
+\centering
+series-series connection\\[1ex]
+\includegraphics[height=2.5cm]{twoportss}
+\end{minipage}
+&
+\begin{minipage}[t]{0.21\linewidth}
+\centering
+series-parallel connection\\[1ex]
+\includegraphics[height=2.5cm]{twoportps}
+\end{minipage}
+&
+\begin{minipage}[t]{0.21\linewidth}
+\centering
+parallel-series connection\\[1ex]
+\includegraphics[height=2.5cm]{twoportsp}
+\end{minipage}
+\\
+\hline
+\multicolumn{4}{c}{\vline
+\fboxrule=0pt
+\fbox{\begin{minipage}[t]{.9\linewidth}
+\centering
+cascaded twoports\\[1ex]
+\includegraphics[height=1.3cm]{twoportch}
+\end{minipage}}
+}\vline
+\\
+\hline
+\end{tabular}
+\end{figure}
+\end{center}
+
+Basically there are five different kinds of twoport connections.
+Using the correspondig twoport matrix representations, complicated
+networks can be analysed by connecting elementary twoports.  The
+linear correlations between the complex currents and voltages rms
+values of a twoport are described by four complex twoport parameters
+(i.e. the twoport matrix).  These parameters are used to describe the
+AC behaviour of the twoport.
+
+\begin{itemize}
+\item parallel-parallel connection: use Y-parameters: $Y = Y_{1} + Y_{2}$
+\item series-series connection: use Z-parameters: $Z = Z_{1} + Z_{2}$
+\item series-parallel connection: use H-parameters: $H = H_{1} + H_{2}$
+\item parallel-series connection: use G-parameters: $G = G_{1} + G_{2}$
+\item chain connection: use A-parameters: $A = A_{1}\cdot A_{2}$
+\end{itemize}
+
 \fboxsep = 4pt
 \def\a{0.152\linewidth}
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -935,13 +996,21 @@ A_{11} &= \dfrac{Z_{1}^{*} + Z_{1}\cdot S_{11} - Z_{1}^{*}\cdot S_{22} - Z_{1}\c
 A_{12} &= \dfrac{Z_{1}^{*}\cdot Z_{2}^{*} + Z_{1}\cdot Z_{2}^{*}\cdot S_{11} + Z_{1}^{*}\cdot Z_{2}\cdot S_{22} + Z_{1}\cdot Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 A_{21} &= \dfrac{1 - S_{11} - S_{22} + \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 A_{22} &= \dfrac{Z_{2}^{*} - Z_{2}^{*}\cdot S_{11} + Z_{2}\cdot S_{22} - Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}
-\end{align}
-
-\begin{align}
+%\end{align}
+\intertext{
+}
+%\begin{align}
 S_{11} &= \dfrac{A_{11}\cdot Z_{2} + A_{12} - A_{21}\cdot Z_{1}^{*}\cdot Z_{2} - A_{22}\cdot Z_{1}^{*}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
 S_{12} &= \dfrac{\Delta A\cdot 2\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
 S_{21} &= \dfrac{2\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
 S_{22} &= \dfrac{-A_{11}\cdot Z_{2}^{*} + A_{12} - A_{21}\cdot Z_{1}\cdot Z_{2}^{*} + A_{22}\cdot Z_{1}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}
+\end{align}
+
+\begin{align}
+S_{11} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
+S_{12} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
+S_{21} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
+S_{22} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}
 \end{align}
 
 \section{Scattering parameters of components}
