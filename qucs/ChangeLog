@@ -1,3 +1,9 @@
+2004-08-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* diagrams/graph: Using malloc to store screen points.
+	* many small improvements
+	* "Close Project" and "Print Selected Elements" operation
+
 2004-08-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/markerdialog.cpp (MarkerDialog): Set maximum

@@ -118,12 +118,21 @@ void QucsInit::initActions()
 	  App, SLOT(slotFileSettings()));
 
   App->filePrint = new QAction(tr("Print File"),
-                          QIconSet(QImage(BITMAPDIR "fileprint.png")),
-                          tr("&Print..."), CTRL+Key_P, App);
+			QIconSet(QImage(BITMAPDIR "fileprint.png")),
+			tr("&Print..."), CTRL+Key_P, App);
   App->filePrint->setStatusTip(tr("Prints the current document"));
   App->filePrint->setWhatsThis(
 	tr("Print File\n\nPrints the current document"));
   connect(App->filePrint, SIGNAL(activated()), App, SLOT(slotFilePrint()));
+
+  App->filePrintSel = new QAction(tr("Print Selected Elements"),
+			tr("Print Selection..."), 0, App);
+  App->filePrintSel->setStatusTip(tr("Prints Selected Elements"));
+  App->filePrintSel->setWhatsThis(
+	tr("Print Selected Elements\n\n"
+	   "Prints selected elements of the current document"));
+  connect(App->filePrintSel, SIGNAL(activated()),
+	  App, SLOT(slotFilePrintSelected()));
 
   App->fileQuit = new QAction(tr("Exit"), tr("E&xit"), CTRL+Key_Q, App);
   App->fileQuit->setStatusTip(tr("Quits the application"));
@@ -274,6 +283,14 @@ void QucsInit::initActions()
   App->projDel->setWhatsThis(
 	tr("Delete Project\n\nDeletes an existing project"));
   connect(App->projDel, SIGNAL(activated()), App, SLOT(slotMenuDelProject()));
+
+  App->projClose = new QAction(tr("Close Project"), tr("&Close Project"),
+				0, App);
+  App->projClose->setStatusTip(tr("Close current project"));
+  App->projClose->setWhatsThis(
+	tr("Close Project\n\nCloses the current project"));
+  connect(App->projClose, SIGNAL(activated()),
+	  App, SLOT(slotMenuCloseProject()));
 
   App->magAll = new QAction(tr("View All"),
                        QIconSet(QImage(BITMAPDIR "viewmagfit.png")),
@@ -522,6 +539,7 @@ void QucsInit::initMenuBar()
   App->fileSaveAll->addTo(fileMenu);
   App->fileSaveAs->addTo(fileMenu);
   App->filePrint->addTo(fileMenu);
+  App->filePrintSel->addTo(fileMenu);
   App->fileSettings->addTo(fileMenu);
   fileMenu->insertSeparator();
   App->applSettings->addTo(fileMenu);
@@ -569,6 +587,7 @@ void QucsInit::initMenuBar()
   projMenu = new QPopupMenu();  // menuBar entry projMenu
   App->projNew->addTo(projMenu);
   App->projOpen->addTo(projMenu);
+  App->projClose->addTo(projMenu);
   App->projDel->addTo(projMenu);
 
   simMenu = new QPopupMenu();  // menuBar entry simMenu
@@ -704,6 +723,7 @@ void QucsInit::slotHelpAbout()
     tr("Translations:\n")+
     tr("German by Stefan Jahn\n")+
     tr("Polish by Dariusz Pienkowski\n")+
+    tr("Rumanian by Radu Circa\n")+
     tr("French by Eric Marzolf\n")+
     tr("Italian by Giorgio Luparia"));
 }
