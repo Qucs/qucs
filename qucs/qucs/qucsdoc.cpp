@@ -1923,10 +1923,10 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<GND") c = new Ground();
     else if(cstr == "<Tr") c = new Transformer();
     else if(cstr == "<sTr") c = new symTrafo();
-    else if(cstr == "<V") c = new Volt_dc();
+    else if(cstr == "<Vdc") c = new Volt_dc();
     else if(cstr == "<Vac") c = new Volt_ac();
     else if(cstr == "<Pac") c = new Source_ac();
-    else if(cstr == "<I") c = new Ampere_dc();
+    else if(cstr == "<Idc") c = new Ampere_dc();
     else if(cstr == "<VCCS") c = new VCCS();
     else if(cstr == "<CCCS") c = new CCCS();
     else if(cstr == "<VCVS") c = new VCVS();
@@ -1934,8 +1934,8 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<Port") c = new SubCirPort();
     else if(cstr.left(7) == "<SPfile") { c = new SParamFile(cstr.mid(7).toInt()); }
     else if(cstr.left(4) == "<Sub") { c = new Subcircuit(cstr.mid(4).toInt()); }
-    else if(cstr == "<DCblock") c = new dcBlock();
-    else if(cstr == "<DCfeed") c = new dcFeed();
+    else if(cstr == "<DCBlock") c = new dcBlock();
+    else if(cstr == "<DCFeed") c = new dcFeed();
     else if(cstr == "<BiasT") c = new BiasT();
     else if(cstr == "<Attenuator") c = new Attenuator();
     else if(cstr == "<Isolator") c = new Isolator();
