@@ -39,7 +39,7 @@ TR_Sim::TR_Sim()
   Name  = "TR";
 
   Props.append(new Property("Type", "lin", true,
-	QObject::tr("sweep type")+" [lin, log]"));
+	QObject::tr("sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Start", "0", true,
 	QObject::tr("start time in seconds")));
   Props.append(new Property("Stop", "1 ms", true,

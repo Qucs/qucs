@@ -44,7 +44,7 @@ AC_Sim::AC_Sim()
   Name  = "AC";
 
   Props.append(new Property("Type", "lin", true,
-			QObject::tr("sweep type")+" [lin, log]"));
+			QObject::tr("sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Start", "1 GHz", true,
 			QObject::tr("start frequency in Hertz")));
   Props.append(new Property("Stop", "10 GHz", true,
