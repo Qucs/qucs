@@ -80,7 +80,6 @@ QucsApp::QucsApp()
   resize(QucsSettings.dx, QucsSettings.dy);
 //  resize(maximumSize());
 
-
   initView();
   Init.perform(this);  // initializes toolbar, statusbar, menubar, actions
   Acts.init(this);
@@ -1210,6 +1209,13 @@ void QucsApp::slotShowLastNetlist()
 }
 
 // ------------------------------------------------------------------------
+// Is called to start the text editor.
+void QucsApp::slotCallEditor()
+{
+  editFile(QString(""));
+}
+
+// ------------------------------------------------------------------------
 // Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
 // component edit dialog.
 void QucsApp::editFile(const QString& File)
@@ -1225,6 +1231,22 @@ void QucsApp::editFile(const QString& File)
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
+}
+
+// ------------------------------------------------------------------------
+// Is called to start the filter synthesis program.
+void QucsApp::slotCallFilter()
+{
+  QProcess *QucsFilter = new QProcess(QString(BINARYDIR "qucsfilter"));
+  if(!QucsFilter->start()) {
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Cannot start filter synthesis program!"));
+    delete QucsFilter;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), QucsFilter, SLOT(kill()));
 }
 
 // ------------------------------------------------------------------------
