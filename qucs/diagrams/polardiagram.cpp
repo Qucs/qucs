@@ -113,7 +113,7 @@ void PolarDiagram::calcDiagram()
         Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12,
 			 QString::number(GridNum, 'e', 0)));
 
-      phi = 16.0*180.0/M_PIl*atan(30.0/zD);  // 2*(text height+3) / radius
+      phi = 16.0*180.0/M_PI*atan(30.0/zD);  // 2*(text height+3) / radius
       Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, 0, 16*360-int(phi),
 			  QPen(QPen::lightGray,0)));
       zD += zDstep;
@@ -130,7 +130,7 @@ void PolarDiagram::calcDiagram()
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup)));
   else
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup, 'e', 0)));
-  phi = 16.0*180.0/M_PIl*atan(30.0/double(x2));  // (text height+3) / radius
+  phi = 16.0*180.0/M_PI*atan(30.0/double(x2));  // (text height+3) / radius
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi),
 			QPen(QPen::black,0)));
 }

@@ -86,7 +86,7 @@ void GraphicText::setCenter(int x, int y, bool relative)
 {
   if(relative) {  cx += x;  cy += y;  }
   else {  cx = x;  cy = y;  }
-    double phi = M_PIl/180.0*double(Angle);
+    double phi = M_PI/180.0*double(Angle);
     double sine = sin(phi), cosine = cos(phi);
     cx_d = double(cx)*cosine - double(cy)*sine;
     cy_d = double(cy)*cosine + double(cx)*sine;
@@ -195,7 +195,7 @@ bool GraphicText::MousePressing()
 // 5 is the precision the user must point onto the painting.
 bool GraphicText::getSelected(int x, int y)
 {
-  double phi = M_PIl/180.0*double(Angle);
+  double phi = M_PI/180.0*double(Angle);
   double sine = sin(phi), cosine = cos(phi);
   int _x = int( double(x-cx)*cosine - double(y-cy)*sine );
   int _y = int( double(y-cy)*cosine + double(x-cx)*sine );
@@ -207,7 +207,7 @@ bool GraphicText::getSelected(int x, int y)
 // ------------------------------------------------------------------------
 void GraphicText::Bounding(int& xmin, int& ymin, int& xmax, int& ymax)
 {
-  double phi = M_PIl/180.0*double(Angle);
+  double phi = M_PI/180.0*double(Angle);
   double sine = sin(phi), cosine = cos(phi);
   int dx = int( double(y2) * sine );
   int dy = int( double(y2) * cosine );

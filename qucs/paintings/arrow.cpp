@@ -162,11 +162,11 @@ void Arrow::calcArrowHead()
 {
   double phi  = atan2(double(y2), double(x2));
 
-  double w = beta+phi-M_PIl;
+  double w = beta+phi-M_PI;
   xp1 = x2+int(Length*cos(w));
   yp1 = y2+int(Length*sin(w));
 
-  w = M_PIl-beta+phi;
+  w = M_PI-beta+phi;
   xp2 = x2+int(Length*cos(w));
   yp2 = y2+int(Length*sin(w));
 }
