@@ -37,7 +37,7 @@ public:
   GraphicLine* newOne();
   bool load(const QString&);
   QString save();
-  void paint(QPainter*);
+  void paint(ViewPainter*);
   void MouseMoving(int, int, int, int, QPainter*, bool);
   bool MousePressing();
   bool getSelected(int, int);

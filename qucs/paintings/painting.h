@@ -19,6 +19,7 @@
 #define PAINTING_H
 
 #include "element.h"
+#include "viewpainter.h"
 
 #include <qpainter.h>
 
@@ -27,7 +28,7 @@
   */
 
 class Painting : public Element  {
-public: 
+public:
   Painting();
   ~Painting();
 
@@ -37,7 +38,7 @@ public:
   virtual Painting* newOne();
   virtual bool load(const QString&) { return true; };
   virtual QString save();
-  virtual void paint(QPainter*) {};
+  virtual void paint(ViewPainter*) {};
   virtual void MouseMoving(int, int, int, int, QPainter*, bool) {};
   virtual bool MousePressing() { return false; };
   virtual void Bounding(int&, int&, int&, int&) {};

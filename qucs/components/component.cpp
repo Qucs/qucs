@@ -142,55 +142,93 @@ bool Component::getSelected(int x_, int y_)
 }
 
 // -------------------------------------------------------
-void Component::paint(QPainter *p)
+void Component::paint(ViewPainter *p)
 {
+  Text *pt;
+  int x, y, a, b, Size;
+  QFont f = p->Painter->font();   // save current font
 
-  // paint all lines
-  for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-    p->setPen(p1->style);
-    p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
-  }
-
-  // paint all arcs
-  for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {
-    p->setPen(p3->style);
-    p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
-  }
-
-  QFont f = p->font();   // restore current font
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    p->setFont(QucsSettings.largeFont);
-    p->drawText(cx+x1+8, cy+y1+8, x2-x1, y2-y1, Qt::WordBreak, Description);
+    Size = QucsSettings.largeFont.pointSize();
+    QucsSettings.largeFont.setPointSizeFloat(
+			float(p->Scale * double(Size)) );
+    p->Painter->setFont(QucsSettings.largeFont);
+    p->map(cx, cy, &x, &y);
+
+    p->Painter->setPen(QPen(QPen::darkBlue,2));
+    a = b = 0;
+    QRect r;
+    for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
+      p->Painter->drawText(x, y+b, 0, 0, Qt::DontClip, pt->s, -1, &r);
+      b +=r.height();
+      if(a < r.width())  a = r.width();
+    }
+    int xb = a + int(12.0*p->Scale);
+    int yb = b + int(10.0*p->Scale);
+    x2 = x1+25 + int(double(a) / p->Scale);
+    y2 = y1+23 + int(double(b) / p->Scale);
+    ty = y2 + 1;
+
+    p->map(cx-1, cy,   &x, &y);
+    p->map(cx-6, cy-5, &a, &b);
+    p->Painter->drawRect(a, b, xb, yb);
+    p->Painter->drawLine(x,      y+yb, a,      b+yb);
+    p->Painter->drawLine(x+xb-1, y+yb, x,      y+yb);
+    p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
+    p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
+    p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
+
+    QucsSettings.largeFont.setPointSize(Size);
   }
+  else {    // normal components go here
 
-  p->setPen(QPen(QPen::black,1));
-  p->setFont(QucsSettings.smallFont);
-  // write all text
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
-    p->drawText(cx+pt->x, cy+pt->y, pt->s);
-  p->setFont(f);
+    // paint all lines
+    for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
+      p->Painter->setPen(p1->style);
+      p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);
+    }
 
-  p->setWorldXForm(false);
-  int x, y, Height = p->font().pointSize();
-  p->worldMatrix().map(cx+tx, cy+ty, &x, &y);
-  p->drawText(x, y, 0, 0, Qt::DontClip, Name);
+    // paint all arcs
+    for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {
+      p->Painter->setPen(p3->style);
+      p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+    }
+
+    p->Painter->setPen(QPen(QPen::black,1));
+    Size = QucsSettings.smallFont.pointSize();
+    QucsSettings.smallFont.setPointSizeFloat(
+			float(p->Scale * double(Size)) );
+    p->Painter->setFont(QucsSettings.smallFont);
+    // write all text
+    for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
+      p->map(cx+pt->x, cy+pt->y, &x, &y);
+      p->Painter->drawText(x, y, pt->s);
+    }
+    QucsSettings.smallFont.setPointSize(Size);
+  }
+  p->Painter->setFont(f);
+
+
+  p->Painter->setPen(QPen(QPen::black,1));
+  int Height = p->LineSpacing;
+  p->map(cx+tx, cy+ty, &x, &y);
+  p->Painter->drawText(x, y, 0, 0, Qt::DontClip, Name);
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
       y += Height;
-      p->drawText(x, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
+      p->Painter->drawText(x, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
     }
-  p->setWorldXForm(true);
 
   if(!isActive) {
-    p->setPen(QPen(QPen::red,0));
+    p->Painter->setPen(QPen(QPen::red,0));
     p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
     p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
   }
 
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,3));
+    p->Painter->setPen(QPen(QPen::darkGray,3));
     p->drawRoundRect(cx+x1, cy+y1, x2-x1, y2-y1);
   }
 }
@@ -199,6 +237,19 @@ void Component::paint(QPainter *p)
 // Paints the component when moved with the mouse.
 void Component::paintScheme(QPainter *p)
 {
+  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
+    int xb = x2-x1;
+    int yb = y2-y1;
+
+    p->drawRect(cx-6, cy-5, xb, yb);
+    p->drawLine(cx-1, cy+yb, cx-6, cy+yb-5);
+    p->drawLine(cx+xb-2, cy+yb, cx-1, cy+yb);
+    p->drawLine(cx+xb-2, cy+yb, cx+xb-6, cy+yb-5);
+    p->drawLine(cx+xb-2, cy+yb, cx+xb-2, cy);
+    p->drawLine(cx+xb-2, cy, cx+xb-6, cy-5);
+    return;
+  }
+
   // paint all lines
   for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next())
     p->drawLine(cx+p1->x1, cy+p1->y1, cx+p1->x2, cy+p1->y2);

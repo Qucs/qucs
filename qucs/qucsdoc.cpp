@@ -21,6 +21,7 @@
 
 #include "qucs.h"
 #include "qucsdoc.h"
+#include "viewpainter.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "main.h"
@@ -217,7 +218,7 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
 }
 
 // ---------------------------------------------------
-void QucsDoc::paint(QPainter *p)
+void QucsDoc::paint(ViewPainter *p)
 {
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
     pc->paint(p);   // paint all components
@@ -236,19 +237,22 @@ void QucsDoc::paint(QPainter *p)
 }
 
 // ---------------------------------------------------
-void QucsDoc::paintSelected(QPainter *p)
+void QucsDoc::paintSelected(QPainter *p_)
 {
+  ViewPainter p;
+  p.init(p_, 1.0, 0, 0);
+
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
     if(pc->isSelected) {
       pc->isSelected = false;
-      pc->paint(p);   // paint all selected components
+      pc->paint(&p);   // paint all selected components
       pc->isSelected = true;
     }
 
   for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     if(pw->isSelected) {
       pw->isSelected = false;
-      pw->paint(p);   // paint all selected wires
+      pw->paint(&p);   // paint all selected wires
       pw->isSelected = true;
     }
 
@@ -256,7 +260,7 @@ void QucsDoc::paintSelected(QPainter *p)
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
     for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
       if(pe->isSelected) {
-	pn->paint(p);   // paint all nodes with selected elements
+	pn->paint(&p);   // paint all nodes with selected elements
 	break;
       }
   }
@@ -264,14 +268,14 @@ void QucsDoc::paintSelected(QPainter *p)
   for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
     if(pd->isSelected) {
       pd->isSelected = false;
-      pd->paint(p);   // paint all selected diagrams
+      pd->paint(&p);   // paint all selected diagrams
       pd->isSelected = true;
     }
 
   for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())
     if(pp->isSelected) {
       pp->isSelected = false;
-      pp->paint(p);   // paint all selected paintings
+      pp->paint(&p);   // paint all selected paintings
       pp->isSelected = true;
     }
 }
@@ -1199,7 +1203,7 @@ Marker* QucsDoc::setMarker(int x, int y)
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
 	n  = pg->getSelected(x-pd->cx, pd->cy-y);
 	if(n > 0) {
-	  Marker *pm = new Marker(pd, pg, n-1, x-pd->cx, pd->cy-y);
+	  Marker *pm = new Marker(pd, pg, n-1, x-pd->cx, y-pd->cy);
 	  pg->Markers.append(pm);
 	  setChanged(true, true);
 	  return pm;
@@ -1311,7 +1315,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
       // test markers of graphs
       for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
-        if(pm->getSelected(x-pd->cx, pd->cy-y)) {
+        if(pm->getSelected(x-pd->cx, y-pd->cy)) {
           if(flag) { pm->isSelected ^= flag; return pm; }
           if(pe_sel) {
 	    pe_sel->isSelected = false;
@@ -1455,7 +1459,7 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
     if(pw->Label) {
       pl = pw->Label;
       if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
-        if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2) {
+        if(pl->y1 >= y2) if((pl->y1+pl->y2) <= y1) {
           pl->isSelected = true;  z++;
           continue;
         }

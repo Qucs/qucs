@@ -22,6 +22,7 @@
 #include "graphictext.h"
 #include "graphictextdialog.h"
 #include "main.h"
+#include "viewpainter.h"
 
 #include <qwidget.h>
 #include <qpainter.h>
@@ -47,21 +48,31 @@ GraphicText::~GraphicText()
 }
 
 // -----------------------------------------------------------------------
-void GraphicText::paint(QPainter *p)
+void GraphicText::paint(ViewPainter *p)
 {
-  p->save();
-  p->rotate(-Angle);
+  QWMatrix wm = p->Painter->worldMatrix();
+  p->Painter->setWorldMatrix(QWMatrix());
+  p->Painter->rotate(-Angle);   // automatically enables transformation
+
+  int Size = Font.pointSize();
+  Font.setPointSizeFloat( float(p->Scale * double(Size)) );
 
   int x = int(cx_d),  y = int(cy_d);
-  if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,3));
-    p->drawRect(x-2, y-2, x2+4, y2+4);
-  }
-  p->setPen(Color);
-  p->setFont(Font);
-  p->drawText(x, y, 0, 0, Qt::AlignAuto | Qt::DontClip, Text);
+//  int x = int(cx_d + wm.dx()),  y = int(cy_d + wm.dy());
+  p->Painter->setPen(Color);
+  p->Painter->setFont(Font);
+  x2 = p->drawText(Text, x, y, &y2);
+  Font.setPointSize(Size);
 
-  p->restore();
+  x2 = int(double(x2) / p->Scale);
+  y2 = int(double(y2) / p->Scale);
+  if(isSelected) {
+    p->Painter->setPen(QPen(QPen::darkGray,3));
+    p->drawRect(x-2, y-2, x2+6, y2+5);
+  }
+
+  p->Painter->setWorldMatrix(wm);
+  p->Painter->setWorldXForm(false);
 }
 
 // -----------------------------------------------------------------------

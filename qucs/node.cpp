@@ -32,21 +32,20 @@ Node::~Node()
 }
 
 // -------------------------------------------------------------
-void Node::paint(QPainter *p)
+void Node::paint(ViewPainter *p)
 {
   switch(Connections.count()) {
-    case 1:  p->setPen(QPen(QPen::red,1));  // node is open
+    case 1:  p->Painter->setPen(QPen(QPen::red,1));  // node is open
              p->drawEllipse(cx-4, cy-4, 8, 8);
              break;
     case 2:  if(Connections.getFirst()->Type == isWire)
                if(Connections.getLast()->Type == isWire) break;
-             p->fillRect(cx-2, cy-2, 4, 4, QBrush(Qt::darkBlue));
+             p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue);
              break;
-    default: QBrush b = p->brush();
-	     p->setBrush(Qt::darkBlue);
-	     p->setPen(QPen(QPen::darkBlue,1));  // more than 2 connections
+    default: p->Painter->setBrush(Qt::darkBlue);  // more than 2 connections
+	     p->Painter->setPen(QPen(QPen::darkBlue,1));
 	     p->drawEllipse(cx-3, cy-3, 6, 6);
-	     p->setBrush(b);
+	     p->Painter->setBrush(Qt::NoBrush);
              break;
   }
 

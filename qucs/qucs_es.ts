@@ -464,6 +464,10 @@
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessageBox</name>
@@ -2054,6 +2058,42 @@ Use:  qucsedit [-r] archivo
     <message>
         <source>Rectangle Voltage</source>
         <translation>Tensión Cuadrada</translation>
+    </message>
+    <message>
+        <source>ideal rectangle current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current at high pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of high pulses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of low pulses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal rectangle voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of high signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> &lt;invalid&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

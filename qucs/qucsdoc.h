@@ -45,7 +45,7 @@ public:
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
 
-  void paint(QPainter*);
+  void paint(ViewPainter*);
   void paintGrid(QPainter*, int, int, int, int);
   void paintSelected(QPainter*);
 
