@@ -504,19 +504,19 @@
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreiseigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prefix:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -5389,13 +5389,15 @@ Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponententext verschieben</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponententext verschieben
+
+Verschiebt den Eigenschaftentext von Komponenten</translation>
     </message>
 </context>
 <context>
