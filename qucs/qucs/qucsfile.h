@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Mar 27 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -40,6 +40,8 @@ public:
 
   QString createClipboardFile();
   bool    pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe);
+  QString createUndoString();
+  bool    rebuild(QString *s);
 
 private:
   bool  loadProperties(QTextStream *stream);

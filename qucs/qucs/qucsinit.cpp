@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -195,8 +195,7 @@ void QucsInit::initActions()
                      tr("&Undo"), CTRL+Key_Z, App);
   App->undo->setStatusTip(tr("Undoes the last command"));
   App->undo->setWhatsThis(tr("Undo\n\nMakes the last action undone"));
-//  connect(App->undo, SIGNAL(activated()), App, SLOT(slot()));
-  App->undo->setEnabled(false);
+  connect(App->undo, SIGNAL(activated()), App, SLOT(slotEditUndo()));
 
   App->redo = new QAction(tr("Redo"), QIconSet(QImage(BITMAPDIR "redo.png")),
                      tr("&Redo"), CTRL+Key_Y, App);

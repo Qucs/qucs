@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -84,6 +84,7 @@ public slots:
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
+    void slotEditUndo();    // makes the last operation undone
     void slotApplSettings();// open dialog to change application settings
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
