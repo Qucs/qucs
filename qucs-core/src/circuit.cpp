@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.12 2004-05-23 15:27:26 ela Exp $
+ * $Id: circuit.cpp,v 1.13 2004-05-26 20:03:39 ela Exp $
  *
  */
 
@@ -58,7 +58,7 @@ circuit::circuit () : object () {
 /* Constructor creates an unnamed instance of the circuit class with a
    certain number of ports. */
 circuit::circuit (int s) : object () {
-  assert (s >= 0 && s <= MAX_CIR_PORTS);
+  assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
   size = s;
   MatrixS = new complex[s * s];
   MatrixY = new complex[s * s];
