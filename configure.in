@@ -63,5 +63,4 @@ dnl add here all your Makefiles. This are created by configure
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ qucs/Makefile ])
 AC_CONFIG_FILES([ qucs/bitmaps/Makefile ])
-AC_CONFIG_FILES([  ])
 AC_OUTPUT
