@@ -20,7 +20,7 @@
 
 Transformer::Transformer()
 {
-  Description = "ideal transformer";
+  Description = QObject::tr("ideal transformer");
 
   Arcs.append(new Arc(-16,-18, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16, -6, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
@@ -42,7 +42,7 @@ Transformer::Transformer()
   Texts.append(new Text(-21, -8,"T"));
   Arcs.append(new Arc(-21,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  
+
 
   Ports.append(new Port(-30,-30));
   Ports.append(new Port( 30,-30));
@@ -58,7 +58,7 @@ Transformer::Transformer()
   Model = "Tr";
   Name  = "Tr";
 
-  Props.append(new Property("T", "1", true, "voltage transformation ration"));
+  Props.append(new Property("T", "1", true, QObject::tr("voltage transformation ration")));
 }
 
 Transformer::~Transformer()

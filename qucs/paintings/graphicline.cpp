@@ -233,7 +233,7 @@ bool GraphicLine::Dialog()
 {
   bool changed = false;
 
-  LineDialog *d = new LineDialog("Edit Line Properties");
+  LineDialog *d = new LineDialog(QObject::tr("Edit Line Properties"));
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());

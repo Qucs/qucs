@@ -20,14 +20,14 @@
 
 SParamFile::SParamFile(int No)
 {
-  Description = "S parameter file";
+  Description = QObject::tr("S parameter file");
 
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( -6,  0,"file"));
+  Texts.append(new Text( -6,  0,QObject::tr("file")));
 
 
   int i=0, y = 15-h;
@@ -58,7 +58,7 @@ SParamFile::SParamFile(int No)
   Model = QString("SPfile")+QString::number(No);
   Name  = "X";
 
-  Props.append(new Property("File", "test.s2p", true, "name of the s parameter file"));
+  Props.append(new Property("File", "test.s2p", true, QObject::tr("name of the s parameter file")));
 }
 
 SParamFile::~SParamFile()

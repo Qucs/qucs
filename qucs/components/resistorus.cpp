@@ -19,7 +19,7 @@
 
 ResistorUS::ResistorUS()
 {
-  Description = "resistor (US symbol)";
+  Description = QObject::tr("resistor (US symbol)");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-18,  0,-15, -7,QPen(QPen::darkBlue,2)));
@@ -43,8 +43,8 @@ ResistorUS::ResistorUS()
   Model = "R";
   Name  = "R";
 
-  Props.append(new Property("R", "50 Ohm", true, "ohmic resistance in Ohms"));
-//  Props.append(new Property("Noise", "yes", false, "thermal noise yes or no"));
+  Props.append(new Property("R", "50 Ohm", true, QObject::tr("ohmic resistance in Ohms")));
+//  Props.append(new Property("Noise", "yes", false, QObject::tr("thermal noise yes or no")));
 }
 
 ResistorUS::~ResistorUS()

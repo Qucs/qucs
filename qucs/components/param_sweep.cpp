@@ -20,7 +20,7 @@
 
 Param_Sweep::Param_Sweep()
 {
-  Description = "Parameter sweep";
+  Description = QObject::tr("Parameter sweep");
 
   Lines.append(new Line(-46,-22, 46,-22,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-46, 22, 46, 22,QPen(QPen::darkBlue,2)));
@@ -42,10 +42,10 @@ Param_Sweep::Param_Sweep()
   Model = ".SW";
   Name  = "SW";
 
-  Props.append(new Property("Param", "R1", true, "parameter to sweep"));
-  Props.append(new Property("Start", "5 Ohm", true, "start value for sweep"));
-  Props.append(new Property("Stop", "50 Ohm", true, "stop value for sweep"));
-  Props.append(new Property("Step", "5 Ohm", true, "step size for sweep"));
+  Props.append(new Property("Param", "R1", true, QObject::tr("parameter to sweep")));
+  Props.append(new Property("Start", "5 Ohm", true, QObject::tr("start value for sweep")));
+  Props.append(new Property("Stop", "50 Ohm", true, QObject::tr("stop value for sweep")));
+  Props.append(new Property("Step", "5 Ohm", true, QObject::tr("step size for sweep")));
 }
 
 Param_Sweep::~Param_Sweep()

@@ -65,6 +65,9 @@
 #include "sp_sim.h"
 #include "hb_sim.h"
 #include "param_sweep.h"
+#include "iprobe.h"
+#include "volt_noise.h"
+#include "ampere_noise.h"
 
 
 #endif

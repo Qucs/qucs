@@ -20,7 +20,7 @@
 
 Substrate::Substrate()
 {
-  Description = "substrate definition";
+  Description = QObject::tr("substrate definition");
 
   Lines.append(new Line(-30,-16, 30,-16,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,-12, 30,-12,QPen(QPen::darkBlue,2)));
@@ -56,10 +56,10 @@ Substrate::Substrate()
   Model = "SUBST";
   Name  = "Subst";
 
-  Props.append(new Property("er", "9.8", true, "permittivity"));
-  Props.append(new Property("h", "1 mm", true, "thickness in meters"));
-  Props.append(new Property("t", "35 um", true, "thickness of metalization"));
-  Props.append(new Property("tand", "0", true, "loss tangent"));
+  Props.append(new Property("er", "9.8", true, QObject::tr("permittivity")));
+  Props.append(new Property("h", "1 mm", true, QObject::tr("thickness in meters")));
+  Props.append(new Property("t", "35 um", true, QObject::tr("thickness of metalization")));
+  Props.append(new Property("tand", "0", true, QObject::tr("loss tangent")));
 }
 
 Substrate::~Substrate()

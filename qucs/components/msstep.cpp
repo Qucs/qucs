@@ -20,7 +20,7 @@
 
 MSstep::MSstep()
 {
-  Description = "microstrip impedance step";
+  Description = QObject::tr("microstrip impedance step");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
@@ -47,9 +47,9 @@ MSstep::MSstep()
   Model = "MSTEP";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, "substrate"));
-  Props.append(new Property("W1", "2 mm", true, "width 1 of the line"));
-  Props.append(new Property("W2", "1 mm", true, "width 2 of the line"));
+  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
+  Props.append(new Property("W1", "2 mm", true, QObject::tr("width 1 of the line")));
+  Props.append(new Property("W2", "1 mm", true, QObject::tr("width 2 of the line")));
 }
 
 MSstep::~MSstep()

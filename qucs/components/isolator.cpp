@@ -20,7 +20,7 @@
 
 Isolator::Isolator()
 {
-  Description = "isolator";
+  Description = QObject::tr("isolator");
 
   Lines.append(new Line( -8,  0,  8,  0,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(  8,  0,  0, -5,QPen(QPen::darkBlue,3)));
@@ -46,8 +46,8 @@ Isolator::Isolator()
   Model = "Isolator";
   Name  = "X";
 
-  Props.append(new Property("Z1", "50 Ohm", false, "reference impedance of input port"));
-  Props.append(new Property("Z2", "50 Ohm", false, "reference impedance of output port"));
+  Props.append(new Property("Z1", "50 Ohm", false, QObject::tr("reference impedance of input port")));
+  Props.append(new Property("Z2", "50 Ohm", false, QObject::tr("reference impedance of output port")));
 }
 
 Isolator::~Isolator()

@@ -201,7 +201,7 @@ bool Diagram::loadVarData(const QString& fileName)
 
   QFile file(fileName);
   if(!file.open(IO_ReadOnly)) {
-    QMessageBox::critical(0, "Error", "Cannot load dataset: "+fileName);
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot load dataset: ")+fileName);
     return false;
   }
 
@@ -275,7 +275,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
 {
   QFile file(fileName);
   if(!file.open(IO_ReadOnly)) {
-    QMessageBox::critical(0, "Error", "Cannot load dataset: "+fileName);
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot load dataset: ")+fileName);
     return 0;
   }
 
