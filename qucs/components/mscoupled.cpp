@@ -52,7 +52,7 @@ MScoupled::MScoupled()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "MSc";
+  Model = "MCOUPLED";
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
@@ -64,7 +64,9 @@ MScoupled::MScoupled()
   Props.append(new Property("S", "1 mm", true,
 	QObject::tr("spacing between the lines")));
   Props.append(new Property("Model", "Kirschning", false,
-	QObject::tr("microstrip model")+" (Kirschning,Kobayashi,Yamashita)"));
+	QObject::tr("microstrip model")+" (Kirschning,Hammerstad)"));
+  Props.append(new Property("DispModel", "Kirschning", false,
+	QObject::tr("microstrip dispersion model")+" (Kirschning,Getsinger)"));
 }
 
 MScoupled::~MScoupled()
