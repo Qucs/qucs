@@ -138,7 +138,7 @@
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished">Alle Dateien</translation>
+        <translation>Alle Dateien</translation>
     </message>
 </context>
 <context>
@@ -2072,39 +2072,39 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>sweep type</source>
-        <translation type="unfinished">Durchlaufart</translation>
+        <translation>Durchlaufart</translation>
     </message>
     <message>
         <source>polarity</source>
-        <translation type="unfinished">Polarität</translation>
+        <translation>Polarität</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation type="unfinished">Ausgabe der Arbeitspunkte in den Datensatz</translation>
+        <translation>Ausgabe der Arbeitspunkte in den Datensatz</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation type="unfinished">Ergebnis in den Datensatz ausgeben</translation>
+        <translation>Ergebnis in den Datensatz ausgeben</translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished">quasi-statisches Mikrostreifenmodell</translation>
+        <translation>quasi-statisches Mikrostreifenmodell</translation>
     </message>
     <message>
         <source>microstrip open end model</source>
-        <translation type="unfinished">Modell der offenen Mikrostreifenleitung</translation>
+        <translation>Modell der offenen Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation type="unfinished">Schaltkreissymbol</translation>
+        <translation>Schaltkreissymbol</translation>
     </message>
     <message>
         <source>calculate noise parameters</source>
-        <translation type="unfinished">Rauschparameter berechnen</translation>
+        <translation>Rauschparameter berechnen</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation type="unfinished">Interpolationsraum</translation>
+        <translation>Interpolationsraum</translation>
     </message>
 </context>
 <context>
@@ -4900,45 +4900,50 @@ Sets selected elements on grid</source>
 Setzt ausgewählte Elemente auf das Gitternetz</translation>
     </message>
     <message>
-        <source>Rumanian by Radu Circa
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt schließen</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt &amp;schließen</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließt das aktuelle Projekt</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt schließen
+
+Schließt das aktuelle Projekt</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl drucken</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke Auswahl...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckt ausgewählte Elemente</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl drucken
+
+Druckt ausgewählte Elemente des aktuellen Dokuments</translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa
+</source>
+        <translation>Rumänisch von Radu Circa
+</translation>
     </message>
 </context>
 <context>

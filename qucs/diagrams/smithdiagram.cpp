@@ -53,9 +53,9 @@ void SmithDiagram::calcCoordinate(double, double yr, double yi,
 // calculate the circles and arcs of the smith chart
 bool SmithDiagram::calcDiagram()
 {
-  Lines.clear();
-  Texts.clear();
-  Arcs.clear();
+  if(!Lines.isEmpty()) Lines.clear();
+  if(!Texts.isEmpty()) Texts.clear();
+  if(!Arcs.isEmpty()) Arcs.clear();
 
   xlow = ylow = 0.0;
   if(ymax > 1.01) xup = yup = 1.05*ymax;

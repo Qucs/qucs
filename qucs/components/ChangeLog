@@ -1,3 +1,8 @@
+2004-08-30  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
+
+	* componentdialog.cpp (slotSelectProperty): Fixed bug when
+	longer descriptions without white spaces occur.
+
 2004-08-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* componentdialog.cpp (correctDesc): New private function which
