@@ -1,3 +1,11 @@
+2004-08-31  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
+
+	* dialogs/messagebox.cpp (MessageBox): Changed
+	'DiscardAll' to 'Discard all'.
+
+	* qucs.cpp (QucsApp): Removed file extensions from
+	translations.
+
 2004-08-30  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
 	* diagrams/diagram.cpp: Including headers for finite().

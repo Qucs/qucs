@@ -480,11 +480,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DiscardAll</source>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
+        <source>Discard all</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2303,19 +2303,7 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Data Display (*.dpl)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2344,6 +2332,22 @@ Errors:
     </message>
     <message>
         <source>No page set !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -485,11 +485,15 @@
     </message>
     <message>
         <source>DiscardAll</source>
-        <translation>Renunţare totală</translation>
+        <translation type="obsolete">Renunţare totală</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Revocare</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2104,7 +2108,7 @@ Doriţi sa salvaţi modificările înaintea salvării? </translation>
     </message>
     <message>
         <source>Data Display (*.dpl)</source>
-        <translation>Afişajul de Date (*.dpl)</translation>
+        <translation type="obsolete">Afişajul de Date (*.dpl)</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
@@ -2396,11 +2400,11 @@ Erori:
     </message>
     <message>
         <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
-        <translation>Schemă (*.sch);; Afişaj de date (*.dpl);;</translation>
+        <translation type="obsolete">Schemă (*.sch);; Afişaj de date (*.dpl);;</translation>
     </message>
     <message>
         <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
-        <translation>Documente Qucs (*.sch *.dpl);; Orice Fişier (*)</translation>
+        <translation type="obsolete">Documente Qucs (*.sch *.dpl);; Orice Fişier (*)</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
@@ -2429,6 +2433,22 @@ Erori:
     <message>
         <source>No page set !</source>
         <translation>Nici o pagină setată!</translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
