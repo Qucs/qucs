@@ -51,7 +51,8 @@ MSopen::MSopen()
 	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
   Props.append(new Property("Model", "Kirschning", false,
-	QObject::tr("microstrip open end model")+" [Kirschning, Hammerstad]"));
+	QObject::tr("microstrip open end model")+" [Kirschning, Hammerstad, "
+	"Alexopoulos]"));
 }
 
 MSopen::~MSopen()
