@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cccs.cpp,v 1.5 2004/02/10 21:21:10 ela Exp $
+ * $Id: cccs.cpp,v 1.6 2004/02/17 15:30:57 ela Exp $
  *
  */
 
@@ -30,17 +30,13 @@
 #define __USE_XOPEN
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-#ifndef M_PI
-#define M_PI 3.1415926535897932384626433832795
-#endif
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "constants.h"
 #include "cccs.h"
 
 cccs::cccs () : circuit (4) {
@@ -48,7 +44,7 @@ cccs::cccs () : circuit (4) {
   setVoltageSources (1);
 }
 
-void cccs::calcS (nr_double_t frequency) {
+void cccs::calcSP (nr_double_t frequency) {
 
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
@@ -74,7 +70,7 @@ void cccs::calcS (nr_double_t frequency) {
   setS (4, 4, 0.0);
 }
 
-void cccs::calcY (void) {
+void cccs::calcDC (void) {
   nr_double_t g = getPropertyDouble ("G");
   setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
   setB (1, 1, +1/g); setB (1, 2, +1.0); setB (1, 3, -1.0); setB (1, 4, -1/g);

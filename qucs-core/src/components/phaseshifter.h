@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: phaseshifter.h,v 1.1 2004/01/13 23:23:01 ela Exp $
+ * $Id: phaseshifter.h,v 1.2 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -29,7 +29,7 @@ class phaseshifter : public circuit
 {
  public:
   phaseshifter ();
-  void calcS (nr_double_t);
+  void calcSP (nr_double_t);
 };
 
 #endif /* __PHASESHIFTER_H__ */

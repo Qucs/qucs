@@ -1,3 +1,37 @@
+2004-02-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp (solve_gauss_jordan): New solution method for
+	linear equation systems implemented.
+
+	* Makefile.am (libqucsator_a_SOURCES): The libqucsator library
+	can be used by the Qucs GUI in order to handle datasets.  The
+	header 'libqucsator.h' must be included.
+
+2004-02-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* operatingpoint.cpp: New class representing an operating
+	point of a non-linear component.
+
+	* circuit.cpp: Added the functionality in order to handle
+	the operating point of non-linear components.
+
+	* object.cpp (hasProperty): New function checking whether an
+	object has a certain property or not.
+
+	* dcsolver.cpp: Generalized the G matrix creation to apply
+	also to components with more than two ports.
+
+	* circuit.cpp (setY, getY): Made these functions depending on
+	the specified port numbers.
+
+2004-02-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp (exchange): New function for swapping two rows
+	of a matrix object.  Used during Gaussian elimination.
+
+	* eqnsys.cpp: New class implementing a linear equation system
+	solver with different kind of algorithms.
+
 2004-02-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: Vectors do have an arbitrary origin.  Used
@@ -14,7 +48,7 @@
 	* net.cpp: Ordering analysis for additional parameter sweeps
 	implemented.
 
-	* input.cpp: Handling variables correctly.  Creating veriables
+	* input.cpp: Handling variables correctly.  Creating variables
 	in a certain environment and using them later works somehow.
 
 	* dcsolver.cpp: Temporarily removed the frequency vector
@@ -46,7 +80,7 @@
 	* check_netlist.c, input.cpp: Incorporated the new DC current
 	probe.
 	
-	* check_netlist.c: Allowing the new paramter 'n' (ideality
+	* check_netlist.c: Allowing the new parameter 'n' (ideality
 	coefficient of the saturation current).
 
 	* variable.cpp, variable.h: New files.  The variable class
@@ -127,7 +161,7 @@
 2003-12-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_netlist.c: Made modifications regarding the
-	symmetrical transformator.
+	symmetrical transformer.
 
 	* input.cpp (createCircuit): Added 'sTr' component to the
 	list of available circuit components.

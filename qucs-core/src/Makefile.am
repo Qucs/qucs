@@ -32,22 +32,26 @@ bin_PROGRAMS = qucsator
 INCLUDES = -I$(top_srcdir)/src/components \
 	-I$(top_srcdir)/src/components/microstrip
 
-qucsator_LDADD = components/libcomponent.a
+qucsator_LDADD = libqucsator.a components/libcomponent.a
 
-qucsator_SOURCES = ucs.cpp logging.c strlist.cpp complex.cpp circuit.cpp    \
-	check_netlist.c parse_netlist.c scan_netlist.c dataset.cpp node.cpp \
-	check_dataset.cpp parse_dataset.cpp scan_dataset.cpp property.cpp   \
-	vector.cpp object.cpp net.cpp input.cpp check_touchstone.cpp        \
-	parse_touchstone.cpp scan_touchstone.cpp matrix.cpp analysis.cpp    \
-	spsolver.cpp dcsolver.cpp nodelist.cpp variable.cpp environment.cpp \
-	parasweep.cpp
+qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.c operatingpoint.cpp    \
+	parse_netlist.c scan_netlist.c node.cpp net.cpp input.cpp eqnsys.cpp \
+	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
+	parasweep.cpp matrix.cpp
 
 noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h     \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h      \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h        \
-	nodelist.h variable.h environment.h parasweep.h
+	nodelist.h variable.h environment.h parasweep.h eqnsys.h            \
+	operatingpoint.h libqucsator.h
 
+noinst_LIBRARIES = libqucsator.a
+
+libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
+	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
+	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
+	complex.cpp strlist.cpp logging.c
 
 generated_FILES = scan_netlist.c parse_netlist.c scan_dataset.cpp \
 	parse_dataset.cpp tokens_dataset.h tokens_netlist.h       \

@@ -1,5 +1,5 @@
 /*
- * gyrator.h - gyrator class definitions
+ * operatingpoint.h - operating point class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,19 +18,35 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.h,v 1.3 2004/02/17 15:30:58 ela Exp $
+ * $Id: operatingpoint.h,v 1.1 2004/02/17 15:30:57 ela Exp $
  *
  */
 
-#ifndef __GYRATOR_H__
-#define __GYRATOR_H__
+#ifndef __OPERATINGPOINT_H__
+#define __OPERATINGPOINT_H__
 
-class gyrator : public circuit
+class variable;
+
+class operatingpoint
 {
  public:
-  gyrator ();
-  void calcSP (nr_double_t);
-  void calcDC (void);
+  operatingpoint ();
+  operatingpoint (char *);
+  operatingpoint (char *, nr_double_t);
+  operatingpoint (const operatingpoint &);
+  virtual ~operatingpoint ();
+  operatingpoint * getNext (void) { return next; }
+  void setNext (operatingpoint * p) { next = p; }
+  void setName (char *);
+  char * getName (void);
+  nr_double_t getValue (void) { return value; }
+  void setValue (nr_double_t val) { value = val; }
+  operatingpoint * findOperatingPoint (char *);
+
+ private:
+  char * name;
+  nr_double_t value;
+  operatingpoint * next;
 };
 
-#endif /* __GYRATOR_H__ */
+#endif /* __OPERATINGPOINT_H__ */

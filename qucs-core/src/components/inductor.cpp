@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: inductor.cpp,v 1.3 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -30,24 +30,20 @@
 #define __USE_XOPEN
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-#ifndef M_PI
-#define M_PI 3.1415926535897932384626433832795
-#endif
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "constants.h"
 #include "inductor.h"
 
 inductor::inductor () : circuit (2) {
   type = CIR_INDUCTOR;
 }
 
-void inductor::calcS (nr_double_t frequency) {
+void inductor::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L") / z0;
   complex z = rect (0, 2.0 * M_PI * frequency * l);
   setS (1, 1, z / (z + 2.0));

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.7 2004/02/13 20:31:45 ela Exp $
+ * $Id: input.cpp,v 1.8 2004/02/17 15:30:57 ela Exp $
  *
  */
 
@@ -212,6 +212,8 @@ circuit * input::createCircuit (char * type) {
     return new idc ();
   else if (!strcmp (type, "Vac"))
     return new vac ();
+  else if (!strcmp (type, "Iac"))
+    return new iac ();
   else if (!strcmp (type, "Gyrator"))
     return new gyrator ();
   else if (!strcmp (type, "PShift"))

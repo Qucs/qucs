@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.8 2004/02/03 21:57:28 ela Exp $
+ * $Id: circuit.h,v 1.9 2004/02/17 15:30:57 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 class node;
 class property;
 class substrate;
+class operatingpoint;
 
 class circuit : public object
 {
@@ -36,15 +37,19 @@ class circuit : public object
   circuit (int);
   circuit (const circuit &);
   ~circuit ();
-  virtual void calcS (nr_double_t) { }
-  virtual void calcY (void) { }
-  virtual void initY (void) { }
+  virtual void calcSP (nr_double_t) { }
+  virtual void calcDC (void) { }
+  virtual void calcAC (nr_double_t) { }
+  virtual void initDC (void) { }
+  virtual void calcOperatingPoints (void) { }
   void setNode (int, char *);
   node * getNode (int);
-  complex getS (int x, int y) { return data[x - 1 + (y - 1) * size]; }
-  void setS (int x, int y, complex z) { data[x - 1 + (y - 1) * size] = z; }
-  complex getY (void) { return Y; }
-  void setY (complex y) { Y = y; }
+  complex getS (int, int);
+  void setS (int, int, complex);
+  complex getY (int, int);
+  void setY (int, int, complex);
+  nr_double_t getG (int, int);
+  void setG (int, int, nr_double_t);
   int getSize (void) { return size; }
   void print (void);
   int isPort (void) { return port; }
@@ -74,6 +79,12 @@ class circuit : public object
   void setE (int, complex);
   void setI (int, complex);
   void setV (int, complex);
+  void addOperatingPoint (char *, nr_double_t);
+  nr_double_t getOperatingPoint (char *);
+  void setOperatingPoint (char *, nr_double_t);
+  int hasOperatingPoint (char *);
+  void copyOperatingPoints (operatingpoint *);
+  void deleteOperatingPoints (void);
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -85,8 +96,8 @@ class circuit : public object
   int source;
   int nSources;
   int org;
-  complex * data;
-  complex Y;
+  complex * MatrixS;
+  complex * MatrixY;
   complex MatrixB[2 * 6];
   complex MatrixC[2 * 6];
   complex MatrixD[2];
@@ -96,6 +107,7 @@ class circuit : public object
 
   node * nodes;
   substrate * subst;
+  operatingpoint * oper;
 };
 
 #endif /* __CIRCUIT_H__ */

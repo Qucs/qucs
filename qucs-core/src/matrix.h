@@ -1,7 +1,7 @@
 /*
  * matrix.h - matrix class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.1 2003/12/20 19:03:26 ela Exp $
+ * $Id: matrix.h,v 1.2 2004/02/17 15:30:57 ela Exp $
  *
  */
 
@@ -32,12 +32,15 @@ class matrix
   matrix (int);
   matrix (int, int);
   matrix (const matrix &);
+  const matrix& operator = (const matrix &);
   ~matrix ();
   complex get (int, int);
   void set (int, int, complex);
   int getCols (void) { return cols; }
   int getRows (void) { return rows; }
   void print (void);
+  void exchangeRows (int, int);
+  void exchangeCols (int, int);
 
   // operator functions
   friend matrix& operator + (matrix&, matrix&);

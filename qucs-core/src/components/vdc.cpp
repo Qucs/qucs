@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.4 2004/01/30 21:40:35 ela Exp $
+ * $Id: vdc.cpp,v 1.5 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -45,7 +45,7 @@ vdc::vdc () : circuit (2) {
   setVoltageSources (1);
 }
 
-void vdc::calcY (void) {
+void vdc::calcDC (void) {
   setC (1, 1, +1.0); setC (1, 2, -1.0);
   setB (1, 1, +1.0); setB (1, 2, -1.0);
   setE (1, getPropertyDouble ("U"));

@@ -1,5 +1,5 @@
 /*
- * gyrator.h - gyrator class definitions
+ * eqnsys.h - equations system solver class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,19 +18,41 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.h,v 1.3 2004/02/17 15:30:58 ela Exp $
+ * $Id: eqnsys.h,v 1.1 2004/02/17 15:30:57 ela Exp $
  *
  */
 
-#ifndef __GYRATOR_H__
-#define __GYRATOR_H__
+#ifndef __EQNSYS_H__
+#define __EQNSYS_H__
 
-class gyrator : public circuit
-{
- public:
-  gyrator ();
-  void calcSP (nr_double_t);
-  void calcDC (void);
+// Definition of equation system solving algorithms.
+enum algo_type {
+  ALGO_INVERSE = 0,
+  ALGO_GAUSS,
+  ALGO_GAUSS_JORDAN
 };
 
-#endif /* __GYRATOR_H__ */
+class matrix;
+
+class eqnsys
+{
+ public:
+  eqnsys ();
+  eqnsys (eqnsys &);
+  ~eqnsys ();
+  void setAlgo (int a) { algo = a; }
+  int getAlgo (void) { return algo; }
+  void passEquationSys (matrix *, matrix *, matrix *);
+  void solve (void);
+
+ private:
+  int algo;
+  matrix * A;
+  matrix * B;
+  matrix * X;
+  void solve_inverse (void);
+  void solve_gauss (void);
+  void solve_gauss_jordan (void);
+};
+
+#endif /* __EQNSYS_H__ */

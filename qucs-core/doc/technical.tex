@@ -955,10 +955,10 @@ matrices, G, B, C, and D.
 
 \begin{equation}
 A =
-\begin{pmatrix}
+\begin{bmatrix}
 G & B\\
 C & D
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The A matrix is (M+N)$\times$(M+N) (N is the number of nodes, and M is the
@@ -1053,10 +1053,10 @@ to define than the A matrix.
 
 \begin{equation}
 x =
-\begin{pmatrix}
+\begin{bmatrix}
 v\\
 j
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The x matrix is 1$\times$(M+N) (N is the number of nodes, and M is the
@@ -1083,12 +1083,12 @@ For a circuit with N nodes we get:
 
 \begin{equation}
 v =
-\begin{pmatrix}
+\begin{bmatrix}
 v_{1}\\
 v_{2}\\
 \vdots\\
 v_{N}\\
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \subsubsection*{Rules for making the j matrix}
@@ -1100,12 +1100,12 @@ $V_{1}$, $V_{2}$ through $V_{M}$, the j matrix will be:
 
 \begin{equation}
 j =
-\begin{pmatrix}
+\begin{bmatrix}
 i_{V_{1}}\\
 i_{V_{2}}\\
 \vdots\\
 i_{V_{M}}\\
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \subsection*{The z matrix}
@@ -1117,10 +1117,10 @@ It is quite easy to formulate.
 
 \begin{equation}
 z =
-\begin{pmatrix}
+\begin{bmatrix}
 i\\
 e
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The z matrix is 1$\times$(M+N) (N is the number of nodes, and M is the
@@ -1154,7 +1154,7 @@ equal in value to the corresponding independent voltage source.
 \subsection*{A simple example}
 \addcontentsline{toc}{subsection}{A simple example}
 
-The example given in fig. (\ref{fig:MNAexample}) illustrates applying
+The example given in fig. \ref{fig:MNAexample} illustrates applying
 the rules for building the MNA matrices and how this relates to basic
 equations used in circuit analysis.
 
@@ -1178,15 +1178,15 @@ conductances of the elements connected between two nodes.
 
 \begin{equation}
 G =
-\begin{pmatrix}
+\begin{bmatrix}
 \frac{1}{R_{1}} & -\frac{1}{R_{1}}\\
 -\frac{1}{R_{1}} & \frac{1}{R_{1}} + \frac{1}{R_{2}}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 0.2 & -0.2\\
 -0.2 & 0.3
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The B matrix (which is transposed to C) is a 1$\times$2 matrix because
@@ -1195,10 +1195,10 @@ voltage source $V_{1}$ is connected to node 1.  That is why
 
 \begin{equation}
 B = C^{T} =
-\begin{pmatrix}
+\begin{bmatrix}
 1\\
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 and the D matrix is filled with zeros only because there are no dependent
@@ -1206,9 +1206,9 @@ and the D matrix is filled with zeros only because there are no dependent
 
 \begin{equation}
 D =
-\begin{pmatrix}
+\begin{bmatrix}
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The x matrix is a 1$\times$3 matrix.  The MNA equations deliver a
@@ -1217,11 +1217,11 @@ reference node and the currents through each voltage source.
 
 \begin{equation}
 x =
-\begin{pmatrix}
+\begin{bmatrix}
 v_{1}\\
 v_{2}\\
 i_{V_{1}}
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The z matrix is according to the rules for building it a 1$\times$3
@@ -1231,17 +1231,17 @@ voltage source $V_{1}$.
 
 \begin{equation}
 z =
-\begin{pmatrix}
+\begin{bmatrix}
 0\\
 I_{1}\\
 U_{1}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 0\\
 1\\
 1
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 According to the MNA algorithm the equation system is represented by
@@ -1253,41 +1253,41 @@ According to the MNA algorithm the equation system is represented by
 which is eqivalent to
 
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 G & B\\
 C & D
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 x
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 z
-\end{pmatrix}
+\end{bmatrix}
 \label{eq:MNAexample}
 \end{equation}
 
 In the example eq. (\ref{eq:MNAexample}) expands to:
 
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 \frac{1}{R_{1}} & -\frac{1}{R_{1}} & 1\\
 -\frac{1}{R_{1}} & \frac{1}{R_{1}} + \frac{1}{R_{2}} & 0\\
 1 & 0 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 v_{1}\\
 v_{2}\\
 i_{V_{1}}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 0\\
 I_{1}\\
 U_{1}
-\end{pmatrix}
+\end{bmatrix}
 \label{eq:MNAfull}
 \end{equation}
 
@@ -1295,23 +1295,23 @@ The equation systems to be solved is now defined by the following
 matrix representation.
 
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 0.2 & -0.2 & 1\\
 -0.2 & 0.3 & 0\\
 1 & 0 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 v_{1}\\
 v_{2}\\
 i_{V_{1}}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 0\\
 1\\
 1
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 Using matrix inversion the solution vector x writes as follows:
@@ -1319,17 +1319,17 @@ Using matrix inversion the solution vector x writes as follows:
 \begin{equation}
 \left[x\right] = 
 \left[A\right]^{-1}\cdot \left[z\right] = 
-\begin{pmatrix}
+\begin{bmatrix}
 v_{1}\\
 v_{2}\\
 i_{V_{1}}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 1\\
 4\\
 0.6
-\end{pmatrix}
+\end{bmatrix}
 \label{eq:MNAresult}
 \end{equation}
 
@@ -1374,9 +1374,92 @@ transforming equation I.
 i_{V_{1}} = \frac{1}{R_{1}}\cdot v_{2} - \frac{1}{R_{1}}\cdot v_{1} = 0.6\ampere
 \end{equation}
 
-The small example, shown in fig (\ref{fig:MNAexample}), and the
+The small example, shown in fig. \ref{fig:MNAexample}, and the
 excursus into artless math verifies that the MNA algorithm and classic
 electrical handiwork tend to produce the same results.
+
+\section*{Solving linear equation systems}
+\addcontentsline{toc}{section}{Solving linear equation systems}
+
+When dealing with non-linear networks the number of equation systems
+to be solved depends on the required precision of the solution and the
+average necessary iterations until the solution is stable.  This
+emphasizes the meaning of the solving procedures choice for different
+problems.
+
+\addvspace{12pt}
+
+The equation systems
+\begin{equation}
+\left[A\right] \cdot \left[x\right] = \left[z\right]
+\end{equation}
+solution can be written as
+\begin{equation}
+\left[x\right] = \left[A\right]^{-1} \cdot \left[z\right]
+\end{equation}
+
+\subsection*{Matrix inversion}
+\addcontentsline{toc}{subsection}{Matrix inversion}
+
+The elements $\beta_{\mu\nu}$ of the inverse of the matrix $A$ are
+\begin{equation}
+\beta_{\mu\nu} = \frac{A_{\mu\nu}}{det A}
+\end{equation}
+whereas $A_{\mu\nu}$ is the matrix elements $a_{\mu\nu}$ adjoint.  The
+adjoint is the sub determinant of the element $a_{\mu\nu}$ multiplied
+with $(-1)^{\mu + \nu}$.  The determinant of a square matrix can be
+recursively computed by either of the following equations.
+\begin{align}
+det A = \sum_{\mu = 1}^{n} a_{\mu\nu}\cdot A_{\mu\nu}
+\quad &\text{using the $\nu$-th column}\\
+det A = \sum_{\nu = 1}^{n} a_{\mu\nu}\cdot A_{\mu\nu}
+\quad &\text{using the $\mu$-th row}
+\end{align}
+
+A sub determinant $(n-1)$-th order of a matrix's element $a_{\mu\nu}$
+of $n$-th order is the determinant which is computed by canceling the
+$\mu$-th row and $\nu$-th column.  The following example demonstrates
+calculating the determinant of a 4th order matrix with the elements of
+the 3rd row.
+\begin{align}
+\begin{vmatrix}
+a_{11} & a_{12} & a_{13} & a_{14}\\
+a_{21} & a_{22} & a_{23} & a_{24}\\
+a_{31} & a_{32} & a_{33} & a_{34}\\
+a_{41} & a_{42} & a_{43} & a_{44}\\
+\end{vmatrix}
+&= a_{31}
+\begin{vmatrix}
+a_{12} & a_{13} & a_{14}\\
+a_{22} & a_{23} & a_{24}\\
+a_{42} & a_{43} & a_{44}\\
+\end{vmatrix}
+- a_{32}
+\begin{vmatrix}
+a_{11} & a_{13} & a_{14}\\
+a_{21} & a_{23} & a_{24}\\
+a_{41} & a_{43} & a_{44}\\
+\end{vmatrix}\\
+\nonumber
+&+ a_{33}
+\begin{vmatrix}
+a_{11} & a_{12} & a_{14}\\
+a_{21} & a_{22} & a_{24}\\
+a_{41} & a_{42} & a_{44}\\
+\end{vmatrix}
+- a_{34}
+\begin{vmatrix}
+a_{11} & a_{12} & a_{13}\\
+a_{21} & a_{22} & a_{23}\\
+a_{41} & a_{42} & a_{43}\\
+\end{vmatrix}
+\end{align}
+
+This recursive process for computing the inverse of a matrix is most
+easiest to be implemented but as well the slowest algorithm.
+
+\subsection*{Gaussian elimination}
+\addcontentsline{toc}{subsection}{Gaussian elimination}
 
 \section*{Extensions to the MNA}
 \addcontentsline{toc}{section}{Extensions to the MNA}
@@ -1418,29 +1501,29 @@ I_{1} = 0 \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = 0
 
 And in matrix representation this is:
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.&.& 0\\
 .&.&.&.& 1\\
 .&.&.&.& -1\\
 .&.&.&.& 0\\
 1 & 0 & 0 & -1 & -\frac{1}{G}
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 V_{4}\\
 I_{out}\\
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
 0\\
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 As you can see the last row which has been added by the VCCS
@@ -1479,29 +1562,29 @@ I_{1} = 0 \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = 0
 
 And in matrix representation this is:
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.&.& 0\\
 .&.&.&.& -1\\
 .&.&.&.& 1\\
 .&.&.&.& 0\\
 G & -1 & 1 & -G & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 V_{4}\\
 I_{out}\\
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
 0\\
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \subsection*{Current controlled current source}
@@ -1534,29 +1617,29 @@ I_{1} = +\frac{1}{G}\cdot I_{out} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \
 
 And in matrix representation this is:
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.&.& \frac{1}{G}\\
 .&.&.&.& 1\\
 .&.&.&.& -1\\
 .&.&.&.& -\frac{1}{G}\\
 1 & 0 & 0 & -1 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 V_{4}\\
 I_{out}\\
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
 0\\
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \subsection*{Current controlled voltage source}
@@ -1595,32 +1678,32 @@ I_{1} = I_{in} \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = -I_{in
 The matrix representation needs to be augmented by two more new rows
 (for the new unknown variables) and their corresponding columns.
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.&.& 1 & 0\\
 .&.&.&.& 0 & -1\\
 .&.&.&.& 0 & 1\\
 .&.&.&.& -1 & 0\\
 0 & 1 & -1 & 0 & -G & 0\\
 1 & 0 & 0 & -1 & 0 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 V_{4}\\
 I_{in}\\
 I_{out}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
 0\\
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \subsection*{Operational amplifier}
@@ -1653,26 +1736,26 @@ I_{1} = 0 \quad I_{2} = I_{out} \quad I_{3} = 0
 
 And in matrix representation this is:
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.& 0\\
 .&.&.& 1\\
 .&.&.& 0\\
 -1 & 0 & -1 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 I_{out}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 The operational amplifier could be considered as a special case of a
@@ -1711,29 +1794,29 @@ I_{1} = -I_{t} \quad I_{2} = T\cdot I_{t} \quad I_{3} = -T\cdot I_{t} \quad I_{4
 
 And in matrix representation this is:
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.&.& -1\\
 .&.&.&.& T\\
 .&.&.&.& -T\\
 .&.&.&.& 1\\
 1 & -T & T & -1 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 V_{4}\\
 I_{t}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 It is noticable that the additional row (part of the C matrix) and the
@@ -1748,7 +1831,7 @@ in this case.
 
 The ideal symmetrical tranformator, as shown in fig.
 \ref{fig:acstrafo}, is determined by the following equations which
-introduce one more unknown in the MNA matrix.
+introduce two more unknowns in the MNA matrix.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1784,18 +1867,18 @@ I_{2} = T_{2}\cdot I_{T2} \quad I_{3} = -T_{2}\cdot I_{T2} \quad I_{4} = I_{T2} 
 The matrix representation needs to be augmented by two more new rows
 and their corresponding columns.
 \begin{equation}
-\begin{pmatrix}
-.&.&.&.&.&.& 1 & 0\\
-.&.&.&.&.&.& T_{1} & +T_{2}\\
+\begin{bmatrix}
+.&.&.&.&.&.& -1 & 0\\
+.&.&.&.&.&.& T_{1} & T_{2}\\
 .&.&.&.&.&.& -T_{1} & -T_{2}\\
-.&.&.&.&.&.& 0 & +1\\
+.&.&.&.&.&.& 0 & 1\\
 .&.&.&.&.&.& 0 & -1\\
-.&.&.&.&.&.& +1 & 0\\
+.&.&.&.&.&.& 1 & 0\\
 1 & -T_{1} & T_{1} & 0 & 0 & -1 & 0 & 0\\
 0 & -T_{2} & T_{2} & -1 & 1 & 0 & 0 & 0
-\end{pmatrix}
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
@@ -1804,9 +1887,9 @@ V_{5}\\
 V_{6}\\
 I_{T1}\\
 I_{T2}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
@@ -1815,13 +1898,13 @@ I_{5}\\
 I_{6}\\
 0\\
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \subsection*{Gyrator}
 \addcontentsline{toc}{subsection}{Gyrator}
 
-The ideal gyrator, as shown in fig.  \ref{fig:gyrator}, is determined
+The ideal gyrator, as shown in fig. \ref{fig:gyrator}, is determined
 by the following equations which introduce two more unknowns in the
 MNA matrix.
 
@@ -1840,9 +1923,9 @@ I_{in} = \frac{1}{R}\cdot\left(V_{2} - V_{3}\right)
 \frac{1}{R}\cdot V_{2} - \frac{1}{R}\cdot V_{3} - I_{in} = 0
 \end{equation}
 \begin{equation}
-V_{2} - V_{3} = \frac{1}{R}\cdot\left(V_{1} - V_{4}\right)
+I_{out} = -\frac{1}{R}\cdot\left(V_{1} - V_{4}\right)
 \quad \rightarrow \quad
-\frac{1}{R}\cdot V_{1} - V_{2} + V_{3} - \frac{1}{R}\cdot V_{4} = 0
+-\frac{1}{R}\cdot V_{1} + \frac{1}{R}\cdot V_{4} - I_{out} = 0
 \label{eq:gyrator}
 \end{equation}
 
@@ -1856,32 +1939,32 @@ I_{1} = I_{in} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = -I_{in
 The matrix representation needs to be augmented by two more new rows
 (for the new unknown variables) and their corresponding columns.
 \begin{equation}
-\begin{pmatrix}
+\begin{bmatrix}
 .&.&.&.& 1 & 0\\
 .&.&.&.& 0 & 1\\
 .&.&.&.& 0 & -1\\
 .&.&.&.& -1 & 0\\
-0 & +\frac{1}{R} & -\frac{1}{R} & 0 & -1 & 0\\
-\frac{1}{R} & -1 & 1 & -\frac{1}{R} & 0 & 0
-\end{pmatrix}
+0 & \frac{1}{R} & -\frac{1}{R} & 0 & -1 & 0\\
+-\frac{1}{R} & 0 & 0 & \frac{1}{R} & 0 & -1
+\end{bmatrix}
 \cdot
-\begin{pmatrix}
+\begin{bmatrix}
 V_{1}\\
 V_{2}\\
 V_{3}\\
 V_{4}\\
 I_{in}\\
 I_{out}
-\end{pmatrix}
+\end{bmatrix}
 =
-\begin{pmatrix}
+\begin{bmatrix}
 I_{1}\\
 I_{2}\\
 I_{3}\\
 I_{4}\\
 0\\
 0
-\end{pmatrix}
+\end{bmatrix}
 \end{equation}
 
 \nocite{*}

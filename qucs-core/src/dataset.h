@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.h,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: dataset.h,v 1.3 2004/02/17 15:30:57 ela Exp $
  *
  */
 
@@ -40,15 +40,15 @@ class dataset : public object
   void appendVariable (vector *);
   void assignDependency (char *, char *);
   char * getFile (void);
-  void setFile (char *);
+  void setFile (const char *);
   void print (void);
   void printData (vector *, FILE *);
   vector * findDependency (char *);
   vector * findVariable (char *);
   vector * getDependencies (void) { return dependencies; }
   vector * getVariables (void) { return variables; }
-  static dataset * load (char *);
-  static dataset * load_touchstone (char *);
+  static dataset * load (const char *);
+  static dataset * load_touchstone (const char *);
 
  private:
   char * file;

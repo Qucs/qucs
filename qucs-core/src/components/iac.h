@@ -1,5 +1,5 @@
 /*
- * gyrator.h - gyrator class definitions
+ * iac.h - AC current source class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,19 +18,17 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.h,v 1.3 2004/02/17 15:30:58 ela Exp $
+ * $Id: iac.h,v 1.1 2004/02/17 15:30:58 ela Exp $
  *
  */
 
-#ifndef __GYRATOR_H__
-#define __GYRATOR_H__
+#ifndef __IAC_H__
+#define __IAC_H__
 
-class gyrator : public circuit
+class iac : public circuit
 {
  public:
-  gyrator ();
-  void calcSP (nr_double_t);
-  void calcDC (void);
+  iac ();
 };
 
-#endif /* __GYRATOR_H__ */
+#endif /* __IAC_H__ */

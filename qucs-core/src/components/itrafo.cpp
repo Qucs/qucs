@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: itrafo.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: itrafo.cpp,v 1.3 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@ itrafo::itrafo () : circuit (3) {
   type = CIR_ITRAFO;
 }
 
-void itrafo::calcS (nr_double_t frequency) {
+void itrafo::calcSP (nr_double_t) {
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t n = 2 * z0 + z;
   setS (1, 1,  (2.0 * z0 - z) / n);

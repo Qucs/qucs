@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.h,v 1.3 2004/01/28 18:19:07 ela Exp $
+ * $Id: idc.h,v 1.4 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -29,8 +29,7 @@ class idc : public circuit
 {
  public:
   idc ();
-  void calcS (nr_double_t) { }
-  void calcY (void);
+  void calcDC (void);
 };
 
 #endif /* __IDC_H__ */

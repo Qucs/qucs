@@ -1,3 +1,11 @@
+2004-02-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section*{Solving linear equation systems}): 
+	Started writing a section about solving linear equations
+	systems.
+	(subsection*{Gyrator}): Fixed description of gyrators MNA
+	matrix represention.
+
 2004-02-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex: Fixed descriptions of MNA stamps of operational

@@ -1,5 +1,5 @@
 /*
- * gyrator.h - gyrator class definitions
+ * libqucsator.h - qucsator library include file
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,19 +18,28 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.h,v 1.3 2004/02/17 15:30:58 ela Exp $
+ * $Id: libqucsator.h,v 1.1 2004/02/17 15:30:57 ela Exp $
  *
  */
 
-#ifndef __GYRATOR_H__
-#define __GYRATOR_H__
+#ifndef __LIBQUCSATOR_H__
+#define __LIBQUCSATOR_H__
 
-class gyrator : public circuit
-{
- public:
-  gyrator ();
-  void calcSP (nr_double_t);
-  void calcDC (void);
-};
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <iostream>
 
-#endif /* __GYRATOR_H__ */
+typedef double nr_double_t;
+
+#include "logging.h"
+#include "complex.h"
+#include "object.h"
+#include "strlist.h"
+#include "vector.h"
+#include "dataset.h"
+#include "check_dataset.h"
+#include "check_touchstone.h"
+
+#endif /* __LIBQUCSATOR_H__ */

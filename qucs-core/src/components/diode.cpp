@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.4 2004/02/09 18:27:42 ela Exp $
+ * $Id: diode.cpp,v 1.5 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -42,15 +42,22 @@ diode::diode () : circuit (2) {
   type = CIR_DIODE;
 }
 
-void diode::calcS (nr_double_t frequency) {
+void diode::calcSP (nr_double_t frequency) {
+  complex z = getOperatingPoint ("gd");
+  z += rect (0, getOperatingPoint ("Cd") * 2.0 * M_PI * frequency);
+  z = 1.0 / z / z0; 
+  setS (1, 1, z / (z + 2.0));
+  setS (2, 2, z / (z + 2.0));
+  setS (1, 2, 2.0 / (z + 2.0));
+  setS (2, 1, 2.0 / (z + 2.0));
 }
 
-void diode::initY (void) {
+void diode::initDC (void) {
   setV (1, 0.0);
   setV (2, 0.9);
 }
 
-void diode::calcY (void) {
+void diode::calcDC (void) {
   nr_double_t Is = getPropertyDouble ("Is");
   nr_double_t n = getPropertyDouble ("n");
   nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit;
@@ -68,5 +75,33 @@ void diode::calcY (void) {
 
   setI (1, +Ieq);
   setI (2, -Ieq);
-  setY (gd);
+
+  setY (1, 1, +gd); setY (2, 2, +gd);
+  setY (1, 2, -gd); setY (2, 1, -gd);
+}
+
+void diode::calcOperatingPoints (void) {
+  nr_double_t Is = getPropertyDouble ("Is");
+  nr_double_t n = getPropertyDouble ("n");
+  nr_double_t z = getPropertyDouble ("z");
+  nr_double_t cj0 = getPropertyDouble ("Cj0");
+  nr_double_t vd = getPropertyDouble ("Vd");
+  
+  nr_double_t Ud, Id, Ut, T, gd, Cd;
+
+  T = 290.0;
+  Ut = kB * T / Q;
+  Ud = real (getV (2) - getV (1));
+  gd = Is / Ut / n * exp (Ud / Ut / n);
+  Id = Is * (exp (Ud / Ut / n) - 1);
+
+  if (Ud < 0)
+    Cd = cj0 * pow (1 - Ud / vd, -z);
+  else
+    Cd = cj0 * (1 + z * Ud / vd);
+
+  setOperatingPoint ("gd", gd);
+  setOperatingPoint ("Id", Id);
+  setOperatingPoint ("Ud", Ud);
+  setOperatingPoint ("Cd", Cd);
 }

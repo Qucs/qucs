@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ccvs.cpp,v 1.4 2004/02/10 21:21:10 ela Exp $
+ * $Id: ccvs.cpp,v 1.5 2004/02/17 15:30:58 ela Exp $
  *
  */
 
@@ -30,17 +30,13 @@
 #define __USE_XOPEN
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-#ifndef M_PI
-#define M_PI 3.1415926535897932384626433832795
-#endif
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "constants.h"
 #include "ccvs.h"
 
 ccvs::ccvs () : circuit (4) {
@@ -48,7 +44,7 @@ ccvs::ccvs () : circuit (4) {
   setVoltageSources (2);
 }
 
-void ccvs::calcS (nr_double_t frequency) {
+void ccvs::calcSP (nr_double_t frequency) {
 
   nr_double_t g = getPropertyDouble ("G") / z0;
   nr_double_t t = getPropertyDouble ("T");
@@ -74,7 +70,7 @@ void ccvs::calcS (nr_double_t frequency) {
   setS (4, 4, 0.0);
 }
 
-void ccvs::calcY (void) {
+void ccvs::calcDC (void) {
   setB (1, 1, +1.0); setB (1, 2, +0.0); setB (1, 3, +0.0); setB (1, 4, -1.0);
   setB (2, 1, +0.0); setB (2, 2, -1.0); setB (2, 3, +1.0); setB (2, 4, +0.0);
   setC (1, 1, +0.0); setC (1, 2, +1.0); setC (1, 3, -1.0); setC (1, 4, +0.0);

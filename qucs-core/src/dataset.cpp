@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: dataset.cpp,v 1.3 2004/02/17 15:30:57 ela Exp $
  *
  */
 
@@ -181,7 +181,7 @@ char * dataset::getFile (void) {
 
 /* Sets the current output file name.  The file name is used during
    the print functionality of the dataset class. */
-void dataset::setFile (char * f) {
+void dataset::setFile (const char * f) {
   if (file) free (file);
   file = f ? strdup (f) : NULL;
 }
@@ -256,7 +256,7 @@ void dataset::printData (vector * v, FILE * f) {
 /* This static function read a full dataset from the given file and
    returns it.  On failure the function emits appropriate error
    messages and returns NULL. */
-dataset * dataset::load (char * file) {
+dataset * dataset::load (const char * file) {
   FILE * f;
   if ((f = fopen (file, "r")) == NULL) {
     logprint (LOG_ERROR, "error loading `%s': %s\n", file, strerror (errno));
@@ -281,7 +281,7 @@ dataset * dataset::load (char * file) {
 /* This static function read a full dataset from the given touchstone
    file and returns it.  On failure the function emits appropriate
    error messages and returns NULL. */
-dataset * dataset::load_touchstone (char * file) {
+dataset * dataset::load_touchstone (const char * file) {
   FILE * f;
   if ((f = fopen (file, "r")) == NULL) {
     logprint (LOG_ERROR, "error loading `%s': %s\n", file, strerror (errno));
