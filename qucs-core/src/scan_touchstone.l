@@ -4,7 +4,7 @@
 /*
  * scan_touchstone.l - scanner for Touchstone files
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_touchstone.l,v 1.2 2004/06/01 17:07:21 ela Exp $
+ * $Id: scan_touchstone.l,v 1.3 2005/02/26 09:01:51 raimi Exp $
  *
  */
 
@@ -36,6 +36,10 @@
 
 #ifdef __MINGW32__
 #include <io.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 
 #include "logging.h"
@@ -58,7 +62,7 @@ FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 SPACE    [ \t]
 
 %x COMMENT
-%option yylineno noyywrap nounput prefix="touchstone_"
+%option yylineno noyywrap nounput nounistd prefix="touchstone_"
 
 %%
 

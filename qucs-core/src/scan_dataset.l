@@ -4,7 +4,7 @@
 /*
  * scan_dataset.l - scanner for the Qucs dataset
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_dataset.l,v 1.4 2004/12/01 20:23:46 raimi Exp $
+ * $Id: scan_dataset.l,v 1.5 2005/02/26 09:01:51 raimi Exp $
  *
  */
 
@@ -36,6 +36,10 @@
 
 #ifdef __MINGW32__
 #include <io.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 
 #include "logging.h"
@@ -72,7 +76,7 @@ IEND     "/indep"
 
 
 %x COMMENT DESCRIPTION
-%option yylineno noyywrap nounput prefix="dataset_"
+%option yylineno noyywrap nounput nounistd prefix="dataset_"
 
 %%
 

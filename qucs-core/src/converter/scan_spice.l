@@ -4,7 +4,7 @@
 /*
  * scan_spice.l - scanner for a Spice netlist
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.8 2004/11/24 19:16:05 raimi Exp $
+ * $Id: scan_spice.l,v 1.9 2005/02/26 09:01:57 raimi Exp $
  *
  */
 
@@ -36,6 +36,10 @@
 
 #ifdef __MINGW32__
 #include <io.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 
 #include "check_spice.h"
@@ -107,7 +111,7 @@ MOS      ({MOS1}|{MOS2})
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
 %x STARTUP VSINGLE SWITCH
-%option yylineno noyywrap nounput prefix="spice_"
+%option yylineno noyywrap nounput nounistd prefix="spice_"
 
 %%
 

@@ -4,7 +4,7 @@
 /*
  * scan_netlist.l - scanner for the Qucs netlist
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.13 2004/12/07 22:33:31 raimi Exp $
+ * $Id: scan_netlist.l,v 1.14 2005/02/26 09:01:51 raimi Exp $
  *
  */
 
@@ -36,6 +36,10 @@
 
 #ifdef __MINGW32__
 #include <io.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
 #endif
 
 #include "logging.h"
@@ -85,7 +89,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
 
 
 %x COMMENT STR EQN
-%option yylineno noyywrap nounput prefix="netlist_"
+%option yylineno noyywrap nounput nounistd prefix="netlist_"
 
 %%
 

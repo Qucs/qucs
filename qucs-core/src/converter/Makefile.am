@@ -37,13 +37,6 @@ generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h
 
 scan_spice.cpp: scan_spice.l
 	$(LEX) -o$@ $<
-	@tmpfile="tmp.cpp"; sedfile="tmp.sed"; \
-	echo "/^#include <unistd\.h>/ c\\" > $$sedfile; \
-	echo "#if HAVE_UNISTD_H\\" >> $$sedfile; \
-	echo "#include <unistd.h>\\" >> $$sedfile; \
-	echo "#endif" >> $$sedfile; \
-	cat $@ | sed -f $$sedfile > $$tmpfile; \
-	mv -f $$tmpfile $@; rm -f $$tmpfile $$sedfile
 
 parse_spice.cpp: parse_spice.y
 	$(YACC) -v -o $@ --defines=tokens_spice.h $<
