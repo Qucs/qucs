@@ -28,6 +28,7 @@
 #include <qclipboard.h>
 #include <qapplication.h>
 #include <qmessagebox.h>
+#include <qpopupmenu.h>
 
 #include <limits.h>
 #include <stdlib.h>
@@ -65,11 +66,19 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 		viewport(), SLOT(repaint()));
   connect(this, SIGNAL(verticalSliderReleased()),
 		viewport(), SLOT(repaint()));
+
+  // .......................................................................
+  // initialize menu appearing by right mouse button click on component
+  ComponentMenu = new QPopupMenu(this);
+  focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
+				  Qt::NoButton, Qt::NoButton);
 }
 
 
 QucsView::~QucsView()
 {
+  delete ComponentMenu;
+  delete focusElement;
 }
 
 // -----------------------------------------------------------
@@ -980,6 +989,36 @@ void QucsView::contentsMousePressEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+// Is called from several MousePress functions to show right button menu.
+void QucsView::rightPressMenu(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  MAx1 = int(double(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(double(Event->pos().y())/d->Scale) + d->ViewY1;
+  focusElement = d->selectElement(MAx1, MAy1, false);
+
+  if(focusElement) {
+    switch(focusElement->Type) {
+      case isDiagramScroll:   // scroll in tabular ?
+      case isDiagramResize:   // resize diagram ?
+        focusElement->Type = isDiagram;
+        break;
+      case isPaintingResize:  // resize painting ?
+        focusElement->Type = isPainting;
+        break;
+      default: ;
+    }
+
+    focusElement->isSelected = true;
+  }
+
+  *focusMEvent = *Event;
+  ComponentMenu->popup(Event->globalPos());
+  viewport()->repaint();
+  drawn = false;
+}
+
+// -----------------------------------------------------------
 void QucsView::MPressPainting(QMouseEvent *)
 {
   if(selPaint->MousePressing()) {
@@ -993,7 +1032,7 @@ void QucsView::MPressPainting(QMouseEvent *)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressLabel(QMouseEvent *Event)
+void QucsView::PressLabel(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
@@ -1069,6 +1108,17 @@ void QucsView::MPressLabel(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+void QucsView::MPressLabel(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
+
+  PressLabel(Event);
+}
+
+// -----------------------------------------------------------
 void QucsView::MPressSelect(QMouseEvent *Event)
 {
   bool Ctrl;
@@ -1131,16 +1181,20 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 
 
 
-  viewport()->repaint();
-  drawn = false;
   if(Event->button() != Qt::LeftButton) {
     if(focusElement)  focusElement->isSelected = true;
+    *focusMEvent = *Event;
+    ComponentMenu->popup(Event->globalPos());
+    viewport()->repaint();
+    drawn = false;
     return;
   }
 
   MousePressAction = &QucsView::MouseDoNothing;
   MouseDoubleClickAction = &QucsView::MouseDoNothing;
   this->grabKeyboard();  // no keyboard inputs during move actions
+  viewport()->repaint();
+  drawn = false;
 
   if(focusElement == 0) {
     MAx2 = 0;  // if not clicking on an element => open a rectangle
@@ -1162,6 +1216,11 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressDelete(QMouseEvent *Event)
 {
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
+
   QucsDoc *d = Docs.current();
 
   Element *pe = d->selectElement(int(Event->pos().x()/d->Scale)+d->ViewX1,
@@ -1180,11 +1239,16 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressActivate(QMouseEvent *Event)
 {
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
+
   QucsDoc *d = Docs.current();
   MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
   MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
   if(!d->activateComponent(MAx1, MAy1)) {
-    if(Event->button() != Qt::LeftButton) return;
+//    if(Event->button() != Qt::LeftButton) return;
     MAx2 = 0;  // if not clicking on a component => open a rectangle
     MAy2 = 0;
     MousePressAction = &QucsView::MouseDoNothing;
@@ -1198,6 +1262,11 @@ void QucsView::MPressActivate(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressMirrorX(QMouseEvent *Event)
 {
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
+
   QucsDoc *d = Docs.current();
   int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
   int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
@@ -1223,6 +1292,11 @@ void QucsView::MPressMirrorX(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressMirrorY(QMouseEvent *Event)
 {
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
+
   QucsDoc *d = Docs.current();
   int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
   int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
@@ -1248,8 +1322,12 @@ void QucsView::MPressMirrorY(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressRotate(QMouseEvent *Event)
 {
-  QucsDoc *d = Docs.current();
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
 
+  QucsDoc *d = Docs.current();
   Element *e = d->selectElement(
 	int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
 	int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,
@@ -1366,7 +1444,10 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
 // Is called if starting point of wire is pressed
 void QucsView::MPressWire1(QMouseEvent *Event)
 {
-  if(Event->button() != Qt::LeftButton) return;
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
 
   QPainter painter(viewport());
   setPainter(&painter, Docs.current());
@@ -1478,6 +1559,11 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 // Is called for setting a marker on a diagram's graph
 void QucsView::MPressMarker(QMouseEvent *Event)
 {
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
+
   MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)
 		+Docs.current()->ViewX1;
   MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)
@@ -1496,8 +1582,12 @@ void QucsView::MPressMarker(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressOnGrid(QMouseEvent *Event)
 {
-  QucsDoc *d = Docs.current();
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
 
+  QucsDoc *d = Docs.current();
   Element *pe = d->selectElement(int(Event->pos().x()/d->Scale)+d->ViewX1,
 				 int(Event->pos().y()/d->Scale)+d->ViewY1,
 				 false);
@@ -1514,7 +1604,10 @@ void QucsView::MPressOnGrid(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressMoveText(QMouseEvent *Event)
 {
-  if(Event->button() != Qt::LeftButton) return;
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
 
   QucsDoc *d = Docs.current();
   MAx1 = int(Event->pos().x()/d->Scale)+d->ViewX1;
@@ -1537,7 +1630,10 @@ void QucsView::MPressMoveText(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressZoomIn(QMouseEvent *Event)
 {
-  if(Event->button() != Qt::LeftButton) return;
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);   // show menu on right mouse button
+    return;
+  }
 
   QucsDoc *d = Docs.current();
   MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
@@ -1891,9 +1987,8 @@ void QucsView::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MDoubleClickSelect(QMouseEvent *Event)
+void QucsView::editElement(QMouseEvent *Event)
 {
-  this->releaseKeyboard();  // allow keyboard inputs again
   if(focusElement == 0) return;
 
   Component *c;
@@ -1929,7 +2024,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
          break;
 
     case isWire:
-         MPressLabel(Event);
+         PressLabel(Event);
          break;
 
     case isNodeLabel:
@@ -1952,6 +2047,21 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
+}
+
+// -----------------------------------------------------------
+void QucsView::MDoubleClickSelect(QMouseEvent *Event)
+{
+  this->releaseKeyboard();  // allow keyboard inputs again
+  editElement(Event);
+}
+
+// -----------------------------------------------------------
+// Is called if the "edit" action is clicked on right mouse button menu.
+void QucsView::slotEditElement()
+{
+  if(focusMEvent)
+    editElement(focusMEvent);
 }
 
 // -----------------------------------------------------------

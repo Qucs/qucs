@@ -314,7 +314,7 @@ if(Axis->log) {
 
     if((zD < 1.5*zDstep) || (z == 0)) {
       if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
-      else  tmp = StringNum(zD, 'e',1);
+      else  tmp = StringNum(zD, 'e', 1);
       if(Axis->up < 0.0)  tmp = '-'+tmp;
 
       r = metrics.size(0, tmp);  // width of text
