@@ -42,9 +42,9 @@ TabDiagram::~TabDiagram()
 // calculates the text in the tabular
 bool TabDiagram::calcDiagram()
 {
-  Lines.clear();
-  Texts.clear();
-  Arcs.clear();
+  if(!Lines.isEmpty()) Lines.clear();
+  if(!Texts.isEmpty()) Texts.clear();
+  if(!Arcs.isEmpty()) Arcs.clear();
 
   QSize r;
   QFontMetrics  metrics(QucsSettings.font);

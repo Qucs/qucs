@@ -50,9 +50,9 @@ void PolarDiagram::calcCoordinate(double, double yr, double yi,
 // --------------------------------------------------------------
 bool PolarDiagram::calcDiagram()
 {
-  Lines.clear();
-  Texts.clear();
-  Arcs.clear();
+  if(!Lines.isEmpty()) Lines.clear();
+  if(!Texts.isEmpty()) Texts.clear();
+  if(!Arcs.isEmpty()) Arcs.clear();
 
   // x and y line
   Lines.append(new Line(x2>>1, y2, x2>>1, 0, GridPen));

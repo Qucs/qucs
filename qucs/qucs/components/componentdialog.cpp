@@ -235,8 +235,12 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
 
     QString s = PropDesc;
     QFontMetrics  metrics(QucsSettings.font);   // get size of text
-    while(metrics.width(s) > 270)   // if description too long, cut it
-      s = s.left(s.findRev(' ', -1)) + "....";
+    while(metrics.width(s) > 270) {  // if description too long, cut it
+      if (s.findRev(' ') != -1)
+	s = s.left(s.findRev(' ', -1)) + "....";
+      else
+	s = s.left(s.length()-5) + "....";
+    }
     Description->setText(s);
 
     if(List.count() >= 1) {    // ComboBox with value list or line edit ?
