@@ -51,6 +51,7 @@ Diagram::Diagram(int _cx, int _cy)
   yAxis.max = yAxis.up = zAxis.max = zAxis.up = 1.0;
   xAxis.GridOn = yAxis.GridOn = true;
   zAxis.GridOn = false;
+  xAxis.log = yAxis.log = zAxis.log = false;
 
   xAxis.limit_min = yAxis.limit_min = zAxis.limit_min = 0.0;
   xAxis.limit_max = yAxis.limit_max = zAxis.limit_max = 1.0;
@@ -200,12 +201,6 @@ int Diagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-int Diagram::calcCoordinate(double* &, double* &, int*, int*, Axis*)
-{
-  return 15;
-}
-
-// ------------------------------------------------------------
 int Diagram::regionCode(int x, int y)
 {
   int code=0;   // code for clipping
@@ -218,33 +213,38 @@ int Diagram::regionCode(int x, int y)
 
 // ------------------------------------------------------------
 // Cohen-Sutherland clipping algorithm
-// Returns number of bytes writen in point memory.
-int Diagram::clip(int *p, int code2)
+void Diagram::clip(int* &p)
 {
-  int x, y, dx, dy, code;
-  int x_1 = *p,     y_1 = *(p+1);
-  int x_2 = *(p+2), y_2 = *(p+3);
+  if(Name.at(0) != 'R') {
+    roundClip(p);
+    return;
+  }
+
+  int x, y, dx, dy, code, z=0;
+  int x_1 = *(p-4), y_1 = *(p-3);
+  int x_2 = *(p-2), y_2 = *(p-1);
 
   int code1 = regionCode(x_1, y_1);
-  if((code1 | code2) == 0)  return 2;  // line completly inside ?
+  int code2 = regionCode(x_2, y_2);
+  if((code1 | code2) == 0)  return;  // line completly inside ?
 
-  int z=0;
-  if(code1 != 0) if(*(p-1) != -2) { // is there already a line end flag ?
-    *(p++) = -2;
-    z++;
+  if(code1 != 0) if(*(p-5) >= 0) { // is there already a line end flag ?
+    p++;
+    *(p-5) = -2;
   }
-  if(code1 & code2) {  // line not visible at all ?
-    *p = x_2;
-    *(p+1) = y_2;
-    return z;
+  if(code1 & code2) {   // line not visible at all ?
+    *(p-4) = x_2;
+    *(p-3) = y_2;
+    p -= 2;
+    return;
   }
   if(code2 != 0) {
-    *(p+4) = -2;
-    *(p+5) = x_2;
-    *(p+6) = y_2;
+    *p     = -2;
+    *(p+1) = x_2;
+    *(p+2) = y_2;
     z += 3;
   }
-  z += 2;
+
 
   for(;;) {
     if((code1 | code2) == 0) break;  // line completly inside ?
@@ -283,11 +283,76 @@ int Diagram::clip(int *p, int code2)
     }
   }
 
-  *p = x_1;
-  *(p+1) = y_1;
-  *(p+2) = x_2;
-  *(p+3) = y_2;
-  return z;
+  *(p-4) = x_1;
+  *(p-3) = y_1;
+  *(p-2) = x_2;
+  *(p-1) = y_2;
+  p += z;
+}
+
+// ------------------------------------------------------------
+// Clipping for round diagrams (smith, polar, ...)
+void Diagram::roundClip(int* &p)
+{
+  int R = x2 >> 1;
+  int x_1 = *(p-4) - R, y_1 = *(p-3) - R;
+  int x_2 = *(p-2) - R, y_2 = *(p-1) - R;
+
+  int dt1 = R*R;   // square of radius
+  int dt2 = dt1 - x_2*x_2 - y_2*y_2;
+  dt1 -= x_1*x_1 + y_1*y_1;
+
+  int code = 0;
+  if(dt1 < 0)  code |= 1;
+  if(dt2 < 0)  code |= 2;
+  if(code == 0)  return;  // line completly inside ?
+
+  if(code & 1) if(*(p-5) >= 0) { // is there already a line end flag ?
+    p++;
+    *(p-5) = -2;
+  }
+
+  int x = x_2-x_1;
+  int y = y_2-y_1;
+  int C = x_1*x + y_1*y;
+  int D = x*x + y*y;
+  float F = float(C);
+  F = F*F + float(dt1)*float(D);
+
+  x_1 += R;
+  y_1 += R;
+  x_2 += R;
+  y_2 += R;
+  if(F <= 0.0) {   // line not visible at all ?
+    *(p-4) = x_2;
+    *(p-3) = y_2;
+    p -= 2;
+    return;
+  }
+
+  F = sqrt(F);
+  if(code & 1) {   // start point outside ?
+    R = int(F) + C;
+    *(p-4) = x_1 - x*R / D;
+    *(p-3) = y_1 - y*R / D;
+  }
+  else {
+    *(p-4) = x_1;
+    *(p-3) = y_1;
+  }
+
+  if(code & 2) {   // end point outside ?
+    R = int(F) - C;
+    *(p-2) = x_1 + x*R / D;
+    *(p-1) = y_1 + y*R / D;
+    *(p++) = -2;
+    *(p++) = x_2;
+    *(p++) = y_2;
+  }
+  else {
+    *(p-2) = x_2;
+    *(p-1) = y_2;
+  }
 }
 
 // ------------------------------------------------------------
@@ -299,25 +364,29 @@ void Diagram::calcData(Graph *g, int valid)
 
 
   if(g->countY == 0) return;
-  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 4;
+  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
   int *p_end;
   g->Points = p_end = p;
   p_end += Size - 5;   // limit of buffer
 
-  int dx, dy, xtmp, ytmp, tmp, i, z;
+  int dx, dy, xtmp, ytmp, tmp, i, z, Counter=2;
   double *px;
   double *py = g->cPointsY;
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
 
+  if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
+    Counter = -50000;
+
   double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->Style) {
-    case 0:      // *** solid line***
+    case 0:      // ***** solid line **********************************
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->cPointsX.getFirst()->Points;
 	calcCoordinate(px, py, p, p+1, pa);
+	p += 2;
 	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
 	  if(p >= p_end) {  // need to enlarge memory block ?
 	    Size += 256;
@@ -325,12 +394,13 @@ void Diagram::calcData(Graph *g, int valid)
 	    p = p_end = g->Points
 	      = (int*)realloc(g->Points, Size*sizeof(int));
 	    p += tmp;
-	    p_end += Size - 5;
+	    p_end += Size - 9;
 	  }
-	  tmp = calcCoordinate(px, py, p+2, p+3, pa);
-	  p += clip(p, tmp);  // clipping
+	  calcCoordinate(px, py, p, p+1, pa);
+	  p += 2;
+	  if(Counter >= 2)   // clipping only if an axis is manual
+	    clip(p);
 	}
-	if(tmp == 0)  p += 2;
 	*(p++) = -10;
       }
       *p = -100;
@@ -349,6 +419,7 @@ void Diagram::calcData(Graph *g, int valid)
     calcCoordinate(px, py, &xtmp, &ytmp, pa);
     *(p++) = xtmp;
     *(p++) = ytmp;
+    Counter = 1;
     for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
@@ -356,17 +427,18 @@ void Diagram::calcData(Graph *g, int valid)
       dx = xtmp - dx;
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
-      if(Flag == 1) if(dist <= 0) {
+      if(Flag == 1) if(dist <= 0.0) {
 	if(p >= p_end) {  // need to enlarge memory block ?
 	  Size += 256;
 	  tmp = p - g->Points;
 	  p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int));
 	  p += tmp;
-	  p_end += Size - 5;
+	  p_end += Size - 9;
 	}
 
 	*(p++) = xtmp;    // if stroke then save points
 	*(p++) = ytmp;
+	if((++Counter) >= 2)  clip(p);
 	continue;
       }
       alpha = atan2(double(dy), double(dx));   // slope for interpolation
@@ -376,31 +448,35 @@ void Diagram::calcData(Graph *g, int valid)
 	  tmp = p - g->Points;
 	  p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int));
 	  p += tmp;
-	  p_end += Size - 5;
+	  p_end += Size - 9;
 	}
 
 	*(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
-        *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+	*(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+	if((++Counter) >= 2)  clip(p);
 
-         if(Flag == 0) {
-            dist -= Stroke;
-            if(dist <= 0) {
-               *(p++) = xtmp;  // don't forget point after ...
-               *(p++) = ytmp;  // ... interpolated point
-            }
-         }
-         else {
-            dist -= Space;
-            *(p++) = -2;  // value for interrupt stroke
-         }
-         Flag ^= 1; // toggle between stroke and space
+        if(Flag == 0) {
+          dist -= Stroke;
+          if(dist <= 0) {
+	    *(p++) = xtmp;  // don't forget point after ...
+	    *(p++) = ytmp;  // ... interpolated point
+	    if((++Counter) >= 2)  clip(p);
+          }
+        }
+        else {
+	  dist -= Space;
+	  if(*(p-3) < 0)  p -= 2;
+	  else *(p++) = -2;  // value for interrupt stroke
+	  if(Counter < 0)  Counter = -50000;   // if auto-scale
+	  else  Counter = 0;
+        }
+        Flag ^= 1; // toggle between stroke and space
       }
 
     } // of x loop
     *(p++) = -10;
   } // of y loop
   *p = -100;
-
 }
 
 // -------------------------------------------------------
@@ -964,8 +1040,8 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   return false;   // end tag missing
 }
 
-// ------------------------------------------------------------
-void Diagram::createSmithChart(Axis *Axis, int Mode)
+// --------------------------------------------------------------
+void Diagram::calcSmithAxisScale(Axis *Axis, int& GridX, int& GridY)
 {
   xAxis.low = xAxis.min;
   xAxis.up  = xAxis.max;
@@ -976,8 +1052,21 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
   if(Axis->autoScale) {
     if(Axis->max > 1.01)  Axis->up = 1.05*Axis->max;
     else  Axis->up = 1.0;
+    GridX = GridY = 4;
   }
-  else  Axis->up = Axis->limit_max;
+  else {
+    Axis->up = Axis->limit_max;
+    GridX = GridY = int(Axis->step);
+  }
+}
+
+// ------------------------------------------------------------
+void Diagram::createSmithChart(Axis *Axis, int Mode)
+{
+  int GridX;    // number of arcs with re(z)=const
+  int GridY;    // number of arcs with im(z)=const
+  calcSmithAxisScale(Axis, GridX, GridY);
+
 
   if(!xAxis.GridOn)  return;
 
@@ -986,9 +1075,6 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
   bool Below  = ((Mode & 4) == 4);   // paint lower half ?
 
   int dx2 = x2>>1;
-
-  int GridX = 4;    // number of arcs with re(z)=const
-  int GridY = 4;    // number of arcs with im(z)=const
 
   double im, n_cos, n_sin, real, real1, real2, root;
   double rMAXq = Axis->up*Axis->up;
@@ -1062,12 +1148,12 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 
   for(m=1; m<GridX; m++) {
     im = m*(Axis->up+1.0)/GridX - Axis->up;
-    x  = int(im/Axis->up*double(dx2));
-    y  = int((1.0-im)/Axis->up*double(dx2));    // diameter
+    x  = int(im/Axis->up*double(dx2));        // center
+    y  = int((1.0-im)/Axis->up*double(dx2));  // diameter
 
     if(Zplane)  x += dx2;
     else  x = 0;
-    if(fabs(fabs(im)-1.0) > 0.4)   // if too near to |r|=1, it looks ugly
+    if(fabs(fabs(im)-1.0) > 0.2)   // if too near to |r|=1, it looks ugly
       Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
 
     if(Axis->up > 1.0) {  // draw arcs on the rigth-handed side ?
@@ -1115,6 +1201,35 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 }
 
 
+// --------------------------------------------------------------
+void Diagram::calcPolarAxisScale(Axis *Axis, double& numGrids,
+				 double& GridStep, double& zD)
+{
+  if(Axis->autoScale) {  // auto-scale or user defined limits ?
+    double Expo, Base;
+    numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
+    Expo = floor(log10(Axis->max/numGrids));
+    Base = Axis->max/numGrids/pow(10.0,Expo);// get first significant digit
+    if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
+      if(Base < 1.5) Base = 1.0;
+      else Base = 2.0;
+    }
+    else {
+      if(Base < 7.5) Base = 5.0;
+      else { Base = 1.0; Expo++; }
+    }
+    GridStep = Base * pow(10.0,Expo); // grid distance in real values
+    numGrids -= floor(numGrids - Axis->max/GridStep); // correct num errors
+    Axis->up = GridStep*numGrids;
+  }
+  else {   // no auto-scale
+    Axis->up = Axis->limit_max;
+    GridStep  = Axis->step;
+    numGrids  = Axis->limit_max / Axis->step;
+  }
+  zD = double(x2) / numGrids;   // grid distance in pixel
+}
+
 // ------------------------------------------------------------
 void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 {
@@ -1148,29 +1263,8 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   char form;
   double Expo, Base, numGrids, GridStep, zD;
   if(xAxis.GridOn) {
+    calcPolarAxisScale(Axis, numGrids, GridStep, zD);
 
-    if(Axis->autoScale) {  // auto-scale or user defined limits ?
-      numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
-      Expo = floor(log10(Axis->max/numGrids));
-      Base = Axis->max/numGrids/pow(10.0,Expo);// get first significant digit
-      if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
-        if(Base < 1.5) Base = 1.0;
-        else Base = 2.0;
-      }
-      else {
-        if(Base < 7.5) Base = 5.0;
-        else { Base = 1.0; Expo++; }
-      }
-      GridStep = Base * pow(10.0,Expo); // grid distance in real values
-      numGrids -= floor(numGrids - Axis->max/GridStep); // correct num errors
-      Axis->up = GridStep*numGrids;
-    }
-    else {   // no auto-scale
-      Axis->up = Axis->limit_max;
-      GridStep  = Axis->step;
-      numGrids  = Axis->limit_max / Axis->step;
-    }
-    zD = double(x2) / numGrids;   // grid distance in pixel
     if(fabs(log10(Axis->up)) < 3.0)  { form = 'g';  Prec = 3; }
     else  { form = 'e';  Prec = 0; }
 

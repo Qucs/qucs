@@ -336,26 +336,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>x-Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>left y-Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>right y-Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limits</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -365,6 +345,18 @@
     </message>
     <message>
         <source>stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2164,7 +2156,8 @@ Very simple text editor for Qucs
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>

@@ -33,8 +33,9 @@ public:
 
 
   PSDiagram* newOne();
-  int calcDiagram();
-  int calcCoordinate(double* &, double* &, int*, int*, Axis*);
+  int  calcDiagram();
+  void calcLimits();
+  void calcCoordinate(double* &, double* &, int*, int*, Axis*);
 };
 
 #endif

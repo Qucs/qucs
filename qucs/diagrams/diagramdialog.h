@@ -70,6 +70,7 @@ public slots:
   void slotManualX(int);
   void slotManualY(int);
   void slotManualZ(int);
+  void slotChangeTab(QWidget*);
 
 public:
   Diagram *Diag;
@@ -85,7 +86,7 @@ public:
   QRegExp     Expr;
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
-  QCheckBox   *GridOn, *GridLogX, *GridLogYl, *GridLogYr;
+  QCheckBox   *GridOn, *GridLogX, *GridLogY, *GridLogZ;
   QCheckBox   *manualX, *manualY, *manualZ;
   QLineEdit   *startX, *stepX, *stopX;
   QLineEdit   *startY, *stepY, *stopY;

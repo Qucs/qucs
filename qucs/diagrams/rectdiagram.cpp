@@ -32,8 +32,6 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   x3 = 247;
 
   Name = "Rect";
-
-  xAxis.log = yAxis.log = zAxis.log = false;
   calcDiagram();
 }
 
@@ -42,10 +40,9 @@ RectDiagram::~RectDiagram()
 }
 
 // ------------------------------------------------------------
-int RectDiagram::calcCoordinate(double* &xD, double* &yD,
+void RectDiagram::calcCoordinate(double* &xD, double* &yD,
 				 int *px, int *py, Axis *pa)
 {
-//  int xc, yc;
   double x  = *(xD++);
   double yr = *(yD++);
   double yi = *(yD++);
@@ -64,16 +61,23 @@ int RectDiagram::calcCoordinate(double* &xD, double* &yD,
       *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)
 		*double(y2) + 0.5);
   }
-
-  return regionCode(*px, *py);
 }
 
 // --------------------------------------------------------------
 void RectDiagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				double& zDstep, double& GridStep, double Dist)
 {
-  double numGrids, Base, Expo, corr;
+  if(fabs(Axis->max-Axis->min) < 1e-200) {
+    Axis->max += fabs(Axis->max);
+    Axis->min -= fabs(Axis->min);
+  }
+  if(Axis->max == 0) if(Axis->min == 0) {
+    Axis->max = 1;
+    Axis->min = -1;
+  }
+  Axis->low = Axis->min; Axis->up = Axis->max;
 
+  double numGrids, Base, Expo, corr;
 if(Axis->autoScale) {
   numGrids = floor(Dist/60.0);   // minimal grid is 60 pixel
   if(numGrids < 1.0) Base = Axis->max-Axis->min;
@@ -129,7 +133,7 @@ if(Axis->autoScale) {
 	}
       }
     }
-    else { Axis->low -= zD;  zD = 0.0; }
+    else { Axis->low -= zD; zD = 0.0; }
   }
 
   GridNum = Axis->low + zD;
@@ -146,11 +150,38 @@ else {   // user defined limits
 }
 
 // --------------------------------------------------------------
-void RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
+bool RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
 				   double& zDstep, double& corr, int len)
 {
-  double Base, Expo;
+  if(fabs(Axis->max-Axis->min) < 1e-200) {
+    Axis->max += fabs(Axis->max);
+    Axis->min -= fabs(Axis->min);
+  }
+  if(Axis->max == 0) if(Axis->min == 0) {
+    Axis->max = 1;
+    Axis->min = -1;
+  }
+  Axis->low = Axis->min; Axis->up = Axis->max;
 
+  if(!Axis->autoScale) {
+    Axis->low = Axis->limit_min;
+    Axis->up  = Axis->limit_max;
+  }
+
+
+  bool set_log=false;
+  double tmp;
+  if(Axis->max < 0.0) {   // for negative values
+    tmp = Axis->min;
+    Axis->min = -Axis->max;
+    Axis->max = -tmp;
+    tmp = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -tmp;
+    set_log = true;
+  }
+
+  double Base, Expo;
   if(Axis->autoScale) {
     Expo = floor(log10(Axis->max));
     Base = Axis->max/pow(10.0,Expo);
@@ -171,8 +202,6 @@ void RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
     zDstep = pow(10.0,Expo);
   }
   else {
-    Axis->low = Axis->limit_min;
-    Axis->up  = Axis->limit_max;
     Expo = floor(log10(Axis->low));
     Base = ceil(Axis->low/pow(10.0,Expo));
     zD = Base * pow(10.0, Expo);
@@ -182,6 +211,46 @@ void RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
     z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
   }
+
+  if(set_log) {   // set back values ?
+    tmp = Axis->min;
+    Axis->min = -Axis->max;
+    Axis->max = -tmp;
+    tmp = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -tmp;
+  }
+  return set_log;
+}
+
+// --------------------------------------------------------------
+void RectDiagram::calcLimits()
+{
+  int i;
+  double a, b, c;
+  if(xAxis.log) {
+    calcAxisLogScale(&xAxis, i, a, b, c, x2);
+    xAxis.step = 1.0;
+  }
+  else  calcAxisScale(&xAxis, a, b, c, xAxis.step, double(x2));
+  xAxis.limit_min = xAxis.low;
+  xAxis.limit_max = xAxis.up;
+
+  if(yAxis.log) {
+    calcAxisLogScale(&yAxis, i, a, b, c, y2);
+    yAxis.step = 1.0;
+  }
+  else  calcAxisScale(&yAxis, a, b, c, yAxis.step, double(y2));
+  yAxis.limit_min = yAxis.low;
+  yAxis.limit_max = yAxis.up;
+
+  if(zAxis.log) {
+    calcAxisLogScale(&zAxis, i, a, b, c, y2);
+    zAxis.step = 1.0;
+  }
+  else  calcAxisScale(&zAxis, a, b, c, zAxis.step, double(y2));
+  zAxis.limit_min = zAxis.low;
+  zAxis.limit_max = zAxis.up;
 }
 
 // --------------------------------------------------------------
@@ -199,18 +268,12 @@ bool RectDiagram::calcYAxis(Axis *Axis, int x0)
 
   bool set_log = false;
 if(Axis->log) {
-  if(Axis->max*Axis->min <= 0.0)  return false;  // invalid
-  if(Axis->max < 0.0) {   // for negative values
-    corr = Axis->min;
-    Axis->min = -Axis->max;
-    Axis->max = -corr;
-    corr = Axis->low;
-    Axis->low = -Axis->up;
-    Axis->up  = -corr;
-    set_log = true;
+  if(Axis->autoScale) {
+    if(Axis->max*Axis->min <= 0.0)  return false;  // invalid
   }
+  else  if(Axis->limit_min*Axis->limit_max <= 0.0)  return false;  // invalid
 
-  calcAxisLogScale(Axis, z, zD, zDstep, corr, y2);
+  set_log = calcAxisLogScale(Axis, z, zD, zDstep, corr, y2);
 
   if(set_log) z = y2;
   while((z <= y2) && (z >= 0)) {    // create all grid lines
@@ -235,21 +298,16 @@ if(Axis->log) {
 
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
-    if(set_log)  z = y2 - z;
-  }
-  if(set_log) {   // set back values ?
-    corr = Axis->min;
-    Axis->min = -Axis->max;
-    Axis->max = -corr;
-    corr = Axis->low;
-    Axis->low = -Axis->up;
-    Axis->up  = -corr;
+    if(set_log) {
+      z = int(corr*log10(zD / -Axis->up) + 0.5); // int(..) implies floor(..)
+      z = y2 - z;
+    }
+    else
+      z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
   }
 }
 else {  // not logarithmical
   calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(y2));
-
 
   double Expo;
   if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
@@ -290,35 +348,6 @@ int RectDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  if(fabs(xAxis.max-xAxis.min) < 1e-200) {
-    xAxis.max += fabs(xAxis.max);
-    xAxis.min -= fabs(xAxis.min);
-  }
-  if(fabs(yAxis.max-yAxis.min) < 1e-200) {
-    yAxis.max += fabs(yAxis.max);
-    yAxis.min -= fabs(yAxis.min);
-  }
-  if(fabs(zAxis.max-zAxis.min) < 1e-200) {
-    zAxis.max += fabs(zAxis.max);
-    zAxis.min -= fabs(zAxis.min);
-  }
-  if(yAxis.max == 0) if(yAxis.min == 0) {
-    yAxis.max = 1;
-    yAxis.min = -1;
-  }
-  if(zAxis.max == 0) if(zAxis.min == 0) {
-    zAxis.max = 1;
-    zAxis.min = -1;
-  }
-  if(xAxis.max == 0) if(xAxis.min == 0) {
-    xAxis.max = 1;
-    xAxis.min = -1;
-  }
-  xAxis.low = xAxis.min; xAxis.up = xAxis.max;
-  yAxis.low = yAxis.min; yAxis.up = yAxis.max;
-  zAxis.low = zAxis.min; zAxis.up = zAxis.max;
-
-
   int z;
   double GridStep, corr, zD, zDstep, GridNum;
 
@@ -329,18 +358,12 @@ int RectDiagram::calcDiagram()
 
   // ====  x grid  =======================================================
 if(xAxis.log) {
-  if(xAxis.max*xAxis.min <= 0.0) goto Frame;  // invalid
-  if(xAxis.max < 0.0) {
-    corr = xAxis.min;
-    xAxis.min = -xAxis.max;
-    xAxis.max = -corr;
-    corr = xAxis.low;
-    xAxis.low = -xAxis.up;
-    xAxis.up  = -corr;
-    set_log = true;
+  if(xAxis.autoScale) {
+    if(xAxis.max*xAxis.min <= 0.0)  goto Frame;  // invalid
   }
+  else  if(xAxis.limit_min*xAxis.limit_max <= 0.0)  goto Frame;  // invalid
 
-  calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
+  set_log = calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
 
   if(set_log) z = x2;
   while((z <= x2) && (z >= 0)) {    // create all grid lines
@@ -359,16 +382,12 @@ if(xAxis.log) {
 
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    z = int(corr*log10(zD / xAxis.low) + 0.5); // int(..) implies floor(..)
-    if(set_log)  z = x2 - z;
-  }
-  if(set_log) {   // set back values ?
-    corr = xAxis.min;
-    xAxis.min = -xAxis.max;
-    xAxis.max = -corr;
-    corr = xAxis.low;
-    xAxis.low = -xAxis.up;
-    xAxis.up  = -corr;
+    if(set_log) {
+      z = int(corr*log10(zD / -xAxis.up) + 0.5); // int(..) implies floor(..)
+      z = x2 - z;
+    }
+    else
+      z = int(corr*log10(zD / xAxis.low) + 0.5); // int(..) implies floor(..)
   }
 }
 else {  // not logarithmical
