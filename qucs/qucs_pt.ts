@@ -2984,6 +2984,10 @@ Edits the schematic</source>
         <source>Edit Properties</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4084,7 +4088,7 @@ Sobre a aplicação</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation>&amp;Sobre Qt...</translation>
+        <translation type="obsolete">&amp;Sobre Qt...</translation>
     </message>
     <message>
         <source>About Qt
@@ -4261,6 +4265,52 @@ Moves the property text of components</source>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text editor
+
+Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis
+
+Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
+
 </source>
         <translation type="unfinished"></translation>
     </message>

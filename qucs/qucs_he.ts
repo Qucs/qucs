@@ -2924,6 +2924,10 @@ Edits the symbol for this schematic</source>
 Edits the schematic</source>
         <translation>ערוך סכימה עורך את הסכימה</translation>
     </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4036,7 +4040,7 @@ About the application</source>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation>אודות Q&amp;T...</translation>
+        <translation type="obsolete">אודות Q&amp;T...</translation>
     </message>
     <message>
         <source>About Qt
@@ -4187,6 +4191,52 @@ Qt universal circuit simulator
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation>Hungarian by Jozsef Bus</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text editor
+
+Starts the Qucs text editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter synthesis
+
+Starts QucsFilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

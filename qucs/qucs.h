@@ -114,6 +114,9 @@ public slots:
     void slotShowOne();
     void slotZoomOut(); // Zoom out by 2
 
+    void slotCallEditor();
+    void slotCallFilter();
+
     // for menu that appears by right click in content ListView
     void slotShowContentMenu(QListViewItem*, const QPoint&, int);
     void slotCMenuOpen();
@@ -162,7 +165,7 @@ public:
     QAction *magMinus, *distrHor, *distrVert, *filePrintSel;
     QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
     QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
-    QAction *helpIndex, *helpGetStart, *symEdit;
+    QAction *helpIndex, *helpGetStart, *symEdit, *callEditor, *callFilter;
 
     QAction *activeAction;    // pointer to the action selected by the user
     QucsActions  Acts;    // contains most of the toggle actions

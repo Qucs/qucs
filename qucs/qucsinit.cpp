@@ -497,6 +497,20 @@ void QucsInit::initActions()
   connect(Acts->insLabel, SIGNAL(toggled(bool)),
 	  Acts, SLOT(slotInsertLabel(bool)));
 
+  App->callEditor = new QAction(tr("Text editor"), tr("Text Editor"),
+				CTRL+Key_1, App);
+  App->callEditor->setStatusTip(tr("Starts the Qucs text editor"));
+  App->callEditor->setWhatsThis(
+			tr("Text editor\n\nStarts the Qucs text editor"));
+  connect(App->callEditor, SIGNAL(activated()), App, SLOT(slotCallEditor()));
+
+  App->callFilter = new QAction(tr("Filter synthesis"), tr("Filter synthesis"),
+				CTRL+Key_2, App);
+  App->callFilter->setStatusTip(tr("Starts QucsFilter"));
+  App->callFilter->setWhatsThis(
+			tr("Filter synthesis\n\nStarts QucsFilter"));
+  connect(App->callFilter, SIGNAL(activated()), App, SLOT(slotCallFilter()));
+
   App->simulate =
     new QAction(tr("Simulate"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "gear.png")),
@@ -578,7 +592,7 @@ void QucsInit::initActions()
   helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
   connect(helpAboutApp, SIGNAL(activated()), SLOT(slotHelpAbout()));
 
-  helpAboutQt = new QAction(tr("About Qt"), tr("&About Qt..."), 0, App);
+  helpAboutQt = new QAction(tr("About Qt"), tr("About Qt..."), 0, App);
   helpAboutQt->setStatusTip(tr("About Qt"));
   helpAboutQt->setWhatsThis(tr("About Qt\n\nAbout Qt by Trolltech"));
   connect(helpAboutQt, SIGNAL(activated()), SLOT(slotHelpAboutQt()));
@@ -650,6 +664,10 @@ void QucsInit::initMenuBar()
   App->projClose->addTo(projMenu);
   App->projDel->addTo(projMenu);
 
+  toolMenu = new QPopupMenu();  // menuBar entry toolMenu
+  App->callEditor->addTo(toolMenu);
+  App->callFilter->addTo(toolMenu);
+
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);
   App->dpl_sch->addTo(simMenu);
@@ -677,6 +695,7 @@ void QucsInit::initMenuBar()
   App->menuBar()->insertItem(tr("&Edit"), editMenu);
   App->menuBar()->insertItem(tr("&Insert"), insMenu);
   App->menuBar()->insertItem(tr("&Project"), projMenu);
+  App->menuBar()->insertItem(tr("&Tools"), toolMenu);
   App->menuBar()->insertItem(tr("&Simulation"), simMenu);
   App->menuBar()->insertItem(tr("&View"), viewMenu);
   App->menuBar()->insertSeparator();
@@ -783,6 +802,7 @@ void QucsInit::slotHelpAbout()
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
     tr("Simulator by Stefan Jahn\n")+
     tr("Special thanks to Jens Flucke and Raimund Jacob\n\n")+
+    tr("QucsFilter by Toyoyuki Ishikawa and Michael Margraf\n\n")+
     tr("Translations:\n")+
     tr("German by Stefan Jahn\n")+
     tr("Polish by Dariusz Pienkowski\n")+
