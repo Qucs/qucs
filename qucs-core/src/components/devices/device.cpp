@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.1 2004-06-19 07:34:55 ela Exp $
+ * $Id: device.cpp,v 1.2 2004-06-25 22:09:23 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@ void device::applyResistance (circuit * res, nr_double_t Rs) {
   res->setY (1, 2, -g); res->setY (2, 1, -g);
 
   // apply constant S-Matrix
-  nr_double_t r = Rs / 50.0 /* z0 */;
+  nr_double_t r = Rs / circuit::z0;
   res->setS (1, 1, r / (r + 2.0)); res->setS (1, 2, 2.0 / (r + 2.0));
   res->setS (2, 2, r / (r + 2.0)); res->setS (2, 1, 2.0 / (r + 2.0));
 }

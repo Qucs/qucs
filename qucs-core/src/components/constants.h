@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.8 2004-05-16 13:48:40 ela Exp $
+ * $Id: constants.h,v 1.9 2004-06-25 22:09:23 ela Exp $
  *
  */
 
@@ -66,5 +66,6 @@
 #define H    6.626069311e-34          /* Planck constant           */
 #define K    -273.15                  /* absolute 0 in centigrade  */
 #define Z0   376.73031346958504364963 /* wave resistance in vacuum */
+#define T0   290                      /* standard temperatur       */
 
 #endif /* __CONSTANTS_H__ */

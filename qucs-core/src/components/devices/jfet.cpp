@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.4 2004-06-24 12:49:16 margraf Exp $
+ * $Id: jfet.cpp,v 1.5 2004-06-25 22:09:23 ela Exp $
  *
  */
 
@@ -134,7 +134,7 @@ void jfet::calcDC (void) {
 
   // apply polarity of JFET
   char * type = getPropertyString ("Type");
-  nr_double_t pol = (type && !strcmp (type, "pfet")) ? -1 : 1;
+  nr_double_t pol = !strcmp (type, "pfet") ? -1 : 1;
 
   T = -K + 26.5;
   Ut = T * kB / Q;
@@ -256,7 +256,7 @@ void jfet::calcOperatingPoints (void) {
 
   // apply polarity of JFET
   char * type = getPropertyString ("Type");
-  nr_double_t pol = (type && !strcmp (type, "pfet")) ? -1 : 1;
+  nr_double_t pol = !strcmp (type, "pfet") ? -1 : 1;
 
   T = -K + 26.5;
   Ut = kB * T / Q;
