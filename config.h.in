@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
 
+/* Where the data files go. */
+#undef BITMAPDIR
+
 /* Define if you have the CoreAudio API */
 #undef HAVE_COREAUDIO
 
