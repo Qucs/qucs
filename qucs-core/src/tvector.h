@@ -18,12 +18,28 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.3 2004-10-14 13:28:25 ela Exp $
+ * $Id: tvector.h,v 1.4 2004-10-21 13:51:17 ela Exp $
  *
  */
 
 #ifndef __TVECTOR_H__
 #define __TVECTOR_H__
+
+template <class nr_type_t>
+class tvector;
+
+template <class nr_type_t>
+nr_double_t maxnorm (tvector<nr_type_t>);
+template <class nr_type_t>
+nr_double_t norm (tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator + (tvector<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator - (tvector<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tvector<nr_type_t>, nr_double_t);
+template <class nr_type_t>
+tvector<nr_type_t> operator * (nr_double_t, tvector<nr_type_t>);
 
 template <class nr_type_t>
 class tvector
@@ -43,13 +59,13 @@ class tvector
   void print (void);
 
   // some basic vector operations
-  friend tvector operator +<nr_type_t> (tvector, tvector);
-  friend tvector operator -<nr_type_t> (tvector, tvector);
-  friend tvector operator *<nr_type_t> (tvector, nr_double_t);
-  friend tvector operator *<nr_type_t> (nr_double_t, tvector);
+  friend tvector operator +<> (tvector, tvector);
+  friend tvector operator -<> (tvector, tvector);
+  friend tvector operator *<> (tvector, nr_double_t);
+  friend tvector operator *<> (nr_double_t, tvector);
 
-  friend nr_double_t norm<nr_type_t> (tvector);
-  friend nr_double_t maxnorm<nr_type_t> (tvector);
+  friend nr_double_t norm<> (tvector);
+  friend nr_double_t maxnorm<> (tvector);
 
  private:
   int size;
