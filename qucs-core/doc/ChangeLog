@@ -1,3 +1,9 @@
+2004-07-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{Noise Wave Correlation Matrix in 
+	CAE}): Fixed two of the formulas for noise correlation matrix
+	elements.
+
 2004-07-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Mixed Two-Port matrix 
