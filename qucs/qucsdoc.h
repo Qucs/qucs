@@ -3,7 +3,7 @@
                              -------------------
     begin                : Wed Sep 3 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -42,7 +42,7 @@ public:
   ~QucsDoc();
 
   void setName(const QString& _Name);
-  void setChanged(bool c);
+  void setChanged(bool c, bool fillStack=false);
 
   void paint(QPainter *p);
   void paintGrid(QPainter *p, int StartX, int StartY, int Width, int Height);
@@ -102,6 +102,7 @@ public:
   bool    paste(QTextStream *stream, QPtrList<Element> *pe);
   bool    load();
   int     save();
+  bool    undo();
 
   void    reloadGraphs();
   void    setOnGrid(int& x, int& y);
@@ -127,11 +128,12 @@ public:
   int     GridX, GridY;
   bool    GridOn;
   double  Scale;
-  int PosX, PosY;    // upper left corner of the visible area (only for remembering during seeing another open document)
+  int PosX, PosY;    // upper left corner of visible area (only for remembering during seeing another open document)
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
   QPtrList<Element> ElementCache;
+  QPtrList<QString> UndoStack;
 };
 
 

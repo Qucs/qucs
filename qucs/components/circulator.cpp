@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "circulator.h"
+#include "../main.h"
 
 
 Circulator::Circulator()
@@ -41,7 +42,7 @@ Circulator::Circulator()
   x2 =  30; y2 =  30;
 
   tx = x1+4;
-  ty = y2+4;
+  ty = y1-QucsSettings.font.pointSize()-4;
   Sign  = "Circulator";
   Model = "Circulator";
   Name  = "X";

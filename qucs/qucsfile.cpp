@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Mar 27 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -94,10 +94,8 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
   QString Line;
 
   Line = stream->readLine();
-  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-//    QMessageBox::critical(0, "Error", "Clipboard content is not a Qucs schematic!");
+  if(Line.left(16) != "<Qucs Schematic ")   // wrong file type ?
     return false;
-  }
 
   QString s = PACKAGE_VERSION;
   Line = Line.mid(16, Line.length()-17);
@@ -137,7 +135,8 @@ int QucsFile::save()
 {
   QFile file(Doc->DocName);
   if(!file.open(IO_WriteOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot save document!"));
+    QMessageBox::critical(0, QObject::tr("Error"),
+				QObject::tr("Cannot save document!"));
     return -1;
   }
 
@@ -146,36 +145,40 @@ int QucsFile::save()
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
   stream << "<Properties>\n";
-  stream << "   <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","<<Doc->ViewX2<<","<<Doc->ViewY2;
-                 stream << ","<<Doc->Scale<<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
-  stream << "   <Grid=" << Doc->GridX<<","<<Doc->GridY<<","<<Doc->GridOn << ">\n";
+  stream << "   <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
+			<< Doc->ViewX2<<","<<Doc->ViewY2;
+  stream << ","<<Doc->Scale<<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
+  stream << "   <Grid=" << Doc->GridX<<","<<Doc->GridY<<","
+			<< Doc->GridOn << ">\n";
   stream << "   <DataSet=" << Doc->DataSet << ">\n";
   stream << "   <DataDisplay=" << Doc->DataDisplay << ">\n";
   stream << "   <OpenDisplay=" << Doc->SimOpenDpl << ">\n";
   stream << "</Properties>\n";
 
   int z=0;   // to count number of subcircuit ports
-  stream << "<Components>\n";
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {  // save all components
+  stream << "<Components>\n";    // save all components
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
     stream << pc->save() << "\n";
     if(pc->Sign == "Port") z++;
   }
   stream << "</Components>\n";
 
-  stream << "<Wires>\n";
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())  // save all wires
+  stream << "<Wires>\n";    // save all wires
+  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
     stream << pw->save() << "\n";
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())  // save all nodes as wires
+
+  // save all labeled nodes as wires
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->Label) stream << pn->Label->save() << "\n";
   stream << "</Wires>\n";
 
-  stream << "<Diagrams>\n";
-  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())  // save all diagrams
+  stream << "<Diagrams>\n";    // save all diagrams
+  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
     stream << pd->save() << "\n";
   stream << "</Diagrams>\n";
 
-  stream << "<Paintings>\n";
-  for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())  // save all paintings
+  stream << "<Paintings>\n";     // save all paintings
+  for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())
     stream << pp->save() << "\n";
   stream << "</Paintings>\n";
 
@@ -507,5 +510,78 @@ bool QucsFile::load()
   }
 
   file.close();
+  return true;
+}
+
+// -------------------------------------------------------------
+// Creates a Qucs file format (without document properties) in the returning
+// string. This is used to save state for undo operation.
+QString QucsFile::createUndoString()
+{
+  Wire *pw;
+  Diagram *pd;
+  Painting *pp;
+  Component *pc;
+
+  // Build element document.
+  QString s = "<Components>\n";
+  for(pc = Comps->first(); pc != 0; pc = Comps->next())
+    s += pc->save()+"\n";
+  s += "</Components>\n";
+
+  s += "<Wires>\n";
+  for(pw = Wires->first(); pw != 0; pw = Wires->next())
+    s += pw->save()+"\n";
+  // save all labeled nodes as wires
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+    if(pn->Label) s += pn->Label->save()+"\n";
+  s += "</Wires>\n";
+
+  s += "<Diagrams>\n";
+  for(pd = Diags->first(); pd != 0; pd = Diags->next())
+    s += pd->save()+"\n";
+  s += "</Diagrams>\n";
+
+  s += "<Paintings>\n";
+  for(pp = Paints->first(); pp != 0; pp = Paints->next())
+    s += pp->save()+"\n";
+  s += "</Paintings>\n";
+
+  return s;
+}
+
+// -------------------------------------------------------------
+// Is quite similiar to "load()" but with less error checking.
+// Used for "undo" function.
+bool QucsFile::rebuild(QString *s)
+{
+  Wires->clear();	// delete whole document
+  Nodes->clear();
+  Comps->clear();
+  Diags->clear();
+  Paints->clear();
+
+  QString Line;
+  QTextStream stream(s, IO_ReadOnly);
+
+  // read content *************************
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    Line = Line.stripWhiteSpace();
+
+    if(Line == "<Components>") {
+      if(!loadComponents(&stream))  return false; }
+    else
+    if(Line == "<Wires>") {
+      if(!loadWires(&stream))  return false; }
+    else
+    if(Line == "<Diagrams>") {
+      if(!loadDiagrams(&stream, Diags))  return false; }
+    else
+    if(Line == "<Paintings>") {
+      if(!loadPaintings(&stream, Paints)) return false; }
+    else  return false;
+  }
+
   return true;
 }
