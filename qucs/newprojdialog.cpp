@@ -26,22 +26,22 @@
 NewProjDialog::NewProjDialog(QWidget *parent, const char *name)
                              : QDialog(parent, name, true)
 {
-  setCaption(tr("Create new project"));
+  setCaption(QObject::tr("Create new project"));
 
   QGridLayout *gbox = new QGridLayout(this,3,3,5,5);
-  QLabel *Label1 = new QLabel(tr("Project name:"),this);
+  QLabel *Label1 = new QLabel(QObject::tr("Project name:"),this);
   gbox->addWidget(Label1,0,0);
 
   ProjName = new QLineEdit(this);
   ProjName->setMinimumWidth(250);
   gbox->addMultiCellWidget(ProjName,0,0,1,2);
-  OpenProj = new QCheckBox(tr("open new project"),this);
+  OpenProj = new QCheckBox(QObject::tr("open new project"),this);
   OpenProj->setChecked(true);
   gbox->addMultiCellWidget(OpenProj,1,1,1,2);
 
-  ButtonOk = new QPushButton(tr("Create"),this);
+  ButtonOk = new QPushButton(QObject::tr("Create"),this);
   gbox->addWidget(ButtonOk,2,1);
-  ButtonCancel = new QPushButton(tr("Cancel"),this);
+  ButtonCancel = new QPushButton(QObject::tr("Cancel"),this);
   gbox->addWidget(ButtonCancel,2,2);
 
   connect(ButtonOk, SIGNAL(clicked()), SLOT(accept()));

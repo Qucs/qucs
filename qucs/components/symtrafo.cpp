@@ -69,8 +69,8 @@ symTrafo::symTrafo()
   Model = "sTr";
   Name  = "Tr";
 
-  Props.append(new Property("T1", "1", true, QObject::tr("voltage transformation ration of coil 1")));
-  Props.append(new Property("T2", "1", true, QObject::tr("voltage transformation ration of coil 2")));
+  Props.append(new Property("T1", "1", true, QObject::tr("voltage transformation ratio of coil 1")));
+  Props.append(new Property("T2", "1", true, QObject::tr("voltage transformation ratio of coil 2")));
 }
 
 symTrafo::~symTrafo()

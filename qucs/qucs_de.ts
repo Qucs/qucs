@@ -315,23 +315,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation>Neues Projekt erstellen</translation>
+        <translation type="obsolete">Neues Projekt erstellen</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Projektname:</translation>
+        <translation type="obsolete">Projektname:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>neues Projekt öffnen</translation>
+        <translation type="obsolete">neues Projekt öffnen</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Erstellen</translation>
+        <translation type="obsolete">Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -708,7 +708,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenkreuzung</translation>
     </message>
     <message>
         <source>width of line 3</source>
@@ -800,7 +800,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>permittivity</source>
-        <translation>Permeabilität</translation>
+        <translation type="obsolete">Permeabilität</translation>
     </message>
     <message>
         <source>thickness in meters</source>
@@ -819,16 +819,8 @@ Unbekanntes Feld!</translation>
         <translation>idealer symmetrischer Transformator</translation>
     </message>
     <message>
-        <source>voltage transformation ration of coil 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ration of coil 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ideal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Leitung</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
@@ -857,10 +849,6 @@ Unbekanntes Feld!</translation>
     <message>
         <source>ideal transformer</source>
         <translation>idealer Transformator</translation>
-    </message>
-    <message>
-        <source>voltage transformation ration</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
@@ -921,6 +909,46 @@ Unbekanntes Feld!</translation>
     <message>
         <source>ac power in Watts</source>
         <translation>AC Leistung in Watt</translation>
+    </message>
+    <message>
+        <source>Create new project</source>
+        <translation>Neues Projekt erstellen</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation>Projektname:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation>neues Projekt öffnen</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>relative permittivity</source>
+        <translation>relative Permeabilität</translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>saturation current</source>
+        <translation>Sättigungsstrom</translation>
     </message>
 </context>
 <context>
