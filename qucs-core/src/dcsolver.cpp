@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.33 2004-11-29 19:03:33 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.34 2004-12-03 18:57:03 raimi Exp $
  *
  */
 
@@ -78,13 +78,34 @@ void dcsolver::solve (void) {
   // local variables for the fallback thingies
   int retry = -1, error, fallback = 0;
   int helpers[] = {
+    CONV_SourceStepping,
     CONV_GMinStepping,
     CONV_SteepestDescent,
     CONV_LineSearch,
     CONV_Attenuation,
     -1 };
 
-  do {
+  // is a certain convergence helper requested?
+  char * helper = getPropertyString ("convHelper");
+  convHelper = CONV_None;
+  if (!strcmp (helper, "LineSearch")) {
+    convHelper = CONV_LineSearch;
+  } else if (!strcmp (helper, "SteepestDescent")) {
+    convHelper = CONV_SteepestDescent;
+  } else if (!strcmp (helper, "Attenuation")) {
+    convHelper = CONV_Attenuation;
+  } else if (!strcmp (helper, "gMinStepping")) {
+    convHelper = CONV_GMinStepping;
+  } else if (!strcmp (helper, "SourceStepping")) {
+    convHelper = CONV_SourceStepping;
+  }
+
+  if (!subnet->isNonLinear ()) {
+    // Start the linear solver.
+    convHelper = CONV_None;
+    error = solve_linear ();
+  }
+  else do {
     // Run the DC solver once.
     try_running () {
       applyNodeset ();
@@ -105,7 +126,8 @@ void dcsolver::solve (void) {
       convHelper = helpers[fallback++];
       if (convHelper != -1) {
 	logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using fallback "
-		  "#%d\n", getName (), getDescription (), fallback);
+		  "#%d (%s)\n", getName (), getDescription (), fallback,
+		  getHelperDescription ());
 	retry++;
       }
       else {

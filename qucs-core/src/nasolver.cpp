@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.25 2004-11-29 19:03:37 raimi Exp $
+ * $Id: nasolver.cpp,v 1.26 2004-12-03 18:57:03 raimi Exp $
  *
  */
 
@@ -236,13 +236,14 @@ void nasolver<nr_type_t>::applyNodeset (void) {
 		"initialize node\n", getName (), n->getName ());
     }
   }
+  if (xprev != NULL) *xprev = *x;
   saveSolution ();
 }
 
 /* The following function uses the gMin-stepping algorithm in order to
    solve the given non-linear netlist by continuous iterations. */
 template <class nr_type_t>
-int nasolver<nr_type_t>::solve_nonlinear_continuation (void) {
+int nasolver<nr_type_t>::solve_nonlinear_continuation_gMin (void) {
   qucs::exception * e;
   int convergence, run = 0, MaxIterations, error = 0;
   nr_double_t gStep, gPrev;
@@ -300,6 +301,91 @@ int nasolver<nr_type_t>::solve_nonlinear_continuation (void) {
   return error;
 }
 
+/* The following function uses the source-stepping algorithm in order
+   to solve the given non-linear netlist by continuous iterations. */
+template <class nr_type_t>
+int nasolver<nr_type_t>::solve_nonlinear_continuation_Source (void) {
+  qucs::exception * e;
+  int convergence, run = 0, MaxIterations, error = 0;
+  nr_double_t sStep, sPrev;
+
+  // fetch simulation properties
+  MaxIterations = getPropertyInteger ("MaxIter") / 4 + 1;
+  updateMatrix = 1;
+  fixpoint = 0;
+
+  // initialize the stepper
+  sPrev = srcFactor = 0;
+  sStep = 0.01;
+  srcFactor += sStep;
+
+  do {
+    // run solving loop until convergence is reached
+    run = 0;
+    do {
+      subnet->setSrcFactor (srcFactor);
+      error = solve_once ();
+      if (!error) {
+	// convergence check
+	convergence = (run > 0) ? checkConvergence () : 0;
+	savePreviousIteration ();
+	run++;
+      }
+      else break;
+    }
+    while (!convergence && run < MaxIterations);
+    iterations += run;
+
+    // not yet converged, so decreased the source-step
+    if (run >= MaxIterations || error) {
+      sStep /= 2;
+      // here the absolute minimum step checker
+      if (sStep < 1e-15) {
+	error = 1;
+	e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
+	e->setText ("no convergence in %s analysis after %d sourceStepping "
+		    "iterations", desc, iterations);
+	throw_exception (e);
+	break;
+      }
+      srcFactor = MIN (sPrev + sStep, 1);
+    } 
+    // converged, increased the source-step
+    else {
+      sPrev = srcFactor;
+      srcFactor = MIN (srcFactor + sStep, 1);
+      sStep *= 2;
+    }
+  }
+  // continue until no source factor is necessary
+  while (sPrev < 1);
+
+  subnet->setSrcFactor (1);
+  return error;
+}
+
+/* The function returns an appropriate text representation for the
+   currently used convergence helper algorithm. */
+template <class nr_type_t>
+char * nasolver<nr_type_t>::getHelperDescription (void) {
+  if (convHelper == CONV_Attenuation) {
+    return "RHS attenuation";
+  }
+  else if  (convHelper == CONV_LineSearch) {
+    return "line search";
+  }
+  else if  (convHelper == CONV_SteepestDescent) {
+    return "steepest descent";
+  }
+  else if  (convHelper == CONV_GMinStepping) {
+    return "gMin stepping";
+  }
+  else if  (convHelper == CONV_SourceStepping) {
+    return "source stepping";
+  }
+  return "none";
+}
+
 /* This is the non-linear iterative nodal analysis netlist solver. */
 template <class nr_type_t>
 int nasolver<nr_type_t>::solve_nonlinear (void) {
@@ -316,7 +402,12 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
   // yet another non-linear solver
   if (convHelper == CONV_GMinStepping) {
     iterations = 0;
-    error = solve_nonlinear_continuation ();
+    error = solve_nonlinear_continuation_gMin ();
+    return error;
+  }
+  else if (convHelper == CONV_SourceStepping) {
+    iterations = 0;
+    error = solve_nonlinear_continuation_Source ();
     return error;
   }
 
@@ -519,7 +610,7 @@ void nasolver<nr_type_t>::createGMatrix (void) {
   int pr, pc, N = countNodes ();
   nr_type_t g;
   struct nodelist_t * nr, * nc;
-  circuit * cir;
+  circuit * ct;
 
   // go through each column of the G matrix
   for (int c = 1; c <= N; c++) {
@@ -528,26 +619,14 @@ void nasolver<nr_type_t>::createGMatrix (void) {
     for (int r = 1; r <= N; r++) {
       nr = nlist->getNode (r);
       g = 0.0;
-      // diagonal matrix element ?
-      if (c == r) {
 	// sum up the conductance of each connected circuit
-	for (int i = 0; i < nc->nNodes; i++) {
-	  cir = nc->nodes[i]->getCircuit ();
-	  pc = pr = nc->nodes[i]->getPort ();
-	  g += MatVal (cir->getY (pr, pc));
-	}
-      }
-      // off diagonal
-      else {
-	// sum up negative conductance of each circuit in between both nodes
 	for (int a = 0; a < nc->nNodes; a++)
 	  for (int b = 0; b < nr->nNodes; b++)
 	    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ()) {
-	      cir = nc->nodes[a]->getCircuit ();
+	    ct = nc->nodes[a]->getCircuit ();
 	      pc = nc->nodes[a]->getPort ();
 	      pr = nr->nodes[b]->getPort ();
-	      g += MatVal (cir->getY (pr, pc));
-	    }
+	    g += MatVal (ct->getY (pr, pc));
       }
       // put value into G matrix
       A->set (r, c, g);

@@ -1,4 +1,4 @@
-2004-11-24    <raimi@lkcc.org>
+2004-11-24  Raimund Jacob  <raimi@lkcc.org>
 
 	* autogen.sh: Make aclocal and automake program be overridable
 	with environment variable. Need this so i can easily build on

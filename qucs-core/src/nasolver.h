@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.12 2004-11-29 19:03:39 raimi Exp $
+ * $Id: nasolver.h,v 1.13 2004-12-03 18:57:03 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #define SAVE_ALL 2 // also save subcircuit nodes and operating points
 
 // Convergence helper definitions.
+#define CONV_None            0
 #define CONV_Attenuation     1
 #define CONV_LineSearch      2
 #define CONV_SteepestDescent 3
@@ -55,7 +56,8 @@ class nasolver : public analysis
   ~nasolver ();
   int  solve_once (void);
   int  solve_nonlinear (void);
-  int  solve_nonlinear_continuation (void);
+  int  solve_nonlinear_continuation_gMin (void);
+  int  solve_nonlinear_continuation_Source (void);
   int  solve_linear (void);
   void solve_pre (void);
   void solve_post (void);
@@ -65,6 +67,7 @@ class nasolver : public analysis
   typedef void (* calculate_func_t) (nasolver<nr_type_t> *);
   void setCalculation (calculate_func_t f) { calculate_func = f; }
   void calculate (void) { if (calculate_func) (*calculate_func) (this); }
+  char * getHelperDescription (void);
 
  protected:
   void savePreviousIteration (void);

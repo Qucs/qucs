@@ -26,6 +26,7 @@ files.
 Version 0.0.5
 -------------
 
+ * added convergence helpers for non-linear DC and transient analysis
  * allowing vector indices with multiply dependencies
  * new matrix operations, e.g. det(), conj(), transpose() and inverse()
  * reduced memory consumption during netlist checking and instantiating

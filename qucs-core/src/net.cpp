@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.23 2004-10-25 21:01:31 ela Exp $
+ * $Id: net.cpp,v 1.24 2004-12-03 18:57:03 raimi Exp $
  *
  */
 
@@ -57,6 +57,7 @@ net::net () : object () {
   actions = NULL;
   env = NULL;
   nset = NULL;
+  srcFactor = 1;
 }
 
 // Constructor creates a named instance of the net class.
@@ -67,6 +68,7 @@ net::net (char * n) : object (n) {
   actions = NULL;
   env = NULL;
   nset = NULL;
+  srcFactor = 1;
 }
 
 // Destructor deletes the net class object.
@@ -89,6 +91,7 @@ net::net (net & n) : object (n) {
   actions = NULL;
   env = n.env;
   nset = NULL;
+  srcFactor = 1;
 }
 
 /* This function prepends the given circuit to the list of registered
@@ -461,6 +464,16 @@ int net::countNodes (void) {
   int count = 0;
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (!c->getPort ()) count += c->getSize ();
+  }
+  return count;
+}
+
+/* The function returns the number of non-linear circuits within the
+   list of registered circuits. */
+int net::isNonLinear (void) {
+  int count = 0;
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isNonLinear ()) count++;
   }
   return count;
 }
