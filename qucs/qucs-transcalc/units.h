@@ -19,7 +19,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  * USA.
  *
- * $Id: units.h,v 1.1 2005/03/13 14:46:35 margraf Exp $
+ * $Id: units.h,v 1.2 2005/03/19 11:51:31 raimi Exp $
  *
  */
 
@@ -27,6 +27,12 @@
 #define __UNITS_H
 
 #include <math.h>
+
+#ifdef __MINGW32__
+#define atanh(x) (0.5 * log((1.0 + x) / (1.0 - x)))
+#define asinh(x) log(x + sqrt(x * x + 1.0))
+#define acosh(x) log(x + sqrt(x * x - 1.0))
+#endif
 
 #ifndef M_PI
 #define M_PI           3.14159265358979323846  /* pi */

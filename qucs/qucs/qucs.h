@@ -42,8 +42,7 @@
 #include <qcombobox.h>
 #include <qtabwidget.h>
 #include <qdir.h>
-
-class QProcess;
+#include <qprocess.h>
 
 
 // application specific includes
