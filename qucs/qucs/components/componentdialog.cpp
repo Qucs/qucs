@@ -27,16 +27,16 @@
 ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name )
                                   : QDialog(parent, name, Qt::WDestructiveClose)
 {
-  setCaption("Edit Component Properties");
+  setCaption(tr("Edit Component Properties"));
 
   QGridLayout *g = new QGridLayout(this,8,2,5,5);
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
   g->addMultiCellWidget(h2,7,7,0,1);
-  connect(new QPushButton("OK",h2), SIGNAL(clicked()), SLOT(slotButtOK()));
-  connect(new QPushButton("Apply",h2), SIGNAL(clicked()), SLOT(slotApplyInput()));
-  connect(new QPushButton("Cancel",h2), SIGNAL(clicked()), SLOT(close()));
+  connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()), SLOT(slotButtOK()));
+  connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()), SLOT(slotApplyInput()));
+  connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()), SLOT(close()));
 
   QLabel *label1 = new QLabel(this);
   g->addMultiCellWidget(label1,0,0,0,1);
@@ -44,9 +44,9 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   prop = new QListView(this);
   prop->setMinimumSize(200, 150);
 //  prop->setMaximumSize(250, 500);
-  prop->addColumn("Name");
-  prop->addColumn("Value");
-  prop->addColumn("display");
+  prop->addColumn(tr("Name"));
+  prop->addColumn(tr("Value"));
+  prop->addColumn(tr("display"));
   prop->setSorting(-1);   // no sorting
   g->addMultiCellWidget(prop,1,6,0,0);
 
@@ -74,12 +74,12 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   g->addWidget(h3,4,1);
   QWidget *h = new QWidget(h3); // stretchable placeholder
   h3->setStretchFactor(h,5);
-  BrowseButt = new QPushButton("Browse",h3);
+  BrowseButt = new QPushButton(tr("Browse"),h3);
   BrowseButt->setEnabled(false);
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
-  disp = new QCheckBox("display in schematic",this);
+  disp = new QCheckBox(tr("display in schematic"),this);
   g->addWidget(disp,5,1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
   
@@ -217,7 +217,7 @@ void ComponentDialog::slotApplyInput()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotBrowseFile()
 {
-  QString s = QFileDialog::getOpenFileName("","All Files (*.*)",this,"","Select a file");
+  QString s = QFileDialog::getOpenFileName("",tr("All Files (*.*)"),this,"",tr("Select a file"));
   if(!s.isEmpty()) edit->setText(s);
   prop->currentItem()->setText(1, s);
 }

@@ -1,3 +1,11 @@
+2004-01-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* fileshowdialog.cpp, settingsdialog.cpp: Added translatable 
+	strings.
+
+	* Makefile.am (TRANSLATIONS): Adjusted paths for translation 
+	files to make 'make distcheck' working again.
+
 2004-01-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* helpdialog.cpp (HelpDialog): Added a FIXME.  Possible use
