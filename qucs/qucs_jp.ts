@@ -3,265 +3,281 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>プロパティー編集</translation>
     </message>
     <message>
         <source>Head Length: </source>
-        <translation type="unfinished"></translation>
+        <translation>長さ:</translation>
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>幅 :</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>線色 :</translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>線幅 :</translation>
     </message>
     <message>
         <source>Line style: </source>
-        <translation type="unfinished"></translation>
+        <translation>線種 :</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュ</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ドット</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュドット</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュドットドット</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>部品プロパティー編集</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>適用</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>名前 :</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名前</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>値</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>説明</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>編集</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>参照</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図に表示</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>はい</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>いいえ</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのファイル</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>選択されたファイル</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="obsolete">エラー</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="obsolete">テキストエディタを開けません !</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>グラフプロパティー編集</translation>
     </message>
     <message>
         <source>Graph Input</source>
-        <translation type="unfinished"></translation>
+        <translation>グラフの入力</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>数字表記法 :</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>実数/虚数</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>絶対角(ディグリー)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>絶対角(ラジアン)</translation>
     </message>
     <message>
         <source>Precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>精度 :</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>色 :</translation>
     </message>
     <message>
         <source>Thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>細さ :</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>線種 :</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュ</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ドット</translation>
     </message>
     <message>
         <source>long dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>長いダッシュ</translation>
     </message>
     <message>
         <source>Dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>データセット</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名前</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>状態</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>サイズ</translation>
     </message>
     <message>
         <source>Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>グラフ</translation>
     </message>
     <message>
         <source>New Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいグラフ</translation>
     </message>
     <message>
         <source>Delete Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>グラフ削除</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>データ</translation>
     </message>
     <message>
         <source>x-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>x軸ラベル :</translation>
+    </message>
+    <message>
+        <source>y-Axis Label:</source>
+        <translation type="obsolete">y軸ラベル :</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド表示</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド色 :</translation>
     </message>
     <message>
         <source>Grid Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドスタイル :</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュドット</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュドットドット</translation>
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>x軸 LOG表示</translation>
+    </message>
+    <message>
+        <source>logarithmical Y Axis Grid</source>
+        <translation type="obsolete">y軸 LOG表示</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>プロパティー</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>適用</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>y-Axis:</source>
@@ -296,442 +312,462 @@
     <name>FillDialog</name>
     <message>
         <source>Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>線幅 :</translation>
     </message>
     <message>
         <source>Line Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>線色 :</translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>線種 :</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュ</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ドット</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュドット</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュドットドット</translation>
     </message>
     <message>
         <source>Line Style</source>
-        <translation type="unfinished"></translation>
+        <translation>線種</translation>
     </message>
     <message>
         <source>enable filling</source>
-        <translation type="unfinished"></translation>
+        <translation>塗りつぶし</translation>
     </message>
     <message>
         <source>Fill Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>塗色 :</translation>
     </message>
     <message>
         <source>Fill Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>塗種 :</translation>
     </message>
     <message>
         <source>no filling</source>
-        <translation type="unfinished"></translation>
+        <translation>塗りつぶし無し</translation>
     </message>
     <message>
         <source>solid</source>
-        <translation type="unfinished"></translation>
+        <translation>ソリッド</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 1 (一番濃い)</translation>
     </message>
     <message>
         <source>dense 2</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 2</translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 3</translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 4</translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 5</translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 6</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation type="unfinished"></translation>
+        <translation>濃さ 7 (一番薄い)</translation>
     </message>
     <message>
         <source>horizontal line</source>
-        <translation type="unfinished"></translation>
+        <translation>水平線</translation>
     </message>
     <message>
         <source>vertical line</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直線</translation>
     </message>
     <message>
         <source>crossed lines</source>
-        <translation type="unfinished"></translation>
+        <translation>十字格子</translation>
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>斜線(右上がり)</translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>斜線(右下がり)</translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation type="unfinished"></translation>
+        <translation>斜線格子</translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation type="unfinished"></translation>
+        <translation>塗りつぶし種</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストプロパティー編集</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Text color: </source>
-        <translation type="unfinished"></translation>
+        <translation>テキスト色 :</translation>
     </message>
     <message>
         <source>Text size: </source>
-        <translation type="unfinished"></translation>
+        <translation>テキストサイズ :</translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>回転角度 :</translation>
     </message>
 </context>
 <context>
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットプロパティー編集</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキット名 :</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>マーカプロパティー編集</translation>
     </message>
     <message>
         <source>Precision: </source>
-        <translation type="unfinished"></translation>
+        <translation>精度 :</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>数字表記法 :</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>実数/虚数</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>絶対角(ディグリー)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>絶対角(ラジアン)</translation>
     </message>
     <message>
         <source>transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>透明</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished"></translation>
+        <translation>全て保存</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>破棄</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished"></translation>
+        <translation>全て破棄</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>注意</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation type="unfinished"></translation>
+        <translation>セッティングを保存できません !</translation>
     </message>
     <message>
         <source>untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>タイトル無し</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+&apos;Painting’ フィールドが閉じられていません!</translation>
     </message>
     <message>
         <source>Wrong document version: </source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントのバージョンが違います:</translation>
     </message>
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>クリップボードフォーマットエラー:
+不明のフィールドです!</translation>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントをセーブできません!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤ったプロパティーフィールドリミットです!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown property: </source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+未知のプロパティーです:</translation>
     </message>
     <message>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+プロパティーフィールドに数値が入ると思われます!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+&apos;Property’フィールドが閉じられていません!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー :
+&apos;Component&apos; フィールドが閉じられていません!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤った &apos;wire&apos; ラインフォーマットです!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+&apos;ワイヤ&apos; フィールドが閉じられていません!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+未知のグラフです!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤った &apos;diagram&apos; ラインフォーマットです!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+&apos;Diagram’ フィールドが閉じられていません!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤った &apos;painting&apos; ライン区切りです!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown painting!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+未知の図形描画です!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤った &apos;painting&apos; ラインフォーマットです!</translation>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントを読み込みできません:</translation>
+    </message>
+    <message>
+        <source>Wrong document type!</source>
+        <translation type="obsolete">誤ったドキュメントタイプです!</translation>
     </message>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルフォーマットエラー:
+未知のフィールドです!</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>楕円プロパティー編集</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>弧プロパティー編集</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>線プロパティー編集</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>長方形プロパティー編集</translation>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;無効&gt;</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation type="unfinished"></translation>
+        <translation>データセットをロードできません:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルサイズが取得できません</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>データが少なすぎます</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>データ”</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation type="unfinished"></translation>
+        <translation>”が見つかりません</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>データが少なすぎます”</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>無効</translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>ACシミュレーション</translation>
     </message>
     <message>
         <source>sweep type</source>
-        <translation type="unfinished"></translation>
+        <translation>スィープタイプ</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>スタート周波数(Hz)</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>ストップ周波数(Hz)</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーションステップ数</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想AC電流源</translation>
     </message>
     <message>
         <source>current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>電流(A)</translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>周波数(Hz)</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>開始位相(°)</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>AC電流源</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想DC電流源</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>DC電流源</translation>
     </message>
     <message>
         <source>noise current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ノイズ電流源</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
@@ -739,67 +775,67 @@ Unknown field!</source>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">周波数 指数</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">周波数 係数</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">周波数付加</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ノイズ電流源</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>アッテネータ</translation>
     </message>
     <message>
         <source>power attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>パワーアッテネーション</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>インピーダンス</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション温度(°C)</translation>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>アッテネータ</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>バイアスティー</translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation type="unfinished"></translation>
+        <translation>バイアスティー</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>バイポーラジャンクショントランジスタ</translation>
     </message>
     <message>
         <source>polarity</source>
-        <translation type="unfinished"></translation>
+        <translation>極性</translation>
     </message>
     <message>
         <source>saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>飽和電流</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>順放射係数</translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>逆放射係数</translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
@@ -811,27 +847,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>forward early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>順初期電圧</translation>
     </message>
     <message>
         <source>reverse early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>逆初期電圧</translation>
     </message>
     <message>
         <source>base-emitter leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>ベースエミッタ間 洩れ飽和電流</translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ベースエミッタ間 洩れ放射係数</translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>ベースコレクタ間 洩れ飽和電流</translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>ベースコレクタ間 洩れ放射係数</translation>
     </message>
     <message>
         <source>forward beta</source>
@@ -847,27 +883,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ベース抵抗中点時の電流</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">コレクタ抵抗</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">エミッタ抵抗</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ゼロバイアス ベース抵抗 (恐らく大電流に依存)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ベースエミッタ間 ゼロバイアス 空乏容量</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ベースエミッタ間 電位</translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
@@ -927,11 +963,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>フリッカーノイズ係数</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>フリッカーノイズ指数</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
@@ -955,11 +991,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>npn transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>NPNトランジスタ</translation>
     </message>
     <message>
         <source>pnp transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>PNPトランジスタ</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
@@ -967,19 +1003,19 @@ Unknown field!</source>
     </message>
     <message>
         <source>capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>コンデンサ</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>容量(F)</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>コンデンサ</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>電流制御電流源</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
@@ -987,146 +1023,149 @@ Unknown field!</source>
     </message>
     <message>
         <source>delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>遅延時間</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>電流制御電流源</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>電流制御電圧源</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>電流制御電圧源</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>サーキュレータ</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>ポート1のインピーダンス</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>ポート2のインピーダンス</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation type="unfinished"></translation>
+        <translation>ポート3のインピーダンス</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>サーキュレータ</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong line start!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤ったライン開始です!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+未知のコンポーネントです!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーマットエラー:
+誤った &apos;component&apos; 線フォーマットです!</translation>
     </message>
     <message>
         <source>coplanar line</source>
-        <translation type="unfinished"></translation>
+        <translation>コプレーナライン</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>基材定義名</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>線路の幅</translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation type="unfinished"></translation>
+        <translation>間隔の幅</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>線路の長さ</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation type="unfinished"></translation>
+        <translation>コプレーナライン</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>DCシミュレーション</translation>
     </message>
     <message>
         <source>relative tolerance for convergence</source>
-        <translation type="unfinished"></translation>
+        <translation>収束公差</translation>
     </message>
     <message>
         <source>absolute tolerance for currents</source>
-        <translation type="unfinished"></translation>
+        <translation>電流絶対公差</translation>
     </message>
     <message>
         <source>absolute tolerance for voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧絶対公差</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>オペレーティングポイントをデータセットに入力</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラーになるまでの最大繰り返し数</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットノードをデータセットに保存</translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation type="unfinished"></translation>
+        <translation>DCブロック</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation type="unfinished"></translation>
+        <translation>DCブロック</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧付加</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧付加</translation>
     </message>
     <message>
         <source>diode</source>
-        <translation type="unfinished"></translation>
+        <translation>ダイオード</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>放射係数</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>ゼロバイアスジャンクション容量</translation>
     </message>
     <message>
         <source>grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>等級係数</translation>
     </message>
     <message>
         <source>junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャンクション電位</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>線形容量</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
@@ -1138,83 +1177,83 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>直列抵抗</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>推移時間</translation>
     </message>
     <message>
         <source>Diode</source>
-        <translation type="unfinished"></translation>
+        <translation>ダイオード</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>結果をデータセットに入力</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンド(リファレンス電位)</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンド</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャイレータ(インピーダンス変換)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャイレータ比率</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャイレータ</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>ハーモニックバランスシミュレーション</translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>ハーモニクス数</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation>ハーモニックバランス</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>インダクタ</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>インダクタンス(H)</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>インダクタ</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation type="unfinished"></translation>
+        <translation>電流計</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>電流計</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想電流パルス源</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
@@ -1222,75 +1261,75 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>パルス電流</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>パルスの開始時間</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>パルスの終了時間</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation type="unfinished"></translation>
+        <translation>立上り時間</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation type="unfinished"></translation>
+        <translation>立下がり時間</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>電流パルス</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想矩形電流源</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>ハイパルス時の電流</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>ハイパルス持続時間</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>ローパルス持続時間</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>矩形波電流</translation>
     </message>
     <message>
         <source>isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>アイソレータ</translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation type="unfinished"></translation>
+        <translation>入力ポートインピーダンス</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation type="unfinished"></translation>
+        <translation>出力ポートインピーダンス</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>アイソレータ</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>ジャンクションフィールドエフェクトトランジスタ</translation>
     </message>
     <message>
         <source>threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>スレッショルド電圧</translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>伝導パラメータ</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
@@ -1298,11 +1337,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>parasitic drain resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ドレイン寄生抵抗</translation>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース寄生抵抗</translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
@@ -1330,7 +1369,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>gate-junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲートジャンクション電位</translation>
     </message>
     <message>
         <source>forward-bias junction capacitance coefficient</source>
@@ -1342,11 +1381,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>n-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-JFET</translation>
     </message>
     <message>
         <source>p-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-JFET</translation>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
@@ -1514,79 +1553,79 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップコーナー</translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>基板</translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップコーナー</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>カップルドマイクロストリップライン</translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>線間幅</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップモデル</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップ分散モデル</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>カップルドマイクロストリップライン</translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップクロス</translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅1</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅2</translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅3</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅4</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップクロス</translation>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップギャップ</translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅1</translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅2</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップ端の間隔</translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
@@ -1594,287 +1633,287 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップギャップ</translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップライン</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップライン</translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップマイターベンド</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップマイターベンド</translation>
     </message>
     <message>
         <source>microstrip open</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップオープン</translation>
     </message>
     <message>
         <source>microstrip open end model</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップオープンエンドモデル</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップオープン</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップインピーダンスステップ</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅1</translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>線幅2</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップステップ</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップティージャンクション</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップティージャンクション</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>パラメータスイープ</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
+        <translation>パラメータスイープ シミュレーション</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>スイープパラメータ</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>スイープ開始値</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>スイープ終了値</translation>
     </message>
     <message>
         <source>phase shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>フェーズシフタ</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>位相シフト(°)</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>フェーズシフタ</translation>
     </message>
     <message>
         <source>resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>抵抗</translation>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>抵抗(オーム)</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>回路シンボル</translation>
     </message>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>抵抗</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation type="unfinished"></translation>
+        <translation>抵抗(US)</translation>
     </message>
     <message>
         <source>ac power source</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>ポートナンバ</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>ポートインピーダンス</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>ACパワー(W)</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished"></translation>
+        <translation>パワーソース</translation>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sパラメータシミュレーション</translation>
     </message>
     <message>
         <source>calculate noise parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>ノイズパラメータ計算</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>入力ポート ノイズフィギュア</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>出力ポート ノイズフィギュア</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sパラメータシミュレーション</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sパラメータファイル</translation>
     </message>
     <message>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sパラメータファイルの名前</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation type="unfinished"></translation>
+        <translation>インターポレーションタイプ</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>1ポートSパラメータファイル</translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキット</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs回路図ファイル名</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットのポート</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットのポート数</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットポート</translation>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>基板定義</translation>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>誘電率</translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation type="unfinished"></translation>
+        <translation>厚さ(m)</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation type="unfinished"></translation>
+        <translation>導体厚み</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>誘電正接</translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
-        <translation type="unfinished"></translation>
+        <translation>導体抵抗率</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>基板</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>理想対称トランス</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>対称トランス</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>理想トランスミッションライン</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>インピーダンス特性</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>電気長</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>トランスミッションライン</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>トランジェント解析</translation>
     </message>
     <message>
         <source>start time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時間(s)</translation>
     </message>
     <message>
         <source>stop time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>終了時間(s)</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーションステップ数</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>初期ステップサイズ(s)</translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>最小ステップサイズ(s)</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
@@ -1890,87 +1929,87 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>トランジェント解析</translation>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>理想トランス</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>トランス</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧制御電流源</translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>電流制御電圧源</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧制御電圧源</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧制御電圧源</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想AC電圧源</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>実効電圧(V)</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>AC電圧源</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想DC電圧源</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧(V)</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>DC電圧源</translation>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ノイズ電圧源</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ノイズ電圧源</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>理想電圧パルス源</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>パルスの電圧</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
@@ -1998,15 +2037,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいプロジェクトを開く</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>作成</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
@@ -2021,7 +2060,7 @@ Very simple text editor for Qucs
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf</translation>
     </message>
     <message>
         <source>
@@ -2055,6 +2094,10 @@ Usage:  qucsedit [-r] file
         <source>Only one filename allowed!
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2097,374 +2140,373 @@ Usage:  qucsedit [-r] file
         <source>OpAmp</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation type="unfinished"></translation>
+        <translation>データ表示</translation>
     </message>
     <message>
         <source>Qucs Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs ドキュメント</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>いずれかのファイル</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>新規</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>開く</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクト</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトディレクトリの内容</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation type="unfinished"></translation>
+        <translation>内容</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>ノート</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation type="unfinished"></translation>
+        <translation>データセット</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>データ表示</translation>
     </message>
     <message>
         <source>Schematics</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>内容</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトの内容</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>部品</translation>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>部品と図表</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished"></translation>
+        <translation>集中定数部品</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース源部品</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>伝送線路部品</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
+        <translation>非線形部品</translation>
     </message>
     <message>
         <source>file data</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルデータ部品</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション部品</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>図表部品</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="unfinished"></translation>
+        <translation>図形描画部品</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>名前変更</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
+        <translation>グループ削除</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>名前変更できません!</translation>
     </message>
     <message>
         <source>Rename file</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名変更</translation>
     </message>
     <message>
         <source>Enter new name:</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい名前入力:</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名を変更できません:</translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを削除できません!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>注意</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>完全にファイルを削除します!  続けますか?</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>いいえ</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>はい</translation>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation type="unfinished"></translation>
+        <translation>回路図を削除できません:</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを削除できません:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを完全に削除します</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>続けますか?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>ワークディレクトリを作成できません !</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsドキュメントを閉じます</translation>
     </message>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>このドキュメントは変更されています!
+閉じる前に保存しますか?</translation>
     </message>
     <message>
         <source>Creating new schematic...</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい回路図を作成しています...</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>準備完了.</translation>
     </message>
     <message>
         <source>Opening file...</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開いています...</translation>
     </message>
     <message>
         <source>Enter a Schematic Name</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図名を入力</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>開くのを中断しました</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation type="unfinished"></translation>
+        <translation>-port</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを保存しています...</translation>
     </message>
     <message>
         <source>Saving aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>保存を中断しました</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメント名を入力</translation>
     </message>
     <message>
         <source>The file &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル &apos;</translation>
     </message>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&apos; は既に存在しています!</translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>古いファイルを上書きしてしまいます ! 続けますか?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>拡張子は&apos;.sch&apos; と &apos;.dpl&apos; のみです</translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>コンテントブラウザに表われます! 続けますか?</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>情報</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation type="unfinished"></translation>
+        <translation>上書きできません</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい名前で保存しています...</translation>
     </message>
     <message>
         <source>Saving all files...</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのファイルを保存しています...</translation>
     </message>
     <message>
         <source>Closing file...</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを閉じています...</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントに保存されていない変更があります!</translation>
     </message>
     <message>
         <source>Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる前に変更を保存しますか?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>破棄(&amp;D)</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>印刷中...</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションを終了しています...</translation>
     </message>
     <message>
         <source>Quit...</source>
-        <translation type="unfinished"></translation>
+        <translation>終了...</translation>
     </message>
     <message>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>本当に終了しますか?</translation>
     </message>
     <message>
         <source>Cutting selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>選択を切り取っています...</translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>選択をクリップボードにコピーしています...</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsヘルプを開けません!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>新しいシミュレーションを始めています</translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished"></translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished"></translation>
+        <translation>ネットリストを作成中...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー:ネットリストファイルを作成できません!
+中断しました.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>完了.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー:シミュレータを開始できません!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション完了</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>準備完了.
+</translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーションでのエラー</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>中断しました.</translation>
     </message>
     <message>
         <source>Output:
 ----------
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>
@@ -2474,1292 +2516,1408 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストエディタを開始できません!</translation>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation type="unfinished"></translation>
+        <translation>作成できません</translation>
     </message>
     <message>
         <source>No page set !</source>
-        <translation type="unfinished"></translation>
+        <translation>ページがセットされていません!</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトディレクトリにアクセスできません:</translation>
     </message>
     <message>
         <source> - Project: </source>
-        <translation type="unfinished"></translation>
+        <translation>-Project:</translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時のプロジェクトディレクトリを選択</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトディレクトリを作成できません !</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>線</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>弧</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation type="unfinished"></translation>
+        <translation>矢印</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>テキスト</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>楕円</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>長方形</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>塗りつぶし楕円</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>塗りつぶし長方形</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>1-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>2-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>3-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>4-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>5-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>6-ポート Sパラメータファイル</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation type="unfinished"></translation>
+        <translation>直交座標</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation type="unfinished"></translation>
+        <translation>極座標</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation type="unfinished"></translation>
+        <translation>表</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>スミスチャート</translation>
     </message>
     <message>
         <source>No project is selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトが選択されていません!</translation>
     </message>
     <message>
         <source>Cannot delete an open project !</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを削除できません!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトファイルが完全に壊れます! 続けますか?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>はい(&amp;Y)</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
+        <translation>いいえ(&amp;N)</translation>
     </message>
     <message>
         <source>Cannot remove project file: </source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトファイルを除去できません:</translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトディレクトリを除去できません!</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation type="unfinished"></translation>
+        <translation>削除するプロジェクトディレクトリを選択</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>少なくとも二つ以上の要素を選択してください!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>回路シンボルを編集</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>この回路図の為のシンボルを編集</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路シンボルを編集
+
+この回路図の為のシンボルを編集</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図編集</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図を編集します</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図を編集
+
+回路図を編集します</translation>
     </message>
 </context>
 <context>
     <name>QucsEdit</name>
     <message>
         <source>File: </source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル:</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>このソフトウェアについて...</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル名入力</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを書き込みできません:</translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを読み込みできません:</translation>
     </message>
     <message>
         <source>Closing document</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメントを閉じます</translation>
     </message>
     <message>
         <source>The text contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>セーブされていないテキストが含まれています!</translation>
     </message>
     <message>
         <source>Do you want to save the changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>変更されたものを保存しますか?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>破棄(&amp;D)</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsヘルプシステム</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ目次</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる</translation>
     </message>
 </context>
 <context>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>新規</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>新規(&amp;N)</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいドキュメントを作成</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished"></translation>
+        <translation>新規
+
+新しい回路図かデータ表示を作成</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開く</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>開く(&amp;O)...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>既存のドキュメントを開く</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>既存のドキュメントを開きます</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを保存</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のドキュメントを保存</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のドキュメントを保存現在のドキュメントを保存</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>別名で保存</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>別名で保存 (&amp;a)...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のドキュメントを新しい名前で保存</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>別名で保存
+
+現在のドキュメントを新しい名前で保存</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのファイルを保存</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て保存(&amp;A)</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>開かれた全てのドキュメントを保存</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>全てのファイルを保存
+
+開かれた全てのドキュメントを保存</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを閉じる</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる(&amp;C)</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のドキュメントを閉じる</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを閉じる
+
+現在のファイルを閉じる</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>回路シンボルを編集</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図のシンボルを編集</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>回路シンボルを編集
+
+この回路図の為のシンボルを編集</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメント セッティング</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメント セッティング...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished"></translation>
+        <translation>セッティング
+
+ファイルのプロパティーのセッティング</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを印刷</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>印刷(&amp;P)...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のドキュメントを印刷</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを印刷
+
+現在のドキュメントを印刷</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を印刷</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された物を印刷...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を印刷</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を印刷
+
+現在のドキュメントの選択された要素を印刷</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>終了</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>終了(&amp;x)</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションを終了</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションを終了</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションの設定</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションの設定...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsの設定
+
+このアプリケーションの設定</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished"></translation>
+        <translation>上に整列</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を上部に整列</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素をそれらの上端に整列</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>下に整列</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を下に整列</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素をそれらの下端に整列</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished"></translation>
+        <translation>左に整列</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を左に整列</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素をそれらの左端に整列</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished"></translation>
+        <translation>右に整列</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を右に整列</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素をそれらの右端に整列</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>水平方向に配置</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>均等に水平に配置</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>水平に分割
+
+選択された要素を水平に配置</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直方向に配置</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>均等に垂直に配置</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された要素を垂直に配置</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドに合わせる</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドに合わせる
+
+選択された要素をグリッドに合わせる
+</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished"></translation>
+        <translation>部品のテキストを移動</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>部品のテキストを移動
+
+部品のプロパティテキストを移動</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>切り取り</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>切り取り(&amp;t)</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された部分を切り取り、クリップボードにいれます</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>切り取り
+
+選択された部分を切り取り、クリップボードにいれます</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>コピー(&amp;C)</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された部分をクリップボードにコピーします</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>コピー
+
+選択された部分をクリップボードにコピーします</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>貼付け</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>貼付け(&amp;P)</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>クリップボードの内容をカーソル位置に貼付けます</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>貼付け
+
+クリップボードの内容をカーソル位置に貼付けます</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>削除(&amp;D)</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された部品を削除します</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>削除
+
+選択された部品を削除します</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>やり直し</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>やり直し(&amp;U)</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のコマンドをやり直しします</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>やり直し
+
+最後のアクションをやり直します</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>元に戻す</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>元に戻す(&amp;R)</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のコマンドを元に戻します</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished"></translation>
+        <translation>元に戻す
+
+最後のアクションをもう一度繰り返します</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>新規プロジェクト</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>新規プロジェクト(&amp;N)...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>新プロジェクトを作成します</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>新規プロジェクト
+
+新プロジェクトを作成します</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを開く</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを開く(&amp;O)...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを開きます</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを開く
+
+既存のプロジェクトを開きます</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを削除</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを削除(&amp;D)...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを削除します</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを削除
+
+既存のプロジェクトを削除します</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを閉じる</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを閉じる(&amp;C)</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のプロジェクトを閉じる</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクトを閉じる
+
+現在のプロジェクトを閉じます</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished"></translation>
+        <translation>全体を見る</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>ページ全体を見ます</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished"></translation>
+        <translation>全体を見る
+
+ページ全体の内容を見ます</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished"></translation>
+        <translation>1:1のスケールで見る</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>拡大しないで見る</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>ページの内容を拡大しないで見る</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>ズームイン</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のビューを拡大</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>ズームイン
+
+現在のビューを拡大</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>ズームアウト</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>現在のビューを拡小</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>縮小
+
+現在のビューを拡小</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>選択</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>選択モード</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>選択
+
+選択モード</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>全て選択</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>全ての要素を選択</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>全て選択
+
+ドキュメント全ての要素を選択</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>回転</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>選択された部品を90°回転</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>回転
+
+選択された部品を時計周りに90°回転</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X軸で反転</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>選択されたアイテムをX軸で反転</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X軸で反転
+
+選択されたアイテムをX軸で反転</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Y軸で反転</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>選択されたアイテムをY軸で反転</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Y軸で反転
+
+選択されたアイテムをY軸で反転</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットに入る</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキット内部に行く</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットに入る
+
+選択去れたサブサーキット内部に行く</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished"></translation>
+        <translation>出る</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>サブサーキットから出る</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>出る
+
+一つ上の階層に上がる   サブサーキットを抜ける</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>無効にする/有効にする</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>選択されたアイテムを無効/有効にする</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>無効にする/有効にする
+
+選択されたアイテムを無効/有効にする</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式を挿入</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式を挿入</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished"></translation>
+        <translation>方程式を挿入
+
+ユーザが定義した方程式を挿入</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンドを挿入</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンドを挿入</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンドを挿入
+
+グラウンドシンボルを挿入</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished"></translation>
+        <translation>ポートを挿入</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished"></translation>
+        <translation>ポートを挿入</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>ポートを挿入
+
+ポートシンボルを挿入</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイアを挿入</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイア</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイアを挿入</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイア
+
+ワイアを挿入</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイア/ピン ラベルを挿入</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイアラベル</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイアかピンのラベルを挿入</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>ワイアラベル
+
+ワイアかピンのラベルを挿入</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレート</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>現在の回路図をシミュレートする</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレート
+
+現在の回路をシミュレートする</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>データディスプレー/回路図 を見る</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished"></translation>
+        <translation>データディスプレーと回路図を切替えます</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>データディスプレー/回路図 を見る
+</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>マーカセット</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>グラフにマーカをセットします</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>グラフ上にマーカをセットします</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>マーカセット
+
+グラフ上にマーカをセットします</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のメッセージを見る</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のシミュレーションメッセージを見る</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のメッセージを見る
+
+最後のシミュレーションのメッセージを見る</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のネットリストを見る</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のシミュレーションネットリストを見る</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>最後のネットリストを見る
+
+最後のシミュレーションのネットリストを見る</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー(&amp;b)</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバーを有効/無効にする</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー
+
+ツールバーを有効／無効にする</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスバー</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスバー(&amp;S)</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスバーを有効／無効にする</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスバー
+
+ステータスバーを有効／無効にする</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ目次</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ目次...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsヘルプ目次</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ目次
+
+Qucsヘルプ目次</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished"></translation>
+        <translation>はじめに</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="unfinished"></translation>
+        <translation>はじめに...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="unfinished"></translation>
+        <translation>はじめに</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished"></translation>
+        <translation>はじめに
+
+短いQucsの紹介</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>About</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;About Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>このアプリケーションについて</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>About
+
+このアプリケーションについて</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Qtについて</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;About Qt...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>整列</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>編集(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>挿入(&amp;I)</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>プロジェクト(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>ビュー(&amp;V)</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ(&amp;H)</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ready.</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー切替え...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスバー切替え...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>About...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Version</translation>
     </message>
     <message>
         <source>
 Qt universal circuit simulator
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Qt universal circuit simulator
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2003,2004 by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Simulator by Stefan Jahn</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Special thanks to Jens Flucke
+
+</translation>
     </message>
     <message>
         <source>Translations:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Traslations:
+</translation>
     </message>
     <message>
         <source>German by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>German by Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Polish by Dariusz Pienkowski
+</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Romanian by Radu Circa
+</translation>
+    </message>
+    <message>
+        <source>French by Eric Marzolf
+</source>
+        <translation type="obsolete">French by Eric Marzolf
+</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Portuguese by Luciano Franca
+</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Spanish by Jose L. Redrejo Rodriguez
+</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation type="unfinished"></translation>
+        <translation>Italian by Giorgio Luparia</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS
@@ -3771,140 +3929,140 @@ Qt universal circuit simulator
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucsプロパティー編集</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>フォント (再起動時に有効):</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>バックグラウンド色 :</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation type="unfinished"></translation>
+        <translation>最大やり直し数 :</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストエディタ :</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>適用</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトに戻す</translation>
     </message>
 </context>
 <context>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
+        <translation>ノード名追加</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished"></translation>
+        <translation>ラベル入力 :</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>情報</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished"></translation>
+        <translation>グラウンドにはラベルを付けられません !</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルプロパティー編集</translation>
     </message>
     <message>
         <source>Data Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>回路図 :</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="unfinished"></translation>
+        <translation>データ セット :</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション後データ表示する</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド表示</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平グリッド :</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直グリッド :</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>適用</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs シミュレーション メッセージ</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>進捗 :</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation type="unfinished"></translation>
+        <translation>エラーと注意 :</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="unfinished"></translation>
+        <translation>表示ページへ</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション中止</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィンドウを閉じる</translation>
     </message>
 </context>
 </TS>

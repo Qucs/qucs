@@ -293,31 +293,31 @@
     </message>
     <message>
         <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>y-Achse:</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>linke Achse</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>rechte Achse</translation>
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>linke y-Achsenbezeichnung:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>rechte y-Achsenbezeichnung:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>logarithmische Y-Achseneinteilung links</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>logarithmische Y-Achseneinteilung rechts</translation>
     </message>
 </context>
 <context>
@@ -2374,47 +2374,47 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>idealer Verstärker</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungsverstärkung</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstärker</translation>
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifendurchkontaktierung</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchmesser der runden Durchkontaktierung</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifendurchkontaktierung</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungsleitwert-Parameter in A/V²</translation>
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Operationsverstärker</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>OPV</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>absoluter Wert der maximalen und minimalen Ausgangsspannung</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Falscher Dokumententyp: </translation>
     </message>
 </context>
 <context>
@@ -5474,7 +5474,8 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <message>
         <source>French by Vincent Habchi, F5RCS
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Französisch von Vincent Habchi, F5RCS
+</translation>
     </message>
 </context>
 <context>
