@@ -1,5 +1,5 @@
 /***************************************************************************
-                       mosfet_depl.cpp  -  description
+                       mosfet_sub.cpp  -  description
                              -------------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
@@ -15,43 +15,49 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "mosfet_depl.h"
+#include "mosfet_sub.h"
 
 
-MOSFET_depl::MOSFET_depl()
+MOSFET_sub::MOSFET_sub()
 {
-  Description = QObject::tr("depletion MOS field-effect transistor");
+  Description = QObject::tr("MOS field-effect transistor");
 
   Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,-16,-10, 16,QPen(QPen::darkBlue,3)));
 
   Lines.append(new Line(-10,-11,  0,-11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0,-11,  0,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 11,  0, 11,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0,  0,  0, 30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,  0,  0,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 11,  0, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,  0, 20,  0,QPen(QPen::darkBlue,2)));
 
+  Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
+
+  // These three lines must be the last.
+  Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
   Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));
   Ports.append(new Port(  0,-30));
   Ports.append(new Port(  0, 30));
+  Ports.append(new Port( 20,  0));
 
   x1 = -30; y1 = -30;
-  x2 =   4; y2 =  30;
+  x2 =  30; y2 =  30;
 
   tx = x2+4;
   ty = y1+4;
-  Model = "DMOSFET";
+  Model = "MOSFET";
   Name  = "T";
 
-  // this must be the first property in the list !!!
+  // these must be the first properties in the list !!!
   Props.append(new Property("Type", "nfet", false,
 	QObject::tr("polarity (nfet,pfet)")));
-  Props.append(new Property("Vt0", "-1.0 V", true,
+  Props.append(new Property("Vt0", "1.0 V", true,
 	QObject::tr("zero-bias threshold voltage")));
+
   Props.append(new Property("Kp", "2e-5", true,
 	QObject::tr("transconductance coefficient in A/m^2")));
   Props.append(new Property("Gamma", "0.0", false,
@@ -145,20 +151,114 @@ MOSFET_depl::MOSFET_depl()
 	QObject::tr("simulation temperature in degree Celsius")));
 }
 
-MOSFET_depl::~MOSFET_depl()
+MOSFET_sub::~MOSFET_sub()
 {
 }
 
-Component* MOSFET_depl::newOne()
+Component* MOSFET_sub::newOne()
 {
-  return new MOSFET_depl();
+  MOSFET_sub* p = new MOSFET_sub();
+  p->Props.first()->Value = Props.first()->Value;
+  p->Props.next()->Value = Props.next()->Value;
+  p->recreate();
+  return p;
 }
 
-Component* MOSFET_depl::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Component* MOSFET_sub::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("n-MOSFET");
+  BitmapFile = "nmosfet_sub";
+
+  if(getNewOne)  return new MOSFET_sub();
+  return 0;
+}
+
+Component* MOSFET_sub::info_p(QString& Name,
+			      char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("p-MOSFET");
+  BitmapFile = "pmosfet_sub";
+
+  if(getNewOne) {
+    MOSFET_sub* p = new MOSFET_sub();
+    p->Props.getFirst()->Value = "pfet";
+    p->recreate();
+    return p;
+  }
+  return 0;
+}
+
+Component* MOSFET_sub::info_depl(QString& Name,
+				 char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("depletion MOSFET");
-  BitmapFile = "dmosfet";
+  BitmapFile = "dmosfet_sub";
 
-  if(getNewOne)  return new MOSFET_depl();
+  if(getNewOne) {
+    MOSFET_sub* p = new MOSFET_sub();
+    p->Props.first();
+    p->Props.next()->Value = "-1.0 V";
+    p->recreate();
+    return p;
+  }
   return 0;
+}
+
+// Makes the schematic symbol a n-type, p-type or depletion MOSFET (according
+// to the "Type" and "Vt0" properties).
+void MOSFET_sub::recreate()
+{
+  Line *pl2 = Lines.last();
+  Line *pl1 = Lines.prev();
+  Line *pl3 = Lines.prev();
+
+  if(Props.first()->Value == "nfet") {
+    pl1->x1 = -9;  pl1->y1 = 0;  pl1->x2 = -4; pl1->y2 = -5;
+    pl2->x1 = -9;  pl2->y1 = 0;  pl2->x2 = -4; pl2->y2 =  5;
+  }
+  else {
+    pl1->x1 = -1;  pl1->y1 = 0;  pl1->x2 = -6; pl1->y2 = -5;
+    pl2->x1 = -1;  pl2->y1 = 0;  pl2->x2 = -6; pl2->y2 =  5;
+  }
+
+  // depletion or enhancement MOSFET ?
+  if(Props.next()->Value.stripWhiteSpace().at(0) == '-') {
+    pl3->x1 = -10;  pl3->y1 = -8;  pl3->x2 = -10; pl3->y2 = 8;
+  }
+  else {
+    pl3->x1 = -10;  pl3->y1 = -4;  pl3->x2 = -10; pl3->y2 = 4;
+  }
+
+  if(mirroredX) {
+    pl1->y1 = -pl1->y1;
+    pl1->y2 = -pl1->y2;
+    pl2->y1 = -pl2->y1;
+    pl2->y2 = -pl2->y2;
+    pl3->y1 = -pl3->y1;
+    pl3->y2 = -pl3->y2;
+  }
+
+  int tmp;
+  for(int z=0; z<rotated; z++) {
+    tmp = -pl1->x1;
+    pl1->x1 = pl1->y1;
+    pl1->y1 = tmp;
+    tmp = -pl1->x2;
+    pl1->x2 = pl1->y2;
+    pl1->y2 = tmp;
+
+    tmp = -pl2->x1;
+    pl2->x1 = pl2->y1;
+    pl2->y1 = tmp;
+    tmp = -pl2->x2;
+    pl2->x2 = pl2->y2;
+    pl2->y2 = tmp;
+
+    tmp = -pl3->x1;
+    pl3->x1 = pl3->y1;
+    pl3->y1 = tmp;
+    tmp = -pl3->x2;
+    pl3->x2 = pl3->y2;
+    pl3->y2 = tmp;
+  }
 }

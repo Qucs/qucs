@@ -1826,7 +1826,7 @@ NF_{min} = 10\cdot \lg F_{min}
 
 Equivalent noise resistance:
 \begin{equation}
-R_n = \frac{Z_0}{4\cdot k\cdot T_0}\cdot
+R_n = \frac{Z_{port,in}}{4\cdot k\cdot T_0}\cdot
       \left( \underline{c}_{11} - 2\cdot
       \text{Re}\left( \underline{c}_{12}\cdot\left( \frac{1+\underline{S}_{11}}{\underline{S}_{21}} \right)^*
       \right)\, + \underline{c}_{22}\cdot
@@ -1834,7 +1834,8 @@ R_n = \frac{Z_0}{4\cdot k\cdot T_0}\cdot
 \label{eqn:nparamRn}
 \end{equation}
 \begin{tabular}{ll}
-With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
+With & \quad $Z_{port,in}$ internal impedance of input port\\
+     & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
      & \quad standard temperature $T_0 = 290$K\\
 \end{tabular}
 

@@ -129,6 +129,12 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   CompNameEdit->setText(c->Name);
   changed = transfered = false;
 
+  c->TextSize(tx_Dist, ty_Dist);
+  int tmp = c->tx+tx_Dist - c->x1;
+  if((tmp > 0) || (tmp < -6))  tx_Dist = 0;  // remember the text position
+  tmp = c->ty+ty_Dist - c->y1;
+  if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
+
 //  prop->clear();
 
   QString s;
@@ -249,15 +255,19 @@ void ComponentDialog::slotApplyProperty()
 {
   QListViewItem *item = prop->currentItem();
 
+  if(ComboEdit->isShown())   // take text from ComboBox ?
+    edit->setText(ComboEdit->currentText());
+
   if(item->text(1) != edit->text()) {
     item->setText(1, edit->text());    // apply edit line
     changed = true;
   }
   if(NameEdit->isShown())	// also apply property name ?
     if(item->text(0) != NameEdit->text()) {
-      if(NameEdit->text() == "Export")
-        item->setText(0, "Export_");   // name must not be "Export" !!!
-      else  item->setText(0, NameEdit->text());  // apply property name
+//      if(NameEdit->text() == "Export")
+//        item->setText(0, "Export_");   // name must not be "Export" !!!
+//      else
+      item->setText(0, NameEdit->text());  // apply property name
       changed = true;
     }
 
@@ -341,7 +351,7 @@ void ComponentDialog::slotApplyInput()
   }
 
   QListViewItem *item = prop->firstChild();
-  if(item == 0) return;
+ if(item != 0) {
 
   item = prop->currentItem();
   if(item->text(1) != edit->text()) {
@@ -362,9 +372,21 @@ void ComponentDialog::slotApplyInput()
     Comp->Props.append(new
 	Property(item->text(0), item->text(1), display, item->text(3)));
   }
-  transfered = true;     // applied changed to the component itself
+ }
+  transfered = true;     // applied changes to the component itself
 
   if(changed) {
+    int dx, dy;
+    Comp->TextSize(dx, dy);
+    if(tx_Dist != 0) {
+      Comp->tx += tx_Dist-dx;
+      tx_Dist = dx;
+    }
+    if(ty_Dist != 0) {
+      Comp->ty += ty_Dist-dy;
+      ty_Dist = dy;
+    }
+
     Doc->Comps.setAutoDelete(false);
     Doc->deleteComp(Comp);
     Comp->recreate();   // to apply changes to the schematic symbol

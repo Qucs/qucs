@@ -111,7 +111,7 @@ void Resistor::recreate()
 
   Line *p1;
   bool mmir = mirroredX;
-  int  tmp, ttx = tx, tty = ty, rrot = rotated;
+  int  tmp, rrot = rotated;
   if(mmir)  // mirror all lines
     for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
       p1->y1 = -p1->y1;
@@ -129,7 +129,6 @@ void Resistor::recreate()
     }
 
 
-  tx = ttx; ty = tty;  // restore properties (were changed by rotate/mirror)
-  rotated = rrot;
+  rotated = rrot;  // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
 }
