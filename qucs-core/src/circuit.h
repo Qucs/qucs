@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.16 2004/06/25 00:17:23 ela Exp $
+ * $Id: circuit.h,v 1.17 2004/06/25 22:09:22 ela Exp $
  *
  */
 
@@ -101,8 +101,9 @@ class circuit : public object
   static char * createInternal (char *, char *);
   void copyMatrixS (matrix &);
 
- protected:
   static const nr_double_t z0 = 50.0;
+
+ protected:
   int type;
 
  private:

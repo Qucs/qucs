@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.16 2004/06/25 00:17:23 ela Exp $
+ * $Id: check_netlist.cpp,v 1.17 2004/06/25 22:09:22 ela Exp $
  *
  */
 
@@ -40,6 +40,8 @@
 struct definition_t * definition_root = NULL;
 struct node_t * node_root = NULL;
 struct pair_t * pair_root = NULL;
+
+#define MAX_PORTS 256
 
 // List of available components.
 struct define_t definition_available[] =
@@ -83,7 +85,7 @@ struct define_t definition_available[] =
   { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Z", { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Num", { 1, PROP_NO_STR }, { 1, 256 } }, PROP_NO_PROP },
+      { "Num", { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, PROP_NO_PROP },
     { { "P", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* circulator */
@@ -218,7 +220,8 @@ struct define_t definition_available[] =
     { { "W", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "L", { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "Model", { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE }, PROP_NO_PROP },
+      { "Model", { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
     { PROP_NO_PROP }
   },
 
@@ -227,7 +230,9 @@ struct define_t definition_available[] =
     { { "Start", { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
       { "Stop", { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
       { "Step", { 1e9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Noise", { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "NoiseIP", { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, 
+      { "NoiseOP", { 2, PROP_NO_STR }, { 1, MAX_PORTS } }, PROP_NO_PROP }
   },
   /* dc analysis */
   { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -342,6 +347,7 @@ struct special_t {
 static struct special_t checker_specials[] = {
   { "JFET", "Type", { "nfet", "pfet", NULL } },
   { "BJT",  "Type", { "npn", "pnp", NULL } },
+  { "SP",  "Noise", { "yes", "no", NULL } },
   { NULL, NULL, { NULL } }
 };
 

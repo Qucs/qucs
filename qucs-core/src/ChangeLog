@@ -1,3 +1,10 @@
+2004-06-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Started to implemented noise analysis.
+
+	* check_netlist.cpp (definition_available): Added Noise, NoiseIP
+	and NoiseOP to S-parameter simulation properties.
+
 2004-06-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Additionally computing noise wave correlation
