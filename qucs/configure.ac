@@ -197,7 +197,7 @@ LANG_PATH="$prefix/share/qucs/lang/"
 AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"],
   [Where the language files go.])
 unset LANG_PATH
-DOC_PATH="$prefix/share/qucs/docs/en/"
+DOC_PATH="$prefix/share/qucs/docs/"
 AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"],
   [Where the documentation files go.])
 unset DOC_PATH

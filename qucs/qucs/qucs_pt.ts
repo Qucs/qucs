@@ -1900,6 +1900,50 @@ Formato da linha &apos;componente&apos; errado!</translation>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] filename
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    -r  open file read-only
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too long command line argument!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong command line argument!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only one filename allowed!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2420,6 +2464,97 @@ Erros:
     <message>
         <source>At least two elements must be selected !</source>
         <translation>Ao menos dois elementos devem ser selecionados !</translation>
+    </message>
+</context>
+<context>
+    <name>QucsEdit</name>
+    <message>
+        <source>File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Sobre</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">Sobre...</translation>
+    </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Enter a Filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erro</translation>
+    </message>
+    <message>
+        <source>Cannot write file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The text contains unsaved changes!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to save the changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished">&amp;Salvar</translation>
+    </message>
+    <message>
+        <source>&amp;Discard</source>
+        <translation type="unfinished">&amp;Descartar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>QucsHelp</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished">Índice da Ajuda</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3547,6 +3682,11 @@ Qt universal circuit simulator
     <message>
         <source>Italian by Giorgio Luparia</source>
         <translation>Novo</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

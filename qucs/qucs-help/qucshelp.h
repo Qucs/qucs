@@ -20,7 +20,9 @@
 
 #include <qdialog.h>
 #include <qtextbrowser.h>
+#include <qdir.h>
 
+extern QDir QucsHelpDir;
 
 /**
   *@author Michael Margraf

@@ -51,7 +51,8 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 	@list='$(TRANSLATIONS)'; for file in $$list; do \
 	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
 	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp \
-	  $(srcdir)/dialogs/*.cpp` -ts $$file; \
+	  $(srcdir)/dialogs/*.cpp  $(top_srcdir)/qucs-help/*.cpp \
+	  $(top_srcdir)/qucs-edit/*.cpp` -ts $$file; \
 	done
 
 %.qm: %.ts

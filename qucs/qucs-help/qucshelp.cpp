@@ -24,7 +24,6 @@
 #include <qpushbutton.h>
 #include <qlayout.h>
 #include <qhbox.h>
-/* FIXME: #include <qtextcodec.h> */
 
 QucsHelp::QucsHelp(const QString& page)
 {
@@ -51,8 +50,7 @@ QucsHelp::QucsHelp(const QString& page)
 
   // .......................................
   if(page.isEmpty()) slotGotoIndex();
-  else text->setSource(DOCDIR + page);
-  /* FIXME: text->setSource(QString(DOCDIR) + QTextCodec::locale() + page); */
+  else text->setSource(QucsHelpDir.filePath(page));
 }
 
 QucsHelp::~QucsHelp()
@@ -62,7 +60,7 @@ QucsHelp::~QucsHelp()
 //-----------------------------------------------------------------
 void QucsHelp::slotGotoIndex()
 {
-  text->setSource(DOCDIR "index.html");
+  text->setSource(QucsHelpDir.filePath("index.html"));
 }
 
 //-----------------------------------------------------------------
