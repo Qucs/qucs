@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.1 2004-07-07 13:52:34 ela Exp $
+ * $Id: bjt.cpp,v 1.2 2004-07-07 17:00:41 ela Exp $
  *
  */
 
@@ -162,7 +162,7 @@ void bjt::calcDC (void) {
   gif = gbei * Bf;
   gir = gbci * Br;
 
-  // compute base charge terms
+  // compute base charge quantities
   Q1 = 1 / (1 - Ubc / Vaf - Ube / Var);
   Q2 = If / Ikf + Ir / Ikr;
   nr_double_t SArg = 1 + 4 * Q2;
@@ -171,6 +171,7 @@ void bjt::calcDC (void) {
   dQbdUbe = Q1 * (Qb / Var + gif / Ikf / Sqrt);
   dQbdUbc = Q1 * (Qb / Vaf + gir / Ikr / Sqrt);
 
+  // compute transfer current
   It = (If - Ir) / Qb;
 
   // compute forward and backward transconductance
@@ -178,12 +179,13 @@ void bjt::calcDC (void) {
   gitr = (gir - Ir / Qb * dQbdUbc) / Qb;
   git = gitf - gitr;
 
-  if (/*Irb != */0) {
-    nr_double_t a1 = (Ibe + Ibc) / Irb;
-    nr_double_t a2 = (sqrt (1 + 144 / sqr (M_PI) * a1) - 1) / 
-      sqrt (24 / sqr (M_PI) * a1);
-    nr_double_t a3 = tan (a2);
-    Rbb = Rbm + 3 * (Rb - Rbm) * a3 / a2 / sqr (a3); // check that!!!
+  // calculate current-dependent base resistance
+  if (Irb != 0) {
+    nr_double_t a, b, z;
+    a = (Ibci + Ibcn + Ibei + Iben) / Irb;
+    z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / sqrt (24 / sqr (M_PI) * a);
+    b = tan (z);
+    Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
   }
   else {
     Rbb = Rbm + (Rb - Rbm) / Qb;
