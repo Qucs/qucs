@@ -1,7 +1,7 @@
 /*
  * tvector.cpp - simple vector template class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.4 2004/10/27 18:45:19 ela Exp $
+ * $Id: tvector.cpp,v 1.5 2005/01/24 19:37:00 raimi Exp $
  *
  */
 
@@ -110,6 +110,18 @@ void tvector<nr_type_t>::set (int i, nr_type_t z) {
   data[i - 1] = z;
 }
 
+// Sets all the tvector elements to the given value.
+template <class nr_type_t>
+void tvector<nr_type_t>::set (nr_type_t z) {
+  for (int i = 0; i < getSize (); i++) data[i] = z;
+}
+
+// Copies the specified elements from the given tvector.
+template <class nr_type_t>
+void tvector<nr_type_t>::set (tvector<nr_type_t> a, int start, int stop) {
+  for (int i = start; i <= stop; i++) data[i - 1] = a.get (i);
+}
+
 // The function swaps the given rows with each other.
 template <class nr_type_t>
 void tvector<nr_type_t>::exchangeRows (int r1, int r2) {
@@ -162,6 +174,22 @@ tvector<nr_type_t> operator * (tvector<nr_type_t> a, tvector<nr_type_t> b) {
   tvector<nr_type_t> res (n);
   for (int i = 1; i <= n; i++) res.set (i, a.get (i) * b.get (i));
   return res;
+}
+
+// Computes the scalar product of two vectors.
+template <class nr_type_t>
+nr_type_t scalar (tvector<nr_type_t> a, tvector<nr_type_t> b) {
+  assert (a.getSize () == b.getSize ());
+  nr_type_t n = 0;
+  for (int i = 1; i <= a.getSize (); i++) n += a.get (i) * b.get (i);
+  return n;
+}
+
+// Constant assignment operation.
+template <class nr_type_t>
+tvector<nr_type_t> tvector<nr_type_t>::operator = (const nr_type_t val) {
+  for (int i = 0; i < getSize (); i++) data[i] = val;
+  return *this;
 }
 
 // Returns the sum of the vector elements.
@@ -230,6 +258,15 @@ nr_double_t maxnorm (tvector<nr_type_t> a) {
     if (n > nMax) nMax = n;
   }
   return nMax;
+}
+
+// Conjugate vector.
+template <class nr_type_t>
+tvector<nr_type_t> conj (tvector<nr_type_t> a) {
+  int n = a.getSize ();
+  tvector<nr_type_t> res (n);
+  for (int i = 1; i <= n; i++) res.set (i, conj (a.get (i)));
+  return res;
 }
 
 // Checks validity of vector.

@@ -1,7 +1,7 @@
 /*
  * trsolver.cpp - transient solver class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.30 2004/12/07 22:33:32 raimi Exp $
+ * $Id: trsolver.cpp,v 1.31 2005/01/24 19:37:00 raimi Exp $
  *
  */
 
@@ -293,7 +293,7 @@ int trsolver::predictor (void) {
    explicit Adams-Bashford integration formula. */
 void trsolver::predictBashford (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   nr_double_t xn, dd, hn;
 
   // go through each solution
@@ -314,7 +314,7 @@ void trsolver::predictBashford (void) {
    Adams-Bashford order 1. */
 void trsolver::predictEuler (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   nr_double_t xn, dd, hn;
 
   for (int r = 1; r <= N + M; r++) {
@@ -330,7 +330,7 @@ void trsolver::predictEuler (void) {
    explicit Gear integration formula. */
 void trsolver::predictGear (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   nr_double_t xn;
 
   // go through each solution
@@ -536,7 +536,7 @@ nr_double_t trsolver::checkDelta (void) {
   nr_double_t LTEfactor = getPropertyDouble ("LTEfactor");
   nr_double_t dif, rel, tol, lte, q, n = DBL_MAX;
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
 
   // cec = corrector error constant
   nr_double_t cec = getCorrectorError (corrType, corrOrder);

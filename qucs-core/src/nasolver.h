@@ -1,7 +1,7 @@
 /*
  * nasolver.h - nodal analysis solver class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.13 2004/12/03 18:57:03 raimi Exp $
+ * $Id: nasolver.h,v 1.14 2005/01/24 19:36:59 raimi Exp $
  *
  */
 
@@ -72,9 +72,12 @@ class nasolver : public analysis
  protected:
   void savePreviousIteration (void);
   int  countNodes (void);
+  int  countVoltageSources (void);
   void saveSolution (void);
   circuit * findVoltageSource (int);
   void applyNodeset (void);
+  void createNoiseMatrix (void);
+  void runMNA (void);
 
  private:
   void createMatrix (void);
@@ -86,7 +89,6 @@ class nasolver : public analysis
   void createIVector (void);
   void createEVector (void);
   void createZVector (void);
-  void runMNA (void);
   void applyAttenuation (void);
   void lineSearch (void);
   void steepestDescent (void);
@@ -106,10 +108,12 @@ class nasolver : public analysis
   tvector<nr_type_t> * xprev;
   tvector<nr_type_t> * zprev;
   tmatrix<nr_type_t> * A;
+  tmatrix<nr_type_t> * C;
   int iterations;
   int convHelper;
   int fixpoint;
   int eqnAlgo;
+  int updateMatrix;
   nr_double_t gMin, srcFactor;
 
  private:
@@ -118,7 +122,6 @@ class nasolver : public analysis
   nr_double_t reltol;
   nr_double_t abstol;
   nr_double_t vntol;
-  int updateMatrix;
 
  private:
   char * desc;

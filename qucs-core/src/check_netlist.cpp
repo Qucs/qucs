@@ -1,7 +1,7 @@
 /*
  * check_netlist.cpp - checker for the Qucs netlist
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.70 2005/01/17 12:19:01 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.71 2005/01/24 19:36:59 raimi Exp $
  *
  */
 
@@ -193,6 +193,7 @@ static struct special_t checker_specials[] = {
   { "SP",     "Noise",       { "yes", "no", NULL } },
   { "SP",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "AC",     "Type",        { "lin", "log", "list", "const", NULL } },
+  { "AC",     "Noise",       { "yes", "no", NULL } },
   { "DC",     "saveOPs",     { "yes", "no", NULL } },
   { "DC",     "saveAll",     { "yes", "no", NULL } },
   { "DC",     "convHelper",  { "none", "SourceStepping", "gMinStepping", 

@@ -1,7 +1,7 @@
 /*
  * gyrator.cpp - gyrator class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.10 2004/11/24 19:15:48 raimi Exp $
+ * $Id: gyrator.cpp,v 1.11 2005/01/24 19:37:16 raimi Exp $
  *
  */
 
@@ -39,7 +39,9 @@
 
 gyrator::gyrator () : circuit (4) {
   type = CIR_GYRATOR;
+#if AUGMENTED
   setVoltageSources (2);
+#endif
 }
 
 void gyrator::initSP (void) {
@@ -61,6 +63,7 @@ void gyrator::initSP (void) {
 void gyrator::initDC (void) {
   nr_double_t r = getPropertyDouble ("R");
   allocMatrixMNA ();
+#if AUGMENTED
   setB (1, 1, +1.0); setB (2, 1, +0.0); setB (3, 1, +0.0); setB (4, 1, -1.0);
   setB (2, 1, +0.0); setB (2, 2, +1.0); setB (3, 2, -1.0); setB (4, 2, +0.0);
   setC (1, 1, +0.0); setC (1, 2, +1/r); setC (1, 3, -1/r); setC (1, 4, +0.0);
@@ -68,6 +71,12 @@ void gyrator::initDC (void) {
   setD (1, 1, -1.0); setD (2, 2, -1.0); setD (1, 2, +0.0); setD (2, 1, +0.0);
   setE (1, +0.0);
   setE (2, +0.0);
+#else
+  setY (1, 2, +1/r); setY (1, 3, -1/r);
+  setY (2, 1, -1/r); setY (2, 4, +1/r);
+  setY (3, 1, +1/r); setY (3, 4, -1/r);
+  setY (4, 2, -1/r); setY (4, 3, +1/r);
+#endif
 }
 
 void gyrator::initAC (void) {

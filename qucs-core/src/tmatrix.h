@@ -1,7 +1,7 @@
 /*
  * tmatrix.h - simple matrix template class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.6 2004/10/25 21:01:32 ela Exp $
+ * $Id: tmatrix.h,v 1.7 2005/01/24 19:37:00 raimi Exp $
  *
  */
 
@@ -37,6 +37,8 @@ template <class nr_type_t>
 tmatrix<nr_type_t> operator * (tmatrix<nr_type_t>, tmatrix<nr_type_t>);
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tmatrix<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tvector<nr_type_t>, tmatrix<nr_type_t>);
 
 template <class nr_type_t>
 class tmatrix
@@ -55,6 +57,7 @@ class tmatrix
   nr_type_t * getData (void) { return data; }
   void exchangeRows (int, int);
   void exchangeCols (int, int);
+  void transpose (void);
   int  isFinite (void);
   void print (void);
 
@@ -63,6 +66,7 @@ class tmatrix
   friend tmatrix eye<nr_type_t> (int);
   friend tmatrix operator *<> (tmatrix, tmatrix);
   friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
+  friend tvector<nr_type_t> operator *<> (tvector<nr_type_t>, tmatrix);
 
  private:
   int cols;

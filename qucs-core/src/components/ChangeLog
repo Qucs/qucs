@@ -1,3 +1,12 @@
+2005-01-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* vccs.cpp, gyrator.cpp: Pivotised MNA stamp, saving some
+	rows/columns in the final MNA matrix.
+
+	* devices/diode.cpp, inoise.cpp, attenuator.cpp, isolator.cpp,
+	resistor.cpp: Added computation of noise current correlation
+	matrix.
+
 2004-12-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwline.cpp: Fixed bug in loss computation.

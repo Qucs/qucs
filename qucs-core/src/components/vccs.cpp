@@ -1,7 +1,7 @@
 /*
  * vccs.cpp - vccs class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vccs.cpp,v 1.9 2004/11/24 19:15:50 raimi Exp $
+ * $Id: vccs.cpp,v 1.10 2005/01/24 19:37:17 raimi Exp $
  *
  */
 
@@ -41,7 +41,9 @@
 
 vccs::vccs () : circuit (4) {
   type = CIR_VCCS;
+#if AUGMENTED
   setVoltageSources (1);
+#endif
 }
 
 void vccs::calcSP (nr_double_t frequency) {
@@ -59,10 +61,16 @@ void vccs::calcSP (nr_double_t frequency) {
 
 void vccs::initDC (void) {
   allocMatrixMNA ();
+#if AUGMENTED
   setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
   setB (1, 1, +0.0); setB (2, 1, +1.0); setB (3, 1, -1.0); setB (4, 1, +0.0);
   setD (1, 1, -1.0 / getPropertyDouble ("G"));
   setE (1, +0.0);
+#else
+  nr_double_t g = getPropertyDouble ("G");
+  setY (2, 1, +g); setY (3, 4, +g);
+  setY (3, 1, -g); setY (2, 4, -g);
+#endif
 }
 
 void vccs::initAC (void) {
@@ -70,8 +78,14 @@ void vccs::initAC (void) {
 }
 
 void vccs::calcAC (nr_double_t frequency) {
-  nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
+#if AUGMENTED
+  nr_double_t g = getPropertyDouble ("G");
   complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
   setD (1, 1, -r);
+#else
+  complex g = polar (getPropertyDouble ("G"), - 2.0 * M_PI * frequency * t);
+  setY (2, 1, +g); setY (3, 4, +g);
+  setY (3, 1, -g); setY (2, 4, -g);
+#endif
 }

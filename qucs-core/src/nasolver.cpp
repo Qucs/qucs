@@ -1,7 +1,7 @@
 /*
  * nasolver.cpp - nodal analysis solver class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.27 2004/12/07 22:33:31 raimi Exp $
+ * $Id: nasolver.cpp,v 1.28 2005/01/24 19:36:59 raimi Exp $
  *
  */
 
@@ -60,7 +60,7 @@ using namespace qucs;
 template <class nr_type_t>
 nasolver<nr_type_t>::nasolver () : analysis () {
   nlist = NULL;
-  A = NULL;
+  A = C = NULL;
   z = x = xprev = zprev = NULL;
   reltol = abstol = vntol = 0;
   desc = NULL;
@@ -76,7 +76,7 @@ nasolver<nr_type_t>::nasolver () : analysis () {
 template <class nr_type_t>
 nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   nlist = NULL;
-  A = NULL;
+  A = C = NULL;
   z = x = xprev = zprev = NULL;
   reltol = abstol = vntol = 0;
   desc = NULL;
@@ -92,6 +92,7 @@ nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
 template <class nr_type_t>
 nasolver<nr_type_t>::~nasolver () {
   if (nlist) delete nlist;
+  if (C) delete C;
   delete A;
   delete z;
   delete x;
@@ -106,6 +107,7 @@ template <class nr_type_t>
 nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   nlist = o.nlist ? new nodelist (*(o.nlist)) : NULL;
   A = o.A ? new tmatrix<nr_type_t> (*(o.A)) : NULL;
+  C = o.C ? new tmatrix<nr_type_t> (*(o.C)) : NULL;
   z = o.z ? new tvector<nr_type_t> (*(o.z)) : NULL;
   x = o.x ? new tvector<nr_type_t> (*(o.x)) : NULL;
   xprev = zprev = NULL;
@@ -203,7 +205,7 @@ void nasolver<nr_type_t>::solve_pre (void) {
 #endif
 
   // create matrix, solution vector and right hand side vector
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   int N = countNodes ();
   if (A == NULL) A = new tmatrix<nr_type_t> (M + N);
   if (z == NULL) z = new tvector<nr_type_t> (N + M);
@@ -474,7 +476,7 @@ void nasolver<nr_type_t>::createMatrix (void) {
   /* Adjust G matrix if requested. */
   if (convHelper == CONV_GMinStepping) {
     int N = countNodes ();
-    int M = subnet->getVoltageSources ();
+    int M = countVoltageSources ();
     for (int n = 1; n <= N + M; n++) {
       A->set (n, n, A->get (n, n) + gMin);
     }
@@ -516,7 +518,7 @@ nr_type_t nasolver<nr_type_t>::MatValX (complex z, nr_double_t *) {
 template <class nr_type_t>
 void nasolver<nr_type_t>::createBMatrix (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   circuit * vs;
   struct nodelist_t * n;
   nr_type_t val;
@@ -551,7 +553,7 @@ void nasolver<nr_type_t>::createBMatrix (void) {
 template <class nr_type_t>
 void nasolver<nr_type_t>::createCMatrix (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   circuit * vs;
   struct nodelist_t * n;
   nr_type_t val;
@@ -579,7 +581,7 @@ void nasolver<nr_type_t>::createCMatrix (void) {
    It can be non-zero if dependent sources are considered. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::createDMatrix (void) {
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   int N = countNodes ();
   circuit * vsr, * vsc;
   nr_type_t val;
@@ -634,6 +636,40 @@ void nasolver<nr_type_t>::createGMatrix (void) {
   }
 }
 
+/* The following function creates the NxN noise current correlation
+   matrix. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::createNoiseMatrix (void) {
+  int pr, pc, N = countNodes ();
+  nr_type_t n;
+  struct nodelist_t * nr, * nc;
+  circuit * ct;
+
+  // create new Cy matrix if necessary
+  if (C == NULL) C = new tmatrix<nr_type_t> (N);
+
+  // go through each column of the Cy matrix
+  for (int c = 1; c <= N; c++) {
+    nc = nlist->getNode (c);
+    // go through each row of the Cy matrix
+    for (int r = 1; r <= N; r++) {
+      nr = nlist->getNode (r);
+      n = 0.0;
+      // sum up the noise-correlation of each connected circuit
+      for (int a = 0; a < nc->nNodes; a++)
+	for (int b = 0; b < nr->nNodes; b++)
+	  if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ()) {
+	    ct = nc->nodes[a]->getCircuit ();
+	    pc = nc->nodes[a]->getPort ();
+	    pr = nr->nodes[b]->getPort ();
+	    n += MatVal (ct->getN (pr, pc));
+	  }
+      // put value into Cy matrix
+      C->set (r, c, n);
+    }
+  }
+}
+
 /* The i matrix is an 1xN matrix with each element of the matrix
    corresponding to a particular node.  The value of each element of i
    is determined by the sum of current sources into the corresponding
@@ -668,7 +704,7 @@ void nasolver<nr_type_t>::createIVector (void) {
 template <class nr_type_t>
 void nasolver<nr_type_t>::createEVector (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   nr_type_t val;
   circuit * vs;
 
@@ -692,6 +728,12 @@ void nasolver<nr_type_t>::createZVector (void) {
 template <class nr_type_t>
 int nasolver<nr_type_t>::countNodes (void) {
   return nlist->length () - 1;
+}
+
+// Returns the number of voltage sources in the nodelist.
+template <class nr_type_t>
+int nasolver<nr_type_t>::countVoltageSources (void) {
+  return subnet->getVoltageSources ();
 }
 
 /* The function returns the voltage source circuit object
@@ -857,7 +899,7 @@ void nasolver<nr_type_t>::steepestDescent (void) {
 template <class nr_type_t>
 int nasolver<nr_type_t>::checkConvergence (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   nr_double_t v_abs, v_rel, i_abs, i_rel;
 
   for (int r = 1; r <= N; r++) {
@@ -924,7 +966,7 @@ void nasolver<nr_type_t>::saveNodeVoltages (void) {
 template <class nr_type_t>
 void nasolver<nr_type_t>::saveBranchCurrents (void) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   circuit * vs;
   // save all branch currents of voltage sources
   for (int r = 1; r <= M; r++) {
@@ -946,22 +988,26 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
 				       vector * f) {
   int N = countNodes ();
-  int M = subnet->getVoltageSources ();
+  int M = countVoltageSources ();
   char * n;
 
   // add node voltage variables
-  for (int r = 1; r <= N; r++) {
-    if ((n = createV (r, volts, saveOPs)) != NULL) {
-      saveVariable (n, x->get (r), f);
-      free (n);
+  if (volts) {
+    for (int r = 1; r <= N; r++) {
+      if ((n = createV (r, volts, saveOPs)) != NULL) {
+	saveVariable (n, x->get (r), f);
+	free (n);
+      }
     }
   }
 
   // add branch current variables
-  for (int r = 1; r <= M; r++) {
-    if ((n = createI (r, amps, saveOPs)) != NULL) {
-      saveVariable (n, x->get (r + N), f);
-      free (n);
+  if (amps) {
+    for (int r = 1; r <= M; r++) {
+      if ((n = createI (r, amps, saveOPs)) != NULL) {
+	saveVariable (n, x->get (r + N), f);
+	free (n);
+      }
     }
   }
 

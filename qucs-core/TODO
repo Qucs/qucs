@@ -61,7 +61,7 @@ unfixed) have a look at the file BUGS.
 - BSIMv3 implementation.
 - Harmonic balance simulation.
 	- Transient simulation.
-- AC noise analysis.
+	- AC noise analysis.
 	- AC analysis.
 	- Implement sorted node list for S-parameter analysis in order
 	  to increase speed.

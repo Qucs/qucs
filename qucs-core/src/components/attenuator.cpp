@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.14 2005/01/17 12:19:02 raimi Exp $
+ * $Id: attenuator.cpp,v 1.15 2005/01/24 19:37:15 raimi Exp $
  *
  */
 
@@ -66,6 +66,17 @@ void attenuator::calcNoiseSP (nr_double_t) {
   setN (2, 2, -f * (r * r + l));
   setN (1, 2, +f * 2 * r * sqrt (l));
   setN (2, 1, +f * 2 * r * sqrt (l));
+}
+
+void attenuator::calcNoiseAC (nr_double_t) {
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t z = getPropertyDouble ("Zref");
+  nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
+  setN (1, 1, +f * (l + 1));
+  setN (2, 2, +f * (l + 1));
+  setN (1, 2, -f * 2 * sqrt (l));
+  setN (2, 1, -f * 2 * sqrt (l));
 }
 
 void attenuator::initDC (void) {
