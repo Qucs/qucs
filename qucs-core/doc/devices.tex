@@ -912,64 +912,13 @@ given in section \ref{sec:noiseTrans} on page
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.9\linewidth]{mosphysical}
+\includegraphics[width=0.78\linewidth]{mosphysical}
 \end{center}
 \caption{vertical section of integrated MOSFET}
 \label{fig:MOSphysical}
 \end{figure}
 \FloatBarrier
 
-The following table contains the model and device parameters for the
-MOSFET level 1.
-
-\addvspace{12pt}
-
-\begin{tabular}{rllll}
-Name & Symbol & Description & Unit & Default\\
-\hline
-Is & $I_{S}$ & bulk junction saturation current & $\ampere$ & $10^{-14}$\\
-N & $N$ & bulk junction emission coefficient &  & $1.0$\\
-Vt0 & $V_{T0}$ & zero-bias threshold voltage & $\volt$ & $0.0$\\
-Lambda & $\lambda$ & channel-length modulation parameter & $1/\volt$ & $0.0$\\
-Kp & $K_P$ & transconductance coefficient & $\ampere/\volt^2$ & $2.0\cdot 10^{-5}$\\
-Gamma & $\gamma$ & bulk threshold & $\sqrt{\volt}$ & $0.0$\\
-Phi & $\Phi$ & surface potential & $\volt$ & $0.6$\\
-Rd & $R_D$ & drain ohmic resistance & $\ohm$ & $0.0$\\
-Rs & $R_S$ & source ohmic resistance & $\ohm$ & $0.0$\\
-Rg & $R_G$ & gate ohmic resistance & $\ohm$ & $0.0$\\
-L & $L$ & channel length & $\meter$ & $100\micro$\\
-Ld & $L_D$ & lateral diffusion length & $\meter$ & $0.0$\\
-W & $W$ & channel width & $\meter$ & $100\micro$\\
-Tox & $T_{OX}$ & oxide thickness & $\meter$ & $0.1\micro$\\
-Cgso & $C_{GSO}$ & \parbox[t]{6.5cm}{gate-source overlap capacitance per meter of channel width} & $\farad/\meter$ & $0.0$\\
-Cgdo & $C_{GDO}$ & \parbox[t]{6.5cm}{gate-drain overlap capacitance per meter of channel width} & $\farad/\meter$ & $0.0$\\
-Cgbo & $C_{GBO}$ & \parbox[t]{6.5cm}{gate-bulk overlap capacitance per meter of channel length} & $\farad/\meter$ & $0.0$\\
-Cbd & $C_{BD}$ & zero-bias bulk-drain junction capacitance & $\farad$ & $0.0$\\
-Cbs & $C_{BS}$ & zero-bias bulk-source junction capacitance & $\farad$ & $0.0$\\
-Pb & $\Phi_{B}$ & bulk junction potential & $\volt$ & $0.8$\\
-Mj & $M_J$ & bulk junction bottom grading coefficient & & $0.5$\\
-Fc & $F_C$ & \parbox[t]{6.5cm}{bulk junction forward-bias depletion capacitance coefficient} & & $0.5$\\
-Cjsw & $C_{JSW}$ & \parbox[t]{6.5cm}{zero-bias bulk junction periphery capacitance per meter of junction perimeter} & $\farad/\meter$ & $0.0$\\
-Mjsw & $M_{JSW}$ & bulk junction periphery grading coefficient & & $0.33$\\
-Tt & $T_{T}$ & bulk transit time & $\second$ & $0.0$\\
-Kf & $K_{F}$ & flicker noise coefficient & & $0.0$\\
-Af & $A_{F}$ & flicker noise exponent & & $1.0$\\
-Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
-Nsub & $N_{SUB}$ & substrate (bulk) doping density & $1/\centi\meter^3$ & $0.0$\\
-Nss & $N_{SS}$ & surface state density & $1/\centi\meter^2$ & $0.0$\\
-Tpg & $T_{PG}$ & \parbox[t]{6.5cm}{gate material type (0 = alumina, -1 = same as bulk, 1 = opposite to bulk)} &  & $1$\\
-Uo & $\mu_{0}$ & surface mobility & $\centi\meter^2/\volt\second$ & $600.0$\\
-Rsh & $R_{SH}$ & drain and source diffusion sheet resistance & $\ohm/$square & $0.0$\\
-Nrd & $N_{RD}$ & number of equivalent drain squares & & $1$\\
-Nrs & $N_{RS}$ & number of equivalent source squares & & $1$\\
-Cj & $C_{J}$ & \parbox[t]{6.5cm}{zero-bias bulk junction bottom capacitance per square meter of junction area} & $\farad/\meter^2$ & $0.0$\\
-Js & $J_{S}$ & \parbox[t]{6.5cm}{bulk junction saturation current per square meter of junction area} & $\ampere/\meter^2$ & $0.0$\\
-Ad & $A_{D}$ & drain diffusion area & $\meter^2$ & $0.0$\\
-As & $A_{S}$ & source diffusion area & $\meter^2$ & $0.0$\\
-Pd & $P_{D}$ & drain junction perimeter & $\meter$ & $0.0$\\
-Ps & $P_{S}$ & source junction perimeter & $\meter$ & $0.0$\\
-Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
-\end{tabular}
 
 \begin{figure}[ht]
 \begin{center}
@@ -984,7 +933,62 @@ There are four different types of MOS field effect transistors as
 shown in fig. \ref{fig:MOStypes} all covered by the model going to be
 explained here.  The ``First Order Model'' is a physical model with
 the drain current equations according to Harold Shichman and David
-A. Hodges \cite{Shichman}.
+A. Hodges \cite{Shichman}.\\
+
+The following table contains the model and device parameters for the
+MOSFET level 1.
+
+\addvspace{12pt}
+
+\begin{tabular}{rlllll}
+Name & Symbol & Description & Unit & Default & typical\\
+\hline
+Is & $I_{S}$ & bulk junction saturation current & $\ampere$ & $10^{-14}$ & $10^{-15}$\\
+N & $N$ & bulk junction emission coefficient &  & $1.0$ & \\
+Vt0 & $V_{T0}$ & zero-bias threshold voltage & $\volt$ & $0.0$ & $0.7$\\
+Lambda & $\lambda$ & channel-length modulation parameter & $1/\volt$ & $0.0$ & $0.02$\\
+Kp & $K_P$ & transconductance coefficient & $\ampere/\volt^2$ & $2\cdot 10^{-5}$ & $6\cdot 10^{-5}$\\
+Gamma & $\gamma$ & bulk threshold & $\sqrt{\volt}$ & $0.0$ & $0.37$\\
+Phi & $\Phi$ & surface potential & $\volt$ & $0.6$ & $0.65$\\
+Rd & $R_D$ & drain ohmic resistance & $\ohm$ & $0.0$ & $1.0$\\
+Rs & $R_S$ & source ohmic resistance & $\ohm$ & $0.0$ & $1.0$\\
+Rg & $R_G$ & gate ohmic resistance & $\ohm$ & $0.0$ & \\
+L & $L$ & channel length & $\meter$ & $100\micro$ & \\
+Ld & $L_D$ & lateral diffusion length & $\meter$ & $0.0$ & $10^{-7}$\\
+W & $W$ & channel width & $\meter$ & $100\micro$ & \\
+Tox & $T_{OX}$ & oxide thickness & $\meter$ & $0.1\micro$ & $2\cdot 10^{-8}$\\
+Cgso & $C_{GSO}$ & \parbox[t]{6.5cm}{gate-source overlap capacitance per meter of channel width} & $\farad/\meter$ & $0.0$ & $4\cdot 10^{-11}$\\
+Cgdo & $C_{GDO}$ & \parbox[t]{6.5cm}{gate-drain overlap capacitance per meter of channel width} & $\farad/\meter$ & $0.0$ & $4\cdot 10^{-11}$\\
+Cgbo & $C_{GBO}$ & \parbox[t]{6.5cm}{gate-bulk overlap capacitance per meter of channel length} & $\farad/\meter$ & $0.0$ & $2\cdot 10^{-10}$\\
+Cbd & $C_{BD}$ & zero-bias bulk-drain junction capacitance & $\farad$ & $0.0$ & $6\cdot 10^{-17}$\\
+Cbs & $C_{BS}$ & zero-bias bulk-source junction capacitance & $\farad$ & $0.0$ & $6\cdot 10^{-17}$\\
+Pb & $\Phi_{B}$ & bulk junction potential & $\volt$ & $0.8$ & $0.87$\\
+Mj & $M_J$ & bulk junction bottom grading coefficient & & $0.5$ & $0.5$\\
+Fc & $F_C$ & \parbox[t]{6.5cm}{bulk junction forward-bias depletion capacitance coefficient} & & $0.5$ & \\
+Cjsw & $C_{JSW}$ & \parbox[t]{6.5cm}{zero-bias bulk junction periphery capacitance per meter of junction perimeter} & $\farad/\meter$ & $0.0$ & \\
+Mjsw & $M_{JSW}$ & bulk junction periphery grading coefficient & & $0.33$ & $0.33$\\
+Tt & $T_{T}$ & bulk transit time & $\second$ & $0.0$ & \\
+Kf & $K_{F}$ & flicker noise coefficient & & $0.0$ & \\
+Af & $A_{F}$ & flicker noise exponent & & $1.0$ & \\
+Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$ & \\
+Nsub & $N_{SUB}$ & substrate (bulk) doping density & $1/\centi\meter^3$ & $0.0$ & $4\cdot 10^{15}$\\
+Nss & $N_{SS}$ & surface state density & $1/\centi\meter^2$ & $0.0$ & $10^{10}$\\
+Tpg & $T_{PG}$ & \parbox[t]{6.5cm}{gate material type (0 = alumina, -1 = same as bulk, 1 = opposite to bulk)} &  & $1$ & \\
+Uo & $\mu_{0}$ & surface mobility & $\centi\meter^2/\volt\second$ & $600.0$ & $400.0$\\
+Rsh & $R_{SH}$ & drain and source diffusion sheet resistance & $\ohm/$square & $0.0$ & $10.0$\\
+Nrd & $N_{RD}$ & number of equivalent drain squares & & $1$ & \\
+Nrs & $N_{RS}$ & number of equivalent source squares & & $1$ & \\
+Cj & $C_{J}$ & \parbox[t]{6.5cm}{zero-bias bulk junction bottom capacitance per square meter of junction area} & $\farad/\meter^2$ & $0.0$ & $2\cdot 10^{-4}$\\
+Js & $J_{S}$ & \parbox[t]{6.5cm}{bulk junction saturation current per square meter of junction area} & $\ampere/\meter^2$ & $0.0$ & $10^{-8}$\\
+Ad & $A_{D}$ & drain diffusion area & $\meter^2$ & $0.0$ & \\
+As & $A_{S}$ & source diffusion area & $\meter^2$ & $0.0$ & \\
+Pd & $P_{D}$ & drain junction perimeter & $\meter$ & $0.0$ & \\
+Ps & $P_{S}$ & source junction perimeter & $\meter$ & $0.0$ & \\
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$ &
+\end{tabular}
+
+\newpage
+
 
 \subsection{Large signal model}
 %\addcontentsline{toc}{subsection}{Large signal model}
@@ -993,7 +997,7 @@ A. Hodges \cite{Shichman}.
 \begin{center}
 \includegraphics[width=0.6\linewidth]{mosfet}
 \end{center}
-\caption{MOSFET large signal model}
+\caption{n-channel MOSFET large signal model}
 \label{fig:mosfet}
 \end{figure}
 \FloatBarrier
@@ -1155,7 +1159,7 @@ The transconductance coefficient $K_P$ can be calculated using
 K_P = \mu_0\cdot C'_{ox}
 \end{equation}
 
-The surface potential $\Phi$ is given by
+The surface potential $\Phi$ is given by (with temperature voltage $V_T$)
 \begin{equation}
 \Phi = 2\cdot V_T\cdot \ln{\left(\dfrac{N_{SUB}}{n_i}\right)}
 \;\;\;\; \textrm{ with the intrinsic density } \;
