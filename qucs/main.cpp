@@ -30,13 +30,14 @@
 #include <math.h>
 
 #include "qucs.h"
+#include "qucsview.h"
 #include "main.h"
 
 
 
 tQucsSettings QucsSettings
      = {0, 0, 600, 400,    // position and size
-	QFont("Helvetica", 12), 16.0, 10.0,
+	QFont("Helvetica", 12), 16.0,
 	QColor(255, 250, 225), 20,
 	BINARYDIR "qucsedit"};
 
@@ -75,7 +76,6 @@ bool loadSettings()
 
 	QucsSettings.largeFontSize
 		= floor(4.0/3.0 * QucsSettings.font.pointSize());
-	QucsSettings.smallFontSize = 10.0;
 	}
     else if(Setting == "BGColor") {
 	QucsSettings.BGColor.setNamedColor(Line);

@@ -47,8 +47,11 @@ Diagram::Diagram(int _cx, int _cy)
 {
   cx = _cx;  cy = _cy;
 
-  ymin = xmin = xlow = ylow = 0.0;
-  ymax = xmax = xup  = yup  = 1.0;
+  xAxis.numGraphs = ylAxis.numGraphs = yrAxis.numGraphs = 0;
+  xAxis.min = xAxis.low =
+  ylAxis.min = ylAxis.low = yrAxis.min = yrAxis.low = 0.0;
+  xAxis.max = xAxis.up =
+  ylAxis.max = ylAxis.up = yrAxis.max = yrAxis.up = 1.0;
 
   Type = isDiagram;
   isSelected = false;
@@ -88,7 +91,7 @@ void Diagram::paint(ViewPainter *p)
       pg->paint(p, cx, cy);
 
     p->map(cx+(x2>>1), cy+y1, &x, &y);
-    if(xLabel.isEmpty()) {
+    if(xAxis.Label.isEmpty()) {
       // write all x labels
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
 	DataX *pD = pg->cPointsX.getFirst();
@@ -102,15 +105,15 @@ void Diagram::paint(ViewPainter *p)
     else {
       // write x label text
       p->Painter->setPen(Qt::black);
-      s = p->Painter->fontMetrics().size(0, xLabel);
-      p->Painter->drawText(x-(s.width()>>1), y, xLabel);
+      s = p->Painter->fontMetrics().size(0, xAxis.Label);
+      p->Painter->drawText(x-(s.width()>>1), y, xAxis.Label);
     }
 
 
     QWMatrix wm = p->Painter->worldMatrix();
     p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
     p->map(cx-x1, cy-(y2>>1), &x, &y);
-    if(yLabel.isEmpty()) {
+    if(ylAxis.Label.isEmpty()) {
       // draw y-label for all graphs
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         p->Painter->setPen(pg->Color);
@@ -127,8 +130,8 @@ void Diagram::paint(ViewPainter *p)
     }
     else {
 	p->Painter->setPen(Qt::black);
-	s = p->Painter->fontMetrics().size(0, yLabel);
-	p->Painter->drawText(-y-(s.width()>>1), x, yLabel);
+	s = p->Painter->fontMetrics().size(0, ylAxis.Label);
+	p->Painter->drawText(-y-(s.width()>>1), x, ylAxis.Label);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
@@ -313,19 +316,19 @@ bool Diagram::ResizeTouched(int x, int y)
 // --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
-  ymin = xmin = DBL_MAX;
-  ymax = xmax = -DBL_MAX;
+  ylAxis.min = xAxis.min = DBL_MAX;
+  ylAxis.max = xAxis.max = -DBL_MAX;
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);  // load data, determine max/min values
 
-  if(ymin > ymax) {
-    ymin = 0.0;
-    ymax = 1.0;
+  if(ylAxis.min > ylAxis.max) {
+    ylAxis.min = 0.0;
+    ylAxis.max = 1.0;
   }
-  if(xmin > xmax) {
-    xmin = 0.0;
-    xmax = 1.0;
+  if(xAxis.min > xAxis.max) {
+    xAxis.min = 0.0;
+    xAxis.max = 1.0;
   }
 
   updateGraphData();
@@ -335,8 +338,8 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 // Calculate diagram again without reading dataset from file.
 void Diagram::recalcGraphData()
 {
-  ymin = xmin = DBL_MAX;
-  ymax = xmax = -DBL_MAX;
+  ylAxis.min = xAxis.min = DBL_MAX;
+  ylAxis.max = xAxis.max = -DBL_MAX;
 
   int z;
   double x, y, *p;
@@ -347,8 +350,8 @@ void Diagram::recalcGraphData()
     p = pD->Points;
     for(z=pD->count; z>0; z--) { // check every x coordinate (1. dimension)
       x = *(p++);
-      if(x > xmax) xmax = x;
-      if(x < xmin) xmin = x;
+      if(x > xAxis.max) xAxis.max = x;
+      if(x < xAxis.min) xAxis.min = x;
     }
 
     p = pg->cPointsY;
@@ -356,14 +359,14 @@ void Diagram::recalcGraphData()
       x = *(p++);
       y = *(p++);
       if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(x > ymax) ymax = x;
-      if(x < ymin) ymin = x;
+      if(x > ylAxis.max) ylAxis.max = x;
+      if(x < ylAxis.min) ylAxis.min = x;
     }
   }
 
-  if((ymin > ymax) || (xmin > xmax)) {
-    ymin = xmin = 0.0;
-    ymax = xmax = 1.0;
+  if((ylAxis.min > ylAxis.max) || (xAxis.min > xAxis.max)) {
+    ylAxis.min = xAxis.min = 0.0;
+    ylAxis.max = xAxis.max = 1.0;
   }
   updateGraphData();
 }
@@ -468,16 +471,16 @@ bool Diagram::loadVarData(const QString& fileName)
     g->countY = 1;
     g->cPointsX.current()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
-    xmin = 1.0;
-    xmax = double(counting);
+    xAxis.min = 1.0;
+    xAxis.max = double(counting);
   }
   else {  // ...................................
     // get independent variables from data file
     g->countY = 1;
     for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
       if(pD == g->cPointsX.getFirst()) {
-	xmin = DBL_MAX;    // only count the first independent variable
-	xmax = -DBL_MAX;
+	xAxis.min = DBL_MAX;    // only count the first independent variable
+	xAxis.max = -DBL_MAX;
       }
       counting = loadIndepVarData(pD->Var, FileString);
       g->countY *= counting;
@@ -526,8 +529,8 @@ bool Diagram::loadVarData(const QString& fileName)
     *(p++) = y;
     if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
     if(finite(x)) {
-      if(x > ymax) ymax = x;
-      if(x < ymin) ymin = x;
+      if(x > ylAxis.max) ylAxis.max = x;
+      if(x < ylAxis.min) ylAxis.min = x;
     }
 
     i = FileString.find(noWhiteSpace, j);
@@ -592,8 +595,8 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
     }
     *(p++) = x;
     if(finite(x)) {
-      if(x > xmax) xmax = x;
-      if(x < xmin) xmin = x;
+      if(x > xAxis.max) xAxis.max = x;
+      if(x < xAxis.min) xAxis.min = x;
     }
 
     i = FileString.find(noWhiteSpace, j);
@@ -636,9 +639,9 @@ QString Diagram::save()
   if(GridOn) s+= "1 ";
   else s += "0 ";
   s += GridPen.color().name() + " " + QString::number(GridPen.style());
-  if(xlog) s+= " 1";  else s += " 0";
-  if(ylog) s+= "1";   else s += "0";
-  s += " \""+xLabel+"\" \""+yLabel+"\">\n";
+  if(xAxis.log) s+= " 1";  else s += " 0";
+  if(ylAxis.log) s+= "1";   else s += "0";
+  s += " \""+xAxis.Label+"\" \""+ylAxis.Label+"\">\n";
 
   for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
     s += pg->save()+"\n";
@@ -689,12 +692,12 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
     if(!ok) return false;
 
     n  = s.section(' ',8,8);    // xlog, ylog
-    xlog = n.at(0) != '0';
-    ylog = n.at(1) != '0';
+    xAxis.log = n.at(0) != '0';
+    ylAxis.log = n.at(1) != '0';
   }
 
-  xLabel = s.section('"',1,1);    // xLabel
-  yLabel = s.section('"',3,3);    // yLabel
+  xAxis.Label = s.section('"',1,1);    // xLabel
+  ylAxis.Label = s.section('"',3,3);    // yLabel
 
   Graph *pg;
   // .......................................................

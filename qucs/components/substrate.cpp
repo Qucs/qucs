@@ -61,7 +61,7 @@ Substrate::Substrate()
 		QObject::tr("thickness in meters")));
   Props.append(new Property("t", "35 um", true,
 		QObject::tr("thickness of metalization")));
-  Props.append(new Property("tand", "1e-3", true,
+  Props.append(new Property("tand", "2e-4", true,
 		QObject::tr("loss tangent")));
   Props.append(new Property("rho", "0.022e-6", true,
 		QObject::tr("specific resistance of metal")));

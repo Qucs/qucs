@@ -42,7 +42,7 @@ public:
 
   void init(QucsApp *p_);
 
-  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
+  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus;
   QAction *editRotate, *editMirror, *editMirrorY, *editPaste, *select;
   QAction *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText;
 
@@ -62,6 +62,7 @@ public slots:
   void slotSetMarker(bool);
   void slotOnGrid(bool);      // set selected elements on grid
   void slotMoveText(bool);    // move property text of components
+  void slotZoomIn(bool);
 
 private:
   void QucsActions::performToggleAction(bool, QAction*, pToggleFunc,

@@ -1,8 +1,8 @@
 /***************************************************************************
-                          graphictext.h  -  description
+                          msvia.h  -  description
                              -------------------
-    begin                : Mon Nov 24 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Sat Oct 30 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,42 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef GRAPHICTEXT_H
-#define GRAPHICTEXT_H
+#ifndef MSVIA_H
+#define MSVIA_H
 
-#include "painting.h"
+#include "component.h"
 
-/**
-  *@author Michael Margraf
-  */
 
-class GraphicText : public Painting  {
-public: 
-  GraphicText();
-  ~GraphicText();
-
-  void paintScheme(QPainter*);
-  void getCenter(int&, int&);
-  void setCenter(int, int, bool relative=false);
-
-  GraphicText* newOne();
-  bool load(const QString&);
-  QString save();
-  void paint(ViewPainter*);
-  void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);
-  bool MousePressing();
-  bool getSelected(int, int);
-  void Bounding(int&, int&, int&, int&);
-
-  void rotate();
-  void mirrorX();
-  void mirrorY();
-  bool Dialog();
-
-  QColor   Color;
-  QFont    Font;
-  QString  Text;
-  int      Angle;
+class MSvia : public Component  {
+public:
+  MSvia();
+  ~MSvia();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -30,9 +30,17 @@
   *@author Michael Margraf
   */
 
+struct Axis {
+  double  min, max; // least and greatest values of all graph data
+  double  low, up;  // the limits of the diagram
+  bool    log;      // in "rectdiagram": logarithmic or linear
+  QString Label;
+  int     numGraphs;  // counts number of graphs using this axis
+};
+
 
 class Diagram : public Element {
-public: 
+public:
   Diagram(int _cx=0, int _cy=0);
   virtual ~Diagram();
 
@@ -59,17 +67,14 @@ public:
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
   QPen    GridPen;
-  QString xLabel, yLabel;
-  bool    xlog, ylog;   // in "rectdiagram": x-/y-axis logarithmic or linear
 
   QPtrList<Graph>  Graphs;
   QPtrList<Arc>    Arcs;
   QPtrList<Line>   Lines;
   QPtrList<Text>   Texts;
 
-  double xmin, ymin, xmax, ymax; // least and greatest values of all graph data
-  double xup, xlow, yup, ylow;   // the limits of the diagram
-  int State;
+  Axis  xAxis, ylAxis, yrAxis;   // axes (x, y left, y right)
+  int State;  // to remember which resize area was touched
 };
 
 #endif

@@ -126,11 +126,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation>Eroare</translation>
+        <translation type="obsolete">Eroare</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Editorul de text nu poate fi iniţializat!</translation>
+        <translation type="obsolete">Editorul de text nu poate fi iniţializat!</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -1743,7 +1743,7 @@ Fals format de linie a &apos;component&apos;!</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/m^2</source>
-        <translation>coeficientul de transconductanţă în A/m²</translation>
+        <translation type="obsolete">coeficientul de transconductanţă în A/m²</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
@@ -2140,6 +2140,50 @@ Folosire:  qucsedit [-r] file
     <message>
         <source>overestimation of local truncation error</source>
         <translation>supraestimare a erorii de truncare locală</translation>
+    </message>
+    <message>
+        <source>ideal amplifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Amplifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter of round via conductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Via</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transconductance coefficient in A/V^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>operational amplifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>positive voltage limit at the output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>negative voltage limit at the output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OpAmp</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

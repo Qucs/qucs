@@ -28,7 +28,7 @@ SParamFile::SParamFile(int No)
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( -6,  0,QObject::tr("file")));
+  Texts.append(new Text( -9, -6,QObject::tr("file")));
 
 
   int i=0, y = 15-h;
@@ -36,18 +36,18 @@ SParamFile::SParamFile(int No)
     i++;
     Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port(-30,  y));
-    Texts.append(new Text(-25,y-3,QString::number(i)));
+    Texts.append(new Text(-25,y-14,QString::number(i)));
 
     if(i == No) break;
     i++;
     Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port( 30,  y));
-    Texts.append(new Text( 20,y-3,QString::number(i)));
+    Texts.append(new Text( 19,y-14,QString::number(i)));
     y += 60;
   }
 
   Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( 4,h+10,"Ref"));
+  Texts.append(new Text( 4, h,"Ref"));
   Ports.append(new Port( 0,h+15));    // 'Ref' port
 
   x1 = -30; y1 = -h-2;
@@ -55,7 +55,7 @@ SParamFile::SParamFile(int No)
 
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
   tx = x1+4;
-  ty = y1 - 2*metrics.height() - 4;
+  ty = y1 - 2*metrics.lineSpacing() - 4;
   Model = "#SPfile";
   Name  = "X";
 
