@@ -23,12 +23,12 @@
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
-  x1 = 10;        // position of label text
+  x1 = 10;     // position of label text
   y1 = 2;
-  x2 = 200;  // initial size of diagram
+  x2 = 200;    // initial size of diagram
   y2 = 200;
-  x3 = 207;
   y3 = 0;
+  x3 = 207;    // with some distance for right axes text
   if(ImpMode)  Name = "Smith";  // with impedance circles
   else  Name = "ySmith";        // with admittance circles
 
@@ -68,6 +68,7 @@ int SmithDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
+  x3 = x2 + 7;
   if(Name.at(0) == 'y')  createSmithChart(&yAxis, 6);
   else  createSmithChart(&yAxis);
 
