@@ -62,7 +62,7 @@ SParamFile::SParamFile(int No)
   Props.append(new Property("File", "test.s2p", true,
 		QObject::tr("name of the s parameter file")));
   Props.append(new Property("Data", "rectangular", false,
-		QObject::tr("interpolation type (rectangular,polar)")));
+		QObject::tr("interpolation type")+" [rectangular, polar]"));
 }
 
 SParamFile::~SParamFile()

@@ -26,15 +26,14 @@ Graph::Graph(const QString& _Line)
 
   Var    = _Line;
   countY = 0;    // no points in graph
-  Points = 0;
   Thick  = numMode = 0;
   Color  = 0x0000ff;  // blue
   Style  = 0;    // solid line
   Precision  = 3;
   isSelected = false;
 
-  Points = 0;
   cPointsY = 0;
+  Points.clear();
 
   Markers.setAutoDelete(true);
   cPointsX.setAutoDelete(true);
@@ -42,7 +41,7 @@ Graph::Graph(const QString& _Line)
 
 Graph::~Graph()
 {
-  if(Points != 0) delete[] Points;
+  Points.clear();
   if(cPointsY != 0) delete[] cPointsY;
 }
 
@@ -53,45 +52,46 @@ void Graph::paint(QPainter *p, int x0, int y0)
   for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
     pm->paint(p, x0, y0);
 
-  int *pp = Points;
-  if(pp == 0) {
+  if(Points.isEmpty()) {
     p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
 
-  int n1;
+  int n1, pos = 0;
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Thick+4));
     for(n1=countY; n1>0; n1--) {
-      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+      p->drawPoint(x0+Points[pos], y0-Points[pos+1]);
       do {
-	pp += 2;
-	if(*pp > -2)
+	pos += 2;
+	if(Points[pos] > -2)
 	do {
-	  p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
-	  pp += 2;
-        } while(*pp > -2);    // until end of stroke
-        if(*pp < -9) break;   // end of line ?
-        pp++;
-      } while(*pp > -9);
-      pp++;
+	  p->drawLine(x0+Points[pos-2], y0-Points[pos-1],
+		      x0+Points[pos], y0-Points[pos+1]);
+	  pos += 2;
+        } while(Points[pos] > -2);    // until end of stroke
+        if(Points[pos] < -9) break;   // end of line ?
+        pos++;
+      } while(Points[pos] > -9);
+      pos++;
     }
 
-    pp = Points;
+    pos = 0;
     p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
     for(n1=countY; n1>0; n1--) {
-      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+      p->drawPoint(x0+Points[pos], y0-Points[pos+1]);
       do {
-	pp += 2;
-	if(*pp > -2)
+	pos += 2;
+	if(Points[pos] > -2)
 	do {
-	  p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
-	  pp += 2;
-        } while(*pp > -2);    // until end of stroke
-        if(*pp < -9) break;   // end of line ?
-        pp++;
-      } while(*pp > -9);
-      pp++;
+	  p->drawLine(x0+Points[pos-2], y0-Points[pos-1],
+		      x0+Points[pos], y0-Points[pos+1]);
+	  pos += 2;
+        } while(Points[pos] > -2);    // until end of stroke
+        if(Points[pos] < -9) break;   // end of line ?
+        pos++;
+      } while(Points[pos] > -9);
+      pos++;
     }
     p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
@@ -100,18 +100,19 @@ void Graph::paint(QPainter *p, int x0, int y0)
   // **** not selected ****
   p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
   for(n1=countY; n1>0; n1--) {
-    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+    p->drawPoint(x0+Points[pos], y0-Points[pos+1]);
     do {
-      pp += 2;
-      if(*pp > -2)
+      pos += 2;
+      if(Points[pos] > -2)
       do {
-	p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
-	pp += 2;
-      } while(*pp > -2);    // until end of stroke
-      if(*pp < -9) break;   // end of line ?
-      pp++;
-    } while(*pp > -9);
-    pp++;
+	p->drawLine(x0+Points[pos-2], y0-Points[pos-1],
+		    x0+Points[pos], y0-Points[pos+1]);
+	pos += 2;
+      } while(Points[pos] > -2);    // until end of stroke
+      if(Points[pos] < -9) break;   // end of line ?
+      pos++;
+    } while(Points[pos] > -9);
+    pos++;
   }
 }
 
@@ -172,10 +173,9 @@ bool Graph::load(const QString& _s)
 // diagram cx/cy. 5 is the precision the user must point onto the graph.
 int Graph::getSelected(int x, int y)
 {
-  int *pp = Points;
-  if(pp == 0) return -1;
+  if(Points.isEmpty()) return -1;
 
-  int A, zi;
+  int A, zi, pos = 0;
   int dx, dx2, x1;
   int dy, dy2, y1;
 
@@ -183,14 +183,14 @@ int Graph::getSelected(int x, int y)
   for(int z=0; z<countY; z++) {
     zi = 0;
     do {
-      x1 = *(pp++);  y1 = *(pp++);
+      x1 = Points[pos++];  y1 = Points[pos++];
       zi++;
 
       dx  = x - x1;
-      dx2 = (*pp);
+      dx2 = Points[pos];
       if(dx2 < -1) {
 	if(dx2 < -9) break;
-	dx2 = *(++pp);
+	dx2 = Points[++pos];
 	if(dx2 < -9) break;
 	zi -= 2;  // because of space (edge-values)
       }
@@ -198,7 +198,7 @@ int Graph::getSelected(int x, int y)
       else { if(x > 5) if(x > dx2+5) continue; }
 
       dy  = y - y1;
-      dy2 = (*(pp+1));
+      dy2 = Points[pos+1];
       if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
       else { if(y > 5) if(y > dy2+5) continue; }
 
@@ -211,7 +211,7 @@ int Graph::getSelected(int x, int y)
 
       if(A <= 0)  return z*countX + zi;  // lies x/y onto the graph line ?
     } while(true);
-    pp++;
+    pos++;
   }
 
   return -1;

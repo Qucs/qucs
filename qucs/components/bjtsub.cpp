@@ -50,7 +50,7 @@ BJTsub::BJTsub()
 
   // this must be the first property in the list  !!!
   Props.append(new Property("Type", "npn", true,
-	QObject::tr("polarity (npn,pnp)")));
+	QObject::tr("polarity")+" [npn, pnp]"));
   Props.append(new Property("Is", "1e-16", true,
 	QObject::tr("saturation current")));
   Props.append(new Property("Nf", "1", true,

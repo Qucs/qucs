@@ -53,7 +53,7 @@ MOSFET::MOSFET()
 
   // these must be the first properties in the list !!!
   Props.append(new Property("Type", "nfet", false,
-	QObject::tr("polarity (nfet,pfet)")));
+	QObject::tr("polarity")+" [nfet, pfet]"));
   Props.append(new Property("Vt0", "1.0 V", true,
 	QObject::tr("zero-bias threshold voltage")));
 

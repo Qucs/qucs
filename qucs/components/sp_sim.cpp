@@ -53,7 +53,7 @@ SP_Sim::SP_Sim()
   Name  = "SP";
 
   Props.append(new Property("Type", "lin", true,
-			QObject::tr("sweep type (lin,log)")));
+			QObject::tr("sweep type")+" [lin, log]"));
   Props.append(new Property("Start", "1 GHz", true,
 			QObject::tr("start frequency in Hertz")));
   Props.append(new Property("Stop", "10 GHz", true,
@@ -61,7 +61,8 @@ SP_Sim::SP_Sim()
   Props.append(new Property("Points", "19", true,
 			QObject::tr("number of simulation steps")));
   Props.append(new Property("Noise", "no", false,
-			QObject::tr("calculate noise parameters (yes,no)")));
+			QObject::tr("calculate noise parameters")+
+			" [yes, no]"));
   Props.append(new Property("NoiseIP", "1", false,
 			QObject::tr("input port for noise figure")));
   Props.append(new Property("NoiseOP", "2", false,
