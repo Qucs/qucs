@@ -60,9 +60,9 @@ concept. Let us define the following symbols:
 \FloatBarrier
 
 The linear circuit is modeled by two transadmittance matrices:
-The first one $(\tilde{\underline{Y}})$
+The first one $\tilde{\boldsymbol{Y}}$
 relates the source voltages $v_{S,1}...v_{S,M}$ to the interconnection
-currents $i_1...i_N$ and the second one $(\hat{\underline{Y}})$
+currents $i_1...i_N$ and the second one $\hat{\boldsymbol{Y}}$
 relates the interconnection
 voltages $v_1...v_N$ to the interconnection currents $i_1...i_N$.
 Taking both, we can express the current flowing through the
@@ -70,13 +70,13 @@ interconnections between linear and non-linear subcircuit:
 
 \begin{equation}
 \label{eqn:HBlin}
-(\underline{I})
-  = (\underline{\tilde{Y}})_{N\times M}\cdot (\underline{V}_S) +
-    (\underline{\hat{Y}})_{N\times N}\cdot (\underline{V})
-  = (\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
+\boldsymbol{I}
+  = \boldsymbol{\tilde{Y}}_{N\times M}\cdot \boldsymbol{V}_S +
+    \boldsymbol{\hat{Y}}_{N\times N}\cdot \boldsymbol{V}
+  = \boldsymbol{I}_S + \boldsymbol{\hat{Y}}\cdot \boldsymbol{V}
 \end{equation}
-Because $(\underline{V}_S)$ is known and constant, the first term
-can already be computed to give $(\underline{I}_S)$.
+Because $\boldsymbol{V}_S$ is known and constant, the first term
+can already be computed to give $\boldsymbol{I}_S$.
 
 \addvspace{12pt}
 
@@ -85,7 +85,7 @@ $i(t) = f_g(v_1, ..., v_P)$
 and by the charge of its capacitances
 $q(t) = f_q(v_1, ..., v_Q)$.
 These functions must be Fourier-transformed to give the
-frequency-domain vectors $(\underline{Q})$ and $(\underline{I}_G)$,
+frequency-domain vectors $\boldsymbol{Q}$ and $\boldsymbol{I}_G$,
 respectively.
 
 \addvspace{12pt}
@@ -100,21 +100,23 @@ be precise the described method is called KCL-HB, Kirchhoff's
 current law harmonic balance.) So, the non-linear equation
 system that needs to be solved writes:
 \begin{equation}
-(\underline{0})
-  = \underbrace{(\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})}_{\text{linear}}
-  + \underbrace{j\cdot (\underline{\Omega})\cdot (\underline{Q}) + (\underline{I}_G)}_{\text{non-linear}}
+\label{eqn:HBeqn}
+\textbf{F}(\textbf{V})
+  = \underbrace{(\boldsymbol{I}_S) + (\boldsymbol{\hat{Y}})\cdot (\boldsymbol{V})}_{\text{linear}}
+  + \underbrace{j\cdot \boldsymbol{\Omega}\cdot \boldsymbol{Q} + \boldsymbol{I}_G}_{\text{non-linear}}
+  = \boldsymbol{0}
 \end{equation}
-where matrix $(\underline{\Omega})$ contains the angular frequencies
-on the first main diagonal and zeros anywhere else, $(\underline{0})$
+where matrix $\boldsymbol{\Omega}$ contains the angular frequencies
+on the first main diagonal and zeros anywhere else, $\boldsymbol{0}$
 is zero matrix.
 
 \addvspace{12pt}
 
 After each iteration step, the inverse Fourier transformation must
-be applied to the voltage vector $(\underline{V})$. Then the time domain
+be applied to the voltage vector $\boldsymbol{V}$. Then the time domain
 voltages $v_{0,1}...v_{K,N}$ are put into $i(t) = f_g(v_1, ..., v_P)$
 and $q(t) = f_q(v_1, ..., v_Q)$ again. Now, a Fourier transformation
-gives the vectors $(\underline{Q})$ and $(\underline{I}_G)$ for the
+gives the vectors $\boldsymbol{Q}$ and $\boldsymbol{I}_G$ for the
 next iteration step. After repeating this several times, a simulation
 result has hopefully be found.\\
 Having found this result means having got the voltages $v_1...v_N$ at
@@ -213,6 +215,30 @@ effect of these resistors can be easily removed by subtracting
 
 \subsection{Solution algorithm}
 
+To perform a HB simulation, the multi-dimensional, non-linear function
+\ref{eqn:HBeqn} has to be solved. One of the best possibilities to
+do so is the Newton method:
+\begin{equation}
+\textbf{V}_{n+1} = \textbf{V}_n - \textbf{J}_F (\textbf{V}_n)^{-1}
+                   \cdot \textbf{F} (\textbf{V}_n)
+\end{equation}
+with $\textbf{J}_F$ being the Jacobian matrix. DC and transient
+simulation also use this technique. but here a problem appears:
+The derivatives of the component models are not given in frequency
+domain. Thus, the Jacobian must be calculated starting at the HB
+equation \ref{eqn:HBeqn}:
+\begin{equation}
+\boldsymbol{J}_F (\boldsymbol{V}_n) = \frac{d\boldsymbol{F} (\boldsymbol{V})}{d\boldsymbol{V}}
+    = \boldsymbol{\hat{Y}}_{N \times N} + \frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
+     + j\cdot \boldsymbol{\Omega}\frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
+    = \boldsymbol{\hat{Y}}_{N \times N} + \boldsymbol{J}_{F,IG}
+     + j\cdot \boldsymbol{\Omega}\cdot\boldsymbol{F}_{F,Q}
+\end{equation}
+So, two Jacobian matrices have to be built, one for the current
+$\boldsymbol{I}_G$ and one for the charge $\boldsymbol{Q}$. Both resulted
+from a Fourier Transformation. The two operations (Fourier Transformation
+and differentiation) can be exchanged. Hence, the Jacobian matrices
+are built in time domain and transformed into frequency domain afterwards.
 
 
 \subsection{Termination Criteria}

@@ -1089,65 +1089,67 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   zAxis.log = ((c - '0') & 2) == 2;
 
   n = s.section(' ',9,9);   // xAxis.autoScale
-  if(n == "1")  xAxis.autoScale = true;
-  else  xAxis.autoScale = false;
-
-  n = s.section(' ',10,10);    // xAxis.limit_min
-  xAxis.limit_min = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',11,11);  // xAxis.step
-  xAxis.step = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',12,12);  // xAxis.limit_max
-  xAxis.limit_max = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',13,13);    // yAxis.autoScale
-  if(n == "1")  yAxis.autoScale = true;
-  else  yAxis.autoScale = false;
-
-  n = s.section(' ',14,14);    // yAxis.limit_min
-  yAxis.limit_min = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',15,15);    // yAxis.step
-  yAxis.step = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',16,16);    // yAxis.limit_max
-  yAxis.limit_max = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',17,17);    // zAxis.autoScale
-  if(n == "1")  zAxis.autoScale = true;
-  else  zAxis.autoScale = false;
-
-  n = s.section(' ',18,18);    // zAxis.limit_min
-  zAxis.limit_min = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',19,19);    // zAxis.step
-  zAxis.step = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',20,20);    // zAxis.limit_max
-  zAxis.limit_max = n.toDouble(&ok);
-  if(!ok) return false;
-
-  n = s.section(' ',21,21); // rotX
   if(n.at(0) != '"') {      // backward compatible
-    rotX = n.toInt(&ok);
+    if(n == "1")  xAxis.autoScale = true;
+    else  xAxis.autoScale = false;
+
+    n = s.section(' ',10,10);    // xAxis.limit_min
+    xAxis.limit_min = n.toDouble(&ok);
     if(!ok) return false;
 
-    n = s.section(' ',22,22); // rotY
-    rotY = n.toInt(&ok);
+    n = s.section(' ',11,11);  // xAxis.step
+    xAxis.step = n.toDouble(&ok);
     if(!ok) return false;
 
-    n = s.section(' ',23,23); // rotZ
-    rotZ = n.toInt(&ok);
+    n = s.section(' ',12,12);  // xAxis.limit_max
+    xAxis.limit_max = n.toDouble(&ok);
     if(!ok) return false;
+
+    n = s.section(' ',13,13);    // yAxis.autoScale
+    if(n == "1")  yAxis.autoScale = true;
+    else  yAxis.autoScale = false;
+
+    n = s.section(' ',14,14);    // yAxis.limit_min
+    yAxis.limit_min = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',15,15);    // yAxis.step
+    yAxis.step = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',16,16);    // yAxis.limit_max
+    yAxis.limit_max = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',17,17);    // zAxis.autoScale
+    if(n == "1")  zAxis.autoScale = true;
+    else  zAxis.autoScale = false;
+
+    n = s.section(' ',18,18);    // zAxis.limit_min
+    zAxis.limit_min = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',19,19);    // zAxis.step
+    zAxis.step = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',20,20);    // zAxis.limit_max
+    zAxis.limit_max = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',21,21); // rotX
+    if(n.at(0) != '"') {      // backward compatible
+      rotX = n.toInt(&ok);
+      if(!ok) return false;
+
+      n = s.section(' ',22,22); // rotY
+      rotY = n.toInt(&ok);
+      if(!ok) return false;
+
+      n = s.section(' ',23,23); // rotZ
+      rotZ = n.toInt(&ok);
+      if(!ok) return false;
+    }
   }
 
   xAxis.Label = s.section('"',1,1);   // xLabel
@@ -1462,7 +1464,11 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 //               Dist - length of axis in pixel on the screen
 // return value: "true" if axis runs from largest to smallest value
 //               (only used for logarithmical axes)
-//               GridNum - number where the first numbered grid is placed
+//
+//               GridNum  - number where the first numbered grid is placed
+//               GridStep - distance from one grid to the next
+//               zD     - screen coordinate where the first grid is placed
+//               zDstep - distance on screen from one grid to the next
 bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				double& zDstep, double& GridStep, double Dist)
 {
