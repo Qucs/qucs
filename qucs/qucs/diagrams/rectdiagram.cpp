@@ -76,15 +76,18 @@ void RectDiagram::calcDiagram()
 
   if(fabs(xmax-xmin) < 1e-200) { xmax += fabs(xmax); xmin -= fabs(xmin); }
   if(fabs(ymax-ymin) < 1e-200) { ymax += fabs(ymax); ymin -= fabs(ymin); }
-  if(ymax == 0 && ymin == 0) { ymax = 1; ymin = -1; }
-  if(xmax == 0 && xmin == 0) { xmax = 1; xmin = -1; }
+  if(ymax == 0) if(ymin == 0) { ymax = 1; ymin = -1; }
+  if(xmax == 0) if(xmin == 0) { xmax = 1; xmin = -1; }
   xlow = xmin;  xup = xmax;
   ylow = ymin;  yup = ymax;
 
+  int z;
+  double numGrids, Base, Expo, GridStep, corr, zD, zDstep, GridNum;
   // ====  x grid  =======================================================
-  double numGrids = floor(double(x2)/60.0);   // minimal grid is 60 pixel
-  double Base = (xmax-xmin)/numGrids;
-  double Expo = floor(log10(Base));
+  numGrids = floor(double(x2)/60.0);   // minimal grid is 60 pixel
+  if(numGrids < 1.0) Base = xmax-xmin;
+  else Base = (xmax-xmin)/numGrids;
+  Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);         // separate first significant digit
   if(Base < 3.5) {      // use only 1, 2 and 5, which ever is best fitted
     if(Base < 1.5) Base = 1.0;
@@ -94,12 +97,12 @@ void RectDiagram::calcDiagram()
     if(Base < 7.5) Base = 5.0;
     else { Base = 1.0; Expo++; }
   }
-  double GridStep = Base * pow(10.0,Expo); // grid distance (real coordinates)
-  double corr = floor((xmax-xmin)/GridStep - numGrids);
+  GridStep = Base * pow(10.0,Expo); // grid distance (real coordinates)
+  corr = floor((xmax-xmin)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
-  double zD = GridStep-fmod(xmax, GridStep);
+  zD = GridStep-fmod(xmax, GridStep);
   // expand grid to the right edge of diagram ?
   if(zD/GridStep < 0.2)  xup = xmax+zD;
 
@@ -107,11 +110,11 @@ void RectDiagram::calcDiagram()
   if(zD/GridStep < 0.2) { xlow = xmin-zD;  zD = 0.0; }
   else zD = GridStep-zD;
 
-  double zDstep = GridStep/(xup-xlow)*double(x2);  // grid distance in pixel
-  double GridNum  = xlow + zD;
+  zDstep = GridStep/(xup-xlow)*double(x2);  // grid distance in pixel
+  GridNum  = xlow + zD;
   zD /= (xup-xlow)/double(x2);
 
-  int z = int(zD);
+  z = int(zD);
   while(z <= x2) {    // create all grid lines
     if(fabs(Expo) < 3.0)
       Texts.append(new Text(z-10, -17, QString::number(GridNum)));
@@ -129,7 +132,8 @@ void RectDiagram::calcDiagram()
 
   // ====  y grid  =======================================================
   numGrids = floor(double(y2)/60.0);   // minimal grid is 60 pixel
-  Base = (ymax-ymin)/numGrids;
+  if(numGrids < 1.0) Base = ymax-ymin;
+  else Base = (ymax-ymin)/numGrids;
   Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);        // separate first significant digit
   if(Base < 3.5) {            // use only 1, 2 and 5, which ever is best fitted
@@ -184,7 +188,6 @@ void RectDiagram::calcDiagram()
     z = int(zD);
   }
   x1 = maxWidth+14;
-
 
   // outer frame
   Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::black,0)));
