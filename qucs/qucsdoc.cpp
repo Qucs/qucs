@@ -1225,10 +1225,13 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 {
   int  z=0;   // counts selected elements
   int  cx1, cy1, cx2, cy2;
-  if(x1 > x2) { cx1 = x1; x1  = x2; x2  = cx1; }
-  if(y1 > y2) { cy1 = y1; y1  = y2; y2  = cy1; }
 
-
+  // exchange rectangle coordinates to obtain x1 < x2 and y1 < y2
+  cx1 = (x1 < x2) ? x1 : x2; cx2 = (x1 > x2) ? x1 : x2;
+  cy1 = (y1 < y2) ? y1 : y2; cy2 = (y1 > y2) ? y1 : y2;
+  x1 = cx1; x2 = cx2;
+  y1 = cy1; y2 = cy2;
+  
   for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {    // test all components
     pc->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
