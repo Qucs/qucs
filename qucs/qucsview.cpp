@@ -881,8 +881,8 @@ void QucsView::MMoveMoveTextB(QMouseEvent *Event)
   }
   drawn = true;
 
-  MAx3  = Event->pos().x() - contentsX();
-  MAy3  = Event->pos().y() - contentsY();
+  MAx3 = Event->pos().x() - contentsX();
+  MAy3 = Event->pos().y() - contentsY();
 
   painter.drawLine(MAx3+14, MAy3   , MAx3+16, MAy3); // paint new
   painter.drawLine(MAx3+23, MAy3   , MAx3+25, MAy3);
@@ -1444,11 +1444,13 @@ void QucsView::MPressMoveText(QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   QucsDoc *d = Docs.current();
-  MAx3 = int(Event->pos().x()/d->Scale)+d->ViewX1;
-  MAy3 = int(Event->pos().y()/d->Scale)+d->ViewY1;
-  (Component*)focusElement = d->selectCompText(MAx3, MAy3, MAx2, MAy2);
+  MAx1 = int(Event->pos().x()/d->Scale)+d->ViewX1;
+  MAy1 = int(Event->pos().y()/d->Scale)+d->ViewY1;
+  (Component*)focusElement = d->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
   if(focusElement) {
+    MAx3 = MAx1;
+    MAy3 = MAy1;
     MAx1 = ((Component*)focusElement)->cx + ((Component*)focusElement)->tx;
     MAy1 = ((Component*)focusElement)->cy + ((Component*)focusElement)->ty;
     viewport()->repaint();
