@@ -91,6 +91,7 @@ QucsApp::QucsApp()
 	tr("Edit Properties"), view, SLOT(slotEditElement()));
   Acts.moveText->addTo(view->ComponentMenu);
   Acts.onGrid->addTo(view->ComponentMenu);
+  Acts.editDelete->addTo(view->ComponentMenu);
   view->ComponentMenu->insertSeparator();
   Acts.editActivate->addTo(view->ComponentMenu);
   Acts.editRotate->addTo(view->ComponentMenu);

@@ -12,8 +12,33 @@
 \chapter{AC Noise Analysis}
 %\addcontentsline{toc}{chapter}{AC Noise Analysis}
 
-\section{The Concept}
-%\addcontentsline{toc}{section}{The Concept}
+\section{Definitions}
+
+First some definition must be done:
+
+\addvspace{12pt}
+
+Reciprocal Networks:\\
+Two networks $A$ and $B$ are reciprocal to each other if their
+transimpedances have the following relation:
+\begin{equation}
+Z_{mn,A} = Z_{nm,B}
+\end{equation}
+That means: Drive the current $I$ into node $n$ of circuit $A$ and
+at node $m$ the voltage $I\cdot Z_{mn,A}$ appears. In circuit $B$
+it is just the way around.
+
+\addvspace{12pt}
+
+Adjoint Networks:\\
+Network $A$ and network $B$ are adjoint to each other if the
+following equation holds for their MNA matrices:
+\begin{equation}
+[A]^T = [B]
+\end{equation}
+
+
+\section{The Algorithm}
 
 To calculate the small signal noise of a circuit, the AC noise
 analysis has to be applied \cite{Blum}.  This technique uses the
@@ -34,7 +59,7 @@ times.  Fortunately there is a more easy way.  One can perform the
 above-mentioned $n$ steps in one single step, if the reciprocal MNA
 matrix is used.  This matrix equals the MNA matrix itself, if the
 network is reciprocal.  A network that only contains resistors,
-capacitors, inductors and transformers is reciprocal.
+capacitors, inductors, gyrators and transformers is reciprocal.
 
 \addvspace{12pt}
 
@@ -95,6 +120,196 @@ not needed.
 As the noise current correlation matrix contains lots of zeros, it is
 not worthy to create it in the computer memory.  Instead, during its
 creation, one can directly apply it to the $\left[v\right]^T$ vector.
+
+
+
+\subsection{A Simple Example}
+
+We have the network that is depicted in figure \ref{fig:mna_noise1}.
+The MNA equation is (see chapter \ref{sec:MNA}):
+
+\begin{equation}
+[A]\cdot [x] =
+\begin{bmatrix}
+1/R_1 & 0\\
+  G   & 1/R_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+U_1\\
+U_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{MNAnoise1}
+\end{center}
+\caption{simple non-reciprocal network}
+\label{fig:mna_noise1}
+\end{figure}
+\FloatBarrier
+
+Because of the controlled current source, the circuit is not
+reciprocal. We want to know the noise voltage at node 2. Yes,
+this is very easy to calculate, because it is a simple example,
+but we want to use the algorithm described above.\\
+We could solve the equations
+\begin{equation}
+\begin{bmatrix}
+1/R_1 & 0\\
+  G   & 1/R_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+Z_{11}\\
+Z_{21}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-1\\
+0
+\end{bmatrix}
+\end{equation}
+and
+\begin{equation}
+\begin{bmatrix}
+1/R_1 & 0\\
+  G   & 1/R_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+Z_{12}\\
+Z_{22}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}
+\end{equation}
+So, we must solve the MNA matrix two times: First to get the
+transimpedance from node 1 to node 2 (i.e. $Z_{21}$) and
+second to get the transimpedance from node 2 to node 2 (i.e.
+$Z_{22}$). But why solving it two times, if we only want to
+know one voltage ? With every step we get transimpedances
+that we do not need. Is there no more effective way ?
+
+\addvspace{12pt}
+
+Fortunately, we remember Tellegen's Theorem: A network and
+its adjoint network are reciprocal to each other. That is,
+we have to transpose the MNA matrix and the new matrix is
+the one of the reciprocal network. Let's check it out:
+
+\begin{equation}
+[A]^T\cdot [x] =
+\begin{bmatrix}
+1/R_1 & G\\
+  0   & 1/R_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+U_1\\
+U_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7cm]{MNAnoise2}
+\end{center}
+\caption{simple network to compare with adjoint network}
+\label{fig:mna_noise2}
+\end{figure}
+\FloatBarrier
+
+Compare the transposed matrix with the reciprocal network
+in figure \ref{fig:mna_noise2}. It is true! But now we
+have:
+\begin{equation}
+\begin{bmatrix}
+1/R_1 & G\\
+  0   & 1/R_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+Z_{12,reciprocal}\\
+Z_{22,reciprocal}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1/R_1 & G\\
+  0   & 1/R_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+Z_{21}\\
+Z_{22}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+-1
+\end{bmatrix}
+\end{equation}
+Because $Z_{21}$ of our original network equals $Z_{12}$ of
+the reciprocal network, we get exactly what we need with one
+step. So let us go on:
+\begin{equation}
+([A]^T)^{-1}\cdot
+\begin{bmatrix}
+  0\\
+ -1
+\end{bmatrix}
+=
+\begin{bmatrix}
+R_1 & -G\cdot R_1\cdot R_2\\
+  0 & R2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+  0\\
+ -1
+\end{bmatrix}
+=
+\begin{bmatrix}
+G\cdot R_1\cdot R_2\\
+-R_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+Z_{21}\\
+Z_{22}
+\end{bmatrix}
+\end{equation}
+
+Now, as we computed the transimpedances, we can
+compute the noise voltages at node 2. As there is
+no correlation, we get:
+
+\begin{eqnarray}
+<u_{node2}^2> & = & <u_{R1,node2}^2> + <u_{R2,node2}^2> \\
+  & = & <i_{R1}^2>\cdot Z_{21}\cdot Z_{21}^* + <i_{R2}^2>\cdot Z_{22}\cdot Z_{22}^* \\
+  & = & \frac{4\cdot k\cdot T\cdot \Delta f}{R_1} \cdot (G\cdot R_1\cdot R_2)^2 +
+        \frac{4\cdot k\cdot T\cdot \Delta f}{R_2} \cdot (-R_2)^2 \\
+  & = & 4\cdot k\cdot T\cdot \Delta f\cdot \left( R_1\cdot (G\cdot R_2)^2 + R_2 \right)
+\end{eqnarray}
+
+That's it. Yes, you knew it before, but now you also understand
+the universal algorithm.
+
+
 
 \section{Noise Current Correlation Matrix}
 %\addcontentsline{toc}{section}{Noise Current Correlation Matrix}
