@@ -1,3 +1,15 @@
+2004-11-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_dataset.l: Fixed identifier expression to adapt the
+	dataset loader to new variables containing one or more '.'.
+
+	* nodelist.cpp: Fixed detection of internal nodes.  If *any*
+	of the nodes in a nodelist entry is marked internal, then the
+	node is made internal.
+
+	* check_dataset.cpp (dataset_check): Fixed variable data size
+	computation for multiple dependencies.
+
 2004-11-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Allowing multiple types of arguments which must

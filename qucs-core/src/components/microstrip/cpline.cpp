@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpline.cpp,v 1.1 2004/11/29 19:04:02 raimi Exp $
+ * $Id: cpline.cpp,v 1.2 2004/12/01 20:23:47 raimi Exp $
  *
  */
 
@@ -50,6 +50,8 @@
 
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
+# define isnan(x)  _isnan(x)
+# define isinf(x)  (!_finite(x) && !_isnan(x))
 #endif
 
 cpline::cpline () : circuit (2) {
@@ -97,7 +99,7 @@ void cpline::ellipke (nr_double_t arg, nr_double_t &k, nr_double_t &e) {
     k = DBL_MAX / DBL_MIN; // infinite
     e = 0;
   }
-  else if (!isfinite (arg) && arg < 0) {
+  else if (isinf (arg) && arg < 0) {
     k = 0;
     e = DBL_MAX / DBL_MIN; // infinite
   }

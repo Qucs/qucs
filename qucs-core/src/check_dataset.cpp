@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_dataset.cpp,v 1.1 2003/12/20 19:03:26 ela Exp $
+ * $Id: check_dataset.cpp,v 1.2 2004/12/01 20:23:46 raimi Exp $
  *
  */
 
@@ -72,7 +72,7 @@ int dataset_check (dataset * data) {
     }
     /* yes */
     else {
-      int n = 0;
+      int n = 1;
       /* go through each dependency and check it */
       for (struct strlist_t * root = s->getRoot (); 
 	   root != NULL; root = root->next) {
@@ -82,7 +82,7 @@ int dataset_check (dataset * data) {
 	  errors++;
 	}
 	else {
-	  n += d->getSize ();
+	  n *= d->getSize ();
 	}
       }
       if (n != 0) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.7 2004/11/24 19:15:54 raimi Exp $
+ * $Id: check_spice.cpp,v 1.8 2004/12/01 20:23:47 raimi Exp $
  *
  */
 
@@ -1326,7 +1326,8 @@ static void spice_free_values (struct definition_t * def) {
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
    resulting netlist. */
-static int spice_post_translator (struct definition_t * root) {
+static struct definition_t *
+spice_post_translator (struct definition_t * root) {
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     // post-process parameter sweep
     if (def->action && !strcmp (def->type, "SW")) {
@@ -1380,29 +1381,76 @@ static int spice_post_translator (struct definition_t * root) {
     // post-process mutual inductors (transformer)
     if (!def->action && !strcmp (def->type, "Tr")) {
       struct definition_t * target;
-      char * l1 = def->values->ident;
-      char * l2 = def->values->next->ident;
-      target = spice_find_definition (root, "L", l1);
+      char * linst1 = def->values->ident;       // get inductivity 1
+      char * linst2 = def->values->next->ident; // get inductivity 2
+      nr_double_t l1, l2, k;
+      char * n1, * n2, * n3, * n4;
+      struct node_t * nn;
+
+      // initialize local variables
+      n1 = n2 = n3 = n4 = NULL;
+      l1 = l2 = k = 0;
+
+      // find and handle inductivity 1
+      target = spice_find_definition (root, "L", linst1);
       if (target == NULL) {
 	fprintf (stderr, "spice error, no such inductor `%s' found as "
-		 "referenced by %s `%s'\n", def->type, def->instance, l1);
+		 "referenced by %s `%s'\n", linst1, def->type, def->instance);
 	spice_errors++;
       }
       else {
-	spice_adjust_isource_nodes (def, target);
+	l1 = spice_get_property_value (target, "L");
+	nn = spice_get_node (target, 2);
+	n4 = nn->node;
+	nn->node = strdup (spice_create_intern_node ());
+	n1 = strdup (nn->node);
       }
-      target = spice_find_definition (root, "L", l2);
+      spice_value_done (def->values);
+
+      // find and handle inductivity 2
+      target = spice_find_definition (root, "L", linst2);
       if (target == NULL) {
 	fprintf (stderr, "spice error, no such inductor `%s' found as "
-		 "referenced by %s `%s'\n", def->type, def->instance, l2);
+		 "referenced by %s `%s'\n", linst2, def->type, def->instance);
 	spice_errors++;
       }
       else {
-	spice_adjust_isource_nodes (def, target);
+	l2 = spice_get_property_value (target, "L");
+	nn = spice_get_node (target, 2);
+	n3 = nn->node;
+	nn->node = strdup (spice_create_intern_node ());
+	n2 = strdup (nn->node);
       }
-      spice_translate_nodes (def, 1);
-      double v = spice_get_property_value (def, "T");
-      spice_set_property_value (def, "T", 1 / v);
+      spice_value_done (def->values->next);
+
+      // if both inductors found
+      if (n1 && n2) {
+	// get the coefficient of coupling
+	struct value_t * val;
+	foreach_value (def->values, val) {
+	  if (val->hint & HINT_NUMBER) {
+	    spice_append_pair (def, "T", val->ident, 1);
+	    spice_value_done (val);
+	    break;
+	  }
+	}
+	k = spice_get_property_value (def, "T");
+	// apply the turns ratio of the transformer and its nodes
+	spice_set_property_value (def, "T", sqrt (l1 / l2));
+	spice_append_node (def, n1);
+	spice_append_node (def, n2);
+	spice_append_node (def, n3);
+	spice_append_node (def, n4);
+	// insert the actual mutual inductance if necessary
+	if (k < 1) {
+	  struct definition_t * Mind = spice_create_definition (def, "L");
+	  spice_append_node (Mind, n1);
+	  spice_append_node (Mind, n4);
+	  spice_set_property_value (Mind, "L", k * l1 / (1 - k));
+	  root = spice_add_definition (root, Mind);
+	}
+	free (n1); free (n2); free (n3); free (n4);
+      }
     }
     // post-process general analysis options
     if (def->action && strstr (def->type, "OPT")) {
@@ -1433,7 +1481,7 @@ static int spice_post_translator (struct definition_t * root) {
     // remove values if possible
     spice_free_values (def);
   }
-  return spice_errors;
+  return root;
 }
 
 /* The function translates special actions defined in the Spice
@@ -1642,7 +1690,7 @@ static struct definition_t * spice_translator (struct definition_t * root) {
        - current dependent sources
        - initial conditions
        - options (partly done)
-   - mutual inductors (transformer, possibly with T or PI equivalent circuit)
+       - mutual inductors (transformer)
    - mesfet if available in Qucs
    - other mosfet models if available in Qucs
 */
@@ -1677,18 +1725,17 @@ void spice_set_last_hint (struct value_t * val, int hint) {
 
 /* This function is the overall spice checker and translator. */
 struct definition_t * spice_checker_intern (struct definition_t * root) {
-  int ret = 0;
 #if 0
   spice_lister (root);
 #endif
   root = spice_translator (root);
-  ret += spice_post_translator (root);
+  root = spice_post_translator (root);
   return root;
 }
 
 /* This function is the overall spice checker and translator. */
 int spice_checker (void) {
-  int ret = 0;
+  spice_errors = 0;
   definition_root = spice_checker_intern (definition_root);
-  return ret;
+  return spice_errors;
 }

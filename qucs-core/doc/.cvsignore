@@ -1,2 +1,15 @@
 Makefile
 Makefile.in
+*.bak
+*.aux
+*.log
+*.toc
+*.pdf
+*.bbl
+*.blg
+*.dvi
+*.brf
+*.out
+*.pdf
+[a-z]*.eps
+Sparam.eps

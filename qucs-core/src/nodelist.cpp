@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.7 2004/10/25 21:01:31 ela Exp $
+ * $Id: nodelist.cpp,v 1.8 2004/12/01 20:23:46 raimi Exp $
  *
  */
 
@@ -291,6 +291,7 @@ void nodelist::addCircuitNode (struct nodelist_t * nl, node * n) {
     }
   }
   nl->nodes[nl->nNodes++] = n;
+  if (n->getInternal ()) nl->internal = n->getInternal ();
 }
 
 /* This function deletes the given node from the nodelist
