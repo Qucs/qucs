@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.1 2003/12/20 19:03:28 ela Exp $
+ * $Id: matrix.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -172,7 +172,7 @@ matrix& operator * (matrix& a, matrix& b) {
   matrix * res = new matrix (a.getRows (), b.getCols ());
   for (r = 1; r <= a.getRows (); r++) {
     for (c = 1; c <= b.getCols (); c++) {
-      for (i = 0, z = 0; i < n; i++) z += a.get (r, n) * b.get (n, c);
+      for (i = 1, z = 0; i <= n; i++) z += a.get (r, i) * b.get (i, c);
       res->set (r, c, z);
     }
   }

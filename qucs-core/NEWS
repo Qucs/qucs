@@ -26,6 +26,7 @@ files.
 Version 0.0.2
 -------------
 
+ * DC simulation for passive elements
  * implemented s-parameters of DC and AC components
  * support for arbitrary port impedances
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.1 2003/12/21 13:25:38 ela Exp $
+ * $Id: spsolver.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -216,11 +216,11 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
 }
 
 /* Goes through the list of circuit objects and runs its frequency
-   dependent calc() function. */
+   dependent calcS() function. */
 void spsolver::calc (nr_double_t freq) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->calc (freq);
+    c->calcS (freq);
   }
 }
 

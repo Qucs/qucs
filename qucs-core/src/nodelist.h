@@ -1,5 +1,5 @@
 /*
- * itrafo.h - ideal trafo class definitions
+ * nodelist.h - node list class definitions
  *
  * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,18 +18,43 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: itrafo.h,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: nodelist.h,v 1.1 2003/12/26 14:04:07 ela Exp $
  *
  */
 
-#ifndef __ITRAFO_H__
-#define __ITRAFO_H__
+#ifndef __NODELIST_H__
+#define __NODELIST_H__
 
-class itrafo : public circuit
-{
- public:
-  itrafo ();
-  void calcS (nr_double_t);
+class node;
+
+struct nodelist_t {
+  int n;
+  char * name;
+  node ** nodes;
+  int nNodes;
+  struct nodelist_t * next;
 };
 
-#endif /* __ITRAFO_H__ */
+class nodelist
+{
+ public:
+  nodelist ();
+  nodelist (const nodelist &);
+  ~nodelist ();
+  void add (char *);
+  void append (char *);
+  struct nodelist_t * getRoot (void) { return root; }
+  int length (void);
+  int contains (char *);
+  char * get (int);
+  void addCircuitNode (struct nodelist_t *, node *);
+  void assignNodes (void);
+  void print (void);
+  struct nodelist_t * getNode (int);
+  struct nodelist_t * getLastNode (void);
+
+ private:
+  struct nodelist_t * root;
+};
+
+#endif /* __NODELIST_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.1 2003/12/20 19:03:28 ela Exp $
+ * $Id: capacitor.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -40,13 +40,14 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "component_id.h"
 #include "capacitor.h"
 
 capacitor::capacitor () : circuit (2) {
+  type = CIR_CAPACITOR;
 }
 
-void capacitor::calc (nr_double_t frequency) {
-
+void capacitor::calcS (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
   complex z = rect (0, -1.0 / (2.0 * M_PI * frequency * c));
   setS (1, 1, z / (z + 2.0));

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: biastee.cpp,v 1.1 2003/12/20 19:03:28 ela Exp $
+ * $Id: biastee.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "component_id.h"
 #include "biastee.h"
 
 biastee::biastee () : circuit (3) {
@@ -45,7 +46,5 @@ biastee::biastee () : circuit (3) {
   setS (3, 1, 0.0);
   setS (3, 2, 0.0);
   setS (3, 3, 1.0);
-}
-
-void biastee::calc (nr_double_t frequency) {
+  type = CIR_BIASTEE;
 }

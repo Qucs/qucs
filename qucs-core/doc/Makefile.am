@@ -24,9 +24,9 @@
 
 EXTRA_DIST = technical.tex technical.ps $(FIGURES)
 
-CLEANFILES = *~ $(EPSFILES)
+CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi
 MAINTAINERCLEANFILES = Makefile.in
-DISTCLEANFILES = 
+DISTCLEANFILES = *.ps
 
 LATEX = latex
 BIBTEX = bibtex

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.cpp,v 1.1 2003/12/20 19:03:28 ela Exp $
+ * $Id: cross.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "component_id.h"
 #include "cross.h"
 
 cross::cross () : circuit (4) {
@@ -52,7 +53,5 @@ cross::cross () : circuit (4) {
   setS (4, 2,  1.0 / 2.0);
   setS (4, 3,  1.0 / 2.0);
   setS (4, 4, -1.0 / 2.0);
-}
-
-void cross::calc (nr_double_t frequency) {
+  type = CIR_CROSS;
 }

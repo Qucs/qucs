@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.1 2003/12/20 19:03:29 ela Exp $
+ * $Id: vdc.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "component_id.h"
 #include "vdc.h"
 
 vdc::vdc () : circuit (2) {
@@ -40,4 +41,5 @@ vdc::vdc () : circuit (2) {
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
+  type = CIR_VDC;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.h,v 1.1 2003/12/21 13:25:37 ela Exp $
+ * $Id: analysis.h,v 1.2 2003/12/26 14:04:07 ela Exp $
  *
  */
 
@@ -35,7 +35,7 @@ class analysis : public object
   analysis (char *);
   analysis (analysis &);
   ~analysis ();
-  virtual void solve (void) { };
+  virtual void solve (void) { }
   dataset * getData (void) { return data; }
   void setData (dataset * d) { data = d; }
   net * getNet (void) { return subnet; }
