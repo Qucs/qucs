@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.2 2004/10/31 12:35:46 ela Exp $
+ * $Id: check_spice.cpp,v 1.3 2004/11/01 22:39:35 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include <math.h>
 #include <assert.h>
 #include <float.h>
+#include <ctype.h>
 
 #ifdef __MINGW32__
 #define strcasecmp stricmp
@@ -65,12 +66,19 @@ struct define_t spice_definition_available[] =
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* voltage sources */
   { "V", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "U", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
-  { "Q", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+  /* BJT device */
+  { "Q", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* MOS device */
+  { "M", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -215,26 +223,19 @@ static char * spice_evaluate_scale (char * value, char **endptr,
     value++; scale = "T"; break;
   case 'G': case 'g':
     value++; scale = "G"; break;
-  case 'M':
-    value++; scale = "M";
-    if ((value[1] == 'e' || value[1] == 'E') &&
-	(value[2] == 'g' || value[2] == 'G')) {
-      value += 2;
+  case 'M': case 'm':
+    value++; scale = (char *) ((*value == 'M') ? "M" : "m");
+    if ((value[0] == 'i' || value[0] == 'I') &&
+	(value[1] == 'l' || value[1] == 'L')) {
+      value += 2; *factor = 2.54e-5; scale = NULL;
+    }
+    if ((value[0] == 'e' || value[0] == 'E') &&
+	(value[1] == 'g' || value[1] == 'G')) {
+      value += 2; scale = "M";
     }
     break;
   case 'k': case 'K':
     value++; scale = "k"; break;
-  case 'm':
-    value++; scale = "m";
-    if ((value[1] == 'i' || value[1] == 'I') &&
-	(value[2] == 'l' || value[2] == 'L')) {
-      value += 2; *factor = 2.54e-5;
-    }
-    if ((value[1] == 'e' || value[1] == 'E') &&
-	(value[2] == 'g' || value[2] == 'G')) {
-      value += 2; scale = "M";
-    }
-    break;
   case 'u': case 'U':
     value++; scale = "u"; break;
   case 'n': case 'N':
@@ -276,12 +277,14 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
     // if there is a value given and no description, it is required
     if (val->hint & HINT_NUMBER) {
       prop = &def->define->required[i++];
-      struct pair_t * p = create_pair ();
-      p->key = strdup (prop->key);
-      p->value = spice_create_value (val->ident);
-      p->next = root;
-      root = p;
-      val->hint |= HINT_DONE;
+      if (prop->key) {
+	struct pair_t * p = create_pair ();
+	p->key = strdup (prop->key);
+	p->value = spice_create_value (val->ident);
+	p->next = root;
+	root = p;
+	val->hint |= HINT_DONE;
+      }
     }
     else break;
   }
@@ -579,6 +582,8 @@ struct property_translation_t {
 property_translation[] = {
   { "CCS", "Cjs" },
   { "VA",  "Vaf" },
+  { "VB",  "Var" },
+  { "VTO", "Vt0" },
   { NULL, NULL }
 };
 
@@ -624,6 +629,239 @@ void spice_adjust_properties (struct definition_t * def) {
   }
 }
 
+/* This function looks whether the given property name is stored
+   within the given list of values and returns it.  If there is no
+   such name, then it returns NULL. */
+static struct value_t *
+spice_find_property (struct value_t * values, char * prop) {
+  struct value_t * val;
+  foreach_value (values, val) {
+    if (!strcasecmp (prop, val->ident)) return val;
+  }
+  return NULL;
+}
+
+/* The following function free()'s the given value. */
+static void spice_free_value (struct value_t * value) {
+  if (value->ident) free (value->ident);
+  if (value->unit)  free (value->unit);
+  if (value->scale) free (value->scale);
+  free (value);
+}
+
+/* This function appends the given key/value pair to the given
+   definition.  If the replace flag is non-zero the pair gets
+   replaced.  If the replace flag is zero and the pair already exists
+   nothing is done here. */
+static void spice_append_pair (struct definition_t * def, char * prop,
+			       char * value, int replace) {
+  struct pair_t * p = spice_find_property (def, prop);
+  if (p != NULL) {
+    if (replace) {
+      spice_free_value (p->value);
+      p->value = spice_create_value (value);
+      return;
+    }
+    else return;
+  }
+  p = create_pair ();
+  p->key = strdup (prop);
+  p->value = spice_create_value (value);
+  def->pairs = netlist_append_pairs (def->pairs, p);
+}
+
+/* The function appends the given node name to the list of nodes of
+   the given definition. */
+static void spice_append_node (struct definition_t * def, char * node) {
+  struct node_t * n = create_node ();
+  n->node = strdup (node);
+  def->nodes = netlist_append_nodes (def->nodes, n);
+}
+
+/* The function adjusts the instance name of the given component
+   definition. */
+static void spice_adjust_instance (struct definition_t * def) {
+  for (unsigned int i = 0; i < strlen (def->instance); i++) {
+    def->instance[i] = toupper (def->instance[i]);
+  }
+}
+
+/* This function is used by the overall netlist translator in order to
+   fixup the properties, nodes, instance name and property units of
+   the given definition. */
+static void spice_fixup_definition (struct definition_t * def) {
+  spice_adjust_instance (def);
+  spice_adjust_properties (def);
+  spice_translate_nodes (def);
+  spice_translate_units (def);
+  spice_adjust_default_properties (def);
+}
+
+/* The function adds the given definition to the list of valid
+   definitions.  The definition is placed at the beginning of the
+   list. */
+static void spice_add_definition (struct definition_t * def) {
+  spice_fixup_definition (def);
+  def->next = definition_root;
+  definition_root = def;
+}
+
+/* This function creates an internal node name used during the
+   conversion process.  The returned string is static and must be
+   copied by the caller.  Successive calls result in different node
+   names. */
+static char * spice_create_intern_node (void) {
+  static int intern = 0;
+  static char txt[32];
+  sprintf (txt, "_cnet%d", intern++);
+  return txt;
+}
+
+/* This function places an internal node in between the given
+   components.  The first node of the 'dn' component becomes the first
+   node of the 'up' component. */
+static void spice_adjust_vsource_nodes (struct definition_t * up,
+					struct definition_t * dn) {
+  struct node_t * node = spice_get_node (dn, 1);
+  spice_append_node (up, node->node);
+  char * inode = spice_create_intern_node ();
+  spice_append_node (up, inode);
+  free (node->node);
+  node->node = strdup (inode);
+}
+
+/* The function creates a new definition based upon the given
+   definition.  The type of the new component must be given as
+   well. */
+static struct definition_t *
+spice_create_definition (struct definition_t * base, char * type) {
+  struct definition_t * res = create_definition ();
+  res->type = strdup (type);
+  res->action = PROP_COMPONENT;
+  res->instance = strdup (base->instance);
+  res->define = base->define;
+  return res;
+}
+
+#define VAL_IS_NUMBER(val) \
+  ((val) != NULL && \
+  (val)->hint & (HINT_NUMBER | HINT_NODE) && \
+  !((val)->hint & HINT_DONE))
+
+/* This function is the voltage source translator.  If necessesary new
+   kinds of voltage source are created.  This must be done since Qucs
+   has seperate voltage sources for each type of excitation and Spice
+   summarizes these voltage excitations in a single source. */
+static void spice_translate_vsource (struct definition_t * def) {
+  struct definition_t * vac = NULL, * vdc = def, * vpulse = NULL;
+  struct value_t * prop;
+
+  // adjust the DC part of the voltage source
+  if ((prop = spice_find_property (vdc->values, "DC")) != NULL) {
+    spice_append_pair (def, "U", prop->unit, 1);
+    prop->hint |= HINT_DONE;
+  }
+  free (vdc->type);
+  vdc->type = strdup ("Vdc");
+
+  // adjust the sinusoidal part of the voltage source
+  if ((prop = spice_find_property (vdc->values, "SIN")) != NULL) {
+    vac = spice_create_definition (vdc, "Vac");
+    prop->hint |= HINT_DONE;
+    prop = prop->next;
+    int i = 0;
+    while (VAL_IS_NUMBER (prop)) {
+      switch (i++) {
+      case 0: // DC Offset
+	spice_append_pair (vdc, "U", prop->ident, 0);
+	break;
+      case 1: // Magnitude
+	spice_append_pair (vac, "U", prop->ident, 0);
+	break;
+      case 2: // Frequency
+	spice_append_pair (vac, "f", prop->ident, 0);
+	break;
+      case 3: // Delay
+	spice_append_pair (vac, "Phase", prop->ident, 0);
+	break;
+      case 4: break;
+      }
+      prop->hint |= HINT_DONE;
+      prop = prop->next;
+    }
+  }
+
+  // adjust the AC part of the voltage source
+  if ((prop = spice_find_property (vdc->values, "AC")) != NULL) {
+    char * Mag = NULL, * Phase = NULL;
+    prop->hint |= HINT_DONE;
+    if (prop->hint & HINT_PAIR) {
+      Mag = prop->unit;
+    }
+    else {
+      prop = prop->next;
+      if (VAL_IS_NUMBER (prop)) {
+	Mag = prop->ident;
+	prop->hint |= HINT_DONE;
+	prop = prop->next;
+	if (VAL_IS_NUMBER (prop)) {
+	  Phase = prop->ident;
+	  prop->hint |= HINT_DONE;
+	}
+      }
+    }
+    if (vac == NULL)
+      vac = spice_create_definition (vdc, "Vac");
+    if (Mag)
+      spice_append_pair (vac, "U", Mag, 1);
+    if (Phase)
+      spice_append_pair (vac, "Phase", Phase, 1);
+  }
+
+  // adjust the pulse part of the voltage source
+  if ((prop = spice_find_property (vdc->values, "PULSE")) != NULL) {
+    vpulse = spice_create_definition (vdc, "Vpulse");
+    prop->hint |= HINT_DONE;
+    prop = prop->next;
+    int i = 0;
+    while (VAL_IS_NUMBER (prop)) {
+      switch (i++) {
+      case 0: // Initial Value
+	spice_append_pair (vpulse, "U1", prop->ident, 0);
+	spice_append_pair (vdc, "U", "0", 1);
+	break;
+      case 1: // Pulsed Value
+	spice_append_pair (vpulse, "U2", prop->ident, 0);
+	break;
+      case 2: // Delay
+	spice_append_pair (vpulse, "T1", prop->ident, 0);
+	break;
+      case 3: // Rise
+	spice_append_pair (vpulse, "Tr", prop->ident, 0);
+	break;
+      case 4: // Fall
+	spice_append_pair (vpulse, "Tf", prop->ident, 0);
+	break;
+      case 5: // Pulse Width
+	spice_append_pair (vpulse, "T2", prop->ident, 0);
+	break;
+      }
+      prop->hint |= HINT_DONE;
+      prop = prop->next;
+    }
+  }
+
+  // finally add sources to list of definitions
+  if (vac) {
+    spice_adjust_vsource_nodes (vac, vdc);
+    spice_add_definition (vac);
+  }
+  if (vpulse) {
+    spice_adjust_vsource_nodes (vpulse, vac ? vac : vdc);
+    spice_add_definition (vpulse);
+  }
+}
+
 /* This is the overall Spice netlist translator.  It adjusts the list
    of definitions into usable structures. */
 int spice_translator (void) {
@@ -634,13 +872,13 @@ int spice_translator (void) {
       strcpy (def->type, def->define->type);
       def->nodes = spice_get_nodes (def);
       def->pairs = spice_get_pairs (def);
-      if (!strcasecmp (def->type, "Q")) {
+      if (!strcasecmp (def->type, "Q") || !strcasecmp (def->type, "M")) {
 	spice_translate_device (def);
       }
-      spice_adjust_properties (def);
-      spice_translate_nodes (def);
-      spice_translate_units (def);
-      spice_adjust_default_properties (def);
+      if (!strcasecmp (def->type, "V")) {
+	spice_translate_vsource (def);
+      }
+      spice_fixup_definition (def);
     }
     else {
       // skipped

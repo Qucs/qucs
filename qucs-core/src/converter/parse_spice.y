@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_spice.y,v 1.2 2004/10/31 12:35:46 ela Exp $
+ * $Id: parse_spice.y,v 1.3 2004/11/01 22:39:35 ela Exp $
  *
  */
 
@@ -100,6 +100,22 @@ DefinitionLine:
     $$->line = spice_lineno;
     value_root = NULL;
   }
+  | Identifier NodeList Identifier PairList Eol { 
+    /* e.g. M5 5 7 3 0 MOD W=50U L=5U */
+    $$ = create_definition ();
+    $$->action = PROP_COMPONENT;
+    $$->type = (char *) calloc (2, 1);
+    $$->type[0] = $1[0];
+    $$->instance = $1;
+    struct value_t * here = create_value ();
+    here->ident = $3;
+    here->hint = HINT_NAME;
+    here = netlist_append_values ($2, here);
+    here = netlist_append_values (here, $4);
+    $$->values = here;
+    $$->line = spice_lineno;
+    value_root = NULL;
+  }
   | Identifier NodeList PairList Expr PairList Eol { 
     $$ = create_definition ();
     $$->action = PROP_COMPONENT;
@@ -112,17 +128,6 @@ DefinitionLine:
     $$->values = here;
     $$->line = spice_lineno;
     value_root = NULL;
-  }
-  | Identifier NodeList Identifier Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_COMPONENT;
-    $$->type = (char *) calloc (2, 1);
-    $$->type[0] = $1[0];
-    $$->instance = $1;
-    struct value_t * here = create_value ();
-    here->ident = $3;
-    here->hint = HINT_NAME;
-    $$->values = netlist_append_values ($2, here);
   }
   | Action NodeList Eol { 
     $$ = create_definition ();
@@ -150,6 +155,20 @@ DefinitionLine:
     $$->line = spice_lineno;
   }
   | Action Identifier Node NodeList Eol { 
+    $$ = create_definition ();
+    $$->action = PROP_ACTION;
+    $$->type = strdup (&$1[1]);
+    $$->instance = $1;
+    $$->line = spice_lineno;
+  }
+  | Action Identifier Identifier Identifier Eol { 
+    $$ = create_definition ();
+    $$->action = PROP_ACTION;
+    $$->type = strdup (&$1[1]);
+    $$->instance = $1;
+    $$->line = spice_lineno;
+  }
+  | Action Identifier PairList Eol { 
     $$ = create_definition ();
     $$->action = PROP_ACTION;
     $$->type = strdup (&$1[1]);
