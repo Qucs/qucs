@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.3 2004-01-30 21:40:35 ela Exp $
+ * $Id: strafo.cpp,v 1.4 2004-02-14 15:28:39 ela Exp $
  *
  */
 
@@ -71,14 +71,17 @@ void strafo::calcS (nr_double_t frequency) {
 void strafo::calcY (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
-  setB (1, 1, + t1); setB (1, 2, -1.0); setB (1, 3, +1.0);
-  setB (1, 4, +0.0); setB (1, 5, +0.0); setB (1, 6, - t1);
-  setB (2, 1, +0.0); setB (2, 2, -1.0); setB (2, 3, +1.0);
-  setB (2, 4, - t2); setB (2, 5, + t2); setB (2, 6, +0.0);
-  setC (1, 1, + t1); setC (1, 2, -1.0); setC (1, 3, +1.0);
-  setC (1, 4, +0.0); setC (1, 5, +0.0); setC (1, 6, - t1);
-  setC (2, 1, +0.0); setC (2, 2, -1.0); setC (2, 3, +1.0);
-  setC (2, 4, - t2); setC (2, 5, + t2); setC (2, 6, +0.0);
+
+  setB (1, 1, -1.0); setB (1, 2, + t1); setB (1, 3, - t1);
+  setB (1, 4, +0.0); setB (1, 5, +0.0); setB (1, 6, +1.0);
+  setB (2, 1, +0.0); setB (2, 2, + t2); setB (2, 3, - t2);
+  setB (2, 4, +1.0); setB (2, 5, -1.0); setB (2, 6, +0.0);
+
+  setC (1, 1, +1.0); setC (1, 2, - t1); setC (1, 3, + t1);
+  setC (1, 4, +0.0); setC (1, 5, +0.0); setC (1, 6, -1.0);
+  setC (2, 1, +0.0); setC (2, 2, - t2); setC (2, 3, + t2);
+  setC (2, 4, -1.0); setC (2, 5, +1.0); setC (2, 6, +0.0);
+
   setD (1, 0.0);
   setD (2, 0.0);
   setE (1, 0.0);

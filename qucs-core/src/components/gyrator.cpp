@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.3 2004-02-01 13:10:38 margraf Exp $
+ * $Id: gyrator.cpp,v 1.4 2004-02-14 15:28:39 ela Exp $
  *
  */
 
@@ -59,12 +59,12 @@ void gyrator::calcS (nr_double_t frequency) {
 
 void gyrator::calcY (void) {
   nr_double_t r = getPropertyDouble ("R");
-  setB (1, 1, -1.0); setB (1, 2, +0.0); setB (1, 3, +0.0); setB (1, 4, +1.0);
-  setB (2, 1, +0.0); setB (2, 2, -1.0); setB (2, 3, +1.0); setB (2, 4, +0.0);
-  setC (1, 1, +0.0); setC (1, 2, -1/r); setC (1, 3, +1/r); setC (1, 4, +0.0);
-  setC (2, 1, +1/r); setC (2, 2, -1.0); setC (2, 3, +1.0); setC (2, 4, -1/r);
+  setB (1, 1, +1.0); setB (1, 2, +0.0); setB (1, 3, +0.0); setB (1, 4, -1.0);
+  setB (2, 1, +0.0); setB (2, 2, +1.0); setB (2, 3, -1.0); setB (2, 4, +0.0);
+  setC (1, 1, +0.0); setC (1, 2, +1/r); setC (1, 3, -1/r); setC (1, 4, +0.0);
+  setC (2, 1, -1/r); setC (2, 2, +0.0); setC (2, 3, +0.0); setC (2, 4, +1/r);
   setD (1, -1.0);
-  setD (2, +0.0);
+  setD (2, -1.0);
   setE (1, +0.0);
   setE (2, +0.0);
 }
