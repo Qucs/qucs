@@ -108,7 +108,7 @@ bool TabDiagram::calcDiagram()
         Lines.append(new Line(0, y, x2, y, QPen(QPen::black,0)));
     }
     lastCount *= pD->count; }
-    x += colWidth+10;
+    x += colWidth+15;
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
   }
   Lines.current()->style = QPen(QPen::black,2);
@@ -162,7 +162,7 @@ bool TabDiagram::calcDiagram()
       Texts.append(new Text(x, y, Str));
       y -= tHeight;
     }
-    x += colWidth+10;
+    x += colWidth+15;
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
   }
 
