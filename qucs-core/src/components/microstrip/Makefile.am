@@ -33,7 +33,8 @@ libmicrostrip_a_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp \
 noinst_HEADERS = substrate.h msline.h mscorner.h msmbend.h msstep.h msopen.h \
 	msgap.h mscoupled.h mstee.h mscross.h msvia.h cpwline.h
 
-INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components
+INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components \
+ -I$(top_srcdir)/src/components/devices
 
 CLEANFILES = *~ *.orig *.rej
 

@@ -1,3 +1,21 @@
+2005-01-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolver.cpp: Fixed a bug in the nasolver.  If the solver
+	object changed its number of nodes or voltage sources the
+	matrices are now adjusted appropriately.
+
+	* eqnsys.cpp: The equation system solver now works on a
+	reference of the given matrix.  Thus the nasolver can modify
+	the matrix from the outside (needed during AC noise analysis).
+	Also the change saves a lot of memory.
+
+2005-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* acsolver.cpp (solve_noise): Fixed bug invalidating the usual
+	AC results when computing the AC noise results.
+	(solve_noise): Ensuring real values during noise voltage
+	computation.
+
 2005-01-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* tvector.cpp: Some new 'set()' functionality added.  Computation

@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about AC analysis.
 %
-% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
@@ -320,35 +320,32 @@ as described in section \ref{sec:spfile} of page \pageref{sec:spfile}
 required for a small signal AC analysis can be obtained by converting
 the S-parameters into Y-parameters.
 
-
-\subsection{Non-ideal Transformer}
+\subsection{Non-ideal transformer}
+%\addcontentsline{toc}{subsection}{Non-ideal transformer}
 
 Many simulators support non-ideal transformers (e.g. mutual inductor
-in SPICE). An often used model consists of finite inductances and
-a not perfect coupling (straw inductance). This model has three
-parameters: Inductance of primary coil $L_1$, inductance of secondary
-coil $L_2$ and coupling factor $k=0...1$.\\
-This model can be replaced by the equivalent circuit depicted in
-figure \ref{fig:nitrafo}. The values are calculated as follows.
+in SPICE).  An often used model consists of finite inductances and an
+imperfect coupling (straw inductance).  This model has three
+parameters: Inductance of the primary coil $L_1$, inductance of the
+secondary coil $L_2$ and the coupling factor $k=0...1$.
 
-\begin{equation}
-\text{turn ratio:}  \qquad  T = \sqrt{\frac{L_1}{L_2}}
-\end{equation}
-\begin{equation}
-\text{mutual inductance:}  \qquad  M = k\cdot L_1
-\end{equation}
-\begin{equation}
-\text{primary inductance:}  \qquad  L_{1,new} = L_1 - M
-\end{equation}
-\begin{equation}
-\text{secondary inductance:}  \qquad  L_{2,new} = L_2 - \frac{M}{N^2}
-\end{equation}
+\addvspace{12pt}
+
+This model can be replaced by the equivalent circuit depicted in
+figure \ref{fig:nitrafo}.  The values are calculated as follows.
+
+\begin{align}
+\textrm{turn ratio:} & \qquad  T = \sqrt{\frac{L_1}{L_2}}\\
+\textrm{mutual inductance:}  & \qquad M = k\cdot L_1\\
+\textrm{primary inductance:}  & \qquad L_{1,new} = L_1 - M\\
+\textrm{secondary inductance:}  & \qquad L_{2,new} = L_2 - \frac{M}{N^2}
+\end{align}
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=7.5cm]{nitrafo}
 \end{center}
-\caption{Equivalent circuit of non-ideal transformer}
+\caption{equivalent circuit of non-ideal transformer}
 \label{fig:nitrafo}
 \end{figure}
 \FloatBarrier

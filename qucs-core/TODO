@@ -54,7 +54,7 @@ unfixed) have a look at the file BUGS.
 	- Node-set functionality for DC and transient analysis.
 - Coplanar line implementation.
 	- Microstrip via hole implementation.
-- Microstrip t-junction.
+	- Microstrip t-junction.
 - Microstrip cross.
 - Modella, HICUM, MEXTRAM and VBIC bipolar model implementations.
 - MESFET (Curtize, Staatz) implementations.

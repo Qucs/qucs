@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.28 2005/01/24 19:36:59 raimi Exp $
+ * $Id: nasolver.cpp,v 1.29 2005/02/01 22:56:40 raimi Exp $
  *
  */
 
@@ -207,9 +207,9 @@ void nasolver<nr_type_t>::solve_pre (void) {
   // create matrix, solution vector and right hand side vector
   int M = countVoltageSources ();
   int N = countNodes ();
-  if (A == NULL) A = new tmatrix<nr_type_t> (M + N);
-  if (z == NULL) z = new tvector<nr_type_t> (N + M);
-  if (x == NULL) x = new tvector<nr_type_t> (N + M);
+  if (A != NULL) delete A; A = new tmatrix<nr_type_t> (M + N);
+  if (z != NULL) delete z; z = new tvector<nr_type_t> (N + M);
+  if (x != NULL) delete x; x = new tvector<nr_type_t> (N + M);
 
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: solving %s netlist\n", getName (), desc);
@@ -646,7 +646,7 @@ void nasolver<nr_type_t>::createNoiseMatrix (void) {
   circuit * ct;
 
   // create new Cy matrix if necessary
-  if (C == NULL) C = new tmatrix<nr_type_t> (N);
+  if (C != NULL) delete C; C = new tmatrix<nr_type_t> (N);
 
   // go through each column of the Cy matrix
   for (int c = 1; c <= N; c++) {

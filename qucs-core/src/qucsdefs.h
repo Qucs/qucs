@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.11 2005/01/28 19:24:39 raimi Exp $
+ * $Id: qucsdefs.h,v 1.12 2005/02/01 22:56:40 raimi Exp $
  *
  */
 
@@ -482,8 +482,12 @@ struct define_t qucs_definition_available[] =
       { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "W3", PROP_REAL, { 2e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_NO_RANGE },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* microstrip cross-junction */
   { "MCROSS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

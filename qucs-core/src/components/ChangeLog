@@ -1,3 +1,8 @@
+2005-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mstee.cpp: Implemented AC and SP model of the
+	microstrip t-junction.
+
 2005-01-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* vccs.cpp, gyrator.cpp: Pivotised MNA stamp, saving some
