@@ -806,8 +806,314 @@ ideal, ohmic resistor with resistance $R$ writes as follows.
 \chapter*{DC Analysis}
 \addcontentsline{toc}{chapter}{DC Analysis}
 
+\section*{Modified Nodal Analysis}
+\addcontentsline{toc}{section}{Modified Nodal Analysis}
+
+Many different kinds of network element are encountered in network
+analysis.  For circuit analysis it is necessary to formulate equations
+for circuits containing as many different types of network elements as
+possible.  There are various methods for equation formulation for a
+circuit.  These are based on three types of equations found in circuit
+theory:
+
+\begin{itemize}
+\item equations based on Kirchhoff's voltage law (KVL)
+\item equations based on Kirchhoff's current law (KCL)
+\item branch constitutive equations
+\end{itemize}
+
+The equations have to be formulated (represented in a computer
+program) automatically in a simple, comprehensive manner.  Once
+formulated, the system of equations has to be solved.  There are two
+main aspects to be considered when choosing algorithms for this
+purpose: accuracy and speed.  The MNA, briefly for \textbf{M}odified
+\textbf{N}odal \textbf{A}nalysis, has been proved to accomplish these
+tasks.
+
+MNA applied to a circuit with passive elements, independent current
+and voltage sources and active elements results in a matrix equation
+of the form:
+\begin{equation}
+\left[A\right] \cdot \left[x\right] = \left[z\right]
+\end{equation}
+
+For a circuit with N nodes and M independent voltage sources:
+
+\begin{itemize}
+
+\item The A matrix
+\begin{itemize}
+\item
+is (N+M)$\times$(N+M) in size, and consists only of known quantities
+\item
+the N$\times$N part of the matrix in the upper left:
+\begin{itemize}
+\item
+has only passive elements
+\item
+elements connected to ground appear only on the diagonal
+\item
+elements not connected to ground are both on the diagonal and
+off-diagonal terms
+\end{itemize}
+\item
+the rest of the A matrix (not included in the N$\times$N upper left
+part) contains only 1, -1 and 0 (other values are possible if there
+are dependent current and voltage sources)
+\end{itemize}
+
+\item The x matrix
+\begin{itemize}
+\item
+is an (N+M)$\times$1 vector that holds the unknown quantities (node
+voltages and the currents through the independent voltage sources)
+\item
+the top N elements are the n node voltages
+\item
+the bottom M elements represent the currents through the M independent
+voltage sources in the circuit
+\end{itemize}
+
+\item The z matrix
+\begin{itemize}
+\item
+is an (N+M)$\times$1 vector that holds only known quantities
+\item
+the top N elements are either zero or the sum and difference of
+independent current sources in the circuit
+\item
+the bottom M elements represent the M independent voltage sources in
+the circuit
+\end{itemize}
+\end{itemize}
+
+The circuit is solved by a simple matrix manipulation:
+\begin{equation}
+\left[x\right] = \left[A\right]^{-1} \cdot \left[z\right]
+\end{equation}
+
+Though this may be difficult by hand, it is straightforward and so is
+easily done by computer.
+
+\subsection*{Generating the MNA matrices}
+\addcontentsline{toc}{subsection}{Generating the MNA matrices}
+
+The following section is an algorithmic approach to the concept of the
+Modified Nodal Analysis.  There are three matrices we need to
+generate, the A matrix, the x matrix and the z matrix.  Each of these
+will be created by combining several individual sub-matrices.
+
+\subsection*{The A matrix}
+\addcontentsline{toc}{subsection}{The A matrix}
+
+The A matrix will be developed as the combination of 4 smaller
+matrices, G, B, C, and D.
+
+\begin{equation}
+A =
+\begin{pmatrix}
+G & B\\
+C & D
+\end{pmatrix}
+\end{equation}
+
+The A matrix is (M+N)$\times$(M+N) (N is the number of nodes, and M is the
+number of independent voltage sources) and:
+
+\begin{itemize}
+\item
+the G matrix is N$\times$N and is determined by the interconnections
+between the circuit elements
+\item
+the B matrix is M$\times$N and is determined by the connection of the voltage
+sources
+\item
+the C matrix is N$\times$M and is determined by the connection of
+the voltage sources (B and C are closely related, particularly when
+only independent sources are considered)
+\item
+the D matrix is M$\times$M and is zero if only independent sources are
+considered
+\end{itemize}
+
+\subsubsection*{Rules for making the G matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the G matrix}
+
+The G matrix is an N$\times$N matrix formed in two steps.
+
+\begin{enumerate}
+\item
+Each element in the diagonal matrix is equal to the sum of the
+conductance (one over the resistance) of each element connected to the
+corresponding node.  So the first diagonal element is the sum of
+conductances connected to node 1, the second diagonal element is the
+sum of conductances connected to node 2, and so on.
+\item
+The off diagonal elements are the negative conductance of the element
+connected to the pair of corresponding node.  Therefore a resistor
+between nodes 1 and 2 goes into the G matrix at location (1,2) and
+locations (2,1).
+\end{enumerate}
+
+If an element is grounded, it will only have contribute to one entry
+in the G matrix -- at the appropriate location on the diagonal.  If it
+is ungrounded it will contribute to four entries in the matrix -- two
+diagonal entries (corresponding to the two nodes) and two off-diagonal
+entries.
+
+\subsubsection*{Rules for making the B matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the B matrix}
+
+The B matrix is an M$\times$N matrix with only 0, 1 and -1 elements.
+Each location in the matrix corresponds to a particular voltage source
+(first dimension) or a node (second dimension).  If the positive
+terminal of the ith voltage source is connected to node k, then the
+element (i,k) in the B matrix is a 1.  If the negative terminal of the
+ith voltage source is connected to node k, then the element (i,k) in
+the B matrix is a -1.  Otherwise, elements of the B matrix are zero.
+
+\addvspace{12pt}
+
+If a voltage source is ungrounded, it will have two elements in the B
+matrix (a 1 and a -1 in the same column).  If it is grounded it will
+only have one element in the matrix.
+
+\subsubsection*{Rules for making the C matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the C matrix}
+
+The C matrix is an N$\times$M matrix with only 0, 1 and -1 elements.
+Each location in the matrix corresponds to a particular node (first
+dimension) or voltage source (second dimension).  If the positive
+terminal of the ith voltage source is connected to node k, then the
+element (k,i) in the C matrix is a 1.  If the negative terminal of the
+ith voltage source is connected to node k, then the element (k,i) in
+the C matrix is a -1.  Otherwise, elements of the C matrix are zero.
+
+\addvspace{12pt}
+
+In other words, the C matrix is the transpose of the B matrix.  This
+is not the case when dependent sources are present.
+
+\subsubsection*{Rules for making the D matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the D matrix}
+
+The D matrix is an M$\times$M matrix that is composed entirely of
+zeros.  It can be non-zero if dependent sources are considered.
+
+\subsection*{The x matrix}
+\addcontentsline{toc}{subsection}{The x matrix}
+
+The x matrix holds our unknown quantities and will be developed as the
+combination of 2 smaller matrices v and j.  It is considerably easier
+to define than the A matrix.
+
+\begin{equation}
+x =
+\begin{pmatrix}
+v\\
+j
+\end{pmatrix}
+\end{equation}
+
+The x matrix is 1$\times$(M+N) (N is the number of nodes, and M is the
+number of independent voltage sources) and:
+
+\begin{itemize}
+\item
+the v matrix is 1$\times$N and hold the unknown voltages
+\item
+the j matrix is 1$\times$M and holds the unknown currents through the
+voltage sources
+\end{itemize}
+
+\subsubsection*{Rules for making the v matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the v matrix}
+
+The v matrix is an 1$\times$N matrix formed of the node voltages.
+Each element in v corresponds to the voltage at the equivalent node in
+the circuit (there is no entry for ground -- node 0).
+
+\addvspace{12pt}
+
+For a circuit with N nodes we get:
+
+\begin{equation}
+v =
+\begin{pmatrix}
+v_{1}\\
+v_{2}\\
+\vdots\\
+v_{N}\\
+\end{pmatrix}
+\end{equation}
+
+\subsubsection*{Rules for making the j matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the j matrix}
+
+The j matrix is an 1$\times$M matrix, with one entry for the current
+through each voltage source.  So if there are M voltage sources
+$V_{1}$, $V_{2}$ through $V_{M}$, the j matrix will be:
+
+\begin{equation}
+j =
+\begin{pmatrix}
+i_{V_{1}}\\
+i_{V_{2}}\\
+\vdots\\
+i_{V_{M}}\\
+\end{pmatrix}
+\end{equation}
+
+\subsection*{The z matrix}
+\addcontentsline{toc}{subsection}{The z matrix}
+
+The z matrix holds our independent voltage and current sources and
+will be developed as the combination of 2 smaller matrices i and e.
+It is quite easy to formulate.
+
+\begin{equation}
+z =
+\begin{pmatrix}
+i\\
+e
+\end{pmatrix}
+\end{equation}
+
+The z matrix is 1$\times$(M+N) (N is the number of nodes, and M is the
+number of independent voltage sources) and:
+
+\begin{itemize}
+\item
+the i matrix is 1$\times$N and contains the sum of the currents through the
+passive elements into the corresponding node (either zero, or the sum
+of independent current sources)
+\item
+the e matrix is 1$\times$M and holds the values of the independent
+voltage sources
+\end{itemize}
+
+\subsubsection*{Rules for making the i matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the i matrix}
+
+The i matrix is an 1$\times$N matrix with each element of the matrix
+corresponding to a particular node.  The value of each element of i is
+determined by the sum of current sources into the corresponding node.
+If there are no current sources connected to the node, the value is
+zero.
+
+\subsubsection*{Rules for making the e matrix}
+\addcontentsline{toc}{subsubsection}{Rules for making the e matrix}
+
+The e matrix is an 1$\times$M matrix with each element of the matrix
+equal in value to the corresponding independent voltage source.
+
 \section*{Extensions to the MNA}
 \addcontentsline{toc}{section}{Extensions to the MNA}
+
+As noted in the previous sections the D matrix is zero and the B and C
+matrices are transposed each other and filled with either 1, -1 or 0
+provided that there are no dependent sources within the circuit.  This
+changes when introducing active (and controlled) elements.
 
 \subsection*{Voltage controlled current source}
 \addcontentsline{toc}{subsection}{Voltage controlled current source}
