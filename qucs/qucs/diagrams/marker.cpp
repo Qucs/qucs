@@ -317,13 +317,20 @@ void Marker::setCenter(int x, int y, bool relative)
 }
 
 // -------------------------------------------------------
-// Provides the coordinates relative to the diagram !!!
 void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = x1;
-  _y1 = y1;
-  _x2 = x1+x2;
-  _y2 = y1-y2;
+  if(Diag) {
+    _x1 = Diag->cx + x1;
+    _y1 = Diag->cy - y1-y2;
+    _x2 = Diag->cx + x1+x2;
+    _y2 = Diag->cy - y1;
+  }
+  else {
+    _x1 = x1;
+    _y1 = y1+y2;
+    _x2 = x1+x2;
+    _y2 = y1;
+  }
 }
 
 // ---------------------------------------------------------------------

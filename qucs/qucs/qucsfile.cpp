@@ -110,13 +110,17 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
   // read content *************************
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "<Components>") { if(!loadComponents(stream, (QPtrList<Component>*)pe)) return false; }
+    if(Line == "<Components>") {
+      if(!loadComponents(stream, (QPtrList<Component>*)pe)) return false; }
     else
-    if(Line == "<Wires>") { if(!loadWires(stream, (QPtrList<Wire>*)pe)) return false; }
+    if(Line == "<Wires>") {
+      if(!loadWires(stream, (QPtrList<Wire>*)pe)) return false; }
     else
-    if(Line == "<Diagrams>") { if(!loadDiagrams(stream, (QPtrList<Diagram>*)pe)) return false; }
+    if(Line == "<Diagrams>") {
+      if(!loadDiagrams(stream, (QPtrList<Diagram>*)pe)) return false; }
     else
-    if(Line == "<Paintings>") { if(!loadPaintings(stream, (QPtrList<Painting>*)pe)) return false; }
+    if(Line == "<Paintings>") {
+      if(!loadPaintings(stream, (QPtrList<Painting>*)pe)) return false; }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
                    QObject::tr("Clipboard Format Error:\nUnknown field!"));
@@ -402,15 +406,17 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     else if(cstr == "<Line") p = new GraphicLine();
     else if(cstr == "<Arrow") p = new Arrow();
     else if(cstr == "<Ellipse") p = new Ellipse();
+    else if(cstr == "<FilledEllipse") p = new FilledEllipse();
+    else if(cstr == "<FilledRect") p = new FilledRect();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nUnknown painting!"));
+		QObject::tr("Format Error:\nUnknown painting!"));
       return false;
     }
 
     if(!p->load(Line)) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nWrong 'painting' line format!"));
+	QObject::tr("Format Error:\nWrong 'painting' line format!"));
       delete p;
       return false;
     }
@@ -418,7 +424,7 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
-               QObject::tr("Format Error:\n'Painting' field is not closed!"));
+	QObject::tr("Format Error:\n'Painting' field is not closed!"));
   return false;
 }
 

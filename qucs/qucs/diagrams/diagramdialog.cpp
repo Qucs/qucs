@@ -17,6 +17,8 @@
 
 #include "diagramdialog.h"
 
+#include "../qucsview.h"
+
 #include <qvbox.h>
 #include <qlayout.h>
 #include <qvbuttongroup.h>
@@ -46,7 +48,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   defaultDataSet = _DataSet;
   setCaption(tr("Edit Diagram Properties"));
   changed = false;
-  toTake = false;   // should double-clicked variable be inserted immediately into the graph list ?
+  toTake = false;   // double-clicked variable be inserted into graph list ?
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
   
@@ -219,9 +221,10 @@ void DiagramDialog::slotReadVars(int)
   } while(i > 0);
 }
 
-// --------------------------------------------------------------------------
-// Inserts the double-clicked variable into the Graph Input Line at the cursor position.
-// If the Graph Input is empty, then the variable is also inserted as graph.
+// ------------------------------------------------------------------------
+// Inserts the double-clicked variable into the Graph Input Line at the
+// cursor position. If the Graph Input is empty, then the variable is
+// also inserted as graph.
 void DiagramDialog::slotTakeVar(QListViewItem *Item)
 {
  GraphInput->blockSignals(true);
@@ -240,7 +243,8 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
     g->Thick = GraphThick->text().toInt();
     Diag->Graphs.append(g);
 
-    ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+    ColorButt->setPaletteBackgroundColor(
+		QColor(DefaultColors[GraphList->count()]));
     changed = true;
     toTake  = true;
   }
@@ -302,6 +306,7 @@ void DiagramDialog::slotNewGraph()
 }
 
 // --------------------------------------------------------------------------
+// Is called if "Ok" button is pressed.
 void DiagramDialog::slotOK()
 {
   slotApply();
@@ -310,15 +315,16 @@ void DiagramDialog::slotOK()
 }
 
 // --------------------------------------------------------------------------
+// Is called if "Apply" button is pressed.
 void DiagramDialog::slotApply()
 {
-  if(Diag->xLabel.isEmpty()) Diag->xLabel = "";  // QString can be non-Null and empty !!!
+  if(Diag->xLabel.isEmpty()) Diag->xLabel = ""; // can be non-Null and empty!
   if(xLabel->text().isEmpty()) xLabel->setText("");
   if(Diag->xLabel != xLabel->text()) {
     Diag->xLabel = xLabel->text();
     changed = true;
   }
-  if(Diag->yLabel.isEmpty()) Diag->yLabel = "";   // QString can be non-Null and empty !!!
+  if(Diag->yLabel.isEmpty()) Diag->yLabel = ""; // can be non-Null and empty!
   if(yLabel->text().isEmpty()) yLabel->setText("");
   if(Diag->yLabel != yLabel->text()) {
     Diag->yLabel = yLabel->text();
@@ -330,6 +336,7 @@ void DiagramDialog::slotApply()
   }
 
   Diag->loadGraphData(defaultDataSet);
+  ((QucsView*)parent())->viewport()->repaint();
 }
 
 // --------------------------------------------------------------------------
