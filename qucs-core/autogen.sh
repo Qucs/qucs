@@ -26,13 +26,13 @@ here=`pwd`
 cd `dirname $0`
 
 echo -n "Creating aclocal.m4... "
-aclocal
+${ACLOCAL:-aclocal}
 echo "done."
 echo -n "Creating config.h.in... "
 autoheader
 echo "done."
 echo -n "Creating Makefile.in(s)... "
-automake
+${AUTOMAKE:-automake}
 echo "done."
 echo -n "Creating configure... "
 autoconf

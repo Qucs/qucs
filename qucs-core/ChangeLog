@@ -1,3 +1,10 @@
+2004-11-24    <raimi@lkcc.org>
+
+	* autogen.sh: Make aclocal and automake program be overridable
+	with environment variable. Need this so i can easily build on
+	debian woody, I hope nobody takes offense.
+	PS: While Stefan is away, I will commit his stuff.
+
 2004-10-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Modified script in order to allow CXXFLAGS and
