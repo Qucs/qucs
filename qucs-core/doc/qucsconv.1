@@ -1,0 +1,49 @@
+.TH Qucs-Converter "1" "November 2004" "Debian/GNU Linux" "User Commands"
+.SH NAME
+Qucs-Converter \- Command line tool for netlist conversion.
+.SH SYNOPSIS
+.B qucsconv
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+
+The \fBQucs-Converter\fR is a command line tool for converting
+netlists and schematics form other software into data formats used by
+\fBQucs\fR and its simulation backend.
+
+The software aims to support a variety of data formats and currently
+supports Spice netlists as input data format and Qucs netlists as
+output data format.
+
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+display this help and exit
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+display version information and exit
+.TP
+\fB\-i\fR FILENAME
+use file as input file (default stdin)
+.TP
+\fB\-o\fR FILENAME
+use file as output file (default stdout)
+.TP
+\fB\-if\fR FORMAT
+input data specification (e.g. \fBspice\fR)
+.TP
+\fB\-of\fR FORMAT
+output data specification (e.g. \fBqucs\fR)
+.SH AVAILABILITY
+The latest version of Qucs can always be obtained from
+\fBwww.sourceforge.net\fR or \fBwww.freshmeat.net\fR
+.SH "REPORTING BUGS"
+Known bugs are documented within the BUGS file.  Report bugs to
+<qucs-bugs@lists.sourceforge.net>.
+.SH COPYRIGHT
+Copyright \(co 2004 Stefan Jahn <stefan@lkcc.org>
+.PP
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+.SH AUTHORS
+Written by Michael Margraf <michael.margraf@alumni.tu-berlin.de> and
+Stefan Jahn <stefan@lkcc.org>.

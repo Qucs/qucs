@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.3 2004/11/01 10:56:16 ela Exp $
+ * $Id: qucsdefs.h,v 1.4 2004/11/02 23:48:40 ela Exp $
  *
  */
 
@@ -135,14 +135,14 @@ struct define_t qucs_definition_available[] =
   { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { 0, 360 } },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { -360, 360 } },
       PROP_NO_PROP }
   },
   /* AC current source */
   { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { 0, 360 } },
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { -360, 360 } },
       PROP_NO_PROP }
   },
   /* pulse voltage source */

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_spice.y,v 1.3 2004/11/01 22:39:35 ela Exp $
+ * $Id: parse_spice.y,v 1.4 2004/11/02 23:48:40 ela Exp $
  *
  */
 
@@ -64,7 +64,7 @@
 %type <ident> Identifier Node Action Function Value Float
 %type <str> TitleLines
 %type <definition> DefinitionLine
-%type <value> NodeList PairList Model Expr
+%type <value> NodeList PairList Model Expr DcList
 
 %%
 
@@ -130,10 +130,11 @@ DefinitionLine:
     value_root = NULL;
   }
   | Action NodeList Eol { 
+    /* e.g. .TRAN 2.0NS 200NS */
     $$ = create_definition ();
-    $$->action = PROP_COMPONENT;
-    $$->type = strdup (&$1[1]);
-    $$->instance = $1;
+    $$->action = PROP_ACTION;
+    $$->type = $1;
+    $$->instance = strdup ($1);
     $$->values = $2;
     $$->line = spice_lineno;
     value_root = NULL;
@@ -142,38 +143,79 @@ DefinitionLine:
     /* e.g. .MODEL QNL NPN BF=80 RB=100 CCS=2PF */
     $$ = create_definition ();
     $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
+    $$->type = $1;
     $$->instance = $2;
     $$->line = spice_lineno;
     $$->values = $3;
    }
-  | Action Identifier Float NodeList Eol { 
+  | Action Expr Eol { 
+    /* e.g. .AC DEC 10 1 10GHZ */
     $$ = create_definition ();
     $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
-    $$->instance = $1;
+    $$->type = $1;
+    $$->instance = strdup ($1);
     $$->line = spice_lineno;
+    $$->values = $2;
   }
-  | Action Identifier Node NodeList Eol { 
+  | Action DcList Eol { 
+    /* e.g. .DC VIN -0.25 0.25 0.005 */
     $$ = create_definition ();
     $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
-    $$->instance = $1;
+    $$->type = $1;
+    $$->instance = strdup ($1);
     $$->line = spice_lineno;
+    $$->values = $2;
+  }
+  | Action DcList DcList Eol { 
+    /* e.g. .DC VCE 0 10 .25 IB 0 10U 1U */
+    $$ = create_definition ();
+    $$->action = PROP_ACTION;
+    $$->type = $1;
+    $$->instance = strdup ($1);
+    $$->line = spice_lineno;
+    $$->values = netlist_append_values ($2, $3);
   }
   | Action Identifier Identifier Identifier Eol { 
     $$ = create_definition ();
     $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
+    $$->type = $1;
     $$->instance = $1;
     $$->line = spice_lineno;
   }
   | Action Identifier PairList Eol { 
     $$ = create_definition ();
     $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
+    $$->type = $1;
     $$->instance = $1;
     $$->line = spice_lineno;
+  }
+;
+
+DcList:
+  Identifier Value Value Value {
+    struct value_t * here;
+    here = create_value ();
+    here->ident = $4;
+    here->value = strtod ($4, NULL);
+    here->hint = HINT_NUMBER | HINT_MSTOP;
+    $$ = here;
+    here = create_value ();
+    here->ident = $3;
+    here->value = strtod ($3, NULL);
+    here->hint = HINT_NUMBER;
+    here->next = $$;
+    $$ = here;
+    here = create_value ();
+    here->ident = $2;
+    here->value = strtod ($2, NULL);
+    here->hint = HINT_NUMBER;
+    here->next = $$;
+    $$ = here;
+    here = create_value ();
+    here->ident = $1;
+    here->hint = HINT_NAME | HINT_MSTART;
+    here->next = $$;
+    $$ = here;
   }
 ;
 

@@ -1,3 +1,8 @@
+2004-11-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Added transformations for DC, AC and
+	transient analysis.
+
 2004-11-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed unit conversion routine and added
