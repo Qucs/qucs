@@ -2244,11 +2244,6 @@ Very simple text editor for Qucs
         <translation></translation>
     </message>
     <message>
-        <source>Copyright (C) 2004 by Michael Margraf
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
@@ -2369,6 +2364,11 @@ Usage:  qucsedit [-r] file
     <message>
         <source>temperature in degree Celsius</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf</translation>
     </message>
 </context>
 <context>
@@ -2974,11 +2974,6 @@ Very simple text editor for Qucs
         <translation></translation>
     </message>
     <message>
-        <source>Copyright (C) 2004 by Michael Margraf
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Enter a Filename</source>
         <translation>ファイル名入力</translation>
     </message>
@@ -3018,6 +3013,11 @@ Very simple text editor for Qucs
     <message>
         <source>Cancel</source>
         <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf</translation>
     </message>
 </context>
 <context>
@@ -4108,7 +4108,7 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003,2004 by Michael Margraf</translation>
+        <translation type="obsolete">Copyright (C) 2003,2004 by Michael Margraf</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
@@ -4187,6 +4187,11 @@ Qt universal circuit simulator
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf</translation>
     </message>
 </context>
 <context>

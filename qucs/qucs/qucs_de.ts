@@ -2363,11 +2363,6 @@ Einfacher Texteditor für Qucs
 </translation>
     </message>
     <message>
-        <source>Copyright (C) 2004 by Michael Margraf
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>
 Usage:  qucsedit [-r] filename
 </source>
@@ -2605,15 +2600,21 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung der Rauschspannungen</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Material auf der Rückseite des Substrats</translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatur in °C</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>
@@ -4449,7 +4450,7 @@ Einfacher Texteditor für Qucs
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2004 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -4500,6 +4501,12 @@ Very simple text editor for Qucs
 </source>
         <translation>
 Einfacher Texteditor für Qucs
+</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
 </context>
@@ -5419,7 +5426,7 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003,2004 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003,2004 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -5715,6 +5722,12 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation>Ungarisch von Jozsef Bus</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</source>
+        <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>
