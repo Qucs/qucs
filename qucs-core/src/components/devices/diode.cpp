@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.5 2004-07-27 16:43:58 ela Exp $
+ * $Id: diode.cpp,v 1.6 2004-07-31 16:59:15 ela Exp $
  *
  */
 
@@ -64,20 +64,25 @@ void diode::calcSP (nr_double_t frequency) {
 void diode::calcNoise (nr_double_t frequency) {
   nr_double_t Id = getOperatingPoint ("Id");
 
-#if MICHAEL
+#if MICHAEL /* shot noise only */
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
   complex y = rect (gd, Cd * 2.0 * M_PI * frequency);
-  complex f = 2 * 2 * z0 * Id / (2 * z0 * y + 1) * QoverkB / T0;
+  complex f = 2 * z0 * Id / norm (2 * z0 * y + 1) * QoverkB / T0;
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
 #else
-  matrix y = matrix (2);
-  nr_double_t i = 2 * Id * QoverkB / T0;
-  y.set (NODE_C, NODE_C, +i); y.set (NODE_A, NODE_A, +i);
-  y.set (NODE_A, NODE_C, -i); y.set (NODE_C, NODE_A, -i);
-  setMatrixN (cytocs (y * z0, getMatrixS ()));
+  nr_double_t Kf  = getPropertyDouble ("Kf");
+  nr_double_t Af  = getPropertyDouble ("Af");
+  nr_double_t Ffe = getPropertyDouble ("Ffe");
+
+  matrix yc = matrix (2);
+  nr_double_t i = 2 * Id * QoverkB / T0 +               // shot noise
+    Kf * pow (Id, Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
+  yc.set (NODE_C, NODE_C, +i); yc.set (NODE_A, NODE_A, +i);
+  yc.set (NODE_A, NODE_C, -i); yc.set (NODE_C, NODE_A, -i);
+  setMatrixN (cytocs (yc * z0, getMatrixS ()));
 #endif
 }
 

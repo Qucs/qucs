@@ -69,7 +69,7 @@ Documentation License".
 }
 \makeatother
 
-\author{Stefan Jahn \\ Michael Margraf}
+\author{Stefan Jahn\vspace*{6pt}\\Michael Margraf}
 \title{Qucs}
 \date{}
 
@@ -839,8 +839,10 @@ inverted matrix of $\left[\underline{X}\right]$\\& &\\
 \end{tabular}
 
 \subsection{Two-Port transformations}
+%\addcontentsline{toc}{subsection}{Two-Port transformations}
 
 \subsubsection{Two-Port matrix conversion based on current and voltage}
+%\addcontentsline{toc}{subsubsection}{Two-Port matrix conversion based on current and voltage}
 
 \begin{figure}[ht]
 \begin{center}
@@ -1061,6 +1063,7 @@ G &
 \end{tabular}
 
 \subsubsection{Two-Port matrix conversion based on signal waves}
+%\addcontentsline{toc}{subsubsection}{Two-Port matrix conversion based on signal waves}
 
 \begin{figure}[ht]
 \begin{center}
@@ -1143,6 +1146,7 @@ $\begin{array}{cc}T_{11}&T_{12}\vspace{4pt}\\T_{21}&T_{22}\end{array}$\\
 \end{tabular}
 
 \subsubsection{Mixed Two-Port matrix conversions}
+%\addcontentsline{toc}{subsubsection}{Mixed Two-Port matrix conversions}
 
 Sometimes it may be useful to have a twoport matrix representation
 based on signal waves in a representation based on voltage and current
@@ -2337,13 +2341,13 @@ The noise wave correlation matrix, therefore, writes as follows.
 \begin{equation}
 \begin{split}
 (\underline{C})
- =  \left| \frac{0.5\cdot Y_0}{g_D+j\omega C_j + 0.5\cdot Y_0}\right|^2  \cdot 2\cdot e\cdot I_S\cdot
-    \left( \exp\left( \frac{U_{dc}}{n\cdot U_T} \right) +1 \right) \cdot Z_0\cdot\begin{pmatrix}
+ =  \left| \frac{0.5\cdot Y_0}{g_d+j\omega C_d + 0.5\cdot Y_0}\right|^2  \cdot 2\cdot e\cdot I_S\cdot
+    \left( \exp\left( \frac{V_{d}}{N\cdot V_T} \right) -1 \right) \cdot Z_0\cdot\begin{pmatrix}
    1 & -1\\
   -1 &  1\\
 \end{pmatrix} \\
- = 2\cdot e\cdot Z_0\cdot  (I_{dc}+2\cdot I_S)\cdot
-    \left| \frac{1}{2\cdot Z_0\cdot (g_D+j\omega C_j) + 1}\right|^2 \cdot
+ = 2\cdot e\cdot Z_0\cdot  I_{d}\cdot
+    \left| \frac{1}{2\cdot Z_0\cdot (g_d+j\omega C_d) + 1}\right|^2 \cdot
 \begin{pmatrix}
    1 & -1\\
   -1 &  1\\
@@ -2352,22 +2356,23 @@ The noise wave correlation matrix, therefore, writes as follows.
 \label{eqn:diode_noise}
 \end{equation}
 
-Where $e$ is charge of an electron, $U_T$ temperature voltage, $g_D$
-(dynamically) conductance of the diode and $C_j$ junction capacitance.
-To be
-very precise, the equation above only holds for diodes whose field and
-diffusion current dominate absolutely (diffusion limited diode),
-i.e. $n=1$.  Many diodes also generate a generation/recombination
-current ($n\approx 2$).  Furthermore some special diodes have
-additional current or noise components (tunnel diodes, avalanche
-diodes etc.).  All these mechanisms are not taken into account in
-equation \eqref{eqn:diode_noise}.
+Where $e$ is charge of an electron, $V_T$ temperature voltage, $g_d$
+(dynamic) conductance of the diode and $C_d$ its junction capacitance.
+
+\addvspace{12pt}
+
+To be very precise, the equation above only holds for diodes whose
+field and diffusion current dominate absolutely (diffusion limited
+diode), i.e. $N=1$.  Many diodes also generate a
+generation/recombination current ($N\approx 2$).  Furthermore some
+special diodes have additional current or noise components (tunnel
+diodes, avalanche diodes etc.).  All these mechanisms are not taken
+into account in equation \eqref{eqn:diode_noise}.
 
 \addvspace{12pt}
 
 The parasitic ohmic resistance in a non-ideal diode, of course,
 creates thermal noise.
-
 
 \chapter{DC Analysis}
 %\addcontentsline{toc}{chapter}{DC Analysis}
@@ -3087,6 +3092,46 @@ x_{i} &= \frac{z_{i}}{a_{ii}} - \sum_{k=i+1}^{n} x_{k}\cdot \frac{a_{ik}}{a_{ii}
 
 The forward elimination in the Gaussian algorithm requires
 approximately $n^3/3$, the backward substitution $n^2/2$ operations.
+
+\subsection{Gauss-Jordan method}
+%\addcontentsline{toc}{subsection}{Gauss-Jordan method}
+
+The Gauss-Jordan method is a modification of the Gaussian elimination.
+In each k-th elimination step the elements of the k-th column get zero
+except the diagonal element which gets 1.  When the right hand side
+vector z is included in each step it contains the solution vector x
+afterwards.
+
+\addvspace{12pt}
+
+The following recursive formulas must be applied to get the new matrix
+elements for the k-th elimination step.  The k-th row must be computed
+first.
+\begin{align}
+a_{kj} &= a_{kj} / a_{kk} & j = 1\ldots n\\
+z_{k}  &= z_{k} / a_{kk}  &
+\end{align}
+
+Then the other rows can be calculated with the following formulas.
+\begin{align}
+a_{ij} &= a_{ij} - a_{ik}\cdot a_{kj} & j = 1,\ldots,n \textrm{ and } i = 1,\ldots,n \textrm{ with } i \ne k\\
+z_{i}  &= z_{i} - a_{ik}\cdot z_{k}   & i = 1,\ldots,n \textrm{ with } i \ne k
+\end{align}
+
+Column pivoting may be necessary in order to avoid division by zero.
+The solution vector x is not harmed by row substitutions.  When the
+Gauss-Jordan algorithm has been finished the original matrix has been
+transformed into the identity matrix.  If each operation during this
+process is applied to an identity matrix the resulting matrix is the
+inverse matrix of the original matrix.  This means that the
+Gauss-Jordan method can be used to compute the inverse of a matrix.
+
+\addvspace{12pt}
+
+Though this elimination method is easy to implement the number of
+required operations is larger than within the Gaussian elimination.
+The Gauss-Jordan method requires approximately $N^3/2 + N^2/2$
+operations.
 
 \subsection{LU decomposition}
 %\addcontentsline{toc}{subsection}{LU decomposition}

@@ -1,3 +1,16 @@
+2004-07-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Checking for non-equal variables in same
+	order sweeps (with the same simulation instance to sweep).
+
+	* eqnsys.cpp: Fixed Gauss-Jordan algorithm.
+
+	* dcsolver.cpp: Fixed a bug.  Now really using DC analysis
+	properties for convergence tolerances.
+
+	* eqnsys.cpp: Started to implement the Jacobi's method for
+	solving linear equation systems.  Not yet working...
+
 2004-07-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* net.cpp: When inserting and removing a circuit from the

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.6 2004-07-11 17:06:09 margraf Exp $
+ * $Id: eqnsys.cpp,v 1.7 2004-07-31 16:59:14 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@ using namespace std;
 #include "complex.h"
 #include "matrix.h"
 #include "eqnsys.h"
+#include "constants.h"
 #include "exception.h"
 #include "exceptionstack.h"
 
@@ -92,6 +93,9 @@ void eqnsys::solve (void) {
     break;
   case ALGO_LU_DECOMPOSITION:
     solve_lu ();
+    break;
+  case ALGO_JACOBI:
+    solve_jacobi ();
     break;
   }
 }
@@ -168,10 +172,9 @@ void eqnsys::solve_gauss_jordan (void) {
       B->exchangeRows (i, pivot);
     }
 
-#if 1
-    // compute current column
+    // compute current row
     f = A->get (i, i);
-    for (c = 1; c <= N; c++) {
+    for (c = i + 1; c <= N; c++) {
       A->set (i, c, A->get (i, c) / f);
     }
     B->set (i, 1, B->get (i, 1) / f);
@@ -180,32 +183,12 @@ void eqnsys::solve_gauss_jordan (void) {
     for (r = 1; r <= N; r++) {
       if (r != i) {
 	f = A->get (r, i);
-	for (c = 1; c <= N; c++) {
-	  A->set (r, c, A->get (r, c) - f * A->get (i, c));
-	}
-	B->set (r, 1, B->get (r, 1) - f * B->get (i, 1));
-      }
-    }
-#else
-    // compute new rows and columns
-    for (r = 1; r <= N; r++) {
-      if (r == i) {
-        f = A->get (i, i);
-        for (c = i + 1; c <= N; c++) {
-          A->set (r, c, A->get (r, c) / f);
-        }
-        B->set (r, 1, B->get (r, 1) / f);
-      }
-      else {
-        f = A->get (r, i) / A->get (i, i);
         for (c = i + 1; c <= N; c++) {
           A->set (r, c, A->get (r, c) - f * A->get (i, c));
         }
         B->set (r, 1, B->get (r, 1) - f * B->get (i, 1));
       }
-      A->set (r, i, (r == i) ? 1 : 0);
     }
-#endif
   }
 
   // right hand side is now the solution
@@ -300,4 +283,107 @@ void eqnsys::solve_lu (void) {
  fail:
   delete Y;
   delete change;
+}
+
+/* The function solves the equation system using a full-step iterative
+   method (called Jacobi's method). */
+void eqnsys::solve_jacobi (void) {
+  nr_double_t MaxPivot;
+  complex f;
+  int conv, k, i, c, r, rpivot, cpivot, N = A->getCols ();
+  int MaxIter = 350;
+  nr_double_t reltol = 1e-3;
+  nr_double_t abstol = 1e-12;
+  int * change = new int[N];
+
+  // initialize pivot exchange table
+  for (i = 1; i <= N; i++) change[i - 1] = i;
+
+  // TODO: Find algorithm to ensure that!!!
+  // ensure that all diagonal values are non-zero
+  for (i = 1; i <= N; i++) {
+    //fprintf (stderr, "not pivoted:\n");
+    //A->print ();
+    for (MaxPivot = 0, rpivot = cpivot = i, r = i; r <= N; r++) {
+      for (c = 1; c <= N; c++) {
+	if (abs (A->get (r, c)) > MaxPivot && abs (A->get (c, r)) > 0) {
+	  MaxPivot = abs (A->get (r, c));
+	  rpivot = r;
+	  cpivot = c;
+	}
+      }
+    }
+    if (MaxPivot <= 0) {
+      //A->print ();
+    }
+    assert (MaxPivot > 0);
+    if (cpivot != i) {
+      A->exchangeCols (i, cpivot);
+      k = change[i - 1];
+      change[i - 1] = change[cpivot - 1];
+      change[cpivot - 1] = k;
+      //fprintf (stderr, "exchanged c: %d-%d\n", i, cpivot);
+      //A->print ();
+    }
+    if (rpivot != i) {
+      A->exchangeRows (i, rpivot);
+      //fprintf (stderr, "exchanged r: %d-%d\n", i, rpivot);
+      //A->print ();
+    }
+  }
+
+  for (f = 1, i = 1; i <= N; i++) f *= A->get (i, i);
+  //fprintf (stderr, "pivoted:\n");
+  //A->print ();
+  assert (f != 0);
+  if (criteria_schmidt_mises () >= 1) {
+    solve_lu ();
+    return;
+  }
+
+  matrix * Xprev = new matrix (*X);
+  for (r = 1; r <= N; r++) Xprev->set (r, 1, 0);
+  i = 0;
+  do {
+    for (r = 1; r <= N; r++) {
+      for (f = 0, c = 1; c <= N; c++) {
+	if (c != r) {
+	  f += A->get (r, c) * Xprev->get (c, 1);
+	}
+      }
+      X->set (r, 1, (B->get (change[r - 1], 1) - f) / A->get (r, r));
+    }
+    //fprintf (stderr, "NOTE: step %d\n", i);
+    //X->print ();
+    for (conv = 1, r = 1; r <= N; r++) {
+      if (abs (X->get (r, 1) - Xprev->get (r, 1)) >= 
+	  abstol + reltol * abs (X->get (r, 1))) {
+	conv = 0;
+	break;
+      }
+    }
+    *Xprev = *X;
+  }
+  while (i++ < MaxIter && !conv);
+#if DEBUG
+  if (!conv) {
+    fprintf (stderr, "ERROR: no convergence after %d iterations\n", i);
+  }
+  else {
+    fprintf (stderr, "NOTE: convergence after %d iterations\n", i);
+  }
+  //X->print ();
+#endif
+  delete change;
+  delete Xprev;
+}
+
+nr_double_t eqnsys::criteria_schmidt_mises (void) {
+  complex f = 0;
+  for (int r = 1; r <= A->getCols (); r++) {
+    for (int c = 1; c <= A->getCols (); c++) {
+      if (r != c) f += sqr (A->get (r, c) / A->get (r, r));
+    }
+  }
+  return abs (f);
 }

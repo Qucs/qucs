@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.20 2004-07-11 17:06:09 margraf Exp $
+ * $Id: dcsolver.cpp,v 1.21 2004-07-31 16:59:14 ela Exp $
  *
  */
 
@@ -117,17 +117,18 @@ void dcsolver::solve (void) {
 
   // create node list, enumerate nodes and voltage sources
 #if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: creating node list for DC analysis\n");
+  logprint (LOG_STATUS, "NOTIFY: %s: creating node list for DC analysis\n",
+	    getName ());
 #endif
   createNodeList ();
   nlist->assignNodes ();
   assignVoltageSources ();
-#if DEBUG
+#if DEBUG && 0
   nlist->print ();
 #endif
 
 #if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: solving DC netlist\n");
+  logprint (LOG_STATUS, "NOTIFY: %s: solving DC netlist\n", getName ());
 #endif
 
   // run solving loop until convergence is reached
@@ -504,9 +505,6 @@ int dcsolver::checkConvergence (void) {
   int N = countNodes ();
   int M = subnet->getVoltageSources ();
   nr_double_t v_abs, v_rel, i_abs, i_rel;
-  nr_double_t reltol = 1e-3;
-  nr_double_t abstol = 1e-12; // 1pA
-  nr_double_t vntol  = 1e-6;  // 1uV
 
   for (int r = 1; r <= N; r++) {
     v_abs = abs (x->get (r, 1) - xprev->get (r, 1));

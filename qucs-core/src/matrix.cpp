@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.11 2004-07-26 22:07:28 ela Exp $
+ * $Id: matrix.cpp,v 1.12 2004-07-31 16:59:14 ela Exp $
  *
  */
 
@@ -108,7 +108,7 @@ void matrix::print (void) {
   for (int r = 1; r <= rows; r++) {
     for (int c = 1; c <= cols; c++) {
       fprintf (stderr, "%+.2e,%+.2e ", (double) real (get (r, c)), 
-	       (double) imag (get (r, c)));
+      	       (double) imag (get (r, c)));
     }
     fprintf (stderr, "\n");
   }
@@ -359,7 +359,7 @@ matrix& inverseGaussJordan (matrix& a) {
       e->exchangeRows (i, pivot);
     }
 
-    // compute current column
+    // compute current row
     f = b->get (i, i);
     for (c = 1; c <= n; c++) {
       b->set (i, c, b->get (i, c) / f);
@@ -584,7 +584,7 @@ matrix& cstocz (matrix& cs, matrix& z) {
 
 // The function swaps the given rows with each other.
 void matrix::exchangeRows (int r1, int r2) {
-  assert (r1 <= rows && r2 <= rows);
+  assert (r1 >= 1 && r2 >= 1 && r1 <= rows && r2 <= rows);
   complex * s = new complex[cols];
   int len = sizeof (complex) * cols;
   r1--; r2--;
@@ -596,7 +596,7 @@ void matrix::exchangeRows (int r1, int r2) {
 
 // The function swaps the given columns with each other.
 void matrix::exchangeCols (int c1, int c2) {
-  assert (c1 <= cols && c2 <= cols);
+  assert (c1 >= 1 && c2 >= 1 && c1 <= cols && c2 <= cols);
   complex s;
   c1--; c2--;
   for (int r = 0; r < rows * cols; r += cols) {

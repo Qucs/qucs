@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.24 2004-07-30 06:25:54 ela Exp $
+ * $Id: input.cpp,v 1.25 2004-07-31 16:59:14 ela Exp $
  *
  */
 
@@ -139,6 +139,7 @@ void input::factory (void) {
 	      // put new parameter sweep variable into environment
 	      variable * v = new variable (pairs->value->ident);
 	      constant * c = new constant (TAG_DOUBLE);
+	      c->d = 0; // initialize the variable
 	      v->setConstant (c);
 	      env->addVariable (v);
 	    }
