@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.8 2004/07/05 21:41:46 ela Exp $
+ * $Id: scan_netlist.l,v 1.9 2004/07/16 19:14:37 ela Exp $
  *
  */
 
@@ -88,6 +88,14 @@ UCOMPLEX {UCREAL}{UCIMAG}
 <INITIAL>"Eqn" { /* special equation case */
     BEGIN(EQN);
     return Eqn;
+  }
+<INITIAL>"."{SPACE}*"Def"{SPACE}*":" {
+    /* subcircuit definition begins */
+    return DefSub;
+  }
+<INITIAL>"."{SPACE}*"Def"{SPACE}*":"{SPACE}*"End" {
+    /* subcircuit definition ends */
+    return EndSub;
   }
 <INITIAL,STR>{ID} { /* identify identifier */
     netlist_lval.ident = strdup (netlist_text); 

@@ -43,7 +43,7 @@ eYGridVisible=1; eYGridDash=1;
 eXAxisNorthValueVisible=0;
 eXAxisSouthScale=[0 1 5];
 eYAxisEastValueVisible=0;
-eYAxisWestScale=[-2 .5 2];
+eYAxisWestScale=[-2 .5 1.5];
 eYAxisWestLabelDistance=8;
 
 % set axes options
@@ -73,26 +73,9 @@ eAxesLabelTextFont=1;
 
 % apply legend layout
 ePlotLegendPos=[90 93];
-lb=[2.8 1.9 4.9 1.1];
+lb=[2.8 1.9-0.5 4.9 1.1-0.4];
 bb=[lb(1) lb(2); lb(3) lb(2); lb(3) lb(4); lb(1) lb(4); lb(1) lb(2)];
 eplot(bb(:,1),bb(:,2),"",-1,[1 1 1]);
-
-for i = 1 : length (u)
-  if (u(i) < 3.3)
-    c = log (4 / u(i) + sqrt ((4 / u(i))^2 + 2));
-    z = c - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (2 * M_2_PI) / er);
-    z = z * Z0 / M_PI / sqrt (2 * (er + 1));
-  else
-    c = u(i) / 2 + log (4) / M_PI;
-    c = c + (er + 1) / 2 / M_PI / er * log (M_PI_2 * e * (u(i) / 2 + 0.94));
-    c = c + (er - 1) / 2 / M_PI / er^2 * log (e * M_PI^2 / 16);
-    z = Z0 / 2 / sqrt (er) / c;
-    z = z + 0.098456; % minimal correction
-  endif
-  zl(i) = z;
-endfor
-zl1 = zl;
-eplot (u,(zl1 - zl)./zl1 * 100,"Wheeler",0,[1 0 0],1);
 
 a = 1 + 1 / 49 * log ((u.^4 + (u / 52).^2) / (u.^4 + 0.432));
 a = a + 1 / 18.7 * log (1 + (u / 18.1).^3);
@@ -101,15 +84,33 @@ g = (er + 1) / 2 + (er - 1) / 2 * (1 + 10 ./ u).^(-a * b);
 f = 6 + (2 * M_PI - 6) * exp (-(30.666 ./ u).^0.7528);
 d = Z0 / 2 / M_PI * log (f ./ u + sqrt (1 + (2 ./ u).^2));
 zl = d ./ sqrt (g);
-zl2 = zl;
-eplot (u,(zl' - zl1)./zl1 * 100,"Hammerstad and Jensen",1,[0 1 0],1);
+zlref = zl;
+
+eplot (u,(zl - zlref)./zlref * 100,"Hammerstad and Jensen",1,[0 1 0],1);
 
 g = (er + 1) / 2 + (er - 1) / 2 * (1 + 10 ./ u).^(-0.5);
 f = 6 + (2 * M_PI - 6) * exp (-(30.666 ./ u).^0.7528);
 d = Z0 / 2 / M_PI * log (f ./ u + sqrt (1 + (2 ./ u).^2));
 zl = d ./ sqrt (g);
+zl2 = zl;
+eplot (u,(zl - zlref)./zlref * 100,"Schneider",2,[0 0 1],1);
+
+for i = 1 : length (u)
+  if (u(i) <= 3.3)
+    c = log (4 / u(i) + sqrt ((4 / u(i))^2 + 2));
+    z = c - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (2 * M_2_PI) / er);
+    z = z * Z0 / M_PI / sqrt (2 * (er + 1));
+  else
+    c = u(i) / 2 + log (4) / M_PI;
+    c = c + (er + 1) / 2 / M_PI / er * log (M_PI_2 * e * (u(i) / 2 + 0.94));
+    c = c + (er - 1) / 2 / M_PI / er^2 * log (e * M_PI^2 / 16);
+    z = Z0 / 2 / sqrt (er) / c;
+    %z = z + 0.098456; % minimal correction
+  endif
+  zl(i) = z;
+endfor
 zl3 = zl;
-eplot (u,(zl' - zl1)./zl1 * 100,"Schneider",2,[0 0 1],1);
+eplot (u,(zl3 - zlref)./zlref * 100,"Wheeler",0,[1 0 0],1);
 
 eclose (1,0);
 %eview;

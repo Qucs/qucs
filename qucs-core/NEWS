@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * subcircuit definitions are now possible
  * npn BJT implementation (Gummel-Poon)
  * additional noise analysis with s-parameters
  * constants like 'pi' can be used in equations without defining them
