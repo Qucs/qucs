@@ -23,6 +23,16 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Transient models for controlled sources with time delay.
+- Transient noise analysis.
+- Implement a real predictor for transient analysis.
+- Use Milne's formula for local truncation error estimation.
+- Transient models of transmission lines.
+- Transient models of non-linear devices.
+	- Implementation of transient models for capacitor, inductor and
+	  resistor.
+- Subcircuit definitions with properties.
+- Node-set functionality for AC, DC and transient analysis.
 - Coplanar line implementation.
 - Microstrip via hole implementation.
 - Microstrip t-junction.
@@ -31,7 +41,7 @@ unfixed) have a look at the file BUGS.
 - MESFET (Curtize, Staatz) implementations.
 - BSIMv3 implementation.
 - Harmonic balance simulation.
-- Transient simulation.
+	- Transient simulation.
 - AC noise analysis.
 	- AC analysis.
 	- Implement sorted node list for S-parameter analysis in order

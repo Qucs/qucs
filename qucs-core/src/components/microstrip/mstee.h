@@ -1,7 +1,7 @@
 /*
- * cross.h - cross connector class definitions
+ * mstee.h - microstrip t-junction class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,20 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.h,v 1.4 2004/09/26 13:31:36 ela Exp $
+ * $Id: mstee.h,v 1.1 2004/09/26 13:31:37 ela Exp $
  *
  */
 
-#ifndef __CROSS_H__
-#define __CROSS_H__
+#ifndef __MSTEE_H__
+#define __MSTEE_H__
 
-class cross : public circuit
+class mstee : public circuit
 {
  public:
-  cross ();
+  mstee ();
   void initDC (void);
   void initAC (void);
+  void initSP (void);
 };
 
-#endif /* __CROSS_H__ */
+#endif /* __MSTEE_H__ */

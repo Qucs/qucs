@@ -1,7 +1,7 @@
 /*
  * cross.cpp - cross connector class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: cross.cpp,v 1.3 2004/09/26 13:31:36 ela Exp $
  *
  */
 
@@ -54,4 +54,15 @@ cross::cross () : circuit (4) {
   setS (4, 3,  1.0 / 2.0);
   setS (4, 4, -1.0 / 2.0);
   type = CIR_CROSS;
+}
+
+void cross::initDC (void) {
+  setVoltageSources (3);
+  voltageSource (1, 1, 2);
+  voltageSource (2, 1, 3);
+  voltageSource (3, 1, 4);
+}
+
+void cross::initAC (void) {
+  initDC ();
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.16 2004/09/20 10:09:55 ela Exp $
+ * $Id: component_id.h,v 1.17 2004/09/26 13:31:36 ela Exp $
  *
  */
 
@@ -73,6 +73,8 @@ enum circuit_type {
   CIR_MSOPEN,
   CIR_MSGAP,
   CIR_MSCOUPLED,
+  CIR_MSTEE,
+  CIR_MSCROSS,
 
   // non-linear components
   CIR_DIODE,
