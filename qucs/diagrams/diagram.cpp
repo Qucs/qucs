@@ -154,8 +154,8 @@ bool Diagram::calcDiagram()
 void Diagram::calcData(Graph *g, bool valid)
 {
   if(g->Points != 0) { free(g->Points);  g->Points = 0; }
-  if((Name[0] == 'T') || (!valid))   // no graph within tabulars
-    return;
+  if(Name[0] == 'T')  return;   // no graph within tabulars
+  if(!valid)  return;
 
     
   if(g->countY == 0) return;
@@ -506,8 +506,10 @@ bool Diagram::loadVarData(const QString& fileName)
     *(p++) = x;
     *(p++) = y;
     if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-    if(x > ymax) ymax = x;
-    if(x < ymin) ymin = x;
+    if(isfinite(x)) {
+      if(x > ymax) ymax = x;
+      if(x < ymin) ymin = x;
+    }
 
     i = FileString.find(noWhiteSpace, j);
     j = FileString.find(WhiteSpace, i);
@@ -570,8 +572,10 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
       return -1;
     }
     *(p++) = x;
-    if(x > xmax) xmax = x;
-    if(x < xmin) xmin = x;
+    if(isfinite(x)) {
+      if(x > xmax) xmax = x;
+      if(x < xmin) xmin = x;
+    }
 
     i = FileString.find(noWhiteSpace, j);
     j = FileString.find(WhiteSpace, i);

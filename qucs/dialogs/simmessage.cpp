@@ -91,9 +91,11 @@ bool SimMessage::startProcess(const QStringList& commands)
 // Is called when the process sends an output to stdout.
 void SimMessage::slotDisplayMsg()
 {
+//qDebug("-");
   int i;
   QString s = QString(SimProcess.readStdout());
   while((i = s.find('\r')) >= 0) {
+//qDebug("*");
     ProgText->insert(s.left(i-1));
     s = s.mid(i+1);
     ProgText->removeParagraph(ProgText->paragraphs());
@@ -106,6 +108,7 @@ void SimMessage::slotDisplayMsg()
 // Is called when the process sends an output to stderr.
 void SimMessage::slotDisplayErr()
 {
+//qDebug("#");
   ErrText->insert(QString(SimProcess.readStderr()));
 }
 
@@ -121,7 +124,8 @@ void SimMessage::slotSimEnded()
 }
 
 // ------------------------------------------------------------------------
-// Is called when the simulation ended with errors before starting simulator process.
+// Is called when the simulation ended with errors before starting simulator
+// process.
 void SimMessage::errorSimEnded()
 {
   Abort->setText(tr("Close window"));
