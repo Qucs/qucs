@@ -1,7 +1,7 @@
 /*
  * integrator.cpp - integrator class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: integrator.cpp,v 1.2 2004/09/12 18:10:21 ela Exp $
+ * $Id: integrator.cpp,v 1.3 2005/02/21 20:50:36 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 integrator::integrator () : states<nr_double_t> () {
   coefficients = NULL;
   order = 0;
+  state = 0;
   integrate_func = NULL;
 }
 
@@ -49,9 +50,20 @@ integrator::integrator () : states<nr_double_t> () {
 integrator::integrator (const integrator & c) : states<nr_double_t> (c) {
   coefficients = c.coefficients;
   order = c.order;
+  state = c.state;
   integrate_func = c.integrate_func;
 }
 
 // Destructor deletes a integrator object.
 integrator::~integrator () {
+}
+
+/* The function evaluates the state of the integration-using component
+   and runs the appropriate integrator function. */
+void integrator::integrate (int qstate, nr_double_t cap, nr_double_t& geq,
+			    nr_double_t& ceq) {
+  int cstate = qstate + 1;
+  if (state & MODE_INIT) fillState (qstate, getState (qstate));
+  (*integrate_func) (this, qstate, cap, geq, ceq);
+  if (state & MODE_INIT) fillState (cstate, getState (cstate));
 }

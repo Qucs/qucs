@@ -1,7 +1,7 @@
 /*
  * trsolver.h - transient solver class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.15 2004/10/17 09:44:30 ela Exp $
+ * $Id: trsolver.h,v 1.16 2005/02/21 20:52:43 raimi Exp $
  *
  */
 
@@ -43,6 +43,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   int  corrector (void);
   void nextStates (void);
   void fillStates (void);
+  void setMode (int);
   void adjustDelta (void);
   void adjustOrder (int reduce = 0);
   void initTR (void);
@@ -57,6 +58,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void predictEuler (void);
   void predictGear (void);
   void initCircuitTR (circuit *);
+  void fillSolution (tvector<nr_double_t> *);
 
  private:
   sweep * swp;
