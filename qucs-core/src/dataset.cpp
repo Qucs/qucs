@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.8 2004-07-04 15:46:24 ela Exp $
+ * $Id: dataset.cpp,v 1.9 2004-07-21 16:25:08 ela Exp $
  *
  */
 
@@ -258,6 +258,22 @@ vector * dataset::findVariable (char * n) {
       return v;
   }
   return NULL;
+}
+
+// Returns the number of variable vectors.
+int dataset::countVariables (void) {
+  int count = 0;
+  for (vector * v = variables; v != NULL; v = (vector *) v->getNext ())
+    count++;
+  return count;
+}
+
+// Returns the number of dependency vectors.
+int dataset::countDependencies (void) {
+  int count = 0;
+  for (vector * v = dependencies; v != NULL; v = (vector *) v->getNext ())
+    count++;
+  return count;
 }
 
 // Returns the current output file name.

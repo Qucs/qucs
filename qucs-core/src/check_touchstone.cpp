@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.2 2004-07-18 17:22:45 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.3 2004-07-21 16:25:08 ela Exp $
  *
  */
 
@@ -37,6 +37,7 @@
 #include "object.h"
 #include "vector.h"
 #include "matrix.h"
+#include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
 #include "circuit.h"
@@ -186,13 +187,13 @@ static void touchstone_options_eval (void) {
 /* This little function returns a static string containing an
    appropriate variable name. */
 static char * touchstone_create_set (int i, int j) {
-  static char text[16];
-  sprintf (text, "%c[%d,%d]", touchstone_options.parameter, i, j);
+  char * text;
+  text = matvec::createMatrixString (touchstone_options.parameter, i, j);
   if (touchstone_options.ports == 2) {
     /* handle special case for 2-port touchstone data, '21' data
        precedes the '12' data */
     if (i != j)
-      sprintf (text, "%c[%d,%d]", touchstone_options.parameter, j, i);
+      text = matvec::createMatrixString (touchstone_options.parameter, j, i);
   }
   return text;
 }

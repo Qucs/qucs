@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{stmaryrd}
 \usepackage{SIunits}
+\usepackage{graphics}
 \usepackage{psfrag}
 \usepackage{relsize}
 \usepackage[section]{placeins}
@@ -30,41 +31,30 @@
 \fi
 
 \makeatletter
-\def\thickhrulefill{\leavevmode \leaders \hrule height 1pt\hfill \kern \z@}
 \renewcommand{\maketitle}{\begin{titlepage}%
-    \let\footnotesize\small
-    \let\footnoterule\relax
-    \parindent \z@
-    \reset@font
-    \null\vfil
+    \setlength{\parindent}{0pt}
     \vspace*{3cm}
     \begin{flushleft}
-      \bf \huge \@title
+      \bf{\huge{\@title}}
     \end{flushleft}
-    \par
     \hrule height 3pt
-    \par
     \begin{flushright}
-      \LARGE Technical Papers \par
+      \LARGE{Technical Papers}
     \end{flushright}
-    \vskip 60\p@
     \vfill
-
-
     \begin{flushright}
-      \Large \@author \par
+      \Large{\@author}
     \end{flushright}
-
-    \hrule height 3pt \par
-
-\vspace*{24pt}
+    \hrule height 3pt
+    \vspace*{24pt}
 
 Copyright \copyright{} 2003, 2004 Michael Margraf 
-\textless michael.margraf@alumni.tu-berlin.de\textgreater \par
-Copyright \copyright{} 2003, 2004 Stefan Jahn 
-\textless jahn@mwt.ee.tu-berlin.de\textgreater \par
+\textless michael.margraf@alumni.tu-berlin.de\textgreater
 
-\vspace*{12pt}
+Copyright \copyright{} 2003, 2004 Stefan Jahn 
+\textless jahn@mwt.ee.tu-berlin.de\textgreater
+
+    \vspace*{12pt}
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -72,10 +62,10 @@ any later version published by the Free Software Foundation.  A copy
 of the license is included in the section entitled "GNU Free
 Documentation License".
 
-\vspace*{1cm}
+    \vspace*{1cm}
 
-  \end{titlepage}%
-  \setcounter{footnote}{0}%
+    \end{titlepage}%
+    \setcounter{footnote}{0}%
 }
 \makeatother
 
@@ -286,12 +276,12 @@ the dependent variable in question and the independent variable.
 
 \begin{equation}
 T = \dfrac{
-\begin{split}
+\begin{array}{r}
 P_{1}\cdot\left(1 - \Sigma L_{1}^{(1)} + \Sigma L_{2}^{(1)} - \Sigma L_{3}^{(1)} + \ldots\right) +
-P_{2}\cdot\left(1 - \Sigma L_{1}^{(2)} + \Sigma L_{2}^{(2)} - \Sigma L_{3}^{(2)} + \ldots\right)\\ +
- P_{3}\cdot\left(1 - \Sigma L_{1}^{(3)} + \Sigma L_{2}^{(3)} - \Sigma L_{3}^{(3)} + \ldots\right) +
+P_{2}\cdot\left(1 - \Sigma L_{1}^{(2)} + \Sigma L_{2}^{(2)} - \Sigma L_{3}^{(2)} + \ldots\right)\\
++ P_{3}\cdot\left(1 - \Sigma L_{1}^{(3)} + \Sigma L_{2}^{(3)} - \Sigma L_{3}^{(3)} + \ldots\right) +
 P_{4}\cdot\left(1 - \ldots\right) + \ldots
-\end{split}
+\end{array}
 }{1 - \Sigma L_{1} + \Sigma L_{2} - \Sigma L_{3} + \ldots}
 \label{eq:ntrule}
 \end{equation}
@@ -961,10 +951,10 @@ connecting twoports with each other.
 
 \begin{center}
 \begin{figure}[ht]
-\fboxsep=6pt
+\setlength{\fboxsep}{5pt}
 \begin{tabular}{|c|c|c|c|}
 \hline
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{\begin{minipage}[t]{0.22\linewidth}
 \centering
 parallel-parallel connection\\[1ex]
@@ -991,8 +981,8 @@ parallel-series connection\\[1ex]
 \\
 \hline
 \multicolumn{4}{c}{\vline
-\fboxrule=0pt
-\fbox{\begin{minipage}[t]{.9\linewidth}
+\setlength{\fboxrule}{0pt}
+\fbox{\begin{minipage}[t]{0.85\linewidth}
 \centering
 cascaded twoports\\[1ex]
 \includegraphics[height=1.3cm]{twoportch}
@@ -1021,22 +1011,22 @@ AC behaviour of the twoport.
 \item chain connection: use A-parameters: $A = A_{1}\cdot A_{2}$
 \end{itemize}
 
-\fboxsep = 4pt
-\def\a{0.152\linewidth}
+\setlength{\fboxsep}{4pt}
+\def\a{0.15\linewidth}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
 & A & Y & Z & H & G\\
 \hline
 A & 
 \makebox[\a][c]{$\begin{array}{cc}A_{11}&A_{12}\vspace{4pt}\\A_{21}&A_{22}\end{array}$} &
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{-Y_{22}}{Y_{21}}&\dfrac{-1}{Y_{21}}\vspace{4pt}\\\dfrac{-\Delta Y}{Y_{21}}&\dfrac{-Y_{11}}{Y_{21}}\end{array}$}} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{Z_{11}}{Z_{21}}&\dfrac{\Delta Z}{Z_{21}}\vspace{4pt}\\\dfrac{1}{Z_{21}}&\dfrac{Z_{22}}{Z_{21}}\end{array}$} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{-\Delta H}{H_{21}}&\dfrac{-H_{11}}{H_{21}}\vspace{4pt}\\\dfrac{-H_{22}}{H_{21}}&\dfrac{-1}{H_{21}}\end{array}$} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{G_{21}}&\dfrac{G_{22}}{G_{21}}\vspace{4pt}\\\dfrac{G_{11}}{G_{21}}&\dfrac{\Delta G}{G_{21}}\end{array}$}\\
 \hline
 Y & 
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{22}}{A_{12}}&\dfrac{-\Delta A}{A_{12}}\vspace{4pt}\\\dfrac{-1}{A_{12}}&\dfrac{A_{11}}{A_{12}}\end{array}$}} &
 \makebox[\a][c]{$\begin{array}{cc}Y_{11}&Y_{12}\vspace{4pt}\\Y_{21}&Y_{22}\end{array}$} & 
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{Z_{22}}{\Delta Z}&\dfrac{-Z_{12}}{\Delta Z}\vspace{4pt}\\\dfrac{-Z_{21}}{\Delta Z}&\dfrac{Z_{11}}{\Delta Z}\end{array}$} &
@@ -1044,7 +1034,7 @@ Y &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta G}{G_{22}}&\dfrac{G_{12}}{G_{22}}\vspace{4pt}\\\dfrac{-G_{21}}{G_{22}}&\dfrac{1}{G_{22}}\end{array}$}\\
 \hline
 Z & 
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{11}}{A_{21}}&\dfrac{\Delta A}{A_{21}}\vspace{4pt}\\\dfrac{1}{A_{21}}&\dfrac{A_{22}}{A_{21}}\end{array}$}} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{Y_{22}}{\Delta Y}&\dfrac{-Y_{12}}{\Delta Y}\vspace{4pt}\\\dfrac{-Y_{21}}{\Delta Y}&\dfrac{Y_{11}}{\Delta Y}\end{array}$} &
 \makebox[\a][c]{$\begin{array}{cc}Z_{11}&Z_{12}\vspace{4pt}\\Z_{21}&Z_{22}\end{array}$} & 
@@ -1052,7 +1042,7 @@ Z &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{G_{11}}&\dfrac{-G_{12}}{G_{11}}\vspace{4pt}\\\dfrac{G_{21}}{G_{11}}&\dfrac{\Delta G}{G_{11}}\end{array}$}\\
 \hline
 H & 
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{12}}{A_{22}}&\dfrac{\Delta A}{A_{22}}\vspace{4pt}\\\dfrac{-1}{A_{22}}&\dfrac{A_{21}}{A_{22}}\end{array}$}} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{Y_{11}}&\dfrac{-Y_{12}}{Y_{11}}\vspace{4pt}\\\dfrac{Y_{21}}{Y_{11}}&\dfrac{\Delta Y}{Y_{11}}\end{array}$} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta Z}{Z_{22}}&\dfrac{Z_{12}}{Z_{22}}\vspace{4pt}\\\dfrac{-Z_{21}}{Z_{22}}&\dfrac{1}{Z_{22}}\end{array}$} &
@@ -1060,7 +1050,7 @@ H &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{G_{22}}{\Delta G}&\dfrac{-G_{12}}{\Delta G}\vspace{4pt}\\\dfrac{-G_{21}}{\Delta G}&\dfrac{G_{11}}{\Delta G}\end{array}$}\\
 \hline
 G & 
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{21}}{A_{11}}&\dfrac{-\Delta A}{A_{11}}\vspace{4pt}\\\dfrac{1}{A_{11}}&\dfrac{A_{12}}{A_{11}}\end{array}$}} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta Y}{Y_{22}}&\dfrac{Y_{12}}{Y_{22}}\vspace{4pt}\\\dfrac{-Y_{21}}{Y_{22}}&\dfrac{1}{Y_{22}}\end{array}$} &
 \makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{Z_{11}}&\dfrac{-Z_{12}}{Z_{11}}\vspace{4pt}\\\dfrac{Z_{21}}{Z_{11}}&\dfrac{\Delta Z}{Z_{11}}\end{array}$} &
@@ -1126,11 +1116,11 @@ G &
 \hline
 S &
 $\begin{array}{cc}S_{11}&S_{12}\vspace{4pt}\\S_{21}&S_{22}\end{array}$ &
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{$\begin{array}{cc}\dfrac{T_{12}}{T_{22}}&\dfrac{\Delta T}{T_{22}}\vspace{4pt}\\\dfrac{1}{T_{22}}&\dfrac{-T_{21}}{T_{22}}\end{array}$}\\
 \hline
 T &
-\fboxrule=0pt
+\setlength{\fboxrule}{0pt}
 \fbox{$\begin{array}{cc}\dfrac{-\Delta S}{S_{21}}&\dfrac{S_{11}}{S_{21}}\vspace{4pt}\\\dfrac{-S_{22}}{S_{21}}&\dfrac{1}{S_{21}}\end{array}$} &
 $\begin{array}{cc}T_{11}&T_{12}\vspace{4pt}\\T_{21}&T_{22}\end{array}$\\
 \hline
@@ -5178,7 +5168,9 @@ j\omega L + \dfrac{1}{j\omega C} & \dfrac{1}{j\omega C}\\
 Parallel coupled microstrip lines are defined by the characteristic
 impedance and the effective permittivity of the even and the odd mode.
 These quantities can very precisely be modeled by the following
-equations \cite{Kirschning5}, \cite{Kirschning6}.\\ \\
+equations \cite{Kirschning5}, \cite{Kirschning6}.
+
+\addvspace{12pt}
 
 Some normalized quantities:
 \begin{equation}
@@ -5223,7 +5215,10 @@ c_o = b_o(\epsilon_r) - (b_o(\epsilon_r)-0.207)\cdot\exp(-0.414\cdot u)
 d_o = 0.593+0.694\cdot\exp(-0.562\cdot u)
 \end{equation}
 with $\epsilon_{eff}(0)$ refers to zero-thickness single microstrip of width
-$w$ according to \cite{Hammerstad}.\\ \\
+$w$ according to \cite{Hammerstad}.
+
+\addvspace{12pt}
+
 The dispersion formula writes as follows.
 \begin{equation}
 \epsilon_{eff,e,o}(f_n) = \epsilon_r - \frac{\epsilon_r - \epsilon_{eff,e,o}(0)}{1+F_{e,o}(f_n)}
@@ -5408,7 +5403,9 @@ Q_{21} = \text{abs}\left( 1-42.54\cdot g^{0.133}\cdot \exp(-0.812\cdot g)
 \end{equation}
 With $\epsilon_{eff}(f_n)$ being the single microstrip effective
 dielectric constant according to (x) and $Q_0$ single microstrip
-impedance dispersion according to (y).\\
+impedance dispersion according to (y).
+
+\addvspace{12pt}
 
 Dispersion of characteristic impedance for the odd mode can be
 modeled by the following equations.

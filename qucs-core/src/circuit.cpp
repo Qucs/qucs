@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.20 2004-06-25 00:17:23 ela Exp $
+ * $Id: circuit.cpp,v 1.21 2004-07-21 16:25:08 ela Exp $
  *
  */
 
@@ -63,10 +63,12 @@ circuit::circuit () : object () {
 circuit::circuit (int s) : object () {
   assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
   size = s;
-  MatrixS = new complex[s * s];
-  MatrixN = new complex[s * s];
-  MatrixY = new complex[s * s];
-  nodes = new node[s];
+  if (size > 0) {
+    MatrixS = new complex[s * s];
+    MatrixN = new complex[s * s];
+    MatrixY = new complex[s * s];
+    nodes = new node[s];
+  }
   port = 0;
   org = 1;
   subst = NULL;
@@ -91,23 +93,29 @@ circuit::circuit (const circuit & c) : object (c) {
   inserted = c.inserted;
   linear = c.linear;
 
-  // copy each node and set its circuit to the current circuit object
-  nodes = new node[size];
-  for (int i = 0; i < size; i++) {
-    node * n = new node (c.nodes[i]);
-    n->setCircuit (this);
-    nodes[i] = * n;
-    delete n;
+  if (size > 0) {
+    // copy each node and set its circuit to the current circuit object
+    nodes = new node[size];
+    for (int i = 0; i < size; i++) {
+      node * n = new node (c.nodes[i]);
+      n->setCircuit (this);
+      nodes[i] = * n;
+      delete n;
+    }
+    // copy each s-parameter
+    MatrixS = new complex[size * size];
+    memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
+    // copy each noise-correlation-parameter
+    MatrixN = new complex[size * size];
+    memcpy (MatrixN, c.MatrixN, size * size * sizeof (complex));
+    // copy each G-MNA entry
+    MatrixY = new complex[size * size];
+    memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
   }
-  // copy each s-parameter
-  MatrixS = new complex[size * size];
-  memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
-  // copy each noise-correlation-parameter
-  MatrixN = new complex[size * size];
-  memcpy (MatrixN, c.MatrixN, size * size * sizeof (complex));
-  // copy each G-MNA entry
-  MatrixY = new complex[size * size];
-  memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
+  else {
+    nodes = NULL;
+    MatrixS = MatrixN = MatrixY = NULL;
+  }
 
   // copy operating points
   copyOperatingPoints (c.oper);
@@ -115,11 +123,40 @@ circuit::circuit (const circuit & c) : object (c) {
 
 // Destructor deletes a circuit object.
 circuit::~circuit () {
-  delete[] MatrixS;
-  delete[] MatrixN;
-  delete[] MatrixY;
-  delete[] nodes;
+  if (size > 0) {
+    delete[] MatrixS;
+    delete[] MatrixN;
+    delete[] MatrixY;
+    delete[] nodes;
+  }
   deleteOperatingPoints ();
+}
+
+/* With this function the number of ports of the circuit object can be
+   changed.  Previously stored node and matrix information gets
+   completely lost except the current size equals the given size. */
+void circuit::setSize (int s) {
+  // nothing to do here
+  if (size == s) return;
+  assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
+
+  if (size > 0) {
+    // destroy any matrix and node information
+    delete[] MatrixS;
+    delete[] MatrixN;
+    delete[] MatrixY;
+    delete[] nodes;
+    nodes = NULL;
+    MatrixS = MatrixN = MatrixY = NULL;
+  }
+
+  if ((size = s) > 0) {
+    // re-create matrix and node information space
+    nodes = new node[size];
+    MatrixS = new complex[size * size];
+    MatrixN = new complex[size * size];
+    MatrixY = new complex[size * size];
+  }
 }
 
 /* This function sets the name and port number of one of the circuit's

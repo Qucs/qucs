@@ -1,3 +1,9 @@
+2004-07-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* spfile.h (class spfile): New class representing a S-parameter
+	file (e.g. touchstone) component.  During S-parameter simulation
+	the values stored in the file are interpolated if necessary.
+
 2004-07-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Fixed strip thickness effect

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.25 2004-07-16 19:14:37 ela Exp $
+ * $Id: check_netlist.cpp,v 1.26 2004-07-21 16:25:08 ela Exp $
  *
  */
 
@@ -186,6 +186,13 @@ struct define_t definition_available[] =
   { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
     { PROP_NO_PROP }
+  },
+  /* S-parameter file */
+  { "SPfile", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
   },
 
   /* diode */
@@ -453,16 +460,17 @@ struct special_t {
 
 // List of special identifiers.
 static struct special_t checker_specials[] = {
-  { "JFET", "Type",      { "nfet", "pfet", NULL } },
-  { "BJT",  "Type",      { "npn", "pnp", NULL } },
-  { "SP",   "Noise",     { "yes", "no", NULL } },
-  { "SP",   "Type",      { "lin", "log", NULL } },
-  { "DC",   "saveOPs",   { "yes", "no", NULL } },
-  { "MLIN", "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
-			   "Getsinger", "Schneider", "Pramanick",
-			   "Hammerstad", NULL } },
-  { "MLIN", "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "SW",   "Type",      { "lin", "log", NULL } },
+  { "JFET",   "Type",      { "nfet", "pfet", NULL } },
+  { "BJT",    "Type",      { "npn", "pnp", NULL } },
+  { "SP",     "Noise",     { "yes", "no", NULL } },
+  { "SP",     "Type",      { "lin", "log", NULL } },
+  { "DC",     "saveOPs",   { "yes", "no", NULL } },
+  { "MLIN",   "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			     "Getsinger", "Schneider", "Pramanick",
+			     "Hammerstad", NULL } },
+  { "MLIN",   "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "SW",     "Type",      { "lin", "log", NULL } },
+  { "SPfile", "Data",      { "rect", "polar", NULL } },
   { NULL, NULL, { NULL } }
 };
 
@@ -528,6 +536,10 @@ static int checker_resolve_variable (struct definition_t * root,
     }
     /* 5. find special identifiers in certain properties */
     if (checker_validate_special (root, def, value->ident)) {
+      found++;
+    }
+    /* 6. find file reference in S-parameter file components */
+    if ((val = checker_find_variable (root, "SPfile", "File", value->ident))) {
       found++;
     }
     /* TODO: find variable in equations */
@@ -821,50 +833,69 @@ int netlist_checker_variables (void) {
   return netlist_checker_variables_intern (definition_root);
 }
 
-/* The function checks whether the the given key-value combination
-   being part of the an available definition is inside the allowed
-   range and returns zero if not.  Otherwise the function returns
-   non-zero. */
+/* The function checks whether the given key-value combination is
+   inside the allowed range defined by the given property definition
+   and returns the number of error or zero otherwise. */
+static int checker_value_in_prop_range (char * instance, struct define_t * def,
+					struct pair_t * pair,
+					struct property_t * prop) {
+  int errors = 0;
+  // check values
+  if (PROP_IS_VAL (*prop)) {
+    if (PROP_HAS_RANGE (*prop)) {
+      if (pair->value->value < prop->range.l ||
+	  pair->value->value > prop->range.h) {
+	logprint (LOG_ERROR, 
+		  "checker error, value of `%s' (%g) is out of "
+		  "range [%g,%g] in `%s:%s'\n",
+		  pair->key, pair->value->value, prop->range.l,
+		  prop->range.h, def->type, instance);
+	errors++;
+      }
+    }
+    // check fraction of integers
+    if (PROP_IS_INT (*prop)) {
+      double integral;
+      if (modf (pair->value->value, &integral) != 0) {
+	logprint (LOG_ERROR,
+		  "checker error, value of `%s' (%g) needs to be "
+		  "an integer in `%s:%s'\n",
+		  pair->key, pair->value->value, def->type, instance);
+	errors++;
+      }
+    }
+  }      
+  // check identifiers
+  else {
+    if (pair->value->ident == NULL) {
+      logprint (LOG_ERROR,
+		"checker error, value of `%s' (%g) needs to be "
+		"an identifier in `%s:%s'\n",
+		pair->key, pair->value->value, def->type, instance);
+      errors++;
+    }
+  }
+  return errors;
+}
+
+/* The function checks whether the given key-value combination being
+   part of the available definition is inside the allowed range and
+   returns zero if not.  Otherwise the function returns non-zero. */
 static int checker_value_in_range (char * instance, struct define_t * def,
 				   struct pair_t * pair) {
   int errors = 0;
+  // go through required properties
   for (int i = 0; PROP_IS_PROP (def->required[i]); i++) {
     if (!strcmp (def->required[i].key, pair->key)) {
-      // check values
-      if (PROP_IS_VAL (def->required[i])) {
-	if (PROP_HAS_RANGE (def->required[i])) {
-	  if (pair->value->value < def->required[i].range.l ||
-	      pair->value->value > def->required[i].range.h) {
-	    logprint (LOG_ERROR, 
-		      "checker error, value of `%s' (%g) is out of "
-		      "range [%g,%g] in `%s:%s'\n",
-		      pair->key, pair->value->value, def->required[i].range.l,
-		      def->required[i].range.h, def->type, instance);
-	    errors++;
-	  }
-	}
-	// check fraction of integers
-	if (PROP_IS_INT (def->required[i])) {
-	  double integral;
-	  if (modf (pair->value->value, &integral) != 0) {
-	    logprint (LOG_ERROR,
-		      "checker error, value of `%s' (%g) needs to be "
-		      "an integer in `%s:%s'\n",
-		      pair->key, pair->value->value, def->type, instance);
-	    errors++;
-	  }
-	}
-      }      
-      // check identifiers
-      else {
-	if (pair->value->ident == NULL) {
-	  logprint (LOG_ERROR,
-		    "checker error, value of `%s' (%g) needs to be "
-		    "an identifier in `%s:%s'\n",
-		    pair->key, pair->value->value, def->type, instance);
-	  errors++;
-	}
-      }
+      errors += checker_value_in_prop_range (instance, def, pair,
+					     &def->required[i]);
+    }
+  }
+  // go through optional properties
+  for (int i = 0; PROP_IS_PROP (def->optional[i]); i++) {
+    if (!strcmp (def->optional[i].key, pair->key)) {
+      errors += checker_value_in_prop_range (instance, def, pair,
+					     &def->optional[i]);
     }
   }
   return errors ? 0 : 1;
@@ -1253,8 +1284,9 @@ static int netlist_checker_intern (struct definition_t * root) {
       def->substrate = available->substrate;
       /* save available definition */
       def->define = available;
-      /* check whether the number of nodes is correct */
-      n = checker_count_nodes (def);
+      /* check whether the number of nodes is correct and save the
+         number of given nodes */
+      n = def->ncount = checker_count_nodes (def);
       if (available->nodes == PROP_NODES) {
 	if (n < 1) {
 	  logprint (LOG_ERROR, 
@@ -1324,7 +1356,7 @@ static int netlist_checker_intern (struct definition_t * root) {
   /* check microstrip definitions */
   errors += checker_validate_strips (root);
   errors += checker_validate_subcircuits (root);
-  return errors ? -1 : 0;
+  return errors;
 }
 
 #if DEBUG
@@ -1393,7 +1425,7 @@ int netlist_checker (void) {
     // and finally expand the subcircuits into the global netlist
     definition_root = checker_expand_subcircuits (definition_root);
   }
-  return errors;
+  return errors ? -1 : 0;
 }
 
 /* The function deletes the given definition list. */

@@ -1,7 +1,7 @@
 /*
  * check_netlist.h - checker definitions for the Qucs netlist
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.10 2004-07-16 19:14:37 ela Exp $
+ * $Id: check_netlist.h,v 1.11 2004-07-21 16:25:08 ela Exp $
  *
  */
 
@@ -63,6 +63,7 @@ struct definition_t {
   int nonlinear;
   int line;
   int copy;
+  int ncount;
   struct define_t * define;
 };
 

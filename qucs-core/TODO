@@ -62,7 +62,7 @@ unfixed) have a look at the file BUGS.
 	- Implement isolator.
 	- Implement attenuator.
 	- Implement 4-port transformer.
-- Implement device (touchstone file).
+	- Implement device (touchstone file).
 	- Implement netlist parser using bison + flex.
 	- Permit differential s-parameters.
 	- Add math functionality to the dataset class.  The functionality was
@@ -71,7 +71,7 @@ unfixed) have a look at the file BUGS.
 	- Free the parsed netlist input (as checker functionality).
 	- Add already implemented components to checker + factory.
 	- Allow s-parameter impedances other than Z=50 Ohm.
-- Implement "@file" component property.
+	- Implement "@file" component property.  Is now "{file}" property.
 	- Allow variable definitions and sweeps.
 	- Exit code indicating simulation success/failure.
 	- Status and error message file descriptors.

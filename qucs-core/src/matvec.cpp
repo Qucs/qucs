@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.3 2004-07-04 15:46:24 ela Exp $
+ * $Id: matvec.cpp,v 1.4 2004-07-21 16:25:09 ela Exp $
  *
  */
 
@@ -105,11 +105,54 @@ vector * matvec::get (int r, int c) {
   vector * res = new vector ();
   for (int i = 0; i < size; i++) res->add (data[i].get (r, c));
   if (name != NULL) {
-    static char str[256];
-    sprintf (str, "%s[%d,%d]", name, r, c);
-    res->setName (str);
+    res->setName (createMatrixString (name, r, c));
   }
   return res;
+}
+
+/* This function returns a static text representation with the
+   'n[r,c]' scheme indicating a matrix (vector) entry. */
+char * matvec::createMatrixString (char * n, int r, int c) {
+  static char str[256];
+  sprintf (str, "%s[%d,%d]", n, r, c);
+  return str;
+}
+
+/* This function also returns a static text representation with the
+   'n[r,c]' scheme indicating a matrix (vector) entry but with
+   different arguments. */
+char * matvec::createMatrixString (char n, int r, int c) {
+  static char str[256];
+  sprintf (str, "%c[%d,%d]", n, r, c);
+  return str;
+}
+
+/* The function investigates the given vectors name.  If this name
+   matches the 'n[r,c]' pattern it returns the name 'n' and saves the
+   row and column indices as well.  The caller is responsible to
+   'free()' the returned string.  If the vectors name does not match
+   the pattern the function returns NULL. */
+char * matvec::isMatrixVector (char * n, int& r, int& c) {
+  char * p; int len;
+  if (n == NULL) return NULL;             // nothing todo here
+  if ((p = index (n, '[')) != NULL) {     // find first '['
+    r = atoi (p + 1);                     // get first index
+    if ((p = index (p, ',')) != NULL) {   // find the ','
+      c = atoi (p + 1);                   // get second index
+      if ((p = index (p, ']')) != NULL) { // find trailing ']'
+	if (p[1] == '\0') {               // identifier must end in ']'
+	  // parse actual identifier
+	  if ((len = index (n, '[') - n) > 0) {
+	    p = (char *) malloc (len + 1);
+	    memcpy (p, n, len);
+	    p[len] = '\0';
+	    return p;
+	  }
+	}
+      }
+    }
+  }
+  return NULL;
 }
 
 /* This function saves the given matrix in the matrix vector at the

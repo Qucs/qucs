@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.18 2004-06-27 15:11:48 ela Exp $
+ * $Id: circuit.h,v 1.19 2004-07-21 16:25:08 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@ class circuit : public object
   circuit (const circuit &);
   ~circuit ();
   virtual void calcSP (nr_double_t) { }
+  virtual void initSP (void) { }
   virtual void calcDC (void) { }
   virtual void calcAC (nr_double_t) { }
   virtual void initDC (dcsolver *) { }
@@ -58,6 +59,7 @@ class circuit : public object
   nr_double_t getG (int, int);
   void setG (int, int, nr_double_t);
   int getSize (void) { return size; }
+  void setSize (int);
   void print (void);
   int isPort (void) { return port; }
   void setPort (int p) { port = p; }
