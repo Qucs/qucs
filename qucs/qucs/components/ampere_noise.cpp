@@ -29,11 +29,18 @@ Ampere_noise::Ampere_noise()
   Lines.append(new Line(  6,  0,  0, -4,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(  6,  0,  0,  4,QPen(QPen::darkBlue,3)));
 
+  Lines.append(new Line(-12,  1,  1,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,  6, -7,  3,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  3, -7,  6,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -7, 10, -2,  5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  7, -4, 10, -7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -1, 12, 12, -1,QPen(QPen::darkBlue,2)));
+
   Ports.append(new Port( 30,  0));
   Ports.append(new Port(-30,  0));
 
-  x1 = -30; y1 = -14;
-  x2 =  30; y2 =  14;
+  x1 = -30; y1 = -15;
+  x2 =  30; y2 =  15;
 
   tx = x1+4;
   ty = y2+4;
@@ -42,9 +49,9 @@ Ampere_noise::Ampere_noise()
   Name  = "I";
 
   Props.append(new Property("i", "1e-6", true, QObject::tr("equivalent current density in A/sqrt(Hz)")));
-  Props.append(new Property("e", "0", true, QObject::tr("frequency exponent")));
-  Props.append(new Property("c", "1", true, QObject::tr("frequency coefficient")));
-  Props.append(new Property("a", "0", true, QObject::tr("additive frequency term")));
+  Props.append(new Property("e", "0", false, QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", false, QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", false, QObject::tr("additive frequency term")));
 }
 
 Ampere_noise::~Ampere_noise()

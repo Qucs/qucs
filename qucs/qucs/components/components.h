@@ -57,6 +57,8 @@
 #include "mscorner.h"
 #include "mstee.h"
 #include "mscross.h"
+#include "msmbend.h"
+#include "msopen.h"
 #include "coplanar.h"
 #include "diode.h"
 #include "dc_sim.h"
