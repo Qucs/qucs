@@ -79,7 +79,7 @@ Diagram::~Diagram()
 void Diagram::paint(ViewPainter *p)
 {
   // paint all arcs
-  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
+  for(struct Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     p->Painter->setPen(pa->style);
     p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
@@ -1249,9 +1249,9 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     }
 
     if(Above)
-      Arcs.append(new Arc(x, dx2+y, y, y, beta, theta, GridPen));
+      Arcs.append(new struct Arc(x, dx2+y, y, y, beta, theta, GridPen));
     if(Below)
-      Arcs.append(new Arc(x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
+      Arcs.append(new struct Arc(x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
   }
 
   // ....................................................
@@ -1269,7 +1269,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     if(Zplane)  x += dx2;
     else  x = 0;
     if(fabs(fabs(im)-1.0) > 0.2)   // if too near to |r|=1, it looks ugly
-      Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
+      Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
 
     if(Axis->up > 1.0) {  // draw arcs on the rigth-handed side ?
       im = 1.0-im;
@@ -1277,14 +1277,14 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
       if(Zplane)  x += y;
       else  x -= y;
       if(im >= 1.0)
-	Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
+	Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
       else {
 	phi = int(16.0*180.0/M_PI*acos(im));
 	len = 16*180-phi;
 	if(Above && Below)  len += len;
 	else if(Below)  phi = 16*180;
 	if(!Zplane)  phi += 16*180;
-	Arcs.append(new Arc(x, dx2+(y>>1), y, y, phi, len, GridPen));
+	Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, phi, len, GridPen));
       }
     }
   }
@@ -1293,7 +1293,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
   // ....................................................
   if(Axis->up > 1.0) {  // draw circle with |r|=1 ?
     x = int(x2/Axis->up);
-    Arcs.append(new Arc(dx2-(x>>1), dx2+(x>>1), x, x, beta, theta,
+    Arcs.append(new struct Arc(dx2-(x>>1), dx2+(x>>1), x, x, beta, theta,
 			QPen(QPen::black,0)));
 
     // vertical line Re(r)=1 (visible only if |r|>1)
@@ -1395,7 +1395,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
       phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/zD));
       if(!Below)  tmp = beta + phi;
       else  tmp = beta;
-      Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, tmp, len-phi,
+      Arcs.append(new struct Arc((x2-z)>>1, (y2+z)>>1, z, z, tmp, len-phi,
 			  GridPen));
       zD += zDstep;
     }
@@ -1414,7 +1414,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/double(x2)));
   if(!Below)  tmp = phi;
   else  tmp = 0;
-  Arcs.append(new Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(QPen::black,0)));
+  Arcs.append(new struct Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(QPen::black,0)));
 
   QFontMetrics  metrics(QucsSettings.font);
   QSize r = metrics.size(0, Texts.current()->s);  // width of text
