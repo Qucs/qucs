@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.10 2004-10-04 20:54:23 ela Exp $
+ * $Id: vac.cpp,v 1.11 2004-10-11 09:58:01 ela Exp $
  *
  */
 
@@ -55,7 +55,9 @@ void vac::initDC (void) {
 
 void vac::initAC (void) {
   initDC ();
-  setE (1, getPropertyDouble ("U"));
+  nr_double_t a = getPropertyDouble ("U");
+  nr_double_t p = getPropertyDouble ("Phase");
+  setE (1, polar (a, rad (p)));
 }
 
 void vac::initTR (void) {
