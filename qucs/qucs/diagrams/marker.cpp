@@ -345,7 +345,7 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 QString Marker::save()
 {
   int GraphNum = Diag->Graphs.findRef(pGraph);
-  QString s  = "      <Mkr "+QString::number(GraphNum)+" ";
+  QString s  = "\t<Mkr "+QString::number(GraphNum)+" ";
 
   for(int i=0; i<nVarPos; i++)
     s += QString::number(VarPos[i])+"/";

@@ -43,7 +43,7 @@ public:
   ~QucsDoc();
 
   void setName(const QString&);
-  void setChanged(bool, bool fillStack=false);
+  void setChanged(bool, bool fillStack=false, char Op='*');
 
   void paint(QPainter*);
   void paintGrid(QPainter*, int, int, int, int);

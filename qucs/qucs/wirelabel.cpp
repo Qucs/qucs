@@ -165,10 +165,10 @@ void WireLabel::setName(const QString& Name_)
 // Wire labels use the same format like wires, but with length zero.
 QString WireLabel::save()
 {
-  QString s  = "   <";
-          s += QString::number(cx)+" "+QString::number(cy)+" ";
-          s += QString::number(cx)+" "+QString::number(cy);
-          s += " \""+Name +"\" ";
-          s += QString::number(x1)+" "+QString::number(y1)+" 0>";
+  QString s("<");
+	s += QString::number(cx)+" "+QString::number(cy)+" "
+	  +  QString::number(cx)+" "+QString::number(cy)
+	  +  " \""+Name +"\" "
+	  +  QString::number(x1)+" "+QString::number(y1)+" 0>";
   return s;
 }

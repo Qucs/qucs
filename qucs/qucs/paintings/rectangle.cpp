@@ -148,7 +148,7 @@ bool Rectangle::load(const QString& _s)
 // --------------------------------------------------------------------------
 QString Rectangle::save()
 {
-  QString s = "   <Rectangle " +
+  QString s = "<Rectangle " +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
 	Pen.color().name() + " " + QString::number(Pen.width()) + " " +

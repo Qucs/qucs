@@ -73,8 +73,8 @@ public:
 
   QRegExp     Expr;
   QLineEdit   *GraphInput, *Property2, *xLabel, *yLabel;
-  QCheckBox   *GridOn;
-  QLabel      *GridLabel1, *GridLabel2;
+  QCheckBox   *GridOn, *GridLogX, *GridLogY;
+  QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3;
   QComboBox   *PropertyBox, *GridStyleBox;
   QPushButton *ColorButt, *GridColorButt;
   bool changed, toTake;

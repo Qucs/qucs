@@ -154,7 +154,7 @@ bool Arrow::load(const QString& _s)
 // --------------------------------------------------------------------------
 QString Arrow::save()
 {
-  QString s = "   <Arrow "+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = "<Arrow "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += QString::number(Height)+" "+QString::number(Width)+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";

@@ -125,6 +125,7 @@ public slots:
     void slotAfterSimulation(int Status, SimMessage *sim);
     void slotChangePage();
     void slotSelectAll();
+    void slotNextTab();
 
 public:
     QucsView  *view; // the working area with schematics, data displays etc.
@@ -170,11 +171,11 @@ private:
     bool saveCurrentFile();
     bool saveAs();
     void readProjects();
-    void OpenProject(const QString& Path, const QString& Name);
-    bool DeleteProject(const QString& Path, const QString& Name);
-    void updatePortNumber(int No);
-    bool gotoPage(const QString& Name);
-    
+    void OpenProject(const QString&, const QString&);
+    bool DeleteProject(const QString&, const QString&);
+    void updatePortNumber(int);
+    bool gotoPage(const QString&);
+    void nextDocument(bool);
 };
 #endif 
 
