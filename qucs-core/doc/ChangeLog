@@ -1,6 +1,13 @@
+2004-01-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection*{Symmetrical transformer}): Added
+	figures for symmetrical trafo and normal two winding trafo.  
+	Documented MNA entries for symmetrical transformer.  Switched
+	over to IEEtran bibliography style.
+	
 2004-01-30  Stefan Jahn  <stefan@lkcc.org>
 
-	* technical.tex (subsection*{Transformator}): Documented
+	* technical.tex (subsection*{Transformer}): Documented
 	DC simulation of ideal transformer.
 
 2004-01-29  Stefan Jahn  <stefan@lkcc.org>

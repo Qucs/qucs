@@ -795,7 +795,7 @@ ideal, ohmic resistor with resistance $R$ writes as follows.
 \addcontentsline{toc}{subsection}{Voltage controlled current source}
 
 The voltage-dependent current source (VCCS), as shown in fig.
-\ref{fig:vccs}, is designated by the following equation which
+\ref{fig:vccs}, is determined by the following equation which
 introduces one more unknown in the MNA matrix.
 
 \begin{figure}[ht]
@@ -849,14 +849,14 @@ I_{4}\\
 \end{equation}
 
 As you can see the last row which has been added by the VCCS
-represents the designating equation (\ref{eq:vccs}).  The additional
+represents the determining equation (\ref{eq:vccs}).  The additional
 right hand column in the matrix keeps the system consistent.
 
 \subsection*{Voltage controlled voltage source}
 \addcontentsline{toc}{subsection}{Voltage controlled voltage source}
 
 The voltage-dependent voltage source (VCVS), as shown in fig.
-\ref{fig:vcvs}, is designated by the following equation which
+\ref{fig:vcvs}, is determined by the following equation which
 introduces one more unknown in the MNA matrix.
 
 \begin{figure}[ht]
@@ -913,7 +913,7 @@ I_{4}\\
 \addcontentsline{toc}{subsection}{Current controlled current source}
 
 The current-dependent current source (CCCS), as shown in fig.
-\ref{fig:cccs}, is designated by the following equation which
+\ref{fig:cccs}, is determined by the following equation which
 introduces one more unknown in the MNA matrix.
 
 \begin{figure}[ht]
@@ -968,8 +968,8 @@ I_{4}\\
 \addcontentsline{toc}{subsection}{Current controlled voltage source}
 
 The current-dependent voltage source (CCVS), as shown in fig.
-\ref{fig:ccvs}, is designated by the following equations which
-introduces two more unknowns in the MNA matrix.
+\ref{fig:ccvs}, is determined by the following equations which
+introduce two more unknowns in the MNA matrix.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1031,18 +1031,19 @@ I_{4}\\
 \subsection*{Operational amplifier}
 \addcontentsline{toc}{subsection}{Operational amplifier}
 
-\subsection*{Transformator}
-\addcontentsline{toc}{subsection}{Transformator}
+\subsection*{Transformer}
+\addcontentsline{toc}{subsection}{Transformer}
 
-The two winding ideal transformator, as shown in fig.
-\ref{fig:trafo}, is designated by the following equation which
+The two winding ideal transformer, as shown in fig.
+\ref{fig:actrafo}, is determined by the following equation which
 introduces one more unknown in the MNA matrix.
 
 \begin{figure}[ht]
 \begin{center}
+\includegraphics[width=4cm]{actrafo}
 \end{center}
-\caption{ideal two winding transformator}
-\label{fig:trafo}
+\caption{ideal two winding transformer}
+\label{fig:actrafo}
 \end{figure}
 \FloatBarrier
 
@@ -1094,23 +1095,92 @@ an additional phase the transformer can be used as phase-shifting
 transformer.  Both the vectors must be conjugated complex transposed
 in this case.
 
-\subsection*{Symmetrical transformator}
-\addcontentsline{toc}{subsection}{Symmetrical transformator}
+\subsection*{Symmetrical transformer}
+\addcontentsline{toc}{subsection}{Symmetrical transformer}
+
+The ideal symmetrical tranformator, as shown in fig.
+\ref{fig:acstrafo}, is determined by the following equations which
+introduce one more unknown in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{acstrafo}
+\end{center}
+\caption{ideal three winding transformer}
+\label{fig:acstrafo}
+\end{figure}
+\FloatBarrier
+
+\begin{equation}
+T_{1}\cdot\left(V_{1} - V_{6}\right) = V_{2} - V_{3}
+\quad \rightarrow \quad
+T_{1}\cdot V_{1} - V_{2} + V_{3} - T_{1}\cdot V_{6} = 0
+\end{equation}
+\begin{equation}
+T_{2}\cdot\left(V_{5} - V_{4}\right) = V_{2} - V_{3}
+\quad \rightarrow \quad
+- V_{2} + V_{3} - T_{2}\cdot V_{4} + T_{2}\cdot V_{5} = 0
+\label{eq:acstrafo}
+\end{equation}
+
+The new unknown variable $I_{t}$ must be considered by the eight
+remaining simple equations.
+
+\begin{equation}
+I_{1} = T_{1}\cdot I_{t} \quad I_{2} = -I_{t} \quad I_{3} = I_{t} \quad I_{6} = -T_{1}\cdot I_{t}
+\end{equation}
+\begin{equation}
+I_{2} = -I_{t} \quad I_{3} = +I_{t} \quad I_{4} = -T_{2}\cdot I_{t} \quad I_{5} = T_{2}\cdot I_{t}
+\end{equation}
+
+The matrix representation needs to be augmented by two more new rows
+and their corresponding columns.
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.&.&.& T_{1} & 0\\
+.&.&.&.&.&.& -1 & -1\\
+.&.&.&.&.&.& 1 & 1\\
+.&.&.&.&.&.& 0 & -T_{2}\\
+.&.&.&.&.&.& 0 & T_{2}\\
+.&.&.&.&.&.& -T_{1} & 0\\
+T_{1} & -1 & 1 & 0 & 0 & -T_{1} & 0 & 0\\
+0 & -1 & 1 & -T_{2} & T_{2} & 0 & 0 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+V_{5}\\
+V_{6}\\
+I_{t}\\
+I_{t}
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+I_{5}\\
+I_{6}\\
+0\\
+0
+\end{pmatrix}
+\end{equation}
 
 \subsection*{Gyrator}
 \addcontentsline{toc}{subsection}{Gyrator}
 
-\nocite{Compton}
-\nocite{Queiroz}
-\nocite{Wedepohl}
-\nocite{Monaco}
+\nocite{*}
 
 \chapter*{Bibliography}
 \addcontentsline{toc}{chapter}{Bibliography}
 \def\chapter*{}% to suppress any header
 \def\section*{}% just to be sure
 \renewcommand{\bibname}{}
-\bibliographystyle{plaindin}
+\bibliographystyle{IEEEtran}
 \bibliography{literature}
 
 \end{document}
