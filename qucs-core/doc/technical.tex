@@ -1000,7 +1000,7 @@ cascaded twoports\\[1ex]
 \end{center}
 
 Basically there are five different kinds of twoport connections.
-Using the correspondig twoport matrix representations, complicated
+Using the corresponding twoport matrix representations, complicated
 networks can be analysed by connecting elementary twoports.  The
 linear correlations between the complex currents and voltages rms
 values of a twoport are described by four complex twoport parameters
@@ -1904,7 +1904,7 @@ N = \frac{Z_0}{4\cdot R_n}\cdot (F-F_{min})\cdot |1+\Gamma_{opt}|^2
 \section{Noise Wave Correlation Matrix in CAE}
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
 
-Due to the similiar concept of S parameters and noise correlation
+Due to the similar concept of S parameters and noise correlation
 coefficients, the CAE noise analysis can be performed quite alike the
 S parameter analysis (section \ref{sec:SparameterCAE}). As each step
 uses the S parameters to calculate the noise correlation matrix, the
@@ -2070,7 +2070,7 @@ These equations are also valid if $i$ equals $j$.
 The absolute values of the noise correlation coefficients are very
 small.  To achieve a higher numerical precision, it is recommended to
 normalize the noise matrix with $k\cdot T_0$. After the simulation
-they do not have to be denormalized, because the noise parameters can
+they do not have to be renormalized, because the noise parameters can
 be calculated by using equation \eqref{eqn:nparamF} to
 \eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
 
@@ -2400,8 +2400,8 @@ field and diffusion current dominate absolutely (diffusion limited
 diode), i.e. $N=1$.  Many diodes also generate a
 generation/recombination current ($N\approx 2$), which produces shot
 noise, too.  But depending on where and how the charge carriers
-generate or recombinate, their effective charge is somewhat smaller
-than $e$.  To take this into account, one needs a further factor $K$.
+generate or recombine, their effective charge is somewhat smaller than
+$e$.  To take this into account, one needs a further factor $K$.
 Several opinions exist according the value of $K$.  Some say 1 and 2/3
 are common values, others say $K=1/N$ with $K$ and $N$ being bias
 dependent.  Altogether it is:
@@ -3006,7 +3006,7 @@ det A = \sum_{\nu = 1}^{n} a_{\mu\nu}\cdot A_{\mu\nu}
 \quad &\text{using the $\mu$-th row}
 \end{align}
 
-This methode is called the Laplace expansion.  In order to save
+This method is called the Laplace expansion.  In order to save
 computing time the row or column with the most zeros in it is used for
 the expansion expressed in the above equations.  A sub determinant
 $(n-1)$-th order of a matrix's element $a_{\mu\nu}$ of $n$-th order is
@@ -6247,7 +6247,7 @@ propagation of surface waves and higher order modes.
 \subsubsection{Dielectric losses}
 %\addcontentsline{toc}{subsubsection}{Dielectric losses}
 
-Dielectric loss is due to the effects of finete loss tangent
+Dielectric loss is due to the effects of finite loss tangent
 $\tan{\delta_d}$. Basically the losses rise proportional over the
 operating frequency.  For common microwave substrate materials like
 $Al_2O_3$ ceramics with a loss tangent $\delta_d$ less than $10^{-3}$
@@ -6345,28 +6345,24 @@ admittance.
 %\addcontentsline{toc}{section}{Microstrip corner}
 
 The equivalent circuit of a microstrip corner is shown in fig.
-\ref{fig:MScorner}. The values of the components are as follows
+\ref{fig:MScorner}.  The values of the components are as follows
 \cite{Kirschning4}.
 
-\begin{equation}
-C \text{ [pF]} = W \cdot \left( (10.35\cdot\varepsilon_r + 2.5) \cdot \frac{W}{h} +
-			       (2.6\cdot\varepsilon_r + 5.64) \right)
-\end{equation}
-\begin{equation}
-L \text{ [nH]} = 220\cdot h \cdot \left( 1 - 1.35\cdot\exp\left( -0.18\cdot
+\begin{align}
+C \text{ [pF] } &= W \cdot \left( (10.35\cdot\varepsilon_r + 2.5) \cdot \frac{W}{h} +
+			       (2.6\cdot\varepsilon_r + 5.64) \right)\\
+L \text{ [nH] } &= 220\cdot h \cdot \left( 1 - 1.35\cdot\exp\left( -0.18\cdot
 		   \left( \frac{W}{h} \right)^{1.39} \right) \right)
-\end{equation}
+\end{align}
 
 The values for a 50\% mitered bend are \cite{Kirschning4}.
 
-\begin{equation}
-C \text{ [pF]} = W \cdot \left( (3.93\cdot\varepsilon_r + 0.62) \cdot \frac{W}{h} +
-			       (7.6\cdot\varepsilon_r + 3.80) \right)
-\end{equation}
-\begin{equation}
-L \text{ [nH]} = 440\cdot h \cdot \left( 1 - 1.062\cdot\exp\left( -0.177\cdot
+\begin{align}
+C \text{ [pF] } &= W \cdot \left( (3.93\cdot\varepsilon_r + 0.62) \cdot \frac{W}{h} +
+			       (7.6\cdot\varepsilon_r + 3.80) \right)\\
+L \text{ [nH]} &= 440\cdot h \cdot \left( 1 - 1.062\cdot\exp\left( -0.177\cdot
 		   \left( \frac{W}{h} \right)^{0.947} \right) \right)
-\end{equation}
+\end{align}
 
 With $W$ being width of the microstrip line and $h$ height of the
 substrate.  These formulas are valid for $W/h = $ 0.2 to 6.0 and for
@@ -6375,7 +6371,7 @@ approximately 0.3\%.
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=10cm]{mscorner}
+\includegraphics[width=12cm]{mscorner}
 \end{center}
 \caption{microstrip corner (left), mitered corner (middle) and equivalent circuit (right)}
 \label{fig:MScorner}
@@ -6756,6 +6752,7 @@ N.H.L. Koster \cite{Kirschning7}.
 \frac{\Delta l}{h} = \frac{Q_1\cdot Q_3\cdot Q_5}{Q_4}
 \end{equation}
 
+with
 \begin{align}
 Q_1 &= 0.434907\cdot \dfrac{\varepsilon_{r,eff}^{0.81}+0.26}{\varepsilon_{r,eff}^{0.81}-0.189}\cdot
       \dfrac{\left( W/h \right)^{0.8544} + 0.236}{\left( W/h \right)^{0.8544} + 0.87}\\
@@ -6795,94 +6792,117 @@ With $C'$ being the capacitance per length and $c_0$ = 299 792 458 m/s
 being the vacuum light velocity.
 
 \section{Microstrip gap}
-The model of a microstrip gap is shown in figure \ref{fig:MSgap}. The
-values of the components are \cite{Kirschning8}.
+%\addcontentsline{toc}{section}{Microstrip gap}
+
+A symmetrical microstrip gap can be modeled by two open ends with a
+capacitive series coupling between the two ends.  The physical layout
+is shown in fig. \ref{fig:MSgaPhys}.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{msgapphys}
+\end{center}
+\caption{symmetrical microstrip gap layout}
+\label{fig:MSgaPhys}
+\end{figure}
+\FloatBarrier
+
+The equivalent $\pi$-network of a microstrip gap is shown in figure
+\ref{fig:MSgap}.  The values of the components are according to
+\cite{Kirschning8} and \cite{Kirschning4}.
 \begin{equation}
-C_s[\text{pF}] = 500\cdot h\cdot\exp\left( -1.86\frac{s}{h} \right)\cdot Q_1\cdot
-       \left( 1 + 4.19\left( 1 - \exp\left( -0.785\cdot\sqrt{\frac{h}{w_1}}\cdot
-       \frac{w_2}{w_1} \right) \right) \right)
+C_S \textrm{ [pF] } = 500\cdot h\cdot\exp\left( -1.86\cdot\dfrac{s}{h} \right)\cdot Q_1\cdot
+       \left( 1 + 4.19\left( 1 - \exp\left( -0.785\cdot\sqrt{\dfrac{h}{W_1}}\cdot
+       \dfrac{W_2}{W_1} \right) \right) \right)
 \end{equation}
-\begin{equation}
-C_{P1} = C_1\cdot \frac{Q_2+Q_3}{Q_2+1}
-\end{equation}
-\begin{equation}
-C_{P2} = C_2\cdot \frac{Q_2+Q_4}{Q_2+1}
-\end{equation}
+\begin{align}
+C_{P1} &= C_1\cdot \dfrac{Q_2+Q_3}{Q_2+1}\\
+C_{P2} &= C_2\cdot \dfrac{Q_2+Q_4}{Q_2+1}
+\end{align}
+
 with
-\begin{equation}
-Q_1 = 0.04598\cdot \left( 0.03 + \left(\frac{w_1}{h}\right)^{Q_5} \right)\cdot
-      (0.272 + 0.07\cdot\epsilon_r)
-\end{equation}
-\begin{equation}
-Q_2 = 0.107\cdot\left( \frac{w_1}{h}+9 \right) \cdot \left( \frac{s}{h} \right)^{3.23}
-    + 2.09 \cdot \left( \frac{s}{h} \right)^{1.05}\cdot
-    \frac{1.5+0.3\cdot\frac{w_1}{h}}{1+0.6\cdot\frac{w_1}{h}}
-\end{equation}
-\begin{equation}
-Q_3 = \exp\left( -0.5978\cdot \left( \frac{w_2}{w_1} \right)^{1.35} \right) - 0.55
-\end{equation}
-\begin{equation}
-Q_4 = \exp\left( -0.5978\cdot \left( \frac{w_1}{w_2} \right)^{1.35} \right) - 0.55
-\end{equation}
-\begin{equation}
-Q_5 = \frac{1.23}{1 + 0.12\cdot \left( \frac{w_2}{w_1} - 1 \right)^{0.9}}
-\end{equation}
-with $C_1$ and $C_2$ being the open end capacitances of a microstrip line
-(equation \ref{eqn:Cend}).
-The numerical error of the capacitive admittances is $\le0.1$mS for
+\begin{align}
+Q_1 &= 0.04598\cdot \left( 0.03 + \left(\frac{W_1}{h}\right)^{Q_5} \right)\cdot
+      (0.272 + 0.07\cdot\varepsilon_r)\\
+Q_2 &= 0.107\cdot\left( \frac{W_1}{h}+9 \right) \cdot \left( \dfrac{s}{h} \right)^{3.23}
+    + 2.09 \cdot \left( \dfrac{s}{h} \right)^{1.05}\cdot
+    \frac{1.5+0.3\cdot W_1/h}{1+0.6\cdot W_1/h}\\
+Q_3 &= \exp\left( -0.5978\cdot \left( \frac{W_2}{W_1} \right)^{1.35} \right) - 0.55\\
+Q_4 &= \exp\left( -0.5978\cdot \left( \frac{W_1}{W_2} \right)^{1.35} \right) - 0.55\\
+Q_5 &= \frac{1.23}{1 + 0.12\cdot \left( W_2 / W_1 - 1 \right)^{0.9}}
+\end{align}
+
+with $C_1$ and $C_2$ being the open end capacitances of a microstrip
+line (see eq. \eqref{eqn:Cend}).  The numerical error of the
+capacitive admittances is less than $0.1$mS for
 \begin{equation*}
 \begin{split}
-0.1\le w_1/h \le 3 \\
-0.1\le w_2/h \le 3 \\
-1\le w_2/w_1 \le 3 \\
-6\le \epsilon_r \le 13 \\
+0.1\le W_1/h \le 3 \\
+0.1\le W_2/h \le 3 \\
+1\le W_2/W_1 \le 3 \\
+6\le \varepsilon_r \le 13 \\
 0.2\le s/h \le \infty \\
 0.2\text{GHz} \le f \le 18\text{GHz}
 \end{split}
 \end{equation*}
 
-
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=10cm]{msgap}
+\includegraphics[width=12cm]{msgap}
 \end{center}
 \caption{microstrip gap and its equivalent circuit}
 \label{fig:MSgap}
 \end{figure}
 \FloatBarrier
 
+The Y-parameters for the given equivalent small signal circuit can be
+written as stated in eq. \eqref{eq:MSgapY} and are easy to convert to
+scattering parameters.
+\begin{equation}
+Y =
+\begin{bmatrix}
+j\omega\cdot \left(C_{P1} + C_S\right) & -j\omega C_S\\
+-j\omega C_S & j\omega\cdot \left(C_{P2} + C_S\right)\\
+\end{bmatrix}
+\label{eq:MSgapY}
+\end{equation}
 
 \section{Microstrip impedance step}
+%\addcontentsline{toc}{section}{Microstrip impedance step}
 
-The euqivalent circuit of a microstrip impedance step is the same
-as for the microstrip corner (figure \ref{fig:MScorner}). The
-values are \cite{Gupta}:
+The equivalent circuit of a microstrip impedance step is the same as
+for the microstrip corner (figure \ref{fig:MScorner}).  The values are
+according to \cite{Gupta}:
 \begin{equation}
-C_s [\text{pF}] = \sqrt{W_1\cdot W_2}\cdot\left( (10.1\cdot\log\epsilon_r + 2.33)\cdot
-     \frac{W_1}{W_2} - 12.6\cdot\log\epsilon_r - 3.17 \right)
+C_S \textrm{ [pF] } = \sqrt{W_1\cdot W_2}\cdot\left( (10.1\cdot\log{\varepsilon_r} + 2.33)\cdot
+     \dfrac{W_1}{W_2} - 12.6\cdot\log{\varepsilon_r} - 3.17 \right)
 \end{equation}
-for $\epsilon_r\le 10$ and $1.5\le W_1/W_2\le 3.5$ the error is
+
+for $\varepsilon_r\le 10$ and $1.5\le W_1/W_2\le 3.5$ the error is
 $<10$\%.
 \begin{equation}
-L_1 = \frac{L_{w1}}{L_{w1}+L_{w2}}\cdot L_s
+L_1 = \frac{L_{W1}}{L_{W1}+L_{W2}}\cdot L_S
 \end{equation}
 \begin{equation}
-L_2 = \frac{L_{w2}}{L_{w1}+L_{w2}}\cdot L_s
+L_2 = \frac{L_{W2}}{L_{W1}+L_{W2}}\cdot L_S
 \end{equation}
+
 with
 \begin{equation}
-L_{w1,2} = \frac{Z_{L,1,2}\cdot\sqrt{\epsilon_{r,eff,1,2}}}{c_0}
+L_{W1,2} = \dfrac{Z_{L,1,2}\cdot\sqrt{\varepsilon_{r,eff,1,2}}}{c_0}
 \end{equation}
 \begin{equation}
-\frac{L_s}{h} [\text{nH/m}] = 40.5\cdot\left( \frac{W_1}{W_2}-1 \right)
-      - 75\cdot\log\frac{W_1}{W_2} + 0.2\cdot \left( \frac{W_1}{W_2}-1 \right)^2
+\frac{L_S}{h} \textrm{ [nH/m] } = 40.5\cdot\left( \dfrac{W_1}{W_2}-1 \right)
+      - 75\cdot\log{\dfrac{W_1}{W_2}} + 0.2\cdot \left( \dfrac{W_1}{W_2}-1 \right)^2
 \end{equation}
-With $c_0$ = 299 792 458 m/s being the vacuum light velocity.
-The error is less than 5\% for $W_1/W_2\le 5$ and $W_2/h = 1$.
+With $c_0$ = 299 792 458 m/s being the vacuum light velocity.  The
+error is less than 5\% for $W_1/W_2\le 5$ and $W_2/h = 1$.
 
+\section{Microstrip tee junction}
+%\addcontentsline{toc}{section}{Microstrip tee junction}
 
-\section{Microstrip Tee}
-
+\section{Microstrip cross}
+%\addcontentsline{toc}{section}{Microstrip cross}
 
 
 \chapter*{Bibliography}

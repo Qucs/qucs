@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.44 2004/08/16 21:49:53 ela Exp $
+ * $Id: check_netlist.cpp,v 1.45 2004/08/17 18:38:59 ela Exp $
  *
  */
 
@@ -397,8 +397,9 @@ struct define_t definition_available[] =
     { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
-      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_NO_RANGE },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -419,8 +420,9 @@ struct define_t definition_available[] =
       { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "S" , PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
-      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      { "MSDispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" },
+	PROP_NO_RANGE },
+      { "MSModel", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -625,19 +627,19 @@ static struct special_t checker_specials[] = {
   { "MLIN",   "Model",       { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "SW",     "Type",        { "lin", "log", NULL } },
   { "SPfile", "Data",        { "rectangular", "polar", NULL } },
-  { "MSTEP",  "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
+  { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
-  { "MSTEP",  "Model",       { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "MSTEP",  "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "MOPEN",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
   { "MOPEN",  "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "MOPEN",  "Model",       { "Kirschning", "Hammerstad", NULL } },
-  { "MGAP",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
+  { "MGAP",   "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
-  { "MGAP",   "Model",       { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "MGAP",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { NULL, NULL, { NULL } }
 };
 

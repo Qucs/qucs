@@ -1,7 +1,8 @@
 /*
- * mscorner.cpp - microstrip corner class implementation
+ * mscorner.cpp - microstrip mitered bend class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.4 2004/08/07 10:48:47 margraf Exp $
+ * $Id: msmbend.cpp,v 1.5 2004/08/17 18:39:02 ela Exp $
  *
  */
 
@@ -69,18 +70,18 @@ void msmbend::calcSP (nr_double_t frequency) {
     logprint (LOG_STATUS,
 	"Model for microstrip mitered bend defined for 2.36 <= er <= 10.4\n");
   }
-  if (frequency/h < 1e6) {
+  if (frequency/h > 1e6) {
     logprint (LOG_STATUS,
 	"Model for microstrip mitered bend defined for freq/h[mm] <= 1GHz\n");
   }
 
   // capacitance in pF
-  C = W * ( (3.93 * er + 0.62) * Wh + (7.6 * er + 3.80) );
+  C = W * ((3.93 * er + 0.62) * Wh + (7.6 * er + 3.80));
   // inductance in nH
-  L = 440.0 * h * ( 1.0 - 1.062 * exp( -0.177 * pow(Wh, 0.947) ) );
+  L = 440.0 * h * (1.0 - 1.062 * exp (-0.177 * pow (Wh, 0.947)));
 
-  z21 = rect (0.0, -0.5e12 / (M_PI*frequency*C));
-  z11 = rect (0.0, 2e-9*M_PI*frequency*L) + z21;
+  z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
+  z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
 
   matrix z (2);
   z.set (1, 1, z11);

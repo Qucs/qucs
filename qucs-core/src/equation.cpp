@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.21 2004/08/12 13:59:53 ela Exp $
+ * $Id: equation.cpp,v 1.22 2004/08/17 18:38:59 ela Exp $
  *
  */
 
@@ -897,9 +897,9 @@ vector * solver::dataVector (node * eqn) {
       for (int r = 1; r <= mv->getRows (); r++) {
 	for (int c = 1; c <= mv->getCols (); c++) {
 	  // name gets automatically assigned
-	  vector t = mv->get (r, c);
+	  vector * t = new vector (mv->get (r, c));
 	  // chain the vectors appropriately
-	  t.setNext (v); v = &t;
+	  t->setNext (v); v = t;
 	}
       }
     }

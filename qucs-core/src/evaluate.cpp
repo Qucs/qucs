@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.13 2004/07/26 06:30:28 ela Exp $
+ * $Id: evaluate.cpp,v 1.14 2004/08/17 18:38:59 ela Exp $
  *
  */
 
@@ -1398,6 +1398,91 @@ constant * evaluate::index_m_2 (constant * args) {
   return res;
 }
 
+// ***************** matrix conversions *****************
+constant * evaluate::stoy_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (stoy (*m));
+  return res;
+}
+
+constant * evaluate::stoy_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (stoy (*mv));
+  return res;
+}
+
+constant * evaluate::stoz_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (stoz (*m));
+  return res;
+}
+
+constant * evaluate::stoz_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (stoz (*mv));
+  return res;
+}
+
+constant * evaluate::ytos_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (ytos (*m));
+  return res;
+}
+
+constant * evaluate::ytos_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (ytos (*mv));
+  return res;
+}
+
+constant * evaluate::ytoz_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (ytoz (*m));
+  return res;
+}
+
+constant * evaluate::ytoz_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (ytoz (*mv));
+  return res;
+}
+
+constant * evaluate::ztos_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (ztos (*m));
+  return res;
+}
+
+constant * evaluate::ztos_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (ztos (*mv));
+  return res;
+}
+
+constant * evaluate::ztoy_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (ztoy (*m));
+  return res;
+}
+
+constant * evaluate::ztoy_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (ztoy (*mv));
+  return res;
+}
+
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
   { "+", TAG_DOUBLE,  evaluate::plus_d, 1, { TAG_DOUBLE  } },
@@ -1634,6 +1719,19 @@ struct application_t eqn::applications[] = {
     { TAG_VECTOR, TAG_DOUBLE } },
   { "array", TAG_COMPLEX, evaluate::index_m_2, 3,
     { TAG_MATRIX, TAG_DOUBLE, TAG_DOUBLE } },
+
+  { "stoy", TAG_MATRIX, evaluate::stoy_m,  1, { TAG_MATRIX } },
+  { "stoy", TAG_MATVEC, evaluate::stoy_mv, 1, { TAG_MATVEC } },
+  { "stoz", TAG_MATRIX, evaluate::stoz_m,  1, { TAG_MATRIX } },
+  { "stoz", TAG_MATVEC, evaluate::stoz_mv, 1, { TAG_MATVEC } },
+  { "ytos", TAG_MATRIX, evaluate::ytos_m,  1, { TAG_MATRIX } },
+  { "ytos", TAG_MATVEC, evaluate::ytos_mv, 1, { TAG_MATVEC } },
+  { "ytoz", TAG_MATRIX, evaluate::ytoz_m,  1, { TAG_MATRIX } },
+  { "ytoz", TAG_MATVEC, evaluate::ytoz_mv, 1, { TAG_MATVEC } },
+  { "ztos", TAG_MATRIX, evaluate::ztos_m,  1, { TAG_MATRIX } },
+  { "ztos", TAG_MATVEC, evaluate::ztos_mv, 1, { TAG_MATVEC } },
+  { "ztoy", TAG_MATRIX, evaluate::ztoy_m,  1, { TAG_MATRIX } },
+  { "ztoy", TAG_MATVEC, evaluate::ztoy_mv, 1, { TAG_MATVEC } },
 
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };
