@@ -95,8 +95,10 @@ class QucsApp : public QMainWindow
     void slotViewToolBar(bool toggle);    // toggle the toolbar
     void slotViewStatusBar(bool toggle);  // toggle the statusbar
 
-    void slotHelpAbout();    // shows an about dialog
-    void slotHelpAboutQt();  // shows the standard about dialog for Qt
+    void slotHelpIndex();       // shows a HTML docu: Help Index
+    void slotGettingStarted();  // shows a HTML docu: Getting started
+    void slotHelpAbout();       // shows an about dialog
+    void slotHelpAboutQt();     // shows the standard about dialog for Qt
 
     void slotIntoHierarchy();
     void slotPopHierarchy();
@@ -159,7 +161,7 @@ class QucsApp : public QMainWindow
     QAction *select, *editRotate, *editMirror, *editMirrorY, *intoH, *popH, *editActivate, *wire;
     QAction *editDelete, *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *viewToolBar, *viewStatusBar;
-    QAction *helpAboutApp, *helpAboutQt;
+    QAction *helpAboutApp, *helpAboutQt, *helpIndex, *helpGetStart;
 
     QAction *activeAction;    // pointer to the action selected by the user
     

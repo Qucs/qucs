@@ -113,6 +113,7 @@ public:
   void MReleaseSelect2(QMouseEvent *Event);
   void MReleaseActivate(QMouseEvent *Event);
   void MReleaseMoving(QMouseEvent *Event);
+  void MReleaseResizeDiagram(QMouseEvent *Event);
   void MReleasePaste(QMouseEvent *);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to current mouse release button method
 
@@ -125,6 +126,7 @@ signals:
 
 private:
   int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
+  bool isMoveEqual;
   Element *focusElement;
 };
 

@@ -115,6 +115,9 @@ unset BIN_PATH
 LANG_PATH="$prefix/share/qucs/lang/"
 AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"], [Where the language files go.])
 unset LANG_PATH
+DOC_PATH="$prefix/share/qucs/docs/en/"
+AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"], [Where the documentation files go.])
+unset DOC_PATH
 
 # Add here all your Makefiles. This are created by configure.
 AC_CONFIG_FILES([Makefile 
@@ -123,7 +126,8 @@ AC_CONFIG_FILES([Makefile
 		 qucs/sim/Makefile
 		 qucs/components/Makefile
 		 qucs/diagrams/Makefile
-		 qucs/paintings/Makefile])
+		 qucs/paintings/Makefile
+                 qucs/docs/en/Makefile])
 AC_OUTPUT
 
 dnl Print results.

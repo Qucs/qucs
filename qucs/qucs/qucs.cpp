@@ -28,6 +28,7 @@
 #include "messagebox.h"
 #include "fileshowdialog.h"
 #include "paintings/paintings.h"
+#include "helpdialog.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -317,6 +318,16 @@ void QucsApp::initActions()
   viewStatusBar->setWhatsThis(tr("Statusbar\n\nEnables/disables the statusbar"));
   connect(viewStatusBar, SIGNAL(toggled(bool)), this, SLOT(slotViewStatusBar(bool)));
 
+  helpIndex = new QAction(tr("Help Index"), tr("Help Index..."), 0, this);
+  helpIndex->setStatusTip(tr("Index of Qucs Help"));
+  helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
+  connect(helpIndex, SIGNAL(activated()), this, SLOT(slotHelpIndex()));
+
+  helpGetStart = new QAction(tr("Getting Started"), tr("Getting Started..."), 0, this);
+  helpGetStart->setStatusTip(tr("Getting Started with Qucs"));
+  helpGetStart->setWhatsThis(tr("Getting Started\n\nShort introduction into Qucs"));
+  connect(helpGetStart, SIGNAL(activated()), this, SLOT(slotGettingStarted()));
+
   helpAboutApp = new QAction(tr("About"), tr("&About Qucs..."), 0, this);
   helpAboutApp->setStatusTip(tr("About the application"));
   helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
@@ -398,6 +409,9 @@ void QucsApp::initMenuBar()
   viewStatusBar->addTo(viewMenu);
 
   helpMenu=new QPopupMenu();  // menuBar entry helpMenu
+  helpIndex->addTo(helpMenu);
+  helpGetStart->addTo(helpMenu);
+  helpMenu->insertSeparator();
   helpAboutApp->addTo(helpMenu);
   helpAboutQt->addTo(helpMenu);
 
@@ -993,6 +1007,20 @@ void QucsApp::slotViewStatusBar(bool toggle)
 }
 
 // ###################################################################################
+void QucsApp::slotHelpIndex()
+{
+  HelpDialog *d = new HelpDialog("index.html",this);
+  d->show();
+}
+
+// ###################################################################################
+void QucsApp::slotGettingStarted()
+{
+  HelpDialog *d = new HelpDialog("start.html",this);
+  d->show();
+}
+
+// ###################################################################################
 void QucsApp::slotHelpAbout()
 {
   QMessageBox::about(this,tr("About..."),
@@ -1337,8 +1365,10 @@ int QucsApp::testFile(const QString& DocName)
   }
 
   QString s = VERSION;
+  s.remove('.');
   Line = Line.mid(16, Line.length()-17);
-  if(Line != s) {  // wrong version number ?
+  Line.remove('.');
+  if(Line > s) {  // wrong version number ? (only backward compatible)
     file.close();
     return -4;
   }
@@ -1775,14 +1805,21 @@ void QucsApp::slotInsertLabel(bool on)
 void QucsApp::slotSelect(bool on)
 {
   if(!on) {
+    if(!view->movingElements.isEmpty())   // elements are moving ?
+      view->endElementMoving();           // place them
+    else if(view->MouseMoveAction == &QucsView::MMoveSelect) {   // do not disturb diagram resize
+           activeAction->blockSignals(true); // do not call toggle slot
+           activeAction->setOn(true);        // set back select on
+           activeAction->blockSignals(false);
+           return;
+         }
+
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
     activeAction = 0;   // no action active
 
-    if(!view->movingElements.isEmpty())   // elements are moving ?
-      view->endElementMoving();           // place them
     return;
   }
   if(activeAction) {

@@ -2100,8 +2100,10 @@ bool QucsDoc::load()
   }
 
   QString s = VERSION;
+  s.remove('.');
   Line = Line.mid(16, Line.length()-17);
-  if(Line != s) {  // wrong version number ?
+  Line.remove('.');
+  if(Line > s) {  // wrong version number ? (only backward compatible)
     file.close();
     QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Wrong document version: ")+Line);
     return false;
