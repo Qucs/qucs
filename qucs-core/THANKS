@@ -32,4 +32,5 @@ Vincent Habchi, F5RCS <10.50@free.fr> for testing the simulator, giving
 	coplanar issues.
 
 Raimund Jacob  <raimi@lkcc.org> for wildly testing the application and
-	for applying patches to CVS during my time in Munich.
+	for applying patches to CVS during my time in Munich.  Also for
+	documenting the grammars used in Qucs's data files.
