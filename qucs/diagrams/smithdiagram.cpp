@@ -48,9 +48,9 @@ void SmithDiagram::calcData(Graph *g)
   int *p = g->Points;
 //  if(p == 0) return;
   double *py = g->cPointsY;
-  for(int z=g->count; z>0; z--) {
-    *(p++) = (x2>>1)+int((*(py++))/ymax*double(x2>>1));
-    *(p++) = (y2>>1)+int((*(py++))/ymax*double(y2>>1));
+  for(int z = (g->countX1)*(g->countX2); z>0; z--) {
+    *(p++) = (x2>>1)+int((*(py++))/yup*double(x2>>1));
+    *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1));
   }
 }
 
@@ -121,8 +121,10 @@ if(GridOn) {
       }
     }
 
-    Arcs.append(new Arc(dx2+x, dx2+y, y, y, beta, theta, QPen(QPen::lightGray,1)));
-    Arcs.append(new Arc(dx2+x, dx2  , y, y, 16*360-beta-theta, theta, QPen(QPen::lightGray,1)));
+    Arcs.append(new Arc(dx2+x, dx2+y, y, y, beta, theta,
+			QPen(QPen::lightGray,0)));
+    Arcs.append(new Arc(dx2+x, dx2  , y, y, 16*360-beta-theta, theta,
+			QPen(QPen::lightGray,0)));
   }
 
   // ....................................................
@@ -133,41 +135,47 @@ if(GridOn) {
     im = (1-im);
     y  = int(im/xup*double(dx2));    // diameter
 
-    Arcs.append(new Arc(dx2+x, dx2+(y>>1), y, y, 0, 16*360, QPen(QPen::lightGray,1)));
+    Arcs.append(new Arc(dx2+x, dx2+(y>>1), y, y, 0, 16*360,
+			QPen(QPen::lightGray,0)));
 /*        if abs(abs(r)-1) > 0.4      // do not draw if to close to most outer circle (beauty correction)
         */
 
     if(xup > 1.0) {    // draw arcs on the rigth-handed side ?
       im = (rMAXq-1)/(im*(im/2+1)) - 1;
       if(im>=1)
-        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, 0, 16*360, QPen(QPen::lightGray,1)));
+        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, 0, 16*360,
+			    QPen(QPen::lightGray,0)));
       else {
         beta  = int(16.0*180.0/M_PIl*acos(im));
         theta = 2*(16*180-beta);
-        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, beta, theta, QPen(QPen::lightGray,1)));
+        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, beta, theta,
+			    QPen(QPen::lightGray,0)));
       }
     }
   }
 
 
   // horizontal line Im(r)=0
-  Lines.append(new Line(0, dx2, x2, dx2, QPen(QPen::lightGray,1)));
+  Lines.append(new Line(0, dx2, x2, dx2, QPen(QPen::lightGray,0)));
 
   // ....................................................
   if(xup > 1.0) {  // draw circle with |r|=1 ?
     x = int(x2/xup);
-    Arcs.append(new Arc(dx2-(x>>1), dx2+(x>>1), x, x, 0, 16*360, QPen(QPen::black,1)));
+    Arcs.append(new Arc(dx2-(x>>1), dx2+(x>>1), x, x, 0, 16*360,
+			QPen(QPen::black,0)));
 
     // vertical line Re(r)=1 (visible only if |r|>1)
     x = int(x2/xup)>>1;
     y = int(sqrt(rMAXq-1)/xup*dx2);
-    Lines.append(new Line(dx2+x, dx2+y, dx2+x, dx2-y, QPen(QPen::lightGray,1)));
+    Lines.append(new Line(dx2+x, dx2+y, dx2+x, dx2-y,
+			  QPen(QPen::lightGray,0)));
 
     Texts.append(new Text(0, 4, QString::number(xup)));
   }
 }  // of if(GridOn)
 
-  Arcs.append(new Arc(0, x2, x2, x2, 0, 16*360, QPen(QPen::black,1)));  // outer most circle
+  // outer most circle
+  Arcs.append(new Arc(0, x2, x2, x2, 0, 16*360, QPen(QPen::black,0)));
 }
 
 // ------------------------------------------------------------

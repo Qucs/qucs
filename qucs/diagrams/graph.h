@@ -30,11 +30,14 @@
   *@author Michael Margraf
   */
 
-/*struct cPoint {
-  cPoint(double _x, double _yr, double _yi)
-       : x(_x), yr(_yr), yi(_yi) {};
-  double  x, yr, yi;
-};*/
+struct DataX {
+  DataX(const QString& Var_, double *Points_=0, int count_=0)
+       : Var(Var_), Points(Points_), count(count_) {};
+  ~DataX() { if(Points) delete[] Points; };
+  QString Var;
+  double *Points;
+  int     count;
+};
 
 
 class Graph : public Element {
@@ -47,9 +50,10 @@ public:
   bool    load(const QString& Line);
   int     getSelected(int x, int y);
 
-  int    *Points, count;
-  double *cPointsX, *cPointsY;
-  QString Line, IndepVar;
+  QPtrList<DataX>  cPointsX;
+  double *cPointsY;
+  int    *Points, countX1, countX2;     // data in screen coordinates
+  QString Var;
   QColor  Color;
   int     Thick;
   
