@@ -38,8 +38,8 @@ Volt_dc::Volt_dc()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "V";
-  Model = "V";
+  Sign  = "Vdc";
+  Model = "Vdc";
   Name  = "V";
 
   Props.append(new Property("U", "1 V", true, "voltage in Volts"));
