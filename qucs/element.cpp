@@ -33,3 +33,7 @@ void Element::paintScheme(QPainter *)
 void Element::setCenter(int, int, bool)
 {
 }
+
+void Element::getCenter(int&, int&)
+{
+}

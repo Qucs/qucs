@@ -802,7 +802,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>equivalent current density in A/sqrt(Hz)</source>
-        <translation>äquivalente Stromdichte in A/sqrt(Hz)</translation>
+        <translation type="obsolete">äquivalente Stromdichte in A/sqrt(Hz)</translation>
     </message>
     <message>
         <source>frequency exponent</source>
@@ -1166,7 +1166,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
-        <translation>äquivalente Spannungsdichte in V/sqrt(Hz)</translation>
+        <translation type="obsolete">äquivalente Spannungsdichte in V/sqrt(Hz)</translation>
     </message>
     <message>
         <source>phase shifter</source>
@@ -1868,6 +1868,18 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current power spectral density in A^2/Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type (rectangular,polar)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage power spectral density in V^2/Hz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4636,6 +4648,16 @@ Distribute horizontally selected elements</source>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

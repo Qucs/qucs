@@ -41,18 +41,19 @@ public:
 
   virtual Component* newOne();
   virtual void recreate() {};
-  void    paintScheme(QPainter *p);
-  void    setCenter(int x, int y, bool relative=false);
-  void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
-  void    entireBounds(int& _x1, int& _y1, int& _x2, int& _y2);
-  bool    getSelected(int x_, int y_);
-  void    paint(QPainter *p);
+  void    paintScheme(QPainter*);
+  void    setCenter(int, int, bool relative=false);
+  void    getCenter(int&, int&);
+  void    Bounding(int&, int&, int&, int&);
+  void    entireBounds(int&, int&, int&, int&);
+  bool    getSelected(int, int);
+  void    paint(QPainter*);
   void    rotate();
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
   QString NetList();
   QString save();
-  bool    load(const QString& s);
+  bool    load(const QString&);
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
@@ -73,6 +74,6 @@ public:
 
 
 // prototype of independent function
-Component* getComponentFromName(QString& Line);
+Component* getComponentFromName(QString&);
 
 #endif

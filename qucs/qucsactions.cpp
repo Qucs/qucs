@@ -350,3 +350,40 @@ void QucsActions::slotEditPaste(bool on)
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
+
+// #######################################################################
+// Is called, when "set on grid" action is activated.
+void QucsActions::slotOnGrid(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    App->activeAction = 0;   // no action active
+    return;
+  }
+
+  if(view->Docs.current()->elementsOnGrid() > 0) {
+    view->viewport()->repaint();
+    view->drawn = false;
+    onGrid->blockSignals(true); // do not call toggle slot
+    onGrid->setOn(false);       // set toolbar button off
+    onGrid->blockSignals(false);
+    return;   // if no element was selected
+  }
+
+  if(App->activeAction) {
+    App->activeAction->blockSignals(true); // do not call toggle slot
+    App->activeAction->setOn(false);       // set last toolbar button off
+    App->activeAction->blockSignals(false);
+  }
+  App->activeAction = onGrid;
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveOnGrid;
+  view->MousePressAction = &QucsView::MPressOnGrid;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
