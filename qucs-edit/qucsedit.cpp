@@ -81,7 +81,7 @@ void QucsEdit::slotAbout()
   QMessageBox::about(this, tr("About..."),
     tr("Qucs Editor Version ")+PACKAGE_VERSION+
     tr("\nVery simple text editor for Qucs\n")+
-    tr("Copyright (C) 2004 by Michael Margraf\n")+
+    tr("Copyright (C) 2004, 2005 by Michael Margraf\n")+
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.");
