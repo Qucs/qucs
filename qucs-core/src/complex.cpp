@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.6 2004-04-25 17:08:50 ela Exp $
+ * $Id: complex.cpp,v 1.7 2004-04-26 18:36:37 ela Exp $
  *
  */
 
@@ -256,13 +256,31 @@ complex& complex::operator/=(const complex z) {
   return *this;
 }
 
-complex operator/(const nr_double_t z1, const complex z2) {
+complex operator/(const nr_double_t r1, const complex z2) {
   nr_double_t n = norm (z2);
-  return complex (z1 * z2.r / n, -z1 * z2.i / n);
+  return complex (r1 * z2.r / n, -r1 * z2.i / n);
 }
 
 complex operator%(const complex z1, const complex z2) {
   return z1 - z2 * floor (z1 / z2);
+}
+
+complex operator%(const complex z1, const nr_double_t r2) {
+  return z1 - r2 * floor (z1 / r2);
+}
+
+complex operator%(const nr_double_t r1, const complex z2) {
+  return r1 - z2 * floor (r1 / z2);
+}
+
+complex& complex::operator%=(const complex z) { 
+  *this = *this % z;
+  return *this;
+}
+
+complex& complex::operator%=(const nr_double_t r) { 
+  *this = *this % r;
+  return *this;
 }
 
 complex& complex::operator=(const complex z) {
