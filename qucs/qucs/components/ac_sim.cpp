@@ -36,7 +36,7 @@ AC_Sim::AC_Sim()
   if (b != -1) Texts.append(new Text(0, 0, s.mid(b+1)));
 
   x1 = -10; y1 = -9;
-  x2 = x1+115; y2 = y1+28;
+  x2 = x1+128; y2 = y1+41;
 
   tx = 0;
   ty = y2+1;

@@ -254,8 +254,8 @@ void Component::paint(ViewPainter *p)
 void Component::paintScheme(QPainter *p)
 {
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    int xb = x2-x1;
-    int yb = y2-y1;
+    int xb = x2-x1-13;
+    int yb = y2-y1-13;
 
     p->drawRect(cx-6, cy-5, xb, yb);
     p->drawLine(cx-1, cy+yb, cx-6, cy+yb-5);

@@ -31,7 +31,7 @@ Param_Sweep::Param_Sweep()
   if (a != -1) Texts.append(new Text(0, 0, s.mid(a+1)));
 
   x1 = -10; y1 = -9;
-  x2 = x1+91; y2 = y1+46;
+  x2 = x1+104; y2 = y1+59;
 
   tx = 0;
   ty = y2+1;

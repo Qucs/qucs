@@ -34,8 +34,8 @@ OpAmp::OpAmp()
   Lines.append(new Line(-16,-19, -9,-19,QPen(QPen::red,1)));
   Lines.append(new Line(-13,-22,-13,-15,QPen(QPen::red,1)));
 
-  Ports.append(new Port(-30,-20));
   Ports.append(new Port(-30, 20));
+  Ports.append(new Port(-30,-20));
   Ports.append(new Port( 40,  0));
 
   x1 = -30; y1 = -38;

@@ -28,6 +28,7 @@ Version 0.0.5
 
  * translations into French and Japanese
  * some new components and diagrams
+ * some new graph styles (stars, circles, ...)
  * manual axes scale for diagrams
  * many minor improvements and bug fixes
 

@@ -18,9 +18,11 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
-#include <qpainter.h>
+#include <qpen.h>
+#include <qbrush.h>
 
 class Node;
+class QPainter;
 
 /**
   *@author Michael Margraf

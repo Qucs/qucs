@@ -20,12 +20,13 @@
 
 #include "painting.h"
 
+
 /**
   *@author Michael Margraf
   */
 
 class GraphicLine : public Painting  {
-public: 
+public:
   GraphicLine(int cx_=0, int cy_=0, int x2_=0, int y2_=0,
 		QPen Pen_=QPen(QColor()));
   ~GraphicLine();

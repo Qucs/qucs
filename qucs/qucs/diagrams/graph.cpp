@@ -51,67 +51,56 @@ Graph::~Graph()
 // ---------------------------------------------------------------------
 void Graph::paint(ViewPainter *p, int x0, int y0)
 {
-  int *pp = Points;
-  if(pp == 0) {
-    p->Painter->setPen(QPen(QColor(Color)));   // set color for xlabel text
+  if(Points == 0)
     return;
-  }
 
-  int n1;
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,Thick+4));
-    if(*pp < 0)  pp++;
-    for(n1=countY; n1>0; n1--) {
-      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-      do {
-	pp += 2;
-	if(*pp > -2)
-	do {
-	  p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
-	  pp += 2;
-        } while(*pp > -2);    // until end of stroke
-        if(*pp < -9) break;   // end of line ?
-        pp++;
-      } while(*pp > -9);
-      pp++;
-    }
+    paintLines(p, x0, y0);
 
-    pp = Points;
     p->Painter->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
-    if(*pp < 0)  pp++;
-    for(n1=countY; n1>0; n1--) {
-      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-      do {
-	pp += 2;
-	if(*pp > -2)
-	do {
-	  p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
-	  pp += 2;
-        } while(*pp > -2);    // until end of stroke
-        if(*pp < -9) break;   // end of line ?
-        pp++;
-      } while(*pp > -9);
-      pp++;
-    }
-    p->Painter->setPen(QPen(QColor(Color)));   // set color for xlabel text
+    paintLines(p, x0, y0);
     return;
   }
 
   // **** not selected ****
   p->Painter->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
+  paintLines(p, x0, y0);
+}
+
+// ---------------------------------------------------------------------
+void Graph::paintLines(ViewPainter *p, int x0, int y0)
+{
+  int x, y;
+  int *pp = Points;
   if(*pp < 0)  pp++;
-  for(n1=countY; n1>0; n1--) {    // every branch of curves
-    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-    do {   // until end of branch
+  for(int n1=countY; n1>0; n1--) {    // every branch of curves
+    if(*pp >= 0)  p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+    while(*pp > -9) {   // until end of branch
       pp += 2;
-      if(*pp > -2)
-      do {    // until end of stroke
+      while(*pp > -2) {    // until end of stroke
 	p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
 	pp += 2;
-      } while(*pp > -2);    // until end of stroke
-      if(*pp < -9) break;   // end of line ?
+      }
+      if(*pp < -9)  break;   // end of line ?
+      else {
+	x = x0 + *(pp-2);
+	y = y0 - *(pp-1);
+	if(*pp == -7) {    // paint star
+	  p->drawLine(x-5, y, x+5, y);     // horizontal line
+	  p->drawLine(x-4, y+4, x+4, y-4); // upper left to lower right
+	  p->drawLine(x+4, y+4, x-4, y-4); // upper right to lower left
+	}
+	else if(*pp == -6)    // paint circle
+	  p->drawEllipse(x-4, y-4, 8, 8);
+	else if(*pp == -5) {  // paint arrow
+	  p->drawLine(x, y, x, y0);
+	  p->drawLine(x-4, y+7, x, y);
+	  p->drawLine(x+4, y+7, x, y);
+	}
+      }
       pp++;
-    } while(*pp > -9);
+    }
     pp++;
   }
 }
@@ -190,19 +179,28 @@ int Graph::getSelected(int x, int y)
     do {
       x1 = *(pp++);  y1 = *(pp++);
       zi++;
-
       dx  = x - x1;
+      dy  = y - y1;
+
       dx2 = (*pp);
       if(dx2 < -1) {
 	if(dx2 < -9) break;
-	dx2 = *(++pp);
+	pp++;
+	if(dx2 < -2) {     // no line, but single point (e.g. star) ?
+	  if(*pp < -9) break;
+	  if(dx < -5) continue;
+	  if(dx >  5) continue;
+	  if(dy < -5) continue;
+	  if(dy >  5) continue;
+	  return z*countX;// + zi;   // points on graph
+	}
+	dx2 = *pp;
 	if(dx2 < -9) break;
 	zi -= 2;  // because of space (edge-values)
       }
       if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
       else { if(x > 5) if(x > dx2+5) continue; }
 
-      dy  = y - y1;
       dy2 = (*(pp+1));
       if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
       else { if(y > 5) if(y > dy2+5) continue; }

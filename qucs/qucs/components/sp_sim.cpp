@@ -35,7 +35,7 @@ SP_Sim::SP_Sim()
   if (b != -1) Texts.append(new Text(0, 0, s.mid(b+1)));
 
   x1 = -10; y1 = -9;
-  x2 = x1+108; y2 = y1+46;
+  x2 = x1+121; y2 = y1+59;
 
   tx = 0;
   ty = y2+1;

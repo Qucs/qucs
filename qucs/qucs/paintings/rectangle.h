@@ -28,7 +28,7 @@
   */
 
 class Rectangle : public Painting  {
-public: 
+public:
   Rectangle(bool _filled=false);
   ~Rectangle();
 

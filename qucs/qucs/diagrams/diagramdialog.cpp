@@ -110,6 +110,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     PropertyBox->insertItem(tr("dash line"));
     PropertyBox->insertItem(tr("dot line"));
     PropertyBox->insertItem(tr("long dash line"));
+    PropertyBox->insertItem(tr("stars"));
+    PropertyBox->insertItem(tr("circles"));
+    PropertyBox->insertItem(tr("arrows"));
     connect(PropertyBox, SIGNAL(activated(int)),
 			 SLOT(slotSetGraphStyle(int)));
     Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
@@ -678,6 +681,27 @@ void DiagramDialog::slotApply()
         changed = true;
       }
     }
+
+    QString tmp;
+    if(startX->text().toDouble() > stopX->text().toDouble()) {
+      tmp = startX->text();
+      startX->setText(stopX->text());
+      stopX->setText(tmp);
+    }
+    if(startY->text().toDouble() > stopY->text().toDouble()) {
+      tmp = startY->text();
+      startY->setText(stopY->text());
+      stopY->setText(tmp);
+    }
+    if(startZ->text().toDouble() > stopZ->text().toDouble()) {
+      tmp = startZ->text();
+      startZ->setText(stopZ->text());
+      stopZ->setText(tmp);
+    }
+    if((Diag->Name == "Smith") || (Diag->Name == "ySmith"))
+      if(stopY->text().toDouble() < 1.0)
+        stopY->setText("1");
+
 
     if(Diag->xAxis.autoScale == manualX->isChecked()) {
       Diag->xAxis.autoScale = !(manualX->isChecked());
