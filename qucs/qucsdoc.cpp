@@ -897,7 +897,8 @@ int QucsDoc::insertWire(Wire *w)
       pn = Nodes.next();
     }
 
-  oneLabel(w->Port1); // if two wire lines with different labels are connected, delete one label
+  if (Wires.containsRef (w))
+    oneLabel(w->Port1); // if two wire lines with different labels are connected, delete one label
   setChanged(true);
   return con;
 }
@@ -2067,7 +2068,7 @@ void QucsDoc::deleteWire(Wire *w)
   }
 
   if(w->Port2->Connections.count() == 1) {
-    if(w->Port1->Label) delete w->Port1->Label;
+    if(w->Port2->Label) delete w->Port2->Label;
     Nodes.removeRef(w->Port2);     // delete node 2 if open
   }
   else {

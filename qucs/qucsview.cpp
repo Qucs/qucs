@@ -915,7 +915,8 @@ void QucsView::MPressRotate(QMouseEvent *Event)
                       if(pl) d->setOnGrid(pl->cx, pl->cy);
                       d->insertWire((Wire*)e);
                       d->Wires.setAutoDelete(true);
-                      enlargeView(e->x1, e->y1, e->x2, e->y2);
+                      if (d->Wires.containsRef ((Wire*)e))
+			enlargeView(e->x1, e->y1, e->x2, e->y2);
                       break;
     case isPainting:  ((Painting*)e)->rotate();
                       // enlarge viewarea if component lies outside the view
@@ -1304,25 +1305,27 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
     for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
       switch(pe->Type) {
         case isWire:     if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
-                         Docs.current()->insertWire((Wire*)pe);
-                         enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
+                         d->insertWire((Wire*)pe);
+			 if (d->Wires.containsRef ((Wire*)pe))
+			   enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
+			 else pe = NULL;
                          break;
-        case isDiagram:  Docs.current()->Diags.append((Diagram*)pe);
-                         ((Diagram*)pe)->loadGraphData(Docs.current()->DataSet);
+        case isDiagram:  d->Diags.append((Diagram*)pe);
+                         ((Diagram*)pe)->loadGraphData(d->DataSet);
                          enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
-                         Docs.current()->setChanged(true);
+                         d->setChanged(true);
                          break;
-        case isPainting: Docs.current()->Paints.append((Painting*)pe);
+        case isPainting: d->Paints.append((Painting*)pe);
                          ((Painting*)pe)->Bounding(x1,y1,x2,y2);
                          enlargeView(x1, y1, x2, y2);
-                         Docs.current()->setChanged(true);
+                         d->setChanged(true);
                          break;
-        default:         Docs.current()->insertComponent((Component*)pe);
+        default:         d->insertComponent((Component*)pe);
                          ((Component*)pe)->entireBounds(x1,y1,x2,y2);
                          enlargeView(x1, y1, x2, y2);
                          break;
       }
-      pe->isSelected = false;
+      if (pe) pe->isSelected = false;
     }
 
     pasteElements();
