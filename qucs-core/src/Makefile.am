@@ -76,6 +76,6 @@ parse_dataset.cpp: parse_dataset.y
 parse_touchstone.cpp: parse_touchstone.y
 	$(YACC) -v -o $@ --defines=tokens_touchstone.h $<
 
-CLEANFILES = *~ *.orig *.rej
+CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)
 DISTCLEANFILES = $(generated_FILES)
