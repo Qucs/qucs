@@ -8,61 +8,8 @@
 % or any later version published by the Free Software Foundation.
 %
 
-\chapter{Qucs netlist grammar}
+\section{Qucs netlist grammar}
 \label{sec:qucsgrammar}
-
-%
-% Grammar environment based on Martin Grabmueller's original one
-%
-\newcommand\tok[1]{`{\bf #1}'}  % Literal token
-\newcommand\ntok[1]{{\bf #1}}   % Composed token
-\newcommand\bsl[1]{\tok{$\backslash$#1}}
-\newenvironment{grammar}%
-  {\newcommand\produces[2]{##1 \> $\rightarrow$ \> ##2 \\}
-   \newcommand\orproduces[1]{\> \> \makebox[0pt][r]{$|$ }##1 \\}
-   \newcommand\opt[1]{[ ##1 ]}
-   \newcommand\rep[1]{\{ ##1 \}}
-   \newcommand\alt[0]{$|$}
-   \newcommand\group[1]{( ##1 )}
-   \newcommand\emptyprod{{$\varepsilon$}}
-   \newcommand\heading[1]{\rule{\linewidth}{1pt} \\{\bf ##1}\\[2ex]}
-   \newcommand\separator{\rule{\linewidth}{1pt} \\}
-   \begin{tabbing}
-   \qquad\qquad\qquad\qquad \= \qquad \= \kill}
-  {\end{tabbing}}
-
-%
-% How the grammar works
-%
-The grammar is presented using a version of the Extended Backus-Naur
-Form (EBNF) which works as follows:
-
-\vskip0.5em
-\begin{tabular}{ll}
-$A \rightarrow B$&
-Nonterminal $A$ produces form $B$.\\
-
-$B | C$&
-Produces $B$ or $C$.\\
-
-$\{ A \}$&
-Arbitrary repetition of form $A$. No repetition is allowed as well.\\
-
-[ $A$ ]&
-Form $A$ is optional.\\
-
-$(A)$&
-Grouping, stands for $A$ itself.\\
-
-%Not needed (yet): $\varepsilon$& The empty form.\\
-\end{tabular}
-\vskip0.5em
-
-Nonterminal symbols are set in normal font, terminal symbols are in
-bold font. Terminal symbols in single quotes are literally found in
-the input while the other terminal symbols are compositions. See below
-for definition of composed terminal symbols.
-
 
 %
 % Syntax: Beginning
@@ -196,10 +143,6 @@ expressions.
 %
 % Lexical structure (scanner)
 %
-\def\REalpha{\tok{a} \alt~\dots~\alt \tok{z} \alt
-             \tok{A} \alt~\dots~\alt \tok{Z}}
-\def\REalnum{\REalpha \alt \tok{0}~\dots~\tok{9} \alt \tok{\_}}
-\def\REplusminus{\opt{\tok{+} \alt \tok{-}}}
 \begin{grammar}
 \heading{Lexical structure}
 
@@ -211,15 +154,15 @@ expressions.
 \produces{AlphaNum}{\REalnum}
 %
 % Real
-\produces{\ntok{Real}}{\REplusminus \opt{Num} \tok{.}
-         Num \opt{\group{\tok{e} \alt \tok{E}} \REplusminus Num}}
+\produces{\ntok{Real}}{\REplusminus{} \opt{Num} \tok{.}
+         Num \opt{\group{\tok{e} \alt \tok{E}} \REplusminus{} Num}}
 \produces{Num}{Digit \rep{Digit}}
 \produces{Digit}{\tok{0}~\dots~\tok{9}}
 %
 % Imaginary
-\produces{\ntok{Imag}}{\REplusminus \group{\tok{i} \alt \tok{j}}
+\produces{\ntok{Imag}}{\REplusminus{} \group{\tok{i} \alt \tok{j}}
         \opt{Num} \tok{.}
-         Num \opt{\group{\tok{e} \alt \tok{E}} \REplusminus Num}}
+         Num \opt{\group{\tok{e} \alt \tok{E}} \REplusminus{} Num}}
 %
 % A single character
 \produces{\ntok{Character}}{\tok{'}
