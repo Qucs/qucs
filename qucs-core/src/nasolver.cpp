@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.14 2004-10-09 19:59:42 ela Exp $
+ * $Id: nasolver.cpp,v 1.15 2004-10-10 12:32:24 ela Exp $
  *
  */
 
@@ -575,7 +575,6 @@ void nasolver<nr_type_t>::lineSearch (void) {
   int dir = -1, r, len = x->getRows ();
 
   tmatrix<nr_type_t> * dx = new tmatrix<nr_type_t> (len, 1);
-  tmatrix<nr_type_t> * zp = new tmatrix<nr_type_t> (*z);
 
   // compute solution deciation vector
   for (nMin = 0, r = 1; r <= len; r++) {
@@ -618,8 +617,6 @@ void nasolver<nr_type_t>::lineSearch (void) {
   for (r = 1; r <= len; r++) {
     x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
   }
-  *z = *zp;
-  delete zp;
   delete dx;
 }
 
