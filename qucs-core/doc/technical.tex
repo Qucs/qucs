@@ -1107,6 +1107,106 @@ zero.
 The e matrix is an 1$\times$M matrix with each element of the matrix
 equal in value to the corresponding independent voltage source.
 
+\subsection*{A simple example}
+\addcontentsline{toc}{subsection}{A simple example}
+
+The example given in fig. (\ref{fig:MNAexample}) illustrates applying
+the rules for building the MNA matrices and how this relates to basic
+equations used in circuit analysis.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[angle=-90,width=10cm]{MNAexample}
+\end{center}
+\caption{example circuit applied to modified nodal analysis}
+\label{fig:MNAexample}
+\end{figure}
+\FloatBarrier
+
+\begin{equation}
+G =
+\begin{pmatrix}
+\frac{1}{R_{1}} & -\frac{1}{R_{1}}\\
+-\frac{1}{R_{1}} & \frac{1}{R_{1}} + \frac{1}{R_{2}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0.2 & -0.2\\
+-0.2 & 0.3
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+B = C^{T} =
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+D =
+\begin{pmatrix}
+0
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+x =
+\begin{pmatrix}
+v_{1}\\
+v_{2}\\
+i_{V_{1}}
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+z =
+\begin{pmatrix}
+0\\
+I_{1}\\
+V_{1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+1\\
+1
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+\left[A\right] \cdot \left[x\right] = \left[z\right]
+\end{equation}
+
+\begin{equation}
+\begin{pmatrix}
+\frac{1}{R_{1}} & -\frac{1}{R_{1}} & 1\\
+-\frac{1}{R_{1}} & \frac{1}{R_{1}} + \frac{1}{R_{2}} & 0\\
+1 & 0 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+v_{1}\\
+v_{2}\\
+i_{V_{1}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+I_{1}\\
+V_{1}
+\end{pmatrix}
+\end{equation}
+
+\begin{align}
+\rm{I:}& \qquad 0 = \frac{1}{R_{1}}\cdot V_{1} - \frac{1}{R_{1}}\cdot V_{2} + i_{V_{1}}& \text{KCL at node 1}\\
+\rm{II:}& \qquad I_{1} = -\frac{1}{R_{1}}\cdot V_{1} + \left(\frac{1}{R_{1}} + \frac{1}{R_{2}}\right)\cdot V_{2}& \text{KCL at node 2}\\
+\rm{III:}& \qquad U_{1} = V_{1}& \text{constitutive equation}
+\end{align}
+
+
+
 \section*{Extensions to the MNA}
 \addcontentsline{toc}{section}{Extensions to the MNA}
 
