@@ -40,27 +40,35 @@ Diode::Diode()
   Name  = "D";
 
   Props.append(new Property("Is", "1e-15 A", true,
-		QObject::tr("saturation current")));
+	QObject::tr("saturation current")));
   Props.append(new Property("N", "1", true,
-		QObject::tr("emission coefficient")));
+	QObject::tr("emission coefficient")));
   Props.append(new Property("Cj0", "10 fF", true,
-		QObject::tr("zero-bias junction capacitance")));
+	QObject::tr("zero-bias junction capacitance")));
   Props.append(new Property("M", "0.5", true,
-		QObject::tr("grading coefficient")));
+	QObject::tr("grading coefficient")));
   Props.append(new Property("Vj", "0.7 V", true,
-		QObject::tr("junction potential")));
+	QObject::tr("junction potential")));
+  Props.append(new Property("Fc", "0.5", false,
+	QObject::tr("forward-bias depletion capacitance coefficient")));
+  Props.append(new Property("Cp", "0.0 fF", false,
+	QObject::tr("linear capacitance")));
+  Props.append(new Property("Isr", "0.0", false,
+	QObject::tr("recombination current parameter")));
+  Props.append(new Property("Nr", "2.0", false,
+	QObject::tr("emission coefficient for Isr")));
   Props.append(new Property("Rs", "0.0 Ohm", false,
-		QObject::tr("ohmic series resistance")));
+	QObject::tr("ohmic series resistance")));
   Props.append(new Property("Tt", "0.0 ps", false,
-		QObject::tr("transit time")));
+	QObject::tr("transit time")));
   Props.append(new Property("Temp", "26.85", false,
-		QObject::tr("simulation temperature in degree Celsius")));
+	QObject::tr("simulation temperature in degree Celsius")));
   Props.append(new Property("Kf", "0.0", false,
-                QObject::tr("flicker noise coefficient")));
+        QObject::tr("flicker noise coefficient")));
   Props.append(new Property("Af", "1.0", false,
-	        QObject::tr("flicker noise exponent")));
+	QObject::tr("flicker noise exponent")));
   Props.append(new Property("Ffe", "1.0", false,
-	        QObject::tr("flicker noise frequency exponent")));
+	QObject::tr("flicker noise frequency exponent")));
 }
 
 Diode::~Diode()
