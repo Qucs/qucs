@@ -1,8 +1,8 @@
 /***************************************************************************
-                          wirelabel.h  -  description
+                          markerdialog.h  -  description
                              -------------------
-    begin                : Sun Feb 29 2004
-    copyright            : (C) 2004 by Michael Margraf
+    begin                : Wed April 21 2004
+    copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
 
@@ -15,43 +15,32 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRELABEL_H
-#define WIRELABEL_H
+#ifndef MARKERDIALOG_H
+#define MARKERDIALOG_H
 
-#include "element.h"
+#include <qdialog.h>
+#include <qlineedit.h>
 
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include "marker.h"
 
-class Wire;
-class Node;
 
 /**
   *@author Michael Margraf
   */
 
-
-class WireLabel : public Element {
+class MarkerDialog : public QDialog  {
+Q_OBJECT
 public:
-  WireLabel(const QString& _Name=0, int _cx=0, int _cy=0,
-            int _x1=0, int _y1=0, ElementType _Type=isNodeLabel);
-  ~WireLabel();
+  MarkerDialog(Marker *pm_, QWidget *parent=0, const char *name=0);
+  ~MarkerDialog();
 
-  void paintScheme(QPainter *p);
-  void setCenter(int x, int y, bool relative=false);
-  bool getSelected(int, int);
-  void setName(const QString& Name_);
+private slots:
+  void slotAcceptValues();
 
-  Wire    *pWire;
-  Node    *pNode;
-  QString Name;
+public:
+  Marker *pMarker;
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
+  QLineEdit  *Precision;
 };
 
 #endif

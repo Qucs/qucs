@@ -24,11 +24,12 @@
 
 noinst_LIBRARIES = libdiagrams.a
 
-MOCHEADERS = diagramdialog.h
+MOCHEADERS = diagramdialog.h markerdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp       \
-  polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp marker.cpp $(MOCFILES)
+  polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp marker.cpp \
+  markerdialog.cpp $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   smithdiagram.h tabdiagram.h diagrams.h marker.h

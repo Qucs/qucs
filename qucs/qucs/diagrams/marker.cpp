@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "marker.h"
+#include "diagram.h"
 
 #include <qstring.h>
 #include <qwidget.h>
@@ -24,7 +25,8 @@
 #include <math.h>
 
 
-Marker::Marker(int _cx, int _cy, double _xpos, double _yrpos, double _yipos, int _gNum)
+Marker::Marker(Diagram *Diag_, int _cx, int _cy, double _xpos,
+               double _yrpos, double _yipos, int _gNum)
 {
   Type = isMarker;
   isSelected = false;
@@ -34,25 +36,12 @@ Marker::Marker(int _cx, int _cy, double _xpos, double _yrpos, double _yipos, int
   x1 = cx + 100;
   y1 = cy + 100;
 
+  Diag = Diag_;
+  Precision = 2;
   xpos = _xpos;
-  if(fabs(_yipos) < 1e-250) Text = QString::number(_yrpos);
-  else {
-    Text = QString::number(_yipos);
-    if(Text.at(0) == '-') { Text.at(0) = 'j'; Text = '-'+Text; }
-    else { Text = "+j"+Text; }
-    Text = QString::number(_yrpos) + Text;
-  }
-  Text = "x: "+QString::number(_xpos)+"\ny: " + Text;
-
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);    // get width of text
-  x2 = r.width()+4;
-  y2 = r.height()+4;
-
+  yr = _yrpos;  yi = _yipos;
+  createText();
   GraphNum = _gNum;
-
   lookNfeel = 1;
 }
 
@@ -61,50 +50,140 @@ Marker::~Marker()
 }
 
 // ---------------------------------------------------------------------
+void Marker::createText()
+{
+  if(fabs(yi) < 1e-250) Text = QString::number(yr);
+  else {
+    Text = QString::number(yi,'g',Precision);
+    if(Text.at(0) == '-') { Text.at(0) = 'j'; Text = '-'+Text; }
+    else { Text = "+j"+Text; }
+    Text = QString::number(yr,'g',Precision) + Text;
+  }
+  Text = "x: "+QString::number(xpos,'g',Precision)+"\ny: " + Text;
+
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",12, QFont::Light));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);  // width of text
+  x2 = r.width()+4;
+  y2 = r.height()+4;
+}
+
+// ---------------------------------------------------------------------
 void Marker::paint(QPainter *p, int x0, int y0)
 {
   p->setPen(QPen(QPen::darkMagenta,0));
   p->drawRect(x0+x1, y0-y1, x2, -y2);
-  p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
+
+  // which corner of rectangle should be connected to line ?
+  if(cx < x1+(x2>>1)) {
+    if(cy < y1-(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
+    else
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1-y2);
+  }
+  else {
+    if(cy < y1-(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1);
+    else
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1-y2);
+  }
 
   p->setPen(QPen(QPen::black,1));
   p->drawText(x0+x1+2, y0-y1-y2+2, x2, y2, Qt::AlignAuto, Text);
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(x0+x1-3, y0-y1+3, x2+6, -y2-6);
+    p->drawRoundRect(x0+x1-2, y0-y1+2, x2+4, -y2-4);
   }
+}
+
+// ---------------------------------------------------------------------
+void Marker::paintScheme(QPainter *p)
+{
+  int x0 = Diag->cx;
+  int y0 = Diag->cy;
+  p->drawRect(x0+x1, y0-y1, x2, -y2);
+
+  // which corner of rectangle should be connected to line ?
+  if(cx < x1+(x2>>1)) {
+    if(cy < y1-(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
+    else
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1-y2);
+  }
+  else {
+    if(cy < y1-(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1);
+    else
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1-y2);
+  }
+}
+
+// ------------------------------------------------------------
+void Marker::setCenter(int x, int y, bool relative)
+{
+  if(relative) {
+    x1 += x;  y1 -= y;
+  }
+  else {
+    x1 = x;  y1 = y;
+  }
+}
+
+// -------------------------------------------------------
+// Provides the coordinates relative to the diagram !!!
+void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
+{
+  _x1 = x1;
+  _y1 = y1;
+  _x2 = x1+x2;
+  _y2 = y1-y2;
 }
 
 // ---------------------------------------------------------------------
 QString Marker::save()
 {
   QString s  = "      <Mkr "+QString::number(GraphNum)+" ";
-          s += QString::number(xpos)+" "+QString::number(x1)+" "+QString::number(y1)+">";
+          s += QString::number(xpos)+" "+QString::number(x1)
+	       +" "+QString::number(y1)+" "
+	       +QString::number(Precision)+">";
   return s;
 }
 
 // ---------------------------------------------------------------------
 bool Marker::load(const QString& _s)
 {
-//  bool ok;
+  bool ok;
   QString s = _s;
 
   if(s.at(0) != '<') return false;
-/*  if(s.at(s.length()-1) != '>') return false;
+  if(s.at(s.length()-1) != '>') return false;
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  Line  = s.section(' ',0,0);    // Line
+  if(s.section(' ',0,0) != "Mkr") return false;
 
   QString n;
-  n  = s.section(' ',1,1);    // Color
-  Color.setNamedColor(n);
-  if(!Color.isValid()) return false;
-
-  n  = s.section(' ',2,2);    // Thick
-  Thick = n.toInt(&ok);
+  n  = s.section(' ',1,1);    // GraphNum
+  GraphNum = n.toInt(&ok);
   if(!ok) return false;
-*/
+
+  n  = s.section(' ',2,2);    // xpos
+  xpos = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',3,3);    // x1
+  x1 = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',4,4);    // y1
+  y1 = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',5,5);      // Precision
+  if(n.isEmpty()) return true;  //  is optional
+  Precision = n.toInt(&ok);
+
   return true;
 }
 

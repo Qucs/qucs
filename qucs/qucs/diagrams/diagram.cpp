@@ -50,12 +50,14 @@ Diagram::~Diagram()
 // ------------------------------------------------------------
 void Diagram::paint(QPainter *p)
 {
-  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {    // paint all lines
+  // paint all lines
+  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
     p->setPen(pl->style);
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
 
-  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {    // paint all arcs
+  // paint all arcs
+  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     p->setPen(pa->style);
     p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
@@ -66,16 +68,20 @@ void Diagram::paint(QPainter *p)
     int delta=y1;
 
     if(xLabel.isEmpty())
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {   // draw all graphs
+      // draw all graphs
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         pg->paint(p, cx, cy);
-        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,pg->IndepVar);    // get width of text
+	// get width of text
+        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,pg->IndepVar);
         p->drawText(cx+((x2-r.width())>>1), cy+delta, pg->IndepVar);
         delta += r.height();
       }
     else {
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next())   // draw all graphs
+      // draw all graphs
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
         pg->paint(p, cx, cy);
-      r = p->boundingRect(0,0,0,0,Qt::AlignAuto,xLabel);    // get width of text
+      // get width of text
+      r = p->boundingRect(0,0,0,0,Qt::AlignAuto,xLabel);
       p->setPen(QColor(0,0,0));
       p->drawText(cx+((x2-r.width())>>1), cy+delta, xLabel);
     }
@@ -84,33 +90,38 @@ void Diagram::paint(QPainter *p)
     p->save();
     p->rotate(270);
     if(yLabel.isEmpty()) {
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {   // draw y-label for all graphs
+      // draw y-label for all graphs
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         p->setPen(pg->Color);
-        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,pg->Line);    // get width of text
+	// get width of text
+        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,pg->Line);
         p->drawText(-cy+((y2-r.width())>>1), cx-delta, pg->Line);
         delta += r.height();
       }
     }
     else {
-        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,yLabel);    // get width of text
+        // get width of text
+        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,yLabel);
         p->setPen(QColor(0,0,0));
         p->drawText(-cy+((y2-r.width())>>1), cx-delta, yLabel);
     }
     p->restore();
 
-    for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())   // draw markers
+    // draw markers
+    for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
       pm->paint(p, cx, cy);
   }
 
   p->setPen(QPen(QPen::black,1));
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())      // write whole text
+  // write whole text
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
     p->drawText(cx+pt->x, cy-pt->y, pt->s);
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
     p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
     p->setPen(QPen(QPen::darkRed,2));
-    p->drawRect(cx-5, cy-y2-5, 10, 10);       // markers for changing the size
+    p->drawRect(cx-5, cy-y2-5, 10, 10);  // markers for changing the size
     p->drawRect(cx-5, cy-5, 10, 10);
     p->drawRect(cx+x2-5, cy-y2-5, 10, 10);
     p->drawRect(cx+x2-5, cy-5, 10, 10);
@@ -195,10 +206,8 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     ymin = xmin = 0.0;
     ymax = xmax = 1.0;
   }
-  calcDiagram();
 
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    calcData(pg);   // calculate graph coordinates
+  updateGraphData();
 }
 
 // --------------------------------------------------------------------------
@@ -206,8 +215,27 @@ void Diagram::updateGraphData()
 {
   calcDiagram();
 
+  Graph *pg;
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     calcData(pg);   // calculate graph coordinates
+
+  int n, *pi;
+  double *pp;
+  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next()) {
+    pg = Graphs.at(pm->GraphNum);
+    pp = pg->cPointsX;
+    for(n=0; n<pg->count; n++) {
+      if(pm->xpos <= *pp) break;
+      pp++;
+    }
+    if(n == pg->count) pp--;
+    pm->xpos = *pp;
+    pm->yr = *((pg->cPointsY)+2*n);  pm->yi = *((pg->cPointsY)+2*n+1);
+    pm->createText();
+    pi = pg->Points + 2*n;
+    pm->cx = *pi;
+    pm->cy = *(pi+1);
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -215,38 +243,44 @@ bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
   if(g->Points != 0) { delete[] g->Points;  g->Points = 0; }
-  g->cPoints.clear();
+  if(g->cPointsX != 0) { delete[] g->cPointsX;  g->cPointsX = 0; }
+  if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Line.isEmpty()) return false;
 
   QFile file(fileName);
   if(!file.open(IO_ReadOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot load dataset: ")+fileName);
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Cannot load dataset: ")+fileName);
     return false;
   }
 
-  QTextStream ReadWhole(&file);          // to strongly speed up the file read operation ...
-  QString FileString = ReadWhole.read(); // the whole file is read into the memory ...
-  file.close();                          // in one piece
+  // *****************************************************************
+  // To strongly speed up the file read operation the whole file is
+  // read into the memory in one piece.
+  QTextStream ReadWhole(&file);
+  QString FileString = ReadWhole.read();
+  file.close();
 
 
   QString Line, tmp;
-
+  // *****************************************************************
+  // look for variable name in data file  ****************************
   int i=0, j=0, k=0;
   i = FileString.find('<')+1;
   if(i > 0)
-  do {    // look for variable name in data file
+  do {
     j = FileString.find('>', i);
     Line = FileString.mid(i, j-i);
     i = FileString.find('<', j)+1;
     if(Line.left(3) == "dep") {
       tmp = Line.section(' ', 1, 1);
-      if(g->Line != tmp) continue;     // found variable with name sought for ?
+      if(g->Line != tmp) continue;  // found variable with name sought for ?
       tmp = Line.section(' ', 2, 2);   // name of independent variable
       break;
     }
     if(Line.left(5) == "indep") {
       tmp = Line.section(' ', 1, 1);
-      if(g->Line != tmp) continue;     // found variable with name sought for ?
+      if(g->Line != tmp) continue;  // found variable with name sought for ?
       tmp = "";        // no independent variable
       break;
     }
@@ -255,15 +289,52 @@ bool Diagram::loadVarData(const QString& fileName)
   if(i <= 0)  return false;   // return if data name was not found
   g->IndepVar = tmp;    // name of independet variable (could be empty!)
 
-  int counting = 0;
-  bool ok;
+  // *****************************************************************
+  // get independent variable ****************************************
+  bool ok, ok2;
+  double *p;
+  int counting;
+  if(g->IndepVar.isEmpty()) {    // create independent variable by myself ?
+    g->IndepVar = "number";
+
+    tmp = Line.section(' ', 2, 2);  // get number of points
+    counting = tmp.toInt(&ok);
+    if(!ok) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+                   QObject::tr("Cannot get size of independent data \"")+
+		   g->Line+"\"");
+      return false;
+    }
+
+    p = new double[counting];  // memory of new independent variable
+    g->cPointsX = p;
+    for(int z=1; z<=counting; z++)  *(p++) = double(z);
+    xmin = 1.0;
+    xmax = double(counting);
+  }
+  else {
+    // get independent variable
+    counting = loadIndepVarData(g->IndepVar, FileString);
+    if(counting <= 0) {     // failed to load independent variable ?
+      if(g->cPointsX != 0) { delete[] g->cPointsX;  g->cPointsX = 0; }
+      return false;
+    }
+  }
+
+  g->Points = new int[2*counting];   // create memory for points
+  g->count  = counting;
+
+  // *****************************************************************
+  // get dependent variable ******************************************
+  p = new double[2*counting];  // memory of new independent variable
+  g->cPointsY = p;
   double x, y;
   QRegExp WhiteSpace("\\s");
   QRegExp noWhiteSpace("\\S");
   i = FileString.find(noWhiteSpace, j+1);
   j = FileString.find(WhiteSpace, i);
   Line = FileString.mid(i, j-i);
-  while(Line.at(0) != '<') {
+  for(int z=0; z<counting; z++) {
     k = Line.find('j');
     if(k < 0) {
       x = Line.toDouble(&ok);
@@ -274,10 +345,16 @@ bool Diagram::loadVarData(const QString& fileName)
       tmp.at(0) = Line.at(k-1);   // copy sign over "j"
       y = tmp.toDouble(&ok);
       Line = Line.left(k-1);  // real part
-      x = Line.toDouble(&ok);
+      x = Line.toDouble(&ok2);
     }
-    g->cPoints.append(new cPoint(0,x,y));
-    counting++;
+    if((!ok) || (!ok2)) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+                   QObject::tr("Too few dependent data \"")+
+		   g->Line+"\"");
+      return false;
+    }
+    *(p++) = x;
+    *(p++) = y;
     if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
     if(x > ymax) ymax = x;
     if(x < ymin) ymin = x;
@@ -287,30 +364,11 @@ bool Diagram::loadVarData(const QString& fileName)
     Line = FileString.mid(i, j-i);
   }
 
-  if(g->IndepVar.isEmpty()) {     // create independent variable by myself ?
-    g->IndepVar = "number";
-
-    cPoint *p = g->cPoints.first();
-    for(int z=1; z<=counting; z++) {
-      p->x = double(z);
-      p = g->cPoints.next();
-    }
-    xmin = 1.0;
-    xmax = double(counting);
-  }
-  else  if(loadIndepVarData(g->IndepVar, FileString) <= 0) {  // get independent variable
-          g->cPoints.clear();        // failed to load independent variable
-          return false;
-        }
-
-  g->Points = new int[2*counting];    // create memory for points
-  g->count  = counting;
-
   return true;
 }
 
 // --------------------------------------------------------------------------
-// Reads the data of an independent variable. Returns the numberof points.
+// Reads the data of an independent variable. Returns the number of points.
 int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
 {
   QString Line, tmp;
@@ -328,14 +386,25 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
     }
   } while(i > 0);
 
-  if(i <= 0) return 0;   // return if data name was not found
-  Graph *g = Graphs.current();
+  if(i <= 0) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Independent data \"")+var+
+		 QObject::tr("\" not found"));
+    return -1;
+  }
 
   bool ok;
   tmp = Line.section(' ', 2, 2);  // get number of points
   int n = tmp.toInt(&ok);
+  if(!ok) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Cannot get size of independent data \"")+
+		 var+"\"");
+    return -1;
+  }
 
-  cPoint *p = g->cPoints.first();
+  double *p = new double[n];     // memory for new independent variable
+  Graphs.current()->cPointsX = p;
 
   double x;
   QRegExp WhiteSpace("\\s");
@@ -343,20 +412,24 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
   i = FileString.find(noWhiteSpace, j+1);
   j = FileString.find(WhiteSpace, i);
   Line = FileString.mid(i, j-i);
-  while(Line.at(0) != '<') {
+  for(int z=0; z<n; z++) {
     x = Line.toDouble(&ok);  // get number
-    p->x = x;
+    if(!ok) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+                   QObject::tr("Too few independent data\"")+
+		   var+"\"");
+      return -1;
+    }
+    *(p++) = x;
     if(x > xmax) xmax = x;
     if(x < xmin) xmin = x;
-    p = g->cPoints.next();
-    if(!p) return n;
 
     i = FileString.find(noWhiteSpace, j);
     j = FileString.find(WhiteSpace, i);
     Line = FileString.mid(i, j-i);
   }
 
-  return 0;     // size of independent and dependet vector don't equal
+  return n;   // return number of independent data
 }
 
 // ------------------------------------------------------------
@@ -385,8 +458,11 @@ QString Diagram::save()
   else s += "0 ";
   s += "\""+xLabel+"\" \""+yLabel+"\">\n";
 
-  for(Graph *p=Graphs.first(); p!=0; p=Graphs.next())
-    s += p->save()+"\n";
+  for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
+    s += pg->save()+"\n";
+
+  for(Marker *pm=Markers.first(); pm != 0; pm=Markers.next())
+    s += pm->save()+"\n";
 
   s += "   </"+Name+">";
   return s;
@@ -433,9 +509,27 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
     s = stream->readLine();
     s = s.stripWhiteSpace();
     if(s == ("</"+Name+">")) return true;  // found end tag ?
-    Graph *g = new Graph();
-    if(!g->load(s)) return false;
-    Graphs.append(g);
+    if(s.section(' ', 0,0) == "<Mkr") break;
+    Graph *pg = new Graph();
+    if(!pg->load(s)) {
+      delete pg;
+      return false;
+    }
+    Graphs.append(pg);
+  }
+
+  // .......................................................
+  // load markers of the diagram
+  while(!stream->atEnd()) {
+    Marker *pm = new Marker(this);
+    if(!pm->load(s)) {
+      delete pm;
+      return false;
+    }
+    Markers.append(pm);
+    s = stream->readLine();
+    s = s.stripWhiteSpace();
+    if(s == ("</"+Name+">")) return true;  // found end tag ?
   }
 
   return false;   // end tag missing

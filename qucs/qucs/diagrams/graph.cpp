@@ -33,7 +33,8 @@ Graph::Graph(const QString& _Line)
   isSelected = false;
 
   Points = 0;
-  cPoints.setAutoDelete(true);
+  cPointsX = cPointsY = 0;
+//  cPoints.setAutoDelete(true);
 }
 
 Graph::~Graph()
