@@ -1,3 +1,8 @@
+2004-10-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mscoupled.cpp: Added preliminary direct
+	computation of Y-parameters.
+
 2004-10-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* vac.cpp: Considering 'Phase' parameter of Vac and Iac during

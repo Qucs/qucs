@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.18 2004-10-10 12:32:25 ela Exp $
+ * $Id: trsolver.cpp,v 1.19 2004-10-12 07:00:28 ela Exp $
  *
  */
 
@@ -104,7 +104,7 @@ void trsolver::initSteps (void) {
    for each requested time and solves it then. */
 void trsolver::solve (void) {
   nr_double_t time;
-  int error = 0;
+  int error = 0, convError = 0;
   runs++;
   current = 0;
   statRejected = statSteps = statIterations = statConvergence = 0;
@@ -187,6 +187,7 @@ void trsolver::solve (void) {
 
 	// Start using damped Newton-Raphson.
 	linesearch = 1;
+	convError = 8;
 
 #if STEPDEBUG || 1
 	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
@@ -204,7 +205,7 @@ void trsolver::solve (void) {
 
       // Update statistics and no more damped Newton-Raphson.
       statIterations += iterations;
-      linesearch = 0;
+      if (--convError < 0) linesearch = 0;
 
       // Now advance in time or not...
       if (running > 1) {

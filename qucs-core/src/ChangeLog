@@ -1,3 +1,7 @@
+2004-10-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Tried to optimize non-convergence handling.
+
 2004-10-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Fixed all predictors (off-by-one indexing into

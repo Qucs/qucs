@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.12 2004-09-26 09:58:52 ela Exp $
+ * $Id: mscoupled.cpp,v 1.13 2004-10-12 07:00:37 ela Exp $
  *
  */
 
@@ -416,4 +416,52 @@ void mscoupled::calcAC (nr_double_t frequency) {
   // TODO: calculate Y-parameters directly
   calcSP (frequency);
   setMatrixY (stoy (getMatrixS ()));
+
+#if 0
+  // fetch line properties
+  nr_double_t l = getPropertyDouble ("L");
+
+  // compute propagation constants for even and odd mode
+  calcPropagation (frequency);
+  complex ge = rect (ae, be);
+  complex go = rect (ao, bo);
+
+  // compute abbreviations
+  complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo, Ze, Zo;
+
+  De = 2 * ze * z0 * cosh (ge * l) + (sqr (ze) + sqr (z0)) * sinh (ge * l);
+  Do = 2 * zo * z0 * cosh (go * l) + (sqr (zo) + sqr (z0)) * sinh (go * l);
+
+  Xe = Do * (ze * z0 * cosh (ge * l) + sqr (ze) * sinh (ge * l));
+  Xo = De * (zo * z0 * cosh (go * l) + sqr (z0) * sinh (go * l));
+
+  Ye = Do * (ze * cosh (ge * l) + z0 * sinh (ge * l));
+  Yo = De * (zo * cosh (go * l) + z0 * sinh (go * l));
+
+  Ee = Do * z0 * ze;
+  Eo = De * z0 * zo;
+
+  Ze = Do * ze;
+  Zo = De * zo;
+
+  setY (1, 1, (Ye + Yo) / (Xe + Xo));
+  setY (1, 2, (Ye + Yo) / (Ee + Eo));
+  setY (1, 3, (Ye + Yo) / (Xe - Xo));
+  setY (1, 4, (Ye + Yo) / (Ee - Eo));
+
+  setY (2, 1, (Ze + Zo) / (Xe + Xo));
+  setY (2, 2, (Ze + Zo) / (Ee + Eo));
+  setY (2, 3, (Ze + Zo) / (Xe - Xo));
+  setY (2, 4, (Ze + Zo) / (Ee - Eo));
+
+  setY (3, 1, (Ye - Yo) / (Xe + Xo));
+  setY (3, 2, (Ye - Yo) / (Ee + Eo));
+  setY (3, 3, (Ye - Yo) / (Xe - Xo));
+  setY (3, 4, (Ye - Yo) / (Ee - Eo));
+
+  setY (4, 1, (Ze - Zo) / (Xe + Xo));
+  setY (4, 2, (Ze - Zo) / (Ee + Eo));
+  setY (4, 3, (Ze - Zo) / (Xe - Xo));
+  setY (4, 4, (Ze - Zo) / (Ee - Eo));
+#endif
 }
