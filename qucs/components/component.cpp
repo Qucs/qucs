@@ -401,10 +401,12 @@ QString Component::NetList()
     if(p2->Name != "Symbol")
       if(p2->Name == "File") {
 	if(Model == "Sub") {
-	  QFileInfo Info(QucsWorkDir, p2->Value);
-	  QString  Type = Info.filePath();;
+	  QString  Type = p2->Value;
+	  QFileInfo Info(Type);
+	  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
+	  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
 	  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-	  s += " Type=\"_"+Type+"\"";   // type for subcircuit
+	  s += " Type=\""+Type+"\"";   // type for subcircuit
 	  continue;
 	}
         QFileInfo info(p2->Value);

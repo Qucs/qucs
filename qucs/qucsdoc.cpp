@@ -1139,7 +1139,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(flag) { pc->isSelected ^= flag; return pc; }
       if(pe_sel) {
 	pe_sel->isSelected = false;
-//	pc->isSelected = true;
 	return pc;
       }
       if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
@@ -1153,7 +1152,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(flag) { pw->isSelected ^= flag; return pw; }
       if(pe_sel) {
 	pe_sel->isSelected = false;
-//	pw->isSelected = true;
 	return pw;
       }
       if(pe_1st == 0) pe_1st = pw;  // give access to elements lying beneath
@@ -1164,7 +1162,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(flag) { pl->isSelected ^= flag; return pl; }
       if(pe_sel) {
 	pe_sel->isSelected = false;
-//	pl->isSelected = true;
 	return pl;
       }
       if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
@@ -1179,7 +1176,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(flag) { pl->isSelected ^= flag; return pl; }
       if(pe_sel) {
 	pe_sel->isSelected = false;
-//	pl->isSelected = true;
 	return pl;
       }
       if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
@@ -1195,7 +1191,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
         if(flag) { pm->isSelected ^= flag; return pm; }
         if(pe_sel) {
 	  pe_sel->isSelected = false;
-//	  pm->isSelected = true;
 	  return pm;
 	}
         if(pe_1st == 0) pe_1st = pm;  // give access to elements lying beneath
@@ -1217,7 +1212,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
           if(flag) { pg->isSelected ^= flag; return pg; }
           if(pe_sel) {
 	    pe_sel->isSelected = false;
-//	    pg->isSelected = true;
 	    return pg;
 	  }
           if(pe_1st == 0) pe_1st = pg;  // access to elements lying beneath
@@ -1227,7 +1221,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(flag) { pd->isSelected ^= flag; return pd; }
       if(pe_sel) {
 	pe_sel->isSelected = false;
-//	pd->isSelected = true;
 	return pd;
       }
       if(pe_1st == 0) pe_1st = pd;  // give access to elements lying beneath
@@ -1248,7 +1241,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(flag) { pp->isSelected ^= flag; return pp; }
       if(pe_sel) {
 	pe_sel->isSelected = false;
-//	pp->isSelected = true;
 	return pp;
       }
       if(pe_1st == 0) pe_1st = pp;  // give access to elements lying beneath
@@ -1256,7 +1248,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     }
   }
 
-//  if(pe_1st) pe_1st->isSelected = true;
   return pe_1st;
 }
 
