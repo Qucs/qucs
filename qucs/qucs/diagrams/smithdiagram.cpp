@@ -24,7 +24,7 @@
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
   x1 = 10;        // position of label text
-  y1 = 16;
+  y1 = 2;
   x2 = 200;  // initial size of diagram
   y2 = 200;
   x3 = 207;
