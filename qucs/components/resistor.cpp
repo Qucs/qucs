@@ -38,7 +38,7 @@ Resistor::Resistor(bool european)
 		QObject::tr("ohmic resistance in Ohms")));
 
   // this must be the last property in the list !!!
-  Props.append(new Property("Symbol", "europaen", false,
+  Props.append(new Property("Symbol", "european", false,
 		QObject::tr("schematic symbol (european,US)")));
   if(!european)  Props.getLast()->Value = "US";
 }
