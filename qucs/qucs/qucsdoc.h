@@ -94,6 +94,10 @@ public:
   Marker*  setMarker(int, int);
   bool  MarkerLeftRight(bool);
   bool  MarkerUpDown(bool);
+  void  alignTop();
+  void  alignBottom();
+  void  alignLeft();
+  void  alignRight();
 
   QString copySelected(bool);
   bool    paste(QTextStream*, QPtrList<Element>*);

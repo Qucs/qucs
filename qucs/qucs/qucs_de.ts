@@ -1706,6 +1706,10 @@ Ungültiger Zeilenanfang!</translation>
         <source>number of ports</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>width of line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3581,7 +3585,7 @@ Druckt das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
         <source>Quits the application</source>
@@ -4381,6 +4385,66 @@ Setzt die Einstellungen der Applikation</translation>
     <message>
         <source>Document Settings...</source>
         <translation>Dokumenteneinstellungen...</translation>
+    </message>
+    <message>
+        <source>Align top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align top selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align top
+
+Align selected elements to their upper edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align bottom selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align bottom
+
+Align selected elements to their lower edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align left selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align left
+
+Align selected elements to their left edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align right selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align right
+
+Align selected elements to their right edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
