@@ -38,6 +38,7 @@ Param_Sweep::Param_Sweep()
   Model = ".SW";
   Name  = "SW";
 
+  // The index of the first 6 properties must not changed. Used in recreate().
   Props.append(new Property("Sim", "", true,
 		QObject::tr("simulation to perform parameter sweep on")));
   Props.append(new Property("Type", "lin", true,
@@ -69,3 +70,19 @@ Component* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
   if(getNewOne)  return new Param_Sweep();
   return 0;
 }
+
+void Param_Sweep::recreate()
+{
+  if((Props.at(1)->Value == "list") || (Props.at(1)->Value == "const")) {
+    // Call them "Symbol" to omit them in the netlist.
+    Props.at(3)->Name = "Symbol";
+    Props.next()->Name = "Symbol";
+    Props.next()->Name = "Values";
+  }
+  else {
+    Props.at(3)->Name = "Start";
+    Props.next()->Name = "Stop";
+    Props.next()->Name = "Points";
+  }
+}
+

@@ -47,6 +47,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   checkSim  = 0;  editSim   = 0;  comboType = 0;  checkParam = 0;
   editStart = 0;  editStop  = 0;  editNumber = 0;
 
+  Property *pp = 0;   // last property not to put in ListView
   // ...........................................................
   // if simulation component
   if((Comp->Model[0] == '.') &&
@@ -99,7 +100,9 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textValues = new QLabel(tr("Values:"), Tab1);
     gp->addWidget(textValues, row,0);
     editValues = new QLineEdit(Tab1);
-    gp->addWidget(editValues, row++,1);
+    gp->addWidget(editValues, row,1);
+    checkValues = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkValues, row++,2);
 
     textStart  = new QLabel(tr("Start:"), Tab1);
     gp->addWidget(textStart, row,0);
@@ -141,12 +144,15 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
       s = Comp->Props.first()->Value;
       checkType->setChecked(Comp->Props.current()->display);
     }
-    editStart->setText(Comp->Props.next()->Value);
-    checkStart->setChecked(Comp->Props.current()->display);
-    editStop->setText(Comp->Props.next()->Value);
-    checkStop->setChecked(Comp->Props.current()->display);
-    editNumber->setText(Comp->Props.next()->Value);
-    checkNumber->setChecked(Comp->Props.current()->display);
+    pp = Comp->Props.next();
+    editStart->setText(pp->Value);
+    checkStart->setChecked(pp->display);
+    pp = Comp->Props.next();
+    editStop->setText(pp->Value);
+    checkStop->setChecked(pp->display);
+    pp = Comp->Props.next();  // remember last property for ListView
+    editNumber->setText(pp->Value);
+    checkNumber->setChecked(pp->display);
 
     int tNum = 0;
     if(s[0] == 'l') {
@@ -159,9 +165,17 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     else  tNum = 3;
     comboType->setCurrentItem(tNum);
 
-    slotNumberChanged(0);
     slotSimTypeChange(tNum);   // not automatically ?!?
+    if(tNum > 1) {
+      editValues->setText(
+		editNumber->text().mid(1, editNumber->text().length()-2));
+      checkValues->setChecked(Comp->Props.current()->display);
+      editNumber->setText("2");
+    }
+    slotNumberChanged(0);
 
+    connect(editValues, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotTextChanged(const QString&)));
     connect(editStart, SIGNAL(textChanged(const QString&)),
 	    SLOT(slotNumberChanged(const QString&)));
     connect(editStop, SIGNAL(textChanged(const QString&)),
@@ -294,8 +308,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
   // insert all properties into the ListBox
   for(Property *p = Comp->Props.last(); p != 0; p = Comp->Props.prev()) {
-    if(Comp->Model[0] == '.') if(p->Name == "Points")
-      break;   // do not insert if already on first tab
+    if(p == pp)  break;   // do not insert if already on first tab
     if(p->display) s = tr("yes");
     else s = tr("no");
     QString str = p->Description;
@@ -553,7 +566,6 @@ void ComponentDialog::slotApplyInput()
   }
   if(comboType) {
     display = checkType->isChecked();
-//    tmp = tmp.section('[')
     switch(comboType->currentItem()) {
       case 1:  tmp = "log";   break;
       case 2:  tmp = "list";  break;
@@ -569,17 +581,28 @@ void ComponentDialog::slotApplyInput()
 	Property("Param", editParam->text(), display, QString("--")));
   }
   if(editStart) {
-    display = checkStart->isChecked();
-    Comp->Props.append(new
+    if(comboType->currentItem() < 2) {
+      display = checkStart->isChecked();
+      Comp->Props.append(new
 	Property("Start", editStart->text(), display, QString("--")));
 
-    display = checkStop->isChecked();
-    Comp->Props.append(new
+      display = checkStop->isChecked();
+      Comp->Props.append(new
 	Property("Stop", editStop->text(), display, QString("--")));
 
-    display = checkNumber->isChecked();
-    Comp->Props.append(new
+      display = checkNumber->isChecked();
+      Comp->Props.append(new
 	Property("Points", editNumber->text(), display, QString("--")));
+    }
+    else {
+      // Call them "Symbol" to omit them in the netlist.
+      Comp->Props.append(new Property("Symbol", "0", false, QString("--")));
+      Comp->Props.append(new Property("Symbol", "0", false, QString("--")));
+
+      display = checkValues->isChecked();
+      Comp->Props.append(new Property("Values", "["+editValues->text()+"]",
+			     display, QString("--")));
+    }
   }
 
 
@@ -694,45 +717,56 @@ void ComponentDialog::slotSimTypeChange(int Type)
 
   if(Type < 2) {
     if(!editNumber->isEnabled()) {  // was the other mode before ?
-      editStart->blockSignals(true);  // do not calculate step again
-      editStop->blockSignals(true);
-      editNumber->blockSignals(true);
-      editStart->setText(editValues->text().section(';', 0, 0));
-      editStop->setText(editValues->text().section(';', -1, -1));
+      // this text change, did not emit the textChange signal !??!
+      editStart->setText(
+	editValues->text().section(';', 0, 0).stripWhiteSpace());
+      editStop->setText(
+	editValues->text().section(';', -1, -1).stripWhiteSpace());
       editNumber->setText("2");
-      editStart->blockSignals(false);  // do not calculate step again
-      editStop->blockSignals(false);
-      editNumber->blockSignals(false);
+      slotNumberChanged(0);
+
+      checkStart->setChecked(true);
+      checkStop->setChecked(true);
     }
     textValues->setDisabled(true);
     editValues->setDisabled(true);
+    checkValues->setDisabled(true);
     textStart->setDisabled(false);
     editStart->setDisabled(false);
+    checkStart->setDisabled(false);
     textStop->setDisabled(false);
     editStop->setDisabled(false);
+    checkStop->setDisabled(false);
     textStep->setDisabled(false);
     editStep->setDisabled(false);
     textNumber->setDisabled(false);
     editNumber->setDisabled(false);
+    checkNumber->setDisabled(false);
     if(Type == 1)   // logarithmic ?
-      textStep->setText("Points per decade");
+      textStep->setText("Points per decade:");
     else
-      textStep->setText("Step");
+      textStep->setText("Step:");
   }
   else {
-    if(!editValues->isEnabled())   // was the other mode before ?
+    if(!editValues->isEnabled()) {   // was the other mode before ?
       editValues->setText(editStart->text() + "; " + editStop->text());
+      checkValues->setChecked(true);
+    }
 
     textValues->setDisabled(false);
     editValues->setDisabled(false);
+    checkValues->setDisabled(false);
     textStart->setDisabled(true);
     editStart->setDisabled(true);
+    checkStart->setDisabled(true);
     textStop->setDisabled(true);
     editStop->setDisabled(true);
+    checkStop->setDisabled(true);
     textStep->setDisabled(true);
     editStep->setDisabled(true);
     textNumber->setDisabled(true);
     editNumber->setDisabled(true);
+    checkNumber->setDisabled(true);
     textStep->setText("Step");
   }
 }
@@ -817,6 +851,13 @@ void ComponentDialog::slotStepChanged(const QString& Step)
 // -------------------------------------------------------------------------
 // Is called if one of the "display on schematic" CheckBoxes is clicked.
 void ComponentDialog::slotSetChanged(int)
+{
+  changed = true;
+}
+
+// -------------------------------------------------------------------------
+// Is called if text in the LineEdit (e.g. "editValues") is changed.
+void ComponentDialog::slotTextChanged(const QString&)
 {
   changed = true;
 }

@@ -42,6 +42,7 @@ SP_Sim::SP_Sim()
   Model = ".SP";
   Name  = "SP";
 
+  // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
 			QObject::tr("sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Start", "1 GHz", true,
@@ -75,4 +76,20 @@ Component* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new SP_Sim();
   return 0;
+}
+
+void SP_Sim::recreate()
+{
+  if((Props.getFirst()->Value == "list") ||
+     (Props.getFirst()->Value == "const")) {
+    // Call them "Symbol" to omit them in the netlist.
+    Props.at(1)->Name = "Symbol";
+    Props.next()->Name = "Symbol";
+    Props.next()->Name = "Values";
+  }
+  else {
+    Props.at(1)->Name = "Start";
+    Props.next()->Name = "Stop";
+    Props.next()->Name = "Points";
+  }
 }

@@ -1254,6 +1254,8 @@ void QucsApp::slotChangePage(QString Name)
 
   int cNo = view->Docs.at();
   view->Docs.findRef(Doc);  // back to the last current
+  if(WorkView->indexOf(WorkView->currentTab()) == cNo)  // if page not ...
+    view->Docs.current()->reloadGraphs();       // ... changes, reload here !
   WorkView->setCurrentTab(WorkView->tabAt(cNo));  // make new doc the current
   // must be done before the next step, in order to call the change slot !
 
@@ -1576,6 +1578,8 @@ void QucsApp::slotSetCompView(int index)
     case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
     case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
     case COMBO_File:
+      new QIconViewItem(CompComps, tr("SPICE netlist"),
+		QImage(BITMAPDIR "spicefile.xpm"));
       new QIconViewItem(CompComps, tr("1-port S parameter file"),
 		QImage(BITMAPDIR "spfile1.xpm"));
       new QIconViewItem(CompComps, tr("2-port S parameter file"),
@@ -1681,7 +1685,10 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	 Infos = nonlinearComps[CompComps->index(item)];
 	 break;
     case COMBO_File:
-	 view->selComp = new SParamFile(CompComps->index(item)+1);
+         if(CompComps->index(item) == 0)
+	   view->selComp = new SpiceFile(2);
+	 else
+	   view->selComp = new SParamFile(CompComps->index(item));
 	 break;
     case COMBO_Sims:
 	 Infos = Simulations[CompComps->index(item)];

@@ -2335,6 +2335,18 @@ Usage:  qucsedit [-r] file
         <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SPICE netlist file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2917,6 +2929,10 @@ Editar o símbolo para este esquemático</translation>
         <source>Edit Schematic
 
 Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

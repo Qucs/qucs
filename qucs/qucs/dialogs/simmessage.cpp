@@ -155,6 +155,7 @@ void SimMessage::slotSimEnded()
 {
   Abort->setText(tr("Close window"));
   Display->setDisabled(false);
+  SimProgress->setProgress(100, 100);   // progress bar to 100%
 
   int stat = (!SimProcess.normalExit()) ? -1 : SimProcess.exitStatus();
   emit SimulationEnded(stat, this);

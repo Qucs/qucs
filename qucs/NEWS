@@ -31,6 +31,8 @@ Version 0.0.5
  * some new graph styles (stars, circles, ...)
  * manual axes scale for diagrams
  * many minor improvements and bug fixes
+ * improved simulation component dialog
+ * scroll bar for tabular diagrams
 
 Version 0.0.4
 -------------

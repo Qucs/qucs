@@ -165,6 +165,35 @@ void Diagram::paint(ViewPainter *p)
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
   }
+  else    // tabular diagram
+  if(x1 > 0) {  // paint scroll bar ?
+    y = y2 - 20;
+    // draw scroll bar
+    p->fillRect(cx-15, cy-y + yAxis.numGraphs, 14, zAxis.numGraphs, Qt::gray);
+
+    // draw frame for scroll bar
+    p->Painter->setPen(QPen(QPen::black,0));
+    p->drawLine(cx-17, cy-y2, cx-17, cy);
+    p->drawLine(cx-17, cy-y2, cx, cy-y2);
+    p->drawLine(cx-17, cy, cx, cy);
+    y += 2;
+    p->drawLine(cx-17, cy-y, cx, cy-y);
+    y -= y2;
+    p->drawLine(cx-17, cy+y, cx, cy+y);
+
+    // draw the arrows above and below the scroll bar
+    p->Painter->setBrush(QBrush(Qt::gray));
+    int dx, dy;
+    p->map(cx-20, cy-y2-8, &x, &y);
+    p->map(cx+4, cy-y2+16, &dx, &dy);
+    dx -= x;
+    dy -= y;
+    p->Painter->drawPie(x, y, dx, dy, 16*240, 16*60);
+
+    p->map(cx-20, cy-15, &x, &y);
+    p->Painter->drawPie(x, y, dx, dy, 16*60, 16*60);
+    p->Painter->setBrush(QBrush(Qt::NoBrush));
+  }
 
   p->Painter->setPen(QPen(QPen::black,1));
   // write whole text
@@ -923,8 +952,8 @@ QString Diagram::save()
   if(xAxis.GridOn) s+= "1 ";
   else s += "0 ";
   s += GridPen.color().name() + " " + QString::number(GridPen.style());
+
   if(xAxis.log) s+= " 1";  else s += " 0";
-//  if(yAxis.log) s+= "1";   else s += "0";
   char c = '0';
   if(yAxis.log)  c |= 1;
   if(zAxis.log)  c |= 2;
