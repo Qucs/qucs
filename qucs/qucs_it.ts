@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation type="unfinished">Tutti i Files (*.*)</translation>
+        <translation type="obsolete">Tutti i Files (*.*)</translation>
     </message>
     <message>
         <source>Select a file</source>
@@ -135,6 +135,10 @@
     <message>
         <source>Name:</source>
         <translation>Nome:</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1261,7 +1265,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation type="unfinished">polarità (npn,pnp)</translation>
+        <translation type="obsolete">polarità (npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1533,7 +1537,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation type="unfinished">polarità (nfet,pfet)</translation>
+        <translation type="obsolete">polarità (nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
@@ -1561,7 +1565,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>put operating points into dataset (yes,no)</source>
-        <translation type="unfinished">metti punti di lavoro nel dataset (sì,no)</translation>
+        <translation type="obsolete">metti punti di lavoro nel dataset (sì,no)</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
@@ -1569,7 +1573,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>put result into dataset (yes,no)</source>
-        <translation type="unfinished">metti risultati nel dataset (sì,no)</translation>
+        <translation type="obsolete">metti risultati nel dataset (sì,no)</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
@@ -1956,31 +1960,39 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>sweep type (lin,log)</source>
+        <source>sweep type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
+        <source>polarity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
+        <source>put operating points into dataset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip open end model (Kirschning,Hammerstad)</source>
+        <source>put result into dataset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>schematic symbol (european,US)</source>
+        <source>quasi-static microstrip model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>interpolation type (rectangular,polar)</source>
+        <source>microstrip open end model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>calculate noise parameters (yes,no)</source>
+        <source>schematic symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

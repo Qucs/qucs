@@ -186,7 +186,10 @@ void QucsView::slotCursorLeft()
   movingElements.clear();
   d->copySelectedElements(&movingElements);
   if(movingElements.isEmpty()) {
-    slotScrollLeft();
+    if(ScrollLeft(horizontalScrollBar()->lineStep()))
+      scrollBy(-horizontalScrollBar()->lineStep(), 0);
+    viewport()->repaint();
+    drawn = false;
     return;
   }
 
@@ -207,7 +210,10 @@ void QucsView::slotCursorRight()
   movingElements.clear();
   d->copySelectedElements(&movingElements);
   if(movingElements.isEmpty()) {
-    slotScrollRight();
+    if(ScrollRight(-horizontalScrollBar()->lineStep()))
+      scrollBy(horizontalScrollBar()->lineStep(), 0);
+    viewport()->repaint();
+    drawn = false;
     return;
   }
 
@@ -228,7 +234,10 @@ void QucsView::slotCursorUp()
   movingElements.clear();
   d->copySelectedElements(&movingElements);
   if(movingElements.isEmpty()) {
-    slotScrollUp();
+    if(ScrollUp(verticalScrollBar()->lineStep()))
+      scrollBy(0, -verticalScrollBar()->lineStep());
+    viewport()->repaint();
+    drawn = false;
     return;
   }
 
@@ -249,7 +258,10 @@ void QucsView::slotCursorDown()
   movingElements.clear();
   d->copySelectedElements(&movingElements);
   if(movingElements.isEmpty()) {
-    slotScrollDown();
+    if(ScrollDown(-verticalScrollBar()->lineStep()))
+      scrollBy(0, verticalScrollBar()->lineStep());
+    viewport()->repaint();
+    drawn = false;
     return;
   }
 

@@ -133,7 +133,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Files (*.*)</source>
+        <source>All Files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1817,47 +1817,39 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>sweep type (lin,log)</source>
+        <source>sweep type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>polarity (npn,pnp)</source>
+        <source>polarity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>put operating points into dataset (yes,no)</source>
+        <source>put operating points into dataset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>put result into dataset (yes,no)</source>
+        <source>put result into dataset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>polarity (nfet,pfet)</source>
+        <source>quasi-static microstrip model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
+        <source>microstrip open end model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
+        <source>schematic symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip open end model (Kirschning,Hammerstad)</source>
+        <source>interpolation type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>schematic symbol (european,US)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>interpolation type (rectangular,polar)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate noise parameters (yes,no)</source>
+        <source>calculate noise parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
