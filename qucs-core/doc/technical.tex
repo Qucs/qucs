@@ -203,6 +203,7 @@ element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
 
 \subsection{S-parameters in CAE programs}
 %\addcontentsline{toc}{subsection}{S-parameters in CAE programs}
+\label{sec:SparameterCAE}
 
 The most common task of a simulation program is to compute the S
 parameters of an arbitrary network that consists of many elementary
@@ -499,7 +500,7 @@ And furthermore
 \addvspace{12pt}
 
 \begin{tabular}{rll}
-$\left[\underline{X}\right]^{-1}$ & = & 
+$\left[\underline{X}\right]^{-1}$ & = &
 inverted matrix of $\left[\underline{X}\right]$\\& &\\
 $\left[\underline{X}\right]^{*}$ & = & 
 complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
@@ -1039,7 +1040,7 @@ With $c$ = 299 792 458 m/s being the vacuum light velocity.
 %\addcontentsline{toc}{section}{Definition}
 
 In microwave circuits described by scattering parameters, it is
-advantageous to regard noise as noise waves.  The noise
+advantageous to regard noise as noise waves \cite{Wedge}.  The noise
 characteristics of an n-port is then defined completely by one
 outgoing noise wave $\underline{b}_{noise,n}$ at each port (see 2-port
 example in fig. \ref{fig:Sparam}) and the correlation between these
@@ -1101,7 +1102,7 @@ $\underline{x}$.
 %\addcontentsline{toc}{section}{Noise Parameters}
 
 Having the noise wave correlation matrix, one can easily compute the
-noise parameters.  The following equations calculate them with regard
+noise parameters \cite{Wedge}.  The following equations calculate them with regard
 to port 1 (input) and port 2 (output).
 
 \addvspace{12pt}
@@ -1161,8 +1162,14 @@ With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
 \section{Noise Wave Correlation Matrix in CAE}
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
 
-We have the noise wave correlation ( $(\underline{C})$,
-$(\underline{D})$ ) and the scattering matrix ( $(\underline{S})$,
+Due to the similiar concept of S parameters and noise correlation
+coefficients, the CAE noise analysis can be performed quite alike
+the S parameter analysis (section \ref{sec:SparameterCAE}). As each
+step uses the S parameters to calculate the noise correlation matrix,
+the noise analysis is best done step by step in parallel with the
+S parameter analysis. Performing each step is as follows:
+We have the noise wave correlation matrices ( $(\underline{C})$,
+$(\underline{D})$ ) and the S parameter matrices ( $(\underline{S})$,
 $(\underline{T})$ ) of two arbitrary circuits and want to know the
 correlation matrix of the special circuit, that results from
 connecting port $m$ of circuit 1 with port $k$ of circuit 2

@@ -1,7 +1,12 @@
+2004-05-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed many small bugs in the view area handling
+	* filled rectangle and filled ellipse as paintings
+
 2004-05-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* diagrams/tabdiagram.cpp (calcDiagram): Yet another bug fix
-	causing segfaulting the tabdiagram when an graph input has 
+	causing segfaulting the tabdiagram when an graph input has
 	disappered after a new simulation.
 
 2004-05-19  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
@@ -10,7 +15,7 @@
 	loop bug when trying to calculate grid properties for zero
 	ymax and ymin.
 
-	* qucsfile.cpp (simpleInsertWire): Fixed segfault bug when 
+	* qucsfile.cpp (simpleInsertWire): Fixed segfault bug when
 	accessing null pointer.
 
 	* qucsview.cpp (MPressRotate): Fixed possible cause of

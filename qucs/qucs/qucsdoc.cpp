@@ -1017,7 +1017,7 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
 }*/
 
 // ---------------------------------------------------
-bool QucsDoc::setMarker(int x, int y)
+Marker* QucsDoc::setMarker(int x, int y)
 {
   int n;
   // test all diagrams
@@ -1031,12 +1031,12 @@ bool QucsDoc::setMarker(int x, int y)
           Marker *pm = new Marker(pd, pg, n-1);
           pd->Markers.append(pm);
           setChanged(true);
-          return true;
+          return pm;
         }
       }
     }
 
-  return false;
+  return 0;
 }
 
 // ---------------------------------------------------
@@ -2129,7 +2129,8 @@ bool QucsDoc::deleteElements()
       sel = true;
     }
     else {
-      for(Marker *pm = pd->Markers.first(); pm != 0; )   // all markers of diagram
+      // all markers of diagram
+      for(Marker *pm = pd->Markers.first(); pm != 0; )
         if(pm->isSelected) {
           pd->Markers.remove();
           pm = pd->Markers.current();
@@ -2137,7 +2138,8 @@ bool QucsDoc::deleteElements()
         }
         else  pm = pd->Markers.next();
 
-      for(Graph *pg = pd->Graphs.first(); pg != 0; )   // all graphs of diagram
+      // all graphs of diagram
+      for(Graph *pg = pd->Graphs.first(); pg != 0; )
         if(pg->isSelected) {
           pd->Graphs.remove();
           pg = pd->Graphs.current();
@@ -2157,6 +2159,8 @@ bool QucsDoc::deleteElements()
     }
     else pp = Paints.next();
 
+  if(sel)
+    sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
   setChanged(sel);
   return sel;
 }

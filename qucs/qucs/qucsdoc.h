@@ -90,7 +90,7 @@ public:
   void  deleteComp(Component *c);
   void  deleteWire(Wire *w);
   bool  deleteElements();
-  bool  setMarker(int x, int y);
+  Marker*  setMarker(int x, int y);
   bool  MarkerLeftRight(bool);
   bool  MarkerUpDown(bool);
 
@@ -129,7 +129,7 @@ public:
   double  Scale;
   int PosX, PosY;    // upper left corner of the visible area (only for remembering during seeing another open document)
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
-  int UsedX1, UsedY1, UsedX2, UsedY2;  // size of the document area used by elements
+  int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
   QPtrList<Element> ElementCache;
 };

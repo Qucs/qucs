@@ -1,7 +1,7 @@
 /***************************************************************************
-                          paintings.h  -  description
+                          filldialog.h  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
+    begin                : Thu May 20 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,20 +15,42 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTINGS_H
-#define PAINTINGS_H
+#ifndef FILLDIALOG_H
+#define FILLDIALOG_H
 
-// This header file includes the header files of all diagrams.
+#include <qdialog.h>
+#include <qregexp.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qcombobox.h>
 
-#include "painting.h"
 
-#include "rectangle.h"
-#include "filledrect.h"
-#include "ellipse.h"
-#include "filledellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
-#include "graphictext.h"
+/**
+  *@author Michael Margraf
+  */
 
+class FillDialog : public QDialog  {
+Q_OBJECT
+public:
+  FillDialog(const QString& _Caption, QWidget *parent=0, const char *name=0);
+  ~FillDialog();
+
+  void SetComboBox(Qt::PenStyle _Style);
+  void SetFillComboBox(Qt::BrushStyle _Style);
+
+private slots:
+  void slotSetColor();
+  void slotSetFillColor();
+  void slotSetStyle(int index);
+  void slotSetFillStyle(int index);
+
+public:
+  QRegExp        Expr;
+  QLineEdit     *LineWidth;
+  QPushButton   *ColorButt, *FillColorButt;
+  QComboBox     *StyleBox, *FillStyleBox;
+  Qt::PenStyle   LineStyle;
+  Qt::BrushStyle FillStyle;
+};
 
 #endif

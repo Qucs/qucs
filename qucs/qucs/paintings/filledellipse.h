@@ -1,7 +1,7 @@
 /***************************************************************************
-                          paintings.h  -  description
+                       filledellipse.h  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
+    begin                : Thu May 20 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,20 +15,44 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTINGS_H
-#define PAINTINGS_H
-
-// This header file includes the header files of all diagrams.
+#ifndef FILLEDELLIPSE_H
+#define FILLEDELLIPSE_H
 
 #include "painting.h"
 
-#include "rectangle.h"
-#include "filledrect.h"
-#include "ellipse.h"
-#include "filledellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
-#include "graphictext.h"
+#include <qpen.h>
+#include <qbrush.h>
 
+
+/**
+  *@author Michael Margraf
+  */
+
+class FilledEllipse : public Painting  {
+public:
+  FilledEllipse();
+  ~FilledEllipse();
+
+  void paintScheme(QPainter *p);
+  void getCenter(int& x, int &y);
+  void setCenter(int x, int y, bool relative=false);
+
+  FilledEllipse* newOne();
+  bool load(const QString& s);
+  QString save();
+  void paint(QPainter *p);
+  void MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn);
+  bool MousePressing();
+  bool getSelected(int x, int y);
+  void Bounding(int&, int&, int&, int&);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QPen   Pen;
+  QBrush Brush;
+};
 
 #endif
