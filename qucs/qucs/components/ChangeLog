@@ -1,3 +1,7 @@
+2004-07-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* resistor.cpp (Resistor): Added 'Temp' property.
+
 2004-07-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* componentdialog.cpp (ComponentDialog): Allowing ',' to be
