@@ -75,6 +75,7 @@ public:
   void createPolarDiagram(Axis*, int Mode=3);
 
   int  regionCode(int, int);
+  bool insideDiagram(int, int);
   void clip(int* &);
   void roundClip(int* &);
 

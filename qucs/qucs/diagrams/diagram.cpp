@@ -1,5 +1,5 @@
 /***************************************************************************
-                          diagram.cpp  -  description
+                                diagram.cpp
                              -------------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
@@ -212,6 +212,18 @@ int Diagram::regionCode(int x, int y)
 }
 
 // ------------------------------------------------------------
+bool Diagram::insideDiagram(int x, int y)
+{
+  if(Name.at(0) == 'R')
+    return (regionCode(x, y) == 0);
+
+  int R = x2 >> 1;
+  x -= R;
+  y -= R;
+  return ((x*x + y*y) <= R*R);
+}
+
+// ------------------------------------------------------------
 // Cohen-Sutherland clipping algorithm
 void Diagram::clip(int* &p)
 {
@@ -220,7 +232,7 @@ void Diagram::clip(int* &p)
     return;
   }
 
-  int x, y, dx, dy, code, z=0;
+  int x=0, y=0, dx, dy, code, z=0;
   int x_1 = *(p-4), y_1 = *(p-3);
   int x_2 = *(p-2), y_2 = *(p-1);
 
@@ -302,22 +314,19 @@ void Diagram::roundClip(int* &p)
   int dt2 = dt1 - x_2*x_2 - y_2*y_2;
   dt1 -= x_1*x_1 + y_1*y_1;
 
-  int code = 0;
-  if(dt1 < 0)  code |= 1;
-  if(dt2 < 0)  code |= 2;
-  if(code == 0)  return;  // line completly inside ?
+  if(dt1 >= 0) if(dt2 >= 0)  return;  // line completly inside ?
 
-  if(code & 1) if(*(p-5) >= 0) { // is there already a line end flag ?
+  if(dt1 < 0) if(*(p-5) >= 0) { // is there already a line end flag ?
     p++;
     *(p-5) = -2;
   }
 
-  int x = x_2-x_1;
-  int y = y_2-y_1;
+  int x = x_1-x_2;
+  int y = y_1-y_2;
   int C = x_1*x + y_1*y;
   int D = x*x + y*y;
   float F = float(C);
-  F = F*F + float(dt1)*float(D);
+  F = F*F + float(dt1)*float(D); // use float because number is easily > 2^32
 
   x_1 += R;
   y_1 += R;
@@ -330,29 +339,36 @@ void Diagram::roundClip(int* &p)
     return;
   }
 
-  F = sqrt(F);
-  if(code & 1) {   // start point outside ?
-    R = int(F) + C;
-    *(p-4) = x_1 - x*R / D;
-    *(p-3) = y_1 - y*R / D;
+  int code = 0;
+  R   = int(sqrt(F));
+  dt1 = C - R;
+  if((dt1 > 0) && (dt1 < D)) { // intersection outside start/end point ?
+    *(p-4) = x_1 - x*dt1 / D;
+    *(p-3) = y_1 - y*dt1 / D;
+    code |= 1;
   }
   else {
     *(p-4) = x_1;
     *(p-3) = y_1;
   }
 
-  if(code & 2) {   // end point outside ?
-    R = int(F) - C;
-    *(p-2) = x_1 + x*R / D;
-    *(p-1) = y_1 + y*R / D;
-    *(p++) = -2;
-    *(p++) = x_2;
-    *(p++) = y_2;
+  dt2 = C + R;
+  if((dt2 > 0) && (dt2 < D)) { // intersection outside start/end point ?
+    *(p-2) = x_1 - x*dt2 / D;
+    *(p-1) = y_1 - y*dt2 / D;
+    *p = -2;
+    p += 3;
+    code |= 2;
   }
-  else {
-    *(p-2) = x_2;
-    *(p-1) = y_2;
+  *(p-2) = x_2;
+  *(p-1) = y_2;
+
+  if(code == 0) {   // intersections both lie outside ?
+    *(p-4) = x_2;
+    *(p-3) = y_2;
+    p -= 2;
   }
+
 }
 
 // ------------------------------------------------------------
@@ -401,13 +417,46 @@ void Diagram::calcData(Graph *g, int valid)
 	  if(Counter >= 2)   // clipping only if an axis is manual
 	    clip(p);
 	}
+	if(*(p-3) == -2) if(*(p-1) > -2)
+	  p -= 2;  // no single point after "no stroke"
 	*(p++) = -10;
       }
       *p = -100;
       return;
+
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
     case 2: Stroke =  2.0; Space =  4.0;  break;   // dot line
     case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
+
+    default:
+      if(g->Style == 4)  xtmp = -7;      // **** a star at each point ******
+      else if(g->Style == 5)  xtmp = -6; // **** a circle at each point ****
+      else if(g->Style == 6)  xtmp = -5; // **** a arrow at each point *****
+
+      for(i=g->countY; i>0; i--) {  // every branch of curves
+	px = g->cPointsX.getFirst()->Points;
+	for(z=g->cPointsX.getFirst()->count; z>0; z--) {  // every point
+	  if(p >= p_end) {  // need to enlarge memory block ?
+	    Size += 256;
+	    tmp = p - g->Points;
+	    p = p_end = g->Points
+	      = (int*)realloc(g->Points, Size*sizeof(int));
+	    p += tmp;
+	    p_end += Size - 9;
+	  }
+	  calcCoordinate(px, py, p, p+1, pa);
+	  if(insideDiagram(*p, *(p+1))) {    // within diagram ?
+	    *(p+2) = xtmp;
+	    p += 3;
+	  }
+	}
+	*(p++) = -10;
+      }
+      *p = -100;
+/*qDebug("\n******");
+for(int zz=0; zz<60; zz+=2)
+  qDebug("c: %d/%d", *(g->Points+zz), *(g->Points+zz+1));*/
+      return;
   }
 
   double alpha, dist;
@@ -474,6 +523,8 @@ void Diagram::calcData(Graph *g, int valid)
       }
 
     } // of x loop
+    if(*(p-3) == -2) if(*(p-1) > -2)
+      p -= 2;  // no single point after "no stroke"
     *(p++) = -10;
   } // of y loop
   *p = -100;

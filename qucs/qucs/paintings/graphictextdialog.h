@@ -1,6 +1,6 @@
 /***************************************************************************
-                          graphictextdialog.h  -  description
-                             -------------------
+                            graphictextdialog.h
+                           ---------------------
     begin                : Wed Nov 26 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -19,7 +19,6 @@
 #define GRAPHICTEXTDIALOG_H
 
 #include <qdialog.h>
-
 
 class QLineEdit;
 class QTextEdit;

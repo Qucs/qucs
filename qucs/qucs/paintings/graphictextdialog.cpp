@@ -1,6 +1,6 @@
 /***************************************************************************
-                          graphictextdialog.cpp  -  description
-                             -------------------
+                          graphictextdialog.cpp
+                         -----------------------
     begin                : Wed Nov 26 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -18,6 +18,7 @@
 #include "graphictextdialog.h"
 
 #include "qucs.h"
+#include "qucsview.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -87,10 +88,10 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   Angle->setMaximumWidth(35);
   Angle->setText("0");
 
-//  if(((QucsApp*)pApp->mainWidget())->view->Docs.current()->symbolMode) {
-//    l1->setEnabled(false);
-//    Angle->setEnabled(false);
-//  }
+  if(QucsMain->view->Docs.current()->symbolMode) {
+    l1->setEnabled(false);
+    Angle->setEnabled(false);
+  }
 
   text->setFocus();
 }
