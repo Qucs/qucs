@@ -181,6 +181,13 @@ void QucsInit::initActions()
 	   "Distribute vertically selected elements"));
   connect(App->distrVert, SIGNAL(activated()), App, SLOT(slotDistribVert()));
 
+  Acts->onGrid = new QAction(tr("Set on Grid"), tr("Set on Grid"), 0, App);
+  Acts->onGrid->setStatusTip(tr("Set on Grid"));
+  Acts->onGrid->setWhatsThis(
+	tr("Set on Grid\n\nSets selected elements on grid"));
+  Acts->onGrid->setToggleAction(true);
+  connect(Acts->onGrid, SIGNAL(toggled(bool)), Acts, SLOT(slotOnGrid(bool)));
+
   App->editCut = new QAction(tr("Cut"),
 			QIconSet(QImage(BITMAPDIR "editcut.png")),
 			tr("Cu&t"), CTRL+Key_X, App);
@@ -546,6 +553,7 @@ void QucsInit::initMenuBar()
   Acts->editMirrorY->addTo(editMenu);
   Acts->editActivate->addTo(editMenu);
   editMenu->insertItem(tr("Align"), alignMenu);
+  Acts->onGrid->addTo(editMenu);
   editMenu->insertSeparator();
   App->intoH->addTo(editMenu);
   App->popH->addTo(editMenu);

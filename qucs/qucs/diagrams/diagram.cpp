@@ -552,6 +552,13 @@ void Diagram::setCenter(int x, int y, bool relative)
   }
 }
 
+// -------------------------------------------------------
+void Diagram::getCenter(int& x, int& y)
+{
+  x = cx + (x2 >> 1);
+  y = cy - (y2 >> 1);
+}
+
 // ------------------------------------------------------------
 Diagram* Diagram::newOne()
 {

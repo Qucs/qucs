@@ -1,5 +1,10 @@
 2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
+	* functions: distribute horizontally/vertically,
+	set on grid
+
+2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
 	* component name can be edited
 
 2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>

@@ -115,6 +115,7 @@ public:
   void MMoveMirrorX(QMouseEvent*);
   void MMoveRotate(QMouseEvent*);
   void MMoveActivate(QMouseEvent*);
+  void MMoveOnGrid(QMouseEvent*);
   void MMoveResizePainting(QMouseEvent*);
   void (QucsView::*MouseMoveAction) (QMouseEvent*);// current mouse move method
 
@@ -131,6 +132,7 @@ public:
   void MPressWire2(QMouseEvent*);
   void MPressPainting(QMouseEvent*);
   void MPressMarker(QMouseEvent*);
+  void MPressOnGrid(QMouseEvent*);
   void (QucsView::*MousePressAction) (QMouseEvent*); // mouse press method
 
   void MDoubleClickSelect(QMouseEvent*);

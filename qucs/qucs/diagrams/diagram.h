@@ -40,6 +40,7 @@ public:
   virtual void calcCoordinate(double, double, double, int*, int*) {};
   void    calcData(Graph*, bool);
   void    setCenter(int, int, bool relative=false);
+  void    getCenter(int&, int&);
   void    paintScheme(QPainter*);
   void    paint(QPainter*);
   void    Bounding(int&, int&, int&, int&);
