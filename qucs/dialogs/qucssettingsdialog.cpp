@@ -16,7 +16,6 @@
  ***************************************************************************/
 
 #include "qucssettingsdialog.h"
-
 #include "../main.h"
 
 #include <qwidget.h>
@@ -96,7 +95,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   // ...........................................................
   // fill the fields with the Qucs-Properties
 
-  Font  = App->globalSettings->font;
+  Font  = QucsSettings.font;
   FontButton->setText(Font.toString());
   BGColorButton->setPaletteBackgroundColor(
 	App->view->viewport()->paletteBackgroundColor());
@@ -118,24 +117,25 @@ void QucsSettingsDialog::slotApply()
 {
   bool changed = false;
 
-  if(App->font() != Font) {
-    App->globalSettings->font = Font;
-//    App->setFont(Font);
-//    App->App->setFont(Font);
-//    App->ContentMenu->setFont(Font);
-    changed = true;
-  }
   if(App->view->viewport()->paletteBackgroundColor() !=
-	BGColorButton->paletteBackgroundColor()) {
+		BGColorButton->paletteBackgroundColor()) {
     App->view->viewport()->setPaletteBackgroundColor(
 		BGColorButton->paletteBackgroundColor());
     changed = true;
   }
 
+  QFont tmpFont(App->font());
+  if(App->font() != Font) {
+    QucsSettings.font = Font;
+//    App->setFont(Font);
+//    App->ContentMenu->setFont(Font);
+    changed = true;
+  }
+
   if(changed) {
-//    App->menuBar()->update();
+    saveApplSettings(App);  // also sets the small and large font
+    QucsSettings.font = tmpFont;
     App->repaint();
-//    App->saveSettings();
   }
 }
 
@@ -162,7 +162,7 @@ void QucsSettingsDialog::slotBGColorDialog()
 // -----------------------------------------------------------
 void QucsSettingsDialog::slotDefaultValues()
 {
-  Font = QFont("helvetica", 12);
+  Font = QFont("Helvetica", 12);
   FontButton->setText(Font.toString());
 
   BGColorButton->setPaletteBackgroundColor(QColor(255,250,225));

@@ -523,6 +523,8 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   while(!stream->atEnd()) {
     s = stream->readLine();
     s = s.stripWhiteSpace();
+    if(s.isEmpty()) continue;
+
     if(s == ("</"+Name+">")) return true;  // found end tag ?
     if(s.section(' ', 0,0) == "<Mkr") break;
     Graph *pg = new Graph();
@@ -542,8 +544,10 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
       return false;
     }
     Markers.append(pm);
+
     s = stream->readLine();
     s = s.stripWhiteSpace();
+    if(s.isEmpty()) continue;
     if(s == ("</"+Name+">")) return true;  // found end tag ?
   }
 

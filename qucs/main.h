@@ -21,12 +21,18 @@
 #include <qfont.h>
 #include <qcolor.h>
 
+class QucsApp;
+
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
-  QFont font;
+  QFont font, largeFont, smallFont;
   QColor BGColor;      // background color of view area
 };
+
+extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
+
+bool saveApplSettings(QucsApp *qucs);
 
 #endif
 

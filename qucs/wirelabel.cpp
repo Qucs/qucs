@@ -16,8 +16,8 @@
  ***************************************************************************/
 
 #include "wirelabel.h"
-
 #include "wire.h"
+#include "main.h"
 
 
 WireLabel::WireLabel(const QString& _Name, int _cx, int _cy, int _x1, int _y1, ElementType _Type)
@@ -71,7 +71,7 @@ void WireLabel::setCenter(int x_, int y_, bool relative)
   }
   else {
     if(relative) {
-      x1 += x_;  y1 += y_;   // moving cx/cy must be done by owner (wire or node)
+      x1 += x_;  y1 += y_; // moving cx/cy must be done by owner (wire, node)
     }
     else {
       x1 = x_;
@@ -147,10 +147,8 @@ void WireLabel::setName(const QString& Name_)
 {
   Name = Name_;
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name);  // get size of text
+  QFontMetrics  metrics(QucsSettings.font);    // get size of text
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Name);
   x2 = r.width();
   y2 = r.height()-2;    // remember size of text
 }

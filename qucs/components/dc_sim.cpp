@@ -16,16 +16,15 @@
  ***************************************************************************/
 
 #include "dc_sim.h"
+#include "../main.h"
 
 
 DC_Sim::DC_Sim()
 {
   Description = QObject::tr("dc simulation");
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Description);      // get size of text
+  QFontMetrics  metrics(QucsSettings.largeFont);
+  QRect r = metrics.boundingRect(0,0,0,0,Qt::AlignAuto,Description);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 

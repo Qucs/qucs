@@ -16,18 +16,17 @@
  ***************************************************************************/
 
 #include "hb_sim.h"
+#include "../main.h"
 
 
 HB_Sim::HB_Sim()
 {
   Description = QObject::tr("Harmonic balance simulation");
 
-  QWidget  w;
-  QPainter p(&w);
   QString  s = Description;
   s[s.findRev(" ")] = '\n';    // break line before the word "simulation"
-  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  QFontMetrics  metrics(QucsSettings.largeFont);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -51,8 +50,10 @@ HB_Sim::HB_Sim()
   Model = ".HB";
   Name  = "HB";
 
-  Props.append(new Property("f", "1 GHz", true, QObject::tr("frequency in Hertz")));
-  Props.append(new Property("n", "4", true, QObject::tr("number of harmonics")));
+  Props.append(new Property("f", "1 GHz", true,
+			QObject::tr("frequency in Hertz")));
+  Props.append(new Property("n", "4", true,
+			QObject::tr("number of harmonics")));
 }
 
 HB_Sim::~HB_Sim()

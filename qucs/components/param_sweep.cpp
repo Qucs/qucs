@@ -16,18 +16,17 @@
  ***************************************************************************/
 
 #include "param_sweep.h"
+#include "../main.h"
 
 
 Param_Sweep::Param_Sweep()
 {
   Description = QObject::tr("Parameter sweep");
 
-  QWidget  w;
-  QPainter p(&w);
   QString  s = Description;
   s.replace(" ","\n");
-  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  QFontMetrics  metrics(QucsSettings.largeFont);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -51,11 +50,16 @@ Param_Sweep::Param_Sweep()
   Model = ".SW";
   Name  = "SW";
 
-  Props.append(new Property("Sim", "", true, QObject::tr("simulation to perform parameter sweep on")));
-  Props.append(new Property("Param", "R1", true, QObject::tr("parameter to sweep")));
-  Props.append(new Property("Start", "5 Ohm", true, QObject::tr("start value for sweep")));
-  Props.append(new Property("Stop", "50 Ohm", true, QObject::tr("stop value for sweep")));
-  Props.append(new Property("Step", "5 Ohm", true, QObject::tr("step size for sweep")));
+  Props.append(new Property("Sim", "", true,
+		QObject::tr("simulation to perform parameter sweep on")));
+  Props.append(new Property("Param", "R1", true,
+		QObject::tr("parameter to sweep")));
+  Props.append(new Property("Start", "5 Ohm", true,
+		QObject::tr("start value for sweep")));
+  Props.append(new Property("Stop", "50 Ohm", true,
+		QObject::tr("stop value for sweep")));
+  Props.append(new Property("Step", "5 Ohm", true,
+		QObject::tr("step size for sweep")));
 }
 
 Param_Sweep::~Param_Sweep()

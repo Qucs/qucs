@@ -21,6 +21,7 @@
 
 #include "graphictext.h"
 #include "graphictextdialog.h"
+#include "../main.h"
 
 #include <qwidget.h>
 #include <qpainter.h>
@@ -32,7 +33,7 @@ GraphicText::GraphicText()
 {
   isSelected = false;
   Color = QColor(0,0,0);
-  Size = 12;
+  Font = QucsSettings.font;
   cx = cy = 0;
   cx_d = cy_d = 0.0;
   x1 = x2 = 0;
@@ -56,7 +57,7 @@ void GraphicText::paint(QPainter *p)
     p->drawRect(x-2, y-2, x2+4, y2+4);
   }
   p->setPen(Color);
-  p->setFont(QFont("Helvetica",Size, QFont::Light));
+  p->setFont(Font);
   p->drawText(x, y, 0, 0, Qt::AlignAuto | Qt::DontClip, Text);
 
   p->restore();
@@ -118,7 +119,7 @@ bool GraphicText::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // Size
-  Size = n.toInt(&ok);
+  Font.setPointSize(n.toInt(&ok));
   if(!ok) return false;
 
   n  = s.section(' ',4,4);    // Color
@@ -140,10 +141,8 @@ bool GraphicText::load(const QString& _s)
 
   Text.replace("\\n", "\n");
   Text.replace("\\\\", "\\");
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",Size, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);  // get width of text
+  QFontMetrics  metrics(QucsSettings.font);    // get size of text
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width();
   y2 = r.height();
 
@@ -158,9 +157,9 @@ QString GraphicText::save()
   t.replace('\n', "\\n");
 
   // the 'Text' property has to be the last within the line !
-  QString s = "   <Text "+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += QString::number(Size)+" "+Color.name()+" "+QString::number(Angle);
-  s += " \""+t+"\">";
+  QString s = "   <Text "+QString::number(cx)+" "+QString::number(cy)+" "
+		+ QString::number(Font.pointSize())+" "+Color.name()+" "
+		+ QString::number(Angle) + " \""+t+"\">";
   return s;
 }
 
@@ -263,7 +262,7 @@ bool GraphicText::Dialog()
 
   GraphicTextDialog *d = new GraphicTextDialog();
   d->ColorButt->setPaletteBackgroundColor(Color);
-  d->TextSize->setText(QString::number(Size));
+  d->TextSize->setText(QString::number(Font.pointSize()));
   d->Angle->setText(QString::number(Angle));
   d->text->setText(Text);
 
@@ -276,8 +275,8 @@ bool GraphicText::Dialog()
     Color = d->ColorButt->paletteBackgroundColor();
     changed = true;
   }
-  if(Size  != d->TextSize->text().toInt()) {
-    Size  = d->TextSize->text().toInt();
+  if(Font.pointSize()  != d->TextSize->text().toInt()) {
+    Font.setPointSize(d->TextSize->text().toInt());
     changed = true;
   }
   int tmp = d->Angle->text().toInt();
@@ -295,10 +294,8 @@ bool GraphicText::Dialog()
       changed = true;
     }
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",Size, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text); // get width of text
+  QFontMetrics  metrics(QucsSettings.font);    // get size of text
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width();
   y2 = r.height();
 

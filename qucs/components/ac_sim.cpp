@@ -16,16 +16,15 @@
  ***************************************************************************/
 
 #include "ac_sim.h"
+#include "../main.h"
 
 
 AC_Sim::AC_Sim()
 {
   Description = QObject::tr("ac simulation");
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Description);      // get size of text
+  QFontMetrics  metrics(QucsSettings.largeFont);
+  QRect r = metrics.boundingRect(0,0,0,0,Qt::AlignAuto,Description);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -49,9 +48,12 @@ AC_Sim::AC_Sim()
   Model = ".AC";
   Name  = "AC";
 
-  Props.append(new Property("Start", "1 GHz", true, QObject::tr("start frequency in Hertz")));
-  Props.append(new Property("Stop", "10 GHz", true, QObject::tr("stop frequency in Hertz")));
-  Props.append(new Property("Step", "1 GHz", true, QObject::tr("frequency steps in Hertz")));
+  Props.append(new Property("Start", "1 GHz", true,
+			QObject::tr("start frequency in Hertz")));
+  Props.append(new Property("Stop", "10 GHz", true,
+			QObject::tr("stop frequency in Hertz")));
+  Props.append(new Property("Step", "1 GHz", true,
+			QObject::tr("frequency steps in Hertz")));
 }
 
 AC_Sim::~AC_Sim()

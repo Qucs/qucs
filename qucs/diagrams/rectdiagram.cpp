@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "rectdiagram.h"
+#include "../main.h"
 
 #include <math.h>
 
@@ -165,17 +166,15 @@ void RectDiagram::calcDiagram()
   zD /= (yup-ylow)/double(y2);
 
   QRect r;
-  QWidget w;
-  QPainter p(&w);
   QString tmp;
-  p.setFont(QFont("Helvetica",12, QFont::Light));
+  QFontMetrics  metrics(QucsSettings.font);
 
   int maxWidth = 0;
   z = int(zD);
   while(z <= y2) {    // create all grid lines
     if(fabs(Expo) < 3.0)  tmp = QString::number(GridNum);
     else QString::number(GridNum, 'e', 0);
-    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,tmp);   // get width of text
+    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, tmp); // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
 
     Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
