@@ -2359,6 +2359,10 @@ Usage:  qucsedit [-r] file
 
 </translation>
     </message>
+    <message>
+        <source>Cannot find variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

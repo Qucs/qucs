@@ -1,3 +1,11 @@
+2005-03-26  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed seg fault if indep data not found
+	* fixed seg fault caused by wrong y-axis
+	* fixed some graph and diagram painting faults
+	* dependend variables can now replace independent ones
+	(if suitable)
+
 2005-03-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed a few small bugs.

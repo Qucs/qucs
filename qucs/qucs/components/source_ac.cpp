@@ -63,6 +63,8 @@ Source_ac::Source_ac()
 		QObject::tr("ac power in Watts")));
   Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature in degree Celsius")));
 }
 
 Source_ac::~Source_ac()

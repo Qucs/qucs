@@ -68,6 +68,8 @@ MScoupled::MScoupled()
   Props.append(new Property("DispModel", "Kirschning", false,
 	QObject::tr("microstrip dispersion model")+
 	" [Kirschning, Getsinger]"));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature in degree Celsius")));
 }
 
 MScoupled::~MScoupled()

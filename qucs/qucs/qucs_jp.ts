@@ -2405,6 +2405,10 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf</translation>
     </message>
+    <message>
+        <source>Cannot find variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
