@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.1 2004-02-13 20:31:45 ela Exp $
+ * $Id: parasweep.cpp,v 1.2 2004-04-13 20:41:17 ela Exp $
  *
  */
 
@@ -46,12 +46,14 @@ using namespace std;
 
 // Constructor creates an unnamed instance of the parasweep class.
 parasweep::parasweep () : analysis () {
+  runs = 0;
   var = NULL;
   type = ANALYSIS_SWEEP;
 }
 
 // Constructor creates a named instance of the parasweep class.
 parasweep::parasweep (char * n) : analysis (n) {
+  runs = 0;
   var = NULL;
   type = ANALYSIS_SWEEP;
 }
@@ -63,6 +65,7 @@ parasweep::~parasweep () {
 /* The copy constructor creates a new instance of the parasweep class
    based on the given parasweep object. */
 parasweep::parasweep (parasweep & p) : analysis (p) {
+  runs = p.runs;
   var = new variable (*p.var);
 }
 
@@ -87,12 +90,14 @@ void parasweep::solve (void) {
 
   // run the parameter sweep
   for (*var = start; *var <= stop; *var += step) {
-    saveResults ();
-    if (actions != NULL) {
-      actions->solve ();
-      data->assignDependency (actions->getName (), var->getName ());
+    if (runs == 0) saveResults ();
+    for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+      a->solve ();
+      analysis * last = subnet->findLastOrder (a);
+      data->assignDependency (last->getName (), var->getName ());
     }
   }
+  runs++;
 }
 
 /* This function saves the results of a single solve() functionality

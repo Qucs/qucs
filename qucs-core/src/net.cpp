@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.7 2004-02-17 15:30:57 ela Exp $
+ * $Id: net.cpp,v 1.8 2004-04-13 20:41:17 ela Exp $
  *
  */
 
@@ -160,6 +160,18 @@ void net::removeAnalysis (analysis * a) {
   }
 }
 
+/* The function returns the analysis associated with the netlist
+   object specified by the given instance name and returns NULL if
+   there is no such analysis. */
+analysis * net::findAnalysis (char * n) {
+  if (n == NULL) return NULL;
+  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+    if (!strcmp (a->getName (), n))
+      return a;
+  }
+  return NULL;
+}
+
 /* This function runs all registered analyses applied to the current
    netlist. */
 dataset * net::runAnalysis (void) {
@@ -171,37 +183,88 @@ dataset * net::runAnalysis (void) {
     a->setNet (this);
     a->setData (out);
   }
-  orderAnalysis ();
-  // solve the analyses
-  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
-    a->solve ();
+
+  if (!orderAnalysis ()) {
+    // solve the analyses
+    for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+      a->solve ();
+    }
   }
   return out;
+}
+
+/* The function returns the analysis with the lowest order.  If there
+   is no recursive sweep it returns NULL. */
+analysis * net::firstOrderAnalysis (void) {
+  int error = 0;
+  analysis * parent = NULL;
+  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+    // parameter sweeps are potential parent sweeps
+    if (a->getType () == ANALYSIS_SWEEP) {
+      // find the appropriate sub analysis
+      char * cn = a->getPropertyString ("Sim");
+      analysis * child = findAnalysis (cn);
+      if (child == NULL) {
+	// no sub analysis found
+	error++;
+      }
+      else {
+	// check if child is not another variable sweep
+	if (child->getType () != ANALYSIS_SWEEP) {
+	  parent = a;
+	  break;
+	}
+	// check if the child's child is still in the analysis list
+	else if (findAnalysis (child->getPropertyString ("Sim")) == NULL) {
+	  parent = a;
+	  break;
+	}
+      }
+    }
+  }
+  return parent;
 }
 
 /* The function reorders (prioritizes) the registered analysis to the
    netlist object.  In fact it chains the analyses to be extecuted in
    a certain order. */
-void net::orderAnalysis (void) {
-  analysis * parent = NULL;
+int net::orderAnalysis (void) {
+  analysis * parent;
+  int error = 0;
 
-  // find analysis with lowest order
-  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
-    if (a->getType () == ANALYSIS_SWEEP) {
-      parent = a;
-      break;
-    }
-  }
-  // apply sub-analysis to the parent analysis if any
-  if (parent != NULL) {
-    for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
-      if (a->getType () != ANALYSIS_SWEEP) {
-	parent->setAnalysis (a);
-	removeAnalysis (a);
-	break;
+  do {
+    // get first order sweep
+    parent = firstOrderAnalysis ();
+    // apply sub-analysis to the parent analysis if any
+    if (parent != NULL) {
+      char * cn = parent->getPropertyString ("Sim");
+      analysis * child = findAnalysis (cn);
+      if (child == parent) {
+	logprint (LOG_ERROR,
+		  "cyclic analysis definition `%s' detected\n", cn);
+	error++;
+      }
+      else if (child != NULL) {
+	removeAnalysis (child);
+	parent->addAnalysis (child);
+      }
+      else {
+	logprint (LOG_ERROR, "no such analysis `%s' found\n", cn);
+	error++;
       }
     }
+  } while (parent != NULL && !error);
+
+  return error;
+}
+
+// Returns the last order sweep being not an parameter sweep.
+analysis * net::findLastOrder (analysis * a) {
+  analysis * child = a->getAnalysis ();
+  if (child != NULL && child->getType () == ANALYSIS_SWEEP) {
+    return findLastOrder (child);
   }
+  return child ? child : a;
 }
 
 /* The function re-shifts all circuits in the drop list to the actual

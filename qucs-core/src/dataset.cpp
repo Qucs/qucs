@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.3 2004-02-17 15:30:57 ela Exp $
+ * $Id: dataset.cpp,v 1.4 2004-04-13 20:41:17 ela Exp $
  *
  */
 
@@ -131,26 +131,57 @@ void dataset::appendVariable (vector * v) {
   v->setNext (NULL);
 }
 
+/* This function returns the dataset vector (both independent and
+   dependent) with the given origin.  It returns NULL if there is no
+   such vector. */
+vector * dataset::findOrigin (char * n) {
+  for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
+    char * origin = v->getOrigin ();
+    if (origin != NULL && n != NULL && !strcmp (n, origin))
+      return v;
+  }
+  for (vector * v = dependencies; v != NULL; v = (vector *) v->getNext ()) {
+    char * origin = v->getOrigin ();
+    if (origin != NULL && n != NULL && !strcmp (n, origin))
+      return v;
+  }
+  return NULL;
+}
+
 /* This function assigns dependency entries to variable vectors which
    do have the specified origin. */
-void dataset::assignDependency (char * origin, char * n) {
+void dataset::assignDependency (char * origin, char * depvar) {
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
-    if (v->getOrigin () && origin && !strcmp (v->getOrigin (), origin)) {
+    char * n = v->getOrigin ();
+    if (n != NULL && origin != NULL && !strcmp (origin, n)) {
       strlist * deplist = v->getDependencies ();
       if (deplist != NULL) {
-	if (!deplist->contains (n)) {
-	  deplist->append (n);
+	if (!deplist->contains (depvar)) {
+	  deplist->append (depvar);
 	}
       }
       else {
 	deplist = new strlist ();
-	deplist->add (n);
+	deplist->add (depvar);
 	v->setDependencies (deplist);
       }
     }
   }
 }
 
+// Return non-zero if the given vector is an independent variable vector.
+int dataset::isDependency (vector * dep) {
+  for (vector * v = dependencies; v != NULL; v = (vector *) v->getNext ())
+    if (v == dep) return 1;
+  return 0;
+}
+
+// Return non-zero if the given vector is a dependent variable vector.
+int dataset::isVariable (vector * var) {
+  for (vector * v = variables; v != NULL; v = (vector *) v->getNext ())
+    if (v == var) return 1;
+  return 0;
+}
 
 /* The function goes through the list of dependencies in the dataset
    and returns the vector specified by the given name.  Otherwise the
