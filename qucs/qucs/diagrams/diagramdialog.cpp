@@ -285,7 +285,7 @@ void DiagramDialog::slotDeleteGraph()
   GraphInput->setText("");  // erase input line and back to default values
   ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
-  GraphThick->setText("1");
+  GraphThick->setText("0");
   changed = true;
   toTake  = false;
 }

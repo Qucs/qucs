@@ -2453,7 +2453,7 @@ And in matrix representation this is:
 .&.&.& 0\\
 .&.&.& 1\\
 .&.&.& 0\\
--1 & 0 & -1 & 0
+1 & 0 & -1 & 0
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -2791,6 +2791,33 @@ I_{2}\\
 I_{3}\\
 0\\
 0\\
+0
+\end{bmatrix}
+\end{equation}
+
+\subsection{Bias T}
+%\addcontentsline{toc}{subsection}{Bias T}
+
+The MNA matrix of an ideal bias t writes as follows:
+\begin{equation}
+\begin{bmatrix}
+ . & . & .  &  0\\
+ . & . & .  &  1\\
+ . & . & .  & -1\\
+ 0 & 1 & -1 &  0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+I_{out}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
 0
 \end{bmatrix}
 \end{equation}

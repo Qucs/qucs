@@ -69,4 +69,6 @@ void Node::setName(const QString& Name_, int x_, int y_)
 
   if(!Label) Label = new WireLabel(Name_, cx, cy, x_, y_, isNodeLabel);
   else Label->setName(Name_);
+  Label->pNode = this;
+  Label->pWire = 0;
 }

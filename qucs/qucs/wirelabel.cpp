@@ -150,7 +150,7 @@ void WireLabel::setName(const QString& Name_)
   QWidget w;
   QPainter p(&w);
   p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name);      // get size of text on screen
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name);  // get size of text
   x2 = r.width();
   y2 = r.height()-2;    // remember size of text
 }
