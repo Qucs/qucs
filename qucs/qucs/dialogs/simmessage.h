@@ -52,6 +52,7 @@ public slots:
 public:
   QProcess    SimProcess;
   QTextEdit   *ProgText, *ErrText;
+  bool        wasLF;   // linefeed for "ProgText"
   QPushButton *Display, *Abort;
   QString     DataDisplay;
 };
