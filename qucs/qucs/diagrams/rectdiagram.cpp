@@ -131,14 +131,16 @@ void RectDiagram::calcDiagram()
 	   }
   }
   else {
-    if(GridNum > 0.3) zD = GridStep-zD;
-    else if(GridNum < 0.1) {
+    if(GridNum > 0.3) {
+      if(GridNum > 0.9) {
 	   if(GridNum*double(x2) >= 1.0) { // more than 1 pixel above ?
 	     xlow -= 0.3*GridStep;    // beauty correction
 	     zD   += 0.3*GridStep;
 	   }
-	 }
-         else { xlow -= zD;  zD = 0.0; }
+      }
+      else zD = GridStep-zD;
+    }
+    else { xlow -= zD;  zD = 0.0; }
   }
 
 
@@ -210,14 +212,16 @@ void RectDiagram::calcDiagram()
 	   }
   }
   else {
-    if(GridNum > 0.3) zD = GridStep-zD;
-    else if(GridNum < 0.1) {
+    if(GridNum > 0.3) {
+      if(GridNum > 0.9) {
 	   if(GridNum*double(y2) >= 1.0) { // more than 1 pixel above ?
 	     ylow -= 0.3*GridStep;    // beauty correction
 	     zD   += 0.3*GridStep;
 	   }
-	 }
-         else { ylow -= zD;  zD = 0.0; }
+      }
+      else zD = GridStep-zD;
+    }
+    else { ylow -= zD;  zD = 0.0; }
   }
 
   zDstep = GridStep/(yup-ylow)*double(y2); // distance between grids in pixel
