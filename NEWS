@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * translation into polish
  * some new components (e.g. transistors)
  * undo function
  * resize operation for paintings
