@@ -2,6 +2,7 @@
 
 	* devices/mosfet.cpp: Applied trapezoidal rule to Meyer
 	charges in MOSFET model.
+	(transientCharge): Simplified Meyer charge handling a bit.
 
 2004-10-17  Stefan Jahn  <stefan@lkcc.org>
 
