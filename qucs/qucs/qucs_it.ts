@@ -631,6 +631,10 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>ideality coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>equation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -968,22 +972,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancella</translation>
-    </message>
-    <message>
-        <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zero-bias junction capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>junction potential</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

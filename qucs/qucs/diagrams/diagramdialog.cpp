@@ -315,7 +315,7 @@ void DiagramDialog::slotApply()
     Diag->xLabel = xLabel->text();
     changed = true;
   }
-  if(Diag->yLabel.isEmpty()) Diag->yLabel = "";   // A QString can be non-Null and empty !!!
+  if(Diag->yLabel.isEmpty()) Diag->yLabel = "";   // QString can be non-Null and empty !!!
   if(yLabel->text().isEmpty()) yLabel->setText("");
   if(Diag->yLabel != yLabel->text()) {
     Diag->yLabel = yLabel->text();
