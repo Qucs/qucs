@@ -2140,37 +2140,38 @@ solutions the method requires $n^3/3 + Mn^2 - n/3$ operations.
 \subsection{A comparison}
 %\addcontentsline{toc}{subsection}{A comparison}
 
-\begin{tabular}{l|r|r|r|r|r}
-method                & precision        & application & programming &
-computing      & notes\\
-                      &                  &              & effort &
-time      & \\
+There are direct and iterative methods (algorithms) for solving linear
+equation systems.  Equation systems with large and sparse matrices
+should rather be solved with iterative methods.
+
+\addvspace{12pt}
+
+\begin{tabular}{|p{2.2cm}|p{1.5cm}|p{1.8cm}|p{2.1cm}|p{1.7cm}|p{3cm}|}
 \hline
-Laplace     & numerical & general     & straight   &
-$n!$                & very time \\
-expansion   & errors    &             & forward    &
-                    & consuming\\
+\raggedright method & \raggedleft precision & \raggedleft application & 
+\raggedleft programming effort & \raggedleft computing complexity & 
+\parbox[t]{3cm}{\raggedleft notes}\\
 \hline
-Gaussian & numerical & general     & intermediate       &
-$n^3/3 + n^2/2$     &\\
-eliminiation & errors &      &        &
-     &\\
+\raggedright Laplace expansion & \raggedleft numerical errors & 
+\raggedleft general & \raggedleft straight forward &
+\raggedleft $n!$ & \parbox[t]{3cm}{\raggedleft very time consuming}\\
 \hline
-Gauss-Jordan          & numerical & general     & intermediate       &
-$n^3/3 + n^2 - n/3$ &\\
-          & errors &      &        &
- &\\
+\raggedright Gaussian elimination & \raggedleft numerical errors & 
+\raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2/2$ &
+\parbox[t]{3cm}{\raggedleft }\\
 \hline
-LU      & numerical & general     & intermediate       &
-$n^3/3 + n^2 - n/3$ &\\
-decomposition      & errors &      &        &
- &\\
+\raggedright Gauss-Jordan & \raggedleft numerical errors & \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2 - n/3$ & \parbox[t]{3cm}{\raggedleft computes the inverse besides}\\
 \hline
-Jacobi                &                  &             &                    &
-                    &\\
+\raggedright LU decomposition & \raggedleft numerical errors & \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2 - n/3$ & \parbox[t]{3cm}{\raggedleft useful for consecutive solutions}
+
+\addvspace{1pt}
+
+\\
 \hline
-Gauss-Seidel          & very good        &             &                    &
-                    &\\
+\raggedright Jacobi & \raggedleft ? & \raggedleft ? & \raggedleft ? & \raggedleft ? & \parbox[t]{3cm}{\raggedleft }\\
+\hline
+\raggedright Gauss-Seidel & \raggedleft very good & \raggedleft diagonally dominant systems & \raggedleft easy & & \parbox[t]{3cm}{\raggedleft possibly no convergence}\\
+\hline
 \end{tabular}
 
 \section{Extensions to the MNA}
