@@ -76,6 +76,7 @@ public:
   virtual void paintScheme(QPainter *p);
   virtual void setCenter(int x, int y, bool relative=false);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
+  void    entireBounds(int& _x1, int& _y1, int& _x2, int& _y2);
   void    paint(QPainter *p);
   void    rotate();
   void    mirrorX();  // mirror about X axis
@@ -107,6 +108,13 @@ public:
 	SParamFile(int No);
 	virtual ~SParamFile();
   virtual SParamFile* newOne();
+};
+
+class Subcircuit : public Component  {
+public:
+	Subcircuit(int No);
+	virtual ~Subcircuit();
+  virtual Subcircuit* newOne();
 };
 
 class Equation : public Component  {

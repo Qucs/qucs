@@ -23,6 +23,7 @@
 #include <qdialog.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
+#include <qregexp.h>
 
 /**
   *@author Michael Margraf
@@ -39,10 +40,12 @@ private slots:
   void slotApply();
 
 public:
-  QucsDoc *Doc;
+  QRegExp   Expr;
+  QucsDoc   *Doc;
 
   QLineEdit *Input_DataSet, *Input_DataDisplay;
-  QCheckBox *Check_OpenDpl;
+  QLineEdit *Input_GridX, *Input_GridY;
+  QCheckBox *Check_OpenDpl, *Check_GridOn;
 };
 
 #endif

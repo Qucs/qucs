@@ -36,7 +36,7 @@ TabDiagram::~TabDiagram()
 // No data has to be calculated.
 void TabDiagram::calcData(Graph *)
 {
-  calcDiagram();
+//  calcDiagram();
 }
 
 
@@ -54,10 +54,11 @@ void TabDiagram::calcDiagram()
   Lines.append(new Line(x2, y2, x2, 0, QPen(QPen::black,1)));
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,1)));
 
-  Graph *g = Graphs.first();
+  Graph *g = Graphs.getFirst();
   if(g == 0) return;
   
   int y = y2-30;
+  Texts.append(new Text( 4, y2-13, g->IndepVar));
   Texts.append(new Text(84, y2-13, g->Line));
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
     Texts.append(new Text( 4, y, QString::number(cp->x)));

@@ -43,7 +43,7 @@ public:
   void    paint(QPainter *p);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();
-  bool    load(const QString& Line, QTextStream *stream, const QString& DataSet);
+  bool    load(const QString& Line, QTextStream *stream);
 
   void loadGraphData(const QString& defaultDataSet);
   bool loadVarData(const QString& fileName);

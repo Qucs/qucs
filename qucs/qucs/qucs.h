@@ -84,7 +84,7 @@ class QucsApp : public QMainWindow
     void slotFileSettings();// open dialog to change file settings
     void slotFilePrint();   // print the actual file
     void slotFileQuit();    // exits the application
-    void slotEditCut();     // put the marked object into the clipboard and remove it from the document
+    void slotEditCut();     // put marked object into the clipboard and remove it from the document
     void slotEditCopy();    // put the marked object into the clipboard
     void slotEditPaste(bool on);   // paste the clipboard into the document
     void slotEditDelete(bool on);  // delete the selected components
@@ -98,7 +98,11 @@ class QucsApp : public QMainWindow
     void slotHelpAbout();    // shows an about dialog
     void slotHelpAboutQt();  // shows the standard about dialog for Qt
 
+    void slotIntoHierarchy();
+    void slotPopHierarchy();
 
+    void slotShowAll();
+    void slotShowOne();
     void slotZoomIn();  // Zoom in by 2
     void slotZoomOut(); // Zoom out by 2    
     void slotInsertEquation(bool on);
@@ -108,19 +112,25 @@ class QucsApp : public QMainWindow
 
 // ##########################################################################################
 //  private slots:
+    void slotMenuOpenProject();
     void slotOpenProject(QListBoxItem *item);
     void slotSelectComponent(QIconViewItem *item);
 //    void slotOpenContent(QListViewItem *item, const QPoint &, int column);  // Qt3.2
+    void slotSelectSubcircuit(QListViewItem *item);
     void slotOpenContent(QListViewItem *item);
     void slotSetCompView(int index);
     void slotProjNewButt();
     void slotProjOpenButt();
     void slotProjDelButt();
+    void slotMenuDelProject();
     void slotChangeView(int id);
     void slotSimulate();
+    void slotShowLastMsg();
+    void slotShowLastNetlist();
     void slotAfterSimulation(int Status);
     void slotChangePage();
     void slotSelect(bool on);
+    void slotSelectAll();
     void slotEditActivate(bool on);
     void slotInsertLabel(bool on);
 
@@ -134,12 +144,8 @@ class QucsApp : public QMainWindow
     QPrinter   Printer; // printer global in order to remember the user settings
 
 
-    QPopupMenu *fileMenu;    // file_menu contains all items of the menubar entry "File"
-    QPopupMenu *editMenu;    // edit_menu contains all items of the menubar entry "Edit"
-    QPopupMenu *insMenu;     // ins_menu contains all items of the menubar entry "Insert"
-    QPopupMenu *projMenu;    // proj_menu contains all items of the menubar entry "Project"
-    QPopupMenu *viewMenu;    // view_menu contains all items of the menubar entry "View"
-    QPopupMenu *helpMenu;    // view_menu contains all items of the menubar entry "Help"
+    // menus contain the items of their menubar
+    QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu, *helpMenu;
     
     QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;    // the toolbars
 
@@ -149,9 +155,9 @@ class QucsApp : public QMainWindow
     QAction *fileSettings, *filePrint, *fileQuit;
     QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
     QAction *projNew, *projOpen, *projDel;
-    QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magPlus, *magMinus, *select;
-    QAction *editRotate, *editMirror, *editMirrorY, *intoH, *popH, *editActivate, *wire, *editDelete;
-    QAction *simulate, *dpl_sch;
+    QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magOne, *magPlus, *magMinus;
+    QAction *select, *editRotate, *editMirror, *editMirrorY, *intoH, *popH, *editActivate, *wire;
+    QAction *editDelete, *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *viewToolBar, *viewStatusBar;
     QAction *helpAboutApp, *helpAboutQt;
 
@@ -171,10 +177,15 @@ class QucsApp : public QMainWindow
     
 // ********** Properties ************************************************
     QString       ProjName;   // name of the project, that is open
+    QPtrList<QString> HierarchyHistory; // keeps track of the "go into subcircuit"
 
     
 // ********** Methods ***************************************************
-    void OpenProject(const QString& name);
+//    void openDocument(const QString& Name);
+    void OpenProject(const QString& Path, const QString& Name);
+    void DeleteProject(const QString& Path, const QString& Name);
+    void updatePortNumber(int No);
+    bool gotoPage(const QString& Name);
     
 };
 #endif 

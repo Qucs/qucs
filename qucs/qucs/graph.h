@@ -47,7 +47,7 @@ public:
 
   int  count, *Points;
   QPtrList<cPoint> cPoints;
-  QString Line;
+  QString Line, IndepVar;
 //  QRgb    Color;
   QColor  Color;
   int     Thick;

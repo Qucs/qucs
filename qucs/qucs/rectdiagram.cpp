@@ -101,11 +101,11 @@ void RectDiagram::calcData(Graph *g)
   int *p = g->Points;
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
     *(p++) = int((cp->x-xmin)/(xmax-xmin)*x2);
-    *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-y1)/(ymax-ymin)*y2);
-//QMessageBox::critical(0, "Error", QString::number(cp->x)+"  "+QString::number(cp->yr));
+    *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ymin)/(ymax-ymin)*y2);
   }
 
-  calcDiagram();
+//QMessageBox::critical(0, "Error", QString::number(xmin)+"  "+QString::number(xmax));
+//  calcDiagram();
 }
 
 // ------------------------------------------------------------
