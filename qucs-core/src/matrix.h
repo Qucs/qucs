@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.2 2004-02-17 15:30:57 ela Exp $
+ * $Id: matrix.h,v 1.3 2004-04-28 14:39:19 ela Exp $
  *
  */
 
@@ -62,8 +62,12 @@ class matrix
   friend complex adjoint (matrix&, int, int);
   friend complex det (matrix&);
   friend matrix& inverse (matrix&);
-  friend matrix& stoz (matrix&, complex);
-  friend matrix& stoy (matrix&, complex);
+  friend matrix& stoz (matrix&, complex z0 = 50.0);
+  friend matrix& ztos (matrix&, complex z0 = 50.0);
+  friend matrix& ztoy (matrix&);
+  friend matrix& stoy (matrix&, complex z0 = 50.0);
+  friend matrix& ytos (matrix&, complex z0 = 50.0);
+  friend matrix& ytoz (matrix&);
 
  private:
   int cols;
