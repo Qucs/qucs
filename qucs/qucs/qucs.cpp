@@ -1283,7 +1283,7 @@ pInfoFunc Sources[12] =
 
 pInfoFunc TransmissionLines[13] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
-   &MSstep::info, &MScorner::info, &MSmbend::info, &MStee::info,
+   &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
    &MScross::info, &MSopen::info, &MSgap::info, &Coplanar::info, 0};
 
 pInfoFunc nonlinearComps[11] =
@@ -1610,7 +1610,9 @@ void QucsApp::slotEditRedo()
 // Is called, when "Align top" action is activated.
 void QucsApp::slotAlignTop()
 {
-  view->Docs.current()->alignTop();
+  if(!view->Docs.current()->aligning(0))
+    QMessageBox::information(this, tr("Info"),
+		      tr("At least two elements must be selected !"));
   view->viewport()->repaint();
   view->drawn = false;
 }
@@ -1619,7 +1621,9 @@ void QucsApp::slotAlignTop()
 // Is called, when "Align bottom" action is activated.
 void QucsApp::slotAlignBottom()
 {
-  view->Docs.current()->alignBottom();
+  if(!view->Docs.current()->aligning(1))
+    QMessageBox::information(this, tr("Info"),
+		      tr("At least two elements must be selected !"));
   view->viewport()->repaint();
   view->drawn = false;
 }
@@ -1628,7 +1632,9 @@ void QucsApp::slotAlignBottom()
 // Is called, when "Align left" action is activated.
 void QucsApp::slotAlignLeft()
 {
-  view->Docs.current()->alignLeft();
+  if(!view->Docs.current()->aligning(2))
+    QMessageBox::information(this, tr("Info"),
+		      tr("At least two elements must be selected !"));
   view->viewport()->repaint();
   view->drawn = false;
 }
@@ -1637,7 +1643,27 @@ void QucsApp::slotAlignLeft()
 // Is called, when "Align right" action is activated.
 void QucsApp::slotAlignRight()
 {
-  view->Docs.current()->alignRight();
+  if(!view->Docs.current()->aligning(3))
+    QMessageBox::information(this, tr("Info"),
+		      tr("At least two elements must be selected !"));
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Distribute horizontally" action is activated.
+void QucsApp::slotDistribHoriz()
+{
+  view->Docs.current()->distribHoriz();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Distribute vertically" action is activated.
+void QucsApp::slotDistribVert()
+{
+  view->Docs.current()->distribVert();
   view->viewport()->repaint();
   view->drawn = false;
 }

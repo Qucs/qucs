@@ -25,7 +25,6 @@
 #include "paintings/paintings.h"
 #include "main.h"
 
-#include <qmessagebox.h>
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qiconset.h>
@@ -310,10 +309,18 @@ void QucsDoc::setComponentNumber(Component *c)
   if(c->Model != "Port")
     if(c->Model != "Pac") return;  // number ports and power sources only
 
+  // power sources and subcircuit ports have to be numbered
   int n=1;
-  QString s, cSign = c->Model;
+  QString s  = c->Props.getFirst()->Value;
+  QString cSign = c->Model;
   Component *pc;
-  // power sources and subcirciut ports have to be numbered
+  // First look, if the port number already exists.
+  for(pc = Comps.first(); pc != 0; pc = Comps.next())
+    if(pc->Model == cSign)
+      if(pc->Props.getFirst()->Value == s) break;
+  if(!pc) return;   // was port number not yet in use ?
+
+  // Find the first free number.
   do {
     s  = QString::number(n);
     // look for existing ports and their numbers
@@ -1914,24 +1921,25 @@ void QucsDoc::setCompPorts(Component *pc)
 }
 
 // ---------------------------------------------------
-bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
+void QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
 {
   x1=INT_MAX;
   y1=INT_MAX;
   x2=INT_MIN;
   y2=INT_MIN;
   Wire *pw;
-  Painting *pp;
   Component *pc;
   WireLabel *pl;
+  int bx1, by1, bx2, by2;
 
   // find bounds of all selected components
   for(pc = Comps.first(); pc != 0; ) {
-    if(pc->isSelected) if(pc->Ports.count() > 0) {
-      if(pc->cx < x1) x1 = pc->cx;  // do not copy components without ports
-      if(pc->cx > x2) x2 = pc->cx;
-      if(pc->cy < y1) y1 = pc->cy;
-      if(pc->cy > y2) y2 = pc->cy;
+    if(pc->isSelected) {
+      pc->Bounding(bx1, by1, bx2, by2);
+      if(bx1 < x1) x1 = bx1;
+      if(bx2 > x2) x2 = bx2;
+      if(by1 < y1) y1 = by1;
+      if(by2 > y2) y2 = by2;
 
       ElementCache.append(pc);
       deleteComp(pc);
@@ -1956,7 +1964,14 @@ bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
       pw = Wires.current();
     }
     else pw = Wires.next();
+}
 
+// ---------------------------------------------------
+bool QucsDoc::copyCompsWiresPaints(int& x1, int& y1, int& x2, int& y2)
+{
+  copyCompsWires(x1, y1, x2, y2);
+
+  Painting *pp;
   int bx1, by1, bx2, by2;
   // find boundings of all selected paintings
   for(pp = Paints.first(); pp != 0; )
@@ -1985,7 +2000,7 @@ bool QucsDoc::rotateElements()
   Comps.setAutoDelete(false);
 
   int x1, y1, x2, y2, tmp;
-  if(!copyCompsWires(x1, y1, x2, y2)) return false;
+  if(!copyCompsWiresPaints(x1, y1, x2, y2)) return false;
   Wires.setAutoDelete(true);
   Comps.setAutoDelete(true);
 
@@ -1993,7 +2008,7 @@ bool QucsDoc::rotateElements()
   y1 = (y1+y2) >> 1;
   setOnGrid(x1, y1);
 
-  
+
   Component *pc;
   Wire *pw;
   Painting *pp;
@@ -2052,7 +2067,7 @@ bool QucsDoc::mirrorXComponents()
   Comps.setAutoDelete(false);
 
   int x1, y1, x2, y2;
-  if(!copyCompsWires(x1, y1, x2, y2)) return false;
+  if(!copyCompsWiresPaints(x1, y1, x2, y2)) return false;
   Wires.setAutoDelete(true);
   Comps.setAutoDelete(true);
 
@@ -2103,7 +2118,7 @@ bool QucsDoc::mirrorYComponents()
   Comps.setAutoDelete(false);
 
   int x1, y1, x2, y2;
-  if(!copyCompsWires(x1, y1, x2, y2)) return false;
+  if(!copyCompsWiresPaints(x1, y1, x2, y2)) return false;
   Wires.setAutoDelete(true);
   Comps.setAutoDelete(true);
 
@@ -2400,83 +2415,191 @@ bool QucsDoc::redo()
 }
 
 // ---------------------------------------------------
-void QucsDoc::alignTop()
+int QucsDoc::copyElements(int& x1, int& y1, int& x2, int& y2)
 {
-  int x1, y1, x2, y2;
-  int ymin = INT_MAX;
+  int bx1, by1, bx2, by2;
+  Wires.setAutoDelete(false);
+  Comps.setAutoDelete(false);
+
+  // take components and wires out of list, check their boundings
+  copyCompsWires(x1, y1, x2, y2);
+  int number = ElementCache.count();
+
+  Wires.setAutoDelete(true);
+  Comps.setAutoDelete(true);
 
   // find upper most selected diagram
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
     if(pd->isSelected) {
-      if(pd->cy-pd->y2 < ymin)  ymin = pd->cy - pd->y2;
+      pd->Bounding(bx1, by1, bx2, by2);
+      if(bx1 < x1) x1 = bx1;
+      if(bx2 > x2) x2 = bx2;
+      if(by1 < y1) y1 = by1;
+      if(by2 > y2) y2 = by2;
+      ElementCache.append(pd);
+      number++;
     }
   // find upper most selected painting
-/*  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
+  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
     if(pp->isSelected) {
-      pp->Bounding(x1, y1, x2, y2);
-      if(y1 < ymin)  ymin = y1;
-    }*/
+      pp->Bounding(bx1, by1, bx2, by2);
+      if(bx1 < x1) x1 = bx1;
+      if(bx2 > x2) x2 = bx2;
+      if(by1 < y1) y1 = by1;
+      if(by2 > y2) y2 = by2;
+      ElementCache.append(pp);
+      number++;
+    }
 
+  return number;
+}
+
+// ---------------------------------------------------
+bool QucsDoc::aligning(int Mode)
+{
+  int x1, y1, x2, y2;
+  int bx1, by1, bx2, by2, *bx=0, *by=0;
+  int count = copyElements(x1, y1, x2, y2);
+  if(count < 1) return false;
+
+
+  switch(Mode) {
+    case 0:  // align top
+	bx = &x1;
+	by = &by1;
+	break;
+    case 1:  // align bottom
+	bx = &x1;
+	y1 = y2;
+	by = &by2;
+	break;
+    case 2:  // align left
+	by = &y1;
+	bx = &bx1;
+	break;
+    case 3:  // align right
+	by = &y1;
+	x1 = x2;
+	bx = &bx2;
+	break;
+  }
+
+
+  Wire *pw;
+  Component *pc;
+  // re-insert elements
+  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
+    switch(pe->Type) {
+      case isComponent:
+	pc = (Component*)pe;
+	pc->Bounding(bx1, by1, bx2, by2);
+	pc->setCenter(x1-(*bx), y1-(*by), true);
+	insertRawComponent(pc);
+	break;
+
+      case isWire:
+	pw = (Wire*)pe;
+	bx1 = pw->x1;
+	by1 = pw->y1;
+	bx2 = pw->x2;
+	by2 = pw->y2;
+	pw->setCenter(x1-(*bx), y1-(*by), true);
+//	if(pw->Label) {	}
+	insertWire(pw);
+	break;
+
+      case isDiagram:
+	((Diagram*)pe)->Bounding(bx1, by1, bx2, by2);
+	((Diagram*)pe)->setCenter(x1-(*bx), y1-(*by), true);
+	break;
+
+      case isPainting:
+	((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
+	((Painting*)pe)->setCenter(x1-(*bx), y1-(*by), true);
+      default: ;
+    }
+
+  ElementCache.clear();
+  if(count < 2) return false;
 
   // align all selected diagrams
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected)
-      pd->cy = ymin + pd->y2;
+/*  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected) {
+      pd->Bounding(bx1, by1, bx2, by2);
+      pd->setCenter(x1-(*bx), y1-(*by), true);
+    }
   // align all selected paintings
-/*  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
+  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
     if(pp->isSelected) {
-      pp->Bounding(x1, y1, x2, y2);
-//      pp->setCenter(ymin-y1, true);
-    }*/
+      pp->Bounding(bx1, by1, bx2, by2);
+      pp->setCenter(x1-(*bx), y1-(*by), true);
+    }
+*/
+  setChanged(true, true);
+  return true;
 }
 
 // ---------------------------------------------------
-void QucsDoc::alignBottom()
+bool QucsDoc::distribHoriz()
 {
-  int ymax = INT_MIN;
+  int x1, y1, x2, y2;
+//  int bx1, by1, bx2, by2, *bx=0, *by=0;
+  int count = copyElements(x1, y1, x2, y2);
+  if(count < 1) return false;
 
-  // find lower most selected diagram
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected) {
-      if(pd->cy > ymax)  ymax = pd->cy;
+/*  for(int i=0; i<ElementCache.count(); i++) {
+    ElementCache.first();
+    for(int j=0; j<ElementCache.count()-i; j++) {
+      ElementCache
+      if()
     }
+  }
+*/
 
-  // align all selected diagrams
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected)
-      pd->cy = ymax;
+  Wire *pw;
+  int x  = x1;
+  int dx = (x2-x1)/count;
+  // re-insert elements
+  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next()) {
+    switch(pe->Type) {
+      case isComponent:
+	((Component*)pe)->cx = x;
+	insertRawComponent((Component*)pe);
+	break;
+
+      case isWire:
+	pw = (Wire*)pe;
+	if(pw->isHorizontal()) {
+	  x1 = pw->x2 - pw->x1;
+	  pw->x1 = x - (x1 >> 1);
+	  pw->x2 = pe->x1 + x1;
+	}
+	else  pw->x1 = pw->x2 = x;
+//	pw->;
+//	if(pw->Label) {	}
+	insertWire(pw);
+	break;
+
+      case isDiagram:
+	((Diagram*)pe)->cx = x - (((Diagram*)pe)->x2 >> 1);
+	break;
+
+      case isPainting:
+//	((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
+      default: ;
+    }
+    x += dx;
+  }
+
+  ElementCache.clear();
+  if(count < 2) return false;
+
+  setChanged(true, true);
+  return true;
 }
 
 // ---------------------------------------------------
-void QucsDoc::alignLeft()
+bool QucsDoc::distribVert()
 {
-  int xmin = INT_MAX;
-
-  // find left most selected diagram
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected) {
-      if(pd->cx < xmin)  xmin = pd->cx;
-    }
-
-  // align all selected diagrams
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected)
-      pd->cx = xmin;
-}
-
-// ---------------------------------------------------
-void QucsDoc::alignRight()
-{
-  int xmax = INT_MIN;
-
-  // find right most selected diagram
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected) {
-      if(pd->cx+pd->x2 > xmax)  xmax = pd->cx + pd->x2;
-    }
-
-  // align all selected diagrams
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected)
-      pd->cx = xmax - pd->x2;
+  return true;
 }

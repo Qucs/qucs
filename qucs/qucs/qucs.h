@@ -94,6 +94,8 @@ public slots:
     void slotAlignBottom(); // align selected elements with respect to bottom
     void slotAlignLeft();   // align selected elements with respect to left
     void slotAlignRight();  // align selected elements with respect to right
+    void slotDistribHoriz();// distribute horizontally selected elements
+    void slotDistribVert(); // distribute vertically selected elements
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
     void slotGettingStarted();  // shows a HTML docu: Getting started
@@ -145,7 +147,7 @@ public:
     QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
     QAction *projNew, *projOpen, *projDel, *applSettings;
     QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
-    QAction *magPlus, *magMinus;
+    QAction *magPlus, *magMinus, *distrHor, *distrVert;
     QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
     QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *helpIndex, *helpGetStart;

@@ -28,6 +28,7 @@
 #include <qregexp.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
+#include <qptrlist.h>
 
 
 /**
@@ -37,8 +38,9 @@
 class ComponentDialog : public QDialog {
    Q_OBJECT
 public: 
-	ComponentDialog(Component *c, QWidget *parent=0, const char *name=0);
-	~ComponentDialog();
+  ComponentDialog(Component *c, QPtrList<Component> *l,
+		  QWidget *parent=0, const char *name=0);
+  ~ComponentDialog();
 
 private slots:
   void slotButtOK();
@@ -58,12 +60,13 @@ private slots:
 private:
   QRegExp     Expr;
   QListView   *prop;
-  QLineEdit   *edit, *NameEdit;
+  QLineEdit   *edit, *NameEdit, *CompNameEdit;
   QComboBox   *ComboEdit;
   QLabel      *Name, *Description;
   QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
   QCheckBox   *disp;
   Component   *Comp;
+  QPtrList<Component> *cList;
   bool        changed, transfered;
 };
 

@@ -132,6 +132,10 @@
         <source>Cannot start text editor!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -2178,6 +2182,10 @@ Errors:
         <source>This will destroy all the project files permanently ! Continue ?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>
@@ -3091,6 +3099,34 @@ Align selected elements to their right edge</source>
     </message>
     <message>
         <source>Align</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribute horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribute equally horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribute horizontally
+
+Distribute horizontally selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribute vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribute equally vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribute vertically
+
+Distribute vertically selected elements</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
