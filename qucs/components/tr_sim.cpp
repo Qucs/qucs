@@ -76,6 +76,12 @@ TR_Sim::TR_Sim()
 	QObject::tr("absolute tolerance for voltages")));
   Props.append(new Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("LTEreltol", "1e-3", false,
+	QObject::tr("relative tolerance of local truncation error")));
+  Props.append(new Property("LTEabstol", "1e-6", false,
+	QObject::tr("absolute tolerance of local truncation error")));
+  Props.append(new Property("LTEfactor", "1", false,
+	QObject::tr("overestimation of local truncation error")));
 }
 
 TR_Sim::~TR_Sim()
