@@ -115,7 +115,9 @@ process must be applied to the resulting S-parameter analysis.
 \dfrac{Z^{n} + Z_{0}}{Z^{m} + Z_{0}}
 \end{equation}
 
-With\\
+With
+
+\addvspace{12pt}
 
 \begin{tabular}{rll}
 $Z_{0}$ & = & $50\ohm$\\& &\\
@@ -142,7 +144,9 @@ $\dfrac{Z_{n} - Z_{0}}{Z_{n} + Z_{0}}$
 reflection coefficient of impedance at port n\\& &\\
 \end{tabular}
 
-And furthermore\\
+And furthermore
+
+\addvspace{12pt}
 
 \begin{tabular}{rll}
 $\left[\underline{X}\right]^{-1}$ & = & 
@@ -185,7 +189,9 @@ S
 \end{equation}
 
 This transformation can be applied to each S-parameter port in a
-circuit regardless whether it is actually differential or not.\\
+circuit regardless whether it is actually differential or not.
+
+\addvspace{12pt}
 
 It is also possible to do the impedance transformation within this step
 (for S-parameter ports with impedances different than $50\ohm$). This can
@@ -681,14 +687,20 @@ $\underline{x}$.
 Having the noise wave correlation matrix, one can easily compute the
 noise parameters.  The following equations calculate them with regard
 to port 1 (input) and port 2 (output).
-\\ \\Noise figure:
+
+\addvspace{12pt}
+
+Noise figure:
 \begin{equation}
 F = 1 + \frac{\underline{c}_{22}}{k\cdot T_0\cdot |\underline{S}_{21}|^2}
 \end{equation}
 \begin{equation}
 NF\,[\text{dB}]\, = 10\cdot\lg F
 \end{equation}
-\\ \\Optimal source reflection coefficient:
+
+\addvspace{12pt}
+
+Optimal source reflection coefficient:
 \begin{equation}
 \Gamma_{opt} = \frac{\eta_2}{2}\cdot\left( 1-\sqrt{1-\frac{4}{|\eta_2|^2}} \right)
 \end{equation}
@@ -702,7 +714,10 @@ With
 \eta_2 = \frac{\underline{c}_{22} + \eta_1}
               {\underline{c}_{22}\cdot\underline{S}_{11} - \underline{c}_{12}\cdot\underline{S}_{21}}
 \end{equation}
-\\ \\Minimum noise figure:
+
+\addvspace{12pt}
+
+Minimum noise figure:
 \begin{equation}
 F_{min} = 1 + \frac{\underline{c}_{22} - \eta_1\cdot |\Gamma_{opt}|^2}
                    {k\cdot T_0\cdot |\underline{S}_{21}|^2\cdot (1+|\Gamma_{opt}|^2)}
@@ -710,7 +725,10 @@ F_{min} = 1 + \frac{\underline{c}_{22} - \eta_1\cdot |\Gamma_{opt}|^2}
 \begin{equation}
 NF_{min} = 10\cdot \lg F_{min}
 \end{equation}
-\\ \\Equivalent noise resistance:
+
+\addvspace{12pt}
+
+Equivalent noise resistance:
 \begin{equation}
 R_n = \frac{Z_0}{4\cdot k\cdot T_0}\cdot
       \left( \underline{c}_{11} - 2\cdot
@@ -1031,6 +1049,59 @@ I_{4}\\
 \subsection*{Operational amplifier}
 \addcontentsline{toc}{subsection}{Operational amplifier}
 
+The ideal operational amplifier, as shown in fig.  \ref{fig:opamp}, is
+determined by the following equation which introduces one more unknown
+in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{opamp}
+\end{center}
+\caption{ideal operational amplifier}
+\label{fig:opamp}
+\end{figure}
+\FloatBarrier
+
+\begin{equation}
+V_{1} - V_{3} = 0
+\label{eq:opamp}
+\end{equation}
+
+The new unknown variable $I_{out}$ must be considered by the three
+remaining simple equations.
+
+\begin{equation}
+I_{1} = 0 \quad I_{2} = -I_{out} \quad I_{3} = 0
+\end{equation}
+
+And in matrix representation this is:
+\begin{equation}
+\begin{pmatrix}
+.&.&.& 0\\
+.&.&.& -1\\
+.&.&.& 0\\
+-1 & 0 & -1 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+I_{out}
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+0
+\end{pmatrix}
+\end{equation}
+
+The operational amplifier could be considered as a special case of a
+voltage controlled current source with infinite forward
+transconductance $G$.
+
 \subsection*{Transformer}
 \addcontentsline{toc}{subsection}{Transformer}
 
@@ -1172,6 +1243,69 @@ I_{6}\\
 
 \subsection*{Gyrator}
 \addcontentsline{toc}{subsection}{Gyrator}
+
+The ideal gyrator, as shown in fig.  \ref{fig:gyrator}, is determined
+by the following equations which introduce two more unknowns in the
+MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{gyrator}
+\end{center}
+\caption{ideal gyrator}
+\label{fig:gyrator}
+\end{figure}
+\FloatBarrier
+
+\begin{equation}
+I_{in} = -\frac{1}{R}\cdot\left(V_{2} - V_{3}\right)
+\quad \rightarrow \quad
+-\frac{1}{R}\cdot V_{2} + \frac{1}{R}\cdot V_{3} - I_{in} = 0
+\end{equation}
+\begin{equation}
+V_{2} - V_{3} = \frac{1}{R}\cdot\left(V_{1} - V_{4}\right)
+\quad \rightarrow \quad
+\frac{1}{R}\cdot V_{1} - V_{2} + V_{3} - \frac{1}{R}\cdot V_{4} = 0
+\label{eq:gyrator}
+\end{equation}
+
+The new unknown variables $I_{out}$ and $I_{in}$ must be considered by
+the four remaining simple equations.
+
+\begin{equation}
+I_{1} = -I_{in} \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = I_{in}
+\end{equation}
+
+The matrix representation needs to be augmented by two more new rows
+(for the new unknown variables) and their corresponding columns.
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.& -1 & 0\\
+.&.&.&.& 0 & -1\\
+.&.&.&.& 0 & 1\\
+.&.&.&.& 1 & 0\\
+0 & -\frac{1}{R} & \frac{1}{R} & 0 & -1 & 0\\
+\frac{1}{R} & -1 & 1 & -\frac{1}{R} & 0 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{in}\\
+I_{out}
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+0
+\end{pmatrix}
+\end{equation}
 
 \nocite{*}
 
