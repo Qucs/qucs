@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.2 2004-10-31 12:35:46 ela Exp $
+ * $Id: scan_spice.l,v 1.3 2004-11-01 22:39:35 ela Exp $
  *
  */
 
@@ -62,7 +62,7 @@ NUMBER   ({INT}|{FLOAT1}|{FLOAT2}){SFX}?[A-Za-z]*
 SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     {DIGIT}+
 EOL      \r?\n
-FUNCTION ([sS][iI][nN])
+FUNCTION ([sS][iI][nN]|[pP][uU][lL][sS][eE])
 
 %x COMMENT
 %option yylineno noyywrap nounput prefix="spice_"
