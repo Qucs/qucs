@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.h,v 1.10 2004-10-21 09:00:31 ela Exp $
+ * $Id: mosfet.h,v 1.11 2004-10-21 17:10:30 ela Exp $
  *
  */
 
@@ -42,7 +42,7 @@ class mosfet : public circuit
   void calcTR (nr_double_t);
 
  private:
-  nr_double_t transientCharge (int, nr_double_t, nr_double_t);
+  nr_double_t transientCharge (int, nr_double_t&, nr_double_t, nr_double_t);
 
  private:
   nr_double_t UbsPrev, UbdPrev, UgsPrev, UgdPrev, UdsPrev, Udsat, Uon;
