@@ -1,3 +1,16 @@
+2004-07-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdoc.cpp (QucsDoc): Fixed bug when instantiating a qucsdoc
+	without a given application pointer (0).
+	(giveNodeNames): Fixed path reference when writing a subcircuit
+	netlist.
+
+	* qucs_de.ts: Updated german translation.
+
+	* qucs.cpp: Defining new global variable 'QucsHomeDir'
+	containing the "root" directory for the Qucs application.
+	Changed all possible callers.
+
 2004-07-14  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
 	* paintings/filldialog.cpp (FillDialog): Fixed description
