@@ -25,5 +25,7 @@ package-messages:
 	$(MAKE) -C po merge
 
 dist-hook:
+	rm -rf $(distdir)/admin/CVS
+	rm -f $(distdir)/*.tar.gz
 	cd $(top_distdir) && perl admin/am_edit -padmin
 	cd $(top_distdir) && $(MAKE) -f admin/Makefile.common subdirs
