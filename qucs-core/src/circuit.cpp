@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.19 2004-06-23 16:05:09 ela Exp $
+ * $Id: circuit.cpp,v 1.20 2004-06-25 00:17:23 ela Exp $
  *
  */
 
@@ -45,7 +45,7 @@
 // Constructor creates an unnamed instance of the circuit class.
 circuit::circuit () : object () {
   size = 0;
-  MatrixS = MatrixY = NULL;
+  MatrixN = MatrixS = MatrixY = NULL;
   nodes = NULL;
   port = 0;
   org = 1;
@@ -54,6 +54,7 @@ circuit::circuit () : object () {
   nSources = 0;
   oper = NULL;
   inserted = -1;
+  linear = 1;
   type = CIR_UNKNOWN;
 }
 
@@ -63,6 +64,7 @@ circuit::circuit (int s) : object () {
   assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
   size = s;
   MatrixS = new complex[s * s];
+  MatrixN = new complex[s * s];
   MatrixY = new complex[s * s];
   nodes = new node[s];
   port = 0;
@@ -72,6 +74,7 @@ circuit::circuit (int s) : object () {
   nSources = 0;
   oper = NULL;
   inserted = -1;
+  linear = 1;
   type = CIR_UNKNOWN;
 }
 
@@ -86,6 +89,7 @@ circuit::circuit (const circuit & c) : object (c) {
   source = c.source;
   nSources = c.nSources;
   inserted = c.inserted;
+  linear = c.linear;
 
   // copy each node and set its circuit to the current circuit object
   nodes = new node[size];
@@ -95,9 +99,12 @@ circuit::circuit (const circuit & c) : object (c) {
     nodes[i] = * n;
     delete n;
   }
-  // copy each s parameter
+  // copy each s-parameter
   MatrixS = new complex[size * size];
   memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
+  // copy each noise-correlation-parameter
+  MatrixN = new complex[size * size];
+  memcpy (MatrixN, c.MatrixN, size * size * sizeof (complex));
   // copy each G-MNA entry
   MatrixY = new complex[size * size];
   memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
@@ -109,6 +116,7 @@ circuit::circuit (const circuit & c) : object (c) {
 // Destructor deletes a circuit object.
 circuit::~circuit () {
   delete[] MatrixS;
+  delete[] MatrixN;
   delete[] MatrixY;
   delete[] nodes;
   deleteOperatingPoints ();
@@ -347,11 +355,14 @@ void circuit::setS (int x, int y, complex z) {
   MatrixS[y - 1 + (x - 1) * size] = z;
 }
 
-// Returns non-zero if the circuit is non-linear (DC dependent).
-int circuit::isNonLinear (void) {
-  if (type == CIR_DIODE || type == CIR_JFET)
-    return 1;
-  return 0;
+// Returns the noise-correlation-parameter at the given matrix position.
+complex circuit::getN (int r, int c) { 
+  return MatrixN[c - 1 + (r - 1) * size];
+}
+
+// Sets the noise-correlation-parameter at the given matrix position.
+void circuit::setN (int r, int c, complex z) {
+  MatrixN[c - 1 + (r - 1) * size] = z;
 }
 
 // Returns the number of internal voltage sources for DC analysis.

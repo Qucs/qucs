@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.8 2004-06-21 23:11:41 ela Exp $
+ * $Id: spsolver.cpp,v 1.9 2004-06-25 00:17:23 ela Exp $
  *
  */
 
@@ -52,11 +52,13 @@ using namespace std;
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
   type = ANALYSIS_SPARAMETER;
+  noise = 0;
 }
 
 // Constructor creates a named instance of the spsolver class.
 spsolver::spsolver (char * n) : analysis (n) {
   type = ANALYSIS_SPARAMETER;
+  noise = 0;
 }
 
 // Destructor deletes the spsolver class object.
@@ -66,6 +68,7 @@ spsolver::~spsolver () {
 /* The copy constructor creates a new instance of the spsolver class
    based on the given spsolver object. */
 spsolver::spsolver (spsolver & n) : analysis (n) {
+  noise = n.noise;
 }
 
 /* This function joins two nodes of a single circuit (interconnected
@@ -218,6 +221,46 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   return result;
 }
 
+#define sqr(x) ((x) * (x))
+
+/* The following function joins two nodes of two different circuits or
+   the same circuit and save the the noise wave correlation matrix in
+   the resulting circuit. */
+void spsolver::noiseJoin (circuit * result, node * n1, node * n2) {
+  circuit * c = n1->getCircuit ();
+  circuit * d = n2->getCircuit ();
+  complex p, t;
+
+  // connected port numbers
+  int k = n1->getPort (), l = n2->getPort ();
+
+  for (int j = 1; j <= result->getSize (); j++) {
+    for (int i = 1; i <= result->getSize (); i++) {
+      if (i == j) {
+	p = c->getN (i, j);
+	t = c->getS (i, k) / (1.0 - c->getS (k, k) * d->getS (l, l));
+	p += 
+	  (d->getN (l, l) + c->getN (k, k) * sqr (abs (d->getS (l, l)))) *
+	  sqr (abs (t));
+	p += 2.0 * real (c->getN (i, k) * d->getS (l, l) * t);
+	result->setN (i, j, p);
+      }
+      else if (i < j) {
+	t = 1.0 - c->getS (k, k) * d->getS (l, l);
+	p = 
+	  (c->getN (k, k) * d->getS (l, l) + 
+	   d->getN (l, l) * conj (c->getS (k, k))) *
+	  c->getS (i, k) * conj (d->getS (j, l)) / sqr (abs (t));
+	p +=
+	  c->getN (i, k) * conj (d->getS (j, l) / t) + 
+	  d->getN (l, j) * c->getS (i, k) / t;
+	result->setN (i, j, p);
+	result->setN (j, i, conj (p));
+      }
+    }
+  }
+}
+
 /* Goes through the list of circuit objects and runs its frequency
    dependent calcSP() function. */
 void spsolver::calc (nr_double_t freq) {
@@ -283,6 +326,7 @@ void spsolver::reduce (void) {
 		n1->getName (), cand1->getName (), cand2->getName ());
 #endif /* DEBUG */
       result = connectedJoin (n1, n2);
+      if (noise) noiseJoin (result, n1, n2);
       subnet->reducedCircuit (result);
       subnet->removeCircuit (cand1);
       subnet->removeCircuit (cand2);
@@ -296,6 +340,7 @@ void spsolver::reduce (void) {
 		n1->getName (), cand1->getName ());
 #endif
       result = interconnectJoin (n1, n2);
+      if (noise) noiseJoin (result, n1, n2);
       subnet->reducedCircuit (result);
       subnet->removeCircuit (cand1);
       subnet->insertCircuit (result);

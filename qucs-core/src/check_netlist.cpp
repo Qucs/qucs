@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.15 2004-06-21 23:11:41 ela Exp $
+ * $Id: check_netlist.cpp,v 1.16 2004-06-25 00:17:23 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <float.h>
 
 #include "logging.h"
 #include "strlist.h"
@@ -40,92 +41,212 @@ struct definition_t * definition_root = NULL;
 struct node_t * node_root = NULL;
 struct pair_t * pair_root = NULL;
 
-struct definition {
-  char * type;
-  int nodes;
-  int action;
-  int substrate;
-  int nonlinear;
-  char * required[16];
-  char * optional[16];
+// List of available components.
+struct define_t definition_available[] =
+{
+  /* resistor */
+  { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
+    { { "R", { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* inductor */
+  { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L", { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* capacitor */
+  { "C", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "C", { 1e-12, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* voltage controlled current source */
+  { "VCCS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+  },
+  /* current controlled current source */
+  { "CCCS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+  },
+  /* voltage controlled voltage source */
+  { "VCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+  },
+  /* current controlled voltage source */
+  { "CCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+  },
+  /* power source */
+  { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z", { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Num", { 1, PROP_NO_STR }, { 1, 256 } }, PROP_NO_PROP },
+    { { "P", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* circulator */
+  { "Circulator", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "Z1", { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z3", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* isolator */
+  { "Isolator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { { "Z1", { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* attenuator */
+  { "Attenuator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "L", { 10, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "Zref", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* bias tee */
+  { "BiasT", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* DC feed */
+  { "DCFeed", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* DC block */
+  { "DCBlock", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* transformer */
+  { "Tr", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "T", { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* symmetrical transformer */
+  { "sTr", 6, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "T1", { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* DC voltage source */
+  { "Vdc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* DC current source */
+  { "Idc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I", { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* AC voltage source */
+  { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* AC current source */
+  { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I", { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* phase shifter */
+  { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "phi", { 1e-90, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Zref", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* gyrator */
+  { "Gyrator", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "R", { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Zref", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* ideal transmission line */
+  { "TLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Z", { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "L", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* DC current probe */
+  { "IProbe", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+
+  /* diode */
+  { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", { 1, PROP_NO_STR }, { 1, 100 } },
+      { "M", { 0.5, PROP_NO_STR }, { 0, 1 } },
+      { "Cj0", { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vj", { 0.7, PROP_NO_STR }, { DBL_MIN, 10 } }, PROP_NO_PROP },
+    { { "Rs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tt", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+  },
+  /* jfet */
+  { "JFET", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", { 1, PROP_NO_STR }, { 1, 100 } },
+      { "Vt0", { -2, PROP_NO_STR }, PROP_NEG_RANGE },
+      { "Lambda", { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Beta", { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "M", { 0.5, PROP_NO_STR }, { 0, 1 } },
+      { "Pb", { 1.0, PROP_NO_STR }, { DBL_MIN, 10 } },
+      { "Fc", { 0.5, PROP_NO_STR }, { 0, 10 } },
+      { "Cgs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgd", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "Rd", { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Isr", { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nr", { 2, PROP_NO_STR }, { 1, 100 } },
+      { "Type", { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE }, PROP_NO_PROP }
+  },
+
+  /* microstrip substrate */
+  { "SUBST", 0, PROP_COMPONENT, PROP_SUBSTRATE, PROP_LINEAR,
+    { { "er", { 9.8, PROP_NO_STR }, { 1, 100 } },
+      { "h", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "t", { 35e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "tand", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "D", { 0.15e-6, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* microstrip line */
+  { "MLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "Model", { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+
+  /* s-parameter analysis */
+  { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Start", { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Stop", { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Step", { 1e9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* dc analysis */
+  { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* parameter sweep */
+  { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Start", { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Stop", { 50, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Step", { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Param", { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
+      { "Sim", { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+
+  /* end of list */
+  { NULL, 0, 0, 0, 0, { PROP_NO_PROP }, { PROP_NO_PROP } }
 };
-
-struct definition definition_available[] =
-  {
-    /* resistor */
-    { "R", 2, 0, 0, 0, { "R", NULL }, { "Symbol", NULL } },
-    /* inductor */
-    { "L", 2, 0, 0, 0, { "L", NULL }, { NULL } },
-    /* capacitor */
-    { "C", 2, 0, 0, 0, { "C", NULL }, { NULL } },
-    /* voltage controlled current source */
-    { "VCCS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
-    /* current controlled current source */
-    { "CCCS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
-    /* voltage controlled voltage source */
-    { "VCVS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
-    /* current controlled voltage source */
-    { "CCVS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
-    /* power source */
-    { "Pac", 2, 0, 0, 0, { "f", "Z", "Num", NULL }, { "P", NULL } },
-    /* circulator */
-    { "Circulator", 3, 0, 0, 0, { "Z1", "Z2", "Z3", NULL }, { NULL } },
-    /* isolator */
-    { "Isolator", 2, 0, 0, 0, { "Z1", "Z2", NULL }, { NULL } },
-    /* attenuator */
-    { "Attenuator", 2, 0, 0, 0, { "L", "Zref", NULL }, { NULL } },
-    /* bias tee */
-    { "BiasT", 3, 0, 0, 0, { NULL }, { NULL } },
-    /* DC feed */
-    { "DCFeed", 2, 0, 0, 0, { NULL }, { NULL } },
-    /* DC block */
-    { "DCBlock", 2, 0, 0, 0, { NULL }, { NULL } },
-    /* transformator */
-    { "Tr", 4, 0, 0, 0, { "T", NULL }, { NULL } },
-    /* symmetrical transformator */
-    { "sTr", 6, 0, 0, 0, { "T1", "T2", NULL }, { NULL } },
-    /* DC voltage source */
-    { "Vdc", 2, 0, 0, 0, { "U", NULL }, { NULL } },
-    /* DC current source */
-    { "Idc", 2, 0, 0, 0, { "I", NULL }, { NULL } },
-    /* AC voltage source */
-    { "Vac", 2, 0, 0, 0, { "U", "f", NULL }, { NULL } },
-    /* AC current source */
-    { "Iac", 2, 0, 0, 0, { "I", "f", NULL }, { NULL } },
-    /* phase shifter */
-    { "PShift", 2, 0, 0, 0, { "phi", "Zref", NULL }, { NULL } },
-    /* gyrator */
-    { "Gyrator", 4, 0, 0, 0, { "R", "Zref", NULL }, { NULL } },
-    /* ideal transmission line */
-    { "TLIN", 2, 0, 0, 0, { "Z", "L", NULL }, { NULL } },
-    /* DC current probe */
-    { "IProbe", 2, 0, 0, 0, { NULL }, { NULL } },
-
-    /* diode */
-    { "Diode", 2, 0, 0, 1, { "Is", "N", "M", "Cj0", "Vj", NULL },
-      { "Rs", "Tt", NULL } },
-    /* jfet */
-    { "JFET", 3, 0, 0, 1, { "Is", "N", "Vt0", "Lambda", "Beta", "M", "Pb",
-			    "Fc", "Cgs", "Cgd", NULL },
-      { "Rd", "Rs", "Isr", "Nr", "Type", NULL } },
-
-    /* microstrip substrate */
-    { "SUBST", 0, 0, 1, 0, { "er", "h", "t", "tand", "rho", "D", NULL },
-      { NULL } },
-    /* microstrip line */
-    { "MLIN", 2, 0, 0, 0, { "W", "L", "Subst", "Model", NULL }, { NULL } },
-
-    /* s-parameter analysis */
-    { "SP", 0, 1, 0, 0, { "Start", "Stop", "Step", NULL }, { NULL } },
-    /* dc analysis */
-    { "DC", 0, 1, 0, 0, { NULL }, { NULL } },
-    /* parameter sweep */
-    { "SW", 0, 1, 0, 0, { "Start", "Stop", "Step", "Param", "Sim", NULL }, 
-      { NULL } },
-
-    /* end of list */
-    { NULL, 0, 0, 0, 0, { NULL }, { NULL } }
-  };
 
 /* The function counts the nodes in a definition line. */
 static int checker_count_nodes (struct definition_t * def) {
@@ -139,8 +260,8 @@ static int checker_count_nodes (struct definition_t * def) {
 /* The function returns an available definition line for the given
    type.  If there is no such definition type the function returns
    NULL. */
-static struct definition * checker_find_definition (char * type, int action) {
-  struct definition * def;
+static struct define_t * checker_find_definition (char * type, int action) {
+  struct define_t * def;
   for (def = definition_available; def->type != NULL; def++) {
     if (!strcmp (type, def->type) && action == def->action)
       return def;
@@ -162,14 +283,14 @@ static int checker_find_property (char * key, struct pair_t * pair) {
 
 /* Checks if the given property key is either optional or required for
    the given definition type. */
-static int checker_is_property (struct definition * available, char * key) {
+static int checker_is_property (struct define_t * available, char * key) {
   int i;
-  for (i = 0; available->required[i] != NULL; i++) {
-    if (!strcmp (available->required[i], key))
+  for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
+    if (!strcmp (available->required[i].key, key))
       return 1;
   }
-  for (i = 0; available->optional[i] != NULL; i++) {
-    if (!strcmp (available->optional[i], key))
+  for (i = 0; PROP_IS_PROP (available->optional[i]); i++) {
+    if (!strcmp (available->optional[i].key, key))
       return 1;
   }
   return 0;
@@ -607,6 +728,31 @@ int netlist_checker_variables (void) {
   return errors;
 }
 
+/* The function checks whether the the given key-value combination
+   being part of the an available definition is inside the allowed
+   range and returns zero if not.  Otherwise the function returns
+   non-zero. */
+static int checker_value_in_range (char * instance, struct define_t * def,
+				   struct pair_t * pair) {
+  int errors = 0;
+  for (int i = 0; PROP_IS_PROP (def->required[i]); i++) {
+    if (PROP_IS_VAL (def->required[i]) && PROP_HAS_RANGE (def->required[i])) {
+      if (!strcmp (def->required[i].key, pair->key)) {
+	if (pair->value->value < def->required[i].range.l ||
+	    pair->value->value > def->required[i].range.h) {
+	  logprint (LOG_ERROR, 
+		    "checker error, value of `%s' (%g) is out of range "
+		    "[%g,%g] in `%s:%s'\n",
+		    pair->key, pair->value->value, def->required[i].range.l,
+		    def->required[i].range.h, def->type, instance);
+	  errors++;
+	}
+      }
+    }
+  }
+  return errors ? 0 : 1;
+}
+
 /* This function is the checker routine for a parsed netlist.  It
    returns zero on success or non-zero if the parsed netlist contained
    errors. */
@@ -614,7 +760,7 @@ int netlist_checker (void) {
 
   struct definition_t * def;
   struct pair_t * pair;
-  struct definition * available;
+  struct define_t * available;
   int i, n, errors = 0;
 
   /* go through all definitions */
@@ -632,6 +778,8 @@ int netlist_checker (void) {
       def->nonlinear = available->nonlinear;
       /* mark substrate definitions */
       def->substrate = available->substrate;
+      /* save available definition */
+      def->define = available;
       /* check whether the number of nodes is correct */
       n = checker_count_nodes (def);
       if (available->nodes != n) {
@@ -641,22 +789,22 @@ int netlist_checker (void) {
 	errors++;
       }
       /* check whether the required properties are given */
-      for (i = 0; available->required[i] != NULL; i++) {
-	n = checker_find_property (available->required[i], def->pairs);
+      for (i = 0; PROP_IS_PROP (available->required[i]); i++) {
+	n = checker_find_property (available->required[i].key, def->pairs);
 	if (n != 1) {
 	  logprint (LOG_ERROR, "checker error, required property `%s' "
 		    "occurred %dx in `%s:%s'\n",
-		    available->required[i], n, def->type, def->instance);
+		    available->required[i].key, n, def->type, def->instance);
 	  errors++;
 	}
       }
       /* check whether the optional properties are given zero/once */
-      for (i = 0; available->optional[i] != NULL; i++) {
-	n = checker_find_property (available->optional[i], def->pairs);
+      for (i = 0; PROP_IS_PROP (available->optional[i]); i++) {
+	n = checker_find_property (available->optional[i].key, def->pairs);
 	if (n >= 2) {
 	  logprint (LOG_ERROR, "checker error, optional property `%s' "
 		    "occurred %dx in `%s:%s'\n",
-		    available->optional[i], n, def->type, def->instance);
+		    available->optional[i].key, n, def->type, def->instance);
 	  errors++;
 	}
       }
@@ -668,6 +816,10 @@ int netlist_checker (void) {
 		    "checker error, extraneous property `%s' is invalid "
 		    "in `%s:%s'\n",
 		    pair->key, def->type, def->instance);
+	  errors++;
+	}
+	/* check whether properties are in range */
+	if (!checker_value_in_range (def->instance, available, pair)) {
 	  errors++;
 	}
 	/* check variables in properties */

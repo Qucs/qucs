@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.15 2004-06-21 23:11:41 ela Exp $
+ * $Id: circuit.h,v 1.16 2004-06-25 00:17:23 ela Exp $
  *
  */
 
@@ -51,6 +51,8 @@ class circuit : public object
   node * getNode (int);
   complex getS (int, int);
   void setS (int, int, complex);
+  complex getN (int, int);
+  void setN (int, int, complex);
   complex getY (int, int);
   void setY (int, int, complex);
   nr_double_t getG (int, int);
@@ -94,7 +96,8 @@ class circuit : public object
   int hasOperatingPoint (char *);
   void copyOperatingPoints (operatingpoint *);
   void deleteOperatingPoints (void);
-  int isNonLinear (void);
+  int isNonLinear (void) { return !linear; }
+  void setNonLinear (int nl) { linear = !nl; }
   static char * createInternal (char *, char *);
   void copyMatrixS (matrix &);
 
@@ -110,7 +113,9 @@ class circuit : public object
   int org;
   int internal;
   int inserted;
+  int linear;
   complex * MatrixS;
+  complex * MatrixN;
   complex * MatrixY;
   complex MatrixB[MAX_CIR_VSRCS * MAX_CIR_PORTS];
   complex MatrixC[MAX_CIR_VSRCS * MAX_CIR_PORTS];
