@@ -242,11 +242,11 @@ AC_CONFIG_FILES([Makefile
 		 qucs/diagrams/Makefile
 		 qucs/paintings/Makefile
 		 qucs/dialogs/Makefile
-                 qucs/docs/Makefile
-                 qucs/docs/en/Makefile
-		 qucs/docs/de/Makefile
-                 qucs/docs/es/Makefile
-                 qucs/docs/fr/Makefile])
+                 qucs-help/docs/Makefile
+                 qucs-help/docs/en/Makefile
+		 qucs-help/docs/de/Makefile
+                 qucs-help/docs/es/Makefile
+                 qucs-help/docs/fr/Makefile])
 AC_OUTPUT
 
 dnl Print results.

@@ -22,6 +22,8 @@
 # Boston, MA 02111-1307, USA.  
 #
 
+SUBDIRS = docs
+
 bin_PROGRAMS = qucshelp
 
 dist_man_MANS = qucshelp.1
