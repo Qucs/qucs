@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.12 2005/01/24 19:37:16 raimi Exp $
+ * $Id: isolator.cpp,v 1.13 2005/01/25 20:49:04 raimi Exp $
  *
  */
 
@@ -40,7 +40,6 @@
 
 isolator::isolator () : circuit (2) {
   type = CIR_ISOLATOR;
-  setVoltageSources (2);
 }
 
 void isolator::initSP (void) {
@@ -81,12 +80,22 @@ void isolator::calcNoiseAC (nr_double_t) {
 void isolator::initDC (void) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
+#if AUGMENTED
   nr_double_t z21 = 2 * sqrt (z1 * z2);
+  setVoltageSources (2);
   allocMatrixMNA ();
   setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
   setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0); 
   setD (1, 1,  +z1); setD (2, 2,  +z2); setD (1, 2, +0.0); setD (2, 1, +z21);
   setE (1, +0.0); setE (2, +0.0);
+#else
+  setVoltageSources (0);
+  allocMatrixMNA ();
+  setY (1, 1, 1 / z1);
+  setY (1, 2, 0);
+  setY (2, 1, -2 / sqrt (z1 * z2));
+  setY (2, 2, 1 / z2);
+#endif
 }
 
 void isolator::initAC (void) {

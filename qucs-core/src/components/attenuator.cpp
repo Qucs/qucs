@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.15 2005/01/24 19:37:15 raimi Exp $
+ * $Id: attenuator.cpp,v 1.16 2005/01/25 20:49:03 raimi Exp $
  *
  */
 
@@ -86,6 +86,7 @@ void attenuator::initDC (void) {
     allocMatrixMNA ();
     voltageSource (1, 1, 2);
   }
+#if AUGMENTED
   else { // compute Z-parameters
     setVoltageSources (2);
     allocMatrixMNA ();
@@ -98,6 +99,18 @@ void attenuator::initDC (void) {
     setE (1, +0.0); setE (2, +0.0);
   }
   clearY ();
+#else
+  else { // compute Y-parameters
+    setVoltageSources (0);
+    allocMatrixMNA ();
+    nr_double_t z = getPropertyDouble ("Zref");
+    nr_double_t f = 1 / z / (a - 1);
+    setY (1, 1, f * (a + 1));
+    setY (2, 2, f * (a + 1));
+    setY (1, 2, -f * 2 * sqrt (a));
+    setY (2, 1, -f * 2 * sqrt (a));
+  }
+#endif
 }
 
 void attenuator::initAC (void) {
@@ -109,6 +122,7 @@ void attenuator::initAC (void) {
     clearY ();
     voltageSource (1, 1, 2);
   }
+#if AUGMENTED
   else { // compute Z-parameters
     setVoltageSources (0);
     allocMatrixMNA ();
@@ -122,6 +136,18 @@ void attenuator::initAC (void) {
     z.set (1, 2, z21); z.set (2, 1, z21);
     setMatrixY (ztoy (z));
   }
+#else
+  else { // compute Y-parameters
+    setVoltageSources (0);
+    allocMatrixMNA ();
+    nr_double_t z = getPropertyDouble ("Zref");
+    nr_double_t f = 1 / z / (a - 1);
+    setY (1, 1, f * (a + 1));
+    setY (2, 2, f * (a + 1));
+    setY (1, 2, -f * 2 * sqrt (a));
+    setY (2, 1, -f * 2 * sqrt (a));
+  }
+#endif
 }
 
 void attenuator::initTR (void) {
