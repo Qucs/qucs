@@ -1,3 +1,13 @@
+2004-05-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp: Optimized copy constructors.
+	new functions: detGauss() and inverseGaussJordan().  These
+	functions compute determinant and inverse of a matrix using
+	Gauss based algorithms.
+
+	* eqnsys.cpp: Fixed and improved Gauss and Gauss-Jordan 
+	algorithm for solving equations systems.
+
 2004-05-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_netlist.cpp: Check for duplicate parameter names in 

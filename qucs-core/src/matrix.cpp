@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.5 2004-04-28 14:39:19 ela Exp $
+ * $Id: matrix.cpp,v 1.6 2004-05-20 18:06:33 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@ matrix::matrix () {
    certain number of rows and columns.  Creates a square matrix.  */
 matrix::matrix (int s)  {
   rows = cols = s;
-  data = new complex[s * s];
+  data = (s > 0) ? new complex[s * s] : NULL;
 }
 
 /* Constructor creates an unnamed instance of the matrix class with a
@@ -55,7 +55,7 @@ matrix::matrix (int s)  {
 matrix::matrix (int r, int c)  {
   rows = r;
   cols = c;
-  data = new complex[r * c];
+  data = (r > 0 && c > 0) ? new complex[r * c] : NULL;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -63,13 +63,12 @@ matrix::matrix (int r, int c)  {
 matrix::matrix (const matrix & m) {
   rows = m.rows;
   cols = m.cols;
-  data = new complex[rows * cols];
+  data = NULL;
 
-  // copy each matrix element
-  for (int i = 0; i < rows * cols; i++) {
-    complex * z = new complex (m.data[i]);
-    data[i] = * z;
-    delete z;
+  // copy matrix elements
+  if (rows > 0 && cols > 0) {
+    data = new complex[rows * cols];
+    memcpy (data, m.data, sizeof (complex) * rows * cols);
   }
 }
 
@@ -79,15 +78,18 @@ const matrix& matrix::operator=(const matrix & m) {
   if (&m != this) {
     rows = m.rows;
     cols = m.cols;
-    data = new complex[rows * cols];
-    memcpy (data, m.data, sizeof (complex) * rows * cols);
+    if (data) { delete[] data; data = NULL; }
+    if (rows > 0 && cols > 0) {
+      data = new complex[rows * cols];
+      memcpy (data, m.data, sizeof (complex) * rows * cols);
+    }
   }
   return *this;
 }
 
 // Destructor deletes a matrix object.
 matrix::~matrix () {
-  delete[] data;
+  if (data) delete[] data;
 }
 
 // Returns the matrix element at the given row and column.
@@ -259,6 +261,50 @@ complex det (matrix& a) {
   return 1;
 }
 
+/* Compute determinant of the given matrix using the Gaussian
+   algorithm.  This means to triangulate the matrix and multiply all
+   the diagonal elements. */
+complex detGauss (matrix& a) {
+  assert (a.getRows () == a.getCols ());
+  nr_double_t MaxPivot;
+  complex f, res;
+  matrix * b;
+  int i, c, r, pivot, n = a.getCols ();
+
+  // return special matrix cases
+  if (n == 0) return 1;
+  if (n == 1) return a.get (1, 1);
+
+  // make copy of original matrix
+  b = new matrix (a);
+
+  // triangulate the matrix
+  for (res = 1, i = 1; i < n; i++) {
+    // find maximum column value for pivoting
+    for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
+      if (abs (b->get (r, i)) > MaxPivot) {
+	MaxPivot = abs (b->get (r, i));
+	pivot = r;
+      }
+    }
+    // exchange rows if necessary
+    assert (MaxPivot != 0);
+    if (i != pivot) { b->exchangeRows (i, pivot); res = -res; }
+    // compute new rows and columns
+    for (r = i + 1; r <= n; r++) {
+      f = b->get (r, i) / b->get (i, i);
+      for (c = i + 1; c <= n; c++) {
+	b->set (r, c, b->get (r, c) - f * b->get (i, c));
+      }
+    }
+  }
+
+  // now compute determinant by multiplying diagonal
+  for (i = 1; i <= n; i++) res *= b->get (i, i);
+  delete b;
+  return res;
+}
+
 // Compute inverse matrix of the given matrix.
 matrix& inverse (matrix& a) {
   matrix * res = new matrix (a.getRows (), a.getCols ());
@@ -268,6 +314,56 @@ matrix& inverse (matrix& a) {
     for (int c = 1; c <= a.getCols (); c++)
       res->set (r, c, adjoint (a, c, r) / d);
   return *res;
+}
+
+/* Compute inverse matrix of the given matrix by Gauss-Jordan
+   elimination. */
+matrix& inverseGaussJordan (matrix& a) {
+  nr_double_t MaxPivot;
+  complex f;
+  matrix * b, * e;
+  int i, c, r, pivot, n = a.getCols ();
+
+  // create temporary matrix and the result matrix
+  b = new matrix (a);
+  e = &eye (n);
+
+  // create the eye matrix in 'b' and the result in 'e'
+  for (i = 1; i <= n; i++) {
+    // find maximum column value for pivoting
+    for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
+      if (abs (b->get (r, i)) > MaxPivot) {
+	MaxPivot = abs (b->get (r, i));
+	pivot = r;
+      }
+    }
+    // exchange rows if necessary
+    assert (MaxPivot != 0);
+    if (i != pivot) {
+      b->exchangeRows (i, pivot);
+      e->exchangeRows (i, pivot);
+    }
+
+    // compute current column
+    f = b->get (i, i);
+    for (c = 1; c <= n; c++) {
+      b->set (i, c, b->get (i, c) / f);
+      e->set (i, c, e->get (i, c) / f);
+    }
+
+    // compute new rows and columns
+    for (r = 1; r <= n; r++) {
+      if (r != i) {
+	f = b->get (r, i);
+	for (c = 1; c <= n; c++) {
+	  b->set (r, c, b->get (r, c) - f * b->get (i, c));
+	  e->set (r, c, e->get (r, c) - f * e->get (i, c));
+	}
+      }
+    }
+  }
+  delete b;
+  return *e;
 }
 
 // Convert scattering parameters to impedance matrix.

@@ -1,3 +1,13 @@
+2004-05-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Gaussian elimination}): Documented
+	the Gaussian eliminiation algorithm for solving linear
+	equations systems.
+	(subsection{LU decomposition}): Documented Crout's LU
+	decomposition.
+
+	* literature.bib: Added some more IEEE papers and books.
+
 2004-05-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (MATHFILES): New files added.  Octave is now

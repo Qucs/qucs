@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.h,v 1.3 2004-02-17 15:30:58 ela Exp $
+ * $Id: diode.h,v 1.4 2004-05-20 18:06:33 ela Exp $
  *
  */
 
@@ -33,6 +33,10 @@ class diode : public circuit
   void calcDC (void);
   void initDC (void);
   void calcOperatingPoints (void);
+  nr_double_t pnVoltage (nr_double_t, nr_double_t, nr_double_t, nr_double_t);
+
+ private:
+  nr_double_t lastU;
 };
 
 #endif /* __DIODE_H__ */

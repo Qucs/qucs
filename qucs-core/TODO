@@ -27,7 +27,8 @@ unfixed) have a look at the file BUGS.
 - Implement DC model for phaseshifter and bias T.
 	- Handle special DC models for dc-block, dc-feed, inductor and
 	  capacitor.
-- Use LU decomposition for matrix inversion and determinants.
+	- Use LU decomposition for matrix inversion and determinants.  Done
+	  by Gaussian methods.
 - Implement sec(), cosec(), sech(), cosech(), si() and sign() functions.
 - Fix dependency in dataset variables when e.g. using max().
 - Add constants like pi to the available symbols in equations.
