@@ -1,10 +1,10 @@
-/* -*-c-*- */
+/* -*-c++-*- */
 
 %{
 /*
- * parser.y - parser for the Qucs netlist
+ * parse_netlist.y - parser for the Qucs netlist
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: parse_netlist.y,v 1.2 2004-03-07 08:33:01 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 
 #include "check_netlist.h"
 #include "logging.h"
+#include "equation.h"
 
 %}
 
@@ -46,9 +47,19 @@
 %token InvalidCharacter
 %token Identifier
 %token Assign
-%token Float
 %token ScaleOrUnit
 %token Eol
+%token Eqn
+%token REAL
+%token IMAG
+%token COMPLEX
+
+%right '='
+%left '-' '+'
+%left '*' '/'
+%left NEG     /* unary negation */
+%left POS     /* unary non-negation */
+%right '^'
 
 %union {
   char * ident;
@@ -58,15 +69,28 @@
   struct node_t * node;
   struct pair_t * pair;
   struct value_t * value;
+  struct {
+    double r;
+    double i;
+  } c;
+  eqn::node * eqn;
+  eqn::constant * con;
+  eqn::reference * ref;
+  eqn::application * app;
 }
 
 %type <ident> Identifier Assign
 %type <str> ScaleOrUnit
-%type <d> Float
+%type <d> REAL IMAG
+%type <c> COMPLEX
 %type <definition> DefinitionLine ActionLine
 %type <node> IdentifierList
 %type <pair> PairList
 %type <value> String
+%type <eqn> Equation EquationList Expression ExpressionList
+%type <con> Constant
+%type <ref> Reference
+%type <app> Application
 
 %%
 
@@ -75,14 +99,15 @@ Input: /* nothing */
 ;
 
 InputLine:
-  ActionLine     { }
+  EquationLine   { }
+| ActionLine     { }
 | DefinitionLine { }
 | Eol            { }
 ;
 
 ActionLine:
   '.' Identifier ':' Identifier PairList Eol { 
-    $$ = calloc (sizeof (struct definition_t), 1);
+    $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->action = 1;
     $$->type = $2;
     $$->instance = $4;
@@ -95,7 +120,7 @@ ActionLine:
 
 DefinitionLine:
   Identifier ':' Identifier IdentifierList PairList Eol { 
-    $$ = calloc (sizeof (struct definition_t), 1);
+    $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
     $$->action = 0;
     $$->type = $1;
     $$->instance = $3;
@@ -110,7 +135,7 @@ DefinitionLine:
 
 IdentifierList: /* nothing */ { $$ = node_root = NULL; }
   | Identifier IdentifierList {
-    $$ = calloc (sizeof (struct node_t), 1);
+    $$ = (struct node_t *) calloc (sizeof (struct node_t), 1);
     $$->node = $1;
     $$->next = node_root;
     node_root = $$;
@@ -119,7 +144,7 @@ IdentifierList: /* nothing */ { $$ = node_root = NULL; }
 
 PairList: /* nothing */ { $$ = pair_root = NULL; }
   | Assign String PairList {
-    $$ = calloc (sizeof (struct pair_t), 1);
+    $$ = (struct pair_t *) calloc (sizeof (struct pair_t), 1);
     $$->key = $1;
     $$->value = $2;
     $$->next = pair_root;
@@ -128,45 +153,172 @@ PairList: /* nothing */ { $$ = pair_root = NULL; }
 ;
 
 String:
-  Float {
-    $$ = calloc (sizeof (struct value_t), 1);
+  REAL {
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->value = $1;
   }
-  | '"' Float '"' {
-    $$ = calloc (sizeof (struct value_t), 1);
+  | '"' REAL '"' {
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->value = $2;
   }
-  | Float ScaleOrUnit {
-    $$ = calloc (sizeof (struct value_t), 1);
+  | REAL ScaleOrUnit {
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->value = $1;
     $$->scale = $2;
   }
-  | '"' Float ScaleOrUnit '"' {
-    $$ = calloc (sizeof (struct value_t), 1);
+  | '"' REAL ScaleOrUnit '"' {
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->value = $2;
     $$->scale = $3;
   }
-  | Float ScaleOrUnit ScaleOrUnit {
-    $$ = calloc (sizeof (struct value_t), 1);
+  | REAL ScaleOrUnit ScaleOrUnit {
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->value = $1;
     $$->scale = $2;
     $$->unit = $3;
   }
-  | '"' Float ScaleOrUnit ScaleOrUnit '"' {
-    $$ = calloc (sizeof (struct value_t), 1);
+  | '"' REAL ScaleOrUnit ScaleOrUnit '"' {
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->value = $2;
     $$->scale = $3;
     $$->unit = $4;
   }
   | Identifier {
-    $$ = calloc (sizeof (struct value_t), 1);
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->ident = $1;
   }
   | '"' Identifier '"' {
-    $$ = calloc (sizeof (struct value_t), 1);
+    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
     $$->ident = $2;
   }
+;
 
+EquationLine:
+  Eqn ':' Identifier Equation EquationList Eol {
+    $4->setNext (eqn::equations);
+    eqn::equations = $4;
+  }
+;
+
+EquationList: /* nothing */ { }
+  | Equation EquationList { 
+    $1->setNext (eqn::equations);
+    eqn::equations = $1;
+  }
+;
+
+Equation:
+  Assign '"' Expression '"' {
+    $$ = new eqn::node (eqn::ASSIGNMENT);
+    $$->assign = new eqn::assignment ();
+    $$->assign->result = strdup ($1);
+    $$->assign->body = $3;
+  }
+;
+
+Expression:
+    Constant {
+    $$ = new eqn::node (eqn::CONSTANT);
+    $$->con = $1;
+  }
+  | Reference {
+    $$ = new eqn::node (eqn::REFERENCE);
+    $$->ref = $1;
+  }
+  | Application {
+    $$ = new eqn::node (eqn::APPLICATION);
+    $$->app = $1;
+  }
+  | '(' Expression ')' {
+    $$ = $2;
+  }
+;
+
+Constant:
+    REAL { 
+    $$ = new eqn::constant (eqn::TAG_DOUBLE);
+    $$->d = $1;
+  }
+  | IMAG {
+    $$ = new eqn::constant (eqn::TAG_COMPLEX);
+    $$->c = new complex (0.0, $1);
+  }
+  | COMPLEX {
+    $$ = new eqn::constant (eqn::TAG_COMPLEX);
+    $$->c = new complex ($1.r, $1.i);
+  }
+;
+
+Reference:
+  Identifier {
+    $$ = new eqn::reference ();
+    $$->n = strdup ($1);
+  }
+;
+
+Application:
+    Identifier '(' ExpressionList ')' {
+    $$ = new eqn::application ();
+    $$->n = strdup ($1);
+    $$->nargs = $3->count ();
+    $$->args = $3;
+    eqn::expressions = NULL;
+  }
+  | Expression '+' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("+");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression '-' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("-");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression '*' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("*");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression '/' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("/");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | '+' Expression %prec POS {
+    /* nothing todo here */
+  }
+  | '-' Expression %prec NEG {
+    $$ = new eqn::application ();
+    $$->n = strdup ("-");
+    $$->nargs = 1;
+    $$->args = $2;
+  }
+  | Expression '^' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("^");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+;
+
+ExpressionList: /* nothing */ { $$ = eqn::expressions = NULL; }
+  | Expression {
+    $1->setNext (eqn::expressions);
+    eqn::expressions = $1;
+  }
+  | Expression ',' ExpressionList {
+    $1->setNext (eqn::expressions);
+    eqn::expressions = $1;
+  }
 ;
 
 %%

@@ -2,9 +2,9 @@
 
 %{
 /*
- * scanner.l - scanner for the Qucs netlist
+ * scan_netlist.l - scanner for the Qucs netlist
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: scan_netlist.l,v 1.2 2004-03-07 08:33:01 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #include <ctype.h>
 
 #include "logging.h"
+#include "equation.h"
 #include "check_netlist.h"
 #include "tokens_netlist.h"
 
@@ -44,14 +45,20 @@ WS       [ \t\n\r]
 ID       [a-zA-Z_][a-zA-Z0-9_]*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
-INT      [+-]?{DIGIT}+
-FLOAT1   [+-]?{DIGIT}+{EXPONENT}
-FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 PFX      ("dBm"|"dB"|"T"|"G"|"M"|"k"|"m"|"u"|"n"|"p"|"f"|"a")
 UNT      ("Ohm"|"S"|"s"|"K"|"H"|"F"|"Hz"|"V"|"A"|"W"|"m")
 EXCEPT   ("mm")
 SU       ({PFX}|{UNT}|{PFX}{UNT}|{EXCEPT})
 SPACE    [ \t]
+RINT     [+-]?{DIGIT}+
+IINT     [+-]?[ij]{1}{DIGIT}+
+RFLOAT1  [+-]?{DIGIT}+{EXPONENT}
+RFLOAT2  [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
+IFLOAT1  [+-]?[ij]{1}{DIGIT}+{EXPONENT}
+IFLOAT2  [+-]?[ij]{1}{DIGIT}*"."{DIGIT}+({EXPONENT})?
+CREAL    ({RFLOAT1}|{RFLOAT2}|{RINT})
+CIMAG    ({IFLOAT1}|{IFLOAT2}|{IINT})
+COMPLEX  {CREAL}{CIMAG}
 
 
 %x COMMENT STR
@@ -63,18 +70,38 @@ SPACE    [ \t]
     netlist_lval.str = strdup (netlist_text);
     return ScaleOrUnit;
   }
+<INITIAL>"Eqn" { /* special equation case */
+    return Eqn;
+  }
 <INITIAL,STR>{ID} { /* identify identifier */
     netlist_lval.ident = strdup (netlist_text); 
     return Identifier; 
   }
-<INITIAL,STR>({INT}|{FLOAT1}|{FLOAT2}) { /* identify float or integer */
+<INITIAL,STR>{CREAL} { /* identify real float */
     netlist_lval.d = strtod (netlist_text, NULL);
-    return Float;
+    return REAL;
+  }
+<INITIAL,STR>{CIMAG} { /* identify imaginary float */
+    if (netlist_text[0] == 'i' || netlist_text[0] == 'j')
+      netlist_text[0] = '0';
+    else
+      netlist_text[1] = '0';
+    netlist_lval.d = strtod (netlist_text, NULL);
+    return IMAG;
+  }
+<INITIAL,STR>{COMPLEX} { /* identify complete complex number */
+    int i = 0;
+    while (netlist_text[i] != 'i' && netlist_text[i] != 'j') i++;
+    netlist_text[i] = netlist_text[i - 1];
+    netlist_text[i - 1] = '\0';
+    netlist_lval.c.r = strtod (netlist_text, NULL);
+    netlist_lval.c.i = strtod (&netlist_text[i], NULL);
+    return COMPLEX;
   }
 <INITIAL>{ID}{SPACE}*= {  /* identify 'identifier =' assign */
     int len = netlist_leng - 2;
     while (isspace (netlist_text[len])) len--;
-    netlist_lval.ident = calloc (len + 2, 1);
+    netlist_lval.ident = (char *) calloc (len + 2, 1);
     memcpy (netlist_lval.ident, netlist_text, len + 1);
     return Assign; 
   }
@@ -114,6 +141,16 @@ SPACE    [ \t]
     return Eol;
   }
 <STR>{SPACE} /* skip spaces */
+
+<STR>"+" { return '+'; }
+<STR>"-" { return '-'; }
+<STR>"*" { return '*'; }
+<STR>"/" { return '/'; }
+<STR>"(" { return '('; }
+<STR>")" { return ')'; }
+<STR>"^" { return '^'; }
+<STR>"," { return ','; }
+
 <STR>. { /* any other character is invalid */
     logprint (LOG_ERROR, 
 	      "line %d: syntax error, unrecognized character: `%s'\n", 

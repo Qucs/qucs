@@ -1,5 +1,5 @@
 /*
- * check_netlist.c - checker for the Qucs netlist
+ * check_netlist.cpp - checker for the Qucs netlist
  *
  * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.c,v 1.8 2004-02-17 15:30:57 ela Exp $
+ * $Id: check_netlist.cpp,v 1.1 2004-03-07 08:33:01 ela Exp $
  *
  */
 

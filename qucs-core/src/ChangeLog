@@ -1,3 +1,8 @@
+2004-03-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y: Added parser and scanner rules for 
+	equations inside netlists.
+
 2004-02-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp (solve_lu): New equation system solver implemented
