@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.4 2004/10/21 13:51:17 ela Exp $
+ * $Id: tvector.h,v 1.5 2004/10/21 13:59:02 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 template <class nr_type_t>
 class tvector;
 
+// Forward declarations of friend functions.
 template <class nr_type_t>
 nr_double_t maxnorm (tvector<nr_type_t>);
 template <class nr_type_t>
