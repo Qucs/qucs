@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vnoise.h,v 1.3 2004/09/25 21:09:46 ela Exp $
+ * $Id: vnoise.h,v 1.4 2004/11/24 19:15:50 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class vnoise : public circuit
 {
  public:
   vnoise ();
+  void initSP (void);
   void initDC (void);
   void calcNoise (nr_double_t);
   void initAC (void);

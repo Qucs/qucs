@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vccs.cpp,v 1.8 2004/09/25 21:09:46 ela Exp $
+ * $Id: vccs.cpp,v 1.9 2004/11/24 19:15:50 raimi Exp $
  *
  */
 
@@ -45,40 +45,31 @@ vccs::vccs () : circuit (4) {
 }
 
 void vccs::calcSP (nr_double_t frequency) {
-
   nr_double_t g = getPropertyDouble ("G") * z0;
   nr_double_t t = getPropertyDouble ("T");
 
   complex z1 = polar (2.0 * g, M_PI - 2.0 * M_PI * frequency * t);
   complex z2 = polar (2.0 * g, - 2.0 * M_PI * frequency * t);
 
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (1, 3, 0.0);
-  setS (1, 4, 0.0);
-  setS (2, 1, z1);
-  setS (2, 2, 1.0);
-  setS (2, 3, 0.0);
-  setS (2, 4, z2);
-  setS (3, 1, z2);
-  setS (3, 2, 0.0);
-  setS (3, 3, 1.0);
-  setS (3, 4, z1);
-  setS (4, 1, 0.0);
-  setS (4, 2, 0.0);
-  setS (4, 3, 0.0);
-  setS (4, 4, 1.0);
+  setS (1, 1, 1.0); setS (1, 2, 0.0); setS (1, 3, 0.0); setS (1, 4, 0.0);
+  setS (2, 1, z1);  setS (2, 2, 1.0); setS (2, 3, 0.0); setS (2, 4, z2);
+  setS (3, 1, z2);  setS (3, 2, 0.0); setS (3, 3, 1.0); setS (3, 4, z1);
+  setS (4, 1, 0.0); setS (4, 2, 0.0); setS (4, 3, 0.0); setS (4, 4, 1.0);
 }
 
 void vccs::initDC (void) {
+  allocMatrixMNA ();
   setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
   setB (1, 1, +0.0); setB (2, 1, +1.0); setB (3, 1, -1.0); setB (4, 1, +0.0);
   setD (1, 1, -1.0 / getPropertyDouble ("G"));
   setE (1, +0.0);
 }
 
-void vccs::calcAC (nr_double_t frequency) {
+void vccs::initAC (void) {
   initDC ();
+}
+
+void vccs::calcAC (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
   complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);

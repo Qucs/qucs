@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.31 2004/10/16 16:42:30 ela Exp $
+ * $Id: circuit.h,v 1.32 2004/11/24 19:15:44 raimi Exp $
  *
  */
 
@@ -36,9 +36,6 @@ enum circuit_flag {
 
 #define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
 #define RETFLAG(bit)     (flag & (bit))
-
-#define MAX_CIR_PORTS 6
-#define MAX_CIR_VSRCS 3
 
 class node;
 class property;
@@ -60,14 +57,15 @@ class circuit : public object, public integrator
   ~circuit ();
 
   // functionality to be overloaded by real circuit implementations
-  virtual void initSP (void) { }
+  virtual void initSP (void) { allocMatrixS (); }
   virtual void calcSP (nr_double_t) { }
-  virtual void initDC (void) { }
+  virtual void initDC (void) { allocMatrixMNA (); }
   virtual void calcDC (void) { }
+  virtual void initNoise (void) { allocMatrixN (); }
   virtual void calcNoise (nr_double_t) { }
-  virtual void initAC (void) { }
+  virtual void initAC (void) { allocMatrixMNA (); }
   virtual void calcAC (nr_double_t) { }
-  virtual void initTR (void) { }
+  virtual void initTR (void) { allocMatrixMNA (); }
   virtual void calcTR (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
 
@@ -166,6 +164,10 @@ class circuit : public object, public integrator
   static char * createInternal (char *, char *);
 
   // matrix operations
+  void   allocMatrixS (void);
+  void   allocMatrixN (void);
+  void   allocMatrixMNA (void);
+  void   freeMatrixMNA (void);
   void   setMatrixS (matrix);
   matrix getMatrixS (void);
   void   setMatrixN (matrix);
@@ -189,13 +191,13 @@ class circuit : public object, public integrator
   complex * MatrixS;
   complex * MatrixN;
   complex * MatrixY;
-  complex MatrixB[MAX_CIR_VSRCS * MAX_CIR_PORTS];
-  complex MatrixC[MAX_CIR_VSRCS * MAX_CIR_PORTS];
-  complex MatrixD[MAX_CIR_VSRCS * MAX_CIR_VSRCS];
-  complex MatrixE[MAX_CIR_VSRCS];
-  complex MatrixI[MAX_CIR_PORTS];
-  complex MatrixV[MAX_CIR_PORTS];
-  complex MatrixJ[MAX_CIR_VSRCS];
+  complex * MatrixB;
+  complex * MatrixC;
+  complex * MatrixD;
+  complex * MatrixE;
+  complex * MatrixI;
+  complex * MatrixV;
+  complex * MatrixJ;
   char * subcircuit;
   node * nodes;
   substrate * subst;

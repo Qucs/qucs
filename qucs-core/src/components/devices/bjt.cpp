@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.21 2004/10/25 21:01:32 ela Exp $
+ * $Id: bjt.cpp,v 1.22 2004/11/24 19:15:51 raimi Exp $
  *
  */
 
@@ -137,6 +137,9 @@ void bjt::calcNoise (nr_double_t frequency) {
 
 void bjt::initDC (void) {
 
+  // allocate MNA matrices
+  allocMatrixMNA ();
+
   // apply polarity of BJT
   char * type = getPropertyString ("Type");
   pol = !strcmp (type, "pnp") ? -1 : 1;
@@ -160,6 +163,7 @@ void bjt::initDC (void) {
     re = splitResistance (this, re, getNet (), "Re", "emitter", NODE_E);
     re->setProperty ("R", Re);
     re->setProperty ("Temp", T);
+    re->initDC ();
   }
   // no series resistance at emitter
   else {
@@ -173,6 +177,7 @@ void bjt::initDC (void) {
     rc = splitResistance (this, rc, getNet (), "Rc", "collector", NODE_C);
     rc->setProperty ("R", Rc);
     rc->setProperty ("Temp", T);
+    rc->initDC ();
   }
   // no series resistance at collector
   else {
@@ -190,6 +195,7 @@ void bjt::initDC (void) {
     rb = splitResistance (this, rb, getNet (), "Rbb", "base", NODE_B);
     rb->setProperty ("R", Rb);
     rb->setProperty ("Temp", T);
+    rb->initDC ();
   }
   // no series resistance at base
   else {
@@ -430,7 +436,9 @@ void bjt::calcOperatingPoints (void) {
 }
 
 void bjt::initSP (void) {
+  allocMatrixS ();
   processCbcx ();
+  if (deviceEnabled (cbcx)) cbcx->initSP ();
 }
 
 void bjt::processCbcx (void) {
@@ -453,7 +461,9 @@ void bjt::processCbcx (void) {
 }
 
 void bjt::initAC (void) {
+  allocMatrixMNA ();
   processCbcx ();
+  if (deviceEnabled (cbcx)) cbcx->initAC ();
   clearI ();
 }
 
@@ -477,7 +487,10 @@ void bjt::initTR (void) {
 
   // handle external base-collector capacitance appropriately
   processCbcx ();
-  if (deviceEnabled (cbcx)) cbcx->setProperty ("Controlled", getName ());
+  if (deviceEnabled (cbcx)) {
+    cbcx->initTR ();
+    cbcx->setProperty ("Controlled", getName ());
+  }
 }
 
 void bjt::calcTR (nr_double_t t) {

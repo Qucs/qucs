@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: opamp.h,v 1.2 2004/11/10 20:26:37 ela Exp $
+ * $Id: opamp.h,v 1.3 2004/11/24 19:15:49 raimi Exp $
  *
  */
 
@@ -29,15 +29,16 @@ class opamp : public circuit
 {
  public:
   opamp ();
-  void calcSP (nr_double_t);
+  void initSP (void);
   void initDC (void);
   void calcDC (void);
   void initAC (void);
   void initTR (void);
   void calcTR (nr_double_t);
+  void calcOperatingPoints (void);
 
  private:
-  nr_double_t gv;
+  nr_double_t gv, Uprev, Uold;
 };
 
 #endif /* __OPAMP_H__ */

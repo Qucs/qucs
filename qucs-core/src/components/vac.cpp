@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.11 2004/10/11 09:58:01 ela Exp $
+ * $Id: vac.cpp,v 1.12 2004/11/24 19:15:50 raimi Exp $
  *
  */
 
@@ -40,16 +40,21 @@
 #include "vac.h"
 
 vac::vac () : circuit (2) {
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
   type = CIR_VAC;
   setVSource (true);
   setVoltageSources (1);
 }
 
+void vac::initSP (void) {
+  allocMatrixS ();
+  setS (1, 1, 0.0);
+  setS (1, 2, 1.0);
+  setS (2, 1, 1.0);
+  setS (2, 2, 0.0);
+}
+
 void vac::initDC (void) {
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.13 2004/10/17 09:44:30 ela Exp $
+ * $Id: capacitor.cpp,v 1.14 2004/11/24 19:15:47 raimi Exp $
  *
  */
 
@@ -54,6 +54,7 @@ void capacitor::calcSP (nr_double_t frequency) {
 }
 
 void capacitor::initDC (void) {
+  allocMatrixMNA ();
   clearI ();
   clearY ();
 }
@@ -66,6 +67,7 @@ void capacitor::calcAC (nr_double_t frequency) {
 }
 
 void capacitor::initAC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 
@@ -74,6 +76,7 @@ void capacitor::initAC (void) {
 
 void capacitor::initTR (void) {
   setStates (2);
+  initDC ();
 }
 
 void capacitor::calcTR (nr_double_t) {

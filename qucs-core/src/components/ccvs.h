@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ccvs.h,v 1.5 2004/09/25 21:09:46 ela Exp $
+ * $Id: ccvs.h,v 1.6 2004/11/24 19:15:47 raimi Exp $
  *
  */
 
@@ -31,6 +31,7 @@ class ccvs : public circuit
   ccvs ();
   void calcSP (nr_double_t);
   void initDC (void);
+  void initAC (void);
   void calcAC (nr_double_t);
 };
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vrect.cpp,v 1.1 2004/10/03 10:30:51 ela Exp $
+ * $Id: vrect.cpp,v 1.2 2004/11/24 19:15:50 raimi Exp $
  *
  */
 
@@ -39,19 +39,24 @@
 #include "vrect.h"
 
 vrect::vrect () : circuit (2) {
+  type = CIR_VRECT;
+  setVSource (true);
+  setVoltageSources (1);
+}
+
+void vrect::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, 0.0);
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
-  type = CIR_VRECT;
-  setVSource (true);
-  setVoltageSources (1);
 }
 
 void vrect::initDC (void) {
   nr_double_t th = getPropertyDouble ("TH");
   nr_double_t tl = getPropertyDouble ("TL");
   nr_double_t u  = getPropertyDouble ("U") * th / (th + tl);
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
   setE (1, u);
 }

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msopen.cpp,v 1.5 2004/09/26 09:58:52 ela Exp $
+ * $Id: msopen.cpp,v 1.6 2004/11/24 19:15:54 raimi Exp $
  *
  */
 
@@ -112,7 +112,7 @@ complex msopen::calcY (nr_double_t frequency) {
 				ZlEffFreq, ErEffFreq);
 
     if (fabs (er - 9.9) > 0.2) {
-      logprint (LOG_STATUS, "WARNING: Model for microstrip open end defined "
+      logprint (LOG_ERROR, "WARNING: Model for microstrip open end defined "
 		"for er = 9.9 (er = %g)\n", er);
     }
 
@@ -134,6 +134,7 @@ complex msopen::calcY (nr_double_t frequency) {
 }
 
 void msopen::initDC (void) {
+  allocMatrixMNA ();
   setY (1, 1, 0);
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.34 2004/10/19 11:17:14 ela Exp $
+ * $Id: circuit.cpp,v 1.35 2004/11/24 19:15:44 raimi Exp $
  *
  */
 
@@ -46,6 +46,7 @@
 circuit::circuit () : object (), integrator () {
   size = 0;
   MatrixN = MatrixS = MatrixY = NULL;
+  MatrixB = MatrixC = MatrixD = MatrixE = MatrixI = MatrixV = MatrixJ = NULL;
   nodes = NULL;
   pacport = 0;
   pol = 1;
@@ -63,14 +64,11 @@ circuit::circuit () : object (), integrator () {
 /* Constructor creates an unnamed instance of the circuit class with a
    certain number of ports. */
 circuit::circuit (int s) : object (), integrator () {
-  assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
+  assert (s >= 0);
   size = s;
-  if (size > 0) {
-    MatrixS = new complex[s * s];
-    MatrixN = new complex[s * s];
-    MatrixY = new complex[s * s];
-    nodes = new node[s];
-  }
+  if (size > 0) nodes = new node[s];
+  MatrixN = MatrixS = MatrixY = NULL;
+  MatrixB = MatrixC = MatrixD = MatrixE = MatrixI = MatrixV = MatrixJ = NULL;
   pacport = 0;
   pol = 1;
   flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
@@ -103,24 +101,38 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
     // copy each node and set its circuit to the current circuit object
     nodes = new node[size];
     for (int i = 0; i < size; i++) {
-      node * n = new node (c.nodes[i]);
-      n->setCircuit (this);
-      nodes[i] = * n;
-      delete n;
+      nodes[i] = node (c.nodes[i]);;
+      nodes[i].setCircuit (this);
     }
     // copy each s-parameter
-    MatrixS = new complex[size * size];
-    memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
-    // copy each noise-correlation-parameter
-    MatrixN = new complex[size * size];
-    memcpy (MatrixN, c.MatrixN, size * size * sizeof (complex));
+    if (c.MatrixS) {
+      allocMatrixS ();
+      memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
+    }
+    // copy each noise-correlation parameter
+    if (c.MatrixN) {
+      allocMatrixN ();
+      memcpy (MatrixN, c.MatrixN, size * size * sizeof (complex));
+    }
     // copy each G-MNA entry
-    MatrixY = new complex[size * size];
-    memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
+    if (c.MatrixY) {
+      allocMatrixMNA ();
+      memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
+      memcpy (MatrixI, c.MatrixI, size * sizeof (complex));
+      memcpy (MatrixV, c.MatrixV, size * sizeof (complex));
+      if (vsources > 0) {
+	memcpy (MatrixB, c.MatrixB, vsources * size * sizeof (complex));
+	memcpy (MatrixC, c.MatrixC, vsources * size * sizeof (complex));
+	memcpy (MatrixD, c.MatrixD, vsources * vsources * sizeof (complex));
+	memcpy (MatrixE, c.MatrixE, vsources * sizeof (complex));
+	memcpy (MatrixJ, c.MatrixJ, vsources * sizeof (complex));
+      }
+    }
   }
   else {
     nodes = NULL;
     MatrixS = MatrixN = MatrixY = NULL;
+    MatrixB = MatrixC = MatrixD = MatrixE = MatrixI = MatrixV = MatrixJ = NULL;
   }
 
   // copy operating points
@@ -130,9 +142,9 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
 // Destructor deletes a circuit object.
 circuit::~circuit () {
   if (size > 0) {
-    delete[] MatrixS;
-    delete[] MatrixN;
-    delete[] MatrixY;
+    if (MatrixS) delete[] MatrixS;
+    if (MatrixN) delete[] MatrixN;
+    freeMatrixMNA ();
     delete[] nodes;
   }
   if (subcircuit) free (subcircuit);
@@ -145,25 +157,71 @@ circuit::~circuit () {
 void circuit::setSize (int s) {
   // nothing to do here
   if (size == s) return;
-  assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
+  assert (s >= 0);
 
   if (size > 0) {
     // destroy any matrix and node information
-    delete[] MatrixS;
-    delete[] MatrixN;
-    delete[] MatrixY;
-    delete[] nodes;
-    nodes = NULL;
-    MatrixS = MatrixN = MatrixY = NULL;
+    if (MatrixS) delete[] MatrixS;
+    if (MatrixN) delete[] MatrixN;
+    MatrixS = MatrixN = NULL;
+    freeMatrixMNA ();
+    delete[] nodes; nodes = NULL;
   }
 
   if ((size = s) > 0) {
     // re-create matrix and node information space
     nodes = new node[size];
-    MatrixS = new complex[size * size];
-    MatrixN = new complex[size * size];
-    MatrixY = new complex[size * size];
+    allocMatrixS ();
+    allocMatrixN ();
+    allocMatrixMNA ();
   }
+}
+
+/* Allocates the S-parameter matrix memory. */
+void circuit::allocMatrixS (void) {
+  if (MatrixS) {
+    memset (MatrixS, 0, size * size * sizeof (complex));
+  } else {
+    MatrixS = new complex[size * size];
+  }
+}
+
+/* Allocates the noise correlation matrix memory. */
+void circuit::allocMatrixN (void) {
+  if (MatrixN) {
+    memset (MatrixN, 0, size * size * sizeof (complex));
+  } else {
+    MatrixN = new complex[size * size];
+  }
+}
+
+/* Allocates the matrix memory for the MNA matrices. */
+void circuit::allocMatrixMNA (void) {
+  freeMatrixMNA ();
+  if (size > 0) {
+    MatrixY = new complex[size * size];
+    MatrixI = new complex[size];
+    MatrixV = new complex[size];
+    if (vsources > 0) {
+      MatrixB = new complex[vsources * size];
+      MatrixC = new complex[vsources * size];
+      MatrixD = new complex[vsources * vsources];
+      MatrixE = new complex[vsources];
+      MatrixJ = new complex[vsources];
+    }
+  }
+}
+
+/* Free()'s all memory used by the MNA matrices. */
+void circuit::freeMatrixMNA (void) {
+  if (MatrixY) { delete[] MatrixY; MatrixY = NULL; }
+  if (MatrixB) { delete[] MatrixB; MatrixB = NULL; }
+  if (MatrixC) { delete[] MatrixC; MatrixC = NULL; }
+  if (MatrixD) { delete[] MatrixD; MatrixD = NULL; }
+  if (MatrixE) { delete[] MatrixE; MatrixE = NULL; }
+  if (MatrixI) { delete[] MatrixI; MatrixI = NULL; }
+  if (MatrixV) { delete[] MatrixV; MatrixV = NULL; }
+  if (MatrixJ) { delete[] MatrixJ; MatrixJ = NULL; }
 }
 
 /* This function sets the name and port number of one of the circuit's
@@ -414,7 +472,7 @@ int circuit::getVoltageSources (void) {
 
 // Sets the number of internal voltage sources for DC analysis.
 void circuit::setVoltageSources (int s) {
-  assert (s >= 0 && s <= MAX_CIR_VSRCS);
+  assert (s >= 0);
   vsources = s;
 }
 

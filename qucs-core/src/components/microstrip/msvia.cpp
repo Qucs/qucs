@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.2 2004/11/10 20:26:37 ela Exp $
+ * $Id: msvia.cpp,v 1.3 2004/11/24 19:15:54 raimi Exp $
  *
  */
 
@@ -58,6 +58,7 @@ void msvia::calcNoise (nr_double_t) {
 }
 
 void msvia::initSP (void) {
+  allocMatrixS ();
   R = calcResistance ();
 }
 
@@ -110,21 +111,24 @@ void msvia::initDC (void) {
   // for non-zero resistances usual MNA entries
   if (r != 0.0) {
     nr_double_t g = 1.0 / r;
+    setVoltageSources (0);
+    allocMatrixMNA ();
     setY (1, 1, +g); setY (2, 2, +g);
     setY (1, 2, -g); setY (2, 1, -g);
-    setVoltageSources (0);
   }
   // for zero resistances create a zero voltage source
   else {
-    clearY ();
-    voltageSource (1, 1, 2);
     setVoltageSources (1);
     setInternalVoltageSource (1);
+    allocMatrixMNA ();
+    clearY ();
+    voltageSource (1, 1, 2);
   }
 }
 
 void msvia::initAC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
   initSP ();
 }
 

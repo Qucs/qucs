@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcblock.cpp,v 1.5 2004/10/08 11:45:39 ela Exp $
+ * $Id: dcblock.cpp,v 1.6 2004/11/24 19:15:48 raimi Exp $
  *
  */
 
@@ -37,20 +37,26 @@
 #include "dcblock.h"
 
 dcblock::dcblock () : circuit (2) {
+  type = CIR_DCBLOCK;
+}
+
+void dcblock::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, 0.0);
   setS (2, 2, 0.0);
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
-  type = CIR_DCBLOCK;
 }
 
 void dcblock::initDC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
 }
 
 void dcblock::initAC (void) {
-  voltageSource (1, 1, 2);
   setVoltageSources (1);
+  allocMatrixMNA ();
+  voltageSource (1, 1, 2);
 }
 
 void dcblock::initTR (void) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.64 2004/10/31 12:35:46 ela Exp $
+ * $Id: check_netlist.cpp,v 1.65 2004/11/24 19:15:42 raimi Exp $
  *
  */
 
@@ -1187,6 +1187,27 @@ static void netlist_free_definition (struct definition_t * def) {
   free (def->type);
   free (def->instance);
   free (def);
+}
+
+/* The function removes the given definition 'cand' from the
+   definition root.  It returns the new definition root. */
+struct definition_t *
+netlist_unchain_definition (struct definition_t * root,
+			    struct definition_t * cand) {
+  struct definition_t * prev;
+  if (cand == root) {
+    root = cand->next;
+    netlist_free_definition (cand);
+  }
+  else {
+    // find previous to the candidate to be deleted
+    for (prev = root; prev != NULL && prev->next != cand; prev = prev->next);
+    if (prev != NULL) {
+      prev->next = cand->next;
+      netlist_free_definition (cand);
+    }
+  }
+  return root;
 }
 
 /* The function expands the subcircuits within the given definition

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.9 2004/10/04 17:17:45 ela Exp $
+ * $Id: trafo.cpp,v 1.10 2004/11/24 19:15:49 raimi Exp $
  *
  */
 
@@ -41,11 +41,12 @@ trafo::trafo () : circuit (4) {
   setVoltageSources (1);
 }
 
-void trafo::calcSP (nr_double_t) {
+void trafo::initSP (void) {
   nr_double_t t = getPropertyDouble ("T");
   complex z1 = (t * t) / (t * t + 1.0);
   complex z2 = t / (t * t + 1.0);
   complex z3 = 1 / (t * t + 1.0);
+  allocMatrixS ();
   setS (1, 1,  z1); setS (1, 2,  z2); setS (1, 3, -z2); setS (1, 4,  z3);
   setS (2, 1,  z2); setS (2, 2,  z3); setS (2, 3,  z1); setS (2, 4, -z2);
   setS (3, 1, -z2); setS (3, 2,  z1); setS (3, 3,  z3); setS (3, 4,  z2);
@@ -54,6 +55,7 @@ void trafo::calcSP (nr_double_t) {
 
 void trafo::initDC (void) {
   nr_double_t t = getPropertyDouble ("T");
+  allocMatrixMNA ();
   setB (1, 1, -1); setB (2, 1, +t); setB (3, 1, -t); setB (4, 1, +1);
   setC (1, 1, +1); setC (1, 2, -t); setC (1, 3, +t); setC (1, 4, -1);
   setD (1, 1, +0);

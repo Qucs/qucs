@@ -23,12 +23,13 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Non-ideal transient models of bias-t, dc-block and dc-feed.
 - Implement optional gmin-stepping algorithm.
 - More S-parameter computation formulas, e.g. stability factors.
 - Implementation of noise and stability circle formulas.
 - Implement some more matrix operations, e.g. det(), conj(), transpose() and
   inverse(), to be available in equations.
-- Spice to Qucs netlist converter.
+	- Spice to Qucs netlist converter.
 - Reordering algorithm for MNA matrices (fail of convergence).
 - Allow array indices in vectors with multiple dependencies.
 - Add charge-conversing model for MOS capacitances (i.e. Simpson's

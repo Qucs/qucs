@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msgap.cpp,v 1.6 2004/10/12 18:13:12 ela Exp $
+ * $Id: msgap.cpp,v 1.7 2004/11/24 19:15:53 raimi Exp $
  *
  */
 
@@ -118,6 +118,7 @@ matrix msgap::calcMatrixY (nr_double_t frequency) {
 }
 
 void msgap::initDC (void) {
+  allocMatrixMNA ();
   clearY ();
 }
 

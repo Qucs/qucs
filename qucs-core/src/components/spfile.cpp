@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.13 2004/10/12 18:13:11 ela Exp $
+ * $Id: spfile.cpp,v 1.14 2004/11/24 19:15:49 raimi Exp $
  *
  */
 
@@ -277,6 +277,9 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
 
 void spfile::initSP (void) {
 
+  // allocate S-parameter matrix
+  allocMatrixS ();
+
   // load S-parameter file
   char * file = getPropertyString ("File");
   if (data == NULL) data = dataset::load_touchstone (file);
@@ -485,10 +488,12 @@ complex spfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
 }
 
 void spfile::initDC (void) {
+  allocMatrixMNA ();
   clearY ();
 }
 
 void spfile::initAC (void) {
+  allocMatrixMNA ();
   initSP ();
 }
 

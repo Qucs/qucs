@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: amplifier.cpp,v 1.1 2004/11/01 08:36:00 ela Exp $
+ * $Id: amplifier.cpp,v 1.2 2004/11/24 19:15:47 raimi Exp $
  *
  */
 
@@ -45,6 +45,7 @@ void amplifier::initSP (void) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
+  allocMatrixS ();
   setS (1, 1, (z1 - z0) / (z1 + z0));
   setS (1, 2, 0);
   setS (2, 2, (z2 - z0) / (z2 + z0));
@@ -55,6 +56,7 @@ void amplifier::initDC (void) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
+  allocMatrixMNA ();
   setY (1, 1, 1 / z1);
   setY (1, 2, 0);
   setY (2, 1, -2 * g / sqrt (z1 * z2));

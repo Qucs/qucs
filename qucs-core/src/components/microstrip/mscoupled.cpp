@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.16 2004/10/16 16:42:31 ela Exp $
+ * $Id: mscoupled.cpp,v 1.17 2004/11/24 19:15:53 raimi Exp $
  *
  */
 
@@ -393,23 +393,26 @@ void mscoupled::initDC (void) {
   if (t != 0.0 && rho != 0.0) {
     // tiny resistances
     nr_double_t g = t * W / rho / l;
+    setVoltageSources (0);
+    allocMatrixMNA ();
     setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
     setY (3, 3, +g); setY (4, 4, +g); setY (3, 4, -g); setY (4, 3, -g);
-    setVoltageSources (0);
   }
   else {
     // DC shorts (voltage sources V = 0 volts)
+    setVoltageSources (2);
+    setInternalVoltageSource (1);
+    allocMatrixMNA ();
     clearY ();
     voltageSource (1, 1, 2);
     voltageSource (2, 3, 4);
     setD (1, 2, 0.0); setD (2, 1, 0.0);
-    setVoltageSources (2);
-    setInternalVoltageSource (1);
   }
 }
 
 void mscoupled::initAC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
 }
 
 void mscoupled::calcAC (nr_double_t frequency) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.6 2004/11/04 14:34:39 ela Exp $
+ * $Id: check_spice.cpp,v 1.7 2004/11/24 19:15:54 raimi Exp $
  *
  */
 
@@ -44,7 +44,8 @@
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
-struct value_t * value_root = NULL;
+int spice_errors = 0;
+char * spice_title = NULL;
 
 // List of available Spice components.
 struct define_t spice_definition_available[] =
@@ -138,6 +139,33 @@ struct define_t spice_definition_available[] =
     { PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* operating point analysis */
+  { "OP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* subcircuit instance */
+  { "X", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* subcircuit definition */
+  { "SUBCKT", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* nodeset functionality */
+  { "NODESET", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* nodeset functionality */
+  { "IC", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
 
   /* end of list */
   { NULL, 0, 0, 0, 0, { PROP_NO_PROP }, { PROP_NO_PROP } }
@@ -221,9 +249,8 @@ netlist_append_nodes (struct node_t * n1, struct node_t * n2) {
    checks whether the given component type can be found. */
 static struct define_t * spice_find_definition (char * n) {
   struct define_t * def;
-  for (def = spice_definition_available; def->type != NULL; def++) {
+  for (def = spice_definition_available; def->type != NULL; def++)
     if (!strcasecmp (n, def->type)) return def;
-  }
   return NULL;
 }
 
@@ -237,8 +264,23 @@ static struct node_t * spice_translate_node (char * node) {
     n->node = (char *) malloc (5 + strlen (node));
     strcpy (n->node, "_net");
     strcat (n->node, node);
+    // strip off invalid characters
+    for (unsigned int i = 0; i < strlen (n->node); i++) {
+      if (!isalpha (n->node[i]) && !isdigit (n->node[i])) {
+	n->node[i] = '_';
+      }
+    }
   }
   return n;
+}
+
+/* The function marks the given value to be processed and free()'s
+   unnecessary memory. */
+static void spice_value_done (struct value_t * val) {
+  if (val->ident) { free (val->ident); val->ident = NULL; }
+  if (val->unit)  { free (val->unit);  val->unit = NULL;  }
+  if (val->scale) { free (val->scale); val->scale = NULL; }
+  val->hint |= HINT_DONE;
 }
 
 /* The function creates the nodes list for the given component. */
@@ -246,20 +288,23 @@ static struct node_t * spice_get_nodes (struct definition_t * def) {
 
   // has this component actually any nodes to define?
   int nodes = def->define->nodes;
-  if (nodes <= 0) return NULL;
+  if (nodes == 0) return NULL;
 
   // go through value list and try identifying nodes
   struct value_t * val;
   struct node_t * root = NULL;
   int i = 0;
   foreach_value (def->values, val) {
-    if (val->hint & (HINT_NODE | HINT_NUMBER)) {
+    if (val->hint & HINT_NODE) {
       struct node_t * n = spice_translate_node (val->ident);
       n->next = root;
       root = n;
-      val->hint |= HINT_DONE;
-      if (++i >= nodes) break;
+      spice_value_done (val);
+      // continue until all nodes are done
+      if (++i >= nodes && nodes != PROP_NODES) break;
     }
+    // nodes are defined successively
+    else break;
   }
   // return reversed list of nodes
   return netlist_reverse_nodes (root);
@@ -270,8 +315,8 @@ static struct node_t * spice_get_nodes (struct definition_t * def) {
    there is no valid scale found and otherwise the corrected scale.
    The given endptr is set to the character after the last valid scale
    character. */
-static char * spice_evaluate_scale (char * value, char **endptr,
-				    double * factor) {
+static char *
+spice_evaluate_scale (char * value, char ** endptr, double * factor) {
   char * scale = NULL;
   *factor = 1.0;
   switch (*value) {
@@ -307,7 +352,7 @@ static char * spice_evaluate_scale (char * value, char **endptr,
 
 /* This little function takes the given string value, converts it into
    an appropriate real value and save optional scale and unit. */
-static struct value_t * spice_create_value (char * ident) {
+static struct value_t * spice_create_value (const char * ident) {
   struct value_t * val;
   char * end, * str;
   double value = 1.0;
@@ -330,30 +375,29 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
   struct property_t * prop;
   int i = 0;
 
-  // if there is a value given and no description, it is required
+  // if there is a value given and no description (key), it is required
   foreach_value (def->values, val) {
-    prop = &def->define->required[i++];
+    prop = &def->define->required[i];
     if (val->hint & HINT_NUMBER && prop->key) {
       p = create_pair ();
       p->key = strdup (prop->key);
       p->value = spice_create_value (val->ident);
       p->next = root;
       root = p;
-      val->hint |= HINT_DONE;
+      spice_value_done (val);
+      i++;
     }
     else break;
   }
   // other key/value pairs on that line
   foreach_value (def->values, val) {
     if (val->hint & HINT_PAIR) {
-      if (!strcasecmp (val->ident, "DC") || !strcasecmp (val->ident, "AC"))
-	continue;
       p = create_pair ();
       p->key = strdup (val->ident);
       p->value = spice_create_value (val->unit);
       p->next = root;
       root = p;
-      val->hint |= HINT_DONE;
+      spice_value_done (val);
     }
   }
   return netlist_reverse_pairs (root);
@@ -362,10 +406,10 @@ static struct pair_t * spice_get_pairs (struct definition_t * def) {
 /* The function goes through the list of definitions and tries to find
    the given device model.  It returns NULL if there is no such
    model. */
-static struct definition_t * spice_find_device (char * type) {
-  struct definition_t * def;
-  for (def = definition_root; def != NULL; def = def->next) {
-    if (def->action && !strcasecmp (def->type, "MODEL") &&
+static struct definition_t *
+spice_find_device (struct definition_t * root, char * type) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (def->action && !strcasecmp (def->type, "MODEL") && 
 	!strcasecmp (def->instance, type)) {
       return def;
     }
@@ -373,7 +417,9 @@ static struct definition_t * spice_find_device (char * type) {
   return NULL;
 }
 
-/* Looks for the first possible .MODEL instance name in the given list. */
+/* Looks for the first possible .MODEL or any other device reference
+   instance name in the given list.  Returns NULL if there is no such
+   thing. */
 static struct value_t *
 spice_find_device_instance (struct definition_t * def) {
   struct value_t * val;
@@ -488,13 +534,25 @@ static void spice_adjust_device (struct definition_t * def,
   }
 }
 
-/* Translate .MODEL specifications in Q instances. */
-static void spice_translate_device (struct definition_t * def) {
+/* The function translates .MODEL specifications in device (MOSFET,
+   BJT, etc.)  instances. */
+static void spice_translate_device (struct definition_t * root,
+				    struct definition_t * def) {
   struct value_t * inst = spice_find_device_instance (def);
-  struct definition_t * tran = spice_find_device (inst->ident);
-  if (tran) {
-    inst->hint |= HINT_DONE;
+  /* first look for the Model in the local definition root, then in
+     the global definition root */
+  struct definition_t * tran;
+  if ((tran = spice_find_device (root, inst->ident)) == NULL)
+    tran = spice_find_device (definition_root, inst->ident);
+  // really translate the instance here
+  if (tran != NULL) {
+    spice_value_done (inst);
     spice_adjust_device (def, tran);
+  }
+  else {
+    fprintf (stderr, "spice error, no such .MODEL `%s' found as specified in "
+	     "device instance `%s'\n", inst->ident, def->instance);
+    spice_errors++;
   }
 }
 
@@ -503,10 +561,8 @@ static void spice_translate_device (struct definition_t * def) {
 static struct define_t *
 spice_get_qucs_definition (struct definition_t * def) {
   struct define_t * entry;
-  for (entry = qucs_definition_available; entry->type != NULL; entry++) {
-    if (!strcmp (entry->type, def->type))
-      return entry;
-  }
+  for (entry = qucs_definition_available; entry->type != NULL; entry++)
+    if (!strcmp (entry->type, def->type)) return entry;
   return NULL;
 }
 
@@ -530,7 +586,7 @@ spice_device_table[] = {
   { NULL, NULL }
 };
 
-/* This little funtion translates the Spice type definitions into Qucs
+/* This little function translates the Spice type definitions into Qucs
    types. */
 static void spice_translate_type (struct definition_t * def) {
   struct spice_device_table_t * tran;
@@ -583,6 +639,10 @@ node_translations[] = {
     { 3, 1, 2, 4, -1 },
     { 1, 2, 3, 4, -1 }
   },
+  { "NodeSet", 1,
+    { 1, -1 },
+    { 1, -1 }
+  },
   { NULL, 0, { -1 }, { -1 } }
 };
 
@@ -634,9 +694,8 @@ static void spice_translate_nodes (struct definition_t * def, int pass) {
   struct node_translation_t * nodes;
   struct node_t * node;
   // find node translator
-  for (nodes = node_translations; nodes->type != NULL; nodes++) {
+  for (nodes = node_translations; nodes->type != NULL; nodes++)
     if (!strcmp (nodes->type, def->type)) break;
-  }
   if (nodes->type == NULL || pass != nodes->pass) return;
 
   struct define_t * entry = spice_get_qucs_definition (def);
@@ -647,7 +706,7 @@ static void spice_translate_nodes (struct definition_t * def, int pass) {
       if (nodes->Default[n] == 0) { // default is the ground node
 	node->node = strdup ("gnd");
       }
-      else {                       // default is some other node
+      else {                        // default is some other node
 	struct node_t * t = spice_get_node (def, nodes->Default[n]);
 	node->node = strdup (t->node);
       }
@@ -717,7 +776,7 @@ static void spice_adjust_default_properties (struct definition_t * def) {
   struct define_t * entry = spice_get_qucs_definition (def);
   if (entry == NULL) return;
 
-  // handle required properties
+  // handle required properties only
   for (int i = 0; PROP_IS_PROP (entry->required[i]); i++) {
     struct property_t * prop = &entry->required[i];
     if (spice_find_property (def, prop->key) == NULL) {
@@ -819,7 +878,7 @@ spice_find_property (struct value_t * values, char * prop) {
    replaced.  If the replace flag is zero and the pair already exists
    nothing is done here. */
 static void spice_append_pair (struct definition_t * def, const char * prop,
-			       char * value, int replace) {
+			       const char * value, int replace) {
   struct pair_t * p = spice_find_property (def, prop);
   if (p != NULL) {
     if (replace) {
@@ -851,6 +910,12 @@ static void spice_adjust_instance (struct definition_t * def) {
   }
 }
 
+// Converts the given string into upper case.
+static char * spice_toupper (char * str) {
+  for (unsigned int i = 0; i < strlen (str); i++) str[i] = toupper (str[i]);
+  return str;
+}
+
 /* This function is used by the overall netlist translator in order to
    fixup the properties, nodes, instance name and property units of
    the given definition. */
@@ -865,10 +930,11 @@ static void spice_fixup_definition (struct definition_t * def) {
 /* The function adds the given definition to the list of valid
    definitions.  The definition is placed at the beginning of the
    list. */
-static void spice_add_definition (struct definition_t * def) {
+static struct definition_t *
+spice_add_definition (struct definition_t * root, struct definition_t * def) {
   spice_fixup_definition (def);
-  def->next = definition_root;
-  definition_root = def;
+  def->next = root;
+  return def;
 }
 
 /* This function creates an internal node name used during the
@@ -955,13 +1021,13 @@ spice_set_property_value (struct definition_t * def, char * key, double val) {
   struct pair_t * prop = spice_find_property (def, key);
   if (prop != NULL) {
     // just replace the key/value pair
-    if (prop->value->unit) {
-      free (prop->value->unit);
-      prop->value->unit = NULL;
-    }
     if (prop->value->scale) {
       free (prop->value->scale);
       prop->value->scale = NULL;
+    }
+    if (prop->value->unit) {
+      free (prop->value->unit);
+      prop->value->unit = NULL;
     }
     prop->value->value = val;
   }
@@ -995,14 +1061,50 @@ static void spice_extract_properties (struct definition_t * def,
     if (val->hint & HINT_NAME) {
       spice_set_property_string (def, field->field[i], val->ident);
     }
-    else if (val->hint & HINT_NODE | HINT_NUMBER) {
+    else if (val->hint & (HINT_NODE | HINT_NUMBER)) {
       spice_append_pair (def, field->field[i], val->ident, 0);
     }
     else break;
-    val->hint |= HINT_DONE;
+    spice_value_done (val);
     if (val->hint & HINT_MSTOP) break; // stop here if necessary
     i++;
   }  
+}
+
+/* This function tries to reproduce a Spice netlist line.  It is used
+   if no proper translation could be found for the line and is printed
+   as commentary line then. */
+static char * spice_untranslated_text (struct definition_t * def) {
+  struct value_t * val;
+  char str[256];
+  sprintf (str, "%s%s:%s ", def->action ? "." : "", def->type, def->instance);
+  char * txt = (char *) malloc (strlen (str) + 1);
+  strcpy (txt, str);
+  for (val = def->values; val != NULL; val = val->next) {
+    if (val->hint == HINT_NODE) {
+      sprintf (str, "%s ", val->ident);
+    }
+    else if (val->hint & (HINT_NODE | HINT_NUMBER)) {
+      sprintf (str, "%s%s ", val->ident, val->hint & HINT_MSTOP ? ")" : "");
+    }
+    else if (val->hint & HINT_PAIR) {
+      sprintf (str, "%s%s=%s%s ", val->hint & HINT_MSTART ? "(" : "",
+	       val->ident, val->unit, val->hint & HINT_MSTOP ? ")" : "");
+    }
+    else if (val->hint & HINT_NAME) {
+      sprintf (str, "%s%s%s%s",
+	       (val->hint & HINT_MSTART) ? " " : "",
+	       val->ident,
+	       (val->hint & HINT_MSTART) && val->next &&
+	       (val->next->hint & HINT_MSTOP) || 
+	       (val->hint & HINT_MSTOP) ? "" : " ",
+	       (val->hint & HINT_MSTART && val->next) ? "(" : 
+	       (val->hint & HINT_MSTOP) ? ")" : " ");
+    }
+    txt = (char *) realloc (txt, strlen (txt) + strlen (str) + 1);
+    strcat (txt, str);
+  }
+  return spice_toupper (txt);
 }
 
 #define VAL_IS_NUMBER(val) \
@@ -1014,14 +1116,18 @@ static void spice_extract_properties (struct definition_t * def,
    new kinds of sources are created.  This must be done since Qucs has
    separate sources for each type of excitation and Spice summarizes
    these voltage/current excitations in a single source. */
-static void spice_translate_source (struct definition_t * def, char type) {
+static struct definition_t *
+spice_translate_source (struct definition_t * root,
+			struct definition_t * def, char type) {
   struct definition_t * ac = NULL, * dc = def, * pulse = NULL;
   struct value_t * prop;
 
   // adjust the DC part of the source
   if ((prop = spice_find_property (dc->values, "DC")) != NULL) {
-    spice_append_pair (def, type == 'U' ? "U" : "I", prop->unit, 1);
-    prop->hint |= HINT_DONE;
+    spice_value_done (prop);
+    prop = prop->next;
+    spice_append_pair (def, type == 'U' ? "U" : "I", prop->ident, 1);
+    spice_value_done (prop);
   }
   free (dc->type);
   dc->type = strdup (type == 'U' ? "Vdc" : "Idc");
@@ -1029,11 +1135,11 @@ static void spice_translate_source (struct definition_t * def, char type) {
   // adjust the sinusoidal part of the source
   if ((prop = spice_find_property (dc->values, "SIN")) != NULL) {
     ac = spice_create_definition (dc, type == 'U' ? "Vac" : "Iac");
-    prop->hint |= HINT_DONE;
+    spice_value_done (prop);
     prop = prop->next;
     if (VAL_IS_NUMBER (prop)) {
       spice_append_pair (dc, type == 'U' ? "U" : "I", prop->ident, 0);
-      prop->hint |= HINT_DONE;
+      spice_value_done (prop);
       prop = prop->next;
       struct property_field_t field =
       { { type == 'U' ? "U" : "I", "f", "Phase", NULL } };
@@ -1048,39 +1154,42 @@ static void spice_translate_source (struct definition_t * def, char type) {
   // adjust the AC part of the source
   if ((prop = spice_find_property (dc->values, "AC")) != NULL) {
     char * Mag = NULL, * Phase = NULL;
-    prop->hint |= HINT_DONE;
-    if (prop->hint & HINT_PAIR) {
-      Mag = prop->unit;
-    }
-    else {
+    spice_value_done (prop);
+    prop = prop->next;
+    if (VAL_IS_NUMBER (prop)) {
+      Mag = strdup (prop->ident);
+      spice_value_done (prop);
       prop = prop->next;
       if (VAL_IS_NUMBER (prop)) {
-	Mag = prop->ident;
-	prop->hint |= HINT_DONE;
-	prop = prop->next;
-	if (VAL_IS_NUMBER (prop)) {
-	  Phase = prop->ident;
-	  prop->hint |= HINT_DONE;
-	}
+	Phase = strdup (prop->ident);
+	spice_value_done (prop);
       }
     }
-    if (ac == NULL)
+    if (ac == NULL) {
       ac = spice_create_definition (dc, type == 'U' ? "Vac" : "Iac");
-    if (Mag)
+    }
+    if (Mag) {
       spice_append_pair (ac, type == 'U' ? "U" : "I", Mag, 1);
-    if (Phase)
+      free (Mag);
+    }
+    else {
+      spice_append_pair (ac, type == 'U' ? "U" : "I", "0", 0);
+    }
+    if (Phase) {
       spice_append_pair (ac, "Phase", Phase, 1);
+      free (Phase);
+    }
   }
 
   // adjust the pulse part of the source
   if ((prop = spice_find_property (dc->values, "PULSE")) != NULL) {
     pulse = spice_create_definition (dc, type == 'U' ? "Vpulse" : "Ipulse");
-    prop->hint |= HINT_DONE;
+    spice_value_done (prop);
     prop = prop->next;
     if (VAL_IS_NUMBER (prop)) {
       spice_append_pair (pulse, type == 'U' ? "U1" : "I1", prop->ident, 0);
       spice_append_pair (dc, type == 'U' ? "U" : "I", "0", 1);
-      prop->hint |= HINT_DONE;
+      spice_value_done (prop);
       prop = prop->next;
       struct property_field_t field =
       { { type == 'U' ? "U2" : "I2", "T1", "Tr", "Tf", "T2", NULL } };
@@ -1100,15 +1209,16 @@ static void spice_translate_source (struct definition_t * def, char type) {
       spice_adjust_vsource_nodes (ac, dc);
     else
       spice_adjust_isource_nodes (ac, dc);
-    spice_add_definition (ac);
+    root = spice_add_definition (root, ac);
   }
   if (pulse) {
     if (type == 'U')
       spice_adjust_vsource_nodes (pulse, ac ? ac : dc);
     else
       spice_adjust_isource_nodes (pulse, ac ? ac : dc);
-    spice_add_definition (pulse);
+    root = spice_add_definition (root, pulse);
   }
+  return root;
 }
 
 /* This little function returns a static string containing an instance
@@ -1121,12 +1231,6 @@ static char * spice_create_intern_para (void) {
   return txt;
 }
 
-// Converts the given string into upper case.
-static char * spice_toupper (char * str) {
-  for (unsigned int i = 0; i < strlen (str); i++) str[i] = toupper (str[i]);
-  return str;
-}
-
 /* The function is used to translate the lin/log10/log8 sweeps into an
    appropriate sweep in Qucs.  Depending on the given arguments it
    computes the number of points in a sweep and stores the new type of
@@ -1137,15 +1241,17 @@ static int spice_evaluate_points (char ** type, double start, double stop,
   if (!strcasecmp (*type, "dec")) {      // logarithmic
     ret = (int) ((log10 (stop) - log10 (start)) * points);
     free (*type);
-    *type = "log";
+    *type = strdup ("log");
   }
   else if (!strcasecmp (*type, "lin")) { // linear
     ret = (int) points;
+    free (*type);
+    *type = strdup ("lin");
   }
   else if (!strcasecmp (*type, "oct")) { // octaves
     ret = (int) (((log10 (stop) - log10 (start)) / log10 (8)) * points);
     free (*type);
-    *type = "log";
+    *type = strdup ("log");
   }
   return ret;
 }
@@ -1185,70 +1291,65 @@ static int spice_count_values (struct value_t * values) {
 /* The function looks through the list of definitions if there is a
    component with the given type and instance names and returns it.
    Otherwise the function returns NULL. */
-static struct definition_t * spice_find_definition (char * type, char * inst) {
-  struct definition_t * def;
-  for (def = definition_root; def != NULL; def = def->next) {
+static struct definition_t *
+spice_find_definition (struct definition_t * root, char * type, char * inst) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (!strcasecmp (def->type, type) && !strcasecmp (def->instance, inst))
       return def;
   }
   return NULL;
 }
 
-/* This function tries to reproduce a Soice netlist line.  It is used
-   if no proper translation could be found for the line and is printed
-   as commentary line then. */
-static char * spice_untranslated_text (struct definition_t * def) {
-  struct value_t * val;
-  char str[256];
-  sprintf (str, "%s%s%s ", def->action ? "." : "", def->type,
-	   def->action ? "" : &def->instance[1]);
-  char * txt = (char *) malloc (strlen (str) + 1);
-  strcpy (txt, str);
-  for (val = def->values; val != NULL; val = val->next) {
-    if (val->hint == HINT_NODE) {
-      sprintf (str, "%g ", val->value);
-    }
-    else if (val->hint & (HINT_NODE | HINT_NUMBER)) {
-      sprintf (str, "%s ", val->ident);
-    }
-    else if (val->hint & HINT_PAIR) {
-      sprintf (str, "%s%s=%s%s ", val->hint & HINT_MSTART ? "(" : "",
-	       val->ident, val->unit, val->hint & HINT_MSTOP ? ")" : "");
-    }
-    else if (val->hint & HINT_NAME) {
-      sprintf (str, "%s%s", val->ident,
-	       (val->hint & HINT_MSTART && val->next) ? " (" : " ");
-    }
-    txt = (char *) realloc (txt, strlen (txt) + strlen (str) + 1);
-    strcat (txt, str);
+/* The function appends the given key/value pair to the properties of
+   any definition of the given type. */
+static void spice_add_property (struct definition_t * root, char * type,
+				char * key, char * value) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (!strcmp (def->type, type))
+      spice_append_pair (def, key, value, 0);
   }
-  return spice_toupper (txt);
+}
+
+/* The following little function removes the value list of the given
+   definition entirely if all values are marked to be processed. */
+static void spice_free_values (struct definition_t * def) {
+  if (spice_count_values (def->values) <= 0) {
+    struct value_t * val, * next;
+    for (val = def->values; val != NULL; val = next) {
+      next = val->next;
+      netlist_free_value (val);
+    }
+    def->values = NULL;
+  }
 }
 
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
    resulting netlist. */
-static int spice_post_translator (void) {
-  struct definition_t * def;
-  for (def = definition_root; def != NULL; def = def->next) {
+static int spice_post_translator (struct definition_t * root) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
     // post-process parameter sweep
     if (def->action && !strcmp (def->type, "SW")) {
       // adjust the actual 'Param' name
       struct pair_t * prop = spice_find_property (def, "Param");
-      char * val = prop->value->ident;
-      spice_toupper (val);
+      char * val = spice_toupper (prop->value->ident);
       struct definition_t * target;
       // get the target voltage or current source and adjust the property
-      target = spice_find_definition ("Vdc", val);
+      target = spice_find_definition (root, "Vdc", val);
       if (target) {
 	prop = spice_find_property (target, "U");
 	prop->value->ident = strdup (val);
       }
       else {
-	target = spice_find_definition ("Idc", val);
+	target = spice_find_definition (root, "Idc", val);
 	if (target) {
 	  prop = spice_find_property (target, "I");
 	  prop->value->ident = strdup (val);
+	}
+	else {
+	  fprintf (stderr, "spice error, no such source `%s' found as "
+		   "referenced by the .DC analysis\n", val);
+	  spice_errors++;
 	}
       }
     }
@@ -1256,48 +1357,90 @@ static int spice_post_translator (void) {
     if (!def->action && (!strcmp (def->type, "CCCS") ||
 			 !strcmp (def->type, "CCVS"))) {
       struct definition_t * target;
-      struct pair_t * prop = def->pairs; // get first property
-      char * key = prop->key;            // and its key
-      // adjust the controlling nodes of the source
-      target = spice_find_definition ("Vdc", key);
-      spice_adjust_vsource_nodes (def, target);      
-      spice_translate_nodes (def, 1);
-      // and the properties of the source
-      prop = spice_find_property (def, "G");
-      netlist_free_pair (prop);
-      def->pairs->next = NULL;
-      strcpy (key, "G");
-      if (!strcmp (def->type, "CCVS")) {
+      struct pair_t * prop;
+      struct value_t * val = spice_find_device_instance (def);
+      char * key = val->ident;
+      target = spice_find_definition (root, "Vdc", key);
+      if (target) {
+	// adjust the controlling nodes of the source
+	spice_adjust_vsource_nodes (def, target);      
+	spice_translate_nodes (def, 1);
+	// and the properties of the source
+	prop = spice_find_property (def, "G");
 	double v = spice_get_property_value (def, "G");
 	spice_set_property_value (def, "G", 1 / v);
+      }
+      else {
+	fprintf (stderr, "spice error, no such voltage source `%s' found as "
+		 "referenced by the %s `%s' instance\n", def->type,
+		 def->instance, key);
+	spice_errors++;
       }
     }
     // post-process mutual inductors (transformer)
     if (!def->action && !strcmp (def->type, "Tr")) {
       struct definition_t * target;
       char * l1 = def->values->ident;
-      char * l2 = def->pairs->key;
-      target = spice_find_definition ("L", l1);
-      spice_adjust_isource_nodes (def, target);      
-      target = spice_find_definition ("L", l2);
-      spice_adjust_isource_nodes (def, target);      
+      char * l2 = def->values->next->ident;
+      target = spice_find_definition (root, "L", l1);
+      if (target == NULL) {
+	fprintf (stderr, "spice error, no such inductor `%s' found as "
+		 "referenced by %s `%s'\n", def->type, def->instance, l1);
+	spice_errors++;
+      }
+      else {
+	spice_adjust_isource_nodes (def, target);
+      }
+      target = spice_find_definition (root, "L", l2);
+      if (target == NULL) {
+	fprintf (stderr, "spice error, no such inductor `%s' found as "
+		 "referenced by %s `%s'\n", def->type, def->instance, l2);
+	spice_errors++;
+      }
+      else {
+	spice_adjust_isource_nodes (def, target);
+      }
       spice_translate_nodes (def, 1);
-      struct pair_t * prop = spice_find_property (def, l2);
-      double v = spice_get_property_value (def, l2);
+      double v = spice_get_property_value (def, "T");
       spice_set_property_value (def, "T", 1 / v);
-      def->pairs = prop->next;
-      netlist_free_pair (prop);
     }
+    // post-process general analysis options
+    if (def->action && strstr (def->type, "OPT")) {
+      struct value_t * val;
+      if ((val = spice_find_property (def->values, "ABSTOL")) != NULL) {
+	spice_add_property (root, "DC", "abstol", val->unit);
+	spice_add_property (root, "TR", "abstol", val->unit);
+      }
+      if ((val = spice_find_property (def->values, "RELTOL")) != NULL) {
+	spice_add_property (root, "DC", "reltol", val->unit);
+	spice_add_property (root, "TR", "reltol", val->unit);
+      }
+      if ((val = spice_find_property (def->values, "VNTOL")) != NULL) {
+	spice_add_property (root, "DC", "vntol", val->unit);
+	spice_add_property (root, "TR", "vntol", val->unit);
+      }
+      if ((val = spice_find_property (def->values, "ITL1")) != NULL) {
+	spice_add_property (root, "DC", "MaxIter", val->unit);
+      }
+      if ((val = spice_find_property (def->values, "ITL4")) != NULL) {
+	spice_add_property (root, "TR", "MaxIter", val->unit);
+      }
+    }
+    // post-process untranslated netlist lines
     if (def->define == NULL) {
       def->text = spice_untranslated_text (def);
     }
+    // remove values if possible
+    spice_free_values (def);
   }
-  return 0;
+  return spice_errors;
 }
 
 /* The function translates special actions defined in the Spice
    netlist including the types of simulations. */
-static void spice_translate_action (struct definition_t * def) {
+static struct definition_t *
+spice_translate_action (struct definition_t * root,
+			struct definition_t * def) {
   // translate transient analysis
   if (!strcasecmp (def->type, "TRAN")) {
     free (def->type);
@@ -1318,7 +1461,7 @@ static void spice_translate_action (struct definition_t * def) {
       case 3:
 	break;
       }
-      val->hint |= HINT_DONE;
+      spice_value_done (val);
     }
     double v;
     v  = spice_get_property_value (def, "Stop");
@@ -1330,12 +1473,12 @@ static void spice_translate_action (struct definition_t * def) {
   // translate AC analysis
   else if (!strcasecmp (def->type, "AC")) {
     struct value_t * val;
-    char * type;
+    char * type = NULL;
     int i = 0;
     foreach_value (def->values, val) {
       switch (i++) {
       case 0:
-	type = val->ident;
+	type = strdup (val->ident);
 	break;
       case 1:
 	spice_append_pair (def, "Points", val->ident, 0);
@@ -1347,7 +1490,7 @@ static void spice_translate_action (struct definition_t * def) {
 	spice_append_pair (def, "Stop", val->ident, 0);
 	break;
       }
-      val->hint |= HINT_DONE;
+      spice_value_done (val);
     }
     double v;
     v = spice_evaluate_points (&type,
@@ -1356,7 +1499,9 @@ static void spice_translate_action (struct definition_t * def) {
 			       spice_get_property_value (def, "Points"));
     spice_set_property_value (def, "Points", v);
     spice_set_property_string (def, "Type", type);
+    free (type);
   }
+  // translate DC analysis
   else if (!strcasecmp (def->type, "DC")) {
     struct definition_t * para1 = NULL, * para2 = NULL;
     if (spice_count_values (def->values) >= 4) {
@@ -1369,64 +1514,144 @@ static void spice_translate_action (struct definition_t * def) {
 				   spice_toupper (para1->instance));
       }
     }
-    if (para1) spice_add_definition (para1);
-    if (para2) spice_add_definition (para2);
+    if (para1) root = spice_add_definition (root, para1);
+    if (para2) root = spice_add_definition (root, para2);
   }
+  // translate subcircuit definition
+  else if (!strcasecmp (def->type, "SUBCKT")) {
+    free (def->type);
+    def->type = strdup ("Def");
+    def->sub = spice_checker_intern (def->sub);
+  }
+  // translate operating point analysis
+  else if (!strcasecmp (def->type, "OP")) {
+    free (def->type);
+    def->type = strdup ("DC");
+    spice_set_property_string (def, "saveOPs", "yes");
+  }
+  return root;
+}
+
+/* The following function translates the given definition 'sub' into a
+   valid Qucs subcircuit instance. */
+static void spice_translate_subcircuit (struct definition_t * sub) {
+  struct value_t * val;
+  free (sub->type);
+  sub->type = strdup ("Sub");
+  foreach_value (sub->values, val) {
+    if (val->hint & HINT_NAME) {
+      spice_set_property_string (sub, "Type", val->ident);
+      break;
+    }
+  }
+}
+
+/* The function returns a static string containing successive instance
+   names for the nodeset functionality in Qucs. */
+static char * spice_create_intern_nodeset (void) {
+  static int intern = 1;
+  static char txt[32];
+  sprintf (txt, "NS%d", intern++);
+  return txt;
+}
+
+/* The following function translates the nodeset functionality defined
+   by Spice into appropriate definitions for Qucs. */
+static struct definition_t *
+spice_translate_nodeset (struct definition_t * root,
+			 struct definition_t * def) {
+  struct value_t * val;
+  struct definition_t * node = def;
+  free (def->type);
+  def->type = strdup ("NodeSet");
+  free (node->instance);
+  node->instance = strdup (spice_create_intern_nodeset ());
+  node->action = PROP_COMPONENT;
+  foreach_value (def->values->next, val) {
+    if (val->hint & HINT_NODE) {
+      node->nodes = spice_translate_node (val->ident);
+    }
+    if (val->hint & HINT_NUMBER) {
+      spice_append_pair (node, "U", val->ident, 1);
+    }
+    if (val->hint & HINT_NAME) {
+      node = spice_create_definition (node, "NodeSet");
+      root = spice_add_definition (root, node);
+      free (node->instance);
+      node->instance = strdup (spice_create_intern_nodeset ());
+    }
+  }
+  return root;
 }
 
 /* This is the overall Spice netlist translator.  It adjusts the list
    of definitions into usable structures. */
-static int spice_translator (void) {
-  int error = 0;
-  struct definition_t * def;
-  for (def = definition_root; def != NULL; def = def->next) {
+static struct definition_t * spice_translator (struct definition_t * root) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
     if ((def->define = spice_find_definition (def->type)) != NULL) {
       strcpy (def->type, def->define->type);
       def->nodes = spice_get_nodes (def);
       def->pairs = spice_get_pairs (def);
       if (!def->action) { // handle normal components
+	// devices
 	if (!strcasecmp (def->type, "Q") || !strcasecmp (def->type, "M") ||
 	    !strcasecmp (def->type, "J") || !strcasecmp (def->type, "D")) {
-	  spice_translate_device (def);
+	  spice_translate_device (root, def);
 	}
+	// voltage sources
 	if (!strcasecmp (def->type, "V")) {
-	  spice_translate_source (def, 'U');
+	  root = spice_translate_source (root, def, 'U');
 	}
+	// current sources
 	if (!strcasecmp (def->type, "I")) {
-	  spice_translate_source (def, 'I');
+	  root = spice_translate_source (root, def, 'I');
+	}
+	// subcircuits
+	if (!strcasecmp (def->type, "X")) {
+	  spice_translate_subcircuit (def);
 	}
 	spice_translate_type (def);
       }
       else {              // handle special actions (dot '.' commands)
-	spice_translate_action (def);
+	// nodeset functionality
+	if (!strcasecmp (def->type, "NODESET") ||
+	    !strcasecmp (def->type, "IC")) {
+	  root = spice_translate_nodeset (root, def);
+	}
+	else {
+	  root = spice_translate_action (root, def);
+	}
       }
       spice_fixup_definition (def);
     }
     else {
       // skipped
     }
+    // remove values if possible
+    spice_free_values (def);
   }
-  return error;
+  return root;
 }
 
 /* TODO list for Spice Translator:
        - current sources
-   - subcircuits
+       - subcircuits
    - file includes
-   - transmission line
+   - transmission line (won't be possible)
        - voltage dependent sources
        - current dependent sources
-   - initial conditions
-   - options
-   - mutual inductors (transformer)
+       - initial conditions
+       - options (partly done)
+   - mutual inductors (transformer, possibly with T or PI equivalent circuit)
+   - mesfet if available in Qucs
+   - other mosfet models if available in Qucs
 */
 
 #if 0
 // My debugger...
-static void spice_lister (void) {
-  struct definition_t * def;
+static void spice_lister (struct definition_t * root) {
   struct value_t * val;
-  for (def = definition_root; def != NULL; def = def->next) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
     fprintf (stderr, "%s:%s", def->type, def->instance);
     for (val = def->values; val != NULL; val = val->next) {
       fprintf (stderr, " %s[%d]", val->ident, val->hint);
@@ -1437,19 +1662,33 @@ static void spice_lister (void) {
 #endif
 
 // Adjusts the hint value of the last entry in the value list.
-void spice_set_last_hint (struct value_t * val, int hint) {
+void spice_add_last_hint (struct value_t * val, int hint) {
   if (val == NULL) return;
   for (; val->next != NULL; val = val->next);
   val->hint |= hint;
 }
 
+// Adjusts the hint value of the last entry in the value list.
+void spice_set_last_hint (struct value_t * val, int hint) {
+  if (val == NULL) return;
+  for (; val->next != NULL; val = val->next);
+  val->hint = hint;
+}
+
+/* This function is the overall spice checker and translator. */
+struct definition_t * spice_checker_intern (struct definition_t * root) {
+  int ret = 0;
+#if 0
+  spice_lister (root);
+#endif
+  root = spice_translator (root);
+  ret += spice_post_translator (root);
+  return root;
+}
+
 /* This function is the overall spice checker and translator. */
 int spice_checker (void) {
   int ret = 0;
-#if 0
-  spice_lister ();
-#endif
-  ret += spice_translator ();
-  ret += spice_post_translator ();
+  definition_root = spice_checker_intern (definition_root);
   return ret;
 }

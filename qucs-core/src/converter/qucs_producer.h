@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.h,v 1.1 2004/10/29 18:01:29 ela Exp $
+ * $Id: qucs_producer.h,v 1.2 2004/11/24 19:16:05 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ __BEGIN_DECLS
 
 /* Externalize variables. */
 extern FILE * qucs_out;
+extern int    qucs_actions;
 
 __END_DECLS
 

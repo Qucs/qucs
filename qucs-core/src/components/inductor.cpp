@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.10 2004/10/03 10:30:51 ela Exp $
+ * $Id: inductor.cpp,v 1.11 2004/11/24 19:15:48 raimi Exp $
  *
  */
 
@@ -52,8 +52,9 @@ void inductor::calcSP (nr_double_t frequency) {
 }
 
 void inductor::initDC (void) {
-  voltageSource (1, 1, 2);
   setVoltageSources (1);  
+  allocMatrixMNA ();
+  voltageSource (1, 1, 2);
 }
 
 void inductor::calcDC (void) {
@@ -66,6 +67,7 @@ void inductor::initAC (void) {
   // for non-zero inductance usual MNA entries
   if (l != 0.0) {
     setVoltageSources (0);
+    allocMatrixMNA ();
   }
   // for zero inductance create a zero voltage source
   else {

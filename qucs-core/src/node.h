@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: node.h,v 1.2 2004/06/04 16:01:47 ela Exp $
+ * $Id: node.h,v 1.3 2004/11/24 19:15:46 raimi Exp $
  *
  */
 
@@ -35,13 +35,13 @@ class node : public object
   node (const node &);
   ~node ();
   void setNode (int);
-  int getNode (void);
+  int  getNode (void);
   void setPort (int);
-  int getPort (void);
+  int  getPort (void);
   void setCircuit (circuit *);
   circuit * getCircuit (void);
   void setInternal (int i) { internal = i; }
-  int getInternal (void) { return internal; }
+  int  getInternal (void) { return internal; }
 
  private:
   int nNode;

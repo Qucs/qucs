@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.9 2004/10/08 11:45:39 ela Exp $
+ * $Id: gyrator.cpp,v 1.10 2004/11/24 19:15:48 raimi Exp $
  *
  */
 
@@ -42,12 +42,13 @@ gyrator::gyrator () : circuit (4) {
   setVoltageSources (2);
 }
 
-void gyrator::calcSP (nr_double_t) {
+void gyrator::initSP (void) {
   nr_double_t R = getPropertyDouble ("R");
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = R / z;
   nr_double_t s1 = r * r / (r * r + 4.0);
   nr_double_t s2 = 2.0 * r / (r * r + 4.0);
+  allocMatrixS ();
   setS (1, 1, s1); setS (2, 2, s1); setS (3, 3, s1); setS (4, 4, s1);
   setS (1, 4, 1.0 - s1);
   setS (2, 3, 1.0 - s1);
@@ -59,6 +60,7 @@ void gyrator::calcSP (nr_double_t) {
 
 void gyrator::initDC (void) {
   nr_double_t r = getPropertyDouble ("R");
+  allocMatrixMNA ();
   setB (1, 1, +1.0); setB (2, 1, +0.0); setB (3, 1, +0.0); setB (4, 1, -1.0);
   setB (2, 1, +0.0); setB (2, 2, +1.0); setB (3, 2, -1.0); setB (4, 2, +0.0);
   setC (1, 1, +0.0); setC (1, 2, +1/r); setC (1, 3, -1/r); setC (1, 4, +0.0);

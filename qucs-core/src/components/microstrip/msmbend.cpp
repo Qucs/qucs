@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.10 2004/10/12 18:13:12 ela Exp $
+ * $Id: msmbend.cpp,v 1.11 2004/11/24 19:15:54 raimi Exp $
  *
  */
 
@@ -67,16 +67,16 @@ matrix msmbend::calcMatrixZ (nr_double_t frequency) {
 
   // check validity
   if ((Wh < 0.2) || (Wh > 6.0)) {
-    logprint (LOG_STATUS,
-	"Model for microstrip mitered bend defined for 0.2 <= W/h <= 6.0\n");
+    logprint (LOG_ERROR, "WARNING: Model for microstrip mitered bend defined "
+	      "for 0.2 <= W/h <= 6.0\n");
   }
   if ((er < 2.36) || (er > 10.4)) {
-    logprint (LOG_STATUS,
-	"Model for microstrip mitered bend defined for 2.36 <= er <= 10.4\n");
+    logprint (LOG_ERROR, "WARNING: Model for microstrip mitered bend defined "
+	      "for 2.36 <= er <= 10.4\n");
   }
   if (frequency * h > 12e6) {
-    logprint (LOG_STATUS,
-	"Model for microstrip mitered bend defined for freq*h <= 12MHz\n");
+    logprint (LOG_ERROR, "WARNING: Model for microstrip mitered bend defined "
+	      "for freq*h <= 12MHz\n");
   }
 
   // capacitance in pF
@@ -97,14 +97,16 @@ matrix msmbend::calcMatrixZ (nr_double_t frequency) {
 
 void msmbend::initDC (void) {
   // a DC short (voltage source V = 0 volts)
-  clearY ();
-  voltageSource (1, 1, 2);
   setVoltageSources (1);
   setInternalVoltageSource (1);
+  allocMatrixMNA ();
+  clearY ();
+  voltageSource (1, 1, 2);
 }
 
 void msmbend::initAC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
 }
 
 void msmbend::calcAC (nr_double_t frequency) {

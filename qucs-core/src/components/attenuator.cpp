@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.12 2004/10/08 11:45:39 ela Exp $
+ * $Id: attenuator.cpp,v 1.13 2004/11/24 19:15:47 raimi Exp $
  *
  */
 
@@ -43,7 +43,8 @@ attenuator::attenuator () : circuit (2) {
   type = CIR_ATTENUATOR;
 }
 
-void attenuator::calcSP (nr_double_t) {
+void attenuator::initSP (void) {
+  allocMatrixS ();
   nr_double_t a = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z - z0) / (z + z0);
@@ -69,14 +70,14 @@ void attenuator::calcNoise (nr_double_t) {
 
 void attenuator::initDC (void) {
   nr_double_t a = getPropertyDouble ("L");
-  clearY ();
-
   if (a == 1.0) { // no attenuation
-    voltageSource (1, 1, 2);
     setVoltageSources (1);
+    allocMatrixMNA ();
+    voltageSource (1, 1, 2);
   }
   else { // compute Z-parameters
     setVoltageSources (2);
+    allocMatrixMNA ();
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
     nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);
@@ -85,18 +86,21 @@ void attenuator::initDC (void) {
     setD (1, 1, +z11); setD (2, 2, +z11); setD (1, 2, +z21); setD (2, 1, +z21);
     setE (1, +0.0); setE (2, +0.0);
   }
+  clearY ();
 }
 
 void attenuator::initAC (void) {
   nr_double_t a = getPropertyDouble ("L");
 
   if (a == 1.0) { // no attenuation
+    setVoltageSources (1);
+    allocMatrixMNA ();
     clearY ();
     voltageSource (1, 1, 2);
-    setVoltageSources (1);
   }
   else { // compute Z-parameters
     setVoltageSources (0);
+    allocMatrixMNA ();
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
     nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.6 2004/09/25 21:09:46 ela Exp $
+ * $Id: phaseshifter.cpp,v 1.7 2004/11/24 19:15:49 raimi Exp $
  *
  */
 
@@ -42,13 +42,14 @@ phaseshifter::phaseshifter () : circuit (2) {
   type = CIR_PHASESHIFTER;
 }
 
-void phaseshifter::calcSP (nr_double_t) {
+void phaseshifter::initSP (void) {
   nr_double_t p = rad (getPropertyDouble ("phi"));
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z0 - z) / (z0 + z);
   complex d = 1.0 - polar (r * r, 2 * p);
   complex s11 = r * (polar (1, 2 * p) - 1.0) / d;
   complex s21 = (1.0 - r * r) * polar (1, p) / d;
+  allocMatrixS ();
   setS (1, 1, s11);
   setS (2, 2, s11);
   setS (1, 2, s21);
@@ -56,9 +57,10 @@ void phaseshifter::calcSP (nr_double_t) {
 }
 
 void phaseshifter::initDC (void) {
+  setVoltageSources (1);
+  allocMatrixMNA ();
   clearY ();
   voltageSource (1, 1, 2);
-  setVoltageSources (1);
 }
 
 void phaseshifter::initAC (void) {
@@ -69,6 +71,7 @@ void phaseshifter::initAC (void) {
   }
   else { // compute Y-parameters directly
     setVoltageSources (0);
+    allocMatrixMNA ();
     nr_double_t z = getPropertyDouble ("Zref");
     nr_double_t y11 = -1 / z / tan (p);
     nr_double_t y21 = -1 / z / sin (p);

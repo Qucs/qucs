@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.3 2004/11/04 08:48:32 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.4 2004/11/24 19:16:05 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 
 /* Global variables. */
 FILE * qucs_out = NULL;
+int    qucs_actions = 1;
 
 /* Prints value representation. */
 static void netlist_list_value (struct value_t * value) {
@@ -49,22 +50,23 @@ static void netlist_list_value (struct value_t * value) {
   }
 }
 
-/* Prints definition list representation. */
-static void netlist_lister (struct definition_t * root, char * prefix) {
-  struct definition_t * def;
+/* Prints a single definition on a single line. */
+static void netlist_list_def (struct definition_t * def, char * prefix) {
   struct node_t * node;
   struct pair_t * pair;
-  for (def = root; def != NULL; def = def->next) {
-    if (def->define == NULL) {
-      if (def->text != NULL)
-	fprintf (qucs_out, "# %s\n", def->text);
-      continue;
+  if (def->define == NULL) {
+    if (def->text != NULL)
+      fprintf (qucs_out, "%s# %s\n", prefix, def->text);
+  }
+  else {
+    if (!qucs_actions) {
+      // skip specific actions if required
+      if (def->action && strcmp (def->type, "Def")) return;
     }
     fprintf (qucs_out, "%s%s%s:%s", prefix, def->action ? "." : "",
 	     def->type, def->instance);
-    for (node = def->nodes; node != NULL; node = node->next) {
+    for (node = def->nodes; node != NULL; node = node->next)
       fprintf (qucs_out, " %s", node->node);
-    }
     for (pair = def->pairs; pair != NULL; pair = pair->next) {
       fprintf (qucs_out, " %s=\"", pair->key);
       netlist_list_value (pair->value);
@@ -74,11 +76,30 @@ static void netlist_lister (struct definition_t * root, char * prefix) {
   }
 }
 
+/* Prints definition list representation. */
+static void netlist_lister (struct definition_t * root, char * prefix) {
+  struct definition_t * def;
+  for (def = root; def != NULL; def = def->next) {
+    if (def->sub != NULL) {
+      netlist_list_def (def, prefix);
+      netlist_lister (def->sub, "  ");
+      fprintf (qucs_out, ".Def:End\n");
+    }
+    else {
+      netlist_list_def (def, prefix);
+    }
+  }
+}
+
 /* Prints the overall netlist representation. */
 static void netlist_list (void) {
   struct definition_t * def;
   time_t t = time (NULL);
   fprintf (qucs_out, "# converted Qucs netlist processed at %s\n", ctime (&t));
+  if (spice_title != NULL) {
+    fprintf (qucs_out, "#\n# %s#\n\n", spice_title);
+    free (spice_title);
+  }
   netlist_lister (definition_root, "");
   for (def = subcircuit_root; def != NULL; def = def->next) {
     fprintf (qucs_out, ".Def:%s\n", def->instance);
@@ -87,6 +108,7 @@ static void netlist_list (void) {
   }
 }
 
+/* This function is the overall Qucs netlist producer. */
 void qucs_producer (void) {
   if (qucs_out != NULL) {
     netlist_list ();

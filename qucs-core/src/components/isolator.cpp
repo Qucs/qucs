@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.9 2004/10/08 11:45:39 ela Exp $
+ * $Id: isolator.cpp,v 1.10 2004/11/24 19:15:49 raimi Exp $
  *
  */
 
@@ -39,18 +39,19 @@
 #include "isolator.h"
 
 isolator::isolator () : circuit (2) {
-  setS (1, 2, 0.0);
   type = CIR_ISOLATOR;
   setVoltageSources (2);
 }
 
-void isolator::calcSP (nr_double_t) {
+void isolator::initSP (void) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t s1 = (z1 - z0) / (z1 + z0);
   nr_double_t s2 = (z2 - z0) / (z2 + z0);
+  allocMatrixS ();
   setS (1, 1, s1);
   setS (2, 2, s2);
+  setS (1, 2, 0);
   setS (2, 1, sqrt (1 - s1 * s1) * sqrt (1 - s2 * s2));
 }
 
@@ -70,6 +71,7 @@ void isolator::initDC (void) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t z21 = 2 * sqrt (z1 * z2);
+  allocMatrixMNA ();
   setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
   setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0); 
   setD (1, 1,  +z1); setD (2, 2,  +z2); setD (1, 2, +0.0); setD (2, 1, +z21);

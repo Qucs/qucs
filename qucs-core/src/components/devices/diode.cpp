@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.15 2004/10/25 21:01:33 ela Exp $
+ * $Id: diode.cpp,v 1.16 2004/11/24 19:15:51 raimi Exp $
  *
  */
 
@@ -90,6 +90,9 @@ void diode::calcNoise (nr_double_t frequency) {
 
 void diode::initDC (void) {
 
+  // allocate MNA matrices
+  allocMatrixMNA ();
+
   // initialize starting values
   Uprev = real (getV (NODE_A) - getV (NODE_C));
 
@@ -103,6 +106,7 @@ void diode::initDC (void) {
     rs = splitResistance (this, rs, getNet (), "Rs", "anode", NODE_A);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
+    rs->initDC ();
   }
   // no series resistance
   else {
@@ -164,6 +168,7 @@ void diode::calcOperatingPoints (void) {
 }
 
 void diode::initAC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.37 2004/10/12 07:00:37 ela Exp $
+ * $Id: msline.cpp,v 1.38 2004/11/24 19:15:53 raimi Exp $
  *
  */
 
@@ -449,20 +449,23 @@ void msline::initDC (void) {
   if (t != 0.0 && rho != 0.0) {
     // tiny resistance
     nr_double_t g = t * W / rho / l;
-    setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
     setVoltageSources (0);
+    allocMatrixMNA ();
+    setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
   }
   else {
     // a DC short (voltage source V = 0 volts)
-    clearY ();
-    voltageSource (1, 1, 2);
     setVoltageSources (1);
     setInternalVoltageSource (1);
+    allocMatrixMNA ();
+    clearY ();
+    voltageSource (1, 1, 2);
   }
 }
 
 void msline::initAC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
 }
 
 void msline::calcAC (nr_double_t frequency) {

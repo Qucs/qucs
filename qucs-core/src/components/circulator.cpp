@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.cpp,v 1.8 2004/10/08 11:45:39 ela Exp $
+ * $Id: circulator.cpp,v 1.9 2004/11/24 19:15:47 raimi Exp $
  *
  */
 
@@ -79,6 +79,8 @@ void circulator::initDC (void) {
   nr_double_t s21 = sqrt (z1/z2) * (z2+z0) / (z1+z0) * (1-r2*r2) / d;
   nr_double_t s13 = sqrt (z3/z1) * (z1+z0) / (z3+z0) * (1-r1*r1) / d;
   nr_double_t s32 = sqrt (z2/z3) * (z3+z0) / (z2+z0) * (1-r3*r3) / d;
+
+  allocMatrixMNA ();
 
   setB (1, 1, +1.0); setB (1, 2, +0.0); setB (1, 3, +0.0);
   setB (2, 1, +0.0); setB (2, 2, +1.0); setB (2, 3, +0.0);

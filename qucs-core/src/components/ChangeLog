@@ -1,3 +1,8 @@
+2004-11-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* opamp.cpp: Fixed the non-linear DC analysis for the
+	operational amplifier.
+
 2004-11-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msvia.cpp: Changed diameter parameter from 'd'

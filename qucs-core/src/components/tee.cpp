@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tee.cpp,v 1.6 2004/10/08 11:45:39 ela Exp $
+ * $Id: tee.cpp,v 1.7 2004/11/24 19:15:49 raimi Exp $
  *
  */
 
@@ -37,6 +37,11 @@
 #include "tee.h"
 
 tee::tee () : circuit (3) {
+  type = CIR_TEE;
+}
+
+void tee::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, -1.0 / 3.0);
   setS (1, 2,  2.0 / 3.0);
   setS (1, 3,  2.0 / 3.0);
@@ -46,11 +51,11 @@ tee::tee () : circuit (3) {
   setS (3, 1,  2.0 / 3.0);
   setS (3, 2,  2.0 / 3.0);
   setS (3, 3, -1.0 / 3.0);
-  type = CIR_TEE;
 }
 
 void tee::initDC (void) {
   setVoltageSources (2);
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
   voltageSource (2, 1, 3);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.5 2004/06/25 00:17:23 ela Exp $
+ * $Id: input.h,v 1.6 2004/11/24 19:15:46 raimi Exp $
  *
  */
 
@@ -52,5 +52,8 @@ class input : public object
   net * subnet;
   environment * env;
 };
+
+// externalize global variable
+extern int netlist_check;
 
 #endif /* __INPUT_H__ */

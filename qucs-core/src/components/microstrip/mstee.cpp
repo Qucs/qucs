@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.1 2004/09/26 13:31:37 ela Exp $
+ * $Id: mstee.cpp,v 1.2 2004/11/24 19:15:54 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@ mstee::mstee () : circuit (3) {
 }
 
 void mstee::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, -1.0 / 3.0);
   setS (1, 2,  2.0 / 3.0);
   setS (1, 3,  2.0 / 3.0);
@@ -54,6 +55,7 @@ void mstee::initSP (void) {
 
 void mstee::initDC (void) {
   setVoltageSources (2);
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
   voltageSource (2, 1, 3);
 }

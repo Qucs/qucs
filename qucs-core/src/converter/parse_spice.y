@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_spice.y,v 1.7 2004/11/10 20:26:38 ela Exp $
+ * $Id: parse_spice.y,v 1.8 2004/11/24 19:16:05 raimi Exp $
  *
  */
 
@@ -32,27 +32,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
+#define YYMAXDEPTH 1000000
 
 #include "check_spice.h"
+
+// Converts the given string into upper case.
+static char * spice_toupper (char * str) {
+  for (unsigned int i = 0; i < strlen (str); i++) str[i] = toupper (str[i]);
+  return str;
+}
+
+// Creates a device instance.
+static struct definition_t * spice_create_device (char * instance) {
+  struct definition_t * def = create_definition ();
+  def->action = PROP_COMPONENT;
+  def->instance = spice_toupper (instance);
+  def->type = (char *) calloc (2, 1);
+  def->type[0] = def->instance[0];
+  def->line = spice_lineno;
+  return def;
+}
+
+// Creates an action instance.
+static struct definition_t * spice_create_action (char * type,
+						  char * instance) {
+  struct definition_t * def = create_definition ();
+  def->action = PROP_ACTION;
+  def->instance = spice_toupper (instance);
+  def->type = spice_toupper (type);
+  def->line = spice_lineno;
+  return def;
+}
+
+// Create a string value.
+static struct value_t * spice_create_str_value (char * value, int hint) {
+  struct value_t * val = create_value ();
+  val->ident = spice_toupper (value);
+  val->hint |= hint;
+  return val;
+}
+
+// Create a real value.
+static struct value_t * spice_create_val_value (char * value, int hint) {
+  struct value_t * val = create_value ();
+  val->ident = value;
+  val->value = strtod (value, NULL);
+  val->hint |= hint;
+  return val;
+}
+
+// Create a key/value pair.
+static struct value_t * spice_create_par_value (char * key, char * value) {
+  struct value_t * val = spice_create_str_value (key, HINT_PAIR);
+  val->unit = value;
+  return val;
+}
+
+// Append a string value to the definition.
+static void spice_append_str_value (struct definition_t * def,
+				    char * value, int hint) {
+  struct value_t * val = spice_create_str_value (value, hint);
+  def->values = netlist_append_values (def->values, val);
+}
+
+// Append a string value to the given values.
+static struct value_t * spice_append_str_values (struct value_t * values,
+						 char * value, int hint) {
+  struct value_t * val = spice_create_str_value (value, hint);
+  return netlist_append_values (values, val);
+}
+
+// Append a real value to the definition.
+static void spice_append_val_value (struct definition_t * def,
+				    char * value, int hint) {
+  struct value_t * val = spice_create_val_value (value, hint);
+  def->values = netlist_append_values (def->values, val);
+}
+
+// Append a real value to the given values.
+static struct value_t * spice_append_val_values (struct value_t * values,
+						 char * value, int hint) {
+  struct value_t * val = spice_create_val_value (value, hint);
+  return netlist_append_values (values, val);
+}
 
 %}
 
 %name-prefix="spice_"
 
-%token TitleLines
-%token End
-%token InvalidCharacter
-%token Identifier
-%token Eol
-%token Float
-%token Node
-%token Action
-%token Function
-%token StartSub
-%token StopSub
+%token TitleLine InvalidCharacter End Eol
+%token Identifier Digits Floats Nodes Options Function
+%token SUBCKT_Action ENDS_Action AC_Action OP_Action I_Source SAVE_Action
+%token RLC_Device L_Device K_Device IV_Source GE_Source FH_Source V_Source
+%token Diode_Device Bipolar_Device JFET_Device MOSFET_Device MESFET_Device
+%token MODEL_Action MODEL_Spec TRAN_Action PLOT_Action VoltFunc CurrFunc
+%token DC_Action PRINT_Action OPTIONS_Action WIDTH_Action NOISE_Action
+%token PZ_Action CurVol PoleZero ALL_Special X_Device O_Device ModelProps
+%token OFF_Special IC_Special SIM_Type TEMP_Special MOS_Special B_Source
+%token DISTO_Action INCLUDE_Action File BranchFunc NODESET_Action T_Device
+%token U_Device S_Device W_Device ON_Special TF_Action SENS_Action FOUR_Action
+%token OpFunc
 
 %union {
   char * ident;
@@ -63,32 +146,57 @@
   struct value_t * value;
 }
 
-%type <ident> Identifier Node Action Function Value Float
-%type <str> TitleLines
+%type <str> TitleLine
 %type <definition> DefinitionLine BeginSub SubBody Subcircuit SubBodyLine
-%type <value> NodeList PairList Model Expr DcList
+
+%type <value> NodeList PairList Expr DC_List ValueList ExprList PLOT_List
+%type <value> VOLTAGE_Output CURRENT_Output Output_Range PRINT_List
+%type <value> OPTIONS_List MODEL_List DEVICE_List_1 DEVICE_List_2 DEVICE_List_3
+%type <value> IC_Condition_1 IC_Condition_2 IC_Condition_3 NODESET_List
+%type <value> IC_Condition_4 SWITCH_State
+
+%type <ident> Identifier Nodes Function Value Floats Digits Node
+%type <ident> RLC_Device K_Device L_Device IV_Source GE_Source FH_Source
+%type <ident> V_Source MODEL_Spec Diode_Device Bipolar_Device JFET_Device
+%type <ident> MOSFET_Device MESFET_Device TRAN_Action PLOT_Action MODEL_Action
+%type <ident> VoltFunc CurrFunc AC_Action DC_Action B_Source DISTO_Action
+%type <ident> PRINT_Action Options OPTIONS_Action WIDTH_Action INCLUDE_Action
+%type <ident> NOISE_Action PZ_Action CurVol PoleZero ALL_Special File
+%type <ident> X_Device SUBCKT_Action SubCkt_Ident O_Device MODEL_Ident
+%type <ident> ModelProps OP_Action I_Source IV_Reference SAVE_Action ON_Special
+%type <ident> IC_Special OFF_Special SIM_Type TEMP_Special MOS_Special
+%type <ident> BranchFunc NODESET_Action T_Device U_Device S_Device W_Device
+%type <ident> TF_Action SENS_Action FOUR_Action OpFunc
 
 %%
 
 Input:
-  End {
+  InputList End {
+  }
+  | TitleLine InputList End {
+    spice_title = $1;
   }
   | InputList {
+    fprintf (stderr, "spice notice, no .END directive found, continuing\n");
   }
-  | TitleLines InputList {
+  | TitleLine InputList {
+    spice_title = $1;
+    fprintf (stderr, "spice notice, no .END directive found, continuing\n");
   }
 ;
 
 InputList: /* nothing */
-  | InputLine Input
+  | InputLine InputList
 ;
 
 InputLine:
-  Subcircuit   { /* chain definition root */
+  Subcircuit {
+    /* chain definition root */
     $1->next = definition_root;
     definition_root = $1;
   }
-  | DefinitionLine { /* chain definition root */
+  | DefinitionLine {
+    /* chain definition root */
     $1->next = definition_root;
     definition_root = $1;
   }
@@ -96,210 +204,570 @@ InputLine:
 ;
 
 DefinitionLine:
-  Identifier NodeList PairList Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_COMPONENT;
-    $$->type = (char *) calloc (2, 1);
-    $$->type[0] = $1[0];
-    $$->instance = $1;
+  RLC_Device Node Node Value PairList Eol {
+    /* R, L and C definitions */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+    $$->values = netlist_append_values ($$->values, $5);
+  }
+  | RLC_Device Node Node MODEL_Ident PairList Eol {
+    /* R, L and C definitions specified by a Model */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+    $$->values = netlist_append_values ($$->values, $5);
+  }
+  | K_Device L_Device L_Device Value Eol {
+    /* Mutual inductors */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NAME);
+    spice_append_str_value ($$, $3, HINT_NAME);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+  }
+  | IV_Source Node Node ExprList Eol {
+    /* independent current/voltage sources */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    $$->values = netlist_append_values ($$->values, $4);
+  }
+  | IV_Source Node Node Value ExprList Eol {
+    /* independent current/voltage sources given the value */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_val_value ($$, $4, HINT_NUMBER);
+    $$->values = netlist_append_values ($$->values, $5);
+  }
+  | GE_Source Node Node Node Node Value Eol {
+    /* voltage controlled sources */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_val_value ($$, $6, HINT_NUMBER);
+  }
+  | FH_Source Node Node V_Source Value Eol {
+    /* voltage controlled sources */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NAME);
+    spice_append_val_value ($$, $5, HINT_NUMBER);
+  }
+  | MODEL_Action MODEL_Ident MODEL_Spec MODEL_List Eol {
+    /* device specification */
+    $$ = spice_create_action ($1, $2);
+    spice_append_str_value ($$, $3, HINT_NAME | HINT_MSTART);
+    spice_add_last_hint ($4, HINT_MSTOP);
+    $$->values = netlist_append_values ($$->values, $4);
+  }
+  | Diode_Device Node Node MODEL_Ident DEVICE_List_1 {
+    /* diode */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NAME);
+  }
+  | JFET_Device Node Node Node MODEL_Ident DEVICE_List_2 {
+    /* JFET */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
+  }
+  | Bipolar_Device Node Node Node MODEL_Ident DEVICE_List_2 {
+    /* 3 node BJT */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
+  }
+  | Bipolar_Device Node Node Node Node MODEL_Ident DEVICE_List_2 {
+    /* 4 node BJT */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_str_value ($$, $6, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $7);
+  }
+  | MOSFET_Device Node Node Node Node MODEL_Ident DEVICE_List_3 {
+    /* MOS */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_str_value ($$, $6, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $7);
+  }
+  | MESFET_Device Node Node Node MODEL_Ident DEVICE_List_2 {
+    /* MES */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NAME);
+  }
+  | TRAN_Action ValueList Eol {
+    /* transient analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
+  }
+  | PLOT_Action SIM_Type PLOT_List Eol {
+    /* plotting */
+    $$ = spice_create_action ($1, strdup ($1));
+    spice_append_str_value ($$, $2, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $3);
+  }
+  | AC_Action Expr Eol {
+    /* AC analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
+  }
+  | DC_Action Eol {
+    /* single DC analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+  }
+  | DC_Action DC_List Eol {
+    /* DC analysis first order */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
+  }
+  | DC_Action DC_List DC_List Eol {
+    /* DC analysis second order */
+    $$ = spice_create_action ($1, strdup ($1));
     $$->values = netlist_append_values ($2, $3);
-    $$->line = spice_lineno;
-    value_root = NULL;
   }
-  | Identifier NodeList Identifier PairList Eol { 
-    /* e.g. M5 5 7 3 0 MOD W=50U L=5U */
-    $$ = create_definition ();
-    $$->action = PROP_COMPONENT;
-    $$->type = (char *) calloc (2, 1);
-    $$->type[0] = $1[0];
-    $$->instance = $1;
-    struct value_t * here = create_value ();
-    here->ident = $3;
-    here->hint = HINT_NAME;
-    here = netlist_append_values ($2, here);
-    here = netlist_append_values (here, $4);
-    $$->values = here;
-    $$->line = spice_lineno;
-    value_root = NULL;
+  | PRINT_Action SIM_Type PRINT_List Eol {
+    /* printing specifying the analysis type */
+    $$ = spice_create_action ($1, strdup ($1));
+    spice_append_str_value ($$, $2, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $3);
   }
-  | Identifier NodeList PairList Expr PairList Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_COMPONENT;
-    $$->type = (char *) calloc (2, 1);
-    $$->type[0] = $1[0];
-    $$->instance = $1;
-    struct value_t * here = netlist_append_values ($2, $3);
-    here = netlist_append_values (here, $4);
-    here = netlist_append_values (here, $5);
-    $$->values = here;
-    $$->line = spice_lineno;
-    value_root = NULL;
-  }
-  | Action NodeList Eol { 
-    /* e.g. .TRAN 2.0NS 200NS */
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = strdup ($1);
-    $$->values = $2;
-    $$->line = spice_lineno;
-    value_root = NULL;
-  }
-  | Action Identifier Model Eol {
-    /* e.g. .MODEL QNL NPN BF=80 RB=100 CCS=2PF */
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $2;
-    $$->line = spice_lineno;
-    $$->values = $3;
-   }
-  | Action Expr Eol { 
-    /* e.g. .AC DEC 10 1 10GHZ */
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = strdup ($1);
-    $$->line = spice_lineno;
+  | PRINT_Action PRINT_List Eol {
+    /* printing */
+    $$ = spice_create_action ($1, strdup ($1));
     $$->values = $2;
   }
-  | Action DcList Eol { 
-    /* e.g. .DC VIN -0.25 0.25 0.005 */
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = strdup ($1);
-    $$->line = spice_lineno;
+  | PRINT_Action SIM_Type ALL_Special Eol {
+    /* printing */
+    $$ = spice_create_action ($1, strdup ($1));
+    spice_append_str_value ($$, $2, HINT_NAME);
+    spice_append_str_value ($$, $3, HINT_NAME);
+  }
+  | OPTIONS_Action OPTIONS_List Eol {
+    /* general analysis options */
+    $$ = spice_create_action ($1, strdup ($1));
     $$->values = $2;
   }
-  | Action DcList DcList Eol { 
-    /* e.g. .DC VCE 0 10 .25 IB 0 10U 1U */
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = strdup ($1);
-    $$->line = spice_lineno;
-    $$->values = netlist_append_values ($2, $3);
+  | WIDTH_Action PairList Eol {
+    /* TODO: default width of ??? */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
   }
-  | Action Identifier Identifier Identifier Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $1;
-    $$->line = spice_lineno;
+  | NOISE_Action VOLTAGE_Output IV_Reference Expr Eol {
+    /* noise analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = netlist_append_values ($$->values, $2);
+    spice_append_str_value ($$, $3, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $4);
   }
-  | Action Identifier PairList Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $1;
-    $$->line = spice_lineno;
+  | PZ_Action Node Node Node Node CurVol PoleZero Eol {
+    /* pole-zero analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_str_value ($$, $6, HINT_NAME);
+    spice_append_str_value ($$, $7, HINT_NAME);
   }
-  | Action Identifier Value Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $1;
-    $$->line = spice_lineno;
+  | X_Device NodeList Eol {
+    /* subcircuit call */
+    $$ = spice_create_device ($1);
+    spice_set_last_hint ($2, HINT_NAME);
+    $$->values = $2;
   }
-  | Action Node NodeList Identifier Identifier Eol { 
-    /* e.g. .PZ 1 0 3 0 CUR POL */
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $1;
-    $$->line = spice_lineno;
+  | S_Device Node Node Node Node MODEL_Ident SWITCH_State Eol {
+    /* voltage controlled switch */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_str_value ($$, $6, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $7);
   }
-  | Action Expr Identifier Expr Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $1;
-    $$->line = spice_lineno;
+  | W_Device Node Node V_Source MODEL_Ident SWITCH_State Eol {
+    /* current controlled switch */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NAME);
+    spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
   }
-  | Action Identifier Value Expr PairList Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = $1;
-    $$->instance = $1;
-    $$->line = spice_lineno;
+  | O_Device Node Node Node Node MODEL_Ident Eol {
+    /* lossy transline */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    spice_append_str_value ($$, $6, HINT_NAME);
+  }
+  | U_Device Node Node Node MODEL_Ident PairList Eol {
+    /* distributed lossy transline */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NAME);
+    $$->values = netlist_append_values ($$->values, $6);
+  }
+  | T_Device Node Node Node Node PairList Eol {
+    /* lossless transline */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    $$->values = netlist_append_values ($$->values, $6);
+  }
+  | T_Device Node Node Node Node PairList IC_Condition_4 Eol {
+    /* lossless transline and initial condition */
+    $$ = spice_create_device ($1);
+    spice_append_str_value ($$, $2, HINT_NODE);
+    spice_append_str_value ($$, $3, HINT_NODE);
+    spice_append_str_value ($$, $4, HINT_NODE);
+    spice_append_str_value ($$, $5, HINT_NODE);
+    $$->values = netlist_append_values ($$->values, $6);
+    $$->values = netlist_append_values ($$->values, $7);
+  }
+  | OP_Action Eol {
+    /* operating point analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+  }
+  | SAVE_Action Eol {
+    /* saving action */
+    $$ = spice_create_action ($1, strdup ($1));
+  }
+  | SENS_Action Eol {
+    /* sensitivity analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+  }
+  | TF_Action Eol {
+    /* transfer function analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+  }
+  | FOUR_Action Eol {
+    /* fourier analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+  }
+  | B_Source Eol {
+    /* non-linear dependent sources */
+    $$ = spice_create_device ($1);
+  }
+  | DISTO_Action Expr Eol {
+    /* distortion analysis */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
+  }
+  | INCLUDE_Action File Eol {
+    /* file include */
+    $$ = spice_create_action ($1, strdup ($1));
+    struct value_t * file = create_value ();
+    file->ident = $2;
+    file->hint = HINT_NAME;
+    $$->values = file;
+  }
+  | NODESET_Action NODESET_List Eol {
+    /* nodeset functionality */
+    $$ = spice_create_action ($1, strdup ($1));
+    $$->values = $2;
   }
 ;
 
-DcList:
-  Identifier Value Value Value {
-    struct value_t * here;
-    here = create_value ();
-    here->ident = $4;
-    here->value = strtod ($4, NULL);
-    here->hint = HINT_NUMBER | HINT_MSTOP;
-    $$ = here;
-    here = create_value ();
-    here->ident = $3;
-    here->value = strtod ($3, NULL);
-    here->hint = HINT_NUMBER;
-    here->next = $$;
-    $$ = here;
-    here = create_value ();
-    here->ident = $2;
-    here->value = strtod ($2, NULL);
-    here->hint = HINT_NUMBER;
-    here->next = $$;
-    $$ = here;
-    here = create_value ();
-    here->ident = $1;
-    here->hint = HINT_NAME | HINT_MSTART;
-    here->next = $$;
-    $$ = here;
+IC_Condition_1:
+  IC_Special Value {
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME);
+    $$ = spice_append_val_values ($$, $2, HINT_NUMBER);
   }
 ;
 
-Value: Float | Node;
+IC_Condition_2:
+  IC_Special Value Value {
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME);
+    $$ = spice_append_val_values ($$, $2, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $3, HINT_NUMBER);
+  }
+
+IC_Condition_3:
+  IC_Special Value Value Value {
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME);
+    $$ = spice_append_val_values ($$, $2, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $3, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $4, HINT_NUMBER);
+  }
+;
+
+IC_Condition_4:
+  IC_Special Value Value Value Value {
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME);
+    $$ = spice_append_val_values ($$, $2, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $3, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $4, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $5, HINT_NUMBER);
+  }
+;
+
+Output_Range:
+  Value Value { /* range specification during plotting */
+    $$ = NULL;
+    $$ = spice_append_val_values ($$, $1, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $2, HINT_NUMBER);
+  }
+;
+
+VOLTAGE_Output:
+  Node {
+    /* print/plot specification of node voltage */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, strdup ("V"), HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $1, HINT_NODE | HINT_MSTOP);
+  }
+  | VoltFunc Node {
+    /* print/plot specification of node voltage */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $2, HINT_NODE | HINT_MSTOP);
+  }
+  | VoltFunc Node Node {
+    /* print/plot specification of differential node voltages */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $2, HINT_NODE);
+    $$ = spice_append_str_values ($$, $3, HINT_NODE | HINT_MSTOP);    
+  }
+;
+
+/* reference to a current or voltage source */
+IV_Reference: I_Source | V_Source;
+
+CURRENT_Output:
+  CurrFunc V_Source {
+    /* print/plot specification of branch current */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $2, HINT_NAME | HINT_MSTOP);
+  }
+  | BranchFunc {
+    /* print/plot specification of branch current */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, strdup ("I"), HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTOP);
+  }
+  | OpFunc {
+    /* print/plot specification of operating point */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, strdup ("OP"), HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTOP);
+  }
+;
+
+PLOT_List: /* nothing */ { $$ = NULL; }
+  | VOLTAGE_Output PLOT_List {
+    $$ = netlist_append_values ($1, $2);
+  }
+  | VOLTAGE_Output Output_Range PLOT_List {
+    $$ = netlist_append_values ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+  | CURRENT_Output PLOT_List {
+    $$ = netlist_append_values ($1, $2);
+  }
+  | CURRENT_Output Output_Range PLOT_List {
+    $$ = netlist_append_values ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+;
+
+SWITCH_State: /* nothing */ { $$ = NULL; }
+  | ON_Special {
+    $$ = spice_create_str_value ($1, HINT_NAME);
+  }
+  | OFF_Special {
+    $$ = spice_create_str_value ($1, HINT_NAME);
+  }
+;
+
+PRINT_List: /* nothing */ { $$ = NULL; }
+  | VOLTAGE_Output PLOT_List {
+    $$ = netlist_append_values ($1, $2);
+  }
+  | CURRENT_Output PLOT_List {
+    $$ = netlist_append_values ($1, $2);
+  }
+;
+
+OPTIONS_List: /* nothing */ { $$ = NULL; }
+  | Options OPTIONS_List {
+    $$ = spice_create_str_value ($1, HINT_NAME);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | Identifier Value OPTIONS_List {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+;
+
+MODEL_List: /* nothing */ { $$ = NULL; }
+  | ModelProps MODEL_List {
+    $$ = spice_create_str_value ($1, HINT_NAME);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | Identifier Value MODEL_List {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+;
+
+NODESET_List: /* nothing */ { $$ = NULL; }
+  | VoltFunc Node Value NODESET_List {
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTART);
+    $$ = spice_append_str_values ($$, $2, HINT_NODE | HINT_MSTOP);
+    $$ = spice_append_str_values ($$, $3, HINT_NUMBER);
+    $$ = netlist_append_values ($$, $4);
+  }
+;
+
+DEVICE_List_1: /* nothing */ { $$ = NULL; }
+  | TEMP_Special Value DEVICE_List_1 {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+  | Value DEVICE_List_1 {
+    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | OFF_Special DEVICE_List_1 {
+    $$ = spice_create_val_value ($1, HINT_NAME);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | IC_Condition_1 DEVICE_List_1 {
+    $$ = netlist_append_values ($1, $2);
+  }
+;
+
+DEVICE_List_2: /* nothing */ { $$ = NULL; }
+  | TEMP_Special Value DEVICE_List_2 {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+  | Value DEVICE_List_2 {
+    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | OFF_Special DEVICE_List_2 {
+    $$ = spice_create_val_value ($1, HINT_NAME);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | IC_Condition_2 DEVICE_List_2 {
+    $$ = netlist_append_values ($1, $2);
+  }
+  | MOS_Special Value DEVICE_List_2 {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+;
+
+DEVICE_List_3: /* nothing */ { $$ = NULL; }
+  | TEMP_Special Value DEVICE_List_3 {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+  | MOS_Special Value DEVICE_List_3 {
+    $$ = spice_create_par_value ($1, $2);
+    $$ = netlist_append_values ($$, $3);
+  }
+  | Value DEVICE_List_3 {
+    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | OFF_Special DEVICE_List_3 {
+    $$ = spice_create_val_value ($1, HINT_NAME);
+    $$ = netlist_append_values ($$, $2);
+  }
+  | IC_Condition_3 DEVICE_List_3 {
+    $$ = netlist_append_values ($1, $2);
+  }
+;
+
+MODEL_Ident: Identifier | MODEL_Spec;
+
+DC_List:
+  IV_Reference Value Value Value {
+    /* identification of a DC sweep */
+    $$ = NULL;
+    $$ = spice_append_str_values ($$, $1, HINT_NAME | HINT_MSTART);
+    $$ = spice_append_val_values ($$, $2, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $3, HINT_NUMBER);
+    $$ = spice_append_val_values ($$, $4, HINT_NUMBER | HINT_MSTOP);
+  }
+;
+
+Value: Digits | Floats;
+
+Node: Digits | Nodes | Identifier;
 
 PairList: /* nothing */ { $$ = NULL; }
   | Identifier Value PairList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->unit = $2;
-    $$->hint = HINT_PAIR;
+    $$ = spice_create_par_value ($1, $2);
     $$->next = $3;
+  }
+;
+
+ValueList: /* nothing */ { $$ = NULL; }
+  | Value ValueList {
+    $$ = spice_create_val_value ($1, HINT_NUMBER);
+    $$->next = $2;
   }
 ;
 
 NodeList: /* nothing */ { $$ = NULL; }
   | Node NodeList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->value = strtod ($1, NULL);
-    $$->hint = HINT_NODE | HINT_NUMBER;
-    $$->next = $2;
-  }
-  | Float NodeList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->value = strtod ($1, NULL);
-    $$->hint = HINT_NUMBER;
+    $$ = spice_create_str_value ($1, HINT_NODE);
     $$->next = $2;
   }
 ;
 
 Expr:
-  Function NodeList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->hint = HINT_NAME | HINT_MSTART;
-    spice_set_last_hint ($2, HINT_MSTOP);
-    $$->next = $2;    
+  Function ValueList {
+    $$ = spice_create_str_value ($1, HINT_NAME | HINT_MSTART);
+    spice_add_last_hint ($2, HINT_MSTOP);
+    $$->next = $2;
   }
 ;
 
-Model:
-  Identifier PairList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->hint = HINT_NAME | HINT_MSTART;
-    spice_set_last_hint ($2, HINT_MSTOP);
-    $$->next = $2;
+ExprList: /* nothing */ { $$ = NULL; }
+  | Expr ExprList {
+    $$ = netlist_append_values ($1, $2);
   }
 ;
 
@@ -312,13 +780,9 @@ Subcircuit:
 ;
 
 BeginSub:
-  StartSub Identifier NodeList Eol {
-    $$ = create_definition ();
-    $$->type = strdup ("Def");
-    $$->instance = $2;
+  SUBCKT_Action SubCkt_Ident NodeList Eol {
+    $$ = spice_create_action ($1, $2);
     $$->values = $3;
-    $$->action = PROP_ACTION;
-    $$->line = spice_lineno;
   }
 ;
 
@@ -328,11 +792,17 @@ SubBody: /* nothing */ { $$ = NULL; }
       $1->next = $2;
       $$ = $1;
     }
+    else {
+      $$ = $2;
+    }
   }
 ;
 
+SubCkt_Ident: Identifier;
+
 EndSub:
-  StopSub Eol { /* nothing to do */ }
+    ENDS_Action Eol { /* nothing to do */ }
+  | ENDS_Action SubCkt_Ident Eol { /* nothing to do */ }
 ;
 
 SubBodyLine:

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: biastee.h,v 1.7 2004/10/08 11:45:39 ela Exp $
+ * $Id: biastee.h,v 1.8 2004/11/24 19:15:47 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class biastee : public circuit
 {
  public:
   biastee ();
+  void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);
