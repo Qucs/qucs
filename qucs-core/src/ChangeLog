@@ -1,3 +1,9 @@
+2003-12-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* analysis.cpp, analysis.h, spsolver.cpp, spsolver.h: New files.
+	Reorganized the source code in order to prepare it for other
+	analysis types.
+
 2003-12-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* input.cpp (createCircuit): Added 'Vdc', 'Idc' and 'Vac'

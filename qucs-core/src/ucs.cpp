@@ -1,5 +1,5 @@
 /*
- * qucs_sp.cpp - main program implementation
+ * ucs.cpp - main program implementation
  *
  * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_sp.cpp,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: ucs.cpp,v 1.1 2003/12/21 13:25:38 ela Exp $
  *
  */
 
@@ -52,7 +52,7 @@ int main (int argc, char ** argv) {
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v")) {
       logprint (LOG_STATUS,
-		"Qucs SP " VERSION "\n"
+		"Qucsator " VERSION "\n"
 		"Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>\n"
 		"\nThis is free software; see the source for copying "
 		"conditions.  There is NO\n"
@@ -83,15 +83,15 @@ int main (int argc, char ** argv) {
   gnd->setName ("GND");
   subnet->insertCircuit (gnd);
 
-  // solve the netlist
-  subnet->solve ();
+  // analyse the netlist
+  out = subnet->runAnalysis ();
 
   // evaluate output dataset
-  out = subnet->getData ();
   out->setFile (outfile);
   out->print ();
 
   delete subnet;
   delete in;
+  delete out;
   return 0;
 }

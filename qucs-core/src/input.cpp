@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.1 2003/12/20 19:03:20 ela Exp $
+ * $Id: input.cpp,v 1.2 2003/12/21 13:25:37 ela Exp $
  *
  */
 
@@ -37,6 +37,8 @@ using namespace std;
 #include "logging.h"
 #include "component.h"
 #include "net.h"
+#include "analysis.h"
+#include "spsolver.h"
 #include "input.h"
 #include "check_netlist.h"
 
@@ -102,6 +104,7 @@ void input::factory (void) {
   struct pair_t * pairs;
   circuit * c;
   object * o;
+  analysis * a;
   int i;
 
   // go through the list of input definitions
@@ -109,13 +112,15 @@ void input::factory (void) {
 
     // handle actions
     if (def->action) {
-      if (!strcmp (def->type, "SP")) {
-	o = subnet;
+      if ((a = createAnalysis (def->type)) != NULL) {
+	// add the properties to analysis
 	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	  if (pairs->value->ident)
-	    o->addProperty (pairs->key, pairs->value->ident);
+	    a->addProperty (pairs->key, pairs->value->ident);
 	  else
-	    o->addProperty (pairs->key, pairs->value->value);
+	    a->addProperty (pairs->key, pairs->value->value);
+	a->setName (def->instance);
+	subnet->insertAnalysis (a);
       }
     }
 
@@ -124,6 +129,7 @@ void input::factory (void) {
       c = createCircuit (def->type);
       o = (object *) c;
       c->setName (def->instance);
+      c->setType (def->type);
 
       // add appropriate nodes to circuit
       for (i = 1, nodes = def->nodes; nodes != NULL; nodes = nodes->next, i++)
@@ -138,10 +144,7 @@ void input::factory (void) {
 	  o->addProperty (pairs->key, pairs->value->value);
 
       // insert the circuit into the netlist object
-      if (!strcmp (def->type, "Pac"))
-	subnet->insertPort (c);
-      else
-	subnet->insertCircuit (c);
+      subnet->insertCircuit (c);
     }
   }
 }
@@ -188,5 +191,14 @@ circuit * input::createCircuit (char * type) {
     return new vac ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
+  return NULL;
+}
+
+// The function creates an analysis specified by the type of analysis.
+analysis * input::createAnalysis (char * type) {
+  if (!strcmp (type, "SP"))
+    return new spsolver ();
+
+  logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
   return NULL;
 }
