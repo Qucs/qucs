@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.31 2005-02-14 19:56:43 raimi Exp $
+ * $Id: nasolver.cpp,v 1.32 2005-02-21 20:50:36 raimi Exp $
  *
  */
 
@@ -221,11 +221,11 @@ void nasolver<nr_type_t>::solve_pre (void) {
    the function saves the solution vector back into the actual
    component nodes. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::applyNodeset (void) {
+void nasolver<nr_type_t>::applyNodeset (bool nokeep) {
   if (x == NULL || nlist == NULL) return;
 
   // set each solution to zero
-  for (int i = 1; i <= x->getSize (); i++) x->set (i, 0);
+  if (nokeep) for (int i = 1; i <= x->getSize (); i++) x->set (i, 0);
 
   // then apply the nodeset itself
   for (nodeset * n = subnet->getNodeset (); n; n = n->getNext ()) {

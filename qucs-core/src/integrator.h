@@ -1,7 +1,7 @@
 /*
  * integrator.h - integrator class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: integrator.h,v 1.2 2004-09-12 18:10:21 ela Exp $
+ * $Id: integrator.h,v 1.3 2005-02-21 20:50:36 raimi Exp $
  *
  */
 
@@ -26,6 +26,9 @@
 #define __INTEGRATOR_H__
 
 #include "states.h"
+
+#define MODE_NONE 0
+#define MODE_INIT 1
 
 class integrator : public states<nr_double_t>
 {
@@ -39,17 +42,17 @@ class integrator : public states<nr_double_t>
   typedef void (* integrate_func_t)
     (integrator *, int, nr_double_t, nr_double_t&, nr_double_t&);
   void setIntegration (integrate_func_t f) { integrate_func = f; }
-  void integrate (int qstate, nr_double_t cap, nr_double_t& geq,
-		  nr_double_t& ceq) {
-    (*integrate_func) (this, qstate, cap, geq, ceq);
-  }
+  void integrate (int, nr_double_t, nr_double_t&, nr_double_t&);
   void setOrder (int o) { order = o; }
   int  getOrder (void) { return order; }
+  void setMode (int s) { state = s; }
+  int  getMode (void) { return state; }
   void setCoefficients (nr_double_t * c) { coefficients = c; }
   nr_double_t * getCoefficients (void) { return coefficients; }
 
  private:
   int order;
+  int state;
   nr_double_t * coefficients;
   integrate_func_t integrate_func;
 };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.32 2005-02-08 23:08:35 raimi Exp $
+ * $Id: trsolver.cpp,v 1.33 2005-02-21 20:50:59 raimi Exp $
  *
  */
 
@@ -87,6 +87,9 @@ void trsolver::initSteps (void) {
   swp = createSweep ("time");
 }
 
+// Macro for the n-th state of the solution vector history.
+#define SOL(state) (solution[(int) getState (sState, (state))])
+
 /* This is the transient netlist solver.  It prepares the circuit list
    for each requested time and solves it then. */
 void trsolver::solve (void) {
@@ -140,17 +143,19 @@ void trsolver::solve (void) {
   initTR ();
   setCalculation ((calculate_func_t) &calcTR);
   solve_pre ();
-  applyNodeset ();
   swp->reset ();
+
+  // Apply the nodesets and adjust previous solutions.
+  applyNodeset (false);
+  fillSolution (x);
+
+  // Tell integrators to be initialized.
+  setMode (MODE_INIT);
 
   int running = 0;
   delta /= 10;
   fillState (dState, delta);
   adjustOrder (1);
-
-#if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: %s: solving transient netlist\n", getName ());
-#endif
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
@@ -234,16 +239,18 @@ void trsolver::solve (void) {
       if (running > 1) {
 	adjustDelta ();
 	adjustOrder ();
-	//fixpoint = (deltaOld == delta) ? 1 : 0;
       }
       else {
-	//fillStates ();
+	fillStates ();
 	nextStates ();
 	rejected = 0;
       }
 
       current += delta;
       running++;
+
+      // Tell integrators to be running.
+      setMode (MODE_NONE);
     }
     while (current < time); // Hit a requested time point?
     
@@ -262,9 +269,6 @@ void trsolver::solve (void) {
 	    "%d non-convergences\n", getName (),
 	    (double) statIterations / statSteps, statConvergence);
 }
-
-// Macro for the n-th state of the solution vector history.
-#define SOL(state) (solution[(int) getState (sState, (state))])
 
 /* This function predicts a start value for the solution vector for
    the successive iterative corrector process. */
@@ -287,6 +291,11 @@ int trsolver::predictor (void) {
   saveSolution ();
   *SOL (0) = *x;
   return error;
+}
+
+// Stores the given vector into all the solution vectors.
+void trsolver::fillSolution (tvector<nr_double_t> * s) {
+  for (int i = 0; i < 8; i++) *SOL (i) = *s;
 }
 
 /* The function predicts the successive solution vector using the
@@ -372,6 +381,13 @@ void trsolver::fillStates (void) {
     for (int s = 0; s < c->getStates (); s++)
       c->fillState (s, c->getState (s));
   }
+}
+
+// The function modifies the circuit lists integrator mode.
+void trsolver::setMode (int state) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    c->setMode (state);
 }
 
 /* This function tries to adapt the current time-step according to the

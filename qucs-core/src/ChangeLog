@@ -1,3 +1,14 @@
+2005-02-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: The transient solver can now tell its
+	integrators to be in certain states.  Thus its initial
+	run can be indicated.  Also the initial conditions (nodesets)
+	are now correctly evaluated.
+
+	* integrator.cpp (integrate): New integration wrapper
+	able to evaluate a state flag.  Currently used for initial
+	transient analysis run.
+
 2005-02-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp: If a preferred convergence algorithm is

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.16 2005-02-14 19:56:44 raimi Exp $
+ * $Id: nasolver.h,v 1.17 2005-02-21 20:50:39 raimi Exp $
  *
  */
 
@@ -75,7 +75,7 @@ class nasolver : public analysis
   int  countVoltageSources (void);
   void saveSolution (void);
   circuit * findVoltageSource (int);
-  void applyNodeset (void);
+  void applyNodeset (bool nokeep = true);
   void createNoiseMatrix (void);
   void runMNA (void);
   void createMatrix (void);
