@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.h,v 1.2 2004-02-13 20:31:45 ela Exp $
+ * $Id: property.h,v 1.3 2004-07-08 06:38:43 ela Exp $
  *
  */
 
@@ -26,6 +26,14 @@
 #define __PROPERTY_H__
 
 class variable;
+
+enum property_type {
+  PROPERTY_UNKNOWN = -1,
+  PROPERTY_INT,
+  PROPERTY_DOUBLE,
+  PROPERTY_STR,
+  PROPERTY_VAR
+};
 
 class property
 {
@@ -44,11 +52,18 @@ class property
   nr_double_t getDouble (void);
   int getInteger (void);
   char * getString (void);
+  void set (nr_double_t);
+  void set (int);
+  void set (char *);
+  void set (variable *);
   property * findProperty (char *);
+  char * toString (void);
 
  private:
+  int type;
   char * name;
   char * str;
+  char * txt;
   nr_double_t value;
   variable * var;
   property * next;

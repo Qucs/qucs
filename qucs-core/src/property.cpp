@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.cpp,v 1.4 2004-04-25 17:08:50 ela Exp $
+ * $Id: property.cpp,v 1.5 2004-07-08 06:38:43 ela Exp $
  *
  */
 
@@ -32,24 +32,27 @@
 #include <ctype.h>
 #include <math.h>
 
-#include "complex.h"
 #include "variable.h"
 #include "property.h"
 
 // Constructor creates an unnamed instance of the property class.
 property::property () {
+  type = PROPERTY_UNKNOWN;
   name = NULL;
   value = 0.0;
   str = NULL;
+  txt = NULL;
   var = NULL;
   next = NULL;
 }
 
 // Constructor creates a named instance of the property class.
 property::property (char * n) {
+  type = PROPERTY_UNKNOWN;
   name = n ? strdup (n) : NULL;
   value = 0.0;
   str = NULL;
+  txt = NULL;
   var = NULL;
   next = NULL;
 }
@@ -57,9 +60,11 @@ property::property (char * n) {
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (char * n, char * val) {
+  type = PROPERTY_STR;
   name = n ? strdup (n) : NULL;
   str = val ? strdup (val) : NULL;
   value = 0.0;
+  txt = NULL;
   var = NULL;
   next = NULL;
 }
@@ -67,9 +72,11 @@ property::property (char * n, char * val) {
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (char * n, nr_double_t val) {
+  type = PROPERTY_DOUBLE;
   name = n ? strdup (n) : NULL;
   value = val;
   str = NULL;
+  txt = NULL;
   var = NULL;
   next = NULL;
 }
@@ -77,9 +84,11 @@ property::property (char * n, nr_double_t val) {
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (char * n, variable * val) {
+  type = PROPERTY_VAR;
   name = n ? strdup (n) : NULL;
   var = val;
   value = 0.0;
+  txt = NULL;
   str = NULL;
   next = NULL;
 }
@@ -87,9 +96,11 @@ property::property (char * n, variable * val) {
 /* The copy constructor creates a new instance of the property class
    based on the given property object. */
 property::property (const property & p) {
+  type = p.type;
   name = p.name ? strdup (p.name) : NULL;
   str = p.str ? strdup (p.str) : NULL;
   value = p.value;
+  txt = p.txt ? strdup (p.txt) : NULL;
   next = p.next;
   var = p.var;
 }
@@ -98,6 +109,7 @@ property::property (const property & p) {
 property::~property () {
   if (name) free (name);
   if (str) free (str);
+  if (txt) free (txt);
 }
 
 // Sets the name of the property.
@@ -116,9 +128,7 @@ char * property::getName (void) {
    If there is no such property the function returns NULL. */
 property * property::findProperty (char * n) {
   for (property * p = this; p != NULL; p = p->getNext ()) {
-    if (!strcmp (p->getName (), n)) {
-      return p;
-    }
+    if (!strcmp (p->getName (), n)) return p;
   }
   return NULL;
 }
@@ -142,4 +152,56 @@ nr_double_t property::getDouble (void) {
 int property::getInteger (void) {
   if (var != NULL) return (int) floor (D (var->getConstant ()));
   return (int) floor (value);
+}
+
+// Sets the property's value being a double.
+void property::set (nr_double_t val) {
+  type = PROPERTY_DOUBLE;
+  value = val;
+}
+
+// Sets the property's value being an integer.
+void property::set (int val) {
+  type = PROPERTY_INT;
+  value = val;
+}
+
+// Sets the property's value being a variable.
+void property::set (variable * val) {
+  type = PROPERTY_VAR;
+  var = val;
+}
+
+// Sets the property's value being a string.
+void property::set (char * val) {
+  type = PROPERTY_STR;
+  if (str) free (str);
+  str = val ? strdup (val) : NULL;
+}
+
+// This function returns a text representation of the property object.
+char * property::toString (void) {
+  char text[256];
+  if (txt) free (txt);
+  switch (type) {
+  case PROPERTY_UNKNOWN:
+    txt = strdup ("(no such type)");
+    break;
+  case PROPERTY_INT:
+    sprintf (text, "%d", (int) floor (value));
+    txt = strdup (text);
+    break;
+  case PROPERTY_STR:
+    txt = strdup (str);
+    break;
+  case PROPERTY_DOUBLE:
+    sprintf (text, "%g", (double) value);
+    txt = strdup (text);
+    break;
+  case PROPERTY_VAR:
+    sprintf (text, "%s", var->getName ());
+    txt = strdup (text);
+    break;
+  }
+  return txt;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.h,v 1.3 2004-02-17 15:30:57 ela Exp $
+ * $Id: object.h,v 1.4 2004-07-08 06:38:43 ela Exp $
  *
  */
 
@@ -41,22 +41,28 @@ class object
   void setPrev (object * o) { prev = o; }
   void setName (char *);
   char * getName (void);
+  void addProperty (property *);
   void addProperty (char *, char *);
   void addProperty (char *, nr_double_t);
   void addProperty (char *, variable *);
+  void setProperty (char *, char *);
+  void setProperty (char *, nr_double_t);
+  void setProperty (char *, variable *);
   char * getPropertyString (char *);
   nr_double_t getPropertyDouble (char *);
   int getPropertyInteger (char *);
   int hasProperty (char *);
   void copyProperties (property *);
-  void listProperties (void);
   void deleteProperties (void);
+  int countProperties (void);
+  char * propertyList (void);
 
  private:
   char * name;
   object * next;
   object * prev;
   property * prop;
+  char * ptxt;
 };
 
 #endif /* __OBJECT_H__ */

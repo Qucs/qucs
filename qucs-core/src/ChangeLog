@@ -1,3 +1,13 @@
+2004-07-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* property.cpp (toString): New function returning text
+	representation of a property.  The properties are now typified
+	and can be modified using set().
+
+	* object.cpp: Added some functionality in order to modify an
+	objects properties.  New function returning a string 
+	representation of the property list.
+
 2004-07-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Removed some of the noise debug messages and
