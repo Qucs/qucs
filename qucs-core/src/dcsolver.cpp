@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.18 2004-07-05 21:41:46 ela Exp $
+ * $Id: dcsolver.cpp,v 1.19 2004-07-07 13:52:19 ela Exp $
  *
  */
 
@@ -175,7 +175,7 @@ void dcsolver::solve (void) {
   }
   while (!convergence && run < MaxIterations);
 
-  if (run >= MaxIterations) {
+  if (run >= MaxIterations || error) {
     e = new exception (EXCEPTION_NO_CONVERGENCE);
     e->setText ("no convergence in DC analysis after %d iterations", run);
     throw_exception (e);
@@ -416,9 +416,7 @@ void dcsolver::createIMatrix (void) {
     for (int i = 0; i < n->nNodes; i++) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
-      if (is->getType () == CIR_IDC   ||
-	  is->getType () == CIR_DIODE ||
-	  is->getType () == CIR_JFET) {
+      if (is->getType () == CIR_IDC || is->isNonLinear ()) {
 	val += real (is->getI (n->nodes[i]->getPort ()));
       }
     }
