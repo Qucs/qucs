@@ -36,8 +36,7 @@
 
 tQucsSettings QucsSettings
      = {0, 0, 600, 400,    // position and size
-	QFont("Helvetica", 12), QFont("Helvetica", 16, QFont::DemiBold),
-	QFont("Helvetica", 10, QFont::Light),
+	QFont("Helvetica", 12), 16.0, 10.0,
 	QColor(255, 250, 225), 20,
 	BINARYDIR "qucsedit"};
 
@@ -74,14 +73,9 @@ bool loadSettings()
 	QucsSettings.font.fromString(Line);
 	savingFont = QucsSettings.font;
 
-	QucsSettings.largeFont = QucsSettings.font;
-	int i = QucsSettings.font.pointSize();  i += i/3;
-	QucsSettings.largeFont.setPointSize(i);   // large font greater
-	QucsSettings.largeFont.setWeight(QFont::DemiBold);
-
-	QucsSettings.smallFont = QucsSettings.font;
-	QucsSettings.smallFont.setPointSize(10);   // small font 10pt
-	QucsSettings.smallFont.setWeight(QFont::Light);
+	QucsSettings.largeFontSize
+		= floor(4.0/3.0 * QucsSettings.font.pointSize());
+	QucsSettings.smallFontSize = 10.0;
 	}
     else if(Setting == "BGColor") {
 	QucsSettings.BGColor.setNamedColor(Line);

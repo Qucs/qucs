@@ -179,7 +179,8 @@ Component* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     MOSFET* p = new MOSFET();
-    p->Props.getFirst()->Value = "pfet";
+    p->Props.first()->Value = "pfet";
+    p->Props.next()->Value = "-1.0 V";
     p->recreate();
     return p;
   }

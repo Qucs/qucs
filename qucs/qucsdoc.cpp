@@ -294,37 +294,52 @@ void QucsDoc::setOnGrid(int& x, int& y)
 }
 
 // ---------------------------------------------------
-void QucsDoc::paintGrid(QPainter *p, int cX, int cY, int Width, int Height)
+void QucsDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 {
   if(!GridOn) return;
 
-  p->setPen(QPen(QPen::black,1));
-  int dx = -int(Scale*double(ViewX1));
-  int dy = -int(Scale*double(ViewY1));
-  p->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
-  p->drawLine( dx,-3+dy, dx, 4+dy);
+  p->Painter->setPen(QPen(QPen::black,1));
+  int dx = -int(Scale*double(ViewX1)) - cX;
+  int dy = -int(Scale*double(ViewY1)) - cY;
+  p->Painter->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
+  p->Painter->drawLine( dx,-3+dy, dx, 4+dy);
 
-  int x1 = int(cX/Scale)+ViewX1;
+
+  int x1  = int(cX/Scale) + ViewX1;
+  int y1  = int(cY/Scale) + ViewY1;
+
+  // setOnGrid(x1, y1) for 2*Grid
   if(x1<0) x1 -= GridX - 1;
   else x1 += GridX;
   x1 -= x1 % (GridX << 1);
-  x1 -= ViewX1; x1 = int(x1*Scale);
 
-  int y1 = int(cY/Scale)+ViewY1;
   if(y1<0) y1 -= GridY - 1;
   else y1 += GridY;
   y1 -= y1 % (GridY << 1);
-  y1 -= ViewY1; y1 = int(y1*Scale);
 
-  int x2 = x1+Width, y2 = y1+Height;
-  dx = int(double(2*GridX)*Scale);
-  dy = int(double(2*GridY)*Scale);
-  if(dx < 5) dx = 5;   // grid not too dense
-  if(dy < 5) dy = 5;
+  double X, Y, Y0;
+  X = double(x1)*Scale + p->DX;
+  Y = Y0 = double(y1)*Scale + p->DY;
+  x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+  y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
 
-  for(int x=x1; x<x2; x+=dx)
-    for(int y=y1; y<y2; y+=dy)
-      p->drawPoint(x,y);    // paint grid
+
+  int xEnd = x1 + Width;
+  int yEnd = y1 + Height;
+  double DX = double(GridX << 1) * Scale;   // every second grid a point
+  double DY = double(GridY << 1) * Scale;
+
+  while(x1 < xEnd) {
+    Y = Y0;
+    y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+    while(y1 < yEnd) {
+      p->Painter->drawPoint(x1, y1);    // paint grid
+      Y += DY;
+      y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
+    }
+    X += DX;
+    x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
+  }
 }
 
 // ---------------------------------------------------
@@ -1459,7 +1474,7 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
     if(pw->Label) {
       pl = pw->Label;
       if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
-        if(pl->y1 >= y2) if((pl->y1+pl->y2) <= y1) {
+        if(pl->y1 >= y1) if((pl->y1+pl->y2) <= y2) {
           pl->isSelected = true;  z++;
           continue;
         }

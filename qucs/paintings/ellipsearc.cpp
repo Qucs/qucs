@@ -144,16 +144,16 @@ QString EllipseArc::save()
 bool EllipseArc::ResizeTouched(int x, int y)
 {
   State = -1;
-  if(x < cx) return false;
-  if(y < cy) return false;
-  if(x > cx+x2) return false;
-  if(y > cy+y2) return false;
+  if(x < cx-5) return false;
+  if(y < cy-5) return false;
+  if(x > cx+x2+5) return false;
+  if(y > cy+y2+5) return false;
 
   State = 0;
-  if(x < cx+10) State = 1;
-  else if(x <= cx+x2-10) { State = -1; return false; }
-  if(y < cy+10)  State |= 2;
-  else if(y <= cy+y2-10) { State = -1; return false; }
+  if(x < cx+5) State = 1;
+  else if(x <= cx+x2-5) { State = -1; return false; }
+  if(y < cy+5)  State |= 2;
+  else if(y <= cy+y2-5) { State = -1; return false; }
 
   return true;
 }

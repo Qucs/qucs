@@ -23,9 +23,10 @@ Equation::Equation()
 {
   Description = QObject::tr("equation");
 
-  QFontMetrics  metrics(QucsSettings.smallFont);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto,
-				QObject::tr("Equation"));
+  QFont f = QucsSettings.font;
+  f.setPointSizeFloat(QucsSettings.smallFontSize);
+  QFontMetrics  metrics(f);
+  QSize r = metrics.size(0, QObject::tr("Equation"));
   int xb = r.width()  >> 1;
   int yb = r.height() >> 1;
 

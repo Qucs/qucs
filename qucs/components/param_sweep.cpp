@@ -26,16 +26,12 @@ Param_Sweep::Param_Sweep()
   QString  s = Description;
   int a = s.findRev(" ");
   if (a != -1) s[a] = '\n';    // break line
-  QFontMetrics  metrics(QucsSettings.largeFont);
-  QSize r = metrics.size(0, s);
-  int xb = r.width()  + 15;
-  int yb = r.height() + 15;
 
   Texts.append(new Text(0, 0, s.left(a)));
   if (a != -1) Texts.append(new Text(0, 0, s.mid(a+1)));
 
   x1 = -10; y1 = -9;
-  x2 = x1+xb+8; y2 = y1+yb+8;
+  x2 = x1+91; y2 = y1+46;
 
   tx = 0;
   ty = y2+1;
