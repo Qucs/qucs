@@ -129,9 +129,17 @@ int main(int argc, char *argv[])
   tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
   a.installTranslator( &tor );
 
-  QucsHelpDir = QString (DOCDIR) + QTextCodec::locale();
+  QString locale = QTextCodec::locale();
+  QucsHelpDir = QString (DOCDIR) + locale;
   if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
-    QucsHelpDir = QString (DOCDIR) + "en";
+    int p = locale.find ('_');
+    if (p != -1) {
+      QucsHelpDir = QString (DOCDIR) + locale.left (p);
+      if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
+	QucsHelpDir = QString (DOCDIR) + "en";
+      }
+    }
+    else QucsHelpDir = QString (DOCDIR) + "en";
   }
 
   QString Page;

@@ -5252,6 +5252,12 @@ Bearbeitet das Symbol für diesen Schaltkreis</translation>
         <translation>Portugiesisch von Luciano Franca
 </translation>
     </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez
+</source>
+        <translation>Spanisch von Jose L. Redrejo Rodriguez
+</translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>

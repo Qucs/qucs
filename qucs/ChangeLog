@@ -1,3 +1,14 @@
+2004-09-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/Makefile.am (SUBDIRS): Added the es/ directory
+	supplied by Jose L. Redrejo Rodriguez.  Thanks a lot!
+
+	* qucsinit.cpp (slotHelpAbout): Mentioned Jose as Spanish
+	translator in the About.. box.
+
+	* qucs_es.ts: Applied the spanish translation.  Thanks to
+	Jose L. Redrejo Rodriguez.
+
 2004-09-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/Makefile.am (dist_man_MANS): Added simple man page.
