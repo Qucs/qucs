@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.2 2004-06-06 13:01:45 ela Exp $
+ * $Id: jfet.cpp,v 1.3 2004-06-09 23:55:41 ela Exp $
  *
  */
 
@@ -31,6 +31,7 @@
 #include <math.h>
 
 #include "complex.h"
+#include "matrix.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
@@ -48,6 +49,38 @@ jfet::jfet () : circuit (3) {
 }
 
 void jfet::calcSP (nr_double_t frequency) {
+  nr_double_t Cgd = getOperatingPoint ("Cgd");
+  nr_double_t Cgs = getOperatingPoint ("Cgs");
+  nr_double_t ggs = getOperatingPoint ("ggs");
+  nr_double_t ggd = getOperatingPoint ("ggd");
+  nr_double_t gds = getOperatingPoint ("gds");
+  nr_double_t gm  = getOperatingPoint ("gm");
+
+  complex Ygd = rect (ggd, 2.0 * M_PI * frequency * Cgd);
+  complex Ygs = rect (ggs, 2.0 * M_PI * frequency * Cgs);
+  complex Yds = gds;
+
+  matrix y = matrix (3); 
+  y.set (1, 1, Ygd + Ygs);
+  y.set (1, 2, -Ygd);
+  y.set (1, 3, -Ygs);
+  y.set (2, 1, gm - Ygd);
+  y.set (2, 2, Ygd + Yds);
+  y.set (2, 3, -Yds - gm);
+  y.set (3, 1, -Ygs - gm);
+  y.set (3, 2, -Yds);
+  y.set (3, 3, Ygs + Yds + gm);
+  matrix s = ytos (y);
+
+  setS (1, 1, s.get (1, 1));
+  setS (1, 2, s.get (1, 2));
+  setS (1, 3, s.get (1, 3));
+  setS (2, 1, s.get (2, 1));
+  setS (2, 2, s.get (2, 2));
+  setS (2, 3, s.get (2, 3));
+  setS (3, 1, s.get (3, 1));
+  setS (3, 2, s.get (3, 2));
+  setS (3, 3, s.get (3, 3));
 }
 
 void jfet::initDC (dcsolver * solver) {
@@ -168,6 +201,10 @@ void jfet::calcDC (void) {
     }
   }
 
+  setOperatingPoint ("gm", gm);
+  setOperatingPoint ("gds", gds);
+  setOperatingPoint ("Id", Ids);
+
   IeqG = Igs - ggs * Ugs;
   IeqD = Igd - ggd * Ugd;
   IeqS = Ids - gm * Ugs - gds * Uds;
@@ -182,4 +219,39 @@ void jfet::calcDC (void) {
 }
 
 void jfet::calcOperatingPoints (void) {
+  nr_double_t Is   = getPropertyDouble ("Is");
+  nr_double_t n    = getPropertyDouble ("N");
+  nr_double_t z    = getPropertyDouble ("M");
+  nr_double_t Cgd0 = getPropertyDouble ("Cgd");
+  nr_double_t Cgs0 = getPropertyDouble ("Cgs");
+  nr_double_t Pb   = getPropertyDouble ("Pb");
+  
+  nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd;
+
+  T = -K + 26.5;
+  Ut = kB * T / Q;
+  Ugd = real (getV (1) - getV (2));
+  Ugs = real (getV (1) - getV (3));
+
+  ggs = Is / Ut / n * exp (Ugs / Ut / n);
+  Igs = Is * (exp (Ugs / Ut / n) - 1);
+  ggd = Is / Ut / n * exp (Ugd / Ut / n);
+  Igd = Is * (exp (Ugd / Ut / n) - 1);
+
+  if (Ugd < 0)
+    Cgd = Cgd0 * pow (1 - Ugd / Pb, -z);
+  else
+    Cgd = Cgd0 * (1 + z * Ugd / Pb);
+
+  if (Ugs < 0)
+    Cgs = Cgs0 * pow (1 - Ugs / Pb, -z);
+  else
+    Cgs = Cgs0 * (1 + z * Ugs / Pb);
+
+  setOperatingPoint ("ggs", ggs);
+  setOperatingPoint ("ggd", ggd);
+  setOperatingPoint ("Ugs", Ugs);
+  setOperatingPoint ("Ugd", Ugd);
+  setOperatingPoint ("Cgd", Cgd);
+  setOperatingPoint ("Cgs", Cgs);
 }

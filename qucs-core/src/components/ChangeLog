@@ -1,3 +1,8 @@
+2004-06-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* jfet.cpp: Implemented S-parameters and operating points of
+	junction FET.
+
 2004-06-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp: Using symbolic names for anode and cathode node.
