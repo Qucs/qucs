@@ -1880,15 +1880,15 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>konstante Parallelkapazität</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekombinationsstromparameter</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>Emissionskoeffizient von Isr</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
@@ -1920,7 +1920,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>bulk junction emission coefficient</source>
-        <translation>Substrat-Sperrschicht-Diffusionsspannung</translation>
+        <translation>Emissionsfaktor des Substrat-Übergangs</translation>
     </message>
     <message>
         <source>channel width</source>
@@ -2016,7 +2016,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>Bull-Substratbodenkapazität je Sperrschichtfläche in F/m²</translation>
+        <translation>Null-Substratbodenkapazität je Sperrschichtfläche in F/m²</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
@@ -2040,7 +2040,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>Abstand zwischen den Mikrostreifenenden</translation>
+    </message>
+    <message>
+        <source>channel-length modulation parameter in 1/V</source>
+        <translation>Parameter für die Kanallängenmodulation in 1/V</translation>
     </message>
 </context>
 <context>

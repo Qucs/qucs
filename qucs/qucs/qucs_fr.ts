@@ -1848,6 +1848,10 @@ Wrong line start!</source>
         <source>source junction perimeter</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>channel-length modulation parameter in 1/V</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
