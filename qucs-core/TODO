@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Make Wheeler's quasi-static formulas for microstrip continual.
 - Allow subcircuits in netlist and simulate them correctly.
 	- Parameter for exporting equation result to dataset.
 	- What about resistors with R=0?
@@ -44,7 +45,7 @@ unfixed) have a look at the file BUGS.
 	  variables.
 - Add string constants to equation base class.
 - Allow equation variables in component properties.
-- Implement class for vectors of matrices.
+	- Implement class for vectors of matrices.
 	- Check for cyclic analysis definitions.
 	- Somehow merge the variable class and the equation base classes.
 	- Fix dataset output of multiple variable sweeps.
@@ -63,7 +64,8 @@ unfixed) have a look at the file BUGS.
 - Implement device (touchstone file).
 	- Implement netlist parser using bison + flex.
 	- Permit differential s-parameters.
-- Add math functionality to the dataset class.
+	- Add math functionality to the dataset class.  The functionality was
+	  build into the base types.
 	- Allow multiple s-parameter simulations at once.
 	- Free the parsed netlist input (as checker functionality).
 	- Add already implemented components to checker + factory.
@@ -75,7 +77,7 @@ unfixed) have a look at the file BUGS.
 	- Autofy the package.
 	- Make 'nr_double_t' configurable.
 - Handle reference impedance for touchstone files correctly.
-- Implement matrix conversion routines for datasets.
+	- Implement matrix conversion routines for datasets.
 - Add noise parameters in touchstone file importer.
 	- Implement 6-port transformer.
 	- Add microstrip elements to the list of available components.

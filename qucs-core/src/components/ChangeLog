@@ -1,3 +1,8 @@
+2004-07-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Started to implement the DC model of the
+	standard SGP (Spice Gummel Poon) model fo BJTs.
+
 2004-07-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* resistor.cpp: Using new 'Temp' property for noise parameter

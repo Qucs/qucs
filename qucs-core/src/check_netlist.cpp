@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.22 2004/07/04 11:16:16 ela Exp $
+ * $Id: check_netlist.cpp,v 1.23 2004/07/07 13:52:19 ela Exp $
  *
  */
 
@@ -213,6 +213,37 @@ struct define_t definition_available[] =
       { "Isr", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
       { "Nr", PROP_REAL, { 2, PROP_NO_STR }, { 1, 100 } },
       { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  },
+  /* sgp bjt */
+  { "BJT", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nf", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
+      { "Nr", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
+      { "Ikf", PROP_REAL,
+	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Ikr", PROP_REAL,
+	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Vaf", PROP_REAL,
+	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Var", PROP_REAL,
+	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Ise", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ne", PROP_REAL, { 1.5, PROP_NO_STR }, { 1, 100 } },
+      { "Isc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nc", PROP_REAL, { 2, PROP_NO_STR }, { 1, 100 } },
+      { "Bf", PROP_REAL, 
+	{ 100, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Br", PROP_REAL, 
+	{ 1, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Rbm", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Irb", PROP_REAL,
+	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      PROP_NO_PROP },
+    { { "Rc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Re", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
 

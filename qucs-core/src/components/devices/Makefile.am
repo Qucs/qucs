@@ -26,9 +26,9 @@
 
 noinst_LIBRARIES = libdevices.a
 
-libdevices_a_SOURCES = device.cpp diode.cpp jfet.cpp
+libdevices_a_SOURCES = device.cpp diode.cpp jfet.cpp bjt.cpp
 
-noinst_HEADERS = device.h diode.h jfet.h
+noinst_HEADERS = device.h diode.h jfet.h bjt.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components
 
