@@ -39,13 +39,14 @@ qucsator_LDADD = libqucsator.a \
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
-	parasweep.cpp matrix.cpp eqnsys.cpp equation.cpp evaluate.cpp
+	parasweep.cpp matrix.cpp eqnsys.cpp equation.cpp evaluate.cpp        \
+	sweep.cpp
 
 noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h     \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h      \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h        \
-	nodelist.h variable.h environment.h parasweep.h eqnsys.h            \
+	nodelist.h variable.h environment.h parasweep.h eqnsys.h sweep.h    \
 	operatingpoint.h libqucsator.h equation.h evaluate.h
 
 noinst_LIBRARIES = libqucsator.a

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.7 2004-05-24 10:11:09 ela Exp $
+ * $Id: vector.h,v 1.8 2004-06-22 19:32:56 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@ class vector : public object
   ~vector ();
   void add (complex);
   void add (vector *);
-  complex  get (int);
+  complex get (int);
   void set (nr_double_t, int);
   void set (const complex, int);
   int getSize (void);

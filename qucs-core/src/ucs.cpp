@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.4 2004-04-30 22:27:03 ela Exp $
+ * $Id: ucs.cpp,v 1.5 2004-06-22 19:32:56 ela Exp $
  *
  */
 
@@ -60,6 +60,16 @@ int main (int argc, char ** argv) {
 		"conditions.  There is NO\n"
 		"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
 		"PARTICULAR PURPOSE.\n");
+      return 0;
+    }
+    if (!strcmp (argv[i], "-h") || !strcmp (argv[i], "--help")) {
+      logprint (LOG_STATUS,
+	"Usage: %s [OPTION]...\n\n"
+	"  -h, --help     display this help and exit\n"
+	"  -v, --version  display version information and exit\n"
+	"  -i FILENAME    use file as input netlist (default stdin)\n"
+	"  -o FILENAME    use file as output dataset (default stdout)\n"
+	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
     else if (!strcmp (argv[i], "-i")) {
