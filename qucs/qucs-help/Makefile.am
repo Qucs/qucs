@@ -24,6 +24,8 @@
 
 bin_PROGRAMS = qucshelp
 
+dist_man_MANS = qucshelp.1
+
 MOCHEADERS = qucshelp.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
