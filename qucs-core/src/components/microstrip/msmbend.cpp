@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.8 2004-08-30 20:55:19 ela Exp $
+ * $Id: msmbend.cpp,v 1.9 2004-09-26 09:58:52 ela Exp $
  *
  */
 
@@ -45,11 +45,13 @@
 
 msmbend::msmbend () : circuit (2) {
   type = CIR_MSMBEND;
-  setVoltageSources (1);
-  setInternalVoltageSource (1);
 }
 
 void msmbend::calcSP (nr_double_t frequency) {
+  setMatrixS (ztos (calcMatrixZ (frequency)));
+}
+
+matrix& msmbend::calcMatrixZ (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W = getPropertyDouble ("W");
@@ -72,7 +74,7 @@ void msmbend::calcSP (nr_double_t frequency) {
     logprint (LOG_STATUS,
 	"Model for microstrip mitered bend defined for 2.36 <= er <= 10.4\n");
   }
-  if (frequency*h > 12e6) {
+  if (frequency * h > 12e6) {
     logprint (LOG_STATUS,
 	"Model for microstrip mitered bend defined for freq*h <= 12MHz\n");
   }
@@ -82,21 +84,29 @@ void msmbend::calcSP (nr_double_t frequency) {
   // inductance in nH
   L = 440.0 * h * (1.0 - 1.062 * exp (-0.177 * pow (Wh, 0.947)));
 
+  // calculate Z-parameters
   z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
   z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
-
-  matrix z (2);
-  z.set (1, 1, z11);
-  z.set (1, 2, z21);
-  z.set (2, 1, z21);
-  z.set (2, 2, z11);
-  setMatrixS (ztos (z));
+  matrix * z = new matrix (2);
+  z->set (1, 1, z11);
+  z->set (1, 2, z21);
+  z->set (2, 1, z21);
+  z->set (2, 2, z11);
+  return *z;
 }
 
-void msmbend::calcDC (void) {
+void msmbend::initDC (void) {
   // a DC short (voltage source V = 0 volts)
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+  clearY ();
+  voltageSource (1, 1, 2);
+  setVoltageSources (1);
+  setInternalVoltageSource (1);
+}
+
+void msmbend::initAC (void) {
+  setVoltageSources (0);
+}
+
+void msmbend::calcAC (nr_double_t frequency) {
+  setMatrixY (ztoy (calcMatrixZ (frequency)));
 }

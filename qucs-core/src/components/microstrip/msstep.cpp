@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msstep.cpp,v 1.4 2004-08-20 10:45:37 ela Exp $
+ * $Id: msstep.cpp,v 1.5 2004-09-26 09:58:52 ela Exp $
  *
  */
 
@@ -46,11 +46,13 @@
 
 msstep::msstep () : circuit (2) {
   type = CIR_MSSTEP;
-  setVoltageSources (1);
-  setInternalVoltageSource (1);
 }
 
 void msstep::calcSP (nr_double_t frequency) {
+  setMatrixS (ztos (calcMatrixZ (frequency)));
+}
+
+matrix& msstep::calcMatrixZ (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W1 = getPropertyDouble ("W1");
@@ -90,22 +92,30 @@ void msstep::calcSP (nr_double_t frequency) {
   L1 *= Ls;
   L2 *= Ls;
 
-  // build Z-parameter matrix and convert to S-parameters
+  // build Z-parameter matrix
   complex z21 = rect (0.0, 0.5e12 / (M_PI * frequency * Cs));
   complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L1) + z21;
   complex z22 = rect (0.0, 2e-9 * M_PI * frequency * L2) + z21;
-  matrix z (2);
-  z.set (1, 1, z11);
-  z.set (1, 2, z21);
-  z.set (2, 1, z21);
-  z.set (2, 2, z22);
-  setMatrixS (ztos (z));
+  matrix * z = new matrix (2);
+  z->set (1, 1, z11);
+  z->set (1, 2, z21);
+  z->set (2, 1, z21);
+  z->set (2, 2, z22);
+  return *z;
 }
 
-void msstep::calcDC (void) {
+void msstep::initDC (void) {
   // a DC short (voltage source V = 0 volts)
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+  clearY ();
+  voltageSource (1, 1, 2);
+  setVoltageSources (1);
+  setInternalVoltageSource (1);
+}
+
+void msstep::initAC (void) {
+  setVoltageSources (0);
+}
+
+void msstep::calcAC (nr_double_t frequency) {
+  setMatrixY (ztoy (calcMatrixZ (frequency)));
 }
