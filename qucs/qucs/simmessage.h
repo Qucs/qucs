@@ -38,18 +38,20 @@ public:
   bool startProcess(const QStringList& commands);
 
 signals:
-  void SimulationEnded();
+  void SimulationEnded(int Status);
+  void displayDataPage();
 
 public slots:
   void slotDisplayMsg();
   void slotDisplayErr();
   void slotSimEnded();
   void slotClose();
+  void slotDisplayButton();
   
 public:
   QProcess   SimProcess;
   QTextEdit *ProgText, *ErrText;
-  QPushButton *Abort;
+  QPushButton *Display, *Abort;
 
 };
 

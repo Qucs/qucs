@@ -142,16 +142,19 @@ void QucsApp::initActions()
   editCut->setStatusTip(tr("Cuts the selected section and puts it to the clipboard"));
   editCut->setWhatsThis(tr("Cut\n\nCuts the selected section and puts it to the clipboard"));
   connect(editCut, SIGNAL(activated()), this, SLOT(slotEditCut()));
+//  editCut->setEnabled(false);
 
   editCopy = new QAction(tr("Copy"), QIconSet(QImage(BITMAPDIR "bitmaps/editcopy.png")), tr("&Copy"), QAccel::stringToKey(tr("Ctrl+C")), this);
   editCopy->setStatusTip(tr("Copies the selected section to the clipboard"));
   editCopy->setWhatsThis(tr("Copy\n\nCopies the selected section to the clipboard"));
   connect(editCopy, SIGNAL(activated()), this, SLOT(slotEditCopy()));
+//  editCopy->setEnabled(false);
 
   editPaste = new QAction(tr("Paste"), QIconSet(QImage(BITMAPDIR "bitmaps/editpaste.png")), tr("&Paste"), QAccel::stringToKey(tr("Ctrl+V")), this);
   editPaste->setStatusTip(tr("Pastes the clipboard contents to actual position"));
   editPaste->setWhatsThis(tr("Paste\n\nPastes the clipboard contents to actual position"));
-  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  editPaste->setToggleAction(true);
+  connect(editPaste, SIGNAL(toggled(bool)), this, SLOT(slotEditPaste(bool)));
 
   editDelete = new QAction(tr("Delete"), QIconSet(QImage(BITMAPDIR "bitmaps/editdelete.png")), tr("&Delete"), QAccel::stringToKey(tr("Del")), this);
   editDelete->setStatusTip(tr("Deletes the selected components"));
@@ -254,8 +257,7 @@ void QucsApp::initActions()
   insPort->setStatusTip(tr("Inserts port"));
   insPort->setWhatsThis(tr("Insert Port\n\nInserts a port symbol"));
   insPort->setToggleAction(true);
-//  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
-  insPort->setEnabled(false);
+  connect(insPort, SIGNAL(toggled(bool)), this, SLOT(slotInsertPort(bool)));
 
   insWire = new QAction(tr("Insert Wire"), QIconSet(QImage(BITMAPDIR "bitmaps/wire.png")), tr("Wire"), 0, this);
   insWire->setStatusTip(tr("Inserts a wire"));
@@ -300,7 +302,8 @@ void QucsApp::initActions()
   connect(helpAboutQt, SIGNAL(activated()), this, SLOT(slotHelpAboutQt()));
 
   // ................................................................
-  connect(&sim, SIGNAL(SimulationEnded()), this, SLOT(slotAfterSimulation()));
+  connect(&sim, SIGNAL(SimulationEnded(int)), this, SLOT(slotAfterSimulation(int)));
+  connect(&sim, SIGNAL(displayDataPage()), this, SLOT(slotChangePage()));
 
 }
 
@@ -486,8 +489,9 @@ void QucsApp::initView()
   Content->setRootIsDecorated(true);  // root items should have open/close decoration to their left
   Content->setSorting(-1);    // no sorting
   Content->addColumn("Content of");
+  Content->addColumn("Note");
   Content->setColumnWidthMode(0,QListView::Manual);
-  Content->setColumnWidth(0, 180);
+  Content->setColumnWidth(0, 150);
 
   ConDatasets   = new QListViewItem(Content, "Datasets");
   ConDisplays   = new QListViewItem(Content, "Data Displays");
@@ -544,6 +548,9 @@ void QucsApp::initView()
   // ---------------------------------------------------------------------
   // creates a document called "untitled"
   view->Docs.append(new QucsDoc(WorkView, ""));
+
+  // ...............................................................
+//  connect(view, SIGNAL(CompsSelected(bool)), this, SLOT(slotActivateCopy(bool)));
 }
 
 
@@ -783,36 +790,73 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 }
 
 // --------------------------------------------------------------------
+/*void QucsApp::slotActivateCopy(bool on)
+{
+  editCut->setEnabled(on);
+  editCopy->setEnabled(on);
+}*/
+
+// --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
   statusBar()->message(tr("Cutting selection..."));
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
-  cb->setText(view->Docs.current()->copySelected(true), QClipboard::Clipboard);
-  view->viewport()->repaint();
+  QString s = view->Docs.current()->copySelected(true);
+  if(!s.isEmpty()) {
+    cb->setText(s, QClipboard::Clipboard);
+    view->viewport()->repaint();
+  }
 
   statusBar()->message(tr("Ready."));
 }
 
+// ###################################################################################
 void QucsApp::slotEditCopy()
 {
   statusBar()->message(tr("Copying selection to clipboard..."));
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
-  cb->setText(view->Docs.current()->copySelected(false), QClipboard::Clipboard);
+  QString s = view->Docs.current()->copySelected(false);
+  if(!s.isEmpty())
+    cb->setText(s, QClipboard::Clipboard);
 
   statusBar()->message(tr("Ready."));
 }
 
-void QucsApp::slotEditPaste()
+// ###################################################################################
+void QucsApp::slotEditPaste(bool on)
 {
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    activeAction = 0;   // no action active
+    return;
+  }
+
+  if(!view->pasteElements()) {
+    editPaste->blockSignals(true); // do not call toggle slot
+    editPaste->setOn(false);       // set toolbar button off
+    editPaste->blockSignals(false);
+    return;   // if clipboard empty
+  }
+
   statusBar()->message(tr("Inserting clipboard contents..."));
 
-  QClipboard *cb = QApplication::clipboard();   // get system clipboard
-  QString s = cb->text(QClipboard::Clipboard);
-  QTextStream stream(&s, IO_ReadOnly);
-  view->Docs.current()->paste(&stream);
-  view->viewport()->repaint();
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = editPaste;
+
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMovePaste;
+  view->MousePressAction = &QucsView::MouseDoNothing;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 
   statusBar()->message(tr("Ready."));
 }
@@ -926,11 +970,12 @@ void QucsApp::slotSimulate()
 
 // -------------------------------------------------------------------------------
 // Is called after the simulation process terminates.
-void QucsApp::slotAfterSimulation()
+void QucsApp::slotAfterSimulation(int Status)
 {
-  if(true) {  // errors ocurred ?
-    QDate d = QDate::currentDate();   // get date of today
-    QTime t = QTime::currentTime();   // get time
+  QDate d = QDate::currentDate();   // get date of today
+  QTime t = QTime::currentTime();   // get time
+
+  if(Status == 0) {  // errors ocurred ?
     sim.ProgText->insert("\nSimulation ended on "+d.toString("ddd dd. MMM yyyy"));
     sim.ProgText->insert(" at "+t.toString("hh:mm:ss")+"\n");
     sim.ProgText->insert("Ready.\n");
@@ -941,6 +986,9 @@ void QucsApp::slotAfterSimulation()
     }
   }
   else {
+    sim.ProgText->insert("\nErrors occured during simulation on "+d.toString("ddd dd. MMM yyyy"));
+    sim.ProgText->insert(" at "+t.toString("hh:mm:ss")+"\n");
+    sim.ProgText->insert("Aborted.\n");
   }
 }
 
@@ -1020,6 +1068,52 @@ void QucsApp::slotOpenProject(QListBoxItem *item)
 }
 
 // #########################################################################################
+// Checks whether this file is a qucs file and whether it is an subcircuit.
+int QucsApp::testFile(const QString& DocName)
+{
+  QFile file(DocName);
+  if(!file.open(IO_ReadOnly)) {
+    return -1;
+  }
+
+  QString Line;
+  QTextStream stream(&file);
+
+  // read header **************************
+  if(stream.atEnd()) {
+    file.close();
+    return -2;
+  }
+  Line = stream.readLine();
+  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
+    file.close();
+    return -3;
+  }
+
+  QString s = VERSION;
+  Line = Line.mid(16, Line.length()-17);
+  if(Line != s) {  // wrong version number ?
+    file.close();
+    return -4;
+  }
+
+  // read content *************************
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    if(Line == "<Components>") break;
+  }
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    if(Line == "</Components>") { file.close(); return 0; }   // no subcircuit
+
+    Line = Line.stripWhiteSpace();
+    s    = Line.section(' ',0,0);    // component type
+    if(s == "<Port") { file.close(); return 2; }   // subcircuit !
+  }
+  return -5;  // component field not closed
+}
+
+// #########################################################################################
 // Opens an existing project.
 void QucsApp::OpenProject(const QString& name)
 {
@@ -1043,21 +1137,27 @@ void QucsApp::OpenProject(const QString& name)
   ConDisplays   = new QListViewItem(Content, "Data Displays");
   ConSchematics = new QListViewItem(Content, "Schematics");
 
+  int n;
   // put all schematic files into "Content"-ListView
   QStringList Elements = ProjDir.entryList("*.sch", QDir::Files, QDir::Name);
   QStringList::iterator it;
-  for(it = Elements.begin(); it != Elements.end(); ++it)
-     new QListViewItem(ConSchematics, (*it).ascii());
+  for(it = Elements.begin(); it != Elements.end(); ++it) {
+    n = testFile((*it).ascii());
+    if(n >= 0) {
+      if(n > 0) new QListViewItem(ConSchematics, (*it).ascii(), "subcircuit");
+      else new QListViewItem(ConSchematics, (*it).ascii());
+    }
+  }
 
   // put all data display files into "Content"-ListView
   Elements = ProjDir.entryList("*.dpl", QDir::Files, QDir::Name);
   for(it = Elements.begin(); it != Elements.end(); ++it)
-     new QListViewItem(ConDisplays, (*it).ascii());
+    new QListViewItem(ConDisplays, (*it).ascii());
 
   // put all dataset files into "Content"-ListView
   Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
   for(it = Elements.begin(); it != Elements.end(); ++it)
-     new QListViewItem(ConDatasets, (*it).ascii());
+    new QListViewItem(ConDatasets, (*it).ascii());
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab
   Content->firstChild()->setOpen(true);  // show schematics
@@ -1097,6 +1197,7 @@ void QucsApp::slotSetCompView(int index)
           new QIconViewItem(CompComps, "Transformer", QImage(BITMAPDIR "bitmaps/transformer.xpm"));
           new QIconViewItem(CompComps, "symmetric Transformer", QImage(BITMAPDIR "bitmaps/symtrans.xpm"));
           new QIconViewItem(CompComps, "Ground", QImage(BITMAPDIR "bitmaps/ground.xpm"));
+          new QIconViewItem(CompComps, "Subcircuit Port", QImage(BITMAPDIR "bitmaps/port.xpm"));
           new QIconViewItem(CompComps, "dc Block", QImage(BITMAPDIR "bitmaps/dcblock.xpm"));
           new QIconViewItem(CompComps, "dc Feed", QImage(BITMAPDIR "bitmaps/dcfeed.xpm"));
           new QIconViewItem(CompComps, "Bias T", QImage(BITMAPDIR "bitmaps/biast.xpm"));
@@ -1191,17 +1292,19 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 6: view->selComp = new Ground();
                       break;
-              case 7: view->selComp = new dcBlock();
+              case 7: view->selComp = new SubCirPort();
                       break;
-              case 8: view->selComp = new dcFeed();
+              case 8: view->selComp = new dcBlock();
                       break;
-              case 9: view->selComp = new BiasT();
+              case 9: view->selComp = new dcFeed();
                       break;
-              case 10: view->selComp = new Attenuator();
+              case 10: view->selComp = new BiasT();
                        break;
-              case 11: view->selComp = new Isolator();
+              case 11: view->selComp = new Attenuator();
                        break;
-              case 12: view->selComp = new Circulator();
+              case 12: view->selComp = new Isolator();
+                       break;
+              case 13: view->selComp = new Circulator();
                        break;
           }
           break;
@@ -1351,7 +1454,7 @@ void QucsApp::slotSelect(bool on)
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MouseDoNothing;
   view->MousePressAction = &QucsView::MPressSelect;
-  view->MouseReleaseAction = &QucsView::MReleaseSelect;//MouseDoNothing;
+  view->MouseReleaseAction = &QucsView::MReleaseSelect;
   view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
 }
 
@@ -1367,19 +1470,28 @@ void QucsApp::slotEditActivate(bool on)
     activeAction = 0;   // no action active
     return;
   }
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = editActivate;
 
-  if(view->drawn) view->viewport()->repaint();
+  if(view->Docs.current()->activateComponents()) {
+    editActivate->blockSignals(true);
+    editActivate->setOn(false);  // release toolbar button
+    editActivate->blockSignals(false);
+  }
+  else {
+    if(activeAction) {
+      activeAction->blockSignals(true); // do not call toggle slot
+      activeAction->setOn(false);       // set last toolbar button off
+      activeAction->blockSignals(false);
+    }
+    activeAction = editActivate;
+
+    view->MouseMoveAction = &QucsView::MouseDoNothing;  // if no component is selected, activate the one
+    view->MousePressAction = &QucsView::MPressActivate; // that will be clicked
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  }
+  
+  view->viewport()->repaint();
   view->drawn = false;
-  view->MouseMoveAction = &QucsView::MouseDoNothing;
-  view->MousePressAction = &QucsView::MPressActivate;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
 
 // -------------------------------------------------------------------------------
@@ -1467,6 +1579,38 @@ void QucsApp::slotInsertGround(bool on)
     delete view->selComp;  // delete previously selected component
 
   view->selComp = new Ground();
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveComponent;
+  view->MousePressAction = &QucsView::MPressComponent;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
+
+// #########################################################################################
+// Is called when the mouse is clicked upon the port toolbar button.
+void QucsApp::slotInsertPort(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    activeAction = 0;   // no action active
+    return;
+  }
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = insPort;
+
+  if(view->selComp != 0)
+    delete view->selComp;  // delete previously selected component
+
+  view->selComp = new SubCirPort();
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
