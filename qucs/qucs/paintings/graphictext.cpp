@@ -141,7 +141,7 @@ bool GraphicText::load(const QString& _s)
 
   Text.replace("\\n", "\n");
   Text.replace("\\\\", "\\");
-  QFontMetrics  metrics(QucsSettings.font);    // get size of text
+  QFontMetrics  metrics(Font);    // get size of text
   QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width();
   y2 = r.height();
@@ -294,7 +294,7 @@ bool GraphicText::Dialog()
       changed = true;
     }
 
-  QFontMetrics  metrics(QucsSettings.font);    // get size of text
+  QFontMetrics  metrics(Font);    // get size of text
   QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width();
   y2 = r.height();
