@@ -1,3 +1,7 @@
+2004-02-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* literature.bib: Added reference for natural constants.
+
 2004-02-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section*{Solving linear equation systems}): 

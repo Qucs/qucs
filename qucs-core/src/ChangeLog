@@ -1,3 +1,8 @@
+2004-02-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp (solve_lu): New equation system solver implemented
+	using so called LU decomposition.
+
 2004-02-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp (solve_gauss_jordan): New solution method for

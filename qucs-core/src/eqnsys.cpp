@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.1 2004-02-17 15:30:57 ela Exp $
+ * $Id: eqnsys.cpp,v 1.2 2004-02-18 17:45:11 ela Exp $
  *
  */
 
@@ -85,6 +85,9 @@ void eqnsys::solve (void) {
     break;
   case ALGO_GAUSS_JORDAN:
     solve_gauss_jordan ();
+    break;
+  case ALGO_LU_DECOMPOSITION:
+    solve_lu ();
     break;
   }
 }
@@ -183,4 +186,76 @@ void eqnsys::solve_gauss_jordan (void) {
 
   // right hand side is now the solution
   *X = *B;
+}
+
+/* This function decomposites the left hand matrix into an upper U and
+   lower L matrix.  The algorithm is called LU decomposition.  It is
+   very useful when dealing with equation systems where the left hand
+   side (the A matrix) does not change but the right hand side (the B
+   vector) only. */
+void eqnsys::solve_lu (void) {
+  nr_double_t MaxPivot;
+  complex f;
+  int k, i, c, r, pivot, N = A->getCols ();
+  matrix * Y = new matrix (N, 1);
+  int * change = new int[N];
+
+  // initialize pivot exchange table
+  for (i = 1; i <= N; i++) change[i - 1] = i;
+
+  // decomposite the matrix into L (lower) and U (upper) matrix
+  for (i = 1, c = 2; c <= N; c++, i++) {
+    // find maximum column value for pivoting
+    for (MaxPivot = 0, pivot = r = i; r <= N; r++) {
+      if (abs (A->get (r, i)) > MaxPivot) {
+        MaxPivot = abs (A->get (r, i));
+        pivot = r;
+      }
+    }
+    // swap matrix rows if necessary and remember that step in the
+    // exchange table
+    assert (MaxPivot != 0);
+    if (i != pivot) {
+      A->exchangeRows (i, pivot);
+      k = change[i - 1];
+      change[i - 1] = change[pivot - 1];
+      change[pivot - 1] = k;
+    }
+    // compute new column
+    for (r = 1; r <= N; r++) {
+      if (r < c) {
+        // upper matrix entries
+        for (f = 0, k = 1; k <= r - 1; k++)
+          f += A->get (r, k) * A->get (k, c);
+        A->set (r, c, (A->get (r, c) - f) / A->get (r, r));
+      }
+      else {
+        // lower matrix entries
+        for (f = 0, k = 1; k <= c - 1; k++)
+          f += A->get (r, k) * A->get (k, c);
+        A->set (r, c, A->get (r, c) - f);
+      }
+    }
+  }
+
+  // forward substitution in order to solve LY = B
+  for (i = 1; i <= N; i++) {
+    f = B->get (change[i - 1], 1);
+    for (c = 1; c <= i - 1; c++)
+      f -= A->get (i, c) * Y->get (c, 1);
+    f /= A->get (i, i);
+    Y->set (i, 1, f);
+  }
+   
+  // backward substitution in order to solve UX = Y
+  for (i = N; i > 0; i--) {
+    f = Y->get (i, 1);
+    for (c = i + 1; c <= N; c++)
+      f -= A->get (i, c) * X->get (c, 1);
+    // remember that the Uii diagonal are ones only
+    X->set (i, 1, f);
+  }
+
+  delete Y;
+  delete change;
 }
