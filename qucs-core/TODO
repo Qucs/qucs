@@ -23,6 +23,12 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Handle special DC models for dc-block, dc-feed, inductor,
+  capacitor and resistor R=0.
+- Use LU decomposition for matrix inversion and determinants.
+- Implement sec(), cosec(), sech(), cosech(), si() and sign() functions.
+- Fix dependency in dataset variables when e.g. using max().
+- Add constants like pi to the available symbols in equations.
 - Implement list and logarithmic sweeps and merge them with the
   existing linear parameter sweep.
 	- Do not permit duplicate parameter names in parameter sweeps, but
