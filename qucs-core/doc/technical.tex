@@ -154,7 +154,7 @@ element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
 \subsection*{Differential S-parameter ports}
 \addcontentsline{toc}{subsection}{Differential S-parameter ports}
 
-The implemented algorithm for then S-parameter analysis calculates
+The implemented algorithm for the S-parameter analysis calculates
 S-parameters in terms of the ground node.  In order to allow
 differential S-parameters as well it is necessary to insert an ideal
 impedance transformer with a turns ratio of 1:1 between the
@@ -187,16 +187,416 @@ S
 This transformation can be applied to each S-parameter port in a
 circuit regardless whether it is actually differential or not.
 
-\subsection*{Symmetrical transformator}
-\addcontentsline{toc}{subsection}{Symmetrical transformator}
+It is also possible to do the impedance transformation within this step
+(for S-parameter ports with impedances different than $50\ohm$). This can
+be done by using a transformer with an impedance ration of
+
+\begin{equation}
+r=T^2=\frac{50\ohm}{Z}
+\end{equation}
+
+With $Z$ being the S-parameter port impedance. The S-parameter matrix of
+the inserted ideal transformer now writes as follows.
+
+\begin{equation}
+\begin{pmatrix}
+S
+\end{pmatrix}
+= \dfrac{1}{2\cdot Z_0+Z}\cdot
+\begin{pmatrix}
+2\cdot Z_0-Z              & 2\cdot\sqrt{Z_0\cdot Z}  & -2\cdot\sqrt{Z_0\cdot Z}\\
+2\cdot\sqrt{Z_0\cdot Z}   & Z                        & 2\cdot Z_0\\
+-2\cdot\sqrt{Z_0\cdot Z}  & 2\cdot Z_0               & Z\\
+\end{pmatrix}
+\end{equation}
+
+With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
+
+\section*{Scattering parameters of components}
+\addcontentsline{toc}{section}{Scattering parameters of components}
+
+\subsection*{Resistor}
+\addcontentsline{toc}{subsection}{Resistor}
+
+The scattering parameters of an ideal, ohmic resistor with resistance $R$ writes as follows.
+
+\begin{equation}
+S_{11} = S_{22} = \frac{R}{2\cdot Z_0+R} \\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11} = \frac{2\cdot Z_0}{2\cdot Z_0+R}
+\end{equation}
+
+\subsection*{Capacitor}
+\addcontentsline{toc}{subsection}{Capacitor}
+
+The scattering parameters of an ideal capacitor with capacitance $C$ writes as follows.
+
+\begin{equation}
+S_{11} = S_{22} = \frac{1}{2\cdot Z_0\cdot j\omega C+1} \\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11}
+\end{equation}
+
+\subsection*{Inductor}
+\addcontentsline{toc}{subsection}{Inductor}
+
+The scattering parameters of an ideal inductor with inductance $L$ writes as follows.
+
+\begin{equation}
+S_{11} = S_{22} = \frac{j\omega L}{2\cdot Z_0 + j\omega L} \\
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = 1-S_{11}
+\end{equation}
+
+\subsection*{DC Block}
+\addcontentsline{toc}{subsection}{DC Block}
+
+A DC block is a capacitor with an infinite capacitance. The scattering parameters,
+therefore, writes as follows.
+
+\begin{equation}
+\begin{pmatrix}
+S
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1\\
+1 & 0\\
+\end{pmatrix}
+\end{equation}
+
+\subsection*{DC Feed}
+\addcontentsline{toc}{subsection}{DC Feed}
+
+A DC feed is an inductor with an infinite inductance. The scattering parameters,
+therefore, writes as follows.
+
+\begin{equation}
+\begin{pmatrix}
+S
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0\\
+0 & 1\\
+\end{pmatrix}
+\end{equation}
+
+\subsection*{Bias T}
+\addcontentsline{toc}{subsection}{Bias T}
+
+A bias T is a combination of a dc block and a dc feed (fig. \ref{fig:biast}).
+The scattering parameters, therefore, writes as follows.
+
+\begin{equation}
+\begin{pmatrix}
+S
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1 & 0\\
+1 & 0 & 0\\
+0 & 0 & 1\\
+\end{pmatrix}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=3.5cm]{biast}
+\end{center}
+\caption{bias t}
+\label{fig:biast}
+\end{figure}
+\FloatBarrier
+
+\subsection*{Transformer}
+\addcontentsline{toc}{subsection}{Transformer}
+
+Using the port numbers depicted in fig. \ref{fig:trafo}, the scattering
+parameters of an ideal transformer with voltage transformation ratio $T$
+(number of turns) writes as follows.
+
+\begin{equation}
+S_{14} = S_{22} = S_{33} = S_{41} = \frac{1}{T^2+1}
+\end{equation}
+\begin{equation}
+S_{12} = -S_{13} = S_{21} = -S_{24} = -S_{31} = S_{34} = -S_{42} = S_{43} = T\cdot S_{22}
+\end{equation}
+\begin{equation}
+S_{11} = S_{23} = S_{32} = S_{44} = T\cdot S_{12}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{trafo}
+\end{center}
+\caption{transformer}
+\label{fig:trafo}
+\end{figure}
+\FloatBarrier
+
+\subsection*{Symmetrical transformer}
+\addcontentsline{toc}{subsection}{Symmetrical transformer}
+
+Using the port numbers depicted in fig. \ref{fig:symtrafo}, the scattering
+parameters of an ideal, symmetrical transformer with voltage transformation
+ratio (number of turns) $T_1$ and $T_2$, respectively, writes as follows.
+
+\begin{equation}
+denom = T_1^2+T_2^2+T_1^2\cdot T_2^2
+\end{equation}
+\begin{eqnarray}
+S_{11} = S_{66} = \frac{T_2^2}{denom}  &  \qquad S_{16} = S_{61} = 1-S_{11} \\
+S_{44} = S_{55} = \frac{T_1^2}{denom}  &  \qquad S_{45} = S_{54} = 1-S_{44} \\
+S_{22} = S_{33} = \frac{T_1^2\cdot T_2^2}{denom}  &  \qquad S_{23} = S_{32} = 1-S_{22} \\
+\end{eqnarray}
+\begin{equation}
+S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
+       = \frac{T_1\cdot T_2^2}{denum}
+\end{equation}
+\begin{equation}
+-S_{24} = -S_{42} = S_{25} = S_{52} = S_{34} = S_{43} = -S_{35} = -S_{53}
+       = \frac{T_1^2\cdot T_2}{denum}
+\end{equation}
+\begin{equation}
+-S_{14} = -S_{41} = S_{15} = S_{51} = S_{46} = S_{64} = -S_{56} = -S_{65}
+       = \frac{T_1\cdot T_2}{denum}
+\end{equation}
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=4cm]{symtrafo}
 \end{center}
-\caption{symmetrical transformator}
+\caption{symmetrical transformer}
 \label{fig:symtrafo}
 \end{figure}
 \FloatBarrier
+
+\subsection*{Attenuator}
+\addcontentsline{toc}{subsection}{Attenuator}
+
+The scattering parameters of an ideal attenuator with attenuation $L$ (loss) in
+reference to the impedance $Z_{ref}$ writes as follows.
+
+\begin{equation}
+r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
+\end{equation}
+\begin{equation}
+S_{11} = S_{22} = \frac{r\cdot(1-L^2)}{L^2-r^2}
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = \frac{L\cdot(1-r^2)}{L^2-r^2}
+\end{equation}
+
+\subsection*{Isolator}
+\addcontentsline{toc}{subsection}{Isolator}
+
+An isolator is a one-way two-port, transporting incomming waves lossless from
+the input (port 1) to the output (port 2), but consuming all waves flowing
+into the output. With the reference impedance of the input $Z_1$ and the one
+of the output $Z_2$, the scattering parameters of an ideal isolator writes as
+follows.
+
+\begin{equation}
+S_{11} = \frac{Z_1-Z_0}{Z_1+Z_0}
+\end{equation}
+\begin{equation}
+S_{12} = 0
+\end{equation}
+\begin{equation}
+S_{22} = \frac{Z_2-Z_0}{Z_2+Z_0}
+\end{equation}
+\begin{equation}
+S_{21} = \sqrt{1-(S_{11})^2}\cdot\sqrt{1-(S_{22})^2}
+\end{equation}
+
+\subsection*{Circulator}
+\addcontentsline{toc}{subsection}{Circulator}
+
+A circulator is a 3-port device, transporting incomming waves lossless from port 1
+to port 2, from port 2 to port 3 and from port 3 to port 1. In all other
+directions, there is no energy flow. With the reference impedances $Z_1$, $Z_2$ and
+$Z_3$ for the ports 1, 2 and 3 the scattering matrix of an ideal circulator writes
+as follows.
+
+\begin{equation}
+denum = 1-r_1\cdot r_2\cdot r_3
+\end{equation}
+\begin{equation}
+r_1 = \frac{Z_0-Z_1}{Z_0+Z_1} \quad,\qquad 
+r_2 = \frac{Z_0-Z_2}{Z_0+Z_2} \quad,\qquad 
+r_3 = \frac{Z_0-Z_3}{Z_0+Z_3}
+\end{equation}
+\begin{equation}
+S_{11} = \frac{r_2\cdot r_3 - r_1}{denum} \quad,\qquad 
+S_{22} = \frac{r_1\cdot r_3 - r_2}{denum} \quad,\qquad 
+S_{33} = \frac{r_1\cdot r_2 - r_3}{denum}
+\end{equation}
+\begin{equation}
+S_{12} = \sqrt{\frac{Z_2}{Z_1}}\cdot\frac{Z_1+Z_0}{Z_2+Z_0}\cdot\frac{r_3\cdot(1-r_1^2)}{denum}
+\quad,\qquad 
+S_{13} = \sqrt{\frac{Z_3}{Z_1}}\cdot\frac{Z_1+Z_0}{Z_3+Z_0}\cdot\frac{1-r_1^2}{denum}
+\end{equation}
+\begin{equation}
+S_{21} = \sqrt{\frac{Z_1}{Z_2}}\cdot\frac{Z_2+Z_0}{Z_1+Z_0}\cdot\frac{1-r_2^2}{denum}
+\quad,\qquad 
+S_{23} = \sqrt{\frac{Z_3}{Z_2}}\cdot\frac{Z_2+Z_0}{Z_3+Z_0}\cdot\frac{r_1\cdot(1-r_2^2)}{denum}
+\end{equation}
+\begin{equation}
+S_{31} = \sqrt{\frac{Z_1}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_1+Z_0}\cdot\frac{r_2\cdot(1-r_3^2)}{denum}
+\quad,\qquad 
+S_{32} = \sqrt{\frac{Z_2}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_2+Z_0}\cdot\frac{1-r_3^2}{denum}
+\end{equation}
+
+\subsection*{Phase shifter}
+\addcontentsline{toc}{subsection}{Phase shifter}
+
+The scattering parameters of an ideal phase shifter with phase shift $\phi$ and
+reference impedance $Z_{ref}$ writes as follows.
+
+\begin{equation}
+r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
+\end{equation}
+\begin{equation}
+S_{11} = S_{22} = \frac{r\cdot\left(\exp(j\cdot 2\phi)-1\right)}{1-r^2\cdot\exp(j\cdot 2\phi)}
+\end{equation}
+\begin{equation}
+S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp(j\cdot\phi)}{1-r^2\cdot\exp(j\cdot 2\phi)}
+\end{equation}
+
+
+\subsection*{Gyrator}
+\addcontentsline{toc}{subsection}{Gyrator}
+
+A gyrator is an impedance inverter. Thus, for example, it converts a capacitance into
+an inductance and vice versa. The scattering matrix of an ideal gyrator with the
+ratio $R$ writes as follows.
+
+\begin{equation}
+r = \frac{R}{Z_0} = \frac{1}{G\cdot Z_0}
+\end{equation}
+\begin{equation}
+S_{11} = S_{22} = S_{33} = S_{44} = \frac{R^2}{4\cdot Z_0^2 + R^2} = \frac{r^2}{r^2+4}
+\end{equation}
+\begin{equation}
+S_{14} = S_{23} = S_{32} = S_{41} = 1-S_{11}
+\end{equation}
+\begin{equation}
+S_{12} = -S_{13} = -S_{21} = S_{24} = S_{31} = -S_{34} = -S_{42} = S_{43} = \frac{2\cdot r}{r^2+4}
+\end{equation}
+
+\subsection*{Voltage and current sources}
+\addcontentsline{toc}{subsection}{Voltage and current sources}
+
+All voltage sources (AC and DC) are short circuits and therefore their S-parameter
+matrix equals the one of the DC block. All current sources are open circuits and
+therefore their S-parameter matrix equals the one of the DC feed.
+
+\subsection*{Controlled voltage and current sources}
+\addcontentsline{toc}{subsection}{Controlled voltage and current sources}
+
+The scattering matrix of the voltage controlled current source depicted in fig.
+\ref{fig:xCCS} (left) writes as follows ($\tau$ is time delay).
+
+\begin{equation}
+S_{11} = S_{22} = S_{33} = S_{44} = 1
+\end{equation}
+\begin{equation}
+S_{12} = S_{13} = S_{14} = S_{23} = S_{32} = S_{41} = S_{42} = S_{43} = 0
+\end{equation}
+\begin{equation}
+S_{21} = S_{34} = 2\cdot G\cdot \exp(j\pi-j\omega\tau)
+\end{equation}
+\begin{equation}
+S_{24} = S_{31} = 2\cdot G\cdot \exp(-j\omega\tau)
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{xCCS}
+\end{center}
+\caption{voltage controlled current source (left) and current controlled current source (right)}
+\label{fig:xCCS}
+\end{figure}
+\FloatBarrier
+
+The scattering matrix of the current controlled current source depicted in fig.
+\ref{fig:xCCS} (right) writes as follows ($\tau$ is time delay).
+
+\begin{equation}
+S_{14} = S_{22} = S_{33} = S_{41} = 1
+\end{equation}
+\begin{equation}
+S_{11} = S_{12} = S_{13} = S_{23} = S_{32} = S_{42} = S_{43} = S_{44} = 0
+\end{equation}
+\begin{equation}
+S_{21} = S_{34} = G\cdot \exp(j\pi-j\omega\tau)
+\end{equation}
+\begin{equation}
+S_{24} = S_{31} = G\cdot \exp(-j\omega\tau)
+\end{equation}
+
+The scattering matrix of the voltage controlled voltage source depicted in fig.
+\ref{fig:xCVS} (left) writes as follows ($\tau$ is time delay).
+
+\begin{equation}
+S_{11} = S_{23} = S_{32} = S_{44} = 1
+\end{equation}
+\begin{equation}
+S_{12} = S_{13} = S_{14} = S_{22} = S_{33} = S_{41} = S_{42} = S_{43} = 0
+\end{equation}
+\begin{equation}
+S_{21} = S_{34} = G\cdot \exp(-j\omega\tau)
+\end{equation}
+\begin{equation}
+S_{24} = S_{31} = G\cdot \exp(j\pi-j\omega\tau)
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{xCVS}
+\end{center}
+\caption{voltage controlled voltage source (left) and current controlled voltage source (right)}
+\label{fig:xCVS}
+\end{figure}
+\FloatBarrier
+
+The scattering matrix of the current controlled voltage source depicted in fig.
+\ref{fig:xCVS} (right) writes as follows ($\tau$ is time delay).
+
+\begin{equation}
+S_{14} = S_{23} = S_{32} = S_{41} = 1
+\end{equation}
+\begin{equation}
+S_{11} = S_{12} = S_{13} = S_{22} = S_{33} = S_{42} = S_{43} = S_{44} = 0
+\end{equation}
+\begin{equation}
+S_{21} = S_{34} = \frac{G}{2}\cdot \exp(-j\omega\tau)
+\end{equation}
+\begin{equation}
+S_{24} = S_{31} = \frac{G}{2}\cdot \exp(j\pi-j\omega\tau)
+\end{equation}
+
+\subsection*{Transmission Line}
+\addcontentsline{toc}{subsection}{Transmission Line}
+
+The scattering matrix of an ideal, lossless transmission line with impedance $Z$
+and electrical length $L$ writes as follows.
+
+\begin{equation}
+r = \frac{Z-Z_0}{Z+Z_0}
+\end{equation}
+\begin{equation}
+p = \exp(-j\omega\frac{L}{c})
+\end{equation}
+\begin{equation}
+S_{11} = S_{22} = \frac{r\cdot(1-p^2)}{1-r^2\cdot p^2} \quad,\qquad
+S_{12} = S_{21} = \frac{p\cdot(1-r^2)}{1-r^2\cdot p^2}
+\end{equation}
+
+With $c$=299 792 458 m/s being the vacuum light velocity.
 
 \end{document}
