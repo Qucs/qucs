@@ -2249,35 +2249,35 @@ Verwendung:  qucsedit [-r] Dateiname
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Rechteckstromquelle</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom während des Rechteckpulses</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dauer der High-Level Pulse</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dauer der Low-Level Pulse</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteckstromquelle</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Rechteckspannungsquelle</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannung der High-Level Pulse</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteckspannungsquelle</translation>
     </message>
     <message>
         <source>
@@ -4058,34 +4058,28 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <translation>unwiderruflich! Fortfahren?</translation>
     </message>
     <message>
-        <source>Edit Circuit Symbol</source>
-        <translation type="unfinished">Schaltkreissymbol bearbeiten</translation>
-    </message>
-    <message>
-        <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished">Bearbeitet das Symbol für diesen Schaltkreis</translation>
+        <translation>Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished">Schaltkreissymol bearbeiten
+        <translation>Schaltkreissymol bearbeiten
 
 Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan bearbeiten
+
+Bearbeitet den Schaltplan</translation>
     </message>
 </context>
 <context>
