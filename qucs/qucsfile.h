@@ -32,29 +32,30 @@ class QucsDoc;
 
 class QucsFile {
 public:
-  QucsFile(QucsDoc *p);
+  QucsFile(QucsDoc*);
   ~QucsFile();
 
   int   save();
   bool  load();
 
   QString createClipboardFile();
-  bool    pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe);
+  bool    pasteFromClipboard(QTextStream*, QPtrList<Element>*);
   QString createUndoString(char);
-  bool    rebuild(QString *s);
+  bool    rebuild(QString *);
 
   bool  createSubNetlist(QTextStream*);
   bool  createNetlist(QFile*);
 
 
 private:
-  bool  loadProperties(QTextStream *stream);
-  void  simpleInsertComponent(Component *c);
-  bool  loadComponents(QTextStream *stream, QPtrList<Component> *List=0);
-  void  simpleInsertWire(Wire *pw);
-  bool  loadWires(QTextStream *stream, QPtrList<Wire> *List=0);
-  bool  loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List);
-  bool  loadPaintings(QTextStream *stream, QPtrList<Painting> *List);
+  bool  loadProperties(QTextStream*);
+  void  simpleInsertComponent(Component*);
+  bool  loadComponents(QTextStream*, QPtrList<Component> *List=0);
+  void  simpleInsertWire(Wire*);
+  bool  loadWires(QTextStream*, QPtrList<Wire> *List=0);
+  bool  loadDiagrams(QTextStream*, QPtrList<Diagram>*);
+  bool  loadPaintings(QTextStream*, QPtrList<Painting>*);
+  bool  loadIntoNothing(QTextStream*);
 
   bool  giveNodeNames(QTextStream*);
 

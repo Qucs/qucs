@@ -31,6 +31,7 @@
 #include <qregexp.h>
 
 #include <limits.h>
+//#include <strings.h>
 
 
 // icon for unsaved files (diskette)
@@ -77,11 +78,16 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
   GridX  = 10;
   GridY  = 10;
   GridOn = true;
-  Scale=1.0;
+  Scale  = 1.0;
   ViewX1=ViewY1=0;
   ViewX2=ViewY2=800;
   PosX=PosY=0;
   UsedX1=UsedY1=UsedX2=UsedY2=0;
+
+  tmpPosX = tmpPosY = -100;
+  tmpUsedX1 = tmpUsedY1 = tmpViewX1 = tmpViewY1 = -200;
+  tmpUsedX2 = tmpUsedY2 = tmpViewX2 = tmpViewY2 =  200;
+  tmpScale = 1.0;
 
   DocName = _Name;
   if(_Name.isEmpty()) Tab = new QTab(QObject::tr("untitled"));
@@ -270,8 +276,10 @@ void QucsDoc::paintGrid(QPainter *p, int cX, int cY, int Width, int Height)
   if(!GridOn) return;
 
   p->setPen(QPen(QPen::black,1));
-  p->drawLine(-3-ViewX1, -ViewY1, 4-ViewX1, -ViewY1); // small cross at origin
-  p->drawLine( -ViewX1,-3-ViewY1, -ViewX1, 4-ViewY1);
+  int dx = -int(Scale*double(ViewX1));
+  int dy = -int(Scale*double(ViewY1));
+  p->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
+  p->drawLine( dx,-3+dy, dx, 4+dy);
 
   int x1 = int(cX/Scale)+ViewX1;
   if(x1<0) x1 -= GridX - 1;
@@ -286,8 +294,8 @@ void QucsDoc::paintGrid(QPainter *p, int cX, int cY, int Width, int Height)
   y1 -= ViewY1; y1 = int(y1*Scale);
 
   int x2 = x1+Width, y2 = y1+Height;
-  int dx = int(double(2*GridX)*Scale);
-  int dy = int(double(2*GridY)*Scale);
+  dx = int(double(2*GridX)*Scale);
+  dy = int(double(2*GridY)*Scale);
   if(dx < 5) dx = 5;   // grid not too dense
   if(dy < 5) dy = 5;
 
@@ -2409,13 +2417,17 @@ bool QucsDoc::deleteElements()
     }
 
   Painting *pp = Paints->first();
-  while(pp != 0)      // test all paintings
+  while(pp != 0) {    // test all paintings
     if(pp->isSelected) {
-      Paints->remove();
-      pp = Paints->current();
       sel = true;
+      if(strcmp(pp->Name, "PortSym ") != 0) {
+	Paints->remove();
+	pp = Paints->current();
+	continue;
+      }
     }
-    else pp = Paints->next();
+    pp = Paints->next();
+  }
 
   if(sel) {
     sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
@@ -2858,4 +2870,22 @@ int QucsDoc::elementsOnGrid()
 
   setChanged(true, true);
   return count;
+}
+
+// ---------------------------------------------------
+void QucsDoc::switchPaintMode()
+{
+  int tmp;
+  double temp;
+  temp = Scale; Scale  = tmpScale;  tmpScale  = temp;
+  tmp = PosX;   PosX   = tmpPosX;   tmpPosX   = tmp;
+  tmp = PosY;   PosY   = tmpPosY;   tmpPosY   = tmp;
+  tmp = ViewX1; ViewX1 = tmpViewX1; tmpViewX1 = tmp;
+  tmp = ViewY1; ViewY1 = tmpViewY1; tmpViewY1 = tmp;
+  tmp = ViewX2; ViewX2 = tmpViewX2; tmpViewX2 = tmp;
+  tmp = ViewY2; ViewY2 = tmpViewY2; tmpViewY2 = tmp;
+  tmp = UsedX1; UsedX1 = tmpUsedX1; tmpUsedX1 = tmp;
+  tmp = UsedY1; UsedY1 = tmpUsedY1; tmpUsedY1 = tmp;
+  tmp = UsedX2; UsedX2 = tmpUsedX2; tmpUsedX2 = tmp;
+  tmp = UsedY2; UsedY2 = tmpUsedY2; tmpUsedY2 = tmp;
 }

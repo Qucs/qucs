@@ -21,6 +21,7 @@
 
 Rectangle::Rectangle(bool _filled)
 {
+  Name = "Rectangle ";
   isSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(QPen::lightGray);
@@ -141,7 +142,7 @@ bool Rectangle::load(const QString& s)
 // --------------------------------------------------------------------------
 QString Rectangle::save()
 {
-  QString s = "Rectangle " +
+  QString s = Name +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
 	Pen.color().name() + " " + QString::number(Pen.width()) + " " +
