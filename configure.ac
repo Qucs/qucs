@@ -79,6 +79,9 @@ AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ qucs/Makefile ])
 AC_CONFIG_FILES([ qucs/bitmaps/Makefile ])
 AC_CONFIG_FILES([ qucs/sim/Makefile ])
+AC_CONFIG_FILES([ qucs/components/Makefile ])
+AC_CONFIG_FILES([ qucs/diagrams/Makefile ])
+AC_CONFIG_FILES([ qucs/paintings/Makefile ])
 AC_OUTPUT
 
 dnl Print results.

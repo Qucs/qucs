@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          componentdialog.h  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Tue Sep 9 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,50 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
+#ifndef COMPONENTDIALOG_H
+#define COMPONENTDIALOG_H
 
-#include "element.h"
-#include "components/component.h"    // because of struct Port
+#include "components.h"
 
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <qlabel.h>
+#include <qdialog.h>
+#include <qlistview.h>
+#include <qlineedit.h>
+#include <qcheckbox.h>
+#include <qregexp.h>
+#include <qcombobox.h>
+#include <qpushbutton.h>
+
 
 /**
   *@author Michael Margraf
   */
 
-
-class Wire : public Element {
+class ComponentDialog : public QDialog {
+   Q_OBJECT
 public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+	ComponentDialog(Component *c, QWidget *parent=0, const char *name=0);
+	~ComponentDialog();
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+private slots:
+  void slotButtOK();
+  void slotSelectProperty(QListViewItem *item);
+  void slotApplyInput();
+  void slotApplyState(int State);
+  void slotBrowseFile();
+  void slotApplyChange(const QString& Text);
+  void slotApplyProperty();
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
-
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
+private:
+  QRegExp     Expr;
+  QListView   *prop;
+  QLineEdit   *edit;
+  QComboBox   *ComboEdit;
+  QLabel      *Name, *Description;
+  QPushButton *BrowseButt;
+  QCheckBox   *disp;
+  Component   *Comp;
+  bool        changed;
 };
 
 #endif

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          graphictext.h  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
+#ifndef GRAPHICTEXT_H
+#define GRAPHICTEXT_H
 
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include "painting.h"
 
 /**
   *@author Michael Margraf
   */
 
-
-class Wire : public Element {
+class GraphicText : public Painting  {
 public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+	GraphicText();
+	~GraphicText();
 
-  virtual void paintScheme(QPainter *p);
+  virtual void paintScheme(QPainter*);
+  virtual void getCenter(int& x, int &y);
   virtual void setCenter(int x, int y, bool relative=false);
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
+  virtual GraphicText* newOne();
+  virtual bool load(const QString& s);
+  virtual QString save();
+  virtual void paint(QPainter *p);
+  virtual void MouseMoving(int x, int y, int, int, QPainter *p, bool drawn);
+  virtual bool MousePressing();
+  virtual bool getSelected(int x, int y);
+  virtual void Bounding(int&, int&, int&, int&);
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
+  virtual void rotate();
+  virtual void mirrorX();
+  virtual void mirrorY();
+  virtual bool Dialog();
+
+  QColor   Color;
+  int      Size;
+  QString  Text;
 };
 
 #endif
