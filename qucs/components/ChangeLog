@@ -1,3 +1,7 @@
+2004-04-30  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed behaviour of combo box in component dialog
+
 2004-02-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp (Diode): Added new 'n' property to diode model.

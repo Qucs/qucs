@@ -34,8 +34,10 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
   g->addMultiCellWidget(h2,8,8,0,1);
-  connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()), SLOT(slotButtOK()));
-  connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()), SLOT(slotApplyInput()));
+  connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()),
+	  SLOT(slotButtOK()));
+  connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
+	  SLOT(slotApplyInput()));
   connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()), SLOT(close()));
 
   QLabel *label1 = new QLabel(this);
@@ -73,7 +75,8 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   ComboEdit = new QComboBox(false,this);
   ComboEdit->setShown(false);   // hide, because it only replaces 'edit' in some cases
   g->addWidget(ComboEdit,3,1);
-  connect(ComboEdit, SIGNAL(activated(const QString&)), SLOT(slotApplyChange(const QString&)));
+  connect(ComboEdit, SIGNAL(activated(const QString&)),
+	  SLOT(slotApplyChange(const QString&)));
 
   QHBox *h3 = new QHBox(this);
   g->addWidget(h3,4,1);
@@ -120,7 +123,8 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
     slotSelectProperty(prop->firstChild());
   }
 
-  connect(prop, SIGNAL(clicked(QListViewItem*)), SLOT(slotSelectProperty(QListViewItem*)));
+  connect(prop, SIGNAL(clicked(QListViewItem*)),
+	  SLOT(slotSelectProperty(QListViewItem*)));
 }
 
 ComponentDialog::~ComponentDialog()
@@ -128,8 +132,8 @@ ComponentDialog::~ComponentDialog()
 }
 
 // -------------------------------------------------------------------------
-// Is called if a property is selected. It transfers the values to the right side
-// for editing.
+// Is called if a property is selected. It transfers the values to the right
+// side for editing.
 void ComponentDialog::slotSelectProperty(QListViewItem *item)
 {
   if(item == 0) return;
@@ -145,7 +149,10 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
   if(pp->Name == "File") BrowseButt->setEnabled(true);
   else BrowseButt->setEnabled(false);
 
-  if(pp->Description.isEmpty()) { ButtAdd->setEnabled(true); ButtRem->setEnabled(true); }
+  if(pp->Description.isEmpty()) {
+    ButtAdd->setEnabled(true);
+    ButtRem->setEnabled(true);
+  }
   else { ButtAdd->setEnabled(false); ButtRem->setEnabled(false); }
 
   if(pp->Description.isEmpty()) {
@@ -163,7 +170,7 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
     edit->setText(item->text(1));
 
     NameEdit->setShown(false);
-    NameEdit->setText(item->text(0));    // only for uniformity (perhaps used for adding properties)
+    NameEdit->setText(item->text(0));  // only for uniformity (perhaps used for adding properties)
     Description->setShown(true);
 
     QStringList List = List.split('|',pp->Description);
@@ -172,6 +179,12 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
       List.remove(List.begin());
       ComboEdit->clear();
       ComboEdit->insertStringList(List);
+
+      for(int i=ComboEdit->count()-1; i>=0; i--)
+       if(item->text(1) == ComboEdit->text(i)) {
+         ComboEdit->setCurrentItem(i);
+	 break;
+       }
       edit->setShown(false);
       ComboEdit->setShown(true);
     }
@@ -188,8 +201,14 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
 void ComponentDialog::slotApplyChange(const QString& Text)
 {
   edit->setText(Text);
-  slotApplyProperty();
+  prop->currentItem()->setText(1, Text);	// apply edit line
+
   ComboEdit->setFocus();
+  QListViewItem *item = prop->currentItem()->itemBelow();
+  if(item == 0) return;
+
+  prop->setSelected(item, true);
+  slotSelectProperty(item);   // switch to the next property
 }
 
 // -------------------------------------------------------------------------
