@@ -20,7 +20,7 @@
 
 Source_ac::Source_ac()
 {
-  Description = QObject::QObject::tr("ac power source");
+  Description = QObject::tr("ac power source");
 
   Lines.append(new Line(-22,-11, 22,-11,QPen(QPen::darkGray,1)));
   Lines.append(new Line(-22, 10, 22, 10,QPen(QPen::darkGray,1)));
@@ -55,10 +55,10 @@ Source_ac::Source_ac()
   Model = "Pac";
   Name  = "P";
 
-  Props.append(new Property("Num", "1", true, QObject::QObject::tr("number of the port")));
-  Props.append(new Property("Z", "50 Ohm", true, QObject::QObject::tr("port impedance")));
-  Props.append(new Property("P", "0 dBm", true, QObject::QObject::tr("ac power in Watts")));
-  Props.append(new Property("f", "1 GHz", true, QObject::QObject::tr("frequency in Hertz")));
+  Props.append(new Property("Num", "1", true, QObject::tr("number of the port")));
+  Props.append(new Property("Z", "50 Ohm", true, QObject::tr("port impedance")));
+  Props.append(new Property("P", "0 dBm", true, QObject::tr("ac power in Watts")));
+  Props.append(new Property("f", "1 GHz", true, QObject::tr("frequency in Hertz")));
 }
 
 Source_ac::~Source_ac()
