@@ -1434,6 +1434,37 @@ is port a = 1, port b = 2 and port 2 = 3.
     \frac{2}{n_a\cdot n_b\cdot \left( j\cdot B_T\cdot Z_0 + 1\right) + \frac{n_a}{n_b} + \frac{n_b}{n_a}}
 \end{equation}
 
+The MNA matrix representation can be derived from the Z parameters in the
+following way.
+\begin{equation}
+\begin{bmatrix}
+ . & .  & .  &  1 & 0 & 0\\
+ . & .  & .  &  0 & 1 & 0\\
+ . & .  & .  &  0 & 0 & 1\\
+-1 &  0 & 0  & Z_{11} & Z_{12} & Z_{13}\\
+ 0 & -1 & 0  & Z_{21} & Z_{22} & Z_{23}\\
+ 0 & 0  & -1 & Z_{31} & Z_{32} & Z_{33}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+I_{1,in}\\
+I_{2,in}\\
+I_{3,in}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+0\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
 
 
 \section{Microstrip cross}
