@@ -120,7 +120,7 @@ FillDialog::~FillDialog()
 void FillDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
-  ColorButt->setPaletteBackgroundColor(c);
+  if(c.isValid()) ColorButt->setPaletteBackgroundColor(c);
 }
 
 // --------------------------------------------------------------------------

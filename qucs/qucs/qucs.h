@@ -59,11 +59,8 @@ class QucsApp : public QMainWindow
 {
   Q_OBJECT
 public:
-    QucsApp();
+    QucsApp(tQucsSettings *ps);
     ~QucsApp();
-
-    bool loadSettings();   // loads the settings file and restores the settings
-    void saveSettings();   // saves the settings in the settings file
 
     void initView();       // setup the mainview
     void initCursorMenu();
@@ -87,6 +84,7 @@ public slots:
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
+    void slotQucsSettings();// open dialog to change application settings
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
     void slotGettingStarted();  // shows a HTML docu: Getting started
@@ -127,11 +125,12 @@ public slots:
     void slotSelectAll();
 
 public:
-    QucsView   *view;   // the working area with schematics, data displays etc.
+    tQucsSettings  *globalSettings;
+    QucsView     *view; // the working area with schematics, data displays etc.
 
     QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs;
     QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
-    QAction *projNew, *projOpen, *projDel;
+    QAction *projNew, *projOpen, *projDel, *QucsSettings;
     QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
     QAction *magPlus, *magMinus;
     QAction *intoH, *popH;
@@ -161,7 +160,7 @@ private:
 
 // ********** Properties ************************************************
     QString       ProjName;   // name of the project, that is open
-    QPtrList<QString> HierarchyHistory; // keeps track of the "go into subcircuit"
+    QPtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
 
     QString       QucsFileFilter;
 

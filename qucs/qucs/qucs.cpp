@@ -19,6 +19,7 @@
 # include <config.h>
 #endif
 
+#include "main.h"
 #include "qucs.h"
 #include "qucsview.h"
 #include "wire.h"
@@ -29,6 +30,7 @@
 #include "dialogs/newprojdialog.h"
 #include "dialogs/fileshowdialog.h"
 #include "dialogs/settingsdialog.h"
+#include "dialogs/qucssettingsdialog.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -43,6 +45,7 @@
 #include <qinputdialog.h>
 #include <qclipboard.h>
 #include <qdatetime.h>
+#include <qfont.h>
 
 
 #include <limits.h>
@@ -58,15 +61,16 @@
 #define  COMBO_Diagrams  7
 
 
-QucsApp::QucsApp()
+QucsApp::QucsApp(tQucsSettings *ps)
 {
+  globalSettings = ps;
   setCaption("Qucs " PACKAGE_VERSION);
 
   QucsFileFilter = tr("Schematic (*.sch);;Data Display (*.dpl);;")+
-                   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
+		   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
 
-  if(!loadSettings())
-    resize(600,400);
+  move  (globalSettings->x,  globalSettings->y);
+  resize(globalSettings->dx, globalSettings->dy);
 //  resize(maximumSize());
 
 
@@ -94,52 +98,6 @@ QucsApp::~QucsApp()
 {
 }
 
-// ###########################################################################
-// Loads the settings file and restores the settings.
-bool QucsApp::loadSettings()
-{
-  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
-  if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
-
-  QString Line, Setting;
-  QTextStream stream(&file);
-
-  int  x, y;
-  bool ok;
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Setting = Line.section('=',0,0);
-    Line    = Line.section('=',1,1);
-    if(Setting == "Position")  { x = Line.section(",",0,0).toInt(&ok);
-                                 y = Line.section(",",1,1).toInt(&ok);
-                                 move(x,y); }
-    else if(Setting == "Size") { x = Line.section(",",0,0).toInt(&ok);
-                                 y = Line.section(",",1,1).toInt(&ok);
-                                 resize(x,y); }
-  }
-  file.close();
-  return true;
-}
-
-// ###########################################################################
-// Saves the settings in the settings file.
-void QucsApp::saveSettings()
-{
-  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
-  if(!file.open(IO_WriteOnly)) {    // settings file cannot be created
-    QMessageBox::warning(this, tr("Warning"), tr("Cannot save settings !"));
-    return;
-  }
-
-  QString Line;
-  QTextStream stream(&file);
-
-  stream << "Settings file, Qucs " PACKAGE_VERSION "\n";
-  stream << "Position=" << x() << "," << y() << "\n";
-  stream << "Size=" << width() << "," << height() << "\n";
-  file.close();
-}
-
 
 // #########################################################################
 // ##########                                                     ##########
@@ -154,7 +112,7 @@ void QucsApp::initView()
   TabView  = new QTabWidget(Hsplit);    // tabs on the left side
   QVBox *WorkGroup = new QVBox(Hsplit);
   WorkView = new QTabBar(WorkGroup);    // tab on the right side
-  view = new QucsView(WorkGroup);       // work area with documents
+  view = new QucsView(globalSettings, WorkGroup); // work area with documents
 
   connect(WorkView, SIGNAL(selected(int)), SLOT(slotChangeView(int)));
 
@@ -246,7 +204,6 @@ void QucsApp::initCursorMenu()
 
   connect(Content,
 	  SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)),
-	  this,
 	  SLOT(slotShowContentMenu(QListViewItem*, const QPoint&, int)));
 }
 
@@ -460,6 +417,15 @@ bool QucsApp::gotoPage(const QString& Name)
 void QucsApp::slotFileSettings()
 {
   SettingsDialog *d = new SettingsDialog(view->Docs.current(), this);
+  d->exec();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// --------------------------------------------------------------
+void QucsApp::slotQucsSettings()
+{
+  QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
   view->viewport()->repaint();
   view->drawn = false;
@@ -718,11 +684,7 @@ void QucsApp::slotFileQuit()
 				      tr("Do you really want to quit?"),
 				      tr("Yes"), tr("No"));
   if(exit == 0)
-    if(closeAllFiles()) {
-      saveSettings();
-      qApp->quit();
-    }
-
+    if(closeAllFiles())  qApp->quit();
 
   statusBar()->message(tr("Ready."));
 }
@@ -732,10 +694,7 @@ void QucsApp::slotFileQuit()
 void QucsApp::closeEvent(QCloseEvent* Event)
 {
   Event->ignore();
-  if(closeAllFiles()) {
-    saveSettings();
-    qApp->quit();
-  }
+  if(closeAllFiles())  qApp->quit();
 }
 
 // --------------------------------------------------------------------
@@ -1292,6 +1251,8 @@ void QucsApp::slotSetCompView(int index)
 		QImage(BITMAPDIR "dc_current.xpm"));
       new QIconViewItem(CompComps, tr("ac Voltage Source"),
 		QImage(BITMAPDIR "ac_voltage.xpm"));
+      new QIconViewItem(CompComps, tr("ac Current Source"),
+		QImage(BITMAPDIR "ac_current.xpm"));
       new QIconViewItem(CompComps, tr("Power Source"),
 		QImage(BITMAPDIR "source.xpm"));
       new QIconViewItem(CompComps, tr("Noise Voltage Source"),
@@ -1447,13 +1408,14 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
               case 0: view->selComp = new Volt_dc();   break;
               case 1: view->selComp = new Ampere_dc(); break;
               case 2: view->selComp = new Volt_ac();   break;
-              case 3: view->selComp = new Source_ac();    break;
-              case 4: view->selComp = new Volt_noise();   break;
-              case 5: view->selComp = new Ampere_noise(); break;
-              case 6: view->selComp = new VCCS();  break;
-              case 7: view->selComp = new CCCS();  break;
-              case 8: view->selComp = new VCVS();  break;
-              case 9: view->selComp = new CCVS();  break;
+              case 3: view->selComp = new Ampere_ac(); break;
+              case 4: view->selComp = new Source_ac();    break;
+              case 5: view->selComp = new Volt_noise();   break;
+              case 6: view->selComp = new Ampere_noise(); break;
+              case 7: view->selComp = new VCCS();  break;
+              case 8: view->selComp = new CCCS();  break;
+              case 9: view->selComp = new VCVS();  break;
+              case 10: view->selComp = new CCVS(); break;
           }
           break;
     case COMBO_TLines:

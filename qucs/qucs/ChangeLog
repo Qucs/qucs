@@ -1,3 +1,8 @@
+2004-05-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* improved detection of grounded wires and labeled wires
+	* add component ampere_ac
+
 2004-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdoc.cpp (selectElements): Rearranged the code for
