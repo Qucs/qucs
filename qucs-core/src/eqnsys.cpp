@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.19 2004-10-14 13:28:25 ela Exp $
+ * $Id: eqnsys.cpp,v 1.20 2004-10-25 21:01:31 ela Exp $
  *
  */
 
@@ -55,6 +55,8 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
   A = NULL;
   B = X = NULL;
+  change = NULL;
+  update = 1;
 }
 
 // Destructor deletes the eqnsys class object.
@@ -62,6 +64,7 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
   if (A != NULL) delete A;
   if (B != NULL) delete B;
+  if (change != NULL) delete change;
 }
 
 /* The copy constructor creates a new instance of the eqnsys class
@@ -70,6 +73,8 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   if (e.A != NULL) A = new tmatrix<nr_type_t> (*(e.A));
   if (e.B != NULL) B = new tvector<nr_type_t> (*(e.B));
+  change = NULL;
+  update = 1;
   X = e.X;
 }
 
@@ -83,9 +88,15 @@ template <class nr_type_t>
 void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
 					 tvector<nr_type_t> * refX,
 					 tvector<nr_type_t> * nB) {
-  if (A != NULL) delete A;
+  if (nA != NULL) {
+    if (A != NULL) delete A;
+    A = new tmatrix<nr_type_t> (*nA);
+    update = 1;
+  }
+  else {
+    update = 0;
+  }
   if (B != NULL) delete B;
-  A = new tmatrix<nr_type_t> (*nA);
   B = new tvector<nr_type_t> (*nB);
   X = refX;
 }
@@ -241,9 +252,13 @@ void eqnsys<nr_type_t>::solve_lu (void) {
   nr_type_t f;
   int k, i, c, r, pivot, N = A->getCols ();
   tvector<nr_type_t> Y (N);
-  int * change = new int[N];
+
+  // skip decomposition if requested
+  if (!update) goto noupdate;
 
   // initialize pivot exchange table
+  if (change) delete change;
+  change = new int[N];
   for (i = 1; i <= N; i++) change[i - 1] = i;
 
   // decomposite the matrix into L (lower) and U (upper) matrix
@@ -293,6 +308,7 @@ void eqnsys<nr_type_t>::solve_lu (void) {
     }
   }
 
+ noupdate:
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
     f = B->get (change[i - 1]);
@@ -328,7 +344,6 @@ void eqnsys<nr_type_t>::solve_lu (void) {
 #if LU_FAILURE
  fail:
 #endif
-  delete change;
 }
 
 /* The function solves the equation system using a full-step iterative

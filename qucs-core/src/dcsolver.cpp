@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.30 2004-09-17 11:48:52 ela Exp $
+ * $Id: dcsolver.cpp,v 1.31 2004-10-25 21:01:31 ela Exp $
  *
  */
 
@@ -74,6 +74,7 @@ void dcsolver::solve (void) {
 
   // start the iterative solver
   solve_pre ();
+  applyNodeset ();
   int error = solve_nonlinear ();
 #if DEBUG
   if (!error) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.5 2004-10-21 13:59:02 ela Exp $
+ * $Id: tmatrix.h,v 1.6 2004-10-25 21:01:32 ela Exp $
  *
  */
 
@@ -50,11 +50,12 @@ class tmatrix
   ~tmatrix ();
   nr_type_t get (int, int);
   void set (int, int, nr_type_t);
-  int getCols (void) { return cols; }
-  int getRows (void) { return rows; }
+  int  getCols (void) { return cols; }
+  int  getRows (void) { return rows; }
   nr_type_t * getData (void) { return data; }
   void exchangeRows (int, int);
   void exchangeCols (int, int);
+  int  isFinite (void);
   void print (void);
 
   // some basic matrix operations

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.22 2004-10-03 10:30:51 ela Exp $
+ * $Id: net.cpp,v 1.23 2004-10-25 21:01:31 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@
 #include "itrafo.h"
 #include "analysis.h"
 #include "nodelist.h"
+#include "nodeset.h"
 #include "environment.h"
 #include "component_id.h"
 
@@ -55,6 +56,7 @@ net::net () : object () {
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
   env = NULL;
+  nset = NULL;
 }
 
 // Constructor creates a named instance of the net class.
@@ -64,6 +66,7 @@ net::net (char * n) : object (n) {
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
   env = NULL;
+  nset = NULL;
 }
 
 // Destructor deletes the net class object.
@@ -74,6 +77,7 @@ net::~net () {
     delete c;
   }
   root = NULL;
+  delNodeset ();
 }
 
 /* The copy constructor creates a new instance of the net class based
@@ -84,6 +88,7 @@ net::net (net & n) : object (n) {
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
   env = n.env;
+  nset = NULL;
 }
 
 /* This function prepends the given circuit to the list of registered
@@ -458,6 +463,24 @@ int net::countNodes (void) {
     if (!c->getPort ()) count += c->getSize ();
   }
   return count;
+}
+
+/* The function adds the given nodeset object to the netlist's nodeset
+   list. */
+void net::addNodeset (nodeset * n) {
+  n->setNext (nset);
+  nset = n;
+}
+
+/* The following function deletes all the nodeset list of the netlist
+   object.  Called from the destructor. */
+void net::delNodeset (void) {
+  nodeset * next;
+  for (nodeset * n = nset; n != NULL; n = next) {
+    next = n->getNext ();
+    delete n;
+  }
+  nset = NULL;
 }
 
 #if DEBUG

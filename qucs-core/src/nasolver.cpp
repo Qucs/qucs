@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.20 2004-10-18 16:21:21 ela Exp $
+ * $Id: nasolver.cpp,v 1.21 2004-10-25 21:01:31 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "net.h"
 #include "analysis.h"
 #include "nodelist.h"
+#include "nodeset.h"
 #include "strlist.h"
 #include "tvector.h"
 #include "tmatrix.h"
@@ -64,7 +65,8 @@ nasolver<nr_type_t>::nasolver () : analysis () {
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
-  attenuation = linesearch = 0;
+  attenuation = linesearch = fixpoint = 0;
+  updateMatrix = 1;
   eqns = new eqnsys<nr_type_t> ();
 }
 
@@ -77,7 +79,8 @@ nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
-  attenuation = linesearch = 0;
+  attenuation = linesearch = fixpoint = 0;
+  updateMatrix = 1;
   eqns = new eqnsys<nr_type_t> ();
 }
 
@@ -109,6 +112,8 @@ nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   calculate_func = o.calculate_func;
   attenuation = o.attenuation;
   linesearch = o.linesearch;
+  updateMatrix = o.updateMatrix;
+  fixpoint = o.fixpoint;
   eqns = new eqnsys<nr_type_t> (*(o.eqns));
 }
 
@@ -191,9 +196,37 @@ void nasolver<nr_type_t>::solve_pre (void) {
   nlist->print ();
 #endif
 
+  // create matrix, solution vector and right hand side vector
+  int M = subnet->getVoltageSources ();
+  int N = countNodes ();
+  if (A == NULL) A = new tmatrix<nr_type_t> (M + N);
+  if (z == NULL) z = new tvector<nr_type_t> (N + M);
+  if (x == NULL) x = new tvector<nr_type_t> (N + M);
+
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: solving %s netlist\n", getName (), desc);
 #endif
+}
+
+/* This function goes through the nodeset list of the current netlist
+   and applies the stored values to the current solution vector.  Then
+   the function saves the solution vector back into the actual
+   component nodes. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::applyNodeset (void) {
+  if (x == NULL || nlist == NULL) return;
+
+  for (nodeset * n = subnet->getNodeset (); n; n = n->getNext ()) {
+    struct nodelist_t * nl = nlist->getNode (n->getName ());
+    if (nl != NULL) {
+      x->set (nl->n, n->getValue ());
+    }
+    else {
+      logprint (LOG_ERROR, "WARNING: %s: no such node `%s' found, cannot "
+		"initialize node\n", getName (), n->getName ());
+    }
+  }
+  saveSolution ();
 }
 
 /* This is the non-linear iterative nodal analysis netlist solver. */
@@ -206,7 +239,8 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
   MaxIterations = getPropertyInteger ("MaxIter");
   reltol = getPropertyDouble ("reltol");
   abstol = getPropertyDouble ("abstol");
-  vntol  = getPropertyDouble ("vntol");
+  vntol = getPropertyDouble ("vntol");
+  updateMatrix = 1;
 
   // run solving loop until convergence is reached
   do {
@@ -216,6 +250,14 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
       convergence = (run > 0) ? checkConvergence () : 0;
       savePreviousIteration ();
       run++;
+      // control fixpoint iterations
+      if (fixpoint) {
+	if (convergence && !updateMatrix) {
+	  updateMatrix = 1;
+	  convergence = 0;
+	}
+	else updateMatrix = 0;
+      }
     }
     else break;
   }
@@ -236,6 +278,7 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
 /* This is the linear nodal analysis netlist solver. */
 template <class nr_type_t>
 int nasolver<nr_type_t>::solve_linear (void) {
+  updateMatrix = 1;
   return solve_once ();
 }
 
@@ -245,8 +288,6 @@ int nasolver<nr_type_t>::solve_linear (void) {
    generates the A and z matrix. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::createMatrix (void) {
-  int M = subnet->getVoltageSources ();
-  int N = countNodes ();
 
   /* Generate the A matrix.  The A matrix consists of four (4) minor
      matrices in the form     +-   -+
@@ -254,12 +295,12 @@ void nasolver<nr_type_t>::createMatrix (void) {
                               | C D |
 			      +-   -+.
      Each of these minor matrices is going to be generated here. */
-  if (A != NULL) delete A;
-  A = new tmatrix<nr_type_t> (M + N);
-  createGMatrix ();
-  createBMatrix ();
-  createCMatrix ();
-  createDMatrix ();
+  if (updateMatrix) {
+    createGMatrix ();
+    createBMatrix ();
+    createCMatrix ();
+    createDMatrix ();
+  }
 
   /* Generate the z Matrix.  The z Matrix consists of two (2) minor
      matrices in the form     +- -+
@@ -267,13 +308,7 @@ void nasolver<nr_type_t>::createMatrix (void) {
                               | e |
 			      +- -+.
      Each of these minor matrices is going to be generated here. */
-  if (z != NULL) delete z;
-  z = new tvector<nr_type_t> (N + M);
-  createIMatrix ();
-  createEMatrix ();
-
-  // Create empty solution vector.
-  if (x == NULL) x = new tvector<nr_type_t> (N + M);
+  createZVector ();
 }
 
 /* This MatVal() functionality is just helper to get the correct
@@ -439,7 +474,7 @@ void nasolver<nr_type_t>::createGMatrix (void) {
    node.  If there are no current sources connected to the node, the
    value is zero. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::createIMatrix (void) {
+void nasolver<nr_type_t>::createIVector (void) {
   int N = countNodes ();
   nr_type_t val;
   struct nodelist_t * n;
@@ -465,7 +500,7 @@ void nasolver<nr_type_t>::createIMatrix (void) {
 /* The e matrix is a 1xM matrix with each element of the matrix equal
    in value to the corresponding independent voltage source. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::createEMatrix (void) {
+void nasolver<nr_type_t>::createEVector (void) {
   int N = countNodes ();
   int M = subnet->getVoltageSources ();
   nr_type_t val;
@@ -478,6 +513,13 @@ void nasolver<nr_type_t>::createEMatrix (void) {
     // put value into e vector
     z->set (r + N, val);
   }  
+}
+
+// The function loads the right hand side vector.
+template <class nr_type_t>
+void nasolver<nr_type_t>::createZVector (void) {
+  createIVector ();
+  createEVector ();
 }
 
 // Returns the number of nodes in the nodelist, excluding the ground node.
@@ -523,7 +565,7 @@ void nasolver<nr_type_t>::runMNA (void) {
 
   // just solve the equation system here
   eqns->setAlgo (ALGO_LU_DECOMPOSITION);
-  eqns->passEquationSys (A, x, z);
+  eqns->passEquationSys (updateMatrix ? A : NULL, x, z);
   eqns->solve ();
 
   // if damped Newton-Raphson is requested
@@ -580,8 +622,7 @@ void nasolver<nr_type_t>::lineSearch (void) {
     // recalculate Jacobian and right hand side
     saveSolution ();
     calculate ();
-    createIMatrix ();
-    createEMatrix ();
+    createZVector ();
 
     // calculate norm of right hand side vector
     n = norm (*z);
@@ -644,10 +685,14 @@ int nasolver<nr_type_t>::checkConvergence (void) {
    iteration. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::savePreviousIteration (void) {
-  if (xprev != NULL) delete xprev;
-  xprev = new tvector<nr_type_t> (*x);
-  if (zprev != NULL) delete zprev;
-  zprev = new tvector<nr_type_t> (*z);
+  if (xprev != NULL)
+    *xprev = *x;
+  else
+    xprev = new tvector<nr_type_t> (*x);
+  if (zprev != NULL)
+    *zprev = *z;
+  else
+    zprev = new tvector<nr_type_t> (*z);
 }
 
 /* This function goes through solution (the x vector) and saves the

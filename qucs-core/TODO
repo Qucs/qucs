@@ -38,9 +38,9 @@ unfixed) have a look at the file BUGS.
 	- Implementation of transient models for capacitor, inductor and
 	  resistor.
 - Subcircuit definitions with properties.
-- Node-set functionality for AC, DC and transient analysis.
+	- Node-set functionality for DC and transient analysis.
 - Coplanar line implementation.
-- Microstrip via hole implementation.
+	- Microstrip via hole implementation.
 - Microstrip t-junction.
 - Microstrip cross.
 - Modella, HICUM, MEXTRAM and VBIC bipolar model implementations.

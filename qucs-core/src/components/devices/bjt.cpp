@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.20 2004-10-25 07:55:47 ela Exp $
+ * $Id: bjt.cpp,v 1.21 2004-10-25 21:01:32 ela Exp $
  *
  */
 
@@ -145,10 +145,6 @@ void bjt::initDC (void) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // initialize starting values
-  setV (NODE_B, 0.8);
-  setV (NODE_C, 0.0);
-  setV (NODE_E, 0.0);
-  setV (NODE_S, 0.0);
   UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
   UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
 
@@ -297,7 +293,7 @@ void bjt::calcDC (void) {
     if (Irb != 0.0) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
-      a = MAX (a, 1e-12);
+      a = MAX (a, 1e-12); // enforce positive values
       z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
       b = tan (z);
       Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);

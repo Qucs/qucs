@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.5 2004-10-21 13:51:17 ela Exp $
+ * $Id: tmatrix.cpp,v 1.6 2004-10-25 21:01:32 ela Exp $
  *
  */
 
@@ -32,9 +32,17 @@
 #include <string.h>
 #include <math.h>
 
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
+
 #include "logging.h"
 #include "complex.h"
 #include "tmatrix.h"
+
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 
 // Constructor creates an unnamed instance of the tmatrix class.
 template <class nr_type_t>
@@ -232,6 +240,14 @@ tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
     res.set (r, z);
   }
   return res;
+}
+
+// Checks validity of matrix.
+template <class nr_type_t>
+int tmatrix<nr_type_t>::isFinite (void) {
+  for (int i = 0; i < rows * cols; i++)
+    if (!finite (real (data[i]))) return 0;
+  return 1;
 }
 
 #ifdef DEBUG

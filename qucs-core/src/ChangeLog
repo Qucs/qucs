@@ -1,3 +1,28 @@
+2004-10-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp, trsolver.cpp: Using new nodeset functionality.
+
+	* net.cpp: Added the appropriate nodeset functionality.
+
+	* nasolver.cpp: Added function which can save the nodeset list
+	of the netlist into the component nodes.
+
+	* input.cpp: Creating nodesets in the component factory and
+	adding them to the netlist.
+
+	* nodeset.h (class nodeset): Implemented base class for
+	nodeset functionality.
+
+	* tmatrix.cpp: New function isFinite() implemented.
+
+	* nodelist.cpp: Created array of nodes for faster access
+	to enumerated nodes.
+
+	* nasolver.cpp: Fixpoint iterations possible.
+
+	* eqnsys.cpp: Implemented code for consecutive solutions
+	of equation systems using LU decomposition.
+
 2004-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* matvec.cpp: Fixed bug in copy constructor.

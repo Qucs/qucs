@@ -38,8 +38,10 @@ if test "$enable_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
 else
   AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
-  CFLAGS="-O2"
-  CXXFLAGS="-O2"
+  if test "x$GCC" = xyes; then
+    CFLAGS="`echo $CFLAGS | sed -e 's/\-g //g'`"
+    CXXFLAGS="`echo $CXXFLAGS | sed -e 's/\-g //g'`"
+  fi
 fi
 unset enable_debug
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.36 2004-10-25 07:55:46 ela Exp $
+ * $Id: input.cpp,v 1.37 2004-10-25 21:01:31 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "trsolver.h"
 #include "variable.h"
 #include "environment.h"
+#include "nodeset.h"
 #include "input.h"
 #include "check_netlist.h"
 #include "equation.h"
@@ -122,6 +123,7 @@ void input::factory (void) {
   object * o;
   analysis * a;
   substrate * s;
+  nodeset * n;
   int i;
 
   // go through the list of input definitions
@@ -179,13 +181,20 @@ void input::factory (void) {
 	env->addVariable (v);
       }
     }
+    // handle nodeset definitions
+    else if (!def->action && def->nodeset) {
+      n = new nodeset ();
+      n->setName (def->nodes->node);
+      n->setValue (def->pairs->value->value);
+      subnet->addNodeset (n);
+    }
   }
 
   // go through the list of input definitions
   for (def = definition_root; def != NULL; def = def->next) {
 
     // handle component definitions
-    if (!def->action && !def->substrate) {
+    if (!def->action && !def->substrate && !def->nodeset) {
       c = createCircuit (def->type);
       assert (c != NULL);
       o = (object *) c;

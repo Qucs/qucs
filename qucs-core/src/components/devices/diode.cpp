@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.14 2004-10-16 16:42:31 ela Exp $
+ * $Id: diode.cpp,v 1.15 2004-10-25 21:01:33 ela Exp $
  *
  */
 
@@ -91,8 +91,6 @@ void diode::calcNoise (nr_double_t frequency) {
 void diode::initDC (void) {
 
   // initialize starting values
-  setV (NODE_C, 0.0);
-  setV (NODE_A, 0.9);
   Uprev = real (getV (NODE_A) - getV (NODE_C));
 
   // get device temperature
