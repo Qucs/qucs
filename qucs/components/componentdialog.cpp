@@ -1,5 +1,5 @@
 /***************************************************************************
-                          componentdialog.cpp  -  description
+                             componentdialog.cpp
                              -------------------
     begin                : Tue Sep 9 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
@@ -63,11 +63,13 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
     int row=1;
     editParam = new QLineEdit(Tab1);
+    connect(editParam, SIGNAL(returnPressed()), SLOT(slotParamEntered()));
     checkParam = new QCheckBox(tr("display in schematic"), Tab1);
     if(Comp->Model == ".SW") {   // parameter sweep
       textSim = new QLabel(tr("Simulation:"), Tab1);
       gp->addWidget(textSim, row,0);
       editSim = new QLineEdit(Tab1);
+      connect(editSim, SIGNAL(returnPressed()), SLOT(slotSimEntered()));
       gp->addWidget(editSim, row,1);
       checkSim = new QCheckBox(tr("display in schematic"), Tab1);
       gp->addWidget(checkSim, row++,2);
@@ -104,6 +106,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textValues = new QLabel(tr("Values:"), Tab1);
     gp->addWidget(textValues, row,0);
     editValues = new QLineEdit(Tab1);
+    connect(editValues, SIGNAL(returnPressed()), SLOT(slotValuesEntered()));
     gp->addWidget(editValues, row,1);
     checkValues = new QCheckBox(tr("display in schematic"), Tab1);
     gp->addWidget(checkValues, row++,2);
@@ -111,6 +114,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textStart  = new QLabel(tr("Start:"), Tab1);
     gp->addWidget(textStart, row,0);
     editStart  = new QLineEdit(Tab1);
+    connect(editStart, SIGNAL(returnPressed()), SLOT(slotStartEntered()));
     gp->addWidget(editStart, row,1);
     checkStart = new QCheckBox(tr("display in schematic"), Tab1);
     gp->addWidget(checkStart, row++,2);
@@ -118,6 +122,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textStop   = new QLabel(tr("Stop:"), Tab1);
     gp->addWidget(textStop, row,0);
     editStop   = new QLineEdit(Tab1);
+    connect(editStop, SIGNAL(returnPressed()), SLOT(slotStopEntered()));
     gp->addWidget(editStop, row,1);
     checkStop = new QCheckBox(tr("display in schematic"), Tab1);
     gp->addWidget(checkStop, row++,2);
@@ -125,12 +130,14 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textStep   = new QLabel(tr("Step:"), Tab1);
     gp->addWidget(textStep, row,0);
     editStep   = new QLineEdit(Tab1);
+    connect(editStep, SIGNAL(returnPressed()), SLOT(slotStepEntered()));
     gp->addWidget(editStep, row++,1);
 
     textNumber = new QLabel(tr("Number:"), Tab1);
     gp->addWidget(textNumber, row,0);
     editNumber = new QLineEdit(Tab1);
     editNumber->setValidator(ValInteger);
+    connect(editNumber, SIGNAL(returnPressed()), SLOT(slotNumberEntered()));
     gp->addWidget(editNumber, row,1);
     checkNumber = new QCheckBox(tr("display in schematic"), Tab1);
     gp->addWidget(checkNumber, row++,2);
@@ -719,7 +726,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
 {
   changed = true;
 
-  if(Type < 2) {
+  if(Type < 2) {  // new type is "linear" or "logarithmic"
     if(!editNumber->isEnabled()) {  // was the other mode before ?
       // this text change, did not emit the textChange signal !??!
       editStart->setText(
@@ -751,7 +758,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
     else
       textStep->setText(tr("Step:"));
   }
-  else {
+  else {  // new type is "list" or "constant"
     if(!editValues->isEnabled()) {   // was the other mode before ?
       editValues->setText(editStart->text() + "; " + editStop->text());
       checkValues->setChecked(true);
@@ -864,4 +871,56 @@ void ComponentDialog::slotSetChanged(int)
 void ComponentDialog::slotTextChanged(const QString&)
 {
   changed = true;
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Parameter".
+void ComponentDialog::slotParamEntered()
+{
+  if(editValues->isEnabled())
+    editValues->setFocus();
+  else
+    editStart->setFocus();
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Simulation".
+void ComponentDialog::slotSimEntered()
+{
+  editParam->setFocus();
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Values".
+void ComponentDialog::slotValuesEntered()
+{
+  slotButtOK();
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Start".
+void ComponentDialog::slotStartEntered()
+{
+  editStop->setFocus();
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Stop".
+void ComponentDialog::slotStopEntered()
+{
+  editStep->setFocus();
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Step".
+void ComponentDialog::slotStepEntered()
+{
+  editNumber->setFocus();
+}
+
+// -------------------------------------------------------------------------
+// Is called if return is pressed in LineEdit "Number".
+void ComponentDialog::slotNumberEntered()
+{
+  slotButtOK();
 }
