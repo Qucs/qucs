@@ -47,7 +47,7 @@ if test "x$GCC" = xyes; then
   fi
 fi
 
-# Release specific.
+# Release specific. Uncomment this line.
 # AC_CONFIG_SUBDIRS(qucs-core)
 
 # Check for language support.

@@ -28,10 +28,10 @@ bin_PROGRAMS = qucs
 MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = node.cpp \
-  element.cpp qucsdoc.cpp wire.cpp \
-  qucsview.cpp qucs.cpp main.cpp wirelabel.cpp qucsfile.cpp \
-  qucsinit.cpp qucsactions.cpp $(MOCFILES)
+qucs_SOURCES = node.cpp element.cpp qucsdoc.cpp wire.cpp qucsview.cpp \
+  qucs.cpp main.cpp wirelabel.cpp qucsfile.cpp qucsinit.cpp qucsactions.cpp
+
+nodist_qucs_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
@@ -61,12 +61,13 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 langdatadir = ${prefix}/share/qucs/lang
 langdata_DATA = $(TRANSFILES)
 
-EXTRADIST = $(TRANSLATIONS) $(TRANSFILES)
+EXTRA_DIST = $(TRANSLATIONS)
 
-all-local: $(TRANSFILES) $(TRANSLATIONS)
+all-local: $(TRANSLATIONS) $(TRANSFILES)
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm
+DISTCLEANFILES = *.moc.cpp *.qm
