@@ -1,3 +1,18 @@
+2004-04-28  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
+
+	* class complex: sin(), cos(), tan(), cot(), arcsin(), arccos(),
+	arctan(), arccot(), sinh(), cosh(), tanh(), coth(), arsinh(),
+	arcosh(), artanh(), arcoth(), log2()
+	* class vector: sin(), cos(), tan(), cot(), arcsin(), arccos(),
+	arctan(), arccot(), sinh(), cosh(), tanh(), coth(), arsinh(),
+	arcosh(), artanh(), arcoth(), max(), min(), sum(), prod(), avg(),
+	log2()
+	* class evaluate: sin(), cos(), tan(), cot(), arcsin(), arccos(),
+	arctan(), arccot(), sinh(), cosh(), tanh(), coth(), arsinh(),
+	arcosh(), artanh(), arcoth(), max(), min(), sum(), prod(), avg(),
+	log2()
+	* fixed many bugs in class evaluate/complex
+
 2004-04-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* matrix.cpp: Implemented all remaining matrix conversions not

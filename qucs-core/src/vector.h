@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.5 2004/04/25 16:26:04 margraf Exp $
+ * $Id: vector.h,v 1.6 2004/04/30 17:27:41 margraf Exp $
  *
  */
 
@@ -38,6 +38,7 @@ class vector : public object
   void add (complex);
   void add (vector *);
   complex  get (int);
+  void set (nr_double_t, int);
   void set (const complex, int);
   int getSize (void);
   int checkSizes (vector &, vector &);
@@ -48,6 +49,12 @@ class vector : public object
   void setDependencies (strlist * s) { dependencies = s; }
   void setOrigin (char *);
   char * getOrigin (void);
+  nr_double_t maximum ();
+  nr_double_t minimum ();
+
+  friend complex sum  (vector & v);
+  friend complex prod (vector & v);
+  friend complex avg  (vector & v);
 
   // vector manipulations
   friend vector * real  (vector &);  // the real part
@@ -57,6 +64,7 @@ class vector : public object
   friend vector * arg   (vector &);  // the angle in the plane
   friend vector * dB    (vector &);
   friend vector * ln    (vector &);
+  friend vector * log2  (vector &);
   friend vector * pow   (vector &, const complex);
   friend vector * pow   (const complex, vector &);
   friend vector * pow   (vector &, vector &);
@@ -64,13 +72,26 @@ class vector : public object
   friend vector * rtoz  (vector & v, nr_double_t zref = 50.0);
 
   // overloaded math functions
-  friend vector * abs   (vector &);
-  friend vector * log10 (vector &);
-  friend vector * exp   (vector &);
-  friend vector * sqrt  (vector &);
-  friend vector * sin   (vector &);
-  friend vector * cos   (vector &);
-  friend vector * tan   (vector &);
+  friend vector * abs    (vector &);
+  friend vector * log10  (vector &);
+  friend vector * exp    (vector &);
+  friend vector * sqrt   (vector &);
+  friend vector * sin    (vector &);
+  friend vector * arcsin (vector &);
+  friend vector * cos    (vector &);
+  friend vector * arccos (vector &);
+  friend vector * tan    (vector &);
+  friend vector * arctan (vector &);
+  friend vector * cot    (vector &);
+  friend vector * arccot (vector &);
+  friend vector * sinh   (vector &);
+  friend vector * arsinh (vector &);
+  friend vector * cosh   (vector &);
+  friend vector * arcosh (vector &);
+  friend vector * tanh   (vector &);
+  friend vector * artanh (vector &);
+  friend vector * coth   (vector &);
+  friend vector * arcoth (vector &);
 
   // operator functions
   friend vector * operator + (vector &, vector &);
@@ -92,7 +113,7 @@ class vector : public object
   //  friend int      operator != (const vector *, const vector *);
 
   // assignment operations
-  vector& operator - ();
+  vector& operator  - ();
   vector& operator  = (const complex);
   vector& operator += (vector &);
   vector& operator += (const complex);

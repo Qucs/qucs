@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.6 2004/04/25 16:26:04 margraf Exp $
+ * $Id: vector.cpp,v 1.7 2004/04/30 17:27:41 margraf Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <float.h>
 
 #include "complex.h"
 #include "object.h"
@@ -104,6 +105,10 @@ complex vector::get (int i) {
   return data[i];
 }
 
+void vector::set (nr_double_t d, int i) {
+  data[i] = complex (d);
+}
+
 void vector::set (const complex z, int i) {
   data[i] = z;
 }
@@ -120,6 +125,54 @@ int vector::checkSizes (vector & v1, vector & v2) {
     return 0;
   }
   return 1;
+}
+
+// searches the maximum value of the vector elements.
+// complex numbers in the 1. and 4. quadrant are counted as "abs(c)".
+// complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
+nr_double_t vector::maximum () {
+  complex c;
+  nr_double_t d, max_D = -DBL_MAX;
+  for (int i = 0; i < getSize (); i++) {
+    c = data[i];
+    if(fabs (arg (c)) < M_PI_2l) d = abs (c);
+    else d = -abs (c);
+    if(d > max_D) max_D = d;
+  }
+  return max_D;
+}
+
+// searches the minimum value of the vector elements.
+// complex numbers in the 1. and 4. quadrant are counted as "abs(c)".
+// complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
+nr_double_t vector::minimum () {
+  complex c;
+  nr_double_t d, min_D = DBL_MAX;
+  for (int i = 0; i < getSize (); i++) {
+    c = data[i];
+    if(fabs (arg (c)) < M_PI_2l) d = abs (c);
+    else d = -abs (c);
+    if(d < min_D) min_D = d;
+  }
+  return min_D;
+}
+
+complex sum (vector & v) {
+  complex result(0.0);
+  for (int i = 0; i < v.getSize (); i++) result += v.get (i);
+  return result;
+}
+
+complex prod (vector & v) {
+  complex result(1.0);
+  for (int i = 0; i < v.getSize (); i++) result *= v.get (i);
+  return result;
+}
+
+complex avg (vector & v) {
+  complex result(0.0);
+  for (int i = 0; i < v.getSize (); i++) result += v.get (i);
+  return result / v.getSize ();
 }
 
 vector * abs (vector & v) {
@@ -189,6 +242,12 @@ vector * log10 (vector & v) {
   return result;
 }
 
+vector * log2 (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (log2 (v.get (i)), i);
+  return result;
+}
+
 vector * pow (vector & v, const complex z) {
   vector * result = new vector (v);
   for (int i = 0; i < v.getSize (); i++) result->set (pow (v.get(i), z), i);
@@ -217,6 +276,18 @@ vector * sin (vector & v) {
   return result;
 }
 
+vector * arcsin (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arcsin (v.get (i)), i);
+  return result;
+}
+
+vector * arccos (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arccos (v.get (i)), i);
+  return result;
+}
+
 vector * cos (vector & v) {
   vector * result = new vector (v);
   for (int i = 0; i < v.getSize (); i++) result->set (cos (v.get (i)), i);
@@ -226,6 +297,72 @@ vector * cos (vector & v) {
 vector * tan (vector & v) {
   vector * result = new vector (v);
   for (int i = 0; i < v.getSize (); i++) result->set (tan (v.get (i)), i);
+  return result;
+}
+
+vector * arctan (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arctan (v.get (i)), i);
+  return result;
+}
+
+vector * cot (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (cot (v.get (i)), i);
+  return result;
+}
+
+vector * arccot (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arccot (v.get (i)), i);
+  return result;
+}
+
+vector * sinh (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (sinh (v.get (i)), i);
+  return result;
+}
+
+vector * arsinh (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arsinh (v.get (i)), i);
+  return result;
+}
+
+vector * cosh (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (cosh (v.get (i)), i);
+  return result;
+}
+
+vector * arcosh (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arcosh (v.get (i)), i);
+  return result;
+}
+
+vector * tanh (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (tanh (v.get (i)), i);
+  return result;
+}
+
+vector * artanh (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (artanh (v.get (i)), i);
+  return result;
+}
+
+vector * coth (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (coth (v.get (i)), i);
+  return result;
+}
+
+vector * arcoth (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (arcoth (v.get (i)), i);
   return result;
 }
 
