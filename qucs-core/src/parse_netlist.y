@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.7 2004-07-05 21:41:46 ela Exp $
+ * $Id: parse_netlist.y,v 1.8 2004-07-16 19:14:37 ela Exp $
  *
  */
 
@@ -50,6 +50,8 @@
 %token ScaleOrUnit
 %token Eol
 %token Eqn
+%token DefSub
+%token EndSub
 %token REAL
 %token IMAG
 %token COMPLEX
@@ -66,6 +68,7 @@
   char * str;
   double d;
   struct definition_t * definition;
+  struct definition_t * subcircuit;
   struct node_t * node;
   struct pair_t * pair;
   struct value_t * value;
@@ -84,7 +87,8 @@
 %type <str> ScaleOrUnit
 %type <d> REAL IMAG
 %type <c> COMPLEX
-%type <definition> DefinitionLine ActionLine
+%type <definition> DefinitionLine ActionLine DefBody DefBodyLine
+%type <subcircuit> DefBegin SubcircuitBody
 %type <node> IdentifierList
 %type <pair> PairList
 %type <value> String
@@ -97,25 +101,34 @@
 %%
 
 Input: /* nothing */
-| InputLine Input
+  | InputLine Input
 ;
 
 InputLine:
-  EquationLine   { }
-| ActionLine     { }
-| DefinitionLine { }
+  SubcircuitBody   { /* chain definition root */
+    $1->next = definition_root;
+    definition_root = $1;
+  }
+  | EquationLine   { /* nothing to do here */ }
+  | ActionLine     { /* chain definition root */
+    $1->next = definition_root;
+    definition_root = $1;
+  }
+  | DefinitionLine { /* chain definition root */
+    $1->next = definition_root;
+    definition_root = $1;
+  }
 | Eol            { }
 ;
 
 ActionLine:
   '.' Identifier ':' Identifier PairList Eol { 
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
-    $$->action = 1;
+    $$->action = PROP_ACTION;
     $$->type = $2;
     $$->instance = $4;
     $$->pairs = $5;
-    $$->next = definition_root;
-    definition_root = $$;
+    $$->line = netlist_lineno;
     pair_root = NULL;
   }
 ;
@@ -123,13 +136,12 @@ ActionLine:
 DefinitionLine:
   Identifier ':' Identifier IdentifierList PairList Eol { 
     $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
-    $$->action = 0;
+    $$->action = PROP_COMPONENT;
     $$->type = $1;
     $$->instance = $3;
     $$->nodes = $4;
     $$->pairs = $5;
-    $$->next = definition_root;
-    definition_root = $$;
+    $$->line = netlist_lineno;
     node_root = NULL;
     pair_root = NULL;
   }
@@ -334,6 +346,52 @@ ExpressionList: /* nothing */ { $$ = eqn::expressions = NULL; }
     $$ = eqn::expressions = $1;
   }
 ;
+
+SubcircuitBody:
+  DefBegin DefBody DefEnd { /* a full subcircuit definition found */
+    $1->sub = $2;
+    $$ = $1;
+    $2 = NULL;
+  }
+;
+
+DefBegin:
+  DefSub Identifier IdentifierList Eol {
+    /* create subcircuit definition right here */
+    $$ = (struct definition_t *) calloc (sizeof (struct definition_t), 1);
+    $$->type = strdup ("Def");
+    $$->instance = $2;
+    $$->nodes = $3;
+    $$->action = PROP_ACTION;
+    $$->line = netlist_lineno;
+    node_root = NULL;
+  }
+;
+
+DefBody: /* nothing */ { $$ = NULL; }
+  | DefBodyLine DefBody { /* chain definitions here */
+    if ($1) {
+      $1->next = $2;
+      $$ = $1;
+    }
+  }
+;
+
+DefEnd:
+  EndSub Eol { /* nothing to do */ }
+;
+
+DefBodyLine:
+  DefinitionLine { /* chain definitions here */
+    $1->next = $$;
+    $$ = $1;
+  }
+  | SubcircuitBody { /* do nothing here, see subcircuit rule */ }
+  | Eol {
+    $$ = NULL;
+  }
+;
+
 
 %%
 

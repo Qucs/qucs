@@ -1,3 +1,18 @@
+2004-07-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Added additional tokens for subcircuit
+	definitions.
+
+	* parse_netlist.y: Scribbled down the grammar for subcircuit
+	definitions.  Also saving the line number for component lines.
+
+	* check_netlist.cpp: Added the functionality used to provide
+	subcircuits in netlists.  This includes checking the subcircuits
+	itself, expanding them into the global netlist and checking
+	their context validity.
+	Also giving the offending line number for checker errors when
+	possible.
+
 2004-07-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Avoiding singularity when two full reflective

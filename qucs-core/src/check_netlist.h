@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.9 2004-07-10 14:45:26 ela Exp $
+ * $Id: check_netlist.h,v 1.10 2004-07-16 19:14:37 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 /* Representation of a node list. */
 struct node_t {
   char * node;
+  char * xlate;
   struct node_t * next;
 };
 
@@ -55,10 +56,13 @@ struct definition_t {
   struct node_t * nodes;
   struct pair_t * pairs;
   struct definition_t * next;
+  struct definition_t * sub;
   int duplicate;
   int action;
   int substrate;
   int nonlinear;
+  int line;
+  int copy;
   struct define_t * define;
 };
 
@@ -93,6 +97,7 @@ struct define_t {
 #define PROP_NO_SUBSTRATE 0
 #define PROP_NONLINEAR    1
 #define PROP_LINEAR       0
+#define PROP_NODES        -1
 #define PROP_NO_PROP      { NULL, PROP_REAL, { PROP_NO_VAL, PROP_NO_STR }, \
                             PROP_NO_RANGE }
 #define PROP_NO_VAL       0.0

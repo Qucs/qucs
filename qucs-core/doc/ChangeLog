@@ -1,3 +1,11 @@
+2004-07-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{Dispersion}): Added some comments
+	about the various dispersion models of microstrip.
+
+	* mscomparezl.m: Using Hammerstad and Jensen as reference
+	when comparing quasi-static impedances of microstrip.
+
 2004-07-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Small signal model}): Documented

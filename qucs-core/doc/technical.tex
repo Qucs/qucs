@@ -4720,11 +4720,15 @@ Z_{L}\left(W, h, \varepsilon_{r}\right) =
 \frac{Z_{F0}}{2\sqrt{\varepsilon_{r}}}\cdot\frac{1}{\dfrac{W}{2h} + \dfrac{1}{\pi}\ln{4} + \dfrac{\varepsilon_{r} + 1}{2\pi \varepsilon_{r}} \ln{\left(\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)\right)} + \dfrac{\varepsilon_{r} - 1}{2\pi \varepsilon_{r}^{2}}\cdot \ln{\dfrac{e\pi^{2}}{16}}}
 \end{equation}
 
-For narrow strips ($W/h < 3.3$) he obtains the approximation
+For narrow strips ($W/h \le 3.3$) he obtains the approximation
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
 \frac{Z_{F0}}{\pi \sqrt{2 \left(\varepsilon_{r} + 1\right)}} \cdot \left(\ln{\left(\frac{4h}{W} + \sqrt{\left(\frac{4h}{W}\right)^{2} + 2}\right)} - \frac{1}{2}\cdot \frac{\varepsilon_{r} - 1}{\varepsilon_{r} + 1}\left(\ln{\frac{\pi}{2}} + \frac{1}{\varepsilon_{r}} \ln{\frac{4}{\pi}}\right)\right)
 \end{equation}
+
+The formulae are applicable to alumina-type substrates ($8 \le
+\varepsilon_r \le 12$) and have an estimated relative error less than
+1 per cent.
 
 \begin{figure}[ht]
 \begin{center}
@@ -4750,10 +4754,16 @@ Z_{L}\left(W, h, \varepsilon_{r}\right) =
 \frac{Z_{F0}}{2\pi\cdot\sqrt{\varepsilon_{r}}}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}
 \end{equation}
 
-With
+with
 \begin{align}
 f_{u} &= 6 + \left(2\pi - 6\right)\cdot\exp{\left(-\left(30.666\cdot\frac{h}{W}\right)^{0.7528}\right)}
 \end{align}
+
+The comparison of the expression given for the quasi-static impedance
+as shown in fig. \ref{fig:mscomparezl} has been done with respect to
+E. Hammerstad and O. Jensen.  It reveals the advantage of closed-form
+expressions.  The impedance step for Wheelers formulae at $W/h = 3.3$
+is approximately $0.1\ohm$.
 
 \begin{figure}[ht]
 \begin{center}
@@ -4769,19 +4779,41 @@ f_{u} &= 6 + \left(2\pi - 6\right)\cdot\exp{\left(-\left(30.666\cdot\frac{h}{W}\
 \section{Quasi-static effective dielectric constant}
 %\addcontentsline{toc}{section}{Quasi-static effective dielectric constant}
 
-Wheeler \cite{Wheeler}:
-
-narrow strips:
+Harold A. Wheeler \cite{Wheeler} gives the following approximation for
+narrow strips ($W/h < 3$) based upon the characteristic impedance
+$Z_L$.  The estimated relative error is less than 1\%.
 \begin{equation}
 \varepsilon_{r_{eff}} = \frac{\varepsilon_{r} + 1}{2} + \frac{Z_{F0}}{2\pi Z_{L}}\cdot \frac{\varepsilon_{r} - 1}{2}\cdot \left(\ln{\frac{\pi}{2}} + \frac{1}{\varepsilon_{r}} \ln{\frac{4}{\pi}}\right)
 \end{equation}
 
-Hammerstad and Jensen \cite{Hammerstad}:
+For narrow strips ($W/h \le 1.3$):
+\begin{equation}
+\varepsilon_{r_{eff}} = \dfrac{1 + \varepsilon_r}{2}\cdot \left(\dfrac{A}{A - B}\right)^2
+\end{equation}
+with
+\begin{align}
+A &= \ln{\left(8\dfrac{h}{W}\right)} + \dfrac{1}{32}\cdot\left(\dfrac{W}{h}\right)^2\\
+B &= \dfrac{1}{2}\cdot \dfrac{\varepsilon_r - 1}{\varepsilon_r + 1} \cdot\left(0.4516 + \dfrac{0.2416}{\varepsilon_r}\right)
+\end{align}
+
+For wide strips ($W/h > 1.3$):
+\begin{equation}
+\varepsilon_{r_{eff}} = \varepsilon_r\cdot\left(\dfrac{E - D}{E}\right)^2
+\end{equation}
+with
+\begin{align}
+D &= \dfrac{\varepsilon_r - 1}{2\pi \varepsilon_r}\cdot\left(\ln{\left(2.1349\dfrac{W}{h} + 4.0137\right)} - \dfrac{0.5169}{\varepsilon_r}\right)\\
+E &= \dfrac{1}{2}\cdot\dfrac{W}{h} + \dfrac{1}{\pi}\cdot \ln{\left(8.5397\dfrac{W}{h} + 16.0547\right)}
+\end{align}
+
+The accuracy of the E. Hammerstad and O. Jensen \cite{Hammerstad} model
+is better than 0.2\% at least for $\varepsilon_r < 128$ and $0.01 \le
+W/h \le 100$.
 \begin{equation}
 \varepsilon_{r_{eff}} = \frac{\varepsilon_{r} + 1}{2} + \frac{\varepsilon_{r} - 1}{2}\cdot\left(1 + 10\frac{h}{W}\right)^{-ab}
 \end{equation}
 
-With
+with
 \begin{align}
 a &= 1 + \frac{1}{49}\cdot\ln{\left(\frac{u^{4} + \left(\dfrac{u}{52}\right)^{2}}{u^{4} + 0.432}\right)} + \frac{1}{18.7}\cdot\ln{\left(1 + \left(\frac{u}{18.1}\right)^{3}\right)}\\
 b &= 0.564\cdot\left(\frac{\varepsilon_{r} - 0.9}{\varepsilon_{r} + 3}\right)^{0.053}\\
@@ -4791,12 +4823,15 @@ u &= \frac{W}{h}
 \section{Dispersion}
 %\addcontentsline{toc}{section}{Dispersion}
 
-Kirschning and Jansen \cite{Kirschning3}:
-
+The dispersion formulae given by Kirschning and Jansen
+\cite{Kirschning3} is meant to have an accuracy better than 0.6\% in
+the range $0.1 \le W/h \le 100$, $1\le \varepsilon_r \le 20$ and $0
+\le h/\lambda_0 \le 0.13$, i.e. up to about $60\giga\hertz$ for
+$25\milli\meter$ substrates.
 \begin{equation}
 \varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + P(f)}
 \end{equation}
-With
+with
 \begin{align}
 P(f) &= P_{1} P_{2} \cdot\left(\left(0.1844 + P_{3} P_{4}\right) \cdot f_{n}\right)^{1.5763}\\
 P_{1} &= 0.27488 + \left(0.6315 + \frac{0.525}{\left(1 + 0.0157\cdot f_{n}\right)^{20}}\right)\cdot \frac{W}{h} - 0.065683 \cdot \exp\left(-8.7513\dfrac{W}{h}\right)\\
@@ -4806,23 +4841,33 @@ P_{4} &= 1 + 2.751 \cdot \left(1 - \exp\left(- \left(\frac{\varepsilon_{r}}{15.9
 f_{n} &= f \cdot h = \text{normalised frequency in } \left[\giga\hertz \cdot \milli\meter\right]
 \end{align}
 
-Yamashita \cite{Yamashita}:
-
+The values obtained by the approximate dispersion formula as given by
+E. Yamashita \cite{Yamashita} deviate within 1\% in a wide frequency
+range compared to the integral equation method used to derive the
+functional approximation.  The formula assumes the knowledge of the
+quasi-static effective dielectric constant.  The applicable ranges of
+the formula are $2 < \varepsilon_r < 16$, $0.06 < W/h < 16$ and
+$0.1\giga\hertz < f < 100\giga\hertz$.  Though the lowest usable
+frequency is limited by $0.1\giga\hertz$, the propagation constant for
+frequencies less than $0.1\giga\hertz$ has been given as the
+quasi-static one.
 \begin{equation}
 \varepsilon_{r}(f) = \varepsilon_{r_{eff}}\cdot \left(\frac{1 + \dfrac{1}{4}\cdot k\cdot F^{1.5}}{1 + \dfrac{1}{4}\cdot F^{1.5}}\right)^{2}
 \end{equation}
-With
+with
 \begin{align}
 k &= \sqrt{\frac{\varepsilon_{r}}{\varepsilon_{r_{eff}}}}\\
 F &= \frac{4\cdot h\cdot f\cdot \sqrt{\varepsilon_{r} - 1}}{c_{0}} \cdot \left(0.5 + \left(1 + 2 \cdot \log\left(1 + \frac{W}{h}\right)\right)^{2}\right)
 \end{align}
 
-Kobayashi \cite{Kobayashi}:
-
+The dispersion formula presented by M. Kobayashi \cite{Kobayashi},
+derived by comparison to a numerical model, has a high degree of
+accuracy, better than 0.6\% in the range $0.1 \le W/h \le 10$, $1 <
+\varepsilon_r \le 128$ and any $h/\lambda_0$ (no frequency limits).
 \begin{equation}
 \varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + \left(\dfrac{f}{f_{50}}\right)^{m}}
 \end{equation}
-With
+with
 \begin{align}
 f_{50} &= \frac{c_{0}}{2\pi\cdot h \cdot\left(0.75 + \left(0.75 - \dfrac{0.332}{\varepsilon_{r}^{1.73}}\right)\dfrac{W}{h}\right)} \cdot \frac{\arctan\left(\varepsilon_{r}\cdot\sqrt{\dfrac{\varepsilon_{r_{eff}} - 1}{\varepsilon_{r} - \varepsilon_{r_{eff}}}}\right)}{\sqrt{\varepsilon_{r} - \varepsilon_{r_{eff}}}}\\
 m &= m_{0}\cdot m_{c} \;\; (\le 2.32)\\
@@ -4836,42 +4881,50 @@ m_{c} &=
 \end{cases}
 \end{align}
 
-Getsinger \cite{Getsinger}:
-
+Based upon measurements of dispersion curves for microstrip lines on
+alumina substrates 0.025 and 0.050 inch thick W. J. Getsinger
+\cite{Getsinger} developed a very simple , closed-form expression that
+allow slide-rule prediction of microstrip dispersion.
 \begin{equation}
 \varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + G\cdot \left(\dfrac{f}{f_{p}}\right)^{2}}
 \end{equation}
-
-With
+with
 \begin{align}
 f_{p} &= \frac{Z_{L}}{2\mu_{0} h}\\
 G &= 0.6 + 0.009\cdot Z_{L}
 \end{align}
 
-Getsinger \cite{Getsinger2} (wave impedance model):
+Also based upon measurements of microstrip lines 0.1, 0.25 and 0.5
+inch in width on a 0.250 inch thick alumina substrate Getsinger
+\cite{Getsinger2} developed two different dispersion models for the
+characteristic impedance.
 
+\begin{itemize}
+\item wave impedance model published in \cite{Getsinger2}
 \begin{equation}
 Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}
 \end{equation}
 
-Getsinger \cite{Getsinger3} (group-delay model):
-
+\item group-delay model published in \cite{Getsinger3}
 \begin{equation}
 Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r}(f)}{\varepsilon_{r_{eff}}}}\cdot\frac{1}{1 + D(f)}
 \end{equation}
 
-With
+with
 \begin{align}
 D(f) &= \frac{\left(\varepsilon_{r} - \varepsilon_{r}(f)\right)\cdot\left(\varepsilon_{r}(f) - \varepsilon_{r_{eff}}\right)}{\varepsilon_{r}(f)\cdot\left(\varepsilon_{r} - \varepsilon_{r_{eff}}\right)}
 \end{align}
+\end{itemize}
 
-Hammerstad and Jensen \cite{Hammerstad}:
-
+The dispersion formulae of E. Hammerstad and O. Jensen
+\cite{Hammerstad} give good results for all types of substrates (not
+as limited as Getsinger's formulae).  The impedance dispersion model
+is based upon a parallel-plate model using the theory of dielectrics.
 \begin{equation}
 \varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + G\cdot \left(\dfrac{f}{f_{p}}\right)^{2}}
 \end{equation}
 
-With
+with
 \begin{align}
 f_{p} &= \frac{Z_{L}}{2\mu_{0} h}\\
 G &= \frac{\pi^{2}}{12}\cdot\frac{\varepsilon_{r} - 1}{\varepsilon_{r_{eff}}}\cdot\sqrt{\frac{2\pi\cdot Z_{L}}{Z_{F0}}}
@@ -4880,7 +4933,6 @@ G &= \frac{\pi^{2}}{12}\cdot\frac{\varepsilon_{r} - 1}{\varepsilon_{r_{eff}}}\cd
 \begin{equation}
 Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}\cdot\frac{\varepsilon_{r}(f) - 1}{\varepsilon_{r_{eff}} - 1}
 \end{equation}
-
 
 \section{Transmission losses}
 %\addcontentsline{toc}{section}{Transmission losses}
