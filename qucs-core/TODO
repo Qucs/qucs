@@ -33,7 +33,7 @@ unfixed) have a look at the file BUGS.
 - Harmonic balance simulation.
 - Transient simulation.
 - AC noise analysis.
-- AC analysis.
+	- AC analysis.
 	- Implement sorted node list for S-parameter analysis in order
 	  to increase speed.
 - What about a damped Newton-Raphson or source-stepping?

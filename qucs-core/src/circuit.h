@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.21 2004-07-30 06:25:54 ela Exp $
+ * $Id: circuit.h,v 1.22 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -34,83 +34,115 @@ class substrate;
 class operatingpoint;
 class dcsolver;
 class spsolver;
+class acsolver;
 class matrix;
 
 class circuit : public object
 {
  public:
+  // constructor and destructor set
   circuit ();
   circuit (int);
   circuit (const circuit &);
   ~circuit ();
+
+  // functionality to be overloaded by real circuit implementations
   virtual void initSP (spsolver *) { }
   virtual void calcSP (nr_double_t) { }
   virtual void initDC (dcsolver *) { }
   virtual void calcDC (void) { }
   virtual void calcNoise (nr_double_t) { }
+  virtual void initAC (acsolver *) { }
+  virtual void calcAC (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
-  void setNode (int, char *, int intern = 0);
+
+  // real basics
+  void   setNode (int, char *, int intern = 0);
   node * getNode (int);
-  complex getS (int, int);
-  void setS (int, int, complex);
-  complex getN (int, int);
-  void setN (int, int, complex);
-  complex getY (int, int);
-  void setY (int, int, complex);
-  nr_double_t getG (int, int);
-  void setG (int, int, nr_double_t);
-  int getSize (void) { return size; }
-  void setSize (int);
-  void print (void);
-  int isPort (void) { return port; }
-  void setPort (int p) { port = p; }
-  int isEnabled (void) { return enabled; }
-  void setEnabled (int e) { enabled = e; }
+  void   setType (int t) { type = t; }
+  int    getType (void) { return type; }
+  int    getSize (void) { return size; }
+  void   setSize (int);
+  int    isEnabled (void) { return enabled; }
+  void   setEnabled (int e) { enabled = e; }
+
+  // subcircuitry
   char * getSubcircuit (void) { return subcircuit; }
-  void setSubcircuit (char *);
+  void   setSubcircuit (char *);
+
+  // nodal analyses helpers
   void setInternalVoltageSource (int i) { internal = i; }
-  int isInternalVoltageSource (void) { return internal; }
-  int isVoltageSource (void) { return source; }
-  void setVoltageSource (int s) { source = s; }
-  int getVoltageSources (void);
+  int  isInternalVoltageSource (void) { return internal; }
+  void setVoltageSource (int s) { vsource = s; }
+  int  isVoltageSource (void) { return vsource; }
+  int  getVoltageSources (void);
   void setVoltageSources (int);
-  int isOriginal (void) { return org; }
-  void setOriginal (int o) { org = o; }
-  int getInserted (void) { return inserted; }
+
+  // s-parameter helpers
+  int  isPort (void) { return pacport; }
+  void setPort (int p) { pacport = p; }
+  int  isOriginal (void) { return original; }
+  void setOriginal (int o) { original = o; }
+  int  getInserted (void) { return inserted; }
   void setInserted (int i) { inserted = i; }
-  int countCircuits (void);
-  int countPorts (void);
-  int countNodes (void);
-  void setType (int t) { type = t; }
-  int getType (void) { return type; }
+
+  // microstrip helpers
   substrate * getSubstrate (void);
   void setSubstrate (substrate *);
+
+  // matrix entry modificators
+  complex getS (int, int);
+  complex getN (int, int);
+  complex getY (int, int);
   complex getB (int, int);
   complex getC (int, int);
   complex getD (int, int);
   complex getE (int);
   complex getI (int);
   complex getV (int);
+  nr_double_t getG (int, int);
+  void setS (int, int, complex);
+  void setN (int, int, complex);
+  void setY (int, int, complex);
   void setB (int, int, complex);
   void setC (int, int, complex);
   void setD (int, int, complex);
   void setE (int, complex);
   void setI (int, complex);
   void setV (int, complex);
-  void addOperatingPoint (char *, nr_double_t);
+  void setG (int, int, nr_double_t);
+  void clearB (void);
+  void clearC (void);
+  void clearD (void);
+  void clearE (void);
+  void clearI (void);
+  void clearV (void);
+  void clearY (void);
+
+  // operating point functionality
+  void        addOperatingPoint (char *, nr_double_t);
   nr_double_t getOperatingPoint (char *);
-  void setOperatingPoint (char *, nr_double_t);
-  int hasOperatingPoint (char *);
-  void copyOperatingPoints (operatingpoint *);
-  void deleteOperatingPoints (void);
+  void        setOperatingPoint (char *, nr_double_t);
+  int         hasOperatingPoint (char *);
+  void        copyOperatingPoints (operatingpoint *);
+  void        deleteOperatingPoints (void);
   operatingpoint * getOperatingPoints (void) { return oper; }
-  int isNonLinear (void) { return !linear; }
-  void setNonLinear (int nl) { linear = !nl; }
+
+  // differentiate between linear and non-linear circuits
+  void setNonLinear (int n) { linear = !n; }
+  int  isNonLinear (void) { return !linear; }
+
+  // miscellaneous functionality
+  void print (void);
   static char * createInternal (char *, char *);
-  void setMatrixS (matrix &);
+
+  // matrix operations
+  void    setMatrixS (matrix &);
   matrix& getMatrixS (void);
-  void setMatrixN (matrix &);
+  void    setMatrixN (matrix &);
   matrix& getMatrixN (void);
+  void    setMatrixY (matrix &);
+  matrix& getMatrixY (void);
 
   static const nr_double_t z0 = 50.0;
 
@@ -119,10 +151,10 @@ class circuit : public object
 
  private:
   int size;
-  int port;
-  int source;
-  int nSources;
-  int org;
+  int pacport;
+  int vsource;
+  int vsources;
+  int original;
   int internal;
   int inserted;
   int linear;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.10 2004-08-15 12:25:38 ela Exp $
+ * $Id: net.h,v 1.11 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -71,6 +71,8 @@ class net : public object
   void sortChildAnalyses (analysis *);
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
+  int countPorts (void);
+  int countNodes (void);
 
  private:
   circuit * drop;

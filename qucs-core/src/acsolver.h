@@ -1,7 +1,7 @@
 /*
- * pac.h - AC power source class definitions
+ * acsolver.h - AC solver class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,32 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.h,v 1.5 2004-09-06 06:40:07 ela Exp $
+ * $Id: acsolver.h,v 1.1 2004-09-06 06:40:07 ela Exp $
  *
  */
 
-#ifndef __PAC_H__
-#define __PAC_H__
+#ifndef __ACSOLVER_H__
+#define __ACSOLVER_H__
 
-class pac : public circuit
+#include "nasolver.h"
+
+class sweep;
+
+class acsolver : public nasolver<complex>
 {
  public:
-  pac ();
-  void calcSP (nr_double_t);
-  void calcDC (void);
-  void calcAC (nr_double_t);
+  acsolver ();
+  acsolver (char *);
+  acsolver (acsolver &);
+  ~acsolver ();
+  void solve (void);
+  void calc (nr_double_t);
+  void init (void);
+  void saveAllResults (nr_double_t);
+
+ private:
+  sweep * swp;
 };
 
-#endif /* __PAC_H__ */
+#endif /* __ACSOLVER_H__ */
+

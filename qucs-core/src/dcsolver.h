@@ -18,20 +18,16 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.h,v 1.7 2004-08-15 12:25:38 ela Exp $
+ * $Id: dcsolver.h,v 1.8 2004-09-06 06:40:07 ela Exp $
  *
  */
 
 #ifndef __DCSOLVER_H__
 #define __DCSOLVER_H__
 
-class analysis;
-class circuit;
-class nodelist;
-class matrix;
-class complex;
+#include "nasolver.h"
 
-class dcsolver : public analysis
+class dcsolver : public nasolver<nr_double_t>
 {
  public:
   dcsolver ();
@@ -39,39 +35,12 @@ class dcsolver : public analysis
   dcsolver (dcsolver &);
   ~dcsolver ();
   void solve (void);
-  void createMatrix (void);
-  void assignVoltageSources (void);
-  circuit * findVoltageSource (int);
-  int countNodes (void);
-  void createGMatrix (void);
   void calc (void);
-  void createBMatrix (void);
-  void createCMatrix (void);
-  void createDMatrix (void);
-  void createIMatrix (void);
-  void createEMatrix (void);
-  void runMNA (void);
   void init (void);
-  void savePreviousIteration (void);
-  void saveResults (void);
-  char * createV (int);
-  char * createI (int);
-  char * createOP (char *, char *);
-  void saveNodeVoltages (void);
-  int checkConvergence (void);
-  void saveVariable (char *, complex);
 
  private:
-  nodelist * nlist;
-  matrix * A;
-  matrix * z;
-  matrix * x;
-  matrix * xprev;
-  matrix * zprev;
-  nr_double_t reltol;
-  nr_double_t abstol;
-  nr_double_t vntol;
   int saveOPs;
 };
 
 #endif /* __DCSOLVER_H__ */
+

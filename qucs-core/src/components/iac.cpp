@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.1 2004-02-17 15:30:58 ela Exp $
+ * $Id: iac.cpp,v 1.2 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -42,4 +42,13 @@ iac::iac () : circuit (2) {
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
   type = CIR_IAC;
+}
+
+void iac::initDC (dcsolver *) {
+  clearI ();
+}
+
+void iac::initAC (acsolver *) {
+  nr_double_t i = getPropertyDouble ("I");
+  setI (1, +i); setI (2, -i);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.h,v 1.4 2004-05-18 15:19:03 ela Exp $
+ * $Id: capacitor.h,v 1.5 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -30,7 +30,8 @@ class capacitor : public circuit
  public:
   capacitor ();
   void calcSP (nr_double_t);
-  void calcDC (void) { }
+  void initDC (dcsolver *);
+  void calcAC (nr_double_t);
 };
 
 #endif /* __CAPACITOR_H__ */

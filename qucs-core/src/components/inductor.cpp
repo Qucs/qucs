@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.5 2004-05-23 15:27:26 ela Exp $
+ * $Id: inductor.cpp,v 1.6 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -41,21 +41,34 @@
 
 inductor::inductor () : circuit (2) {
   type = CIR_INDUCTOR;
-  setVoltageSources (1);
 }
 
 void inductor::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L") / z0;
   complex z = rect (0, 2.0 * M_PI * frequency * l);
-  setS (1, 1,   z / (z + 2.0));
-  setS (2, 2,   z / (z + 2.0));
-  setS (1, 2, 2.0 / (z + 2.0));
-  setS (2, 1, 2.0 / (z + 2.0));
+  setS (1, 1, z / (z + 2)); setS (2, 2, z / (z + 2));
+  setS (1, 2, 2 / (z + 2)); setS (2, 1, 2 / (z + 2));
+}
+
+void inductor::initDC (dcsolver *) {
+  setVoltageSources (1);  
 }
 
 void inductor::calcDC (void) {
+  clearY ();
   setC (1, 1, +1.0); setC (1, 2, -1.0);
   setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+}
+
+void inductor::initAC (acsolver *) {
+  clearC ();
+  clearB ();
+  setVoltageSources (0);  
+}
+
+void inductor::calcAC (nr_double_t frequency) {
+  nr_double_t l = getPropertyDouble ("L") / z0;
+  complex y = rect (0, -1 / (2.0 * M_PI * frequency * l));
+  setY (1, 1, +y); setY (2, 2, +y);
+  setY (1, 2, -y); setY (2, 1, -y);
 }

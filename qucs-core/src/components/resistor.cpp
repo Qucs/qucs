@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.13 2004-08-19 19:44:24 ela Exp $
+ * $Id: resistor.cpp,v 1.14 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -44,10 +44,10 @@ resistor::resistor () : circuit (2) {
 void resistor::calcSP (nr_double_t) {
   // calculate s-parameters
   nr_double_t z = getPropertyDouble ("R") / z0;
-  setS (1, 1, z / (z + 2.0));
-  setS (2, 2, z / (z + 2.0));
-  setS (1, 2, 2.0 / (z + 2.0));
-  setS (2, 1, 2.0 / (z + 2.0));
+  setS (1, 1, z / (z + 2));
+  setS (2, 2, z / (z + 2));
+  setS (1, 2, 2 / (z + 2));
+  setS (2, 1, 2 / (z + 2));
 }
 
 void resistor::calcNoise (nr_double_t) {
@@ -71,7 +71,7 @@ void resistor::initDC (dcsolver *) {
   }
   // for zero resistances create a zero voltage source
   else {
-    setY (1, 1, 0); setY (2, 2, 0); setY (1, 2, 0); setY (2, 1, 0);
+    clearY ();
     setC (1, 1, +1.0); setC (1, 2, -1.0);
     setB (1, 1, +1.0); setB (2, 1, -1.0);
     setVoltageSources (1);
@@ -90,4 +90,12 @@ void resistor::calcDC (void) {
     setY (1, 1, +g); setY (2, 2, +g);
     setY (1, 2, -g); setY (2, 1, -g);
   }
+}
+
+void resistor::calcAC (nr_double_t) {
+  calcDC ();
+}
+
+void resistor::initAC (acsolver *) {
+  initDC (NULL);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.49 2004-09-02 13:39:59 ela Exp $
+ * $Id: check_netlist.cpp,v 1.50 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -475,6 +475,15 @@ struct define_t definition_available[] =
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* ac analysis */
+  { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
   /* subcircuit definition */
   { "Def", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
@@ -634,6 +643,7 @@ static struct special_t checker_specials[] = {
   { "MOSFET", "Type",        { "nfet", "pfet", NULL } },
   { "SP",     "Noise",       { "yes", "no", NULL } },
   { "SP",     "Type",        { "lin", "log", NULL } },
+  { "AC",     "Type",        { "lin", "log", NULL } },
   { "DC",     "saveOPs",     { "yes", "no", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
@@ -1002,6 +1012,8 @@ static int checker_validate_actions (struct definition_t * root) {
 	errors++;
       }
     }
+    // count analyses requiring a DC solution
+    a += checker_count_definitions (root, "AC", 1);
     // check dc-analysis requirements
     c = checker_count_nonlinearities (root);
     n = checker_count_definitions (root, "DC", 1);

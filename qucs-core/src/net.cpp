@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.18 2004-08-15 12:25:38 ela Exp $
+ * $Id: net.cpp,v 1.19 2004-09-06 06:40:07 ela Exp $
  *
  */
 
@@ -441,12 +441,32 @@ int net::checkCircuitChain (void) {
   return error;
 }
 
+/* This function counts the number of signals (ports) within the list
+   of registerd circuits. */
+int net::countPorts (void) {
+  int count = 0;
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isPort ()) count++;
+  }
+  return count;
+}
+
+/* This function counts the number of circuits within the list of
+   registered circuits. */
+int net::countNodes (void) {
+  int count = 0;
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (!c->isPort ()) count += c->getSize ();
+  }
+  return count;
+}
+
 #if DEBUG
 // DEBUG function: Lists the netlist.
 void net::list (void) {
   logprint (LOG_STATUS, "DEBUG: netlist `%s' (%d circuits, "
-	    "%d ports, %d nodes)\n", getName (), root->countPorts (),
-	    root->countPorts (), root->countNodes ());
+	    "%d ports, %d nodes)\n", getName (), countPorts (),
+	    countPorts (), countNodes ());
   // go through circuit list
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     // list each circuit
