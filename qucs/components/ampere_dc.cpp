@@ -37,8 +37,8 @@ Ampere_dc::Ampere_dc()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "I";
-  Model = "I";
+  Sign  = "Idc";
+  Model = "Idc";
   Name  = "I";
 
   Props.append(new Property("I", "1 mA", true, "current in Ampere"));
