@@ -21,6 +21,7 @@
 
 #include <qvbox.h>
 #include <qlayout.h>
+#include <qhbuttongroup.h>
 #include <qvbuttongroup.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>
@@ -116,15 +117,25 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2->setMaximumWidth(25);
     Property2->setText("0");
 
-    if(Diag->Name == "Rect") {
+    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP")){
       QHBox *Box3 = new QHBox(InputGroup);
       Box3->setSpacing(5);
 
       Label4 = new QLabel(tr("y-Axis:"),Box3);
       Label4->setEnabled(false);
       yAxisBox = new QComboBox(Box3);
-      yAxisBox->insertItem(tr("left Axis"));
-      yAxisBox->insertItem(tr("right Axis"));
+      if(Diag->Name == "PS") {
+        yAxisBox->insertItem(tr("smith Axis"));
+        yAxisBox->insertItem(tr("polar Axis"));
+      }
+      else if(Diag->Name == "SP") {
+        yAxisBox->insertItem(tr("polar Axis"));
+        yAxisBox->insertItem(tr("smith Axis"));
+      }
+      else {
+        yAxisBox->insertItem(tr("left Axis"));
+        yAxisBox->insertItem(tr("right Axis"));
+      }
       yAxisBox->setEnabled(false);
       connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
       Box3->setStretchFactor(new QWidget(Box3), 5); // stretchable placeholder
@@ -168,10 +179,10 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   t->addTab(Tab1, tr("Data"));
 
   // ...........................................................
+  if(Diag->Name != "Tab") {
     QWidget *Tab2 = new QWidget(t);
     QGridLayout *gp = new QGridLayout(Tab2,10,2,5,5);
 
-  if(Diag->Name != "Tab") {
     gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), 0,0);
     xLabel = new QLineEdit(Tab2);
     gp->addWidget(xLabel,0,1);
@@ -232,9 +243,36 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       GridLogYl->setChecked(Diag->ylAxis.log);
       GridLogYr->setChecked(Diag->yrAxis.log);
     }
-  }
 
-  t->addTab(Tab2, tr("Properties"));
+    t->addTab(Tab2, tr("Properties"));
+
+  // ...........................................................
+    QVBox *Tab3 = new QVBox(this);
+    Tab1->setSpacing(5);
+
+    QHButtonGroup *axisX = new QHButtonGroup(tr("x-Axis"), Tab3);
+    manualX = new QCheckBox(tr("manual"), axisX);
+    connect(manualX, SIGNAL(stateChanged(int)), SLOT(slotManualX(int)));
+    startX  = new QLineEdit(axisX);
+    stepX   = new QLineEdit(axisX);
+    stopX   = new QLineEdit(axisX);
+
+    QHButtonGroup *axisY = new QHButtonGroup(tr("left y-Axis"), Tab3);
+    manualY = new QCheckBox(tr("manual"), axisY);
+    connect(manualY, SIGNAL(stateChanged(int)), SLOT(slotManualY(int)));
+    startY  = new QLineEdit(axisY);
+    stepY   = new QLineEdit(axisY);
+    stopY   = new QLineEdit(axisY);
+
+    QHButtonGroup *axisZ = new QHButtonGroup(tr("right y-Axis"), Tab3);
+    manualZ = new QCheckBox(tr("manual"), axisZ);
+    connect(manualZ, SIGNAL(stateChanged(int)), SLOT(slotManualZ(int)));
+    startZ  = new QLineEdit(axisZ);
+    stepZ   = new QLineEdit(axisZ);
+    stopZ   = new QLineEdit(axisZ);
+
+    t->addTab(Tab3, tr("Limits"));
+  }
 
   // ...........................................................
   QHBox *Butts = new QHBox(this);

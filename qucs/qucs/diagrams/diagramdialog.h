@@ -78,6 +78,10 @@ public:
   QVBoxLayout *all;   // the mother of all widgets
   QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
   QCheckBox   *GridOn, *GridLogX, *GridLogYl, *GridLogYr;
+  QCheckBox   *manualX, *manualY, *manualZ;
+  QLineEdit   *startX, *stepX, *stopX;
+  QLineEdit   *startY, *stepY, *stopY;
+  QLineEdit   *startZ, *stepZ, *stopZ;
   QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;

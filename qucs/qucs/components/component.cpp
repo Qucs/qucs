@@ -434,15 +434,15 @@ void Component::mirrorX()
   for(pa = Ellips.first(); pa != 0; pa = Ellips.next())
     pa->y = -pa->y - pa->h;
 
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  int dy = metrics.height();    // for "Name"
   // mirror all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
-    pt->y = -pt->y + 10;
+    pt->y = -pt->y + dy;
 
   int tmp = y1;
   y1  = -y2; y2 = -tmp;   // mirror boundings
 
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  int dy = metrics.height();    // for "Name"
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display)  dy += metrics.height();
   if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position

@@ -19,6 +19,7 @@ using namespace std;
 
 #include "diagram.h"
 #include "qucs.h"
+#include "main.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -67,16 +68,16 @@ Diagram::~Diagram()
 // ------------------------------------------------------------
 void Diagram::paint(ViewPainter *p)
 {
-  // paint all lines
-  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
-    p->Painter->setPen(pl->style);
-    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
-  }
-
   // paint all arcs
   for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     p->Painter->setPen(pa->style);
     p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+  }
+
+  // paint all lines
+  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
+    p->Painter->setPen(pl->style);
+    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
 
   QSize s;
@@ -360,10 +361,10 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     xAxis.min = 0.0;
     xAxis.max = 1.0;
   }
-  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
+/*  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
     if(ylAxis.min > yrAxis.min)  ylAxis.min = yrAxis.min;
     if(ylAxis.max < yrAxis.max)  ylAxis.max = yrAxis.max;
-  }
+  }*/
 
   updateGraphData();
 }
@@ -793,4 +794,233 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   }
 
   return false;   // end tag missing
+}
+
+// ------------------------------------------------------------
+void Diagram::createSmithChart(Axis *yAxis, int Mode)
+{
+  xAxis.low = xAxis.min;
+  xAxis.up  = xAxis.max;
+
+  yAxis->low = 0.0;
+  if(yAxis->max > 1.01)  yAxis->up = 1.05*yAxis->max;
+  else  yAxis->up = 1.0;
+
+  if(!xAxis.GridOn)  return;
+
+  bool Zplane = ((Mode & 1) == 1);   // impedance or admittance chart ?
+  bool Above  = ((Mode & 2) == 2);   // paint upper half ?
+  bool Below  = ((Mode & 4) == 4);   // paint lower half ?
+
+  int dx2 = x2>>1;
+
+  int GridX = 4;    // number of arcs with re(z)=const
+  int GridY = 4;    // number of arcs with im(z)=const
+
+  double im, n_cos, n_sin, real, real1, real2, root;
+  double rMAXq = yAxis->up*yAxis->up;
+  int    theta, beta, phi, len, m, x, y;
+
+  // ....................................................
+  // draw arcs with im(z)=const
+
+  for(m=1; m<GridY; m++) {
+    n_sin = M_PI*double(m)/double(GridY);
+    n_cos = cos(n_sin);
+    n_sin = sin(n_sin);
+    im = (1-n_cos)/n_sin * pow(yAxis->up,0.7); // up^0.7 is beauty correction
+    x  = int((1-im)/yAxis->up*dx2);
+    y  = int(im/yAxis->up*x2);
+
+    if(yAxis->up <= 1.0) {       // Smith chart with |r|=1
+      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PI);
+      if(beta<0) beta += 16*360;
+      theta = 16*270-beta;
+    }
+    else {         // Smith chart with |r|>1
+      im = 1/im;
+      real = (rMAXq+1)/(rMAXq-1);
+      root =  real*real - im*im-1;
+      if(root<0) {       // circle lies completely within the Smith chart ?
+        beta = 0;        // yes, ...
+        theta = 16*360;  // ... draw whole circle
+      }
+      else {
+	// calculate both intersections with most outer circle
+	real1 =  sqrt(root)-real;
+	real2 = -sqrt(root)-real;
+
+	root  = (real1+1)*(real1+1) + im*im;
+	n_cos = (real1*real1 + im*im - 1) / root;
+	n_sin = 2*im / root;
+	beta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PI);
+	if(beta<0) beta += 16*360;
+
+	root  = (real2+1)*(real2+1) + im*im;
+	n_cos = (real2*real2 + im*im - 1) / root;
+	n_sin = 2*im / root;
+	theta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PI);
+	if(theta<0) theta += 16*360;
+	theta = theta - beta;   // arc length
+	if(theta < 0) theta = 16*360+theta;
+      }
+    }
+
+    if(Zplane)
+      x += dx2;
+    else {
+      x -= dx2;
+      beta = 16*180 - beta - theta;  // mirror
+      if(beta < 0) beta += 16*360;   // angle has to be > 0
+    }
+
+    if(Above)
+      Arcs.append(new Arc(x, dx2+y, y, y, beta, theta, GridPen));
+    if(Below)
+      Arcs.append(new Arc(x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
+  }
+
+  // ....................................................
+  // draw  arcs with Re(z)=const
+  theta = 0;       // arc length
+  beta  = 16*180;  // start angle
+  if(Above)  { beta = 0;  theta = 16*180; }
+  if(Below)  theta += 16*180;
+
+  for(m=1; m<GridX; m++) {
+    im = m*(yAxis->up+1.0)/GridX - yAxis->up;
+    x  = int(im/yAxis->up*double(dx2));
+    y  = int((1.0-im)/yAxis->up*double(dx2));    // diameter
+
+    if(Zplane)  x += dx2;
+    else  x = 0;
+    if(fabs(fabs(im)-1.0) > 0.4)   // if too near to |r|=1, it looks ugly
+      Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
+
+    if(yAxis->up > 1.0) {  // draw arcs on the rigth-handed side ?
+      im = 1.0-im;
+      im = (rMAXq-1.0)/(im*(im/2.0+1.0)) - 1.0;
+      if(Zplane)  x += y;
+      else  x -= y;
+      if(im >= 1.0)
+	Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
+      else {
+	phi = int(16.0*180.0/M_PI*acos(im));
+	len = 2*(16*180-phi);
+	if(!Zplane)  phi += 16*180;
+	Arcs.append(new Arc(x, dx2+(y>>1), y, y, phi, len, GridPen));
+      }
+    }
+  }
+
+
+  // ....................................................
+  if(yAxis->up > 1.0) {  // draw circle with |r|=1 ?
+    x = int(x2/yAxis->up);
+    Arcs.append(new Arc(dx2-(x>>1), dx2+(x>>1), x, x, beta, theta,
+			QPen(QPen::black,0)));
+
+    // vertical line Re(r)=1 (visible only if |r|>1)
+    x = int(x2/yAxis->up)>>1;
+    y = int(sqrt(rMAXq-1)/yAxis->up*dx2);
+    if(Zplane)  x += dx2;
+    else  x = dx2 - x;
+    if(Above)  m = y;
+    else  m = 0;
+    if(!Below)  y = 0;
+    Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
+
+    if(!Below)
+      Texts.append(new Text(0, y2-4, StringNum(yAxis->up)));
+    else
+      Texts.append(
+	new Text(0, QucsSettings.font.pointSize()+4, StringNum(yAxis->up)));
+  }
+
+}
+
+
+// ------------------------------------------------------------
+void Diagram::createPolarDiagram(Axis *yAxis, int Mode)
+{
+  xAxis.low  = xAxis.min;
+  xAxis.up   = xAxis.max;
+  yAxis->low = 0.0;
+  if(fabs(yAxis->min) > yAxis->max)
+    yAxis->max = fabs(yAxis->min);  // also fit negative values
+
+
+  bool Above  = ((Mode & 1) == 1);  // paint upper half ?
+  bool Below  = ((Mode & 2) == 2);  // paint lower half ?
+
+  int i, z, tmp;
+  if(Above)  i = y2;  else  i = y2>>1;
+  if(Below)  z = 0;   else  z = y2>>1;
+  // y line
+  Lines.append(new Line(x2>>1, i, x2>>1, z, GridPen));
+
+  int len  = 0;       // arc length
+  int beta = 16*180;  // start angle
+  if(Above)  { beta = 0;  len = 16*180; }
+  if(Below)  len += 16*180;
+
+  int phi, tPos;
+  int tHeight = QucsSettings.font.pointSize() + 5;
+  if(!Below)  tPos = (y2>>1) + tHeight - 3;
+  else  tPos = (y2>>1) - 2;
+
+  double Expo, Base;
+  if(xAxis.GridOn) {
+
+    double numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
+    Expo = floor(log10(yAxis->max/numGrids));
+    Base = yAxis->max/numGrids/pow(10.0,Expo); // get first significant digit
+    if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
+      if(Base < 1.5) Base = 1.0;
+      else Base = 2.0;
+    }
+    else {
+      if(Base < 7.5) Base = 5.0;
+      else { Base = 1.0; Expo++; }
+    }
+    double GridStep = Base * pow(10.0,Expo); // grid distance in real values
+    numGrids -= floor(numGrids - yAxis->max/GridStep); // correct num errors
+    yAxis->up = GridStep*numGrids;
+    double zD = double(x2) / numGrids;   // grid distance in pixel
+
+
+    double zDstep = zD;
+    double GridNum  = 0.0;
+    for(i=int(numGrids); i>1; i--) {    // create all grid circles
+      z = int(zD);
+      GridNum += GridStep;
+      if(fabs(Expo) < 3.0)
+        Texts.append(new Text(((x2+z)>>1)-10, tPos, StringNum(GridNum)));
+      else
+        Texts.append(new Text(((x2+z)>>1)-10, tPos,
+			 StringNum(GridNum, 'e', 0)));
+
+      phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/zD));
+      if(!Below)  tmp = beta + phi;
+      else  tmp = beta;
+      Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, tmp, len-phi,
+			  GridPen));
+      zD += zDstep;
+    }
+  }
+  else {
+    Expo = floor(log10(yAxis->max));
+    Base = ceil(yAxis->max/pow(10.0,Expo) - 0.01);
+    yAxis->up = Base * pow(10.0,Expo);  // separate Base * 10^Expo
+  }
+
+  // create outer circle
+  if(fabs(Expo) < 3.0)
+    Texts.append(new Text(x2-8, tPos, StringNum(yAxis->up)));
+  else
+    Texts.append(new Text(x2-8, tPos, StringNum(yAxis->up, 'e', 0)));
+  phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/double(x2)));
+  if(!Below)  tmp = phi;
+  else  tmp = 0;
+  Arcs.append(new Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(QPen::black,0)));
 }
