@@ -1,5 +1,5 @@
 /*
- * jfet.h - jfet class definitions
+ * diode.h - diode class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,29 +18,27 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.h,v 1.1 2004-06-05 12:20:38 ela Exp $
+ * $Id: diode.h,v 1.1 2004-06-19 07:34:55 ela Exp $
  *
  */
 
-#ifndef __JFET_H__
-#define __JFET_H__
+#ifndef __DIODE_H__
+#define __DIODE_H__
 
 class net;
 
-class jfet : public circuit
+class diode : public circuit
 {
  public:
-  jfet ();
+  diode ();
   void calcSP (nr_double_t);
   void calcDC (void);
   void initDC (dcsolver *);
   void calcOperatingPoints (void);
 
  private:
-  nr_double_t UgsPrev;
-  nr_double_t UgdPrev;
+  nr_double_t Uprev;
   circuit * rs;
-  circuit * rd;
 };
 
-#endif /* __JFET_H__ */
+#endif /* __DIODE_H__ */

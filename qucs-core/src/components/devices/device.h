@@ -1,5 +1,5 @@
 /*
- * diode.h - diode class definitions
+ * device.h - device class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,34 +18,25 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.h,v 1.7 2004-06-04 16:01:47 ela Exp $
+ * $Id: device.h,v 1.1 2004-06-19 07:34:55 ela Exp $
  *
  */
 
-#ifndef __DIODE_H__
-#define __DIODE_H__
+#ifndef __DEVICE_H__
+#define __DEVICE_H__
 
+class circuit;
 class net;
 
-class diode : public circuit
+class device
 {
  public:
-  diode ();
-  void calcSP (nr_double_t);
-  void calcDC (void);
-  void initDC (dcsolver *);
-  void calcOperatingPoints (void);
-
   static nr_double_t pnVoltage (nr_double_t, nr_double_t,
 				nr_double_t, nr_double_t);
   static circuit * splitResistance (circuit *, circuit *, net *,
 				    char *, char *, int);
   static void disableResistance (circuit *, circuit *, net *, int);
   static void applyResistance (circuit *, nr_double_t);
-
- private:
-  nr_double_t Uprev;
-  circuit * rs;
 };
 
-#endif /* __DIODE_H__ */
+#endif /* __DEVICE_H__ */

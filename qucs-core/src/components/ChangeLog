@@ -1,3 +1,11 @@
+2004-06-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/device.h (class device): New class containing some
+	arbitrary routines for non-linear devices.
+
+	* devices/jfet.cpp: Implemented junction capacitances using
+	the model parameter Fc.
+
 2004-06-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* jfet.cpp: Implemented S-parameters and operating points of

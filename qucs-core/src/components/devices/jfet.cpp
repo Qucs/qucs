@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.3 2004-06-09 23:55:41 ela Exp $
+ * $Id: jfet.cpp,v 1.1 2004-06-19 07:34:55 ela Exp $
  *
  */
 
@@ -40,8 +40,12 @@
 #include "dcsolver.h"
 #include "component_id.h"
 #include "constants.h"
-#include "diode.h"
+#include "device.h"
 #include "jfet.h"
+
+#define NODE_G 1 /* gate node   */
+#define NODE_D 2 /* drain node  */
+#define NODE_S 3 /* source node */
 
 jfet::jfet () : circuit (3) {
   rs = rd = NULL;
@@ -61,15 +65,15 @@ void jfet::calcSP (nr_double_t frequency) {
   complex Yds = gds;
 
   matrix y = matrix (3); 
-  y.set (1, 1, Ygd + Ygs);
-  y.set (1, 2, -Ygd);
-  y.set (1, 3, -Ygs);
-  y.set (2, 1, gm - Ygd);
-  y.set (2, 2, Ygd + Yds);
-  y.set (2, 3, -Yds - gm);
-  y.set (3, 1, -Ygs - gm);
-  y.set (3, 2, -Yds);
-  y.set (3, 3, Ygs + Yds + gm);
+  y.set (NODE_G, NODE_G, Ygd + Ygs);
+  y.set (NODE_G, NODE_D, -Ygd);
+  y.set (NODE_G, NODE_S, -Ygs);
+  y.set (NODE_D, NODE_G, gm - Ygd);
+  y.set (NODE_D, NODE_D, Ygd + Yds);
+  y.set (NODE_D, NODE_S, -Yds - gm);
+  y.set (NODE_S, NODE_G, -Ygs - gm);
+  y.set (NODE_S, NODE_D, -Yds);
+  y.set (NODE_S, NODE_S, Ygs + Yds + gm);
   matrix s = ytos (y);
 
   setS (1, 1, s.get (1, 1));
@@ -86,36 +90,36 @@ void jfet::calcSP (nr_double_t frequency) {
 void jfet::initDC (dcsolver * solver) {
 
   // initialize starting values
-  setV (1, 0.8);
-  setV (2, 0.0);
-  setV (3, 0.0);
-  UgdPrev = real (getV (1) - getV (2));
-  UgsPrev = real (getV (1) - getV (3));
+  setV (NODE_G, 0.8);
+  setV (NODE_D, 0.0);
+  setV (NODE_S, 0.0);
+  UgdPrev = real (getV (NODE_G) - getV (NODE_D));
+  UgsPrev = real (getV (NODE_G) - getV (NODE_S));
 
   // possibly insert series resistance at source
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
-    rs = diode::splitResistance (this, rs, solver->getNet (),
-				 "Rs", "source", 3);
-    diode::applyResistance (rs, Rs);
+    rs = device::splitResistance (this, rs, solver->getNet (),
+				  "Rs", "source", NODE_S);
+    device::applyResistance (rs, Rs);
   }
-  // no series resistance
+  // no series resistance at source
   else {
-    diode::disableResistance (this, rs, solver->getNet (), 2);
+    device::disableResistance (this, rs, solver->getNet (), NODE_S);
   }
 
   // possibly insert series resistance at drain
   nr_double_t Rd = getPropertyDouble ("Rd");
   if (Rd != 0) {
     // create additional circuit if necessary and reassign nodes
-    rd = diode::splitResistance (this, rd, solver->getNet (),
-				 "Rd", "drain", 2);
-    diode::applyResistance (rd, Rd);
+    rd = device::splitResistance (this, rd, solver->getNet (),
+				  "Rd", "drain", NODE_D);
+    device::applyResistance (rd, Rd);
   }
-  // no series resistance
+  // no series resistance at drain
   else {
-    diode::disableResistance (this, rd, solver->getNet (), 2);
+    device::disableResistance (this, rd, solver->getNet (), NODE_D);
   }
 }
 
@@ -131,14 +135,14 @@ void jfet::calcDC (void) {
 
   T = -K + 26.5;
   Ut = T * kB / Q;
-  Ugd = real (getV (1) - getV (2));
-  Ugs = real (getV (1) - getV (3));
+  Ugd = real (getV (NODE_G) - getV (NODE_D));
+  Ugs = real (getV (NODE_G) - getV (NODE_S));
 
   // critical voltage necessary for bad start values
   UgsCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
   UgdCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
-  UgsPrev = Ugs = diode::pnVoltage (Ugs, UgsPrev, Ut * n, UgsCrit);
-  UgdPrev = Ugd = diode::pnVoltage (Ugd, UgdPrev, Ut * n, UgdCrit);
+  UgsPrev = Ugs = device::pnVoltage (Ugs, UgsPrev, Ut * n, UgsCrit);
+  UgdPrev = Ugd = device::pnVoltage (Ugd, UgdPrev, Ut * n, UgdCrit);
 
   Uds = Ugs - Ugd;
 
@@ -209,13 +213,19 @@ void jfet::calcDC (void) {
   IeqD = Igd - ggd * Ugd;
   IeqS = Ids - gm * Ugs - gds * Uds;
 
-  setI (1, -IeqG - IeqD);
-  setI (2, +IeqD - IeqS);
-  setI (3, +IeqG + IeqS);
+  setI (NODE_G, -IeqG - IeqD);
+  setI (NODE_D, +IeqD - IeqS);
+  setI (NODE_S, +IeqG + IeqS);
 
-  setY (1, 1, ggs + ggd); setY (1, 2, -ggd); setY (1, 3, -ggs);
-  setY (2, 1, -ggd + gm); setY (2, 2, gds + ggd); setY (2, 3, -gm - gds);
-  setY (3, 1, -ggs - gm); setY (3, 2, -gds); setY (3, 3, ggs + gds + gm);
+  setY (NODE_G, NODE_G, ggs + ggd);
+  setY (NODE_G, NODE_D, -ggd);
+  setY (NODE_G, NODE_S, -ggs);
+  setY (NODE_D, NODE_G, -ggd + gm);
+  setY (NODE_D, NODE_D, gds + ggd);
+  setY (NODE_D, NODE_S, -gm - gds);
+  setY (NODE_S, NODE_G, -ggs - gm);
+  setY (NODE_S, NODE_D, -gds);
+  setY (NODE_S, NODE_S, ggs + gds + gm);
 }
 
 void jfet::calcOperatingPoints (void) {
@@ -225,28 +235,29 @@ void jfet::calcOperatingPoints (void) {
   nr_double_t Cgd0 = getPropertyDouble ("Cgd");
   nr_double_t Cgs0 = getPropertyDouble ("Cgs");
   nr_double_t Pb   = getPropertyDouble ("Pb");
+  nr_double_t Fc   = getPropertyDouble ("Fc");
   
   nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd;
 
   T = -K + 26.5;
   Ut = kB * T / Q;
-  Ugd = real (getV (1) - getV (2));
-  Ugs = real (getV (1) - getV (3));
+  Ugd = real (getV (NODE_G) - getV (NODE_D));
+  Ugs = real (getV (NODE_G) - getV (NODE_S));
 
   ggs = Is / Ut / n * exp (Ugs / Ut / n);
   Igs = Is * (exp (Ugs / Ut / n) - 1);
   ggd = Is / Ut / n * exp (Ugd / Ut / n);
   Igd = Is * (exp (Ugd / Ut / n) - 1);
 
-  if (Ugd < 0)
+  if (Ugd <= Fc * Pb)
     Cgd = Cgd0 * pow (1 - Ugd / Pb, -z);
   else
-    Cgd = Cgd0 * (1 + z * Ugd / Pb);
+    Cgd = Cgd0 / pow (1 - Fc, z) * (1 + z * (Ugd - Fc * Pb) / Pb / (1 - Fc));
 
-  if (Ugs < 0)
+  if (Ugs <= Fc * Pb)
     Cgs = Cgs0 * pow (1 - Ugs / Pb, -z);
   else
-    Cgs = Cgs0 * (1 + z * Ugs / Pb);
+    Cgs = Cgs0 / pow (1 - Fc, z) * (1 + z * (Ugs - Fc * Pb) / Pb / (1 - Fc));
 
   setOperatingPoint ("ggs", ggs);
   setOperatingPoint ("ggd", ggd);
