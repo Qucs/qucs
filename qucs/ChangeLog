@@ -1,3 +1,13 @@
+2004-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* bitmaps/Makefile.am (XPMS): Added missing pixmaps.
+
+	* qucs_de.ts: Reverting last (wrong) patch and adding new
+	translations.
+
+	* Makefile.am (%.ts): Using the path transformation command
+	for passing file names to 'lupdate'.
+
 2004-02-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* components/msmbend.cpp, components/msopen.cpp added

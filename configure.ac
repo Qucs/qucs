@@ -144,6 +144,17 @@ fi
 AC_SUBST(QT_LDFLAGS)
 AC_LANG(C)
 
+# Check for path transformation.
+case $build_os in
+mingw* | cygwin*)
+  PATHXFORM="cygpath -w"
+  ;;
+*)
+  PATHXFORM="echo"
+  ;;
+esac
+AC_SUBST(PATHXFORM)
+
 # Create path info.
 BITMAP_PATH="$prefix/share/qucs/bitmaps/"
 AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"],
