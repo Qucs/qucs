@@ -18,19 +18,27 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
+#include <qpainter.h>
+
 
 /**
   *@author Michael Margraf
   */
 
+enum ElementType {isDummy, isComponent, isWire, isDiagram};
+  
 class Element {
 public: 
 	Element();
-	~Element();
+	virtual ~Element();
+
+  virtual void paintScheme(QPainter *p);
+  virtual void setCenter(int x, int y, bool relative=false);
 
   bool isSelected;
-  bool isWire;    // is it wire or component ?
-  int  x1, y1, x2, y2;  // boundings
+
+  ElementType  Type;    // whether it is Component, Wire, ...
+  int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
 };
 
 #endif

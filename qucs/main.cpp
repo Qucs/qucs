@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
   a.setMainWidget(qucs);
 
   qucs->show();
+//  a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
 
   return a.exec();
 }
