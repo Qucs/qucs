@@ -56,19 +56,34 @@ Substrate::Substrate()
   Model = "SUBST";
   Name  = "Subst";
 
-  Props.append(new Property("er", "9.8", true, QObject::tr("relative permittivity")));
-  Props.append(new Property("h", "1 mm", true, QObject::tr("thickness in meters")));
-  Props.append(new Property("t", "35 um", true, QObject::tr("thickness of metalization")));
-  Props.append(new Property("tand", "1e-3", true, QObject::tr("loss tangent")));
-  Props.append(new Property("rho", "0.022e-6", true, QObject::tr("specific resistance of metal")));
-  Props.append(new Property("D", "0.15e-6", true, QObject::tr("rms substrate roughness")));
+  Props.append(new Property("er", "9.8", true,
+		QObject::tr("relative permittivity")));
+  Props.append(new Property("h", "1 mm", true,
+		QObject::tr("thickness in meters")));
+  Props.append(new Property("t", "35 um", true,
+		QObject::tr("thickness of metalization")));
+  Props.append(new Property("tand", "1e-3", true,
+		QObject::tr("loss tangent")));
+  Props.append(new Property("rho", "0.022e-6", true,
+		QObject::tr("specific resistance of metal")));
+  Props.append(new Property("D", "0.15e-6", true,
+		QObject::tr("rms substrate roughness")));
 }
 
 Substrate::~Substrate()
 {
 }
 
-Substrate* Substrate::newOne()
+Component* Substrate::newOne()
 {
   return new Substrate();
+}
+
+Component* Substrate::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Substrate");
+  BitmapFile = "substrate";
+
+  if(getNewOne)  return new Substrate();
+  return 0;
 }

@@ -54,15 +54,25 @@ Subcircuit::Subcircuit(int No)
   Model = QString("Sub")+QString::number(No);
   Name  = "SUB";
 
-  Props.append(new Property("File", "test.sch", true, QObject::tr("name of qucs schematic file")));
+  Props.append(new Property("File", "test.sch", true,
+		QObject::tr("name of qucs schematic file")));
 }
 
 Subcircuit::~Subcircuit()
 {
 }
 
-Subcircuit* Subcircuit::newOne()
+Component* Subcircuit::newOne()
 {
   int z = Sign.mid(3).toInt();
   return new Subcircuit(z);
+}
+
+Component* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Subcircuit");
+  BitmapFile = "";
+
+  if(getNewOne)  return new Subcircuit(1);
+  return 0;
 }

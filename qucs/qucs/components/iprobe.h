@@ -23,9 +23,10 @@
 
 class iProbe : public Component  {
 public:
-	iProbe();
-	~iProbe();
-  iProbe* newOne();
+  iProbe();
+  ~iProbe();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

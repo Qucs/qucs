@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -60,7 +60,16 @@ AC_Sim::~AC_Sim()
 {
 }
 
-AC_Sim* AC_Sim::newOne()
+Component* AC_Sim::newOne()
 {
   return new AC_Sim();
+}
+
+Component* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("ac simulation");
+  BitmapFile = "ac";
+
+  if(getNewOne)  return new AC_Sim();
+  return 0;
 }

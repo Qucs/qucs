@@ -44,15 +44,26 @@ Phaseshifter::Phaseshifter()
   Model = "PShift";
   Name  = "X";
 
-  Props.append(new Property("phi", "90", true, QObject::tr("phase shift in degree")));
-  Props.append(new Property("Zref", "50 Ohm", false, QObject::tr("reference impedance")));
+  Props.append(new Property("phi", "90", true,
+		QObject::tr("phase shift in degree")));
+  Props.append(new Property("Zref", "50 Ohm", false,
+		QObject::tr("reference impedance")));
 }
 
 Phaseshifter::~Phaseshifter()
 {
 }
 
-Phaseshifter* Phaseshifter::newOne()
+Component* Phaseshifter::newOne()
 {
   return new Phaseshifter();
+}
+
+Component* Phaseshifter::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Phase Shifter");
+  BitmapFile = "pshifter";
+
+  if(getNewOne)  return new Phaseshifter();
+  return 0;
 }

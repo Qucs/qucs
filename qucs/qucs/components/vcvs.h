@@ -23,9 +23,10 @@
 
 class VCVS : public Component  {
 public:
-	VCVS();
-	~VCVS();
-  VCVS* newOne();
+  VCVS();
+  ~VCVS();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

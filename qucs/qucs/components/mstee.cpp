@@ -49,17 +49,30 @@ MStee::MStee()
   Model = "MTEE";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
-  Props.append(new Property("W1", "1 mm", true, QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "1 mm", true, QObject::tr("width of line 2")));
-  Props.append(new Property("W3", "2 mm", true, QObject::tr("width of line 3")));
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("substrate")));
+  Props.append(new Property("W1", "1 mm", true,
+		QObject::tr("width of line 1")));
+  Props.append(new Property("W2", "1 mm", true,
+		QObject::tr("width of line 2")));
+  Props.append(new Property("W3", "2 mm", true,
+		QObject::tr("width of line 3")));
 }
 
 MStee::~MStee()
 {
 }
 
-MStee* MStee::newOne()
+Component* MStee::newOne()
 {
   return new MStee();
+}
+
+Component* MStee::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Microstrip Tee");
+  BitmapFile = "mstee";
+
+  if(getNewOne)  return new MStee();
+  return 0;
 }

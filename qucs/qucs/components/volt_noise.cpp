@@ -43,17 +43,30 @@ Volt_noise::Volt_noise()
   Model = "Vnoise";
   Name  = "V";
 
-  Props.append(new Property("u", "1e-6", true, QObject::tr("equivalent voltage density in V/sqrt(Hz)")));
-  Props.append(new Property("e", "0", false, QObject::tr("frequency exponent")));
-  Props.append(new Property("c", "1", false, QObject::tr("frequency coefficient")));
-  Props.append(new Property("a", "0", false, QObject::tr("additive frequency term")));
+  Props.append(new Property("u", "1e-6", true,
+		QObject::tr("equivalent voltage density in V/sqrt(Hz)")));
+  Props.append(new Property("e", "0", false,
+		QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", false,
+		QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", false,
+		QObject::tr("additive frequency term")));
 }
 
 Volt_noise::~Volt_noise()
 {
 }
 
-Volt_noise* Volt_noise::newOne()
+Component* Volt_noise::newOne()
 {
   return new Volt_noise();
+}
+
+Component* Volt_noise::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Noise Voltage Source");
+  BitmapFile = "noise_volt";
+
+  if(getNewOne)  return new Volt_noise();
+  return 0;
 }

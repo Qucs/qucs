@@ -53,7 +53,16 @@ DC_Sim::~DC_Sim()
 {
 }
 
-DC_Sim* DC_Sim::newOne()
+Component* DC_Sim::newOne()
 {
   return new DC_Sim();
+}
+
+Component* DC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("dc simulation");
+  BitmapFile = "dc";
+
+  if(getNewOne)  return new DC_Sim();
+  return 0;
 }

@@ -23,9 +23,10 @@
 
 class symTrafo : public Component  {
 public:
-	symTrafo();
-	~symTrafo();
-  symTrafo* newOne();
+  symTrafo();
+  ~symTrafo();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

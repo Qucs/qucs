@@ -23,9 +23,10 @@
 
 class MScorner : public Component  {
 public:
-	MScorner();
-	~MScorner();
-  MScorner* newOne();
+  MScorner();
+  ~MScorner();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

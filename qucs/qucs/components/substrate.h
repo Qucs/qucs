@@ -23,9 +23,10 @@
 
 class Substrate : public Component  {
 public:
-	Substrate();
-	~Substrate();
-  Substrate* newOne();
+  Substrate();
+  ~Substrate();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

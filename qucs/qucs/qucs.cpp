@@ -23,6 +23,7 @@
 #include "qucs.h"
 #include "qucsview.h"
 #include "wire.h"
+#include "components/components.h"
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
 #include "dialogs/messagebox.h"
@@ -1204,101 +1205,79 @@ void QucsApp::slotProjNewButt()
                     tr("Cannot create project directory !"));
 }
 
+// ######################################################################
+// The following arrays contains the components that appear in the
+// component listview.
+typedef Component*  (*pInfoFunc) (QString&, char* &, bool);
+pInfoFunc Simulations[7] =
+  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
+   &HB_Sim::info, &Param_Sweep::info, 0};
+
+pInfoFunc lumpedComponents[18] =
+  {&Resistor::info, &ResistorUS::info, &Capacitor::info, &Inductor::info,
+   &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
+   &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
+   &Isolator::info, &Circulator::info, &Gyrator::info, &Phaseshifter::info,
+   &iProbe::info, 0};
+
+pInfoFunc Sources[12] =
+  {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
+   &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
+   &CCCS::info, &VCVS::info, &CCVS::info, 0};
+
+pInfoFunc TransmissionLines[12] =
+  {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
+   &MSstep::info, &MScorner::info, &MStee::info, &MScross::info,
+   &MSmbend::info, &MSopen::info, &Coplanar::info, 0};
+
+pInfoFunc nonlinearComps[9] =
+  {&Diode::info, &BJT::info, &BJT::info_pnp, &JFET::info, &JFET::info_p,
+   &MOSFET::info, &MOSFET::info_p, &MOSFET_depl::info, 0};
+
 // #######################################################################
 // Whenever the Component Library ComboBox is changed, this slot fills the Component IconView
 // with the appropriat components.
 void QucsApp::slotSetCompView(int index)
 {
+int i=-1;
+char *File;
+QString Name;
+Component*  (*Infos) (QString&, char* &, bool);
+
   CompComps->clear();   // clear the IconView
   switch(index) {
     case COMBO_passive:
-      new QIconViewItem(CompComps, tr("Resistor"),
-		QImage(BITMAPDIR "resistor.xpm"));
-      new QIconViewItem(CompComps, tr("Resistor US"),
-		QImage(BITMAPDIR "resistor_us.xpm"));
-      new QIconViewItem(CompComps, tr("Capacitor"),
-		QImage(BITMAPDIR "capacitor.xpm"));
-      new QIconViewItem(CompComps, tr("Inductor"),
-		QImage(BITMAPDIR "inductor.xpm"));
-      new QIconViewItem(CompComps, tr("Ground"),
-		QImage(BITMAPDIR "ground.xpm"));
-      new QIconViewItem(CompComps, tr("Subcircuit Port"),
-		QImage(BITMAPDIR "port.xpm"));
-      new QIconViewItem(CompComps, tr("Transformer"),
-		QImage(BITMAPDIR "transformer.xpm"));
-      new QIconViewItem(CompComps, tr("symmetric Transformer"),
-		QImage(BITMAPDIR "symtrans.xpm"));
-      new QIconViewItem(CompComps, tr("dc Block"),
-		QImage(BITMAPDIR "dcblock.xpm"));
-      new QIconViewItem(CompComps, tr("dc Feed"),
-		QImage(BITMAPDIR "dcfeed.xpm"));
-      new QIconViewItem(CompComps, tr("Bias T"),
-		QImage(BITMAPDIR "biast.xpm"));
-      new QIconViewItem(CompComps, tr("Attenuator"),
-		QImage(BITMAPDIR "attenuator.xpm"));
-      new QIconViewItem(CompComps, tr("Isolator"),
-		QImage(BITMAPDIR "isolator.xpm"));
-      new QIconViewItem(CompComps, tr("Circulator"),
-		QImage(BITMAPDIR "circulator.xpm"));
-      new QIconViewItem(CompComps, tr("Gyrator"),
-		QImage(BITMAPDIR "gyrator.xpm"));
-      new QIconViewItem(CompComps, tr("Phase Shifter"),
-		QImage(BITMAPDIR "pshifter.xpm"));
-      new QIconViewItem(CompComps, tr("Current Probe"),
-		QImage(BITMAPDIR "iprobe.xpm"));
-      break;
+	 while(lumpedComponents[++i] != 0) {
+	   Infos = lumpedComponents[i];
+	   (*Infos) (Name, File, false);
+	   new QIconViewItem(CompComps, Name,
+			QImage(BITMAPDIR+QString(File)+".xpm"));
+	 }
+	 break;
     case COMBO_Sources:
-      new QIconViewItem(CompComps, tr("dc Voltage Source"),
-		QImage(BITMAPDIR "dc_voltage.xpm"));
-      new QIconViewItem(CompComps, tr("dc Current Source"),
-		QImage(BITMAPDIR "dc_current.xpm"));
-      new QIconViewItem(CompComps, tr("ac Voltage Source"),
-		QImage(BITMAPDIR "ac_voltage.xpm"));
-      new QIconViewItem(CompComps, tr("ac Current Source"),
-		QImage(BITMAPDIR "ac_current.xpm"));
-      new QIconViewItem(CompComps, tr("Power Source"),
-		QImage(BITMAPDIR "source.xpm"));
-      new QIconViewItem(CompComps, tr("Noise Voltage Source"),
-		QImage(BITMAPDIR "noise_volt.xpm"));
-      new QIconViewItem(CompComps, tr("Noise Current Source"),
-		QImage(BITMAPDIR "noise_current.xpm"));
-      new QIconViewItem(CompComps, tr("Voltage Controlled Current Source"),
-		QImage(BITMAPDIR "vccs.xpm"));
-      new QIconViewItem(CompComps, tr("Current Controlled Current Source"),
-		QImage(BITMAPDIR "cccs.xpm"));
-      new QIconViewItem(CompComps, tr("Voltage Controlled Voltage Source"),
-		QImage(BITMAPDIR "vcvs.xpm"));
-      new QIconViewItem(CompComps, tr("Current Controlled Voltage Source"),
-		QImage(BITMAPDIR "ccvs.xpm"));
-      break;
+	 while(Sources[++i] != 0) {
+	   Infos = Sources[i];
+	   (*Infos) (Name, File, false);
+	   new QIconViewItem(CompComps, Name,
+			QImage(BITMAPDIR+QString(File)+".xpm"));
+	 }
+	 break;
     case COMBO_TLines:
-      new QIconViewItem(CompComps, tr("Transmission Line"),
-		QImage(BITMAPDIR "tline.xpm"));
-      new QIconViewItem(CompComps, tr("Substrate"),
-		QImage(BITMAPDIR "substrate.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Line"),
-		QImage(BITMAPDIR "msline.xpm"));
-      new QIconViewItem(CompComps, tr("Coupled Microstrip Line"),
-		QImage(BITMAPDIR "mscoupled.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Step"),
-		QImage(BITMAPDIR "msstep.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Corner"),
-		QImage(BITMAPDIR "mscorner.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Tee"),
-		QImage(BITMAPDIR "mstee.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Cross"),
-		QImage(BITMAPDIR "mscross.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Mitered Bend"),
-		QImage(BITMAPDIR "msmbend.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Open"),
-		QImage(BITMAPDIR "msopen.xpm"));
-      new QIconViewItem(CompComps, tr("Coplanar Line"),
-		QImage(BITMAPDIR "coplanar.xpm"));
-      break;
+	 while(TransmissionLines[++i] != 0) {
+	   Infos = TransmissionLines[i];
+	   (*Infos) (Name, File, false);
+	   new QIconViewItem(CompComps, Name,
+			QImage(BITMAPDIR+QString(File)+".xpm"));
+	 }
+	 break;
     case COMBO_nonlinear:
-      new QIconViewItem(CompComps, tr("Diode"),
-		QImage(BITMAPDIR "diode.xpm"));
-      break;
+	 while(nonlinearComps[++i] != 0) {
+	   Infos = nonlinearComps[i];
+	   (*Infos) (Name, File, false);
+	   new QIconViewItem(CompComps, Name,
+			QImage(BITMAPDIR+QString(File)+".xpm"));
+	 }
+	 break;
     case COMBO_File:
       new QIconViewItem(CompComps, tr("1-port S parameter file"),
 		QImage(BITMAPDIR "spfile1.xpm"));
@@ -1314,19 +1293,13 @@ void QucsApp::slotSetCompView(int index)
 		QImage(BITMAPDIR "spfile6.xpm"));
       break;
     case COMBO_Sims:
-      new QIconViewItem(CompComps, tr("dc simulation"),
-		QImage(BITMAPDIR "dc.xpm"));
-      new QIconViewItem(CompComps, tr("Transient simulation"),
-		QImage(BITMAPDIR "tran.xpm"));
-      new QIconViewItem(CompComps, tr("ac simulation"),
-		QImage(BITMAPDIR "ac.xpm"));
-      new QIconViewItem(CompComps, tr("S-parameter simulation"),
-		QImage(BITMAPDIR "sparameter.xpm"));
-      new QIconViewItem(CompComps, tr("Harmonic balance"),
-		QImage(BITMAPDIR "hb.xpm"));
-      new QIconViewItem(CompComps, tr("Parameter sweep"),
-		QImage(BITMAPDIR "sweep.xpm"));
-      break;
+	 while(Simulations[++i] != 0) {
+	   Infos = Simulations[i];
+	   (*Infos) (Name, File, false);
+	   new QIconViewItem(CompComps, Name,
+			QImage(BITMAPDIR+QString(File)+".xpm"));
+	 }
+	 break;
     case COMBO_Paints:
       new QIconViewItem(CompComps, tr("Line"),
 		QImage(BITMAPDIR "line.xpm"));
@@ -1384,83 +1357,27 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   }
   activeAction = 0;
 
+
+  Component*  (*Infos) (QString&, char* &, bool) = 0;
   switch(CompChoose->currentItem()) {
     case COMBO_passive:
-          switch(CompComps->index(item)) {
-              case 0: view->selComp = new Resistor();    break;
-              case 1: view->selComp = new ResistorUS();  break;
-              case 2: view->selComp = new Capacitor();   break;
-              case 3: view->selComp = new Inductor();    break;
-              case 4: view->selComp = new Ground();      break;
-              case 5: view->selComp = new SubCirPort();  break;
-              case 6: view->selComp = new Transformer(); break;
-              case 7: view->selComp = new symTrafo();    break;
-              case 8: view->selComp = new dcBlock();     break;
-              case 9: view->selComp = new dcFeed();      break;
-              case 10: view->selComp = new BiasT();      break;
-              case 11: view->selComp = new Attenuator(); break;
-              case 12: view->selComp = new Isolator();   break;
-              case 13: view->selComp = new Circulator(); break;
-              case 14: view->selComp = new Gyrator();    break;
-              case 15: view->selComp = new Phaseshifter(); break;
-              case 16: view->selComp = new iProbe();     break;
-          }
-          break;
+	 Infos = lumpedComponents[CompComps->index(item)];
+	 break;
     case COMBO_Sources:
-          switch(CompComps->index(item)) {
-              case 0: view->selComp = new Volt_dc();   break;
-              case 1: view->selComp = new Ampere_dc(); break;
-              case 2: view->selComp = new Volt_ac();   break;
-              case 3: view->selComp = new Ampere_ac(); break;
-              case 4: view->selComp = new Source_ac();    break;
-              case 5: view->selComp = new Volt_noise();   break;
-              case 6: view->selComp = new Ampere_noise(); break;
-              case 7: view->selComp = new VCCS();  break;
-              case 8: view->selComp = new CCCS();  break;
-              case 9: view->selComp = new VCVS();  break;
-              case 10: view->selComp = new CCVS(); break;
-          }
-          break;
+	 Infos = Sources[CompComps->index(item)];
+	 break;
     case COMBO_TLines:
-          switch(CompComps->index(item)) {
-              case  0: view->selComp = new TLine();     break;
-              case  1: view->selComp = new Substrate(); break;
-              case  2: view->selComp = new MSline();    break;
-              case  3: view->selComp = new MScoupled(); break;
-              case  4: view->selComp = new MSstep();    break;
-              case  5: view->selComp = new MScorner();  break;
-              case  6: view->selComp = new MStee();     break;
-              case  7: view->selComp = new MScross();   break;
-              case  8: view->selComp = new MSmbend();   break;
-              case  9: view->selComp = new MSopen();    break;
-              case 10: view->selComp = new Coplanar();  break;
-          }
-          break;
+	 Infos = TransmissionLines[CompComps->index(item)];
+	 break;
     case COMBO_nonlinear:
-          switch(CompComps->index(item)) {
-              case 0: view->selComp = new Diode();  break;
-          }
-          break;
+	 Infos = nonlinearComps[CompComps->index(item)];
+	 break;
     case COMBO_File:
-          switch(CompComps->index(item)) {
-              case 0: view->selComp = new SParamFile(1);  break;
-              case 1: view->selComp = new SParamFile(2);  break;
-              case 2: view->selComp = new SParamFile(3);  break;
-              case 3: view->selComp = new SParamFile(4);  break;
-              case 4: view->selComp = new SParamFile(5);  break;
-              case 5: view->selComp = new SParamFile(6);  break;
-          }
-          break;
+	 view->selComp = new SParamFile(CompComps->index(item)+1);
+	 break;
     case COMBO_Sims:
-          switch(CompComps->index(item)) {
-              case 0: view->selComp = new DC_Sim();  break;
-              case 1: view->selComp = new TR_Sim();  break;
-              case 2: view->selComp = new AC_Sim();  break;
-              case 3: view->selComp = new SP_Sim();  break;
-              case 4: view->selComp = new HB_Sim();  break;
-              case 5: view->selComp = new Param_Sweep();  break;
-          }
-          break;
+	 Infos = Simulations[CompComps->index(item)];
+	 break;
     case COMBO_Paints:
           switch(CompComps->index(item)) {
               case 0: view->selPaint = new GraphicLine();    break;
@@ -1493,7 +1410,12 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
           view->MouseReleaseAction = &QucsView::MouseDoNothing;
           view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
           return;
+    default:  return;   // do not run into uninitialized "Infos"
   }
+
+  char *Dummy2;
+  QString Dummy1;
+  view->selComp = (*Infos) (Dummy1, Dummy2, true);
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;

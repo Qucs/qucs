@@ -60,7 +60,8 @@ VCCS::VCCS()
   Model = "VCCS";
   Name  = "SRC";
 
-  Props.append(new Property("G", "1 S", true, QObject::tr("forward transconductance")));
+  Props.append(new Property("G", "1 S", true,
+		QObject::tr("forward transconductance")));
   Props.append(new Property("T", "0", true, QObject::tr("delay time")));
 }
 
@@ -68,7 +69,16 @@ VCCS::~VCCS()
 {
 }
 
-VCCS* VCCS::newOne()
+Component* VCCS::newOne()
 {
   return new VCCS();
+}
+
+Component* VCCS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Voltage Controlled Current Source");
+  BitmapFile = "vccs";
+
+  if(getNewOne)  return new VCCS();
+  return 0;
 }

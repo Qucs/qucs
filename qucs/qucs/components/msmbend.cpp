@@ -46,16 +46,28 @@ MSmbend::MSmbend()
   Model = "MMBEND";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
-  Props.append(new Property("W1", "1 mm", true, QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "2 mm", true, QObject::tr("width of line 2")));
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("substrate")));
+  Props.append(new Property("W1", "1 mm", true,
+		QObject::tr("width of line 1")));
+  Props.append(new Property("W2", "2 mm", true,
+		QObject::tr("width of line 2")));
 }
 
 MSmbend::~MSmbend()
 {
 }
 
-MSmbend* MSmbend::newOne()
+Component* MSmbend::newOne()
 {
   return new MSmbend();
+}
+
+Component* MSmbend::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Microstrip Mitered Bend");
+  BitmapFile = "msmbend";
+
+  if(getNewOne)  return new MSmbend();
+  return 0;
 }

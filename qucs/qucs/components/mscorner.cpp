@@ -45,16 +45,28 @@ MScorner::MScorner()
   Model = "MCORN";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
-  Props.append(new Property("W1", "1 mm", true, QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "2 mm", true, QObject::tr("width of line 2")));
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("substrate")));
+  Props.append(new Property("W1", "1 mm", true,
+		QObject::tr("width of line 1")));
+  Props.append(new Property("W2", "2 mm", true,
+		QObject::tr("width of line 2")));
 }
 
 MScorner::~MScorner()
 {
 }
 
-MScorner* MScorner::newOne()
+Component* MScorner::newOne()
 {
   return new MScorner();
+}
+
+Component* MScorner::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Microstrip Corner");
+  BitmapFile = "mscorner";
+
+  if(getNewOne)  return new MScorner();
+  return 0;
 }

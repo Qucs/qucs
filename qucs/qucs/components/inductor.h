@@ -23,9 +23,10 @@
 
 class Inductor : public Component  {
 public:
-	Inductor();
-	~Inductor();
-  Inductor* newOne();
+  Inductor();
+  ~Inductor();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

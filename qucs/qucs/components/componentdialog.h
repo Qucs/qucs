@@ -18,7 +18,7 @@
 #ifndef COMPONENTDIALOG_H
 #define COMPONENTDIALOG_H
 
-#include "components.h"
+#include "component.h"
 
 #include <qlabel.h>
 #include <qdialog.h>

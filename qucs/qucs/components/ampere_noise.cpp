@@ -48,17 +48,30 @@ Ampere_noise::Ampere_noise()
   Model = "Inoise";
   Name  = "I";
 
-  Props.append(new Property("i", "1e-6", true, QObject::tr("equivalent current density in A/sqrt(Hz)")));
-  Props.append(new Property("e", "0", false, QObject::tr("frequency exponent")));
-  Props.append(new Property("c", "1", false, QObject::tr("frequency coefficient")));
-  Props.append(new Property("a", "0", false, QObject::tr("additive frequency term")));
+  Props.append(new Property("i", "1e-6", true,
+		QObject::tr("equivalent current density in A/sqrt(Hz)")));
+  Props.append(new Property("e", "0", false,
+		QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", false,
+		QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", false,
+		QObject::tr("additive frequency term")));
 }
 
 Ampere_noise::~Ampere_noise()
 {
 }
 
-Ampere_noise* Ampere_noise::newOne()
+Component* Ampere_noise::newOne()
 {
   return new Ampere_noise();
+}
+
+Component* Ampere_noise::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Noise Current Source");
+  BitmapFile = "noise_current";
+
+  if(getNewOne)  return new Ampere_noise();
+  return 0;
 }

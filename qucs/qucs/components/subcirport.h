@@ -23,9 +23,10 @@
 
 class SubCirPort : public Component  {
 public:
-	SubCirPort();
-	~SubCirPort();
-  SubCirPort* newOne();
+  SubCirPort();
+  ~SubCirPort();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

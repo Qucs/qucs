@@ -58,7 +58,8 @@ CCCS::CCCS()
   Model = "CCCS";
   Name  = "SRC";
 
-  Props.append(new Property("G", "1", true, QObject::tr("forward transfer factor")));
+  Props.append(new Property("G", "1", true,
+		QObject::tr("forward transfer factor")));
   Props.append(new Property("T", "0", true, QObject::tr("delay time")));
 }
 
@@ -66,7 +67,16 @@ CCCS::~CCCS()
 {
 }
 
-CCCS* CCCS::newOne()
+Component* CCCS::newOne()
 {
   return new CCCS();
+}
+
+Component* CCCS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Current Controlled Current Source");
+  BitmapFile = "cccs";
+
+  if(getNewOne)  return new CCCS();
+  return 0;
 }

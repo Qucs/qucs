@@ -23,9 +23,10 @@
 
 class Volt_dc : public Component  {
 public:
-	Volt_dc();
-	~Volt_dc();
-  Volt_dc* newOne();
+  Volt_dc();
+  ~Volt_dc();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

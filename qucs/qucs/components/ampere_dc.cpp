@@ -41,14 +41,24 @@ Ampere_dc::Ampere_dc()
   Model = "Idc";
   Name  = "I";
 
-  Props.append(new Property("I", "1 mA", true, QObject::tr("current in Ampere")));
+  Props.append(new Property("I", "1 mA", true,
+		QObject::tr("current in Ampere")));
 }
 
 Ampere_dc::~Ampere_dc()
 {
 }
 
-Ampere_dc* Ampere_dc::newOne()
+Component* Ampere_dc::newOne()
 {
   return new Ampere_dc();
+}
+
+Component* Ampere_dc::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("dc Current Source");
+  BitmapFile = "dc_current";
+
+  if(getNewOne)  return new Ampere_dc();
+  return 0;
 }

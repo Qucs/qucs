@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,9 +23,10 @@
 
 class HB_Sim : public Component  {
 public:
-	HB_Sim();
-	~HB_Sim();
-  HB_Sim* newOne();
+  HB_Sim();
+  ~HB_Sim();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

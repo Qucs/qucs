@@ -23,9 +23,10 @@
 
 class MScross : public Component  {
 public:
-	MScross();
-	~MScross();
-  MScross* newOne();
+  MScross();
+  ~MScross();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

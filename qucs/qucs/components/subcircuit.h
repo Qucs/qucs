@@ -23,9 +23,10 @@
 
 class Subcircuit : public Component  {
 public:
- 	Subcircuit(int No);
-	~Subcircuit();
-  Subcircuit* newOne();
+  Subcircuit(int No);
+  ~Subcircuit();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

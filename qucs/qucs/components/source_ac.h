@@ -23,9 +23,10 @@
 
 class Source_ac : public Component  {
 public:
-	Source_ac();
-	~Source_ac();
-  Source_ac* newOne();
+  Source_ac();
+  ~Source_ac();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

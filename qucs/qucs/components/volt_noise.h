@@ -23,9 +23,10 @@
 
 class Volt_noise : public Component  {
 public:
-	Volt_noise();
-	~Volt_noise();
-  Volt_noise* newOne();
+  Volt_noise();
+  ~Volt_noise();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif
