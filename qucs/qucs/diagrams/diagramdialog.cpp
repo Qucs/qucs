@@ -18,6 +18,7 @@
 #include "diagramdialog.h"
 #include "qucsview.h"
 #include "qucs.h"
+#include "rect3ddiagram.h"
 
 #include <math.h>
 
@@ -69,9 +70,10 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   QVBox *Tab1 = new QVBox(this);
   Tab1->setSpacing(5);
 
-  Label4 = 0;
+  Label4 = 0;     // different types with same content
   yrLabel = 0;
   yAxisBox = 0;
+  rotationY = rotationZ = 0;
 
   QVButtonGroup *InputGroup = new QVButtonGroup(tr("Graph Input"), Tab1);
   GraphInput = new QLineEdit(InputGroup);
@@ -189,7 +191,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   // ...........................................................
   if(Diag->Name != "Tab") {
     QWidget *Tab2 = new QWidget(t);
-    QGridLayout *gp = new QGridLayout(Tab2,10,2,5,5);
+    QGridLayout *gp = new QGridLayout(Tab2,12,2,5,5);
 
     gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), 0,0);
     xLabel = new QLineEdit(Tab2);
@@ -251,7 +253,22 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       GridLogY->setChecked(Diag->yAxis.log);
       GridLogZ->setChecked(Diag->zAxis.log);
     }
-    else  GridLogX = GridLogY = GridLogZ = 0;
+    else {
+      GridLogX = GridLogY = GridLogZ = 0;
+
+      if(Diag->Name == "Rect3D") {
+        gp->addWidget(new QLabel(tr("Rotation around y-Axis:"), Tab2), 9,0);
+        rotationY = new QLineEdit(Tab2);
+        gp->addWidget(rotationY,9,1);
+        gp->addWidget(new QLabel(tr("Rotation around z-Axis:"), Tab2), 10,0);
+        rotationZ = new QLineEdit(Tab2);
+        gp->addWidget(rotationZ,10,1);
+
+        // transfer the diagram properties to the dialog
+        rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
+        rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
+      }
+    }
 
     t->addTab(Tab2, tr("Properties"));
 
@@ -741,7 +758,22 @@ void DiagramDialog::slotApply()
       Diag->zAxis.limit_max = stopZ->text().toDouble();
       changed = true;
     }
-  }
+
+    // Rect3D only
+    if(rotationY) {
+      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toDouble()) {
+        ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toDouble();
+        changed = true;
+      }
+    }
+    if(rotationZ) {
+      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toDouble()) {
+        ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toDouble();
+        changed = true;
+      }
+    }
+  }   // of "if(Diag->Name != "Tab")"
+
   Diag->Graphs.clear();   // delete the graphs
   Graphs.setAutoDelete(false);
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())

@@ -25,7 +25,7 @@
 SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter
 
 # Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-help qucs-filter qucs-core
+# SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-core
 
 EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
 

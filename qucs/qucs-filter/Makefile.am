@@ -27,14 +27,14 @@ bin_PROGRAMS = qucsfilter
 MOCHEADERS = qucsfilter.h helpdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp
+qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp bwfilter.cpp
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 
-noinst_HEADERS = $(MOCHEADERS)
+noinst_HEADERS = $(MOCHEADERS) bwfilter.h
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
