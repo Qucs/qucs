@@ -947,8 +947,31 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
       if(pw->Label->getSelected(x, y))
         return pw;
   return 0;
+}*/
+
+// ---------------------------------------------------
+bool QucsDoc::setMarker(int x, int y)
+{
+  int n, *p;
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())    // test all diagrams
+    if(pd->getSelected(x, y)) {
+
+      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) { // test graphs of diagram
+        n = pg->getSelected(x-pd->cx, pd->cy-y);
+        if(n > 0) {
+          pg->cPoints.at(n-1);
+          p = pg->Points + 2*(n-1);
+          Marker *pm = new Marker(*p, *(p+1), pg->cPoints.current()->x,  pg->cPoints.current()->yr,
+                                              pg->cPoints.current()->yi, pg->cPoints.at());
+          pd->Markers.append(pm);
+          return true;
+        }
+      }
+    }
+
+  return false;
 }
-*/
+
 // ---------------------------------------------------
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
@@ -991,7 +1014,15 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     }
   }
 
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())    // test all diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev()) {   // test all diagrams
+    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next()) // test markers of diagram
+      if(pm->getSelected(x-pd->cx, pd->cy-y) > 0) {
+        if(flag) { pm->isSelected ^= flag; return pm; }
+        if(pe_sel != 0) { pe_sel->isSelected = false; pm->isSelected = true; return pm; }
+        if(pe_1st == 0) pe_1st = pm;   // give access to elements that lie beneath
+        if(pm->isSelected) pe_sel = pm;
+      }
+
     if(pd->getSelected(x, y)) {
 
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
@@ -1007,6 +1038,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(pe_1st == 0) pe_1st = pd;   // give access to elements that lie beneath
       if(pd->isSelected) pe_sel = pd;
     }
+  }
 
   for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())    // test all paintings
     if(pp->getSelected(x, y)) {
@@ -1038,12 +1070,96 @@ void QucsDoc::deselectElements(Element *e)
   for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {   // test all diagrams
     if(e != pd)  pd->isSelected = false;
 
+    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next()) // test markers of diagram
+      if(e != pm) pm->isSelected = false;
+
     for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
       if(e != pg) pg->isSelected = false;
   }
 
   for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next()) // test all paintings
     if(e != pp)  pp->isSelected = false;
+}
+
+// ---------------------------------------------------
+// Selects elements that lie within the rectangle x1/y1, x2/y2.
+int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
+{
+  int  z=0;   // counts selected elements
+  int  cx1, cy1, cx2, cy2;
+  if(x1 > x2) { cx1 = x1; x1  = x2; x2  = cx1; }
+  if(y1 > y2) { cy1 = y1; y1  = y2; y2  = cy1; }
+
+
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {    // test all components
+    pc->Bounding(cx1, cy1, cx2, cy2);
+    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
+      pc->isSelected = true;  z++;
+      continue;
+    }
+    if(pc->isSelected &= flag) z++;
+  }
+
+
+  Wire *pw;
+  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {    // test all wires
+    if(pw->x1 >= x1) if(pw->x2 <= x2) if(pw->y1 >= y1) if(pw->y2 <= y2) {
+      pw->isSelected = true;  z++;
+      continue;
+    }
+    if(pw->isSelected &= flag) z++;
+  }
+
+
+  WireLabel *pl=0;
+  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {    // test all wire labels
+    if(pw->Label) {
+      pl = pw->Label;
+      if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
+        if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2) {
+          pl->isSelected = true;  z++;
+          continue;
+        }
+      if(pl->isSelected &= flag) z++;
+    }
+  }
+
+
+  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next()) {    // test all node labels
+    if(pn->Label) {
+      pl = pn->Label;
+      if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
+        if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2) {
+          pl->isSelected = true;  z++;
+          continue;
+        }
+      if(pl->isSelected &= flag) z++;
+    }
+  }
+
+
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {    // test all diagrams
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
+      if(pg->isSelected &= flag) z++;
+
+    pd->Bounding(cx1, cy1, cx2, cy2);
+    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
+      pd->isSelected = true;  z++;
+      continue;
+    }
+    if(pd->isSelected &= flag) z++;
+  }
+
+  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next()) {    // test all paintings
+    pp->Bounding(cx1, cy1, cx2, cy2);
+    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
+      pp->isSelected = true;  z++;
+      continue;
+    }
+    if(pp->isSelected &= flag) z++;
+  }
+
+  return z;
 }
 
 // ---------------------------------------------------
@@ -1247,87 +1363,6 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
     if(pn->Label) if(pn->Label->isSelected)
       p->append(pn->Label);
 
-}
-
-// ---------------------------------------------------
-// Selects elements that lie within the rectangle x1/y1, x2/y2.
-int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
-{
-  int  z=0;   // counts selected elements
-  int  cx1, cy1, cx2, cy2;
-  if(x1 > x2) { cx1 = x1; x1  = x2; x2  = cx1; }
-  if(y1 > y2) { cy1 = y1; y1  = y2; y2  = cy1; }
-
-
-  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {    // test all components
-    pc->Bounding(cx1, cy1, cx2, cy2);
-    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      pc->isSelected = true;  z++;
-      continue;
-    }
-    if(pc->isSelected &= flag) z++;
-  }
-
-
-  Wire *pw;
-  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {    // test all wires
-    if(pw->x1 >= x1) if(pw->x2 <= x2) if(pw->y1 >= y1) if(pw->y2 <= y2) {
-      pw->isSelected = true;  z++;
-      continue;
-    }
-    if(pw->isSelected &= flag) z++;
-  }
-
-
-  WireLabel *pl=0;
-  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {    // test all wire labels
-    if(pw->Label) {
-      pl = pw->Label;
-      if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
-        if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2) {
-          pl->isSelected = true;  z++;
-          continue;
-        }
-      if(pl->isSelected &= flag) z++;
-    }
-  }
-
-
-  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next()) {    // test all node labels
-    if(pn->Label) {
-      pl = pn->Label;
-      if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
-        if((pl->y1-pl->y2) >= y1) if(pl->y1 <= y2) {
-          pl->isSelected = true;  z++;
-          continue;
-        }
-      if(pl->isSelected &= flag) z++;
-    }
-  }
-
-
-  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {    // test all diagrams
-    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
-      if(pg->isSelected &= flag) z++;
-
-    pd->Bounding(cx1, cy1, cx2, cy2);
-    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      pd->isSelected = true;  z++;
-      continue;
-    }
-    if(pd->isSelected &= flag) z++;
-  }
-
-  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next()) {    // test all paintings
-    pp->Bounding(cx1, cy1, cx2, cy2);
-    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      pp->isSelected = true;  z++;
-      continue;
-    }
-    if(pp->isSelected &= flag) z++;
-  }
-
-  return z;
 }
 
 // ---------------------------------------------------
@@ -1908,6 +1943,14 @@ bool QucsDoc::deleteElements()
       sel = true;
     }
     else {
+      for(Marker *pm = pd->Markers.first(); pm != 0; )   // all graphs of diagram
+        if(pm->isSelected) {
+          pd->Markers.remove();
+          pm = pd->Markers.current();
+          sel = true;
+        }
+        else  pm = pd->Markers.next();
+
       for(Graph *pg = pd->Graphs.first(); pg != 0; )   // all graphs of diagram
         if(pg->isSelected) {
           pd->Graphs.remove();

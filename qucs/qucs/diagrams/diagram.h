@@ -19,6 +19,7 @@
 #define DIAGRAM_H
 
 #include "graph.h"
+#include "marker.h"
 #include "../element.h"
 
 #include <qfile.h>
@@ -27,7 +28,6 @@
 /**
   *@author Michael Margraf
   */
-
 
 
 class Diagram : public Element {
@@ -56,10 +56,11 @@ public:
   bool    GridOn;
   QString xLabel, yLabel;
 
-  QPtrList<Graph> Graphs;
-  QPtrList<Arc>   Arcs;
-  QPtrList<Line>  Lines;
-  QPtrList<Text>  Texts;
+  QPtrList<Graph>  Graphs;
+  QPtrList<Marker> Markers;
+  QPtrList<Arc>    Arcs;
+  QPtrList<Line>   Lines;
+  QPtrList<Text>   Texts;
 
   double xmin, ymin, xmax, ymax;    // least and greatest values of all graph data
   double xup, xlow, yup, ylow;      // the limits of the diagram

@@ -146,9 +146,10 @@ class QucsApp : public QMainWindow
     void slotSelectAll();
     void slotEditActivate(bool on);
     void slotInsertLabel(bool on);
+    void slotSetMarker(bool on);
 
 //    void slotActivateCopy(bool on);
-    
+
   private:
 
     QucsView   *view;   // the working area with schematics, data displays etc.
@@ -169,7 +170,7 @@ class QucsApp : public QMainWindow
     QAction *projNew, *projOpen, *projDel;
     QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magOne, *magPlus, *magMinus;
     QAction *select, *editRotate, *editMirror, *editMirrorY, *intoH, *popH, *editActivate, *wire;
-    QAction *editDelete, *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
+    QAction *editDelete, *simulate, *dpl_sch, *selectAll, *showMsg, *showNet, *setMarker;
     QAction *viewToolBar, *viewStatusBar;
     QAction *helpAboutApp, *helpAboutQt, *helpIndex, *helpGetStart;
 

@@ -28,10 +28,10 @@ MOCHEADERS = diagramdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp       \
-  polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp $(MOCFILES)
+  polardiagram.cpp graph.cpp diagramdialog.cpp diagram.cpp marker.cpp $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
-  smithdiagram.h tabdiagram.h diagrams.h 
+  smithdiagram.h tabdiagram.h diagrams.h marker.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 

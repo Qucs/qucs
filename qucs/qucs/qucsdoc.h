@@ -90,6 +90,7 @@ public:
   void  deleteComp(Component *c);
   void  deleteWire(Wire *w);
   bool  deleteElements();
+  bool  setMarker(int x, int y);
 
   bool  giveNodeNames(QTextStream *stream);
   bool  createSubNetlist(QTextStream *stream);
