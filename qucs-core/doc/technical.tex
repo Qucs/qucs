@@ -35,15 +35,15 @@
     \setlength{\parindent}{0pt}
     \vspace*{3cm}
     \begin{flushleft}
-      \bf{\huge{\@title}}
+      \textbf{\begin{huge}\@title\end{huge}}
     \end{flushleft}
     \hrule height 3pt
     \begin{flushright}
-      \LARGE{Technical Papers}
+      \begin{LARGE}Technical Papers\end{LARGE}
     \end{flushright}
     \vfill
     \begin{flushright}
-      \Large{\@author}
+      \begin{Large}\@author\end{Large}
     \end{flushright}
     \hrule height 3pt
     \vspace*{24pt}
@@ -1132,7 +1132,7 @@ $\begin{array}{cc}T_{11}&T_{12}\vspace{4pt}\\T_{21}&T_{22}\end{array}$\\
 A_{11} &= \dfrac{Z_{1}^{*} + Z_{1}\cdot S_{11} - Z_{1}^{*}\cdot S_{22} - Z_{1}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 A_{12} &= \dfrac{Z_{1}^{*}\cdot Z_{2}^{*} + Z_{1}\cdot Z_{2}^{*}\cdot S_{11} + Z_{1}^{*}\cdot Z_{2}\cdot S_{22} + Z_{1}\cdot Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 A_{21} &= \dfrac{1 - S_{11} - S_{22} + \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
-A_{22} &= \dfrac{Z_{2}^{*} - Z_{2}^{*}\cdot S_{11} + Z_{2}\cdot S_{22} - Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}
+A_{22} &= \dfrac{Z_{2}^{*} - Z_{2}^{*}\cdot S_{11} + Z_{2}\cdot S_{22} - Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 %\end{align}
 \intertext{
 }
@@ -1147,7 +1147,7 @@ S_{22} &= \dfrac{-A_{11}\cdot Z_{2}^{*} + A_{12} - A_{21}\cdot Z_{1}\cdot Z_{2}^
 H_{11} &= \dfrac{\left(\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}\right)\cdot Z_{1}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
 H_{12} &= \dfrac{2\cdot S_{12}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
 H_{21} &= \dfrac{-2\cdot S_{21}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
-H_{22} &= \dfrac{\left(\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}\right) / Z_{2}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}
+H_{22} &= \dfrac{\left(\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}\right) / Z_{2}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
 %\end{align}
 \intertext{
 }
@@ -4131,7 +4131,7 @@ V_{GD} = V_{GS} - V_{DS}
 \begin{align}
 I_{d} &= 0\\
 g_{m} &= 0\\
-g_{ds} &= 0
+g_{ds} &= 0\\
 %\end{align}
 \intertext{
 \item normal mode, saturation region: $0 < V_{GS} - V_{Th} < V_{DS}$
@@ -4139,7 +4139,7 @@ g_{ds} &= 0
 %\begin{align}
 I_{d} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot\left(V_{GS} - V_{Th}\right)^{2}\\
 g_{m} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot 2\left(V_{GS} - V_{Th}\right)\\
-g_{ds} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot \lambda\left(V_{GS} - V_{Th}\right)^{2}
+g_{ds} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot \lambda\left(V_{GS} - V_{Th}\right)^{2}\\
 %\end{align}
 \intertext{
 \item normal mode, linear region: $V_{DS} < V_{GS} - V_{Th}$
@@ -4156,7 +4156,7 @@ g_{ds} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot 2\left(V_{GS} - V_{Th} 
 \begin{align}
 I_{d} &= 0\\
 g_{m} &= 0\\
-g_{ds} &= 0
+g_{ds} &= 0\\
 %\end{align}
 \intertext{
 \item inverse mode, saturation region: $0 < V_{GD} - V_{Th} < -V_{DS}$
@@ -4164,7 +4164,7 @@ g_{ds} &= 0
 %\begin{align}
 I_{d} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot\left(V_{GD} - V_{Th}\right)^{2}\\
 g_{m} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{Th}\right)\\
-g_{ds} &= \beta \cdot\lambda \left(V_{GD} - V_{Th}\right)^{2} + \beta\cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{Th}\right)
+g_{ds} &= \beta \cdot\lambda \left(V_{GD} - V_{Th}\right)^{2} + \beta\cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{Th}\right)\\
 %\end{align}
 \intertext{
 \item inverse mode, linear region: $-V_{DS} < V_{GD} - V_{Th}$
@@ -4274,15 +4274,15 @@ The junction capacitances are modeled with the following equations.
 C_{GD} &= 
 \begin{cases}
 \begin{array}{ll}
-C_{gd}\cdot \left(1 - \dfrac{V_{GD}}{P_{b}}\right)^{-M} & \text{ for } V_{GD} \le F_{c}\cdot P_{b}\\
-\dfrac{C_{gd}}{\left(1 - F_{c}\right)^{M}}\cdot \left(1 + \dfrac{M\cdot \left(V_{GD} - F_{c}\cdot P_{b}\right)}{P_{b}\cdot \left(1 - F_{c}\right)}\right) & \text{ for } V_{GD} > F_{c}\cdot P_{b}
+C_{gd}\cdot \left(1 - \dfrac{V_{GD}}{P_{b}}\right)^{-M} & \textrm{ for } V_{GD} \le F_{c}\cdot P_{b}\\
+\dfrac{C_{gd}}{\left(1 - F_{c}\right)^{M}}\cdot \left(1 + \dfrac{M\cdot \left(V_{GD} - F_{c}\cdot P_{b}\right)}{P_{b}\cdot \left(1 - F_{c}\right)}\right) & \textrm{ for } V_{GD} > F_{c}\cdot P_{b}
 \end{array}
 \end{cases}\\
 C_{GS} &= 
 \begin{cases}
 \begin{array}{ll}
-C_{gs}\cdot \left(1 - \dfrac{V_{GS}}{P_{b}}\right)^{-M} & \text{ for } V_{GS} \le F_{c}\cdot P_{b}\\
-\dfrac{C_{gs}}{\left(1 - F_{c}\right)^{M}}\cdot \left(1 + \dfrac{M\cdot \left(V_{GS} - F_{c}\cdot P_{b}\right)}{P_{b}\cdot \left(1 - F_{c}\right)}\right) & \text{ for } V_{GS} > F_{c}\cdot P_{b}
+C_{gs}\cdot \left(1 - \dfrac{V_{GS}}{P_{b}}\right)^{-M} & \textrm{ for } V_{GS} \le F_{c}\cdot P_{b}\\
+\dfrac{C_{gs}}{\left(1 - F_{c}\right)^{M}}\cdot \left(1 + \dfrac{M\cdot \left(V_{GS} - F_{c}\cdot P_{b}\right)}{P_{b}\cdot \left(1 - F_{c}\right)}\right) & \textrm{ for } V_{GS} > F_{c}\cdot P_{b}
 \end{array}
 \end{cases}
 \end{align}
@@ -4603,22 +4603,22 @@ follows:
 C_{BE_{dep}} &= 
 \begin{cases}
 \begin{array}{ll}
-C_{JE}\cdot \left(1 - \dfrac{V_{BE}}{V_{JE}}\right)^{-M_{JE}} & \text{ for } V_{BE} \le F_{C}\cdot V_{JE}\\
-\dfrac{C_{JE}}{\left(1 - F_{C}\right)^{M_{JE}}}\cdot \left(1 + \dfrac{M_{JE}\cdot \left(V_{BE} - F_{C}\cdot V_{JE}\right)}{V_{JE}\cdot \left(1 - F_{C}\right)}\right) & \text{ for } V_{BE} > F_{C}\cdot V_{JE}
+C_{JE}\cdot \left(1 - \dfrac{V_{BE}}{V_{JE}}\right)^{-M_{JE}} & \textrm{ for } V_{BE} \le F_{C}\cdot V_{JE}\\
+\dfrac{C_{JE}}{\left(1 - F_{C}\right)^{M_{JE}}}\cdot \left(1 + \dfrac{M_{JE}\cdot \left(V_{BE} - F_{C}\cdot V_{JE}\right)}{V_{JE}\cdot \left(1 - F_{C}\right)}\right) & \textrm{ for } V_{BE} > F_{C}\cdot V_{JE}
 \end{array}
 \end{cases}\\
 C_{BC_{dep}} &= 
 \begin{cases}
 \begin{array}{ll}
-C_{JC}\cdot \left(1 - \dfrac{V_{BC}}{V_{JC}}\right)^{-M_{JC}} & \text{ for } V_{BC} \le F_{C}\cdot V_{JC}\\
-\dfrac{C_{JC}}{\left(1 - F_{C}\right)^{M_{JC}}}\cdot \left(1 + \dfrac{M_{JC}\cdot \left(V_{BC} - F_{C}\cdot V_{JC}\right)}{V_{JC}\cdot \left(1 - F_{C}\right)}\right) & \text{ for } V_{BC} > F_{C}\cdot V_{JC}
+C_{JC}\cdot \left(1 - \dfrac{V_{BC}}{V_{JC}}\right)^{-M_{JC}} & \textrm{ for } V_{BC} \le F_{C}\cdot V_{JC}\\
+\dfrac{C_{JC}}{\left(1 - F_{C}\right)^{M_{JC}}}\cdot \left(1 + \dfrac{M_{JC}\cdot \left(V_{BC} - F_{C}\cdot V_{JC}\right)}{V_{JC}\cdot \left(1 - F_{C}\right)}\right) & \textrm{ for } V_{BC} > F_{C}\cdot V_{JC}
 \end{array}
 \end{cases}\\
 C_{CS_{dep}} &= 
 \begin{cases}
 \begin{array}{ll}
-C_{JS}\cdot \left(1 - \dfrac{V_{CS}}{V_{JS}}\right)^{-M_{JS}} & \text{ for } V_{CS} \le 0\\
-C_{JS}\cdot \left(1 + M_{JS}\cdot \dfrac{V_{CS}}{V_{JS}}\right) & \text{ for } V_{CS} > 0
+C_{JS}\cdot \left(1 - \dfrac{V_{CS}}{V_{JS}}\right)^{-M_{JS}} & \textrm{ for } V_{CS} \le 0\\
+C_{JS}\cdot \left(1 + M_{JS}\cdot \dfrac{V_{CS}}{V_{JS}}\right) & \textrm{ for } V_{CS} > 0
 \end{array}
 \end{cases}
 \end{align}
@@ -4937,8 +4937,8 @@ m_{0} &= 1 + \frac{1}{1 + \sqrt{\dfrac{W}{h}}} + 0.32\cdot\left(\frac{1}{1 + \sq
 m_{c} &=
 \begin{cases}
 \begin{array}{ll}
-1 + \dfrac{1.4}{1 + \dfrac{W}{h}}\cdot\left(0.15 - 0.235\cdot\exp\left(-0.45\dfrac{f}{f_{50}}\right)\right) & \mbox{for $W / h \le 0.7$} \\
-1 & \mbox{for $W / h \ge 0.7$}
+1 + \dfrac{1.4}{1 + \dfrac{W}{h}}\cdot\left(0.15 - 0.235\cdot\exp\left(-0.45\dfrac{f}{f_{50}}\right)\right) & \textrm{ for } W / h \le 0.7\\
+1 & \textrm{ for } W / h \ge 0.7
 \end{array}
 \end{cases}
 \end{align}
