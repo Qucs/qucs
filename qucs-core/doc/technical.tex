@@ -5166,6 +5166,252 @@ correlation matrix representation $\underline{C}_S$ using the formulas
 given in section \ref{sec:noiseTrans} on page
 \pageref{sec:noiseTrans}.
 
+\section{MOS Field-Effect Transistor}
+%\addcontentsline{toc}{section}{MOS Field-Effect Transistor}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{mosphysical}
+\end{center}
+\caption{vertical section of integrated MOSFET}
+\label{fig:MOSphysical}
+\end{figure}
+\FloatBarrier
+
+The following table contains the model and device parameters for the
+MOSFET level 1.
+
+\addvspace{12pt}
+
+\begin{tabular}{rllll}
+Name & Symbol & Description & Unit & Default\\
+\hline
+Is & $I_{S}$ & bulk junction saturation current & $\ampere$ & $10^{-14}$\\
+N & $N$ & bulk junction emission coefficient &  & $1.0$\\
+Vt0 & $V_{T0}$ & zero-bias threshold voltage & $\volt$ & $0.0$\\
+Lambda & $\lambda$ & channel-length modulation parameter & $1/\volt$ & $0.0$\\
+Kp & $K_P$ & transconductance coefficient & $\ampere/\meter^2$ & $2.0\cdot 10^{-5}$\\
+Gamma & $\gamma$ & bulk threshold & $\sqrt{\volt}$ & $0.0$\\
+Phi & $\Phi$ & surface potential & $\volt$ & $0.6$\\
+Rd & $R_D$ & drain ohmic resistance & $\ohm$ & $0.0$\\
+Rs & $R_S$ & source ohmic resistance & $\ohm$ & $0.0$\\
+Rg & $R_G$ & gate ohmic resistance & $\ohm$ & $0.0$\\
+L & $L$ & channel length & $\meter$ & $100\micro$\\
+Ld & $L_D$ & lateral diffusion length & $\meter$ & $0.0$\\
+W & $W$ & channel width & $\meter$ & $100\micro$\\
+Tox & $T_{OX}$ & oxide thickness & $\meter$ & $0.1\micro$\\
+Cgso & $C_{GSO}$ & \parbox[t]{6.5cm}{gate-source overlap capacitance per meter of channel width} & $\farad/\meter$ & $0.0$\\
+Cgdo & $C_{GDO}$ & \parbox[t]{6.5cm}{gate-drain overlap capacitance per meter of channel width} & $\farad/\meter$ & $0.0$\\
+Cgbo & $C_{GBO}$ & \parbox[t]{6.5cm}{gate-bulk overlap capacitance per meter of channel length} & $\farad/\meter$ & $0.0$\\
+Cbd & $C_{BD}$ & zero-bias bulk-drain junction capacitance & $\farad$ & $0.0$\\
+Cbs & $C_{BS}$ & zero-bias bulk-source junction capacitance & $\farad$ & $0.0$\\
+Pb & $\Phi_{B}$ & bulk junction potential & $\volt$ & $0.8$\\
+Mj & $M_J$ & bulk junction bottom grading coefficient & & $0.5$\\
+Fc & $F_C$ & \parbox[t]{6.5cm}{bulk junction forward-bias depletion capacitance coefficient} & & $0.5$\\
+Cjsw & $C_{JSW}$ & \parbox[t]{6.5cm}{zero-bias bulk junction periphery capacitance per meter of junction perimeter} & $\farad/\meter$ & $0.0$\\
+Mjsw & $M_{JSW}$ & bulk junction periphery grading coefficient & & $0.33$\\
+Tt & $T_{T}$ & bulk transit time & $\second$ & $0.0$\\
+Kf & $K_{F}$ & flicker noise coefficient & & $0.0$\\
+Af & $A_{F}$ & flicker noise exponent & & $1.0$\\
+Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
+Nsub & $N_{SUB}$ & substrate (bulk) doping density & $1/\centi\meter^3$ & $0.0$\\
+Nss & $N_{SS}$ & surface state density & $1/\centi\meter^2$ & $0.0$\\
+Tpg & $T_{PG}$ & \parbox[t]{6.5cm}{gate material type (0 = alumina, -1 = same as bulk, 1 = opposite to bulk)} &  & $1$\\
+Uo & $\mu_{0}$ & surface mobility & $\centi\meter^2/\volt\second$ & $600.0$\\
+Rsh & $R_{SH}$ & drain and source diffusion sheet resistance & $\ohm/$square & $0.0$\\
+Nrd & $N_{RD}$ & number of equivalent drain squares & & $1$\\
+Nrs & $N_{RS}$ & number of equivalent source squares & & $1$\\
+Cj & $C_{J}$ & \parbox[t]{6.5cm}{zero-bias bulk junction bottom capacitance per square meter of junction area} & $\farad/\meter^2$ & $0.0$\\
+Js & $J_{S}$ & \parbox[t]{6.5cm}{bulk junction saturation current per square meter of junction area} & $\ampere/\meter^2$ & $0.0$\\
+Ad & $A_{D}$ & drain diffusion area & $\meter^2$ & $0.0$\\
+As & $A_{S}$ & source diffusion area & $\meter^2$ & $0.0$\\
+Pd & $P_{D}$ & drain junction perimeter & $\meter$ & $0.0$\\
+Ps & $P_{S}$ & source junction perimeter & $\meter$ & $0.0$\\
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
+\end{tabular}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.95\linewidth]{mostypes}
+\end{center}
+\caption{four types of MOS field effect transistors and their symbols}
+\label{fig:MOStypes}
+\end{figure}
+\FloatBarrier
+
+There are four different types of MOS field effect transistors as
+shown if fig. \ref{fig:MOStypes} all covered by the model going to be
+explained here.  The ``First Order Model'' is a physical model with
+the drain current equations according to Harold Shichman and David
+A. Hodges \cite{Shichman}.
+
+\subsection{Large signal model}
+%\addcontentsline{toc}{subsection}{Large signal model}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{mosfet}
+\end{center}
+\caption{MOSFET large signal model}
+\label{fig:mosfet}
+\end{figure}
+\FloatBarrier
+
+Beforehand some useful abbreviation are made to simplify the DC
+current equations.
+\begin{align}
+L_{eff} &= L - 2\cdot L_D\\
+\beta &= K_P\cdot \dfrac{W}{L_{eff}}
+\end{align}
+
+The bias-dependent threshold voltage depends on the bulk-source
+voltage $V_{BS}$ or the bulk-drain voltage $V_{BD}$ depending on the
+mode of operation.
+\begin{equation}
+V_{Th} = V_{T0} +
+\begin{cases}
+\begin{array}{ll}
+\gamma\cdot\left(\sqrt{\Phi - V_{BS}} - \sqrt{\Phi}\right) & \textrm{ for } V_{DS} \ge 0, \textrm{ i.e. } V_{BS} \ge V_{BD}\\
+\gamma\cdot\left(\sqrt{\Phi - V_{BD}} - \sqrt{\Phi}\right) & \textrm{ for } V_{DS} < 0, \textrm{ i.e. } V_{BD} > V_{BS}
+\end{array}
+\end{cases}
+\end{equation}
+
+The following equations describe the DC current behaviour of a
+N-channel MOSFET in normal mode, i.e. $V_{DS} > 0$, according to
+Shichman and Hodges.
+
+\begin{itemize}
+\item cutoff region: $V_{GS} - V_{Th} < 0$
+\begin{align}
+I_{d} &= 0\\
+g_{ds} &= 0\\
+g_{m} &= 0\\
+g_{mb} &= 0\\
+%\end{align}
+\intertext{
+\item saturation region: $0 < V_{GS} - V_{Th} < V_{DS}$
+}
+%\begin{align}
+I_{d} &= \beta / 2 \cdot \left(1 + \lambda V_{DS}\right) \cdot\left(V_{GS} - V_{Th}\right)^{2}\\
+g_{ds} &= \beta / 2 \cdot \lambda\left(V_{GS} - V_{Th}\right)^{2}\\
+g_{m} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \left(V_{GS} - V_{Th}\right)\\
+g_{mb} &= g_m\cdot\dfrac{\gamma}{2\sqrt{\Phi - V_{BS}}}\\
+%\end{align}
+\intertext{
+\item linear region: $V_{DS} < V_{GS} - V_{Th}$
+}
+%\begin{align}
+I_{d} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot\left(V_{GS} - V_{Th} - V_{DS}/2\right)\cdot V_{DS}\\
+g_{ds} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot \left(V_{GS} - V_{Th} - V_{DS}\right) + \beta \cdot \lambda V_{DS}\cdot\left(V_{GS} - V_{Th} - V_{DS} / 2\right)\\
+g_{m} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot V_{DS}\\
+g_{mb} &= g_m\cdot\dfrac{\gamma}{2\sqrt{\Phi - V_{BS}}}
+\end{align}
+\end{itemize}
+
+with
+\begin{equation}
+g_{ds} = \dfrac{\partial I_d}{\partial V_{DS}}
+\;\;\;\; \textrm{ and } \;\;\;\;
+g_{m} = \dfrac{\partial I_d}{\partial V_{GS}}
+\;\;\;\; \textrm{ and } \;\;\;\;
+g_{mb} = \dfrac{\partial I_d}{\partial V_{BS}}
+\end{equation}
+
+In the inverse mode of operation, i.e. $V_{DS} < 0$, the same
+equations can be applied with the following modifications.  Replace
+$V_{BS}$ with $V_{BD}$, $V_{GS}$ with $V_{GD}$ and $V_{DS}$ with
+$-V_{DS}$.  The drain current $I_d$ gets reversed.  Furthermore the
+transconductances alter their controlling nodes, i.e.
+\begin{equation}
+g_{m} = \dfrac{\partial I_d}{\partial V_{GD}}
+\;\;\;\; \textrm{ and } \;\;\;\;
+g_{mb} = \dfrac{\partial I_d}{\partial V_{BD}}
+\end{equation}
+
+The current equations of the two parasitic diodes at the bulk node and
+their derivatives write as follows.
+\begin{align}
+I_{BD} &= I_{SD}\cdot \left(e^{\frac{V_{BD}}{N\cdot V_T}} - 1\right) &
+g_{BD} &= \dfrac{\partial I_{BD}}{\partial V_{BD}} = \dfrac{I_{SD}}{N\cdot V_T}\cdot e^{\frac{V_{BD}}{N\cdot V_T}}\\
+I_{BS} &= I_{SS}\cdot \left(e^{\frac{V_{BS}}{N\cdot V_T}} - 1\right) &
+g_{BS} &= \dfrac{\partial I_{BS}}{\partial V_{BS}} = \dfrac{I_{SS}}{N\cdot V_T}\cdot e^{\frac{V_{BS}}{N\cdot V_T}}
+\end{align}
+
+with
+\begin{equation}
+I_{SD} = I_S
+\;\;\;\; \textrm{ and } \;\;\;\;
+I_{SS} = I_S
+\end{equation}
+
+\subsection{Physical model}
+%\addcontentsline{toc}{subsection}{Physical model}
+
+There are electrical parameters as well as physical and geometry
+parameters in the set of model parameters for the MOSFETs ``First
+Order Model''.  Some of the electrical parameters can be derived from
+the geometry and physical parameters.
+
+\addvspace{12pt}
+
+The oxide capacitance per square meter of the channel area can be
+computed as
+\begin{equation}
+C'_{ox} = \varepsilon_0\cdot\dfrac{\varepsilon_{ox}}{T_{ox}}
+\;\;\;\; \textrm{ with } \;\;\;\;
+\varepsilon_{ox} = \varepsilon_{SiO_2} = 3.9
+\end{equation}
+
+Then the overall oxide capacitance can be written as
+\begin{equation}
+C_{ox} = C'_{ox}\cdot W \cdot L_{eff}
+\end{equation}
+
+The transconductance coefficient $K_P$ can be calculated using
+\begin{equation}
+K_P = \mu_0\cdot C'_{ox}
+\end{equation}
+
+The surface potential $\Phi$ results in
+\begin{equation}
+\Phi = 2\cdot V_T\cdot \ln{\left(\dfrac{N_{SUB}}{n_i}\right)}
+\;\;\;\; \textrm{ with the intrinsic density } \;
+n_i = 1.45\cdot 10^{16} 1/\meter^3
+\end{equation}
+
+The bulk threshold $\gamma$ is
+\begin{equation}
+\gamma = \dfrac{\sqrt{2e\cdot \varepsilon_{Si}\cdot \varepsilon_{0}\cdot N_{SUB}}}{C'_{ox}}
+\;\;\;\; \textrm{ with } \;\;\;\;
+\varepsilon_{Si} = 11.7
+\end{equation}
+
+And finally the zero-bias threshold voltage $V_{T0}$ writes as
+follows.
+\begin{equation}
+V_{T0} = \Phi_{FB} - \dfrac{e\cdot N_{SS}}{C'_{ox}} + \Phi + \gamma\cdot\sqrt{\Phi}
+\end{equation}
+
+\begin{equation}
+\Phi_{FB} = \Phi_G - \left(3.25 + \dfrac{1}{2}E_{G_{Si}} + \Phi_{F_{Si}}\right)
+\end{equation}
+\begin{equation}
+E_{G_{Si}}\left(T\right) = 1.16 - \dfrac{7.02\cdot 10^{-4}\cdot T^2}{T + 1108}
+\end{equation}
+\begin{equation}
+\Phi_{F_{Si}} = \dfrac{1}{2}\Phi
+\end{equation}
+\begin{equation}
+\Phi_G =
+\begin{cases}
+\begin{array}{ll}
+3.2 & \textrm{ for } T_{PG} = 0, \textrm{ i.e. alumina}\\
+3.25 + \dfrac{1}{2} E_{G_{Si}} - \dfrac{1}{2} E_{G_{Si}}\cdot T_{PG}& \textrm{ for } T_{PG} \ne 0
+\end{array}
+\end{cases}
+\end{equation}
+
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
 
@@ -5802,7 +6048,7 @@ Q_4 = \frac{Q_1}{Q_2}\cdot \frac{2}{ \exp(-g)\cdot u^{Q_3} + (2-\exp(-g))\cdot u
 \end{equation}
 with $Z_L(0)$ and $\epsilon_{eff}(0)$  being again quantities for
 a zero-thickness single microstrip of width $w$ according to
-\cite{Hammerstad} (equation \ref{eq:HandJErEff} and \ref{eq:HandJZL0}).\\
+\cite{Hammerstad} (equation \ref{eq:HandJErEff} and \ref{eq:HandJZL0}).
 
 \addvspace{12pt}
 
@@ -6034,7 +6280,9 @@ Another model was published by Hammerstad \cite{Hammerstad2}:
 \frac{\Delta l}{h} = 0.102\cdot \frac{u+0.106}{u+0.264} \cdot
     \left( 1.166 + \frac{\epsilon_r+1}{\epsilon_r}\cdot \left(0.9+\ln(u+2.475) \right) \right)
 \end{equation}
-Here the numerical error is $<1.7$\% for $u = w/h < 20$.\\ \\
+Here the numerical error is $<1.7$\% for $u = w/h < 20$.
+
+\addvspace{12pt}
 
 In order to simplify calculations,
 the equivalent additional line length $\Delta l$ can be transformed

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.6 2004-08-03 15:36:20 ela Exp $
+ * $Id: device.cpp,v 1.7 2004-08-05 21:19:48 ela Exp $
  *
  */
 
@@ -233,9 +233,9 @@ nr_double_t fetVoltageDS (nr_double_t Ufet, nr_double_t Uold) {
 /* This function calculates the overlap capacitance for MOS based upon
    the given voltages, surface potential and the zero-bias oxide
    capacitance. */
-void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Ugb,
-			  nr_double_t Uth, nr_double_t Udsat, nr_double_t Phi,
-			  nr_double_t Cox, nr_double_t& Cgs, nr_double_t& Cgd,
+void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
+			  nr_double_t Udsat, nr_double_t Phi, nr_double_t Cox,
+			  nr_double_t& Cgs, nr_double_t& Cgd,
 			  nr_double_t& Cgb) {
 
   nr_double_t Utst = Ugs - Uth;

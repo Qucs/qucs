@@ -1,3 +1,8 @@
+2004-08-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{MOS Field-Effect Transistor}): 
+	Started to document the MOSFET model.
+
 2004-08-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Large signal model}): Fixed bug

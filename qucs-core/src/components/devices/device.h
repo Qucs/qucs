@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.h,v 1.5 2004-08-03 15:36:20 ela Exp $
+ * $Id: device.h,v 1.6 2004-08-05 21:19:48 ela Exp $
  *
  */
 
@@ -52,8 +52,7 @@ class device
   friend nr_double_t fetVoltageDS (nr_double_t, nr_double_t);
   friend void fetCapacitanceMeyer (nr_double_t, nr_double_t, nr_double_t,
 				   nr_double_t, nr_double_t, nr_double_t,
-				   nr_double_t, nr_double_t&, nr_double_t&,
-				   nr_double_t&);
+				   nr_double_t&, nr_double_t&, nr_double_t&);
 };
 
 #endif /* __DEVICE_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.2 2004-08-03 21:13:54 ela Exp $
+ * $Id: mosfet.cpp,v 1.3 2004-08-05 21:19:49 ela Exp $
  *
  */
 
@@ -183,6 +183,9 @@ void mosfet::initDC (dcsolver * solver) {
 
 void mosfet::initModel (void) {
 
+  // get device temperature
+  nr_double_t T = getPropertyDouble ("Temp");
+
   // apply polarity of MOSFET
   char * type = getPropertyString ("Type");
   MOSpol = !strcmp (type, "pfet") ? -1 : 1;
@@ -218,7 +221,7 @@ void mosfet::initModel (void) {
     } else {
       logprint (LOG_STATUS, "WARNING: adjust Tox, Uo or Kp to get a valid "
 		"transconductance coefficient\n");
-      beta = 2e-5;
+      beta = 2e-5 * W / Leff;
     }
   }
 
@@ -260,10 +263,11 @@ void mosfet::initModel (void) {
     nr_double_t Tpg = getPropertyDouble ("Tpg");
     nr_double_t Nss = getPropertyDouble ("Nss");
     nr_double_t PhiMS, PhiG, EgFET, FerGate, FerSilicon;
-    EgFET = 1.16 - (7.02e-4 * T0 * T0) / (T0 + 1108);
+    // bandgap for silicon
+    EgFET = 1.16 - (7.02e-4 * sqr (kelvin (T))) / (kelvin (T) + 1108);
     FerSilicon = MOSpol * Phi / 2;
     PhiG = 3.2;
-    if (Tpg != 0) {
+    if (Tpg != 0) { // no alumina
       FerGate = MOSpol * Tpg * EgFET / 2;
       PhiG = 3.25 + EgFET / 2 - FerGate;
     }
@@ -323,6 +327,13 @@ void mosfet::initModel (void) {
     Cbs0 = Cj * As;
     setProperty ("Cbs", Cbs0);
   }
+
+  // calculate periphery junction capacitances
+  nr_double_t Cjs = getPropertyDouble ("Cjsw");
+  nr_double_t Pd  = getPropertyDouble ("Pd");
+  nr_double_t Ps  = getPropertyDouble ("Ps");
+  setProperty ("Cbds", Cjs * Pd);
+  setProperty ("Cbss", Cjs * Ps);
 
   // calculate junction capacitances and saturation currents
   nr_double_t Js  = getPropertyDouble ("Js");
@@ -395,25 +406,27 @@ void mosfet::calcDC (void) {
   gbd = pnConductance (Ubd, Isd, Ut * n) + gtiny;
   Ibd = pnCurrent (Ubd, Isd, Ut * n) + gtiny * Ubd;
 
-  // calculate drain current
+  // differentiate inverse and forward mode
   MOSdir = (Uds >= 0) ? +1 : -1;
-  nr_double_t Sarg, Upn;
-  Upn = (MOSdir > 0) ? Ubs : Ubd;
+
+  // first calculate sqrt (Upn - Phi)
+  nr_double_t Upn = (MOSdir > 0) ? Ubs : Ubd;
+  nr_double_t Sarg, Sphi = sqrt (Phi);
   if (Upn <= 0) {
+    // take equation as is
     Sarg = sqrt (Phi - Upn);
   }
   else {
-    Sarg = sqrt (Phi);
-    Sarg = Sarg - Upn / Sarg / 2; // looks like taylor series of "sqrt (x - 1)"
+    // taylor series of "sqrt (x - 1)" -> continual at Ubs/Ubd = 0
+    Sarg = Sphi - Upn / Sphi / 2;
     Sarg = MAX (Sarg, 0);
-#if 0
-    fprintf (stderr, "SPICE: %g, ME: %g\n",
-	     Sarg, sqrt (Phi - Upn) - sqrt (Phi));
-#endif
   }
-  Uon = Vto * MOSpol + Ga * Sarg;
+
+  // calculate bias-dependent threshold voltage
+  Uon = Vto * MOSpol + Ga * (Sarg - Sphi);
   nr_double_t Utst = ((MOSdir > 0) ? Ugs : Ugd) - Uon;
-  nr_double_t arg = (Sarg <= 0) ? 0 : (Ga / Sarg / 2);
+  // no infinite backgate transconductance (if non-zero Ga)
+  nr_double_t arg = (Sarg != 0) ? (Ga / Sarg / 2) : 0;
 
   // cutoff region
   if (Utst <= 0) {
@@ -423,8 +436,8 @@ void mosfet::calcDC (void) {
     gmb = 0;
   }
   else {
-    nr_double_t Vds  = Uds * MOSdir;
-    nr_double_t b    = beta * (1 + l * Vds);
+    nr_double_t Vds = Uds * MOSdir;
+    nr_double_t b   = beta * (1 + l * Vds);
     // saturation region
     if (Utst <= Vds) {
       Ids = b * Utst * Utst / 2;
@@ -435,7 +448,7 @@ void mosfet::calcDC (void) {
     else {
       Ids = b * Vds * (Utst - Vds / 2);
       gm  = b * Vds;
-      gds = b * (Utst - Vds) + l * beta * Vds * (Utst - Vds /2);
+      gds = b * (Utst - Vds) + l * beta * Vds * (Utst - Vds / 2);
     }
     gmb = gm * arg;
   }
@@ -485,16 +498,19 @@ void mosfet::calcOperatingPoints (void) {
   // fetch device model parameters
   nr_double_t Cbd0 = getPropertyDouble ("Cbd");
   nr_double_t Cbs0 = getPropertyDouble ("Cbs");
+  nr_double_t Cbds = getPropertyDouble ("Cbds");
+  nr_double_t Cbss = getPropertyDouble ("Cbss");
   nr_double_t Cgso = getPropertyDouble ("Cgso");
   nr_double_t Cgdo = getPropertyDouble ("Cgdo");
   nr_double_t Cgbo = getPropertyDouble ("Cgbo");
   nr_double_t Pb   = getPropertyDouble ("Pb");
   nr_double_t M    = getPropertyDouble ("Mj");
+  nr_double_t Ms   = getPropertyDouble ("Mjsw");
   nr_double_t Fc   = getPropertyDouble ("Fc");
   nr_double_t Tt   = getPropertyDouble ("Tt");
   nr_double_t W    = getPropertyDouble ("W");
   
-  nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds, Ugb;
+  nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds;
   nr_double_t Cgd, Cgb, Cgs;
 
   Ugd = real (getV (NODE_G) - getV (NODE_D)) * MOSpol;
@@ -502,31 +518,34 @@ void mosfet::calcOperatingPoints (void) {
   Ubs = real (getV (NODE_B) - getV (NODE_S)) * MOSpol;
   Ubd = real (getV (NODE_B) - getV (NODE_D)) * MOSpol;
   Uds = Ugs - Ugd;
-  Ugb = Ugs - Ubs;
 
   // capacitance of bulk-drain diode
-  Cbd = gbd * Tt + pnCapacitance (Ubd, Cbd0, Pb, M, Fc);
+  Cbd = gbd * Tt + pnCapacitance (Ubd, Cbd0, Pb, M, Fc) +
+    pnCapacitance (Ubd, Cbds, Pb, Ms, Fc);
 
   // capacitance of bulk-source diode
-  Cbs = gbs * Tt + pnCapacitance (Ubs, Cbs0, Pb, M, Fc);
+  Cbs = gbs * Tt + pnCapacitance (Ubs, Cbs0, Pb, M, Fc) +
+    pnCapacitance (Ubs, Cbss, Pb, Ms, Fc);
 
   // calculate bias-dependent MOS overlap capacitances
   if (MOSdir > 0) {
-    fetCapacitanceMeyer (Ugs, Ugd, Ugb, Uon, Udsat, Phi, Cox, Cgs, Cgd, Cgb);
+    fetCapacitanceMeyer (Ugs, Ugd, Uon, Udsat, Phi, Cox, Cgs, Cgd, Cgb);
   } else {
-    fetCapacitanceMeyer (Ugd, Ugs, Ugb, Uon, Udsat, Phi, Cox, Cgd, Cgs, Cgb);
+    fetCapacitanceMeyer (Ugd, Ugs, Uon, Udsat, Phi, Cox, Cgd, Cgs, Cgb);
   }
   Cgs += Cgso * W;
   Cgd += Cgdo * W;
   Cgb += Cgbo * Leff;
 
   // save operating points
-  setOperatingPoint ("gbs", gbs);
-  setOperatingPoint ("gbd", gbd);
-  setOperatingPoint ("gds", gds);
+  setOperatingPoint ("Id", Ids);
   setOperatingPoint ("gm", gm);
   setOperatingPoint ("gmb", gmb);
-  setOperatingPoint ("Id", Ids);
+  setOperatingPoint ("gds", gds);
+  setOperatingPoint ("Vth", Vto);
+  setOperatingPoint ("Vdsat", Udsat);
+  setOperatingPoint ("gbs", gbs);
+  setOperatingPoint ("gbd", gbd);
   setOperatingPoint ("Vgs", Ugs);
   setOperatingPoint ("Vgd", Ugd);
   setOperatingPoint ("Vbs", Ubs);
