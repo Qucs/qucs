@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.13 2004/09/16 10:15:10 ela Exp $
+ * $Id: bjt.cpp,v 1.14 2004/09/27 18:26:21 ela Exp $
  *
  */
 
@@ -386,7 +386,7 @@ void bjt::calcOperatingPoints (void) {
   nr_double_t Itf  = getPropertyDouble ("Itf");
   nr_double_t Tr   = getPropertyDouble ("Tr");
 
-  nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Usc, Cbc, Ccs;
+  nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Ucs, Cbc, Ccs;
 
   // apply polarity of BJT
   char * type = getPropertyString ("Type");
@@ -397,7 +397,7 @@ void bjt::calcOperatingPoints (void) {
 
   Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
   Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
-  Usc = real (getV (NODE_S) - getV (NODE_C)) * pol;
+  Ucs = real (getV (NODE_S) - getV (NODE_C)) * pol;
 
   // depletion capacitance of base-emitter diode
   Cbe = pnCapacitance (Ube, Cje0, Vje, Mje, Fc);
@@ -415,7 +415,7 @@ void bjt::calcOperatingPoints (void) {
   Cbcx = Cbc * (1 - Xcjc);
 
   // depletion capacitance of collector-substrate diode
-  Ccs = pnCapacitance (Usc, Cjs0, Vjs, Mjs);
+  Ccs = pnCapacitance (Ucs, Cjs0, Vjs, Mjs);
 
   // finally save the operating points
   setOperatingPoint ("Cbe", Cbe);
@@ -429,6 +429,7 @@ void bjt::calcOperatingPoints (void) {
   setOperatingPoint ("Vbe", Ube);
   setOperatingPoint ("Vbc", Ubc);
   setOperatingPoint ("Vce", Ube - Ubc);
+  setOperatingPoint ("Vcs", Ucs);
   setOperatingPoint ("Rbb", Rbb);
   setOperatingPoint ("Ibe", Ibe);
   setOperatingPoint ("Ice", It);
@@ -458,4 +459,33 @@ void bjt::initAC (void) {
 
 void bjt::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
+}
+
+#define qbeState 0 // base-emitter charge state
+#define cbeState 1 // base-emitter current state
+#define qbcState 2 // base-collector charge state
+#define cbcState 3 // base-collector current state
+#define qcsState 4 // collector-substrate charge state
+#define ccsState 5 // collector-substrate current state
+
+void bjt::initTR (void) {
+  setStates (6);
+  initDC ();
+}
+
+void bjt::calcTR (nr_double_t) {
+  calcDC ();
+  calcOperatingPoints ();
+
+  nr_double_t Ube = getOperatingPoint ("Vbe");
+  nr_double_t Ubc = getOperatingPoint ("Vbc");
+  nr_double_t Ucs = getOperatingPoint ("Vcs");
+  nr_double_t Cbe = getOperatingPoint ("Cbe");
+  nr_double_t Cbc = getOperatingPoint ("Cbci");
+  nr_double_t Ccs = getOperatingPoint ("Ccs");
+
+  // TODO: excess phase
+  transientCapacitance (qbeState, NODE_B, NODE_E, Cbe, Ube);
+  transientCapacitance (qbcState, NODE_B, NODE_C, Cbc, Ubc);
+  transientCapacitance (qcsState, NODE_S, NODE_C, Ccs, Ucs);
 }
