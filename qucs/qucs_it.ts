@@ -1157,7 +1157,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation>passo del tempo in secondi</translation>
+        <translation type="obsolete">passo del tempo in secondi</translation>
     </message>
     <message>
         <source>ideal transformer</source>
@@ -2006,6 +2006,22 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of simulation time steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>integration method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>order of integration method</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

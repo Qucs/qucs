@@ -1134,7 +1134,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation>Zeitschritt in Sekunden</translation>
+        <translation type="obsolete">Zeitschritt in Sekunden</translation>
     </message>
     <message>
         <source>ideal transformer</source>
@@ -2117,6 +2117,22 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of simulation time steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>integration method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>order of integration method</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
