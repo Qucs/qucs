@@ -1,7 +1,12 @@
 2004-06-30  Stefan Jahn  <stefan@lkcc.org>
 
+	* sweep.cpp: Fixed bug in logarithmic sweep creation.
+
 	* check_netlist.cpp: Allowing the new properties of the '.SP'
 	analysis to be part of the netlist.
+	Checking whether required string properties are identifiers
+	in fact.
+	Fixed bug: First evaluating unit scale, then checking for range.
 
 	* spsolver.cpp: Now also uses the 'Type', 'Start', 'Stop' and
 	'Points' properties to generate frequency sweeps using the new
