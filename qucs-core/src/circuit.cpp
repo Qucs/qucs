@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.10 2004/05/02 12:02:11 ela Exp $
+ * $Id: circuit.cpp,v 1.11 2004/05/22 09:17:24 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -57,6 +58,7 @@ circuit::circuit () : object () {
 /* Constructor creates an unnamed instance of the circuit class with a
    certain number of ports. */
 circuit::circuit (int s) : object () {
+  assert (s >= 0 && s <= MAX_CIR_PORTS);
   size = s;
   MatrixS = new complex[s * s];
   MatrixY = new complex[s * s];
@@ -343,4 +345,15 @@ int circuit::isNonLinear (void) {
   if (type == CIR_DIODE)
     return 1;
   return 0;
+}
+
+// Returns the number of internal voltage sources for DC analysis.
+int circuit::getVoltageSources (void) {
+  return nSources;
+}
+
+// Sets the number of internal voltage sources for DC analysis.
+void circuit::setVoltageSources (int s) {
+  assert (s >= 0 && s <= MAX_CIR_VSRCS);
+  nSources = s;
 }

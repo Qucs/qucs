@@ -1,3 +1,11 @@
+2004-05-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* circuit.h (MAX_CIR_VSRCS): Raised the maximum number of
+	builtin voltage sources (for circulator).
+
+	* circuit.cpp: Checking for maximum number of circuit nodes
+	(ports) and maximum number of builtin voltage sources.
+
 2004-05-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* matrix.cpp: Optimized copy constructors.
