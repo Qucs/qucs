@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.13 2004/06/06 13:01:45 ela Exp $
+ * $Id: diode.cpp,v 1.14 2004/06/09 06:27:08 ela Exp $
  *
  */
 
@@ -41,38 +41,41 @@
 #include "constants.h"
 #include "diode.h"
 
+#define Cathode 1 /* cathode node */
+#define Anode   2 /* anode node   */
+
 diode::diode () : circuit (2) {
   rs = NULL;
   type = CIR_DIODE;
 }
 
 void diode::calcSP (nr_double_t frequency) {
-  complex z = getOperatingPoint ("gd");
-  z += rect (0, getOperatingPoint ("Cd") * 2.0 * M_PI * frequency);
-  z = 1.0 / z / z0; 
-  setS (1, 1,   z / (z + 2.0));
-  setS (2, 2,   z / (z + 2.0));
-  setS (1, 2, 2.0 / (z + 2.0));
-  setS (2, 1, 2.0 / (z + 2.0));
+  complex y = getOperatingPoint ("gd");
+  y += rect (0, getOperatingPoint ("Cd") * 2.0 * M_PI * frequency);
+  y *= z0; 
+  setS (Cathode, Cathode, 1.0 / (1.0 + 2.0 * y));
+  setS (Anode,     Anode, 1.0 / (1.0 + 2.0 * y));
+  setS (Cathode,   Anode, 2.0 * y / (1.0 + 2.0 * y));
+  setS (Anode,   Cathode, 2.0 * y / (1.0 + 2.0 * y));
 }
 
 void diode::initDC (dcsolver * solver) {
 
   // initialize starting values
-  setV (1, 0.0);
-  setV (2, 0.9);
-  Uprev = real (getV (2) - getV (1));
+  setV (Cathode, 0.0);
+  setV (Anode, 0.9);
+  Uprev = real (getV (Anode) - getV (Cathode));
 
   // possibly insert series resistance
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
-    rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", 2);
+    rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", Anode);
     applyResistance (rs, Rs);
   }
   // no series resistance
   else {
-    disableResistance (this, rs, solver->getNet (), 2);
+    disableResistance (this, rs, solver->getNet (), Anode);
   }
 }
 
@@ -126,12 +129,12 @@ void diode::disableResistance (circuit * base, circuit * res, net * subnet,
 
 void diode::calcDC (void) {
   nr_double_t Is = getPropertyDouble ("Is");
-  nr_double_t n = getPropertyDouble ("n");
+  nr_double_t n  = getPropertyDouble ("N");
   nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit, gtiny;
 
   T = -K + 26.5;
   Ut = T * kB / Q;
-  Ud = real (getV (2) - getV (1));
+  Ud = real (getV (Anode) - getV (Cathode));
 
   // critical voltage necessary for bad start values
   Ucrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
@@ -141,15 +144,14 @@ void diode::calcDC (void) {
   gtiny = Ud < - 10 * Ut * n ? Is : 0;
 
   gd = Is / Ut / n * exp (Ud / Ut / n) + gtiny;
-  //fprintf (stderr, "%s: gd=%g, Ud=%g\n", getName(), gd, Ud);
   Id = Is * (exp (Ud / Ut / n) - 1) + gtiny * Ud;
   Ieq = Id - Ud * gd;
 
-  setI (1, +Ieq);
-  setI (2, -Ieq);
+  setI (Cathode, +Ieq);
+  setI (Anode,   -Ieq);
 
-  setY (1, 1, +gd); setY (2, 2, +gd);
-  setY (1, 2, -gd); setY (2, 1, -gd);
+  setY (Cathode, Cathode, +gd); setY (Anode,   Anode, +gd);
+  setY (Cathode,   Anode, -gd); setY (Anode, Cathode, -gd);
 }
 
 /* The function limits the forward pn-voltage for each DC iteration in
@@ -169,17 +171,18 @@ nr_double_t diode::pnVoltage (nr_double_t Ud, nr_double_t Uold, nr_double_t Ut,
 }
 
 void diode::calcOperatingPoints (void) {
-  nr_double_t Is = getPropertyDouble ("Is");
-  nr_double_t n = getPropertyDouble ("n");
-  nr_double_t z = getPropertyDouble ("z");
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t n   = getPropertyDouble ("N");
+  nr_double_t z   = getPropertyDouble ("M");
   nr_double_t cj0 = getPropertyDouble ("Cj0");
-  nr_double_t vd = getPropertyDouble ("Vd");
+  nr_double_t vd  = getPropertyDouble ("Vj");
+  nr_double_t Tt  = getPropertyDouble ("Tt");
   
   nr_double_t Ud, Id, Ut, T, gd, Cd;
 
   T = -K + 26.5;
   Ut = kB * T / Q;
-  Ud = real (getV (2) - getV (1));
+  Ud = real (getV (Anode) - getV (Cathode));
   gd = Is / Ut / n * exp (Ud / Ut / n);
   Id = Is * (exp (Ud / Ut / n) - 1);
 
@@ -187,10 +190,10 @@ void diode::calcOperatingPoints (void) {
     Cd = cj0 * pow (1 - Ud / vd, -z);
   else
     Cd = cj0 * (1 + z * Ud / vd);
+  Cd = Cd + Tt * gd;
 
-  //fprintf (stderr, "gd=%g, Ud=%g, Id=%g, Cd=%g\n", gd, Ud, Id, Cd);
   setOperatingPoint ("gd", gd);
   setOperatingPoint ("Id", Id);
-  setOperatingPoint ("Ud", Ud);
+  setOperatingPoint ("Vd", Ud);
   setOperatingPoint ("Cd", Cd);
 }

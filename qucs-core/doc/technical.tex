@@ -2960,7 +2960,7 @@ the diode model.
 \begin{center}
 \psfrag{gd}{$\mathrm{g_{d}^{(m)}}$}
 \psfrag{Ieq}{$\mathrm{I_{d}^{(m)} - g_{d}^{(m)}\cdot V^{(m)}}$}
-\includegraphics[width=0.2\linewidth]{dcdiode}
+\includegraphics[width=0.2\linewidth]{newtondiode}
 \end{center}
 \caption{accompanied equivalent circuit for intrinsic diode}
 \label{fig:AccompaniedModel}
@@ -3010,14 +3010,117 @@ currents.
 \section{PN-Junction Diode}
 %\addcontentsline{toc}{section}{PN-Junction Diode}
 
+The following table contains the model parameters for the pn-junction
+diode model.
+
+\addvspace{12pt}
+
+\begin{tabular}{rllll}
+Name & Symbol & Description & Unit & Default\\
+\hline
+Is & $I_{S}$ & saturation current & $\ampere$ & $10^{-14}$\\
+N & $N$ & emission coefficient & & $1.0$\\
+Rs & $R_{S}$ & ohmic resistance & $\ohm$ & $0.0$\\
+Cj0 & $C_{j0}$ & zero-bias junction capacitance & $\farad$ & $0.0$\\
+M & $M$ & grading coefficient & & $0.5$\\
+Vj & $V_{j}$ & junction potential & $\volt$ & $1.0$\\
+Tt & $\tau$ & transit time & $\second$ & $0.0$
+\end{tabular}
+
+\addvspace{12pt}
+
+\subsection{Large signal model}
+%\addcontentsline{toc}{subsection}{Large signal model}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.3\linewidth]{diode}
+\end{center}
+\caption{pn-junction diode symbol and large signal model}
+\label{fig:diode}
+\end{figure}
+\FloatBarrier
+
+The current equation of the diode and its derivative writes as
+follows:
+\begin{align}
+I_{d} &= I_{S}\cdot \left(e^{\frac{V_{d}}{N\cdot V_{T}}} - 1\right)\\
+g_{d} &= \dfrac{\partial I_{d}}{\partial V_{d}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{d}}{N\cdot V_{T}}}
+\end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.17\linewidth]{dcdiode}
+\end{center}
+\caption{accompanied DC model of intrinsic diode}
+\label{fig:dcdiode}
+\end{figure}
+\FloatBarrier
+
+The complete MNA matrix entries are:
+\begin{equation}
+\begin{bmatrix}
+g_{d} & -g_{d}\\
+-g_{d} & g_{d}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{C}\\
+V_{A}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
++I_{d} - g_{d}\cdot V_{d}\\
+-I_{d} + g_{d}\cdot V_{d}\\
+\end{bmatrix}
+\end{equation}
+
+\subsection{Small signal model}
+%\addcontentsline{toc}{subsection}{Small signal model}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.17\linewidth]{spdiode}
+\end{center}
+\caption{small signal model of intrinsic diode}
+\label{fig:spdiode}
+\end{figure}
+\FloatBarrier
+
+The voltage dependent capacitance consists of a diffusion capacitance
+and a junction capacitance which is usually modeled by the following
+equations.
+
+\begin{equation}
+C_{d} = \tau \cdot g_{d} +
+\begin{cases}
+\begin{array}{ll}
+C_{j0}\cdot \left(1 - \dfrac{V_{d}}{V_{j}}\right)^{-M} & \text{ for } V_{d} < 0\\
+C_{j0}\cdot \left(1 + \dfrac{M\cdot V_{d}}{V_{j}}\right) & \text{ for } V_{d} \ge 0
+\end{array}
+\end{cases}
+\end{equation}
+
+The S-parameters of the passive circuit shown in
+fig. \ref{fig:spdiode} can be written as
+\begin{align}
+S_{11} = S_{22} &= \dfrac{1}{1 + 2\cdot y}\\
+S_{12} = S_{21} &= 1 - S_{11} = \dfrac{2\cdot y}{1 + 2\cdot y}
+\end{align}
+
+with
+\begin{equation}
+y = Z_{0}\cdot \left(g_{d} + j\omega C_{d}\right)
+\end{equation}
+
 \section{Junction FET}
 %\addcontentsline{toc}{section}{Junction FET}
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.3\linewidth]{jfet}
+\includegraphics[width=0.5\linewidth]{jfet}
 \end{center}
-\caption{JFET large signal model}
+\caption{junction FET symbol and large signal model}
 \label{fig:jfet}
 \end{figure}
 \FloatBarrier
@@ -3149,7 +3252,7 @@ can be written as:
 
 \addvspace{12pt}
 
-With the accompanied DC model shown in fig. \ref{fig:DCjfet} using the
+With the accompanied DC model shown in fig. \ref{fig:dcjfet} using the
 same principles as explained in section \ref{sec:DCdiode} on page
 \pageref{sec:DCdiode} it is possible to build the complete MNA matrix
 of the intrinsic JFET.
@@ -3159,26 +3262,26 @@ of the intrinsic JFET.
 \includegraphics[width=0.5\linewidth]{dcjfet}
 \end{center}
 \caption{accompanied DC model of intrinsic JFET}
-\label{fig:DCjfet}
+\label{fig:dcjfet}
 \end{figure}
 \FloatBarrier
 
 Applying the rules for creating the MNA matrix of an arbitrary network
-the complete MNA admittance matrix entries for the intrinsic junction
-FET are:
+the complete MNA matrix entries (admittance matrix and current vector)
+for the intrinsic junction FET are:
 \begin{equation}
-A_{FET} =
 \begin{bmatrix}
 g_{gd} + g_{gs} & -g_{gd} & -g_{gs}\\
 -g_{gd} + g_{m} & g_{ds} + g_{gd} & -g_{ds} - g_{m}\\
 -g_{gs} - g_{m} & -g_{ds} & g_{gs} + g_{ds} + g_{m}
 \end{bmatrix}
-\end{equation}
-
-The remaining current vector can be written as
-
-\begin{equation}
-z_{FET} =
+\cdot
+\begin{bmatrix}
+V_{G}\\
+V_{D}\\
+V_{S}\\
+\end{bmatrix}
+=
 \begin{bmatrix}
 -I_{GD_{eq}} - I_{GS_{eq}}\\
 +I_{GD_{eq}} - I_{DS_{eq}}\\

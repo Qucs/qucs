@@ -1,3 +1,8 @@
+2004-06-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{PN-Junction Diode}): Documented large
+	and small signal parameters of pn-junction diode.
+
 2004-06-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Junction FET}): Started to document
