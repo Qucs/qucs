@@ -24,9 +24,9 @@ using namespace std;
 #include "diagram.h"
 #include "qucs.h"
 
-#include <cmath>
-#include <cfloat>
-#include <cstdlib>
+#include <stdlib.h>
+#include <math.h>
+#include <float.h>
 
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
@@ -233,7 +233,7 @@ void Diagram::calcData(Graph *g, bool valid)
 	*(p++) = ytmp;
 	continue;
       }
-      alpha   = atan2(dy, dx);   // slope for interpolation
+      alpha = atan2(double(dy), double(dx));   // slope for interpolation
       while(dist > 0) {   // stroke or space finished ?
 	if(p >= p_end) {  // need to enlarge memory block ?
 	  Size += 256;

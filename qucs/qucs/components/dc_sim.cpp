@@ -60,6 +60,9 @@ DC_Sim::DC_Sim()
 		" [yes, no]"));
   Props.append(new Property("MaxIter", "150", false,
 		QObject::tr("maximum number of iterations until error")));
+  Props.append(new Property("saveAll", "no", false,
+		QObject::tr("save subcircuit nodes into dataset")+
+		" [yes, no]"));
 }
 
 DC_Sim::~DC_Sim()
