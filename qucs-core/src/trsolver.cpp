@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.26 2004-10-21 09:00:26 ela Exp $
+ * $Id: trsolver.cpp,v 1.27 2004-10-25 07:55:46 ela Exp $
  *
  */
 
@@ -137,6 +137,8 @@ void trsolver::solve (void) {
     error++;
     break;
   }
+  solve_post ();
+
   // Really failed to find initial DC solution?
   if (error) {
     logprint (LOG_ERROR, "ERROR: %s: %s analysis failed\n",
@@ -148,6 +150,7 @@ void trsolver::solve (void) {
   setDescription ("transient");
   initTR ();
   setCalculation ((calculate_func_t) &calcTR);
+  solve_pre ();
   swp->reset ();
 
   int running = 0;
