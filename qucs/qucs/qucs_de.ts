@@ -3978,12 +3978,12 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <translation>Ellipsenbogen</translation>
     </message>
     <message>
-        <source>Edit Circuit Symbol</source>
-        <translation>Schaltkreissymbol bearbeiten</translation>
+        <source>Delete Group</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Schematic</source>
-        <translation>Schaltplan bearbeiten</translation>
+        <source>Cannot delete the open file: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

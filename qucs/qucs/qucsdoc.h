@@ -64,8 +64,9 @@ public:
 
   Component* searchSelSubcircuit();
   void       sizeOfAll(int&, int&, int&, int&);
-  Component* selectedComponent(int, int);
-  Diagram*   selectedDiagram(int, int);
+//  Element*   selectedElement(int, int, QPtrList<Element>*);
+  Component*   selectedComponent(int, int);
+//  Diagram*   selectedDiagram(int, int);
   Node*      selectedNode(int, int);
   Wire*      selectedWire(int, int);
   Painting*  selectedPainting(int, int);
@@ -82,6 +83,7 @@ public:
 
   void  setComponentNumber(Component*);
   void  oneLabel(Node*);
+  int   placeNodeLabel(WireLabel*);
   Element* getWireLabel(Node*);
   void  setCompPorts(Component*);
   void  copyComponents(int&, int&, int&, int&);

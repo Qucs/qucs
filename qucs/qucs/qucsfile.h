@@ -54,7 +54,7 @@ private:
   void  simpleInsertComponent(Component*);
   bool  loadComponents(QTextStream*, QPtrList<Component> *List=0);
   void  simpleInsertWire(Wire*);
-  bool  loadWires(QTextStream*, QPtrList<Wire> *List=0);
+  bool  loadWires(QTextStream*, QPtrList<Element> *List=0);
   bool  loadDiagrams(QTextStream*, QPtrList<Diagram>*);
   bool  loadPaintings(QTextStream*, QPtrList<Painting>*);
   bool  loadIntoNothing(QTextStream*);
