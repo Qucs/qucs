@@ -444,7 +444,7 @@ void Component::mirrorX()
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
     f.setPointSizeFloat(pt->Size);
     QFontMetrics  smallMetrics(f);
-    dy = smallMetrics.width(pt->s);   // width of text
+    dy = smallMetrics.lineSpacing();   // height of text
 //    pt->y = -pt->y - (dy & 0xFFFFFFFE); // erase LSB to be rotate consistent
     pt->y = -pt->y - dy;
   }

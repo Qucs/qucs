@@ -1,0 +1,109 @@
+%
+% This document contains the chapter about harmonic balance analysis.
+%
+% Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2005 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
+%
+% Permission is granted to copy, distribute and/or modify this document
+% under the terms of the GNU Free Documentation License, Version 1.1
+% or any later version published by the Free Software Foundation.
+%
+
+\chapter{Harmonic Balance Analysis}
+\label{sec:hb_analysis}
+
+Harmonic balance is a non-linear, frequency-domain, steady-state simulation.
+The voltage and current sources create discrete frequencies resulting in a
+spectrum of discrete frequencies at every node in the circuit. Linear
+circuit components are solely modeled in frequency domain. Non-linear
+components are modeled in time domain and Fourier-transformed before each
+solving step.  The informations in this chapter are taken from \cite{Maas1}
+(chapter 3) which is a very nice and well-written publication on this
+topic.\\
+The harmonic balance simulation is ideal for situations where transient
+simulation methods are problematic. These are:
+\begin{itemize}
+\item components modeled in frequency domain, for instance (dispersive)
+      transmission lines
+\item circuit time constants large compared to period of simulation
+      frequency
+\item circuits with lots of reactive components
+\end{itemize}
+Harmonic balance methods, therefore, are the best choice for most microwave
+circuits excited with sinusoidal signals (e.g. mixers, power amplifiers).
+
+
+\section{The Basic Concept}
+
+As non-linear elements can only be modeled in time domain, the circuit
+first must be separated into a linear and a non-linear part. The
+internal impedances $Z_i$ of the voltage sources are put into the
+linear part as well. Figure \ref{fig:hb_concept} illustrates the
+concept. Let us define the following symbols:
+\begin{description}
+\item[] M = number of (independent) voltage sources
+\item[] N = number of connections between linear and non-linear subcircuit
+\item[] K = number of calculated harmonics
+\end{description}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=9cm]{hb_concept}
+\end{center}
+\caption{Circuit partitioning in harmonic balance}
+\label{fig:hb_concept}
+\end{figure}
+\FloatBarrier
+
+The linear circuit is modeled by two transadmittance matrices:
+The first one $(\tilde{\underline{Y}})$
+relates the source voltages $v_{S,1}...v_{S,M}$ to the interconnection
+currents $i_1...i_N$ and the second one $(\hat{\underline{Y}})$
+relates the interconnection
+voltages $v_1...v_N$ to the interconnection currents $i_1...i_N$.
+Taking both, we can express the current flowing through the
+interconnections between linear and non-linear subcircuit:
+
+\begin{equation}
+(\underline{I})
+  = (\underline{\tilde{Y}})\cdot (\underline{V}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
+  = (\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
+\end{equation}
+(Because $(\underline{V}_S)$ is known and constant, the first term
+can already be computed to give $(\underline{I}_S)$.)\\
+
+The non-linear circuit is modeled by its current function
+$i(t) = f_g(v_1, ..., v_N)$
+and by the charge of its capacitances
+$q(t) = f_q(v_1, ..., v_N)$.
+These functions must be Fourier-transformed to give the
+frequency-domain vectors $(\underline{Q})$ and $(\underline{I}_G)$,
+respectively.\\
+
+We have found a simulation result if the currents through the
+interconnections are the same for the linear and the non-linear
+subcircuit. So, the non-linear equation system that needs to be
+solved writes:
+\begin{equation}
+(\underline{0})
+  = (\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
+    + j\cdot (\underline{\Omega})\cdot (\underline{Q}) + (\underline{I}_G)
+\end{equation}
+where matrix $(\underline{\Omega})$ contains the angluar frequencies
+on the first main diagonal and zeros anywhere else, $(\underline{0})$
+is zero matrix.\\
+After each iteration step, the inverse Fourier transformation must
+be applied to the voltage vector $(\underline{V})$. Then the time domain
+voltages $v_1...v_N$ are put into $i(t) = f_g(v_1, ..., v_N)$
+and $q(t) = f_q(v_1, ..., v_N)$ again. Now, a Fourier transformation
+gives the vectors $(\underline{Q})$ and $(\underline{I}_G)$ for the
+next iteration step. After repeating this several times we hopefully
+have a simulation result.
+
+
+
+\section{Going through Each Step}
+
+
+\subsection{Creating Transadmittance Matrix}
+
