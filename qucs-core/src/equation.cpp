@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.9 2004/05/17 19:50:51 ela Exp $
+ * $Id: equation.cpp,v 1.10 2004/05/22 19:48:32 ela Exp $
  *
  */
 
@@ -796,6 +796,20 @@ void solver::checkinDataset (void) {
   }
 }
 
+/* This function goes through the given string list and calculates the
+   data entries within these dataset dependencies.  It returns at
+   least one no matter whether the data vectors can be found or not. */
+int solver::dataSize (strlist * deps) {
+  int size = 1;
+  for (int i = 0; i < deps->length (); i++) {
+    char * str = deps->get (i);
+    vector * dep = data->findDependency (str);
+    vector * var = data->findVariable (str);
+    size *= dep ? dep->getSize () : var ? var->getSize () : 1;
+  }
+  return size;
+}
+
 // The function stores the equation solver results back into a dataset.
 void solver::checkoutDataset (void) {
   // return if nothing todo
@@ -822,6 +836,12 @@ void solver::checkoutDataset (void) {
       }
       datadeps = checker::foldDependencies (datadeps);
 
+      // check whether dataset is smaller than its dependencies
+      if (v->getSize () <= 1 && dataSize (datadeps) > v->getSize ()) {
+	delete datadeps;
+	datadeps = NULL;
+      }
+	
       // store variable vector
       if (datadeps && datadeps->length () > 0) {
 	v->setDependencies (datadeps);
@@ -830,6 +850,7 @@ void solver::checkoutDataset (void) {
       // store independent vector
       else {
 	data->addDependency (v);
+	delete datadeps;
       }
     }
   }

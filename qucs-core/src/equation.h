@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.8 2004/05/17 19:50:51 ela Exp $
+ * $Id: equation.h,v 1.9 2004/05/22 19:48:32 ela Exp $
  *
  */
 
@@ -225,6 +225,7 @@ public:
   vector * dataVector (node *);
   void checkinDataset (void);
   void checkoutDataset (void);
+  int dataSize (strlist *);
 
 public:
   node * equations;
