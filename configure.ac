@@ -32,15 +32,19 @@ if test $USE_MAINTAINER_MODE = yes; then
 fi
 if test "$enable_debug" = yes; then
   AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
+  QT_DEF=""
 else
   AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
   CFLAGS="-O2"
   CXXFLAGS="-O2"
+  QT_DEF="-DQT_NO_DEBUG"
 fi
 unset enable_debug
 
 # Yet another compiler check.
 if test "x$GCC" = xyes; then
+  CFLAGS="$CFLAGS -pipe"
+  CXXFLAGS="$CXXFLAGS -pipe"
   if test $USE_MAINTAINER_MODE = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
     CXXFLAGS="$CXXFLAGS -W -Wall -Wmissing-prototypes"
@@ -101,11 +105,11 @@ AC_ARG_ENABLE([mt],
    fi])
 if test "$enable_mt" = yes; then
   QT_LIB="-lqt-mt"
-  QT_INC="-DQT_THREAD_SUPPORT -D_REENTRANT"
+  QT_INC="$QT_DEF -DQT_THREAD_SUPPORT -D_REENTRANT"
   QT_MTS="multi-threaded"
 else
   QT_LIB="-lqt"
-  QT_INC=""
+  QT_INC="$QT_DEF"
   QT_MTS="non-threaded"
 fi
 unset enable_mt
