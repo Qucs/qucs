@@ -47,6 +47,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
                     : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   Diag = d;
+  Graphs.setAutoDelete(true);
+  copyDiagramGraphs();   // make a copy of all graphs
   defaultDataSet = _DataSet;
   setCaption(tr("Edit Diagram Properties"));
   changed = false;
@@ -218,9 +220,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   QPushButton *ApplyButt = new QPushButton(tr("Apply"), Butts);
   connect(ApplyButt, SIGNAL(clicked()), SLOT(slotApply()));
   QPushButton *CancelButt = new QPushButton(tr("Cancel"), Butts);
-  connect(CancelButt, SIGNAL(clicked()), SLOT(reject()));
-  QPushButton *HelpButt = new QPushButton(tr("Function Help"), Butts);
-  connect(HelpButt, SIGNAL(clicked()), SLOT(slotFuncHelp()));
+  connect(CancelButt, SIGNAL(clicked()), SLOT(slotCancel()));
+//  QPushButton *HelpButt = new QPushButton(tr("Function Help"), Butts);
+//  connect(HelpButt, SIGNAL(clicked()), SLOT(slotFuncHelp()));
 
   OkButt->setDefault(true);
 
@@ -294,10 +296,10 @@ void DiagramDialog::slotReadVars(int)
 // also inserted as graph.
 void DiagramDialog::slotTakeVar(QListViewItem *Item)
 {
- GraphInput->blockSignals(true);
+  GraphInput->blockSignals(true);
   if(toTake) GraphInput->setText("");
 
-  int     i = GraphInput->cursorPosition();
+  int     i  = GraphInput->cursorPosition();
   QString s  = GraphInput->text();
   QString s1 = Item->text(0);
   if(ChooseData->currentText() != defaultDataSet.section('.',0,0))
@@ -326,7 +328,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
       g->numMode   = PropertyBox->currentItem();
     }
 
-    Diag->Graphs.append(g);
+    Graphs.append(g);
     changed = true;
     toTake  = true;
   }
@@ -353,7 +355,7 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
   GraphInput->setText(GraphList->text(index));
   GraphInput->blockSignals(false);
 
-  Graph *g = Diag->Graphs.at(index);
+  Graph *g = Graphs.at(index);
   if(Diag->Name != "Tab") {
     Property2->setText(QString::number(g->Thick));
     ColorButt->setPaletteBackgroundColor(g->Color);
@@ -382,7 +384,7 @@ void DiagramDialog::slotDeleteGraph()
   if(i < 0) return;   // return, if no item selected
 
   GraphList->removeItem(i);
-  Diag->Graphs.remove(i);
+  Graphs.remove(i);
 
   GraphInput->setText("");  // erase input line and back to default values
   if(Diag->Name != "Tab") {
@@ -421,7 +423,7 @@ void DiagramDialog::slotNewGraph()
     g->Precision = Property2->text().toInt();
     g->numMode   = PropertyBox->currentItem();
   }
-  Diag->Graphs.append(g);
+  Graphs.append(g);
   changed = true;
   toTake  = false;
 }
@@ -476,13 +478,26 @@ void DiagramDialog::slotApply()
     }
   }
 
+  Diag->Graphs.clear();   // delete the graphs
+  Graphs.setAutoDelete(false);
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    Diag->Graphs.append(pg);  // transfer the new graphs to diagram
+  Graphs.clear();
+  Graphs.setAutoDelete(true);
+
   Diag->loadGraphData(defaultDataSet);
   ((QucsView*)parent())->viewport()->repaint();
+  copyDiagramGraphs();
 }
 
+
 // --------------------------------------------------------------------------
-void DiagramDialog::slotFuncHelp()
+// Is called if "Cancel" button is pressed.
+void DiagramDialog::slotCancel()
 {
+//  Diag->loadGraphData(defaultDataSet);
+//  ((QucsView*)parent())->viewport()->repaint();
+  reject();
 }
 
 // --------------------------------------------------------------------------
@@ -495,7 +510,7 @@ void DiagramDialog::slotSetColor()
   int i = GraphList->index(GraphList->selectedItem());
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Diag->Graphs.at(i);
+  Graph *g = Graphs.at(i);
   g->Color = c;
   changed = true;
   toTake  = false;
@@ -518,7 +533,7 @@ void DiagramDialog::slotResetToTake(const QString& s)
   int i = GraphList->index(GraphList->selectedItem());
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Diag->Graphs.at(i);
+  Graph *g = Graphs.at(i);
   g->Var = s;
   GraphList->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
@@ -532,7 +547,7 @@ void DiagramDialog::slotSetProp2(const QString& s)
   int i = GraphList->index(GraphList->selectedItem());
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Diag->Graphs.at(i);
+  Graph *g = Graphs.at(i);
   if(Diag->Name == "Tab") g->Precision = s.toInt();
   else  g->Thick = s.toInt();
   changed = true;
@@ -546,7 +561,7 @@ void DiagramDialog::slotSetNumMode(int Mode)
   int i = GraphList->index(GraphList->selectedItem());
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Diag->Graphs.at(i);
+  Graph *g = Graphs.at(i);
   g->numMode = Mode;
   changed = true;
   toTake  = false;
@@ -569,6 +584,7 @@ void DiagramDialog::slotSetGridBox(int state)
     GridLabel2->setEnabled(false);
   }
 }
+
 // --------------------------------------------------------------------------
 // Is called if the user changes the graph style (combobox).
 void DiagramDialog::slotSetGraphStyle(int style)
@@ -576,8 +592,16 @@ void DiagramDialog::slotSetGraphStyle(int style)
   int i = GraphList->index(GraphList->selectedItem());
   if(i < 0) return;   // return, if no item selected
 
-  Graph *g = Diag->Graphs.at(i);
+  Graph *g = Graphs.at(i);
   g->Style = style;
   changed = true;
   toTake  = false;
+}
+
+// --------------------------------------------------------------------------
+// Makes a copy of all graphs in the diagram.
+void DiagramDialog::copyDiagramGraphs()
+{
+  for(Graph *pg = Diag->Graphs.first(); pg != 0; pg = Diag->Graphs.next())
+    Graphs.append(pg->sameNewOne());
 }

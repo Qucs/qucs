@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>Function Help</source>
-        <translation>Aiuto Funzione</translation>
+        <translation type="obsolete">Aiuto Funzione</translation>
     </message>
     <message>
         <source>Number Notation: </source>
@@ -1261,7 +1261,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
-        <translation>transistor a giunzione bipolare npn</translation>
+        <translation type="obsolete">transistor a giunzione bipolare npn</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
@@ -1606,10 +1606,6 @@ Wrong &apos;component&apos; line format!</source>
     <message>
         <source>number of simulation steps</source>
         <translation>numero di passi della simulazione</translation>
-    </message>
-    <message>
-        <source>npn bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip gap</source>
@@ -3053,10 +3049,6 @@ Errori:
 </translation>
     </message>
     <message>
-        <source>No page set !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot create </source>
         <translation>Impossibile creare </translation>
     </message>
@@ -3361,6 +3353,10 @@ Continuare ?</translation>
     <message>
         <source>At least two elements must be selected !</source>
         <translation>Almeno due elementi devono essere selezionati!</translation>
+    </message>
+    <message>
+        <source>No page set !</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

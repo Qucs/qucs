@@ -25,6 +25,7 @@
 #include <qpainter.h>
 
 #include <limits.h>
+#include <math.h>
 
 
 Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)
@@ -57,7 +58,6 @@ void Marker::initText(int n)
       makeInvalid();
       return;
   }
-//qDebug("n: %d",n);
 
   double num, *py = (pGraph->cPointsY) + 2*n;
   Text = "";
@@ -131,14 +131,10 @@ void Marker::createText()
   for(pD = pGraph->cPointsX.first(); pD!=0; pD = pGraph->cPointsX.next()) {
     pp = pD->Points;
     v  = VarPos[nVarPos];
-    for(i=pD->count; i>0; i--) {  // find appropiate marker position
-      if(*pp >= v) break;
+    for(i=pD->count; i>1; i--) {  // find appropiate marker position
+      if(fabs(v-(*pp)) < fabs(v-(*(pp+1)))) break;
       pp++;
       n += m;
-    }
-    if(i == 0) {	// takelast point ?
-      pp--;
-      n -= m;
     }
 
     m *= pD->count;
@@ -224,13 +220,12 @@ bool Marker::moveUpDown(bool up)
       if(!pD) return false;
       px = pD->Points;
       if(!px) return false;
-      for(n=0; n<pD->count; n++) {
-        if(VarPos[i] <= *px) break;
+      for(n=1; n<pD->count; n++) {  // go through all data points
+        if(fabs(VarPos[i]-(*px)) < fabs(VarPos[i]-(*(px+1)))) break;
         px++;
       }
-      if(n == pD->count) px--;
 
-    } while(px >= (pD->Points + pD->count - 1));
+    } while(px >= (pD->Points + pD->count - 1));  // go to next dimension ?
 
     px++;  // one position up
     VarPos[i] = *px;
@@ -248,12 +243,11 @@ bool Marker::moveUpDown(bool up)
       px = pD->Points;
       if(!px) return false;
       for(n=0; n<pD->count; n++) {
-        if(VarPos[i] <= *px) break;
+        if(fabs(VarPos[i]-(*px)) < fabs(VarPos[i]-(*(px+1)))) break;
         px++;
       }
-      if(n == pD->count) px--;
 
-    } while(px <= pD->Points);
+    } while(px <= pD->Points);  // go to next dimension ?
 
     px--;  // one position up
     VarPos[i] = *px;

@@ -133,7 +133,7 @@ public:
   int     GridX, GridY;
   bool    GridOn;
   double  Scale;
-  int PosX, PosY;    // upper left corner of visible area (only for remembering during seeing another open document)
+  int PosX, PosY; // upper left corner of visible area (only for remembering during seeing another document)
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 

@@ -443,7 +443,7 @@ void QucsInit::initActions()
   App->dpl_sch->setWhatsThis(
 	tr("View Data Display/Schematic\n\n")+
 	tr("Changes to data display or schematic page"));
-  connect(App->dpl_sch, SIGNAL(activated()), App, SLOT(slotChangePage()));
+  connect(App->dpl_sch, SIGNAL(activated()), App, SLOT(slotToPage()));
 
   Acts->setMarker = new QAction(tr("Set Marker"),
                           QIconSet(QImage(BITMAPDIR "marker.png")),

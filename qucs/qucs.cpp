@@ -600,7 +600,7 @@ bool QucsApp::saveAs()
 {
   int n = -1;
   bool intoView = true;
-  QString s;
+  QString s, Filter;
   QFileInfo Info;
   while(true) {
     intoView = true;
@@ -608,19 +608,15 @@ bool QucsApp::saveAs()
     if(Info.extension() == "dpl")
       s = QFileDialog::getSaveFileName(QucsWorkDir.filePath(Info.fileName()),
 				tr("Data Display (*.dpl)"), this, "",
-				tr("Enter a Document Name"));
-    else  s = QFileDialog::getSaveFileName(QucsWorkDir.filePath(Info.fileName()),
-				QucsFileFilter, this, "",
-				tr("Enter a Document Name"));
+				tr("Enter a Document Name"), &Filter);
+    else  s = QFileDialog::getSaveFileName(
+		QucsWorkDir.filePath(Info.fileName()), QucsFileFilter,
+		this, "", tr("Enter a Document Name"), &Filter);
     if(s.isEmpty())  return false;
     Info.setFile(s);                 // try to guess the best extension ...
-    if(Info.extension(false).isEmpty()) {    // ... if no one was specified
-      if(!view->Docs.current()->DocName.isEmpty()) {
-        Info.setFile(view->Docs.current()->DocName);
-        s += '.' + Info.extension(false);
-      }
+    if(Info.extension(false).isEmpty())  // ... if no one was specified
+      if(Filter.right(7) == "(*.dpl)")  s += ".dpl";
       else s += ".sch";
-    }
 
     Info.setFile(s);
     if(QFile::exists(s)) {
@@ -938,12 +934,13 @@ void QucsApp::slotSimulate()
   if(view->Docs.current()->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveCurrentFile()) return;            // ... save schematic before
 
-  SimMessage *sim = new SimMessage(this);
+  SimMessage *sim = new SimMessage(view->Docs.current()->DataDisplay, this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
-               SLOT(slotAfterSimulation(int, SimMessage*)));
-  connect(sim, SIGNAL(displayDataPage()), this, SLOT(slotChangePage()));
+		SLOT(slotAfterSimulation(int, SimMessage*)));
+  connect(sim, SIGNAL(displayDataPage(QString)),
+		this, SLOT(slotChangePage(QString)));
 
 //  sim.ProgText->clear();
 //  sim.ErrText->clear();
@@ -978,7 +975,7 @@ void QucsApp::slotSimulate()
 // Is called after the simulation process terminates.
 void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
-  bool shouldClosed = false;     // should simulation window close after simualtion
+  bool shouldClosed = false; // simulation window close after simualtion ?
   QDate d = QDate::currentDate();   // get date of today
   QTime t = QTime::currentTime();   // get time
 
@@ -990,7 +987,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
     if(view->Docs.current()->SimOpenDpl) {
       shouldClosed = true;
-      slotChangePage();   // switch to the corresponding data display page
+      slotChangePage(sim->DataDisplay);  // switch to data display
       view->viewport()->update();
     }
     else {
@@ -1010,7 +1007,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     sim->ProgText->insert(tr("Aborted.\n"));
   }
 
-  QFile file(QucsHomeDir.filePath("log.txt"));    // save simulator messages
+  QFile file(QucsHomeDir.filePath("log.txt"));  // save simulator messages
   if(file.open(IO_WriteOnly)) {
     int z;
     QTextStream stream(&file);
@@ -1023,7 +1020,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     file.close();
   }
 
-  if(shouldClosed) sim->slotClose();    // close and delete simulation window
+  if(shouldClosed) sim->slotClose();  // close and delete simulation window
 }
 
 // ------------------------------------------------------------------------
@@ -1048,17 +1045,13 @@ void QucsApp::slotShowLastNetlist()
 
 // ------------------------------------------------------------------------
 // Changes to the corresponding data display page or vice versa.
-void QucsApp::slotChangePage()
+void QucsApp::slotChangePage(QString Name)
 {
-  QucsDoc *Doc = view->Docs.current();
-  QString Name = Doc->DataDisplay;
-  if(Name.isEmpty()) {
-    QMessageBox::critical(this, tr("Error"), tr("No page set !"));
-    return;
-  }
+  if(Name.isEmpty())  return;
 
+  QucsDoc   *d;
   QFileInfo Info;
-  QucsDoc *d;
+  QucsDoc   *Doc = view->Docs.current();
 
   // search, if page is already loaded
   for(d = view->Docs.first(); d!=0; d = view->Docs.next()) {
@@ -1067,8 +1060,10 @@ void QucsApp::slotChangePage()
   }
 
   if(d == 0) {   // no open page found ?
-    Info.setFile(Doc->DocName);
-    QFile file(Info.dirPath(true)+"/"+Name);
+    Info.setFile(Name);
+    if(Info.isRelative())
+      Name = QucsWorkDir.filePath(Name);
+    QFile file(Name);
     if(!file.open(IO_ReadOnly))       // load page
       if(!file.open(IO_ReadWrite)) {  // if it doesn't exist, create
         view->Docs.findRef(Doc);
@@ -1076,10 +1071,10 @@ void QucsApp::slotChangePage()
 			tr("Cannot create ")+Info.dirPath(true)+"/"+Name);
         return;
       }
-      else new QListViewItem(ConDisplays, Name);  // insert new name
+      else new QListViewItem(ConDisplays, Info.fileName()); // add new name
     file.close();
 
-    d = new QucsDoc(this, Info.dirPath(true)+"/"+Name);
+    d = new QucsDoc(this, Name);
     view->Docs.append(d);   // create new page
 
     if(!d->load()) {
@@ -1099,6 +1094,19 @@ void QucsApp::slotChangePage()
     CompChoose->setCurrentItem(COMBO_Diagrams);   // switch to diagrams
     slotSetCompView(COMBO_Diagrams);
   }
+}
+
+// ------------------------------------------------------------------------
+// Changes to the data display of current page.
+void QucsApp::slotToPage()
+{
+  QString Name = view->Docs.current()->DataDisplay;
+  if(Name.isEmpty()) {
+    QMessageBox::critical(this, tr("Error"), tr("No page set !"));
+    return;
+  }
+
+  slotChangePage(Name);
 }
 
 // #######################################################################
