@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.15 2004/10/10 12:32:24 ela Exp $
+ * $Id: nasolver.cpp,v 1.16 2004/10/12 07:00:28 ela Exp $
  *
  */
 
@@ -633,17 +633,21 @@ int nasolver<nr_type_t>::checkConvergence (void) {
     v_abs = abs (x->get (r, 1) - xprev->get (r, 1));
     v_rel = abs (x->get (r, 1));
     if (v_abs >= vntol + reltol * v_rel) return 0;
-    i_abs = abs (z->get (r, 1) - zprev->get (r, 1));
-    i_rel = abs (z->get (r, 1));
-    if (i_abs >= abstol + reltol * i_rel) return 0;
+    if (!linesearch) {
+      i_abs = abs (z->get (r, 1) - zprev->get (r, 1));
+      i_rel = abs (z->get (r, 1));
+      if (i_abs >= abstol + reltol * i_rel) return 0;
+    }
   }
   for (int r = 1; r <= M; r++) {
     i_abs = abs (x->get (r + N, 1) - xprev->get (r + N, 1));
     i_rel = abs (x->get (r + N, 1));
     if (i_abs >= abstol + reltol * i_rel) return 0;
-    v_abs = abs (z->get (r + N, 1) - zprev->get (r + N, 1));
-    v_rel = abs (z->get (r + N, 1));
-    if (v_abs >= vntol + reltol * v_rel) return 0;
+    if (!linesearch) {
+      v_abs = abs (z->get (r + N, 1) - zprev->get (r + N, 1));
+      v_rel = abs (z->get (r + N, 1));
+      if (v_abs >= vntol + reltol * v_rel) return 0;
+    }
   }
   return 1;
 }

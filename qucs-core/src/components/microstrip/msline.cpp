@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.36 2004/09/26 09:58:52 ela Exp $
+ * $Id: msline.cpp,v 1.37 2004/10/12 07:00:37 ela Exp $
  *
  */
 
@@ -422,7 +422,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
       ds = rho / Rs;                            // skin depth
       // valid for t > 3 * ds
       if (t < 3 * ds) {
-	logprint (LOG_STATUS,
+	logprint (LOG_ERROR,
 		  "WARNING: conductor loss calculation invalid for line "
 		  "height t (%g) < 3 * skin depth (%g)\n", t, 3 * ds);
       }
