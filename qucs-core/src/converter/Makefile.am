@@ -33,6 +33,7 @@ qucsconv_SOURCES = qucsconv.cpp parse_spice.cpp scan_spice.cpp \
 
 noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h
 
+if MAINTAINER_MODE
 generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h
 
 scan_spice.cpp: scan_spice.l
@@ -40,6 +41,9 @@ scan_spice.cpp: scan_spice.l
 
 parse_spice.cpp: parse_spice.y
 	$(YACC) -v -o $@ --defines=tokens_spice.h $<
+else
+generated_FILES = 
+endif
 
 CLEANFILES = *~ *.orig *.rej *.output
 MAINTAINERCLEANFILES = Makefile.in $(generated_FILES)

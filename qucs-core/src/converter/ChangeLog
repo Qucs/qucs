@@ -1,3 +1,8 @@
+2005-03-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am:  Avoid re-generation of flex/bison files
+	when not in maintainer mode.
+
 2004-12-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Translation of device properties only if

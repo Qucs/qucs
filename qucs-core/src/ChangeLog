@@ -1,3 +1,8 @@
+2005-03-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am: Avoid re-generation of flex/bison files
+	when not in maintainer mode.
+
 2005-03-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* net.cpp: Fixed a bug occurring when the users specifies
