@@ -176,12 +176,20 @@ void SimMessage::slotClose()
     QTimer::singleShot(2000,&SimProcess,SLOT(kill()));
   }
 
-  close();
+  accept();
 }
 
 // ------------------------------------------------------------------------
 void SimMessage::slotDisplayButton()
 {
   emit displayDataPage(DataDisplay);
-  close();
+  accept();
+}
+
+// ------------------------------------------------------------------------
+// Catch termination of dialog (e.g. Esc button, x rider) in order to stop
+// simulator process.
+void SimMessage::reject()
+{
+  slotClose();
 }
