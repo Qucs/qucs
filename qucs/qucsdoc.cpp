@@ -882,11 +882,21 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
     if(pe->Type != isWire) break;
     if(ctrl) pe->isSelected ^= ctrl;
     else pe->isSelected = true;
-    
+
     if(((Wire*)pe)->Port1 == pn)  pn = ((Wire*)pe)->Port2;
     else  pn = ((Wire*)pe)->Port1;
     if(pn == pn_1st) break;  // avoid endless loop in wire loops
   }
+}
+
+// ---------------------------------------------------
+// Checks if pressed on a wire label.
+Wire* QucsDoc::selectWireLabel(int x, int y)
+{
+  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev())    // test all wires
+    if(pw->nx <= x) if(pw->ny >= y) if((pw->nx+pw->NameDX) >= x) if((pw->ny-pw->NameDY) <= y)
+      return pw;
+  return 0;
 }
 
 // ---------------------------------------------------
@@ -896,7 +906,7 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
 Element* QucsDoc::selectElement(int x, int y, bool flag)
 {
   int  x1, y1, x2, y2;
-  
+
   Element *pe_1st=0, *pe_sel=0;
   for(Component *pc = Comps.last(); pc != 0; pc = Comps.prev()) {    // test all components
     pc->Bounding(x1, y1, x2, y2);

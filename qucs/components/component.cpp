@@ -320,7 +320,8 @@ QString Component::save()
   s += " "+QString::number(rotated);
   
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {   // write all properties
-    s += " \""+p1->Value+"\"";
+    if(p1->Description.isEmpty())  s += " \""+p1->Name+"="+p1->Value+"\"";     // e.g. for equations
+    else s += " \""+p1->Value+"\"";
     if(p1->display) s += " 1";
     else s += " 0";
   }
@@ -381,9 +382,18 @@ bool Component::load(const QString& _s)
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {   // load all properties
     z++;
     n = s.section('"',z,z);    // property value
-    if(n.isEmpty()) return true;  // not all properties have to be mentioned (backward compatible)
+    if(n.isEmpty()) {  // not all properties have to be mentioned (backward compatible)
+      if(p1->Description.isEmpty()) Props.remove();    // remove if allocated in vain
+      return true;
+    }
+    if(p1->Description.isEmpty()) {
+      p1->Name = n.section('=',0,0);
+      n = n.section('=',1,1);
+      Props.append(new Property("y", "1", true));   // allocate memory for a new property (e.g. for equations)
+      Props.prev();
+    }
     p1->Value = n;
-  
+
     z++;
     n  = s.section('"',z,z);    // display
     if(n.toInt(&ok) == 1) p1->display = true;
