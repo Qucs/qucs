@@ -1,3 +1,10 @@
+2004-05-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* circuit.cpp: Swapped B matrix indices and changed all DC
+	model callers (attenuator, biastee, cccs, ccvs, circulator, 
+	dcfeed,	inductor, isolator, strafo, trafo, vac, vccs, vcvs,
+	vdc, gyrator) and of course the dcsolver.
+
 2004-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Fixed a bug which occurred when a function

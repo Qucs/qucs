@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.6 2004/04/04 09:11:06 ela Exp $
+ * $Id: strafo.cpp,v 1.7 2004/05/23 15:27:26 ela Exp $
  *
  */
 
@@ -72,10 +72,10 @@ void strafo::calcDC (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
 
-  setB (1, 1, -1.0); setB (1, 2, + t1); setB (1, 3, - t1);
-  setB (1, 4, +0.0); setB (1, 5, +0.0); setB (1, 6, +1.0);
-  setB (2, 1, +0.0); setB (2, 2, + t2); setB (2, 3, - t2);
-  setB (2, 4, +1.0); setB (2, 5, -1.0); setB (2, 6, +0.0);
+  setB (1, 1, -1.0); setB (2, 1, + t1); setB (3, 1, - t1);
+  setB (4, 1, +0.0); setB (5, 1, +0.0); setB (6, 1, +1.0);
+  setB (1, 2, +0.0); setB (2, 2, + t2); setB (3, 2, - t2);
+  setB (4, 2, +1.0); setB (5, 2, -1.0); setB (6, 2, +0.0);
 
   setC (1, 1, +1.0); setC (1, 2, - t1); setC (1, 3, + t1);
   setC (1, 4, +0.0); setC (1, 5, +0.0); setC (1, 6, -1.0);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.11 2004/05/22 09:17:24 ela Exp $
+ * $Id: circuit.cpp,v 1.12 2004/05/23 15:27:26 ela Exp $
  *
  */
 
@@ -181,13 +181,13 @@ void circuit::setSubstrate (substrate * s) {
 
 /* Returns the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
-complex circuit::getB (int nr, int port) {
+complex circuit::getB (int port, int nr) {
   return MatrixB[(nr - source) * size + port - 1];
 }
 
 /* Sets the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
-void circuit::setB (int nr, int port, complex z) {
+void circuit::setB (int port, int nr, complex z) {
   MatrixB[(nr - 1) * size + port - 1] = z;
 }
 
