@@ -24,10 +24,10 @@
 
 bin_PROGRAMS = qucsedit
 
-#MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
-#MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+MOCHEADERS = qucsedit.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsedit_SOURCES = qucsedit.cpp
+qucsedit_SOURCES = main.cpp qucsedit.cpp
 
 nodist_qucsedit_SOURCES = $(MOCFILES)
 

@@ -47,7 +47,7 @@ public:
 
   QFont    Font;
   QPushButton *FontButton, *BGColorButton;
-  QLineEdit   *undoNumEdit;
+  QLineEdit   *undoNumEdit, *editorEdit;
 };
 
 #endif

@@ -26,7 +26,7 @@ TR_Sim::TR_Sim()
   QString  s = Description;
   s.replace(" ","\n");
   QFontMetrics  metrics(QucsSettings.largeFont);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, s);
+  QSize r = metrics.size(0, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -44,7 +44,7 @@ TR_Sim::TR_Sim()
   x1 = -xb-4; y1 = -yb-4;
   x2 =  xb+8; y2 =  yb+9;
 
-  tx = x1+4;
+  tx = x1+8;
   ty = y2+4;
   Model = ".TR";
   Name  = "TR";
