@@ -3082,6 +3082,123 @@ currents.
 \subsection{Convergence}
 %\addcontentsline{toc}{subsection}{Convergence}
 
+Numerical as well as convergence problems occur during the
+Newton-Raphson iterations when dealing with non-linear device curves
+as they are used to model the DC behaviour of diodes and transistors.
+
+\addvspace{12pt}
+
+Linearising the exponential diode eq. \eqref{eq:curve} in the forward
+region a numerical overflow can occur.  The diagram in
+fig. \ref{fig:NewtonBad} visualises this situation.  Starting with
+$V^{(0)}$ the next iteration value gets $V^{(1)}$ which results in an
+indefinite large diode current.  It can be limited by iterating in
+current instead of voltage when the computed voltage exceeds a certain
+value.
+
+\addvspace{12pt}
+
+How this works is going to be explained using the diode model shown in
+fig. \ref{fig:AccompaniedModel}.  When iterating in voltage (as
+normally done) the new diode current is
+
+\begin{equation}
+\hat{I}_{d}^{(m+1)} = g_{d}^{(m)} \left(\hat{V}^{(m+1)} - V^{(m)}\right) + I_{d}^{(m)}
+\end{equation}
+
+The computed value $\hat{V}^{(m+1)}$ in iteration step $m+1$ is not
+going to be used for the following step when $V^{(m)}$ exceeds the
+critical voltage $V_{CRIT}$ which gets explained in the below
+paragraphs.  Instead, the value resulting from
+
+\begin{equation}
+I_{d}^{(m+1)} = I_{S}\cdot \left(e^{\frac{V^{(m+1)}}{n V_{T}}} - 1\right)
+\end{equation}
+
+is used (i.e. iterating in current).  With
+
+\begin{equation}
+\hat{I}_{d}^{(m+1)} \; \shortstack{!\\=} \; I_{d}^{(m+1)}
+\;\;\;\; \text{ and } \;\;\;\;
+g_{d}^{(m)} = \dfrac{I_{S}}{n\cdot V_{T}}\cdot e^{\frac{V^{(m)}}{n\cdot V_{T}}}
+\end{equation}
+
+the new voltage can be written as
+
+\begin{equation}
+V^{(m+1)} = V^{(m)} + n V_{T}\cdot \ln{\left(\dfrac{\hat{V}^{(m+1)} - V^{(m)}}{n V_{T}} + 1\right)}
+\end{equation}
+
+Proceeding from Shockley's simplified diode equation the critical
+voltage is going to be defined.  The explained algorithm can be used
+for all exponential DC equations used in diodes and transistors.
+
+\begin{align}
+I\left(V\right) &= I_{S}\cdot \left(e^{\frac{V}{n V_{T}}} - 1\right)
+\label{eq:curve}\\
+y\left(x\right) &= f \left(x\right)
+\label{eq:explicit}
+\end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{V0}{$\mathrm{V^{(0)}}$}
+\psfrag{V1}{$\mathrm{V^{(1)}}$}
+\psfrag{V2}{$\mathrm{V^{(2)}}$}
+\psfrag{VCRIT}{$\mathrm{V_{CRIT} \rightarrow}$}
+\includegraphics[width=0.75\linewidth]{newtonbad}
+\end{center}
+\caption{numerical problem with Newton-Raphson algorithm}
+\label{fig:NewtonBad}
+\end{figure}
+\FloatBarrier
+
+The critical voltage $V_{CRIT}$ is the voltage where the curve radius
+of eq. \eqref{eq:curve} has its minimum with $I$ and $V$ having
+equally units.  The curve radius $R$ for the explicit definition in
+eq. \eqref{eq:explicit} can be written as
+
+\begin{equation}
+R = \left|\dfrac{\left(1+\left(\dfrac{dy}{dx}\right)^{2}\right)^{3/2}}{\dfrac{d^{2}y}{dx^{2}}}\right|
+\label{eq:radius}
+\end{equation}
+
+Finding this equations minimum requires the derivative.
+
+\begin{equation}
+\dfrac{dR}{dx} = \dfrac{\dfrac{d^{2}y}{dx^{2}} \cdot \dfrac{3}{2}\left(1+\left(\dfrac{dy}{dx}\right)^{2}\right)^{1/2} \cdot 2 \cdot \dfrac{dy}{dx} \cdot \dfrac{d^{2}y}{dx^{2}} - \left(1+\left(\dfrac{dy}{dx}\right)^{2}\right)^{3/2} \cdot \dfrac{d^{3}y}{dx^{3}}}{\left(\dfrac{d^{2}y}{dx^{2}}\right)^{2}}
+\label{eq:radiusderivative}
+\end{equation}
+
+The diagram in fig. \ref{fig:radius} shows the graphs of
+eq. \eqref{eq:radius} and eq. \eqref{eq:radiusderivative} with $n=1$,
+$I_{S}=100\nano\ampere$ and $V_{T}=25\milli\volt$.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{radius}
+\end{center}
+\caption{curve radius of exponential diode curve and its derivative}
+\label{fig:radius}
+\end{figure}
+\FloatBarrier
+
+With the following higher derivatives of eq. \eqref{eq:curve}
+
+\begin{align}
+\dfrac{d I\left(V\right)}{dV} &= \dfrac{I_{S}}{n V_{T}}\cdot e^{\frac{V}{n V_{T}}}\\
+\dfrac{d^{2} I\left(V\right)}{dV^{2}} &= \dfrac{I_{S}}{n^{2} V_{T}^{2}}\cdot e^{\frac{V}{n V_{T}}}\\
+\dfrac{d^{3} I\left(V\right)}{dV^{3}} &= \dfrac{I_{S}}{n^{3} V_{T}^{3}}\cdot e^{\frac{V}{n V_{T}}}
+\end{align}
+
+the critical voltage results in
+
+\begin{equation}
+\dfrac{dR}{dx} \;\shortstack{!\\=}\; 0 = 3 - \dfrac{n^{2} V_{T}^{2}}{I_{S}^{2}}\cdot e^{-2\frac{V}{n V_{T}}} - 1
+\;\;\;\; \rightarrow \;\;\;\;
+V_{CRIT} = n V_{T}\cdot \ln{\left(\dfrac{n V_{T}}{I_{S} \sqrt{2}}\right)}
+\end{equation}
+
 \chapter{Non-linear devices}
 %\addcontentsline{toc}{chapter}{Non-linear devices}
 
