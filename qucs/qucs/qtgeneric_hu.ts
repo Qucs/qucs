@@ -92,7 +92,7 @@
     </message>
     <message>
         <source>&amp;Show this message again</source>
-        <translation>Üzenetek &amp;megjelenítése újra</translation>
+        <translation>Üzenet &amp;megjelenítése újra</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -103,7 +103,7 @@
     <name>QFileDialog</name>
     <message>
         <source>Copy or Move a File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl Másolása vagy Mozgatása</translation>
     </message>
     <message>
         <source>Read: %1</source>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribútumok</translation>
     </message>
     <message>
         <source>OK</source>
@@ -147,71 +147,71 @@
     </message>
     <message>
         <source>Look &amp;in:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Betekint:</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl &amp;név:</translation>
     </message>
     <message>
         <source>File &amp;type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl &amp;típus:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Vissza</translation>
     </message>
     <message>
         <source>One directory up</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy szinttel feljebb</translation>
     </message>
     <message>
         <source>Create New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Könyvtár létrehozása</translation>
     </message>
     <message>
         <source>List View</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista nézet</translation>
     </message>
     <message>
         <source>Detail View</source>
-        <translation type="unfinished"></translation>
+        <translation>Részletes nézet</translation>
     </message>
     <message>
         <source>Preview File Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Elönézeti fájl info</translation>
     </message>
     <message>
         <source>Preview File Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Elönézeti fájl tartalom</translation>
     </message>
     <message>
         <source>Read-write</source>
-        <translation type="unfinished"></translation>
+        <translation>Írás-olvasás</translation>
     </message>
     <message>
         <source>Read-only</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak olvasható</translation>
     </message>
     <message>
         <source>Write-only</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak írható</translation>
     </message>
     <message>
         <source>Inaccessible</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem hozzáférhetö</translation>
     </message>
     <message>
         <source>Symlink to File</source>
-        <translation type="unfinished"></translation>
+        <translation>Symlink Fájlhoz</translation>
     </message>
     <message>
         <source>Symlink to Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Symlink Könyvtárhoz</translation>
     </message>
     <message>
         <source>Symlink to Special</source>
-        <translation></translation>
+        <translation>Symlink Speciálishoz</translation>
     </message>
     <message>
         <source>File</source>
@@ -255,47 +255,47 @@
     </message>
     <message>
         <source>Sort by &amp;Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendez &amp;név szerint</translation>
     </message>
     <message>
         <source>Sort by &amp;Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendez &amp;méret szerint</translation>
     </message>
     <message>
         <source>Sort by &amp;Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendez &amp;dátum szerint</translation>
     </message>
     <message>
         <source>&amp;Unsorted</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rendezetlen</translation>
     </message>
     <message>
         <source>Sort</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendez</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Re&amp;tett fájlok megjelenítése</translation>
     </message>
     <message>
         <source>the file</source>
-        <translation type="unfinished"></translation>
+        <translation>a fájl</translation>
     </message>
     <message>
         <source>the directory</source>
-        <translation type="unfinished"></translation>
+        <translation>a könyvtár</translation>
     </message>
     <message>
         <source>the symlink</source>
-        <translation type="unfinished"></translation>
+        <translation>a symlink</translation>
     </message>
     <message>
         <source>Delete %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Töröl %1</translation>
     </message>
     <message>
         <source>&lt;qt&gt;Are you sure you wish to delete %1 &quot;%2&quot;?&lt;/qt&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;qt&gt;Biztos, hogy törölni szeretné %1 &quot;%2&quot;?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
@@ -307,15 +307,15 @@
     </message>
     <message>
         <source>New Folder 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Könyvtár 1</translation>
     </message>
     <message>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Könyvtár</translation>
     </message>
     <message>
         <source>New Folder %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Új Könyvtár %1</translation>
     </message>
     <message>
         <source>Find Directory</source>
@@ -341,7 +341,9 @@
         <source>%1
 File not found.
 Check path and filename.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Fájl nem található.
+Ellenőrizze az útvonalat és a fájl nevet.</translation>
     </message>
 </context>
 <context>
@@ -420,11 +422,11 @@ Check path and filename.</source>
     </message>
     <message>
         <source>Kannada</source>
-        <translation>Kannadai</translation>
+        <translation>Kanadai</translation>
     </message>
     <message>
         <source>Malayalam</source>
-        <translation>Malajföldi</translation>
+        <translation>Malájföldi</translation>
     </message>
     <message>
         <source>Sinhala</source>
@@ -633,26 +635,27 @@ Check path and filename.</source>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;&lt;p&gt;Qt is a C++ toolkit for multiplatform GUI &amp;amp; application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants.&lt;br&gt;Qt is also available for embedded devices.&lt;/p&gt;&lt;p&gt;Qt is a Trolltech product. See &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt; for more information.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Qt Névjegy&lt;/h3&gt;&lt;p&gt;A program a %1 Qt verziót használja.&lt;/p&gt;&lt;p&gt;A Qt egy C++ eszközkészlet platformfüggetlen programok és GUI fejlesztéséhez.&lt;/p&gt;&lt;p&gt;Qt biztosítja a forrás  hordozhatóságát  MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, és minden fontosabb kereskedelmi Unix-ra.&lt;br&gt;Qt szintén rendelkezésre áll beágyazott eszközökön is.&lt;/p&gt;&lt;p&gt;Qt a Trolltech terméke. További információk:  &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt;&lt;/p&gt;</translation>
+        <translation>&lt;h3&gt;Qt Névjegy&lt;/h3&gt;&lt;p&gt;A program a %1 Qt verziót használ.&lt;/p&gt;&lt;p&gt;A Qt egy C++ eszközkészlet platformfüggetlen programok és GUI fejlesztéséhez.&lt;/p&gt;&lt;p&gt;Qt biztosítja a forrás  hordozhatóságát  MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, és minden fontosabb kereskedelmi Unix-ra.&lt;br&gt;Qt szintén rendelkezésre áll beágyazott eszközökön is.&lt;/p&gt;&lt;p&gt;Qt a Trolltech terméke. További információk:  &lt;tt&gt;http://www.trolltech.com/qt/&lt;/tt&gt;&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>QPrintDialog</name>
     <message>
         <source>locally connected</source>
-        <translation type="unfinished"></translation>
+        <translation>helyi csatlakozás</translation>
     </message>
     <message>
         <source>Aliases: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias: %1</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen</translation>
     </message>
     <message>
         <source>Unknown Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen hely
+</translation>
     </message>
     <message>
         <source>OK</source>
@@ -664,87 +667,87 @@ Check path and filename.</source>
     </message>
     <message>
         <source>Printer settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtató beállítások</translation>
     </message>
     <message>
         <source>Print in color if available</source>
-        <translation type="unfinished"></translation>
+        <translation>Színes nyomtatás, ha lehetséges</translation>
     </message>
     <message>
         <source>Print in grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Szürkeárnyalatú nyomtatás</translation>
     </message>
     <message>
         <source>Print destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatási cél</translation>
     </message>
     <message>
         <source>Print to printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás nyomtatóra:</translation>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtató</translation>
     </message>
     <message>
         <source>Host</source>
-        <translation type="unfinished"></translation>
+        <translation>Host</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjegyzés</translation>
     </message>
     <message>
         <source>Print to file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás fájlba:</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenít...</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciók</translation>
     </message>
     <message>
         <source>Print all</source>
-        <translation type="unfinished"></translation>
+        <translation>Mindent nyomtat</translation>
     </message>
     <message>
         <source>Print range</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartományt nyomtat</translation>
     </message>
     <message>
         <source>From page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Első oldal:</translation>
     </message>
     <message>
         <source>To page:</source>
-        <translation type="unfinished"></translation>
+        <translation>Utolsó oldal:</translation>
     </message>
     <message>
         <source>Print first page first</source>
-        <translation type="unfinished"></translation>
+        <translation>Első oldal nyomtatása</translation>
     </message>
     <message>
         <source>Print last page first</source>
-        <translation type="unfinished"></translation>
+        <translation>Utolsó oldal nyomtatása</translation>
     </message>
     <message>
         <source>Number of copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolatok száma:</translation>
     </message>
     <message>
         <source>Paper format</source>
-        <translation type="unfinished"></translation>
+        <translation>Papír fomátum</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Állókép</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Fekvőkép</translation>
     </message>
     <message>
         <source>A0 (841 x 1189 mm)</source>
@@ -840,39 +843,39 @@ Check path and filename.</source>
     </message>
     <message>
         <source>Executive (7.5x10 inches, 191x254 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezetői (191x254 mm)</translation>
     </message>
     <message>
         <source>Folio (210 x 330 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fólia (210 x 330 mm)</translation>
     </message>
     <message>
         <source>Ledger (432 x 279 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Főkönyv (432 x 279 mm)</translation>
     </message>
     <message>
         <source>Legal (8.5x14 inches, 216x356 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hivatalos (216x356 mm)</translation>
     </message>
     <message>
         <source>Letter (8.5x11 inches, 216x279 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Letter (216x279 mm)</translation>
     </message>
     <message>
         <source>Tabloid (279 x 432 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabló (279 x 432 mm)</translation>
     </message>
     <message>
         <source>US Common #10 Envelope (105 x 241 mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>US Common #10 Boríték (105 x 241 mm)</translation>
     </message>
     <message>
         <source>Setup Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtató beállítás</translation>
     </message>
     <message>
         <source>PostScript Files (*.ps);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PostScript Files (*.ps);;All Files (*)</translation>
     </message>
 </context>
 <context>
