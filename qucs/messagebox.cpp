@@ -38,15 +38,15 @@ MessageBox::MessageBox(const QString& Caption, const QString& Text, QWidget *par
   QHBox  *Butts = new QHBox(this);
 //  Butts->setSpacing(5);
   all->addWidget(Butts);
-  QPushButton *Save = new QPushButton("Save", Butts);
+  QPushButton *Save = new QPushButton(tr("Save"), Butts);
   connect(Save, SIGNAL(clicked()), SLOT(slotSave()));
-  QPushButton *SaveAll = new QPushButton("Save all", Butts);
+  QPushButton *SaveAll = new QPushButton(tr("Save all"), Butts);
   connect(SaveAll, SIGNAL(clicked()), SLOT(slotSaveAll()));
-  QPushButton *Discard = new QPushButton("Discard", Butts);
+  QPushButton *Discard = new QPushButton(tr("Discard"), Butts);
   connect(Discard, SIGNAL(clicked()), SLOT(slotDiscard()));
-  QPushButton *DiscardAll = new QPushButton("DiscardAll", Butts);
+  QPushButton *DiscardAll = new QPushButton(tr("DiscardAll"), Butts);
   connect(DiscardAll, SIGNAL(clicked()), SLOT(slotDiscardAll()));
-  QPushButton *Cancel = new QPushButton("Cancel", Butts);
+  QPushButton *Cancel = new QPushButton(tr("Cancel"), Butts);
   connect(Cancel, SIGNAL(clicked()), SLOT(slotCancel()));
 }
 
