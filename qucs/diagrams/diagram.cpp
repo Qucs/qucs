@@ -41,7 +41,6 @@ Diagram::Diagram(int _cx, int _cy)
   GridOn  = true;
   GridPen = QPen(QPen::lightGray,0);
   Graphs.setAutoDelete(true);
-  Markers.setAutoDelete(true);
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
   Texts.setAutoDelete(true);
@@ -120,10 +119,6 @@ void Diagram::paint(QPainter *p)
         p->drawText(-cy+((y2-r.width())>>1), cx-delta, yLabel);
     }
     p->restore();
-
-    // draw markers
-    for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
-      pm->paint(p, cx, cy);
   }
 
   p->setPen(QPen(QPen::black,1));
@@ -337,22 +332,13 @@ void Diagram::recalcGraphData()
 // ------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
-  Graph *pg;
   bool valid = calcDiagram();   // do not calculate graph data if invalid
 
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
     calcData(pg, valid);   // calculate graph coordinates
 
-
-  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next()) {
-    pg = Graphs.at(Graphs.findRef(pm->pGraph));
-    if(!pg) {
-      Markers.remove();    // graph can't be found -> remove marker
-      pm = Markers.current();
-      continue;
-    }
-
-    pm->createText();
+    for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
+      pm->createText();
   }
 }
 
@@ -620,10 +606,7 @@ QString Diagram::save()
   for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
     s += pg->save()+"\n";
 
-  for(Marker *pm=Markers.first(); pm != 0; pm=Markers.next())
-    s += pm->save()+"\n";
-
-  s += "   </"+Name+">";
+  s += "  </"+Name+">";
   return s;
 }
 
@@ -676,6 +659,7 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   xLabel = s.section('"',1,1);    // xLabel
   yLabel = s.section('"',3,3);    // yLabel
 
+  Graph *pg;
   // .......................................................
   // load graphs of the diagram
   while(!stream->atEnd()) {
@@ -684,29 +668,27 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
     if(s.isEmpty()) continue;
 
     if(s == ("</"+Name+">")) return true;  // found end tag ?
-    if(s.section(' ', 0,0) == "<Mkr") break;
-    Graph *pg = new Graph();
+    if(s.section(' ', 0,0) == "<Mkr") {
+
+      // .......................................................
+      // load markers of the diagram
+      pg = Graphs.current();
+      if(!pg)  return false;
+      Marker *pm = new Marker(this, pg);
+      if(!pm->load(s)) {
+	delete pm;
+	return false;
+      }
+      pg->Markers.append(pm);
+      continue;
+    }
+
+    pg = new Graph();
     if(!pg->load(s)) {
       delete pg;
       return false;
     }
     Graphs.append(pg);
-  }
-
-  // .......................................................
-  // load markers of the diagram
-  while(!stream->atEnd()) {
-    Marker *pm = new Marker(this);
-    if(!pm->load(s)) {
-      delete pm;
-      return false;
-    }
-    Markers.append(pm);
-
-    s = stream->readLine();
-    s = s.stripWhiteSpace();
-    if(s.isEmpty()) continue;
-    if(s == ("</"+Name+">")) return true;  // found end tag ?
   }
 
   return false;   // end tag missing

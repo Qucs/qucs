@@ -36,6 +36,7 @@ Graph::Graph(const QString& _Line)
   Points = 0;
   cPointsY = 0;
 
+  Markers.setAutoDelete(true);
   cPointsX.setAutoDelete(true);
 }
 
@@ -53,6 +54,10 @@ void Graph::paint(QPainter *p, int x0, int y0)
     p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
+
+  // draw markers
+  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
+    pm->paint(p, x0, y0);
 
   int n1;
   if(isSelected) {
@@ -116,6 +121,10 @@ QString Graph::save()
   QString s = "\t<\""+Var+"\" "+Color.name()+
 	      " "+QString::number(Thick)+" "+QString::number(Precision)+
 	      " "+QString::number(numMode)+" "+QString::number(Style)+">";
+
+  for(Marker *pm=Markers.first(); pm != 0; pm=Markers.next())
+    s += "\n\t  "+pm->save();
+
   return s;
 }
 
@@ -252,6 +261,9 @@ Graph* Graph::sameNewOne()
 
   pg->Precision = Precision;
   pg->numMode   = numMode;
+
+  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
+    pg->Markers.append(pm->sameNewOne(pg));
 
   return pg;
 }
