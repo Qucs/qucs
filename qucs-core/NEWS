@@ -26,6 +26,7 @@ files.
 Version 0.0.5
 -------------
 
+ * two new components: amplifier and operational amplifier
  * added microstrip via hole implementation
  * node-set functionality for DC and transient analysis
 

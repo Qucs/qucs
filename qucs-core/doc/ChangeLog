@@ -1,3 +1,11 @@
+2004-11-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip.tex (section{Microstrip via hole}): Added small
+	figure for microstrip via hole.
+
+	* transient.tex (subsubsection{Minimal derivative Gmin
+	stepping}): Finished section about continuation schemes.
+
 2004-10-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (EXTRA_DIST): Decided to remove the postscript
