@@ -23,9 +23,10 @@
 
 class Ampere_noise : public Component  {
 public:
-	Ampere_noise();
-	~Ampere_noise();
-  Ampere_noise* newOne();
+  Ampere_noise();
+  ~Ampere_noise();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

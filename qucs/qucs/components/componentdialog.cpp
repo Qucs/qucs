@@ -158,8 +158,10 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
   if(item->text(0) == "File") BrowseButt->setEnabled(true);
   else BrowseButt->setEnabled(false);
 
+  int i;
   QString PropDesc = item->text(3);
   if(PropDesc.isEmpty()) {
+    // show two line edit fields (name and value)
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
 
@@ -183,15 +185,16 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
     NameEdit->setText(item->text(0));  // perhaps used for adding properties
     Description->setShown(true);
 
-    PropDesc = PropDesc.mid(PropDesc.find('(')+1);
+    i = PropDesc.find('(');
+    Description->setText(PropDesc.left(i));
+    PropDesc = PropDesc.mid(i+1);
     PropDesc.remove(')');
     QStringList List = List.split(',',PropDesc);
-    Description->setText(List.first());
-    if(List.count() > 1) {    // ComboBox with value list or lin edit ?
+    if(List.count() > 1) {    // ComboBox with value list or line edit ?
       ComboEdit->clear();
       ComboEdit->insertStringList(List);
 
-      for(int i=ComboEdit->count()-1; i>=0; i--)
+      for(i=ComboEdit->count()-1; i>=0; i--)
        if(item->text(1) == ComboEdit->text(i)) {
          ComboEdit->setCurrentItem(i);
 	 break;
@@ -213,6 +216,7 @@ void ComponentDialog::slotApplyChange(const QString& Text)
 {
   edit->setText(Text);
   prop->currentItem()->setText(1, Text);	// apply edit line
+  changed = true;
 
   ComboEdit->setFocus();
   QListViewItem *item = prop->currentItem()->itemBelow();
@@ -322,7 +326,10 @@ void ComponentDialog::slotApplyInput()
   }
   transfered = true;     // applied changed to the component itself
 
-  if(changed) ((QucsView*)parent())->viewport()->repaint();
+  if(changed) {
+    Comp->recreate();   // to apply changes to the schematic symbol
+    ((QucsView*)parent())->viewport()->repaint();
+  }
 }
 
 // -------------------------------------------------------------------------

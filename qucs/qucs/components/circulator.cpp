@@ -46,16 +46,28 @@ Circulator::Circulator()
   Model = "Circulator";
   Name  = "X";
 
-  Props.append(new Property("Z1", "50 Ohm", false, QObject::tr("reference impedance of port 1")));
-  Props.append(new Property("Z2", "50 Ohm", false, QObject::tr("reference impedance of port 2")));
-  Props.append(new Property("Z3", "50 Ohm", false, QObject::tr("reference impedance of port 3")));
+  Props.append(new Property("Z1", "50 Ohm", false,
+		QObject::tr("reference impedance of port 1")));
+  Props.append(new Property("Z2", "50 Ohm", false,
+		QObject::tr("reference impedance of port 2")));
+  Props.append(new Property("Z3", "50 Ohm", false,
+		QObject::tr("reference impedance of port 3")));
 }
 
 Circulator::~Circulator()
 {
 }
 
-Circulator* Circulator::newOne()
+Component* Circulator::newOne()
 {
   return new Circulator();
+}
+
+Component* Circulator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Circulator");
+  BitmapFile = "circulator";
+
+  if(getNewOne)  return new Circulator();
+  return 0;
 }

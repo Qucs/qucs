@@ -59,18 +59,32 @@ MScross::MScross()
   Model = "MCROSS";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
-  Props.append(new Property("W1", "1 mm", true, QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "2 mm", true, QObject::tr("width of line 2")));
-  Props.append(new Property("W3", "1 mm", true, QObject::tr("width of line 3")));
-  Props.append(new Property("W4", "2 mm", true, QObject::tr("width of line 4")));
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("substrate")));
+  Props.append(new Property("W1", "1 mm", true,
+		QObject::tr("width of line 1")));
+  Props.append(new Property("W2", "2 mm", true,
+		QObject::tr("width of line 2")));
+  Props.append(new Property("W3", "1 mm", true,
+		QObject::tr("width of line 3")));
+  Props.append(new Property("W4", "2 mm", true,
+		QObject::tr("width of line 4")));
 }
 
 MScross::~MScross()
 {
 }
 
-MScross* MScross::newOne()
+Component* MScross::newOne()
 {
   return new MScross();
+}
+
+Component* MScross::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Microstrip Cross");
+  BitmapFile = "mscross";
+
+  if(getNewOne)  return new MScross();
+  return 0;
 }

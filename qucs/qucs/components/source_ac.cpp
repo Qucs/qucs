@@ -69,7 +69,16 @@ Source_ac::~Source_ac()
 {
 }
 
-Source_ac* Source_ac::newOne()
+Component* Source_ac::newOne()
 {
   return new Source_ac();
+}
+
+Component* Source_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Power Source");
+  BitmapFile = "source";
+
+  if(getNewOne)  return new Source_ac();
+  return 0;
 }

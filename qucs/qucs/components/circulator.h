@@ -23,9 +23,10 @@
 
 class Circulator : public Component  {
 public:
-	Circulator();
-	~Circulator();
-  Circulator* newOne();
+  Circulator();
+  ~Circulator();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

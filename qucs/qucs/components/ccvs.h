@@ -23,9 +23,10 @@
 
 class CCVS : public Component  {
 public:
-	CCVS();
-	~CCVS();
-  CCVS* newOne();
+  CCVS();
+  ~CCVS();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

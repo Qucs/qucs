@@ -23,9 +23,10 @@
 
 class Volt_ac : public Component  {
 public:
-	Volt_ac();
-	~Volt_ac();
-  Volt_ac* newOne();
+  Volt_ac();
+  ~Volt_ac();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

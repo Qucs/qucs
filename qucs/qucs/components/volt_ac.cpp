@@ -43,15 +43,26 @@ Volt_ac::Volt_ac()
   Model = "Vac";
   Name  = "V";
 
-  Props.append(new Property("U", "1 V", true, QObject::tr("rms voltage in Volts")));
-  Props.append(new Property("f", "1 GHz", true, QObject::tr("frequency in Hertz")));
+  Props.append(new Property("U", "1 V", true,
+		QObject::tr("rms voltage in Volts")));
+  Props.append(new Property("f", "1 GHz", true,
+		QObject::tr("frequency in Hertz")));
 }
 
 Volt_ac::~Volt_ac()
 {
 }
 
-Volt_ac* Volt_ac::newOne()
+Component* Volt_ac::newOne()
 {
   return new Volt_ac();
+}
+
+Component* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("ac Voltage Source");
+  BitmapFile = "ac_voltage";
+
+  if(getNewOne)  return new Volt_ac();
+  return 0;
 }

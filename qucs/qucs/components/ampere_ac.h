@@ -23,9 +23,10 @@
 
 class Ampere_ac : public Component  {
 public:
-	Ampere_ac();
-	~Ampere_ac();
-  Ampere_ac* newOne();
+  Ampere_ac();
+  ~Ampere_ac();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

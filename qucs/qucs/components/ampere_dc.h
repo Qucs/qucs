@@ -23,9 +23,10 @@
 
 class Ampere_dc : public Component  {
 public:
-	Ampere_dc();
-	~Ampere_dc();
-  Ampere_dc* newOne();
+  Ampere_dc();
+  ~Ampere_dc();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -23,9 +23,10 @@
 
 class MStee : public Component  {
 public:
-	MStee();
-	~MStee();
-  MStee* newOne();
+  MStee();
+  ~MStee();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -23,9 +23,10 @@
 
 class Param_Sweep : public Component  {
 public:
-	Param_Sweep();
-	~Param_Sweep();
-  Param_Sweep* newOne();
+  Param_Sweep();
+  ~Param_Sweep();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

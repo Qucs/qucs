@@ -58,15 +58,25 @@ SParamFile::SParamFile(int No)
   Model = QString("SPfile")+QString::number(No);
   Name  = "X";
 
-  Props.append(new Property("File", "test.s2p", true, QObject::tr("name of the s parameter file")));
+  Props.append(new Property("File", "test.s2p", true,
+		QObject::tr("name of the s parameter file")));
 }
 
 SParamFile::~SParamFile()
 {
 }
 
-SParamFile* SParamFile::newOne()
+Component* SParamFile::newOne()
 {
   int z = Sign.mid(6).toInt();
   return new SParamFile(z);
+}
+
+Component* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("1-port S parameter file");
+  BitmapFile = "spfile1";
+
+  if(getNewOne)  return new SParamFile(1);
+  return 0;
 }

@@ -23,9 +23,10 @@
 
 class BiasT : public Component  {
 public:
-	BiasT();
-	~BiasT();
-  BiasT* newOne();
+  BiasT();
+  ~BiasT();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

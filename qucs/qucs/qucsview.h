@@ -33,7 +33,7 @@
 
 
 // application specific includes
-#include "components/components.h"
+#include "components/component.h"
 #include "wire.h"
 #include "qucsdoc.h"
 #include "main.h"

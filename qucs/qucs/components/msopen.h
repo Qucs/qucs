@@ -23,9 +23,10 @@
 
 class MSopen : public Component  {
 public:
-	MSopen();
-	~MSopen();
-  MSopen* newOne();
+  MSopen();
+  ~MSopen();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

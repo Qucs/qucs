@@ -23,9 +23,10 @@
 
 class SParamFile : public Component  {
 public:
-	SParamFile(int No);
-	~SParamFile();
-  SParamFile* newOne();
+  SParamFile(int No);
+  ~SParamFile();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif
