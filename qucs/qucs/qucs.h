@@ -161,8 +161,8 @@ public:
     QucsActions  Acts;    // contains most of the toggle actions
 
 private:
-    QPrinter    Printer; // printer is global (to remember the user settings)
-    QucsInit    Init;    // initializes toolbars, menubar, actions ...
+    QPrinter  *Printer; // printer is global (to remember the user settings)
+    QucsInit   Init;    // initializes toolbars, menubar, actions ...
 
 // ********* Widgets on the main area **********************************
     QTabWidget    *TabView;

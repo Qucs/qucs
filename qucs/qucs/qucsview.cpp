@@ -75,9 +75,7 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
 {
   QucsDoc *d = Docs.current();
 
-  Painter.init(p, d->Scale, -d->ViewX1, -d->ViewY1);
-  Painter.DX -= double(contentsX());
-  Painter.DY -= double(contentsY());
+  Painter.init(p, d->Scale, -d->ViewX1, -d->ViewY1, contentsX(), contentsY());
 
   d->paintGrid(&Painter, contentsX(), contentsY(),
 			visibleWidth(), visibleHeight());
@@ -86,18 +84,17 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
 }
 
 // -----------------------------------------------------------
-double QucsView::Zoom(double s)
+float QucsView::Zoom(float s)
 {
   QucsDoc *d = Docs.current();
-  double Scale = d->Scale;
+  float Scale = d->Scale;
   Scale *= s;
   if(Scale > 10.0) Scale = 10.0;
   if(Scale < 0.01) Scale = 0.01;
 
   d->Scale = Scale;
-  resizeContents(int(Scale*double(d->ViewX2 - d->ViewX1)),
-		 int(Scale*double(d->ViewY2 - d->ViewY1)));
-//  resizeContents(int(contentsWidth()*s),int(contentsHeight()*s));
+  resizeContents(int(Scale*float(d->ViewX2 - d->ViewX1)),
+		 int(Scale*float(d->ViewY2 - d->ViewY1)));
   return Scale;
 }
 
@@ -865,6 +862,60 @@ void QucsView::MMoveOnGrid(QMouseEvent *Event)
   painter.drawLine(MAx3+21, MAy3, MAx3+21, MAy3+15);
 }
 
+// -----------------------------------------------------------
+// Paints symbol beside the mouse to show the "move component text" modus.
+void QucsView::MMoveMoveTextB(QMouseEvent *Event)
+{
+  QPainter painter(viewport());
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3+14, MAy3   , MAx3+16, MAy3); // erase old
+    painter.drawLine(MAx3+23, MAy3   , MAx3+25, MAy3);
+    painter.drawLine(MAx3+13, MAy3   , MAx3+13, MAy3+ 3);
+    painter.drawLine(MAx3+13, MAy3+ 7, MAx3+13, MAy3+10);
+    painter.drawLine(MAx3+14, MAy3+10, MAx3+16, MAy3+10);
+    painter.drawLine(MAx3+23, MAy3+10, MAx3+25, MAy3+10);
+    painter.drawLine(MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
+    painter.drawLine(MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
+  }
+  drawn = true;
+
+  MAx3  = Event->pos().x() - contentsX();
+  MAy3  = Event->pos().y() - contentsY();
+
+  painter.drawLine(MAx3+14, MAy3   , MAx3+16, MAy3); // paint new
+  painter.drawLine(MAx3+23, MAy3   , MAx3+25, MAy3);
+  painter.drawLine(MAx3+13, MAy3   , MAx3+13, MAy3+ 3);
+  painter.drawLine(MAx3+13, MAy3+ 7, MAx3+13, MAy3+10);
+  painter.drawLine(MAx3+14, MAy3+10, MAx3+16, MAy3+10);
+  painter.drawLine(MAx3+23, MAy3+10, MAx3+25, MAy3+10);
+  painter.drawLine(MAx3+26, MAy3   , MAx3+26, MAy3+ 3);
+  painter.drawLine(MAx3+26, MAy3+ 7, MAx3+26, MAy3+10);
+}
+
+// -----------------------------------------------------------
+void QucsView::MMoveMoveText(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  setPainter(&painter, d);
+
+  if(drawn)
+    painter.drawRect(MAx1, MAy1, MAx2, MAy2); // erase old
+  drawn = true;
+
+  int newX = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int newY = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx1 += newX - MAx3;
+  MAy1 += newY - MAy3;
+  MAx3  = newX;
+  MAy3  = newY;
+
+  painter.drawRect(MAx1, MAy1, MAx2, MAy2); // paint new
+}
+
+
 // ************************************************************************
 // **********                                                    **********
 // **********    Functions for serving mouse button clicking     **********
@@ -1387,6 +1438,27 @@ void QucsView::MPressOnGrid(QMouseEvent *Event)
   }
 }
 
+// -----------------------------------------------------------
+void QucsView::MPressMoveText(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+  QucsDoc *d = Docs.current();
+  MAx3 = int(Event->pos().x()/d->Scale)+d->ViewX1;
+  MAy3 = int(Event->pos().y()/d->Scale)+d->ViewY1;
+  (Component*)focusElement = d->selectCompText(MAx3, MAy3, MAx2, MAy2);
+
+  if(focusElement) {
+    MAx1 = ((Component*)focusElement)->cx + ((Component*)focusElement)->tx;
+    MAy1 = ((Component*)focusElement)->cy + ((Component*)focusElement)->ty;
+    viewport()->repaint();
+    drawn = false;
+    MouseMoveAction = &QucsView::MMoveMoveText;
+    MouseReleaseAction = &QucsView::MReleaseMoveText;
+    this->grabKeyboard();  // no keyboard inputs during move actions
+  }
+}
+
 
 // ***********************************************************************
 // **********                                                   **********
@@ -1542,7 +1614,6 @@ void QucsView::MReleaseResizePainting(QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
 
-
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
@@ -1656,6 +1727,24 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
   }
 }
 
+// -----------------------------------------------------------
+void QucsView::MReleaseMoveText(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+  MouseMoveAction = &QucsView::MMoveMoveTextB;
+  MouseReleaseAction = &QucsView::MouseDoNothing;
+  this->releaseKeyboard();  // allow keyboard inputs again
+
+  ((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx;
+  ((Component*)focusElement)->ty = MAy1 - ((Component*)focusElement)->cy;
+  viewport()->repaint();
+  drawn = false;
+
+  Docs.current()->setChanged(true, true);
+}
+
+
 // ***********************************************************************
 // **********                                                   **********
 // **********    Functions for mouse button double clicking     **********
@@ -1760,9 +1849,9 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
   }
   // .....................................................................
   else if(Event->state() & Qt::ControlButton) {  // use mouse wheel to zoom ?
-      double Scaling;
-      if(delta < 0) Scaling = double(-delta)/60.0/1.1;
-      else Scaling = 1.1*60.0/double(delta);
+      float Scaling;
+      if(delta < 0) Scaling = float(-delta)/60.0/1.1;
+      else Scaling = 1.1*60.0/float(delta);
       Scaling = Zoom(Scaling);
 //      center(Event->x(), Event->y());
       viewport()->repaint();

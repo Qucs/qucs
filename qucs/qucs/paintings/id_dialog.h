@@ -1,7 +1,7 @@
 /***************************************************************************
-                          id_text.h  -  description
+                          id_dialog.h  -  description
                              -------------------
-    begin                : Thu Oct 14 2004
+    begin                : Sat Oct 16 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -15,37 +15,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ID_TEXT_H
-#define ID_TEXT_H
+#ifndef ID_DIALOG_H
+#define ID_DIALOG_H
 
-#include "painting.h"
+#include <qdialog.h>
+#include <qlineedit.h>
 
 
 /**
   *@author Michael Margraf
   */
 
-class ID_Text : public Painting  {
+class ID_Dialog : public QDialog  {
+Q_OBJECT
 public:
-  ID_Text(int cx_=0, int cy_=0);
-  ~ID_Text();
+  ID_Dialog(QWidget *parent=0);
+  ~ID_Dialog();
 
-  void paintScheme(QPainter*);
-  void getCenter(int&, int&);
-  void setCenter(int, int, bool relative=false);
-
-  bool load(const QString&);
-  QString save();
-  void paint(ViewPainter*);
-  bool getSelected(int, int);
-  void Bounding(int&, int&, int&, int&);
-
-  void rotate();
-  void mirrorX();
-  void mirrorY();
-  bool Dialog();
-
-  QString Prefix;
+public:
+  QLineEdit *Prefix;
 };
 
 #endif

@@ -47,7 +47,7 @@ public:
 
   void paint(ViewPainter*);
   void paintGrid(ViewPainter*, int, int, int, int);
-  void paintSelected(QPainter*);
+  void print(QPainter*, bool);
 
   int   insertWireNode1(Wire*);
   bool  connectHWires1(Wire*);
@@ -65,14 +65,11 @@ public:
 
   Component* searchSelSubcircuit();
   void       sizeOfAll(int&, int&, int&, int&);
-//  Element*   selectedElement(int, int, QPtrList<Element>*);
-  Component*   selectedComponent(int, int);
-//  Diagram*   selectedDiagram(int, int);
+  Component* selectedComponent(int, int);
   Node*      selectedNode(int, int);
   Wire*      selectedWire(int, int);
   Painting*  selectedPainting(int, int);
   void       selectWireLine(Element*, Node*, bool);
-//  Wire*      selectWireLabel(int x, int y);
   Element*   selectElement(int, int, bool);
   int        selectElements(int, int, int, int, bool);
   void       deselectElements(Element*);
@@ -120,6 +117,7 @@ public:
 
   void    reloadGraphs();
   void    setOnGrid(int&, int&);
+  Component* selectCompText(int, int, int&, int&);
 
 
   QucsFile  File;   // class to perform  load, save, copy, paste
@@ -146,14 +144,14 @@ public:
   int     GridX, GridY;
   bool    GridOn;
 
-  double  Scale;
+  float  Scale;
   int PosX, PosY; // upper left corner of visible area (only for remembering during seeing another document)
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
 
   // Two of those data sets are needed for Schematic and for symbol.
   // Which one is in "tmp..." depends on "symbolMode".
-  double  tmpScale;
+  float  tmpScale;
   int tmpPosX, tmpPosY;
   int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
   int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;

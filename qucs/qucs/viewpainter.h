@@ -37,7 +37,7 @@ public:
   ViewPainter(QPainter *p=0);
   ~ViewPainter();
 
-  void init(QPainter*, double, int, int);
+  void init(QPainter*, float, int, int, int, int);
   void map(int, int, int*, int*);
   void drawPoint(int, int);
   void drawLine (int, int, int, int);
@@ -52,7 +52,7 @@ public:
   void drawResizeRect(int, int);
 
   QPainter *Painter;
-  double Scale, DX , DY;
+  float Scale, DX , DY;
   int LineSpacing;   // updated by init(), just for info
 };
 
