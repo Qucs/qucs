@@ -4,7 +4,7 @@
 /*
  * scan_dataset.l - scanner for the Qucs dataset
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_dataset.l,v 1.1 2003/12/20 19:03:26 ela Exp $
+ * $Id: scan_dataset.l,v 1.2 2004/01/17 19:57:36 ela Exp $
  *
  */
 
@@ -54,6 +54,9 @@ RFLOAT1  [+-]?{DIGIT}+{EXPONENT}
 RFLOAT2  [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 IFLOAT1  [+-]?[ij]{1}{DIGIT}+{EXPONENT}
 IFLOAT2  [+-]?[ij]{1}{DIGIT}*"."{DIGIT}+({EXPONENT})?
+CREAL    ({RFLOAT1}|{RFLOAT2}|{RINT})
+CIMAG    ({IFLOAT1}|{IFLOAT2}|{IINT})
+COMPLEX  {CREAL}{CIMAG}
 SPACE    [ \t]
 VERSION  "<Qucs Dataset "{DIGIT}+"."{DIGIT}+"."{DIGIT}+">"
 DBEGIN   "dep"
@@ -92,18 +95,28 @@ IEND     "/indep"
     return Identifier; 
   }
 
-<INITIAL>({RFLOAT1}|{RFLOAT2}|{RINT}) { /* identify float */
+<INITIAL>{CREAL} { /* identify real float */
     dataset_lval.f = strtod (dataset_text, NULL);
     return REAL;
   }
 
-<INITIAL>({IFLOAT1}|{IFLOAT2}|{IINT}) { /* identify float */
+<INITIAL>{CIMAG} { /* identify imaginary float */
     if (dataset_text[0] == 'i' || dataset_text[0] == 'j')
       dataset_text[0] = '0';
     else
       dataset_text[1] = '0';
     dataset_lval.f = strtod (dataset_text, NULL);
     return IMAG;
+  }
+
+<INITIAL>{COMPLEX} { /* identify complete complex number */
+    int i = 0;
+    while (dataset_text[i] != 'i' && dataset_text[i] != 'j') i++;
+    dataset_text[i] = dataset_text[i - 1];
+    dataset_text[i - 1] = '\0';
+    dataset_lval.c.r = strtod (dataset_text, NULL);
+    dataset_lval.c.i = strtod (&dataset_text[i], NULL);
+    return COMPLEX;
   }
 
 <DESCRIPTION>{RINT} { /* identify integer */
