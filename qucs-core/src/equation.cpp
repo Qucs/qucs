@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.2 2004-03-14 17:42:47 ela Exp $
+ * $Id: equation.cpp,v 1.3 2004-03-20 16:58:49 ela Exp $
  *
  */
 
@@ -154,6 +154,7 @@ void application::addDependencies (strlist * depends) {
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
+  cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
 }
@@ -161,6 +162,7 @@ node::node () {
 // This constructor creates an typed instance of the equation node class.
 node::node (int type) {
   tag = type;
+  cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
 }
@@ -197,6 +199,60 @@ strlist * node::getDependencies (void) {
   return dependencies;
 }
 
+#define A(a) ((assignment *) (a))
+#define N(n) ((node *) (n))
+
+/* This function recursively finds the variable dependencies for each
+   equation initially passed to the equation checker and returns the
+   list of variable dependencies regarding this equation instance.
+   The caller is responsible for deleting the returned string list
+   object. */
+strlist * node::recurseDependencies (checker * check, strlist * deps) {
+
+  strlist * res, * sub = NULL;
+
+  /* The abort condition for recursion first. */
+  if (deps->contains (A(this)->result)) {
+    res = new strlist (*deps);
+    cycle = 1;
+    return res;
+  }
+
+  /* Go through the list of passed dependency variables. */
+  for (int i = 0; i < deps->length (); i++) {
+    char * var = deps->get (i);
+    node * child = check->findEquation (var);
+    /* Check each child equation. */
+    if (child != NULL) {
+      if (child->cycle == 0) {
+	strlist * cdeps = child->getDependencies ();
+	/* And append the dependencies of the child equation. */
+	if (cdeps->length () > 0) {
+	  res = strlist::join (sub, cdeps);
+	  if (sub) delete sub; sub = res;
+	}
+      }
+      /* If any child is cyclic, the parent is too. */
+      else {
+	cycle = 1;
+      }
+    }
+  }
+
+  /* Recurse once again if the child equations revealed any more
+     dependencies. */
+  if (sub && sub->length () > 0) {
+    res = recurseDependencies (check, sub);
+    delete sub;
+    sub = res;
+  }
+
+  /* Return the result. */
+  res = strlist::join (deps, sub);
+  if (sub) delete (sub);
+  return res;
+}
+
 // Constructor creates an instance of the checker class.
 checker::checker () {
   equations = NULL;
@@ -229,21 +285,18 @@ void checker::list (void) {
   }
 }
 
+// Local macro definition to go through the list of equations.
+#define foreach_equation(eqn)                        \
+  for (assignment * (eqn) = A (equations);           \
+       (eqn) != NULL; (eqn) = A ((eqn)->getNext ()))
+
+/* This function checks whether the variable references could be
+   resolved within the equations and returns zero if so. */
 int checker::findUndefined (void) {
   int err = 0;
+  strlist * idents = getVariables ();
 
-  /* Go through the list of equations and store the left hand side in
-     a string list. */
-  strlist * idents = new strlist ();
-  for (assignment * eqn = (assignment *) equations; eqn != NULL; 
-       eqn = (assignment *) eqn->getNext ()) {
-    idents->add (eqn->result);
-  }
-
-  /* Check whether the variable references could be resolved within
-     the equations. */
-  for (assignment * eqn = (assignment *) equations; eqn != NULL;
-       eqn = (assignment *) eqn->getNext ()) {
+  foreach_equation (eqn) {
     strlist * depends = eqn->getDependencies ();
     for (int i = 0; i < depends->length (); i++) {
       char * var = depends->get (i);
@@ -252,6 +305,77 @@ int checker::findUndefined (void) {
 		  "equation `%s'\n", var, eqn->result);
 	err++;
       }
+    }
+  }
+  delete idents;
+  return err;
+}
+
+/* Go through the list of equations and store the left hand side in
+   a string list. */
+strlist * checker::getVariables (void) {
+  strlist * idents = new strlist ();
+  foreach_equation (eqn) {
+    idents->add (eqn->result);
+  }
+  return idents;
+}
+
+/* Finds duplicate equation definitions in the list of equations,
+   emits appropriate error messages and returns zero if everything is
+   ok. */
+int checker::findDuplicate (void) {
+  int err = 0;
+  strlist * idents = getVariables ();
+  strlist * dups = new strlist ();
+
+  // Collect duplicate enries.
+  foreach_equation (eqn) {
+    if (!eqn->duplicate && dups->contains (eqn->result) == 0) {
+      eqn->duplicate = idents->contains (eqn->result);
+      dups->add (eqn->result);
+    }
+    else {
+      eqn->duplicate = 1;
+    }
+  }
+  // Emit appropriate error messages.
+  foreach_equation (eqn) {
+    if (eqn->duplicate > 1) {
+      logprint (LOG_ERROR, "checker error, variable `%s' occurred %dx\n",
+		eqn->result, eqn->duplicate);
+      err++;
+    }
+  }
+  delete idents;
+  delete dups;
+  return err;
+}
+
+/* The function returns the equations resulting in the passed variable
+   or NULL if there is no such equation. */
+node * checker::findEquation (char * n) {
+  foreach_equation (eqn) {
+    if (!strcmp (eqn->result, n)) return eqn;
+  }
+  return NULL;
+}
+
+/* This function display the error messages due to equation cycles and
+   returns zero if there are no such cycles. */
+int checker::detectCycles (void) {
+  int err = 0;
+  foreach_equation (eqn) {
+    strlist * deps = eqn->recurseDependencies (this, eqn->getDependencies ());
+    if (deps->contains (eqn->result) || eqn->cycle) {
+      logprint (LOG_ERROR, "checker error, cyclic definition of variable "
+		"`%s' involves: `%s'\n", eqn->result, deps->toString ());
+      err++;
+      delete deps;
+    }
+    else {
+      logprint (LOG_STATUS, "%s depends: %s\n", 
+		eqn->result, deps->toString ());
     }
   }
   return err;

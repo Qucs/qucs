@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.2 2004-03-14 17:42:47 ela Exp $
+ * $Id: equation.h,v 1.3 2004-03-20 16:58:49 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@ class strlist;
 
 namespace eqn {
 
+class checker;
 class constant;
 class reference;
 class assignment;
@@ -62,11 +63,16 @@ public:
   void append (node *);
   void setDependencies (strlist *);
   strlist * getDependencies (void);
+  strlist * recurseDependencies (checker *, strlist *);
 
   /* These functions should be overloaded by derivative classes. */
   virtual void print (void) { }
   virtual void addDependencies (strlist *) { }
   
+public:
+  int duplicate;
+  int cycle;
+
 private:
   int tag;
   node * next;
@@ -157,6 +163,10 @@ public:
   node * getEquations (void) { return equations; }
   void list (void);
   int findUndefined (void);
+  strlist * getVariables (void);
+  int findDuplicate (void);
+  node * findEquation (char *);
+  int detectCycles (void);
 
 public:
   node * equations;

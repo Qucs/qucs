@@ -1,7 +1,7 @@
 /*
  * strlist.cpp - string list class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.cpp,v 1.1.1.1 2003-12-20 19:03:26 ela Exp $
+ * $Id: strlist.cpp,v 1.2 2004-03-20 16:58:49 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 // Constructor creates an instance of the strlist class.
 strlist::strlist () {
   root = NULL;
+  txt = NULL;
 }
 
 /* This copy constructor creates a instance of the strlist class based
@@ -42,6 +43,7 @@ strlist::strlist () {
 strlist::strlist (const strlist & o) {
   struct strlist_t * s;
   root = NULL;
+  txt = NULL;
   for (s = o.root; s != NULL; s = s->next) append (s->str);
 }
 
@@ -54,6 +56,7 @@ strlist::~strlist () {
     free (root);
     root = next;
   }
+  if (txt) free (txt);
 }
 
 // This function adds a string to the list.
@@ -104,4 +107,31 @@ char * strlist::get (int pos) {
   struct strlist_t * s = root;
   for (int i = 0; i < pos && s != NULL; s = s->next, i++);
   return s ? s->str : NULL;
+}
+
+/* The function joins the given string lists to each other and returns
+   the resulting list. */
+strlist * strlist::join (strlist * pre, strlist * post) {
+  strlist * res = pre ? new strlist (*pre) : new strlist ();
+  for (int i = 0; post != NULL && i < post->length (); i++)
+    res->append (post->get (i));
+  return res;
+}
+
+/* The function returns a space seperated string representation of the
+   string list instance. */
+char * strlist::toString (void) {
+  if (txt) { free (txt); txt = NULL; }
+  int size = 0;
+  for (struct strlist_t * s = root; s != NULL; s = s->next) {
+    char * t = s->str ? s->str : (char *) "(null)";
+    int len = strlen (t);
+    size += len + 2;
+    txt = (char *) (txt ? realloc (txt, size) : malloc (size));
+    txt = (s == root) ? strcpy (txt, t) : strcat (txt, t);
+    txt = strcat (txt, " ");
+  }
+  if (txt)
+    txt[strlen (txt) - 1] = '\0';
+  return txt;
 }
