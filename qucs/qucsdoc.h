@@ -58,6 +58,7 @@ public:
   int   insertWire(Wire*);
 
   Node* insertNode(int, int, Element*);
+  void  insertComponentNodes(Component*);
   void  insertRawComponent(Component*, bool num=false);
   void  insertComponent(Component*);
   void  insertNodeLabel(WireLabel*);
@@ -89,6 +90,7 @@ public:
   void  copyComponents(int&, int&, int&, int&);
   void  copyComponents2(int&, int&, int&, int&);
   void  copyWires(int&, int&, int&, int&);
+  void  copyLabels(int&, int&, int&, int&);
   void  copyPaintings(int&, int&, int&, int&);
   bool  copyComps2WiresPaints(int&, int&, int&, int&);
   bool  rotateElements();

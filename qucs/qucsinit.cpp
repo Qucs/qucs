@@ -355,7 +355,7 @@ void QucsInit::initActions()
 
   Acts->editMirror = new QAction(tr("Mirror about X Axis"),
 			  QIconSet(QImage(BITMAPDIR "mirror.png")),
-			  tr("Mirror about X Axis"), 0, App);
+			  tr("Mirror about X Axis"), CTRL+Key_J, App);
   Acts->editMirror->setStatusTip(
 			  tr("Mirrors the selected item about X axis"));
   Acts->editMirror->setWhatsThis(
@@ -547,6 +547,7 @@ void QucsInit::initMenuBar()
   App->fileSaveAs->addTo(fileMenu);
   App->filePrint->addTo(fileMenu);
   App->filePrintSel->addTo(fileMenu);
+  fileMenu->insertSeparator();
   App->fileSettings->addTo(fileMenu);
   App->symEdit->addTo(fileMenu);
   fileMenu->insertSeparator();

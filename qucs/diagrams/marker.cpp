@@ -87,6 +87,8 @@ void Marker::initText(int n)
     num = *(pD->Points + (nn % pD->count));
     VarPos[nVarPos++] = num;
     Text += pD->Var + ": " + QString::number(num,'g',Precision) + "\n";
+    // because of a bug in Qt, line breaks
+//    Text += pD->Var + ": " + QString::number(num,'g',Precision) + "\n";
     nn /= pD->count;
   }
 
@@ -272,7 +274,7 @@ bool Marker::moveUpDown(bool up)
 void Marker::paint(QPainter *p, int x0, int y0)
 {
   p->setPen(QPen(QPen::darkMagenta,0));
-  p->drawRect(x0+x1, y0-y1, x2, -y2);
+  p->drawRect(x0+x1, y0-y1, x2+1, -y2);
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
@@ -289,7 +291,12 @@ void Marker::paint(QPainter *p, int x0, int y0)
   }
 
   p->setPen(QPen(QPen::black,1));
-  p->drawText(x0+x1+3, y0-y1-y2+3, x2, y2, Qt::AlignAuto, Text);
+  int x, y;
+  QWMatrix wm = p->worldMatrix(); // workaround for bug in Qt: If WorldMatrix
+  p->setWorldMatrix(QWMatrix());  // is turned off, \n in the text creates
+  wm.map(x0+x1+3, y0-y1-y2+3, &x, &y);   // a terrible mess.
+  p->drawText( x, y, 0, 0, Qt::DontClip, Text);
+  p->setWorldMatrix(wm);
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
