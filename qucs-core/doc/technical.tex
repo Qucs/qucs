@@ -4879,9 +4879,6 @@ x^{n+1} &= a_0\cdot x^{n} + a_1\cdot x^{n-1} + a_2\cdot x^{n-2} + a_3\cdot x^{n-
 There is no more stable second order integration method than the
 Gear's method of second order.
 
-\subsubsection{Runge-Kutta}
-%\addcontentsline{toc}{subsubsection}{Runge-Kutta}
-
 \subsubsection{Adams-Bashford}
 %\addcontentsline{toc}{subsubsection}{Adams-Bashford}
 
@@ -4987,6 +4984,39 @@ x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{-1}\cdot f^{n+1} + h\cdot b_{0}\cdot f^{n}
 The Adams-Moulton formula of order 1 yields the forward Euler
 integration method and the formula of order 2 yields the trapezoidal
 rule.
+
+\subsection{Stability considerations}
+%\addcontentsline{toc}{subsection}{Stability considerations}
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re (\lambda h)}$}
+\psfrag{Im(lh)}{$\mathrm{Im (\lambda h)}$}
+\includegraphics[width=1\linewidth]{stabgear}
+\end{center}
+\caption{areas of absolute stability for order 1..6 Gear formulae}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re (\lambda h)}$}
+\psfrag{Im(lh)}{$\mathrm{Im (\lambda h)}$}
+\includegraphics[width=1\linewidth]{stabmoulton}
+\end{center}
+\caption{areas of absolute stability for order 1..6 Adams-Moulton formulae}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re (\lambda h)}$}
+\psfrag{Im(lh)}{$\mathrm{Im (\lambda h)}$}
+\includegraphics[width=1\linewidth]{stabbashford}
+\end{center}
+\caption{areas of absolute stability for order 1..6 Adams-Bashford formulae}
+\end{figure}
+\FloatBarrier
 
 \subsection{Energy-storage components}
 %\addcontentsline{toc}{subsection}{Energy-storage components}

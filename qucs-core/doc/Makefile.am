@@ -23,7 +23,7 @@
 #
 
 EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
-  $(PSFILES) $(MATHFILES) PLATFORMS
+  $(PSFILES) $(MATHFILES) PLATFORMS $(MATHHELPS)
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
   $(MPSFILES) $(PDFFIGURES) $(PDFFILES)
@@ -39,7 +39,9 @@ EPSTOPDF = epstopdf
 FIG2DEV = fig2dev
 OCTAVE = octave
 
-MATHFILES = mszl.m mscomparezl.m radius.m
+MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
+  stabbashford.m
+MATHHELPS = zpoly.m
 MPSFILES = $(MATHFILES:.m=.eps)
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
