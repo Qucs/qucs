@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.12 2004/06/29 17:36:47 margraf Exp $
+ * $Id: spsolver.cpp,v 1.13 2004/06/30 15:04:15 ela Exp $
  *
  */
 
@@ -46,6 +46,7 @@ using namespace std;
 #include "open.h"
 #include "itrafo.h"
 #include "analysis.h"
+#include "sweep.h"
 #include "spsolver.h"
 #include "components/constants.h"
 #include "components/component_id.h"
@@ -53,23 +54,27 @@ using namespace std;
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
   type = ANALYSIS_SPARAMETER;
+  swp = NULL;
   noise = 0;
 }
 
 // Constructor creates a named instance of the spsolver class.
 spsolver::spsolver (char * n) : analysis (n) {
   type = ANALYSIS_SPARAMETER;
+  swp = NULL;
   noise = 0;
 }
 
 // Destructor deletes the spsolver class object.
 spsolver::~spsolver () {
+  if (swp) delete swp;
 }
 
 /* The copy constructor creates a new instance of the spsolver class
    based on the given spsolver object. */
 spsolver::spsolver (spsolver & n) : analysis (n) {
   noise = n.noise;
+  if (n.swp) swp = new sweep (*n.swp);
 }
 
 /* This function joins two nodes of a single circuit (interconnected
@@ -586,24 +591,38 @@ void spsolver::init (void) {
    requested frequency and solves it then. */
 void spsolver::solve (void) {
 
-  nr_double_t start, stop, step, freq;
+  nr_double_t freq;
   int ports;
   circuit * root;
 
   runs++;
 
-  // get frequency range
-  start = getPropertyDouble ("Start");
-  stop  = getPropertyDouble ("Stop");
-  step  = getPropertyDouble ("Step");
-
   // run additional noise analysis ?
   noise = !strcmp (getPropertyString ("Noise"), "yes") ? 1 : 0;
+
+  // create frequency sweep if necessary
+  if (swp == NULL) {
+    char * type = getPropertyString ("Type");
+    nr_double_t start = getPropertyDouble ("Start");
+    nr_double_t stop = getPropertyDouble ("Stop");
+    nr_double_t points = getPropertyDouble ("Points");
+
+    if (!strcmp (type, "lin")) {
+      swp = new linsweep ("frequency");
+      ((linsweep *) swp)->create (start, stop, points);
+    }
+    else if (!strcmp (type, "log")) {
+      swp = new logsweep ("frequency");
+      ((logsweep *) swp)->create (start, stop, points);
+    }
+  }
 
   insertConnections ();
   init ();
 
-  for (freq = start; freq <= stop; freq += step) {
+  swp->reset ();
+  for (int i = 0; i < swp->getSize (); i++) {
+    freq = swp->next ();
 
     root = subnet->getRoot ();
     ports = root->countNodes ();
@@ -897,7 +916,7 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
 
   // optimal source reflection coefficient
   Ropt = 1.0 - sqr (abs (n2));
-  if (abs(Ropt) < 1e-12) Ropt = 1.0;  // prevent a negative radicant
+  if (abs (Ropt) < 1e-12) Ropt = 1.0;  // avoid a negative radicant
   else Ropt = (1.0 - sqrt (Ropt)) / n2;
 
   // minimum noise figure

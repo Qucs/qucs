@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.9 2004/05/24 10:11:08 ela Exp $
+ * $Id: complex.h,v 1.10 2004/06/30 15:04:15 ela Exp $
  *
  */
 
@@ -129,6 +129,9 @@ class complex
 
   complex        operator +  ();
   complex        operator -  ();
+
+  // debugging
+  void print (void);
 };
 
 #endif /* __COMPLEX_H__ */

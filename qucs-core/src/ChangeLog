@@ -1,3 +1,20 @@
+2004-06-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Allowing the new properties of the '.SP'
+	analysis to be part of the netlist.
+
+	* spsolver.cpp: Now also uses the 'Type', 'Start', 'Stop' and
+	'Points' properties to generate frequency sweeps using the new
+	sweep class.
+
+	* complex.cpp: Added printing functionality for debugging.
+
+	* matrix.cpp (twoport): Implemented all kinds of matrix 
+	conversions.
+
+	* complex.cpp: Using 'pivotising' for '/' operator on complex
+	numbers to avoid numerical overflow and underrun on a low level.
+
 2004-06-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* parasweep.cpp: Using the new sweep classes for the parameter

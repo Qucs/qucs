@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.6 2004/05/20 18:06:33 ela Exp $
+ * $Id: matrix.cpp,v 1.7 2004/06/30 15:04:15 ela Exp $
  *
  */
 
@@ -107,7 +107,7 @@ void matrix::set (int r, int c, complex z) {
 void matrix::print (void) {
   for (int r = 1; r <= rows; r++) {
     for (int c = 1; c <= cols; c++) {
-      fprintf (stderr, "%.2e,%.2e ", (double) real (get (r, c)), 
+      fprintf (stderr, "%+.2e,%+.2e ", (double) real (get (r, c)), 
 	       (double) imag (get (r, c)));
     }
     fprintf (stderr, "\n");
@@ -426,6 +426,69 @@ matrix& ytos (matrix& y, complex z0) {
   return *res;
 }
 
+// Converts scattering parameters to chain matrix.
+matrix& stoa (matrix& s, complex z1) {
+  assert (s.getRows () == 2 && s.getCols () == 2);
+  complex z2 = z1;
+  complex d = s.get (1, 1) * s.get (2, 2) - s.get (1, 2) * s.get (2, 1);
+  complex n = 2.0 * s.get (2, 1) * sqrt (fabs (real (z1) * real (z2)));
+  matrix * a = new matrix (2);
+  a->set (1, 1, (conj (z1) + z1 * s.get (1, 1) - 
+		 conj (z1) * s.get (2, 2) - z1 * d) / n);
+  a->set (1, 2, (conj (z1) * conj (z2) + z1 * conj (z2) * s.get (1, 1) +
+		 conj (z1) * z2 * s.get (2, 2) + z1 * z2 * d) / n);
+  a->set (2, 1, (1.0 - s.get (1, 1) - s.get (2, 2) + d) / n);
+  a->set (2, 2, (conj (z2) - conj (z2) * s.get (1, 1) +
+		 z2 * s.get (2, 2) - z2 * d) / n);
+  return *a;
+}
+
+// Converts chain matrix to scattering parameters.
+matrix& atos (matrix& a, complex z1) {
+  assert (a.getRows () == 2 && a.getCols () == 2);
+  complex z2 = z1;
+  complex d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
+  complex n = a.get (1, 1) * z2 + a.get (1, 2) + 
+    a.get (2, 1) * z1 * z2 + a.get (2, 2) * z1;
+  matrix * s = new matrix (2);
+  s->set (1, 1, (a.get (1, 1) * z2 + a.get (1, 2) - a.get (2, 1) * 
+		 conj (z1) * z2 - a.get (2, 2) * conj (z1)) / n);
+  s->set (1, 2, (a.get (1, 1) * a.get (2, 2) - 
+		 a.get (1, 2) * a.get (2, 1)) * d / n);
+  s->set (2, 1, d / n);
+  s->set (2, 2, (a.get (2, 2) * z1 - a.get (1, 1) * conj (z2) +
+		 a.get (1, 2) - a.get (2, 1) * z1 * conj (z2)) / n);
+  return *s;
+}
+
+// Converts scattering parameters to hybrid matrix.
+matrix& stoh (matrix& s, complex z1) {
+  assert (s.getRows () == 2 && s.getCols () == 2);
+  complex z2 = z1;
+  complex n = s.get (1, 2) * s.get (2, 1);
+  complex d = (1.0 - s.get (1, 1)) * (1.0 + s.get (2, 2)) + n;
+  matrix * h = new matrix (2);
+  h->set (1, 1, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z1 / d);
+  h->set (1, 2, 2.0 * s.get (1, 2) / d);
+  h->set (2, 1, -2.0 * s.get (2, 1) / d);
+  h->set (2, 2, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z2 / d);
+  return *h;
+}
+
+// Converts hybrid matrix to scattering parameters.
+matrix& htos (matrix& h, complex z1) {
+  assert (h.getRows () == 2 && h.getCols () == 2);
+  complex z2 = z1;
+  complex n = h.get (1, 2) * h.get (2, 1);
+  complex d = (1.0 - h.get (1, 1) / z1) * (1.0 + z2 * h.get (2, 2)) - n;
+  matrix * s = new matrix (2);
+  s->set (1, 1, ((h.get (1, 1) / z1 - 1) * (1 + z2 * h.get (2, 2)) - n) / d);
+  s->set (1, 2, 2.0 * h.get (1, 2) / d);
+  s->set (2, 1, -2.0 * h.get (2, 1) / d);
+  s->set (2, 2, ((1 + h.get (1, 1) / z1) * (1 - z2 * h.get (2, 2)) + n) / d);
+  return *s;
+}
+
 // Convert admittance matrix to impedance matrix.
 matrix& ytoz (matrix& y) {
   assert (y.getRows () == y.getCols ());
@@ -457,4 +520,232 @@ void matrix::exchangeCols (int c1, int c2) {
     data[r + c1] = data[r + c2];
     data[r + c2] = s;
   }
+}
+
+/* This function converts 2x2 matrices from any of the matrix forms Y,
+   Z, H, G and A to any other.  Also converts S<->A, S<->T and S<->H
+   matrices. */
+matrix& twoport (matrix& m, char in, char out) {
+  assert (m.getRows () == 2 && m.getCols () == 2);
+  complex d;
+  matrix * res = new matrix (2);
+
+  switch (in) {
+  case 'Y':
+    switch (out) {
+    case 'Y': // Y to Y
+      *res = m;
+      break;
+    case 'Z': // Y to Z
+      d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
+      res->set (1, 1, m.get (2, 2) / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, m.get (1, 1) / d);
+      break;
+    case 'H': // Y to H
+      d = m.get (1, 1);
+      res->set (1, 1, 1.0 / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, m.get (2, 1) / d);
+      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
+      break;
+    case 'G': // Y to G
+      d = m.get (2, 2);
+      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res->set (1, 2, m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, 1.0 / d);
+      break;
+    case 'A': // Y to A
+      d = m.get (2, 1);
+      res->set (1, 1, -m.get (2, 2) / d);
+      res->set (1, 2, -1.0 / d);
+      res->set (2, 1, m.get (1, 2) - m.get (2, 2) * m.get (1, 1) / d);
+      res->set (2, 2, -m.get (1, 1) / d);
+      break;
+    }
+    break;
+  case 'Z':
+    switch (out) {
+    case 'Y': // Z to Y
+      d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
+      res->set (1, 1, m.get (2, 2) / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, m.get (1, 1) / d);
+      break;
+    case 'Z': // Z to Z
+      *res = m;
+      break;
+    case 'H': // Z to H
+      d = m.get (2, 2);
+      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res->set (1, 2, m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, 1.0 / d);
+      break;
+    case 'G': // Z to G
+      d = m.get (1, 1);
+      res->set (1, 1, 1.0 / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, m.get (2, 1) / d);
+      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
+      break;
+    case 'A': // Z to A
+      d = m.get (2, 1);
+      res->set (1, 1, m.get (1, 1) / d);
+      res->set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
+      res->set (2, 1, 1.0 / d);
+      res->set (2, 2, m.get (2, 2) / d);
+      break;
+    }
+    break;
+  case 'H':
+    switch (out) {
+    case 'Y': // H to Y
+      d = m.get (1, 1);
+      res->set (1, 1, 1.0 / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, m.get (2, 1) / d);
+      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get(2, 1) / d);
+      break;
+    case 'Z': // H to Z
+      d = m.get (2, 2);
+      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res->set (1, 2, m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, 1.0 / d);
+      break;
+    case 'H': // H to H
+      *res = m;
+      break;
+    case 'G': // H to G
+      d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
+      res->set (1, 1, m.get (2, 2) / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, m.get (1, 1) / d);
+      break;
+    case 'A': // H to A
+      d = m.get (2, 1);
+      res->set (1, 1, m.get (1, 2) - m.get (1, 1) * m.get (2, 2) / d);
+      res->set (1, 2, -m.get (1, 1) / d);
+      res->set (2, 1, -m.get (2, 2) / d);
+      res->set (2, 2, -1.0 / d);
+      break;
+    case 'S': // H to S
+      *res = htos (m);
+      break;
+    }
+    break;
+  case 'G':
+    switch (out) {
+    case 'Y': // G to Y
+      d = m.get (2, 2);
+      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res->set (1, 2, m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, 1.0 / d);
+      break;
+    case 'Z': // G to Z
+      d = m.get (1, 1);
+      res->set (1, 1, 1.0 / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, m.get (2, 1) / d);
+      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
+      break;
+    case 'H': // G to H
+      d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
+      res->set (1, 1, m.get (2, 2) / d);
+      res->set (1, 2, -m.get (1, 2) / d);
+      res->set (2, 1, -m.get (2, 1) / d);
+      res->set (2, 2, m.get (1, 1) / d);
+      break;
+    case 'G': // G to G
+      *res = m;
+      break;
+    case 'A': // G to A
+      d = m.get (2, 1);
+      res->set (1, 1, 1.0 / d);
+      res->set (1, 2, m.get (2, 2) / d);
+      res->set (2, 1, m.get (1, 1) / d);
+      res->set (2, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
+      break;
+    }
+    break;
+  case 'A':
+    switch (out) {
+    case 'Y': // A to Y
+      d = m.get (1, 2);
+      res->set (1, 1, m.get (2, 2) / d);
+      res->set (1, 2, m.get (2, 1) - m.get (1, 1) * m.get (2, 2) / d);
+      res->set (2, 1, -1.0 / d);
+      res->set (2, 2, m.get (1, 1) / d);
+      break;
+    case 'Z': // A to Z
+      d = m.get (2, 1);
+      res->set (1, 1, m.get (1, 1) / d);
+      res->set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
+      res->set (2, 1, 1.0 / d);
+      res->set (2, 2, m.get (2, 2) / d);
+      break;
+    case 'H': // A to H
+      d = m.get (2, 2);
+      res->set (1, 1, m.get (1, 2) / d);
+      res->set (1, 2, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res->set (2, 1, -1.0 / d);
+      res->set (2, 2, m.get (2, 1) / d);
+      break;
+    case 'G': // A to G
+      d = m.get (1, 1);
+      res->set (1, 1, m.get (2, 1) / d);
+      res->set (1, 2, m.get (2, 1) * m.get (1, 2) / d - m.get (2, 2));
+      res->set (2, 1, 1.0 / d);
+      res->set (2, 2, m.get (1, 2) / d);
+      break;
+    case 'A': // A to A
+      *res = m;
+      break;
+    case 'S': // A to S
+      *res = atos (m);
+      break;
+    }
+    break;
+  case 'S':
+    switch (out) {
+    case 'S': // S to S
+      *res = m;
+      break;
+    case 'T': // S to T
+      d = m.get (2, 1);
+      res->set (1, 1, m.get (1, 2) - m.get (1, 1) * m.get (2, 2) / d);
+      res->set (1, 2, m.get (1, 1) / d);
+      res->set (2, 1, -m.get (2, 2) / d);
+      res->set (1, 2, 1.0 / d);
+      break;
+    case 'A': // S to A
+      *res = stoa (m);
+      break;
+    case 'H': // S to H
+      *res = stoh (m);
+      break;
+    }
+    break;
+  case 'T':
+    switch (out) {
+    case 'S': // T to S
+      d = m.get (2, 2);
+      res->set (1, 1, m.get (1, 2) / d); 
+      res->set (1, 2, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res->set (2, 1, 1.0 / d);
+      res->set (1, 2, -m.get (2, 1) / d);
+      break;
+    case 'T': // T to T
+      *res = m;
+      break;
+    }
+    break;
+  }
+  return *res;
 }

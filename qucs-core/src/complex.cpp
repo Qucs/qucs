@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.9 2004/05/02 12:02:11 ela Exp $
+ * $Id: complex.cpp,v 1.10 2004/06/30 15:04:15 ela Exp $
  *
  */
 
@@ -164,7 +164,7 @@ complex sinh (const complex z) {
 }
 
 complex arsinh (const complex z) {
-  return ln (z + sqrt (z*z + 1));
+  return ln (z + sqrt (z * z + 1));
 }
 
 complex cosh (const complex z) {
@@ -310,23 +310,75 @@ complex operator/(const complex z1, const nr_double_t r2) {
 }
 
 complex operator/(const complex z1, const complex z2) {
+#if 0
   nr_double_t n = norm (z2);
   return complex ((z1.r * z2.r + z1.i * z2.i) / n,
 		  (z1.i * z2.r - z1.r * z2.i) / n);
+#else /* avoid numerical overflow and underrun */
+  nr_double_t r, i, n, d;
+  if (fabs (z2.r) > fabs (z2.i)) {
+    n = z2.i / z2.r;
+    d = z2.r + z2.i * n;
+    r = (z1.r + z1.i * n) / d;
+    i = (z1.i - z1.r * n) / d;
+  }
+  else {
+    n = z2.r / z2.i;
+    d = z2.r * n + z2.i;
+    r = (z1.r * n + z1.i) / d;
+    i = (z1.i * n - z1.r) / d;
+  }
+  return complex (r, i);
+#endif
 }
 
 complex& complex::operator/=(const complex z) {
+#if 0
   nr_double_t n1, n2;
   n1 = norm (z);
   n2 = (r * z.r + i * z.i) / n1;
   i  = (i * z.r - r * z.i) / n1;
   r  = n2;
+#else /* avoid numerical overflow and underrun */
+  nr_double_t n, d, t;
+  if (fabs (z.r) > fabs (z.i)) {
+    n = z.i / z.r;
+    d = z.r + z.i * n;
+    t = (r + i * n) / d;
+    i = (i - r * n) / d;
+    r = t;
+  }
+  else {
+    n = z.r / z.i;
+    d = z.r * n + z.i;
+    t = (r * n + i) / d;
+    i = (i * n - r) / d;
+    r = t;
+  }
+#endif
   return *this;
 }
 
 complex operator/(const nr_double_t r1, const complex z2) {
+#if 0
   nr_double_t n = norm (z2);
   return complex (r1 * z2.r / n, -r1 * z2.i / n);
+#else /* avoid numerical overflow and underrun */
+  nr_double_t r, i, n, d;
+  if (fabs (z2.r) > fabs (z2.i)) {
+    n = z2.i / z2.r;
+    d = z2.r + z2.i * n;
+    r = r1 / d;
+    i = -n * r1 / d;
+  }
+  else {
+    n = z2.r / z2.i;
+    d = z2.r * n + z2.i;
+    r = r1 * n / d;
+    i = -r1 / d;
+  }
+  return complex (r, i);
+#endif
 }
 
 complex operator%(const complex z1, const complex z2) {
@@ -370,3 +422,11 @@ complex& complex::operator*=(const complex z) {
   r = n;
   return *this;
 }
+
+#ifdef DEBUG
+// Debug function: Prints the complex number.
+#include <stdio.h>
+void complex::print (void) {
+  fprintf (stderr, "%+.2e,%+.2e ", (double) r, (double) i);
+}
+#endif /* DEBUG */
