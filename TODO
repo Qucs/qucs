@@ -24,10 +24,10 @@ unfixed) have a look at the file BUGS.
 (completed tasks are indented one tab)
 
 	- implement user-defined subcircuit paintings
-- make tabdiagram 'scrollable' (for long value lists)
+	- make tabdiagram 'scrollable' (for long value lists)
 - allow tabdiagram to display variables with different dependencies
 - shutdown external programs on application exit
-- implement list parameter sweeps
+	- implement list parameter sweeps
 - allow components to be painted in a certain order (implement drawing
   width)
 - improve wiring algorithm
@@ -43,5 +43,5 @@ unfixed) have a look at the file BUGS.
 - paint logos and other drawings
 	- modify/create configure scripts
 	- load/save/print schematics
-- partial polar/smith chart
+	- partial polar/smith chart
 - compatibility code and testing on other platforms as GNU/Linux

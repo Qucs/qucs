@@ -289,14 +289,15 @@ void Component::paintScheme(QPainter *p)
 // For output on a printer device.
 void Component::print(ViewPainter *p)
 {
-  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
+  Arc *pa;
+  for(pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     pa->w -= 1;   // to look nice after printing, arcs have to be
     pa->h -= 1;   // made smaller
   }
 
   paint(p);
 
-  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
+  for(pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     pa->w += 1;   // back to old size
     pa->h += 1;
   }
