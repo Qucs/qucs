@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.7 2004-07-31 16:59:14 ela Exp $
+ * $Id: parasweep.cpp,v 1.8 2004-09-08 18:25:19 ela Exp $
  *
  */
 
@@ -26,12 +26,9 @@
 # include <config.h>
 #endif
 
-using namespace std;
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream>
 
 #include "logging.h"
 #include "complex.h"

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.9 2004-09-04 06:50:59 ela Exp $
+ * $Id: mscoupled.cpp,v 1.10 2004-09-08 18:25:20 ela Exp $
  *
  */
 
@@ -311,6 +311,66 @@ void mscoupled::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
 		exp (-p13 * pow (g, 1.092)) * p12 / p14);
     Fo = p1 * p2 * pow ((p3 * p4 + 0.1844) * fn * p15, 1.5763);
     ErEffoFreq = er - (er - ErEffo) / (1 + Fo);
+
+    // dispersion of even characteristic impedance
+    nr_double_t t, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21;
+    q11 = 0.893 * (1 - 0.3 / (1 + 0.7 * (er -1)));
+    t = pow (fn / 20, 4.91);
+    q12 = 2.121 * t / (1 + q11 * t) * exp (-2.87 * g) * pow (g, 0.902);
+    q13 = 1 + 0.038 * pow (er / 8, 5.1);
+    t = quadr (er / 15);
+    q14 = 1 + 1.203 * t / (1 + t);
+    q15 = 1.887 * exp (-1.5 * pow (g, 0.84)) * pow (g, q14) /
+      (1 + 0.41 * pow (fn / 15, 3) *
+       pow (u, 2 / q13) / (0.125 + pow (u, 1.626 / q13)));
+    q16 = q15 * (1 + 9 / (1 + 0.403 * sqr (er - 1)));
+    q17 = 0.394 * (1 - exp (-1.47 * pow (u / 7, 0.672))) *
+      (1 - exp (-4.25 * pow (fn / 20, 1.87)));
+    q18 = 0.61 * (1 - exp (-2.31 * pow (u / 8, 1.593))) /
+      (1 + 6.544 * pow (g, 4.17));
+    q19 = 0.21 * quadr (g) / (1 + 0.18 * pow (g, 4.9)) / (1 + 0.1 * sqr (u)) /
+      (1 + pow (fn / 24, 3));
+    q20 = q19 * (0.09 + 1 / (1 + 0.1 * pow (er - 1, 2.7)));
+    t = pow (u, 2.5);
+    q21 = fabs (1 - 42.54 * pow (g, 0.133) * exp (-0.812 * g) * t /
+		(1 + 0.033 * t));
+    
+    nr_double_t re, qe, pe, de, Ce, q0, ZlFreq, ErEffFreq;
+    msline::Kirschning_er (u, fn, er, ErEffe, ErEffFreq);
+    msline::Kirschning_zl (u, fn, er, ErEffe, ErEffFreq, Zle, q0, ZlFreq);
+    re = pow (fn / 28.843, 12);
+    qe = 0.016 + pow (0.0514 * er * q21, 4.524);
+    pe = 4.766 * exp (-3.228 * pow (u, 0.641));
+    t = pow (er - 1, 6);
+    de = 5.086 * qe * re / (0.3838 + 0.386 * qe) *
+      exp (-22.2 * pow (u, 1.92)) / (1 + 1.2992 * re) * t / (1 + 10 * t);
+    Ce = 1 + 1.275 * (1 - exp (-0.004625 * pe * pow (er, 1.674) * 
+	 pow (fn / 18.365, 2.745))) - q12 + q16 - q17 + q18 + q20;
+    ZleFreq = Zle * pow ((0.9408 * pow (ErEffFreq, Ce) - 0.9603) /
+			 ((0.9408 - de) * pow (ErEffe, Ce) - 0.9603), q0);
+    
+    // dispersion of odd characteristic impedance
+    nr_double_t q22, q23, q24, q25, q26, q27, q28, q29;
+    msline::Kirschning_er (u, fn, er, ErEffo, ErEffFreq);
+    msline::Kirschning_zl (u, fn, er, ErEffo, ErEffFreq, Zlo, q0, ZlFreq);
+    q29 = 15.16 / (1 + 0.196 * sqr (er - 1));
+    t = sqr (er - 1);
+    q25 = 0.3 * sqr (fn) / (10 + sqr (fn)) * (1 + 2.333 * t / (5 + t));
+    t = pow ((er - 1) / 13, 12);
+    q26 = 30 - 22.2 * t / (1 + 3 * t) - q29;
+    t = pow (er - 1, 1.5);
+    q27 = 0.4 * pow (g, 0.84) * (1 + 2.5 * t / (5 + t));
+    t = pow (er - 1, 3);
+    q28 = 0.149 * t / (94.5 + 0.038 * t);
+    q22 = 0.925 * pow (fn / q26, 1.536) / (1 + 0.3 * pow (fn / 30, 1.536));
+    q23 = 1 + 0.005 * fn * q27 / (1 + 0.812 * pow (fn / 15, 1.9)) /
+      (1 + 0.025 * sqr (u));
+    t = pow (u, 0.894);
+    q24 = 2.506 * q28 * t / (3.575 + t) *
+      pow ((1 + 1.3 * u) * fn / 99.25, 4.29);
+    ZloFreq = ZlFreq + (Zlo * pow (ErEffoFreq / ErEffo, q22) - ZlFreq * q23) /
+      (1 + q24 + pow (0.46 * g, 2.2) * q25);
+    
   }
 }
 
@@ -330,12 +390,10 @@ void mscoupled::initDC (dcsolver *) {
   }
   else {
     // DC shorts (voltage sources V = 0 volts)
-    setY (1, 1, 0); setY (2, 2, 0); setY (1, 2, 0); setY (2, 1, 0);
-    setY (3, 3, 0); setY (4, 4, 0); setY (3, 4, 0); setY (4, 3, 0);
-    setC (1, 1, +1.0); setC (1, 2, -1.0); setC (2, 3, +1.0); setC (2, 4, -1.0);
-    setB (1, 1, +1.0); setB (2, 1, -1.0); setB (3, 2, +1.0); setB (4, 2, -1.0);
-    setE (1, 0.0); setE (2, 0.0);
-    setD (1, 1, 0.0); setD (1, 2, 0.0); setD (2, 1, 0.0); setD (2, 2, 0.0);
+    clearY ();
+    voltageSource (1, 1, 2);
+    voltageSource (2, 3, 4);
+    setD (1, 2, 0.0); setD (2, 1, 0.0);
     setVoltageSources (2);
     setInternalVoltageSource (1);
   }

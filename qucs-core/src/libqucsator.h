@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: libqucsator.h,v 1.2 2004-07-03 10:56:40 ela Exp $
+ * $Id: libqucsator.h,v 1.3 2004-09-08 18:25:19 ela Exp $
  *
  */
 
@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <iostream>
 
 typedef double nr_double_t;
 

@@ -89,11 +89,16 @@ zlref = zl;
 eplot (u,(zl - zlref)./zlref * 100,"Hammerstad and Jensen",1,[0 1 0],1);
 
 g = (er + 1) / 2 + (er - 1) / 2 * (1 + 10 ./ u).^(-0.5);
-f = 6 + (2 * M_PI - 6) * exp (-(30.666 ./ u).^0.7528);
-d = Z0 / 2 / M_PI * log (f ./ u + sqrt (1 + (2 ./ u).^2));
-zl = d ./ sqrt (g);
+for i = 1 : length (u)
+  if (u(i) <= 1)
+    z = Z0 / M_PI / 2 * log (8 / u(i) + u(i) / 4);
+  else
+    z = Z0 / (u(i) + 2.42 - 0.44 / u(i) + (1 - 1 / u(i))^(6));
+  endif
+  zl(i) = z / sqrt (g(i));
+endfor
 zl2 = zl;
-eplot (u,(zl - zlref)./zlref * 100,"Schneider",2,[0 0 1],1);
+eplot (u,(zl2 - zlref)./zlref * 100,"Schneider",2,[0 0 1],1);
 
 for i = 1 : length (u)
   if (u(i) <= 3.3)

@@ -1,3 +1,13 @@
+2004-09-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Moved dispersion formulas by
+	Kirschning into separate function because they are used by
+	coupled microstrips as well.
+
+	* microstrip/mscoupled.cpp: Implemented dispersion formulas
+	for dispersion of characteristic impedances of even and odd
+	ode according to Kirschning.
+
 2004-09-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* capacitor.cpp, inductor.cpp: Fixed MNA entries for AC

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.12 2004-09-01 21:40:20 ela Exp $
+ * $Id: msline.h,v 1.13 2004-09-08 18:25:20 ela Exp $
  *
  */
 
@@ -49,6 +49,11 @@ class msline : public circuit
   static void Getsinger_disp (nr_double_t, nr_double_t, nr_double_t,
 			      nr_double_t, nr_double_t,
 			      nr_double_t&, nr_double_t&);
+  static void Kirschning_er (nr_double_t, nr_double_t, nr_double_t,
+			     nr_double_t, nr_double_t&);
+  static void Kirschning_zl (nr_double_t, nr_double_t, nr_double_t,
+			     nr_double_t, nr_double_t, nr_double_t,
+			     nr_double_t&, nr_double_t&);
   static void analyseLoss (nr_double_t, nr_double_t, nr_double_t, nr_double_t,
 			   nr_double_t, nr_double_t, nr_double_t, nr_double_t,
 			   nr_double_t, nr_double_t, char *,
