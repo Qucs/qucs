@@ -53,8 +53,10 @@ public:
   void       deselectElements(Element *e);
   void  NewMovingWires(QPtrList<Element> *p, Node *pn);
   void  copySelectedElements(QPtrList<Element> *p);
-  void  selectComponents(int x1, int y1, int x2, int y2, bool flag);
-  void  activateComponent(int x, int y);
+  int   selectComponents(int x1, int y1, int x2, int y2, bool flag);
+  bool  activateComponent(int x, int y);
+  bool  activateComponents();
+  void  activateComps(int x1, int y1, int x2, int y2);
   Node* insertNode(int x, int y, Element *e);
   void  insertRawComponent(Component *c);
   void  insertComponent(Component *c);
@@ -66,18 +68,18 @@ public:
   bool  createNetlist(QFile *NetlistFile);
 
   QString copySelected(bool cut);
-  bool    paste(QTextStream *stream);
+  bool    paste(QTextStream *stream, QPtrList<Element> *pe);
 
   void  reloadGraphs();
   bool  save();
   bool  load();
   bool  loadProperties(QTextStream *stream);
-  bool  loadComponents(QTextStream *stream, bool raw=true);
-  bool  loadWires(QTextStream *stream);
-  bool  loadDiagrams(QTextStream *stream);
-  bool  loadPaintings(QTextStream *stream);
+  bool  loadComponents(QTextStream *stream, bool insert=true);
+  bool  loadWires(QTextStream *stream, bool insert=true);
+  bool  loadDiagrams(QTextStream *stream, bool insert=true);
+  bool  loadPaintings(QTextStream *stream, bool insert=true);
 
-  void setOnGrid(int& x, int& y);
+  void  setOnGrid(int& x, int& y);
 
   QString DocName;
   bool    DocChanged;
@@ -96,6 +98,7 @@ public:
   int  GridX, GridY;
   bool GridOn;
 
+  QPtrList<Element> *Cache;
 };
 
 

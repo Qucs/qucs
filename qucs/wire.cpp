@@ -44,6 +44,7 @@ Wire::~Wire()
 void Wire::paintScheme(QPainter *p)
 {
   p->drawLine(x1, y1, x2, y2);
+//  p->drawText(50,50,QString::number(x1));
 }
 
 // ----------------------------------------------------------------

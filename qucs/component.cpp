@@ -96,7 +96,7 @@ void Component::paint(QPainter *p)
   if(Sign.at(0) == '.') {   // is simulation component (dc, ac, s parameter, ...)
     QFont tmp = p->font();
     p->setFont(QFont("Helvetica",16, QFont::DemiBold));
-    p->drawText(cx+x1+5, cy+y1+5, x2-x1, y2-y1, Qt::WordBreak, Description);
+    p->drawText(cx+x1+8, cy+y1+8, x2-x1, y2-y1, Qt::WordBreak, Description);
     p->setFont(tmp);
   }
 
@@ -131,6 +131,8 @@ void Component::paintScheme(QPainter *p) //, int x, int y) //const QPoint& pos)
   
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next())     // paint all arcs
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+
+//  p->drawText(50,50,QString::number(cx));
 }
 
 // -------------------------------------------------------
@@ -328,6 +330,37 @@ bool Component::load(const QString& _s)
 // **********                                                                      **********
 // ******************************************************************************************
 
+SubCirPort::SubCirPort()
+{
+  Description = "port of a subcircuit";
+
+  Arcs.append(new Arc(-25, -6, 13, 13,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-14,  0,  0,  0,QPen(QPen::darkBlue,2)));
+
+  Ports.append(new Port(  0,  0));
+
+  x1 = -27; y1 = -8;
+  x2 =   0; y2 =  8;
+
+  tx = x1+5;
+  ty = y2+4;
+  Sign  = QString("Port");
+  Model = QString("");
+  Name  = QString("P");
+
+  Props.append(new Property("Num", "1", true));
+}
+
+SubCirPort::~SubCirPort()
+{
+}
+
+SubCirPort* SubCirPort::newOne()
+{
+  return new SubCirPort();
+}
+
+// --------------------------------------------------------------------------
 Resistor::Resistor()
 {
   Description = "resistor";
@@ -621,6 +654,9 @@ Transformer::Transformer()
   Lines.append(new Line( 10, 30, 30, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -1,-20, -1, 20,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-20,  1, 20,QPen(QPen::darkBlue,1)));
+
+  Lines.append(new Line(-21,-14,-15,-14,QPen(QPen::black,1)));
+  Lines.append(new Line(-18,-14,-18,-6,QPen(QPen::black,1)));
   Arcs.append(new Arc(-21,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   
@@ -630,8 +666,8 @@ Transformer::Transformer()
   Ports.append(new Port( 30, 30));
   Ports.append(new Port(-30, 30));
 
-  x1 = -30; y1 = -30;
-  x2 =  30; y2 =  30;
+  x1 = -33; y1 = -33;
+  x2 =  33; y2 =  33;
 
   tx = x1+5;
   ty = y2+4;
@@ -677,6 +713,18 @@ symTrafo::symTrafo()
   Lines.append(new Line(-10,  0,-30,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -1,-45, -1, 45,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-45,  1, 45,QPen(QPen::darkBlue,1)));
+
+  Lines.append(new Line(-24,-40,-18,-40,QPen(QPen::black,1)));
+  Lines.append(new Line(-21,-40,-21,-32,QPen(QPen::black,1)));
+  Lines.append(new Line(-17,-37,-15,-40,QPen(QPen::black,1)));
+  Lines.append(new Line(-15,-40,-15,-32,QPen(QPen::black,1)));
+
+  Lines.append(new Line(-25, 14,-19, 14,QPen(QPen::black,1)));
+  Lines.append(new Line(-22, 14,-22, 22,QPen(QPen::black,1)));
+  Lines.append(new Line(-13, 15,-18, 22,QPen(QPen::black,1)));
+  Lines.append(new Line(-18, 22,-13, 22,QPen(QPen::black,1)));
+  Arcs.append(new Arc(-18, 14,  5,  5,  0, 16*180,QPen(QPen::black,1)));
+  
   Arcs.append(new Arc(-21,-50,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-21,  4,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
@@ -688,8 +736,8 @@ symTrafo::symTrafo()
   Ports.append(new Port(-30, 60));
   Ports.append(new Port(-30,  0));
 
-  x1 = -30; y1 = -60;
-  x2 =  30; y2 =  60;
+  x1 = -33; y1 = -63;
+  x2 =  33; y2 =  63;
 
   tx = x1+5;
   ty = y2+4;
@@ -1033,8 +1081,8 @@ VCCS::VCCS()
 
   Arcs.append(new Arc(0,-11, 23, 23,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, -7, 11,  7,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line( 11, -6, 15, -1,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line( 11, -6,  7, -1,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line( 11,  6, 15,  1,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line( 11,  6,  7,  1,QPen(QPen::darkBlue,3)));
 
   Lines.append(new Line(-30,-30,-12,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-12, 30,QPen(QPen::darkBlue,2)));
@@ -1070,7 +1118,7 @@ VCCS::VCCS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1 S", true, "forward transconductance"));
-  Props.append(new Property("T", "0", true, "channel delay time"));
+  Props.append(new Property("T", "0", true, "delay time"));
 }
 
 VCCS::~VCCS()
@@ -1089,8 +1137,8 @@ CCCS::CCCS()
 
   Arcs.append(new Arc(0,-11, 23, 23,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, -7, 11,  7,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line( 11, -6, 15, -1,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line( 11, -6,  7, -1,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line( 11,  6, 15,  1,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line( 11,  6,  7,  1,QPen(QPen::darkBlue,3)));
 
   Lines.append(new Line(-30,-30,-12,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-12, 30,QPen(QPen::darkBlue,2)));
@@ -1124,7 +1172,7 @@ CCCS::CCCS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1", true, "forward transfer factor"));
-  Props.append(new Property("T", "0", true, "channel delay time"));
+  Props.append(new Property("T", "0", true, "delay time"));
 }
 
 CCCS::~CCCS()
@@ -1181,7 +1229,7 @@ VCVS::VCVS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1", true, "forward transfer factor"));
-  Props.append(new Property("T", "0", true, "channel delay time"));
+  Props.append(new Property("T", "0", true, "delay time"));
 }
 
 VCVS::~VCVS()
@@ -1236,7 +1284,7 @@ CCVS::CCVS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1 Ohm", true, "forward transfer factor"));
-  Props.append(new Property("T", "0", true, "channel delay time"));
+  Props.append(new Property("T", "0", true, "delay time"));
 }
 
 CCVS::~CCVS()
@@ -1641,8 +1689,8 @@ DC_Sim::DC_Sim()
   Lines.append(new Line( 60, -7, 60, 17,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 56,-12, 60, -7,QPen(QPen::darkBlue,2)));
 
-  x1 = -57; y1 = -13;
-  x2 =  61; y2 =  18;
+  x1 = -60; y1 = -16;
+  x2 =  64; y2 =  21;
 
   tx = x1+5;
   ty = y2+4;
@@ -1676,8 +1724,8 @@ AC_Sim::AC_Sim()
   Lines.append(new Line( 60, -7, 60, 17,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 56,-12, 60, -7,QPen(QPen::darkBlue,2)));
 
-  x1 = -57; y1 = -13;
-  x2 =  61; y2 =  18;
+  x1 = -60; y1 = -16;
+  x2 =  64; y2 =  21;
 
   tx = x1+5;
   ty = y2+4;
@@ -1715,8 +1763,8 @@ TR_Sim::TR_Sim()
   Lines.append(new Line( 49,-16, 49, 26,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 45,-21, 49,-16,QPen(QPen::darkBlue,2)));
 
-  x1 = -46; y1 = -22;
-  x2 =  50; y2 =  27;
+  x1 = -49; y1 = -25;
+  x2 =  53; y2 =  30;
 
   tx = x1+5;
   ty = y2+4;
@@ -1754,8 +1802,8 @@ SP_Sim::SP_Sim()
   Lines.append(new Line( 57,-16, 57, 26,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 53,-21, 57,-16,QPen(QPen::darkBlue,2)));
 
-  x1 = -54; y1 = -22;
-  x2 =  58; y2 =  27;
+  x1 = -57; y1 = -25;
+  x2 =  61; y2 =  30;
 
   tx = x1+5;
   ty = y2+4;
@@ -1793,8 +1841,8 @@ HB_Sim::HB_Sim()
   Lines.append(new Line( 79,-16, 79, 26,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 75,-21, 79,-16,QPen(QPen::darkBlue,2)));
 
-  x1 = -76; y1 = -22;
-  x2 =  80; y2 =  27;
+  x1 = -79; y1 = -25;
+  x2 =  83; y2 =  30;
 
   tx = x1+5;
   ty = y2+4;
@@ -1831,8 +1879,8 @@ Param_Sweep::Param_Sweep()
   Lines.append(new Line( 50,-17, 50, 27,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 46,-22, 50,-17,QPen(QPen::darkBlue,2)));
 
-  x1 = -47; y1 = -23;
-  x2 =  51; y2 =  28;
+  x1 = -50; y1 = -26;
+  x2 =  54; y2 =  31;
 
   tx = x1+5;
   ty = y2+4;
