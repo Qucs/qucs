@@ -1,31 +1,35 @@
-####### kdevelop will overwrite this part!!! (begin)##########
+## Process this file with automake to produce Makefile.in
+# 
+# Makefile.am
+#
+# Automake input file.
+#
+# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+#
+# This is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this package; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.  
+#
 
-SUBDIRS = qucs 
+SUBDIRS = qucs
 
-EXTRA_DIST = qucs.kdevprj admin AUTHORS COPYING ChangeLog INSTALL README TODO qucs.lsm qucs.spec NEWS autogen.sh 
+# Release specific.
+# SUBDIRS = qucs qucs-core
 
-####### kdevelop will overwrite this part!!! (end)############
-# not a GNU package. You can remove this line, if 
-# have all needed files, that a GNU package needs
-AUTOMAKE_OPTIONS = foreign 
+EXTRA_DIST = autogen.sh depcomp
 
-#$(top_srcdir)/configure.in: configure.in.in $(top_srcdir)/subdirs
-#	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common configure.in ;
-
-$(top_srcdir)/subdirs:
-	cd $(top_srcdir) && $(MAKE) -f admin/Makefile.common subdirs
-
-$(top_srcdir)/acinclude.m4: $(top_srcdir)/admin/acinclude.m4.in $(top_srcdir)/admin/libtool.m4.in
-	@cd $(top_srcdir) && cat admin/acinclude.m4.in admin/libtool.m4.in > acinclude.m4
-
-MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files 
-
-package-messages:
-	$(MAKE) -f $(top_srcdir)/admin/Makefile.common package-messages
-	$(MAKE) -C po merge
-
-dist-hook:
-	rm -rf $(distdir)/admin/CVS
-	rm -f $(distdir)/*.tar.gz
-	cd $(top_distdir) && perl $(top_srcdir)/admin/am_edit -padmin
-	cd $(top_distdir) && $(MAKE) -f $(top_srcdir)/admin/Makefile.common subdirs
+CLEANFILES = *~
+MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
+        stamp-h.in stamp-h[0-9].in
+DISTCLEANFILES = config.cache config.log *.gz

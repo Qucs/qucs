@@ -25,9 +25,18 @@
 here=`pwd`
 cd `dirname $0`
 
-echo "*** Creating config.h.in"
+echo -n "Creating aclocal.m4... "
+aclocal
+echo "done."
+echo -n "Creating config.h.in... "
 autoheader
-sh admin/cvs.sh cvs
+echo "done."
+echo -n "Creating Makefile.in(s)... "
+automake
+echo "done."
+echo -n "Creating configure... "
+autoconf
+echo "done."
 
 #
 # run configure, maybe with parameters recorded in config.status
