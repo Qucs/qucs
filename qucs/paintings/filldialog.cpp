@@ -23,6 +23,10 @@
 #include <qvalidator.h>
 #include <qcolordialog.h>
 #include <qtabwidget.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qcombobox.h>
+#include <qcheckbox.h>
 
 
 FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
@@ -30,7 +34,7 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
 {
   setCaption(_Caption);
 
-  QVBoxLayout *all = new QVBoxLayout(this); // to provide the neccessary size
+  all = new QVBoxLayout(this); // to provide the neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
 
@@ -39,9 +43,9 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
   QGridLayout *gp1 = new QGridLayout(Tab1,3,2,5,5);
 
   gp1->addWidget(new QLabel(tr("Line Width: "), Tab1), 0,0);
-  QValidator *Validator = new QIntValidator(0,100, this);
+  val100 = new QIntValidator(0,100, this);
   LineWidth = new QLineEdit(Tab1);
-  LineWidth->setValidator(Validator);
+  LineWidth->setValidator(val100);
   LineWidth->setMaximumWidth(35);
   LineWidth->setText("0");
   gp1->addWidget(LineWidth, 0,1);
@@ -122,6 +126,8 @@ if(show) {
 
 FillDialog::~FillDialog()
 {
+  delete all;
+  delete val100;
 }
 
 // --------------------------------------------------------------------------

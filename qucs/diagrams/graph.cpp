@@ -60,6 +60,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
   int n1;
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,Thick+4));
+    if(*pp < 0)  pp++;
     for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
       do {
@@ -77,6 +78,7 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
 
     pp = Points;
     p->Painter->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
+    if(*pp < 0)  pp++;
     for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
       do {
@@ -97,12 +99,13 @@ void Graph::paint(ViewPainter *p, int x0, int y0)
 
   // **** not selected ****
   p->Painter->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
-  for(n1=countY; n1>0; n1--) {
+  if(*pp < 0)  pp++;
+  for(n1=countY; n1>0; n1--) {    // every branch of curves
     p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-    do {
+    do {   // until end of branch
       pp += 2;
       if(*pp > -2)
-      do {
+      do {    // until end of stroke
 	p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
 	pp += 2;
       } while(*pp > -2);    // until end of stroke
@@ -181,7 +184,8 @@ int Graph::getSelected(int x, int y)
   int dy, dy2, y1;
 
   int countX = cPointsX.getFirst()->count;
-  for(int z=0; z<countY; z++) {
+  if(*pp < 0)  pp++;
+  for(int z=0; z<countY; z++) {  // check every branch of curves
     zi = 0;
     do {
       x1 = *(pp++);  y1 = *(pp++);

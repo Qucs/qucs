@@ -19,19 +19,18 @@
 #define NEWPROJDIALOG_H
 
 #include <qdialog.h>
-#include <qcheckbox.h>
-#include <qlineedit.h>
 
-//class QLineEdit;
-//class QCheckBox;
+class QLineEdit;
+class QCheckBox;
 class QPushButton;
+class QGridLayout;
 
 /**
   *@author Michael Margraf
   */
 
 class NewProjDialog : public QDialog  {
-public: 
+public:
 	NewProjDialog(QWidget *parent=0, const char *name=0);
 	~NewProjDialog();
 
@@ -40,6 +39,7 @@ public:
 
 private:
   QPushButton *ButtonOk, *ButtonCancel;
+  QGridLayout *gbox;
 };
 
 #endif

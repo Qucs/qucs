@@ -20,11 +20,12 @@
 
 #include <qdialog.h>
 
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qtextedit.h>
-#include <qvalidator.h>
 
+class QLineEdit;
+class QTextEdit;
+class QPushButton;
+class QVBoxLayout;
+class QIntValidator;
 
 /**
   *@author Michael Margraf
@@ -43,6 +44,9 @@ public:
   QLineEdit   *TextSize, *Angle;
   QPushButton *ColorButt;
   QTextEdit   *text;
+
+  QVBoxLayout *vert;
+  QIntValidator *val50, *val360;
 };
 
 #endif

@@ -25,14 +25,15 @@
 
 RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  x1 = x3 = 10; // position of label text
+  x1 = 10;      // position of label text
   y1 = y3 = 32;
   x2 = 240;     // initial size of diagram
   y2 = 160;
+  x3 = 247;
 
   Name = "Rect";
 
-  xAxis.log = ylAxis.log = yrAxis.log = false;
+  xAxis.log = yAxis.log = zAxis.log = false;
   calcDiagram();
 }
 
@@ -41,9 +42,13 @@ RectDiagram::~RectDiagram()
 }
 
 // ------------------------------------------------------------
-void RectDiagram::calcCoordinate(double x, double yr, double yi,
-				 int *px, int *py, Axis* pa)
+int RectDiagram::calcCoordinate(double* &xD, double* &yD,
+				 int *px, int *py, Axis *pa)
 {
+//  int xc, yc;
+  double x  = *(xD++);
+  double yr = *(yD++);
+  double yi = *(yD++);
   if(xAxis.log)
     *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
 		*double(x2) + 0.5);
@@ -59,89 +64,20 @@ void RectDiagram::calcCoordinate(double x, double yr, double yi,
       *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)
 		*double(y2) + 0.5);
   }
+
+  return regionCode(*px, *py);
 }
 
 // --------------------------------------------------------------
-bool RectDiagram::calcYAxis(Axis *yAxis, int x0)
+void RectDiagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
+				double& zDstep, double& GridStep, double Dist)
 {
-  int z=0;
-  double numGrids, Base, Expo, GridStep, corr, zD, zDstep, GridNum;
+  double numGrids, Base, Expo, corr;
 
-  QSize r;
-  QString tmp;
-  QFontMetrics  metrics(QucsSettings.font);
-  int maxWidth = 0;
-
-  bool set_log = false;
-if(yAxis->log) {
-  if(yAxis->max*yAxis->min <= 0.0)  return false;  // invalid
-  if(yAxis->max < 0.0) {
-    corr = yAxis->min;
-    yAxis->min = -yAxis->max;
-    yAxis->max = -corr;
-    corr = yAxis->low;
-    yAxis->low = -yAxis->up;
-    yAxis->up  = -corr;
-    set_log = true;
-  }
-
-  Expo = floor(log10(yAxis->max));
-  Base = yAxis->max/pow(10.0,Expo);
-  if(Base > 3.0001) yAxis->up = pow(10.0,Expo+1.0);
-  else  if(Base < 1.0001) yAxis->up = pow(10.0,Expo);
-	else yAxis->up = 3.0 * pow(10.0,Expo);
-
-  Expo = floor(log10(yAxis->min));
-  Base = yAxis->min/pow(10.0,Expo);
-  if(Base < 2.999) yAxis->low = pow(10.0,Expo);
-  else  if(Base > 9.999) yAxis->low = pow(10.0,Expo+1.0);
-	else yAxis->low = 3.0 * pow(10.0,Expo);
-
-  corr = double(y2) / log10(yAxis->up / yAxis->low);
-
-  z = 0;
-  zD = yAxis->low;
-  zDstep = pow(10.0,Expo);
-  if(set_log) z = y2;
-  while((z <= y2) && (z >= 0)) {    // create all grid lines
-    if(yAxis->GridOn)  if(z < y2)  if(z > 0)
-      Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
-
-    if((zD < 1.5*zDstep) || (z == 0)) {
-      if(fabs(Expo) < 3.0)  tmp = StringNum(zD);
-      else  tmp = StringNum(zD, 'e',1);
-      if(set_log)  tmp = '-'+tmp;
-
-      if(x0 > 0)
-        Texts.append(new Text(x0+7, z+6, tmp)); // text aligned left
-      else {
-        r = metrics.size(0, tmp);  // width of text
-        if(maxWidth < r.width()) maxWidth = r.width();
-        Texts.append(new Text(-r.width()-7, z+6, tmp)); // text aligned right
-      }
-
-      // y marks
-      Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0)));
-    }
-
-    zD += zDstep;
-    if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    z = int(corr*log10(zD / yAxis->low) + 0.5); // int(..) implies floor(..)
-    if(set_log)  z = y2 - z;
-  }
-  if(set_log) {   // set back values ?
-    corr = yAxis->min;
-    yAxis->min = -yAxis->max;
-    yAxis->max = -corr;
-    corr = yAxis->low;
-    yAxis->low = -yAxis->up;
-    yAxis->up  = -corr;
-  }
-}
-else {  // not logarithmical
-  numGrids = floor(double(y2)/60.0);   // minimal grid is 60 pixel
-  if(numGrids < 1.0) Base = yAxis->max-yAxis->min;
-  else Base = (yAxis->max-yAxis->min)/numGrids;
+if(Axis->autoScale) {
+  numGrids = floor(Dist/60.0);   // minimal grid is 60 pixel
+  if(numGrids < 1.0) Base = Axis->max-Axis->min;
+  else Base = (Axis->max-Axis->min)/numGrids;
   Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);        // separate first significant digit
   if(Base < 3.5) {     // use only 1, 2 and 5, which ever is best fitted
@@ -153,33 +89,33 @@ else {  // not logarithmical
     else { Base = 1.0; Expo++; }
   }
   GridStep = Base * pow(10.0,Expo);   // grid distance in real coordinates
-  corr = floor((yAxis->max-yAxis->min)/GridStep - numGrids);
+  corr = floor((Axis->max-Axis->min)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
 
   // upper y boundery ...........................
-  zD = fabs(fmod(yAxis->max, GridStep));// expand grid to upper diagram edge ?
+  zD = fabs(fmod(Axis->max, GridStep));// expand grid to upper diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
-  if(yAxis->max <= 0.0) {
-    if(GridNum < 0.3) { yAxis->up += zD;  zD = 0.0; }
+  if(Axis->max <= 0.0) {
+    if(GridNum < 0.3) { Axis->up += zD;  zD = 0.0; }
   }
-  else  if(GridNum > 0.7)  yAxis->up += GridStep-zD;
+  else  if(GridNum > 0.7)  Axis->up += GridStep-zD;
         else if(GridNum < 0.1)
-	       if(GridNum*double(y2) >= 1.0)// more than 1 pixel above ?
-		 yAxis->up += 0.3*GridStep;  // beauty correction
+	       if(GridNum*Dist >= 1.0)// more than 1 pixel above ?
+		 Axis->up += 0.3*GridStep;  // beauty correction
 
 
   // lower y boundery ...........................
-  zD = fabs(fmod(yAxis->min, GridStep));// expand grid to lower diagram edge ?
+  zD = fabs(fmod(Axis->min, GridStep));// expand grid to lower diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(yAxis->min <= 0.0) {
-    if(GridNum > 0.7) { yAxis->low -= GridStep-zD;  zD = 0.0; }
+  if(Axis->min <= 0.0) {
+    if(GridNum > 0.7) { Axis->low -= GridStep-zD;  zD = 0.0; }
     else if(GridNum < 0.1)
-	   if(GridNum*double(y2) >= 1.0) { // more than 1 pixel above ?
-	     yAxis->low -= 0.3*GridStep;   // beauty correction
+	   if(GridNum*Dist >= 1.0) { // more than 1 pixel above ?
+	     Axis->low -= 0.3*GridStep;   // beauty correction
 	     zD += 0.3*GridStep;
 	   }
   }
@@ -187,25 +123,145 @@ else {  // not logarithmical
     if(GridNum > 0.3) {
       zD = GridStep-zD;
       if(GridNum > 0.9) {
-	if((1.0-GridNum)*double(y2) >= 1.0) { // more than 1 pixel above ?
-	  yAxis->low -= 0.3*GridStep;    // beauty correction
+	if((1.0-GridNum)*Dist >= 1.0) { // more than 1 pixel above ?
+	  Axis->low -= 0.3*GridStep;    // beauty correction
 	  zD += 0.3*GridStep;
 	}
       }
     }
-    else { yAxis->low -= zD;  zD = 0.0; }
+    else { Axis->low -= zD;  zD = 0.0; }
   }
 
-  zDstep = GridStep/(yAxis->up-yAxis->low)*double(y2); // grid in pixel
-  GridNum  = yAxis->low + zD;
-  zD /= (yAxis->up-yAxis->low)/double(y2);
+  GridNum = Axis->low + zD;
+  zD /= (Axis->up-Axis->low)/Dist;
+}
+else {   // user defined limits
+  zD = 0.0;
+  Axis->low = GridNum = Axis->limit_min;
+  Axis->up  = Axis->limit_max;
+  GridStep  = Axis->step;
+  Expo = floor(log10(Axis->step));
+}
+  zDstep = GridStep/(Axis->up-Axis->low)*Dist; // grid in pixel
+}
+
+// --------------------------------------------------------------
+void RectDiagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
+				   double& zDstep, double& corr, int len)
+{
+  double Base, Expo;
+
+  if(Axis->autoScale) {
+    Expo = floor(log10(Axis->max));
+    Base = Axis->max/pow(10.0,Expo);
+    if(Base > 3.0001) Axis->up = pow(10.0,Expo+1.0);
+    else  if(Base < 1.0001) Axis->up = pow(10.0,Expo);
+	  else Axis->up = 3.0 * pow(10.0,Expo);
+
+    Expo = floor(log10(Axis->min));
+    Base = Axis->min/pow(10.0,Expo);
+    if(Base < 2.999) Axis->low = pow(10.0,Expo);
+    else  if(Base > 9.999) Axis->low = pow(10.0,Expo+1.0);
+	  else Axis->low = 3.0 * pow(10.0,Expo);
+
+    corr = double(len) / log10(Axis->up / Axis->low);
+
+    z = 0;
+    zD = Axis->low;
+    zDstep = pow(10.0,Expo);
+  }
+  else {
+    Axis->low = Axis->limit_min;
+    Axis->up  = Axis->limit_max;
+    Expo = floor(log10(Axis->low));
+    Base = ceil(Axis->low/pow(10.0,Expo));
+    zD = Base * pow(10.0, Expo);
+    zDstep = pow(10.0,Expo);
+
+    corr = double(len) / log10(Axis->up / Axis->low);
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+    z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
+  }
+}
+
+// --------------------------------------------------------------
+bool RectDiagram::calcYAxis(Axis *Axis, int x0)
+{
+  int z;
+  double GridStep, corr, zD, zDstep, GridNum;
+
+  QSize r;
+  QString tmp;
+  QFontMetrics  metrics(QucsSettings.font);
+  int maxWidth = 0;
+  int Prec;
+  char form;
+
+  bool set_log = false;
+if(Axis->log) {
+  if(Axis->max*Axis->min <= 0.0)  return false;  // invalid
+  if(Axis->max < 0.0) {   // for negative values
+    corr = Axis->min;
+    Axis->min = -Axis->max;
+    Axis->max = -corr;
+    corr = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -corr;
+    set_log = true;
+  }
+
+  calcAxisLogScale(Axis, z, zD, zDstep, corr, y2);
+
+  if(set_log) z = y2;
+  while((z <= y2) && (z >= 0)) {    // create all grid lines
+    if(Axis->GridOn)  if(z < y2)  if(z > 0)
+      Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
+
+    if((zD < 1.5*zDstep) || (z == 0)) {
+      if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
+      else  tmp = StringNum(zD, 'e',1);
+      if(set_log)  tmp = '-'+tmp;
+
+      r = metrics.size(0, tmp);  // width of text
+      if(maxWidth < r.width()) maxWidth = r.width();
+      if(x0 > 0)
+        Texts.append(new Text(x0+7, z+6, tmp)); // text aligned left
+      else
+        Texts.append(new Text(-r.width()-7, z+6, tmp)); // text aligned right
+
+      // y marks
+      Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0)));
+    }
+
+    zD += zDstep;
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+    z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
+    if(set_log)  z = y2 - z;
+  }
+  if(set_log) {   // set back values ?
+    corr = Axis->min;
+    Axis->min = -Axis->max;
+    Axis->max = -corr;
+    corr = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -corr;
+  }
+}
+else {  // not logarithmical
+  calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(y2));
+
+
+  double Expo;
+  if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
+  else  Expo = log10(fabs(Axis->up));
+  if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
+  else  { form = 'e';  Prec = 0; }
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
   while(z <= y2) {  // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
-    if(fabs(Expo) < 3.0)  tmp = StringNum(GridNum);
-    else tmp = StringNum(GridNum, 'e',1);
+    tmp = StringNum(GridNum, form, Prec);
 
     r = metrics.size(0, tmp);  // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
@@ -215,7 +271,7 @@ else {  // not logarithmical
       Texts.append(new Text(-r.width()-7, z+6, tmp));  // text aligned right
     GridNum += GridStep;
 
-    if(yAxis->GridOn)  if(z < y2)  if(z > 0)
+    if(Axis->GridOn)  if(z < y2)  if(z > 0)
       Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
     Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0))); // y marks
     zD += zDstep;
@@ -238,37 +294,38 @@ int RectDiagram::calcDiagram()
     xAxis.max += fabs(xAxis.max);
     xAxis.min -= fabs(xAxis.min);
   }
-  if(fabs(ylAxis.max-ylAxis.min) < 1e-200) {
-    ylAxis.max += fabs(ylAxis.max);
-    ylAxis.min -= fabs(ylAxis.min);
+  if(fabs(yAxis.max-yAxis.min) < 1e-200) {
+    yAxis.max += fabs(yAxis.max);
+    yAxis.min -= fabs(yAxis.min);
   }
-  if(fabs(yrAxis.max-yrAxis.min) < 1e-200) {
-    yrAxis.max += fabs(yrAxis.max);
-    yrAxis.min -= fabs(yrAxis.min);
+  if(fabs(zAxis.max-zAxis.min) < 1e-200) {
+    zAxis.max += fabs(zAxis.max);
+    zAxis.min -= fabs(zAxis.min);
   }
-  if(ylAxis.max == 0) if(ylAxis.min == 0) {
-    ylAxis.max = 1;
-    ylAxis.min = -1;
+  if(yAxis.max == 0) if(yAxis.min == 0) {
+    yAxis.max = 1;
+    yAxis.min = -1;
   }
-  if(yrAxis.max == 0) if(yrAxis.min == 0) {
-    yrAxis.max = 1;
-    yrAxis.min = -1;
+  if(zAxis.max == 0) if(zAxis.min == 0) {
+    zAxis.max = 1;
+    zAxis.min = -1;
   }
   if(xAxis.max == 0) if(xAxis.min == 0) {
     xAxis.max = 1;
     xAxis.min = -1;
   }
-  xAxis.low  = xAxis.min;  xAxis.up  = xAxis.max;
-  ylAxis.low = ylAxis.min; ylAxis.up = ylAxis.max;
-  yrAxis.low = yrAxis.min; yrAxis.up = yrAxis.max;
+  xAxis.low = xAxis.min; xAxis.up = xAxis.max;
+  yAxis.low = yAxis.min; yAxis.up = yAxis.max;
+  zAxis.low = zAxis.min; zAxis.up = zAxis.max;
 
 
-  int z=0;
-  double numGrids, Base, Expo, GridStep, corr, zD, zDstep, GridNum;
+  int z;
+  double GridStep, corr, zD, zDstep, GridNum;
 
   QString tmp;
   bool set_log = false;
-  int  valid = 0;
+  int  Prec, valid = 0;
+  char form;
 
   // ====  x grid  =======================================================
 if(xAxis.log) {
@@ -283,29 +340,15 @@ if(xAxis.log) {
     set_log = true;
   }
 
-  Expo = floor(log10(xAxis.max));
-  Base = xAxis.max/pow(10.0,Expo);
-  if(Base > 3.0001) xAxis.up = pow(10.0,Expo+1.0);
-  else  if(Base < 1.0001) xAxis.up = pow(10.0,Expo);
-	else xAxis.up = 3.0 * pow(10.0,Expo);
+  calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
 
-  Expo = floor(log10(xAxis.min));
-  Base = xAxis.min/pow(10.0,Expo);
-  if(Base < 2.999) xAxis.low = pow(10.0,Expo);
-  else  if(Base > 9.999) xAxis.low = pow(10.0,Expo+1.0);
-	else xAxis.low = 3.0 * pow(10.0,Expo);
-
-  corr = double(x2) / log10(xAxis.up / xAxis.low);
-
-  zD = xAxis.low;
-  zDstep = pow(10.0,Expo);
   if(set_log) z = x2;
   while((z <= x2) && (z >= 0)) {    // create all grid lines
     if(xAxis.GridOn)  if(z < x2)  if(z > 0)
       Lines.append(new Line(z, y2, z, 0, GridPen));  // x grid
 
     if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {
-      if(fabs(Expo) < 3.0)  tmp = StringNum(zD);
+      if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
       else  tmp = StringNum(zD, 'e', 1);
 
       if(set_log)  Texts.append(new Text(z-10, -5, '-'+tmp));
@@ -329,76 +372,19 @@ if(xAxis.log) {
   }
 }
 else {  // not logarithmical
-  numGrids = floor(double(x2)/60.0);   // minimal grid is 60 pixel
-  if(numGrids < 1.0) Base = xAxis.max-xAxis.min;
-  else Base = (xAxis.max-xAxis.min)/numGrids;
-  Expo = floor(log10(Base));
-  Base = Base/pow(10.0,Expo);         // separate first significant digit
-  if(Base < 3.5) {      // use only 1, 2 and 5, which ever is best fitted
-    if(Base < 1.5) Base = 1.0;
-    else Base = 2.0;
-  }
-  else {
-    if(Base < 7.5) Base = 5.0;
-    else { Base = 1.0; Expo++; }
-  }
-  GridStep = Base * pow(10.0,Expo); // grid distance (real coordinates)
-  corr = floor((xAxis.max-xAxis.min)/GridStep - numGrids);
-  if(corr < 0.0) corr++;
-  numGrids += corr;     // correct rounding faults
+  calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
 
-
-  // upper x boundery ...........................
-  zD = fabs(fmod(xAxis.max, GridStep)); // expand grid to upper diagram edge ?
-  GridNum = zD/GridStep;
-  if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
-  if(xAxis.max <= 0.0) {
-    if(GridNum < 0.3) { xAxis.up += zD;  zD = 0.0; }
-  }
-  else  if(GridNum > 0.7)  xAxis.up += GridStep-zD;
-        else if(GridNum < 0.1)
-	       if(GridNum*double(x2) >= 1.0)// more than 1 pixel above ?
-		 xAxis.up += 0.3*GridStep;  // beauty correction
-
-
-  // lower x boundery ...........................
-  zD = fabs(fmod(xAxis.min, GridStep)); // expand grid to lower diagram edge ?
-  GridNum = zD/GridStep;
-  if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(xAxis.min <= 0.0) {
-    if(GridNum > 0.7) { xAxis.low -= GridStep-zD;  zD = 0.0; }
-    else if(GridNum < 0.1)
-	   if(GridNum*double(x2) >= 1.0) { // more than 1 pixel above ?
-	     xAxis.low -= 0.3*GridStep;    // beauty correction
-	     zD += 0.3*GridStep;
-	   }
-  }
-  else {
-    if(GridNum > 0.3) {
-      zD = GridStep-zD;
-      if(GridNum > 0.9) {
-	if((1.0-GridNum)*double(x2) >= 1.0) { // more than 1 pixel above ?
-	  xAxis.low -= 0.3*GridStep;    // beauty correction
-	  zD += 0.3*GridStep;
-	}
-      }
-    }
-    else { xAxis.low -= zD;  zD = 0.0; }
-  }
-
-
-  zDstep = GridStep/(xAxis.up-xAxis.low)*double(x2); // grid distance in pixel
-  GridNum  = xAxis.low + zD;
-  zD /= (xAxis.up-xAxis.low)/double(x2);
+  double Expo;
+  if(xAxis.up == 0.0)  Expo = log10(fabs(xAxis.up-xAxis.low));
+  else  Expo = log10(fabs(xAxis.up));
+  if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
+  else  { form = 'e';  Prec = 1; }
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
   while(z <= x2) {    // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
-    if(fabs(Expo) < 3.0)
-      Texts.append(new Text(z-10, -5, StringNum(GridNum)));
-    else
-      Texts.append(new Text(z-10, -5, StringNum(GridNum, 'e', 1)));
+    Texts.append(new Text(z-10, -5, StringNum(GridNum, form, Prec)));
     GridNum += GridStep;
 
     if(xAxis.GridOn)  if(z < x2)  if(z > 0)
@@ -412,8 +398,8 @@ else {  // not logarithmical
 
 
   // ====  y grid  =======================================================
-  if(yrAxis.numGraphs > 0) if(calcYAxis(&yrAxis, x2)) valid |= 1;
-  if(ylAxis.numGraphs > 0) if(calcYAxis(&ylAxis, 0))  valid |= 2;
+  if(zAxis.numGraphs > 0) if(calcYAxis(&zAxis, x2)) valid |= 1;
+  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0))  valid |= 2;
   if(valid == 0)  goto Frame;
 
 
