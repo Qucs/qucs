@@ -3,55 +3,55 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeileigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Head Length: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeillänge: </translation>
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeilbreite: </translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienfarbe: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienbreite: </translation>
     </message>
     <message>
         <source>Line style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienstil: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>durchgezogene Linie</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>gestrichelte Linie</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>gepunktete Linie</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Linie</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Punkt-Linie</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -102,94 +102,94 @@
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>ja</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>nein</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagrammeigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Graph Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurvendaten</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe:</translation>
     </message>
     <message>
         <source>       Thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dicke:</translation>
     </message>
     <message>
         <source>Dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Art</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe</translation>
     </message>
     <message>
         <source>Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurve</translation>
     </message>
     <message>
         <source>New Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>neue Kurve</translation>
     </message>
     <message>
         <source>Delete Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurve löschen</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten</translation>
     </message>
     <message>
         <source>x-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung der x-Achse:</translation>
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung der y-Achse:</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished">Gitternetz anzeigen</translation>
+        <translation>Gitternetz anzeigen</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaften</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Übernehmen</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Function Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfefunktion</translation>
     </message>
 </context>
 <context>
@@ -211,23 +211,23 @@
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Text color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Textfarbe: </translation>
     </message>
     <message>
         <source>          Text size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Textgröße: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -249,43 +249,43 @@
     <name>LineDialog</name>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienfarbe:</translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienbreite:</translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienstil:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>durchgezogene Linie</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>gestrichelte Linie</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>gepunktete Linie</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Linie</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Punkt-Linie</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -315,23 +315,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Projekt erstellen</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Projektname:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished"></translation>
+        <translation>neues Projekt öffnen</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -472,47 +472,47 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipseneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Linieneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteckeigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz kann nicht geladen werden: </translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished">ac Simulation</translation>
+        <translation>AC-Simulation</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Startfrequenz in Hertz</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopfrequenz in Hertz</translation>
     </message>
     <message>
         <source>frequency steps in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzschrittweite in Hertz</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale DC Stromquelle</translation>
     </message>
     <message>
         <source>current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom in Ampere</translation>
     </message>
     <message>
         <source>noise current source</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschstromquelle</translation>
     </message>
     <message>
         <source>equivalent current density in A/sqrt(Hz)</source>
@@ -608,7 +608,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation type="unfinished">dc Simulation</translation>
+        <translation>DC-Simulation</translation>
     </message>
     <message>
         <source>dc block</source>
@@ -620,15 +620,15 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>diode</source>
-        <translation type="unfinished"></translation>
+        <translation>Diode</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
@@ -2316,7 +2316,7 @@ Fehler:
     </message>
     <message>
         <source>Transienten simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Transientsimulation</translation>
     </message>
     <message>
         <source>ac simulation</source>
