@@ -37,7 +37,6 @@ GraphicText::GraphicText()
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
   cx = cy = 0;
-  cx_d = cy_d = 0.0;
   x1 = x2 = 0;
   y1 = y2 = 0;
   Angle = 0;
@@ -51,39 +50,47 @@ GraphicText::~GraphicText()
 void GraphicText::paint(ViewPainter *p)
 {
   QWMatrix wm = p->Painter->worldMatrix();
-  p->Painter->setWorldMatrix(QWMatrix());
+  QWMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + double(cx) * p->Scale,
+				   p->DY + double(cy) * p->Scale);
+  p->Painter->setWorldMatrix(Mat);
   p->Painter->rotate(-Angle);   // automatically enables transformation
 
   int Size = Font.pointSize();
-  Font.setPointSizeFloat( float(p->Scale * double(Size)) );
+  Font.setPointSizeFloat( float(p->Scale) * float(Size) );
 
-  int x = int(cx_d),  y = int(cy_d);
-//  int x = int(cx_d + wm.dx()),  y = int(cy_d + wm.dy());
   p->Painter->setPen(Color);
   p->Painter->setFont(Font);
-  x2 = p->drawText(Text, x, y, &y2);
-  Font.setPointSize(Size);
+  QRect r;
+  // Because of a bug in Qt 3.1, drawing this text is dangerous, if it
+  // contains linefeeds. Qt has problems with linefeeds. It remembers the
+  // last font metrics (within the font ???) and does not calculate it again.
+  // The error often appears at a very different drawText function !!!
+  p->Painter->drawText(0, 0, 0, 0, Qt::DontClip, Text, -1, &r);
 
-  x2 = int(double(x2) / p->Scale);
-  y2 = int(double(y2) / p->Scale);
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
-    p->drawRect(x-2, y-2, x2+6, y2+5);
+    p->Painter->drawRect(-3, -2, r.width()+6, r.height()+5);
   }
 
+  Font.setPointSize(Size);   // restore real font size
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldXForm(false);
+  x2 = int(double(r.width())  / p->Scale);
+  y2 = int(double(r.height()) / p->Scale);
 }
 
 // -----------------------------------------------------------------------
 void GraphicText::paintScheme(QPainter *p)
 {
-  p->save();
+  QWMatrix wm = p->worldMatrix();
+  QWMatrix Mat (wm.m11(), 0.0, 0.0, wm.m22(),
+		wm.dx() + double(cx) * wm.m11(),
+		wm.dy() + double(cy) * wm.m22());
+  p->setWorldMatrix(Mat);
   p->rotate(-Angle);
+  p->drawRect(0, 0, x2, y2);
 
-  p->drawRect(int(cx_d), int(cy_d), x2, y2);
-
-  p->restore();
+  p->setWorldMatrix(wm);
 }
 
 // ------------------------------------------------------------------------
@@ -99,11 +106,6 @@ void GraphicText::setCenter(int x, int y, bool relative)
 {
   if(relative) {  cx += x;  cy += y;  }
   else {  cx = x;  cy = y;  }
-
-  double phi = M_PI/180.0*double(Angle);
-  double sine = sin(phi), cosine = cos(phi);
-  cx_d = double(cx)*cosine - double(cy)*sine;
-  cy_d = double(cy)*cosine + double(cx)*sine;
 }
 
 // -----------------------------------------------------------------------
@@ -137,8 +139,6 @@ bool GraphicText::load(const QString& s)
   n  = s.section(' ',5,5);    // Angle
   Angle = n.toInt(&ok);
   if(!ok) return false;
-
-  setCenter(cx, cy);
 
   Text  = s.mid(s.find('"')+1);    // Text
   Text = Text.left(Text.length()-1);
@@ -243,7 +243,6 @@ void GraphicText::rotate()
 {
   Angle += 90;
   Angle %= 360;
-  setCenter(cx, cy);
 }
 
 // -----------------------------------------------------------------------
@@ -291,7 +290,6 @@ bool GraphicText::Dialog()
     Angle = tmp % 360;
     changed = true;
   }
-  setCenter(cx, cy);
 
   QString _Text = "";
   _Text = d->text->text();

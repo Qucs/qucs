@@ -145,14 +145,14 @@ bool Component::getSelected(int x_, int y_)
 void Component::paint(ViewPainter *p)
 {
   Text *pt;
-  int x, y, a, b, Size;
+  int x, y, a, b, xb, yb; //, Size;
   QFont f = p->Painter->font();   // save current font
+  QFont newFont = f;
 
   if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    Size = QucsSettings.largeFont.pointSize();
-    QucsSettings.largeFont.setPointSizeFloat(
-			float(p->Scale * double(Size)) );
-    p->Painter->setFont(QucsSettings.largeFont);
+    newFont.setPointSizeFloat(float(p->Scale) * QucsSettings.largeFontSize);
+    newFont.setWeight(QFont::DemiBold);
+    p->Painter->setFont(newFont);
     p->map(cx, cy, &x, &y);
 
     p->Painter->setPen(QPen(QPen::darkBlue,2));
@@ -163,8 +163,8 @@ void Component::paint(ViewPainter *p)
       b +=r.height();
       if(a < r.width())  a = r.width();
     }
-    int xb = a + int(12.0*p->Scale);
-    int yb = b + int(10.0*p->Scale);
+    xb = a + int(12.0*p->Scale);
+    yb = b + int(10.0*p->Scale);
     x2 = x1+25 + int(double(a) / p->Scale);
     y2 = y1+23 + int(double(b) / p->Scale);
     ty = y2 + 1;
@@ -177,8 +177,6 @@ void Component::paint(ViewPainter *p)
     p->Painter->drawLine(x+xb-1, y+yb, a+xb,   b+yb);
     p->Painter->drawLine(x+xb-1, y+yb, x+xb-1, y);
     p->Painter->drawLine(x+xb-1, y,    a+xb,   b);
-
-    QucsSettings.largeFont.setPointSize(Size);
   }
   else {    // normal components go here
 
@@ -194,17 +192,16 @@ void Component::paint(ViewPainter *p)
       p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
 
+    newFont.setPointSizeFloat(float(p->Scale) * QucsSettings.smallFontSize);
+    newFont.setWeight(QFont::Light);
+    p->Painter->setFont(newFont);
+
     p->Painter->setPen(QPen(QPen::black,1));
-    Size = QucsSettings.smallFont.pointSize();
-    QucsSettings.smallFont.setPointSizeFloat(
-			float(p->Scale * double(Size)) );
-    p->Painter->setFont(QucsSettings.smallFont);
     // write all text
     for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
       p->map(cx+pt->x, cy+pt->y, &x, &y);
       p->Painter->drawText(x, y, pt->s);
     }
-    QucsSettings.smallFont.setPointSize(Size);
   }
   p->Painter->setFont(f);
 
@@ -406,7 +403,9 @@ void Component::mirrorY()
   }
 
   int tmp;
-  QFontMetrics  smallMetrics(QucsSettings.smallFont);
+  QFont f = QucsSettings.font;
+  f.setPointSizeFloat(QucsSettings.smallFontSize);
+  QFontMetrics  smallMetrics(f);
   // mirror all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
     tmp = smallMetrics.width(pt->s);   // width of text

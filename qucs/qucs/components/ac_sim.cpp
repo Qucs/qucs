@@ -23,15 +23,10 @@ AC_Sim::AC_Sim()
 {
   Description = QObject::tr("ac simulation");
 
-  QFontMetrics  metrics(QucsSettings.largeFont);
-  QSize r = metrics.size(0, Description);
-  int xb = r.width()  + 15;
-  int yb = r.height() + 15;
-
   Texts.append(new Text(0, 0, Description));
 
   x1 = -10; y1 = -9;
-  x2 = x1+xb+8; y2 = y1+yb+8;
+  x2 = x1+115; y2 = y1+28;
 
   tx = 0;
   ty = y2+1;
