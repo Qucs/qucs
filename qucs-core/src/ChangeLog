@@ -1,3 +1,16 @@
+2004-10-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.cpp: New function isFinite() implemented.
+
+	* trsolver.cpp: Now transient analysis also uses variable order
+	step control.
+	Checking for singularity of Jacobian matrix.
+
+	* nasolver.cpp: Yet another bug fix in the line searcher.
+
+	* eqnsys.cpp: Using a macro LU_FAILURE to control exception
+	behaviour.
+
 2004-10-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* tvector.cpp: New function maxnorm() implemented.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.2 2004/10/13 14:43:17 ela Exp $
+ * $Id: tvector.h,v 1.3 2004/10/14 13:28:25 ela Exp $
  *
  */
 
@@ -36,9 +36,10 @@ class tvector
   ~tvector ();
   nr_type_t get (int);
   void set (int, nr_type_t);
-  int getSize (void) { return size; }
+  int  getSize (void) { return size; }
   nr_type_t * getData (void) { return data; }
   void exchangeRows (int, int);
+  int  isFinite (void);
   void print (void);
 
   // some basic vector operations

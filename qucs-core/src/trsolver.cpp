@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.22 2004/10/13 14:43:17 ela Exp $
+ * $Id: trsolver.cpp,v 1.23 2004/10/14 13:28:25 ela Exp $
  *
  */
 
@@ -131,10 +131,9 @@ void trsolver::solve (void) {
   swp->reset ();
 
   int running = 0;
-  //int currentOrder = 0;
   delta /= 10;
   fillState (dState, delta);
-  //adjustOrder (currentOrder, 1);
+  adjustOrder (1);
 
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: solving transient netlist\n", getName ());
@@ -176,7 +175,10 @@ void trsolver::solve (void) {
 	// Reduce step-size if failed to converge.
 	if (current > 0) current -= delta;
 	delta /= 2;
-	if (delta < deltaMin) delta = deltaMin;
+	if (delta <= deltaMin) {
+	  delta = deltaMin;
+	  adjustOrder (1);
+	}
 	if (current > 0) current += delta;
 
 	// Update statistics.
@@ -203,6 +205,14 @@ void trsolver::solve (void) {
       if (error) return;
       if (rejected) continue;
 
+      // check whether Jacobian matrix is still non-singular
+      if (!x->isFinite ()) {
+	logprint (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
+		  "aborting %s analysis\n", getName (), current,
+		  getDescription ());
+	return;
+      }
+
       // Update statistics and no more damped Newton-Raphson.
       statIterations += iterations;
       if (--convError < 0) linesearch = 0;
@@ -210,7 +220,7 @@ void trsolver::solve (void) {
       // Now advance in time or not...
       if (running > 1) {
 	adjustDelta ();
-	//adjustOrder (currentOrder, deltaOld != delta);
+	adjustOrder ();
       }
       else {
 	//fillStates ();
@@ -246,7 +256,7 @@ void trsolver::solve (void) {
    the successive iterative corrector process. */
 int trsolver::predictor (void) {
   int error = 0;
-  switch (PMethod) {
+  switch (predType) {
   case INTEGRATOR_GEAR: // explicit GEAR
     predictGear ();
     break;
@@ -383,22 +393,25 @@ void trsolver::adjustDelta (void) {
   }
 }
 
-/* The function can be used to increase the order of the current
-   integration method. */
-void trsolver::adjustOrder (int& currentOrder, int stepChanged) {
-  circuit * root = subnet->getRoot ();
-  int type;
-  if (currentOrder < corrOrder || stepChanged) {
-    if (stepChanged)
-      currentOrder = 1;
+/* The function can be used to increase the current order of the
+   integration method or to reduce it. */
+void trsolver::adjustOrder (int reduce) {
+  if (corrOrder < corrMaxOrder || reduce) {
+    if (reduce)
+      corrOrder = 1;
     else
-      currentOrder++;
-    type = correctorType (CMethod, currentOrder);
+      corrOrder++;
+
+    // adjust type and order of corrector and predictor
+    corrType = correctorType (CMethod, corrOrder);
+    predType = predictorType (corrType, corrOrder, predOrder);
+
+    // apply new corrector method and order to each circuit
+    circuit * root = subnet->getRoot ();
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-      c->setOrder (currentOrder);
-      setIntegrationMethod (c, type);
+      c->setOrder (corrOrder);
+      setIntegrationMethod (c, corrType);
     }
-    predictorType (type, currentOrder, predOrder);
   }
 }
 
@@ -432,12 +445,17 @@ void trsolver::initDC (void) {
 /* Goes through the list of circuit objects and runs its initTR()
    function. */
 void trsolver::initTR (void) {
-  corrOrder = getPropertyInteger ("Order");
-  CMethod = correctorType (getPropertyString ("IntegrationMethod"), corrOrder);
-  PMethod = predictorType (CMethod, corrOrder, predOrder);
+  char * IMethod = getPropertyString ("IntegrationMethod");
   nr_double_t start = getPropertyDouble ("Start");
   nr_double_t stop = getPropertyDouble ("Stop");
   nr_double_t points = getPropertyDouble ("Points");
+
+  // fetch corrector integration method and determine predicor method
+  corrMaxOrder = getPropertyInteger ("Order");
+  corrType = CMethod = correctorType (IMethod, corrMaxOrder);
+  predType = PMethod = predictorType (CMethod, corrMaxOrder, predMaxOrder);
+  corrOrder = corrMaxOrder;
+  predOrder = predMaxOrder;
 
   // initialize step values
   delta = getPropertyDouble ("InitialStep");
@@ -455,8 +473,8 @@ void trsolver::initTR (void) {
   fillState (dState, delta);
 
   saveState (dState, deltas);
-  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas);
-  calcPredictorCoeff (PMethod, predOrder, predCoeff, deltas);
+  calcCorrectorCoeff (corrType, corrOrder, corrCoeff, deltas);
+  calcPredictorCoeff (predType, predOrder, predCoeff, deltas);
 
   // initialize history of solution vectors (solutions)
   for (int i = 0; i < 8; i++) {
@@ -464,13 +482,14 @@ void trsolver::initTR (void) {
     setState (sState, (nr_double_t) i, i);
   }
 
+  // tell circuits about the transient analysis
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->initTR ();
     c->initStates ();
     c->setCoefficients (corrCoeff);
     c->setOrder (corrOrder);
-    setIntegrationMethod (c, CMethod);
+    setIntegrationMethod (c, corrType);
   }
 }
 
@@ -499,9 +518,9 @@ nr_double_t trsolver::checkDelta (void) {
   int M = subnet->getVoltageSources ();
 
   // cec = corrector error constant
-  nr_double_t cec = getCorrectorError (CMethod, corrOrder);
+  nr_double_t cec = getCorrectorError (corrType, corrOrder);
   // pec = predictor error constant
-  nr_double_t pec = getPredictorError (PMethod, predOrder);
+  nr_double_t pec = getPredictorError (predType, predOrder);
 
   // go through each solution
   for (int r = 1; r <= N + M; r++) {
@@ -534,6 +553,6 @@ nr_double_t trsolver::checkDelta (void) {
 void trsolver::updateCoefficients (nr_double_t delta) {
   setState (dState, delta);
   saveState (dState, deltas);
-  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas);
-  calcPredictorCoeff (PMethod, predOrder, predCoeff, deltas);
+  calcCorrectorCoeff (corrType, corrOrder, corrCoeff, deltas);
+  calcPredictorCoeff (predType, predOrder, predCoeff, deltas);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.13 2004/10/12 18:13:09 ela Exp $
+ * $Id: trsolver.h,v 1.14 2004/10/14 13:28:25 ela Exp $
  *
  */
 
@@ -43,7 +43,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void nextStates (void);
   void fillStates (void);
   void adjustDelta (void);
-  void adjustOrder (int&, int);
+  void adjustOrder (int reduce = 0);
   void initTR (void);
   static void calcTR (trsolver *);
   void initDC (void);
@@ -65,10 +65,14 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   nr_double_t deltaMax;
   nr_double_t deltaMin;
   nr_double_t deltaOld;
-  int CMethod;
-  int PMethod;
-  int corrOrder;
-  int predOrder;
+  int CMethod;      // user specified corrector method
+  int PMethod;      // user specified predictor method
+  int corrMaxOrder; // maximum corrector order
+  int predMaxOrder; // maximum predictor order
+  int corrType;     // current corrector method
+  int predType;     // current predictor method
+  int corrOrder;    // current corrector order
+  int predOrder;    // current predictor order
   int rejected;
   tvector<nr_double_t> * solution[8];
   nr_double_t current;

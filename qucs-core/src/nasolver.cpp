@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.18 2004/10/13 14:43:17 ela Exp $
+ * $Id: nasolver.cpp,v 1.19 2004/10/14 13:28:25 ela Exp $
  *
  */
 
@@ -219,7 +219,8 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
     }
     else break;
   }
-  while (!convergence && run < MaxIterations);
+  while (!convergence &&
+	 run < MaxIterations * (1 + linesearch + attenuation));
 
   if (run >= MaxIterations || error) {
     e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
@@ -588,18 +589,19 @@ void nasolver<nr_type_t>::lineSearch (void) {
     // TODO: this is not perfect, but usable
     astep /= 2;
     adiff = fabs (alpha - aprev);
-    if (adiff > 0.02) {
+    if (adiff > 0.005) {
       aprev = alpha;
       if (n < nMin) {
 	nMin = n;
+	if (alpha == 1) dir = -dir;
 	alpha += astep * dir;
       } else {
 	dir = -dir;
-	alpha += 2 * astep * dir;
+	alpha += 1.5 * astep * dir;
       }
     }
   }
-  while (adiff > 0.02);
+  while (adiff > 0.005);
 
   // apply final damping factor
   assert (alpha > 0 && alpha <= 1);

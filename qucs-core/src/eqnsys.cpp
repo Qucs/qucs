@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.18 2004/10/12 18:13:08 ela Exp $
+ * $Id: eqnsys.cpp,v 1.19 2004/10/14 13:28:25 ela Exp $
  *
  */
 
@@ -222,6 +222,14 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   *X = *B;
 }
 
+#define LU_FAILURE 0
+#define VIRTUAL_RES(txt,i) {					  \
+  qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR); \
+  e->setText (txt);						  \
+  e->setData (i);						  \
+  A->set (i, i, 1e-12); /* virtual resistance to ground */	  \
+  throw_exception (e); }
+
 /* This function decomposites the left hand matrix into an upper U and
    lower L matrix.  The algorithm is called LU decomposition.  It is
    very useful when dealing with equation systems where the left hand
@@ -249,18 +257,14 @@ void eqnsys<nr_type_t>::solve_lu (void) {
     }
     // check pivot element and throw appropriate exception
     if (MaxPivot <= 0) {
-#if 0
+#if LU_FAILURE
       qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
       e->setText ("no pivot != 0 found during LU decomposition");
       e->setData (i);
       throw_exception (e);
       goto fail;
 #else /* insert virtual resistance */
-      qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR);
-      e->setText ("no pivot != 0 found during LU decomposition");
-      e->setData (i);
-      A->set (i, i, 1e-12); // virtual resistance to ground
-      throw_exception (e);
+      VIRTUAL_RES ("no pivot != 0 found during LU decomposition", i);
 #endif
     }
 
@@ -294,16 +298,21 @@ void eqnsys<nr_type_t>::solve_lu (void) {
     f = B->get (change[i - 1]);
     for (c = 1; c <= i - 1; c++)
       f -= A->get (i, c) * Y.get (c);
-    f /= A->get (i, i);
 
     // check for possible division by zero
     if (A->get (i, i) == 0) {
+#if LU_FAILURE
       qucs::exception * e = new qucs::exception (EXCEPTION_WRONG_VOLTAGE);
       e->setText ("forward substitution failed in LU decomposition");
       e->setData (i);
       throw_exception (e);
       goto fail;
+#else /* insert virtual resistance */
+      VIRTUAL_RES ("forward substitution failed in LU decomposition", i);
+#endif
     }
+
+    f /= A->get (i, i);
     Y.set (i, f);
   }
    
@@ -316,7 +325,9 @@ void eqnsys<nr_type_t>::solve_lu (void) {
     X->set (i, f);
   }
 
+#if LU_FAILURE
  fail:
+#endif
   delete change;
 }
 
