@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.4 2004-10-21 13:51:17 ela Exp $
+ * $Id: tmatrix.h,v 1.5 2004-10-21 13:59:02 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 template <class nr_type_t>
 class tmatrix;
 
+// Forward declarations of friend functions.
 template <class nr_type_t>
 tmatrix<nr_type_t> inverse (tmatrix<nr_type_t>);
 template <class nr_type_t>
@@ -58,7 +59,7 @@ class tmatrix
 
   // some basic matrix operations
   friend tmatrix inverse<> (tmatrix);
-  friend tmatrix eye<> (int);
+  friend tmatrix eye<nr_type_t> (int);
   friend tmatrix operator *<> (tmatrix, tmatrix);
   friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
 

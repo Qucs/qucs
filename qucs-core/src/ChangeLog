@@ -1,5 +1,8 @@
 2004-10-21  Stefan Jahn  <stefan@lkcc.org>
 
+	* tmatrix.h (class tmatrix), tvector.h (class tvector): Fixed
+	template functionality to be ISO C++ compliant.
+
 	* trsolver.cpp: Using line search fallback if the initial DC
 	analysis failed to converge.
 
