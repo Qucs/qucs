@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.2 2004/07/31 16:59:15 ela Exp $
+ * $Id: mscorner.cpp,v 1.3 2004/08/07 10:48:47 margraf Exp $
  *
  */
 
@@ -79,7 +79,7 @@ void mscorner::calcSP (nr_double_t frequency) {
   // inductance in nH
   L = 220.0 * h * ( 1.0 - 1.35 * exp( -0.18 * pow(Wh, 1.39) ) );
 
-  z21 = rect (0.0, 1e12 / (2*M_PI*frequency*C));
+  z21 = rect (0.0, -0.5e12 / (M_PI*frequency*C));
   z11 = rect (0.0, 2e-9*M_PI*frequency*L) + z21;
 
   matrix z (2);
