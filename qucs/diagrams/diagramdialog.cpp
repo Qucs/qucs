@@ -31,13 +31,16 @@
 #include <qcolordialog.h>
 
 
-// standard colors: blue, red, magenta, green, cyan, yellow, black (white is only a dummy)
+// standard colors: blue, red, magenta, green, cyan, yellow, black
+// (white is only a dummy)
 static const QRgb DefaultColors[]
-          = {0x0000ff, 0xff0000, 0xff00ff, 0x00ff00, 0x00ffff, 0xffff00, 0xffffff, 0x000000};
+          = {0x0000ff, 0xff0000, 0xff00ff, 0x00ff00, 0x00ffff, 0xffff00,
+             0xffffff, 0x000000};
 
 
-DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent, const char *name )
-                                  : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
+DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
+                             QWidget *parent, const char *name )
+                    : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   Diag = d;
   defaultDataSet = _DataSet;
@@ -47,7 +50,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
   
-  QVBoxLayout *all = new QVBoxLayout(this); // to provide the neccessary size
+  QVBoxLayout *all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
 
@@ -57,7 +60,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
 
   QVButtonGroup *InputGroup = new QVButtonGroup(tr("Graph Input"), Tab1);
   GraphInput = new QLineEdit(InputGroup);
-  connect(GraphInput, SIGNAL(textChanged(const QString&)), SLOT(slotResetToTake(const QString&)));
+  connect(GraphInput, SIGNAL(textChanged(const QString&)),
+		      SLOT(slotResetToTake(const QString&)));
   QHBox *Box2 = new QHBox(InputGroup);
   Box2->setSpacing(5);
   QLabel *l3 = new QLabel(tr("Color:"),Box2);
@@ -70,7 +74,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   GraphThick->setValidator(Validator);
   GraphThick->setMaximumWidth(20);
   GraphThick->setText("1");
-  connect(GraphThick, SIGNAL(textChanged(const QString&)), SLOT(slotSetThick(const QString&)));
+  connect(GraphThick, SIGNAL(textChanged(const QString&)),
+		      SLOT(slotSetThick(const QString&)));
 
   QHBox *Box1 = new QHBox(Tab1);
   Box1->setSpacing(5);
@@ -86,12 +91,14 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
 // QT 3.2
 //  connect(Content, SIGNAL(doubleClicked(QListViewItem*, const QPoint &,int)),
 //                   SLOT(slotTakeVar(QListViewItem*, const QPoint &,int)));
-  connect(ChooseVars, SIGNAL(doubleClicked(QListViewItem*)), SLOT(slotTakeVar(QListViewItem*)));
+  connect(ChooseVars, SIGNAL(doubleClicked(QListViewItem*)),
+		      SLOT(slotTakeVar(QListViewItem*)));
 
 
   QVButtonGroup *GraphGroup = new QVButtonGroup(tr("Graph"), Box1);
   GraphList = new QListBox(GraphGroup);
-  connect(GraphList, SIGNAL(clicked(QListBoxItem*)), SLOT(slotSelectGraph(QListBoxItem*)));
+  connect(GraphList, SIGNAL(clicked(QListBoxItem*)),
+		     SLOT(slotSelectGraph(QListBoxItem*)));
   QPushButton *NewButt = new QPushButton(tr("New Graph"), GraphGroup);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
   QPushButton *DelButt = new QPushButton(tr("Delete Graph"), GraphGroup);
@@ -185,22 +192,29 @@ void DiagramDialog::slotReadVars(int)
   }
 
   QString Line, tmp;
-  QTextStream stream(&file);
+  QTextStream ReadWhole(&file);
+  QString FileString = ReadWhole.read();   // read whole data file
+  file.close();
 
   ChooseVars->clear();
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    if(Line.left(4) == "<dep") {
+  int i=0, j=0;
+  i = FileString.find('<')+1;
+  if(i > 0)
+  do {
+    j = FileString.find('>', i);
+    Line = FileString.mid(i, j-i);
+    i = FileString.find('<', j)+1;
+    if(Line.left(3) == "dep") {
       tmp = Line.section(' ', 2);
-      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'), "dep", tmp.remove('>'));
+      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'),
+			"dep", tmp.remove('>'));
     }
-    else if(Line.left(6) == "<indep") {
+    else if(Line.left(5) == "indep") {
       tmp = Line.section(' ', 2, 2);
-      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'), "indep", tmp.remove('>'));
+      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'),
+			"indep", tmp.remove('>'));
     }
-  }
-
-  file.close();
+  } while(i > 0);
 }
 
 // --------------------------------------------------------------------------
@@ -295,7 +309,7 @@ void DiagramDialog::slotOK()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotApply()
 {
-  if(Diag->xLabel.isEmpty()) Diag->xLabel = "";   // A QString can be non-Null and empty !!!
+  if(Diag->xLabel.isEmpty()) Diag->xLabel = "";  // QString can be non-Null and empty !!!
   if(xLabel->text().isEmpty()) xLabel->setText("");
   if(Diag->xLabel != xLabel->text()) {
     Diag->xLabel = xLabel->text();

@@ -34,16 +34,23 @@
 // icon for unsaved files (diskette)
 static const char *smallsave_xpm[] = {
 "16 17 66 1", " 	c None",
-".	c #595963","+	c #E6E6F1","@	c #465460","#	c #FEFEFF","$	c #DEDEEE","%	c #43535F","&	c #D1D1E6",
-"*	c #5E5E66","=	c #FFFFFF","-	c #C5C5DF",";	c #FCF8F9",">	c #BDBDDA",",	c #BFBFDC","'	c #C4C4DF",
-")	c #FBF7F7","!	c #D6D6E9","~	c #CBCBE3","{	c #B5B5D6","]	c #BCBCDA","^	c #C6C6E0","/	c #CFCFE5",
-"(	c #CEC9DC","_	c #D8D8EA",":	c #DADAEB","<	c #313134","[	c #807FB3","}	c #AEAED1","|	c #B7B7D7",
-"1	c #E2E2EF","2	c #9393C0","3	c #E3E3F0","4	c #DDD5E1","5	c #E8E8F3","6	c #2F2F31","7	c #7B7BAF",
-"8	c #8383B5","9	c #151518","0	c #000000","a	c #C0C0DC","b	c #8E8FBD","c	c #8989BA","d	c #E7EEF6",
-"e	c #282829","f	c #6867A1","g	c #7373A9","h	c #A7A7CD","i	c #8080B3","j	c #7B7CB0","k	c #7070A8",
-"l	c #6D6DA5","m	c #6E6EA6","n	c #6969A2","o	c #7A79AF","p	c #DCDCEC","q	c #60609A","r	c #7777AC",
-"s	c #5D5D98","t	c #7676AB","u	c #484785","v	c #575793","w	c #50506A","x	c #8787B8","y	c #53536E",
-"z	c #07070E","A	c #666688",
+".	c #595963","+	c #E6E6F1","@	c #465460","#	c #FEFEFF",
+"$	c #DEDEEE","%	c #43535F","&	c #D1D1E6","*	c #5E5E66",
+"=	c #FFFFFF","-	c #C5C5DF",";	c #FCF8F9",">	c #BDBDDA",
+",	c #BFBFDC","'	c #C4C4DF",")	c #FBF7F7","!	c #D6D6E9",
+"~	c #CBCBE3","{	c #B5B5D6","]	c #BCBCDA","^	c #C6C6E0",
+"/	c #CFCFE5","(	c #CEC9DC","_	c #D8D8EA",":	c #DADAEB",
+"<	c #313134","[	c #807FB3","}	c #AEAED1","|	c #B7B7D7",
+"1	c #E2E2EF","2	c #9393C0","3	c #E3E3F0","4	c #DDD5E1",
+"5	c #E8E8F3","6	c #2F2F31","7	c #7B7BAF","8	c #8383B5",
+"9	c #151518","0	c #000000","a	c #C0C0DC","b	c #8E8FBD",
+"c	c #8989BA","d	c #E7EEF6","e	c #282829","f	c #6867A1",
+"g	c #7373A9","h	c #A7A7CD","i	c #8080B3","j	c #7B7CB0",
+"k	c #7070A8","l	c #6D6DA5","m	c #6E6EA6","n	c #6969A2",
+"o	c #7A79AF","p	c #DCDCEC","q	c #60609A","r	c #7777AC",
+"s	c #5D5D98","t	c #7676AB","u	c #484785","v	c #575793",
+"w	c #50506A","x	c #8787B8","y	c #53536E","z	c #07070E",
+"A	c #666688",
 "        .       ",
 "       .+.      ",
 "      .+@#.     ",
@@ -82,18 +89,18 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name) : File(this)
     Tab = new QTab(Info.fileName());
     DataSet = Info.baseName()+".dat";   // name of the default dataset
     if(Info.extension(false) == "sch")
-      DataDisplay = Info.baseName()+".dpl";   // name of the default data display
+      DataDisplay = Info.baseName()+".dpl"; // name of default data display
     else {
-      DataDisplay = Info.baseName()+".sch";   // name of the default data display
+      DataDisplay = Info.baseName()+".sch"; // name of default schematic
       GridOn = false;     // data display without grid (per default)
     }
   }
   SimOpenDpl = true;
-  
+
   Bar = b;
   if(Bar != 0) {
     Bar->addTab(Tab);  // create tab in TabBar
-//    Bar->setCurrentTab(Tab);     // make it the current  ===>  Qt 3.1 CRASHES !!!???!!!
+//    Bar->setCurrentTab(Tab);  // make it the current  ===>  Qt 3.1 CRASHES !!!???!!!
     Bar->repaint();
   }
 
@@ -117,13 +124,13 @@ void QucsDoc::setName(const QString& _Name)
   DocName = _Name;
 
   QFileInfo Info(DocName);
-  Tab->setText(Info.fileName());  // remove path from file name and show it in TabBar
+  Tab->setText(Info.fileName());  // remove path from file name, show it in TabBar
 
-  DataSet = Info.baseName()+".dat";   // name of the default dataset
+  DataSet = Info.baseName()+".dat";   // name of default dataset
   if(Info.extension(false) == "sch")
-    DataDisplay = Info.baseName()+".dpl";   // name of the default data display
+    DataDisplay = Info.baseName()+".dpl";   // name of default data display
   else
-    DataDisplay = Info.baseName()+".sch";   // name of the default data display
+    DataDisplay = Info.baseName()+".sch";   // name of default data display
 }
 
 // ---------------------------------------------------
@@ -207,8 +214,8 @@ void QucsDoc::paintGrid(QPainter *p, int cX, int cY, int Width, int Height)
 }
 
 // ---------------------------------------------------
-// Inserts a port into the schematic and connects it to another node if the
-// coordinates are identical. The node is returned.
+// Inserts a port into the schematic and connects it to another node if
+// the coordinates are identical. The node is returned.
 Node* QucsDoc::insertNode(int x, int y, Element *e)
 {
   Node *pn;
@@ -219,7 +226,7 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
       break;
     }
 
-  if(pn == 0) {   // create new node, if no existing one lies at this position
+  if(pn == 0) { // create new node, if no existing one lies at this position
     pn = new Node(x, y);
     Nodes.append(pn);
     pn->Connections.append(e);  // connect schematic node to component node
@@ -263,7 +270,7 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
 void QucsDoc::setComponentNumber(Component *c)
 {
   if(c->Sign != "Port")
-    if(c->Sign != "Pac") return;    // number subcircuit ports and power sources only
+    if(c->Sign != "Pac") return;  // number ports and power sources only
 
   int n=1;
   QString s, cSign = c->Sign;
@@ -291,7 +298,8 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
   if(num) setComponentNumber(c);
   Comps.append(c);
 
-  if(c->Sign == "GND") {    // a ground symbol erases an existing label on the wire line
+  // a ground symbol erases an existing label on the wire line
+  if(c->Sign == "GND") {
     c->Sign = "x";    // prevent that this ground is found as label
     Element *pe = getWireLabel(c->Ports.getFirst()->Connection);
     if(pe) {
@@ -321,7 +329,8 @@ void QucsDoc::insertComponent(Component *c)
   QString s;
   int  max=1, len = c->Name.length(), z;
   if(c->Name.isEmpty()) {
-    if(c->Sign == "GND") {    // a ground symbol erases an existing label on the wire line
+    // a ground symbol erases an existing label on the wire line
+    if(c->Sign == "GND") {
       c->Sign = "x";    // prevent that this ground is found as label
       Element *pe = getWireLabel(c->Ports.getFirst()->Connection);
       if(pe) {
@@ -338,14 +347,15 @@ void QucsDoc::insertComponent(Component *c)
     }
   }
   else {
-    // determines the name by looking for names with the same prefix and increment the number
+    // determines the name by looking for names with the same
+    // prefix and increment the number
     for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
       if(pc->Name.left(len) == c->Name) {
         s = pc->Name.right(pc->Name.length()-len);
         z = s.toInt(&ok);
         if(ok) if(z >= max) max = z + 1;
       }
-    c->Name += QString::number(max);    // create component name with new number
+    c->Name += QString::number(max);  // create name with new number
   }
 
 
@@ -381,12 +391,20 @@ int QucsDoc::insertWireNode1(Wire *w)
       if(ptr2->y2 < w->y1) continue;
 
       if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is vertical)
-        if(ptr2->y2 >= w->y2) { delete w; return 0; }  // new wire lies within an existing wire
-        else {  // one part of the wire lies within an existing wire the other part not
+        if(ptr2->y2 >= w->y2) {
+	  delete w;    // new wire lies within an existing wire
+	  return 0; }
+        else {
+	  // one part of the wire lies within an existing wire
+	  // the other part not
           if(ptr2->Port2->Connections.count() == 1) {
             w->y1 = ptr2->y1;
             w->Port1 = ptr2->Port1;
-            ptr2->Port1->Connections.removeRef(ptr2);   // two wires -> one wire
+	    if(ptr2->Label) {
+	      w->Label = ptr2->Label;
+	      w->Label->pWire = w;
+	    }
+            ptr2->Port1->Connections.removeRef(ptr2);  // two -> one wire
             ptr2->Port1->Connections.append(w);
             Nodes.removeRef(ptr2->Port2);
             Wires.removeRef(ptr2);
@@ -406,11 +424,17 @@ int QucsDoc::insertWireNode1(Wire *w)
 
       if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is horizontal)
         if(ptr2->x2 >= w->x2) { delete w; return 0; }  // new wire lies within an existing wire
-        else {  // one part of the wire lies within an existing wire the other part not
+        else {
+	  // one part of the wire lies within an existing wire
+	  // the other part not
           if(ptr2->Port2->Connections.count() == 1) {
             w->x1 = ptr2->x1;
             w->Port1 = ptr2->Port1;
-            ptr2->Port1->Connections.removeRef(ptr2);   // two wires -> one wire
+	    if(ptr2->Label) {
+	      w->Label = ptr2->Label;
+	      w->Label->pWire = w;
+	    }
+            ptr2->Port1->Connections.removeRef(ptr2); // two -> one wire
             ptr2->Port1->Connections.append(w);
             Nodes.removeRef(ptr2->Port2);
             Wires.removeRef(ptr2);
@@ -438,7 +462,7 @@ int QucsDoc::insertWireNode1(Wire *w)
     ptr2->y2 = w->y1;
     ptr2->Port2 = pn;
 
-    pw->Port2->Connections.prepend(pw);   // add new connections not at the end !!!
+    pw->Port2->Connections.prepend(pw);  // new connections not at end !!!
     pn->Connections.prepend(ptr2);
     pn->Connections.prepend(pw);
     pw->Port2->Connections.removeRef(ptr2);
@@ -459,30 +483,37 @@ bool QucsDoc::connectHWires1(Wire *w)
 {
   Wire *pw;
   Node *n = w->Port1;
-  
+
   pw = (Wire*)n->Connections.last();  // last connection is the new wire itself
   for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev()) {
     if(pw->Type != isWire) continue;
     if(!pw->isHorizontal()) continue;
     if(pw->x1 < w->x1) {
       if(n->Connections.count() != 2) continue;
-//      w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
-//                 w->delta = pw->delta;   // do not move node name label
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
       w->x1 = pw->x1;
-      w->Port1 = pw->Port1;         // new wire lengthens an existing one
+      w->Port1 = pw->Port1;      // new wire lengthens an existing one
       Nodes.removeRef(n);
       w->Port1->Connections.removeRef(pw);
       w->Port1->Connections.append(w);
       Wires.removeRef(pw);
       return true;
     }
-    if(pw->x2 >= w->x2) {  // new wire lies complete within an existing one ?
+    if(pw->x2 >= w->x2) {  // new wire lies within an existing one ?
       w->Port1->Connections.removeRef(w); // second node not yet made
       delete w;
       return false;
     }
     if(pw->Port2->Connections.count() < 2) {
-      pw->Port1->Connections.removeRef(pw); // existing wire lies within the new one
+      // existing wire lies within the new one
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
+      pw->Port1->Connections.removeRef(pw);
       Nodes.removeRef(pw->Port2);
       Wires.removeRef(pw);
       return true;
@@ -510,8 +541,10 @@ bool QucsDoc::connectVWires1(Wire *w)
     if(pw->isHorizontal()) continue;
     if(pw->y1 < w->y1) {
       if(n->Connections.count() != 2) continue;
-//      w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
-//                 w->delta = pw->delta;   // do not move node name label
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
       w->y1 = pw->y1;
       w->Port1 = pw->Port1;         // new wire lengthens an existing one
       Nodes.removeRef(n);
@@ -526,7 +559,12 @@ bool QucsDoc::connectVWires1(Wire *w)
       return false;
     }
     if(pw->Port2->Connections.count() < 2) {
-      pw->Port1->Connections.removeRef(pw); // existing wire lies within the new one
+      // existing wire lies within the new one
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
+      pw->Port1->Connections.removeRef(pw);
       Nodes.removeRef(pw->Port2);
       Wires.removeRef(pw);
       return true;
@@ -567,13 +605,18 @@ int QucsDoc::insertWireNode2(Wire *w)
       if(ptr2->y1 > w->y2) continue;
       if(ptr2->y2 < w->y2) continue;
 
-      // (if new wire lies within an existing wire, was already check before)
+    // (if new wire lies within an existing wire, was already check before)
       if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is vertical)
-      // one part of the wire lies within an existing wire the other part not
+          // one part of the wire lies within an existing wire
+          // the other part not
           if(ptr2->Port1->Connections.count() == 1) {
+	    if(ptr2->Label) {
+	      w->Label = ptr2->Label;
+	      w->Label->pWire = w;
+	    }
             w->y2 = ptr2->y2;
             w->Port2 = ptr2->Port2;
-            ptr2->Port2->Connections.removeRef(ptr2);   // two wires -> one wire
+            ptr2->Port2->Connections.removeRef(ptr2);  // two -> one wire
             ptr2->Port2->Connections.append(w);
             Nodes.removeRef(ptr2->Port1);
             Wires.removeRef(ptr2);
@@ -590,13 +633,18 @@ int QucsDoc::insertWireNode2(Wire *w)
       if(ptr2->x1 > w->x2) continue;
       if(ptr2->x2 < w->x2) continue;
 
-      // (if new wire lies within an existing wire, was already check before)
+    // (if new wire lies within an existing wire, was already check before)
       if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is horizontal)
-      // one part of the wire lies within an existing wire the other part not
+          // one part of the wire lies within an existing wire
+          // the other part not
           if(ptr2->Port1->Connections.count() == 1) {
+	    if(ptr2->Label) {
+	      w->Label = ptr2->Label;
+	      w->Label->pWire = w;
+	    }
             w->x2 = ptr2->x2;
             w->Port2 = ptr2->Port2;
-            ptr2->Port2->Connections.removeRef(ptr2);   // two wires -> one wire
+            ptr2->Port2->Connections.removeRef(ptr2);  // two -> one wire
             ptr2->Port2->Connections.append(w);
             Nodes.removeRef(ptr2->Port1);
             Wires.removeRef(ptr2);
@@ -651,10 +699,12 @@ bool QucsDoc::connectHWires2(Wire *w)
     if(!pw->isHorizontal()) continue;
     if(pw->x2 > w->x2) {
       if(n->Connections.count() != 2) continue;
-//      w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
-//                 w->delta = pw->delta;   // do not move node name label
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
       w->x2 = pw->x2;
-      w->Port2 = pw->Port2;         // new wire lengthens an existing one
+      w->Port2 = pw->Port2;      // new wire lengthens an existing one
       Nodes.removeRef(n);
       w->Port2->Connections.removeRef(pw);
       w->Port2->Connections.append(w);
@@ -662,9 +712,14 @@ bool QucsDoc::connectHWires2(Wire *w)
       return true;
     }
     // (if new wire lies complete within an existing one, was already check before)
-    
+
     if(pw->Port1->Connections.count() < 2) {
-      pw->Port2->Connections.removeRef(pw); // existing wire lies within the new one
+      // existing wire lies within the new one
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
+      pw->Port2->Connections.removeRef(pw);
       Nodes.removeRef(pw->Port1);
       Wires.removeRef(pw);
       return true;
@@ -692,10 +747,12 @@ bool QucsDoc::connectVWires2(Wire *w)
     if(pw->isHorizontal()) continue;
     if(pw->y2 > w->y2) {
       if(n->Connections.count() != 2) continue;
-//      w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
-//                 w->delta = pw->delta;   // do not move node name label
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
       w->y2 = pw->y2;
-      w->Port2 = pw->Port2;         // new wire lengthens an existing one
+      w->Port2 = pw->Port2;     // new wire lengthens an existing one
       Nodes.removeRef(n);
       w->Port2->Connections.removeRef(pw);
       w->Port2->Connections.append(w);
@@ -705,7 +762,12 @@ bool QucsDoc::connectVWires2(Wire *w)
     // (if new wire lies complete within an existing one, was already check before)
 
     if(pw->Port1->Connections.count() < 2) {
-      pw->Port2->Connections.removeRef(pw); // existing wire lies within the new one
+      // existing wire lies within the new one
+      if(pw->Label) {
+        w->Label = pw->Label;
+	w->Label->pWire = w;
+      }
+      pw->Port2->Connections.removeRef(pw);
       Nodes.removeRef(pw->Port1);
       Wires.removeRef(pw);
       return true;
@@ -735,7 +797,7 @@ int QucsDoc::insertWire(Wire *w)
   else con = 0x100;
 
 
-  
+
   tmp = insertWireNode1(w);
   if(tmp == 0) return 3;  // no new wire and no open connection
   if(tmp > 1) con |= 2;   // insert node and remember if it remains open
@@ -796,8 +858,8 @@ int QucsDoc::insertWire(Wire *w)
         n2  = pn2->Connections.count();
         if(n1 == 1) {
           Nodes.removeRef(pn);     // delete node 1 if open
+          pn2->Connections.removeRef(nw);   // remove connection
           pn = pn2;
-          pn->Connections.removeRef(nw);   // remove connection
         }
 
         if(n2 == 1) {
@@ -807,6 +869,10 @@ int QucsDoc::insertWire(Wire *w)
         }
 
         if(pn == pn2) {
+	  if(nw->Label) {
+	    pw->Label = nw->Label;
+	    pw->Label->pWire = pw;
+	  }
           Wires.removeRef(nw);    // delete wire
           Wires.findRef(pw);      // set back to current wire
         }
@@ -953,23 +1019,70 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
 bool QucsDoc::setMarker(int x, int y)
 {
   int n, *p;
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())    // test all diagrams
+  double *px, *py;
+  // test all diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
     if(pd->getSelected(x, y)) {
 
-      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) { // test graphs of diagram
+      // test all graphs of the diagram
+      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
         n = pg->getSelected(x-pd->cx, pd->cy-y);
         if(n > 0) {
-          pg->cPoints.at(n-1);
+          px = pg->cPointsX + n-1;
+          py = pg->cPointsY + 2*(n-1);
           p = pg->Points + 2*(n-1);
-          Marker *pm = new Marker(*p, *(p+1), pg->cPoints.current()->x,  pg->cPoints.current()->yr,
-                                              pg->cPoints.current()->yi, pg->cPoints.at());
+          Marker *pm = new Marker(pd, *p, *(p+1),
+	                          *px, *py, *(py+1), pd->Graphs.at());
           pd->Markers.append(pm);
+          setChanged(true);
           return true;
         }
       }
     }
 
   return false;
+}
+
+// ---------------------------------------------------
+// Moves the marker pointer left/right on the graph.
+bool QucsDoc::MarkerLeftRight(bool left)
+{
+  int n;
+  double *px;
+  bool acted = false;
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    // test all markers of the diagram
+    for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
+      if(pm->isSelected) {
+        Graph *pg = pd->Graphs.at(pm->GraphNum);
+        px = pg->cPointsX;
+        for(n=0; n<pg->count; n++) {
+          if(pm->xpos <= *px) break;
+          px++;
+        }
+        if(n == pg->count) px--;
+
+        if(left) {
+          if(px <= pg->cPointsX) continue;
+          px--;  // one position to the left
+	  n--;
+        }
+        else {
+          if(px >= (pg->cPointsX+pg->count)) continue;
+          px++;  // one position to the right
+	  n++;
+        }
+        pm->xpos = *px;
+        pm->yr = *(pg->cPointsY + 2*n);
+	pm->yi = *(pg->cPointsY + 2*n+1);
+        pm->createText();
+        int *pi = pg->Points + 2*n;
+        pm->cx = *pi;
+        pm->cy = *(pi+1);
+        acted = true;
+      }
+    }
+  return acted;
 }
 
 // ---------------------------------------------------
@@ -1111,8 +1224,9 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
   }
 
 
+  // test all wire labels *********************************
   WireLabel *pl=0;
-  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {    // test all wire labels
+  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {
     if(pw->Label) {
       pl = pw->Label;
       if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
@@ -1125,7 +1239,8 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
   }
 
 
-  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next()) {    // test all node labels
+  // test all node labels *************************************
+  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next()) {
     if(pn->Label) {
       pl = pn->Label;
       if(pl->x1 >= x1) if((pl->x1+pl->x2) <= x2)
@@ -1138,10 +1253,24 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
   }
 
 
-  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {    // test all diagrams
-    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
+  // test all diagrams *******************************************
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {
+    // test graphs of diagram
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
       if(pg->isSelected &= flag) z++;
 
+    // test markers of diagram
+    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next()) {
+      pm->Bounding(cx1, cy1, cx2, cy2);
+      if(pd->cx+cx1 >= x1) if(pd->cx+cx2 <= x2)
+        if(pd->cy-cy1 >= y1) if(pd->cy-cy2 <= y2) {
+          pm->isSelected = true;  z++;
+          continue;
+        }
+      if(pm->isSelected &= flag) z++;
+    }
+
+    // test diagram itself
     pd->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
       pd->isSelected = true;  z++;
@@ -1150,7 +1279,8 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
     if(pd->isSelected &= flag) z++;
   }
 
-  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next()) {    // test all paintings
+  // test all paintings *******************************************
+  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next()) {
     pp->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
       pp->isSelected = true;  z++;
@@ -1279,7 +1409,8 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
     }
     else pc = Comps.next();
 
-  for(pw = Wires.first(); pw != 0; ) {       // test all wires and wire labels
+  // test all wires and wire labels ***********************
+  for(pw = Wires.first(); pw != 0; ) {
     if(pw->Label) if(pw->Label->isSelected)
       p->append(pw->Label);
 
@@ -1295,15 +1426,26 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
     else pw = Wires.next();
   }
 
-  for(pd = Diags.first(); pd != 0; )    // test all diagrams
+  // test all diagrams **********************************
+  for(pd = Diags.first(); pd != 0; )
     if(pd->isSelected) {
       p->append(pd);
       Diags.take();
       pd = Diags.current();
     }
-    else pd = Diags.next();
+    else {
+      for(Marker *pm = pd->Markers.first(); pm != 0; )
+        if(pm->isSelected) {
+          p->append(pm);
+          pd->Markers.take();
+          pm = pd->Markers.current();
+        }
+        else pm = pd->Markers.next();
 
-  for(Painting *pp = Paints.first(); pp != 0; )    // test all paintings
+      pd = Diags.next();
+    }
+
+  for(Painting *pp = Paints.first(); pp != 0; )   // test all paintings
     if(pp->isSelected) {
       p->append(pp);
       Paints.take();
@@ -1313,7 +1455,8 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 
   // ..............................................
   // Inserts wires, if a connection to a not moving element is found.
-  for(pe = p->last(); pe!=0; pe = p->prev())  // go backwards in order not to test the new insertions
+  // Go backwards in order not to test the new insertions.
+  for(pe = p->last(); pe!=0; pe = p->prev())
     switch(pe->Type) {
       case isComponent:
           pc = (Component*)pe;
@@ -1366,14 +1509,15 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 }
 
 // ---------------------------------------------------
-// Activates/deactivates components that lie within the rectangle x1/y1, x2/y2.
+// Activates/deactivates components that lie within the
+// rectangle x1/y1, x2/y2.
 void QucsDoc::activateComps(int x1, int y1, int x2, int y2)
 {
   int  cx1, cy1, cx2, cy2;
   if(x1 > x2) { cx1 = x1; x1  = x2; x2  = cx1; }
   if(y1 > y2) { cy1 = y1; y1  = y2; y2  = cy1; }
 
-  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {    // test all components
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {
     pc->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
       pc->isActive ^= true;    // change "active status"
@@ -1385,7 +1529,7 @@ void QucsDoc::activateComps(int x1, int y1, int x2, int y2)
 bool QucsDoc::activateComponent(int x, int y)
 {
   int  x1, y1, x2, y2;
-  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {    // test all components
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {
     pc->Bounding(x1, y1, x2, y2);
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
       pc->isActive ^= true;    // change "active status"
@@ -1402,7 +1546,7 @@ bool QucsDoc::activateComponents()
 {
   bool sel = false;
 
-  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())    // all selected component
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
     if(pc->isSelected) {
       pc->isActive ^= true;    // change "active status"
       sel = true;
@@ -1524,10 +1668,11 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
           xmin = xmax = 0;
           ymin = ymax = 0;
           return;
-      }
+        }
 
   int x1, y1, x2, y2;
-  for(pc = Comps.first(); pc != 0; pc = Comps.next()) {  // find bounds of all components
+  // find boundings of all components
+  for(pc = Comps.first(); pc != 0; pc = Comps.next()) {
     pc->entireBounds(x1, y1, x2, y2);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -1535,7 +1680,8 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
     if(y2 > ymax) ymax = y2;
   }
 
-  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {  // find bounds of all wires
+  // find boundings of all wires
+  for(pw = Wires.first(); pw != 0; pw = Wires.next()) {
     if(pw->x1 < xmin) xmin = pw->x1;
     if(pw->x2 > xmax) xmax = pw->x2;
     if(pw->y1 < ymin) ymin = pw->y1;
@@ -1543,13 +1689,17 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
 
     if(pw->Label != 0) {     // check position of wire label
       if(pw->Label->x1 < xmin) xmin = pw->x1;
-      if((pw->Label->x1+pw->Label->x2) > xmax) xmax = pw->Label->x1+pw->Label->x2;
-      if(pw->Label->y1 > ymax) ymax = pw->Label->y1;
-      if((pw->Label->y1+pw->Label->y2) < ymin) ymin = pw->Label->y1+pw->Label->y2;
+      if((pw->Label->x1+pw->Label->x2) > xmax)
+        xmax = pw->Label->x1+pw->Label->x2;
+      if(pw->Label->y1 > ymax)
+        ymax = pw->Label->y1;
+      if((pw->Label->y1+pw->Label->y2) < ymin)
+        ymin = pw->Label->y1+pw->Label->y2;
     }
   }
 
-  for(pd = Diags.first(); pd != 0; pd = Diags.next()) {  // find bounds of all diagrams
+  // find boundings of all diagrams
+  for(pd = Diags.first(); pd != 0; pd = Diags.next()) {
     pd->Bounding(x1, y1, x2, y2);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -1557,7 +1707,8 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
     if(y2 > ymax) ymax = y2;
   }
 
-  for(pp = Paints.first(); pp != 0; pp = Paints.next()) {  // find bounds of all Paintings
+  // find boundings of all Paintings
+  for(pp = Paints.first(); pp != 0; pp = Paints.next()) {
     pp->Bounding(x1, y1, x2, y2);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
@@ -1606,9 +1757,10 @@ bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
   Component *pc;
   WireLabel *pl;
 
-  for(pc = Comps.first(); pc != 0; ) {   // find bounds of all selected components
-    if(pc->isSelected) if(pc->Ports.count() > 0) {  // do not copy components without ports
-      if(pc->cx < x1) x1 = pc->cx;
+  // find bounds of all selected components
+  for(pc = Comps.first(); pc != 0; ) {
+    if(pc->isSelected) if(pc->Ports.count() > 0) {
+      if(pc->cx < x1) x1 = pc->cx;  // do not copy components without ports
       if(pc->cx > x2) x2 = pc->cx;
       if(pc->cy < y1) y1 = pc->cy;
       if(pc->cy > y2) y2 = pc->cy;
@@ -1638,7 +1790,8 @@ bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
     else pw = Wires.next();
 
   int bx1, by1, bx2, by2;
-  for(pp = Paints.first(); pp != 0; )  // find bounds of all selected paintings
+  // find boundings of all selected paintings
+  for(pp = Paints.first(); pp != 0; )
     if(pp->isSelected) {
       pp->Bounding(bx1, by1, bx2, by2);
       if(bx1 < x1) x1 = bx1;
@@ -1679,36 +1832,42 @@ bool QucsDoc::rotateElements()
   // re-insert elements
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
-      case isComponent: pc = (Component*)pe;
-                        pc->rotate();   //rotate component !before! rotating its center
-                        x2 = x1 - pc->cx;
-                        pc->setCenter(pc->cy - y1 + x1, x2 + y1);
-                        insertRawComponent(pc);
-                        break;
-      case isWire:      pw = (Wire*)pe;
-                        x2 = pw->x1;
-                        pw->x1 = pw->y1 - y1 + x1;
-                        pw->y1 = x1 - x2 + y1;
-                        x2 = pw->x2;
-                        pw->x2 = pw->y2 - y1 + x1;
-                        pw->y2 = x1 - x2 + y1;
-                        if(pw->Label) {
-                          x2 = pw->Label->cx;
-                          pw->Label->cx = pw->Label->cy - y1 + x1;
-                          pw->Label->cy = x1 - x2 + y1;
-                          if(pw->Label->Type == isHWireLabel) pw->Label->Type = isVWireLabel;
-                          else pw->Label->Type = isHWireLabel;
-                        }
-                        insertWire(pw);
-                        break;
-      case isPainting:  pp = (Painting*)pe;
-                        pp->rotate();   // rotate painting !before! rotating its center
-                        pp->getCenter(x2, y2);
-                        tmp = x1 - x2;
-                        pp->setCenter(y2 - y1 + x1, tmp + y1);
-                        Paints.append(pp);
-                        break;
-      default:          ;
+      case isComponent:
+           pc = (Component*)pe;
+           pc->rotate();   //rotate component !before! rotating its center
+           x2 = x1 - pc->cx;
+           pc->setCenter(pc->cy - y1 + x1, x2 + y1);
+           insertRawComponent(pc);
+           break;
+
+      case isWire:
+           pw = (Wire*)pe;
+           x2 = pw->x1;
+           pw->x1 = pw->y1 - y1 + x1;
+           pw->y1 = x1 - x2 + y1;
+           x2 = pw->x2;
+           pw->x2 = pw->y2 - y1 + x1;
+           pw->y2 = x1 - x2 + y1;
+           if(pw->Label) {
+             x2 = pw->Label->cx;
+             pw->Label->cx = pw->Label->cy - y1 + x1;
+             pw->Label->cy = x1 - x2 + y1;
+             if(pw->Label->Type == isHWireLabel)
+	       pw->Label->Type = isVWireLabel;
+             else pw->Label->Type = isHWireLabel;
+           }
+           insertWire(pw);
+           break;
+
+      case isPainting:
+           pp = (Painting*)pe;
+           pp->rotate();   // rotate painting !before! rotating its center
+           pp->getCenter(x2, y2);
+           tmp = x1 - x2;
+           pp->setCenter(y2 - y1 + x1, tmp + y1);
+           Paints.append(pp);
+           break;
+      default: ;
     }
 
   ElementCache.clear();
@@ -1826,14 +1985,15 @@ bool QucsDoc::oneTwoWires(Node *n)
       if(e1->x1 == e2->x2) if(e1->y1 == e2->y2) {
         e3 = e1; e1 = e2; e2 = e3;    // e1 must have lesser coordinates
       }
-      if(e2->Label != 0) {   // take over the node name label ?
+      if(e2->Label) {   // take over the node name label ?
         e1->Label = e2->Label;
-        e2->Label = 0;     // prevent wire label to be delete when deleting wire
+	e1->Label->pWire = e1;
       }
       else if(n->Label) {
-        e1->Label = n->Label;
-        n->Label = 0;
-      }
+             e1->Label = n->Label;
+	     e1->Label->pWire = e1;
+	     e1->Label->pNode = 0;
+	   }
 
       e1->x2 = e2->x2;
       e1->y2 = e2->y2;
@@ -1927,7 +2087,8 @@ bool QucsDoc::deleteElements()
     else pw = Wires.next();
   }
 
-  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next())   // all selected labels on nodes
+  // all selected labels on nodes ***************************
+  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next())
     if(pn->Label)
       if(pn->Label->isSelected) {
         delete pn->Label;
@@ -1943,7 +2104,7 @@ bool QucsDoc::deleteElements()
       sel = true;
     }
     else {
-      for(Marker *pm = pd->Markers.first(); pm != 0; )   // all graphs of diagram
+      for(Marker *pm = pd->Markers.first(); pm != 0; )   // all markers of diagram
         if(pm->isSelected) {
           pd->Markers.remove();
           pm = pd->Markers.current();
