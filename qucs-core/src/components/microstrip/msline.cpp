@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.30 2004-09-04 06:50:59 ela Exp $
+ * $Id: msline.cpp,v 1.31 2004-09-06 12:46:23 ela Exp $
  *
  */
 
@@ -77,7 +77,7 @@ void msline::calcSP (nr_double_t frequency) {
 
   /* local variables */
   complex s11, s21, n, g;
-  nr_double_t z, y, a, b, k0, ac, ad;
+  nr_double_t z, y, k0, ac, ad;
   nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
 
   // quasi-static effective dielectric constant of substrate + line and
@@ -97,17 +97,14 @@ void msline::calcSP (nr_double_t frequency) {
   z = ZlEffFreq / z0;
   y = 1 / z;
   k0 = 2 * M_PI * frequency / C0;
-  alpha = a = ac + ad;
-  b = sqrt (ErEffFreq) * k0;
-  g = rect (a, b);
+  alpha = ac + ad;
+  g = rect (ac + ad, sqrt (ErEffFreq) * k0);
   n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
   s11 = (z - y) * sinh (g * l) / n;
   s21 = 2 / n;
 
-  setS (1, 1, s11);
-  setS (2, 2, s11);
-  setS (1, 2, s21);
-  setS (2, 1, s21);
+  setS (1, 1, s11); setS (2, 2, s11);
+  setS (1, 2, s21); setS (2, 1, s21);
 }
 
 /* This function calculates the quasi-static impedance of a microstrip
