@@ -1,3 +1,7 @@
+2005-02-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwline.cpp: Replaced '120 * M_PI' by Z0.
+
 2005-02-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* vnoise.cpp: Implemented AC noise callback.
