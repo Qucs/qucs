@@ -2529,7 +2529,7 @@ Erori:
         <translation>Orice Fişier</translation>
     </message>
     <message>
-        <source>Ellipse Arc</source>
+        <source>Elliptic Arc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,6 +25,7 @@
 
 PortSymbol::PortSymbol(int cx_, int cy_, int number_)
 {
+  Name = "PortSym ";
   isSelected = false;
   cx = cx_;
   cy = cy_;
@@ -105,7 +106,7 @@ bool PortSymbol::load(const QString& s)
 // --------------------------------------------------------------------------
 QString PortSymbol::save()
 {
-  QString s = "PortSym "+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += numberStr;
   return s;
 }

@@ -49,6 +49,7 @@ public:
   virtual void mirrorY() {};
   virtual bool Dialog() { return false; };
 
+  char *Name;   // name of painting, e.g. for saving
   int  State;   // state for different mouse operations
 };
 
