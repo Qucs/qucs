@@ -1,5 +1,7 @@
 2004-05-22  Stefan Jahn  <stefan@lkcc.org>
 
+	* biastee.cpp: Fixed Bias-T DC model.
+
 	* iac.h (class iac):  Implemented DC model as zero current
 	source.
 

@@ -1,7 +1,7 @@
 /*
  * biastee.cpp - bias T class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: biastee.cpp,v 1.3 2004-05-22 12:33:46 margraf Exp $
+ * $Id: biastee.cpp,v 1.4 2004-05-22 21:18:46 ela Exp $
  *
  */
 
@@ -47,11 +47,12 @@ biastee::biastee () : circuit (3) {
   setS (3, 2, 0.0);
   setS (3, 3, 1.0);
   type = CIR_BIASTEE;
+  setVoltageSources (1);
 }
 
 void biastee::calcDC (void) {
-  setB (1, 1,  0.0); setB (1, 2, +1.0); setB (1, 3, -1.0);
-  setC (1, 1,  0.0); setC (1, 2, +1.0); setC (1, 3, -1.0);
-  setD (1, 1,  0.0);
+  setB (1, 1, 0.0); setB (1, 2, +1.0); setB (1, 3, -1.0);
+  setC (1, 1, 0.0); setC (1, 2, +1.0); setC (1, 3, -1.0);
+  setD (1, 1, 0.0);
   setE (1, +0.0);
 }
