@@ -26,6 +26,7 @@ files.
 Version 0.0.4
 -------------
 
+ * support for current and voltage pulse sources
  * linear transient analysis for RCL networks available
  * AC analysis
 

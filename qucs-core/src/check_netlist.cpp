@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.55 2004-09-19 10:31:44 ela Exp $
+ * $Id: check_netlist.cpp,v 1.56 2004-09-20 10:09:54 ela Exp $
  *
  */
 
@@ -165,6 +165,28 @@ struct define_t definition_available[] =
     { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
+  },
+  /* pulse voltage source */
+  { "Vpulse", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "U2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* pulse current source */
+  { "Ipulse", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I1", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "I2", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "T1", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* phase shifter */
   { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

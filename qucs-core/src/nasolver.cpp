@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.8 2004-09-17 11:48:52 ela Exp $
+ * $Id: nasolver.cpp,v 1.9 2004-09-20 10:09:54 ela Exp $
  *
  */
 
@@ -431,8 +431,9 @@ void nasolver<nr_type_t>::createIMatrix (void) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
       if (is->getType () == CIR_IDC || is->getType () == CIR_IAC ||
-	  is->getType () == CIR_PAC || is->getType () == CIR_CAPACITOR ||
-	  is->getType () == CIR_INDUCTOR || is->isNonLinear ()) {
+	  is->getType () == CIR_IPULSE || is->getType () == CIR_PAC ||
+	  is->getType () == CIR_CAPACITOR || is->getType () == CIR_INDUCTOR ||
+	  is->isNonLinear ()) {
 	val += MatVal (is->getI (n->nodes[i]->getPort ()));
       }
     }
@@ -693,7 +694,7 @@ char * nasolver<nr_type_t>::createI (int n, char * amps, int saveOPs) {
      current probes */
   int type = vs->getType ();
   if (type != CIR_VDC && type != CIR_VAC && type != CIR_IPROBE &&
-      !(saveOPs & SAVE_OPS))
+      type != CIR_VPULSE && !(saveOPs & SAVE_OPS))
     return NULL;
 
   // don't output subcircuit components if not requested

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.cpp,v 1.6 2004-07-26 06:30:29 ela Exp $
+ * $Id: tline.cpp,v 1.7 2004-09-20 10:09:55 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
@@ -54,9 +55,22 @@ void tline::calcSP (nr_double_t frequency) {
   setS (2, 1, s21);
 }
 
-void tline::calcDC (void) {
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+void tline::initDC (void) {
+  clearY ();
+  voltageSource (1, 1, 2);
+  setVoltageSources (1);
+}
+
+void tline::initAC (void) {
+  setVoltageSources (0);
+}
+
+void tline::calcAC (nr_double_t frequency) {
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t z = getPropertyDouble ("Z");
+  nr_double_t b = 2 * M_PI * frequency / C0;
+  nr_double_t y11 = -1 / z / tan (b * l);
+  nr_double_t y21 = +1 / z / sin (b * l);
+  setY (1, 1, rect (0, y11)); setY (2, 2, rect (0, y11));
+  setY (1, 2, rect (0, y21)); setY (2, 1, rect (0, y21));
 }

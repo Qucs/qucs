@@ -1,5 +1,5 @@
 /*
- * tline.h - ideal transmission line class definitions
+ * vpulse.h - pulse voltage source class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,21 +18,21 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.h,v 1.4 2004-09-20 10:09:55 ela Exp $
+ * $Id: vpulse.h,v 1.1 2004-09-20 10:09:55 ela Exp $
  *
  */
 
-#ifndef __TLINE_H__
-#define __TLINE_H__
+#ifndef __VPULSE_H__
+#define __VPULSE_H__
 
-class tline : public circuit
+class vpulse : public circuit
 {
  public:
-  tline ();
-  void calcSP (nr_double_t);
+  vpulse ();
   void initDC (void);
   void initAC (void);
-  void calcAC (nr_double_t);
+  void initTR (void);
+  void calcTR (nr_double_t);
 };
 
-#endif /* __TLINE_H__ */
+#endif /* __VPULSE_H__ */

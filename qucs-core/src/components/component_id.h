@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.15 2004-08-19 19:44:24 ela Exp $
+ * $Id: component_id.h,v 1.16 2004-09-20 10:09:55 ela Exp $
  *
  */
 
@@ -62,6 +62,8 @@ enum circuit_type {
   CIR_SPFILE,
   CIR_VNOISE,
   CIR_INOISE,
+  CIR_VPULSE,
+  CIR_IPULSE,
 
   // microstrip components
   CIR_MSLINE,
