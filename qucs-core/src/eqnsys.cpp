@@ -1,7 +1,7 @@
 /*
  * eqnsys.cpp - equation system solver class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.21 2004-10-27 18:45:19 ela Exp $
+ * $Id: eqnsys.cpp,v 1.22 2005-02-01 22:56:39 raimi Exp $
  *
  */
 
@@ -62,7 +62,6 @@ eqnsys<nr_type_t>::eqnsys () {
 // Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
-  if (A != NULL) delete A;
   if (B != NULL) delete B;
   if (change != NULL) delete change;
 }
@@ -71,7 +70,7 @@ eqnsys<nr_type_t>::~eqnsys () {
    based on the given eqnsys object. */
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
-  if (e.A != NULL) A = new tmatrix<nr_type_t> (*(e.A));
+  A = e.A;
   if (e.B != NULL) B = new tvector<nr_type_t> (*(e.B));
   change = NULL;
   update = 1;
@@ -81,16 +80,14 @@ eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
 /* With this function the describing matrices for the equation system
    is passed to the equation system solver class.  Matrix A is the
    left hand side of the equation system and B the right hand side
-   vector.  The reference pointer to the X matrix is going to be the
-   solution vector.  Both the matrices A and B will be locally
-   copied. */
+   vector.  The reference pointer to the X vector is going to be the
+   solution vector.  The B vector will be locally copied. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
 					 tvector<nr_type_t> * refX,
 					 tvector<nr_type_t> * nB) {
   if (nA != NULL) {
-    if (A != NULL) delete A;
-    A = new tmatrix<nr_type_t> (*nA);
+    A = nA;
     update = 1;
   }
   else {

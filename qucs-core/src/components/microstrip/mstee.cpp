@@ -1,7 +1,7 @@
 /*
  * mstee.cpp - microstrip t-junction class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.2 2004-11-24 19:15:54 raimi Exp $
+ * $Id: mstee.cpp,v 1.3 2005-02-01 22:56:54 raimi Exp $
  *
  */
 
@@ -28,38 +28,240 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "substrate.h"
+#include "constants.h"
+#include "net.h"
+#include "device.h"
+#include "msline.h"
 #include "mstee.h"
 
 mstee::mstee () : circuit (3) {
+  lineA = lineB = line2 = NULL;
   type = CIR_MSTEE;
 }
 
 void mstee::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, -1.0 / 3.0);
-  setS (1, 2,  2.0 / 3.0);
-  setS (1, 3,  2.0 / 3.0);
-  setS (2, 1,  2.0 / 3.0);
-  setS (2, 2, -1.0 / 3.0);
-  setS (2, 3,  2.0 / 3.0);
-  setS (3, 1,  2.0 / 3.0);
-  setS (3, 2,  2.0 / 3.0);
-  setS (3, 3, -1.0 / 3.0);
+  initLines ();
+  lineA->initSP ();
+  lineB->initSP ();
+  line2->initSP ();
+}
+
+void mstee::initLines (void) {
+  lineA = splitMicrostrip (this, lineA, getNet (), "LineA", "NodeA", 1);
+  lineA->setProperty ("W", getPropertyDouble ("W1"));
+  lineA->setProperty ("Temp", getPropertyDouble ("Temp"));
+  lineA->setProperty ("Model", getPropertyString ("MSModel"));
+  lineA->setProperty ("DispModel", getPropertyString ("MSDispModel"));
+  lineA->setSubstrate (getSubstrate ());
+
+  lineB = splitMicrostrip (this, lineB, getNet (), "LineB", "NodeB", 2);
+  lineB->setProperty ("W", getPropertyDouble ("W2"));
+  lineB->setProperty ("Temp", getPropertyDouble ("Temp"));
+  lineB->setProperty ("Model", getPropertyString ("MSModel"));
+  lineB->setProperty ("DispModel", getPropertyString ("MSDispModel"));
+  lineB->setSubstrate (getSubstrate ());
+
+  line2 = splitMicrostrip (this, line2, getNet (), "Line2", "Node2", 3);
+  line2->setProperty ("W", getPropertyDouble ("W3"));
+  line2->setProperty ("Temp", getPropertyDouble ("Temp"));
+  line2->setProperty ("Model", getPropertyString ("MSModel"));
+  line2->setProperty ("DispModel", getPropertyString ("MSDispModel"));
+  line2->setSubstrate (getSubstrate ());
+}
+
+void mstee::calcSP (nr_double_t frequency) {
+  calcPropagation (frequency);
+
+  lineA->setProperty ("L", La);
+  lineB->setProperty ("L", Lb);
+  line2->setProperty ("L", L2);
+  lineA->calcSP (frequency);
+  lineB->calcSP (frequency);
+  line2->calcSP (frequency);
+
+  // calculate S-parameters
+  complex n1 = Ta2 * rect (1 + 1 / Tb2, Bt * z0);
+  complex n2 = Tb2 * rect (1 + 1 / Ta2, Bt * z0);
+  complex n3 = rect (1 / Ta2 + 1 / Tb2, Bt * z0);
+  setS (1, 1, (1 - n1) / (1 + n1));
+  setS (2, 2, (1 - n2) / (1 + n2));
+  setS (3, 3, (1 - n3) / (1 + n3));
+  setS (1, 3, 2 * sqrt (Ta2) / (1 + n1));
+  setS (3, 1, 2 * sqrt (Ta2) / (1 + n1));
+  setS (2, 3, 2 * sqrt (Tb2) / (1 + n2));
+  setS (3, 2, 2 * sqrt (Tb2) / (1 + n2));
+  setS (1, 2, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
+		   sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
+  setS (2, 1, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
+		   sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
+}
+
+void mstee::calcPropagation (nr_double_t f) {
+
+  char * SModel = getPropertyString ("MSModel");
+  char * DModel = getPropertyString ("MSDispModel");
+  substrate * subst = getSubstrate ();
+  nr_double_t er = subst->getPropertyDouble ("er");
+  nr_double_t h  = subst->getPropertyDouble ("h");
+  nr_double_t t  = subst->getPropertyDouble ("t");
+  nr_double_t Wa = subst->getPropertyDouble ("W1");
+  nr_double_t Wb = subst->getPropertyDouble ("W2");
+  nr_double_t W2 = subst->getPropertyDouble ("W3");
+  
+  nr_double_t Zla, Zlb, Zl2, Era, Erb, Er2;
+
+  // computation of impedances and effective dielectric constants
+  nr_double_t ZlEff, ErEff, WEff;
+  msline::analyseQuasiStatic (Wa, h, t, er, SModel, ZlEff, ErEff, WEff);
+  msline::analyseDispersion  (Wa, h, er, ZlEff, ErEff, f, DModel,
+			      Zla, Era);
+  msline::analyseQuasiStatic (Wb, h, t, er, SModel, ZlEff, ErEff, WEff);
+  msline::analyseDispersion  (Wb, h, er, ZlEff, ErEff, f, DModel,
+			      Zlb, Erb);
+  msline::analyseQuasiStatic (W2, h, t, er, SModel, ZlEff, ErEff, WEff);
+  msline::analyseDispersion  (W2, h, er, ZlEff, ErEff, f, DModel,
+			      Zl2, Er2);
+
+  // local variables
+  nr_double_t Da, Db, D2, fpa, fpb, lda, ldb, da, db, d2, r, q;
+
+  // equivalent parallel plate line widths
+  Da = Z0 / Zla * h / sqrt (Era);
+  Db = Z0 / Zlb * h / sqrt (Erb);
+  D2 = Z0 / Zl2 * h / sqrt (Er2);
+
+  // first higher order mode cut-off frequencies
+  fpa = 0.0004 * Zla / h;
+  fpb = 0.0004 * Zlb / h;
+
+  // effective wavelengths of quasi-TEM mode
+  lda = C0 / sqrt (Era) / f;
+  ldb = C0 / sqrt (Erb) / f;
+
+  // main arm displacements
+  da = 0.055 * D2 * Zla / Zl2 * (1 - 2 * Zla / Zl2 * sqr (f / fpa));
+  db = 0.055 * D2 * Zlb / Zl2 * (1 - 2 * Zlb / Zl2 * sqr (f / fpb));
+
+  // length of lines in the main arms
+  La = 0.5 * W2 - da;
+  Lb = 0.5 * W2 - db;
+
+  // displacement and length of line in the side arm
+  r = sqrt (Zla * Zlb) / Zl2;
+  q = sqr (f) / fpa / fpb;
+  d2 = sqrt (Da * Db) * (0.5 - r * (0.05 + 0.7 * exp (-1.6 * r) +
+				    0.25 * r * q - 0.17 * log (r)));
+  L2 = 0.5 * MAX (Wa, Wb) - d2;
+
+  // turn ratio of transformers in main arms
+  Ta2 = 1 - M_PI * sqr (f / fpa) * (sqr (r) / 12 + sqr (0.5 - d2 / Da));
+  Tb2 = 1 - M_PI * sqr (f / fpb) * (sqr (r) / 12 + sqr (0.5 - d2 / Db));
+
+  // shunt susceptance
+  Bt = 5.5 * sqrt (Da * Db / lda / ldb) * (er + 2) / er /
+    Zl2 / sqrt (Ta2 * Tb2) * sqrt (da * db) / D2 *
+    (1 + 0.9 * log (r) + 4.5 * r * q - 4.4 * exp (-1.3 * r) -
+     20 * sqr (Zl2 / Z0));
+}
+
+/* This function can be used to create an extra microstrip circuit.
+   If the 'line' argument is NULL then the new circuit is created, the
+   nodes get re-arranged and it is inserted into the given
+   netlist. The given arguments can be explained as follows.
+   base:     calling circuit (this)
+   line:     additional microstrip line circuit (can be NULL)
+   subnet:   the netlist object
+   c:        name of the additional circuit
+   n:        name of the inserted (internal) node
+   internal: number of new internal node (the original external node) */
+circuit * splitMicrostrip (circuit * base, circuit * line, net * subnet,
+			   char * c, char * n, int internal) {
+  if (line == NULL) {
+    line = new msline ();
+    char * name = circuit::createInternal (c, base->getName ());
+    char * node = circuit::createInternal (n, base->getName ());
+    line->setName (name);
+    line->setNode (1, base->getNode(internal)->getName ());
+    line->setNode (2, node, 1);
+    subnet->insertCircuit (line);
+    free (name);
+    free (node);
+  }
+  base->setNode (internal, line->getNode(2)->getName (), 1);
+  return line;
+}
+
+/* This function is the counterpart of the above routine.  It removes
+   the microstrip circuit from the netlist and re-assigns the original
+   node. */
+void disableMicrostrip (circuit * base, circuit * line, net * subnet,
+			int internal) {
+  if (line != NULL) {
+    subnet->removeCircuit (line, 0);
+    base->setNode (internal, line->getNode(1)->getName (), 0);
+  }
 }
 
 void mstee::initDC (void) {
   setVoltageSources (2);
+  setInternalVoltageSource (1);
   allocMatrixMNA ();
   voltageSource (1, 1, 2);
   voltageSource (2, 1, 3);
+  if (deviceEnabled (lineA)) {
+    disableMicrostrip (this, lineA, getNet (), 1);
+  }
+  if (deviceEnabled (lineB)) {
+    disableMicrostrip (this, lineB, getNet (), 2);
+  }
+  if (deviceEnabled (line2)) {
+    disableMicrostrip (this, line2, getNet (), 3);
+  }
 }
 
 void mstee::initAC (void) {
+  setVoltageSources (3);
+  setInternalVoltageSource (1);
+  allocMatrixMNA ();
+  setB (1, 1, +1); setB (2, 2, +1); setB (3, 3, +1);
+  setC (1, 1, -1); setC (2, 2, -1); setC (3, 3, -1);
+  initLines ();
+  lineA->initAC ();
+  lineB->initAC ();
+  line2->initAC ();
+}
+
+void mstee::calcAC (nr_double_t frequency) {
+  calcPropagation (frequency);
+
+  lineA->setProperty ("L", La);
+  lineB->setProperty ("L", Lb);
+  line2->setProperty ("L", L2);
+  lineA->calcAC (frequency);
+  lineB->calcAC (frequency);
+  line2->calcAC (frequency);
+
+  // calculate Z-parameters
+  setD (1, 1, rect (0, -1 / Ta2 / Bt));
+  setD (1, 2, rect (0, -1 / sqrt (Ta2 * Tb2) / Bt));
+  setD (1, 3, rect (0, -1 / sqrt (Ta2) / Bt));
+  setD (2, 1, rect (0, -1 / sqrt (Ta2 * Tb2) / Bt));
+  setD (2, 2, rect (0, -1 / Tb2 / Bt));
+  setD (2, 3, rect (0, -1 / sqrt (Tb2) / Bt));
+  setD (3, 1, rect (0, -1 / sqrt (Ta2) / Bt));
+  setD (3, 2, rect (0, -1 / sqrt (Tb2) / Bt));
+  setD (3, 3, rect (0, -1 / Bt));
+}
+
+void mstee::initTR (void) {
   initDC ();
 }

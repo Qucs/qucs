@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.72 2005-01-28 19:24:38 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.73 2005-02-01 22:56:36 raimi Exp $
  *
  */
 
@@ -225,6 +225,10 @@ static struct special_t checker_specials[] = {
   { "MGAP",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "MCOUPLED", "Model",     { "Kirschning", "Hammerstad", NULL } },
   { "MCOUPLED", "DispModel", { "Kirschning", "Getsinger", NULL } },
+  { "MTEE",   "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			       "Getsinger", "Schneider", "Pramanick",
+			       "Hammerstad", NULL } },
+  { "MTEE",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { NULL, NULL, { NULL } }
 };
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.7 2005-01-24 19:36:59 raimi Exp $
+ * $Id: acsolver.cpp,v 1.8 2005-02-01 22:56:35 raimi Exp $
  *
  */
 
@@ -65,7 +65,7 @@ acsolver::~acsolver () {
    based on the given acsolver object. */
 acsolver::acsolver (acsolver & o) : nasolver<complex> (o) {
   swp = o.swp ? new sweep (*(o.swp)) : NULL;
-  vn = o.vn ? new tvector<complex> (*(o.vn)) : NULL;
+  vn = o.vn ? new tvector<nr_double_t> (*(o.vn)) : NULL;
   noise = o.noise;
 }
 
@@ -164,10 +164,13 @@ void acsolver::saveNoiseResults (vector * f) {
 void acsolver::solve_noise (void) {
   int N = countNodes ();
 
+  // save usual AC results
+  tvector<complex> xsave = *x;
+
   // create the Cy matrix
   createNoiseMatrix ();
   // create noise result vector if necessary
-  if (vn == NULL) vn = new tvector<complex> (N);
+  if (vn == NULL) vn = new tvector<nr_double_t> (N);
 
   // temporary result vector for transimpedances
   tvector<complex> vz = tvector<complex> (N);
@@ -184,6 +187,9 @@ void acsolver::solve_noise (void) {
     vz.set (*x, 1, N);          // save transimpedance vector
 
     // compute actual noise voltage
-    vn->set (i, sqrt (scalar (vz * (*C), conj (vz))));
+    vn->set (i, sqrt (real (scalar (vz * (*C), conj (vz)))));
   }
+
+  // restore usual AC results
+  *x = xsave;
 }
