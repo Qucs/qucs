@@ -2304,7 +2304,7 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
   if(!NetlistFile->open(IO_WriteOnly)) return false;
 
   QTextStream stream(NetlistFile);
-  stream << "# Qucs " << VERSION << "  " << DocName << "\n";    // first line is docu
+  stream << "# Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";    // first line is docu
 
 
   if(!giveNodeNames(&stream)) {
