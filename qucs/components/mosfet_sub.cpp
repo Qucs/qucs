@@ -181,7 +181,8 @@ Component* MOSFET_sub::info_p(QString& Name,
 
   if(getNewOne) {
     MOSFET_sub* p = new MOSFET_sub();
-    p->Props.getFirst()->Value = "pfet";
+    p->Props.first()->Value = "pfet";
+    p->Props.next()->Value = "-1.0 V";
     p->recreate();
     return p;
   }

@@ -74,12 +74,13 @@ QucsView::~QucsView()
 void QucsView::drawContents(QPainter *p, int, int, int, int)
 {
   QucsDoc *d = Docs.current();
-  d->paintGrid(p, contentsX(), contentsY(), visibleWidth(), visibleHeight());
 
   Painter.init(p, d->Scale, -d->ViewX1, -d->ViewY1);
   Painter.DX -= double(contentsX());
   Painter.DY -= double(contentsY());
 
+  d->paintGrid(&Painter, contentsX(), contentsY(),
+			visibleWidth(), visibleHeight());
   d->paint(&Painter);
 //  drawn = false;
 }
@@ -156,12 +157,20 @@ void QucsView::enlargeView(int x1, int y1, int x2, int y2)
   if(x2 > d->UsedX2) d->UsedX2 = x2;
   if(y2 > d->UsedY2) d->UsedY2 = y2;
 
-  if(x1 < d->ViewX1) { dx = d->ViewX1-x1+40; d->ViewX1 = x1-40; }
-  if(y1 < d->ViewY1) { dy = d->ViewY1-y1+40; d->ViewY1 = y1-40; }
+  if(x1 < d->ViewX1) {
+    dx = int(d->Scale * double(d->ViewX1-x1+40));
+    d->ViewX1 = x1-40;
+  }
+  if(y1 < d->ViewY1) {
+    dy = int(d->Scale * double(d->ViewY1-y1+40));
+    d->ViewY1 = y1-40;
+  }
   if(x2 > d->ViewX2) d->ViewX2 = x2+40;
   if(y2 > d->ViewY2) d->ViewY2 = y2+40;
 
-  resizeContents(d->ViewX2-d->ViewX1,d->ViewY2-d->ViewY1);
+  resizeContents(int(d->Scale*double(d->ViewX2 - d->ViewX1)),
+		 int(d->Scale*double(d->ViewY2 - d->ViewY1)));
+//  resizeContents(d->ViewX2-d->ViewX1,d->ViewY2-d->ViewY1);
   scrollBy(dx,dy);
 }
 
@@ -1755,7 +1764,7 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
       if(delta < 0) Scaling = double(-delta)/60.0/1.1;
       else Scaling = 1.1*60.0/double(delta);
       Scaling = Zoom(Scaling);
-      center(int(Event->x()*Scaling), int(Event->y()*Scaling));
+//      center(Event->x(), Event->y());
       viewport()->repaint();
       drawn = false;
   }
