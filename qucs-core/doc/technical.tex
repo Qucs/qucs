@@ -57,7 +57,7 @@
 \vspace*{24pt}
 
 Copyright \copyright{} 2003, 2004 Michael Margraf 
-\textless margraf@mwt.ee.tu-berlin.de\textgreater \par
+\textless michael.margraf@alumni.tu-berlin.de\textgreater \par
 Copyright \copyright{} 2003, 2004 Stefan Jahn 
 \textless jahn@mwt.ee.tu-berlin.de\textgreater \par
 
@@ -92,6 +92,47 @@ Documentation License".
 \chapter{Scattering parameters}
 %\addcontentsline{toc}{chapter}{Scattering parameters}
 
+\section{Introduction and Definition}
+%\addcontentsline{toc}{section}{Introduction and Definition}
+
+Voltage and current are hard to measure at high frequencies. Short and open circuits
+(used by definitions of most n-port parameters) are hard to realize at high frequencies.
+Therefore, microwave engineers work with so-called scattering parameters (S parameters),
+that uses waves and matched terminations (normally $50 \Omega$). This procedure also
+minimizes reflexion problems.\\
+A (normalized) wave is defined as ingoing wave $\underline{a}$ or outgoing wave
+$\underline{b}$:
+\begin{equation}
+\underline{a} = \frac{u+Z_0\cdot i}{\sqrt{\text{Re}(Z_0)}} \qquad
+\underline{b} = \frac{u-Z_0^*\cdot i}{\sqrt{\text{Re}(Z_0)}}
+\end{equation}
+where $u$ is (peak) voltage, $i$ (peak) current and $Z_0$ reference impedance. The waves
+are related to power in the following way.
+\begin{equation}
+P = \frac{1}{2}\cdot \left( |\underline{a}|^2 - |\underline{b}|^2 \right)
+\end{equation}
+Now, characterizing an n-port is straight-forward:
+\begin{equation}
+\begin{pmatrix}
+\underline{b}_1\\
+\vdots\\
+\underline{b}_n\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{S}_{11} & \ldots & \underline{S}_{1n}\\
+\vdots & \ddots & \vdots\\
+\underline{S}_{n1} & \ldots & \underline{S}_{nn}\\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_1\\
+\vdots\\
+\underline{a}_n\\
+\end{pmatrix}
+\end{equation}
+
+
 \section{Computing with S-parameters}
 %\addcontentsline{toc}{section}{Computing with S-parameters}
 
@@ -105,7 +146,7 @@ impedances other than $50\ohm$ in a simulation the following two step
 process must be applied to the resulting S-parameter analysis.
 
 \begin{equation}
-\left[\underline{N}\right] = 
+\left[\underline{N}\right] =
 \left(\left[\underline{S}\right] - \left[\underline{R}\right]\right) \cdot
 \left(\left[\underline{E}\right] - \left[\underline{R}\right] \cdot \left[\underline{S}\right]\right)^{-1}
 \end{equation}
@@ -158,6 +199,14 @@ element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
 \subsection{S-parameters in CAE programs}
 %\addcontentsline{toc}{subsection}{S-parameters in CAE programs}
 
+The most common task of a simulation program is to compute the S parameters of an arbitrary
+network that consists of many elementary components connected to each other. To perform
+this, one can build a large matrix containing the S parameters of all components and then
+use matrix operations to solve it. However this method needs heavy algorithms. A more elegant
+possibility was published in \cite{Compton}: Each step computes only one connection and so
+unites two connected components to a single S parameter block. This procedure has to be done
+with every connection until there is only one block left ehose S parameters therefore are the
+simulation result.\\
 Connecting port $k$ of circuit $(\underline{S})$ with port $l$ of circuit $(\underline{T})$,
 the new S-parameters are
 \begin{equation}
@@ -165,7 +214,7 @@ the new S-parameters are
       \frac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}
            {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
 \end{equation}
-with $i$ and $j$ being ports of $(\underline{S})$. Furthermore, it is
+with $i$ and $j$ both being ports of $(\underline{S})$. Furthermore, it is
 \begin{equation}
 \underline{S}'_{mj} =
       \frac{\underline{S}_{kj}\cdot \underline{T}_{ml}}
@@ -181,7 +230,7 @@ If two ports of the same circuit $(\underline{S})$ are connected, the new S-para
            + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}
            {(1-\underline{S}_{kl})\cdot (1-\underline{S}_{lk}) - \underline{S}_{kk}\cdot \underline{S}_{ll}}.
 \end{equation}
-If more than one port is connected at a node, one have to insert a tee. Its S-parameters writes as
+If more than two ports are connected at a node, one have to insert a tee. Its S-parameters writes as
 follows.
 \begin{equation}
 \begin{pmatrix}
@@ -467,6 +516,7 @@ S_{21} = \sqrt{1-(S_{11})^2}\cdot\sqrt{1-(S_{22})^2}
 
 \subsection{Circulator}
 %\addcontentsline{toc}{subsection}{Circulator}
+\label{sec:CirculatorSparameter}
 
 A circulator is a 3-port device, transporting incoming waves lossless
 from port 1 to port 2, from port 2 to port 3 and from port 3 to port
@@ -827,8 +877,10 @@ operation:
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
 
 Many components do not produce any noise. Every element of their noise
-correlation matrix therefore equals exactly zero. Examples are
-capacitors, inductors, transformers, voltage and current sources.
+correlation matrix therefore equals exactly zero. Examples are lossless,
+passive components, i.e. capacitors, inductors, transformers, circulators,
+phase shifters. Furthermore ideal voltage and current sources (without internal
+resistance) as well as gyrators also don't produce any noise.
 
 \subsection{Resistor}
 %\addcontentsline{toc}{subsection}{Resistor}
@@ -2084,6 +2136,43 @@ Z_{12} = 0
 Z_{21} = 2\cdot\sqrt{Z_1\cdot Z_2}  \qquad
 Z_{22} = Z_2
 \end{equation}
+
+\subsection*{Circulator}
+\addcontentsline{toc}{subsection}{Circulator}
+
+The ideal circulator cannot be characterized with Z or Y parameters, because
+their values are infinity. But implementing with S parameters is practical.
+(see chapter \ref{sec:CirculatorSparameter} for S parameters of the
+circulator)
+\begin{equation}
+\begin{bmatrix}
+ . & . & .  &  1 & 0 & 0\\
+ . & . & .  &  0 & 1 & 0\\
+ . & . & .  &  0 & 0 & 1\\
+S_{11}-1 &  S_{12} & S_{13} & Z_0\cdot (S_{11}+1) & Z_0\cdot S_{12} & Z_0\cdot S_{13}\\
+S_{21} &  S_{22}-1 & S_{23} & Z_0\cdot S_{21} & Z_0\cdot (S_{22}+1) & Z_0\cdot S_{23}\\
+S_{31} &  S_{32} & S_{33}-1 & Z_0\cdot S_{31} & Z_0\cdot S_{32} & Z_0\cdot (S_{33}+1)
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+I_{i,1}\\
+I_{i,2}\\
+I_{i,3}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+0\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
 
 \nocite{*}
 
