@@ -17,13 +17,16 @@
 #endif
 
 #include "bwfilter.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <qstring.h>
 
-
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+ 
 bwfilter::bwfilter()
 {
 }
@@ -112,7 +115,6 @@ QString* bwfilter::createSchematic(int Class, double impedance, int order, doubl
   double *BwPi = solveFilter(Class, impedance, order, frequency);
   if(!BwPi)  return 0;
 
-
   // create the Qucs schematic
   QString *s = new QString("<Qucs Schematic ");
   *s += PACKAGE_VERSION;
@@ -122,8 +124,8 @@ QString* bwfilter::createSchematic(int Class, double impedance, int order, doubl
   *s += QString("<Pac P1 1 60 310 18 -26 0 1 \"1\" 1 \"%1 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0>\n").arg(impedance);
   *s += "<GND * 1 60 340 0 0 0 0>\n";
 
-  int x = 0;
-  for(int i = 0; i < order; i++) {
+  int i, x = 0;
+  for(i = 0; i < order; i++) {
     x = 100 +((i+1) * 70);
     int yc = 310;
     int yl = 240;
@@ -152,7 +154,7 @@ QString* bwfilter::createSchematic(int Class, double impedance, int order, doubl
   *s += "</Components>\n";
 
   *s += "<Wires>\n";
-  for(int i = 0; i < (order / 2) + 1; i++)
+  for(i = 0; i < (order / 2) + 1; i++)
     {
       x = 170 +(i * 140);
       *s += QString("<%1 240 %2 280 \"\" 0 0 0>\n").arg(x).arg(x);
@@ -161,7 +163,7 @@ QString* bwfilter::createSchematic(int Class, double impedance, int order, doubl
   if(order & 1)
     *s += QString("<%1 240 %2 280 \"\" 0 0 0>\n").arg(x + 110).arg(x + 110);
 
-  for(int i = 0; i < (order / 2); i++)
+  for(i = 0; i < (order / 2); i++)
     {
       x = 170 +(i * 140);
       *s += QString("<%1 240 %2 240 \"\" 0 0 0>\n").arg(x).arg(x + 40);

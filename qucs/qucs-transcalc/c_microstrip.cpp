@@ -18,7 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA, 02111-1307, USA
  *
- * $Id: c_microstrip.cpp,v 1.1 2005-03-13 14:46:35 margraf Exp $
+ * $Id: c_microstrip.cpp,v 1.2 2005-03-19 11:51:31 raimi Exp $
  *
  */
 
@@ -116,7 +116,6 @@ void c_microstrip::delta_u_thickness()
  */
 void c_microstrip::compute_single_line()
 {
-  double ht;
   double w_h, ht_h;
   double Z0_single, er_eff_single;
 

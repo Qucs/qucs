@@ -22,10 +22,11 @@
 #include <qcolor.h>
 #include <qptrlist.h>
 
+#include "wire.h"
+#include "node.h"
+#include "diagrams/diagram.h"
+
 class QucsApp;
-class Wire;
-class Node;
-class Diagram;
 class Component;
 
 // constants may be missing on windows systems
