@@ -23,7 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- implement user-defined subcircuit paintings
+	- implement user-defined subcircuit paintings
 - make tabdiagram 'scrollable' (for long value lists)
 - allow tabdiagram to display variables with different dependencies
 - shutdown external programs on application exit
