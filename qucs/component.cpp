@@ -229,8 +229,8 @@ QString Component::save()
 {
   QString num;
   QString s = "<"+Sign;
-  if(Model.isEmpty()) s += " *";
-  else s += " "+Model;
+//  if(Model.isEmpty()) s += " *";
+//  else s += " "+Model;
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
 
@@ -267,40 +267,40 @@ bool Component::load(const QString& _s)
   QString n;
   Sign = s.section(' ',0,0);    // Sign
 
-  Model = s.section(' ',1,1);   // Model
-  if(Model == "*") Model = "";
+//  Model = s.section(' ',1,1);   // Model
+//  if(Model == "*") Model = "";
 
-  Name = s.section(' ',2,2);      // Name
+  Name = s.section(' ',1,1);      // Name
   if(Name == "*") Name = "";
 
-  n  = s.section(' ',3,3);    // isActive
+  n  = s.section(' ',2,2);    // isActive
   if(n.toInt(&ok) == 1) isActive = true;
   else isActive = false;
   if(!ok) return false;
 
-  n  = s.section(' ',4,4);    // cx
+  n  = s.section(' ',3,3);    // cx
   cx = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',5,5);    // cy
+  n  = s.section(' ',4,4);    // cy
   cy = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',6,6);    // tx
+  n  = s.section(' ',5,5);    // tx
   ttx = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',7,7);    // ty
+  n  = s.section(' ',6,6);    // ty
   tty = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',8,8);    // mirroredX
+  n  = s.section(' ',7,7);    // mirroredX
   if(n.toInt(&ok) == 1) mirroredX = true;
   else mirroredX = false;
   if(!ok) return false;
   if(mirroredX) mirrorX();  // mirror component
 
-  n  = s.section(' ',9,9);    // rotated
+  n  = s.section(' ',8,8);    // rotated
   tmp = n.toInt(&ok);
   if(!ok) return false;
   for(int z=0; z<tmp; z++) rotate();   // rotate component
@@ -537,7 +537,7 @@ dcFeed::dcFeed()
   tx = x1+5;
   ty = y2+4;
   Sign  = QString("DCfeed");
-  Model = QString("DCfeed");
+  Model = QString("dcfeed");
   Name  = QString("L");
 
 //  Props.append(new Property("L", "1 nH", true, "inductance in Henry"));
@@ -639,7 +639,7 @@ Transformer::Transformer()
   Model = QString("Tr");
   Name  = QString("Tr");
 
-  Props.append(new Property("n", "1", true, "voltage transformation ration"));
+  Props.append(new Property("K", "1", true, "voltage transformation ration"));
 }
 
 Transformer::~Transformer()
@@ -1041,14 +1041,19 @@ VCCS::VCCS()
   Lines.append(new Line( 11,-30, 30,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, 30, 30, 30,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-12,-30,-12,-26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 30,-12, 26,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12,-30,-12,-23,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12, 30,-12, 23,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11,-30, 11,-11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, 30, 11, 11,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-12,-20,-12, 20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 20,-17, 11,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 20, -8, 11,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12,-18,-12, 18,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12, 18,-17,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12, 18, -8,  9,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-25,-27, 25,-27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25,-27, 25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25, 27,-25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line(-25, 27,-25,-27,QPen(QPen::darkGray,1)));
 
   Ports.append(new Port(-30,-30));
   Ports.append(new Port( 30,-30));
@@ -1065,6 +1070,7 @@ VCCS::VCCS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1 S", true, "forward transconductance"));
+  Props.append(new Property("T", "0", true, "channel delay time"));
 }
 
 VCCS::~VCCS()
@@ -1098,6 +1104,11 @@ CCCS::CCCS()
   Lines.append(new Line(-12, 20,-17, 11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-12, 20, -8, 11,QPen(QPen::darkBlue,2)));
 
+  Lines.append(new Line(-25,-27, 25,-27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25,-27, 25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25, 27,-25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line(-25, 27,-25,-27,QPen(QPen::darkGray,1)));
+
   Ports.append(new Port(-30,-30));
   Ports.append(new Port( 30,-30));
   Ports.append(new Port( 30, 30));
@@ -1113,6 +1124,7 @@ CCCS::CCCS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1", true, "forward transfer factor"));
+  Props.append(new Property("T", "0", true, "channel delay time"));
 }
 
 CCCS::~CCCS()
@@ -1136,18 +1148,23 @@ VCVS::VCVS()
   Lines.append(new Line( 11,-30, 30,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, 30, 30, 30,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-12,-30,-12,-26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 30,-12, 26,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12,-30,-12,-23,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12, 30,-12, 23,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11,-30, 11,-11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, 30, 11, 11,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-12,-20,-12, 20,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 20,-17, 11,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-12, 20, -8, 11,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12,-18,-12, 18,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12, 18,-17,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12, 18, -8,  9,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line( 25,-21, 25,-15,QPen(QPen::red,1)));
-  Lines.append(new Line( 22,-18, 28,-18,QPen(QPen::red,1)));
-  Lines.append(new Line( 22, 18, 28, 18,QPen(QPen::black,1)));
+  Lines.append(new Line( 19,-21, 19,-15,QPen(QPen::red,1)));
+  Lines.append(new Line( 16,-18, 22,-18,QPen(QPen::red,1)));
+  Lines.append(new Line( 16, 18, 22, 18,QPen(QPen::black,1)));
+
+  Lines.append(new Line(-25,-27, 25,-27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25,-27, 25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25, 27,-25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line(-25, 27,-25,-27,QPen(QPen::darkGray,1)));
 
   Ports.append(new Port(-30,-30));
   Ports.append(new Port( 30,-30));
@@ -1164,6 +1181,7 @@ VCVS::VCVS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1", true, "forward transfer factor"));
+  Props.append(new Property("T", "0", true, "channel delay time"));
 }
 
 VCVS::~VCVS()
@@ -1194,9 +1212,14 @@ CCVS::CCVS()
   Lines.append(new Line(-12, 20,-17, 11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-12, 20, -8, 11,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line( 25,-21, 25,-15,QPen(QPen::red,1)));
-  Lines.append(new Line( 22,-18, 28,-18,QPen(QPen::red,1)));
-  Lines.append(new Line( 22, 18, 28, 18,QPen(QPen::black,1)));
+  Lines.append(new Line( 19,-21, 19,-15,QPen(QPen::red,1)));
+  Lines.append(new Line( 16,-18, 22,-18,QPen(QPen::red,1)));
+  Lines.append(new Line( 16, 18, 22, 18,QPen(QPen::black,1)));
+
+  Lines.append(new Line(-25,-27, 25,-27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25,-27, 25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line( 25, 27,-25, 27,QPen(QPen::darkGray,1)));
+  Lines.append(new Line(-25, 27,-25,-27,QPen(QPen::darkGray,1)));
 
   Ports.append(new Port(-30,-30));
   Ports.append(new Port( 30,-30));
@@ -1213,6 +1236,7 @@ CCVS::CCVS()
   Name  = QString("SRC");
 
   Props.append(new Property("G", "1 Ohm", true, "forward transfer factor"));
+  Props.append(new Property("T", "0", true, "channel delay time"));
 }
 
 CCVS::~CCVS()

@@ -21,6 +21,7 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qmessagebox.h>
+#include <qvalidator.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name )
@@ -28,94 +29,135 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
 {
   setCaption("Edit Component Properties");
 
-  QGridLayout *g = new QGridLayout(this,6,2,5,5);
+  QGridLayout *g = new QGridLayout(this,7,2,5,5);
 
   QLabel *label1 = new QLabel(this);
   g->addMultiCellWidget(label1,0,0,0,1);
 
-  prop = new QListBox(this);
+  prop = new QListView(this);
   prop->setMinimumSize(200, 150);
-  g->addMultiCellWidget(prop,1,4,0,0);
+//  prop->setMaximumSize(250, 500);
+  prop->addColumn("Name");
+  prop->addColumn("Value");
+  prop->addColumn("display");
+  prop->setSorting(-1);   // no sorting
+  g->addMultiCellWidget(prop,1,5,0,0);
 
   Name = new QLabel(this);
-//  Name->setText("Name");
   g->addWidget(Name,1,1);
   
+  Description = new QLabel(this);
+  g->addWidget(Description,2,1);
+
+  Expr.setPattern("[^\"]+");  // valid expression for property input 'edit'
+  QValidator *Validator = new QRegExpValidator(Expr, this);
+
   edit = new QLineEdit(this);
   edit->setMinimumWidth(150);
-  g->addWidget(edit,2,1);
-  connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyInput()));
+  g->addWidget(edit,3,1);
+  edit->setValidator(Validator);
+  connect(edit, SIGNAL(textChanged(const QString&)), SLOT(slotApplyChange(const QString&)));
 
   disp = new QCheckBox("display in schematic",this);
-  g->addWidget(disp,3,1);
+  g->addWidget(disp,4,1);
+  connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
   
   QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
   v->addStretch(1);
-  g->addLayout(v,4,1);
+  g->addLayout(v,5,1);
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
-  g->addMultiCellWidget(h2,5,5,0,1);
+  g->addMultiCellWidget(h2,6,6,0,1);
 
   connect(new QPushButton("OK",h2), SIGNAL(clicked()), SLOT(slotButtOK()));
-  connect(new QPushButton("Apply",h2), SIGNAL(clicked()), SLOT(slotButtApply()));
+  connect(new QPushButton("Apply",h2), SIGNAL(clicked()), SLOT(slotApplyInput()));
   connect(new QPushButton("Cancel",h2), SIGNAL(clicked()), SLOT(close()));
   
   // ------------------------------------------------------------
   Comp = c;
   label1->setText(c->Description);
+  changed = false;
 
 //  prop->clear();
   
+  QString s;
   // insert all properties into the ListBox
-  for(Property *p = c->Props.first(); p != 0; p = c->Props.next())
-    prop->insertItem(p->Name+"="+p->Value);
-
-  if(prop->count() > 0) {
-    prop->setCurrentItem(0);
-    slotSelectProperty(0);
+  for(Property *p = c->Props.last(); p != 0; p = c->Props.prev()) {
+    if(p->display) s = "yes";
+    else s = "no";
+    prop->insertItem(new QListViewItem(prop,p->Name,p->Value,s));
   }
 
-  connect(prop, SIGNAL(highlighted(int)), SLOT(slotSelectProperty(int)));
+  if(prop->childCount() > 0) {
+    prop->setCurrentItem(prop->firstChild());
+    slotSelectProperty(prop->firstChild());
+  }
+
+  connect(prop, SIGNAL(clicked(QListViewItem*)), SLOT(slotSelectProperty(QListViewItem*)));
 }                                           
 
 ComponentDialog::~ComponentDialog()
 {
 }
 
-void ComponentDialog::slotSelectProperty(int n)
+// -------------------------------------------------------------------------
+void ComponentDialog::slotSelectProperty(QListViewItem *item)
 {
-  QString s = prop->text(n);  //item->text();
-  int m = s.findRev("=");
-  edit->setText(s.right(s.length()-m-1));
-  s = s.left(m);
-  Name->setText(s);
+  Name->setText(item->text(0));
+  edit->setText(item->text(1));
   
-  Property *p = Comp->Props.at(n);
-  disp->setChecked(p->display);
+  if(item->text(2) == "yes") disp->setChecked(true);
+  else disp->setChecked(false);
+
+  Property *pp;
+  for(pp = Comp->Props.first(); pp!=0; pp = Comp->Props.next())
+    if(pp->Name == item->text(0)) break;
+  Description->setText(pp->Description);
 }
 
+// -------------------------------------------------------------------------
+void ComponentDialog::slotApplyChange(const QString& Text)
+{
+  prop->currentItem()->setText(1, Text);
+}
+
+// -------------------------------------------------------------------------
+void ComponentDialog::slotApplyState(int State)
+{
+  if(State == QButton::On) prop->currentItem()->setText(2, "yes");
+  else prop->currentItem()->setText(2, "no");
+}
+
+// -------------------------------------------------------------------------
 void ComponentDialog::slotButtOK()
 {
-  close();
-}
-
-void ComponentDialog::slotButtApply()
-{
   slotApplyInput();
+//  close();
+  if(changed) done(1);
+  else done(0);
 }
 
+// -------------------------------------------------------------------------
 void ComponentDialog::slotApplyInput()
 {
-  int i = prop->currentItem();
-  if(i == -1) return;
+  QListViewItem *item = prop->firstChild();
+  if(item == 0) return;
 
-  Property *p = Comp->Props.at(i);
-  p->Value    = edit->text();
-  p->display  = disp->isChecked();
+  bool display;
+  // take all the new property values
+  for(Property *pp = Comp->Props.first(); pp!=0; pp = Comp->Props.next()) {
+    if(pp->Value != item->text(1)) {
+      pp->Value = item->text(1);
+      changed = true;
+    }
 
-  prop->insertItem("", -1); // workaround for QT 3.1: otherwise it crashes if there's only one item
-  prop->changeItem(p->Name+"="+p->Value, i);  // new value into ListBox
-  prop->removeItem(prop->count()-1);  // undo workaround
-  prop->repaint();
+    display = (item->text(2) == "yes");
+    if(pp->display != display) {
+      pp->display = display;
+      changed = true;
+    }
+    
+    item = item->itemBelow();   // next item
+  }
 }

@@ -115,6 +115,7 @@ class QucsApp : public QMainWindow
     void slotProjDelButt();
     void slotChangeView(int id);
     void slotSimulate();
+    void slotAfterSimulation();
     void slotChangePage();
     void slotSelect(bool on);
     void slotEditActivate(bool on);
@@ -125,6 +126,7 @@ class QucsApp : public QMainWindow
     SimMessage sim;   // simulation message window
 
     QucsView *view;   // the working area with schematics, data displays etc.
+    QPrinter Printer; // printer global in order to remember the user settings
 
 
     QPopupMenu *fileMenu;    // file_menu contains all items of the menubar entry "File"
