@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.7 2004/02/01 22:36:03 ela Exp $
+ * $Id: circuit.h,v 1.8 2004/02/03 21:57:28 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@ class circuit : public object
   ~circuit ();
   virtual void calcS (nr_double_t) { }
   virtual void calcY (void) { }
+  virtual void initY (void) { }
   void setNode (int, char *);
   node * getNode (int);
   complex getS (int x, int y) { return data[x - 1 + (y - 1) * size]; }

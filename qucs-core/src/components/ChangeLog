@@ -1,3 +1,8 @@
+2004-02-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* diode.cpp: Fixed iterative implementation of the simple diode
+	component.
+
 2004-02-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp: New component.
