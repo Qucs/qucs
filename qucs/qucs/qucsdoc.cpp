@@ -107,7 +107,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
       Bar->addTab(Tab);  // create tab in TabBar
       Bar->repaint();
     }
-  }
+  } else Bar = NULL;
 
   DocChanged = false;
 
@@ -123,7 +123,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
 
 QucsDoc::~QucsDoc()
 {
-  if(Bar != 0) Bar->removeTab(Tab);    // delete tab in TabBar
+  if(Bar) Bar->removeTab(Tab);    // delete tab in TabBar
 }
 
 // ---------------------------------------------------
@@ -2387,7 +2387,8 @@ bool QucsDoc::giveNodeNames(QTextStream *stream)
     if(pc->isActive)
       if(pc->Model == "GND") pc->Ports.first()->Connection->Name = "gnd";
       else if(pc->Model.left(3) == "Sub") {
-             QucsDoc *d = new QucsDoc(0, pc->Props.getFirst()->Value);
+             QucsDoc *d = new QucsDoc(0, 
+			    QucsWorkDir.filePath(pc->Props.getFirst()->Value));
              if(!d->File.load()) {  // load document if possible
                delete d;
                return false;

@@ -47,7 +47,7 @@ QFont savingFont;    // to remember which font to save in "qucsrc"
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
-  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
+  QFile file(QucsHomeDir.filePath("qucsrc"));
   if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
 
   QTextStream stream(&file);
@@ -95,7 +95,7 @@ bool loadSettings()
 // Saves the settings in the settings file.
 bool saveApplSettings(QucsApp *qucs)
 {
-  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
+  QFile file(QucsHomeDir.filePath("qucsrc"));
   if(!file.open(IO_WriteOnly)) {    // settings file cannot be created
     QMessageBox::warning(0, QObject::tr("Warning"),
 			QObject::tr("Cannot save settings !"));
@@ -166,6 +166,8 @@ QString complexRad (double real, double imag, int Precision)
 
 int main(int argc, char *argv[])
 {
+  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
+  QucsHomeDir.setPath(QDir::homeDirPath()+"/.qucs");
   loadSettings();
 
   QApplication a(argc, argv);
