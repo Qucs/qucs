@@ -34,7 +34,7 @@ public:
   Diagram* newOne();
   int  calcDiagram();
   void calcLimits();
-  void calcCoordinate(double* &, double* &, int*, int*, Axis*);
+  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 };
 
 #endif

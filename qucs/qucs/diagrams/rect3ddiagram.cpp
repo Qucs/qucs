@@ -29,9 +29,9 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
 
-  rotX = 0.0;
-  rotY = 0.0; //45.0;
-  rotZ = 0.0; //315.0;
+  rotX = 315;
+  rotY = 0;
+  rotZ = 225;
 
   Name = "Rect3D";
   calcDiagram();
@@ -45,9 +45,9 @@ Rect3DDiagram::~Rect3DDiagram()
 // Calculates the coefficients for 3D -> 2D transformation
 void Rect3DDiagram::calcCoefficients()
 {
-  double rX = rotX * M_PI/180.0;
-  double rY = rotY * M_PI/180.0;
-  double rZ = rotZ * M_PI/180.0;
+  double rX = double(rotX) * M_PI/180.0;
+  double rY = double(rotY) * M_PI/180.0;
+  double rZ = double(rotZ) * M_PI/180.0;
   cxx =  cos(rY) * cos(rZ);
   cxy = -cos(rY) * sin(rZ);
   cxz =  sin(rY);
@@ -69,17 +69,19 @@ double Rect3DDiagram::calcY_2D(double x, double y, double z)
 }
 
 // ------------------------------------------------------------
-void Rect3DDiagram::calcCoordinate(double* &xD, double* &yD,
+void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 				   int *px, int *py, Axis*)
 {
-  double x3D = *(xD++) - xAxis.low;
-  double y3D = *(yD++) - yAxis.low;
-  double z3D = *(yD++) - zAxis.low;
-debug("values: %g, %g, %g", x3D, y3D, z3D);
+  double x3D = *(zD++);
+  double y3D = *(zD++);
+  double z3D = (sqrt(x3D*x3D + y3D*y3D) - zAxis.low) / (zAxis.up - zAxis.low);
+
+  x3D = (*(xD++) - xAxis.low) / (xAxis.up - xAxis.low);
+  y3D = (*yD - yAxis.low) / (yAxis.up - yAxis.low);
 
   *px = int(calcX_2D(x3D, y3D, z3D) * scaleX + 0.5) + xorig;
   *py = int(calcY_2D(x3D, y3D, z3D) * scaleY + 0.5) + yorig;
-
+//qDebug("%g, %g, %g -> %d, %d", *(xD-1), *yD, *(zD-2), *px, *py);
 /*  if(xAxis.log)
     *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
 		*double(x2) + 0.5);*/
@@ -284,67 +286,106 @@ if(xAxis.log) {
 }
 else {  // not logarithmical
   back = calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
+  back = calcAxisScale(&yAxis, GridNum, zD, zDstep, GridStep, double(x2));
+  back = calcAxisScale(&zAxis, GridNum, zD, zDstep, GridStep, double(x2));
 
-
+debug("xp:  %g, %g", xAxis.low, xAxis.up);
+debug("yp:  %g, %g", yAxis.low, yAxis.up);
+debug("zp:  %g, %g", zAxis.low, zAxis.up);
 
 
   calcCoefficients();
 
   double XMIN_2D, XMAX_2D, YMIN_2D, YMAX_2D, x3D, y3D, z3D, x2D, y2D;
-  double XMAX = fabs(xAxis.up - xAxis.low);
-  double YMAX = fabs(yAxis.up - yAxis.low);
-  double ZMAX = fabs(zAxis.up - zAxis.low);
-debug("up:  %g, %g, %g", xAxis.up, yAxis.up, zAxis.up);
-debug("max: %g, %g, %g", XMAX, YMAX, ZMAX);
-
+//debug("up:  %g, %g, %g", xAxis.up, yAxis.up, zAxis.up);
+//qDebug("-------------");
   int z;
   XMIN_2D = YMIN_2D = XMAX_2D = YMAX_2D = 0.0;  // origin is zero
   for(z=1; z<8; z++) {  // check 2D coordinates of all 8 corners of the quadrat
-    if(z & 1) x3D = XMAX;  else x3D = 0.0;
-    if(z & 2) y3D = YMAX;  else y3D = 0.0;
-    if(z & 4) z3D = ZMAX;  else z3D = 0.0;
+    if(z & 1) x3D = 1.0;  else x3D = 0.0;
+    if(z & 2) y3D = 1.0;  else y3D = 0.0;
+    if(z & 4) z3D = 1.0;  else z3D = 0.0;
     x2D = calcX_2D(x3D, y3D, z3D);
     y2D = calcY_2D(x3D, y3D, z3D);
-debug("2D: %g, %g", x2D, y2D);
+//debug("2D: %g, %g", x2D, y2D);
 
     if(x2D < XMIN_2D)  XMIN_2D = x2D;
     if(x2D > XMAX_2D)  XMAX_2D = x2D;
     if(y2D < YMIN_2D)  YMIN_2D = y2D;
     if(y2D > YMAX_2D)  YMAX_2D = y2D;
   }
-debug("min 2D: %g, %g", XMIN_2D, YMIN_2D);
-debug("max 2D: %g, %g", XMAX_2D, YMAX_2D);
+//debug("min 2D: %g, %g", XMIN_2D, YMIN_2D);
+//debug("max 2D: %g, %g", XMAX_2D, YMAX_2D);
 
   scaleX = double(x2) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
   scaleY = double(y2) / (YMAX_2D - YMIN_2D);
-debug("scale: %g, %g", scaleX, scaleY);
-  xorig  = int(XMIN_2D * scaleX);   // position of origin
-  yorig  = int(YMIN_2D * scaleY);
-debug("orig: %d, %d", xorig, yorig);
+//debug("scale: %g, %g", scaleX, scaleY);
+  xorig  = -int(XMIN_2D * scaleX);   // position of origin
+  yorig  = -int(YMIN_2D * scaleY);
+//debug("orig: %d, %d", xorig, yorig);
 
-  int xi, yi;
+  int xi, yi, xtmp, ytmp;
+  double *px, *py, *pz, val[2];
+  val[0] = zAxis.low;  val[1] = 0.0;
+  px = &xAxis.up;
+  py = &yAxis.low;
+  pz = val;
+  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // x axis
+  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
+//debug("x axis: %d, %d", xi, yi);
+
+  px = &xAxis.up;
+  py = &yAxis.up;
+  pz = val;
+  calcCoordinate(px, pz, py, &xtmp, &ytmp, &zAxis);  // xy area
+  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+
+  px = &xAxis.low;
+  py = &yAxis.up;
+  pz = val;
+  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // y axis
+  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
+//debug("y axis: %d, %d", xi, yi);
+  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+
+  val[0] = zAxis.up;
+  px = &xAxis.low;
+  py = &yAxis.low;
+  pz = val;
+  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // z axis
+  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
+//debug("z axis: %d, %d\n\n", xi, yi);
+
+//qDebug("-------------");
+
+
+/*  int xi, yi, xtmp, ytmp;
   double *px, *py, val[2];
   val[0] = yAxis.low;  val[1] = zAxis.low;
-  px = &xAxis.up;
-  py = val;
-  calcCoordinate(px, py, &xi, &yi, &zAxis);   // x axis
+  xi = int(calcX_2D(1.0, 0.0, 0.0) * scaleX + 0.5) + xorig;
+  yi = int(calcY_2D(1.0, 0.0, 0.0) * scaleY + 0.5) + yorig;
+//  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // x axis
   Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
-debug("x axis: %d, %d", xi, yi);
+//debug("x axis: %d, %d", xi, yi);
 
-  val[0] = yAxis.up;  val[1] = zAxis.low;
-  px = &xAxis.low;
-  py = val;
-  calcCoordinate(px, py, &xi, &yi, &zAxis);   // y axis
+  xtmp = int(calcX_2D(1.0, 1.0, 0.0) * scaleX + 0.5) + xorig;
+  ytmp = int(calcY_2D(1.0, 1.0, 0.0) * scaleY + 0.5) + yorig;
+//  calcCoordinate(px, pz, py, &xtmp, &ytmp, &zAxis);  // xy area
+  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+
+  xi = int(calcX_2D(0.0, 1.0, 0.0) * scaleX + 0.5) + xorig;
+  yi = int(calcY_2D(0.0, 1.0, 0.0) * scaleY + 0.5) + yorig;
+//  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // y axis
   Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
-debug("y axis: %d, %d", xi, yi);
+//debug("y axis: %d, %d", xi, yi);
+  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
 
-  val[0] = yAxis.low;  val[1] = zAxis.up;
-  px = &xAxis.low;
-  py = val;
-  calcCoordinate(px, py, &xi, &yi, &zAxis);   // y axis
+  xi = int(calcX_2D(0.0, 0.0, 1.0) * scaleX + 0.5) + xorig;
+  yi = int(calcY_2D(0.0, 0.0, 1.0) * scaleY + 0.5) + yorig;
+//  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // z axis
   Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
-debug("z axis: %d, %d\n\n", xi, yi);
-
+//debug("z axis: %d, %d\n\n", xi, yi);
+*/
   return 3;
 
 

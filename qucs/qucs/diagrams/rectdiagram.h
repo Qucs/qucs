@@ -35,7 +35,7 @@ public:
   void calcLimits();
   bool calcYAxis(Axis*, int);
   void calcData(Graph *g);
-  void calcCoordinate(double* &, double* &, int*, int*, Axis*);
+  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 };
 
 #endif
