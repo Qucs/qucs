@@ -1,3 +1,11 @@
+2004-08-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mscoupled.cpp: Implemented DC model of microstrip
+	coupled lines.
+
+	* microstrip/msline.cpp: Implemented DC model of microstrip
+	line.
+
 2004-08-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Moved loss calculations into an

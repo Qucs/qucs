@@ -1,3 +1,11 @@
+2004-08-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{S-parameter container with 
+	additional reference port}): Documented 'spfile' class
+	implementations.
+	(subsubsection{Hammerstad and Jensen}): Documented Getsinger's
+	dispersion formulas for coupled microstrips.
+
 2004-08-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Hammerstad and Jensen}):

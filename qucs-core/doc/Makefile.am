@@ -52,7 +52,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   noisejfet.fig noisediode.fig noisesgp.fig tcircuit.fig bridgecircuit.fig    \
   xcircuit.fig picircuit.fig mscoupled.fig msgap.fig mosphysical.fig          \
   mostypes.fig mosfet.fig mosband.fig dcmosfet.fig spmosfet.fig msgapphys.fig \
-  noisemosfet.fig mscoupledphys.fig
+  noisemosfet.fig mscoupledphys.fig spfile.fig spnfile.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.6 2004/08/19 19:44:24 ela Exp $
+ * $Id: msmbend.cpp,v 1.7 2004/08/20 10:45:37 ela Exp $
  *
  */
 
@@ -46,6 +46,7 @@
 msmbend::msmbend () : circuit (2) {
   type = CIR_MSMBEND;
   setVoltageSources (1);
+  setInternalVoltageSource (1);
 }
 
 void msmbend::calcSP (nr_double_t frequency) {
