@@ -121,7 +121,7 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
       if(!loadPaintings(stream, (QPtrList<Painting>*)pe)) return false; }
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Clipboard Format Error:\nUnknown field!"));
+		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
       return false;
     }
   }
@@ -145,41 +145,41 @@ int QucsFile::save()
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
   stream << "<Properties>\n";
-  stream << "   <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
+  stream << "  <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
 			<< Doc->ViewX2<<","<<Doc->ViewY2;
   stream << ","<<Doc->Scale<<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
-  stream << "   <Grid=" << Doc->GridX<<","<<Doc->GridY<<","
+  stream << "  <Grid=" << Doc->GridX<<","<<Doc->GridY<<","
 			<< Doc->GridOn << ">\n";
-  stream << "   <DataSet=" << Doc->DataSet << ">\n";
-  stream << "   <DataDisplay=" << Doc->DataDisplay << ">\n";
-  stream << "   <OpenDisplay=" << Doc->SimOpenDpl << ">\n";
+  stream << "  <DataSet=" << Doc->DataSet << ">\n";
+  stream << "  <DataDisplay=" << Doc->DataDisplay << ">\n";
+  stream << "  <OpenDisplay=" << Doc->SimOpenDpl << ">\n";
   stream << "</Properties>\n";
 
   int z=0;   // to count number of subcircuit ports
   stream << "<Components>\n";    // save all components
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
-    stream << pc->save() << "\n";
+    stream << "  "<< pc->save() << "\n";
     if(pc->Model == "Port") z++;
   }
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
   for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    stream << pw->save() << "\n";
+    stream << "  "  << pw->save() << "\n";
 
   // save all labeled nodes as wires
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
-    if(pn->Label) stream << pn->Label->save() << "\n";
+    if(pn->Label) stream << "  " << pn->Label->save() << "\n";
   stream << "</Wires>\n";
 
   stream << "<Diagrams>\n";    // save all diagrams
   for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
-    stream << pd->save() << "\n";
+    stream << "  " << pd->save() << "\n";
   stream << "</Diagrams>\n";
 
   stream << "<Paintings>\n";     // save all paintings
   for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())
-    stream << pp->save() << "\n";
+    stream << "  " << pp->save() << "\n";
   stream << "</Paintings>\n";
 
   file.close();
@@ -193,7 +193,7 @@ bool QucsFile::loadProperties(QTextStream *stream)
   QString Line, cstr, nstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "</Properties>") return true;
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;  // field end ?
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
 
@@ -280,14 +280,14 @@ bool QucsFile::loadComponents(QTextStream *stream, QPtrList<Component> *List)
   Component *c;
   while(!stream->atEnd()) {
     Line = stream->readLine();
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
-    if(Line == "</Components>") return true;
 
     c = getComponentFromName(Line);
     if(!c) return false;
 
-    if(List) {
+    if(List) {  // "paste" ?
       int z;
       for(z=c->Name.length()-1; z>=0; z--) // cut off number of component name
         if(!c->Name.at(z).isDigit()) break;
@@ -346,14 +346,15 @@ bool QucsFile::loadWires(QTextStream *stream, QPtrList<Wire> *List)
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "</Wires>") return true;
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
 
-    w = new Wire(0,0,0,0, (Node*)4,(Node*)4);  // (Node*)4 =  move all ports (later on)
+    // (Node*)4 =  move all ports (later on)
+    w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
     if(!w->load(Line)) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nWrong 'wire' line format!"));
+		QObject::tr("Format Error:\nWrong 'wire' line format!"));
       return false;
     }
     if(List) List->append(w);
@@ -361,7 +362,7 @@ bool QucsFile::loadWires(QTextStream *stream, QPtrList<Wire> *List)
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
-               QObject::tr("Format Error:\n'Wire' field is not closed!"));
+		QObject::tr("Format Error:\n'Wire' field is not closed!"));
   return false;
 }
 
@@ -372,7 +373,7 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
   QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "</Diagrams>") return true;
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
 
@@ -408,7 +409,7 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
   QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "</Paintings>") return true;
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
 
@@ -516,7 +517,7 @@ bool QucsFile::load()
 // -------------------------------------------------------------
 // Creates a Qucs file format (without document properties) in the returning
 // string. This is used to save state for undo operation.
-QString QucsFile::createUndoString()
+QString QucsFile::createUndoString(char Op)
 {
   Wire *pw;
   Diagram *pd;
@@ -524,28 +525,26 @@ QString QucsFile::createUndoString()
   Component *pc;
 
   // Build element document.
-  QString s = "<Components>\n";
+  QString s = " \n";
+  s.at(0) = Op;
   for(pc = Comps->first(); pc != 0; pc = Comps->next())
     s += pc->save()+"\n";
-  s += "</Components>\n";
+  s += "</>\n";  // short end flag
 
-  s += "<Wires>\n";
   for(pw = Wires->first(); pw != 0; pw = Wires->next())
     s += pw->save()+"\n";
   // save all labeled nodes as wires
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->Label) s += pn->Label->save()+"\n";
-  s += "</Wires>\n";
+  s += "</>\n";
 
-  s += "<Diagrams>\n";
   for(pd = Diags->first(); pd != 0; pd = Diags->next())
     s += pd->save()+"\n";
-  s += "</Diagrams>\n";
+  s += "</>\n";
 
-  s += "<Paintings>\n";
   for(pp = Paints->first(); pp != 0; pp = Paints->next())
     s += pp->save()+"\n";
-  s += "</Paintings>\n";
+  s += "</>\n";
 
   return s;
 }
@@ -563,25 +562,13 @@ bool QucsFile::rebuild(QString *s)
 
   QString Line;
   QTextStream stream(s, IO_ReadOnly);
+  Line = stream.readLine();  // skip identity byte
 
   // read content *************************
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
-
-    if(Line == "<Components>") {
-      if(!loadComponents(&stream))  return false; }
-    else
-    if(Line == "<Wires>") {
-      if(!loadWires(&stream))  return false; }
-    else
-    if(Line == "<Diagrams>") {
-      if(!loadDiagrams(&stream, Diags))  return false; }
-    else
-    if(Line == "<Paintings>") {
-      if(!loadPaintings(&stream, Paints)) return false; }
-    else  return false;
-  }
+  if(!loadComponents(&stream))  return false;
+  if(!loadWires(&stream))  return false;
+  if(!loadDiagrams(&stream, Diags))  return false;
+  if(!loadPaintings(&stream, Paints)) return false;
 
   return true;
 }

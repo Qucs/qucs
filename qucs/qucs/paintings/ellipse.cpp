@@ -148,7 +148,7 @@ bool Ellipse::load(const QString& _s)
 // --------------------------------------------------------------------------
 QString Ellipse::save()
 {
-  QString s = "   <Ellipse " +
+  QString s = "<Ellipse " +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
 	Pen.color().name()  + " " + QString::number(Pen.width()) + " " +

@@ -112,7 +112,7 @@ void Graph::paint(QPainter *p, int x0, int y0)
 // ---------------------------------------------------------------------
 QString Graph::save()
 {
-  QString s = "      <\""+Var+"\" "+Color.name()+
+  QString s = "\t<\""+Var+"\" "+Color.name()+
 	      " "+QString::number(Thick)+" "+QString::number(Precision)+
 	      " "+QString::number(numMode)+" "+QString::number(Style)+">";
   return s;

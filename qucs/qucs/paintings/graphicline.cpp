@@ -126,7 +126,7 @@ bool GraphicLine::load(const QString& _s)
 // --------------------------------------------------------------------------
 QString GraphicLine::save()
 {
-  QString s = "   <Line "+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = "<Line "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
   s += QString::number(Pen.style())+">";
