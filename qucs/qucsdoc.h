@@ -83,7 +83,8 @@ public:
   void  oneLabel(Node*);
   Element* getWireLabel(Node*);
   void  setCompPorts(Component*);
-  bool  copyCompsWires(int&, int&, int&, int&);
+  void  copyCompsWires(int&, int&, int&, int&);
+  bool  copyCompsWiresPaints(int&, int&, int&, int&);
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
@@ -94,10 +95,10 @@ public:
   Marker*  setMarker(int, int);
   bool  MarkerLeftRight(bool);
   bool  MarkerUpDown(bool);
-  void  alignTop();
-  void  alignBottom();
-  void  alignLeft();
-  void  alignRight();
+  int   copyElements(int&, int&, int&, int&);
+  bool  aligning(int);
+  bool  distribHoriz();
+  bool  distribVert();
 
   QString copySelected(bool);
   bool    paste(QTextStream*, QPtrList<Element>*);

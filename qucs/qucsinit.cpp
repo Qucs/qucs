@@ -165,6 +165,22 @@ void QucsInit::initActions()
 	tr("Align right\n\nAlign selected elements to their right edge"));
   connect(App->alignRight, SIGNAL(activated()), App, SLOT(slotAlignRight()));
 
+  App->distrHor = new QAction(tr("Distribute horizontally"),
+	tr("Distribute horizontally"), 0, App);
+  App->distrHor->setStatusTip(tr("Distribute equally horizontally"));
+  App->distrHor->setWhatsThis(
+	tr("Distribute horizontally\n\n"
+	   "Distribute horizontally selected elements"));
+  connect(App->distrHor, SIGNAL(activated()), App, SLOT(slotDistribHoriz()));
+
+  App->distrVert = new QAction(tr("Distribute vertically"),
+	tr("Distribute vertically"), 0, App);
+  App->distrVert->setStatusTip(tr("Distribute equally vertically"));
+  App->distrVert->setWhatsThis(
+	tr("Distribute vertically\n\n"
+	   "Distribute vertically selected elements"));
+  connect(App->distrVert, SIGNAL(activated()), App, SLOT(slotDistribVert()));
+
   App->editCut = new QAction(tr("Cut"),
 			QIconSet(QImage(BITMAPDIR "editcut.png")),
 			tr("Cu&t"), CTRL+Key_X, App);
@@ -510,6 +526,9 @@ void QucsInit::initMenuBar()
   App->alignBottom->addTo(alignMenu);
   App->alignLeft->addTo(alignMenu);
   App->alignRight->addTo(alignMenu);
+  alignMenu->insertSeparator();
+  App->distrHor->addTo(alignMenu);
+  App->distrVert->addTo(alignMenu);
 
   editMenu = new QPopupMenu();  // menuBar entry editMenu
   App->undo->addTo(editMenu);
