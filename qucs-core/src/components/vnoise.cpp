@@ -1,7 +1,7 @@
 /*
  * vnoise.cpp - noise voltage source class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vnoise.cpp,v 1.4 2004-11-24 19:15:50 raimi Exp $
+ * $Id: vnoise.cpp,v 1.5 2005-01-17 12:19:02 raimi Exp $
  *
  */
 
@@ -51,7 +51,7 @@ void vnoise::initSP (void) {
   setS (2, 2, 0.0);
 }
 
-void vnoise::calcNoise (nr_double_t frequency) {
+void vnoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t u = getPropertyDouble ("u");
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");

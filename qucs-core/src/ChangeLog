@@ -1,3 +1,14 @@
+2005-01-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_netlist.y: Also allow scales and units in parameter
+	list values.
+
+	* circuit.h (class circuit): Prepared AC noise analysis
+	callbacks.  Changed all callers.
+
+	* check_netlist.cpp: Evaluating scales in parameter list
+	values.
+
 2004-12-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Introduced two more speed/memory

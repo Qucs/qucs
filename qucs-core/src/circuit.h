@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.32 2004-11-24 19:15:44 raimi Exp $
+ * $Id: circuit.h,v 1.33 2005-01-17 12:19:01 raimi Exp $
  *
  */
 
@@ -62,7 +62,8 @@ class circuit : public object, public integrator
   virtual void initDC (void) { allocMatrixMNA (); }
   virtual void calcDC (void) { }
   virtual void initNoise (void) { allocMatrixN (); }
-  virtual void calcNoise (nr_double_t) { }
+  virtual void calcNoiseSP (nr_double_t) { }
+  virtual void calcNoiseAC (nr_double_t) { }
   virtual void initAC (void) { allocMatrixMNA (); }
   virtual void calcAC (nr_double_t) { }
   virtual void initTR (void) { allocMatrixMNA (); }

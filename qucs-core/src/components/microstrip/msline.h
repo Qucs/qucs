@@ -1,7 +1,7 @@
 /*
  * msline.h - microstrip transmission line class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.15 2004-09-26 09:58:52 ela Exp $
+ * $Id: msline.h,v 1.16 2005-01-17 12:19:03 raimi Exp $
  *
  */
 
@@ -30,7 +30,7 @@ class msline : public circuit
  public:
   msline ();
   void initDC (void);
-  void calcNoise (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void calcSP (nr_double_t);
   void calcPropagation (nr_double_t);
   void initAC (void);

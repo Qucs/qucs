@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about microstrip components.
 %
-% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
@@ -1296,13 +1296,14 @@ error is less than 5\% for $W_1/W_2\le 5$ and $W_2/h = 1$.
 \section{Microstrip tee junction}
 %\addcontentsline{toc}{section}{Microstrip tee junction}
 
-A model of a microstrip tee junction is published in \cite{Hammerstad2}.
-Figure \ref{fig:mstee2} shows a unsymmetrical microstrip tee with the main
-arms consisting of port a and b and with the side arm consisting of port 2.
-The following model describes the gray area. The equivalent circuit is
-depicted in figure \ref{fig:mstee}. It consists of a shunt reactance $B_T$,
-one transformer in each main arm (ratios $T_a$ and $T_b$) and a microstrip
-line in each arm (width $W_a$, $W_b$ and $W_2$).\\
+A model of a microstrip tee junction is published in
+\cite{Hammerstad2}.  Figure \ref{fig:mstee2} shows a unsymmetrical
+microstrip tee with the main arms consisting of port a and b and with
+the side arm consisting of port 2.  The following model describes the
+gray area.  The equivalent circuit is depicted in figure
+\ref{fig:mstee}.  It consists of a shunt reactance $B_T$, one
+transformer in each main arm (ratios $T_a$ and $T_b$) and a microstrip
+line in each arm (width $W_a$, $W_b$ and $W_2$).
 
 \begin{figure}[ht]
 \begin{center}
@@ -1322,27 +1323,28 @@ line in each arm (width $W_a$, $W_b$ and $W_2$).\\
 \end{figure}
 \FloatBarrier
 
-First, let us define some quantities. Each of them is used in the equations
-below with an index of the arm they belong to ($a$, $b$ or $2$).\\
-
+First, let us define some quantities.  Each of them is used in the
+equations below with an index of the arm they belong to ($a$, $b$ or
+$2$).
 \begin{equation}
 \text{equivalent parallel plate line width:}\qquad
-  D = \frac{Z_{F0}}{\sqrt{\epsilon_{r,eff}}} \cdot \frac{h}{Z_L}
+  D = \frac{Z_{F0}}{\sqrt{\varepsilon_{r,eff}}} \cdot \frac{h}{Z_L}
 \end{equation}
-where $Z_{F0}$ is vacuum field impedance, $h$ height of substrate, $\epsilon_{r,eff}$
-effective, relative dielectric constant, $Z_L$ microstrip line impedance.\\
 
+where $Z_{F0}$ is vacuum field impedance, $h$ height of substrate,
+$\varepsilon_{r,eff}$ effective, relative dielectric constant, $Z_L$
+microstrip line impedance.
 \begin{equation}
 \text{first higher oder mode cut-off frequency:}\qquad  f_p = 0.0004\cdot\frac{Z_L}{h}
 \end{equation}
 
 \begin{equation}
 \text{effective wave length of the microstrip quasi-TEM mode:}\qquad
-  \lambda = \frac{c_0}{\sqrt{\epsilon_{r,eff}}\cdot f}
+  \lambda = \frac{c_0}{\sqrt{\varepsilon_{r,eff}}\cdot f}
 \end{equation}
 
-The main arm displacements of the reference planes from the center lines are
-(index $x$ stand for $a$ or $b$):
+The main arm displacements of the reference planes from the center
+lines are (index $x$ stand for $a$ or $b$):
 \begin{equation}
 d_x = 0.055\cdot D_2\cdot \frac{Z_{L,x}}{Z_{L,2}}\cdot
       \left( 1 - 2\cdot\frac{Z_{L,x}}{Z_{L,2}}\cdot \left( \frac{f}{f_{p,x}} \right)^2 \right)
@@ -1352,19 +1354,23 @@ The length of the line in the main arms is:
 \begin{equation}
 L_x = 0.5\cdot W_2 - d_x
 \end{equation}
-where $f$ is frequency.\\ \\
+where $f$ is frequency.
 
-The side arm displacement of the reference planes from the center lines is:
+\addvspace{12pt}
+
+The side arm displacement of the reference planes from the center
+lines is:
 \begin{equation}
 d_2 = \sqrt{D_a \cdot D_b}\cdot \left( 0.5 - R\cdot
-      \left( 0.05 + 0.7\cdot\exp(-1.6\cdot R) + 0.25\cdot R\cdot Q - 0.17\cdot \ln R \right) \right)
+      \left( 0.05 + 0.7\cdot\exp\left(-1.6\cdot R\right) + 0.25\cdot R\cdot Q - 0.17\cdot \ln R \right) \right)
 \end{equation}
 
 The length of the line in the side arm is:
 \begin{equation}
-L_2 = 0.5\cdot \text{max}(W_a, W_b) - d_2
+L_2 = 0.5\cdot \text{max}\left(W_a, W_b\right) - d_2
 \end{equation}
-where max(x, y) is the larger of the both quantities, $R$ and $Q$ are:
+where $\text{max}\left(x, y\right)$ is the larger of the both
+quantities, $R$ and $Q$ are:
 \begin{equation}
 R = \frac{\sqrt{Z_{L,a}\cdot Z_{L,b}}}{Z_{L,2}} \qquad Q = \frac{f^2}{f_{p,a}\cdot f_{p,b}}
 \end{equation}
@@ -1378,13 +1384,12 @@ T_x^2 = 1 - \pi\cdot \left( \frac{f}{f_{p,x}} \right)^2 \cdot \left( \frac{1}{12
 Shunt reactance:
 \begin{equation}
 \begin{split}
-B_T = & 5.5\cdot \sqrt{\frac{D_a\cdot D_b}{\lambda_a\cdot \lambda_b}}\cdot \frac{\epsilon_r+2}{\epsilon_r}
+B_T &= 5.5\cdot \sqrt{\frac{D_a\cdot D_b}{\lambda_a\cdot \lambda_b}}\cdot \frac{\varepsilon_r+2}{\varepsilon_r}
       \cdot \frac{1}{Z_{L,2}\cdot T_a\cdot T_b}\cdot \frac{\sqrt{d_a\cdot d_b}}{D_2} \\
    &  \cdot \left( 1+0.9\cdot\ln R +4.5\cdot R\cdot Q
-       -4.4\cdot\exp(-1.3\cdot R) -20\cdot \left( \frac{Z_{L,2}}{Z_{F0}} \right)^2 \right)
+       -4.4\cdot\exp\left(-1.3\cdot R\right) -20\cdot \left( \frac{Z_{L,2}}{Z_{F0}} \right)^2 \right)
 \end{split}
 \end{equation}
-
 
 \section{Microstrip cross}
 %\addcontentsline{toc}{section}{Microstrip cross}

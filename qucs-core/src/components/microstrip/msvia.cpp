@@ -1,7 +1,7 @@
 /*
  * msvia.cpp - microstrip via hole class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.3 2004-11-24 19:15:54 raimi Exp $
+ * $Id: msvia.cpp,v 1.4 2005-01-17 12:19:03 raimi Exp $
  *
  */
 
@@ -48,7 +48,7 @@ msvia::msvia () : circuit (2) {
   type = CIR_MSVIA;
 }
 
-void msvia::calcNoise (nr_double_t) {
+void msvia::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
   nr_double_t r = real (Z);
   nr_double_t T = getPropertyDouble ("Temp");

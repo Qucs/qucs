@@ -1,7 +1,7 @@
 /*
  * msline.cpp - microstrip transmission line class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.38 2004-11-24 19:15:53 raimi Exp $
+ * $Id: msline.cpp,v 1.39 2005-01-17 12:19:03 raimi Exp $
  *
  */
 
@@ -46,7 +46,7 @@ msline::msline () : circuit (2) {
   type = CIR_MSLINE;
 }
 
-void msline::calcNoise (nr_double_t) {
+void msline::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t l = exp (alpha * getPropertyDouble ("L"));
   nr_double_t z = zl;

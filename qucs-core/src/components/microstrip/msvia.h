@@ -1,7 +1,7 @@
 /*
  * msvia.h - microstrip via hole class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.h,v 1.1 2004-10-25 07:55:47 ela Exp $
+ * $Id: msvia.h,v 1.2 2005-01-17 12:19:03 raimi Exp $
  *
  */
 
@@ -31,7 +31,7 @@ class msvia : public circuit
   msvia ();
   void calcSP (nr_double_t);
   void initSP (void);
-  void calcNoise (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
