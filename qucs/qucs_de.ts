@@ -300,19 +300,19 @@
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Markierungseigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Precision: </source>
-        <translation type="unfinished"></translation>
+        <translation>Genauigkeit: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -979,7 +979,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
+        <translation>abgeflachter Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>microstrip open</source>
@@ -1013,11 +1013,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Unabhängiger Datensatz &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot; nicht gefunden</translation>
     </message>
     <message>
         <source>Too few independent data&quot;</source>
@@ -2540,7 +2540,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgeflachter Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
@@ -2629,21 +2629,24 @@ Simulator by Stefan Jahn
     <message>
         <source>Translations:
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Übersetzungen:
+</translation>
     </message>
     <message>
         <source>German by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch von Stefan Jahn
+</translation>
     </message>
     <message>
         <source>French by Eric Marzolf</source>
-        <translation type="unfinished"></translation>
+        <translation>Französisch von Eric Marzolf</translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Polnisch von Dariusz Pienkowski
+</translation>
     </message>
 </context>
 <context>
