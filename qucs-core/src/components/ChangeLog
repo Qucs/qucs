@@ -1,3 +1,14 @@
+2004-07-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.h (class msline): Both the quasi-static
+	and dispersion analysing function are now static function of
+	the class msline.  Thus they can be used by other microstrip
+	components as well.
+
+	* pac.cpp: Calculate S-parameter of the AC power source. 
+	This is now necessary because of subcircuit definitions where
+	the component is not used as S-parameter port.
+
 2004-07-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Added noise calculation to BJT model.

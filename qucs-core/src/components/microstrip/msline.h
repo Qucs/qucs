@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.6 2004/05/16 13:48:40 ela Exp $
+ * $Id: msline.h,v 1.7 2004/07/30 06:25:55 ela Exp $
  *
  */
 
@@ -30,16 +30,12 @@ class msline : public circuit
  public:
   msline ();
   void calcSP (nr_double_t);
-  void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t, nr_double_t,
-			   char *);
-  void analyseDispersion (nr_double_t, nr_double_t, nr_double_t, nr_double_t,
-			  char *);
-
- private:
-  nr_double_t ErEff;
-  nr_double_t ZlEff;
-  nr_double_t ErEffFreq;
-  nr_double_t ZlEffFreq;
+  static void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
+				  nr_double_t, char *,
+				  nr_double_t&, nr_double_t&, nr_double_t&);
+  static void analyseDispersion (nr_double_t, nr_double_t, nr_double_t,
+				 nr_double_t, nr_double_t, nr_double_t, char *,
+				 nr_double_t&, nr_double_t&);
 };
 
 #endif /* __MSLINE_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.3 2004/02/17 15:30:58 ela Exp $
+ * $Id: pac.cpp,v 1.4 2004/07/30 06:25:55 ela Exp $
  *
  */
 
@@ -38,6 +38,14 @@
 
 pac::pac () : circuit (2) {
   type = CIR_PAC;
+}
+
+void pac::calcSP (nr_double_t) {
+  nr_double_t z = getPropertyDouble ("Z") / z0;
+  setS (1, 1, z / (z + 2.0));
+  setS (2, 2, z / (z + 2.0));
+  setS (1, 2, 2.0 / (z + 2.0));
+  setS (2, 1, 2.0 / (z + 2.0));
 }
 
 void pac::calcDC (void) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.23 2004/07/25 16:58:47 margraf Exp $
+ * $Id: input.cpp,v 1.24 2004/07/30 06:25:54 ela Exp $
  *
  */
 
@@ -190,6 +190,7 @@ void input::factory (void) {
       o = (object *) c;
       c->setName (def->instance);
       c->setNonLinear (def->nonlinear);
+      c->setSubcircuit (def->subcircuit);
 
       // change size (number of ports) of S-parameter files
       if (c->getType () == CIR_SPFILE) {
