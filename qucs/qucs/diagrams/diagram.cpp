@@ -41,7 +41,7 @@ using namespace std;
 # define finite(x) _finite(x)
 #endif
 
-QString INVALID_STR = QObject::tr(" <invalid>");
+#define INVALID_STR QObject::tr(" <invalid>")
 
 Diagram::Diagram(int _cx, int _cy)
 {
