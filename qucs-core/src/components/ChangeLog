@@ -1,3 +1,8 @@
+2004-09-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* capacitor.cpp, inductor.cpp: Fixed MNA entries for AC
+	anlysis.  Now also L=0 possible for the inductor.
+
 2004-09-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* vac.cpp, resistor.cpp, iprobe.cpp, inductor.cpp,

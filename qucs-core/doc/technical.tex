@@ -2544,6 +2544,7 @@ S_{(m-1)m}
 
 \section{Modified Nodal Analysis}
 %\addcontentsline{toc}{section}{Modified Nodal Analysis}
+\label{sec:MNA}
 
 Many different kinds of network element are encountered in network
 analysis.  For circuit analysis it is necessary to formulate equations
@@ -3533,6 +3534,7 @@ should rather be solved with iterative methods.
 
 \section{Extensions to the MNA}
 %\addcontentsline{toc}{section}{Extensions to the MNA}
+\label{sec:MNAext}
 
 As noted in the previous sections the D matrix is zero and the B and C
 matrices are transposed each other and filled with either 1, -1 or 0
@@ -4519,8 +4521,75 @@ follows.
 \chapter{AC Analysis}
 %\addcontentsline{toc}{chapter}{AC Analysis}
 
+The AC analysis is a small signal analysis in the frequency domain.
+Basically this type of simulation uses the same algorithms as the DC
+analysis (section \ref{sec:MNA} on page \pageref{sec:MNA}).  The AC
+analysis is a linear modified nodal analysis.  Thus no iterative
+process is necessary.  With the Y-matrix of the components, i.e. now a
+complex matrix, and the appropriate extensions it is necessary to
+solve the equation system \eqref{eq:acMNA} similar to the (linear) DC
+analysis.
+\begin{equation}
+\label{eq:acMNA}
+\left[A\right] \cdot \left[x\right] = \left[z\right]
+\;\;\;\; \textrm{ with } \;\;\;\;
+A =
+\begin{bmatrix}
+Y & B\\
+C & D
+\end{bmatrix}
+\end{equation}
+
+\section{MNA matrix entries of reactive components}
+%\addcontentsline{toc}{section}{MNA matrix entries of reactive components}
+
+If not otherwise noted the MNA matrix elements and the extensions of
+the components (section \ref{sec:MNAext} on page \pageref{sec:MNAext})
+for the AC analysis do not differ from those for the DC analysis.  The
+Y-matrices of the non-linear devices are documented in the appropriate
+sections (see chapter \ref{sec:NLdevices}).
+
+\subsection{Capacitor}
+%\addcontentsline{toc}{subsection}{Capacitor}
+
+The Y-parameter matrix of an ideal capacitor with the capacitance $C$
+writes as follows.
+\begin{equation}
+Y =
+\begin{bmatrix}
++j\omega C & -j\omega C\\
+-j\omega C & +j\omega C\\
+\end{bmatrix}
+\end{equation}
+
+\subsection{Inductor}
+%\addcontentsline{toc}{subsection}{Inductor}
+
+The Y-parameter matrix of an ideal inductor with the inductance $L$
+writes as follows.
+\begin{equation}
+Y =
+\begin{bmatrix}
++\dfrac{1}{j\omega L} & -\dfrac{1}{j\omega L}\\
+-\dfrac{1}{j\omega L} & +\dfrac{1}{j\omega L}\\
+\end{bmatrix}
+\end{equation}
+
+\subsection{Phase shifter}
+%\addcontentsline{toc}{subsection}{Phase shifter}
+
+\subsection{Attenuator}
+%\addcontentsline{toc}{subsection}{Attenuator}
+
+\subsection{Isolator}
+%\addcontentsline{toc}{subsection}{Isolator}
+
+\subsection{Transmission line}
+%\addcontentsline{toc}{subsection}{Transmission line}
+
 \chapter{Non-linear devices}
 %\addcontentsline{toc}{chapter}{Non-linear devices}
+\label{sec:NLdevices}
 
 \section{PN-Junction Diode}
 %\addcontentsline{toc}{section}{PN-Junction Diode}
@@ -6580,7 +6649,7 @@ impedance and the effective permittivity of the even and the odd mode.
 %\addcontentsline{toc}{subsubsection}{Kirschning and Jansen}
 
 These quantities can very precisely be modeled by the following
-equations \cite{Kirschning5}, \cite{Kirschning6}.
+equations \cite{Kirschning2}, \cite{Kirschning6}.
 
 \addvspace{12pt}
 

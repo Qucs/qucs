@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.14 2004/09/06 06:40:07 ela Exp $
+ * $Id: resistor.cpp,v 1.15 2004/09/07 12:53:11 ela Exp $
  *
  */
 
@@ -72,8 +72,7 @@ void resistor::initDC (dcsolver *) {
   // for zero resistances create a zero voltage source
   else {
     clearY ();
-    setC (1, 1, +1.0); setC (1, 2, -1.0);
-    setB (1, 1, +1.0); setB (2, 1, -1.0);
+    voltageSource (1, 1, 2);
     setVoltageSources (1);
     setInternalVoltageSource (1);
   }
@@ -92,10 +91,10 @@ void resistor::calcDC (void) {
   }
 }
 
-void resistor::calcAC (nr_double_t) {
-  calcDC ();
-}
-
 void resistor::initAC (acsolver *) {
   initDC (NULL);
+}
+
+void resistor::calcAC (nr_double_t) {
+  calcDC ();
 }
