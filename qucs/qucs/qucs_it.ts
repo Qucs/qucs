@@ -4983,6 +4983,11 @@ Moves the property text of components</source>
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Japanese by Toyoyuki ISHIKAWA
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>

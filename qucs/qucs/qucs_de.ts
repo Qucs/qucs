@@ -5477,6 +5477,12 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
         <translation>Französisch von Vincent Habchi, F5RCS
 </translation>
     </message>
+    <message>
+        <source>Japanese by Toyoyuki ISHIKAWA
+</source>
+        <translation>Japanisch von Toyoyuki ISHIKAWA
+</translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
