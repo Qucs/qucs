@@ -1237,7 +1237,8 @@ void QucsApp::editFile(const QString& File)
 // Is called to start the filter synthesis program.
 void QucsApp::slotCallFilter()
 {
-  QProcess *QucsFilter = new QProcess(QString(BINARYDIR "qucsfilter"));
+  QProcess *QucsFilter =
+    new QProcess(QString(QucsSettings.BinDir + "qucsfilter"));
   if(!QucsFilter->start()) {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot start filter synthesis program!"));
@@ -1247,6 +1248,22 @@ void QucsApp::slotCallFilter()
 
   // to kill it before qucs ends
   connect(this, SIGNAL(signalKillEmAll()), QucsFilter, SLOT(kill()));
+}
+
+// ------------------------------------------------------------------------
+// Is called to start the transmission line calculation program.
+void QucsApp::slotCallLine()
+{
+  QProcess *QucsLine = new QProcess(QString(BINARYDIR "qucstrans"));
+  if(!QucsLine->start()) {
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Cannot start line calculation program!"));
+    delete QucsLine;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), QucsLine, SLOT(kill()));
 }
 
 // ------------------------------------------------------------------------
@@ -1653,6 +1670,8 @@ void QucsApp::slotSetCompView(int index)
 		QImage(QucsSettings.BitmapDir + "polarsmith.xpm"));
       new QIconViewItem(CompComps, tr("Smith-Polar Combi"),
 		QImage(QucsSettings.BitmapDir + "smithpolar.xpm"));
+      new QIconViewItem(CompComps, tr("3D-Cartesian"),
+		QImage(QucsSettings.BitmapDir + "rect3d.xpm"));
       return;
   }
 
@@ -1746,6 +1765,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
               case 4: view->selDiag = new SmithDiagram(0,0,false); break;
               case 5: view->selDiag = new PSDiagram();  break;
               case 6: view->selDiag = new PSDiagram(0,0,false); break;
+              case 7: view->selDiag = new Rect3DDiagram(); break;
           }
 
           if(view->drawn) view->viewport()->repaint();
