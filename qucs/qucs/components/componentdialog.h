@@ -61,6 +61,8 @@ private slots:
   void slotButtRem();
 
 private:
+  void correctDesc(QString &desc, QStringList *clst = 0);
+
   QRegExp     Expr;
   QListView   *prop;
   QLineEdit   *edit, *NameEdit, *CompNameEdit;

@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation>Alle Dateien (*.*)</translation>
+        <translation type="obsolete">Alle Dateien (*.*)</translation>
     </message>
     <message>
         <source>Select a file</source>
@@ -135,6 +135,10 @@
     <message>
         <source>Name:</source>
         <translation>Name:</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation>Alle Dateien</translation>
     </message>
 </context>
 <context>
@@ -1332,7 +1336,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation>Polarität (npn,pnp)</translation>
+        <translation type="obsolete">Polarität (npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1616,11 +1620,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>schematic symbol (european,US)</source>
-        <translation>Schaltkreissymbol (european,US)</translation>
+        <translation type="obsolete">Schaltkreissymbol (european,US)</translation>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation>Polarität (nfet,pfet)</translation>
+        <translation type="obsolete">Polarität (nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
@@ -1648,7 +1652,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>put operating points into dataset (yes,no)</source>
-        <translation>Ausgabe der Arbeitspunkte in den Datensatz (ja,nein)</translation>
+        <translation type="obsolete">Ausgabe der Arbeitspunkte in den Datensatz (ja,nein)</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
@@ -1656,19 +1660,19 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>put result into dataset (yes,no)</source>
-        <translation>Ergebnis in den Datensatz ausgeben (ja,nein)</translation>
+        <translation type="obsolete">Ergebnis in den Datensatz ausgeben (ja,nein)</translation>
     </message>
     <message>
         <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
-        <translation>quasi-statisches Mikrostreifenmodell (Hammerstad,Wheeler,Schneider)</translation>
+        <translation type="obsolete">quasi-statisches Mikrostreifenmodell (Hammerstad,Wheeler,Schneider)</translation>
     </message>
     <message>
         <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
-        <translation>Mikrostreifen-Dispersionsmodell (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</translation>
+        <translation type="obsolete">Mikrostreifen-Dispersionsmodell (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</translation>
     </message>
     <message>
         <source>calculate noise parameters (yes,no)</source>
-        <translation>Rauschparameter berechnen (ja,nein)</translation>
+        <translation type="obsolete">Rauschparameter berechnen (ja,nein)</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
@@ -1680,7 +1684,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>sweep type (lin,log)</source>
-        <translation>Durchlauftyp (lin,log)</translation>
+        <translation type="obsolete">Durchlauftyp (lin,log)</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
@@ -1872,7 +1876,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>interpolation type (rectangular,polar)</source>
-        <translation>Interpolationsraum (rectangular,polar)</translation>
+        <translation type="obsolete">Interpolationsraum (rectangular,polar)</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
@@ -2060,15 +2064,47 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenmodell</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifen-Dispersionsmodell</translation>
     </message>
     <message>
-        <source>microstrip open end model (Kirschning,Hammerstad)</source>
-        <translation type="unfinished"></translation>
+        <source>sweep type</source>
+        <translation>Durchlaufart</translation>
+    </message>
+    <message>
+        <source>polarity</source>
+        <translation>Polarität</translation>
+    </message>
+    <message>
+        <source>put operating points into dataset</source>
+        <translation>Ausgabe der Arbeitspunkte in den Datensatz</translation>
+    </message>
+    <message>
+        <source>put result into dataset</source>
+        <translation>Ergebnis in den Datensatz ausgeben</translation>
+    </message>
+    <message>
+        <source>quasi-static microstrip model</source>
+        <translation>quasi-statisches Mikrostreifenmodell</translation>
+    </message>
+    <message>
+        <source>microstrip open end model</source>
+        <translation>Modell der offenen Mikrostreifenleitung</translation>
+    </message>
+    <message>
+        <source>schematic symbol</source>
+        <translation>Schaltkreissymbol</translation>
+    </message>
+    <message>
+        <source>calculate noise parameters</source>
+        <translation>Rauschparameter berechnen</translation>
+    </message>
+    <message>
+        <source>interpolation type</source>
+        <translation>Interpolationsraum</translation>
     </message>
 </context>
 <context>

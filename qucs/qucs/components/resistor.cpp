@@ -41,7 +41,7 @@ Resistor::Resistor(bool european)
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "european", false,
-		QObject::tr("schematic symbol (european,US)")));
+		QObject::tr("schematic symbol")+" [european, US]"));
   if(!european)  Props.getLast()->Value = "US";
 }
 

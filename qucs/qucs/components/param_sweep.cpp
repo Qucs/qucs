@@ -52,7 +52,7 @@ Param_Sweep::Param_Sweep()
   Props.append(new Property("Sim", "", true,
 		QObject::tr("simulation to perform parameter sweep on")));
   Props.append(new Property("Type", "lin", true,
-		QObject::tr("sweep type (lin,log)")));
+		QObject::tr("sweep type")+" [lin, log]"));
   Props.append(new Property("Param", "R1", true,
 		QObject::tr("parameter to sweep")));
   Props.append(new Property("Start", "5 Ohm", true,
