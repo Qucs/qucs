@@ -1729,7 +1729,7 @@ K = \frac{1-|S_{11}|^2-|S_{22}|^2+|\Delta|^2}{2\cdot |S_{12}\cdot S_{21}|} > 1
 \end{equation}
 
 with $\Delta$ being the determinante of the S parameter matrix of the
-two port.  $K$ is called Rollet factor.  Two relations must be
+two port.  $K$ is called Rollet stability factor.  Two relations must be
 fulfilled to have a necessary and sufficient criterion.
 
 \addvspace{12pt}
@@ -1746,3 +1746,60 @@ stability:
 \begin{equation}
 \mu' = \frac{1-|S_{22}|^2}{|S_{11}-S_{22}^*\cdot \Delta| + |S_{12}\cdot S_{21}|} > 1
 \end{equation}
+
+\addvspace{20pt}
+
+
+For conditional stable two-ports it is interesting which which
+load and which source impedance may cause instability. This can
+be seen using stability circles. A disadvantage of this method
+is that the radius of the below-mentioned circles can become
+infinity. (A circle with infinite radius is a line.)
+
+\addvspace{12pt}
+
+Within the reflexion coefficient plane of the load ($r_L$-plane),
+the stability circle is:
+\begin{equation}
+\underline{r}_{center} = \frac{S_{22}^* - S_{11}\cdot \Delta^*}{|S_{22}|^2 - |\Delta|^2}
+\end{equation}
+\begin{equation}
+\text{Radius} = \frac{|S_{12}|\cdot |S_{21}|}{|S_{22}|^2 - |\Delta|^2}
+\end{equation}
+If the center of the $r_L$-plane lies within this circle and
+$|S_{11}| \le 1$ than the circuit is stable for all reflexion
+coefficients inside the circle.\\
+If the center of the $r_L$-plane lies outside the circle and
+$|S_{11}| \le 1$ than the circuit is stable for all reflexion
+coefficients outside the circle.
+
+\addvspace{12pt}
+
+Very similar is the situation for reflexion coefficients in
+the source plane ($r_S$-plane). The stability circle is:
+\begin{equation}
+\underline{r}_{center} = \frac{S_{11}^* - S_{22}\cdot \Delta^*}{|S_{11}|^2 - |\Delta|^2}
+\end{equation}
+\begin{equation}
+\text{Radius} = \frac{|S_{12}|\cdot |S_{21}|}{|S_{11}|^2 - |\Delta|^2}
+\end{equation}
+If the center of the $r_S$-plane lies within this circle and
+$|S_{22}| \le 1$ than the circuit is stable for all reflexion
+coefficients inside the circle.\\
+If the center of the $r_S$-plane lies outside the circle and
+$|S_{22}| \le 1$ than the circuit is stable for all reflexion
+coefficients outside the circle.
+
+
+
+\subsection{Gain}
+
+Maximum available and stable power gain (only for unconditional stable 2-ports):
+\begin{equation}
+G_{max} = \left| \frac{S_{21}}{S_{12}} \right| \cdot \left( K - \sqrt{K^2-1} \right)
+\end{equation}
+where $K$ is Rollet stability factor.
+
+\addvspace{12pt}
+
+
