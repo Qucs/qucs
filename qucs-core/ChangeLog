@@ -1,3 +1,8 @@
+2004-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.4 and bumped up to version
+        0.0.5.
+
 2004-09-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Added '-fno-exceptions -fno-rtti -fno-check-new'
