@@ -134,7 +134,7 @@
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name:</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>Bias T</translation>
     </message>
     <message>
         <source>capacitor</source>
@@ -1348,7 +1348,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmonic balance</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
@@ -1376,7 +1376,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation type="unfinished"></translation>
+        <translation>Bias T</translation>
     </message>
     <message>
         <source>npn transistor</source>
@@ -1436,11 +1436,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>n-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-JFET</translation>
     </message>
     <message>
         <source>n-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-MOSFET</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
@@ -1544,11 +1544,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>p-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-JFET</translation>
     </message>
     <message>
         <source>p-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-MOSFET</translation>
     </message>
     <message>
         <source>depletion MOS field-effect transistor</source>
@@ -1632,7 +1632,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation>Simulationstemperatur in Grad Celsius</translation>
+        <translation>Simulationstemperatur in °C</translation>
     </message>
     <message>
         <source>relative tolerance for convergence</source>
@@ -1688,175 +1688,175 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>npn Bipolartransistor mit Substratanschluß</translation>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenlücke</translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite der Leitung 1</translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite der Leitung 2</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenlücke</translation>
     </message>
     <message>
         <source>number of ports</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Tore</translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Streifenbreite</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärtsemissionskoeffizient</translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückwärtsemissionskoeffizient</translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Knickstrom für Vorwärtstransferstrom</translation>
     </message>
     <message>
         <source>high current corner for reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>Knickstrom für Rückwärtstransferstrom</translation>
     </message>
     <message>
         <source>forward early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Early-Spannung vorwärts</translation>
     </message>
     <message>
         <source>reverse early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Early-Spannung rückwärts</translation>
     </message>
     <message>
         <source>base-emitter leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>nichtidealer Basis-Emitter-Sättigungsstrom</translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Emissionsfaktor für nichtidealen BE-Diodenstrom</translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>nichtidealer Basis-Kollektor-Sättigungsstrom</translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Emissionsfaktor für nichtidealen BC-Diodenstrom</translation>
     </message>
     <message>
         <source>forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Vorwärtsstromverstärkung</translation>
     </message>
     <message>
         <source>reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Rückwärtsstromverstärkung</translation>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
-        <translation type="unfinished"></translation>
+        <translation>minimaler Basiswiderstand bei großen Strömen</translation>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Basisstrom für Basisbahnwiderstandsmitte</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kollektorwiderstand</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Emitterwiderstand</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished"></translation>
+        <translation>konstanter Basisbahnwiderstand</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>BE-Sperrschichtkapazität bei 0V</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>BE-Diffusionsspannung</translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BE-Gradationskoeffizient</translation>
     </message>
     <message>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>BC-Sperrschichtkapazität bei 0V</translation>
     </message>
     <message>
         <source>base-collector junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>BC-Diffusionsspannung</translation>
     </message>
     <message>
         <source>base-collector junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>BC-Gradationskoeffizient</translation>
     </message>
     <message>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation type="unfinished"></translation>
+        <translation>BC-Aufteilungsfaktor</translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>CS-Sperrschichtkapazität bei 0V</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>CS-Diffusionsspannung</translation>
     </message>
     <message>
         <source>substrate junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>CS-Gradationskoeffizient</translation>
     </message>
     <message>
         <source>forward-bias depletion capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrschichtkapazitäts-Linearisierungskoeffizient</translation>
     </message>
     <message>
         <source>ideal forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Vorwärtstransitzeit</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>Koeffizient für Stromabhängigkeit von Tf</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Koeffizient für Spannungsabhängigkeit von Tf</translation>
     </message>
     <message>
         <source>high-current effect on Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezugsstrom für Stromabhängigkeit von Tf</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Rückwärtstransitzeit</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>1/f-Rauschkoeffizient</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>1/f-Rauschexponent</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzexponent für 1/f-Rauschen</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
@@ -1872,131 +1872,175 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>spektrale Rauschstromleistungsdichte in A²/Hz</translation>
     </message>
     <message>
         <source>interpolation type (rectangular,polar)</source>
-        <translation type="unfinished"></translation>
+        <translation>Interpolationsraum (rectangular,polar)</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>spektrale Rauschspannungsleistungsdichte in V²/Hz</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>konstante Parallelkapazität</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekombinationsstromparameter</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>Emissionskoeffizient für Isr</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Null-Schwellenspannung</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/m^2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bulk threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungsleitwert-Parameter in A/m²</translation>
     </message>
     <message>
         <source>surface potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Oberflächenpotential</translation>
     </message>
     <message>
         <source>drain ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Drain-Bahnwiderstand</translation>
     </message>
     <message>
         <source>source ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Source-Bahnwiderstand</translation>
     </message>
     <message>
         <source>gate ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmscher Widerstand des Gate-Metallkontaktes</translation>
     </message>
     <message>
         <source>bulk junction saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat-Sperrsättigungsstrom</translation>
     </message>
     <message>
         <source>bulk junction emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat-Sperrschicht-Diffusionsspannung</translation>
     </message>
     <message>
         <source>channel width</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanalbreite</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanallänge</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
-        <translation type="unfinished"></translation>
+        <translation>Gate-Diffusionsüberlappung</translation>
     </message>
     <message>
         <source>oxide thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Oxiddicke</translation>
     </message>
     <message>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>GS-Überlappungskapazität je Kanalbreite in F/m</translation>
     </message>
     <message>
         <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>GD-Überlappungskapazität je Kanalbreite in F/m</translation>
     </message>
     <message>
         <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>GB-Überlappungskapazität je Kanallänge in F/m</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Null-BD-Sperrschichtkapazität</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Null-BS-Sperrschichtkapazität</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat-Sperrschicht-Diffusionsspannung</translation>
     </message>
     <message>
         <source>bulk junction bottom grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Substratboden-Sperrschicht-Gradationsexponent</translation>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Koeffizient für Durchlaßbereich der Sperrschichtkapazität</translation>
     </message>
     <message>
         <source>bulk transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Transitzeit durch das Substrat</translation>
     </message>
     <message>
         <source>substrate bulk doping density in 1/cm^3</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat-Dotierungsdichte in 1/cm³</translation>
     </message>
     <message>
         <source>surface state density in 1/cm^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Oberflächenladungsdichte-Koeffizient in 1/cm²</translation>
     </message>
     <message>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ des Gate-Materials: 0 = Aluminium; -1 = wie Substrat; 1 = Gegenteil von Substrat</translation>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
-        <translation type="unfinished"></translation>
+        <translation>Oberflächenbeweglichkeit in cm²/Vs</translation>
+    </message>
+    <message>
+        <source>bulk threshold in sqrt(V)</source>
+        <translation>Substrat-Schwellenspannungs-Parameter in sqrt(V)</translation>
+    </message>
+    <message>
+        <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
+        <translation>Null-Substrat-Seitenwandkapazität je Sperrschichtumfang in F/m</translation>
+    </message>
+    <message>
+        <source>bulk junction periphery grading coefficient</source>
+        <translation>Substratseitenwand-Sperrschicht-Gradationskoeffizient</translation>
+    </message>
+    <message>
+        <source>drain and source diffusion sheet resistance in Ohms/square</source>
+        <translation>Diffusionsflächenwiderstand von Drain und Source in Ohm/Quadrat</translation>
+    </message>
+    <message>
+        <source>number of equivalent drain squares</source>
+        <translation>Drain-Flächenfaktor</translation>
+    </message>
+    <message>
+        <source>number of equivalent source squares</source>
+        <translation>Source-Flächenfaktor</translation>
+    </message>
+    <message>
+        <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
+        <translation>Bull-Substratbodenkapazität je Sperrschichtfläche in F/m²</translation>
+    </message>
+    <message>
+        <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
+        <translation>Substrat-Sperrsättigungsstromdichte in A/m²</translation>
+    </message>
+    <message>
+        <source>drain diffusion area in m^2</source>
+        <translation>Drain-Diffusionsfläche in m²</translation>
+    </message>
+    <message>
+        <source>source diffusion area in m^2</source>
+        <translation>Source-Diffusionsfläche in m²</translation>
+    </message>
+    <message>
+        <source>drain junction perimeter</source>
+        <translation>Umfang der Drain-Sperrschicht</translation>
+    </message>
+    <message>
+        <source>source junction perimeter</source>
+        <translation>Umfang der Source-Sperrschicht</translation>
     </message>
 </context>
 <context>
@@ -3706,7 +3750,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
     </message>
 </context>
 <context>
@@ -4606,7 +4650,8 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2003,2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
@@ -4680,101 +4725,115 @@ Setzt die Einstellungen der Applikation</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach oben ausrichten</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Elemente nach oben ausrichten</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach oben ausrichten
+
+Richtet ausgewählte Elemente an ihrer oberen Kante aus</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach unten ausrichten</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Elemente nach unten ausrichten</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach unten ausrichten
+
+Richtet ausgewählte Elemente an ihrer unteren Kante aus</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach links ausrichten</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Elemente nach links ausrichten</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach links ausrichten
+
+Richtet ausgewählte Elemente an ihrer linken Kante aus</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach rechts ausrichten</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Elemente nach rechts ausrichten</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach rechts ausrichten
+
+Richtet ausgewählte Elemente an ihrer rechten Kante aus</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichten</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontal verteilen</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichmäßig horizontal verteilen</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontal verteilen
+
+Verteilt ausgewählte Elemente horizontal</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal verteilen</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichmäßig vertikal verteilen</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal verteilen
+
+Verteilt ausgewählte Elemente vertikal</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf Gitternetz setzen</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf Gitternetz setzen
+
+Setzt ausgewählte Elemente auf das Gitternetz</translation>
     </message>
 </context>
 <context>

@@ -1828,10 +1828,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bulk threshold</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>surface potential</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1921,6 +1917,54 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk threshold in sqrt(V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction periphery grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain and source diffusion sheet resistance in Ohms/square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of equivalent drain squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of equivalent source squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain diffusion area in m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source diffusion area in m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain junction perimeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source junction perimeter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
