@@ -443,7 +443,7 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   if(pw2 != 0) Name = pw2->Name;
   
   bool OK;
-  Name = QInputDialog::getText("Insert Nodename", "Enter the label:", QLineEdit::Normal,
+  Name = QInputDialog::getText(tr("Insert Nodename"), tr("Enter the label:"), QLineEdit::Normal,
                                        Name, &OK, this);
   if(OK && !Name.isEmpty()) {
     if(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'

@@ -5,5 +5,5 @@ EXTRA_DIST = ac_voltage.xpm arrow.xpm capacitor.xpm dc_current.xpm dc_voltage.xp
 
 ####### kdevelop will overwrite this part!!! (end)############
 
-picdatadir = ${prefix}/share/bitmaps
+picdatadir = ${prefix}/share/qucs/bitmaps
 picdata_DATA = ${EXTRA_DIST}
