@@ -4045,7 +4045,7 @@ Qt universal circuit simulator
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Mulţumiri speciale către Jens Flucke
+        <translation type="obsolete">Mulţumiri speciale către Jens Flucke
 
 </translation>
     </message>
@@ -4323,6 +4323,12 @@ Mută proprietatea text al componentelor</translation>
 </source>
         <translation type="unfinished">Copyright (C) 2003, 2004, 2005 de Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
