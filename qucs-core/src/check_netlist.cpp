@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.7 2004/05/07 18:34:19 ela Exp $
+ * $Id: check_netlist.cpp,v 1.8 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 
 #include "logging.h"
 #include "strlist.h"
+#include "equation.h"
 #include "check_netlist.h"
 
 struct definition_t * definition_root = NULL;
@@ -504,6 +505,56 @@ static int checker_validate_strips (void) {
       }
     }
   }
+  return errors;
+}
+
+/* This function should be called after the netlist and the equation
+   list have been checked.  It verifies that parameter sweep
+   definitions and equation variable identifiers are unique.  The
+   function returns zero on success and non-zero otherwise. */
+int netlist_checker_variables (void) {
+  struct definition_t * def;
+  int errors = 0, pos;
+  struct value_t * para, * ref;
+  strlist * eqnvars = equation_variables ();
+  strlist * instances = new strlist ();
+  strlist * vars = new strlist ();
+  strlist * refs = new strlist ();
+  // go through list of netlist definitions
+  for (def = definition_root; def != NULL; def = def->next) {
+    // find parameters sweeps
+    if (def->action == 1 && !strcmp (def->type, "SW")) {
+      para = checker_find_reference (def, "Param");
+      ref = checker_find_reference (def, "Sim");
+      if (para != NULL && ref != NULL) {
+	// check whether sweep variable collides with equations
+	if (eqnvars && eqnvars->contains (para->ident)) {
+	  logprint (LOG_ERROR, "checker error, equation variable `%s' "
+		    "already defined by `%s:%s'\n", para->ident,
+		    def->type, def->instance);
+	  errors++;
+	}
+	// check for duplicate parameter names in parameter sweeps, but
+	// allow them in same order sweeps
+	if ((pos = vars->index (para->ident)) != -1) {
+	  if (strcmp (ref->ident, refs->get (pos))) {
+	    logprint (LOG_ERROR, "checker error, variable `%s' in `%s:%s' "
+		      "already defined by `%s:%s'\n", para->ident, def->type,
+		      def->instance, def->type, instances->get (pos));
+	    errors++;
+	  }
+	}
+	// collect parameter sweep variables for the above check
+	instances->add (def->instance);
+	vars->add (para->ident);
+	refs->add (ref->ident);
+      }
+    }
+  }
+  delete eqnvars;
+  delete refs;
+  delete vars;
+  delete instances;
   return errors;
 }
 

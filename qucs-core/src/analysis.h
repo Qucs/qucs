@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.h,v 1.5 2004/05/02 16:59:31 ela Exp $
+ * $Id: analysis.h,v 1.6 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -62,6 +62,7 @@ class analysis : public object
   void setType (int t) { type = t; }
 
  protected:
+  int runs;
   int type;
   net * subnet;
   dataset * data;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.6 2004/05/02 12:02:11 ela Exp $
+ * $Id: spsolver.cpp,v 1.7 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -51,13 +51,11 @@ using namespace std;
 
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
-  runs = 0;
   type = ANALYSIS_SPARAMETER;
 }
 
 // Constructor creates a named instance of the spsolver class.
 spsolver::spsolver (char * n) : analysis (n) {
-  runs = 0;
   type = ANALYSIS_SPARAMETER;
 }
 
@@ -68,7 +66,6 @@ spsolver::~spsolver () {
 /* The copy constructor creates a new instance of the spsolver class
    based on the given spsolver object. */
 spsolver::spsolver (spsolver & n) : analysis (n) {
-  runs = n.runs;
 }
 
 /* This function joins two nodes of a single circuit (interconnected
@@ -325,6 +322,8 @@ void spsolver::solve (void) {
   int ports;
   circuit * root;
 
+  runs++;
+
   // get frequency range
   start = getPropertyDouble ("Start");
   stop  = getPropertyDouble ("Stop");
@@ -355,7 +354,6 @@ void spsolver::solve (void) {
     subnet->deleteUnusedCircuits ();
   }
   dropConnections ();
-  runs++;
 }
 
 /* The function goes through the list of circuit objects and creates T
@@ -552,7 +550,7 @@ void spsolver::saveResults (nr_double_t freq) {
     f = new vector ("frequency");
     data->addDependency (f);
   }
-  if (runs == 0) f->add (freq);
+  if (runs == 1) f->add (freq);
 
   // go through the list of remaining circuits
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {

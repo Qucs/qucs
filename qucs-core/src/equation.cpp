@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.8 2004/05/09 12:54:03 ela Exp $
+ * $Id: equation.cpp,v 1.9 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -853,4 +853,14 @@ int equation_solver (dataset * data) {
   solve->setEquations (NULL);
   delete solve;
   return 0;
+}
+
+/* Go through the list of equations and store the left hand side in
+   a string list. */
+strlist * equation_variables (void) {
+  strlist * idents = new strlist ();
+  foreach_equation (eqn) {
+    idents->add (eqn->result);
+  }
+  return idents;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.3 2004/04/25 17:08:50 ela Exp $
+ * $Id: parasweep.cpp,v 1.4 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -46,14 +46,12 @@ using namespace std;
 
 // Constructor creates an unnamed instance of the parasweep class.
 parasweep::parasweep () : analysis () {
-  runs = 0;
   var = NULL;
   type = ANALYSIS_SWEEP;
 }
 
 // Constructor creates a named instance of the parasweep class.
 parasweep::parasweep (char * n) : analysis (n) {
-  runs = 0;
   var = NULL;
   type = ANALYSIS_SWEEP;
 }
@@ -65,7 +63,6 @@ parasweep::~parasweep () {
 /* The copy constructor creates a new instance of the parasweep class
    based on the given parasweep object. */
 parasweep::parasweep (parasweep & p) : analysis (p) {
-  runs = p.runs;
   var = new variable (*p.var);
 }
 
@@ -77,6 +74,8 @@ void parasweep::solve (void) {
   nr_double_t start, stop, step;
   char * n;
   constant * val;
+
+  runs++;
 
   // get fixed properties
   start = getPropertyDouble ("Start");
@@ -97,14 +96,16 @@ void parasweep::solve (void) {
 
   // run the parameter sweep
   for (D (val) = start; D (val) <= stop; D (val) += step) {
-    if (runs == 0) saveResults ();
+    if (runs == 1) saveResults ();
     for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
       a->solve ();
+      // assign variable dataset dependencies to last order analyses
       analysis * last = subnet->findLastOrder (a);
-      data->assignDependency (last->getName (), var->getName ());
+      for (; last != NULL; last = (analysis *) last->getNext ()) {
+	data->assignDependency (last->getName (), var->getName ());
+      }
     }
   }
-  runs++;
 }
 
 /* This function saves the results of a single solve() functionality

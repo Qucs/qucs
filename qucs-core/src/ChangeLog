@@ -1,3 +1,19 @@
+2004-05-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Check for duplicate parameter names in 
+	parameter sweeps, but allow them in same order sweeps.
+
+	* strlist.cpp: New function index() returning the position of
+	the first occurrence of the given string.
+
+	* check_netlist.cpp: Checking for duplicate definitions in 
+	equations and parameter sweep variables.
+
+	* dataset.cpp: Fixed dataset output for single DC analyses.
+
+	* parasweep.cpp: Fixed assignment of variable dataset
+	dependencies.
+
 2004-05-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Fixed a bug occurring when solution of equations

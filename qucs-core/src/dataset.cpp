@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.5 2004/04/30 22:27:03 ela Exp $
+ * $Id: dataset.cpp,v 1.6 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -238,34 +238,51 @@ void dataset::print (void) {
   
   // print dependencies
   for (vector * d = dependencies; d != NULL; d = (vector *) d->getNext ()) {
-    fprintf (f, "<indep %s %d>\n", d->getName (), d->getSize ());
-    printData (d, f);
-    fprintf (f, "</indep>\n");
+    printDependency (d, f);
   }
 
   // print variables
   for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
-
-    // print data header
-    fprintf (f, "<dep %s", v->getName ());
-    if (v->getDependencies () != NULL) {
-      struct strlist_t * root = v->getDependencies()->getRoot ();
-      while (root != NULL) {
-	fprintf (f, " %s", root->str);
-	root = root->next;
-      }
-    }
-    fprintf (f, ">\n");
-  
-    // print data itself
-    printData (v, f);
-
-    // print data footer
-    fprintf (f, "</dep>\n");
+    if (v->getDependencies () != NULL)
+      printVariable (v, f);
+    else
+      printDependency (v, f);
   }
   
   // close file if necessary
   if (file) fclose (f);
+}
+
+/* Prints the given vector as independent dataset vector into the
+   given file descriptor. */
+void dataset::printDependency (vector * v, FILE * f) {
+  // print data header
+  fprintf (f, "<indep %s %d>\n", v->getName (), v->getSize ());
+  // print data itself
+  printData (v, f);
+  // print data footer
+  fprintf (f, "</indep>\n");
+}
+
+/* Prints the given vector as dependent dataset vector into the given
+   file descriptor. */
+void dataset::printVariable (vector * v, FILE * f) {
+  // print data header
+  fprintf (f, "<dep %s", v->getName ());
+  if (v->getDependencies () != NULL) {
+    struct strlist_t * root = v->getDependencies()->getRoot ();
+    while (root != NULL) {
+      fprintf (f, " %s", root->str);
+      root = root->next;
+    }
+  }
+  fprintf (f, ">\n");
+  
+  // print data itself
+  printData (v, f);
+
+  // print data footer
+  fprintf (f, "</dep>\n");
 }
 
 /* This function is a helper routine for the print() functionality of

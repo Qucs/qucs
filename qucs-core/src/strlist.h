@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.h,v 1.2 2004/03/20 16:58:49 ela Exp $
+ * $Id: strlist.h,v 1.3 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@ class strlist
   int length (void);
   int contains (char *);
   char * get (int);
+  int index (char *);
   static strlist * join (strlist *, strlist *);
   char * toString (void);
 

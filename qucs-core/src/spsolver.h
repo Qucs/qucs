@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.h,v 1.3 2004/05/02 12:02:11 ela Exp $
+ * $Id: spsolver.h,v 1.4 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -52,9 +52,6 @@ class spsolver : public analysis
   void dropOpens (void);
   void dropDifferentialPorts (void);
   void dropConnections (void);
-
- private:
-  int runs;
 };
 
 #endif /* __SPSOLVER_H__ */

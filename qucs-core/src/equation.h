@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.7 2004/04/19 18:42:21 ela Exp $
+ * $Id: equation.h,v 1.8 2004/05/17 19:50:51 ela Exp $
  *
  */
 
@@ -244,6 +244,7 @@ __BEGIN_DECLS
 /* Available functions of the equation checker. */
 int equation_checker (int);
 int equation_solver (dataset *);
+strlist * equation_variables (void);
 
 __END_DECLS
 
