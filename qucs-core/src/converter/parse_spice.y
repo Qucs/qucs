@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_spice.y,v 1.4 2004-11-02 23:48:40 ela Exp $
+ * $Id: parse_spice.y,v 1.5 2004-11-04 08:48:32 ela Exp $
  *
  */
 
@@ -183,6 +183,28 @@ DefinitionLine:
     $$->line = spice_lineno;
   }
   | Action Identifier PairList Eol { 
+    $$ = create_definition ();
+    $$->action = PROP_ACTION;
+    $$->type = $1;
+    $$->instance = $1;
+    $$->line = spice_lineno;
+  }
+  | Action Identifier Value Eol { 
+    $$ = create_definition ();
+    $$->action = PROP_ACTION;
+    $$->type = $1;
+    $$->instance = $1;
+    $$->line = spice_lineno;
+  }
+  | Action Node NodeList Identifier Identifier Eol { 
+    /* e.g. .PZ 1 0 3 0 CUR POL */
+    $$ = create_definition ();
+    $$->action = PROP_ACTION;
+    $$->type = $1;
+    $$->instance = $1;
+    $$->line = spice_lineno;
+  }
+  | Action Expr Identifier Expr Eol { 
     $$ = create_definition ();
     $$->action = PROP_ACTION;
     $$->type = $1;

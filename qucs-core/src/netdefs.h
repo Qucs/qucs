@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: netdefs.h,v 1.2 2004-10-31 12:35:46 ela Exp $
+ * $Id: netdefs.h,v 1.3 2004-11-04 08:48:27 ela Exp $
  *
  */
 
@@ -68,6 +68,7 @@ struct definition_t {
   int line;
   int copy;
   int ncount;
+  char * text;
   char * subcircuit;
   struct value_t * values;
   struct define_t * define;
