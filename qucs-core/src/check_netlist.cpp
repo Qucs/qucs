@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.58 2004-10-03 10:30:51 ela Exp $
+ * $Id: check_netlist.cpp,v 1.59 2004-10-04 20:54:20 ela Exp $
  *
  */
 
@@ -158,13 +158,15 @@ struct define_t definition_available[] =
   { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { 0, 360 } },
+      PROP_NO_PROP }
   },
   /* AC current source */
   { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
       { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Phase", PROP_REAL, { 0, PROP_NO_STR }, { 0, 360 } },
+      PROP_NO_PROP }
   },
   /* pulse voltage source */
   { "Vpulse", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.9 2004-10-03 10:30:51 ela Exp $
+ * $Id: vac.cpp,v 1.10 2004-10-04 20:54:23 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "circuit.h"
 #include "component_id.h"
 #include "consts.h"
+#include "constants.h"
 #include "vac.h"
 
 vac::vac () : circuit (2) {
@@ -63,6 +64,7 @@ void vac::initTR (void) {
 
 void vac::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
-  nr_double_t u = getPropertyDouble ("U") * sin (2 * M_PI * f * t);
+  nr_double_t p = getPropertyDouble ("Phase");
+  nr_double_t u = getPropertyDouble ("U") * sin (2 * M_PI * f * t + rad (p));
   setE (1, u);
 }

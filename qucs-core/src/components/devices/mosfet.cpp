@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.10 2004-10-04 17:17:45 ela Exp $
+ * $Id: mosfet.cpp,v 1.11 2004-10-04 20:54:23 ela Exp $
  *
  */
 
@@ -556,7 +556,7 @@ void mosfet::calcOperatingPoints (void) {
 }
 
 void mosfet::initAC (void) {
-  initSP ();
+  clearI ();
 }
 
 void mosfet::calcAC (nr_double_t frequency) {

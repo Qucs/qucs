@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.12 2004-09-25 13:45:50 ela Exp $
+ * $Id: diode.cpp,v 1.13 2004-10-04 20:54:23 ela Exp $
  *
  */
 
@@ -162,6 +162,10 @@ void diode::calcOperatingPoints (void) {
   setOperatingPoint ("Id", Id);
   setOperatingPoint ("Vd", Ud);
   setOperatingPoint ("Cd", Cd);
+}
+
+void diode::initAC (void) {
+  clearI ();
 }
 
 void diode::calcAC (nr_double_t frequency) {

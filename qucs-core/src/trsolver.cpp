@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.11 2004-09-22 16:47:57 ela Exp $
+ * $Id: trsolver.cpp,v 1.12 2004-10-04 20:54:20 ela Exp $
  *
  */
 
@@ -110,7 +110,7 @@ void trsolver::solve (void) {
   initSteps ();
 
   // First calculate a initial state using the non-linear DC analysis.
-  setDescription ("DC");
+  setDescription ("initial DC");
   initDC ();
   setCalculation ((calculate_func_t) &calcDC);
   solve_pre ();
@@ -133,6 +133,10 @@ void trsolver::solve (void) {
   updateCoefficients (delta, 1);
   setState (dState, delta);
   //adjustOrder (currentOrder, 1);
+
+#if DEBUG
+  logprint (LOG_STATUS, "NOTIFY: %s: solving transient netlist\n", getName ());
+#endif
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
