@@ -193,13 +193,13 @@ bool Wire::load(const QString& _s)
 
   n = s.section('"',1,1);
   if(!n.isEmpty()) {     // is wire labeled ?
-    int nx = s.section(' ',5,5).toInt(&ok);    // x coordinate
+    int nx = s.section(' ',5,5).toInt(&ok);   // x coordinate
     if(!ok) return false;
 
-    int ny = s.section(' ',6,6).toInt(&ok);    // y coordinate
+    int ny = s.section(' ',6,6).toInt(&ok);   // y coordinate
     if(!ok) return false;
 
-    int delta = s.section(' ',7,7).toInt(&ok);    // delta for x/y root coordinate
+    int delta = s.section(' ',7,7).toInt(&ok);// delta for x/y root coordinate
     if(!ok) return false;
 
     setName(n, s.section('"',3,3), delta, nx, ny);  // Wire Label

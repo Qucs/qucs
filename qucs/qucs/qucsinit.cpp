@@ -752,7 +752,8 @@ void QucsInit::slotHelpAbout()
     tr("Portuguese by Luciano Franca\n")+
     tr("Spanish by Jose L. Redrejo Rodriguez\n")+
     tr("Japanese by Toyoyuki ISHIKAWA\n")+
-    tr("Italian by Giorgio Luparia"));
+    tr("Italian by Giorgio Luparia\n")+
+    tr("Hungarian by Bus Jozsef"));
 }
 
 // ########################################################################

@@ -2459,6 +2459,14 @@ Stosowanie:  qucsedit [-r] plik
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>no variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -4093,7 +4101,7 @@ Qt universal circuit simulator</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation>Włoskie - Giorgio Luparia</translation>
+        <translation type="obsolete">Włoskie - Giorgio Luparia</translation>
     </message>
     <message>
         <source>French by Eric Marzolf
@@ -4330,6 +4338,15 @@ Przesuwa tekst właściwości elementu</translation>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Bus Jozsef</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -3,138 +3,138 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation>プロパティー編集</translation>
+        <translation>Nyíl tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source>Head Length: </source>
-        <translation>長さ:</translation>
+        <translation>Nyílhegy hossz:</translation>
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation>幅 :</translation>
+        <translation>      Nyílhegy szélesség:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation>線色 :</translation>
+        <translation>Vonal szín:</translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation>線幅 :</translation>
+        <translation>Vonal szélesség:</translation>
     </message>
     <message>
         <source>Line style: </source>
-        <translation>線種 :</translation>
+        <translation>Vonal stílus:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation>ソリッド</translation>
+        <translation>folytonos vonal</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation>ダッシュ</translation>
+        <translation>szaggatott vonal</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation>ドット</translation>
+        <translation>pontokból álló vonal</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation>ダッシュドット</translation>
+        <translation>pontvonal</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation>ダッシュドットドット</translation>
+        <translation>pontvonal dupla ponttal</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation>部品プロパティー編集</translation>
+        <translation>Komponens tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>名前 :</translation>
+        <translation>Név:</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>値</translation>
+        <translation>Érték</translation>
     </message>
     <message>
         <source>display</source>
-        <translation>表示</translation>
+        <translation>Kijelezve</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>説明</translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>参照</translation>
+        <translation>Kiválasztás</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation>回路図に表示</translation>
+        <translation>Kijelezve a kapcsolási rajzon</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>追加</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>はい</translation>
+        <translation>igen</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>いいえ</translation>
+        <translation>nem</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation>全てのファイル</translation>
+        <translation>Minden fájl</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation>選択されたファイル</translation>
+        <translation>Fájl kiválasztás</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
+        <translation type="obsolete">Hiba</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">テキストエディタを開けません !</translation>
+        <translation type="obsolete">A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
         <source>Sweep</source>
@@ -198,150 +198,162 @@
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished">プロパティー</translation>
+        <translation type="unfinished">Tulajdonságok</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation>グラフプロパティー編集</translation>
+        <translation>Diagram tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source>Graph Input</source>
-        <translation>グラフの入力</translation>
+        <translation>Grafikon bemenet</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation>数字表記法 :</translation>
+        <translation>Szám jelzésmód:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation>実数/虚数</translation>
+        <translation>valós/képzetes</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation>絶対角(ディグリー)</translation>
+        <translation>nagyság/szög (fok)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation>絶対角(ラジアン)</translation>
+        <translation>nagyság/szög (radián)</translation>
     </message>
     <message>
         <source>Precision:</source>
-        <translation>精度 :</translation>
+        <translation>Pontosság:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation>色 :</translation>
+        <translation>Szín:</translation>
     </message>
     <message>
         <source>Thickness:</source>
-        <translation>細さ :</translation>
+        <translation>Vastagság:</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation>線種 :</translation>
+        <translation>Stílus:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation>ソリッド</translation>
+        <translation>folytonos vonal</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation>ダッシュ</translation>
+        <translation>szaggatott vonal</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation>ドット</translation>
+        <translation>pontokból álló vonal</translation>
     </message>
     <message>
         <source>long dash line</source>
-        <translation>長いダッシュ</translation>
+        <translation>hosszú szaggatott vonal</translation>
     </message>
     <message>
         <source>Dataset</source>
-        <translation>データセット</translation>
+        <translation>Adatok</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>状態</translation>
+        <translation>Státusz</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>サイズ</translation>
+        <translation>Méret</translation>
     </message>
     <message>
         <source>Graph</source>
-        <translation>グラフ</translation>
+        <translation>Grafikon</translation>
     </message>
     <message>
         <source>New Graph</source>
-        <translation>新しいグラフ</translation>
+        <translation>Új grafikon</translation>
     </message>
     <message>
         <source>Delete Graph</source>
-        <translation>グラフ削除</translation>
+        <translation>Grafikon törlése</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation>データ</translation>
+        <translation>Adat</translation>
     </message>
     <message>
         <source>x-Axis Label:</source>
-        <translation>x軸ラベル :</translation>
+        <translation>X-tengely cimke:</translation>
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation type="obsolete">y軸ラベル :</translation>
+        <translation type="obsolete">Y-tengely cimke:</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation>グリッド表示</translation>
+        <translation>Rácsozat látszik</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation>グリッド色 :</translation>
+        <translation>Rács szín:</translation>
     </message>
     <message>
         <source>Grid Style: </source>
-        <translation>グリッドスタイル :</translation>
+        <translation>Rács stílus:</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation>ダッシュドット</translation>
+        <translation>pontvonal</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation>ダッシュドットドット</translation>
+        <translation>pontvonal dupla ponttal</translation>
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation>x軸 LOG表示</translation>
+        <translation>logaritmikus rácsozat az X tengelyen</translation>
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation type="obsolete">y軸 LOG表示</translation>
+        <translation type="obsolete">logaritmikus rácsozat az Y tengelyen</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>プロパティー</translation>
+        <translation>Tulajdonságok</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
+    </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>y-Axis:</source>
@@ -412,6 +424,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>right y-Axis</source>
         <translation type="unfinished"></translation>
     </message>
@@ -419,212 +435,192 @@
         <source>Limits</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>circles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>arrows</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>FillDialog</name>
     <message>
         <source>Line Width: </source>
-        <translation>線幅 :</translation>
+        <translation>Vonal szélesség:</translation>
     </message>
     <message>
         <source>Line Color: </source>
-        <translation>線色 :</translation>
+        <translation>Vonal szín:</translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation>線種 :</translation>
+        <translation>Vonal stílus:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation>ソリッド</translation>
+        <translation>folytonos vonal</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation>ダッシュ</translation>
+        <translation>szaggatott vonal</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation>ドット</translation>
+        <translation>pontokból álló vonal</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation>ダッシュドット</translation>
+        <translation>pontvonal</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation>ダッシュドットドット</translation>
+        <translation>pontvonal dupla ponttal</translation>
     </message>
     <message>
         <source>Line Style</source>
-        <translation>線種</translation>
+        <translation>Vonal stílus</translation>
     </message>
     <message>
         <source>enable filling</source>
-        <translation>塗りつぶし</translation>
+        <translation>kitöltés engedélyezés</translation>
     </message>
     <message>
         <source>Fill Color: </source>
-        <translation>塗色 :</translation>
+        <translation>Szín kitöltés:</translation>
     </message>
     <message>
         <source>Fill Style: </source>
-        <translation>塗種 :</translation>
+        <translation>Stílus kitöltés:</translation>
     </message>
     <message>
         <source>no filling</source>
-        <translation>塗りつぶし無し</translation>
+        <translation>nincs kitöltés</translation>
     </message>
     <message>
         <source>solid</source>
-        <translation>ソリッド</translation>
+        <translation>folytonos</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation>濃さ 1 (一番濃い)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dense 2</source>
-        <translation>濃さ 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation>濃さ 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation>濃さ 4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation>濃さ 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation>濃さ 6</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation>濃さ 7 (一番薄い)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>horizontal line</source>
-        <translation>水平線</translation>
+        <translation>vízszintes vonal</translation>
     </message>
     <message>
         <source>vertical line</source>
-        <translation>垂直線</translation>
+        <translation>függőleges vonal</translation>
     </message>
     <message>
         <source>crossed lines</source>
-        <translation>十字格子</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation>斜線(右上がり)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation>斜線(右下がり)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation>斜線格子</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation>塗りつぶし種</translation>
+        <translation>Kitöltés stílus</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation>テキストプロパティー編集</translation>
+        <translation>Szöveg tulajdonságainak beéllítása</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Text color: </source>
-        <translation>テキスト色 :</translation>
+        <translation>Szöveg szín:</translation>
     </message>
     <message>
         <source>Text size: </source>
-        <translation>テキストサイズ :</translation>
+        <translation>Szöveg méret:</translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation>回転角度 :</translation>
+        <translation>Forgatási szög:</translation>
     </message>
 </context>
 <context>
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation>サブサーキットプロパティー編集</translation>
+        <translation>Alkapcsolás tulajdonságainak beéllítása</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation>サブサーキット名 :</translation>
+        <translation>Előtag:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>LabelDialog</name>
     <message>
-        <source>More...</source>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">Csomópont Beadása</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Cimke:</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Nodename</source>
-        <translation type="unfinished">ノード名追加</translation>
-    </message>
-    <message>
-        <source>Enter the label:</source>
-        <translation type="unfinished">ラベル入力 :</translation>
-    </message>
-    <message>
-        <source>Initial node voltage:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -633,391 +629,395 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
-        <translation>マーカプロパティー編集</translation>
+        <translation>Jelző tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source>Precision: </source>
-        <translation>精度 :</translation>
+        <translation>Pontosság:</translation>
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation>数字表記法 :</translation>
+        <translation>Szám jelzésmód:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation>実数/虚数</translation>
+        <translation>valós/képzetes</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation>絶対角(ディグリー)</translation>
+        <translation>nagyság/szög (fok)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation>絶対角(ラジアン)</translation>
+        <translation>nagyság/szög (radián)</translation>
     </message>
     <message>
         <source>transparent</source>
-        <translation>透明</translation>
+        <translation>átlátszó</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>全て保存</translation>
+        <translation>Mindent ment</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>破棄</translation>
+        <translation>Eldobás</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>全て破棄</translation>
+        <translation>Mindent eldob</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished">新規プロジェクトを作成</translation>
+        <translation type="unfinished">Új projekt létrehozás</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished">プロジェクト名:</translation>
+        <translation type="unfinished">Projekt név:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished">新しいプロジェクトを開く</translation>
+        <translation type="unfinished">új projekt megnyitása</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">作成</translation>
+        <translation type="unfinished">Létrehozás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">Mégsem</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Warning</source>
-        <translation>注意</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation>セッティングを保存できません !</translation>
+        <translation>Beállítások nem menthetőek!</translation>
     </message>
     <message>
         <source>untitled</source>
-        <translation>タイトル無し</translation>
+        <translation>cím nélkül</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;Painting’ フィールドが閉じられていません!</translation>
+        <translation>Formázási hiba:
+&apos;Painting&apos; mező nincs lezárva!</translation>
     </message>
     <message>
         <source>Wrong document version: </source>
-        <translation>ドキュメントのバージョンが違います:</translation>
+        <translation>Helytelen dokumentum verzió:</translation>
     </message>
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation>クリップボードフォーマットエラー:
-不明のフィールドです!</translation>
+        <translation>Vágólap formázási hiba:
+Ismeretlen mező!</translation>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation>ドキュメントをセーブできません!</translation>
+        <translation>Dokumentum nem menthető!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation>フォーマットエラー:
-誤ったプロパティーフィールドリミットです!</translation>
+        <translation>Formázási hiba:
+Helytelen szélsőérték!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown property: </source>
-        <translation>フォーマットエラー:
-未知のプロパティーです:</translation>
+        <translation>Formázási hiba:
+Ismeretlen érték:</translation>
     </message>
     <message>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation>フォーマットエラー:
-プロパティーフィールドに数値が入ると思われます!</translation>
+        <translation>Formázási hiba:
+Szám legyen az érték mezőben!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;Property’フィールドが閉じられていません!</translation>
+        <translation>Formázási hiba:
+&apos;Property&apos; mező nincs lezárva!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation>フォーマットエラー :
-&apos;Component&apos; フィールドが閉じられていません!</translation>
+        <translation>Formázási hiba:
+&apos;Component&apos; mező nincs lezárva!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;wire&apos; ラインフォーマットです!</translation>
+        <translation>Formázási hiba:
+Helytelen &apos;wire&apos; sor!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;ワイヤ&apos; フィールドが閉じられていません!</translation>
+        <translation>Formázási hiba:
+&apos;Wire&apos; mező nincs lezárva!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation>フォーマットエラー:
-未知のグラフです!</translation>
+        <translation>Formázási hiba:
+Ismeretlen diagram!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;diagram&apos; ラインフォーマットです!</translation>
+        <translation>Formázási hiba:
+Helytelen &apos;diagram&apos; sor!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation>フォーマットエラー:
-&apos;Diagram’ フィールドが閉じられていません!</translation>
+        <translation>Formázási hiba:
+&apos;Diagram&apos; mező nincs lezárva!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation>フォーマットエラー:
-誤った &apos;painting&apos; ライン区切りです!</translation>
+        <translation>Formázási hiba:
+Helytelen &apos;painting&apos; sor határoló!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown painting!</source>
-        <translation>フォーマットエラー:
-未知の図形描画です!</translation>
+        <translation>Formázási hiba:
+Ismeretlen felirat &apos;painting&apos;!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;painting&apos; ラインフォーマットです!</translation>
+        <translation>Formázási hiba:
+Helytelen &apos;painting&apos; sor!</translation>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation>ドキュメントを読み込みできません:</translation>
+        <translation>Dokumentumot nem lehet betölteni:</translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation type="obsolete">誤ったドキュメントタイプです!</translation>
+        <translation type="obsolete">Helytelen dokumentum típus!</translation>
     </message>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation>ファイルフォーマットエラー:
-未知のフィールドです!</translation>
-    </message>
-    <message>
-        <source>Edit Ellipse Properties</source>
-        <translation>楕円プロパティー編集</translation>
+        <translation>Fájl formátum hiba:
+Ismeretlen mező!</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation>弧プロパティー編集</translation>
+        <translation>Körív tulajdonságainak beállítása</translation>
+    </message>
+    <message>
+        <source>Edit Ellipse Properties</source>
+        <translation>Elipszis tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation>線プロパティー編集</translation>
+        <translation>Vonal tulajdonságainak beéllítása</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation>長方形プロパティー編集</translation>
+        <translation>Nényszög tulajdonságainak beállítása</translation>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;無効&gt;</translation>
+        <translation>&lt;érvénytelen&gt;</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>データセットをロードできません:</translation>
+        <translation>Nem tölthető be az adat:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>ファイルサイズが取得できません</translation>
-    </message>
-    <message>
-        <source>Too few dependent data &quot;</source>
-        <translation>データが少なすぎます</translation>
-    </message>
-    <message>
-        <source>Independent data &quot;</source>
-        <translation>データ”</translation>
-    </message>
-    <message>
-        <source>&quot; not found</source>
-        <translation>”が見つかりません</translation>
-    </message>
-    <message>
-        <source>Too few independent data &quot;</source>
-        <translation>データが少なすぎます”</translation>
-    </message>
-    <message>
-        <source>invalid</source>
-        <translation>無効</translation>
-    </message>
-    <message>
-        <source>ac simulation</source>
-        <translation>ACシミュレーション</translation>
-    </message>
-    <message>
-        <source>sweep type</source>
-        <translation>スィープタイプ</translation>
-    </message>
-    <message>
-        <source>start frequency in Hertz</source>
-        <translation>スタート周波数(Hz)</translation>
-    </message>
-    <message>
-        <source>stop frequency in Hertz</source>
-        <translation>ストップ周波数(Hz)</translation>
-    </message>
-    <message>
-        <source>number of simulation steps</source>
-        <translation>シミュレーションステップ数</translation>
-    </message>
-    <message>
-        <source>ideal ac current source</source>
-        <translation>理想AC電流源</translation>
-    </message>
-    <message>
-        <source>current in Ampere</source>
-        <translation>電流(A)</translation>
-    </message>
-    <message>
-        <source>frequency in Hertz</source>
-        <translation>周波数(Hz)</translation>
-    </message>
-    <message>
-        <source>initial phase in degrees</source>
-        <translation>開始位相(°)</translation>
-    </message>
-    <message>
-        <source>ac Current Source</source>
-        <translation>AC電流源</translation>
-    </message>
-    <message>
-        <source>ideal dc current source</source>
-        <translation>理想DC電流源</translation>
-    </message>
-    <message>
-        <source>dc Current Source</source>
-        <translation>DC電流源</translation>
-    </message>
-    <message>
-        <source>noise current source</source>
-        <translation>ノイズ電流源</translation>
-    </message>
-    <message>
-        <source>current power spectral density in A^2/Hz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Too few dependent data &quot;</source>
+        <translation>Túl sok függő adat &quot;</translation>
+    </message>
+    <message>
+        <source>Independent data &quot;</source>
+        <translation>Független adat &quot;</translation>
+    </message>
+    <message>
+        <source>&quot; not found</source>
+        <translation>&quot; nem található</translation>
+    </message>
+    <message>
+        <source>Too few independent data &quot;</source>
+        <translation>Túl kevés független adat &quot;</translation>
+    </message>
+    <message>
+        <source>invalid</source>
+        <translation>érvénytelen</translation>
+    </message>
+    <message>
+        <source>ac simulation</source>
+        <translation>AC szimuláció</translation>
+    </message>
+    <message>
+        <source>sweep type</source>
+        <translation>léptetés típus</translation>
+    </message>
+    <message>
+        <source>start frequency in Hertz</source>
+        <translation>kezdő frekvencia Hertz-ben</translation>
+    </message>
+    <message>
+        <source>stop frequency in Hertz</source>
+        <translation>befejező frekvencia Hertz-ben</translation>
+    </message>
+    <message>
+        <source>number of simulation steps</source>
+        <translation>a szimuláció lépésszáma</translation>
+    </message>
+    <message>
+        <source>ideal ac current source</source>
+        <translation>ideális váltóáram AC generátor</translation>
+    </message>
+    <message>
+        <source>current in Ampere</source>
+        <translation>áram Amper-ben</translation>
+    </message>
+    <message>
+        <source>frequency in Hertz</source>
+        <translation>frekvencia Hertz-ben</translation>
+    </message>
+    <message>
+        <source>initial phase in degrees</source>
+        <translation>Kezdő fázis fokban</translation>
+    </message>
+    <message>
+        <source>ac Current Source</source>
+        <translation>váltóáram AC generátor</translation>
+    </message>
+    <message>
+        <source>ideal dc current source</source>
+        <translation>ideális egyenfeszültség DC forrás</translation>
+    </message>
+    <message>
+        <source>dc Current Source</source>
+        <translation>egyenáram DC forrás</translation>
+    </message>
+    <message>
+        <source>noise current source</source>
+        <translation>zajáram generátor</translation>
+    </message>
+    <message>
+        <source>current power spectral density in A^2/Hz</source>
+        <translation>zajáram-sűrűség A^2/Hz-ben</translation>
+    </message>
+    <message>
         <source>frequency exponent</source>
-        <translation type="unfinished">周波数 指数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished">周波数 係数</translation>
+        <translation>frekvencia tényező</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished">周波数付加</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation>ノイズ電流源</translation>
+        <translation>Zajáram generátor</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation>アッテネータ</translation>
+        <translation>csillapító</translation>
     </message>
     <message>
         <source>power attenuation</source>
-        <translation>パワーアッテネーション</translation>
+        <translation>csillapítás</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation>インピーダンス</translation>
+        <translation>névleges impedancia</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation>シミュレーション温度(°C)</translation>
+        <translation>Szimulációs hőmérséklet Celziuszfok-ban</translation>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation>アッテネータ</translation>
+        <translation>Csillapító</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation>バイアスティー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bias T</source>
-        <translation>バイアスティー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation>バイポーラジャンクショントランジスタ</translation>
+        <translation>bipoláris tranzisztor</translation>
     </message>
     <message>
         <source>polarity</source>
-        <translation>極性</translation>
+        <translation>polaritás</translation>
     </message>
     <message>
         <source>saturation current</source>
-        <translation>飽和電流</translation>
+        <translation>szaturációs áram</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation>順放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation>逆放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
@@ -1029,27 +1029,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>forward early voltage</source>
-        <translation>順初期電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>reverse early voltage</source>
-        <translation>逆初期電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-emitter leakage saturation current</source>
-        <translation>ベースエミッタ間 洩れ飽和電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation>ベースエミッタ間 洩れ放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
-        <translation>ベースコレクタ間 洩れ飽和電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation>ベースコレクタ間 洩れ放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>forward beta</source>
@@ -1065,27 +1065,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished">ベース抵抗中点時の電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished">コレクタ抵抗</translation>
+        <translation>ohmikus kollektor ellenállás</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished">エミッタ抵抗</translation>
+        <translation>ohmikus emitter ellenállás </translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished">ゼロバイアス ベース抵抗 (恐らく大電流に依存)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation type="unfinished">ベースエミッタ間 ゼロバイアス 空乏容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation type="unfinished">ベースエミッタ間 電位</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
@@ -1145,11 +1145,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation>フリッカーノイズ係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation>フリッカーノイズ指数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
@@ -1173,31 +1173,31 @@ Unknown field!</source>
     </message>
     <message>
         <source>npn transistor</source>
-        <translation>NPNトランジスタ</translation>
+        <translation>npn tranzisztor</translation>
     </message>
     <message>
         <source>pnp transistor</source>
-        <translation>PNPトランジスタ</translation>
+        <translation>pnp tranzisztor</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>bipoláris tranzisztor szubsztrátkivezetéssel</translation>
     </message>
     <message>
         <source>capacitor</source>
-        <translation>コンデンサ</translation>
+        <translation>kondenzátor</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation>容量(F)</translation>
+        <translation>kapacitás Farad-ban</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation>コンデンサ</translation>
+        <translation>Kondenzátor</translation>
     </message>
     <message>
-        <source>current controlled current source</source>
-        <translation>電流制御電流源</translation>
+        <source>current controlled voltage source</source>
+        <translation>áramvezérelt feszültséggenerátor</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
@@ -1205,149 +1205,149 @@ Unknown field!</source>
     </message>
     <message>
         <source>delay time</source>
-        <translation>遅延時間</translation>
-    </message>
-    <message>
-        <source>Current Controlled Current Source</source>
-        <translation>電流制御電流源</translation>
-    </message>
-    <message>
-        <source>current controlled voltage source</source>
-        <translation>電流制御電圧源</translation>
+        <translation>késleltetési idő</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation>電流制御電圧源</translation>
+        <translation>Áramvezérelt feszültség generátor</translation>
+    </message>
+    <message>
+        <source>current controlled current source</source>
+        <translation>áramvezérelt áramgenerátor</translation>
+    </message>
+    <message>
+        <source>Current Controlled Current Source</source>
+        <translation>Áramvezérelt áramgenerátor</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation>サーキュレータ</translation>
+        <translation>cirkulátor</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation>ポート1のインピーダンス</translation>
+        <translation>névleges impedancia az 1-es csatlakozón</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation>ポート2のインピーダンス</translation>
+        <translation>névleges impedancia az 2-es csatlakozón</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation>ポート3のインピーダンス</translation>
+        <translation>névleges impedancia az 3-as csatlakozón</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation>サーキュレータ</translation>
+        <translation>Cirkulátor</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong line start!</source>
-        <translation>フォーマットエラー:
-誤ったライン開始です!</translation>
+        <translation>Formázási hiba:
+Helytelen sor kezdés!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation>フォーマットエラー:
-未知のコンポーネントです!</translation>
+        <translation>Fájl formátum hiba:
+Ismeretlen komponens!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation>フォーマットエラー:
-誤った &apos;component&apos; 線フォーマットです!</translation>
+        <translation>Formázási hiba:
+Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>coplanar line</source>
-        <translation>コプレーナライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation>基材定義名</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation>線路の幅</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation>間隔の幅</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation>線路の長さ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation>コプレーナライン</translation>
-    </message>
-    <message>
-        <source>dc simulation</source>
-        <translation>DCシミュレーション</translation>
-    </message>
-    <message>
-        <source>relative tolerance for convergence</source>
-        <translation>収束公差</translation>
-    </message>
-    <message>
-        <source>absolute tolerance for currents</source>
-        <translation>電流絶対公差</translation>
-    </message>
-    <message>
-        <source>absolute tolerance for voltages</source>
-        <translation>電圧絶対公差</translation>
-    </message>
-    <message>
-        <source>put operating points into dataset</source>
-        <translation>オペレーティングポイントをデータセットに入力</translation>
-    </message>
-    <message>
-        <source>maximum number of iterations until error</source>
-        <translation>エラーになるまでの最大繰り返し数</translation>
-    </message>
-    <message>
-        <source>save subcircuit nodes into dataset</source>
-        <translation>サブサーキットノードをデータセットに保存</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation>DCブロック</translation>
+        <translation>DC blokkoló</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation>DCブロック</translation>
+        <translation>DC Blokkoló </translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation>電圧付加</translation>
+        <translation>AC blokkoló</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation>電圧付加</translation>
+        <translation>AC Blokkoló</translation>
+    </message>
+    <message>
+        <source>dc simulation</source>
+        <translation>DC szimuláció</translation>
+    </message>
+    <message>
+        <source>relative tolerance for convergence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance for currents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance for voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put operating points into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maximum number of iterations until error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>diode</source>
-        <translation>ダイオード</translation>
+        <translation>Dióda</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation>放射係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation>ゼロバイアスジャンクション容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>grading coefficient</source>
-        <translation>等級係数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>junction potential</source>
-        <translation>ジャンクション電位</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation>線形容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>recombination current parameter</source>
@@ -1359,83 +1359,83 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation>直列抵抗</translation>
+        <translation>ohmikus soros ellenállás</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation>推移時間</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Diode</source>
-        <translation>ダイオード</translation>
+        <translation>Dióda</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation>方程式</translation>
+        <translation>egyenlet</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation>方程式</translation>
+        <translation>Egyenlet</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation>結果をデータセットに入力</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation>グラウンド(リファレンス電位)</translation>
+        <translation>föld (referencia potenciál)</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation>グラウンド</translation>
+        <translation>Föld</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation>ジャイレータ(インピーダンス変換)</translation>
+        <translation>girátor (impedanciatranszformátor)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
-        <translation>ジャイレータ比率</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation>ジャイレータ</translation>
+        <translation>Girátor</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation>ハーモニックバランスシミュレーション</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation>ハーモニクス数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation>ハーモニックバランス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation>インダクタ</translation>
+        <translation>tekercs</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation>インダクタンス(H)</translation>
+        <translation>Induktivitás Henry-ben</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation>インダクタ</translation>
+        <translation>Tekercs</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation>電流計</translation>
+        <translation>áram próba</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation>電流計</translation>
+        <translation>Áram próba</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation>理想電流パルス源</translation>
+        <translation>ideális áramimpulzus generátor</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
@@ -1443,75 +1443,75 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation>パルス電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation>パルスの開始時間</translation>
+        <translation>impulzus indulási idő</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation>パルスの終了時間</translation>
+        <translation>impulzus befelyezési idő</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation>立上り時間</translation>
+        <translation>felfutási idő</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation>立下がり時間</translation>
+        <translation>lefutási idő</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation>電流パルス</translation>
+        <translation>Áram impulzus</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation>理想矩形電流源</translation>
+        <translation>ideális négyszögáram generátor</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation>ハイパルス時の電流</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation>ハイパルス持続時間</translation>
+        <translation>a magas szint szélessége</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation>ローパルス持続時間</translation>
+        <translation>az alacsony szint szélessége</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation>矩形波電流</translation>
+        <translation>Négyszögáram</translation>
     </message>
     <message>
         <source>isolator</source>
-        <translation>アイソレータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation>入力ポートインピーダンス</translation>
+        <translation>névleges impedancia a bemeneten</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation>出力ポートインピーダンス</translation>
+        <translation>névleges impedancia a kimeneten</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation>アイソレータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
-        <translation>ジャンクションフィールドエフェクトトランジスタ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>threshold voltage</source>
-        <translation>スレッショルド電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation>伝導パラメータ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
@@ -1519,11 +1519,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>parasitic drain resistance</source>
-        <translation>ドレイン寄生抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation>ソース寄生抵抗</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
@@ -1551,7 +1551,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>gate-junction potential</source>
-        <translation>ゲートジャンクション電位</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>forward-bias junction capacitance coefficient</source>
@@ -1571,7 +1571,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS térvezérlésű tranzisztor</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
@@ -1591,15 +1591,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>drain ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmikus drain ellenállás </translation>
     </message>
     <message>
         <source>source ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmikus source ellenállás </translation>
     </message>
     <message>
         <source>gate ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmikus gate ellenállás </translation>
     </message>
     <message>
         <source>bulk junction saturation current</source>
@@ -1611,11 +1611,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>channel width</source>
-        <translation type="unfinished"></translation>
+        <translation>csatorna szélesség</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation type="unfinished"></translation>
+        <translation>csatorna hossz</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
@@ -1623,7 +1623,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>oxide thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>oxid vastagság</translation>
     </message>
     <message>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
@@ -1723,11 +1723,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>n-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-MOSFET</translation>
     </message>
     <message>
         <source>p-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-MOSFET</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
@@ -1735,79 +1735,79 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation>マイクロストリップコーナー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation>基板</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation>線幅</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation>マイクロストリップコーナー</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation>カップルドマイクロストリップライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation>線間幅</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation>マイクロストリップモデル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation>マイクロストリップ分散モデル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation>カップルドマイクロストリップライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation>マイクロストリップクロス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation>線幅1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation>線幅2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation>線幅3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation>線幅4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation>マイクロストリップクロス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation>マイクロストリップギャップ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation>線幅1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation>線幅2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation>マイクロストリップ端の間隔</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
@@ -1815,287 +1815,299 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation>マイクロストリップギャップ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation>マイクロストリップライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation>マイクロストリップライン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation>マイクロストリップマイターベンド</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation>マイクロストリップマイターベンド</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip open</source>
-        <translation>マイクロストリップオープン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip open end model</source>
-        <translation>マイクロストリップオープンエンドモデル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation>マイクロストリップオープン</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation>マイクロストリップインピーダンスステップ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation>線幅1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation>線幅2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation>マイクロストリップステップ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation>マイクロストリップティージャンクション</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation>マイクロストリップティージャンクション</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation>パラメータスイープ</translation>
+        <translation>Paraméter léptetés</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation>パラメータスイープ シミュレーション</translation>
+        <translation>szimuláció, amelyikhez a paramétert léptetni kell</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation>スイープパラメータ</translation>
+        <translation>paramáter amelyiket léptetjük</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation>スイープ開始値</translation>
+        <translation>kezdő érték a léptetéshez</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation>スイープ終了値</translation>
+        <translation>befejező érték a léptetéshez</translation>
     </message>
     <message>
         <source>phase shifter</source>
-        <translation>フェーズシフタ</translation>
+        <translation>fázishasító</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation>位相シフト(°)</translation>
+        <translation>fázishasítás szöge</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation>フェーズシフタ</translation>
+        <translation>Fázishasító</translation>
     </message>
     <message>
         <source>resistor</source>
-        <translation>抵抗</translation>
+        <translation>ellenállás</translation>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation>抵抗(オーム)</translation>
+        <translation>Ohmikus ellenállás - Ohm</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation>回路シンボル</translation>
+        <translation>Rajzjel</translation>
     </message>
     <message>
         <source>Resistor</source>
-        <translation>抵抗</translation>
+        <translation>Ellenállás</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation>抵抗(US)</translation>
+        <translation>Ellenállás US</translation>
     </message>
     <message>
         <source>ac power source</source>
-        <translation></translation>
+        <translation>AC teljesítmény generátor</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation>ポートナンバ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation>ポートインピーダンス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation>ACパワー(W)</translation>
+        <translation>AC teljesítmény Watt-ban</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation>パワーソース</translation>
-    </message>
-    <message>
-        <source>S parameter simulation</source>
-        <translation>Sパラメータシミュレーション</translation>
-    </message>
-    <message>
-        <source>calculate noise parameters</source>
-        <translation>ノイズパラメータ計算</translation>
-    </message>
-    <message>
-        <source>input port for noise figure</source>
-        <translation>入力ポート ノイズフィギュア</translation>
-    </message>
-    <message>
-        <source>output port for noise figure</source>
-        <translation>出力ポート ノイズフィギュア</translation>
-    </message>
-    <message>
-        <source>S-parameter simulation</source>
-        <translation>Sパラメータシミュレーション</translation>
+        <translation>AC teljesítmény generátor</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation>Sパラメータファイル</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>file</source>
-        <translation>ファイル</translation>
+        <translation>fájl</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation>Sパラメータファイルの名前</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation>インターポレーションタイプ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1ポートSパラメータファイル</translation>
+        <translation>1-csatlakozós S paraméter fájl</translation>
+    </message>
+    <message>
+        <source>S parameter simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>input port for noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>output port for noise figure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S-parameter simulation</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation>サブサーキット</translation>
+        <translation>beágyazott kapcsolás</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation>Qucs回路図ファイル名</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation>サブサーキットのポート</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation>サブサーキットのポート数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation>サブサーキットポート</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation>基板定義</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation>誘電率</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation>厚さ(m)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation>導体厚み</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation>誘電正接</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
-        <translation>導体抵抗率</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation>基板</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation>理想対称トランス</translation>
+        <translation>ideális szimetrikus transzformátor</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation></translation>
+        <translation>1-es tekercs feszültség áttétele </translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation></translation>
+        <translation>2-es tekercs feszültség áttétele </translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation>対称トランス</translation>
+        <translation>szimetrikus transzformátor</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation>理想トランスミッションライン</translation>
+        <translation>ideális csőtáp vonal</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation>インピーダンス特性</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation>電気長</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation>トランスミッションライン</translation>
+        <translation>Csőtáp vonal</translation>
+    </message>
+    <message>
+        <source>ideal transformer</source>
+        <translation>ideális transzformátor</translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio</source>
+        <translation>feszültség áttétel</translation>
+    </message>
+    <message>
+        <source>Transformer</source>
+        <translation>Transzformátor</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation>トランジェント解析</translation>
+        <translation>Tranziens szimuláció</translation>
     </message>
     <message>
         <source>start time in seconds</source>
-        <translation>開始時間(s)</translation>
+        <translation>Indítási idő másodpercben</translation>
     </message>
     <message>
         <source>stop time in seconds</source>
-        <translation>終了時間(s)</translation>
+        <translation>Leállítási idő másodpercben</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation>シミュレーションステップ数</translation>
+        <translation>Lépészsám a szimuláció alatt </translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation>初期ステップサイズ(s)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
-        <translation>最小ステップサイズ(s)</translation>
+        <translation>minimum lépésszám másodpercenként</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
@@ -2111,175 +2123,184 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation>トランジェント解析</translation>
-    </message>
-    <message>
-        <source>ideal transformer</source>
-        <translation>理想トランス</translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Transformer</source>
-        <translation>トランス</translation>
-    </message>
-    <message>
-        <source>voltage controlled current source</source>
-        <translation>電圧制御電流源</translation>
-    </message>
-    <message>
-        <source>forward transconductance</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Voltage Controlled Current Source</source>
-        <translation>電流制御電圧源</translation>
+        <translation>Tranziens szimuláció</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation>電圧制御電圧源</translation>
+        <translation>feszültségvezérelt feszültséggenerátor</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation>電圧制御電圧源</translation>
+        <translation>Feszültség vezérelt feszültség generátor</translation>
+    </message>
+    <message>
+        <source>voltage controlled current source</source>
+        <translation>feszültségvezérelt áramgenerátor</translation>
+    </message>
+    <message>
+        <source>forward transconductance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Current Source</source>
+        <translation>Feszültség vezérelt áramgenerátor</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation>理想AC電圧源</translation>
+        <translation>ideális váltófeszültség AC generátor</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation>実効電圧(V)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation>AC電圧源</translation>
+        <translation>váltófeszültség AC generátor</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation>理想DC電圧源</translation>
+        <translation>ideális egyenfeszültség DC forrás</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation>電圧(V)</translation>
+        <translation>feszültség Voltban</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation>DC電圧源</translation>
+        <translation>Egyenfeszültség DC forrás</translation>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation>ノイズ電圧源</translation>
+        <translation>zajfeszültség generátor</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation>ノイズ電圧源</translation>
+        <translation>Zajfeszültség generátor</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation>理想電圧パルス源</translation>
+        <translation>ideális feszültségimpulzus generátor</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation>パルスの電圧</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Feszültség impulzus</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideális négyszögfeszültség generátor</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>a magas szint feszültsége</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Négyszögfeszültség</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation type="obsolete">新規プロジェクトを作成</translation>
+        <translation type="obsolete">Új projekt létrehozás</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="obsolete">プロジェクト名:</translation>
+        <translation type="obsolete">Projekt név:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="obsolete">新しいプロジェクトを開く</translation>
+        <translation type="obsolete">új projekt megnyitása</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="obsolete">作成</translation>
+        <translation type="obsolete">Létrehozás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation></translation>
+        <translation>Qucs editor verzió</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation></translation>
+        <translation>
+Egyszerü szövegszerkesztő a Qucs-hoz
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation></translation>
+        <translation>Copyright (C) 2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation></translation>
+        <translation>
+Használat:  qucsedit [-r] fájl
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation></translation>
+        <translation>    -h  súgó kiírása és kilépés
+</translation>
     </message>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation></translation>
+        <translation>    -r  fájl nyitása csak olvasásra
+</translation>
     </message>
     <message>
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished">Too long command line argument!</translation>
+        <translation>Túl hosszú parancssori argomentum!
+
+</translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Helytelen parancssori argomentum!
+
+</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Csak egy fájlnév megengedett!
+
+</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2292,6 +2313,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Amplifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2323,18 +2348,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Insert Nodename</source>
-        <translation type="obsolete">ノード名追加</translation>
-    </message>
-    <message>
-        <source>Enter the label:</source>
-        <translation type="obsolete">ラベル入力 :</translation>
-    </message>
-    <message>
-        <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SPICE netlist file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2346,381 +2359,388 @@ Usage:  qucsedit [-r] file
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>no variables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>no data</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
         <source>Schematic</source>
-        <translation>回路図</translation>
+        <translation>Kapcsolási rajz</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation>データ表示</translation>
+        <translation>Adat megjelenítők</translation>
     </message>
     <message>
         <source>Qucs Documents</source>
-        <translation>Qucs ドキュメント</translation>
+        <translation>Qucs Dokumentációk</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation>いずれかのファイル</translation>
+        <translation>Bármelyik fájl</translation>
     </message>
     <message>
         <source>New</source>
-        <translation>新規</translation>
+        <translation>Új</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>開く</translation>
+        <translation>Megnyitás</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>Projects</source>
-        <translation>プロジェクト</translation>
+        <translation>Projektek</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation>プロジェクトディレクトリの内容</translation>
+        <translation>A projekt könyvtár összetevői</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation>内容</translation>
+        <translation>Összetevői</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation>ノート</translation>
+        <translation>Megjegyzés</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation>データセット</translation>
+        <translation>Adatbeállítások</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation>データ表示</translation>
+        <translation>Adat megjelenítők</translation>
     </message>
     <message>
         <source>Schematics</source>
-        <translation>回路図</translation>
+        <translation>Kapcsolási rajzok</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation>内容</translation>
+        <translation>Összetevők</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation>プロジェクトの内容</translation>
+        <translation>A megnyitott projekt összetevői</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation>部品</translation>
+        <translation>Komponensek</translation>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation>部品と図表</translation>
+        <translation>Komponensek és Diagramok</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation>集中定数部品</translation>
+        <translation>Álltalános alkatrészek</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation>ソース源部品</translation>
+        <translation>Áram és feszültségforrások</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>伝送線路部品</translation>
+        <translation>Csőtáp vonalak</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation>非線形部品</translation>
+        <translation>Nemlineáris, aktív alkatrészek</translation>
     </message>
     <message>
         <source>file data</source>
-        <translation>ファイルデータ部品</translation>
+        <translation>Alkatrész fájlból (beágyazás)</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation>シミュレーション部品</translation>
+        <translation>Szimulációk</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation>図表部品</translation>
+        <translation>Diagramok</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation>図形描画部品</translation>
+        <translation>Feliratok, rajzelemek</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>名前変更</translation>
+        <translation>Átnevezés</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation>グループ削除</translation>
+        <translation>Csoport törlés</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation>名前変更できません!</translation>
+        <translation>Nyitott fájlt nem lehet átnevezni!</translation>
     </message>
     <message>
         <source>Rename file</source>
-        <translation>ファイル名変更</translation>
+        <translation>Fájl átnevezés</translation>
     </message>
     <message>
         <source>Enter new name:</source>
-        <translation>新しい名前入力:</translation>
+        <translation>Új név:</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation>ファイル名を変更できません:</translation>
+        <translation>A fájl nem átnevezhető:</translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
-        <translation>ファイルを削除できません!</translation>
+        <translation>Nyitott fájlt nem lehet törölni!</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>注意</translation>
+        <translation>Figyelmeztetések</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation>完全にファイルを削除します!  続けますか?</translation>
+        <translation>A fájl véglegesen törlődik! Folytatja?</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>いいえ</translation>
+        <translation>Nem</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>はい</translation>
+        <translation>Igen</translation>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation>回路図を削除できません:</translation>
+        <translation>A kapcsolási rajz nem törölhető:</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation>ファイルを削除できません:</translation>
+        <translation>Nyitott fájlt nem lehet törölni:</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation>ファイルを完全に削除します</translation>
+        <translation>Azt akarja töröljem a fájlokat
+</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation>続けますか?</translation>
+        <translation>Végleges! Folytatja?</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation>ワークディレクトリを作成できません !</translation>
+        <translation>A munkakönyvtárat nem tudtam létrehozni!</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
-        <translation>Qucsドキュメントを閉じます</translation>
+        <translation>A Qucs dokumentum bezárás</translation>
     </message>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation>このドキュメントは変更されています!
-閉じる前に保存しますか?</translation>
+        <translation>A dokumentum tartalmaz mentetlen változásokat!
+Szeretnéd menteni a változásakat bezárás előtt?
+</translation>
     </message>
     <message>
         <source>Creating new schematic...</source>
-        <translation>新しい回路図を作成しています...</translation>
+        <translation>Új kapcsolási rajz létrehozása...</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>準備完了.</translation>
+        <translation>Kész.
+</translation>
     </message>
     <message>
         <source>Opening file...</source>
-        <translation>ファイルを開いています...</translation>
+        <translation>Fájl nyitása...</translation>
     </message>
     <message>
         <source>Enter a Schematic Name</source>
-        <translation>回路図名を入力</translation>
+        <translation>Kapcsolási rajz neve</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation>開くのを中断しました</translation>
+        <translation>Megnyitás megszakítva</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation>-port</translation>
+        <translation>-csatlakozás</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation>ファイルを保存しています...</translation>
+        <translation>Fájl mentése...</translation>
     </message>
     <message>
         <source>Saving aborted</source>
-        <translation>保存を中断しました</translation>
+        <translation>Mentés megszakítva</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation>ドキュメント名を入力</translation>
+        <translation>Dokumentum neve</translation>
     </message>
     <message>
         <source>The file &apos;</source>
-        <translation>ファイル &apos;</translation>
+        <translation>A &apos;</translation>
     </message>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation>&apos; は既に存在しています!</translation>
+        <translation>&apos; fájl már létezik!
+</translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation>古いファイルを上書きしてしまいます ! 続けますか?</translation>
+        <translation>Felülirja a régebbit! Folytatja?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation>拡張子は&apos;.sch&apos; と &apos;.dpl&apos; のみです</translation>
+        <translation>A kiterjesztés csak &apos;.sch&apos; és &apos;.dpl&apos; lehet
+</translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation>コンテントブラウザに表われます! 続けますか?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Infó</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation>上書きできません</translation>
+        <translation>Nyitott dokumentumot nem lehet felülírni</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
-        <translation>新しい名前で保存しています...</translation>
+        <translation>Fájl mentése, új fájlnévvel...</translation>
     </message>
     <message>
         <source>Saving all files...</source>
-        <translation>全てのファイルを保存しています...</translation>
+        <translation>Összes fájl mentése...</translation>
     </message>
     <message>
         <source>Closing file...</source>
-        <translation>ファイルを閉じています...</translation>
+        <translation>Fájl bezárása...</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
 </source>
-        <translation>ドキュメントに保存されていない変更があります!</translation>
+        <translation>A dokumentum tartalmaz mentetlen változásokat!
+
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes before closing?</source>
-        <translation>閉じる前に変更を保存しますか?</translation>
+        <translation>El akarod menteni a változásokat bezárás előtt?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>破棄(&amp;D)</translation>
+        <translation>&amp;Eldobás</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation>印刷中...</translation>
+        <translation>Nyomtatás...</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation>アプリケーションを終了しています...</translation>
+        <translation>Kilépés a programból...</translation>
     </message>
     <message>
         <source>Quit...</source>
-        <translation>終了...</translation>
+        <translation>Kilépés...</translation>
     </message>
     <message>
         <source>Do you really want to quit?</source>
-        <translation>本当に終了しますか?</translation>
+        <translation>Biztosan kilép?</translation>
     </message>
     <message>
         <source>Cutting selection...</source>
-        <translation>選択を切り取っています...</translation>
+        <translation>A kijelölés kivágása...</translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation>選択をクリップボードにコピーしています...</translation>
+        <translation>A kijelölés másolása a vágólapra...</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Qucsヘルプを開けません!</translation>
+        <translation>A Qucs Súgó (qucshelp) nem indítható!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>新しいシミュレーションを始めています</translation>
+        <translation>Új szimuláció indulása </translation>
     </message>
     <message>
         <source> at </source>
-        <translation>at</translation>
+        <translation>,  </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>ネットリストを作成中...</translation>
+        <translation>kötéslista készítés...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation>エラー:ネットリストファイルを作成できません!
-中断しました.</translation>
+        <translation>HIBA: Nem lehet létrehozni a kötéslista fájlt!
+Megszakítva.
+</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation>完了.</translation>
+        <translation>befejezve.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>エラー:シミュレータを開始できません!</translation>
+        <translation>HIBA: Szimuláció nem indítható!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>シミュレーション完了</translation>
+        <translation>
+Szimuláció befejezése </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>準備完了.
+        <translation>Kész.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>シミュレーションでのエラー</translation>
+        <translation>
+Hibák a szimuláció alatt </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>中断しました.</translation>
+        <translation>Megszakítva.
+</translation>
     </message>
     <message>
         <source>Output:
 ----------
 
 </source>
-        <translation></translation>
+        <translation>Kimenet:
+-------------
+
+</translation>
     </message>
     <message>
         <source>
@@ -2730,183 +2750,193 @@ Errors:
 --------
 
 </source>
-        <translation></translation>
+        <translation>
+
+
+Hibák:
+---------
+
+</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>テキストエディタを開始できません!</translation>
+        <translation>A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation>作成できません</translation>
+        <translation>Létrehozás nem sikerült</translation>
     </message>
     <message>
         <source>No page set !</source>
-        <translation>ページがセットされていません!</translation>
+        <translation>Oldal nincs beállítva!</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation>プロジェクトディレクトリにアクセスできません:</translation>
+        <translation>Nincs hozzáférés a projekt könyvtárhoz:</translation>
     </message>
     <message>
         <source> - Project: </source>
-        <translation>-Project:</translation>
+        <translation>- Projekt:</translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation>開始時のプロジェクトディレクトリを選択</translation>
+        <translation>Válassz projekt könyvtárat a megnyitáshoz</translation>
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <source>&apos;</source>
-        <translation></translation>
+        <translation>&apos; összetevői</translation>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation>プロジェクトディレクトリを作成できません !</translation>
+        <translation>Nem lehet létrehozni a projekt könyvtárat!</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>線</translation>
+        <translation>Vonal</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>弧</translation>
+        <translation>Körív</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>矢印</translation>
+        <translation>Nyíl</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>テキスト</translation>
+        <translation>Szöveg</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>楕円</translation>
+        <translation>Elipszis</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>長方形</translation>
+        <translation>Téglalap</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>塗りつぶし楕円</translation>
+        <translation>Kitöltött ellipszis</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>塗りつぶし長方形</translation>
+        <translation>Kitöltött téglalap</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-ポート Sパラメータファイル</translation>
+        <translation>1-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2-ポート Sパラメータファイル</translation>
+        <translation>2-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3-ポート Sパラメータファイル</translation>
+        <translation>3-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4-ポート Sパラメータファイル</translation>
+        <translation>4-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5-ポート Sパラメータファイル</translation>
+        <translation>5-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6-ポート Sパラメータファイル</translation>
+        <translation>6-csatlakozós S paraméter fájl</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>直交座標</translation>
+        <translation>Derékszögű</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>極座標</translation>
+        <translation>Poláris</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>表</translation>
+        <translation>Táblázatos</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>スミスチャート</translation>
+        <translation>Smith grafikon</translation>
     </message>
     <message>
         <source>No project is selected !</source>
-        <translation>プロジェクトが選択されていません!</translation>
+        <translation>Nincs kiválasztott projekt!</translation>
     </message>
     <message>
         <source>Cannot delete an open project !</source>
-        <translation>プロジェクトを削除できません!</translation>
+        <translation>Nyitott projektet nem lehet törölni!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation>プロジェクトファイルが完全に壊れます! 続けますか?</translation>
+        <translation>Ez véglegesen törli a projekt fájlt! Folytatja?</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>はい(&amp;Y)</translation>
+        <translation>&amp;Igen</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>いいえ(&amp;N)</translation>
+        <translation>&amp;Nem</translation>
     </message>
     <message>
         <source>Cannot remove project file: </source>
-        <translation>プロジェクトファイルを除去できません:</translation>
+        <translation>Nem lehet eltávolítani a projekt fájlt:</translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
-        <translation>プロジェクトディレクトリを除去できません!</translation>
+        <translation>Nem lehet eltávolítani a projekt könyvtárat!</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation>削除するプロジェクトディレクトリを選択</translation>
+        <translation>Válassz projekt könyvtárat a törléshez</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>少なくとも二つ以上の要素を選択してください!</translation>
+        <translation>Legalább két elemet kell kiválasztani! </translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>回路シンボルを編集</translation>
+        <translation>Áramköri szimbólum szerkesztése</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>この回路図の為のシンボルを編集</translation>
+        <translation>Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>回路シンボルを編集
+        <translation>Áramköri szimbólum szerkesztése
 
-この回路図の為のシンボルを編集</translation>
+Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>回路図編集</translation>
+        <translation>Kapcsolási rajz szerkesztése</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation>回路図を編集します</translation>
+        <translation>Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation>回路図を編集
+        <translation>Kapcsolási rajz szerkesztése
 
-回路図を編集します</translation>
+Szerkeszti a kapcsolási rajzot</translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Admittance Smith</source>
@@ -2920,1234 +2950,1255 @@ Edits the schematic</source>
         <source>Smith-Polar Combi</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsEdit</name>
     <message>
         <source>File: </source>
-        <translation>ファイル:</translation>
+        <translation>Fájl:</translation>
     </message>
     <message>
         <source>About</source>
-        <translation></translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>閉じる</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>このソフトウェアについて...</translation>
+        <translation>Névjegy...</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation></translation>
+        <translation>Qucs verzió</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation></translation>
+        <translation>
+Egyszerü szövegszerkesztő a Qucs-hoz
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation></translation>
+        <translation>Copyright (C) 2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation>ファイル名入力</translation>
+        <translation>Fájl név</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation>ファイルを書き込みできません:</translation>
+        <translation>A fájl nem írható:</translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation>ファイルを読み込みできません:</translation>
+        <translation>A fájl nem olvasható:</translation>
     </message>
     <message>
         <source>Closing document</source>
-        <translation>ドキュメントを閉じます</translation>
+        <translation>Dokumentum bezárva</translation>
     </message>
     <message>
         <source>The text contains unsaved changes!
 </source>
-        <translation>セーブされていないテキストが含まれています!</translation>
+        <translation>A szöveg tartalmaz mentetlen változásokat!
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes?</source>
-        <translation>変更されたものを保存しますか?</translation>
+        <translation>El akarod menteni a változásokat?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>破棄(&amp;D)</translation>
+        <translation>&amp;Eldobás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
-        <translation>Qucsヘルプシステム</translation>
+        <translation>Qucs súgó rendszer</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>ヘルプ目次</translation>
+        <translation>Súgó index</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>Bezár</translation>
     </message>
 </context>
 <context>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation>新規</translation>
+        <translation>Új</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>新規(&amp;N)</translation>
+        <translation>Ú&amp;j</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation>新しいドキュメントを作成</translation>
+        <translation>Új dokumentumot készít</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation>新規
+        <translation>Új
 
-新しい回路図かデータ表示を作成</translation>
+Új kapcsolási rajzot vagy adatmegjelenítő dokumentumot hoz létre</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation>ファイルを開く</translation>
+        <translation>Fájl megnyitása</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation>開く(&amp;O)...</translation>
+        <translation>&amp;Megnyitás...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation>既存のドキュメントを開く</translation>
+        <translation>Megnyit egy létező dokumentumot</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation>既存のドキュメントを開きます</translation>
+        <translation>Fájl megnyitás
+
+Megnyit egy létező dokumentumot</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>ファイルを保存</translation>
+        <translation>Fájl mentés</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation>現在のドキュメントを保存</translation>
+        <translation>Menti az aktuális dokumentum</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation>現在のドキュメントを保存現在のドキュメントを保存</translation>
+        <translation>Fájl mentése
+
+Menti az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation>別名で保存</translation>
+        <translation>Mentés másként</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation>別名で保存 (&amp;a)...</translation>
+        <translation>Men&amp;tés másként...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation>現在のドキュメントを新しい名前で保存</translation>
+        <translation>Menti az aktuális dokumentumot új fájlnévvel</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation>別名で保存
+        <translation>Mentés másként
 
-現在のドキュメントを新しい名前で保存</translation>
+Menti az aktuális dokumentumot új fájlnévvel</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation>全てのファイルを保存</translation>
+        <translation>Összes fájl mentése</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation>全て保存(&amp;A)</translation>
+        <translation>Min&amp;dent ment</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation>開かれた全てのドキュメントを保存</translation>
+        <translation>Ment minden nyitott dokumentumot</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation>全てのファイルを保存
+        <translation>Minden fájl mentése
 
-開かれた全てのドキュメントを保存</translation>
+Ment minden nyitott dokumentumot</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation>ファイルを閉じる</translation>
+        <translation>Fájl bezárás</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation>&amp;Bezárás</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation>現在のドキュメントを閉じる</translation>
+        <translation>Bezárja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation>ファイルを閉じる
+        <translation>Fájl bezárás
 
-現在のファイルを閉じる</translation>
+Bezárja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>回路シンボルを編集</translation>
+        <translation>Áramköri szimbólum szerkesztése</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation>回路図のシンボルを編集</translation>
+        <translation>Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation>回路シンボルを編集
+        <translation>Áramköri szimbólum szerkesztése
 
-この回路図の為のシンボルを編集</translation>
+Szerkeszti az áramköri szimbólumot a kapcsoláshoz</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation>ドキュメント セッティング</translation>
+        <translation>Dokumentum tulajdonságai</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation>ドキュメント セッティング...</translation>
+        <translation>Dokumentum tulajdonságai...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation>セッティング
+        <translation>Beállítások
 
-ファイルのプロパティーのセッティング</translation>
+Tulajdonságok beállítása a fájlhoz</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation>ファイルを印刷</translation>
+        <translation>Fájl nyomtatása</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>印刷(&amp;P)...</translation>
+        <translation>&amp;Nyomtatás...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation>現在のドキュメントを印刷</translation>
+        <translation>Nyomtatja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation>ファイルを印刷
+        <translation>Fájl nyomtatása
 
-現在のドキュメントを印刷</translation>
+Nyomtatja az aktuális dokumentumot</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>選択された要素を印刷</translation>
+        <translation>Kiválasztott rész nyomtatása</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation>選択された物を印刷...</translation>
+        <translation>Kijelölt rész nyomtatása...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>選択された要素を印刷</translation>
+        <translation>Kinyomtatja a kiválasztott részt</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>選択された要素を印刷
+        <translation>Kijelölt rész nyomtatása
 
-現在のドキュメントの選択された要素を印刷</translation>
+Kinyomtatja a kiválasztott részt</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>終了</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>終了(&amp;x)</translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>アプリケーションを終了</translation>
+        <translation>Kilépés a programból</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation>アプリケーションを終了</translation>
+        <translation>Kilépés
+
+Kilépés a programból</translation>
     </message>
     <message>
         <source>Application Settings</source>
-        <translation>アプリケーションの設定</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation>アプリケーションの設定...</translation>
+        <translation>Beállítások...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation>Qucsの設定
+        <translation>Qucs beállításai
 
-このアプリケーションの設定</translation>
+Beállítja a program tulajdonságait</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation>上に整列</translation>
+        <translation>Tetejéhez igazít</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>選択された要素を上部に整列</translation>
+        <translation>A kiválasztott elemeket a tetejéhez igazítja</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>選択された要素をそれらの上端に整列</translation>
+        <translation>Tetejéhez igazít
+
+A kiválasztott elemeket a tetejéhez igazítja</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation>下に整列</translation>
+        <translation>Aljához igazít</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>選択された要素を下に整列</translation>
+        <translation>A kiválasztott elemeket az aljához igazítja</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>選択された要素をそれらの下端に整列</translation>
+        <translation>Aljához igazít
+
+A kiválasztott elemeket az aljához igazítja</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation>左に整列</translation>
+        <translation>Balra igazít</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>選択された要素を左に整列</translation>
+        <translation>A kiválasztott elemeket balra igazítja</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>選択された要素をそれらの左端に整列</translation>
+        <translation>Balra igazít
+
+A kiválasztott elemeket balra igazítja</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation>右に整列</translation>
+        <translation>Jobbra igazít</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>選択された要素を右に整列</translation>
+        <translation>A kiválasztott elemeket jobbra igazítja</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>選択された要素をそれらの右端に整列</translation>
+        <translation>Jobbra igazít
+
+A kiválasztott elemeket jobbra igazítja</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation>水平方向に配置</translation>
+        <translation>Vízszintesen elterít</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation>均等に水平に配置</translation>
+        <translation>Vízszintesen egyenletesen elterít</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation>水平に分割
+        <translation>Vízszintesen elterít
 
-選択された要素を水平に配置</translation>
+A kiválasztott elemeket vízszintesen elteríti</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation>垂直方向に配置</translation>
+        <translation>Függőlegesen elterít</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation>均等に垂直に配置</translation>
+        <translation>Függőlegesen egyenletesen elterít</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>選択された要素を垂直に配置</translation>
+        <translation>Függőlegesen elterít
+
+A kiválasztott elemeket függőlegesen elteríti</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation>グリッドに合わせる</translation>
+        <translation>Rácshoz illeszt</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation>グリッドに合わせる
+        <translation>Rácshoz illeszt
 
-選択された要素をグリッドに合わせる
-</translation>
+A kiválasztott elemet rácshoz illeszti</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation>部品のテキストを移動</translation>
+        <translation>Alkatrészfelirat mozgatás</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation>部品のテキストを移動
+        <translation>Alkatrészfelirat mozgatás
 
-部品のプロパティテキストを移動</translation>
+Mozgatja az alkatrészfeliratokat</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>切り取り</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>切り取り(&amp;t)</translation>
+        <translation>&amp;Kivágás</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation>選択された部分を切り取り、クリップボードにいれます</translation>
+        <translation>Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation>切り取り
+        <translation>Kivágás
 
-選択された部分を切り取り、クリップボードにいれます</translation>
+Kivágja a kijelölt részeket és a vágólapra helyezi</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>コピー</translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>コピー(&amp;C)</translation>
+        <translation>&amp;Másolás</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation>選択された部分をクリップボードにコピーします</translation>
+        <translation>Átmásolja a kijelölt részeket a vágólapra</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation>コピー
+        <translation>Másolás
 
-選択された部分をクリップボードにコピーします</translation>
+Átmásolja a kijelölt részeket a vágólapra</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>貼付け</translation>
+        <translation>Beillesztés</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation>貼付け(&amp;P)</translation>
+        <translation>&amp;Beillesztés</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>クリップボードの内容をカーソル位置に貼付けます</translation>
+        <translation>Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation>貼付け
+        <translation>Beillesztés
 
-クリップボードの内容をカーソル位置に貼付けます</translation>
+Beilleszti a vágólap tartalmát a kurzor pozicióhoz</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>削除(&amp;D)</translation>
+        <translation>&amp;Törlés</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation>選択された部品を削除します</translation>
+        <translation>Törli a kijelölt részeket</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation>削除
+        <translation>Törlés
 
-選択された部品を削除します</translation>
+Törli a kijelölt részeket</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>やり直し</translation>
+        <translation>Visszavonás</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>やり直し(&amp;U)</translation>
+        <translation>&amp;Visszavonás</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation>最後のコマンドをやり直しします</translation>
+        <translation>Visszavonja az utolsó parancsot</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation>やり直し
+        <translation>Visszavonás
 
-最後のアクションをやり直します</translation>
+Visszavonja az utolsó parancsot</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>元に戻す</translation>
+        <translation>Újra</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>元に戻す(&amp;R)</translation>
+        <translation>Új&amp;ra</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation>最後のコマンドを元に戻します</translation>
+        <translation>Az utolsó visszavont parancsot újból végrehajtja</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation>元に戻す
+        <translation>Újra
 
-最後のアクションをもう一度繰り返します</translation>
+Az utolsó visszavont parancsot újból végrehajtja</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation>新規プロジェクト</translation>
+        <translation>Új projekt</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation>新規プロジェクト(&amp;N)...</translation>
+        <translation>Ú&amp;j Projekt...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation>新プロジェクトを作成します</translation>
+        <translation>Új projektet hoz létre</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation>新規プロジェクト
+        <translation>Új projekt
 
-新プロジェクトを作成します</translation>
+Új projektet hoz létre</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>プロジェクトを開く</translation>
+        <translation>Projekt megnyitása</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>プロジェクトを開く(&amp;O)...</translation>
+        <translation>Projekt &amp;megnyitása...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation>プロジェクトを開きます</translation>
+        <translation>Projektet nyit meg</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation>プロジェクトを開く
+        <translation>Projekt megnyitása
 
-既存のプロジェクトを開きます</translation>
+Projektet nyit meg</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation>プロジェクトを削除</translation>
+        <translation>Projekt törlése</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation>プロジェクトを削除(&amp;D)...</translation>
+        <translation>Projekt &amp;törlése...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation>プロジェクトを削除します</translation>
+        <translation>Projektet töröl</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation>プロジェクトを削除
+        <translation>Projekt törlése
 
-既存のプロジェクトを削除します</translation>
+Projektet töröl</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation>プロジェクトを閉じる</translation>
+        <translation>Projekt bezárása</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation>プロジェクトを閉じる(&amp;C)</translation>
+        <translation>Projekt &amp;bezárása</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation>現在のプロジェクトを閉じる</translation>
+        <translation>Aktuális projekt bezárása</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation>プロジェクトを閉じる
+        <translation>Projekt bezárása
 
-現在のプロジェクトを閉じます</translation>
+Aktuális projekt bezárása</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation>全体を見る</translation>
+        <translation>Nagyítás ablakméretre</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation>ページ全体を見ます</translation>
+        <translation>Nagyit az ablak méretére</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation>全体を見る
+        <translation>Nagyítás ablakméretre
 
-ページ全体の内容を見ます</translation>
+Nagyit az ablak méretére</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation>1:1のスケールで見る</translation>
+        <translation>Tényleges méret</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation>拡大しないで見る</translation>
+        <translation>Nagyít a tényleges méretre</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation>ページの内容を拡大しないで見る</translation>
+        <translation>Tényleges méret
+
+Tényleges méretben mutatja az oldal összetevőit</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>ズームイン</translation>
+        <translation>Nagyítás</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation>現在のビューを拡大</translation>
+        <translation>Nagyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>ズームイン
+        <translation>Nagyítás
 
-現在のビューを拡大</translation>
+Nagyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>ズームアウト</translation>
+        <translation>Kicsinyítés</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation>現在のビューを拡小</translation>
+        <translation>Kicsinyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation>縮小
+        <translation>Kicsinyítés
 
-現在のビューを拡小</translation>
+Kicsinyít az aktuális ablakban</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>選択</translation>
+        <translation>Kijelölés</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>選択モード</translation>
+        <translation>Kijelölő mód</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation>選択
+        <translation>Kijelölés
 
-選択モード</translation>
+Kijelölő mód</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>全て選択</translation>
+        <translation>Mindent kijelöl</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>全ての要素を選択</translation>
+        <translation>Kijelöl minden elemet</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation>全て選択
+        <translation>Mindent kijelöl
 
-ドキュメント全ての要素を選択</translation>
+Kijelöl minden elemet</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>回転</translation>
+        <translation>Forgatás</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation>選択された部品を90°回転</translation>
+        <translation>Elforgatja a kiválasztott komponenst  90°-kal</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation>回転
+        <translation>Forgatás
 
-選択された部品を時計周りに90°回転</translation>
+Elforgatja a kiválasztott komponenst  90°-kal</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation>X軸で反転</translation>
+        <translation>Függőleges tükrözés</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>選択されたアイテムをX軸で反転</translation>
+        <translation>Tükrözi a kiválasztott elemet függőlegesen</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation>X軸で反転
+        <translation>Függőleges tükrözés
 
-選択されたアイテムをX軸で反転</translation>
+Tükrözi a kiválasztott elemet függőlegesen</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation>Y軸で反転</translation>
+        <translation>Vízszintes tükrözés</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>選択されたアイテムをY軸で反転</translation>
+        <translation>Tükrözi a kiválasztott elemet vízszintesen</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Y軸で反転
+        <translation>Vízszintes tükrözés
 
-選択されたアイテムをY軸で反転</translation>
+Tükrözi a kiválasztott elemet vízszintesen</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation>サブサーキットに入る</translation>
+        <translation>Ugrás a beágyazott kapcsolásba</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation>サブサーキット内部に行く</translation>
+        <translation>Beugrik a beágyazott kapcsolásba</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation>サブサーキットに入る
+        <translation>Ugrás a beágyazott kapcsolásba
 
-選択去れたサブサーキット内部に行く</translation>
+Beugrik a beágyazott kapcsolásba</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation>出る</translation>
+        <translation>Kiugrás</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation>サブサーキットから出る</translation>
+        <translation>Kiugrik a beágyazott kapcsolásból</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation>出る
+        <translation>Kiugrás
 
-一つ上の階層に上がる   サブサーキットを抜ける</translation>
+Kiugrik a beágyazott kapcsolásból</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation>無効にする/有効にする</translation>
+        <translation>Passziválás/Aktiválás</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>選択されたアイテムを無効/有効にする</translation>
+        <translation>Passziválja/Aktiválja a kiválasztott elemet</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation>無効にする/有効にする
+        <translation>Passziválás/Aktiválás
 
-選択されたアイテムを無効/有効にする</translation>
+Passziválja/Aktiválja a kiválasztott elemet</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation>方程式を挿入</translation>
+        <translation>Egyenlet beszúrása</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation>方程式を挿入</translation>
+        <translation>Egyenlet beszúrása</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation>方程式を挿入
+        <translation>Egyenlet beszúrása
 
-ユーザが定義した方程式を挿入</translation>
+Beszúr egy felhasználói egyenletet</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation>グラウンドを挿入</translation>
+        <translation>Földelés beszúrása</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation>グラウンドを挿入</translation>
+        <translation>Beszúr egy földelést</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation>グラウンドを挿入
+        <translation>Földelés beszúrása
 
-グラウンドシンボルを挿入</translation>
+Beszúr egy földelést</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation>ポートを挿入</translation>
+        <translation>Csatlakozópont beszúrása</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation>ポートを挿入</translation>
+        <translation>Beszúr egy ssatlakozópontot</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation>ポートを挿入
+        <translation>Csatlakozópont beszúrása
 
-ポートシンボルを挿入</translation>
+Beszúr egy csatlakozópont rajzot</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation>ワイアを挿入</translation>
+        <translation>Vezeték beszúrása</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation>ワイア</translation>
+        <translation>Vezeték</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation>ワイアを挿入</translation>
+        <translation>Beszúr egy vezetéket</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation>ワイア
+        <translation>Vezeték
 
-ワイアを挿入</translation>
+Vezeték beszúrása</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation>ワイア/ピン ラベルを挿入</translation>
+        <translation>Vezeték/Csomópont cimke beszúrása</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation>ワイアラベル</translation>
+        <translation>Vezeték cimke</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation>ワイアかピンのラベルを挿入</translation>
+        <translation>Vezeték/Csomópont cimke beszúrása</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation>ワイアラベル
+        <translation>Vezeték cimke
 
-ワイアかピンのラベルを挿入</translation>
+Vezeték/Csomópont cimke beszúrása</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation>シミュレート</translation>
+        <translation>Szimuláció</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation>現在の回路図をシミュレートする</translation>
+        <translation>Szimuláció futtatása az aktuális kapcsoláson</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation>シミュレート
+        <translation>Szimuláció
 
-現在の回路をシミュレートする</translation>
+Szimuláció futtatása az aktuális kapcsoláson</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation>データディスプレー/回路図 を見る</translation>
+        <translation>Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation>データディスプレーと回路図を切替えます</translation>
+        <translation>Átkapcsolás az Adatmegjelenítő(dpl) és a Kapcsolási rajz(sch) között</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation>データディスプレー/回路図 を見る
+        <translation>Adatmegjelenítő(dpl) / Kapcsolási rajz(sch) nézet
+
 </translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation>マーカセット</translation>
+        <translation>Jelző beéllítása</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation>グラフにマーカをセットします</translation>
+        <translation>Jelző beállítása a grafikonon</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>グラフ上にマーカをセットします</translation>
+        <translation>Jelző beállítása a diagram grafikonjain</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>マーカセット
+        <translation>Jelző beéllítása
 
-グラフ上にマーカをセットします</translation>
+Jelző beállítása a diagram grafikonjain</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation>最後のメッセージを見る</translation>
+        <translation>Utolsó üzenet megjelenítése</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation>最後のシミュレーションメッセージを見る</translation>
+        <translation>Utolsó szimuláció üzeneteinek megjelenítése</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation>最後のメッセージを見る
+        <translation>Utolsó üzenet megjelenítése
 
-最後のシミュレーションのメッセージを見る</translation>
+Utolsó szimuláció üzeneteinek megjelenítése</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation>最後のネットリストを見る</translation>
+        <translation>Utolsó kötéslista megjelenítése</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation>最後のシミュレーションネットリストを見る</translation>
+        <translation>Utolsó szimuláció kötéslistájának megjelenítése</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation>最後のネットリストを見る
+        <translation>Utolsó kötéslista megjelenítése
 
-最後のシミュレーションのネットリストを見る</translation>
+Utolsó szimuláció kötéslistájának megjelenítése</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation>ツールバー</translation>
+        <translation>Eszköztár</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation>ツールバー(&amp;b)</translation>
+        <translation>Esz&amp;köztár</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation>ツールバーを有効/無効にする</translation>
+        <translation>Eszköztár be/ki</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation>ツールバー
+        <translation>Eszköztár
 
-ツールバーを有効／無効にする</translation>
+Eszköztár be/ki</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>ステータスバー</translation>
+        <translation>Státuszsor</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>ステータスバー(&amp;S)</translation>
+        <translation>&amp;Státuszsor</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>ステータスバーを有効／無効にする</translation>
+        <translation>Státuszsor be/ki</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation>ステータスバー
+        <translation>Státuszsor
 
-ステータスバーを有効／無効にする</translation>
+Státuszsor be/ki</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>ヘルプ目次</translation>
+        <translation>Súgó index</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation>ヘルプ目次...</translation>
+        <translation>Súgó index...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation>Qucsヘルプ目次</translation>
+        <translation>Qucs súgó tartalomjegyzék</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation>ヘルプ目次
+        <translation>Súgó index
 
-Qucsヘルプ目次</translation>
+
+Tartalomjegyzék az internetes Qucs súgóhoz </translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation>はじめに</translation>
+        <translation>Kezd így</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation>はじめに...</translation>
+        <translation>Kezd így...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation>はじめに</translation>
+        <translation>Kezd így a Qucs-ot</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation>はじめに
+        <translation>Kezd így
 
-短いQucsの紹介</translation>
+Rövid bemutatás a Qucs-hoz</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation>&amp;About Qucs...</translation>
+        <translation>Qucs &amp;Névjegy...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation>このアプリケーションについて</translation>
+        <translation>Program névjegy</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation>About
+        <translation>Névjegy
 
-このアプリケーションについて</translation>
+Program névjegy</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Qtについて</translation>
+        <translation>Qt Névjegy</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation>&amp;About Qt...</translation>
+        <translation>Qt &amp;Névjegy...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation></translation>
+        <translation>Qt Névjegy
+
+Qt a Trolltech-től</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation>整列</translation>
+        <translation>Elhelyezés</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>&amp;Fájl</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>編集(&amp;E)</translation>
+        <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation>挿入(&amp;I)</translation>
+        <translation>&amp;Beszúrás</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation>プロジェクト(&amp;P)</translation>
+        <translation>&amp;Projekt</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation>シミュレーション(&amp;S)</translation>
+        <translation>Sz&amp;imuláció</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>ビュー(&amp;V)</translation>
+        <translation>&amp;Megjelenítés</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>&amp;Súgó</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Ready.</translation>
+        <translation>Kész.
+</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>ツールバー切替え...</translation>
+        <translation>Eszköztár kapcsoló...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>ステータスバー切替え...</translation>
+        <translation>Státuszsor kapcsoló...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>About...</translation>
+        <translation>Névjegy...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation>Qucs Version</translation>
+        <translation>Qucs verzió </translation>
     </message>
     <message>
         <source>
 Qt universal circuit simulator
 </source>
         <translation>
-Qt universal circuit simulator
+Qt univerzális áramkör szimuláció
 </translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003,2004 by Michael Margraf</translation>
+        <translation>Copyright (C) 2003,2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
 </source>
-        <translation>Simulator by Stefan Jahn</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Special thanks to Jens Flucke
-
-</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Translations:
 </source>
-        <translation>Traslations:
+        <translation>Fordítók:
 </translation>
     </message>
     <message>
         <source>German by Stefan Jahn
 </source>
-        <translation>German by Stefan Jahn
+        <translation>Stefan Jahn - Német
 </translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski
 </source>
-        <translation>Polish by Dariusz Pienkowski
+        <translation>Dariusz Pienkowski - Lengyel
 </translation>
     </message>
     <message>
         <source>Romanian by Radu Circa
 </source>
-        <translation>Romanian by Radu Circa
+        <translation>Radu Circa - Román
 </translation>
     </message>
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation type="obsolete">French by Eric Marzolf
+        <translation type="obsolete">Eric Marzolf - Francia
 </translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca
 </source>
-        <translation>Portuguese by Luciano Franca
+        <translation>Luciano Franca - Portugál
 </translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
-        <translation>Spanish by Jose L. Redrejo Rodriguez
+        <translation>Jose L. Redrejo Rodriguez - Spanyol
 </translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation type="obsolete">Italian by Giorgio Luparia</translation>
+        <translation type="obsolete">Giorgio Luparia - Olasz</translation>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS
@@ -4173,140 +4224,141 @@ Qt universal circuit simulator
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation>Qucsプロパティー編集</translation>
+        <translation>Qucs tulajdonságainak beéllítása</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation>フォント (再起動時に有効):</translation>
+        <translation>Betűkészlet (beállítva ujratöltés után):</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation>バックグラウンド色 :</translation>
+        <translation>Dokumentum háttér szín:</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation>最大やり直し数 :</translation>
+        <translation>maximális visszavonások száma:</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation>テキストエディタ :</translation>
+        <translation>szövegszerkesztő:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation>デフォルトに戻す</translation>
+        <translation>Alapértelmezett értékek</translation>
     </message>
 </context>
 <context>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="obsolete">ノード名追加</translation>
+        <translation type="obsolete">Csomópont Beadása</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="obsolete">ラベル入力 :</translation>
+        <translation type="obsolete">Cimke:</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>Infó</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation>グラウンドにはラベルを付けられません !</translation>
+        <translation>A földpotenciál nem lehet cimke!</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation>ファイルプロパティー編集</translation>
+        <translation>Fájl tulajdonságainak beéllítása</translation>
     </message>
     <message>
         <source>Data Display:</source>
-        <translation>回路図 :</translation>
+        <translation>Adat megjelenítés:</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation>データ セット :</translation>
+        <translation>Adat beállítás:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation>シミュレーション後データ表示する</translation>
+        <translation>Adatok megjelenítése a szimuláció után</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation>シミュレーション</translation>
+        <translation>Szimuláció</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation>グリッド表示</translation>
+        <translation>
+Rács megjelenítése</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation>水平グリッド :</translation>
+        <translation>vízszintes rács:</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation>垂直グリッド :</translation>
+        <translation>függőleges rács:</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation>グリッド</translation>
+        <translation>Rács</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>適用</translation>
+        <translation>Alkalmaz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation>Qucs シミュレーション メッセージ</translation>
+        <translation>Qucs szimulációs üzenetek</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation>進捗 :</translation>
+        <translation>Készultségi állapot:</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation>エラーと注意 :</translation>
+        <translation>Hibák és Figyelmeztetések:</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation>表示ページへ</translation>
+        <translation>Ugrás az adatmegjelenítő oldalra</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation>シミュレーション中止</translation>
+        <translation>Szimuláció megszakítása</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation>ウィンドウを閉じる</translation>
+        <translation>Ablak bezárás</translation>
     </message>
 </context>
 </TS>
