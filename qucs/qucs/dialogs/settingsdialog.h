@@ -3,7 +3,7 @@
                              -------------------
     begin                : Mon Oct 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -40,7 +40,6 @@ private slots:
   void slotApply();
 
 public:
-  QRegExp   Expr;
   QucsDoc   *Doc;
 
   QLineEdit *Input_DataSet, *Input_DataDisplay;

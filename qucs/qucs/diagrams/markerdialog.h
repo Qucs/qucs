@@ -3,7 +3,7 @@
                              -------------------
     begin                : Wed April 21 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,6 +20,7 @@
 
 #include <qdialog.h>
 #include <qlineedit.h>
+#include <qcombobox.h>
 
 #include "marker.h"
 
@@ -40,6 +41,7 @@ private slots:
 public:
   Marker *pMarker;
 
+  QComboBox  *NumberBox;
   QLineEdit  *Precision;
 };
 

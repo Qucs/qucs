@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -51,7 +51,6 @@ Source_ac::Source_ac()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "Pac";
   Model = "Pac";
   Name  = "P";
 

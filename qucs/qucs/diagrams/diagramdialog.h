@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -38,16 +38,17 @@
 class DiagramDialog : public QDialog  {
 Q_OBJECT
 public: 
-	DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent=0, const char *name=0);
-	~DiagramDialog();
+  DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent=0,
+		const char *name=0);
+  ~DiagramDialog();
 
-  bool loadVarData(const QString& var);
-  
+  bool loadVarData(const QString&);
+
 public slots:
-  void slotReadVars(int index);
-  void slotTakeVar(QListViewItem *Item);
+  void slotReadVars(int);
+  void slotTakeVar(QListViewItem*);
 //  void slotSelectGraph(int index);
-  void slotSelectGraph(QListBoxItem *item);
+  void slotSelectGraph(QListBoxItem*);
   void slotNewGraph();
   void slotDeleteGraph();
   void slotOK();
@@ -55,7 +56,8 @@ public slots:
   void slotFuncHelp();
   void slotSetColor();
   void slotResetToTake(const QString&);
-  void slotSetThick(const QString&);
+  void slotSetProp2(const QString&);
+  void slotSetNumMode(int);
 
 public:
   Diagram *Diag;
@@ -66,8 +68,9 @@ public:
   QListBox  *GraphList;
 
   QRegExp     Expr;
-  QLineEdit   *GraphInput, *GraphThick, *xLabel, *yLabel;
+  QLineEdit   *GraphInput, *Property2, *xLabel, *yLabel;
   QCheckBox   *GridOn;
+  QComboBox   *NumberBox;
   QPushButton *ColorButt;
   bool changed, toTake;
 };

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -22,12 +22,17 @@
 
 
 class QucsApp;
+class QucsDoc;
 class QucsView;
 
 
 /**
   *@author Michael Margraf
   */
+
+typedef bool (QucsDoc::*pToggleFunc) (); // pointer to toggle action
+typedef void (QucsView::*pMouseFunc) (QMouseEvent*);
+
 
 class QucsActions : public QObject {
   Q_OBJECT
@@ -57,6 +62,9 @@ public slots:
   void slotSetMarker(bool on);
 
 private:
+  void QucsActions::performToggleAction(bool, QAction*, pToggleFunc,
+					pMouseFunc, pMouseFunc);
+
   // copies of variables in QucsApps
   QucsApp  *App;
   QucsView *view;

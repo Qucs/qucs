@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,6 +23,7 @@
 #include <qtextstream.h>
 #include <qmessagebox.h>
 #include <qregexp.h>
+#include <qdatetime.h>
 
 
 
@@ -158,40 +159,28 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // -------------------------------------------------------
 bool Diagram::getSelected(int x_, int y_)
 {
-  if(x_ >= cx-x1) if(x_ <= cx+x2+5) if(y_ >= cy-y2-5) if(y_ <= cy+y1)
+  if(x_ >= cx-x1) if(x_ <= cx+x2) if(y_ >= cy-y2) if(y_ <= cy+y1)
     return true;
 
   return false;
 }
 
 // ------------------------------------------------------------
-// Checks if the resize area was clicked. If so return "true" and sets x1/y1 and x2/y2
-// to the border coordinates to draw a rectangle.
-bool Diagram::ResizeTouched(int& MAx1, int& MAy1, int& MAx2, int& MAy2)
+// Checks if the resize area was clicked. If so return "true" and sets
+// x1/y1 and x2/y2 to the border coordinates to draw a rectangle.
+bool Diagram::ResizeTouched(int x, int y)
 {
-  int _x1, _y1, _x2, _y2;
+  if(x < cx-5) return false;
+  if(x > cx+x2+5) return false;
+  if(y < cy-y2-5) return false;
+  if(y > cy+5) return false;
 
-  if(MAx1 < cx+5) {
-    _x2 = -x2;
-    _x1 = cx-_x2;
-  }
-  else {
-    if(MAx1 <= cx+x2-5) return false;
-    _x2 = x2;
-    _x1 = cx;
-  }
-  if(MAy1 > cy-5) {
-    _y2 = y2;
-    _y1 = cy-_y2;
-  }
-  else {
-    if(MAy1 >= cy-y2+5) return false;
-    _y2 = -y2;
-    _y1 = cy;
-  }
+  State = 0;
+  if(x < cx+5) State = 1;
+  else  if(x <= cx+x2-5) return false;
+  if(y > cy-5) State |= 2;
+  else  if(y >= cy-y2+5) return false;
 
-  MAx1 = _x1;  MAy1 = _y1;
-  MAx2 = _x2;  MAy2 = _y2;
   return true;
 }
 
@@ -402,8 +391,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
 
   if(i <= 0) {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Independent data \"")+var+
-		 QObject::tr("\" not found"));
+	QObject::tr("Independent data \"")+var+QObject::tr("\" not found"));
     return -1;
   }
 
@@ -412,8 +400,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
   int n = tmp.toInt(&ok);
   if(!ok) {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot get size of independent data \"")+
-		 var+"\"");
+	QObject::tr("Cannot get size of independent data \"")+var+"\"");
     return -1;
   }
 

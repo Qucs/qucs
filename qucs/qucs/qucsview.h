@@ -98,51 +98,53 @@ public slots:
   void slotMarkerDown();
 
 public:
-  void MouseDoNothing(QMouseEvent *Event);
-  void MMoveSelect(QMouseEvent *Event);
-  void MMoveComponent(QMouseEvent *Event);
-  void MMoveDiagram(QMouseEvent *Event);
-  void MMoveWire1(QMouseEvent *Event);
-  void MMoveWire2(QMouseEvent *Event);
-  void MMoveMoving(QMouseEvent *Event);
-  void MMoveMoving2(QMouseEvent *Event);
-  void MMovePaste(QMouseEvent *Event);
-  void MMovePainting(QMouseEvent *Event);
-  void MMoveDelete(QMouseEvent *Event);
-  void MMoveLabel(QMouseEvent *Event);
-  void MMoveMarker(QMouseEvent *Event);
-  void MMoveMirrorY(QMouseEvent *Event);
-  void MMoveMirrorX(QMouseEvent *Event);
-  void MMoveRotate(QMouseEvent *Event);
-  void MMoveActivate(QMouseEvent *Event);
-  void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to current mouse move method
+  void MouseDoNothing(QMouseEvent*);
+  void MMoveSelect(QMouseEvent*);
+  void MMoveComponent(QMouseEvent*);
+  void MMoveDiagram(QMouseEvent*);
+  void MMoveWire1(QMouseEvent*);
+  void MMoveWire2(QMouseEvent*);
+  void MMoveMoving(QMouseEvent*);
+  void MMoveMoving2(QMouseEvent*);
+  void MMovePaste(QMouseEvent*);
+  void MMovePainting(QMouseEvent*);
+  void MMoveDelete(QMouseEvent*);
+  void MMoveLabel(QMouseEvent*);
+  void MMoveMarker(QMouseEvent*);
+  void MMoveMirrorY(QMouseEvent*);
+  void MMoveMirrorX(QMouseEvent*);
+  void MMoveRotate(QMouseEvent*);
+  void MMoveActivate(QMouseEvent*);
+  void MMoveResizePainting(QMouseEvent*);
+  void (QucsView::*MouseMoveAction) (QMouseEvent*);// current mouse move method
 
-  void MPressSelect(QMouseEvent *Event);
-  void MPressDelete(QMouseEvent *Event);
-  void MPressActivate(QMouseEvent *Event);
-  void MPressMirrorX(QMouseEvent *Event);
-  void MPressMirrorY(QMouseEvent *Event);
-  void MPressRotate(QMouseEvent *Event);
-  void MPressComponent(QMouseEvent *Event);
-  void MPressDiagram(QMouseEvent *Event);
-  void MPressLabel(QMouseEvent *Event);
-  void MPressWire1(QMouseEvent *Event);
-  void MPressWire2(QMouseEvent *Event);
-  void MPressPainting(QMouseEvent *Event);
-  void MPressMarker(QMouseEvent *Event);
-  void (QucsView::*MousePressAction) (QMouseEvent*); // pointer to current mouse press button method
+  void MPressSelect(QMouseEvent*);
+  void MPressDelete(QMouseEvent*);
+  void MPressActivate(QMouseEvent*);
+  void MPressMirrorX(QMouseEvent*);
+  void MPressMirrorY(QMouseEvent*);
+  void MPressRotate(QMouseEvent*);
+  void MPressComponent(QMouseEvent*);
+  void MPressDiagram(QMouseEvent*);
+  void MPressLabel(QMouseEvent*);
+  void MPressWire1(QMouseEvent*);
+  void MPressWire2(QMouseEvent*);
+  void MPressPainting(QMouseEvent*);
+  void MPressMarker(QMouseEvent*);
+  void (QucsView::*MousePressAction) (QMouseEvent*); // mouse press method
 
-  void MDoubleClickSelect(QMouseEvent *Event);
-  void MDoubleClickWire2(QMouseEvent *Event);
-  void (QucsView::*MouseDoubleClickAction) (QMouseEvent*); // pointer to current mouse double click method
-  
-  void MReleaseSelect(QMouseEvent *Event);
-  void MReleaseSelect2(QMouseEvent *Event);
-  void MReleaseActivate(QMouseEvent *Event);
-  void MReleaseMoving(QMouseEvent *Event);
-  void MReleaseResizeDiagram(QMouseEvent *Event);
-  void MReleasePaste(QMouseEvent *);
-  void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to current mouse release button method
+  void MDoubleClickSelect(QMouseEvent*);
+  void MDoubleClickWire2(QMouseEvent*);
+  void (QucsView::*MouseDoubleClickAction) (QMouseEvent*);
+
+  void MReleaseSelect(QMouseEvent*);
+  void MReleaseSelect2(QMouseEvent*);
+  void MReleaseActivate(QMouseEvent*);
+  void MReleaseMoving(QMouseEvent*);
+  void MReleaseResizeDiagram(QMouseEvent*);
+  void MReleasePaste(QMouseEvent*);
+  void MReleaseResizePainting(QMouseEvent*);
+  void (QucsView::*MouseReleaseAction) (QMouseEvent*);
 
   void endElementMoving();
 

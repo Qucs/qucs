@@ -3,7 +3,7 @@
                              -------------------
     begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -29,18 +29,20 @@ public:
   GraphicLine();
   ~GraphicLine();
 
-  void paintScheme(QPainter *p);
-  void getCenter(int& x, int &y);
-  void setCenter(int x, int y, bool relative=false);
+  void paintScheme(QPainter*);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
 
   GraphicLine* newOne();
-  bool load(const QString& s);
+  bool load(const QString&);
   QString save();
-  void paint(QPainter *p);
-  void MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn);
+  void paint(QPainter*);
+  void MouseMoving(int, int, int, int, QPainter*, bool);
   bool MousePressing();
-  bool getSelected(int x, int y);
+  bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);
+  bool ResizeTouched(int, int);
+  void MouseResizeMoving(int, int, QPainter*);
 
   void rotate();
   void mirrorX();

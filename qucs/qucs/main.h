@@ -35,7 +35,11 @@ struct tQucsSettings {
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
 extern QFont savingFont;       // to remember which font to save in "qucsrc"
 
-bool saveApplSettings(QucsApp *qucs);
+bool saveApplSettings(QucsApp*);
+
+QString complexRect (double, double, int Precision=3);
+QString complexDeg  (double, double, int Precision=3);
+QString complexRad  (double, double, int Precision=3);
 
 #endif
 

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu May 20 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,10 +19,11 @@
 #define FILLDIALOG_H
 
 #include <qdialog.h>
-#include <qregexp.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
+#include <qcheckbox.h>
+#include <qlabel.h>
 
 
 /**
@@ -32,11 +33,14 @@
 class FillDialog : public QDialog  {
 Q_OBJECT
 public:
-  FillDialog(const QString& _Caption, QWidget *parent=0, const char *name=0);
+  FillDialog(const QString& _Caption, bool show=true, QWidget *parent=0);
   ~FillDialog();
 
   void SetComboBox(Qt::PenStyle _Style);
   void SetFillComboBox(Qt::BrushStyle _Style);
+
+public slots:
+  void slotCheckFilled(bool on);
 
 private slots:
   void slotSetColor();
@@ -45,7 +49,8 @@ private slots:
   void slotSetFillStyle(int index);
 
 public:
-  QRegExp        Expr;
+  QLabel        *FillLabel1, *FillLabel2;
+  QCheckBox     *CheckFilled;
   QLineEdit     *LineWidth;
   QPushButton   *ColorButt, *FillColorButt;
   QComboBox     *StyleBox, *FillStyleBox;

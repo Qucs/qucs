@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun Nov 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -55,6 +55,10 @@ void Arrow::paint(QPainter *p)
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
     p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+
+    p->setPen(QPen(QPen::darkRed,2));
+    p->drawRect(cx-5, cy-5, 10, 10);  // markers for changing the size
+    p->drawRect(cx+x2-5, cy+y2-5, 10, 10);
     return;
   }
   p->setPen(Pen);
@@ -153,8 +157,39 @@ QString Arrow::save()
   QString s = "   <Arrow "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += QString::number(Height)+" "+QString::number(Width)+" ";
-  s += Pen.color().name()+" "+QString::number(Pen.width())+" "+QString::number(Pen.style())+">";
+  s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
+  s += QString::number(Pen.style())+">";
   return s;
+}
+
+// --------------------------------------------------------------------------
+// Checks if the resize area was clicked.
+bool Arrow::ResizeTouched(int x, int y)
+{
+  if(x < cx+5) if(x > cx-5) if(y < cy+5) if(y > cy-5) {
+    State = 1;
+    return true;
+  }
+
+  if(x < cx+x2+5) if(x > cx+x2-5) if(y < cy+y2+5) if(y > cy+y2-5) {
+    State = 2;
+    return true;
+  }
+
+  State = 0;
+  return false;
+}
+
+// --------------------------------------------------------------------------
+// Mouse move action during resize.
+void Arrow::MouseResizeMoving(int x, int y, QPainter *p)
+{
+  paintScheme(p);  // erase old painting
+  if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // moving shaft
+  else { x2 = x-cx;  y2 = y-cy; }  // moving head
+
+  calcArrowHead();
+  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -226,10 +261,10 @@ bool Arrow::getSelected(int x, int y)
   x  -= cx;
   y  -= cy;
 
-  if(x < -5) { if(x < x2-5) goto Head1; }    // lies point between x coordinates ?
-  else { if(x > x2+5) goto Head1; }
-  if(y < -5) { if(y < y2-5) goto Head1; }    // lies point between y coordinates ?
-  else { if(y > y2+5) goto Head1; }
+  if(x < -5) { if(x < x2-5) goto Head1; } // is point between x coordinates ?
+  else { if(x > 5) if(x > x2+5) goto Head1; }
+  if(y < -5) { if(y < y2-5) goto Head1; } // is point between y coordinates ?
+  else { if(y > 5) if(y > y2+5) goto Head1; }
 
   A  = x2*y - x*y2;         // calculate the rectangle area spanned
   A *= A;                   // avoid the need for square root
@@ -241,10 +276,10 @@ Head1:    // check if coordinates match the first arrow head line
   xn = xp1-x2;  x  -= x2;
   yn = yp1-y2;  y  -= y2;
 
-  if(x < -5) { if(x < xn-5) goto Head2; }    // lies point between x coordinates ?
-  else { if(x > xn+5) goto Head2; }
-  if(y < -5) { if(y < yn-5) goto Head2; }    // lies point between y coordinates ?
-  else { if(y > yn+5) goto Head2; }
+  if(x < -5) { if(x < xn-5) goto Head2; } // is point between x coordinates ?
+  else { if(x > 5) if(x > xn+5) goto Head2; }
+  if(y < -5) { if(y < yn-5) goto Head2; } // is point between y coordinates ?
+  else { if(y > 5) if(y > yn+5) goto Head2; }
 
   A  = xn*y - x*yn;         // calculate the rectangle area spanned
   A *= A;                   // avoid the need for square root
@@ -256,10 +291,10 @@ Head2:    // check if coordinates match the second arrow head line
   xn = xp2-x2;
   yn = yp2-y2;
 
-  if(x < -5) { if(x < xn-5) return false; }    // lies point between x coordinates ?
-  else { if(x > xn+5) return false; }
-  if(y < -5) { if(y < yn-5) return false; }    // lies point between y coordinates ?
-  else { if(y > yn+5) return false; }
+  if(x < -5) { if(x < xn-5) return false; }// is point between x coordinates ?
+  else { if(x > 5) if(x > xn+5) return false; }
+  if(y < -5) { if(y < yn-5) return false; }// is point between y coordinates ?
+  else { if(y > 5) if(y > yn+5) return false; }
 
   A  = xn*y - x*yn;         // calculate the rectangle area spanned
   A *= A;                   // avoid the need for square root

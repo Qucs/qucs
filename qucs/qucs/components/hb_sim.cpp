@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -46,7 +46,6 @@ HB_Sim::HB_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = ".HB";
   Model = ".HB";
   Name  = "HB";
 
