@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.cpp,v 1.1 2004-01-13 23:23:01 ela Exp $
+ * $Id: tline.cpp,v 1.2 2004-01-19 18:50:46 ela Exp $
  *
  */
 
@@ -33,7 +33,7 @@
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
 #endif
-#define C 299792458.0
+#define C 299792458.0 /* speed of light */
 
 #include "complex.h"
 #include "object.h"
