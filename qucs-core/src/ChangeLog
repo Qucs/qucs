@@ -1,3 +1,24 @@
+2004-03-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: Fixed a bug in the copy constructor.
+
+	* ucs.cpp (main): Calling the global equation solver.
+
+	* property.cpp: Fixed an uninitialized value bug.
+
+	* logging.c: Fixed a buffer overrun bug.
+
+	* evaluate.cpp: Added some examples for the application
+	implementations.
+
+	* equation.cpp: Added the final evaluate() function to each
+	type of equation node.
+	(equation_solver): This new function is called in order to
+	run the global equation solver.
+
+	* equation.cpp: Added toString() function to each type of
+	equation node.
+
 2004-03-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.h (class evaluate): New class implementing the

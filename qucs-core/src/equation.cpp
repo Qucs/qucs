@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.5 2004-03-21 18:55:48 ela Exp $
+ * $Id: equation.cpp,v 1.6 2004-03-28 11:24:44 ela Exp $
  *
  */
 
@@ -48,6 +48,7 @@ node * eqn::expressions = NULL;
 
 #define A(a) ((assignment *) (a))
 #define N(n) ((node *) (n))
+#define C(c) ((constant *) (c))
 
 // Constructor creates an untyped instance of the constant class.
 constant::constant () : node (CONSTANT) {
@@ -68,15 +69,54 @@ constant::~constant () {
 /* Depending on the type of constant the function prints the textual
    representation of the object. */
 void constant::print (void) {
+  logprint (LOG_STATUS, "%s", toString ());
+}
+
+// Returns the string representation of a complex value.
+static char * Cplx2String (complex c) {
+  static char str[256];
+  if (imag (c) == 0.0) {
+    sprintf (str, "%g", (double) real (c));
+  }
+  else {
+    sprintf (str, "(%g%cj%g)", (double ) real (c), 
+	     imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
+  }
+  return str;
+}
+
+/* This function returns a string representation depending on the type
+   of constant. */
+char * constant::toString (void) {
+  char str[256];
+  if (txt != NULL) free (txt);
   switch (type) {
   case TAG_DOUBLE:
-    logprint (LOG_STATUS, "%g", d);
+    sprintf (str, "%g", (double) d);
+    txt = strdup (str);
     break;
   case TAG_COMPLEX:
-    logprint (LOG_STATUS, "%g%cj%g", 
-	      real (*c), imag (*c) >= 0 ? '+' : '-', imag (*c));
+    txt = strdup (Cplx2String (*c));
+    break;
+  case TAG_VECTOR:
+    {
+      int len = 3 + v->getSize () - 1;
+      txt = (char *) malloc (len);
+      strcpy (txt, "[");
+      for (int i = 0; i < v->getSize (); i++) {
+	char * s = Cplx2String (v->get (i));
+	txt = (char *) realloc (txt, len += strlen (s));
+	strcat (txt, s);
+	if (i != v->getSize () - 1) strcat (txt, ";");
+      }
+      strcat (txt, "]");
+    }
+    break;
+  default:
+    txt = strdup ("(no such type)");
     break;
   }
+  return txt;
 }
 
 // Returns the type of constant.
@@ -84,9 +124,16 @@ int constant::evalType (void) {
   return getType ();
 }
 
+// Returns the result stored in the constant.
+constant * constant::evaluate (void) {
+  setResult (this);
+  return getResult ();
+}
+
 // Constructor creates an instance of the reference class.
 reference::reference () : node (REFERENCE) {
   n = NULL;
+  ref = NULL;
 }
 
 // Destructor deletes an instance of the reference class.
@@ -96,24 +143,44 @@ reference::~reference () {
 
 // Prints textual representation of the reference object.
 void reference::print (void) {
-  logprint (LOG_STATUS, "%s", n);
+  logprint (LOG_STATUS, "%s", toString ());
+}
+
+// Returns textual representation of the reference object.
+char * reference::toString (void) {
+  if (txt) free (txt);
+  txt = strdup (n);
+  return txt;
 }
 
 // Adds the name of the reference to the list of dependencies.
 void reference::addDependencies (strlist * depends) {
   depends->add (n);
+  // Additionally find and save the actual equation reference.
+  for (node * eqn = eqn::equations; eqn != NULL; eqn = eqn->getNext ()) {
+    if (!strcmp (n, A(eqn)->result)) {
+      ref = eqn;
+      break;
+    }
+  }
 }
 
 // Returns the type of reference.
 int reference::evalType (void) {
   setType (TAG_UNKNOWN);
-  for (node * eqn = eqn::equations; eqn != NULL; eqn = eqn->getNext ()) {
-    if (!strcmp (n, A(eqn)->result)) {
-      setType (A(eqn)->body->evalType ());
-      break;
-    }
+  if (ref != NULL) {
+    setType (A(ref)->body->evalType ());
   }
   return getType ();
+}
+
+// Returns the actual result of the reference.
+constant * reference::evaluate (void) {
+  setResult (NULL);
+  if (ref != NULL) {
+    setResult (A(ref)->body->getResult ());
+  }
+  return getResult ();
 }
 
 // Constructor creates an instance of the assignment class.
@@ -130,8 +197,16 @@ assignment::~assignment () {
 
 // Prints textual representation of the assignment object.
 void assignment::print (void) {
-  logprint (LOG_STATUS, "%s = ", result);
-  body->print ();
+  logprint (LOG_STATUS, "%s", toString ());
+}
+
+// Returns textual representation of the assignment object.
+char * assignment::toString (void) {
+  if (txt) free (txt);
+  char * str = body->toString ();
+  txt = (char *) malloc (strlen (result) + strlen (str) + 4);
+  sprintf (txt, "%s = %s", result, str);
+  return txt;
 }
 
 // Adds the right hand side of the assignment to the list of dependencies.
@@ -143,6 +218,12 @@ void assignment::addDependencies (strlist * depends) {
 int assignment::evalType (void) {
   setType (body->evalType ());
   return getType ();
+}
+
+// Returns the result of the assignment.
+constant * assignment::evaluate (void) {
+  setResult (body->evaluate ());
+  return getResult ();
 }
 
 // Constructor creates an instance of the application class.
@@ -165,12 +246,34 @@ application::~application () {
 
 // Prints textual representation of the application object.
 void application::print (void) {
-  logprint (LOG_STATUS, "%s(", n);
-  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
-    arg->print ();
-    if (arg->getNext ()) logprint (LOG_STATUS, ",");
+  logprint (LOG_STATUS, "%s", toString ());
+}
+
+// Returns textual representation of the application object.
+char * application::toString (void) {
+  if (txt) free (txt);
+  // binary operations
+  if ((!strcmp (n, "+") || !strcmp (n, "-") || !strcmp (n, "*") ||
+       !strcmp (n, "/") || !strcmp (n, "^")) && nargs == 2) {
+    char * arg1 = args->toString ();
+    char * arg2 = args->getNext()->toString ();
+    txt = (char *) malloc (strlen (n) + strlen (arg1) + strlen (arg2) + 3);
+    sprintf (txt, "(%s%s%s)", arg1, n, arg2);
   }
-  logprint (LOG_STATUS, ")");
+  // unary and n-ary operations here
+  else {
+    int len = strlen (n) + 3 + nargs - 1;
+    txt = (char *) malloc (len);
+    sprintf (txt, "%s(", n);
+    for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+      char * str = arg->toString ();
+      txt = (char *) realloc (txt, len += strlen (str));
+      strcat (txt, str);
+      if (arg->getNext ()) strcat (txt, ",");
+    }
+    strcat (txt, ")");
+  }
+  return txt;
 }
 
 // Adds the arguments of the application to the list of dependencies.
@@ -207,32 +310,53 @@ int application::evalType (void) {
   }
   // Emit error message if necessary.
   if (getType () == TAG_UNKNOWN) {
-    logprint (LOG_ERROR, "checker error, no appropriate function for `");
-    print ();
-    logprint (LOG_ERROR, "' found\n");
+    logprint (LOG_ERROR, "checker error, no appropriate function for `%s'"
+	      " found\n", toString ());
   }
   return getType ();
+}
+
+/* This function runs the actual evaluation function and the returns
+   the result. */
+constant * application::evaluate (void) {
+  // first evaluate each argument
+  for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
+    if (arg->evaluated == 0) {
+      arg->evaluate ();
+      arg->evaluated++;
+    }
+  }
+  // then evaluate the application
+  setResult (eval (C(args)));
+  return getResult ();
 }
 
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
-  evalPossible = cycle = duplicate = 0;
+  evaluated = evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
+  dataDependencies = NULL;
+  txt = NULL;
+  res = NULL;
 }
 
 // This constructor creates an typed instance of the equation node class.
 node::node (int type) {
   tag = type;
-  evalPossible = cycle = duplicate = 0;
+  evaluated = evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
+  dataDependencies = NULL;
+  txt = NULL;
+  res = NULL;
 }
 
 // Destructor deletes an instance of the equation node class.
 node::~node () {
   if (dependencies) delete dependencies;
+  if (txt) free (txt);
 }
 
 // Counts the number of equations node attached to the node.
@@ -255,6 +379,15 @@ node * node::get (int pos) {
   node * n = this;
   for (int i = 0; i < pos && n != NULL; n = n->getNext ());
   return n;
+}
+
+// Returns the constant equation node at the given argument position.
+constant * node::getResult (int pos) {
+  node * n = this;
+  constant * result = getResult ();
+  for (int i = 0; i < pos && n != NULL; n = n->getNext ())
+    result = n->getResult ();
+  return result;
 }
 
 // Assigns the dependency list to the equation node object.
@@ -333,10 +466,15 @@ checker::~checker () {
   }
 }
 
+// Local macro definition to go through the list of equations.
+#define foreach_equation(eqn)                        \
+  for (assignment * (eqn) = A (equations);           \
+       (eqn) != NULL; (eqn) = A ((eqn)->getNext ()))
+
 /* The function goes through the list of equations assigned to the
    checker and applies the dependency list. */
 void checker::collectDependencies (void) {
-  for (node * eqn = equations; eqn != NULL; eqn = eqn->getNext ()) {
+  foreach_equation (eqn) {
     strlist * depends = new strlist ();
     eqn->addDependencies (depends);
     eqn->setDependencies (depends);
@@ -357,11 +495,6 @@ void checker::list (void) {
     logprint (LOG_STATUS, "\n");
   }
 }
-
-// Local macro definition to go through the list of equations.
-#define foreach_equation(eqn)                        \
-  for (assignment * (eqn) = A (equations);           \
-       (eqn) != NULL; (eqn) = A ((eqn)->getNext ()))
 
 /* This function checks whether the variable references could be
    resolved within the equations and returns zero if so. */
@@ -461,11 +594,11 @@ int checker::detectCycles (void) {
    and returned. */
 strlist * checker::foldDependencies (strlist * deps) {
   strlist * res = new strlist ();
-  for (int i = 0; i < deps->length (); i++) {
+  for (int i = 0; deps && i < deps->length (); i++) {
     char * var = deps->get (i);
     if (!res->contains (var)) res->append (var);
   }
-  delete deps;
+  if (deps) delete deps;
   return res;
 }
 
@@ -483,7 +616,7 @@ node * checker::appendEquation (node * root, node * last) {
 // Returns the last node in the given equation root.
 node * checker::lastEquation (node * root) {
   node * eqn;
-  for (eqn = root; eqn->getNext () != NULL; eqn = eqn->getNext ());
+  for (eqn = root; eqn && eqn->getNext () != NULL; eqn = eqn->getNext ());
   return eqn;
 }
 
@@ -528,9 +661,11 @@ void checker::reorderEquations (void) {
     }
   }
   // Any remaining equations get appended.
-  last = lastEquation (root);
-  last->setNext (equations);
-  equations = root;
+  if (root != NULL) {
+    last = lastEquation (root);
+    last->setNext (equations);
+    equations = root;
+  }
 }
 
 /* The function evaluates the types for each equation and recursively
@@ -550,12 +685,15 @@ int checker::applyTypes (void) {
 /* This function is the checker routine for a parsed equations.  It
    returns zero on success or non-zero if the parsed equations
    contained errors. */
-int equation_checker (void) {
+int equation_checker (int noundefined) {
   int err = 0;
   eqn::checker * check = new eqn::checker ();
   check->setEquations (eqn::equations);
   check->collectDependencies ();
-  check->findUndefined ();
+  if (noundefined)
+    err += check->findUndefined ();
+  else
+    check->findUndefined ();
   err += check->findDuplicate ();
   err += check->detectCycles ();
   check->reorderEquations ();
@@ -567,4 +705,139 @@ int equation_checker (void) {
   check->setEquations (NULL);
   delete check;
   return err;
+}
+
+// Constructor creates an instance of the solver class.
+solver::solver () {
+  equations = NULL;
+  data = NULL;
+}
+
+// Destructor deletes an instance of the solver class.
+solver::~solver () {
+  node * next;
+  for (node * eqn = equations; eqn != NULL; eqn = next) {
+    next = eqn->getNext ();
+    delete eqn;
+  }
+}
+
+// The function finally evaluates each equation passed to the solver.
+void solver::solve (void) {
+  foreach_equation (eqn) {
+    if (eqn->evalPossible && eqn->evaluated == 0) {
+      eqn->evaluate ();
+      eqn->evaluated++;
+#if DEBUG
+      logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
+		eqn->getResult()->toString ());
+#endif
+    }
+  }
+}
+
+/* This function adds the given dataset vector to the set of equations
+   stored in the equation solver. */
+node * solver::addEquationData (vector * v) {
+  constant * con = new constant (TAG_VECTOR);
+  con->v = v;
+  assignment * assign = new assignment ();
+  assign->result = strdup (v->getName ());
+  assign->body = con;
+  assign->setNext (equations);
+  equations = assign;
+  return assign;
+}
+
+/* Depending on the type of equation result the function converts the
+   given equation node to a valid dataset vector. */
+vector * solver::dataVector (node * eqn) {
+  vector * v = NULL;
+  switch (eqn->getType ()) {
+  case TAG_VECTOR:
+    v = eqn->getResult()->v;
+    break;
+  case TAG_DOUBLE:
+    v = new vector ();
+    v->add (eqn->getResult()->d);
+    break;
+  case TAG_COMPLEX:
+    v = new vector ();
+    v->add (* (eqn->getResult()->c));
+    break;
+  }
+  v->setName (A(eqn)->result);
+  return v;
+}
+
+/* This function collects the data vectors in a dataset and appends
+   these to the list of equation node inside the equation solver. */
+void solver::checkinDataset (void) {
+  if (data == NULL) return;
+  vector * v;
+  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+    addEquationData (v);
+  }
+  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+    node * eqn = addEquationData (v);
+    eqn->setDataDependencies (v->getDependencies ());
+  }
+}
+
+// The function stores the equation solver results back into a dataset.
+void solver::checkoutDataset (void) {
+  // return if nothing todo
+  if (data == NULL) return;
+  // go through each equation
+  foreach_equation (eqn) {
+    char * str = A(eqn)->result;
+    vector * dep = data->findDependency (str);
+    vector * var = data->findVariable (str);
+    // is the equation result already in the dataset ?
+    if (dep == NULL && var == NULL) {
+      vector * v = dataVector (eqn);
+
+      // collect inherited dataset dependencies
+      strlist * sub, * datadeps = NULL;
+      strlist * deps = eqn->getDependencies ();
+      for (int i = 0; i < deps->length (); i++) {
+	char * var = deps->get (i);
+	node * n = checker::findEquation (equations, var);
+	sub = strlist::join (datadeps, n->getDataDependencies ());
+	if (datadeps) delete datadeps;
+	datadeps = sub;
+      }
+      datadeps = checker::foldDependencies (datadeps);
+
+      // store variable vector
+      if (datadeps && datadeps->length () > 0) {
+	v->setDependencies (datadeps);
+	data->addVariable (v);
+      }
+      // store independent vector
+      else {
+	data->addDependency (v);
+      }
+    }
+  }
+}
+
+/* This function is called in order to run the equation checker and
+   the solver.  The optional dataset passed to the function receives
+   the results of the calculations. */
+int equation_solver (dataset * data) {
+  solver * solve = new solver ();
+  solve->setEquations (eqn::equations);
+  solve->setData (data);
+  solve->checkinDataset ();
+  eqn::equations = solve->getEquations ();
+  if (equation_checker (data ? 1 : 0) != 0)
+    return -1;
+  solve->setEquations (eqn::equations);
+  solve->solve ();
+  solve->checkoutDataset ();
+  eqn::equations = solve->getEquations ();
+  solve->setEquations (NULL);
+  delete solve;
+  return 0;
 }

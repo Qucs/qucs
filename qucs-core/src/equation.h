@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.5 2004-03-21 18:55:48 ela Exp $
+ * $Id: equation.h,v 1.6 2004-03-28 11:24:44 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@
 #include "evaluate.h"
 
 class strlist;
+class dataset;
 
 namespace eqn {
 
@@ -64,26 +65,37 @@ public:
   void append (node *);
   void setDependencies (strlist *);
   strlist * getDependencies (void);
+  void setDataDependencies (strlist * deps) { dataDependencies = deps; }
+  strlist * getDataDependencies (void) { return dataDependencies; }
   strlist * recurseDependencies (checker *, strlist *);
   node * get (int);
+  constant * getResult (int);
   int getType (void) { return type; }
   void setType (int tag) { type = tag; }
+  constant * getResult (void) { return res; } 
+  void setResult (constant * r) { res = r; }
 
   /* These functions should be overloaded by derivative classes. */
   virtual void print (void) { }
   virtual void addDependencies (strlist *) { }
   virtual int evalType (void) { return type; }
+  virtual char * toString (void) { return txt; }
+  virtual constant * evaluate (void) { return res; }
   
 public:
   int duplicate;
   int cycle;
   int evalPossible;
+  char * txt;
+  int evaluated;
 
 private:
   int type;
   int tag;
   node * next;
   strlist * dependencies;
+  constant * res;
+  strlist * dataDependencies;
 };
 
 enum ConstantTag {
@@ -103,6 +115,8 @@ public:
   ~constant ();
   void print (void);
   int evalType (void);
+  char * toString (void);
+  constant * evaluate (void);
 
 public:
   int type;
@@ -123,9 +137,12 @@ public:
   void print (void);
   void addDependencies (strlist *);
   int evalType (void);
+  char * toString (void);
+  constant * evaluate (void);
 
 public:
   char * n;
+  node * ref;
 };
 
 /* This class represents assigments with a left hand and right hand
@@ -138,6 +155,8 @@ public:
   void print (void);
   void addDependencies (strlist *);
   int evalType (void);
+  char * toString (void);
+  constant * evaluate (void);
   
 public:
   char * result;
@@ -154,6 +173,8 @@ public:
   void print (void);
   void addDependencies (strlist *);
   int evalType (void);
+  char * toString (void);
+  constant * evaluate (void);
 
 public:
   char * n;
@@ -176,7 +197,7 @@ public:
   int findUndefined (void);
   strlist * getVariables (void);
   int findDuplicate (void);
-  node * findEquation (node *, char *);
+  static node * findEquation (node *, char *);
   int detectCycles (void);
   static strlist * foldDependencies (strlist *);
   node * appendEquation (node *, node *);
@@ -189,6 +210,29 @@ public:
   node * equations;
 };
 
+/* The solver class is finally used to solve the list of equations. */
+class solver
+{
+public:
+  solver ();
+  ~solver ();
+  void setEquations (node * eqn) { equations = eqn; }
+  node * getEquations (void) { return equations; }
+  void setData (dataset * d) { data = d; }
+  dataset * getDataset (void) { return data; }
+  void solve (void);
+  node * addEquationData (vector *);
+  vector * dataVector (node *);
+  void checkinDataset (void);
+  void checkoutDataset (void);
+
+public:
+  node * equations;
+
+private:
+  dataset * data;
+};
+
 /* The global list of equations and expression lists. */
 extern node * equations;
 extern node * expressions;
@@ -198,7 +242,8 @@ extern node * expressions;
 __BEGIN_DECLS
 
 /* Available functions of the equation checker. */
-int equation_checker (void);
+int equation_checker (int);
+int equation_solver (dataset *);
 
 __END_DECLS
 
