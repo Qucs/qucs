@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.28 2004-10-25 21:01:32 ela Exp $
+ * $Id: trsolver.cpp,v 1.29 2004-10-27 18:45:19 ela Exp $
  *
  */
 
@@ -128,7 +128,7 @@ void trsolver::solve (void) {
   catch_exception () {
   case EXCEPTION_NO_CONVERGENCE:
     pop_exception ();
-    linesearch = 1;
+    convHelper = CONV_LineSearch;
     logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using line search "
 	      "fallback\n", getName (), getDescription ());
     error = solve_nonlinear ();
@@ -214,7 +214,7 @@ void trsolver::solve (void) {
 	error = 0;
 
 	// Start using damped Newton-Raphson.
-	linesearch = 1;
+	convHelper = CONV_SteepestDescent;
 	convError = 2;
 
 #if DEBUG
@@ -241,7 +241,7 @@ void trsolver::solve (void) {
 
       // Update statistics and no more damped Newton-Raphson.
       statIterations += iterations;
-      if (--convError < 0) linesearch = 0;
+      if (--convError < 0) convHelper = 0;
 
       // Now advance in time or not...
       if (running > 1) {

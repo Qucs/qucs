@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.3 2004-10-14 13:28:25 ela Exp $
+ * $Id: tvector.cpp,v 1.4 2004-10-27 18:45:19 ela Exp $
  *
  */
 
@@ -152,6 +152,65 @@ tvector<nr_type_t> operator * (nr_double_t s, tvector<nr_type_t> a) {
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tvector<nr_type_t> a, nr_double_t s) {
   return s * a;
+}
+
+// Vector multiplication (element by element).
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tvector<nr_type_t> a, tvector<nr_type_t> b) {
+  assert (a.getSize () == b.getSize ());
+  int n = a.getSize ();
+  tvector<nr_type_t> res (n);
+  for (int i = 1; i <= n; i++) res.set (i, a.get (i) * b.get (i));
+  return res;
+}
+
+// Returns the sum of the vector elements.
+template <class nr_type_t>
+nr_type_t sum (tvector<nr_type_t> a) {
+  nr_type_t res = 0;
+  for (int i = 0; i < a.getSize (); i++) res += a.get (i);
+  return res;
+}
+
+// Vector negation.
+template <class nr_type_t>
+tvector<nr_type_t> operator - (tvector<nr_type_t> a) {
+  int n = a.getSize ();
+  tvector<nr_type_t> res (n);
+  for (int i = 1; i <= n; i++) res.set (i, -a.get (i));
+  return res;
+}
+
+// Vector less comparison.
+template <class nr_type_t>
+bool operator < (tvector<nr_type_t> a, tvector<nr_type_t> b) {
+  assert (a.getSize () == b.getSize ());
+  int n = a.getSize ();
+  for (int i = 1; i <= n; i++) if (a.get (i) >= b.get (i)) return false;
+  return true;
+}
+
+// Vector greater comparison.
+template <class nr_type_t>
+bool operator > (tvector<nr_type_t> a, tvector<nr_type_t> b) {
+  assert (a.getSize () == b.getSize ());
+  int n = a.getSize ();
+  for (int i = 1; i <= n; i++) if (a.get (i) <= b.get (i)) return false;
+  return true;
+}
+
+// Scalar addition.
+template <class nr_type_t>
+tvector<nr_type_t> operator + (nr_type_t s, tvector<nr_type_t> a) {
+  int n = a.getSize ();
+  tvector<nr_type_t> res (n);
+  for (int i = 1; i <= n; i++) res.set (i, s + a.get (i));
+  return res;
+}
+
+template <class nr_type_t>
+tvector<nr_type_t> operator + (tvector<nr_type_t> a, nr_type_t s) {
+  return s + a;
 }
 
 // Mean square norm.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.5 2004-10-21 13:59:02 ela Exp $
+ * $Id: tvector.h,v 1.6 2004-10-27 18:45:19 ela Exp $
  *
  */
 
@@ -34,13 +34,27 @@ nr_double_t maxnorm (tvector<nr_type_t>);
 template <class nr_type_t>
 nr_double_t norm (tvector<nr_type_t>);
 template <class nr_type_t>
+nr_type_t   sum (tvector<nr_type_t>);
+template <class nr_type_t>
 tvector<nr_type_t> operator + (tvector<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator + (tvector<nr_type_t>, nr_type_t);
+template <class nr_type_t>
+tvector<nr_type_t> operator + (nr_type_t, tvector<nr_type_t>);
 template <class nr_type_t>
 tvector<nr_type_t> operator - (tvector<nr_type_t>, tvector<nr_type_t>);
 template <class nr_type_t>
 tvector<nr_type_t> operator * (tvector<nr_type_t>, nr_double_t);
 template <class nr_type_t>
 tvector<nr_type_t> operator * (nr_double_t, tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tvector<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator - (tvector<nr_type_t>);
+template <class nr_type_t>
+bool operator < (tvector<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
+bool operator > (tvector<nr_type_t>, tvector<nr_type_t>);
 
 template <class nr_type_t>
 class tvector
@@ -64,9 +78,19 @@ class tvector
   friend tvector operator -<> (tvector, tvector);
   friend tvector operator *<> (tvector, nr_double_t);
   friend tvector operator *<> (nr_double_t, tvector);
+  friend tvector operator *<> (tvector, tvector);
+  friend tvector operator -<> (tvector);
+  friend tvector operator +<> (tvector, nr_type_t);
+  friend tvector operator +<> (nr_type_t, tvector);
 
+  // other operations
   friend nr_double_t norm<> (tvector);
   friend nr_double_t maxnorm<> (tvector);
+  friend nr_type_t   sum<> (tvector);
+
+  // comparisons
+  friend bool operator < <> (tvector, tvector);
+  friend bool operator > <> (tvector, tvector);
 
  private:
   int size;

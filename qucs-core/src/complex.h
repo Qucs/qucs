@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.12 2004-10-13 14:43:17 ela Exp $
+ * $Id: complex.h,v 1.13 2004-10-27 18:45:19 ela Exp $
  *
  */
 
@@ -114,6 +114,8 @@ class complex
   // comparisons
   friend int     operator == (const complex, const complex);
   friend int     operator != (const complex, const complex);
+  friend int     operator >= (const complex, const complex);
+  friend int     operator <= (const complex, const complex);
 		
   // assignment operations
   complex&       operator  = (const complex);

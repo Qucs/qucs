@@ -1,3 +1,13 @@
+2004-10-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolver.cpp: New 'steepest descent' convergence helper
+	implemented.  Seems like working fine...
+
+	* tvector.cpp: Implemented new element-wise *, scalar +/-,
+	comparisons and sum() operators.
+
+	* complex.cpp: Added <= and >= operators.
+
 2004-10-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp, trsolver.cpp: Using new nodeset functionality.

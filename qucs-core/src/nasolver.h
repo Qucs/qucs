@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.10 2004-10-25 21:01:31 ela Exp $
+ * $Id: nasolver.h,v 1.11 2004-10-27 18:45:19 ela Exp $
  *
  */
 
@@ -31,6 +31,11 @@
 
 #define SAVE_OPS 1 // save operating points
 #define SAVE_ALL 2 // also save subcircuit nodes and operating points
+
+// Convergence helper definitions.
+#define CONV_Attenuation     1
+#define CONV_LineSearch      2
+#define CONV_SteepestDescent 3
 
 class analysis;
 class circuit;
@@ -78,6 +83,7 @@ class nasolver : public analysis
   void runMNA (void);
   void applyAttenuation (void);
   void lineSearch (void);
+  void steepestDescent (void);
   char * createV (int, char *, int);
   char * createI (int, char *, int);
   char * createOP (char *, char *);
@@ -95,9 +101,9 @@ class nasolver : public analysis
   tvector<nr_type_t> * zprev;
   tmatrix<nr_type_t> * A;
   int iterations;
-  int attenuation;
-  int linesearch;
+  int convHelper;
   int fixpoint;
+  int eqnAlgo;
 
  private:
   nodelist * nlist;
