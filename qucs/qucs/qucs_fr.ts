@@ -2364,6 +2364,14 @@ Invocation :  qucsedit [-r] fichier
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>no variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3971,7 +3979,7 @@ Simulateur universel sous Qt
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation>Italienne par Giorgio Luparia</translation>
+        <translation type="obsolete">Italienne par Giorgio Luparia</translation>
     </message>
     <message>
         <source>French by Eric Marzolf
@@ -4212,6 +4220,15 @@ Déplace la légende du composant</translation>
 </source>
         <translation>Japonaise par Toyoyuki Ishikawa
 </translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Bus Jozsef</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -3096,10 +3096,11 @@ if(count > 1)
 }
 
 // ---------------------------------------------------
-// Sets selected elements on grid and count their number.
-int QucsDoc::elementsOnGrid()
+// Sets selected elements on grid.
+bool QucsDoc::elementsOnGrid()
 {
-  int x, y, count = 0;
+  bool count = false;
+  int x, y;
   // test all components
   Comps->setAutoDelete(false);
   for(Component *pc = Comps->last(); pc != 0; pc = Comps->prev())
@@ -3110,7 +3111,7 @@ int QucsDoc::elementsOnGrid()
       insertRawComponent(pc);
       Comps->at(x);   // restore current list position
       pc->isSelected = false;
-      count++;
+      count = true;
     }
   Comps->setAutoDelete(true);
 
@@ -3126,7 +3127,7 @@ int QucsDoc::elementsOnGrid()
       insertWire(pw);
       Wires->at(x);   // restore current list position
       pw->isSelected = false;
-      count++;
+      count = true;
     }
 
     pl = pw->Label;
@@ -3134,7 +3135,7 @@ int QucsDoc::elementsOnGrid()
       if(pl->isSelected) {
 	setOnGrid(pl->x1, pl->y1);
 	pl->isSelected = false;
-	count++;
+	count = true;
       }
   }
   Wires->setAutoDelete(true);
@@ -3144,7 +3145,7 @@ int QucsDoc::elementsOnGrid()
     if(pd->isSelected) {
       setOnGrid(pd->cx, pd->cy);
       pd->isSelected = false;
-      count++;
+      count = true;
     }
 
     for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
@@ -3157,7 +3158,7 @@ int QucsDoc::elementsOnGrid()
 	  pm->x1 = x - pd->cx;
 	  pm->y1 = y - pd->cy;
 	  pm->isSelected = false;
-	  count++;
+	  count = true;
         }
   }
 
@@ -3166,7 +3167,7 @@ int QucsDoc::elementsOnGrid()
     if(pp->isSelected) {
       setOnGrid(pp->cx, pp->cy);
       pp->isSelected = false;
-      count++;
+      count = true;
     }
 
   setChanged(true, true);

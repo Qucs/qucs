@@ -118,3 +118,33 @@ equation
 vPSD = cPSD \cdot R
 \end{equation}
 
+Attenuator with (power) attenuation $L$, reference impedance
+$Z_{ref}$ and temperature $T$:
+\begin{equation}
+(\underline{C}_Y) = 4\cdot k\cdot T\cdot \text{Re}(\underline{Y})
+ = \frac{4\cdot k\cdot T}{Z_{ref}\cdot (L-1)} \cdot
+\begin{pmatrix}
+ L+1            & -2\cdot\sqrt{L} \\
+-2\cdot\sqrt{L} &  L+1 \\
+\end{pmatrix}
+\end{equation}
+
+Isolator with reference impedance $Z_1$ (input) and $Z_2$ (output)
+and temperature $T$:
+\begin{equation}
+(\underline{C}_Y) = 4\cdot k\cdot T\cdot
+\begin{pmatrix}
+ 1/Z_1                 & 0 \\
+-2/\sqrt{Z_1\cdot Z_2} &  1/Z_2 \\
+\end{pmatrix}
+\end{equation}
+
+Diode (for details on the parameters see section \ref{sec:nw_diode}):
+\begin{equation}
+(\underline{C}_Y)
+ = 2\cdot e\cdot K\cdot \left(I_{d} + 2\cdot I_{S}\right)\cdot
+\begin{pmatrix}
+   1 & -1\\
+  -1 &  1\\
+\end{pmatrix}\\
+\end{equation}

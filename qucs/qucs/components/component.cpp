@@ -367,10 +367,15 @@ void Component::rotate()
   }
 
   // rotate all text
+  QFont f = QucsSettings.font;
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
-    tmp = -pt->x; // - r.width();
-    pt->x = pt->y - 8;
-    pt->y = tmp;
+    f.setPointSizeFloat(pt->Size);
+    QFontMetrics  smallMetrics(f);
+    dx = smallMetrics.width(pt->s) >> 1;
+    dy = smallMetrics.lineSpacing() >> 1;
+    tmp = -pt->x;
+    pt->x = pt->y + dy - dx;
+    pt->y = tmp - dx - dy;
   }
 
   tmp = -x1;   // rotate boundings
@@ -433,17 +438,24 @@ void Component::mirrorX()
   for(pa = Ellips.first(); pa != 0; pa = Ellips.next())
     pa->y = -pa->y - pa->h;
 
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  int dy = metrics.height();    // for "Name"
+  QFont f = QucsSettings.font;
+  int dy;
   // mirror all text
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
-    pt->y = -pt->y + dy;
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
+    f.setPointSizeFloat(pt->Size);
+    QFontMetrics  smallMetrics(f);
+    dy = smallMetrics.width(pt->s);   // width of text
+//    pt->y = -pt->y - (dy & 0xFFFFFFFE); // erase LSB to be rotate consistent
+    pt->y = -pt->y - dy;
+  }
 
   int tmp = y1;
   y1  = -y2; y2 = -tmp;   // mirror boundings
 
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  dy = metrics.lineSpacing();    // for "Name"
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display)  dy += metrics.height();
+    if(pp->display)  dy += metrics.lineSpacing();
   if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position
   else ty = y1+ty+y2;
 
@@ -491,6 +503,7 @@ void Component::mirrorY()
     f.setPointSizeFloat(pt->Size);
     QFontMetrics  smallMetrics(f);
     tmp = smallMetrics.width(pt->s);   // width of text
+//    pt->x = -pt->x - (tmp & 0xFFFFFFFE); // erase LSB to be rotate consistent
     pt->x = -pt->x - tmp;
   }
 
