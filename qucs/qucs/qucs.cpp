@@ -415,8 +415,11 @@ void QucsApp::slotChangeView(int id)
   if(ps != d->UndoStack.getLast())  redo->setEnabled(true);
   else  redo->setEnabled(false);
 
-  HierarchyHistory.clear();   // no subcircuit history
-  popH->setEnabled(false);
+  if(!HierarchyHistory.isEmpty())
+    if(*(HierarchyHistory.getLast()) != "*") {
+      HierarchyHistory.clear();   // no subcircuit history anymore
+      popH->setEnabled(false);
+    }
 }
 
 // #######################################################################
@@ -527,16 +530,38 @@ void QucsApp::slotFileOpen()
 void QucsApp::updatePortNumber(int No)
 {
   if(No<0) return;
-  QFileInfo Info(view->Docs.current()->DocName);
-  QString Name = Info.fileName();
+  QString pathName = view->Docs.current()->DocName;
+  QFileInfo Info(pathName);
+  QString File, Name = Info.fileName();
 
-  for(QListViewItem *p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
+  // enter new port number into ListView
+  QListViewItem *p;
+  for(p = ConSchematics->firstChild(); p!=0; p = p->nextSibling()) {
     if(p->text(0) == Name) {
       if(No == 0) p->setText(1,"");
       else p->setText(1,QString::number(No)+tr("-port"));
       break;
     }
-}
+  }
+  if(No == 0) return;
+
+  // update all occurencies of subcircuit in all open documents
+  QucsDoc *d;
+  int DocNo = view->Docs.at();
+  for(d = view->Docs.first(); d!=0; d = view->Docs.next())
+    for(Component *pc=d->Comps.first(); pc!=0; pc=d->Comps.next())
+      if(pc->Model == "Sub") {
+	File = pc->Props.getFirst()->Value;
+	if((File == pathName) || (File == Name)) {
+	  d->Comps.setAutoDelete(false);
+	  d->deleteComp(pc);
+	  ((Subcircuit*)pc)->remakeSymbol(No);
+	  d->insertRawComponent(pc);
+	  d->Comps.setAutoDelete(true);
+	}
+      }
+
+  view->Docs.at(DocNo);  // back to the last current document
 }
 
 
@@ -548,6 +573,7 @@ bool QucsApp::saveCurrentFile()
 
   view->Docs.current()->PosX = view->contentsX();
   view->Docs.current()->PosY = view->contentsY();
+
   updatePortNumber(view->Docs.current()->save());   // SAVE
   return true;
 }
@@ -811,11 +837,14 @@ void QucsApp::slotIntoHierarchy()
   QucsDoc *Doc = view->Docs.current();
   Component *pc = view->Docs.current()->searchSelSubcircuit();
   if(pc == 0) return;
+
+  QString *ps = new QString("*");
+  HierarchyHistory.append(ps);    // sign to not clear HierarchyHistory
+
   QString s = QucsWorkDir.filePath(pc->Props.getFirst()->Value);
   if(!gotoPage(s)) return;
 
-  QString *ps = new QString(Doc->DocName);
-  HierarchyHistory.append(ps);    // remember for the way back
+  *(HierarchyHistory.getLast()) = Doc->DocName; // remember for the way back
   popH->setEnabled(true);
 }
 
@@ -825,7 +854,10 @@ void QucsApp::slotPopHierarchy()
 {
   if(HierarchyHistory.count() == 0) return;
 
-  if(!gotoPage( *(HierarchyHistory.last()) )) return;
+  QString Doc = *(HierarchyHistory.getLast());
+  *(HierarchyHistory.last()) = "*";  // sign to not clear HierarchyHistory
+
+  if(!gotoPage(Doc)) return;
 
   HierarchyHistory.remove();
   if(HierarchyHistory.count() == 0) popH->setEnabled(false);
@@ -1242,7 +1274,8 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   Content->firstChild()->setOpen(true);  // show schematics
   ProjName = Name;   // remember the name of project
 
-  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);  // show name in title of main window
+  // show name in title of main window
+  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);
 }
 
 // #######################################################################
@@ -1466,8 +1499,7 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   if(item->parent() == 0) return;
   if(item->parent()->text(0) != tr("Schematics"))
     return;   // return, if not clicked on schematic
-  int n = testFile(QucsWorkDir.filePath(item->text(0)));
-  if(n<=0) return;    // return, if not a subcircuit
+  if(item->text(1).isEmpty()) return;   // return, if not a subcircuit
 
   // delete previously selected elements
   if(view->selComp != 0)  delete view->selComp;
@@ -1483,8 +1515,9 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   }
   activeAction = 0;
 
-  view->selComp = new Subcircuit(n);
+  view->selComp = new Subcircuit();
   view->selComp->Props.first()->Value = item->text(0);
+  view->selComp->recreate();
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;

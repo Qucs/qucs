@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.26 2004-08-03 15:36:19 ela Exp $
+ * $Id: input.cpp,v 1.27 2004-08-07 10:48:46 margraf Exp $
  *
  */
 
@@ -302,6 +302,12 @@ circuit * input::createCircuit (char * type) {
     return new msline ();
   else if (!strcmp (type, "MCORN"))
     return new mscorner ();
+  else if (!strcmp (type, "MSTEP"))
+    return new msstep ();
+  else if (!strcmp (type, "MOPEN"))
+    return new msopen ();
+  else if (!strcmp (type, "MGAP"))
+    return new msgap ();
   else if (!strcmp (type, "MMBEND"))
     return new msmbend ();
   else if (!strcmp (type, "IProbe"))

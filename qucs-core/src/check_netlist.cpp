@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.39 2004-08-05 21:19:48 ela Exp $
+ * $Id: check_netlist.cpp,v 1.40 2004-08-07 10:48:46 margraf Exp $
  *
  */
 
@@ -390,6 +390,36 @@ struct define_t definition_available[] =
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* microstrip impedance step */
+  { "MSTEP", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* microstrip open end */
+  { "MOPEN", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* microstrip gap */
+  { "MGAP", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S" , PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
 
   /* s-parameter analysis */
   { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -587,6 +617,18 @@ static struct special_t checker_specials[] = {
   { "MLIN",   "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "SW",     "Type",      { "lin", "log", NULL } },
   { "SPfile", "Data",      { "rectangular", "polar", NULL } },
+  { "MSTEP",  "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			     "Getsinger", "Schneider", "Pramanick",
+			     "Hammerstad", NULL } },
+  { "MSTEP",  "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "MOPEN",  "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			     "Getsinger", "Schneider", "Pramanick",
+			     "Hammerstad", NULL } },
+  { "MOPEN",  "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "MGAP",   "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			     "Getsinger", "Schneider", "Pramanick",
+			     "Hammerstad", NULL } },
+  { "MGAP",   "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { NULL, NULL, { NULL } }
 };
 

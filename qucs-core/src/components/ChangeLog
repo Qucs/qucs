@@ -24,6 +24,10 @@
 	models.  This includes convergence helpers as well as Meyer's
 	capacitances formulas.
 
+2004-08-02  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
+
+	* added microstrip component msstep, msopen and msgap
+
 2004-08-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Implemented 'Isr', 'Nr' and 'Fc' an d'Cp'

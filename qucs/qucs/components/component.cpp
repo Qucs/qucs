@@ -25,6 +25,7 @@
 #include <qmessagebox.h>
 #include <qdir.h>
 #include <qfileinfo.h>
+#include <qregexp.h>
 
 
 extern QDir QucsWorkDir;
@@ -375,6 +376,13 @@ QString Component::NetList()
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
     if(p2->Name != "Symbol")
       if(p2->Name == "File") {
+	if(Model == "Sub") {
+	  QFileInfo Info(QucsWorkDir, p2->Value);
+	  QString  Type = Info.filePath();;
+	  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
+	  s += " Type=\"_"+Type+"\"";   // type for subcircuit
+	  continue;
+	}
         QFileInfo info(p2->Value);
 	if(info.isRelative())  info.setFile(QucsWorkDir, p2->Value);
 	s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";    // properties

@@ -69,7 +69,7 @@ public:
     void initCursorMenu();
 
     bool closeAllFiles();
-    int  testFile(const QString& DocName);
+    static int testFile(const QString& DocName);
 
 
 protected:
