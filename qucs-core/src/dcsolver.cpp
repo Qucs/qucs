@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.3 2004/01/30 21:40:35 ela Exp $
+ * $Id: dcsolver.cpp,v 1.4 2004/02/01 22:36:03 ela Exp $
  *
  */
 
@@ -66,6 +66,7 @@ dcsolver::~dcsolver () {
   delete A;
   delete z;
   delete x;
+  delete xprev;
 }
 
 /* The copy constructor creates a new instance of the dcsolver class
@@ -75,12 +76,13 @@ dcsolver::dcsolver (dcsolver & o) : analysis (o) {
   A = new matrix (*(o.A));
   z = new matrix (*(o.z));
   x = new matrix (*(o.x));
+  xprev = new matrix (*(o.xprev));
 }
 
 /* This is the DC netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void dcsolver::solve (void) {
-
+  int convergence, run = 0;
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: creating node list for DC analysis\n");
 #endif
@@ -93,8 +95,18 @@ void dcsolver::solve (void) {
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: solving DC netlist\n");
 #endif
-  createMatrix ();
-  runMNA ();
+  do {
+    createMatrix ();
+    runMNA ();
+    saveNodeVoltages ();
+    convergence = checkConvergence ();
+    run++;
+  }
+  while (!convergence);
+#if DEBUG
+  logprint (LOG_STATUS, "NOTIFY: convergence reached after %d iterations\n",
+	    run);
+#endif
   saveResults ();
 }
 
@@ -309,7 +321,8 @@ void dcsolver::createIMatrix (void) {
     for (int i = 0; i < n->nNodes; i++) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
-      if (is->getType () == CIR_IDC) {
+      if (is->getType () == CIR_IDC ||
+	  is->getType () == CIR_DIODE) {
 	val += real (is->getI (n->nodes[i]->getPort ()));
       }
     }
@@ -370,6 +383,39 @@ void dcsolver::runMNA (void) {
   x->print ();
 #endif
 }
+
+int dcsolver::checkConvergence (void) {
+  int N = countNodes ();
+  nr_double_t v_abs, v_rel, e_abs, e_rel;
+  v_abs = v_rel = 0.0;
+  for (int r = 1; r <= N; r++) {
+    if (xprev != NULL) {
+      v_abs += abs (x->get (r, 1) - xprev->get (r, 1));
+    }
+    else {
+      v_abs += abs (x->get (r, 1));
+    }
+    v_rel += abs (x->get (r, 1));
+  }
+  e_abs = 1e-30;
+  e_rel = 1e-6;
+  xprev = x;
+  printf ("v_abs = %e, v_rel = %e\n", v_abs, v_rel);
+  return (v_abs < e_abs + e_rel * v_rel) ? 1 : 0;
+}
+
+void dcsolver::saveNodeVoltages (void) {
+  int N = countNodes ();
+  struct nodelist_t * n;
+  for (int r = 1; r <= N; r++) {
+    n = nlist->getNode (r);
+    for (int i = 0; i < n->nNodes; i++) {
+      n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (),
+				       x->get (r, 1));
+    }
+  }
+}
+
 
 /* Goes through the list of circuit objects and runs its calcY()
    function. */

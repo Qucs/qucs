@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.4 2004/01/13 23:23:01 ela Exp $
+ * $Id: input.cpp,v 1.5 2004/02/01 22:36:03 ela Exp $
  *
  */
 
@@ -195,6 +195,8 @@ circuit * input::createCircuit (char * type) {
     return new phaseshifter ();
   else if (!strcmp (type, "TLIN"))
     return new tline ();
+  else if (!strcmp (type, "Diode"))
+    return new diode ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.h,v 1.2 2004/01/30 21:40:35 ela Exp $
+ * $Id: dcsolver.h,v 1.3 2004/02/01 22:36:03 ela Exp $
  *
  */
 
@@ -53,12 +53,15 @@ class dcsolver : public analysis
   void saveResults (void);
   char * createV (int);
   char * createI (int);
+  void saveNodeVoltages (void);
+  int checkConvergence (void);
 
  private:
   nodelist * nlist;
   matrix * A;
   matrix * z;
   matrix * x;
+  matrix * xprev;
 };
 
 #endif /* __DCSOLVER_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.6 2004/01/30 21:40:35 ela Exp $
+ * $Id: circuit.h,v 1.7 2004/02/01 22:36:03 ela Exp $
  *
  */
 
@@ -66,11 +66,13 @@ class circuit : public object
   complex getD (int);
   complex getE (int);
   complex getI (int);
+  complex getV (int);
   void setB (int, int, complex);
   void setC (int, int, complex);
   void setD (int, complex);
   void setE (int, complex);
   void setI (int, complex);
+  void setV (int, complex);
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -89,6 +91,7 @@ class circuit : public object
   complex MatrixD[2];
   complex MatrixE[2];
   complex MatrixI[6];
+  complex MatrixV[6];
 
   node * nodes;
   substrate * subst;
