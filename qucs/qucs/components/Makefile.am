@@ -1,14 +1,54 @@
-####### kdevelop will overwrite this part!!! (begin)##########
+## Process this file with automake to produce Makefile.in
+# 
+# qucs/components/Makefile.am
+#
+# Automake input file.
+#
+# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+#
+# This is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this package; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.  
+#
+
 noinst_LIBRARIES = libcomponents.a
 
-INCLUDES = $(all_includes)
+MOCHEADERS = componentdialog.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libcomponents_a_METASOURCES = AUTO
+libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
+  vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp             \
+  param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp   \
+  mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp \
+  ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp            \
+  source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp       \
+  ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp        \
+  dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp resistorus.cpp  \
+  component.cpp resistor.cpp $(MOCFILES)
 
-libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp vcvs.cpp vccs.cpp tr_sim.cpp tline.cpp substrate.cpp sp_sim.cpp param_sweep.cpp mstee.cpp msstep.cpp msline.cpp mscross.cpp mscoupled.cpp mscorner.cpp hb_sim.cpp diode.cpp dc_sim.cpp coplanar.cpp ccvs.cpp cccs.cpp ac_sim.cpp volt_dc.cpp volt_ac.cpp subcircuit.cpp sparamfile.cpp source_ac.cpp isolator.cpp equation.cpp circulator.cpp attenuator.cpp ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp resistorus.cpp component.cpp resistor.cpp 
-KDE_OPTIONS = qtonly
+noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
+  inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
+  transformer.h ampere_dc.h attenuator.h circulator.h equation.h isolator.h   \
+  source_ac.h sparamfile.h subcircuit.h volt_ac.h volt_dc.h ac_sim.h cccs.h   \
+  ccvs.h coplanar.h dc_sim.h diode.h hb_sim.h mscorner.h mscoupled.h          \
+  mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
+  tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h resistorus.h
 
+INCLUDES = $(QINCLUDES)
 
-EXTRA_DIST = resistor.cpp resistor.h component.cpp component.h components.h resistorus.cpp resistorus.h capacitor.cpp capacitor.h inductor.cpp inductor.h biast.cpp biast.h dcblock.cpp dcblock.h dcfeed.cpp dcfeed.h ground.cpp ground.h subcirport.cpp subcirport.h symtrafo.cpp symtrafo.h transformer.cpp transformer.h ampere_dc.cpp ampere_dc.h attenuator.cpp attenuator.h circulator.cpp circulator.h equation.cpp equation.h isolator.cpp isolator.h source_ac.cpp source_ac.h sparamfile.cpp sparamfile.h subcircuit.cpp subcircuit.h volt_ac.cpp volt_ac.h volt_dc.cpp volt_dc.h ac_sim.cpp ac_sim.h cccs.cpp cccs.h ccvs.cpp ccvs.h coplanar.cpp coplanar.h dc_sim.cpp dc_sim.h diode.cpp diode.h hb_sim.cpp hb_sim.h mscorner.cpp mscorner.h mscoupled.cpp mscoupled.h mscross.cpp mscross.h msline.cpp msline.h msstep.cpp msstep.h mstee.cpp mstee.h param_sweep.cpp param_sweep.h sp_sim.cpp sp_sim.h substrate.cpp substrate.h tline.cpp tline.h tr_sim.cpp tr_sim.h vccs.cpp vccs.h vcvs.cpp vcvs.h componentdialog.cpp componentdialog.h gyrator.cpp gyrator.h phaseshifter.cpp phaseshifter.h 
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
 
-####### kdevelop will overwrite this part!!! (end)############
+CLEANFILES = *~
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
