@@ -1,3 +1,9 @@
+2004-07-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Avoiding singularity when two full reflective
+	ports of two different circuits are connected.
+	Saving linear 'F' and 'Fmin' instead of logarithmic.
+
 2004-07-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Running the init() function before

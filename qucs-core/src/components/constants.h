@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.11 2004/06/27 15:11:49 ela Exp $
+ * $Id: constants.h,v 1.12 2004/07/12 18:14:59 ela Exp $
  *
  */
 
@@ -69,8 +69,8 @@
 #define T0   290                      /* standard temperature      */
 
 #define sqr(x)    ((x) * (x))
-#define cubic(x)  ((x) * (x) * (x))
-#define quad(x)   ((x) * (x) * (x) * (x))
+#define cubic(x)  (exp (3 * log (x)))
+#define quadr(x)  (exp (4 * log (x)))
 #define coth(x)   (1 / tanh (x))
 #define sech(x)   (1 / cosh (x))
 #define cosech(x) (1 / sinh (x))

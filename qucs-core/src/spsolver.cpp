@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.18 2004/07/11 10:22:13 ela Exp $
+ * $Id: spsolver.cpp,v 1.19 2004/07/12 18:14:58 ela Exp $
  *
  */
 
@@ -139,6 +139,15 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   // connected port numbers
   int k = n1->getPort (), l = n2->getPort ();
 
+  // denominator needs to be calculated only once
+  complex d = 1.0 - s->getS (k, k) * t->getS (l, l);
+
+  // avoid singularity when two full reflective ports are connected
+  nr_double_t tiny1 = (d == 0) ? 1.0 - 1.235e-12 : 1.0;
+  nr_double_t tiny2 = tiny1 * tiny1;
+  nr_double_t tiny3 = tiny1 * tiny2;
+  d = 1.0 - s->getS (k, k) * t->getS (l, l) * tiny2;
+
   int j2; // column index for resulting matrix
   int i2; // row index for resulting matrix
   int j1; // column index for S matrix
@@ -161,10 +170,8 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
       if (i1 == k) continue;
 
       // compute S'ij
-      p = s->getS (i1, j1);
-      p +=
-	(s->getS (k, j1) * t->getS (l, l) * s->getS (i1, k)) /
-	(1.0 - s->getS (k, k) * t->getS (l, l));
+      p  = s->getS (i1, j1);
+      p += s->getS (k, j1) * t->getS (l, l) * s->getS (i1, k) * tiny3 / d;
       result->setS (i2++, j2, p);
     }
 
@@ -175,9 +182,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
       if (i1 == l) continue;
 
       // compute S'mj
-      p =
-	(s->getS (k, j1) * t->getS (i1, l)) /
-	(1.0 - s->getS (k, k) * t->getS (l, l));
+      p = s->getS (k, j1) * t->getS (i1, l) * tiny2 / d;
       result->setS (i2++, j2, p);
     }
     // next column
@@ -200,9 +205,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
       if (i1 == k) continue;
 
       // compute S'mj
-      p =
-	(t->getS (l, j1) * s->getS (i1, k)) /
-	(1.0 - t->getS (l, l) * s->getS (k, k));
+      p = t->getS (l, j1) * s->getS (i1, k) * tiny2 / d;
       result->setS (i2++, j2, p);
     }
 
@@ -213,10 +216,8 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
       if (i1 == l) continue;
 
       // compute S'ij
-      p = t->getS (i1, j1);
-      p +=
-	(t->getS (l, j1) * s->getS (k, k) * t->getS (i1, l)) /
-	(1.0 - t->getS (l, l) * s->getS (k, k));
+      p  = t->getS (i1, j1);
+      p += t->getS (l, j1) * s->getS (k, k) * t->getS (i1, l) * tiny3 / d;
       result->setS (i2++, j2, p);
     }
 
@@ -504,7 +505,7 @@ void spsolver::solve (void) {
     char * type = getPropertyString ("Type");
     nr_double_t start = getPropertyDouble ("Start");
     nr_double_t stop = getPropertyDouble ("Stop");
-    nr_double_t points = getPropertyDouble ("Points");
+    int points = getPropertyInteger ("Points");
 
     if (!strcmp (type, "lin")) {
       swp = new linsweep ("frequency");
@@ -826,9 +827,9 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
 			      c22 * norm ((1.0 + s11) / s21)) / 4.0);
 
   // add variable data items to dataset
-  saveVariable ("F", 10 * log10 (abs (F)), f);
+  saveVariable ("F", F, f);
   saveVariable ("Gopt", Ropt, f);
-  saveVariable ("Fmin", 10 * log10 (abs (Fmin)), f);
+  saveVariable ("Fmin", Fmin, f);
   saveVariable ("Rn", Rn, f);
 }
 

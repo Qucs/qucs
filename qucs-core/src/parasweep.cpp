@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.5 2004/06/27 15:11:48 ela Exp $
+ * $Id: parasweep.cpp,v 1.6 2004/07/12 18:14:58 ela Exp $
  *
  */
 
@@ -89,7 +89,7 @@ void parasweep::solve (void) {
     char * type = getPropertyString ("Type");
     nr_double_t start = getPropertyDouble ("Start");
     nr_double_t stop = getPropertyDouble ("Stop");
-    nr_double_t points = getPropertyDouble ("Points");
+    int points = getPropertyInteger ("Points");
 
     if (!strcmp (type, "lin")) {
       swp = new linsweep (n);
