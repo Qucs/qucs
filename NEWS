@@ -27,3 +27,9 @@ Version 0.0.1
 -------------
 
  * first available version
+
+Version 0.0.2
+-------------
+
+ * translations into german
+ * modified build system, no more kdevelop

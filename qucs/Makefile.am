@@ -1,36 +1,70 @@
-####### kdevelop will overwrite this part!!! (begin)##########
+## Process this file with automake to produce Makefile.in
+# 
+# qucs/Makefile.am
+#
+# Automake input file.
+#
+# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+#
+# This is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This software is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this package; see the file COPYING.  If not, write to
+# the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.  
+#
+
+SUBDIRS = sim bitmaps components diagrams paintings
 bin_PROGRAMS = qucs
 
-## INCLUDES were found outside kdevelop specific part
+MOCHEADERS = qucsview.h settingsdialog.h messagebox.h simmessage.h \
+  fileshowdialog.h qucs.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp qucsview.cpp qucs.cpp main.cpp 
-SOURCES = paintings/rectangle.cpp paintings/painting.cpp paintings/linedialog.cpp paintings/graphictextdialog.cpp paintings/graphictext.cpp paintings/graphicline.cpp paintings/ellipse.cpp paintings/arrowdialog.cpp paintings/arrow.cpp diagrams/tabdiagram.cpp diagrams/smithdiagram.cpp diagrams/rectdiagram.cpp diagrams/polardiagram.cpp diagrams/graph.cpp diagrams/diagramdialog.cpp diagrams/diagram.cpp components/phaseshifter.cpp components/gyrator.cpp components/componentdialog.cpp components/vcvs.cpp components/vccs.cpp components/tr_sim.cpp components/tline.cpp components/substrate.cpp components/sp_sim.cpp components/param_sweep.cpp components/mstee.cpp components/msstep.cpp components/msline.cpp components/mscross.cpp components/mscoupled.cpp components/mscorner.cpp components/hb_sim.cpp components/diode.cpp components/dc_sim.cpp components/coplanar.cpp components/ccvs.cpp components/cccs.cpp components/ac_sim.cpp components/volt_dc.cpp components/volt_ac.cpp components/subcircuit.cpp components/sparamfile.cpp components/source_ac.cpp components/isolator.cpp components/equation.cpp components/circulator.cpp components/attenuator.cpp components/ampere_dc.cpp components/transformer.cpp components/symtrafo.cpp components/subcirport.cpp components/ground.cpp components/dcfeed.cpp components/dcblock.cpp components/biast.cpp components/inductor.cpp components/capacitor.cpp components/resistorus.cpp components/component.cpp components/resistor.cpp sim/complex.cpp fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp qucsview.cpp qucs.cpp main.cpp 
-INTERFACES = 
-TRANSLATIONS = 
-KDE_OPTIONS = qtonly
-qucs_LDADD   = ./sim/libsim.a ./components/libcomponents.a ./diagrams/libdiagrams.a ./paintings/libpaintings.a $(LIB_QPE) $(LIB_QT) $(LIBSOCKET)
+qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp \
+  element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp          \
+  qucsview.cpp qucs.cpp main.cpp $(MOCFILES)
 
-SUBDIRS = bitmaps sim components diagrams paintings 
+INCLUDES = $(QINCLUDES)
+qucs_LDFLAGS = $(QLDFLAGS)
+qucs_LDADD = sim/libsim.a components/libcomponents.a diagrams/libdiagrams.a \
+	paintings/libpaintings.a
 
-EXTRA_DIST = main.cpp qucs.cpp qucs.h qucsview.cpp qucsview.h lo32-app-qucs.png lo16-app-qucs.png newprojdialog.cpp newprojdialog.h wire.cpp wire.h qucsdoc.cpp qucsdoc.h simmessage.cpp simmessage.h element.cpp element.h node.cpp node.h settingsdialog.cpp settingsdialog.h messagebox.cpp messagebox.h fileshowdialog.cpp fileshowdialog.h 
+noinst_HEADERS = $(MOCHEADERS) newprojdialog.h wire.h qucsdoc.h element.h \
+  node.h
 
-####### kdevelop will overwrite this part!!! (end)############
+# rules for translations
+TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts
+TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
+%.ts: $(qucs_SOURCES)
+	@echo "Updating translations...";
+	@list='$(TRANSLATIONS)'; for file in $$list; do \
+	  $(LUPDATE) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
+	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp -ts $$file; \
+	done
 
-# set the include path for X, qt and KDE
-INCLUDES= $(all_includes)
-
-qucs_METASOURCES = AUTO
-
-# the library search path. 
-qucs_LDFLAGS = $(all_libraries) 
-
-# them while "make clean", use CLEANFILES
-DISTCLEANFILES = $(qucs_METASOURCES)
+%.qm: %.ts
+	$(LRELEASE) $<
 
 # installation of translations
 langdatadir = ${prefix}/share/qucs/lang
-langdata_DATA = 
+langdata_DATA = $(TRANSFILES)
 
-dist-hook:
-	rm -f $(distdir)/$(bin_PROGRAMS)
+EXTRADIST = $(TRANSLATIONS) $(TRANSFILES)
+
+all-local: $(TRANSFILES) $(TRANSLATIONS)
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
+
+CLEANFILES = *~
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp *.qm

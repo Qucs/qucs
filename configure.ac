@@ -1,69 +1,111 @@
-# Original Author was Kalle@kde.org
-# I lifted it in some mater. (Stephan Kulow)
-# I used much code from Janos Farkas
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
 
-dnl Process this file with autoconf to produce a configure script.
+AC_PREREQ(2.57)
+AC_INIT(qucs,0.0.2,qucs-bugs@lists.sourceforge.net)
+AC_CONFIG_SRCDIR([qucs/qucs.cpp])
+AC_CONFIG_HEADERS([config.h])
 
-AC_INIT(acinclude.m4) dnl a source file from your sub dir
-
-dnl This is so we can use kde-common
-AC_CONFIG_AUX_DIR(admin)
-
-AC_CANONICAL_SYSTEM 
-
-dnl Automake doc recommends to do this only here. (Janos)
-AM_INIT_AUTOMAKE(qucs,0.0.2)
+AC_CANONICAL_BUILD
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+AM_INIT_AUTOMAKE(1.7.0)
 AM_MAINTAINER_MODE
 
-dnl Release specific.
-dnl AC_CONFIG_SUBDIRS(qucs-sp)
+# Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_RANLIB
 
-dnl KDE_SET_PREFIX
+# Check for debugging.
+AC_ARG_ENABLE([debug],
+  AC_HELP_STRING([--enable-debug],
+                 [include debug output @<:@default=no@:>@]),
+  [case "$enableval" in
+   yes) enable_debug="yes" ;;
+   no)  enable_debug="no"  ;;
+   *)   enable_debug="no"  ;;
+   esac],
+  [enable_debug="no"])
+if test $USE_MAINTAINER_MODE = yes; then
+  enable_debug="yes"
+fi
+if test "$enable_debug" = yes; then
+  AC_DEFINE(DEBUG, 1, [Define if debug output should be supported.])
+else
+  AC_DEFINE(NDEBUG, 1, [Define if debug code should be suppressed.])
+  CFLAGS="-O2"
+  CXXFLAGS="-O2"
+fi
+unset enable_debug
 
-AC_PREFIX_DEFAULT(/usr/local)
-if test "x$prefix" = "xNONE"; then
-  prefix=$ac_default_prefix
-  ac_configure_args="$ac_configure_args --prefix $prefix"
+# Yet another compiler check.
+if test "x$GCC" = xyes; then
+  if test $USE_MAINTAINER_MODE = yes; then
+    CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
+    CXXFLAGS="$CXXFLAGS -W -Wall -Wmissing-prototypes"
+  fi
 fi
 
-dnl generate the config header
-AC_CONFIG_HEADERS(config.h) dnl at the distribution this done
+# Release specific.
+# AC_CONFIG_SUBDIRS(qucs-core)
 
-dnl Checks for programs.
-AC_CHECK_COMPILERS
+# Check for language support.
+AC_CHECK_PROG(LRELEASE, lrelease, lrelease, :)
+AC_CHECK_PROG(LUPDATE, lupdate, lupdate, :)
 
-dnl CXXFLAGS="$NOOPT_CXXFLAGS" dnl __kdevelop[noopt]__
-dnl CFLAGS="$NOOPT_CFLAGS" dnl __kdevelop[noopt]__
-dnl CXXFLAGS="$CXXFLAGS $USE_EXCEPTIONS" dnl __kdevelop[exc]__
+# Check for MOC/UIC support.
+AC_CHECK_PROG(MOC, moc, moc, :)
+AC_CHECK_PROG(UIC, uic, uic, :)
 
-AC_ENABLE_SHARED(yes)
-AC_ENABLE_STATIC(no)
-KDE_PROG_LIBTOOL
+# Check include path to Qt.
+QINCLUDES=""
+AC_MSG_CHECKING([for Qt headers])
+paths="$QTDIR/include /usr/local/qt/include /usr/include/qt /usr/include /usr/X11R6/include/X11/qt /usr/X11R6/include/X11/qt /usr/X11R6/include/qt /usr/X11R6/include/qt2"
+for path in $paths; do
+  if test -f "$path/qapplication.h"; then
+    QINCLUDES=$path
+    break
+  fi
+done
+if test "x$QINCLUDES" != "x"; then
+  AC_MSG_RESULT([found in $QINCLUDES])
+  QINCLUDES="-I$QINCLUDES"
+else
+  AC_MSG_ERROR([not found])
+fi
+AC_SUBST(QINCLUDES)
 
-all_libraries="$all_libraries $USER_LDFLAGS"
-all_includes="$all_includes $USER_INCLUDES"
-AC_SUBST(all_includes)
-AC_SUBST(all_libraries)
+# Check library path to Qt.
+QLDFLAGS=""
+AC_MSG_CHECKING([for Qt library])
+paths="$QTDIR/lib /usr/local/qt/lib /usr/lib/qt /usr/lib /usr/X11R6/lib/X11/qt /usr/X11R6/lib/X11/qt /usr/X11R6/lib/qt /usr/X11R6/lib/qt2"
+AC_LANG(C++)
+for path in $paths; do
+  save_LDFLAGS="$LDFLAGS"
+  save_CXXFLAGS="$CXXFLAGS"
+  LDFLAGS="$LDFLAGS -L$path -lqt-mt"
+  CXXFLAGS="$CXXFLAGS $QINCLUDES"
+  AC_LINK_IFELSE(
+    [#include <qapplication.h>
+     int main (int argc, char ** argv) {
+     QApplication a (argc, argv); a.exec (); return 0; }],
+    [QLDFLAGS="$path"; QINCLUDES="$QINCLUDES -D_REENTRANT"; break;])
+  LDFLAGS="$save_LDFLAGS"
+  CXXFLAGS="$save_CXXFLAGS"
+done
+LDFLAGS="$save_LDFLAGS"
+CXXFLAGS="$save_CXXFLAGS"
+if test "x$QLDFLAGS" != "x"; then
+  AC_MSG_RESULT([found in $QLDFLAGS])
+  QLDFLAGS="-L$QLDFLAGS -lqt-mt"
+else
+  AC_MSG_ERROR([not found])
+fi
+AC_SUBST(QLDFLAGS)
+AC_LANG(C)
 
-dnl for NLS support. Call them in this order!
-dnl WITH_NLS is for the po files
-AM_KDE_WITH_NLS
-
-KDE_USE_QT(3)
-AC_PATH_QT
-
-dnl KDE_NEED_FLEX dnl __kdevelop__
-dnl AC_PROG_YACC dnl __kdevelop__
-
-dnl Perform program name transformation
-dnl AC_ARG_PROGRAM
-
-
-dnl PACKAGE set before
-
-KDE_CREATE_SUBDIRSLIST
-
-dnl Create path info.
+# Create path info.
 BITMAP_PATH="$prefix/share/qucs/bitmaps/"
 AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"], [Where the data files go.])
 unset BITMAP_PATH
@@ -74,14 +116,14 @@ LANG_PATH="$prefix/share/qucs/lang/"
 AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"], [Where the language files go.])
 unset LANG_PATH
 
-dnl add here all your Makefiles. This are created by configure
-AC_CONFIG_FILES([ Makefile ])
-AC_CONFIG_FILES([ qucs/Makefile ])
-AC_CONFIG_FILES([ qucs/bitmaps/Makefile ])
-AC_CONFIG_FILES([ qucs/sim/Makefile ])
-AC_CONFIG_FILES([ qucs/components/Makefile ])
-AC_CONFIG_FILES([ qucs/diagrams/Makefile ])
-AC_CONFIG_FILES([ qucs/paintings/Makefile ])
+# Add here all your Makefiles. This are created by configure.
+AC_CONFIG_FILES([Makefile 
+		 qucs/Makefile
+		 qucs/bitmaps/Makefile
+		 qucs/sim/Makefile
+		 qucs/components/Makefile
+		 qucs/diagrams/Makefile
+		 qucs/paintings/Makefile])
 AC_OUTPUT
 
 dnl Print results.
