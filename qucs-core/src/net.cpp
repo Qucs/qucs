@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.12 2004/06/21 23:11:41 ela Exp $
+ * $Id: net.cpp,v 1.13 2004/07/08 06:38:43 ela Exp $
  *
  */
 
@@ -404,8 +404,7 @@ void net::list (void) {
       if (i != c->getSize ())
 	logprint (LOG_STATUS, ",");
     }
-    logprint (LOG_STATUS, "]\n");
-    c->listProperties ();
+    logprint (LOG_STATUS, "] { %s }\n", c->propertyList ());
   }
 }
 #endif /* DEBUG */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.5 2004/05/09 12:54:03 ela Exp $
+ * $Id: object.cpp,v 1.6 2004/07/08 06:38:43 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@ using namespace std;
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <assert.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -45,6 +46,7 @@ object::object () {
   name = NULL;
   prev = next = NULL;
   prop = NULL;
+  ptxt = NULL;
 }
 
 // This constructor creates a named instance of the object class.
@@ -52,6 +54,7 @@ object::object (char * n) {
   name = strdup (n);
   prev = next = NULL;
   prop = NULL;
+  ptxt = NULL;
 }
 
 /* This copy constructor creates a instance of the object class based
@@ -60,12 +63,14 @@ object::object (const object & o) {
   name = o.name ? strdup (o.name) : NULL;
   next = o.next;
   prev = o.prev;
+  ptxt = o.ptxt ? strdup (o.ptxt) : NULL;
   copyProperties (o.prop);
 }
 
 // Destructor deletes an instance of the object class.
 object::~object () {
   if (name) free (name);
+  if (ptxt) free (ptxt);
   deleteProperties ();
 }
 
@@ -80,28 +85,48 @@ char * object::getName (void) {
   return name;
 }
 
-/* This function adds a property consisting of a key and a value to
-   the object. */
+// The function adds a complete property to the object property list.
+void object::addProperty (property * p) {
+  p->setNext (prop);
+  prop = p;
+}
+
+/* This function adds a property consisting of a key and a string
+   value to the object. */
 void object::addProperty (char * n, char * val) {
-  property * p = new property (n, val);
-  p->setNext (prop);
-  prop = p;
+  addProperty (new property (n, val));
 }
 
-/* This function adds a property consisting of a key and a value to
-   the object. */
+/* This function sets the specified property consisting of a key and a
+   string value in the object. */
+void object::setProperty (char * n, char * val) {
+  property * p = prop->findProperty (n);
+  if (p != NULL)
+    p->set (val);
+  else
+    addProperty (n, val);
+}
+
+/* This function adds a property consisting of a key and a double
+   value to the object. */
 void object::addProperty (char * n, nr_double_t val) {
-  property * p = new property (n, val);
-  p->setNext (prop);
-  prop = p;
+  addProperty (new property (n, val));
 }
 
-/* This function adds a property consisting of a key and a value to
-   the object. */
+/* This function sets the specified property consisting of a key and a
+   double value in the object. */
+void object::setProperty (char * n, nr_double_t val) {
+  property * p = prop->findProperty (n);
+  if (p != NULL)
+    p->set (val);
+  else
+    addProperty (n, val);
+}
+
+/* This function adds a property consisting of a key and a variable
+   value to the object. */
 void object::addProperty (char * n, variable * val) {
-  property * p = new property (n, val);
-  p->setNext (prop);
-  prop = p;
+  addProperty (new property (n, val));
 }
 
 /* Returns the requested property value which has been previously
@@ -109,28 +134,25 @@ void object::addProperty (char * n, variable * val) {
    function returns NULL. */
 char * object::getPropertyString (char * n) {
   property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getString ();
+  if (p != NULL) return p->getString ();
   return NULL;
 }
 
 /* Returns the requested property value which has been previously
-   added as its double representation.  If there is no such property the
-   function returns zero. */
+   added as its double representation.  If there is no such property
+   the function returns zero. */
 nr_double_t object::getPropertyDouble (char * n) {
   property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getDouble ();
+  if (p != NULL) return p->getDouble ();
   return 0.0;
 }
 
 /* Returns the requested property value which has been previously
-   added as its integer representation.  If there is no such property the
-   function returns zero. */
+   added as its integer representation.  If there is no such property
+   the function returns zero. */
 int object::getPropertyInteger (char * n) {
   property * p = prop->findProperty (n);
-  if (p != NULL)
-    return p->getInteger ();
+  if (p != NULL) return p->getInteger ();
   return 0;
 }
 
@@ -143,12 +165,9 @@ int object::hasProperty (char * n) {
 /* This function copies all properties in the given property list into
    an object. */
 void object::copyProperties (property * org) {
-  property * p;
   prop = NULL;
   while (org != NULL) {
-    p = new property (*org);
-    p->setNext (prop);
-    prop = p;
+    addProperty (new property (*org));
     org = org->getNext ();
   }
 }
@@ -163,14 +182,25 @@ void object::deleteProperties (void) {
   prop = NULL;
 }
 
-#if DEBUG
-// DEBUG function:  Lists the properties of an object.
-void object::listProperties (void) {
-  if (prop == NULL) return;
-  logprint (LOG_STATUS, "DEBUG:");
-  for (property * p = prop; p != NULL; p = p->getNext ()) {
-    logprint (LOG_STATUS, " %s=""%s""", p->getName (), p->getString ());
-  }
-  logprint (LOG_STATUS, "\n");
+// The function returns the number of properties in the object.
+int object::countProperties (void) {
+  int res = 0;
+  for (property * p = prop; p != NULL; p = p->getNext ()) res++;
+  return res;
 }
-#endif /* DEBUG */
+
+// This function returns a text representation of the objects properties.
+char * object::propertyList (void) {
+  if (ptxt) free (ptxt);
+  char text[256];
+  int len = countProperties () + 1;
+  ptxt = (char *) malloc (len); ptxt[0] = '\0';
+  for (property * p = prop; p != NULL; p = p->getNext ()) {
+    sprintf (text, "%s=\"%s\"", p->getName (), p->toString ());
+    len += strlen (text);
+    ptxt = (char *) realloc (ptxt, len);
+    strcat (ptxt, text);
+    if (p->getNext () != NULL) strcat (ptxt, " ");
+  }
+  return ptxt;
+}
