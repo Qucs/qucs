@@ -130,7 +130,7 @@ void Component::paint(QPainter *p)
   }
 
   QFont f = p->font();   // restore current font
-  if(Sign.at(0) == '.') {   // is simulation component (dc, ac, ...)
+  if(Model.at(0) == '.') {   // is simulation component (dc, ac, ...)
     p->setFont(QucsSettings.largeFont);
     p->drawText(cx+x1+8, cy+y1+8, x2-x1, y2-y1, Qt::WordBreak, Description);
   }
@@ -343,10 +343,11 @@ void Component::mirrorY()
 // -------------------------------------------------------
 QString Component::NetList()
 {
-  if(Model.isEmpty()) return QString("");   // dummy elements (e.g. ground)
-  if(!isActive) return QString("");         // should it be simulated ?
-  QString s = Model+":"+Name;
+  if(Name.isEmpty()) return QString("");  // dummy elements (e.g. ground)
+  if(!isActive) return QString("");       // should it be simulated ?
+  if(Model == "Port") return QString("");  // do not mention subcircuit ports
 
+  QString s = Model+":"+Name;
 
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;    // node names
@@ -360,7 +361,7 @@ QString Component::NetList()
 // -------------------------------------------------------
 QString Component::save()
 {
-  QString s = "   <"+Sign;
+  QString s = "   <"+Model;
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
 
@@ -396,7 +397,7 @@ bool Component::load(const QString& _s)
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
-  Sign = s.section(' ',0,0);    // Sign
+  Model = s.section(' ',0,0);    // Model
 
   Name = s.section(' ',1,1);    // Name
   if(Name == "*") Name = "";
@@ -431,7 +432,7 @@ bool Component::load(const QString& _s)
   if(!ok) return false;
   for(int z=0; z<tmp; z++) rotate();   // rotate component
 
-  tx = ttx; ty = tty;  // restore text position (was change by rotate/mirror)
+  tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
 
   int z=0;
   // load all properties
@@ -492,7 +493,7 @@ Component* getComponentFromName(QString& Line)
   // letter of their name
   switch(first) {
   case 'R' : if(cstr.isEmpty()) c = new Resistor();
-	else if(cstr == "us") c = new ResistorUS();
+	else if(cstr == "us") c = new Resistor(false);
 	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
 	else if(cstr == "CCS") c = new CCCS();
@@ -534,21 +535,24 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "UBST") c = new Substrate();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
-        else if(cstr == "CFeed") c = new dcFeed();
-        else if(cstr == "iode") c = new Diode();
-        break;
+	else if(cstr == "MOSFET") c = new MOSFET_depl();
+	else if(cstr == "CFeed") c = new dcFeed();
+	else if(cstr == "iode") c = new Diode();
+	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
-        break;
+	else if(cstr == "JT") c = new BJT();
+	break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
         break;
   case 'M' : if(cstr == "LIN") c = new MSline();
-        else if(cstr == "STEP") c = new MSstep();
-        else if(cstr == "CORN") c = new MScorner();
-        else if(cstr == "TEE") c = new MStee();
-        else if(cstr == "CROSS") c = new MScross();
-        else if(cstr == "MBEND") c = new MSmbend();
-        else if(cstr == "OPEN") c = new MSopen();
-        break;
+	else if(cstr == "OSFET") c = new MOSFET();
+	else if(cstr == "STEP") c = new MSstep();
+	else if(cstr == "CORN") c = new MScorner();
+	else if(cstr == "TEE") c = new MStee();
+	else if(cstr == "CROSS") c = new MScross();
+	else if(cstr == "MBEND") c = new MSmbend();
+	else if(cstr == "OPEN") c = new MSopen();
+	break;
   case 'E' : if(cstr == "qn") c = new Equation();
         break;
   case '.' : if(cstr == "DC") c = new DC_Sim();
@@ -561,16 +565,17 @@ Component* getComponentFromName(QString& Line)
   }
   if(!c) {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Format Error:\nUnknown component!"));
+	QObject::tr("Format Error:\nUnknown component!"));
     return 0;
   }
 
   if(!c->load(Line)) {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Format Error:\nWrong 'component' line format!"));
+	QObject::tr("Format Error:\nWrong 'component' line format!"));
     delete c;
     return 0;
   }
 
+  c->recreate();
   return c;
 }

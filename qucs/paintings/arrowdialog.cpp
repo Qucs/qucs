@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Nov 28 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -28,8 +28,7 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
                                   : QDialog(parent, name)
 {
   setCaption(tr("Edit Arrow Properties"));
-  Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
-  QValidator *Validator = new QRegExpValidator(Expr, this);
+  QValidator *Validator = new QIntValidator(0, 100, this);
 
   QVBoxLayout *v = new QVBoxLayout(this);
   v->setSpacing(5);

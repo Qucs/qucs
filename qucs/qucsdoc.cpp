@@ -128,7 +128,7 @@ void QucsDoc::setName(const QString& _Name)
   DocName = _Name;
 
   QFileInfo Info(DocName);
-  Tab->setText(Info.fileName());  // remove path from file name, show it in TabBar
+  Tab->setText(Info.fileName());  // remove path from name, show it in TabBar
 
   DataSet = Info.baseName()+".dat";   // name of default dataset
   if(Info.extension(false) == "sch")
@@ -221,6 +221,8 @@ void QucsDoc::paintGrid(QPainter *p, int cX, int cY, int Width, int Height)
   int x2 = x1+Width, y2 = y1+Height;
   int dx = int(double(2*GridX)*Scale);
   int dy = int(double(2*GridY)*Scale);
+  if(dx < 5) dx = 5;   // grid not too dense
+  if(dy < 5) dy = 5;
 
   p->setPen(QPen(QPen::black,1));
   for(int x=x1; x<x2; x+=dx)
@@ -291,18 +293,18 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
 // sets them accordingly.
 void QucsDoc::setComponentNumber(Component *c)
 {
-  if(c->Sign != "Port")
-    if(c->Sign != "Pac") return;  // number ports and power sources only
+  if(c->Model != "Port")
+    if(c->Model != "Pac") return;  // number ports and power sources only
 
   int n=1;
-  QString s, cSign = c->Sign;
+  QString s, cSign = c->Model;
   Component *pc;
   // power sources and subcirciut ports have to be numbered
   do {
     s  = QString::number(n);
     // look for existing ports and their numbers
     for(pc = Comps.first(); pc != 0; pc = Comps.next())
-      if(pc->Sign == cSign)
+      if(pc->Model == cSign)
         if(pc->Props.getFirst()->Value == s) break;
 
     n++;
@@ -321,8 +323,8 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
   Comps.append(c);
 
   // a ground symbol erases an existing label on the wire line
-  if(c->Sign == "GND") {
-    c->Sign = "x";    // prevent that this ground is found as label
+  if(c->Model == "GND") {
+    c->Model = "x";    // prevent that this ground is found as label
     Element *pe = getWireLabel(c->Ports.getFirst()->Connection);
     if(pe) {
       if(pe->Type == isWire) {
@@ -334,7 +336,7 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
         ((Node*)pe)->Label = 0;
       }
     }
-    c->Sign = "GND";    // rebuild component sign
+    c->Model = "GND";    // rebuild component model
   }
 }
 
@@ -350,8 +352,8 @@ void QucsDoc::insertComponent(Component *c)
   int  max=1, len = c->Name.length(), z;
   if(c->Name.isEmpty()) {
     // a ground symbol erases an existing label on the wire line
-    if(c->Sign == "GND") {
-      c->Sign = "x";    // prevent that this ground is found as label
+    if(c->Model == "GND") {
+      c->Model = "x";    // prevent that this ground is found as label
       Element *pe = getWireLabel(c->Ports.getFirst()->Connection);
       if(pe) {
         if(pe->Type == isWire) {
@@ -363,7 +365,7 @@ void QucsDoc::insertComponent(Component *c)
           ((Node*)pe)->Label = 0;
         }
       }
-      c->Sign = "GND";    // rebuild component sign
+      c->Model = "GND";    // rebuild component model
     }
   }
   else {
@@ -943,16 +945,17 @@ void QucsDoc::insertNodeLabel(WireLabel *pl)
 
   if(pn->Label) delete pn->Label;
   pn->Label = pl;
-  pn->Label->Type = isNodeLabel;
+  pn->Label->Type  = isNodeLabel;
 }
 
 // ---------------------------------------------------
 Component* QucsDoc::searchSelSubcircuit()
 {
   Component *sub=0;
-  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {  // test all components
+  // test all components
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {
     if(!pc->isSelected) continue;
-    if(pc->Sign.left(3) != "Sub") continue;
+    if(pc->Model.left(3) != "Sub") continue;
 
     if(sub != 0) return 0;    // more than one subcircuit selected
     sub = pc;
@@ -1174,6 +1177,13 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
         if(pm->isSelected) pe_sel = pm;
       }
 
+    if(pd->isSelected)
+      if(pd->ResizeTouched(x, y))
+	if(pe_1st == 0) {
+	  pd->Type = isDiagramResize;
+	  return pd;
+        }
+
     if(pd->getSelected(x, y)) {
 
       // test graphs of diagram
@@ -1201,7 +1211,14 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
   }
 
   // test all paintings
-  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
+  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev()) {
+    if(pp->isSelected)
+      if(pp->ResizeTouched(x, y))
+	if(pe_1st == 0) {
+	  pp->Type = isPaintingResize;
+	  return pp;
+        }
+
     if(pp->getSelected(x, y)) {
       if(flag) { pp->isSelected ^= flag; return pp; }
       if(pe_sel != 0) {
@@ -1212,8 +1229,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       if(pe_1st == 0) pe_1st = pp;  // give access to elements lying beneath
       if(pp->isSelected) pe_sel = pp;
     }
+  }
 
-  if(pe_1st != 0) pe_1st->isSelected = true;
+  if(pe_1st) pe_1st->isSelected = true;
   return pe_1st;
 }
 
@@ -1361,7 +1379,7 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 // a wire, use this wire. Otherwise create new wire.
 void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
 {
-  if(pn->Connections.count() < 1) return;   // return, if connected node is also moving
+  if(pn->Connections.count() < 1) return; // return, if connected node moves
   Element *pe = pn->Connections.getFirst();
   if(pe == (Element*)1) return; // return, if it was already treated this way
   pn->Connections.prepend((Element*)1);  // to avoid doubling
@@ -1375,12 +1393,12 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
       Node *pn2 = pw->Port1;
       if(pn2 == pn) pn2 = pw->Port2;
 
-      if(pn2->Connections.count() == 2) {   // two existing wires connected ?
+      if(pn2->Connections.count() == 2) { // two existing wires connected ?
         Element *pe2 = pn2->Connections.getFirst();
         if(pe2 == pe) pe2 = pn2->Connections.getLast();
         if(pe2 != (Element*)1)
-          if(pe2->Type == isWire)   // the connected wire is again connected to exactly one wire ?
-            pw2  = (Wire*)pe2;
+          if(pe2->Type == isWire)  // connected wire connected to ...
+            pw2  = (Wire*)pe2;     // ... exactly one wire ?
       }
 
       // .................................................
@@ -1389,29 +1407,35 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
       pw->Port1->Connections.removeRef(pw);   // remove connection 1
       pw->Port2->Connections.removeRef(pw);   // remove connection 2
       if(pw->Port1->Connections.getFirst() !=  (Element*)1)
-        pw->Port1->Connections.prepend((Element*)1);  // to control node afterwards
+        pw->Port1->Connections.prepend((Element*)1);  // remember this action
       if(pw->Port2->Connections.getFirst() !=  (Element*)1)
-        pw->Port2->Connections.prepend((Element*)1);  // to control node afterwards
+        pw->Port2->Connections.prepend((Element*)1);  // remember this action
       Wires.take(Wires.findRef(pw));
       int mask = 1;
       if(pw->isHorizontal()) mask = 2;
 
       if(pw->Port1 != pn) {
-        pw->Port1 = (Node*)mask;
-        pw->Port2 = (Node*)3;    // move port 2 completely
+	pw->Port1->State = mask;
+	pw->Port1 = (Node*)mask;
+	pw->Port2->State = 3;
+	pw->Port2 = (Node*)3;    // move port 2 completely
       }
       else {
-        pw->Port1 = (Node*)3;
-        pw->Port2 = (Node*)mask;
+	pw->Port1->State = 3;
+	pw->Port1 = (Node*)3;
+	pw->Port2->State = mask;
+	pw->Port2 = (Node*)mask;
       }
 
       // .................................................
       // create new wire ?
       if(pw2 == 0) {
         if(pw->Port1 == (Node*)3)
-          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)mask, (Node*)0));
+          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2,
+			     (Node*)mask, (Node*)0));
         else
-          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)mask, (Node*)0));
+          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1,
+			     (Node*)mask, (Node*)0));
         return;
       }
 
@@ -1422,24 +1446,30 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
       pw2->Port1->Connections.removeRef(pw2);   // remove connection 1
       pw2->Port2->Connections.removeRef(pw2);   // remove connection 2
       if(pw2->Port1->Connections.getFirst() !=  (Element*)1)
-        pw2->Port1->Connections.prepend((Element*)1);  // to control node afterwards
+        pw2->Port1->Connections.prepend((Element*)1); // remember this action
       if(pw2->Port2->Connections.getFirst() !=  (Element*)1)
-        pw2->Port2->Connections.prepend((Element*)1);  // to control node afterwards
+        pw2->Port2->Connections.prepend((Element*)1); // remember this action
       Wires.take(Wires.findRef(pw2));
 
       if(pw2->Port1 != pn2) {
-        pw2->Port1 = (Node*)0;
-        pw2->Port2 = (Node*)mask;
+	pw2->Port1->State = 0;
+	pw2->Port1 = (Node*)0;
+	pw2->Port2->State = mask;
+	pw2->Port2 = (Node*)mask;
       }
       else {
-        pw2->Port1 = (Node*)mask;
-        pw2->Port2 = (Node*)0;
+	pw2->Port1->State = mask;
+	pw2->Port1 = (Node*)mask;
+	pw2->Port2->State = 0;
+	pw2->Port2 = (Node*)0;
       }
       return;
     }
 
-  p->append(new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)0, (Node*)1));  // only x2 moving
-  p->append(new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)1, (Node*)3));  // x1, x2, y2 moving
+  // only x2 moving
+  p->append(new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)0, (Node*)1));
+  // x1, x2, y2 moving
+  p->append(new Wire(pn->cx, pn->cy, pn->cx, pn->cy, (Node*)1, (Node*)3));
 }
 
 // ---------------------------------------------------
@@ -1459,7 +1489,8 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
       p->append(pc);
 
       for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
-        pp->Connection->Connections.removeRef((Element*)pc);   // delete all port connections
+        // delete all port connections
+        pp->Connection->Connections.removeRef((Element*)pc);
 /*        if(pp->Connection->Connections.count() != 1) continue;
         pe1 = pp->Connection->Connections.getfirst();
         if(pe1->Type != isWire) continue;
@@ -1552,8 +1583,13 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 
     if(pn->Connections.count() == 0) {
       if(pn->Label) {
-        p->append(pn->Label);    // do not forget the node labels
-        pn->Label->Type = isMovingLabel;
+	pn->Label->Type = isMovingLabel;
+	if(pn->State & 1) {
+	  if(!(pn->State & 2)) pn->Label->Type = isHMovingLabel;
+	}
+	else if(pn->State & 2) pn->Label->Type = isVMovingLabel;
+	pn->State = 0;
+	p->append(pn->Label);    // do not forget the node labels
       }
       Nodes.remove();
       pn = Nodes.current();
@@ -1591,7 +1627,7 @@ void QucsDoc::activateComps(int x1, int y1, int x2, int y2)
       pc->isActive ^= true;    // change "active status"
       changed = true;
       if(pc->isActive)    // if existing, delete label on wire line
-	if(pc->Sign == "GND") oneLabel(pc->Ports.getFirst()->Connection);
+	if(pc->Model == "GND") oneLabel(pc->Ports.getFirst()->Connection);
     }
   }
 
@@ -1609,7 +1645,7 @@ bool QucsDoc::activateComponent(int x, int y)
       pc->isActive ^= true;    // change "active status"
       setChanged(true, true);
       if(pc->isActive)    // if existing, delete label on wire line
-	if(pc->Sign == "GND") oneLabel(pc->Ports.getFirst()->Connection);
+	if(pc->Model == "GND") oneLabel(pc->Ports.getFirst()->Connection);
       return true;
     }
   }
@@ -1627,7 +1663,7 @@ bool QucsDoc::activateComponents()
       pc->isActive ^= true;    // change "active status"
       sel = true;
       if(pc->isActive)    // if existing, delete label on wire line
-	if(pc->Sign == "GND") oneLabel(pc->Ports.getFirst()->Connection);
+	if(pc->Model == "GND") oneLabel(pc->Ports.getFirst()->Connection);
     }
 
   if(sel) setChanged(true, true);
@@ -1666,7 +1702,7 @@ void QucsDoc::oneLabel(Node *n1)
     for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()) {
       if(pe->Type != isWire) {
         if(((Component*)pe)->isActive)
-	  if(((Component*)pe)->Sign == "GND") {
+	  if(((Component*)pe)->Model == "GND") {
 	    named = true;
 	    if(pl)
 	      if(pl->pWire) pl->pWire->setName("");
@@ -1725,7 +1761,7 @@ Element* QucsDoc::getWireLabel(Node *pn_)
       for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next()) {
         if(pe->Type != isWire) {
 	  if(((Component*)pe)->isActive)
-	    if(((Component*)pe)->Sign == "GND") return pe;
+	    if(((Component*)pe)->Model == "GND") return pe;
           continue;
         }
 
@@ -1841,12 +1877,12 @@ void QucsDoc::setCompPorts(Component *pc)
 {
   WireLabel *pl=0;
   for(Port *pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
-    pp->Connection->Connections.removeRef((Element*)pc);   // delete all port connections
+    pp->Connection->Connections.removeRef((Element*)pc);// delete connections
     switch(pp->Connection->Connections.count()) {
       case 0: pl = pp->Connection->Label;
               Nodes.removeRef(pp->Connection);
               break;
-      case 2: oneTwoWires(pp->Connection);   // if possible, connect two wires to one
+      case 2: oneTwoWires(pp->Connection); // try to connect two wires to one
               pl = 0;
       default: ;
     }
@@ -2137,16 +2173,17 @@ void QucsDoc::deleteComp(Component *c)
 {
   Port *pn;
 
-  for(pn = c->Ports.first(); pn!=0; pn = c->Ports.next())   // delete all port connections
+  // delete all port connections
+  for(pn = c->Ports.first(); pn!=0; pn = c->Ports.next())
     switch(pn->Connection->Connections.count()) {
       case 1  : if(pn->Connection->Label) delete pn->Connection->Label;
-                Nodes.removeRef(pn->Connection);     // delete all open nodes (auto-delete)
-                pn->Connection = 0;
+                Nodes.removeRef(pn->Connection);  // delete open nodes
+                pn->Connection = 0;		  //  (auto-delete)
                 break;
-      case 3  : pn->Connection->Connections.removeRef(c);  // delete connection to component
-                oneTwoWires(pn->Connection);    // two wires -> one wire
+      case 3  : pn->Connection->Connections.removeRef(c);// delete connection
+                oneTwoWires(pn->Connection);  // two wires -> one wire
                 break;
-      default : pn->Connection->Connections.removeRef(c);   // remove connection
+      default : pn->Connection->Connections.removeRef(c);// remove connection
                 break;
     }
 
@@ -2330,8 +2367,8 @@ bool QucsDoc::giveNodeNames(QTextStream *stream)
   // give the ground nodes the name "gnd", and insert subcircuits
   for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
     if(pc->isActive)
-      if(pc->Sign == "GND") pc->Ports.first()->Connection->Name = "gnd";
-      else if(pc->Sign.left(3) == "Sub") {
+      if(pc->Model == "GND") pc->Ports.first()->Connection->Name = "gnd";
+      else if(pc->Model.left(3) == "Sub") {
              QucsDoc *d = new QucsDoc(0, pc->Props.getFirst()->Value);
              if(!d->load()) {    // load document if possible
                delete d;
@@ -2410,7 +2447,7 @@ bool QucsDoc::createSubNetlist(QTextStream *stream)
   QStringList sl;
   Component *pc;
   for(pc = Comps.first(); pc != 0; pc = Comps.next())
-    if(pc->Sign == "Port")
+    if(pc->Model == "Port")
       sl.append(pc->Props.first()->Value + ":" + pc->Ports.getFirst()->Connection->Name);
   sl.sort();
   
@@ -2462,10 +2499,9 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
 bool QucsDoc::undo()
 {
   if(UndoStack.count() < 2)  return false;
-  else {
-    UndoStack.removeLast();    // last item is current state  !!!
-    if(!File.rebuild(UndoStack.current()))
-      qDebug("Fehler!");
-    return true;
-  }
+
+  UndoStack.removeLast();    // last item is current state  !!!
+  File.rebuild(UndoStack.current());
+  reloadGraphs();  // load recent simulation data
+  return true;
 }

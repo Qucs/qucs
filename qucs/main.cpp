@@ -27,6 +27,8 @@
 #include <qtextstream.h>
 #include <qmessagebox.h>
 
+#include <math.h>
+
 #include "qucs.h"
 #include "main.h"
 
@@ -110,6 +112,45 @@ bool saveApplSettings(QucsApp *qucs)
   file.close();
 
   return true;
+}
+
+// #########################################################################
+QString complexRect(double real, double imag, int Precision)
+{
+  QString Text;
+  if(fabs(imag) < 1e-250) Text = QString::number(real,'g',Precision);
+  else {
+    Text = QString::number(imag,'g',Precision);
+    if(Text.at(0) == '-') {
+      Text.at(0) = 'j';
+      Text = '-'+Text;
+    }
+    else  Text = "+j"+Text;
+    Text = QString::number(real,'g',Precision) + Text;
+  }
+  return Text;
+}
+
+QString complexDeg(double real, double imag, int Precision)
+{
+  QString Text;
+  if(fabs(imag) < 1e-250) Text = QString::number(real,'g',Precision);
+  else {
+    Text  = QString::number(sqrt(real*real+imag*imag),'g',Precision) + " <";
+    Text += QString::number(180.0/M_PI*atan2(imag,real),'g',Precision) + '°';
+  }
+  return Text;
+}
+
+QString complexRad (double real, double imag, int Precision)
+{
+  QString Text;
+  if(fabs(imag) < 1e-250) Text = QString::number(real,'g',Precision);
+  else {
+    Text  = QString::number(sqrt(real*real+imag*imag),'g',Precision);
+    Text += " <" + QString::number(atan2(imag,real),'g',Precision);
+  }
+  return Text;
 }
 
 // #########################################################################

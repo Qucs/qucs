@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -56,7 +56,10 @@ public:
   QString Var;
   QColor  Color;
   int     Thick;
-  
+
+  // for tabular diagram
+  int  Precision;   // number of digits to show
+  int  numMode;     // real/imag or polar (deg/rad)
 };
 
 #endif

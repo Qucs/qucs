@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -35,7 +35,8 @@ struct Line {
 
 struct Arc {
   Arc(int _x, int _y, int _w, int _h, int _angle, int _arclen, QPen _style)
-       : x(_x), y(_y), w(_w), h(_h), angle(_angle), arclen(_arclen), style(_style) {};
+      : x(_x), y(_y), w(_w), h(_h), angle(_angle),
+	arclen(_arclen), style(_style) {};
   int   x, y, w, h, angle, arclen;
   QPen  style;
 };
@@ -54,8 +55,9 @@ struct Text {
 };
 
 struct Property {
-  Property(const QString& _Name="", const QString& _Value="", bool _display=false, const QString& Desc="")
-           : Name(_Name), Value(_Value), display(_display), Description(Desc) {};
+  Property(const QString& _Name="", const QString& _Value="",
+	   bool _display=false, const QString& Desc="")
+	 : Name(_Name), Value(_Value), display(_display), Description(Desc) {};
   QString Name, Value;
   bool    display;   // show on schematic or not ?
   QString Description;
@@ -63,8 +65,10 @@ struct Property {
 
 
 
-enum ElementType {isDummy, isComponent, isWire, isHWireLabel, isVWireLabel, isNodeLabel, isMovingLabel,
-                  isDiagram, isGraph, isPainting, isNode, isMarker};
+enum ElementType {isDummy, isComponent, isWire, isHWireLabel, isVWireLabel,
+		  isNodeLabel, isMovingLabel, isHMovingLabel, isVMovingLabel,
+		  isDiagram, isDiagramResize, isGraph,
+		  isPainting, isPaintingResize, isNode, isMarker};
 
 
 class Element {

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Nov 28 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -32,8 +32,8 @@
 class ArrowDialog : public QDialog  {
 Q_OBJECT
 public: 
-	ArrowDialog(QWidget *parent=0, const char *name=0);
-	~ArrowDialog();
+  ArrowDialog(QWidget *parent=0, const char *name=0);
+  ~ArrowDialog();
 
   void SetComboBox(Qt::PenStyle _Style);
 
@@ -42,7 +42,6 @@ private slots:
   void slotSetStyle(int index);
 
 public:
-  QRegExp      Expr;
   QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
   QPushButton  *ColorButt;
   QComboBox    *StyleBox;

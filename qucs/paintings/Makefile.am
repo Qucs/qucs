@@ -24,17 +24,17 @@
 
 noinst_LIBRARIES = libpaintings.a
 
-MOCHEADERS = arrowdialog.h graphictextdialog.h linedialog.h filldialog.h
+MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-libpaintings_a_SOURCES = rectangle.cpp painting.cpp linedialog.cpp arrow.cpp  \
+libpaintings_a_SOURCES = rectangle.cpp painting.cpp arrow.cpp  \
   graphictextdialog.cpp graphictext.cpp graphicline.cpp ellipse.cpp           \
-  arrowdialog.cpp filledrect.cpp filledellipse.cpp filldialog.cpp
+  arrowdialog.cpp filldialog.cpp
 
 nodist_libpaintings_a_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
-  painting.h paintings.h rectangle.h filledrect.h filledellipse.h
+  painting.h paintings.h rectangle.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 

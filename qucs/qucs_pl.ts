@@ -136,10 +136,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>       Thickness:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dataset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -203,6 +199,30 @@
         <source>Function Help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Number Notation: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>real/imaginary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (degree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (radian)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Precision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -231,10 +251,6 @@
     </message>
     <message>
         <source>Line Color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>      Line Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -329,6 +345,22 @@
         <source>diagonal crossed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Line Width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enable filling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filling Style</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
@@ -373,49 +405,6 @@
     </message>
 </context>
 <context>
-    <name>LineDialog</name>
-    <message>
-        <source>Line color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line Style: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>solid line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dash line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dash dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -431,6 +420,22 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number Notation: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>real/imaginary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (degree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (radian)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -878,10 +883,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>resistor (US symbol)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1365,15 +1366,64 @@ Wrong line start!</source>
         <source>depletion MOSFET</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QucsActions</name>
     <message>
-        <source>Inserting clipboard contents...</source>
+        <source>ohmic series resistance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ready.</source>
+        <source>transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>threshold voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transconductance parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel-length modulation parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parasitic drain resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parasitic source resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias gate-source junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias gate-drain junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward-bias junction capacitance coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate P-N grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic symbol (european,US)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

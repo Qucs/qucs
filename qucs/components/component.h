@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -68,7 +68,7 @@ public:
   bool     isActive; // should it be used in simulation or not ?
   int      tx, ty;   // upper left corner of text (position)
   QString  Description;
-  QString  Sign, Model, Name;
+  QString  Model, Name;
 };
 
 

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -41,10 +41,10 @@ BJT::BJT()
 
   tx = x2+4;
   ty = y1+4;
-  Sign  = "BJT";
   Model = "BJT";
   Name  = "T";
 
+  // this must be the first property in the list  !!!
   Props.append(new Property("Type", "npn", true,
 			QObject::tr("polarity (npn,pnp)")));
 }

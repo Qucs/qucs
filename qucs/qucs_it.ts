@@ -137,7 +137,7 @@
     </message>
     <message>
         <source>       Thickness:</source>
-        <translation>       Spessore:</translation>
+        <translation type="obsolete">       Spessore:</translation>
     </message>
     <message>
         <source>Dataset</source>
@@ -203,6 +203,30 @@
         <source>Function Help</source>
         <translation>Aiuto Funzione</translation>
     </message>
+    <message>
+        <source>Number Notation: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>real/imaginary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (degree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (radian)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Precision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -235,7 +259,7 @@
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation>      Larghezza linea: </translation>
+        <translation type="obsolete">      Larghezza linea: </translation>
     </message>
     <message>
         <source>Line Style: </source>
@@ -329,6 +353,22 @@
         <source>diagonal crossed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Line Width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enable filling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filling Style</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
@@ -380,43 +420,43 @@
     <name>LineDialog</name>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation type="obsolete">Cancella</translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation>Colore linea: </translation>
+        <translation type="obsolete">Colore linea: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation>      Larghezza linea: </translation>
+        <translation type="obsolete">      Larghezza linea: </translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation>Stile linea: </translation>
+        <translation type="obsolete">Stile linea: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation>linea continua</translation>
+        <translation type="obsolete">linea continua</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation>linea tratteggiata</translation>
+        <translation type="obsolete">linea tratteggiata</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation>linea a punti</translation>
+        <translation type="obsolete">linea a punti</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation>linea tratteggio punto</translation>
+        <translation type="obsolete">linea tratteggio punto</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation>linea tratteggio punto punto</translation>
+        <translation type="obsolete">linea tratteggio punto punto</translation>
     </message>
 </context>
 <context>
@@ -436,6 +476,22 @@
     <message>
         <source>Cancel</source>
         <translation>Cancella</translation>
+    </message>
+    <message>
+        <source>Number Notation: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>real/imaginary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (degree)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>magnitude/angle (radian)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -916,7 +972,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>resistor (US symbol)</source>
-        <translation>resistore (simbolo US)</translation>
+        <translation type="obsolete">resistore (simbolo US)</translation>
     </message>
     <message>
         <source>ac power source</source>
@@ -1370,16 +1426,76 @@ Wrong &apos;component&apos; line format!</source>
         <source>depletion MOSFET</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ohmic series resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>threshold voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transconductance parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel-length modulation parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parasitic drain resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parasitic source resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias gate-source junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias gate-drain junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward-bias junction capacitance coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate P-N grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic symbol (european,US)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
     <message>
         <source>Inserting clipboard contents...</source>
-        <translation>Inserimento contenuto degli appunti...</translation>
+        <translation type="obsolete">Inserimento contenuto degli appunti...</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Pronto.</translation>
+        <translation type="obsolete">Pronto.</translation>
     </message>
 </context>
 <context>

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun February 29 2004
     copyright            : (C) 2004 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -59,24 +59,30 @@ void WireLabel::paintScheme(QPainter *p)
 // ----------------------------------------------------------------
 void WireLabel::setCenter(int x_, int y_, bool relative)
 {
-  if(Type == isMovingLabel) {
-    if(relative) {
-      x1 += x_;  cx += x_;
-      y1 += y_;  cy += y_;
-    }
-    else {
-      x1 = x_;  cx = x_;
-      y1 = y_;  cy = y_;
-    }
-  }
-  else {
-    if(relative) {
-      x1 += x_;  y1 += y_; // moving cx/cy must be done by owner (wire, node)
-    }
-    else {
-      x1 = x_;
-      y1 = y_;
-    }
+  switch(Type) {
+    case isMovingLabel:
+      if(relative) {
+        x1 += x_;  cx += x_;
+        y1 += y_;  cy += y_;
+      }
+      else {
+        x1 = x_;  cx = x_;
+        y1 = y_;  cy = y_;
+      }
+      break;
+    case isHMovingLabel:
+      if(relative) { x1 += x_;  cx += x_; }
+      else { x1 = x_;  cx = x_; }
+      break;
+    case isVMovingLabel:
+      if(relative) { y1 += y_;  cy += y_; }
+      else { y1 = y_;  cy = y_; }
+      break;
+    default:
+      if(relative) {
+        x1 += x_;  y1 += y_; // moving cx/cy is done by owner (wire, node)
+      }
+      else { x1 = x_; y1 = y_; }
   }
 }
 

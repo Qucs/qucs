@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -41,6 +41,7 @@ public:
 
   WireLabel *Label;     // label for node name
   QString Name;   // node name used by creation of netlist
+  int State;	// remember some things during some operations
 };
 
 #endif

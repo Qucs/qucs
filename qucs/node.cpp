@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -21,6 +21,7 @@ Node::Node(int _x, int _y)
 {
   Label = 0;
   Type  = isNode;
+  State = 0;
 
   cx = _x;
   cy = _y;
