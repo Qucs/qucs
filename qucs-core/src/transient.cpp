@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.6 2004-09-19 10:31:44 ela Exp $
+ * $Id: transient.cpp,v 1.7 2004-09-20 19:10:28 ela Exp $
  *
  */
 
@@ -37,6 +37,8 @@
 #include "tmatrix.h"
 #include "eqnsys.h"
 #include "transient.h"
+
+#define COEFFDEBUG 0
 
 // Defines where the equivalent admittance coefficient is going to be stored.
 #define COEFF_G 0
@@ -74,6 +76,13 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
       e.solve ();
 
       // vector x consists of b_{-1}, a_{0}, a_{1} ... a_{k-1} right here
+#if COEFFDEBUG
+      logprint (LOG_STATUS, "DEBUG: Gear order %d:", order);
+      for (i = 1; i <= x.getRows (); i++) {
+	logprint (LOG_STATUS, " %g", x.get (i, 1));
+      }
+      logprint (LOG_STATUS, "\n");
+#endif
       nr_double_t k = x.get (1, 1);
       coefficients[COEFF_G] = 1 / delta / k;
       for (i = 1; i <= order; i++) {
@@ -113,6 +122,13 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
       e.solve ();
 
       // vector x consists of a_{0}, b_{-1}, b_{0} ... b_{k-2} right here
+#if COEFFDEBUG
+      logprint (LOG_STATUS, "DEBUG: Moulton order %d:", order);
+      for (i = 1; i <= x.getRows (); i++) {
+	logprint (LOG_STATUS, " %g", x.get (i, 1));
+      }
+      logprint (LOG_STATUS, "\n");
+#endif
       nr_double_t k = x.get (2, 1);
       coefficients[COEFF_G] = 1 / delta / k;
       coefficients[1] = -x.get (1, 1) / delta / k;
@@ -156,6 +172,13 @@ void calcPredictorCoeff (int IMethod, int order, nr_double_t * coefficients,
       e.solve ();
 
       // vector x consists of a_{0}, b_{0}, b_{1} ... b_{k-1} right here
+#if COEFFDEBUG
+      logprint (LOG_STATUS, "DEBUG: Bashford order %d:", order);
+      for (i = 1; i <= x.getRows (); i++) {
+	logprint (LOG_STATUS, " %g", x.get (i, 1));
+      }
+      logprint (LOG_STATUS, "\n");
+#endif
       coefficients[COEFF_G] = x.get (1, 1);
       for (i = 1; i <= order; i++) {
 	coefficients[i] = x.get (i + 1, 1) * delta;

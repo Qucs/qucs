@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.7 2004-09-19 10:31:44 ela Exp $
+ * $Id: trsolver.h,v 1.8 2004-09-20 19:10:28 ela Exp $
  *
  */
 
@@ -43,7 +43,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void nextStates (void);
   void fillStates (void);
   void adjustDelta (void);
-  void adjustOrder (int&);
+  void adjustOrder (int&, int);
   void initTR (void);
   static void calcTR (trsolver *);
   void initDC (void);
@@ -59,6 +59,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   nr_double_t delta;
   nr_double_t deltaMax;
   nr_double_t deltaMin;
+  nr_double_t deltaOld;
   int IMethod;
   int order;
   int chargeCoeffs;

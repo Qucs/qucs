@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.9 2004-09-19 10:31:44 ela Exp $
+ * $Id: trsolver.cpp,v 1.10 2004-09-20 19:10:28 ela Exp $
  *
  */
 
@@ -41,6 +41,8 @@
 #include "nasolver.h"
 #include "trsolver.h"
 #include "transient.h"
+
+#define STEPDEBUG 0 // set to zero for release
 
 #define dState 0 // delta T state
 #define rState 1 // right hand side state
@@ -130,7 +132,7 @@ void trsolver::solve (void) {
   delta /= 10;
   updateCoefficients (delta, 1);
   setState (dState, delta);
-  //adjustOrder (currentOrder);
+  //adjustOrder (currentOrder, 1);
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
@@ -149,7 +151,7 @@ void trsolver::solve (void) {
       // Now advance in time or not...
       if (running > 1) {
 	adjustDelta ();
-	//adjustOrder (currentOrder);
+	//adjustOrder (currentOrder, deltaOld != delta);
       }
       else {
 	updateCoefficients (delta, 1);
@@ -164,7 +166,7 @@ void trsolver::solve (void) {
     while (current < time); // Hit a requested time point?
     
     // Save results.
-#if DEBUG && 0
+#if STEPDEBUG
     logprint (LOG_STATUS, "DEBUG: save point at t = %.3e, h = %.3e\n",
 	      current, delta);
 #endif
@@ -220,27 +222,27 @@ void trsolver::fillStates (void) {
 /* This function tries to adapt the current time-step according to the
    global truncation error. */
 void trsolver::adjustDelta (void) {
-  nr_double_t save = delta;
+  deltaOld = delta;
   delta = checkDelta ();
   if (delta > deltaMax) delta = deltaMax;
   if (delta < deltaMin) delta = deltaMin;
 
-  if (delta > 0.9 * save) {
+  if (delta > 0.9 * deltaOld) {
     updateCoefficients (delta, 1);
     nextStates ();
     setState (dState, delta);
     rejected = 0;
-#if DEBUG && 0
+#if STEPDEBUG
     logprint (LOG_STATUS,
 	      "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
 	      current, delta);
 #endif
   }
-  else if (save > delta) {
+  else if (deltaOld > delta) {
     updateCoefficients (delta);
     setState (dState, delta);
     rejected++;
-#if DEBUG && 0
+#if STEPDEBUG
     logprint (LOG_STATUS,
 	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 	      current, delta);
@@ -256,11 +258,14 @@ void trsolver::adjustDelta (void) {
 
 /* The function can be used to increase the order of the current
    integration method. */
-void trsolver::adjustOrder (int& currentOrder) {
+void trsolver::adjustOrder (int& currentOrder, int stepChanged) {
   circuit * root = subnet->getRoot ();
   int type;
-  if (currentOrder < order) {
-    currentOrder++;
+  if (currentOrder < order || stepChanged) {
+    if (stepChanged)
+      currentOrder = 1;
+    else
+      currentOrder++;
     type = integratorType (IMethod, currentOrder);
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
       c->setOrder (order);
@@ -315,7 +320,7 @@ void trsolver::initTR (void) {
   if (delta == 0.0) delta = MIN (stop / 200, deltaMax) / 10;
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
-  
+
   calcCorrectorCoeff (IMethod, order, coefficients, delta, chargeCoeffs);
 
   // initialize step history
@@ -356,8 +361,8 @@ void trsolver::saveAllResults (nr_double_t time) {
    analysis advanced.  For the computation of the new time-step the
    truncation error depending on the integration method is used. */
 nr_double_t trsolver::checkDelta (void) {
-  nr_double_t reltol = getPropertyDouble ("reltolTR");
-  nr_double_t abstol = getPropertyDouble ("abstolTR");
+  nr_double_t reltol = getPropertyDouble ("LTEreltol");
+  nr_double_t abstol = getPropertyDouble ("LTEabstol");
   nr_double_t dif, rel, tol, n = DBL_MAX;
   int N = countNodes ();
   int M = subnet->getVoltageSources ();
@@ -367,7 +372,7 @@ nr_double_t trsolver::checkDelta (void) {
 
   for (int r = 1; r <= N + M; r++) {
     dif = x->get (r, 1) - RHS(0)->get (r, 1);
-    rel = abs (x->get (r, 1));
+    rel = MAX (abs (x->get (r, 1)), abs (RHS(0)->get (r, 1)));
     tol = reltol * rel + abstol;
 
     if (dif != 0) {
@@ -382,7 +387,7 @@ nr_double_t trsolver::checkDelta (void) {
       case INTEGRATOR_TRAPEZOIDAL:
 	{
 	  nr_double_t del = delta + getState (dState, 1);
-	  nr_double_t t = tol * 12 * del / dif;
+	  nr_double_t t = delta * tol * 3 * del / dif;
 	  t = exp (log (fabs (t)) / 3);
 	  n = MIN (n, t);
 	}
@@ -391,7 +396,7 @@ nr_double_t trsolver::checkDelta (void) {
 	{
 	  nr_double_t del = 0;
 	  for (int i = 0; i <= order; i++) del += getState (dState, i);
-	  nr_double_t t = tol * del / dif;
+	  nr_double_t t = tol * del / dif / delta;
 	  t = exp (log (fabs (t)) / (order + 1));
 	  n = MIN (n, t);
 	}
@@ -399,6 +404,10 @@ nr_double_t trsolver::checkDelta (void) {
       }
     }
   }
+#if STEPDEBUG
+    logprint (LOG_STATUS, "DEBUG: delta according to local truncation "
+	      "error h = %.3e\n", n);
+#endif
   delta = MIN (2 * delta, n);
   return delta;
 }
