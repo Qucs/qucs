@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.27 2004-08-15 12:25:38 ela Exp $
+ * $Id: spsolver.cpp,v 1.28 2004-08-15 20:11:54 ela Exp $
  *
  */
 
@@ -571,10 +571,6 @@ void spsolver::solve (void) {
   init ();
   insertConnections ();
 
-#if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: %s: solving SP netlist\n", getName ());
-#endif
-  
 #if SORTED_LIST
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: creating sorted nodelist\n", getName ());
@@ -583,6 +579,10 @@ void spsolver::solve (void) {
   nlist->sort ();
 #endif /* SORTED_LIST */
 
+#if DEBUG
+  logprint (LOG_STATUS, "NOTIFY: %s: solving SP netlist\n", getName ());
+#endif
+  
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     freq = swp->next ();
