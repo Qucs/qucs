@@ -1,3 +1,8 @@
+2004-05-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{A comparison}): Added a table 
+	comparing algorithms for solving equation systems.
+
 2004-05-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Gaussian elimination}): Documented
