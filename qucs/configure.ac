@@ -49,7 +49,7 @@ if test "x$GCC" = xyes; then
   CXXFLAGS="$CXXFLAGS -pipe"
   if test $USE_MAINTAINER_MODE = yes; then
     CFLAGS="$CFLAGS -W -Wall -Wmissing-prototypes"
-    CXXFLAGS="$CXXFLAGS -W -Wall -Wmissing-prototypes"
+    CXXFLAGS="$CXXFLAGS -W -Wall"
   fi
 fi
 

@@ -438,19 +438,19 @@
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Proprietăţile Circuitului</translation>
     </message>
     <message>
         <source>Prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prefix:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Revocare</translation>
+        <translation>Revocare</translation>
     </message>
 </context>
 <context>
@@ -489,7 +489,7 @@
     </message>
     <message>
         <source>transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>transparent</translation>
     </message>
 </context>
 <context>
@@ -1947,186 +1947,199 @@ Fals format de linie a &apos;component&apos;!</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Proprietăţile Arcului</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare de format:
+Fals delimitator al liniei &apos;painting&apos;!</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>salvează nodurile subcircuitului intr-un dataset</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation type="unfinished"></translation>
+        <translation>numarul de paşi de simulare</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>metoda de integrare</translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>ordinul metodei de integrare</translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>mărimea pasului iniţial în secunde</translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>mărimea pasului minim în secunde</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Versiunea Editorului Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004 de Michael Margraf
+        <translation>Copyright (C) 2004 de Michael Margraf
 </translation>
     </message>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation type="unfinished"></translation>
+        <translation>    -r  deschide fisierul doar pentru citire
+</translation>
     </message>
     <message>
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Argument de linie prea lung!
+
+</translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Argument greşit de linie de comandă!
+
+</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Doar un nume de fişier acceptat!
+
+</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>sursă de curent de puls ideală</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>curent înainte si după puls</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>curentul pulsului</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>momentul de start al pulsului</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>momentul de sfârşit al pulsului</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation type="unfinished"></translation>
+        <translation>timpul de ridicare a marginii din faţă</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation type="unfinished"></translation>
+        <translation>timpul de coborîre a marginii din spate</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsul de Curent</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>sursă de tensiune de puls ideala</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tensiune înainte si după puls</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tensiunea pulsului</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsul de Tensiune</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>Sursa de curent rectangular ideală</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>curent la puls înalt</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>durata pulsurilor înalte</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>durata pulsurilor joase</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Curent Rectangular</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>Sursa de tensiune rectangular ideală</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>tensiune de semnal înalt</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensiune Rectangulară</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Editor de text foarte simplu pentur Qucs
+</translation>
     </message>
     <message>
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Folosire:  qucsedit [-r] file
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation type="unfinished"></translation>
+        <translation>    -h  afişează acest ajutor si ieşi
+</translation>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;invalid&gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>faza iniţială în grade</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>toleranţa relativă a erorii de truncare locală</translation>
     </message>
     <message>
         <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>toleranţa absolută a erorii locale de truncare</translation>
     </message>
     <message>
         <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>supraestimare a erorii de truncare locală</translation>
     </message>
 </context>
 <context>
@@ -2659,143 +2672,152 @@ Erori:
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arc Eliptic</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Şterge Grupul</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul deschis nu poate fi şters:</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Simbolul Circuitului</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Schema</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează simbolul pentru schema aceasta</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Simbolul Circuitului
+
+Editează simbolul pentru aceasta schemă</translation>
     </message>
     <message>
         <source>Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează schema</translation>
     </message>
     <message>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Schema
+
+Editează această schemă</translation>
     </message>
     <message>
         <source>This will delete the files
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Aceasta va şterge fişierele
+</translation>
     </message>
     <message>
         <source>permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>definitiv! Continuaţi?</translation>
     </message>
 </context>
 <context>
     <name>QucsEdit</name>
     <message>
         <source>File: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fişier:</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Despre</translation>
+        <translation>Despre</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Termină</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Despre...</translation>
+        <translation>Despre...</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Versiunea Editorului Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004 de Michael Margraf
+        <translation>Copyright (C) 2004 de Michael Margraf
+
 </translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Introdu un Nume de Fişier</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Eroare</translation>
+        <translation>Eroare</translation>
     </message>
     <message>
         <source>Cannot write file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul nu poate fi scris:</translation>
     </message>
     <message>
         <source>Cannot read file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierul nu poate fi citit:</translation>
     </message>
     <message>
         <source>Closing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Închidere document</translation>
     </message>
     <message>
         <source>The text contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Documentul conţine modificări nesalvate!
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferaţi salvarea modificărilor?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salvează</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished">&amp;Renunţare</translation>
+        <translation>&amp;Renunţare</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Revocare</translation>
+        <translation>Revocare</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Editor de text foarte simplu pentur Qucs
+</translation>
     </message>
 </context>
 <context>
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistemul de Ajutor Qucs</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished">Ajutor Index</translation>
+        <translation>Ajutor Index</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide</translation>
     </message>
 </context>
 <context>
@@ -3913,37 +3935,43 @@ Closes the current project</source>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Simbolul Circuitului</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează simbolul pentru schema aceasta</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Simbolul Circuitului
+
+Editează simbolul pentru aceasta schemă</translation>
     </message>
     <message>
         <source>Portuguese by Luciano Franca
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Portugheză de Luciano Franca
+</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Spaniolă de Jose L. Redrejo Rodriguez
+</translation>
     </message>
     <message>
         <source>Move Component Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Mută Textul Componentei</translation>
     </message>
     <message>
         <source>Move Component Text
 
 Moves the property text of components</source>
-        <translation type="unfinished"></translation>
+        <translation>Mută Textul Componentei
+
+Mută proprietatea text al componentelor</translation>
     </message>
 </context>
 <context>
