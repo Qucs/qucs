@@ -1,3 +1,12 @@
+2005-03-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp: Split LU factorization from LU solver and also
+	fixed a bug in the LU decomposition.  Using implicit pivoting.
+
+	* acsolver.cpp (solve_noise): Using LU factorization only
+	instead of full LU solver for initial transposed matrix
+	decomposition.
+
 2005-03-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: New functions: contains() and sort().

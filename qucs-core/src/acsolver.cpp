@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.11 2005-02-22 16:41:09 raimi Exp $
+ * $Id: acsolver.cpp,v 1.12 2005-04-01 06:52:46 raimi Exp $
  *
  */
 
@@ -183,7 +183,7 @@ void acsolver::solve_noise (void) {
   // create the MNA matrix once again and LU decompose the adjoint matrix
   createMatrix ();
   A->transpose ();
-  eqnAlgo = ALGO_LU_DECOMPOSITION;
+  eqnAlgo = ALGO_LU_FACTORIZATION;
   runMNA ();
 
   // ensure skipping LU decomposition
