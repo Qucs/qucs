@@ -1,3 +1,15 @@
+2004-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Moved loss calculations into an
+	extra function of the microstrip line class.
+
+	* microstrip/mscoupled.h (class mscoupled): Implemented
+	parallel coupled microstrip model by Hammerstad and Jensen.
+
+	* microstrip/msopen.cpp: Fixed DC model.
+
+	* microstrip/msline.cpp: Implemented DC short for now.
+
 2004-08-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msstep.cpp: Fixed apparent bug in microstrip

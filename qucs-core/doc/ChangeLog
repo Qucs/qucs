@@ -1,3 +1,9 @@
+2004-08-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Hammerstad and Jensen}):
+	Documented coupled microstrip model by Hammerstad and Jensen and
+	transmission line losses of coupled lines.
+
 2004-08-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Microstrip open}): Revisited

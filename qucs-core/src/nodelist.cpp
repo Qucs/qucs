@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.4 2004-08-15 12:25:38 ela Exp $
+ * $Id: nodelist.cpp,v 1.5 2004-08-19 19:44:23 ela Exp $
  *
  */
 
@@ -104,9 +104,12 @@ struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
   struct nodelist_t * copy = create (n->name, n->internal);
   copy->n = n->n;
   copy->nNodes = n->nNodes;
-  if (copy->nNodes) {
-    copy->nodes = (node **) malloc (sizeof (node *) * n->nNodes);
-    memcpy (copy->nodes, n->nodes, sizeof (node *) * n->nNodes);
+  copy->nAlloc = n->nAlloc;
+  if (copy->nAlloc) {
+    copy->nodes = (node **) malloc (sizeof (node *) * n->nAlloc);
+    if (copy->nNodes) {
+      memcpy (copy->nodes, n->nodes, sizeof (node *) * n->nNodes);
+    }
   }
   return copy;
 }
@@ -272,12 +275,15 @@ void nodelist::assignNodes (void) {
 /* The function appends a node pointer to the given nodelist
    structure. */
 void nodelist::addCircuitNode (struct nodelist_t * nl, node * n) {
-  if (nl->nNodes == 0) {
-    nl->nodes = (node **) malloc (sizeof (node *));
-  }
-  else {
-    nl->nodes = (node **) 
-      realloc (nl->nodes, sizeof (node *) * (1 + nl->nNodes));
+  if (nl->nNodes >= nl->nAlloc) { // ensure capacity
+    if (nl->nAlloc == 0) {
+      nl->nAlloc = 2;
+      nl->nodes = (node **) malloc (sizeof (node *) * nl->nAlloc);
+    }
+    else {
+      nl->nAlloc *= 2;
+      nl->nodes = (node **) realloc (nl->nodes, sizeof (node *) * nl->nAlloc);
+    }
   }
   nl->nodes[nl->nNodes++] = n;
 }
@@ -288,19 +294,17 @@ void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
   assert (nl->nNodes > 0);
   if (nl->nNodes > 1) {
     int i, j;
-    node ** nodes = (node **) malloc (sizeof (node *) * (nl->nNodes - 1));
     // copy nodelist except the given one
     for (j = i = 0; j < nl->nNodes - 1; i++, j++) {
       if (nl->nodes[i] == n) i++;
-      nodes[j] = nl->nodes[i];
+      nl->nodes[j] = nl->nodes[i];
     }
-    free (nl->nodes);
-    nl->nodes = nodes;
   }
   else {
     // no more nodes in the list
     free (nl->nodes);
     nl->nodes = NULL;
+    nl->nAlloc = 0;
   }
   nl->nNodes--;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.45 2004-08-17 18:38:59 ela Exp $
+ * $Id: check_netlist.cpp,v 1.46 2004-08-19 19:44:23 ela Exp $
  *
  */
 
@@ -378,6 +378,17 @@ struct define_t definition_available[] =
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* parallel coupled microstrip lines */
+  { "MCOUPLED", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
   /* microstrip corner */
   { "MCORN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
@@ -479,7 +490,7 @@ struct define_t definition_available[] =
 
 // List of available microstrip components.
 static char * strip_available[] = {
-  "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", NULL };
+  "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", "MCOUPLED", NULL };
 
 /* The function counts the nodes in a definition line. */
 static int checker_count_nodes (struct definition_t * def) {
@@ -640,6 +651,8 @@ static struct special_t checker_specials[] = {
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
   { "MGAP",   "MSModel",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "MCOUPLED", "Model",     { "Kirschning", "Hammerstad", NULL } },
+  { "MCOUPLED", "DispModel", { "Kirschning", "Getsinger", NULL } },
   { NULL, NULL, { NULL } }
 };
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.10 2004-08-16 10:29:56 ela Exp $
+ * $Id: bjt.cpp,v 1.11 2004-08-19 19:44:24 ela Exp $
  *
  */
 
@@ -161,7 +161,7 @@ void bjt::initDC (dcsolver * solver) {
 
   // possibly insert series resistance at emitter
   nr_double_t Re = getPropertyDouble ("Re");
-  if (Re != 0) {
+  if (Re != 0.0) {
     // create additional circuit if necessary and reassign nodes
     re = splitResistance (this, re, subnet, "Re", "emitter", NODE_E);
     re->setProperty ("R", Re);
@@ -174,7 +174,7 @@ void bjt::initDC (dcsolver * solver) {
 
   // possibly insert series resistance at collector
   nr_double_t Rc = getPropertyDouble ("Rc");
-  if (Rc != 0) {
+  if (Rc != 0.0) {
     // create additional circuit if necessary and reassign nodes
     rc = splitResistance (this, rc, subnet, "Rc", "collector", NODE_C);
     rc->setProperty ("R", Rc);
@@ -188,10 +188,10 @@ void bjt::initDC (dcsolver * solver) {
   // possibly insert base series resistance
   nr_double_t Rb  = getPropertyDouble ("Rb");
   nr_double_t Rbm = getPropertyDouble ("Rbm");
-  if (Rbm <= 0) Rbm = Rb; // Rbm defaults to Rb if zero
-  if (Rb < Rbm) Rbm = Rb; // Rbm must be less or equal Rb
+  if (Rbm <= 0.0) Rbm = Rb; // Rbm defaults to Rb if zero
+  if (Rb < Rbm)   Rbm = Rb; // Rbm must be less or equal Rb
   setProperty ("Rbm", Rbm);
-  if (Rbm != 0) {
+  if (Rbm != 0.0) {
     // create additional circuit and reassign nodes
     rb = splitResistance (this, rb, subnet, "Rbb", "base", NODE_B);
     rb->setProperty ("R", Rb);
@@ -298,8 +298,8 @@ void bjt::calcDC (void) {
   setOperatingPoint ("go", go);
 
   // calculate current-dependent base resistance
-  if (Rbm != 0) {
-    if (Irb != 0) {
+  if (Rbm != 0.0) {
+    if (Irb != 0.0) {
       nr_double_t a, b, z;
       a = (Ibci + Ibcn + Ibei + Iben) / Irb;
       z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
@@ -440,7 +440,7 @@ void bjt::initSP (spsolver * solver) {
 
   /* if necessary then insert external capacitance between internal
      collector node and external base node */
-  if (Rbb != 0 && Cbcx != 0) {
+  if (Rbb != 0.0 && Cbcx != 0.0) {
     if (!deviceEnabled (cbcx)) {
       cbcx = splitCapacitance (this, cbcx, subnet, "Cbcx", rb->getNode (1),
 			       getNode (NODE_C));

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: sweep.cpp,v 1.3 2004-08-12 13:59:53 ela Exp $
+ * $Id: sweep.cpp,v 1.4 2004-08-19 19:44:23 ela Exp $
  *
  */
 
@@ -161,9 +161,13 @@ linsweep::linsweep (char * n) : sweep (n) {
    the given start value, ending with the given stop value and
    containing points elements. */
 void linsweep::create (nr_double_t start, nr_double_t stop, int points) {
-  nr_double_t step = (stop - start) / (points - 1);
+  nr_double_t val, step = (stop - start) / (points - 1);
   setSize (points);
-  for (int i = 0; i < points; i++) set (i, start + (i * step));
+  for (int i = 0; i < points; i++) {
+    val = start + (i * step);
+    if (fabs (val) < fabs (step) / 2) val = 0.0;
+    set (i, val);
+  }
 }
 
 // Destructor deletes the linsweep class object.
