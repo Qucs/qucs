@@ -1805,11 +1805,11 @@ Go on ?</source>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nouveau</translation>
     </message>
     <message>
         <source>Creates a new document</source>
