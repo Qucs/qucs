@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_dataset.l,v 1.2 2004/01/17 19:57:36 ela Exp $
+ * $Id: scan_dataset.l,v 1.3 2004/06/01 17:07:21 ela Exp $
  *
  */
 
@@ -33,6 +33,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifdef __MINGW32__
+#include <io.h>
+#endif
 
 #include "logging.h"
 #include "complex.h"

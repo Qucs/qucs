@@ -26,9 +26,9 @@ EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) PLATFORMS
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
-  $(MPSFILES)
+  $(MPSFILES) $(PDFFIGURES) $(PDFFILES)
 MAINTAINERCLEANFILES = Makefile.in
-DISTCLEANFILES = *.ps
+DISTCLEANFILES = *.ps *.pdf
 
 LATEX = latex
 BIBTEX = bibtex
@@ -47,6 +47,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
 PSFILES = MNAexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
+PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
 BIBFILE = $(srcdir)/literature.bib
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
@@ -57,7 +58,7 @@ technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-%.pdf: %.tex $(PDFFILES)
+%.pdf: %.tex $(PDFFILES) $(PDFFIGURES)
 	$(PDFLATEX) $<
 	$(BIBTEX) $*
 	$(PDFLATEX) $<
@@ -68,6 +69,9 @@ technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
 %.pdf: %.fig
 	$(FIG2DEV) -L pdf $< > $@
+
+%.pdf: %.eps
+	$(EPSTOPDF) $< -o=$@
 
 %.eps: %.m
 	$(OCTAVE) $<
