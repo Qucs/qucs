@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.7 2004-09-17 11:48:52 ela Exp $
+ * $Id: trsolver.cpp,v 1.8 2004-09-17 17:28:24 ela Exp $
  *
  */
 
@@ -51,6 +51,7 @@ trsolver::trsolver ()
   swp = NULL;
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
+  for (int i = 0; i < 8; i++) rhs[i] = NULL;
 }
 
 // Constructor creates a named instance of the trsolver class.
@@ -59,11 +60,13 @@ trsolver::trsolver (char * n)
   swp = NULL;
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
+  for (int i = 0; i < 8; i++) rhs[i] = NULL;
 }
 
 // Destructor deletes the trsolver class object.
 trsolver::~trsolver () {
   if (swp) delete swp;
+  for (int i = 0; i < 8; i++) if (rhs[i] != NULL) delete rhs[i];
 }
 
 /* The copy constructor creates a new instance of the trsolver class
@@ -71,6 +74,7 @@ trsolver::~trsolver () {
 trsolver::trsolver (trsolver & o)
   : nasolver<nr_double_t> (o), states<nr_double_t> (o) {
   swp = o.swp ? new sweep (*o.swp) : NULL;
+  for (int i = 0; i < 8; i++) rhs[i] = NULL;
 }
 
 // This function creates the time sweep if necessary.
@@ -110,7 +114,8 @@ void trsolver::solve (void) {
   solve_pre ();
   error = solve_nonlinear ();
   if (error) {
-    logprint (LOG_ERROR, "ERROR: %: initial DC analysis failed\n", getName ());
+    logprint (LOG_ERROR,
+	      "ERROR: %s: initial DC analysis failed\n", getName ());
     return;
   }
 
@@ -121,16 +126,16 @@ void trsolver::solve (void) {
   swp->reset ();
 
   int running = 0;
-  //delta /= 10;
-  //updateCoefficients (delta, 1);
-  //setState (dState, delta);
+  delta /= 10;
+  updateCoefficients (delta, 1);
+  setState (dState, delta);
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
     time = swp->next ();
     logprogressbar (i, swp->getSize (), 40);
 
-#if DEBUG && 1
+#if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for t = %e\n",
 	      getName (), (double) time);
 #endif
@@ -140,7 +145,7 @@ void trsolver::solve (void) {
       error += corrector ();  // Run corrector process.
 
       // Now advance in time or not...
-      if (running > 1 && 0) {
+      if (running > 1) {
 	adjustDelta ();
       }
       else {
@@ -149,8 +154,8 @@ void trsolver::solve (void) {
 	setState (dState, delta);
 	rejected = 0;
       }
-      current += delta;
 
+      current += delta;
       running++;
     }
     while (current < time); // Hit a requested time point?
@@ -210,7 +215,7 @@ void trsolver::adjustDelta (void) {
     nextStates ();
     setState (dState, delta);
     rejected = 0;
-#if DEBUG && 1
+#if DEBUG && 0
     logprint (LOG_STATUS,
 	      "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
 	      current, delta);
@@ -220,7 +225,7 @@ void trsolver::adjustDelta (void) {
     updateCoefficients (delta);
     setState (dState, delta);
     rejected++;
-#if DEBUG && 1
+#if DEBUG && 0
     logprint (LOG_STATUS,
 	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 	      current, delta);
@@ -268,12 +273,13 @@ void trsolver::initTR (void) {
   order = getPropertyInteger ("Order");
   nr_double_t start = getPropertyDouble ("Start");
   nr_double_t stop = getPropertyDouble ("Stop");
+  nr_double_t points = getPropertyDouble ("Points");
 
   // initialize step values
   delta = getPropertyDouble ("InitialStep");
   deltaMin = getPropertyDouble ("MinStep");
   deltaMax = getPropertyDouble ("MaxStep");
-  if (deltaMax == 0.0) deltaMax = (stop - start) / 50;
+  if (deltaMax == 0.0) deltaMax = MIN ((stop - start) / points, stop / 200);
   if (deltaMin == 0.0) deltaMin = 1e-11 * deltaMax;
   if (delta == 0.0) delta = MIN (stop / 200, deltaMax) / 10;
   if (delta < deltaMin) delta = deltaMin;
@@ -323,11 +329,12 @@ nr_double_t trsolver::checkDelta (void) {
   nr_double_t abstol = getPropertyDouble ("abstolTR");
   nr_double_t dif, rel, tol, n = DBL_MAX;
   int N = countNodes ();
+  int M = subnet->getVoltageSources ();
 
   reltol = 1e-3;
   abstol = 1e-6;
 
-  for (int r = 1; r <= N; r++) {
+  for (int r = 1; r <= N + M; r++) {
     dif = x->get (r, 1) - RHS(0)->get (r, 1);
     rel = abs (x->get (r, 1));
     tol = reltol * rel + abstol;
