@@ -360,6 +360,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -531,6 +543,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">Insérer un nom d&apos;équipotentielle</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Saisir le label :</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -590,6 +633,29 @@
     <message>
         <source>Discard all</source>
         <translation>Tout jeter</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished">Créer un nouveau projet</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished">Nom du projet :</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished">ouvrir un nouveau projet</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Créer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1176,23 +1242,23 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Créer un nouveau projet</translation>
+        <translation type="obsolete">Créer un nouveau projet</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Nom du projet :</translation>
+        <translation type="obsolete">Nom du projet :</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>ouvrir un nouveau projet</translation>
+        <translation type="obsolete">ouvrir un nouveau projet</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation type="obsolete">Créer</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation type="obsolete">Annuler</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
@@ -2209,6 +2275,18 @@ Invocation :  qucsedit [-r] fichier
     <message>
         <source>OpAmp</source>
         <translation>Ampli Op</translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="obsolete">Insérer un nom d&apos;équipotentielle</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">Saisir le label :</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4103,11 +4181,11 @@ Déplace la légende du composant</translation>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation>Insérer un nom d&apos;équipotentielle</translation>
+        <translation type="obsolete">Insérer un nom d&apos;équipotentielle</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>Saisir le label :</translation>
+        <translation type="obsolete">Saisir le label :</translation>
     </message>
     <message>
         <source>Info</source>

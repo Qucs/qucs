@@ -307,11 +307,20 @@ int Subcircuit::analyseLine(const QString& Row)
     i5 = i3-int(Length*cos(w));
     i6 = i4-int(Length*sin(w));
     Lines.append(new Line(i3, i4, i5, i6, Pen)); // arrow head
+    if(i5 < x1)  x1 = i5;  // keep track of component boundings
+    if(i5 > x2)  x2 = i5;
+    if(i6 < y1)  y1 = i6;
+    if(i6 > y2)  y2 = i6;
 
     w = phi-beta;
     i5 = i3-int(Length*cos(w));
     i6 = i4-int(Length*sin(w));
     Lines.append(new Line(i3, i4, i5, i6, Pen));
+    if(i5 < x1)  x1 = i5;  // keep track of component boundings
+    if(i5 > x2)  x2 = i5;
+    if(i6 < y1)  y1 = i6;
+    if(i6 > y2)  y2 = i6;
+
     return 1;
   }
   else if(s == "Ellipse") {

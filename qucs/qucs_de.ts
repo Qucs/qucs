@@ -371,6 +371,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -600,6 +612,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">Knotenbezeichnung eingeben</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Bezeichnung eingeben:</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>LineDialog</name>
     <message>
         <source>Line color: </source>
@@ -712,23 +755,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="obsolete">Neues Projekt erstellen</translation>
+        <translation type="unfinished">Neues Projekt erstellen</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="obsolete">Projektname:</translation>
+        <translation type="unfinished">Projektname:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="obsolete">neues Projekt öffnen</translation>
+        <translation type="unfinished">neues Projekt öffnen</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="obsolete">Erstellen</translation>
+        <translation type="unfinished">Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
+        <translation type="unfinished">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -1305,23 +1348,23 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Neues Projekt erstellen</translation>
+        <translation type="obsolete">Neues Projekt erstellen</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Projektname:</translation>
+        <translation type="obsolete">Projektname:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>neues Projekt öffnen</translation>
+        <translation type="obsolete">neues Projekt öffnen</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Erstellen</translation>
+        <translation type="obsolete">Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>relative permittivity</source>
@@ -2467,6 +2510,18 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>Wrong document type: </source>
         <translation>Falscher Dokumententyp: </translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="obsolete">Knotenbezeichnung eingeben</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">Bezeichnung eingeben:</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5603,11 +5658,11 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation>Knotenbezeichnung eingeben</translation>
+        <translation type="obsolete">Knotenbezeichnung eingeben</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>Bezeichnung eingeben:</translation>
+        <translation type="obsolete">Bezeichnung eingeben:</translation>
     </message>
     <message>
         <source>Info</source>

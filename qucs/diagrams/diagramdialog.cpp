@@ -19,6 +19,8 @@
 #include "qucsview.h"
 #include "qucs.h"
 
+#include <math.h>
+
 #include <qvbox.h>
 #include <qlayout.h>
 #include <qhbuttongroup.h>
@@ -682,26 +684,14 @@ void DiagramDialog::slotApply()
       }
     }
 
-    QString tmp;
-    if(startX->text().toDouble() > stopX->text().toDouble()) {
-      tmp = startX->text();
-      startX->setText(stopX->text());
-      stopX->setText(tmp);
-    }
-    if(startY->text().toDouble() > stopY->text().toDouble()) {
-      tmp = startY->text();
-      startY->setText(stopY->text());
-      stopY->setText(tmp);
-    }
-    if(startZ->text().toDouble() > stopZ->text().toDouble()) {
-      tmp = startZ->text();
-      startZ->setText(stopZ->text());
-      stopZ->setText(tmp);
-    }
-    if((Diag->Name == "Smith") || (Diag->Name == "ySmith"))
+    if((Diag->Name == "Smith") || (Diag->Name == "ySmith") ||
+				  (Diag->Name == "PS"))
       if(stopY->text().toDouble() < 1.0)
         stopY->setText("1");
 
+    if(Diag->Name == "SP")
+      if(stopZ->text().toDouble() < 1.0)
+        stopZ->setText("1");
 
     if(Diag->xAxis.autoScale == manualX->isChecked()) {
       Diag->xAxis.autoScale = !(manualX->isChecked());

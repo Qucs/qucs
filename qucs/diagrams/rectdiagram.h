@@ -32,7 +32,7 @@ public:
 
   RectDiagram* newOne();
   int  calcDiagram();
-  void calcAxisScale(Axis*, double&, double&, double&, double&, double);
+  bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
   bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
   void calcLimits();
   bool calcYAxis(Axis*, int);

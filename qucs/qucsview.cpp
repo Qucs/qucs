@@ -21,6 +21,7 @@
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
+#include "dialogs/labeldialog.h"
 
 #include <qinputdialog.h>
 #include <qclipboard.h>
@@ -283,23 +284,32 @@ void QucsView::slotCursorDown()
 // -----------------------------------------------------------
 void QucsView::editLabel(WireLabel *pl)
 {
-  bool OK;
+  LabelDialog *Dia = new LabelDialog(pl, this);
+  int Result = Dia->exec();
+  if(Result == 0) return;
+
+  QString Name  = Dia->NodeName->text();
+  QString Value = Dia->InitValue->text();
+  delete Dia;
+/*  bool OK;
   QString Name = QInputDialog::getText(tr("Insert Nodename"),
 	tr("Enter the label:"), QLineEdit::Normal, pl->Name, &OK, this);
-  if(!OK) return;
+  if(!OK) return;*/
 
-  if(Name.isEmpty()) { // if no name was entered (empty string), delete label
-    if(pl->pWire) pl->pWire->setName("");   // delete name of wire
-    else pl->pNode->setName("");
+  if(Name.isEmpty() && Value.isEmpty()) { // if nothing entered, delete label
+    if(pl->pWire) pl->pWire->setName("", "");   // delete name of wire
+    else pl->pNode->setName("", "");
   }
   else {
-    Name.replace(' ', '_');	// label must not contain spaces
+/*    Name.replace(' ', '_');	// label must not contain spaces
     while(Name.at(0) == '_') Name.remove(0,1);  // must not start with '_'
     if(Name.isEmpty()) return;
-    if(Name == pl->Name) return;
+    if(Name == pl->Name) return;*/
+    if(Result == 1) return;  // nothing changed
 
     int old_x2 = pl->x2;
     pl->setName(Name);   // set new name
+    pl->initValue = Value;
     if(pl->cx > (pl->x1+(pl->x2>>1)))
       pl->x1 -= pl->x2 - old_x2; // don't change position due to text width
   }
@@ -978,13 +988,14 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
   int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
   Wire *pw = 0;
+  WireLabel *pl=0;
   Node *pn = d->selectedNode(x, y);
   if(!pn) {
     pw = d->selectedWire(x, y);
     if(!pw) return;
   }
 
-  QString Name;
+  QString Name, Value;
   Element *pe=0;
   // is wire line already labeled ?
   if(pw) pe = d->getWireLabel(pw->Port1);
@@ -995,41 +1006,49 @@ void QucsView::MPressLabel(QMouseEvent *Event)
 			tr("The ground potential cannot be labeled!"));
       return;
     }
-    if(pe->Type == isNode) Name = ((Node*)pe)->Label->Name;
-    else Name = ((Wire*)pe)->Label->Name;
+    if(pe->Type == isNode) pl = ((Node*)pe)->Label;
+    else pl = ((Wire*)pe)->Label;
+//    Name  = pl->Name;
+//    Value = pl->initValue;
   }
 
-  bool OK;
-  Name = QInputDialog::getText(tr("Insert Nodename"),
-		tr("Enter the label:"), QLineEdit::Normal, Name, &OK, this);
-  if(!OK) return;
+  LabelDialog *Dia = new LabelDialog(pl, this);
+  if(Dia->exec() == 0) return;
 
-  if(!Name.isEmpty()) {
-    Name.replace(' ', '_');	// label must not contain spaces
+  Name  = Dia->NodeName->text();
+  Value = Dia->InitValue->text();
+  delete Dia;
+//  bool OK;
+//  Name = QInputDialog::getText(tr("Insert Nodename"),
+//		tr("Enter the label:"), QLineEdit::Normal, Name, &OK, this);
+//  if(!OK) return;
+
+  if(Name.isEmpty() && Value.isEmpty() ) { // if nothing entered, delete name
+    if(pe) {
+      if(pe->Type == isWire) ((Wire*)pe)->setName("", ""); // delete old name
+      else ((Node*)pe)->setName("", "");
+    }
+    else {
+      if(pw) pw->setName("", "");   // delete name of wire
+      else pn->setName("", "");
+    }
+  }
+  else {
+/*    Name.replace(' ', '_');	// label must not contain spaces
     while(Name.at(0) == '_') Name.remove(0,1);  // must not start with '_'
     if(Name.isEmpty()) return;
-
+*/
     if(pe) {
-      if(pe->Type == isWire) ((Wire*)pe)->setName("");  // delete old name
-      else ((Node*)pe)->setName("");
+      if(pe->Type == isWire) ((Wire*)pe)->setName("", "");  // delete old name
+      else ((Node*)pe)->setName("", "");
     }
 
     int xl = x+30;
     int yl = y-30;
     d->setOnGrid(xl, yl);
     // set new name
-    if(pw) pw->setName(Name, x-pw->x1 + y-pw->y1, xl, yl);
-    else pn->setName(Name, xl, yl);
-  }
-  else {    // if no name was entered (empty string), delete name
-    if(pe) {
-      if(pe->Type == isWire) ((Wire*)pe)->setName("");  // delete old name
-      else ((Node*)pe)->setName("");
-    }
-    else {
-      if(pw) pw->setName("");   // delete name of wire
-      else pn->setName("");
-    }
+    if(pw) pw->setName(Name, Value, x-pw->x1 + y-pw->y1, xl, yl);
+    else pn->setName(Name, Value, xl, yl);
   }
 
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);

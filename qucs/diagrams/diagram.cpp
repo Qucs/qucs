@@ -1106,7 +1106,7 @@ void Diagram::calcSmithAxisScale(Axis *Axis, int& GridX, int& GridY)
     GridX = GridY = 4;
   }
   else {
-    Axis->up = Axis->limit_max;
+    Axis->up = Axis->limit_max = fabs(Axis->limit_max);
     GridX = GridY = int(Axis->step);
   }
 }
@@ -1274,9 +1274,9 @@ void Diagram::calcPolarAxisScale(Axis *Axis, double& numGrids,
     Axis->up = GridStep*numGrids;
   }
   else {   // no auto-scale
-    Axis->up = Axis->limit_max;
-    GridStep  = Axis->step;
-    numGrids  = Axis->limit_max / Axis->step;
+    Axis->up = Axis->limit_max = fabs(Axis->limit_max);
+    GridStep = Axis->step;
+    numGrids = Axis->limit_max / Axis->step;
   }
   zD = double(x2) / numGrids;   // grid distance in pixel
 }

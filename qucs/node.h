@@ -37,7 +37,7 @@ public:
 
   void  paint(ViewPainter*);
   bool  getSelected(int, int);
-  void  setName(const QString&, int x_=0, int y_=0);
+  void  setName(const QString&, const QString&, int x_=0, int y_=0);
 
   QPtrList<Element> Connections;
 

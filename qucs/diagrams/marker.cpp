@@ -106,7 +106,8 @@ void Marker::initText(int n)
 
   num = &(VarPos[0]);
   Diag->calcCoordinate(num, py, &cx, &cy, pa);
-  if(Diag->regionCode(cx, cy) != 0)
+
+  if(!Diag->insideDiagram(cx, cy))
     if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
       cx = Diag->x2 >> 1;        // ... point to origin
       cy = Diag->y2 >> 1;
@@ -168,7 +169,8 @@ void Marker::createText()
   else  pa = &(Diag->zAxis);
   pp = &(VarPos[0]);
   Diag->calcCoordinate(pp, py, &cx, &cy, pa);
-  if(Diag->regionCode(cx, cy) != 0)
+
+  if(!Diag->insideDiagram(cx, cy))
     if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
       cx = Diag->x2 >> 1;        // ... point to origin
       cy = Diag->y2 >> 1;
