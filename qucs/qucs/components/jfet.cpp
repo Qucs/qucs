@@ -35,8 +35,8 @@ JFET::JFET()
   Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));
-  Ports.append(new Port(  0, 30));
   Ports.append(new Port(  0,-30));
+  Ports.append(new Port(  0, 30));
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;
@@ -47,8 +47,8 @@ JFET::JFET()
   Name  = "T";
 
   // this must be the first property in the list !!!
-  Props.append(new Property("Type", "n", true,
-		QObject::tr("polarity (n,p)")));
+  Props.append(new Property("Type", "nfet", true,
+		QObject::tr("polarity (nfet,pfet)")));
   Props.append(new Property("Vt0", "-2.0 V", true,
 		QObject::tr("threshold voltage")));
   Props.append(new Property("Beta", "1e-4", true,
@@ -63,6 +63,10 @@ JFET::JFET()
 		QObject::tr("gate-junction saturation current")));
   Props.append(new Property("N", "1.0", false,
 		QObject::tr("gate-junction emission coefficient")));
+  Props.append(new Property("Isr", "1e-14", false,
+		QObject::tr("gate-junction recombination current parameter")));
+  Props.append(new Property("Nr", "2.0", false,
+		QObject::tr("Isr emission coefficient")));
   Props.append(new Property("Cgs", "0.0", false,
 		QObject::tr("zero-bias gate-source junction capacitance")));
   Props.append(new Property("Cgd", "0.0", false,
@@ -103,7 +107,7 @@ Component* JFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     JFET* p = new JFET();
-    p->Props.getFirst()->Value = "p";
+    p->Props.getFirst()->Value = "pfet";
     p->recreate();
     return p;
   }
@@ -117,7 +121,7 @@ void JFET::recreate()
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();
 
-  if(Props.getFirst()->Value == "n") {
+  if(Props.getFirst()->Value == "nfet") {
     pl1->x1 = -16;  pl1->y1 = -5;  pl1->x2 = -11; pl1->y2 = 0;
     pl2->x1 = -16;  pl2->y1 =  5;  pl2->x2 = -11; pl2->y2 = 0;
   }
