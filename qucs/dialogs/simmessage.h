@@ -39,9 +39,6 @@ public:
   bool startProcess(const QStringList&);
   void errorSimEnded();
 
-private:
-  void reject();
-
 signals:
   void SimulationEnded(int, SimMessage*);
   void displayDataPage(QString);

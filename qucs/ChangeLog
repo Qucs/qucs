@@ -1,3 +1,14 @@
+2004-12-27  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* component edit dialog extented to show special page for
+	simulations
+	* fixed small bug that placed text of subcircuits to wrong
+	position after undo/load
+
+2004-12-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new routines to kill processes when Qucs is terminated
+
 2004-12-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* add nodeset support (initial node voltages) to the label

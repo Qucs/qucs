@@ -34,6 +34,9 @@
 class QucsDoc;
 class QGridLayout;
 class QValidator;
+class QVBoxLayout;
+class QIntValidator;
+class QRegExpValidator;
 
 /**
   *@author Michael Margraf
@@ -63,12 +66,18 @@ private slots:
   void slotButtAdd();
   void slotButtRem();
 
+  void slotSimTypeChange(int);
+  void slotNumberChanged(const QString&);
+  void slotStepChanged(const QString&);
+  void slotSetChanged(int);
+
 private:
   void correctDesc(QString &desc, QStringList *clst = 0);
 
-  QGridLayout *mainWidget;   // the mother of all widgets
-  QValidator  *Validator;
+  QVBoxLayout *all;   // the mother of all widgets
+  QValidator  *Validator, *ValRestrict;
   QRegExp     Expr;
+  QIntValidator *ValInteger;
   QListView   *prop;
   QLineEdit   *edit, *NameEdit, *CompNameEdit;
   QComboBox   *ComboEdit;
@@ -79,6 +88,15 @@ private:
   QucsDoc     *Doc;
   bool        changed, transfered;
   int         tx_Dist, ty_Dist;   // remember the text position
+
+  QLabel    *textType;
+  QLabel    *textSim, *textParam, *textValues, *textStart, *textStop,
+            *textStep, *textNumber;
+  QLineEdit *editSim, *editParam, *editValues, *editStart, *editStop,
+            *editStep, *editNumber;
+  QCheckBox *checkSim, *checkParam, *checkStart, *checkStop, *checkNumber,
+            *checkType;
+  QComboBox *comboType;
 };
 
 #endif

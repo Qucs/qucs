@@ -71,7 +71,7 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
   connect(Display,SIGNAL(clicked()),SLOT(slotDisplayButton()));
 
   Abort = new QPushButton(tr("Abort simulation"), Butts);
-  connect(Abort,SIGNAL(clicked()),SLOT(slotClose()));
+  connect(Abort,SIGNAL(clicked()),SLOT(reject()));
 
   // ........................................................
   connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
@@ -81,6 +81,7 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
 
 SimMessage::~SimMessage()
 {
+  if(SimProcess.isRunning())  SimProcess.kill();
   delete all;
 }
 
@@ -171,14 +172,9 @@ void SimMessage::errorSimEnded()
 }
 
 // ------------------------------------------------------------------------
+// To call accept(), which is protected, from the outside.
 void SimMessage::slotClose()
 {
-  SimProcess.blockSignals(true);  // No 'processexited' signal. Is set back in 'startProcess'.
-  if(SimProcess.isRunning()) {
-    SimProcess.tryTerminate();
-    QTimer::singleShot(2000,&SimProcess,SLOT(kill()));
-  }
-
   accept();
 }
 
@@ -187,12 +183,4 @@ void SimMessage::slotDisplayButton()
 {
   emit displayDataPage(DataDisplay);
   accept();
-}
-
-// ------------------------------------------------------------------------
-// Catch termination of dialog (e.g. Esc button, x rider) in order to stop
-// simulator process.
-void SimMessage::reject()
-{
-  slotClose();
 }

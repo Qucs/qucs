@@ -145,7 +145,8 @@ public slots:
     void slotSelectAll();
     void slotNextTab();
 
-    void slotDeleteProcess();   // deletes exited processes
+signals:
+    void signalKillEmAll();
 
 public:
     QucsView  *view; // the working area with schematics, data displays etc.

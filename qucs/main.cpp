@@ -31,6 +31,7 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qmessagebox.h>
+#include <qregexp.h>
 
 #include <math.h>
 
@@ -186,6 +187,56 @@ QString StringNum(double num, char form, int Precision)
   return s;
 }
 
+// #########################################################################
+void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
+{
+  QString str = s_.stripWhiteSpace();
+
+/*  int i=0;
+  bool neg = false;
+  if(str[0] == '-') {      // check sign
+    neg = true;
+    i++;
+  }
+  else if(str[0] == '+')  i++;
+
+  double num = 0.0;
+  for(;;) {
+    if(str[i] >= '0')  if(str[i] <= '9') {
+      num = 10.0*num + double(str[i]-'0');
+    }
+  }*/
+
+  QRegExp Expr( QRegExp("[^0-9\\x2E\\x2D\\x2B]") );
+  int i = str.find( Expr );
+  if(i >= 0)
+    if((str.at(i).latin1() | 0x20) == 'e') {
+      int j = str.find( Expr , ++i);
+      if(j == i)  j--;
+      i = j;
+    }
+
+  Number = str.left(i).toDouble();
+  Unit   = str.mid(i).stripWhiteSpace();
+
+  switch(Unit.at(0).latin1()) {
+    case 'T': Factor = 1e12;  break;
+    case 'G': Factor = 1e9;   break;
+    case 'M': Factor = 1e6;   break;
+    case 'k': Factor = 1e3;   break;
+    case 'c': Factor = 1e-2;  break;
+    case 'm': Factor = 1e-3;  break;
+    case 'u': Factor = 1e-6;  break;
+    case 'n': Factor = 1e-9;  break;
+    case 'p': Factor = 1e-12; break;
+    case 'f': Factor = 1e-15; break;
+//    case 'd':
+    default:  Factor = 1.0;
+  }
+
+  return;
+}
+
 
 // #########################################################################
 // ##########                                                     ##########
@@ -193,8 +244,21 @@ QString StringNum(double num, char form, int Precision)
 // ##########                                                     ##########
 // #########################################################################
 
+#include <qregexp.h>
 int main(int argc, char *argv[])
 {
+/*double d, Factor;
+QString Unit, s("-2.9E+02eco");
+str2num(s, d, Unit, Factor);
+qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
+       s.latin1(), d, Unit.latin1(), Factor);
+
+s = "2.5eco";
+str2num(s, d, Unit, Factor);
+qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
+       s.latin1(), d, Unit.latin1(), Factor);
+return 0;
+*/
   QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
   QucsHomeDir.setPath(QDir::homeDirPath()+"/.qucs");
   loadSettings();
