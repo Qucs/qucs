@@ -19,18 +19,7 @@
 # include <config.h>
 #endif
 
-#include "main.h"
-#include "qucs.h"
-#include "qucsview.h"
-#include "wire.h"
-#include "components/components.h"
-#include "paintings/paintings.h"
-#include "diagrams/diagrams.h"
-#include "dialogs/messagebox.h"
-#include "dialogs/newprojdialog.h"
-#include "dialogs/settingsdialog.h"
-#include "dialogs/qucssettingsdialog.h"
-#include "dialogs/simmessage.h"
+#include <limits.h>
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -49,7 +38,19 @@
 #include <qtextedit.h>
 #include <qcheckbox.h>
 
-#include <limits.h>
+#include "main.h"
+#include "qucs.h"
+#include "qucsview.h"
+#include "wire.h"
+#include "components/components.h"
+#include "paintings/paintings.h"
+#include "diagrams/diagrams.h"
+#include "dialogs/messagebox.h"
+#include "dialogs/newprojdialog.h"
+#include "dialogs/settingsdialog.h"
+#include "dialogs/qucssettingsdialog.h"
+#include "dialogs/simmessage.h"
+
 
 
 #define  COMBO_passive   0
@@ -1307,10 +1308,11 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 
   
   QucsWorkDir.setPath(QucsHomeDir.path());
-  if(!QucsWorkDir.cd(ProjName+QDir::convertSeparators ("_prj/"))) {
+  QString p = ProjName+"_prj";
+  if(!QucsWorkDir.cd(p)) {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+
-			  QucsWorkDir.path());
+			  QucsWorkDir.path()+QDir::convertSeparators ("/")+p);
     return;
   }
 
@@ -1672,10 +1674,10 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	case 0: view->selPaint = new GraphicLine();   break;
 	case 1: view->selPaint = new Arrow();         break;
 	case 2: view->selPaint = new GraphicText();   break;
-	case 3: view->selPaint = new Ellipse();       break;
-	case 4: view->selPaint = new Rectangle();     break;
-	case 5: view->selPaint = new Ellipse(true);   break;
-	case 6: view->selPaint = new Rectangle(true); break;
+	case 3: view->selPaint = new class Ellipse();       break;
+	case 4: view->selPaint = new class Rectangle();     break;
+	case 5: view->selPaint = new class Ellipse(true);   break;
+	case 6: view->selPaint = new class Rectangle(true); break;
 	case 7: view->selPaint = new EllipseArc();    break;
     }
 
