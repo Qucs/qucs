@@ -67,8 +67,8 @@ void Wire::rotate()
 void Wire::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    x1 += x;  x2 += x;
-    y1 += y;  y2 += y;
+    x1 += x;  x2 += x;  nx += x;
+    y1 += y;  y2 += y;  ny += y;
   }
   else {
     x1 = x;  x2 = x;
@@ -114,6 +114,19 @@ bool Wire::isHorizontal()
 }
 
 // ----------------------------------------------------------------
+void Wire::setName(const QString& Name_)
+{
+  Name = Name_;
+
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",12, QFont::Light));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name);      // get size of text on screen
+  NameDX = r.width();
+  NameDY = r.height();    // remember size of text
+}
+
+// ----------------------------------------------------------------
 // Converts all necessary data of the wire into a string. This can be used to
 // save it to an ASCII file or to transport it via the clipboard.
 QString Wire::save()
@@ -154,7 +167,7 @@ bool Wire::load(const QString& _s)
   y2 = n.toInt(&ok);
   if(!ok) return false;
 
-  Name = s.section('"',1,1);  // Name
+  setName(s.section('"',1,1));  // Name
 
   n  = s.section(' ',5,5);    // nx
   nx = n.toInt(&ok);

@@ -108,6 +108,14 @@
         <source>no</source>
         <translation>nein</translation>
     </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -1568,6 +1576,10 @@ Verläßt den Schaltkreis in die nächsthöhere Hierachieebene</translation>
         <translation>Deaktivieren/Aktivieren</translation>
     </message>
     <message>
+        <source>Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Deactivate/Activate the selected item</source>
         <translation>Deaktiviert/Aktiviert die Auswahl</translation>
     </message>
@@ -1636,6 +1648,10 @@ Fügt ein Anschlußsymbol ein</translation>
         <translation>Draht</translation>
     </message>
     <message>
+        <source>Ctrl+E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Inserts a wire</source>
         <translation>Fügt einen Draht ein</translation>
     </message>
@@ -1670,6 +1686,10 @@ Fügt eine Verbindungs- oder Knotenbezeichnung ein</translation>
     <message>
         <source>Simulate</source>
         <translation>Simulieren</translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
@@ -2493,6 +2513,50 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save settings !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter new name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the file permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete schematic: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename an open file!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -48,14 +48,18 @@ private slots:
   void slotBrowseFile();
   void slotApplyChange(const QString& Text);
   void slotApplyProperty();
+  void slotApplyPropName();
+
+  void slotButtAdd();
+  void slotButtRem();
 
 private:
   QRegExp     Expr;
   QListView   *prop;
-  QLineEdit   *edit;
+  QLineEdit   *edit, *NameEdit;
   QComboBox   *ComboEdit;
   QLabel      *Name, *Description;
-  QPushButton *BrowseButt;
+  QPushButton *BrowseButt, *ButtAdd, *ButtRem;
   QCheckBox   *disp;
   Component   *Comp;
   bool        changed;
