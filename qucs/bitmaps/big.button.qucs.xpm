@@ -1,5 +1,5 @@
 /* XPM */
-static char *big[] = {
+static char *big_button_qucs_xpm[] = {
 /* width height num_colors chars_per_pixel */
 "    56    46      231            2",
 /* colors */
