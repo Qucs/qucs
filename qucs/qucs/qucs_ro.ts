@@ -2192,7 +2192,7 @@ Fals delimitator al liniei &apos;painting&apos;!</translation>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004 de Michael Margraf
+        <translation type="obsolete">Copyright (C) 2004 de Michael Margraf
 </translation>
     </message>
     <message>
@@ -2434,6 +2434,12 @@ Folosire:  qucsedit [-r] file
     <message>
         <source>temperature in degree Celsius</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2005 de Michael Margraf
+</translation>
     </message>
 </context>
 <context>
@@ -3064,7 +3070,7 @@ Editează această schemă</translation>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2004 de Michael Margraf
+        <translation type="obsolete">Copyright (C) 2004 de Michael Margraf
 
 </translation>
     </message>
@@ -3116,6 +3122,12 @@ Very simple text editor for Qucs
 </source>
         <translation>
 Editor de text foarte simplu pentur Qucs
+</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2005 de Michael Margraf
 </translation>
     </message>
 </context>
@@ -4021,7 +4033,7 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003,2004 de Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003,2004 de Michael Margraf
 </translation>
     </message>
     <message>
@@ -4305,6 +4317,12 @@ Mută proprietatea text al componentelor</translation>
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2003, 2004, 2005 de Michael Margraf
+</translation>
     </message>
 </context>
 <context>

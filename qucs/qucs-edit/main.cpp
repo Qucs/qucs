@@ -115,7 +115,7 @@ void showOptions()
 {
   fprintf(stdout, QObject::tr("Qucs Editor Version ")+PACKAGE_VERSION+
     QObject::tr("\nVery simple text editor for Qucs\n")+
-    QObject::tr("Copyright (C) 2004 by Michael Margraf\n")+
+    QObject::tr("Copyright (C) 2004, 2005 by Michael Margraf\n")+
     QObject::tr("\nUsage:  qucsedit [-r] file\n")+
     QObject::tr("    -h  display this help and exit\n")+
     QObject::tr("    -r  open file read-only\n"));

@@ -2282,7 +2282,7 @@ Very simple text editor for Qucs
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2004 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -2362,6 +2362,12 @@ Usage:  qucsedit [-r] file
     <message>
         <source>temperature in degree Celsius</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>
@@ -2987,7 +2993,7 @@ Very simple text editor for Qucs
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2004 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -3030,6 +3036,12 @@ Very simple text editor for Qucs
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>
@@ -4122,7 +4134,7 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation>Copyright (C) 2003,2004 by Michael Margraf
+        <translation type="obsolete">Copyright (C) 2003,2004 by Michael Margraf
 </translation>
     </message>
     <message>
@@ -4211,6 +4223,12 @@ Moves the property text of components</source>
     <message>
         <source>Hungarian by Jozsef Bus</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</translation>
     </message>
 </context>
 <context>
