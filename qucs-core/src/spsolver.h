@@ -1,7 +1,7 @@
 /*
  * spsolver.h - S-parameter solver class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.h,v 1.7 2004-06-25 22:09:22 ela Exp $
+ * $Id: spsolver.h,v 1.8 2004-06-30 15:04:15 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class circuit;
 class node;
 class complex;
 class vector;
+class sweep;
 
 class spsolver : public analysis
 {
@@ -61,6 +62,7 @@ class spsolver : public analysis
 
  private:
   int noise;
+  sweep * swp;
 };
 
 #endif /* __SPSOLVER_H__ */

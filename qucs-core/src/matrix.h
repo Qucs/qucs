@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.5 2004-06-20 11:29:35 ela Exp $
+ * $Id: matrix.h,v 1.6 2004-06-30 15:04:15 ela Exp $
  *
  */
 
@@ -71,6 +71,12 @@ class matrix
   friend matrix& stoy (matrix&, complex z0 = 50.0);
   friend matrix& ytos (matrix&, complex z0 = 50.0);
   friend matrix& ytoz (matrix&);
+  friend matrix& stoa (matrix&, complex z0 = 50.0);
+  friend matrix& atos (matrix&, complex z0 = 50.0);
+  friend matrix& stoh (matrix&, complex z0 = 50.0);
+  friend matrix& htos (matrix&, complex z0 = 50.0);
+
+  friend matrix& twoport (matrix&, char, char);
 
  private:
   int cols;

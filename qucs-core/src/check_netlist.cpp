@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.18 2004-06-27 15:11:48 ela Exp $
+ * $Id: check_netlist.cpp,v 1.19 2004-06-30 15:04:15 ela Exp $
  *
  */
 
@@ -229,9 +229,10 @@ struct define_t definition_available[] =
 
   /* s-parameter analysis */
   { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Start", { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
+    { { "Type", { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Start", { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
       { "Stop", { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Step", { 1e9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+      { "Points", { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } }, PROP_NO_PROP },
     { { "Noise", { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       { "NoiseIP", { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, 
       { "NoiseOP", { 2, PROP_NO_STR }, { 1, MAX_PORTS } }, PROP_NO_PROP }
@@ -356,6 +357,7 @@ static struct special_t checker_specials[] = {
   { "JFET", "Type",      { "nfet", "pfet", NULL } },
   { "BJT",  "Type",      { "npn", "pnp", NULL } },
   { "SP",   "Noise",     { "yes", "no", NULL } },
+  { "SP",   "Type",      { "lin", "log", NULL } },
   { "DC",   "saveOPs",   { "yes", "no", NULL } },
   { "MLIN", "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
 			   "Getsinger", "Schneider", "Pramanick",
