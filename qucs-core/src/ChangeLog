@@ -1,5 +1,8 @@
 2004-09-17  Stefan Jahn  <stefan@lkcc.org>
 
+	* trsolver.cpp: Just enabled the timestep algorithm... seems
+	to work now.
+	
 	* trsolver.cpp: Added predictor/corector functionality.  The
 	transient analysis works now for simple RCL networks with
 	constant timesteps.
