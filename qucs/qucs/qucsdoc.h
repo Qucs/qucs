@@ -92,6 +92,7 @@ public:
   bool  deleteElements();
   bool  setMarker(int x, int y);
   bool  MarkerLeftRight(bool);
+  bool  MarkerUpDown(bool);
 
   bool  giveNodeNames(QTextStream *stream);
   bool  createSubNetlist(QTextStream *stream);

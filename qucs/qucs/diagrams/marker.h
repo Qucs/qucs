@@ -22,7 +22,7 @@
 #include "../element.h"
 
 #include <qpainter.h>
-#include <qptrlist.h>
+#include <qvaluelist.h>
 
 
 class Diagram;
@@ -34,24 +34,27 @@ class Graph;
 
 class Marker : public Element {
 public:
-  Marker(Diagram *Diag_, Graph *pg_=0, int _cx=0, int _cy=0, double _xpos=0.0,
-         double _yrpos=0.0, double _yipos=0.0);
+  Marker(Diagram *Diag_, Graph *pg_=0, int _nn=0);
   ~Marker();
 
+  void    initText(int);
   void    createText();
   void    makeInvalid();
-  void    paint(QPainter *p, int x0, int y0);
-  void    paintScheme(QPainter *p);
-  void    setCenter(int x, int y, bool relative);
+  bool    moveLeftRight(bool);
+  bool    moveUpDown(bool);
+  void    paint(QPainter*, int, int);
+  void    paintScheme(QPainter*);
+  void    setCenter(int, int, bool);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();
   bool    load(const QString& Line);
-  int     getSelected(int x, int y);
+  int     getSelected(int, int);
 
-  Diagram *Diag;    // the corresponding diagram
-  Graph   *pGraph;  // the corresponding graph
-  double  xpos;     // x axis value the marker is pointing to
-  double  yr, yi;
+  Diagram *Diag;     // the corresponding diagram
+  Graph   *pGraph;   // the corresponding graph
+
+  int    nVarPos;      // number of values in "VarPos"
+  double VarPos[256];  // values the marker is pointing to
 
   QString Text;     // the string to be displayed in the marker text
   int lookNfeel;    // different marker designs possible

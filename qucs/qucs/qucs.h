@@ -45,6 +45,7 @@
 
 // application specific includes
 #include "qucsinit.h"
+#include "qucsactions.h"
 #include "qucsview.h"
 #include "dialogs/simmessage.h"
 
@@ -84,13 +85,8 @@ public slots:
     void slotFileSettings();// open dialog to change file settings
     void slotFilePrint();   // print the actual file
     void slotFileQuit();    // exits the application
-    void slotEditCut();     // put marked object into the clipboard and remove it from the document
+    void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
-    void slotEditPaste(bool on);   // paste the clipboard into the document
-    void slotEditDelete(bool on);  // delete the selected components
-    void slotEditRotate(bool on);  // rotate the selected components
-    void slotEditMirrorX(bool on); // mirror the selected components about the X axis
-    void slotEditMirrorY(bool on); // mirror the selected components about the Y axis
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
     void slotGettingStarted();  // shows a HTML docu: Getting started
@@ -102,10 +98,6 @@ public slots:
     void slotShowOne();
     void slotZoomIn();  // Zoom in by 2
     void slotZoomOut(); // Zoom out by 2
-    void slotInsertEquation(bool on);
-    void slotInsertGround(bool on);
-    void slotInsertPort(bool on);
-    void slotSetWire(bool on);
 
     // for menu that appears by right click in content ListView
     void slotShowContentMenu(QListViewItem *item, const QPoint& point, int);
@@ -132,30 +124,26 @@ public slots:
     void slotShowLastNetlist();
     void slotAfterSimulation(int Status, SimMessage *sim);
     void slotChangePage();
-    void slotSelect(bool on);
     void slotSelectAll();
-    void slotEditActivate(bool on);
-    void slotInsertLabel(bool on);
-    void slotSetMarker(bool on);
 
 public:
     QucsView   *view;   // the working area with schematics, data displays etc.
 
     QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs;
     QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
-    QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
     QAction *projNew, *projOpen, *projDel;
-    QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magOne;
-    QAction *magPlus, *magMinus, *select, *editRotate, *editMirror;
-    QAction *editMirrorY, *intoH, *popH, *editActivate, *wire, *editDelete;
-    QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet, *setMarker;
+    QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
+    QAction *magPlus, *magMinus;
+    QAction *intoH, *popH;
+    QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *helpIndex, *helpGetStart;
 
     QAction *activeAction;    // pointer to the action selected by the user
+    QucsActions  Acts;    // contains most of the toggle actions
 
 private:
-    QPrinter   Printer; // printer is global (to remember the user settings)
-    QucsInit   Init;    // initializes toolbars, menubar, actions ...
+    QPrinter    Printer; // printer is global (to remember the user settings)
+    QucsInit    Init;    // initializes toolbars, menubar, actions ...
 
     // menu appearing by right mouse button click on content listview
     QPopupMenu *ContentMenu;

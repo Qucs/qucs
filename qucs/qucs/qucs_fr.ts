@@ -1012,6 +1012,17 @@ Wrong line start!</source>
     </message>
 </context>
 <context>
+    <name>QucsActions</name>
+    <message>
+        <source>Inserting clipboard contents...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QucsApp</name>
     <message>
         <source>New</source>
@@ -1196,10 +1207,6 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inserting clipboard contents...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2512,6 +2519,10 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>French by Eric Marzolf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

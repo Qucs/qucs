@@ -46,9 +46,9 @@ SmithDiagram::~SmithDiagram()
 void SmithDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
-//  if(p == 0) return;
+  if(p == 0) return;
   double *py = g->cPointsY;
-  for(int z = (g->countX1)*(g->countX2); z>0; z--) {
+  for(int z = (g->cPointsX.getFirst()->count)*(g->countY); z>0; z--) {
     *(p++) = (x2>>1)+int((*(py++))/yup*double(x2>>1));
     *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1));
   }

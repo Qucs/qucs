@@ -7,7 +7,19 @@
 
 	* qucs.cpp (QucsApp): Fixed Qucs file filter description.
 
-2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* markers show more-dimensional data correct
+	* cursor up/down key moves selected markers
+	* outsourced toggle actions into class "QucsActions"
+	* fixed bug in tabdiagram (more-dimensional display)
+
+2004-05-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed a few bugs with the graph handling
+	* the graph line is now saved within "..."
+
+2004-05-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug after placing diagram dialog
 	* fixed bug in scaling smith chart graphes
