@@ -17,10 +17,9 @@
 
 #include "resistor.h"
 
-
 Resistor::Resistor()
 {
-  Description = "resistor";
+  Description = QObject::tr("resistor");
 
   Lines.append(new Line(-19, -9, 19, -9,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 18, -9, 18,  9,QPen(QPen::darkBlue,2)));
@@ -41,7 +40,7 @@ Resistor::Resistor()
   Model = "R";
   Name  = "R";
 
-  Props.append(new Property("R", "50 Ohm", true, "ohmic resistance in Ohms"));
+  Props.append(new Property("R", "50 Ohm", true, QObject::tr("ohmic resistance in Ohms")));
 }
 
 Resistor::~Resistor()

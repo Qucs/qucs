@@ -37,6 +37,14 @@
         <source>display in schematic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>All Files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -46,6 +54,10 @@
     </message>
     <message>
         <source>ERROR: Cannot read file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -61,6 +73,29 @@
     </message>
     <message>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DiscardAll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -173,6 +208,14 @@ Wrong &apos;painting&apos; line format!</source>
     <message>
         <source>File Format Error:
 Unknown field!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ohmic resistance in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1639,6 +1682,33 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SimMessage</name>
+    <message>
+        <source>Qucs Simulation Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors and Warnings:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goto display page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
