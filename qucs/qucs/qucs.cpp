@@ -60,7 +60,7 @@
 
 QucsApp::QucsApp()
 {
-  setCaption("Qucs " VERSION);
+  setCaption("Qucs " PACKAGE_VERSION);
 
   if(!loadSettings())
     resize(600,400);
@@ -141,7 +141,7 @@ void QucsApp::saveSettings()
   QString Line;
   QTextStream stream(&file);
 
-  stream << "Settings file, Qucs " VERSION "\n";
+  stream << "Settings file, Qucs " PACKAGE_VERSION "\n";
   stream << "Position=" << x() << "," << y() << "\n";
   stream << "Size=" << width() << "," << height() << "\n";
   file.close();
@@ -1253,7 +1253,7 @@ void QucsApp::slotGettingStarted()
 void QucsApp::slotHelpAbout()
 {
   QMessageBox::about(this,tr("About..."),
-    tr("Qucs Version ")+VERSION+tr("\nQt universal circuit simulator\n")+
+    tr("Qucs Version ")+PACKAGE_VERSION+tr("\nQt universal circuit simulator\n")+
     tr("Copyright (C) 2003,2004 by Michael Margraf\nSimulator by Stefan Jahn\n")+
     tr("Special thanks to Jens Flucke\n\n")+
     tr("Translations:\n")+
@@ -1414,7 +1414,7 @@ void QucsApp::slotSimulate()
 
   QStringList com;
   com << BINARYDIR "qucsator" << "-i" << "netlist.txt";
-  com  << "-o" << view->Docs.current()->DataSet;
+  com << "-o" << view->Docs.current()->DataSet;
   if(!sim->startProcess(com)) {
     sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
     sim->errorSimEnded();
@@ -1612,7 +1612,7 @@ int QucsApp::testFile(const QString& DocName)
     return -3;
   }
 
-  QString s = VERSION;
+  QString s = PACKAGE_VERSION;
   s.remove('.');
   Line = Line.mid(16, Line.length()-17);
   Line.remove('.');
@@ -1689,7 +1689,7 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   Content->firstChild()->setOpen(true);  // show schematics
   ProjName = Name;   // remember the name of project
 
-  setCaption("Qucs " VERSION + tr(" - Project: ")+Name);  // show name in title of main window
+  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: ")+Name);  // show name in title of main window
 }
 
 // #######################################################################
