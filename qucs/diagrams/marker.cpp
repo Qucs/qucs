@@ -18,6 +18,7 @@
 #include "marker.h"
 #include "diagram.h"
 #include "graph.h"
+#include "../main.h"
 
 #include <qstring.h>
 #include <qwidget.h>
@@ -87,10 +88,8 @@ void Marker::initText(int n)
   }
   Text += pGraph->Var + ": " + Text_;
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);  // width of text
+  QFontMetrics  metrics(QucsSettings.font);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
 }
@@ -142,10 +141,8 @@ void Marker::createText()
   }
   Text += pGraph->Var + ": " + Text_;
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);  // width of text
+  QFontMetrics  metrics(QucsSettings.font);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
 }
@@ -157,10 +154,8 @@ void Marker::makeInvalid()
   cy = 0;
   Text = QObject::tr("invalid");
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);  // width of text
+  QFontMetrics  metrics(QucsSettings.font);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
 }

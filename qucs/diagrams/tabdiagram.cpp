@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "tabdiagram.h"
+#include "../main.h"
 
 #include <qwidget.h>
 
@@ -69,11 +70,9 @@ void TabDiagram::calcDiagram()
   if(g == 0) return;
   if(g->cPointsX.isEmpty()) return;
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QString Str;
   QRect r;
+  QFontMetrics  metrics(QucsSettings.font);
+  QString Str;
   int colWidth=0, x=8, y = y2-30;
 
   // ................................................
@@ -82,7 +81,7 @@ void TabDiagram::calcDiagram()
   counting = g->cPointsX.getFirst()->count * g->countY;
   for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
     Str = pD->Var;
-    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);   // get width of text
+    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
       if((x+colWidth) >= x2) {    // enough space for text ?
@@ -100,10 +99,10 @@ void TabDiagram::calcDiagram()
     for(int z1=0; z1<lastCount; z1++) {
       px = pD->Points;
       for(int z=pD->count; z>0; z--) {
-        if(y < 0) break;
-        Str = QString::number(*(px++));
-        r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str); // get width of text
-        if(r.width() > colWidth) {
+	if(y < 0) break;
+	Str = QString::number(*(px++));
+	r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
+	if(r.width() > colWidth) {
           colWidth = r.width();
           if((x+colWidth) >= x2) {    // enough space for text ?
             // mark lack of space with a small arrow
@@ -132,7 +131,7 @@ void TabDiagram::calcDiagram()
     colWidth = 0;
 
     Str = g->Var;
-    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
+    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
       if((x+colWidth) >= x2) {    // enough space for text ?
@@ -159,7 +158,7 @@ void TabDiagram::calcDiagram()
       else Str = QString::number(*py);
       py += 2;
 
-      r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
+      r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Str); // width of text
       if(r.width() > colWidth) {
         colWidth = r.width();
         if((x+colWidth) >= x2) {    // enough space for text ?

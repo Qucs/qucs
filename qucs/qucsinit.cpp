@@ -20,7 +20,6 @@
 #endif
 
 #include "qucsinit.h"
-
 #include "qucs.h"
 #include "qucsactions.h"
 
@@ -132,13 +131,13 @@ void QucsInit::initActions()
   App->fileQuit->setWhatsThis(tr("Exit\n\nQuits the application"));
   connect(App->fileQuit, SIGNAL(activated()), App, SLOT(slotFileQuit()));
 
-  App->QucsSettings = new QAction(tr("Application Settings"),
+  App->applSettings = new QAction(tr("Application Settings"),
 				  tr("Application Settings..."), 0, App);
-  App->QucsSettings->setStatusTip(tr("Application Settings"));
-  App->QucsSettings->setWhatsThis(
+  App->applSettings->setStatusTip(tr("Application Settings"));
+  App->applSettings->setWhatsThis(
 	tr("Qucs Settings\n\nSets properties of the application"));
-  connect(App->QucsSettings, SIGNAL(activated()),
-	  App, SLOT(slotQucsSettings()));
+  connect(App->applSettings, SIGNAL(activated()),
+	  App, SLOT(slotApplSettings()));
 
   App->editCut = new QAction(tr("Cut"),
                         QIconSet(QImage(BITMAPDIR "editcut.png")),
@@ -475,7 +474,7 @@ void QucsInit::initMenuBar()
   App->filePrint->addTo(fileMenu);
   App->fileSettings->addTo(fileMenu);
   fileMenu->insertSeparator();
-  App->QucsSettings->addTo(fileMenu);
+  App->applSettings->addTo(fileMenu);
   fileMenu->insertSeparator();
   App->fileQuit->addTo(fileMenu);
 

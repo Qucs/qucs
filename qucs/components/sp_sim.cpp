@@ -16,18 +16,17 @@
  ***************************************************************************/
 
 #include "sp_sim.h"
+#include "../main.h"
 
 
 SP_Sim::SP_Sim()
 {
   Description = QObject::tr("S parameter simulation");
 
-  QWidget  w;
-  QPainter p(&w);
   QString  s = Description;
   s[s.findRev(" ")] = '\n';    // break line before the word "simulation"
-  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  QFontMetrics  metrics(QucsSettings.largeFont);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -51,9 +50,12 @@ SP_Sim::SP_Sim()
   Model = ".SP";
   Name  = "SP";
 
-  Props.append(new Property("Start", "1 GHz", true, QObject::tr("start frequency in Hertz")));
-  Props.append(new Property("Stop", "10 GHz", true, QObject::tr("stop frequency in Hertz")));
-  Props.append(new Property("Step", "1 GHz", true, QObject::tr("frequency steps in Hertz")));
+  Props.append(new Property("Start", "1 GHz", true,
+			QObject::tr("start frequency in Hertz")));
+  Props.append(new Property("Stop", "10 GHz", true,
+			QObject::tr("stop frequency in Hertz")));
+  Props.append(new Property("Step", "1 GHz", true,
+			QObject::tr("frequency steps in Hertz")));
 }
 
 SP_Sim::~SP_Sim()

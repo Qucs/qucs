@@ -50,7 +50,7 @@ class QucsView : public QScrollView
   Q_OBJECT
 
 public:
-  QucsView(tQucsSettings *ps, QWidget *parent=0);
+  QucsView(QWidget *parent=0);
   ~QucsView();
 
   double Zoom(double s);
