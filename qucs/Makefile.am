@@ -28,5 +28,9 @@ qucs_LDFLAGS = $(all_libraries)
 # them while "make clean", use CLEANFILES
 DISTCLEANFILES = $(qucs_METASOURCES)
 
+# installation of translations
+langdatadir = ${prefix}/share/qucs/lang
+langdata_DATA = 
+
 dist-hook:
 	rm -f $(distdir)/$(bin_PROGRAMS)

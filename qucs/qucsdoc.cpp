@@ -1776,7 +1776,7 @@ bool QucsDoc::paste(QTextStream *stream, QPtrList<Element> *pe)
   QString s = VERSION;
   Line = Line.mid(16, Line.length()-17);
   if(Line != s) {  // wrong version number ?
-    QMessageBox::critical(0, "Error", "Wrong document version: "+Line);
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Wrong document version: ")+Line);
     return false;
   }
 
@@ -1791,7 +1791,7 @@ bool QucsDoc::paste(QTextStream *stream, QPtrList<Element> *pe)
     else
     if(Line == "<Paintings>") { if(!loadPaintings(stream, false)) return false; }
     else {
-      QMessageBox::critical(0, "Error", "Clipboard Format Error:\nUnknown field!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Clipboard Format Error:\nUnknown field!"));
       return false;
     }
   }
@@ -1804,7 +1804,7 @@ int QucsDoc::save()
 {
   QFile file(DocName);
   if(!file.open(IO_WriteOnly)) {
-    QMessageBox::critical(0, "Error", "Cannot save document!");
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot save document!"));
     return -1;
   }
   
@@ -1860,11 +1860,11 @@ bool QucsDoc::loadProperties(QTextStream *stream)
     Line = Line.stripWhiteSpace();
 
     if(Line.at(0) != '<') {
-      QMessageBox::critical(0, "Error", "Format Error:\nWrong property field limiter!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
     if(Line.at(Line.length()-1) != '>') {
-      QMessageBox::critical(0, "Error", "Format Error:\nWrong property field limiter!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
     Line = Line.mid(1, Line.length()-2);   // cut off start and end character
@@ -1887,16 +1887,16 @@ bool QucsDoc::loadProperties(QTextStream *stream)
     else if(cstr == "OpenDisplay") if(nstr.toInt(&ok) == 0) SimOpenDpl = false;
                                    else SimOpenDpl = true;
     else {
-      QMessageBox::critical(0, "Error", "Format Error:\nUnknown property: "+cstr);
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown property: ")+cstr);
       return false;
     }
     if(!ok) {
-      QMessageBox::critical(0, "Error", "Format Error:\nNumber expected in property field!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nNumber expected in property field!"));
       return false;
     }
   }
 
-  QMessageBox::critical(0, "Error", "Format Error:\n'Property' field is not closed!");
+  QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Property' field is not closed!"));
   return false;
 }
 
@@ -1949,11 +1949,11 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<.HB") c = new HB_Sim();
     else if(cstr == "<.SW") c = new Param_Sweep();
     else {
-      QMessageBox::critical(0, "Error", "Format Error:\nUnknown component!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown component!"));
       return false;
     }
     if(!c->load(Line)) {
-      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'component' line format!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'component' line format!"));
       delete c;
       return false;
     }
@@ -1968,7 +1968,7 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     }
   }
 
-  QMessageBox::critical(0, "Error", "Format Error:\n'Component' field is not closed!");
+  QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Component' field is not closed!"));
   return false;
 }
 
@@ -1983,7 +1983,7 @@ bool QucsDoc::loadWires(QTextStream *stream, bool insert)
     Line = Line.stripWhiteSpace();
     w = new Wire();
     if(!w->load(Line)) {
-      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'wire' line format!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'wire' line format!"));
       return false;
     }
     if(insert) insertWire(w);
@@ -1994,7 +1994,7 @@ bool QucsDoc::loadWires(QTextStream *stream, bool insert)
     }
   }
 
-  QMessageBox::critical(0, "Error", "Format Error:\n'Wire' field is not closed!");
+  QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Wire' field is not closed!"));
   return false;
 }
 
@@ -2013,12 +2013,12 @@ bool QucsDoc::loadDiagrams(QTextStream *stream, bool insert)
     else if(cstr == "<Tab") d = new TabDiagram();
     else if(cstr == "<Smith") d = new SmithDiagram();
     else {
-      QMessageBox::critical(0, "Error", "Format Error:\nUnknown diagram!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown diagram!"));
       return false;
     }
 
     if(!d->load(Line, stream)) {
-      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'diagram' line format!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'diagram' line format!"));
       delete d;
       return false;
     }
@@ -2026,7 +2026,7 @@ bool QucsDoc::loadDiagrams(QTextStream *stream, bool insert)
     else Cache->append((Element*)d);
   }
 
-  QMessageBox::critical(0, "Error", "Format Error:\n'Diagram' field is not closed!");
+  QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Diagram' field is not closed!"));
   return false;
 }
 
@@ -2046,12 +2046,12 @@ bool QucsDoc::loadPaintings(QTextStream *stream, bool insert)
     else if(cstr == "<Arrow") p = new Arrow();
     else if(cstr == "<Ellipse") p = new Ellipse();
     else {
-      QMessageBox::critical(0, "Error", "Format Error:\nUnknown painting!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nUnknown painting!"));
       return false;
     }
 
     if(!p->load(Line)) {
-      QMessageBox::critical(0, "Error", "Format Error:\nWrong 'painting' line format!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\nWrong 'painting' line format!"));
       delete p;
       return false;
     }
@@ -2059,7 +2059,7 @@ bool QucsDoc::loadPaintings(QTextStream *stream, bool insert)
     else Cache->append((Element*)p);
   }
 
-  QMessageBox::critical(0, "Error", "Format Error:\n'Painting' field is not closed!");
+  QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Format Error:\n'Painting' field is not closed!"));
   return false;
 }
 
@@ -2068,7 +2068,7 @@ bool QucsDoc::load()
 {
   QFile file(DocName);
   if(!file.open(IO_ReadOnly)) {
-    QMessageBox::critical(0, "Error", "Cannot load document: "+DocName);
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot load document: ")+DocName);
     return false;
   }
 
@@ -2085,7 +2085,7 @@ bool QucsDoc::load()
   Line = stream.readLine();
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
-    QMessageBox::critical(0, "Error", "Wrong document type!");
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Wrong document type!"));
     return false;
   }
 
@@ -2093,7 +2093,7 @@ bool QucsDoc::load()
   Line = Line.mid(16, Line.length()-17);
   if(Line != s) {  // wrong version number ?
     file.close();
-    QMessageBox::critical(0, "Error", "Wrong document version: "+Line);
+    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Wrong document version: ")+Line);
     return false;
   }
 
@@ -2110,7 +2110,7 @@ bool QucsDoc::load()
     else
     if(Line == "<Paintings>") { if(!loadPaintings(&stream)) { file.close(); return false; } }
     else {
-      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown field!");
+      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("File Format Error:\nUnknown field!"));
       file.close();
       return false;
     }
