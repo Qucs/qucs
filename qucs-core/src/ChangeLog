@@ -1,5 +1,15 @@
 2004-07-04  Stefan Jahn  <stefan@lkcc.org>
 
+	* matvec.cpp: When get()'ting a vector from a matrix vector
+	it gets named as well based on the matrix vectors name and the
+	appropriate indices.
+
+	* equation.cpp: Matrix vectors can now also be exported into
+	the dataset.
+
+	* dataset.cpp: Added some functionality which allows the
+	programmer to pass chains of data vectors to the dataset.
+
 	* spsolver.cpp: Remove unnecessary local variables.
 
 	* evaluate.cpp: Implemented example matrix vector operation

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.2 2004/07/04 11:16:16 ela Exp $
+ * $Id: matvec.cpp,v 1.3 2004/07/04 15:46:24 ela Exp $
  *
  */
 
@@ -98,11 +98,17 @@ void matvec::set (vector * v, int r, int c) {
 }
 
 /* The function returns the vector specified by the given matrix
-   indices. */
+   indices.  If the matrix vector has a valid name 'A' the returned
+   vector gets the name 'A[r,c]'. */
 vector * matvec::get (int r, int c) {
   assert (r >= 1 && r <= rows && c >= 1 && c <= cols);
   vector * res = new vector ();
   for (int i = 0; i < size; i++) res->add (data[i].get (r, c));
+  if (name != NULL) {
+    static char str[256];
+    sprintf (str, "%s[%d,%d]", name, r, c);
+    res->setName (str);
+  }
   return res;
 }
 

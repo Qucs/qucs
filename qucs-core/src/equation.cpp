@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.14 2004/07/04 11:16:16 ela Exp $
+ * $Id: equation.cpp,v 1.15 2004/07/04 15:46:24 ela Exp $
  *
  */
 
@@ -850,6 +850,7 @@ vector * solver::dataVector (node * eqn) {
   switch (eqn->getType ()) {
   case TAG_VECTOR:
     v = new vector (* (eqn->getResult()->v));
+    v->setNext (NULL); v->setPrev (NULL);
     break;
   case TAG_DOUBLE:
     v = new vector ();
@@ -859,6 +860,21 @@ vector * solver::dataVector (node * eqn) {
     v = new vector ();
     v->add (* (eqn->getResult()->c));
     break;
+  case TAG_MATVEC:
+    {
+      // convert matrix vector to a list of vectors
+      matvec * mv = eqn->getResult()->mv;
+      mv->setName (A(eqn)->result);
+      for (int r = 1; r <= mv->getRows (); r++) {
+	for (int c = 1; c <= mv->getCols (); c++) {
+	  // name gets automatically assigned
+	  vector * t = mv->get (r, c);
+	  // chain the vectors appropriately
+	  t->setNext (v); v = t;
+	}
+      }
+    }
+    return v;
   default:
     return NULL;
   }
@@ -1052,14 +1068,23 @@ void solver::checkoutDataset (void) {
 	datadeps = NULL;
       }
 	
-      // store variable vector
+      // store variable vector(s)
       if (datadeps && datadeps->length () > 0) {
 	v->setDependencies (datadeps);
-	data->addVariable (v);
+	if (v->getNext () != NULL) {
+	  data->applyDependencies (v);
+	  data->addVariables (v);
+	}
+	else {
+	  data->addVariable (v);
+	}
       }
-      // store independent vector
+      // store independent vector(s)
       else {
-	data->addDependency (v);
+	if (v->getNext () != NULL)
+	  data->addDependencies (v);
+	else
+	  data->addDependency (v);
 	delete datadeps;
       }
     }
