@@ -1,3 +1,8 @@
+2004-08-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/mosfet.cpp: Implemented sidewall capacitances at the
+	perimeter of the drain and source junctions.
+
 2004-08-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/mosfet.cpp: Added and implementet some more

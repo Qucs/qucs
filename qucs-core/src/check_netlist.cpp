@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.38 2004/08/03 21:13:51 ela Exp $
+ * $Id: check_netlist.cpp,v 1.39 2004/08/05 21:19:48 ela Exp $
  *
  */
 
@@ -331,6 +331,8 @@ struct define_t definition_available[] =
       { "Pb", PROP_REAL, { 0.8, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
       { "Mj", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 } },
       { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 - PROP_VAL_MIN } },
+      { "Cjsw", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Mjsw", PROP_REAL, { 0.33, PROP_NO_STR }, { 0, 1 } },
       { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
@@ -346,6 +348,8 @@ struct define_t definition_available[] =
       { "Js", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ad", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "As", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Pd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ps", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
       PROP_NO_PROP }
