@@ -39,12 +39,6 @@ Wire::~Wire()
 }
 
 // ----------------------------------------------------------------
-void Wire::paintScheme(QPainter *p)
-{
-  p->drawLine(x1, y1, x2, y2);
-}
-
-// ----------------------------------------------------------------
 void Wire::rotate()
 {
   int xm, ym, tmp;
@@ -98,6 +92,16 @@ bool Wire::getSelected(int x_, int y_)
     return true;
 
   return false;
+}
+
+// ----------------------------------------------------------------
+void Wire::paintScheme(QPainter *p)
+{
+  p->drawLine(x1, y1, x2, y2);
+//  if(Label)
+//    if((Label->Type == isHWireLabel) || (Label->Type == isHWireLabel))
+//    if(Label->Type == isHWireLabel)
+//      Label->paintScheme(p);
 }
 
 // ----------------------------------------------------------------

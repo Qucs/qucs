@@ -1,5 +1,14 @@
 2004-09-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
+	* CTRL+U = edit circuit symbol
+	* F5 = show last message
+	* fixed bug that prevents default circuit symbol to be
+	drawn
+	* new entry in mouse menu: "delete group"
+	* fixed bug that didn't copy node labels
+
+2004-09-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
 	* subcircuit symbols can be defined by the user
 
 2004-09-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>

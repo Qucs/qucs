@@ -410,12 +410,12 @@ bool Marker::load(const QString& _s)
 // ------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the marker text. x/y are relative
 // to diagram cx/cy.
-int Marker::getSelected(int x_, int y_)
+bool Marker::getSelected(int x_, int y_)
 {
   if(x_ >= x1) if(x_ <= x1+x2) if(y_ >= y1) if(y_ <= y1+y2)
-    return 1;
+    return true;
 
-  return -1;
+  return false;
 }
 
 // ------------------------------------------------------------------------
