@@ -197,7 +197,7 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
 
     NameEdit->setFocus();   // edit QLineEdit
   }
-  else {
+  else {  // show standard line edit (description and value)
     ButtAdd->setEnabled(false);
     ButtRem->setEnabled(false);
 
@@ -209,7 +209,12 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
     Description->setShown(true);
 
     i = PropDesc.find('(');
-    Description->setText(PropDesc.left(i));
+    QString s = PropDesc.left(i);
+    QFontMetrics  metrics(QucsSettings.font);   // get size of text
+    while(metrics.width(s) > 270)   // if description too long, cut it
+      s = s.left(s.findRev(' ', -1)) + "....";
+    Description->setText(s);
+
     PropDesc = PropDesc.mid(i+1);
     PropDesc.remove(')');
     QStringList List = List.split(',',PropDesc);
@@ -416,9 +421,10 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  QString com = QucsSettings.Editor + " " + QucsWorkDir.filePath(edit->text());
+  QString com = QucsSettings.Editor + " " +
+		QucsWorkDir.filePath(edit->text());
   QProcess QucsEditor(QStringList::split(" ", com));
-  if(!QucsEditor.start())
+  if(!QucsEditor.launch(""))
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
 }
 

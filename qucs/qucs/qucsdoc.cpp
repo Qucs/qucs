@@ -116,7 +116,8 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
   Paints.setAutoDelete(true);
 
   UndoStack.setAutoDelete(true);
-  UndoStack.append(new QString("<Qucs Schematic " PACKAGE_VERSION));
+  // The 'i' means state for being unchanged.
+  UndoStack.append(new QString(" i\n</>\n</>\n</>\n</>\n"));
 }
 
 QucsDoc::~QucsDoc()
@@ -177,8 +178,10 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
     if(!App->undo->isEnabled()) App->undo->setEnabled(true);
     if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
-    while(UndoStack.count() > QucsSettings.maxUndo)  // "while..." because
+    while(UndoStack.count() > QucsSettings.maxUndo) { // "while..." because
       UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
+      UndoStack.last();
+    }
   }
 }
 
@@ -2308,6 +2311,7 @@ bool QucsDoc::deleteElements()
           sel = true;
         }
         else  pg = pd->Graphs.next();
+      pd->recalcGraphData();  // update diagram (resize etc.)
 
       pd = Diags.next();
     }
@@ -2361,7 +2365,8 @@ bool QucsDoc::load()
 {
   UndoStack.clear();
   if(!File.load()) return false;
-  setChanged(false, true);   // "not changed" state, but put on undo stack
+  setChanged(false, true); // "not changed" state, but put on undo stack
+  UndoStack.current()->at(1) = 'i';  // state of being unchanged
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   return true;
 }
@@ -2371,7 +2376,10 @@ bool QucsDoc::load()
 int QucsDoc::save()
 {
   int result = File.save();
-  if(result >= 0) setChanged(false);
+  if(result >= 0) {
+    setChanged(false);
+    UndoStack.current()->at(1) = 'i';  // state of being unchanged
+  }
   return result;
 }
 
@@ -2388,8 +2396,13 @@ bool QucsDoc::undo()
   else  App->undo->setEnabled(false);
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
-  setChanged(true, false);
 
+  if(ps->at(1) == 'i') {
+    setChanged(false, false);
+    return true;
+  }
+
+  setChanged(true, false);
   return true;
 }
 
@@ -2406,8 +2419,13 @@ bool QucsDoc::redo()
   else  App->undo->setEnabled(false);
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
-  setChanged(true, false);
 
+  if(ps->at(1) == 'i') {
+    setChanged(false, false);
+    return true;
+  }
+
+  setChanged(true, false);
   return true;
 }
 

@@ -49,10 +49,11 @@ public:
   QString save();
   bool    load(const QString& Line);
   int     getSelected(int x, int y);
+  Graph*  sameNewOne();
 
   QPtrList<DataX>  cPointsX;
   double *cPointsY;
-  int    *Points, countY;     // data in screen coordinates
+  int    *Points, countY; // data in screen coordinates, countY = curves number
   QString Var;
   QColor  Color;
   int     Thick;

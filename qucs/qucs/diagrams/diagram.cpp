@@ -294,7 +294,43 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   updateGraphData();
 }
 
-// --------------------------------------------------------------------------
+// ------------------------------------------------------------------------
+// Calculate diagram again without reading dataset from file.
+void Diagram::recalcGraphData()
+{
+  ymin = xmin = DBL_MAX;
+  ymax = xmax = -DBL_MAX;
+
+  int z;
+  double x, y, *p;
+  // get maximum and minimum values
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+    DataX *pD=pg->cPointsX.getFirst();
+    p = pD->Points;
+    for(z=pD->count; z>0; z--) { // check every x coordinate (1. dimension)
+      x = *(p++);
+      if(x > xmax) xmax = x;
+      if(x < xmin) xmin = x;
+    }
+
+    p = pg->cPointsY;
+    for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
+      x = *(p++);
+      y = *(p++);
+      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
+      if(x > ymax) ymax = x;
+      if(x < ymin) ymin = x;
+    }
+  }
+
+  if((ymin > ymax) || (xmin > xmax)) {
+    ymin = xmin = 0.0;
+    ymax = xmax = 1.0;
+  }
+  updateGraphData();
+}
+
+// ------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
   Graph *pg;

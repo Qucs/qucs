@@ -570,6 +570,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "CCS") c = new CCCS();
 	else if(cstr == "CVS") c = new CCVS();
 	else if(cstr == "irculator") c = new Circulator();
+	else if(cstr == "LIN") c = new Coplanar();
 	break;
   case 'L' : if(cstr.isEmpty()) c = new Inductor();
 	break;

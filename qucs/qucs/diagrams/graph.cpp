@@ -239,3 +239,19 @@ int Graph::getSelected(int x, int y)
   return -1;
   ------------------------------------------------------------ */
 }
+
+// -----------------------------------------------------------------------
+// Creates a new graph and copies all the properties into it.
+Graph* Graph::sameNewOne()
+{
+  Graph *pg = new Graph(Var);
+
+  pg->Color = Color;
+  pg->Thick = Thick;
+  pg->Style = Style;
+
+  pg->Precision = Precision;
+  pg->numMode   = numMode;
+
+  return pg;
+}

@@ -212,10 +212,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Function Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Number Notation: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1145,10 +1141,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>npn bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>polarity (npn,pnp)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1490,10 +1482,6 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>npn bipolar junction transistor with substrate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2195,10 +2183,6 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No page set !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot create </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2344,6 +2328,10 @@ Errors:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No page set !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

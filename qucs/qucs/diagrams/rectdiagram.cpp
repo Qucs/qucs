@@ -47,7 +47,7 @@ void RectDiagram::calcCoordinate(double x, double yr, double yi,
   else  *px = int((x-xlow)/(xup-xlow)*double(x2) + 0.5);
 
   if(ylog)
-    *py = int(log10(sqrt(yr*yr + yi*yi)/ylow) / log10(yup/ylow)
+    *py = int(log10(sqrt(yr*yr + yi*yi)/fabs(ylow)) / log10(yup/ylow)
 		    *double(y2) + 0.5);
   else {
     if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
@@ -79,10 +79,20 @@ bool RectDiagram::calcDiagram()
   QString tmp;
   QFontMetrics  metrics(QucsSettings.font);
   int maxWidth = 0;
-  
+  bool set_log = false;
+
   // ====  x grid  =======================================================
 if(xlog) {
   if(xmax*xmin <= 0.0) goto Frame;  // invalid
+  if(xmax < 0.0) {
+    corr = xmin;
+    xmin = -xmax;
+    xmax = -corr;
+    corr = xlow;
+    xlow = -xup;
+    xup  = -corr;
+    set_log = true;
+  }
 
   Expo = floor(log10(xmax));
   Base = xmax/pow(10.0,Expo);
@@ -100,15 +110,17 @@ if(xlog) {
 
   zD = xlow;
   zDstep = pow(10.0,Expo);
-  while(z <= x2) {    // create all grid lines
+  if(set_log) z = x2;
+  while((z <= x2) && (z >= 0)) {    // create all grid lines
     if(GridOn)  if(z < x2)  if(z > 0)
       Lines.append(new Line(z, y2, z, 0, GridPen));  // x grid
 
-    if((zD < 1.5*zDstep) || (z == 0)) {
-      if(fabs(Expo) < 3.0)
-	Texts.append(new Text(z-10, -17, QString::number(zD)));
-      else
-	Texts.append(new Text(z-10, -17, QString::number(zD, 'e', 1)));
+    if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {
+      if(fabs(Expo) < 3.0)  tmp = QString::number(zD);
+      else  tmp = QString::number(zD, 'e', 1);
+
+      if(set_log)  Texts.append(new Text(z-10, -17, '-'+tmp));
+      else  Texts.append(new Text(z-10, -17, tmp));
 
       Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));  // x marks
     }
@@ -116,6 +128,15 @@ if(xlog) {
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
     z = int(corr*log10(zD / xlow) + 0.5); // "int(...)" implies "floor(...)"
+    if(set_log)  z = x2 - z;
+  }
+  if(set_log) {   // set back values ?
+    corr = xmin;
+    xmin = -xmax;
+    xmax = -corr;
+    corr = xlow;
+    xlow = -xup;
+    xup  = -corr;
   }
 }
 else {  // not logarithmical
@@ -197,13 +218,23 @@ else {  // not logarithmical
     zD += zDstep;
     z = int(zD);
   }
-} // of "if(xlog)"
+} // of "if(xlog) ... else ..."
 
 
 
   // ====  y grid  =======================================================
+  set_log = false;
 if(ylog) {
   if(ymax*ymin <= 0.0) goto Frame;  // invalid
+  if(ymax < 0.0) {
+    corr = ymin;
+    ymin = -ymax;
+    ymax = -corr;
+    corr = ylow;
+    ylow = -yup;
+    yup  = -corr;
+    set_log = true;
+  }
 
   Expo = floor(log10(ymax));
   Base = ymax/pow(10.0,Expo);
@@ -222,13 +253,16 @@ if(ylog) {
   z = 0;
   zD = ylow;
   zDstep = pow(10.0,Expo);
-  while(z <= y2) {    // create all grid lines
+  if(set_log) z = y2;
+  while((z <= y2) && (z >= 0)) {    // create all grid lines
     if(GridOn)  if(z < y2)  if(z > 0)
       Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
 
     if((zD < 1.5*zDstep) || (z == 0)) {
       if(fabs(Expo) < 3.0)  tmp = QString::number(zD);
-      else tmp = QString::number(zD, 'e',1);
+      else  tmp = QString::number(zD, 'e',1);
+      if(set_log)  tmp = '-'+tmp;
+
       r = metrics.size(0, tmp);  // width of text
       if(maxWidth < r.width()) maxWidth = r.width();
       Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
@@ -239,6 +273,15 @@ if(ylog) {
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
     z = int(corr*log10(zD / ylow) + 0.5); // "int(...)" implies "floor(...)"
+    if(set_log)  z = y2 - z;
+  }
+  if(set_log) {   // set back values ?
+    corr = ymin;
+    ymin = -ymax;
+    ymax = -corr;
+    corr = ylow;
+    ylow = -yup;
+    yup  = -corr;
   }
 }
 else {  // not logarithmical
@@ -321,7 +364,7 @@ else {  // not logarithmical
     zD += zDstep;
     z = int(zD);
   }
-} // of "if(xlog)"
+} // of "if(xlog) ... else ..."
   x1 = maxWidth+14;
 
 
