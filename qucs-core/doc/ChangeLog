@@ -1,3 +1,7 @@
+2004-05-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* literature.bib: Added some microstrip related IEEE sources.
+
 2004-04-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Matrix conversions}): Documented

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.7 2004-05-08 09:10:56 ela Exp $
+ * $Id: msline.cpp,v 1.8 2004-05-09 12:54:03 ela Exp $
  *
  */
 
@@ -79,13 +79,13 @@ void msline::calcSP (nr_double_t frequency) {
   analyseDispersion (W, h, er, frequency);
 
   // conductor losses: HAMMERSTAD and JENSEN
-  Rs = sqrt (M_PI * frequency * MU0 * rho); // surface sheet resistance
-  ds = rho / Rs; // skin depth
+  Rs = sqrt (M_PI * frequency * MU0 * rho); // skin resistance
+  ds = rho / Rs;                            // skin depth
   // valid for t > 3 * ds
   if (t < 3 * ds) {
     logprint (LOG_STATUS, "line height t (%g) < 3 * skin depth (%g)\n", t, ds);
   }
-  Ki = exp (-1.2 * pow (ZlEffFreq / (120 * M_PI), 0.7));
+  Ki = exp (-1.2 * pow (ZlEffFreq / Z0, 0.7)); // current distribution factor
   Kr = 1 + M_2_PI * atan (1.4 * SQR (D / ds)); // D is RMS surface roughness
   ac = Rs / (ZlEffFreq * W) * Ki * Kr;
 
@@ -235,11 +235,10 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
   e = ErEff * (1 + SQR (f)) / (1 + k * SQR (f));
   fprintf (stderr, "PRAMANICK e = %g\n", e);
 
-  // HAMMERSTAD and JENSEN
-  g = SQR (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / MU0);
-  fp = C0 / 2 / h * ZlEff / MU0;
-  f = g * SQR (frequency / fp);
-  e = er - (er - ErEff) / (1 + f);
+  // HAMMERSTAD and JENSEN (checked and ok)
+  g = SQR (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / Z0);
+  f = 2 * MU0 * h * frequency / ZlEff;
+  e = er - (er - ErEff) / (1 + g * SQR (f));
   z = ZlEff * sqrt (ErEff / e) * (e - 1) / (ErEff - 1);
   fprintf (stderr, "HAMMERSTAD e = %g, z = %g\n", e, z);
 
