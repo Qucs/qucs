@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.4 2004/08/06 18:24:44 ela Exp $
+ * $Id: mosfet.cpp,v 1.5 2004/08/07 10:49:08 ela Exp $
  *
  */
 
@@ -145,7 +145,6 @@ void mosfet::initDC (dcsolver * solver) {
   nr_double_t T = getPropertyDouble ("Temp");
 
   // possibly insert series resistance at source
-  nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
@@ -171,7 +170,6 @@ void mosfet::initDC (dcsolver * solver) {
   }
 
   // possibly insert series resistance at drain
-  nr_double_t Rd = getPropertyDouble ("Rd");
   if (Rd != 0) {
     // create additional circuit if necessary and reassign nodes
     rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
@@ -289,16 +287,11 @@ void mosfet::initModel (void) {
   nr_double_t Rsh = getPropertyDouble ("Rsh");
   nr_double_t Nrd = getPropertyDouble ("Nrd");
   nr_double_t Nrs = getPropertyDouble ("Nrs");
-  nr_double_t Rs, Rd;
+  Rd = getPropertyDouble ("Rd");
+  Rs = getPropertyDouble ("Rs");
   if (Rsh > 0) {
-    if (Nrd > 0) {
-      Rd = Rsh * Nrd;
-      setProperty ("Rd", Rd);
-    }
-    if (Nrs > 0) {
-      Rs = Rsh * Nrs;
-      setProperty ("Rs", Rs);
-    }
+    if (Nrd > 0) Rd += Rsh * Nrd;
+    if (Nrs > 0) Rs += Rsh * Nrs;
   }
 
   // calculate zero-bias junction capacitance
@@ -306,7 +299,7 @@ void mosfet::initModel (void) {
   nr_double_t Pb = getPropertyDouble ("Pb");
   if (Cj <= 0) {
     if (Pb > 0 && Nsub > 0) {
-      Cj = sqrt (2 * ESi * E0 * Q * Nsub / 2 / Pb);
+      Cj = sqrt (ESi * E0 * Q * Nsub * 1e6 / 2 / Pb);
     }
     else {
       logprint (LOG_STATUS, "WARNING: adjust Pb, Nsub or Cj to get a "

@@ -5334,9 +5334,9 @@ The current equations of the two parasitic diodes at the bulk node and
 their derivatives write as follows.
 \begin{align}
 I_{BD} &= I_{SD}\cdot \left(e^{\frac{V_{BD}}{N\cdot V_T}} - 1\right) &
-g_{BD} &= \dfrac{\partial I_{BD}}{\partial V_{BD}} = \dfrac{I_{SD}}{N\cdot V_T}\cdot e^{\frac{V_{BD}}{N\cdot V_T}}\\
+g_{bd} &= \dfrac{\partial I_{BD}}{\partial V_{BD}} = \dfrac{I_{SD}}{N\cdot V_T}\cdot e^{\frac{V_{BD}}{N\cdot V_T}}\\
 I_{BS} &= I_{SS}\cdot \left(e^{\frac{V_{BS}}{N\cdot V_T}} - 1\right) &
-g_{BS} &= \dfrac{\partial I_{BS}}{\partial V_{BS}} = \dfrac{I_{SS}}{N\cdot V_T}\cdot e^{\frac{V_{BS}}{N\cdot V_T}}
+g_{bs} &= \dfrac{\partial I_{BS}}{\partial V_{BS}} = \dfrac{I_{SS}}{N\cdot V_T}\cdot e^{\frac{V_{BS}}{N\cdot V_T}}
 \end{align}
 
 with
@@ -5345,6 +5345,47 @@ I_{SD} = I_S
 \;\;\;\; \textrm{ and } \;\;\;\;
 I_{SS} = I_S
 \end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{dcmosfet}
+\end{center}
+\caption{accompanied DC model of intrinsic MOSFET}
+\label{fig:dcmosfet}
+\end{figure}
+\FloatBarrier
+
+With the accompanied DC model shown in fig. \ref{fig:dcmosfet} it is
+possible to form the MNA matrix and the current vector of the
+intrinsic MOSFET device.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0\\
+g_{m} & g_{ds} + g_{bd} & -g_{ds} - g_{m} -g_{mb} & g_{mb} - g_{bd}\\
+-g_{m} & -g_{ds} & g_{bs} + g_{ds} + g_{m} + g_{mb} & -g_{bs} - g_{mb}\\
+0 & -g_{bd} & -g_{bs} & g_{bs} + g_{bd}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{G}\\
+V_{D}\\
+V_{S}\\
+V_{B}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
++I_{BD_{eq}} - I_{DS_{eq}}\\
++I_{BS_{eq}} + I_{DS_{eq}}\\
+-I_{BD_{eq}} - I_{BS_{eq}}\\
+\end{bmatrix}
+\end{equation}
+
+\begin{align}
+I_{BD_{eq}} &= I_{BD} - g_{bd} \cdot V_{BD}\\
+I_{BS_{eq}} &= I_{BS} - g_{bs} \cdot V_{BS}\\
+I_{DS_{eq}} &= I_{d} - g_{m} \cdot V_{GS} - g_{mb} \cdot V_{BS} - g_{ds}\cdot V_{DS}
+\end{align}
 
 \subsection{Physical model}
 %\addcontentsline{toc}{subsection}{Physical model}
@@ -5379,11 +5420,15 @@ The surface potential $\Phi$ is given by
 \Phi = 2\cdot V_T\cdot \ln{\left(\dfrac{N_{SUB}}{n_i}\right)}
 \;\;\;\; \textrm{ with the intrinsic density } \;
 n_i = 1.45\cdot 10^{16} 1/\meter^3
+\label{eq:PhiMOS}
 \end{equation}
 
-The bulk threshold $\gamma$ is
+Equation \eqref{eq:PhiMOS} holds for acceptor concentrations $N_A$
+($N_{SUB}$) essentially greater than the donor concentration $N_D$.
+The bulk threshold $\gamma$ (also sometimes called the body effect
+coefficient) is
 \begin{equation}
-\gamma = \dfrac{\sqrt{2e\cdot \varepsilon_{Si}\cdot \varepsilon_{0}\cdot N_{SUB}}}{C'_{ox}}
+\gamma = \dfrac{\sqrt{2\cdot e\cdot \varepsilon_{Si}\cdot \varepsilon_{0}\cdot N_{SUB}}}{C'_{ox}}
 \;\;\;\; \textrm{ with } \;\;\;\;
 \varepsilon_{Si} = 11.7
 \end{equation}
@@ -5409,22 +5454,117 @@ E_{G}\left(T\right) = 1.16 - \dfrac{7.02\cdot 10^{-4}\cdot T^2}{T + 1108}
 \end{equation}
 
 The work function difference $\Phi_{MS}$ gets computed dependent on
-the gate material.  This can be either alumina ($\Phi_{M} = 4.1eV$),
-n-poly-silicon ($\Phi_{M} = 4.15eV$) or p-poly-silicon ($\Phi_{M} =
-5.27eV$).
+the gate conductor material.  This can be either alumina ($\Phi_{M} =
+4.1eV$), n-polysilicon ($\Phi_{M} \approx 4.15eV$) or p-polysilicon
+($\Phi_{M} \approx 5.27eV$).  The work function of a semiconductor,
+which is the energy difference between the vacuum level and the Fermi
+level (see fig. \ref{fig:mosband}), varies with the doping
+concentration.
 \begin{equation}
 \Phi_{MS} = \Phi_{M} - \Phi_{S} = \Phi_{M} - \left(4.15 + \dfrac{1}{2}E_{G} + \dfrac{1}{2}\Phi\right)
+\label{eq:workfunction}
 \end{equation}
 \begin{equation}
 \Phi_{M} =
 \begin{cases}
 \begin{array}{ll}
 4.1 & \textrm{ for } T_{PG} = +0, \textrm{ i.e. alumina}\\
-4.15 + E_{G} & \textrm{ for } T_{PG} = -1, \textrm{ i.e. same as bulk }\\
 4.15 & \textrm{ for } T_{PG} = +1, \textrm{ i.e. opposite to bulk }\\
+4.15 + E_{G} & \textrm{ for } T_{PG} = -1, \textrm{ i.e. same as bulk }\\
 \end{array}
 \end{cases}
 \end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{XAl}{$\mathsmaller{\mathrm{\chi_{Al}}}$}
+\psfrag{XSi}{$\mathsmaller{\mathrm{\chi_{Si}}}$}
+\psfrag{E0}{$\mathsmaller{\mathrm{E_0}}$}
+\psfrag{Ec}{$\mathsmaller{\mathrm{E_C}}$}
+\psfrag{Ev}{$\mathsmaller{\mathrm{E_V}}$}
+\psfrag{Ef}{$\mathsmaller{\mathrm{E_F}}$}
+\psfrag{Ei}{$\mathsmaller{\mathrm{E_I}}$}
+\psfrag{Eg}{$\mathsmaller{\mathrm{E_G}}$}
+\psfrag{Phi}{$\mathsmaller{\mathrm{\frac{1}{2}\Phi}}$}
+\includegraphics[width=0.95\linewidth]{mosband}
+\end{center}
+\caption{energy band diagrams of isolated (flat band) MOS materials}
+\label{fig:mosband}
+\end{figure}
+\FloatBarrier
+
+The expression in eq. \eqref{eq:workfunction} is visualized in
+fig. \ref{fig:mosband}.  The abbreviations denote
+
+\addvspace{12pt}
+
+\begin{tabular}{rl}
+$\chi_{Al}$ & electron affinity of alumina $= 4.1eV$\\
+$\chi_{Si}$ & electron affinity of silicon $= 4.15eV$\\
+$E_0$ & vacuum level\\
+$E_C$ & conduction band\\
+$E_V$ & valence band\\
+$E_F$ & Fermi level\\
+$E_I$ & intrinsic Fermi level\\
+$E_G$ & bandgap of silicon $\approx 1.12eV$ at room temperature\\
+\end{tabular}
+
+\addvspace{12pt}
+
+Please note that the potential $1/2\cdot \Phi$ is positive in p-MOS
+and negative in n-MOS as the following equation reveals.
+\begin{equation}
+\Phi_F = \dfrac{E_F - E_I}{e}
+\end{equation}
+
+When the gate conductor material is a heavily doped polycrystalline
+silicon (also called polysilicon) then the model assumes that the
+Fermi level of this semiconductor is the same as the conduction band
+(for n-poly) or the valence band (for p-poly).  In alumina the Fermi
+level, valence and conduction band all equal the electron affinity.
+
+\addvspace{12pt}
+
+If the zero-bias bulk junction bottom capacitance per square meter of
+junction area $C_J$ is not given it can be computed as follows.
+\begin{equation}
+C_J = \sqrt{\dfrac{\varepsilon_{Si}\cdot \varepsilon_{0}\cdot e\cdot N_{SUB}}{2\cdot \Phi_B}}
+\end{equation}
+
+That's it for the physical parameters.  The geometry parameters
+account for the electrical parameters per length, area or volume.
+Thus the MOS model is scalable.
+
+\addvspace{12pt}
+
+The diffusion resistances at drain and gate are computed as follows.
+The sheet resistance $R_{SH}$ refers to the thickness of the diffusion
+area.
+\begin{equation}
+R_D = N_{RD}\cdot R_{SH}
+\;\;\;\; \textrm{ and } \;\;\;\;
+R_S = N_{RS}\cdot R_{SH}
+\end{equation}
+
+If the bulk junction saturation current per square meter of the
+junction area $J_S$ and the drain and source areas are given the
+according saturation currents are calculated with the following
+equations.
+\begin{equation}
+I_{SD} = A_{D}\cdot J_{S}
+\;\;\;\; \textrm{ and } \;\;\;\;
+I_{SS} = A_{S}\cdot J_{S}
+\end{equation}
+
+If the parameters $C_{BD}$ and $C_{BS}$ are not given the zero-bias
+depletion capacitances for the bottom and sidewall capacitances are
+computed as follows.
+\begin{align}
+C_{BD} &= C_{J}\cdot A_D\\
+C_{BS} &= C_{J}\cdot A_S\\
+C_{BDS} &= C_{JSW}\cdot P_D\\
+C_{BSS} &= C_{JSW}\cdot P_S
+\end{align}
 
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
