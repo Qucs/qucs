@@ -42,6 +42,7 @@ public:
   void setChanged(bool c);
 
   void paint(QPainter *p);
+  void paintGrid(QPainter *p, int StartX, int StartY, int Width, int Height);
 
   int      insertWireNode1(Wire *w);
   bool     connectHWires1(Wire *w);
@@ -51,21 +52,25 @@ public:
   bool     connectVWires2(Wire *w);
   int      insertWire(Wire *w);
 
+  void       sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax);
   Component* selectedComponent(int x, int y);
   Diagram*   selectedDiagram(int x, int y);
   Wire*      selectedWire(int x, int y);
   void       selectWireLine(Element *pe, Node *pn, bool ctrl);
   Element*   selectElement(int x, int y, bool flag);
+  int        selectComponents(int x1, int y1, int x2, int y2, bool flag);
   void       deselectElements(Element *e);
-  void  NewMovingWires(QPtrList<Element> *p, Node *pn);
-  void  copySelectedElements(QPtrList<Element> *p);
-  int   selectComponents(int x1, int y1, int x2, int y2, bool flag);
   bool  activateComponent(int x, int y);
   bool  activateComponents();
   void  activateComps(int x1, int y1, int x2, int y2);
+  Component* searchSelSubcircuit();
+  void  NewMovingWires(QPtrList<Element> *p, Node *pn);
+  void  copySelectedElements(QPtrList<Element> *p);
   Node* insertNode(int x, int y, Element *e);
   void  insertRawComponent(Component *c);
   void  insertComponent(Component *c);
+  void  oneLabel(Node *n1);
+  Wire* getWireLabel(Wire *w);
   void  setCompPorts(Component *pc);
   bool  copyCompsWires(int& x1, int& y1, int& x2, int& y2);
   bool  rotateComponents();
@@ -81,7 +86,7 @@ public:
   bool    paste(QTextStream *stream, QPtrList<Element> *pe);
 
   void  reloadGraphs();
-  bool  save();
+  int   save();
   bool  load();
   bool  loadProperties(QTextStream *stream);
   bool  loadComponents(QTextStream *stream, bool insert=true);
@@ -107,6 +112,9 @@ public:
   QString DataDisplay; // name of the default data display
   int  GridX, GridY;
   bool GridOn;
+  double Scale;
+  int PosX, PosY;    // upper left corner of the visible area
+  int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
 
   QPtrList<Element> *Cache;
   QPtrList<Element> ElementCache;

@@ -40,6 +40,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   Diag = d;
   defaultDataSet = _DataSet;
   setCaption("Edit Diagram Properties");
+  changed = false;
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
   
@@ -207,6 +208,7 @@ void DiagramDialog::slotApplyGraphInput()
     GraphList->changeItem(GraphInput->text(), GraphList->currentItem());
 
   GraphInput->setText("");  // erase input line
+  changed = true;
 }
 
 // --------------------------------------------------------------------------
@@ -218,6 +220,7 @@ void DiagramDialog::slotDeleteGraph()
 
   GraphList->removeItem(i);
   Diag->Graphs.remove(i);
+  changed = true;
 }
 
 // --------------------------------------------------------------------------
@@ -238,13 +241,15 @@ void DiagramDialog::slotNewGraph()
   g = new Graph(GraphInput->text());   // create a new graph
   g->Color = QColor(DefaultColors[z]);
   Diag->Graphs.append(g);
+  changed = true;
 }
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotOK()
 {
   slotApply();
-  reject();
+  if(changed) done(1);
+  else done(0);
 }
 
 // --------------------------------------------------------------------------

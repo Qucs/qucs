@@ -70,7 +70,7 @@ void PolarDiagram::calcData(Graph *g)
     *(p++) = (y2>>1)+int(cp->yi/ymax*double(y2>>1));
   }
 
-  calcDiagram();
+//  calcDiagram();
 }
 
 // ------------------------------------------------------------

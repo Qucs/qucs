@@ -22,6 +22,7 @@
 #include <qvgroupbox.h>
 #include <qhbox.h>
 #include <qtimer.h>
+//#include <qmessagebox.h>
 
 
 SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
@@ -36,6 +37,7 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   ProgText = new QTextEdit(Group1);
   ProgText->setTextFormat(Qt::PlainText);
   ProgText->setReadOnly(true);
+  ProgText->setWordWrap(QTextEdit::NoWrap);
   ProgText->setMinimumSize(400,80);
 
   
@@ -45,6 +47,7 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   ErrText = new QTextEdit(Group2);
   ErrText->setTextFormat(Qt::PlainText);
   ErrText->setReadOnly(true);
+  ErrText->setWordWrap(QTextEdit::NoWrap);
   ErrText->setMinimumSize(400,80);
 
   QHBox *Butts = new QHBox(this);
@@ -97,6 +100,7 @@ void SimMessage::slotDisplayErr()
 }
 
 // ------------------------------------------------------------------------
+// Is called when the simulation process terminates.
 void SimMessage::slotSimEnded()
 {
   Abort->setText("Close window");
@@ -108,7 +112,7 @@ void SimMessage::slotSimEnded()
 // ------------------------------------------------------------------------
 void SimMessage::slotClose()
 {
-  SimProcess.blockSignals(true);  // no 'processexited' signal, is set back in 'startProcess'
+  SimProcess.blockSignals(true);  // No 'processexited' signal. Is set back in 'startProcess'.
   if(SimProcess.isRunning()) {
     SimProcess.tryTerminate();
     QTimer::singleShot(2000,&SimProcess,SLOT(kill()));
