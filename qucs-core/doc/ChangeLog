@@ -1,3 +1,13 @@
+2004-10-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Properties of numerical integration
+	methods}): Added introduction to mathematical terms.
+	(section{Predictor-corrector methods}): Started to document
+	the predictor-corrector methods.
+
+	* stabbashford.m, stabmoulton.m: Additionally displaying the
+	error coefficients of each integration order.
+
 2004-09-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (dist_man_MANS): Added simple man page.
