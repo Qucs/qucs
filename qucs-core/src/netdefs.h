@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: netdefs.h,v 1.1 2004-10-29 18:01:29 ela Exp $
+ * $Id: netdefs.h,v 1.2 2004-10-31 12:35:46 ela Exp $
  *
  */
 
@@ -97,6 +97,9 @@ struct define_t {
   struct property_t required[64]; // required properties
   struct property_t optional[64]; // optional proberties
 };
+
+// Maximum number of S-parameter ports.
+#define MAX_PORTS 256
 
 #define PROP_ACTION       1
 #define PROP_COMPONENT    0

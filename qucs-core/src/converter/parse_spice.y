@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_spice.y,v 1.1 2004-10-29 18:01:29 ela Exp $
+ * $Id: parse_spice.y,v 1.2 2004-10-31 12:35:46 ela Exp $
  *
  */
 
@@ -46,14 +46,11 @@
 %token End
 %token InvalidCharacter
 %token Identifier
-%token Capitals
 %token Eol
 %token Float
-%token Spacer
 %token Node
-%token ModelStart
-%token ModelEnd
 %token Action
+%token Function
 
 %union {
   char * ident;
@@ -64,10 +61,10 @@
   struct value_t * value;
 }
 
-%type <ident> Identifier Node Capitals Action
-%type <str> TitleLines Spacer Float
+%type <ident> Identifier Node Action Function Value Float
+%type <str> TitleLines
 %type <definition> DefinitionLine
-%type <value> NodeList PairList
+%type <value> NodeList PairList Model Expr
 
 %%
 
@@ -93,41 +90,39 @@ InputLine:
 ;
 
 DefinitionLine:
-  Capitals NodeList PairList Eol { 
+  Identifier NodeList PairList Eol { 
     $$ = create_definition ();
     $$->action = PROP_COMPONENT;
     $$->type = (char *) calloc (2, 1);
     $$->type[0] = $1[0];
     $$->instance = $1;
-    $$->values = value_root;
+    $$->values = netlist_append_values ($2, $3);
     $$->line = spice_lineno;
     value_root = NULL;
   }
-  | Identifier NodeList PairList Eol { 
+  | Identifier NodeList PairList Expr PairList Eol { 
     $$ = create_definition ();
     $$->action = PROP_COMPONENT;
     $$->type = (char *) calloc (2, 1);
     $$->type[0] = $1[0];
     $$->instance = $1;
-    $$->values = value_root;
-    $$->line = spice_lineno;
-    value_root = NULL;
-  }
-  | Identifier NodeList PairList Model PairList Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_COMPONENT;
-    $$->type = (char *) calloc (2, 1);
-    $$->type[0] = $1[0];
-    $$->instance = $1;
-    $$->values = $3;
+    struct value_t * here = netlist_append_values ($2, $3);
+    here = netlist_append_values (here, $4);
+    here = netlist_append_values (here, $5);
+    $$->values = here;
     $$->line = spice_lineno;
     value_root = NULL;
   }
   | Identifier NodeList Identifier Eol { 
     $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
+    $$->action = PROP_COMPONENT;
+    $$->type = (char *) calloc (2, 1);
+    $$->type[0] = $1[0];
     $$->instance = $1;
+    struct value_t * here = create_value ();
+    here->ident = $3;
+    here->hint = HINT_NAME;
+    $$->values = netlist_append_values ($2, here);
   }
   | Action NodeList Eol { 
     $$ = create_definition ();
@@ -138,97 +133,77 @@ DefinitionLine:
     $$->line = spice_lineno;
     value_root = NULL;
   }
-  | Action Identifier ModelList Eol { 
+  | Action Identifier Model Eol {
+    /* e.g. .MODEL QNL NPN BF=80 RB=100 CCS=2PF */
     $$ = create_definition ();
     $$->action = PROP_ACTION;
     $$->type = strdup (&$1[1]);
-    $$->instance = $1;
-  }
-  | Action Identifier Identifier PairList Eol { 
-    $$ = create_definition ();
-    $$->action = PROP_ACTION;
-    $$->type = strdup (&$1[1]);
-    $$->instance = $1;
-  }
+    $$->instance = $2;
+    $$->line = spice_lineno;
+    $$->values = $3;
+   }
   | Action Identifier Float NodeList Eol { 
     $$ = create_definition ();
     $$->action = PROP_ACTION;
     $$->type = strdup (&$1[1]);
     $$->instance = $1;
+    $$->line = spice_lineno;
   }
   | Action Identifier Node NodeList Eol { 
     $$ = create_definition ();
     $$->action = PROP_ACTION;
     $$->type = strdup (&$1[1]);
     $$->instance = $1;
+    $$->line = spice_lineno;
   }
 ;
 
-PairList: /* nothing */ { /* $$ = value_root = NULL; */ }
-  | Identifier Spacer Float PairList {
+Value: Float | Node;
+
+PairList: /* nothing */ { $$ = NULL; }
+  | Identifier Value PairList {
     $$ = create_value ();
     $$->ident = $1;
-    $$->value = strtod ($3, NULL);
+    $$->unit = $2;
     $$->hint = HINT_PAIR;
-    $$->next = value_root;
-    value_root = $$;
-  }
-  | Identifier Float PairList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->value = strtod ($2, NULL);
-    $$->hint = HINT_PAIR;
-    $$->next = value_root;
-    value_root = $$;
-  }
-  | Identifier Spacer Node PairList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->value = strtod ($3, NULL);
-    $$->hint = HINT_PAIR;
-    $$->next = value_root;
-    value_root = $$;
-  }
-  | Identifier Node PairList {
-    $$ = create_value ();
-    $$->ident = $1;
-    $$->value = strtod ($2, NULL);
-    $$->hint = HINT_PAIR;
-    $$->next = value_root;
-    value_root = $$;
+    $$->next = $3;
   }
 ;
 
-NodeList: /* nothing */ { /* $$ = value_root = NULL; */ }
+NodeList: /* nothing */ { $$ = NULL; }
   | Node NodeList {
     $$ = create_value ();
     $$->ident = $1;
     $$->value = strtod ($1, NULL);
     $$->hint = HINT_NODE | HINT_NUMBER;
-    $$->next = value_root;
-    value_root = $$;
+    $$->next = $2;
   }
   | Float NodeList {
     $$ = create_value ();
     $$->ident = $1;
     $$->value = strtod ($1, NULL);
     $$->hint = HINT_NUMBER;
-    $$->next = value_root;
-    value_root = $$;
+    $$->next = $2;
+  }
+;
+
+Expr:
+  Function NodeList {
+    $$ = create_value ();
+    $$->ident = $1;
+    $$->hint = HINT_NAME | HINT_MSTART;
+    spice_set_last_hint ($2, HINT_MSTOP);
+    $$->next = $2;    
   }
 ;
 
 Model:
-    ModelStart Identifier ModelEnd {
-  }
-  | ModelStart PairList ModelEnd {
-  }
-  | ModelStart Node NodeList ModelEnd {
-  }
-;
-
-ModelList: /* nothing */ { }
-  | Model ModelList {
+  Identifier PairList {
+    $$ = create_value ();
+    $$->ident = $1;
+    $$->hint = HINT_NAME | HINT_MSTART;
+    spice_set_last_hint ($2, HINT_MSTOP);
+    $$->next = $2;
   }
 ;
 

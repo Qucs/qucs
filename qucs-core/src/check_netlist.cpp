@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.63 2004-10-29 18:01:28 ela Exp $
+ * $Id: check_netlist.cpp,v 1.64 2004-10-31 12:35:46 ela Exp $
  *
  */
 
@@ -44,9 +44,6 @@ struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
 struct node_t * node_root = NULL;
 struct pair_t * pair_root = NULL;
-
-// Maximum number of S-parameter ports.
-#define MAX_PORTS 256
 
 // Include list of available components.
 #include "qucsdefs.h"

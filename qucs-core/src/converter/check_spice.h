@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.h,v 1.1 2004-10-29 18:01:29 ela Exp $
+ * $Id: check_spice.h,v 1.2 2004-10-31 12:35:46 ela Exp $
  *
  */
 
@@ -31,6 +31,9 @@
 #define HINT_NUMBER       2
 #define HINT_NAME         4
 #define HINT_PAIR         8
+#define HINT_DONE        16
+#define HINT_MSTART      32
+#define HINT_MSTOP       64
 
 __BEGIN_DECLS
 
@@ -46,6 +49,9 @@ int  spice_checker (void);
 int  spice_parse (void);
 int  spice_error (char *);
 int  spice_lex (void);
+
+void spice_set_last_hint (struct value_t *, int);
+struct value_t * netlist_append_values (struct value_t *, struct value_t *);
 
 __END_DECLS
 
