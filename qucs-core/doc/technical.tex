@@ -2967,6 +2967,8 @@ the diode model.
 \end{figure}
 \FloatBarrier
 
+\label{sec:DCdiode}
+
 With
 \begin{equation}
 I_{eq} = I_{d}^{(m)} - g_{d}^{(m)}\cdot V^{(m)}
@@ -3020,7 +3022,47 @@ currents.
 \end{figure}
 \FloatBarrier
 
-Shichman-Hodges equations:
+The following table contains the model parameters for the JFET model.
+
+\addvspace{12pt}
+
+\begin{tabular}{rllll}
+Name & Symbol & Description & Unit & Default\\
+\hline
+Vt0 & $V_{Th}$ & zero -bias threshold voltage & $\volt$ & $-2.0$\\
+Beta & $\beta$ & transconductance parameter & $\ampere / \volt^{2}$ & $10^{-4}$\\
+Lambda & $\lambda$ & channel-length modulation parameter & $1/\volt$ & $0.0$\\
+Rd & $R_{D}$ & drain ohmic resistance & $\ohm$ & $0.0$\\
+Rs & $R_{S}$ & source ohmic resistance & $\ohm$ & $0.0$\\
+Is & $I_{S}$ & gate-junction saturation current & $\ampere$ & $10^{-14}$\\
+N & $N$ & gate P-N emission coefficient & & $1.0$
+\end{tabular}
+
+The current equation of the gate source diode and its derivative
+writes as follows:
+\begin{align}
+I_{GS} &= I_{S}\cdot \left(e^{\frac{V_{GS}}{N\cdot V_{T}}} - 1\right)\\
+g_{gs} &= \dfrac{\partial I_{GS}}{\partial V_{GS}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{GS}}{N\cdot V_{T}}}
+\end{align}
+
+The current equation of the gate drain diode and its derivative writes
+as follows:
+\begin{align}
+I_{GD} &= I_{S}\cdot \left(e^{\frac{V_{GD}}{N\cdot V_{T}}} - 1\right)\\
+g_{gd} &= \dfrac{\partial I_{GD}}{\partial V_{GD}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{GD}}{N\cdot V_{T}}}
+\end{align}
+
+Both equations contain the gate-junction saturation current $I_{S}$,
+the gate P-N emission coefficient $N$ and the temperature voltage
+$V_{T}$ with the Boltzmann's constant $k_{B}$ and the electron charge
+$q$.  The operating temperature $T$ must be specified in Kelvin.
+\begin{equation}
+V_{T} = \dfrac{k_{B}\cdot T}{q}
+\end{equation}
+
+
+The controlled drain currents have been defined by Shichman and Hodges
+for different modes of operations.
 
 \begin{equation}
 g_{m} = \dfrac{\partial I_{d}}{\partial V_{GS}}
@@ -3033,62 +3075,115 @@ V_{GD} = V_{GS} - V_{DS}
 \begin{itemize}
 \item normal mode: $V_{DS} > 0$
 \begin{itemize}
-\item normal mode, cutoff region: $V_{GS} - V_{T} < 0$
+\item normal mode, cutoff region: $V_{GS} - V_{Th} < 0$
 \begin{align}
 I_{d} &= 0\\
 g_{m} &= 0\\
 g_{ds} &= 0
 %\end{align}
 \intertext{
-\item normal mode, saturation region: $0 < V_{GS} - V_{T} < V_{DS}$
+\item normal mode, saturation region: $0 < V_{GS} - V_{Th} < V_{DS}$
 }
 %\begin{align}
-I_{d} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot\left(V_{GS} - V_{T}\right)^{2}\\
-g_{m} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot 2\left(V_{GS} - V_{T}\right)\\
-g_{ds} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot \lambda\left(V_{GS} - V_{T}\right)^{2}
+I_{d} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot\left(V_{GS} - V_{Th}\right)^{2}\\
+g_{m} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot 2\left(V_{GS} - V_{Th}\right)\\
+g_{ds} &= \beta \cdot\left(1 + \lambda V_{DS}\right) \cdot \lambda\left(V_{GS} - V_{Th}\right)^{2}
 %\end{align}
 \intertext{
-\item normal mode, linear region: $V_{DS} < V_{GS} - V_{T}$
+\item normal mode, linear region: $V_{DS} < V_{GS} - V_{Th}$
 }
 %\begin{align}
-I_{d} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot\left(2 \left(V_{GS} - V_{T}\right) - V_{DS}\right)\cdot V_{DS}\\
+I_{d} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot\left(2 \left(V_{GS} - V_{Th}\right) - V_{DS}\right)\cdot V_{DS}\\
 g_{m} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot 2\cdot V_{DS}\\
-g_{ds} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot 2\left(V_{GS} - V_{T} - V_{DS}\right) + \beta \cdot \lambda V_{DS}\cdot\left(2\left(V_{GS} - V_{T}\right) - V_{DS}\right)
+g_{ds} &= \beta\cdot\left(1 + \lambda V_{DS}\right)\cdot 2\left(V_{GS} - V_{Th} - V_{DS}\right) + \beta \cdot \lambda V_{DS}\cdot\left(2\left(V_{GS} - V_{Th}\right) - V_{DS}\right)
 \end{align}
 \end{itemize}
 \item inverse mode: $V_{DS} < 0$
 \begin{itemize}
-\item inverse mode, cutoff region: $V_{GD} - V_{T} < 0$
+\item inverse mode, cutoff region: $V_{GD} - V_{Th} < 0$
 \begin{align}
 I_{d} &= 0\\
 g_{m} &= 0\\
 g_{ds} &= 0
 %\end{align}
 \intertext{
-\item inverse mode, saturation region: $0 < V_{GD} - V_{T} < -V_{DS}$
+\item inverse mode, saturation region: $0 < V_{GD} - V_{Th} < -V_{DS}$
 }
 %\begin{align}
-I_{d} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot\left(V_{GD} - V_{T}\right)^{2}\\
-g_{m} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{T}\right)\\
-g_{ds} &= \beta \cdot\lambda \left(V_{GD} - V_{T}\right)^{2} + \beta\cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{T}\right)
+I_{d} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot\left(V_{GD} - V_{Th}\right)^{2}\\
+g_{m} &= -\beta \cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{Th}\right)\\
+g_{ds} &= \beta \cdot\lambda \left(V_{GD} - V_{Th}\right)^{2} + \beta\cdot\left(1 - \lambda V_{DS}\right) \cdot 2\left(V_{GD} - V_{Th}\right)
 %\end{align}
 \intertext{
-\item inverse mode, linear region: $-V_{DS} < V_{GD} - V_{T}$
+\item inverse mode, linear region: $-V_{DS} < V_{GD} - V_{Th}$
 }
 %\begin{align}
-I_{d} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot\left(2 \left(V_{GD} - V_{T}\right) + V_{DS}\right)\cdot V_{DS}\\
+I_{d} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot\left(2 \left(V_{GD} - V_{Th}\right) + V_{DS}\right)\cdot V_{DS}\\
 g_{m} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot 2\cdot V_{DS}\\
-g_{ds} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot 2\left(V_{GD} - V_{T}\right) - \beta \cdot \lambda V_{DS}\cdot\left(2\left(V_{GD} - V_{T}\right) + V_{DS}\right)
+g_{ds} &= \beta\cdot\left(1 - \lambda V_{DS}\right)\cdot 2\left(V_{GD} - V_{Th}\right) - \beta \cdot \lambda V_{DS}\cdot\left(2\left(V_{GD} - V_{Th}\right) + V_{DS}\right)
 \end{align}
 \end{itemize}
 \end{itemize}
 
-Current vector:
+The MNA matrix entries for the voltage controlled drain current source
+can be written as:
 
+\addvspace{12pt}
+
+\begin{center}
+\begin{tabular}{p{1.5cm}|lll}
+\raggedleft & \centering G & \centering S & controlling nodes\\
+\hline
+\raggedleft D & $+g_{m}$ & $-g_{m}$ &\\
+\raggedleft S & $-g_{m}$ & $+g_{m}$ &\\
+\raggedleft controlled nodes & & &
+\end{tabular}
+\end{center}
+
+\addvspace{12pt}
+
+With the accompanied DC model shown in fig. \ref{fig:DCjfet} using the
+same principles as explained in section \ref{sec:DCdiode} on page
+\pageref{sec:DCdiode} it is possible to build the complete MNA matrix
+of the intrinsic JFET.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{dcjfet}
+\end{center}
+\caption{accompanied DC model of intrinsic JFET}
+\label{fig:DCjfet}
+\end{figure}
+\FloatBarrier
+
+Applying the rules for creating the MNA matrix of an arbitrary network
+the complete MNA admittance matrix entries for the intrinsic junction
+FET are:
+\begin{equation}
+A_{FET} =
+\begin{bmatrix}
+g_{gd} + g_{gs} & -g_{gd} & -g_{gs}\\
+-g_{gd} + g_{m} & g_{ds} + g_{gd} & -g_{ds} - g_{m}\\
+-g_{gs} - g_{m} & -g_{ds} & g_{gs} + g_{ds} + g_{m}
+\end{bmatrix}
+\end{equation}
+
+The remaining current vector can be written as
+
+\begin{equation}
+z_{FET} =
+\begin{bmatrix}
+-I_{GD_{eq}} - I_{GS_{eq}}\\
++I_{GD_{eq}} - I_{DS_{eq}}\\
++I_{GS_{eq}} + I_{DS_{eq}}
+\end{bmatrix}
+\end{equation}
+
+with
 \begin{align}
-I_{Geq} &= -I_{GS} + g_{gs}\cdot V_{GS} -I_{GD} + g_{gd}\cdot V_{GD}\\
-I_{Deq} &= I_{GD} - g_{gd}\cdot V_{GD} - I_{d} + g_{m}\cdot V_{GS} + g_{ds}\cdot V_{DS}\\
-I_{Seq} &= I_{GS} - g_{gs}\cdot V_{GS} + I_{d} - g_{m}\cdot V_{GS} - g_{ds}\cdot V_{DS}
+I_{GS_{eq}} &= I_{GS} - g_{gs}\cdot V_{GS}\\
+I_{GD_{eq}} &= I_{GD} - g_{gd}\cdot V_{GD}\\
+I_{DS_{eq}} &= I_{d} - g_{m}\cdot V_{GS} - g_{ds}\cdot V_{DS}
 \end{align}
 
 \chapter{Microstrip components}
