@@ -110,6 +110,16 @@ void SimMessage::slotSimEnded()
 }
 
 // ------------------------------------------------------------------------
+// Is called when the simulation ended with errors before starting simulator process.
+void SimMessage::errorSimEnded()
+{
+  Abort->setText(tr("Close window"));
+  Display->setDisabled(false);
+
+  emit SimulationEnded(1, this);
+}
+
+// ------------------------------------------------------------------------
 void SimMessage::slotClose()
 {
   SimProcess.blockSignals(true);  // No 'processexited' signal. Is set back in 'startProcess'.

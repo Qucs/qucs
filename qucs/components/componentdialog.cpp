@@ -222,8 +222,10 @@ void ComponentDialog::slotApplyPropName()
 // Is called if the checkbox is pressed (changed).
 void ComponentDialog::slotApplyState(int State)
 {
-  if(State == QButton::On) prop->currentItem()->setText(2, tr("yes"));
-  else prop->currentItem()->setText(2, tr("no"));
+  QListViewItem *item = prop->currentItem();
+  if(item == 0) return;
+  if(State == QButton::On) item->setText(2, tr("yes"));
+  else item->setText(2, tr("no"));
 }
 
 // -------------------------------------------------------------------------

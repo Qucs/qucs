@@ -1,3 +1,23 @@
+2004-04-03  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* diagrams can show independent variables
+	* fixed crash with messagebox class
+	* rectdiagram: more beautiful
+	* the graphs of diagrams can be selected.
+
+2004-04-02  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* componentdialog: fixed crash if show box is pressed in
+	components without properties
+	* fixed delete bug for component/diagram dialog
+	* backspace can also used for deleting
+	* polardiagram: more beautiful
+
+2004-03-31  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* F1=help, F2=simulate, ctrl+R=rotate, ctrl+M=mirror about y,
+	F4=change to data display/schematic
+
 2004-03-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* placing a ground on a labeled wire line or node deletes
