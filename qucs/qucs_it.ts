@@ -2045,7 +2045,8 @@ very simple text editor for Qucs
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>
@@ -2074,6 +2075,54 @@ Usage:  qucsedit [-r] filename
         <source>Only one filename allowed!
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal current pulse source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current before and after the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start time of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ending time of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rise time of the leading edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fall time of the trailing edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal voltage pulse source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage before and after the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Pulse</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

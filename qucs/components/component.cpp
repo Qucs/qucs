@@ -587,6 +587,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "ac") c = new Ampere_ac();
         else if(cstr == "noise") c = new Ampere_noise();
         else if(cstr == "solator") c = new Isolator();
+        else if(cstr == "pulse") c = new iPulse();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
         break;
@@ -595,6 +596,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "CCS") c = new VCCS();
         else if(cstr == "CVS") c = new VCVS();
         else if(cstr == "noise") c = new Volt_noise();
+        else if(cstr == "pulse") c = new vPulse();
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();
