@@ -5,6 +5,7 @@ canonical host name          	compiler  	release	results
 
 i686-pc-linux-gnu		gcc 2.95.4	0.0.2	ok
 i586-pc-linux-gnu		gcc 2.95.3	0.0.2	ok
+x86_64-unknown-linux-gnu	gcc 3.3.4	0.0.4	ok
 i686-pc-cygwin			gcc 2.95.3-10	0.0.2	ok
 i386-pc-mingw32			gcc 2.95.3-10	0.0.2	ok, using -mno-cygwin
 i386-pc-mingw32			gcc 2.95.3-6	0.0.3	ok, cross compiled

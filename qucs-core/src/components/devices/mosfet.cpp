@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.13 2004/10/16 16:42:31 ela Exp $
+ * $Id: mosfet.cpp,v 1.14 2004/10/17 09:44:30 ela Exp $
  *
  */
 
@@ -139,6 +139,7 @@ void mosfet::initDC (void) {
   UbsPrev = real (getV (NODE_B) - getV (NODE_S));
   UbdPrev = real (getV (NODE_B) - getV (NODE_D));
   UdsPrev = UgsPrev - UgdPrev;
+  UgbPrev = UgsPrev - UbsPrev;
 
   // initialize the MOSFET
   initModel ();
@@ -356,7 +357,7 @@ void mosfet::calcDC (void) {
   nr_double_t T   = getPropertyDouble ("Temp");
 
   nr_double_t Ugs, Ugd, Ut, IeqBS, IeqBD, IeqDS, UbsCrit, UbdCrit;
-  nr_double_t Uds, gtiny, Ubs, Ubd;
+  nr_double_t Uds, gtiny, Ubs, Ubd, Ugb;
 
   T = kelvin (T);
   Ut = T * kBoverQ;
@@ -365,6 +366,7 @@ void mosfet::calcDC (void) {
   Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
   Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
   Uds = Ugs - Ugd;
+  Ugb = Ugs - Ubs;
 
   // critical voltage necessary for bad start values
   UbsCrit = pnCriticalVoltage (Iss, Ut * n);
@@ -391,8 +393,9 @@ void mosfet::calcDC (void) {
     Ubd = pnVoltage (Ubd, UbdPrev, Ut * n, UbdCrit);
     Ubs = Ubd + Uds;
   }
-  UgsPrev = Ugs; UgdPrev = Ugd; UbsPrev = Ubs; UbdPrev = Ubd; UdsPrev = Uds; 
-  
+  UgsPrev = Ugs; UgdPrev = Ugd; UgbPrev = Ugb;
+  UbdPrev = Ubd; UdsPrev = Uds; UbsPrev = Ubs;
+
   // parasitic bulk-source diode
   gtiny = Ubs < - 10 * Ut * n ? Iss : 0;
   gbs = pnConductance (Ubs, Iss, Ut * n) + gtiny;
@@ -598,9 +601,18 @@ void mosfet::calcTR (nr_double_t) {
   nr_double_t Ubs = getOperatingPoint ("Vbs");
   nr_double_t Ugb = Ugs - Ubs;
 
-  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd, Cgd * Ugd);
-  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs, Cgs * Ugs);
   transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd, Qbd);
   transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs, Qbs);
-  transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb, Cgb * Ugb);
+
+  // handle Meyer charges and capacitances
+  Qgd = Cgd * (Ugd - UgdPrev) + getState (qgdState, 1);
+  Qgs = Cgs * (Ugs - UgsPrev) + getState (qgsState, 1);
+  Qgb = Cgb * (Ugb - UgbPrev) + getState (qgbState, 1);
+  // TODO: not yet correct
+  Qgd = Cgd * Ugd;
+  Qgs = Cgs * Ugs;
+  Qgb = Cgb * Ugb;
+  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd, Qgd);
+  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs, Qgs);
+  transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb, Qgb);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.17 2004/10/16 16:42:31 ela Exp $
+ * $Id: bjt.cpp,v 1.18 2004/10/17 09:44:30 ela Exp $
  *
  */
 
@@ -72,9 +72,6 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Rbb  = getOperatingPoint ("Rbb");
   nr_double_t Ptf  = getPropertyDouble ("Ptf");
   nr_double_t Tf   = getPropertyDouble ("Tf");
-
-  // summarize internal and external base-collector capacitance
-  if (Rbb == 0) Cbci += Cbcx;
 
   // compute admittance matrix entries
   complex Ybe = rect (gbe, 2.0 * M_PI * frequency * Cbe);
@@ -203,7 +200,8 @@ void bjt::initDC (void) {
   // no series resistance at base
   else {
     disableResistance (this, rb, getNet (), NODE_B);
-    Rbb = 0; // set this operating point
+    Rbb = 0.0;                 // set this operating point
+    setProperty ("Xcjc", 1.0); // other than 1 is senseless here
   }
 }
 
@@ -406,14 +404,17 @@ void bjt::calcOperatingPoints (void) {
   Qbe += If * Tff / Qb;
 
   // depletion and diffusion capacitance of base-collector diode
+  nr_double_t Qbc;
   Cbc = pnCapacitance (Ubc, Cjc0, Vjc, Mjc, Fc);
   Cbci = Cbc * Xcjc + Tr * gir;
-  Qbci = Xcjc * pnCharge (Ubc, Cjc0, Vjc, Mjc, Fc) + Tr * Ir;
+  Qbc = pnCharge (Ubc, Cjc0, Vjc, Mjc, Fc);
+  Qbci = Xcjc * Qbc + Tr * Ir;
   Cbcx = Cbc * (1 - Xcjc);
+  Qbcx = Qbc * (1 - Xcjc);
 
   // depletion capacitance of collector-substrate diode
   Ccs = pnCapacitance (Ucs, Cjs0, Vjs, Mjs);
-  Qcs = pnCharge (Ucs, Cjs0, Vjs, Mjs, 0);
+  Qcs = pnCharge (Ucs, Cjs0, Vjs, Mjs);
 
   // finally save the operating points
   setOperatingPoint ("Cbe", Cbe);
@@ -434,17 +435,22 @@ void bjt::calcOperatingPoints (void) {
 }
 
 void bjt::initSP (void) {
-  nr_double_t Cbcx = getOperatingPoint ("Cbcx");
-  nr_double_t Rbb  = getOperatingPoint ("Rbb");
+  processCbcx ();
+}
+
+void bjt::processCbcx (void) {
+  nr_double_t Xcjc = getPropertyDouble ("Xcjc");
+  nr_double_t Rbm  = getPropertyDouble ("Rbm");
+  nr_double_t Cjc0 = getPropertyDouble ("Cjc");
 
   /* if necessary then insert external capacitance between internal
      collector node and external base node */
-  if (Rbb != 0.0 && Cbcx != 0.0) {
+  if (Rbm != 0.0 && Cjc0 != 0.0 && Xcjc != 1.0) {
     if (!deviceEnabled (cbcx)) {
       cbcx = splitCapacitance (this, cbcx, getNet (), "Cbcx", rb->getNode (1),
 			       getNode (NODE_C));
     }
-    cbcx->setProperty ("C", Cbcx);  // S-parameters will be computed
+    cbcx->setProperty ("C", getOperatingPoint ("Cbcx"));
   }
   else {
     disableCapacitance (this, cbcx, getNet ());
@@ -452,7 +458,7 @@ void bjt::initSP (void) {
 }
 
 void bjt::initAC (void) {
-  initSP ();
+  processCbcx ();
   clearI ();
 }
 
@@ -467,12 +473,19 @@ void bjt::calcAC (nr_double_t frequency) {
 #define qcsState 4 // collector-substrate charge state
 #define ccsState 5 // collector-substrate current state
 
+#define qbxState 0 // external base-collector charge state
+#define cbxState 1 // external base-collector current state
+
 void bjt::initTR (void) {
   setStates (6);
   initDC ();
+
+  // handle external base-collector capacitance appropriately
+  processCbcx ();
+  if (deviceEnabled (cbcx)) cbcx->setProperty ("Controlled", getName ());
 }
 
-void bjt::calcTR (nr_double_t) {
+void bjt::calcTR (nr_double_t t) {
   calcDC ();
   calcOperatingPoints ();
 
@@ -480,11 +493,23 @@ void bjt::calcTR (nr_double_t) {
   nr_double_t Ubc = getOperatingPoint ("Vbc");
   nr_double_t Ucs = getOperatingPoint ("Vcs");
   nr_double_t Cbe = getOperatingPoint ("Cbe");
-  nr_double_t Cbc = getOperatingPoint ("Cbci");
   nr_double_t Ccs = getOperatingPoint ("Ccs");
+  nr_double_t Cbci = getOperatingPoint ("Cbci");
+  nr_double_t Cbcx = getOperatingPoint ("Cbcx");
+
+  // handle Rbb and Cbcx appropriately
+  if (Rbb != 0.0) {
+    rb->setProperty ("R", Rbb);
+    rb->calcTR (t);
+    if (deviceEnabled (cbcx)) {
+      cbcx->clearI ();
+      cbcx->clearY ();
+      cbcx->transientCapacitance (qbxState, 1, 2, Cbcx, Ubc, Qbcx);
+    }
+  }
 
   // TODO: excess phase
   transientCapacitance (qbeState, NODE_B, NODE_E, Cbe, Ube, Qbe);
-  transientCapacitance (qbcState, NODE_B, NODE_C, Cbc, Ubc, Qbci);
+  transientCapacitance (qbcState, NODE_B, NODE_C, Cbci, Ubc, Qbci);
   transientCapacitance (qcsState, NODE_S, NODE_C, Ccs, Ucs, Qcs);
 }

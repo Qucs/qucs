@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.14 2004/10/14 13:28:25 ela Exp $
+ * $Id: trsolver.h,v 1.15 2004/10/17 09:44:30 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include "states.h"
 
 class sweep;
+class circuit;
 
 class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
 {
@@ -55,6 +56,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   void predictBashford (void);
   void predictEuler (void);
   void predictGear (void);
+  void initCircuitTR (circuit *);
 
  private:
   sweep * swp;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.h,v 1.7 2004/10/16 16:42:31 ela Exp $
+ * $Id: device.h,v 1.8 2004/10/17 09:44:30 ela Exp $
  *
  */
 
@@ -49,6 +49,8 @@ class device
 			       nr_double_t, nr_double_t);
   friend nr_double_t pnCapacitance (nr_double_t, nr_double_t, nr_double_t,
 				    nr_double_t);
+  friend nr_double_t pnCharge (nr_double_t, nr_double_t, nr_double_t,
+			       nr_double_t);
   friend nr_double_t pnCriticalVoltage (nr_double_t, nr_double_t);
   friend nr_double_t fetVoltage (nr_double_t, nr_double_t, nr_double_t);
   friend nr_double_t fetVoltageDS (nr_double_t, nr_double_t);

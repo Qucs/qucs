@@ -1,3 +1,9 @@
+2004-10-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.tex (subsection{Diffusion Capacitance}): Scribbled
+	down charge and capacitance of the usual depletion and diffusion
+	capacitance.
+
 2004-10-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* *.tex: Added copyright notice in all LaTex files.

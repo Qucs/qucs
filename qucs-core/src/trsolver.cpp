@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.24 2004/10/16 16:42:30 ela Exp $
+ * $Id: trsolver.cpp,v 1.25 2004/10/17 09:44:30 ela Exp $
  *
  */
 
@@ -484,13 +484,20 @@ void trsolver::initTR (void) {
 
   // tell circuits about the transient analysis
   circuit * root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initTR ();
-    c->initStates ();
-    c->setCoefficients (corrCoeff);
-    c->setOrder (corrOrder);
-    setIntegrationMethod (c, corrType);
-  }
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    initCircuitTR (c);
+  // also initialize created circuits
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getPrev ())
+    initCircuitTR (c);
+}
+
+// The function initialize a single circuit.
+void trsolver::initCircuitTR (circuit * c) {
+  c->initTR ();
+  c->initStates ();
+  c->setCoefficients (corrCoeff);
+  c->setOrder (corrOrder);
+  setIntegrationMethod (c, corrType);  
 }
 
 /* This function saves the results of a single solve() functionality
