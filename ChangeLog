@@ -1,3 +1,8 @@
+2004-07-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Ensured that the default prefix gets set early
+	in the configure script.
+
 2004-06-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Displaying warning message if the 'moc' compiler

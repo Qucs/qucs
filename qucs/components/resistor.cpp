@@ -36,6 +36,8 @@ Resistor::Resistor(bool european)
 
   Props.append(new Property("R", "50 Ohm", true,
 		QObject::tr("ohmic resistance in Ohms")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
 
   // this must be the last property in the list !!!
   Props.append(new Property("Symbol", "european", false,
