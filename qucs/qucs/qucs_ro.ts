@@ -2679,10 +2679,6 @@ Sets properties of the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Font:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Document Background Color:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2704,6 +2700,10 @@ Sets properties of the application</source>
     </message>
     <message>
         <source>Default Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font (set after reload):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
