@@ -1,3 +1,8 @@
+2004-09-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Implemented preliminary transient model
+	for bipolar transistor (SGP).  TODO:  Parameter 'Ptf'.
+
 2004-09-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* cross.cpp, tee.cpp: Implemented AC and DC functionality.
