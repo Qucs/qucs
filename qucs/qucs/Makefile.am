@@ -43,19 +43,18 @@ noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h \
   node.h wirelabel.h qucsfile.h viewpainter.h
 
 # rules for translations
-TRANSLATIONS = $(srcdir)/qucs_de.ts $(srcdir)/qucs_pl.ts $(srcdir)/qucs_fr.ts \
-  $(srcdir)/qucs_it.ts $(srcdir)/qucs_ro.ts $(srcdir)/qucs_pt.ts \
-  $(srcdir)/qucs_es.ts
+TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts qucs_it.ts qucs_ro.ts \
+  qucs_pt.ts qucs_es.ts
 GENTRANSLATIONS = qtgeneric_untranslated.ts qtgeneric_de.ts qtgeneric_fr.ts
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
-%.ts: $(qucs_SOURCES)
+qucs_%.ts: $(qucs_SOURCES)
 	@echo "Updating translations...";
 	@list='$(TRANSLATIONS)'; for file in $$list; do \
 	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
 	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp \
 	  $(srcdir)/dialogs/*.cpp  $(top_srcdir)/qucs-help/*.cpp \
-	  $(top_srcdir)/qucs-edit/*.cpp` -ts $$file; \
+	  $(top_srcdir)/qucs-edit/*.cpp` -ts $(srcdir)/$$file; \
 	done
 
 %.qm: %.ts
