@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * avoided working directory changes during program execution
  * translation into polish
  * some new components (e.g. transistors)
  * undo function

@@ -87,11 +87,11 @@ if(show) {
   FillStyleBox->insertItem(tr("no filling"));
   FillStyleBox->insertItem(tr("solid"));
   FillStyleBox->insertItem(tr("dense 1 (densest)"));
-  FillStyleBox->insertItem(tr("dense 2 (densest)"));
-  FillStyleBox->insertItem(tr("dense 3 (densest)"));
-  FillStyleBox->insertItem(tr("dense 4 (densest)"));
-  FillStyleBox->insertItem(tr("dense 5 (densest)"));
-  FillStyleBox->insertItem(tr("dense 6 (densest)"));
+  FillStyleBox->insertItem(tr("dense 2"));
+  FillStyleBox->insertItem(tr("dense 3"));
+  FillStyleBox->insertItem(tr("dense 4"));
+  FillStyleBox->insertItem(tr("dense 5"));
+  FillStyleBox->insertItem(tr("dense 6"));
   FillStyleBox->insertItem(tr("dense 7 (least dense)"));
   FillStyleBox->insertItem(tr("horizontal line"));
   FillStyleBox->insertItem(tr("vertical line"));

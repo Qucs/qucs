@@ -363,23 +363,23 @@
     </message>
     <message>
         <source>dense 2 (densest)</source>
-        <translation>denso 2 (più denso)</translation>
+        <translation type="obsolete">denso 2 (più denso)</translation>
     </message>
     <message>
         <source>dense 3 (densest)</source>
-        <translation>denso 3 (più denso)</translation>
+        <translation type="obsolete">denso 3 (più denso)</translation>
     </message>
     <message>
         <source>dense 4 (densest)</source>
-        <translation>denso 4 (più denso)</translation>
+        <translation type="obsolete">denso 4 (più denso)</translation>
     </message>
     <message>
         <source>dense 5 (densest)</source>
-        <translation>denso 5 (più denso)</translation>
+        <translation type="obsolete">denso 5 (più denso)</translation>
     </message>
     <message>
         <source>dense 6 (densest)</source>
-        <translation>denso 6 (più denso)</translation>
+        <translation type="obsolete">denso 6 (più denso)</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
@@ -423,6 +423,26 @@
     </message>
     <message>
         <source>Filling Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 6</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2895,7 +2915,7 @@ Errori:
         <source>This will destroy all the project
 files permanently !
 Go on ?</source>
-        <translation>Questo cancellerà definitivamente
+        <translation type="obsolete">Questo cancellerà definitivamente
 tutti i file del progetto !
 Continuare ?</translation>
     </message>
@@ -2987,6 +3007,10 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will destroy all the project files permanently ! Continue ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,7 +2,7 @@
                           qucsdoc.cpp  -  description
                              -------------------
     begin                : Wed Sep 3 2003
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -2321,8 +2321,11 @@ bool QucsDoc::deleteElements()
 // Updates the graph data of all diagrams.
 void QucsDoc::reloadGraphs()
 {
-  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next())
-    pd->loadGraphData(DataSet);  // load graphs from data files
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {
+    QFileInfo Info(DocName);
+    // load graphs from data files
+    pd->loadGraphData(Info.dirPath()+"/"+DataSet);
+  }
 }
 
 // ---------------------------------------------------
