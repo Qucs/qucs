@@ -1062,7 +1062,7 @@ Nieznane pole!</translation>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation>krok czasowy w sekundach</translation>
+        <translation type="obsolete">krok czasowy w sekundach</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
@@ -1973,6 +1973,22 @@ Błędny początek linii!</translation>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of simulation time steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>integration method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>order of integration method</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

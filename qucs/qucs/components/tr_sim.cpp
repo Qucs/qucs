@@ -49,12 +49,22 @@ TR_Sim::TR_Sim()
   Model = ".TR";
   Name  = "TR";
 
+  Props.append(new Property("Type", "lin", true,
+	QObject::tr("sweep type")+" [lin, log]"));
   Props.append(new Property("Start", "0", true,
-			QObject::tr("start time in seconds")));
+	QObject::tr("start time in seconds")));
   Props.append(new Property("Stop", "1 ms", true,
-			QObject::tr("stop time in seconds")));
-  Props.append(new Property("Step", "10 us", true,
-			QObject::tr("time step in seconds")));
+	QObject::tr("stop time in seconds")));
+  Props.append(new Property("Points", "10", false,
+	QObject::tr("number of simulation time steps")));
+  Props.append(new Property("IntegrationMethod", "Trapezoidal", false,
+	QObject::tr("integration method")+" [Euler, Trapezoidal, Gear]"));
+  Props.append(new Property("Order", "2", false,
+	QObject::tr("order of integration method")+" (1-6)"));
+  Props.append(new Property("InitialStep", "1 ns", false,
+	QObject::tr("initial step size in seconds")));
+  Props.append(new Property("MinStep", "1e-16", false,
+	QObject::tr("minimum step size in seconds")));
 }
 
 TR_Sim::~TR_Sim()
