@@ -66,27 +66,28 @@ QString QucsFile::createClipboardFile()
 
   // Build element document.
   s += "<Components>\n";
-  for(pc = Doc->Comps->first(); pc != 0; pc = Comps->next())
+  for(pc = Doc->Comps->first(); pc != 0; pc = Doc->Comps->next())
     if(pc->isSelected) {
       s += pc->save()+"\n";  z++; }
   s += "</Components>\n";
 
   s += "<Wires>\n";
-  for(pw = Doc->Wires->first(); pw != 0; pw = Wires->next())
+  for(pw = Doc->Wires->first(); pw != 0; pw = Doc->Wires->next())
     if(pw->isSelected) {
       s += pw->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
-  for(pd = Doc->Diags->first(); pd != 0; pd = Diags->next())
+  for(pd = Doc->Diags->first(); pd != 0; pd = Doc->Diags->next())
     if(pd->isSelected) {
       s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
-  for(pp = Doc->Paints->first(); pp != 0; pp = Paints->next())
-    if(pp->isSelected) {
-      s += "<"+pp->save()+">\n";  z++; }
+  for(pp = Doc->Paints->first(); pp != 0; pp = Doc->Paints->next())
+    if(pp->isSelected)
+      if(pp->Name != "PortSym ") {
+        s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";
 
   if(z == 0) return "";   // return empty if no selection
@@ -483,13 +484,13 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     cstr = Line.section(' ',0,0);    // painting type
          if(cstr == "Line") p = new GraphicLine();
     else if(cstr == "EArc") p = new EllipseArc();
+    else if(cstr == "PortSym") p = new PortSymbol();
     // all other paintings are for schematics only
     else if(Doc->symbolMode) continue;
     else if(cstr == "Text") p = new GraphicText();
     else if(cstr == "Rectangle") p = new Rectangle();
     else if(cstr == "Arrow") p = new Arrow();
     else if(cstr == "Ellipse") p = new Ellipse();
-    else if(cstr == "PortSym") p = new PortSymbol();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nUnknown painting!"));
@@ -619,7 +620,27 @@ QString QucsFile::createUndoString(char Op)
   s += "</>\n";
 
   for(pp = Paints->first(); pp != 0; pp = Paints->next())
-    s += pp->save()+"\n";
+    s += "<"+pp->save()+">\n";
+  s += "</>\n";
+
+  return s;
+}
+
+// -------------------------------------------------------------
+// Same as "createUndoString(char Op)" but for symbol edit mode.
+QString QucsFile::createSymbolUndoString(char Op)
+{
+  Painting *pp;
+
+  // Build element document.
+  QString s = "  \n";
+  s.at(0) = Op;
+  s += "</>\n";  // short end flag for components
+  s += "</>\n";  // short end flag for wires
+  s += "</>\n";  // short end flag for diagrams
+
+  for(pp = SymbolPaints->first(); pp != 0; pp = SymbolPaints->next())
+    s += "<"+pp->save()+">\n";
   s += "</>\n";
 
   return s;
@@ -645,6 +666,25 @@ bool QucsFile::rebuild(QString *s)
   if(!loadWires(&stream))  return false;
   if(!loadDiagrams(&stream, Diags))  return false;
   if(!loadPaintings(&stream, Paints)) return false;
+
+  return true;
+}
+
+// -------------------------------------------------------------
+// Same as "rebuild(QString *s)" but for symbol edit mode.
+bool QucsFile::rebuildSymbol(QString *s)
+{
+  SymbolPaints->clear();	// delete whole document
+
+  QString Line;
+  QTextStream stream(s, IO_ReadOnly);
+  Line = stream.readLine();  // skip identity byte
+
+  // read content *************************
+  Line = stream.readLine();  // skip components
+  Line = stream.readLine();  // skip wires
+  Line = stream.readLine();  // skip diagrams
+  if(!loadPaintings(&stream, SymbolPaints)) return false;
 
   return true;
 }
