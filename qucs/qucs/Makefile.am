@@ -35,7 +35,7 @@ qucs_SOURCES = node.cpp \
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
-	paintings/libpaintings.a dialogs/libdialogs.a
+  paintings/libpaintings.a dialogs/libdialogs.a
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h \
   node.h wirelabel.h qucsfile.h
@@ -48,8 +48,8 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 	@echo "Updating translations...";
 	@list='$(TRANSLATIONS)'; for file in $$list; do \
 	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
-	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp\
-	  $(srcdir)/diagrams/*.cpp` -ts $$file; \
+	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp \
+	  $(srcdir)/dialogs/*.cpp` -ts $$file; \
 	done
 
 %.qm: %.ts

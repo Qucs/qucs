@@ -201,6 +201,21 @@
     </message>
 </context>
 <context>
+    <name>FileShowDialog</name>
+    <message>
+        <source>File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot read file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
@@ -220,6 +235,21 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HelpDialog</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -259,6 +289,29 @@
     </message>
     <message>
         <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DiscardAll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -860,6 +913,26 @@ Wrong line start!</source>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2301,6 +2374,84 @@ Sets a marker on a diagram&apos;s graph</source>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Edit File Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Set:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>open data display after simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>show Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>horizontal Grid:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vertical Grid:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SimMessage</name>
+    <message>
+        <source>Qucs Simulation Messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors and Warnings:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Goto display page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Abort simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
