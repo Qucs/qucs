@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rectdiagram.cpp  -  description
+                              rect3ddiagram.cpp
                              -------------------
-    begin                : Thu Oct 2 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Sat Mar 5 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,56 +15,82 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rectdiagram.h"
+#include "rect3ddiagram.h"
 #include "main.h"
 
 #include <math.h>
 
-#include <qmessagebox.h>
 
-
-RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;      // position of label text
   y1 = y3 = 33;
-  x2 = 240;    // initial size of diagram
-  y2 = 160;
-  x3 = 247;    // with some distance for right axes text
+  x2 = 200;    // initial size of diagram
+  y2 = 200;
+  x3 = 207;    // with some distance for right axes text
 
-  Name = "Rect";
+  rotX = 0.0;
+  rotY = 0.0; //45.0;
+  rotZ = 0.0; //315.0;
+
+  Name = "Rect3D";
   calcDiagram();
 }
 
-RectDiagram::~RectDiagram()
+Rect3DDiagram::~Rect3DDiagram()
 {
 }
 
 // ------------------------------------------------------------
-void RectDiagram::calcCoordinate(double* &xD, double* &yD,
-				 int *px, int *py, Axis *pa)
+// Calculates the coefficients for 3D -> 2D transformation
+void Rect3DDiagram::calcCoefficients()
 {
-  double x  = *(xD++);
-  double yr = *(yD++);
-  double yi = *(yD++);
-  if(xAxis.log)
-    *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
-		*double(x2) + 0.5);
-  else  *px = int((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
+  double rX = rotX * M_PI/180.0;
+  double rY = rotY * M_PI/180.0;
+  double rZ = rotZ * M_PI/180.0;
+  cxx =  cos(rY) * cos(rZ);
+  cxy = -cos(rY) * sin(rZ);
+  cxz =  sin(rY);
+  cyx =  sin(rX) * sin(rY) * cos(rZ) + cos(rX) * sin(rZ);
+  cyy = -sin(rX) * sin(rY) * sin(rZ) + cos(rX) * cos(rZ);
+  cyz = -sin(rX) * cos(rY);
+}
 
-  if(pa->log)
-    *py = int(log10(sqrt(yr*yr + yi*yi)/fabs(pa->low)) /
-		log10(pa->up/pa->low) * double(y2) + 0.5);
-  else {
-    if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
-      *py = int((yr-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
-    else   // calculate magnitude of complex number
-      *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)
-		*double(y2) + 0.5);
-  }
+// ------------------------------------------------------------
+double Rect3DDiagram::calcX_2D(double x, double y, double z)
+{
+  return cxx * x + cxy * y + cxz * z;
+}
+
+// ------------------------------------------------------------
+double Rect3DDiagram::calcY_2D(double x, double y, double z)
+{
+  return cyx * x + cyy * y + cyz * z;
+}
+
+// ------------------------------------------------------------
+void Rect3DDiagram::calcCoordinate(double* &xD, double* &yD,
+				   int *px, int *py, Axis*)
+{
+  double x3D = *(xD++) - xAxis.low;
+  double y3D = *(yD++) - yAxis.low;
+  double z3D = *(yD++) - zAxis.low;
+debug("values: %g, %g, %g", x3D, y3D, z3D);
+
+  *px = int(calcX_2D(x3D, y3D, z3D) * scaleX + 0.5) + xorig;
+  *py = int(calcY_2D(x3D, y3D, z3D) * scaleY + 0.5) + yorig;
+
+/*  if(xAxis.log)
+    *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
+		*double(x2) + 0.5);*/
+
+/*  if(yAxis.log)
+    *py = int(log10(y / yAxis.low)/log10(yAxis.up / yAxis.low)
+		*double(y2) + 0.5);*/
 }
 
 // --------------------------------------------------------------
-void RectDiagram::calcLimits()
+void Rect3DDiagram::calcLimits()
 {
   int i;
   double a, b, c;
@@ -101,7 +127,7 @@ void RectDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-bool RectDiagram::calcYAxis(Axis *Axis, int x0)
+bool Rect3DDiagram::calcYAxis(Axis *Axis, int x0)
 {
   int z;
   double GridStep, corr, zD, zDstep, GridNum;
@@ -189,15 +215,14 @@ else {  // not logarithmical
 }
 
 // --------------------------------------------------------------
-int RectDiagram::calcDiagram()
+int Rect3DDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
   Arcs.clear();
 
-  int z;
   QSize  r;
-  double GridStep, corr, zD, zDstep, GridNum;
+  double GridStep, /*corr,*/ zD, zDstep, GridNum;
   QFontMetrics  metrics(QucsSettings.font);
 
   x3 = x2 + 7;
@@ -222,7 +247,7 @@ int RectDiagram::calcDiagram()
 
   // ====  x grid  =======================================================
 if(xAxis.log) {
-  if(xAxis.autoScale) {
+/*  if(xAxis.autoScale) {
     if(xAxis.max*xAxis.min <= 0.0)  goto Frame;  // invalid
   }
   else  if(xAxis.limit_min*xAxis.limit_max <= 0.0)  goto Frame;  // invalid
@@ -255,10 +280,76 @@ if(xAxis.log) {
     }
     else
       z = int(corr*log10(zD / fabs(xAxis.low)) + 0.5);// int() implies floor()
-  }
+  }*/
 }
 else {  // not logarithmical
   back = calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
+
+
+
+
+  calcCoefficients();
+
+  double XMIN_2D, XMAX_2D, YMIN_2D, YMAX_2D, x3D, y3D, z3D, x2D, y2D;
+  double XMAX = fabs(xAxis.up - xAxis.low);
+  double YMAX = fabs(yAxis.up - yAxis.low);
+  double ZMAX = fabs(zAxis.up - zAxis.low);
+debug("up:  %g, %g, %g", xAxis.up, yAxis.up, zAxis.up);
+debug("max: %g, %g, %g", XMAX, YMAX, ZMAX);
+
+  int z;
+  XMIN_2D = YMIN_2D = XMAX_2D = YMAX_2D = 0.0;  // origin is zero
+  for(z=1; z<8; z++) {  // check 2D coordinates of all 8 corners of the quadrat
+    if(z & 1) x3D = XMAX;  else x3D = 0.0;
+    if(z & 2) y3D = YMAX;  else y3D = 0.0;
+    if(z & 4) z3D = ZMAX;  else z3D = 0.0;
+    x2D = calcX_2D(x3D, y3D, z3D);
+    y2D = calcY_2D(x3D, y3D, z3D);
+debug("2D: %g, %g", x2D, y2D);
+
+    if(x2D < XMIN_2D)  XMIN_2D = x2D;
+    if(x2D > XMAX_2D)  XMAX_2D = x2D;
+    if(y2D < YMIN_2D)  YMIN_2D = y2D;
+    if(y2D > YMAX_2D)  YMAX_2D = y2D;
+  }
+debug("min 2D: %g, %g", XMIN_2D, YMIN_2D);
+debug("max 2D: %g, %g", XMAX_2D, YMAX_2D);
+
+  scaleX = double(x2) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
+  scaleY = double(y2) / (YMAX_2D - YMIN_2D);
+debug("scale: %g, %g", scaleX, scaleY);
+  xorig  = int(XMIN_2D * scaleX);   // position of origin
+  yorig  = int(YMIN_2D * scaleY);
+debug("orig: %d, %d", xorig, yorig);
+
+  int xi, yi;
+  double *px, *py, val[2];
+  val[0] = yAxis.low;  val[1] = zAxis.low;
+  px = &xAxis.up;
+  py = val;
+  calcCoordinate(px, py, &xi, &yi, &zAxis);   // x axis
+  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
+debug("x axis: %d, %d", xi, yi);
+
+  val[0] = yAxis.up;  val[1] = zAxis.low;
+  px = &xAxis.low;
+  py = val;
+  calcCoordinate(px, py, &xi, &yi, &zAxis);   // y axis
+  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
+debug("y axis: %d, %d", xi, yi);
+
+  val[0] = yAxis.low;  val[1] = zAxis.up;
+  px = &xAxis.low;
+  py = val;
+  calcCoordinate(px, py, &xi, &yi, &zAxis);   // y axis
+  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
+debug("z axis: %d, %d\n\n", xi, yi);
+
+  return 3;
+
+
+
+
 
   double Expo;
   if(xAxis.up == 0.0)  Expo = log10(fabs(xAxis.up-xAxis.low));
@@ -308,7 +399,7 @@ Frame:
 }
 
 // ------------------------------------------------------------
-Diagram* RectDiagram::newOne()
+Diagram* Rect3DDiagram::newOne()
 {
-  return new RectDiagram();
+  return new Rect3DDiagram();
 }

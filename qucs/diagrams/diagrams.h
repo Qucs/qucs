@@ -1,6 +1,6 @@
 /***************************************************************************
-                          diagrams.h  -  description
-                             -------------------
+                                diagrams.h
+                              --------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -27,6 +27,6 @@
 #include "smithdiagram.h"
 #include "tabdiagram.h"
 #include "psdiagram.h"
-
+#include "rect3ddiagram.h"
 
 #endif

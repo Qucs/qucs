@@ -511,6 +511,13 @@ void QucsInit::initActions()
 			tr("Filter synthesis\n\nStarts QucsFilter"));
   connect(App->callFilter, SIGNAL(activated()), App, SLOT(slotCallFilter()));
 
+  App->callLine = new QAction(tr("Line calculation"), tr("Line calculation"),
+				CTRL+Key_3, App);
+  App->callLine->setStatusTip(tr("Starts QucsTrans"));
+  App->callLine->setWhatsThis(
+		tr("Line calculation\n\nStarts transmission line calculator"));
+  connect(App->callLine, SIGNAL(activated()), App, SLOT(slotCallLine()));
+
   App->simulate =
     new QAction(tr("Simulate"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "gear.png")),
@@ -667,6 +674,7 @@ void QucsInit::initMenuBar()
   toolMenu = new QPopupMenu();  // menuBar entry toolMenu
   App->callEditor->addTo(toolMenu);
   App->callFilter->addTo(toolMenu);
+  App->callLine->addTo(toolMenu);
 
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);
@@ -813,6 +821,7 @@ void QucsInit::slotHelpAbout()
     tr("Japanese by Toyoyuki Ishikawa\n")+
     tr("Italian by Giorgio Luparia\n")+
     tr("Hebrew by Dotan Nahum\n")+
+    tr("Swedish by Markus Gothe\n")+
     tr("Hungarian by Jozsef Bus"));
 }
 

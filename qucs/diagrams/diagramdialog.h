@@ -91,6 +91,7 @@ public:
   QLineEdit   *startX, *stepX, *stopX;
   QLineEdit   *startY, *stepY, *stopY;
   QLineEdit   *startZ, *stepZ, *stopZ;
+  QLineEdit   *rotationY, *rotationZ;
   QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;
