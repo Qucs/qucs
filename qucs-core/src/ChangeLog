@@ -1,5 +1,14 @@
 2004-06-22  Stefan Jahn  <stefan@lkcc.org>
 
+	* sweep.cpp: Implemented list, constant, linear and logarithmic
+	sweep definitions.
+
+	* sweep.h (class sweep): New class being the base class for
+	linear, logarithmic, constant, etc. sweeps.
+
+	* ucs.cpp (main): Implemented help message when passing -h or
+	--help options to the main program.
+
 	* spsolver.cpp (dropConnections): Removing inserted circuits
 	in the correct order (indicated by those time stamps).  This
 	fixes a bug in s-parameter analysis causing wrong kind of nodes
