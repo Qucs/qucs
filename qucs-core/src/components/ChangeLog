@@ -1,3 +1,8 @@
+2004-08-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mscorner.cpp, microstrip/msmbend.cpp: Fixed
+	frequency limitations.
+
 2004-08-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Implemented noise calculation.

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.7 2004-08-20 10:45:37 ela Exp $
+ * $Id: msmbend.cpp,v 1.8 2004-08-30 20:55:19 ela Exp $
  *
  */
 
@@ -72,9 +72,9 @@ void msmbend::calcSP (nr_double_t frequency) {
     logprint (LOG_STATUS,
 	"Model for microstrip mitered bend defined for 2.36 <= er <= 10.4\n");
   }
-  if (frequency/h > 1e6) {
+  if (frequency*h > 12e6) {
     logprint (LOG_STATUS,
-	"Model for microstrip mitered bend defined for freq/h[mm] <= 1GHz\n");
+	"Model for microstrip mitered bend defined for freq*h <= 12MHz\n");
   }
 
   // capacitance in pF

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.25 2004-08-29 14:51:11 margraf Exp $
+ * $Id: msline.cpp,v 1.26 2004-08-30 20:55:19 ela Exp $
  *
  */
 
@@ -85,12 +85,12 @@ void msline::calcSP (nr_double_t frequency) {
   analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
 
   // analyse dispersion of Zl and Er (use WEff here?)
-  analyseDispersion (W, h, er, ZlEff, ErEff, frequency, DModel,
+  analyseDispersion (WEff, h, er, ZlEff, ErEff, frequency, DModel,
 		     ZlEffFreq, ErEffFreq);
   zref = ZlEffFreq;
 
   // analyse losses of line
-  analyseLoss (W, t, er, rho, D, tand, ZlEffFreq, ZlEffFreq, ErEffFreq,
+  analyseLoss (WEff, t, er, rho, D, tand, ZlEffFreq, ZlEffFreq, ErEffFreq,
 	       frequency, "Hammerstad", ac, ad);
 
   // calculate propagation constant and S-parameters
