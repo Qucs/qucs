@@ -106,11 +106,11 @@
     </message>
     <message>
         <source>yes</source>
-        <translation>Da</translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>Nu</translation>
+        <translation>nu</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
@@ -138,7 +138,7 @@
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate Fişierele</translation>
     </message>
 </context>
 <context>
@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>Graph</source>
-        <translation>Graf</translation>
+        <translation>Funcţii</translation>
     </message>
     <message>
         <source>New Graph</source>
@@ -277,11 +277,11 @@
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation>reţeauă logaritmica pe axa X</translation>
+        <translation>reţea logaritmica pe axa X</translation>
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation>reţeauă logaritmica pe axa Y</translation>
+        <translation>reţea logaritmica pe axa Y</translation>
     </message>
 </context>
 <context>
@@ -493,7 +493,7 @@
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished"></translation>
+        <translation>Renunţare totală</translation>
     </message>
 </context>
 <context>
@@ -513,7 +513,8 @@
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare de Format de Memorie Temporară
+Câmp nedefinit! </translation>
     </message>
     <message>
         <source>Cannot save document!</source>
@@ -1962,7 +1963,7 @@ Fals format de linie a &apos;component&apos;!</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation>Afişaj de Date</translation>
+        <translation>Afişaje de Date</translation>
     </message>
     <message>
         <source>Schematics</source>
@@ -2096,7 +2097,7 @@ Doriţi sa salvaţi modificările înaintea salvării? </translation>
     </message>
     <message>
         <source>-port</source>
-        <translation></translation>
+        <translation>-port</translation>
     </message>
     <message>
         <source>Saving file...</source>
@@ -2202,7 +2203,7 @@ Doriţi sa salvaţi modificările înaintea salvării? </translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiază selecţia în memoria temporară...</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -2352,7 +2353,7 @@ Erori:
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rectangul</translation>
+        <translation>Dreptunghi</translation>
     </message>
     <message>
         <source>Cartesian</source>
@@ -2412,7 +2413,7 @@ Erori:
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>Rectangul plin</translation>
+        <translation>Dreptunghi plin</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
@@ -2436,19 +2437,19 @@ Erori:
     </message>
     <message>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schemă</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Afişaj de Date</translation>
     </message>
     <message>
         <source>Qucs Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Documente Qucs</translation>
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
+        <translation>Orice Fişier</translation>
     </message>
 </context>
 <context>
@@ -2703,21 +2704,23 @@ Deletes the selected components</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Înapoi</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp;Înapoi</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulează ultima comandă</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulează
+
+Anulează ultima acţiune</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -2761,11 +2764,11 @@ Crează un nou proiect</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation>Proiect Deschis</translation>
+        <translation>Deschide Proiect</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation>Proiect &amp;Deschis...</translation>
+        <translation>&amp;Deschide Proiect...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -3117,19 +3120,19 @@ Simulează schema curentă</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation>Pune Marcajul pe Funcţie</translation>
+        <translation>Pune Marcajul pe Grafic</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation>Pune Marcajul pe Diagrama Funcţiei</translation>
+        <translation>Pune un  marcaj pe diagrama graficului</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation>Pune Marcajul
+        <translation>Pune marcajul
 
-Pune Marcajul pe Diagrama Funcţiei</translation>
+Pune marcajul pe diagrama graficului</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
@@ -3325,7 +3328,7 @@ Despre Qt la Trolltech</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation>Versiunea Qucs</translation>
+        <translation>Versiunea Qucs </translation>
     </message>
     <message>
         <source>
@@ -3410,278 +3413,297 @@ Setează proprietăţile aplicaţiei</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază componentele selectate deasupra</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază deasupra
+
+Aliniază componentele selectate la marginea superioară</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază dedesubt</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază componentele selectate dedesubt</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază dedesubt
+
+Aliniază componentele selectate la marginea inferioară</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază stânga</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază componentele selectate la stânga</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază stânga
+
+Aliniază componentele selectate la marginea din stânga</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază dreapta</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază componentele selectate la dreapta</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază dreapta
+
+Aliniază componentele selectate la marginea din dreapta</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliniază</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuie orizontal</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuie uniform orizontal</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuie orizontal
+
+Distribuie orizontal componentele selectate</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuie vertical</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuie uniform vertical</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuie vertical
+
+Distribuie vertical componentele selectate</translation>
     </message>
     <message>
         <source>Set on Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşează pe Reţea</translation>
     </message>
     <message>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşează pe reţea
+
+Pune elementele selectate pe reţea</translation>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Printează Elementele Selectate</translation>
     </message>
     <message>
         <source>Print Selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>Printează Selecţia...</translation>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Printează Elementele Selectate</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Printează Elementele Selectate
+
+Printează elementele selectate în documentul curent</translation>
     </message>
     <message>
         <source>Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide Proiectul</translation>
     </message>
     <message>
         <source>&amp;Close Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Închide Proiectul</translation>
     </message>
     <message>
         <source>Close current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide proiectul curent</translation>
     </message>
     <message>
         <source>Close Project
 
 Closes the current project</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide Proiectul
+
+Închide Proiectul curent</translation>
     </message>
     <message>
         <source>Romanian by Radu Circa
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Româneşte de Radu Circa
+</translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează Proprietăţile Qucs</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Culoare Fundal Document:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Aplică</translation>
+        <translation>Aplică</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Revocare</translation>
+        <translation>Revocare</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Valori Predefinite</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Font (setat după reâncărcare):</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Numarul maxim de acţiuni anulate:</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>editor de text:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Setări</translation>
     </message>
 </context>
 <context>
     <name>QucsView</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Potenţialul de masă nu poate fi etichetat!</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserează Nume de nod</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introdu eticheta:</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeaza Proprietăţile Fişierului</translation>
     </message>
     <message>
         <source>Data Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Afişaj de Date:</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="unfinished"></translation>
+        <translation>Setul de Date:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide afişajul de date după simulare</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulare</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished">Afişează Reţea</translation>
+        <translation>Afişează Reţea</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reţea orizontală:</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reţea verticală:</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Reţea</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Aplică</translation>
+        <translation>Aplică</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Revocare</translation>
+        <translation>Revocare</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesajele Simulării Qucs</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Progres:</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation type="unfinished"></translation>
+        <translation>Erori şi Avertismente:</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="unfinished"></translation>
+        <translation>Mergi la pagina de afişaj</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Renunţă la simulare</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide fereastra</translation>
     </message>
 </context>
 </TS>
