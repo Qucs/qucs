@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.3 2004/08/05 21:19:49 ela Exp $
+ * $Id: mosfet.cpp,v 1.4 2004/08/06 18:24:44 ela Exp $
  *
  */
 
@@ -49,6 +49,9 @@
 #define NODE_D 2 /* drain node  */
 #define NODE_S 3 /* source node */
 #define NODE_B 4 /* bulk node   */
+
+// silicon bandgap as function of T
+#define Egap(T) (1.16 - (7.02e-4 * sqr (T)) / ((T) + 1108))
 
 mosfet::mosfet () : circuit (4) {
   rg = rs = rd = NULL;
@@ -259,19 +262,18 @@ void mosfet::initModel (void) {
 
   // calculate threshold voltage
   nr_double_t Vt0 = getPropertyDouble ("Vt0");
-  if ((Vto = Vt0) <= 0) {
+  if ((Vto = Vt0) < 0) {
     nr_double_t Tpg = getPropertyDouble ("Tpg");
     nr_double_t Nss = getPropertyDouble ("Nss");
-    nr_double_t PhiMS, PhiG, EgFET, FerGate, FerSilicon;
+    nr_double_t PhiMS, PhiG, Eg;
     // bandgap for silicon
-    EgFET = 1.16 - (7.02e-4 * sqr (kelvin (T))) / (kelvin (T) + 1108);
-    FerSilicon = MOSpol * Phi / 2;
-    PhiG = 3.2;
-    if (Tpg != 0) { // no alumina
-      FerGate = MOSpol * Tpg * EgFET / 2;
-      PhiG = 3.25 + EgFET / 2 - FerGate;
+    Eg = Egap (kelvin (T));
+    if (Tpg != 0) { // n-poly or p-poly
+      PhiG = 4.15 + Eg / 2 - MOSpol * Tpg * Eg / 2;
+    } else {        // alumina
+      PhiG = 4.1;
     }
-    PhiMS = PhiG - (3.25 + EgFET / 2 + FerSilicon);
+    PhiMS = PhiG - (4.15 + Eg / 2 + MOSpol * Phi / 2);
     if (Nss >= 0 && Cox > 0) {
       Vto = PhiMS - Q * Nss * 1e4 / Cox + MOSpol * (Phi + Ga * sqrt (Phi));
     } else {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.24 2004/07/31 16:59:15 ela Exp $
+ * $Id: spsolver.cpp,v 1.25 2004/08/06 18:24:43 ela Exp $
  *
  */
 
@@ -832,7 +832,7 @@ void spsolver::saveResults (nr_double_t freq) {
 void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
   complex c22 = c[3], c11 = c[0], c12 = c[1];
   complex s11 = s[0], s21 = s[2];
-  complex n1, n2, F, Ropt, Fmin, Rn;
+  complex n1, n2, F, Sopt, Fmin, Rn;
 
   // linear noise figure
   F    = real (1.0 + c22 / norm (s21));
@@ -842,24 +842,24 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
   n2   = 2.0 * (c22 * s11 - c12 * s21) / (c22 + n1);
 
   // optimal source reflection coefficient
-  Ropt = 1.0 - norm (n2);
-  if (real (Ropt) < 0.0)
-    Ropt = (1.0 + sqrt (Ropt)) / n2;  // avoid a negative radicant
+  Sopt = 1.0 - norm (n2);
+  if (real (Sopt) < 0.0)
+    Sopt = (1.0 + sqrt (Sopt)) / n2;  // avoid a negative radicant
   else
-    Ropt = (1.0 - sqrt (Ropt)) / n2;
+    Sopt = (1.0 - sqrt (Sopt)) / n2;
 
   // minimum noise figure
-  Fmin = real (1.0 + (c22 - n1 * norm (Ropt)) /
-	       norm (s21) / (1.0 + norm (Ropt)));
+  Fmin = real (1.0 + (c22 - n1 * norm (Sopt)) /
+	       norm (s21) / (1.0 + norm (Sopt)));
 
   // equivalent noise resistance
-  Rn   = real (circuit::z0 * (c11 -
-			      2.0 * real (c12 * conj ((1.0 + s11) / s21)) +
-			      c22 * norm ((1.0 + s11) / s21)) / 4.0);
+  Rn   = real ((c11 - 2.0 * real (c12 * conj ((1.0 + s11) / s21)) +
+		c22 * norm ((1.0 + s11) / s21)) / 4.0);
+  Rn   = Rn * circuit::z0;
 
   // add variable data items to dataset
   saveVariable ("F", F, f);
-  saveVariable ("Gopt", Ropt, f);
+  saveVariable ("Sopt", Sopt, f);
   saveVariable ("Fmin", Fmin, f);
   saveVariable ("Rn", Rn, f);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.6 2004/08/01 16:08:02 ela Exp $
+ * $Id: spfile.cpp,v 1.7 2004/08/06 18:24:43 ela Exp $
  *
  */
 
@@ -51,7 +51,7 @@
 // Constructor creates an empty and unnamed instance of the spfile class.
 spfile::spfile () : circuit () {
   data = NULL;
-  sfreq = nfreq = Fmin = Gopt = Rn = NULL;
+  sfreq = nfreq = Fmin = Sopt = Rn = NULL;
   index = NULL;
   type = CIR_SPFILE;
 }
@@ -117,7 +117,7 @@ void spfile::calcNoise (nr_double_t frequency) {
   // set interpolated noise correlation matrix
   nr_double_t r = real (interpolate (nfreq, Rn, frequency));
   nr_double_t f = real (interpolate (nfreq, Fmin, frequency));
-  complex g     = interpolate (nfreq, Gopt, frequency);
+  complex g     = interpolate (nfreq, Sopt, frequency);
   matrix s = getInterpolMatrixS (frequency);
   matrix n = correlationMatrix (f, g, r, s);
   setMatrixN (expandNoiseMatrix (n, expandSParaMatrix (s)));
@@ -344,7 +344,7 @@ void spfile::createIndex (void) {
       // find noise parameter vectors
       if (!strcmp (n, "Rn")) Rn = v;
       else if (!strcmp (n, "Fmin")) Fmin = v;
-      else if (!strcmp (n, "Gopt")) Gopt = v;
+      else if (!strcmp (n, "Sopt")) Sopt = v;
     }
   }
 
@@ -360,16 +360,16 @@ void spfile::createIndex (void) {
 /* This function computes the noise correlation matrix of a twoport
    based upon the noise parameters and the given S-parameter
    matrix. */
-matrix& spfile::correlationMatrix (nr_double_t Fmin, complex Gopt,
+matrix& spfile::correlationMatrix (nr_double_t Fmin, complex Sopt,
 				   nr_double_t Rn, matrix& s) {
   assert (s.getCols () == s.getRows () && s.getCols () == 2);
   matrix * c = new matrix (2);
-  complex Kx = 4 * Rn / z0 / norm (1 + Gopt);
+  complex Kx = 4 * Rn / z0 / norm (1 + Sopt);
   c->set (1, 1, (Fmin - 1) * (norm (s.get (1, 1)) - 1) +
-	  Kx * norm (1 - s.get (1, 1) * Gopt));
-  c->set (2, 2, norm (s.get (2, 1)) * ((Fmin - 1) + Kx * norm (Gopt)));
+	  Kx * norm (1 - s.get (1, 1) * Sopt));
+  c->set (2, 2, norm (s.get (2, 1)) * ((Fmin - 1) + Kx * norm (Sopt)));
   c->set (1, 2, s.get (1, 1) / s.get (2, 1) * c->get (2, 2) -
-	  conj (s.get (2, 1)) * conj (Gopt) * Kx);
+	  conj (s.get (2, 1)) * conj (Sopt) * Kx);
   c->set (2, 1, conj (c->get (1, 2)));
   return *c;
 }
@@ -377,7 +377,7 @@ matrix& spfile::correlationMatrix (nr_double_t Fmin, complex Gopt,
 /* The function computes the noise figure and noise parameters for the
    given S-parameter and noise correlation matrices of a twoport. */
 nr_double_t spfile::noiseFigure (matrix& s, matrix& c, nr_double_t& Fmin,
-				 complex& Gopt, nr_double_t& Rn) {
+				 complex& Sopt, nr_double_t& Rn) {
   assert (s.getCols () == s.getRows () && c.getCols () == c.getRows () &&
 	  s.getCols () == 2 && c.getCols () == 2);
   complex n1, n2;
@@ -388,22 +388,21 @@ nr_double_t spfile::noiseFigure (matrix& s, matrix& c, nr_double_t& Fmin,
 	    c.get (1, 2) * s.get (2, 1)) / (c.get (2, 2) + n1);
 
   // optimal source reflection coefficient
-  Gopt = 1 - norm (n2);
-  if (real (Gopt) < 0.0)
-    Gopt = (1 + sqrt (Gopt)) / n2;  // avoid a negative radicant
+  Sopt = 1 - norm (n2);
+  if (real (Sopt) < 0.0)
+    Sopt = (1 + sqrt (Sopt)) / n2;  // avoid a negative radicant
   else
-    Gopt = (1 - sqrt (Gopt)) / n2;
+    Sopt = (1 - sqrt (Sopt)) / n2;
 
   // minimum noise figure
-  Fmin = real (1 + (c.get (2, 2) - n1 * norm (Gopt)) /
-	       norm (s.get (2, 1)) / (1 + norm (Gopt)));
+  Fmin = real (1 + (c.get (2, 2) - n1 * norm (Sopt)) /
+	       norm (s.get (2, 1)) / (1 + norm (Sopt)));
 
   // equivalent noise resistance
-  Rn = real (z0 * (c.get (1, 1) -
-		   2 * real (c.get (1, 2) *
-			     conj ((1 + s.get (1, 1)) / s.get (2, 1))) +
-		   c.get (2, 2) *
-		   norm ((1 + s.get (1, 1)) / s.get (2, 1))) / 4);
+  Rn = real ((c.get (1, 1) - 2 *
+	      real (c.get (1, 2) * conj ((1 + s.get (1, 1)) / s.get (2, 1))) +
+	      c.get (2, 2) * norm ((1 + s.get (1, 1)) / s.get (2, 1))) / 4);
+  Rn = Rn * z0;
 
   // noise figure itself
   return real (1 + c.get (2, 2) / norm (s.get (2, 1)));

@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Clarify pn-junction noise issue.
 	- Check polarity of BJT (SPICE Gummel-Poon) device.
 - Implement temperature models of existing non-linear devices.
 	- Implement DC model for transmission line.

@@ -1,3 +1,8 @@
+2004-08-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Fixed noise calculation.  Both field and
+	diffusion current contribute independently.
+
 2004-08-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/mosfet.cpp: Implemented sidewall capacitances at the
