@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.21 2004/10/12 20:33:58 ela Exp $
+ * $Id: trsolver.cpp,v 1.22 2004/10/13 14:43:17 ela Exp $
  *
  */
 
@@ -187,11 +187,11 @@ void trsolver::solve (void) {
 
 	// Start using damped Newton-Raphson.
 	linesearch = 1;
-	convError = 8;
+	convError = 2;
 
 #if STEPDEBUG || 1
-	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
-		  current, delta);
+	logprint (LOG_ERROR, "WARNING: delta rejected at t = %.3e, h = %.3e "
+		  "(no convergence)\n", current, delta);
 #endif
 	break;
       default:

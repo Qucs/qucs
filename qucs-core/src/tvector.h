@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.1 2004/10/12 18:13:09 ela Exp $
+ * $Id: tvector.h,v 1.2 2004/10/13 14:43:17 ela Exp $
  *
  */
 
@@ -48,6 +48,7 @@ class tvector
   friend tvector operator *<nr_type_t> (nr_double_t, tvector);
 
   friend nr_double_t norm<nr_type_t> (tvector);
+  friend nr_double_t maxnorm<nr_type_t> (tvector);
 
  private:
   int size;

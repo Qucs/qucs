@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.13 2004/10/12 07:00:37 ela Exp $
+ * $Id: mscoupled.cpp,v 1.14 2004/10/13 14:43:18 ela Exp $
  *
  */
 
@@ -418,6 +418,8 @@ void mscoupled::calcAC (nr_double_t frequency) {
   setMatrixY (stoy (getMatrixS ()));
 
 #if 0
+  fprintf (stderr, "Y-indirect:\n");
+  getMatrixY().print();
   // fetch line properties
   nr_double_t l = getPropertyDouble ("L");
 
@@ -433,7 +435,7 @@ void mscoupled::calcAC (nr_double_t frequency) {
   Do = 2 * zo * z0 * cosh (go * l) + (sqr (zo) + sqr (z0)) * sinh (go * l);
 
   Xe = Do * (ze * z0 * cosh (ge * l) + sqr (ze) * sinh (ge * l));
-  Xo = De * (zo * z0 * cosh (go * l) + sqr (z0) * sinh (go * l));
+  Xo = De * (zo * z0 * cosh (go * l) + sqr (zo) * sinh (go * l));
 
   Ye = Do * (ze * cosh (ge * l) + z0 * sinh (ge * l));
   Yo = De * (zo * cosh (go * l) + z0 * sinh (go * l));
@@ -463,5 +465,8 @@ void mscoupled::calcAC (nr_double_t frequency) {
   setY (4, 2, (Ze - Zo) / (Ee + Eo));
   setY (4, 3, (Ze - Zo) / (Xe - Xo));
   setY (4, 4, (Ze - Zo) / (Ee - Eo));
+
+  fprintf (stderr, "Y-direct:\n");
+  getMatrixY().print();
 #endif
 }

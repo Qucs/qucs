@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.15 2004/10/12 18:13:09 ela Exp $
+ * $Id: vector.cpp,v 1.16 2004/10/13 14:43:17 ela Exp $
  *
  */
 
@@ -214,6 +214,18 @@ complex avg (vector v) {
   complex result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result / v.getSize ();
+}
+
+vector sign (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sign (v.get (i)), i);
+  return result;
+}
+
+vector sinc (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sinc (v.get (i)), i);
+  return result;
 }
 
 vector abs (vector v) {

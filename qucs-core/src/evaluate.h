@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.11 2004/10/12 20:33:58 ela Exp $
+ * $Id: evaluate.h,v 1.12 2004/10/13 14:43:17 ela Exp $
  *
  */
 
@@ -273,6 +273,14 @@ public:
   static constant * avg_d (constant *);
   static constant * avg_c (constant *);
   static constant * avg_v (constant *);
+
+  static constant * sign_d (constant *);
+  static constant * sign_c (constant *);
+  static constant * sign_v (constant *);
+
+  static constant * sinc_d (constant *);
+  static constant * sinc_c (constant *);
+  static constant * sinc_v (constant *);
 
   static constant * index_mv_2 (constant *);
   static constant * index_mv_1 (constant *);

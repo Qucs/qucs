@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.17 2004/10/12 18:13:09 ela Exp $
+ * $Id: nasolver.cpp,v 1.18 2004/10/13 14:43:17 ela Exp $
  *
  */
 
@@ -29,6 +29,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
+#include <float.h>
+#include <assert.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -273,7 +276,7 @@ void nasolver<nr_type_t>::createMatrix (void) {
 }
 
 /* This MatVal() functionality is just helper to get the correct
-   values from the circuit's matrices.  The additional (unsused)
+   values from the circuit's matrices.  The additional (unused)
    argument is used to differentiate between the two possible
    types. */
 #define MatVal(x) MatValX (x, (nr_type_t *) 0)
@@ -523,7 +526,7 @@ void nasolver<nr_type_t>::runMNA (void) {
   eqns->solve ();
 
   // if damped Newton-Raphson is requested
-  if (xprev != NULL) {
+  if (xprev != NULL && top_exception () == NULL) {
     if (attenuation) {
       applyAttenuation ();
     } else if (linesearch) {
@@ -537,31 +540,21 @@ void nasolver<nr_type_t>::runMNA (void) {
    convergence helper is heuristic and does not ensure global convergence. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::applyAttenuation (void) {
-  nr_double_t d, alpha = 1.0, dxMax = 0.0;
-  nr_type_t delta;
-  int len = x->getSize ();
+  nr_double_t alpha = 1.0, nMax;
 
   // create solution difference vector and find maximum deviation
-  tvector<nr_type_t> * dx = new tvector<nr_type_t> (len);
-  for (int r = 1; r <= len; r++) {
-    delta = x->get (r) - xprev->get (r);
-    dx->set (r, delta);
-    d = norm (delta);
-    if (d > dxMax) dxMax = d;
-  }
+  tvector<nr_type_t> dx = *x - *xprev;
+  nMax = maxnorm (dx);
 
   // compute appropriate damping factor
-  if (dxMax > 0.0) {
+  if (nMax > 0.0) {
     nr_double_t g = 1.0;
-    alpha = MIN (0.9, g / dxMax);
+    alpha = MIN (0.9, g / nMax);
     if (alpha < 0.1) alpha = 0.1;
   }
 
   // apply damped solution vector
-  for (int r = 1; r <= len; r++) {
-    x->set (r, xprev->get (r) + alpha * dx->get (r));
-  }
-  delete dx;
+  *x = *xprev + alpha * dx;
 }
 
 /* This is damped Newton-Raphson using nested iterations in order to
@@ -577,23 +570,25 @@ void nasolver<nr_type_t>::lineSearch (void) {
 
   // compute solution deviation vector
   tvector<nr_type_t> dx = *x - *xprev;
-  nMin = norm (dx);
+  nMin = DBL_MAX;
 
   do {
     // apply current damping factor and see what happens
     *x = *xprev + alpha * dx;
+
+    // recalculate Jacobian and right hand side
     saveSolution ();
     calculate ();
     createIMatrix ();
     createEMatrix ();
 
     // calculate norm of right hand side vector
-    n = norm (*z - *zprev);
+    n = norm (*z);
 
     // TODO: this is not perfect, but usable
     astep /= 2;
     adiff = fabs (alpha - aprev);
-    if (adiff > 0.01) {
+    if (adiff > 0.02) {
       aprev = alpha;
       if (n < nMin) {
 	nMin = n;
@@ -602,12 +597,12 @@ void nasolver<nr_type_t>::lineSearch (void) {
 	dir = -dir;
 	alpha += 2 * astep * dir;
       }
-      if (alpha > 1.0) alpha = 1;
     }
   }
-  while (adiff > 0.01);
+  while (adiff > 0.02);
 
   // apply final damping factor
+  assert (alpha > 0 && alpha <= 1);
   *x = *xprev + alpha * dx;
 }
 

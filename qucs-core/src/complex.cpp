@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.13 2004/09/09 11:31:51 ela Exp $
+ * $Id: complex.cpp,v 1.14 2004/10/13 14:43:17 ela Exp $
  *
  */
 
@@ -222,6 +222,26 @@ complex rtoz (const complex r, nr_double_t zref) {
 
 complex floor (const complex z) {
   return rect (floor (real (z)), floor (imag (z)));
+}
+
+complex sign (const complex z) {
+  if (z == 0) return 0;
+  return z / abs (z);
+}
+
+nr_double_t sign (const nr_double_t d) {
+  if (d == 0) return 0;
+  return d < 0 ? -1 : 1;
+}
+
+complex sinc (const complex z) {
+  if (z == 0) return 1;
+  return sin (z) / z;
+}
+
+nr_double_t sinc (const nr_double_t d) {
+  if (d == 0) return 1;
+  return sin (d) / d;
 }
 
 complex polar (const nr_double_t mag, const nr_double_t ang) {

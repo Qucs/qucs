@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.11 2004/10/12 18:13:09 ela Exp $
+ * $Id: vector.h,v 1.12 2004/10/13 14:43:18 ela Exp $
  *
  */
 
@@ -102,6 +102,8 @@ class vector : public object
   friend vector artanh (vector);
   friend vector coth   (vector);
   friend vector arcoth (vector);
+  friend vector sign   (vector);
+  friend vector sinc   (vector);
 
   // operator functions
   friend vector operator + (vector, vector);
