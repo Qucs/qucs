@@ -176,8 +176,41 @@ S-parameters are
 \label{eq:iconnectSij}
 \end{equation}
 
+If more than two ports are connected at a node, one have to insert one
+or more ideal tee components.  Its S parameters write as follows.
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{3}\cdot
+\begin{pmatrix}
+-1 &  2 &  2\\
+ 2 & -1 &  2\\
+ 2 &  2 & -1\\
+\end{pmatrix}
+\end{equation}
+For optimisation reasons it may be desireable to insert a cross if
+at least four components are connected at one node. Its
+S parameters writes as follows.
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{2}\cdot
+\begin{pmatrix}
+-1 &  1 &  1 &  1\\
+ 1 & -1 &  1 &  1\\
+ 1 &  1 & -1 &  1\\
+ 1 &  1 &  1 & -1\\
+\end{pmatrix}
+\end{equation}
+
+
+\addvspace{12pt}
+
+
 The formulas \eqref{eq:connectSij}, \eqref{eq:connectSmj} and
-\eqref{eq:iconnectSij} are obtained using the ``nontouching-loop''
+\eqref{eq:iconnectSij} were obtained using the ``nontouching-loop''
 rule being an analytical method for solving a flow graph.  A few basic
 definitions have to be understood.
 
@@ -368,22 +401,6 @@ Thus the new S-parameter $\underline{S}'_{ij}$ yields to
 This short introduction to signal flow graphs and their solution using
 the nontouching-loop rule verifies the initial formulas used to
 compute the new S-parameters for the reduced subnetworks.
-
-\addvspace{12pt}
-
-If more than two ports are connected at a node, one have to insert a
-tee.  Its S-parameters write as follows.
-\begin{equation}
-\begin{pmatrix}
-\underline{S}
-\end{pmatrix}
-= \dfrac{1}{3}\cdot
-\begin{pmatrix}
--1 &  2 &  2\\
- 2 & -1 &  2\\
- 2 &  2 & -1\\
-\end{pmatrix}
-\end{equation}
 
 
 \subsection{Differential S-parameter ports}

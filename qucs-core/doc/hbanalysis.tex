@@ -65,6 +65,7 @@ Taking both, we can express the current flowing through the
 interconnections between linear and non-linear subcircuit:
 
 \begin{equation}
+\label{eqn:HBlin}
 (\underline{I})
   = (\underline{\tilde{Y}})\cdot (\underline{V}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
   = (\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
@@ -104,6 +105,96 @@ have a simulation result.
 
 \section{Going through Each Step}
 
-
 \subsection{Creating Transadmittance Matrix}
 
+It needs several steps to get the transadmittance matrices $[\tilde{Y}]$
+and $[\hat{Y}]$ mentioned in equation \ref{eqn:HBlin}. First the MNA
+matrix of the linear subcircuit (figure \ref{fig:hb_concept}) is created
+(chapter \ref{sec:MNA}). Then the transimpedance matrix is derived by
+exciting one by one the port nodes of the MNA matrix with unity current.
+After that the transadmittance matrix is calculated by inverting the
+transimpedance matrix. Finally the matrices $[\tilde{Y}]$ and $[\hat{Y}]$
+are filled with the corresponding elements of the overall transadmittance
+matrix.\\
+Now let us have a more detailed look on it: By use of the MNA matrix
+$[A]$, the $n$-th column of the transimpedance matrix $[Z]$ should be
+calculated. The voltage source at port $n$ is connected to node $i$
+(positive terminal) and to port $j$ (negative terminal). This results
+in the following equation:
+\begin{equation}
+\label{eqn:HBtrans}
+[A]\cdot
+\begin{bmatrix}
+U_1\\
+\vdots\\
+U_K\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+\vdots\\
+1\\
+\vdots\\
+-1\\
+\vdots\\
+0\\
+\end{bmatrix}
+\begin{matrix}
+ \\
+ \\
+\leftarrow i\text{-th row}\\
+ \\
+\leftarrow j\text{-th row}\\
+ \\
+ \\
+\end{matrix}
+\end{equation}
+After having solved it, we got $Z_{1,n}$...$Z_{N+M,n}$
+simply by substration of the node voltages:
+\begin{equation}
+Z_{m,n} = V_k - V_l
+\end{equation}
+Here the voltage source at port $m$ is connected to node $k$
+(positive terminal) and to node $l$ (negative terminal).\\
+The next column of $[Z]$ is obtained by changing the right-hand
+side of equation \ref{eqn:HBtrans} appropriatly. As this has to
+be done $N+M$ times, it is strongly recommended to use LU
+decomposition.\\
+One further thing must be mentioned: Because the non-linear
+components are missing in the linear MNA matrix, there are often
+components that are completely disconnected from the rest of the
+circuit. The resulting MNA matrix cannot be solved. To avoid
+this problem, shunt each port with a $100\Omega$ resistor. The
+effect of these resistors can be easily removed by subtracting
+0.01S from the first main diagonal of the transadmittance matrix.
+
+
+\subsection{Termination Criteria}
+
+Frequency components with very different magnitude appear in harmonic
+balance simulation. In order to detect when the solver has found an
+accurate solution, an absolute as well as relative criteria must be
+used on all nodes and at all frequencies. The analysis is regarded as
+finished if one of the criteria is satisfied.\\
+The absolute and relative criteria write as follows:
+\begin{equation}
+\left| \tilde{I}_{n,k} + \hat{I}_{n,k} \right| < \epsilon_{abs}
+  \qquad \text{for all} \quad n, k
+\end{equation}
+\begin{equation}
+2\cdot \left| \frac{\tilde{I}_{n,k} + \hat{I}_{n,k}}
+                   {\tilde{I}_{n,k} - \hat{I}_{n,k}} \right|
+  < \epsilon_{rel}  \qquad \text{for all} \quad n, k
+\end{equation}
+where $\tilde{I}_{n,k}$ is the current of the linear circuit
+partition for node $n$ and frequency $k$ and $\hat{I}_{n,k}$
+is the current of the non-linear circuit partition.
+
+
+\subsection{Frequency-Time Domain Transformation}
+
+During every iteration step, the time domain values have to be transformed
+into frequency domain and back. A standard Fourier Transformation is not
+useful, because with multi-tone excitation many mixing products appear.
+The best way to cope with this problem is to use two-dimensional
+Fast-Fourier-Transformation (2D-FFT).
