@@ -120,6 +120,7 @@ public:
   void MMoveResizePainting(QMouseEvent*);
   void MMoveMoveText(QMouseEvent*);
   void MMoveMoveTextB(QMouseEvent*);
+  void MMoveZoomIn(QMouseEvent*);
   void (QucsView::*MouseMoveAction) (QMouseEvent*);// current mouse move method
 
   void MPressSelect(QMouseEvent*);
@@ -137,6 +138,7 @@ public:
   void MPressMarker(QMouseEvent*);
   void MPressOnGrid(QMouseEvent*);
   void MPressMoveText(QMouseEvent*);
+  void MPressZoomIn(QMouseEvent*);
   void (QucsView::*MousePressAction) (QMouseEvent*); // mouse press method
 
   void MDoubleClickSelect(QMouseEvent*);
@@ -151,15 +153,11 @@ public:
   void MReleasePaste(QMouseEvent*);
   void MReleaseResizePainting(QMouseEvent*);
   void MReleaseMoveText(QMouseEvent*);
+  void MReleaseZoomIn(QMouseEvent*);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*);
 
   void MovingElements();
   void endElementMoving();
-
-signals:
-//  void CompsSelected(bool);
-//  void AreaMouseMove(QMouseEvent *Event);
-//  void AreaMousePress(QMouseEvent *Event);
 
 private:
   int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements

@@ -27,8 +27,8 @@ Gyrator::Gyrator()
 
   Lines.append(new Line(-30,-30,-12,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30, 30,-12, 30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 11,-30, 30,-30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 11, 30, 30, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 12,-30, 30,-30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 12, 30, 30, 30,QPen(QPen::darkBlue,2)));
 
   Lines.append(new Line( 12,-30, 12, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-12,-30,-12, 30,QPen(QPen::darkBlue,2)));

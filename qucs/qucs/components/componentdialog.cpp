@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "componentdialog.h"
+#include "qucs.h"
 #include "qucsview.h"
 #include "qucsdoc.h"
 
@@ -24,7 +25,6 @@
 #include <qmessagebox.h>
 #include <qvalidator.h>
 #include <qfiledialog.h>
-#include <qprocess.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
@@ -54,6 +54,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   QLabel *label2 = new QLabel(h5);
   label2->setText(tr("Name:"));
   CompNameEdit = new QLineEdit(h5);
+  connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
   prop = new QListView(this);
   prop->setMinimumSize(200, 150);
@@ -448,11 +449,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  QString com = QucsSettings.Editor + " " +
-		QucsWorkDir.filePath(edit->text());
-  QProcess QucsEditor(QStringList::split(" ", com));
-  if(!QucsEditor.launch(""))
-    QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
+  Doc->App->editFile(QucsWorkDir.filePath(edit->text()));
 }
 
 // -------------------------------------------------------------------------

@@ -140,7 +140,7 @@ bool GraphicText::load(const QString& s)
   Angle = n.toInt(&ok);
   if(!ok) return false;
 
-  Text  = s.mid(s.find('"')+1);    // Text
+  Text = s.mid(s.find('"')+1);    // Text (can contain " !!!)
   Text = Text.left(Text.length()-1);
   if(Text.isEmpty()) return false;
 
@@ -169,8 +169,11 @@ QString GraphicText::save()
 }
 
 // -----------------------------------------------------------------------
-// x/y are the precise coordinates.
-void GraphicText::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
+// fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
+// x/y are coordinates without scaling.
+void GraphicText::MouseMoving(
+	QPainter*, int, int, int gx, int gy,
+	QPainter *p, int x, int y, bool drawn)
 {
   p->setPen(Qt::SolidLine);
   if(drawn) {

@@ -21,6 +21,7 @@
 
 #include "qucssettingsdialog.h"
 #include "main.h"
+#include "qucsview.h"
 
 #include <qwidget.h>
 #include <qlabel.h>

@@ -33,7 +33,7 @@ class QucsApp;
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
   QFont font;
-  float largeFontSize, smallFontSize;
+  float largeFontSize;
   QColor BGColor;      // background color of view area
 
   unsigned int maxUndo;    // size of undo stack

@@ -24,7 +24,7 @@ Equation::Equation()
   Description = QObject::tr("equation");
 
   QFont f = QucsSettings.font;
-  f.setPointSizeFloat(QucsSettings.smallFontSize);
+  f.setPointSizeFloat(10.0);
   QFontMetrics  metrics(f);
   QSize r = metrics.size(0, QObject::tr("Equation"));
   int xb = r.width()  >> 1;
@@ -32,7 +32,7 @@ Equation::Equation()
 
   Lines.append(new Line(-xb, -yb, -xb,  yb,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-xb,  yb,  xb+3,yb,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text(-xb+4,  yb-4, QObject::tr("Equation")));
+  Texts.append(new Text(-xb+4,  -yb-3, QObject::tr("Equation")));
 
   x1 = -xb-3; y1 = -yb-5;
   x2 =  xb+9; y2 =  yb+3;

@@ -1,3 +1,19 @@
+2004-10-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* open the documents given in command line
+	* component name edit -> RETURN = OK button
+	* fixed bug that pointed marker to wrong position
+	* in substrate: changed default tand nach 2e-4 (aluminia)
+	* zoom in with rectangle and click
+	* fixed bug that didn't set text position of sim components
+	* cursor symbols of paintings not scaled
+	* new components: amplifier, msvia
+	* all paintings available for designing subcircuit
+	* fixed bug that changed subcircuit instance names when
+	changed subcircuit
+	* all subprograms are terminated when qucs is terminated
+	* double-click on dataset opens it in text editor
+
 2004-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_es.ts, qucs_pl.ts: Updated Polosh and Spanish

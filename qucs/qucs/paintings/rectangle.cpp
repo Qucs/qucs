@@ -194,15 +194,19 @@ void Rectangle::MouseResizeMoving(int x, int y, QPainter *p)
 }
 
 // --------------------------------------------------------------------------
-// x/y are the precise coordinates, gx/gy are the coordinates due to the grid.
-void Rectangle::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
+// fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
+// x/y are coordinates without scaling.
+void Rectangle::MouseMoving(
+	QPainter *paintScale, int, int, int gx, int gy,
+	QPainter *p, int x, int y, bool drawn)
 {
   if(State > 0) {
-    if(State > 1) p->drawRect(x1, y1, x2-x1, y2-y1);  // erase old painting
+    if(State > 1)
+      paintScale->drawRect(x1, y1, x2-x1, y2-y1);  // erase old painting
     State++;
     x2 = gx;
     y2 = gy;
-    p->drawRect(x1, y1, x2-x1, y2-y1);  // paint new rectangle
+    paintScale->drawRect(x1, y1, x2-x1, y2-y1);  // paint new rectangle
   }
   else { x2 = gx; y2 = gy; }
 

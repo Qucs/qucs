@@ -38,7 +38,7 @@ public:
   bool load(const QString&);
   QString save();
   void paint(ViewPainter*);
-  void MouseMoving(int, int, int, int, QPainter*, bool);
+  void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);
   bool MousePressing();
   bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);

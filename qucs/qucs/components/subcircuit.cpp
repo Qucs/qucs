@@ -21,10 +21,12 @@
 
 #include "subcircuit.h"
 #include "qucs.h"
+#include "main.h"
 
 #include <qdir.h>
 #include <qfileinfo.h>
 
+#include <math.h>
 #include <limits.h>
 
 extern QDir QucsWorkDir;
@@ -56,15 +58,6 @@ Component* Subcircuit::newOne()
   p->recreate();
   return p;
 }
-
-/*Component* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("Subcircuit");
-  BitmapFile = "";  // has no bitmap
-
-  if(getNewOne)  return new Subcircuit(Props.getLast()->Value.toInt());
-  return 0;
-}*/
 
 // ---------------------------------------------------------------------
 // Makes the schematic symbol subcircuit with the correct number
@@ -108,20 +101,20 @@ void Subcircuit::remakeSymbol(int No)
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( -7,  0,"sub"));
+  Texts.append(new Text(-10, -6,"sub"));
 
   int i=0, y = 15-h;
   while(i<No) {
     i++;
     Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port(-30,  y));
-    Texts.append(new Text(-25,y-3,QString::number(i)));
+    Texts.append(new Text(-25,y-14,QString::number(i)));
 
     if(i == No) break;
     i++;
     Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
     Ports.append(new Port( 30,  y));
-    Texts.append(new Text( 20,y-3,QString::number(i)));
+    Texts.append(new Text( 19,y-14,QString::number(i)));
     y += 60;
   }
 
@@ -233,6 +226,8 @@ int Subcircuit::loadSymbol(const QString& DocName)
 int Subcircuit::analyseLine(const QString& Row)
 {
   QPen Pen;
+  QBrush Brush;
+  QColor Color;
   QString s;
   int i1, i2, i3, i4, i5, i6;
 
@@ -285,8 +280,96 @@ int Subcircuit::analyseLine(const QString& Row)
     ty = i2;
     Name = Row.section(' ',3,3);
     if(Name.isEmpty())  Name = "SUB";
+    return 0;   // do not count IDs
   }
-  else if(s == "Text") {
+  else if(s == "Arrow") {
+    if(!getIntegers(Row, &i1, &i2, &i3, &i4, &i5, &i6))  return -1;
+    if(!getPen(Row, Pen, 7))  return -1;
+
+    double beta   = atan2(double(i6), double(i5));
+    double phi    = atan2(double(i4), double(i3));
+    double Length = sqrt(double(i6*i6 + i5*i5));
+
+    i3 += i1;
+    i4 += i2;
+    if(i1 < x1)  x1 = i1;  // keep track of component boundings
+    if(i1 > x2)  x2 = i1;
+    if(i3 < x1)  x1 = i3;
+    if(i3 > x2)  x2 = i3;
+    if(i2 < y1)  y1 = i2;
+    if(i2 > y2)  y2 = i2;
+    if(i4 < y1)  y1 = i4;
+    if(i4 > y2)  y2 = i4;
+
+    Lines.append(new Line(i1, i2, i3, i4, Pen));   // base line
+
+    double w = beta+phi;
+    i5 = i3-int(Length*cos(w));
+    i6 = i4-int(Length*sin(w));
+    Lines.append(new Line(i3, i4, i5, i6, Pen)); // arrow head
+
+    w = phi-beta;
+    i5 = i3-int(Length*cos(w));
+    i6 = i4-int(Length*sin(w));
+    Lines.append(new Line(i3, i4, i5, i6, Pen));
+    return 1;
+  }
+  else if(s == "Ellipse") {
+    if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
+    if(!getPen(Row, Pen, 5))  return -1;
+    if(!getBrush(Row, Brush, 8))  return -1;
+    Ellips.append(new Area(i1, i2, i3, i4, Pen, Brush));
+
+    if(i1 < x1)  x1 = i1;  // keep track of component boundings
+    if(i1 > x2)  x2 = i1;
+    if(i2 < y1)  y1 = i2;
+    if(i2 > y2)  y2 = i2;
+    if(i1+i3 < x1)  x1 = i1+i3;
+    if(i1+i3 > x2)  x2 = i1+i3;
+    if(i2+i4 < y1)  y1 = i2+i4;
+    if(i2+i4 > y2)  y2 = i2+i4;
+    return 1;
+  }
+  else if(s == "Rectangle") {
+    if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
+    if(!getPen(Row, Pen, 5))  return -1;
+    if(!getBrush(Row, Brush, 8))  return -1;
+    Rects.append(new Area(i1, i2, i3, i4, Pen, Brush));
+
+    if(i1 < x1)  x1 = i1;  // keep track of component boundings
+    if(i1 > x2)  x2 = i1;
+    if(i2 < y1)  y1 = i2;
+    if(i2 > y2)  y2 = i2;
+    if(i1+i3 < x1)  x1 = i1+i3;
+    if(i1+i3 > x2)  x2 = i1+i3;
+    if(i2+i4 < y1)  y1 = i2+i4;
+    if(i2+i4 > y2)  y2 = i2+i4;
+    return 1;
+  }
+  else if(s == "Text") {  // must be last in order to reuse "s" *********
+    if(!getIntegers(Row, &i1, &i2, &i3))  return -1;
+    Color.setNamedColor(Row.section(' ',4,4));
+    if(!Color.isValid()) return -1;
+
+    s = Row.mid(Row.find('"')+1);    // Text (can contain " !!!)
+    s = s.left(s.length()-1);
+    if(s.isEmpty()) return -1;
+    s.replace("\\n", "\n");
+    s.replace("\\\\", "\\");
+
+    Texts.append(new Text(i1, i2, s, Color, float(i3)));
+
+    QFont Font(QucsSettings.font);
+    Font.setPointSizeFloat(float(i3));
+    QFontMetrics  metrics(Font);
+    QSize r = metrics.size(0, s);    // get size of text
+    i3 = i1 + r.width();
+    i4 = i2 + r.height();
+
+    if(i1 < x1)  x1 = i1;  // keep track of component boundings
+    if(i3 > x2)  x2 = i3;
+    if(i2 < y1)  y1 = i2;
+    if(i4 > y2)  y2 = i4;
   }
 
   return 0;
@@ -338,20 +421,45 @@ bool Subcircuit::getPen(const QString& s, QPen& Pen, int i)
   bool ok;
   QString n;
 
-  n  = s.section(' ',i,i);    // color
+  n = s.section(' ',i,i);    // color
   QColor co;
   co.setNamedColor(n);
   Pen.setColor(co);
   if(!Pen.color().isValid()) return false;
 
   i++;
-  n  = s.section(' ',i,i);    // thickness
+  n = s.section(' ',i,i);    // thickness
   Pen.setWidth(n.toInt(&ok));
   if(!ok) return false;
 
   i++;
-  n  = s.section(' ',i,i);    // line style
+  n = s.section(' ',i,i);    // line style
   Pen.setStyle((Qt::PenStyle)n.toInt(&ok));
+  if(!ok) return false;
+
+  return true;
+}
+
+// ---------------------------------------------------------------------
+bool Subcircuit::getBrush(const QString& s, QBrush& Brush, int i)
+{
+  bool ok;
+  QString n;
+
+  n = s.section(' ',i,i);    // fill color
+  QColor co;
+  co.setNamedColor(n);
+  Brush.setColor(co);
+  if(!Brush.color().isValid()) return false;
+
+  i++;
+  n = s.section(' ',i,i);    // fill style
+  Brush.setStyle((Qt::BrushStyle)n.toInt(&ok));
+  if(!ok) return false;
+
+  i++;
+  n = s.section(' ',i,i);    // filled
+  if(n.toInt(&ok) == 0) Brush.setStyle(QBrush::NoBrush);
   if(!ok) return false;
 
   return true;

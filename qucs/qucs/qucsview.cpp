@@ -408,16 +408,19 @@ void QucsView::contentsMouseMoveEvent(QMouseEvent *Event)
 void QucsView::MMovePainting(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
+  QPainter painter(viewport()), paintScale(viewport());
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+  setPainter(&paintScale, d);
 
-  int x  = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int y  = int(Event->pos().y()/d->Scale) + d->ViewY1;
-  int gx = x;
-  int gy = y;
+  int x  = Event->pos().x();
+  int y  = Event->pos().y();
+  int fx = int(x/d->Scale) + d->ViewX1;
+  int fy = int(y/d->Scale) + d->ViewY1;
+  int gx = fx;
+  int gy = fy;
   d->setOnGrid(gx, gy);
 
-  selPaint->MouseMoving(x, y, gx, gy, &painter, drawn);
+  selPaint->MouseMoving(&paintScale, fx, fy, gx, gy, &painter, x, y, drawn);
   drawn = true;
 }
 
@@ -915,6 +918,28 @@ void QucsView::MMoveMoveText(QMouseEvent *Event)
   painter.drawRect(MAx1, MAy1, MAx2, MAy2); // paint new
 }
 
+// -----------------------------------------------------------
+// Paints symbol beside the mouse to show the "Zoom in" modus.
+void QucsView::MMoveZoomIn(QMouseEvent *Event)
+{
+  QPainter painter(viewport());
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3+14, MAy3   , MAx3+22, MAy3); // erase old
+    painter.drawLine(MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
+    painter.drawEllipse(MAx3+12, MAy3-6, 13, 13);
+  }
+  drawn = true;
+
+  MAx3 = Event->pos().x() - contentsX();
+  MAy3 = Event->pos().y() - contentsY();
+
+  painter.drawLine(MAx3+14, MAy3   , MAx3+22, MAy3);  // paint new
+  painter.drawLine(MAx3+18, MAy3-4 , MAx3+18, MAy3+4);
+  painter.drawEllipse(MAx3+12, MAy3-6, 13, 13);
+}
+
 
 // ************************************************************************
 // **********                                                    **********
@@ -1097,7 +1122,7 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 				 false);
   if(pe) {
     pe->isSelected = true;
-    Docs.current()->deleteElements();
+    d->deleteElements();
 
     d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
     viewport()->repaint();
@@ -1108,9 +1133,10 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressActivate(QMouseEvent *Event)
 {
-  MAx1 = int(Event->pos().x()/Docs.current()->Scale) + Docs.current()->ViewX1;
-  MAy1 = int(Event->pos().y()/Docs.current()->Scale) + Docs.current()->ViewY1;
-  if(!Docs.current()->activateComponent(MAx1, MAy1)) {
+  QucsDoc *d = Docs.current();
+  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  if(!d->activateComponent(MAx1, MAy1)) {
     if(Event->button() != Qt::LeftButton) return;
     MAx2 = 0;  // if not clicking on a component => open a rectangle
     MAy2 = 0;
@@ -1461,6 +1487,24 @@ void QucsView::MPressMoveText(QMouseEvent *Event)
   }
 }
 
+// -----------------------------------------------------------
+void QucsView::MPressZoomIn(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+  QucsDoc *d = Docs.current();
+  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx2 = 0;  // rectangle size
+  MAy2 = 0;
+
+  MouseMoveAction = &QucsView::MMoveSelect;
+  MouseReleaseAction = &QucsView::MReleaseZoomIn;
+  this->grabKeyboard();  // no keyboard inputs during move actions
+  viewport()->repaint();
+  drawn = false;
+}
+
 
 // ***********************************************************************
 // **********                                                   **********
@@ -1506,8 +1550,8 @@ void QucsView::MReleaseSelect2(QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
+//  QPainter painter(viewport());
+//  setPainter(&painter, d);
 
   bool Ctrl;
   if(Event->state() & ControlButton) Ctrl = true;
@@ -1531,11 +1575,11 @@ void QucsView::MReleaseActivate(QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
+//  QPainter painter(viewport());
+//  setPainter(&painter, d);
 
-  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);  // erase old rectangle
-  drawn = false;
+//  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);  // erase old rectangle
+//  drawn = false;
 
   // activates all components within the rectangle
   d->activateComps(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
@@ -1545,6 +1589,7 @@ void QucsView::MReleaseActivate(QMouseEvent *Event)
   MouseReleaseAction = &QucsView::MouseDoNothing;
   MouseDoubleClickAction = &QucsView::MouseDoNothing;
   viewport()->repaint();
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1744,6 +1789,55 @@ void QucsView::MReleaseMoveText(QMouseEvent *Event)
   drawn = false;
 
   Docs.current()->setChanged(true, true);
+}
+
+// -----------------------------------------------------------
+void QucsView::MReleaseZoomIn(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+  QucsDoc *d = Docs.current();
+//  QPainter painter(viewport());
+//  setPainter(&painter, d);
+
+//  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);  // erase old rectangle
+//  drawn = false;
+  float DX = float(MAx2);
+  float DY = float(MAy2);
+  if((d->Scale * DX) < 6.0) {
+    MAx1  = (Event->pos().x()<<1) - (visibleWidth()>>1)  - contentsX();
+    MAy1  = (Event->pos().y()<<1) - (visibleHeight()>>1) - contentsY();
+    Zoom(2.0);    // a simple click zooms by factor 2
+  }
+  else {
+    float xScale = float(visibleWidth())  / DX;
+    float yScale = float(visibleHeight()) / DY;
+    if(xScale > yScale) xScale = yScale;
+    if(xScale > 10.0) xScale = 10.0;
+    if(xScale < 0.01) xScale = 0.01;
+
+/*    d->ViewX1 = MAx1;
+    d->ViewY1 = MAy1;
+    d->ViewX2 = MAx1+MAx2;
+    d->ViewY2 = MAy1+MAy2;*/
+//    MAx1  = int(float(MAx1 - d->ViewX1) * d->Scale) - contentsX();;
+//    MAy1  = int(float(MAy1 - d->ViewY1) * d->Scale) - contentsY();;
+    MAx1  = int(float(Event->pos().x())*xScale)
+		- visibleWidth()  - contentsX();
+    MAy1  = int(float(Event->pos().y())*xScale)
+		- visibleHeight() - contentsY();
+    d->Scale = xScale;
+    resizeContents(int(xScale*float(d->ViewX2 - d->ViewX1)),
+		   int(xScale*float(d->ViewY2 - d->ViewY1)));
+  }
+  scrollBy(MAx1, MAy1);
+
+  MouseMoveAction = &QucsView::MMoveZoomIn;
+  MouseReleaseAction = &QucsView::MouseDoNothing;
+  this->releaseKeyboard();  // allow keyboard inputs again
+
+  viewport()->repaint();
+  drawn = false;
 }
 
 
