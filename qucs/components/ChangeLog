@@ -1,3 +1,10 @@
+2004-06-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* resistor.cpp (Resistor): Fixed typo in 'european'.
+
+	* dc_sim.cpp (DC_Sim): Renamed 'showOPs' property into
+	'saveOPs'.
+
 2004-06-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp (Diode): Added 'Rs' and 'Tt' to diode parameters.

@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "dc_sim.h"
-#include "../main.h"
+#include "main.h"
 
 
 DC_Sim::DC_Sim()
@@ -55,7 +55,7 @@ DC_Sim::DC_Sim()
 		QObject::tr("absolute tolerance for currents")));
   Props.append(new Property("vntol", "1 uV", false,
 		QObject::tr("absolute tolerance for voltages")));
-  Props.append(new Property("showOPs", "no", false,
+  Props.append(new Property("saveOPs", "no", false,
 		QObject::tr("put operating points into dataset (yes,no)")));
   Props.append(new Property("MaxIter", "150", false,
 		QObject::tr("maximum number of iterations until error")));
