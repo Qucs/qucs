@@ -22,20 +22,30 @@ iProbe::iProbe()
 {
   Description = QObject::tr("current probe");
 
-  Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -2, -3,  2,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -2,  3,  2,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-20,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 20,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,  0, 20,  0,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(  4,  0, -4, -4,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(  4,  0, -4,  4,QPen(QPen::darkBlue,3)));
 
-  Lines.append(new Line(-20,-22, 20,-22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20,  6, 20,  6,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-20,-22, 20,  6,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 20,-22, 20,  6,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-31, 20,-31,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,  9, 20,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-31,-20,  9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 20,-31, 20,  9,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-16,-27, 16,-27,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-16, -9, 16, -9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-16,-27,-16, -9,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 16,-27, 16, -9,QPen(QPen::darkBlue,2)));
+
+  Arcs.append(new Arc(-20,-23, 40, 40, 16*50, 16*80,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-11,-24, -2, -9,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));
   Ports.append(new Port( 30,  0));
 
-  x1 = -30; y1 = -11;
-  x2 =  30; y2 =  11;
+  x1 = -30; y1 = -34;
+  x2 =  30; y2 =  12;
 
   tx = x1+4;
   ty = y2+4;
