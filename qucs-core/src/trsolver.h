@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.3 2004/09/12 14:09:19 ela Exp $
+ * $Id: trsolver.h,v 1.4 2004/09/12 18:10:21 ela Exp $
  *
  */
 
@@ -26,10 +26,11 @@
 #define __TRSOLVER_H__
 
 #include "nasolver.h"
+#include "states.h"
 
 class sweep;
 
-class trsolver : public nasolver<nr_double_t>
+class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
 {
  public:
   trsolver ();
@@ -44,6 +45,7 @@ class trsolver : public nasolver<nr_double_t>
   void initSteps (void);
   void saveAllResults (nr_double_t);
   nr_double_t checkDelta (void);
+  void updateCoefficients (nr_double_t);
 
  private:
   sweep * swp;

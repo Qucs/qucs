@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.3 2004/09/12 14:09:19 ela Exp $
+ * $Id: trsolver.cpp,v 1.4 2004/09/12 18:10:21 ela Exp $
  *
  */
 
@@ -42,15 +42,19 @@
 #include "trsolver.h"
 #include "transient.h"
 
+#define dState 0 // delta T state
+
 // Constructor creates an unnamed instance of the trsolver class.
-trsolver::trsolver () : nasolver<nr_double_t> () {
+trsolver::trsolver ()
+  : nasolver<nr_double_t> (), states<nr_double_t> () {
   swp = NULL;
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
 }
 
 // Constructor creates a named instance of the trsolver class.
-trsolver::trsolver (char * n) : nasolver<nr_double_t> (n) {
+trsolver::trsolver (char * n)
+  : nasolver<nr_double_t> (n), states<nr_double_t> () {
   swp = NULL;
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
@@ -63,7 +67,8 @@ trsolver::~trsolver () {
 
 /* The copy constructor creates a new instance of the trsolver class
    based on the given trsolver object. */
-trsolver::trsolver (trsolver & o) : nasolver<nr_double_t> (o) {
+trsolver::trsolver (trsolver & o)
+  : nasolver<nr_double_t> (o), states<nr_double_t> (o) {
   swp = o.swp ? new sweep (*o.swp) : NULL;
 }
 
@@ -120,27 +125,38 @@ void trsolver::solve (void) {
       calc (current);
       // Start the linear solver.
       solve_linear ();
-      savePreviousIteration ();
       nr_double_t save = delta;
       delta = checkDelta ();
       if (delta > deltaMax) delta = deltaMax;
-      if (delta < deltaMin) delta = deltaMin;
+      if (delta < deltaMin) {
+	delta = deltaMin;
+	logprint (LOG_ERROR, "WARNING: delta t at %.3e\n", delta);
+      }
       if (save < delta) {
-	calcCoefficients (IMethod, order, coefficients, delta);
+	delta = save * 1.05;
+	updateCoefficients (delta);
+	nextState ();
+	setState (dState, delta);
 	rejected = 0;
 #if DEBUG
-	logprint (LOG_STATUS, "DEBUG: delta accepted at t = %es, h->%e\n",
+	logprint (LOG_STATUS, "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
 		  current, delta);
 #endif
+	savePreviousIteration ();
       }
       else if (save > delta) {
 	calcCoefficients (IMethod, order, coefficients, delta);
-	current -= delta;
+	updateCoefficients (delta);
+	setState (dState, delta);
 	rejected++;
 #if DEBUG
-	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %g, h->%g\n",
+	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 		  current, delta);
 #endif
+	current -= delta;
+      } else {
+	nextState ();
+	setState (dState, delta);
       }
       current += delta;
     }
@@ -193,13 +209,18 @@ void trsolver::init (void) {
   delta = getPropertyDouble ("InitialStep");
   deltaMin = getPropertyDouble ("MinStep");
   deltaMax = getPropertyDouble ("MaxStep");
-  if (deltaMax == 0) deltaMax = (stop - start) / 50;
-  if (deltaMin == 0) deltaMin = 1e-9 * deltaMax;
-  if (delta == 0) delta = deltaMax;
+  if (deltaMax == 0.0) deltaMax = (stop - start) / 50;
+  if (deltaMin == 0.0) deltaMin = 1e-12 * deltaMax;
+  if (delta == 0.0) delta = deltaMax;
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
   
   calcCoefficients (IMethod, order, coefficients, delta);
+
+  // initialize step history
+  setStates (1);
+  initStates ();
+  fillState (dState, delta);
 
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
@@ -236,32 +257,29 @@ nr_double_t trsolver::checkDelta (void) {
   abstol = 1e-6;
 
   for (int r = 1; r <= x->getRows (); r++) {
+    dif = z->get (r, 1) - zprev->get (r, 1);
+    rel = abs (x->get (r, 1));
+    tol = reltol * rel + abstol;
+
     if (!strcmp (IMethod, "Euler")) {
-      dif = z->get (r, 1) - zprev->get (r, 1);
-      rel = abs (x->get (r, 1));
-      tol = reltol * rel + abstol;
       if (dif != 0) {
-	nr_double_t t = tol * 2 / dif;
-	t = delta * sqrt (fabs (t));
+	nr_double_t t = delta * tol * 2 / dif;
+	t = sqrt (fabs (t));
 	n = MIN (n, t);
       }
     }
     else if (!strcmp (IMethod, "Trapezoidal")) {
-      dif = z->get (r, 1) - zprev->get (r, 1);
-      rel = abs (x->get (r, 1));
-      tol = reltol * rel + abstol;
       if (dif != 0) {
-	nr_double_t t = tol * 3 * (delta + delta) / dif;
-	t = delta * fabs (t);
+	nr_double_t t = getState (dState, 0) + getState (dState, 1);
+	t = delta * t * fabs (tol * 3 / dif);
 	n = MIN (n, t);
       }
     }
     else if (!strcmp (IMethod, "Gear")) {
-      dif = z->get (r, 1) - zprev->get (r, 1);
-      rel = abs (x->get (r, 1));
-      tol = reltol * rel + abstol;
+      nr_double_t del = 0;
+      for (int i = 0; i <= order; i++) del += getState (dState, i);
       if (dif != 0) {
-	nr_double_t t = tol * (order * delta) / dif / delta;
+	nr_double_t t = tol * del / dif / delta;
 	t = delta * exp (log (fabs (t)) / (order + 1));
 	n = MIN (n, t);
       }
@@ -269,4 +287,10 @@ nr_double_t trsolver::checkDelta (void) {
   }
   delta = MIN (2 * delta, n);
   return delta;
+}
+
+// The function updates the integration coefficients.
+void trsolver::updateCoefficients (nr_double_t delta) {
+  nr_double_t c = getState (dState);
+  for (int i = 0; i < 8; i++) coefficients[i] *= c / delta;
 }
