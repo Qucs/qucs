@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.59 2004-10-04 20:54:20 ela Exp $
+ * $Id: check_netlist.cpp,v 1.60 2004-10-07 19:49:35 ela Exp $
  *
  */
 
@@ -561,6 +561,9 @@ struct define_t definition_available[] =
       { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
       { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
       { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "LTEabstol", PROP_REAL, { 1e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "LTEreltol", PROP_REAL, { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "LTEfactor", PROP_REAL, { 1, PROP_NO_STR }, { 1, 16 } },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       PROP_NO_PROP }
   },

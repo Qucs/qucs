@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.12 2004-10-04 20:54:20 ela Exp $
+ * $Id: trsolver.cpp,v 1.13 2004-10-07 19:49:35 ela Exp $
  *
  */
 
@@ -45,7 +45,7 @@
 #define STEPDEBUG 0 // set to zero for release
 
 #define dState 0 // delta T state
-#define rState 1 // right hand side state
+#define sState 1 // solution state
 
 // Constructor creates an unnamed instance of the trsolver class.
 trsolver::trsolver ()
@@ -53,7 +53,7 @@ trsolver::trsolver ()
   swp = NULL;
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
-  for (int i = 0; i < 8; i++) rhs[i] = NULL;
+  for (int i = 0; i < 8; i++) solution[i] = NULL;
 }
 
 // Constructor creates a named instance of the trsolver class.
@@ -62,13 +62,13 @@ trsolver::trsolver (char * n)
   swp = NULL;
   type = ANALYSIS_TRANSIENT;
   setDescription ("transient");
-  for (int i = 0; i < 8; i++) rhs[i] = NULL;
+  for (int i = 0; i < 8; i++) solution[i] = NULL;
 }
 
 // Destructor deletes the trsolver class object.
 trsolver::~trsolver () {
   if (swp) delete swp;
-  for (int i = 0; i < 8; i++) if (rhs[i] != NULL) delete rhs[i];
+  for (int i = 0; i < 8; i++) if (solution[i] != NULL) delete solution[i];
 }
 
 /* The copy constructor creates a new instance of the trsolver class
@@ -76,7 +76,7 @@ trsolver::~trsolver () {
 trsolver::trsolver (trsolver & o)
   : nasolver<nr_double_t> (o), states<nr_double_t> (o) {
   swp = o.swp ? new sweep (*o.swp) : NULL;
-  for (int i = 0; i < 8; i++) rhs[i] = NULL;
+  for (int i = 0; i < 8; i++) solution[i] = NULL;
 }
 
 // This function creates the time sweep if necessary.
@@ -158,6 +158,7 @@ void trsolver::solve (void) {
 	//adjustOrder (currentOrder, deltaOld != delta);
       }
       else {
+	//fillStates ();
 	updateCoefficients (delta, 1);
 	nextStates ();
 	setState (dState, delta);
@@ -180,17 +181,64 @@ void trsolver::solve (void) {
   logprogressclear (40);
 }
 
-// Macro for the n-th state of the right hand side vector history.
-#define RHS(state) (rhs[(int) getState (rState, (state))])
+// Macro for the n-th state of the solution vector history.
+#define SOL(state) (solution[(int) getState (sState, (state))])
 
-/* This function predicts a start value for the right hand side vector
-   for the iterative corrector process. */
+/* This function predicts a start value for the solution vector for
+   the successive iterative corrector process. */
 int trsolver::predictor (void) {
   int error = 0;
-  *x = * RHS (1);  // TODO: This is too a simple predictor...
-  saveRHS ();
-  * RHS (0) = *x;
+  switch (PMethod) {
+  case INTEGRATOR_ADAMSBASHFORD: // ADAMS-BASHFORD
+    predictBashford ();
+    break;
+  case INTEGRATOR_EULER: // explicit BACKWARD EULER
+    predictEuler ();
+    break;
+  default:
+    *x = *SOL (1);  // This is too a simple predictor...
+    break;
+  }
+  saveSolution ();
+  *SOL (0) = *x;
   return error;
+}
+
+/* The function predicts the successive solution vector using the
+   explicit Adams-Bashford integration formula. */
+void trsolver::predictBashford (void) {
+  int N = countNodes ();
+  int M = subnet->getVoltageSources ();
+  nr_double_t xn, dd, hn;
+
+  // go through each solution
+  for (int r = 1; r <= N + M; r++) {
+    xn = predCoeff[0] * SOL(1)->get (r, 1); // a0 coefficient
+    for (int o = 1; o <= predOrder; o++) {
+      hn = getState (dState, o + 1);        // previous time-step
+      // divided differences
+      dd = (SOL(o)->get (r, 1) - SOL(o + 1)->get (r, 1)) / hn;
+      xn += predCoeff[o] * dd;              // b0, b1, ... coefficients
+    }
+    x->set (r, 1, xn);                      // save prediction
+  }
+}
+
+/* The function predicts the successive solution vector using the
+   explicit backward Euler integration formula.  Actually this is
+   Adams-Bashford order 1. */
+void trsolver::predictEuler (void) {
+  int N = countNodes ();
+  int M = subnet->getVoltageSources ();
+  nr_double_t xn, dd, hn;
+
+  for (int r = 1; r <= N + M; r++) {
+    xn = predCoeff[0] * SOL(1)->get (r, 1);
+    hn = getState (dState, 2);
+    dd = (SOL(1)->get (r, 1) - SOL(2)->get (r, 1)) / hn;
+    xn += predCoeff[1] * dd;
+    x->set (r, 1, xn);
+  }
 }
 
 /* The function iterates through the solutions of the integration
@@ -204,10 +252,9 @@ int trsolver::corrector (void) {
 // The function advances one more time-step.
 void trsolver::nextStates (void) {
   circuit * root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
     c->nextState ();
-  }
-  * RHS (0) = *x;
+  *SOL (0) = *x; // save current solution
   nextState ();
 }
 
@@ -265,19 +312,18 @@ void trsolver::adjustDelta (void) {
 void trsolver::adjustOrder (int& currentOrder, int stepChanged) {
   circuit * root = subnet->getRoot ();
   int type;
-  if (currentOrder < order || stepChanged) {
+  if (currentOrder < corrOrder || stepChanged) {
     if (stepChanged)
       currentOrder = 1;
     else
       currentOrder++;
-    type = integratorType (IMethod, currentOrder);
+    type = correctorType (CMethod, currentOrder);
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-      c->setOrder (order);
+      c->setOrder (currentOrder);
       setIntegrationMethod (c, type);
     }
     saveState (dState, deltas);
-    calcCorrectorCoeff (type, currentOrder, coefficients,
-			deltas, chargeCoeffs);
+    calcCorrectorCoeff (type, currentOrder, corrCoeff, deltas, chargeCoeffs);
   }
 }
 
@@ -311,8 +357,9 @@ void trsolver::initDC (void) {
 /* Goes through the list of circuit objects and runs its initTR()
    function. */
 void trsolver::initTR (void) {
-  order = getPropertyInteger ("Order");
-  IMethod = integratorType (getPropertyString ("IntegrationMethod"), order);
+  corrOrder = getPropertyInteger ("Order");
+  CMethod = correctorType (getPropertyString ("IntegrationMethod"), corrOrder);
+  PMethod = predictorType (CMethod, corrOrder, predOrder);
   nr_double_t start = getPropertyDouble ("Start");
   nr_double_t stop = getPropertyDouble ("Stop");
   nr_double_t points = getPropertyDouble ("Points");
@@ -333,21 +380,22 @@ void trsolver::initTR (void) {
   fillState (dState, delta);
 
   saveState (dState, deltas);
-  calcCorrectorCoeff (IMethod, order, coefficients, deltas, chargeCoeffs);
+  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas, chargeCoeffs);
+  calcPredictorCoeff (PMethod, predOrder, predCoeff, deltas);
 
-  // initialize history of right hand side vectors (solutions)
+  // initialize history of solution vectors (solutions)
   for (int i = 0; i < 8; i++) {
-    rhs[i] = new tmatrix<nr_double_t> (*x);
-    setState (rState, (nr_double_t) i, i);
+    solution[i] = new tmatrix<nr_double_t> (*x);
+    setState (sState, (nr_double_t) i, i);
   }
 
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->initTR ();
     c->initStates ();
-    c->setCoefficients (coefficients);
-    c->setOrder (order);
-    setIntegrationMethod (c, IMethod);
+    c->setCoefficients (corrCoeff);
+    c->setOrder (corrOrder);
+    setIntegrationMethod (c, CMethod);
   }
 }
 
@@ -368,47 +416,35 @@ void trsolver::saveAllResults (nr_double_t time) {
    analysis advanced.  For the computation of the new time-step the
    truncation error depending on the integration method is used. */
 nr_double_t trsolver::checkDelta (void) {
-  nr_double_t reltol = getPropertyDouble ("LTEreltol");
-  nr_double_t abstol = getPropertyDouble ("LTEabstol");
-  nr_double_t dif, rel, tol, n = DBL_MAX;
+  nr_double_t LTEreltol = getPropertyDouble ("LTEreltol");
+  nr_double_t LTEabstol = getPropertyDouble ("LTEabstol");
+  nr_double_t LTEfactor = getPropertyDouble ("LTEfactor");
+  nr_double_t dif, rel, tol, lte, q, n = DBL_MAX;
   int N = countNodes ();
   int M = subnet->getVoltageSources ();
 
-  reltol = 1e-3;
-  abstol = 1e-6;
+  // cec = corrector error constant
+  nr_double_t cec = getCorrectorError (CMethod, corrOrder);
+  // pec = predictor error constant
+  nr_double_t pec = getPredictorError (PMethod, predOrder);
 
+  // go through each solution
   for (int r = 1; r <= N + M; r++) {
-    dif = x->get (r, 1) - RHS(0)->get (r, 1);
-    rel = MAX (abs (x->get (r, 1)), abs (RHS(0)->get (r, 1)));
-    tol = reltol * rel + abstol;
+    
+    // skip real voltage sources
+    if (r > N) {
+      if (findVoltageSource (r - N)->isVSource ())
+	continue;
+    }
 
+    dif = x->get (r, 1) - SOL(0)->get (r, 1);
     if (dif != 0) {
-      switch (IMethod) {
-      case INTEGRATOR_EULER:
-	{
-	  nr_double_t t = delta * tol * 2 / dif;
-	  t = sqrt (fabs (t));
-	  n = MIN (n, t);
-	}
-	break;
-      case INTEGRATOR_TRAPEZOIDAL:
-	{
-	  nr_double_t del = delta + getState (dState, 1);
-	  nr_double_t t = delta * tol * 3 * del / dif;
-	  t = exp (log (fabs (t)) / 3);
-	  n = MIN (n, t);
-	}
-	break;
-      case INTEGRATOR_GEAR:
-	{
-	  nr_double_t del = 0;
-	  for (int i = 0; i <= order; i++) del += getState (dState, i);
-	  nr_double_t t = tol * del / dif / delta;
-	  t = exp (log (fabs (t)) / (order + 1));
-	  n = MIN (n, t);
-	}
-	break;
-      }
+      // use Milne' estimate for the local truncation error
+      rel = MAX (abs (x->get (r, 1)), abs (SOL(0)->get (r, 1)));
+      tol = LTEreltol * rel + LTEabstol;
+      lte = LTEfactor * (cec / (pec - cec)) * dif;
+      q =  delta * exp (log (fabs (tol / lte)) / (corrOrder + 1));
+      n = MIN (n, q);
     }
   }
 #if STEPDEBUG
@@ -421,12 +457,22 @@ nr_double_t trsolver::checkDelta (void) {
 
 // The function updates the integration coefficients.
 void trsolver::updateCoefficients (nr_double_t delta, int next) {
+#if 1
+  next = 0;
+  setState (dState, delta);
+  saveState (dState, deltas);
+  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas, chargeCoeffs);
+  calcPredictorCoeff (PMethod, predOrder, predCoeff, deltas);
+#else
   nr_double_t c = getState (dState);
-  coefficients[0] *= c / delta;
+  corrCoeff[0] *= c / delta;
   if (next) {
     for (int i = 1; i < chargeCoeffs; i++) {
-      //coefficients[i] *= getState (dState, i) / getState (dState, i - 1);
-      coefficients[i] *= c / delta;
+      corrCoeff[i] *= c / delta;
     }
   }
+  for (int i = 1; i < 8; i++) {
+    predCoeff[i] *= delta / c;
+  }
+#endif
 }

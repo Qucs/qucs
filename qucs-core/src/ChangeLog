@@ -1,3 +1,18 @@
+2004-10-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.cpp: Implemented variable-step Gear coefficients.
+
+	* trsolver.cpp: Implemented predictive integration methods,
+	i.e Adams-Bashford and backward Euler.
+	Using Milne's estimate formula for the local truncation error
+	controlling the current time-step.
+	Using 'LTEreltol', 'LTEabstol' and 'LTEfactor' properties for
+	the acceptable local truncation error.
+
+	* transient.cpp: Implemented some functionality regarding the
+	predictor types and orders.  Also added the error constants for
+	each integration method.
+
 2004-10-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Added string and character constant tokens

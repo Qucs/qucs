@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.8 2004-09-22 16:47:57 ela Exp $
+ * $Id: transient.cpp,v 1.9 2004-10-07 19:49:35 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #include "transient.h"
 
 #define COEFFDEBUG 0
+#define FIXEDCOEFF 0
 
 // Defines where the equivalent admittance coefficient is going to be stored.
 #define COEFF_G 0
@@ -46,7 +47,7 @@
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Gear (order 1-6),
    Trapezoidal and Euler. */
-void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
+void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 			 nr_double_t * delta, int& charges) {
 
   tmatrix<nr_double_t> A (order + 1);
@@ -55,9 +56,10 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
   eqnsys<nr_double_t> e;
   e.setAlgo (ALGO_LU_DECOMPOSITION);
 
-  switch (IMethod) {
+  switch (Method) {
   case INTEGRATOR_GEAR: // GEAR order 1 to 6
     {
+#if FIXEDCOEFF
       int i, r, c;
       // right hand side vector
       for (i = 1; i <= order + 1; i++) b.set (i, 1, 1);
@@ -88,6 +90,27 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
       for (i = 1; i <= order; i++) {
 	coefficients[i] = - 1 / delta[0] / k * x.get (i + 1, 1);
       }
+#else /* !FIXEDCOEFF */
+      int i, c;
+      // right hand side vector
+      for (i = 1; i <= order + 1; i++)
+	b.set (i, 1, (i == 2) ? -1 / delta[0] : 0);
+      for (i = 1; i <= order + 1; i++) {
+	A.set (i, 1, 0); // first column
+	A.set (1, i, 1); // first row
+      }
+      nr_double_t f, a;
+      for (f = 0, i = 1; i <= order; i++) {
+	f += delta[i - 1];
+	for (a = 1, c = 1; c <= order; c++) {
+	  a *= f / delta[0];
+	  A.set (c + 1, i + 1, a);
+	}
+      }
+      e.passEquationSys (&A, &x, &b);
+      e.solve ();
+      for (i = 0; i <= order; i++) coefficients[i] = x.get (i + 1, 1);
+#endif /* !FIXEDCOEFF */
       charges = order + 1;
     }
     break;
@@ -144,7 +167,7 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Adams-Bashford (order
    1-6) and Euler. */
-void calcPredictorCoeff (int IMethod, int order, nr_double_t * coefficients,
+void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
 			 nr_double_t * delta) {
 
   tmatrix<nr_double_t> A (order + 1);
@@ -153,7 +176,7 @@ void calcPredictorCoeff (int IMethod, int order, nr_double_t * coefficients,
   eqnsys<nr_double_t> e;
   e.setAlgo (ALGO_LU_DECOMPOSITION);
 
-  switch (IMethod) {
+  switch (Method) {
   case INTEGRATOR_ADAMSBASHFORD: // ADAMS-BASHFORD order 1 to 6
     {
       int i, r, c;
@@ -183,6 +206,13 @@ void calcPredictorCoeff (int IMethod, int order, nr_double_t * coefficients,
       for (i = 1; i <= order; i++) {
 	coefficients[i] = x.get (i + 1, 1) * delta[0];
       }
+#if !FIXEDCOEFF
+      if (order == 2) {
+	coefficients[0] = 1;
+	coefficients[1] = (1 + delta[0] / (2 * delta[1])) * delta[0];
+	coefficients[2] = (- delta[0] / (2 * delta[1])) * delta[0];
+      }
+#endif
     }
     break;
   case INTEGRATOR_EULER: // BACKWARD EULER
@@ -247,8 +277,8 @@ void integrateMoulton (integrator * c, int qstate, nr_double_t cap,
 
 /* The function applies the appropriate integration function to the
    given circuit object. */
-void setIntegrationMethod (circuit * c, int IMethod) {
-  switch (IMethod) {
+void setIntegrationMethod (circuit * c, int Method) {
+  switch (Method) {
   case INTEGRATOR_GEAR:
     c->setIntegration (integrateGear);
     break;
@@ -269,61 +299,106 @@ void setIntegrationMethod (circuit * c, int IMethod) {
 
 /* Returns an appropriate integrator type identifier and the maximum
    order depending on the given string argument. */
-int integratorType (char * IMethod, int& MaxOrder) {
-  if (!strcmp (IMethod, "Gear")) {
+int correctorType (char * Method, int& MaxOrder) {
+  if (!strcmp (Method, "Gear")) {
     if (MaxOrder > 6) MaxOrder = 6;
     return INTEGRATOR_GEAR;
   }
-  else if (!strcmp (IMethod, "Trapezoidal")) {
+  else if (!strcmp (Method, "Trapezoidal")) {
     if (MaxOrder > 2) MaxOrder = 2;
     return INTEGRATOR_TRAPEZOIDAL;
   }
-  else if (!strcmp (IMethod, "Euler")) {
+  else if (!strcmp (Method, "Euler")) {
     if (MaxOrder > 1) MaxOrder = 1;
     return INTEGRATOR_EULER;
   }
-  else if (!strcmp (IMethod, "AdamsMoulton")) {
+  else if (!strcmp (Method, "AdamsMoulton")) {
     if (MaxOrder > 6) MaxOrder = 6;
     return INTEGRATOR_ADAMSMOULTON;
   }
-  else if (!strcmp (IMethod, "AdamsBashford")) {
+  else if (!strcmp (Method, "AdamsBashford")) {
     if (MaxOrder > 6) MaxOrder = 6;
     return INTEGRATOR_ADAMSBASHFORD;
   }
   return INTEGRATOR_UNKNOWN;
 }
 
+/* The function returns the appropriate predictor integration method
+   for the given corrector method and adjusts the order of the
+   predictor as well based on the given corrector method. */
+int predictorType (int corrMethod, int corrOrder, int& predOrder) {
+  int predMethod = INTEGRATOR_UNKNOWN;
+  switch (corrMethod) {
+  case INTEGRATOR_GEAR:
+  case INTEGRATOR_ADAMSMOULTON:
+    predMethod = INTEGRATOR_ADAMSBASHFORD;
+    predOrder = corrOrder;
+    break;
+  case INTEGRATOR_TRAPEZOIDAL:
+    predMethod = INTEGRATOR_ADAMSBASHFORD;
+    predOrder = corrOrder;
+    break;
+  case INTEGRATOR_EULER:
+    predMethod = INTEGRATOR_EULER;
+    predOrder = 1;
+    break;
+  }
+  return predMethod;
+}
+
 // Structure defining integration algorithm for each possible order.
 struct integration_types_t {
-  int IMethod;
-  int correctorType[6];
+  int Method;
+  int integratorType[6];
+  nr_double_t corrErrorConstant[6];
+  nr_double_t predErrorConstant[6];
 };
 
 static struct integration_types_t integration_types[] = {
   { INTEGRATOR_EULER,
-    { INTEGRATOR_EULER }
+    { INTEGRATOR_EULER },
+    { -1.0/2 },
+    { +1.0/2 }
   },
   { INTEGRATOR_TRAPEZOIDAL,
-    { INTEGRATOR_EULER, INTEGRATOR_TRAPEZOIDAL }
+    { INTEGRATOR_EULER, INTEGRATOR_TRAPEZOIDAL },
+    { -1.0/2, -1.0/12 },
+    { +1.0/2, +5.0/12 }
   },
   { INTEGRATOR_GEAR,
     { INTEGRATOR_GEAR, INTEGRATOR_GEAR, INTEGRATOR_GEAR,
-      INTEGRATOR_GEAR, INTEGRATOR_GEAR, INTEGRATOR_GEAR }
+      INTEGRATOR_GEAR, INTEGRATOR_GEAR, INTEGRATOR_GEAR },
+    { -1.0/2, -2.0/9, -3.0/22, -12.0/125, -10.0/137, -20.0/343 },
+    { +1.0/2, +2.0/9, +3.0/22, +12.0/125, +10.0/137, +20.0/343 }
   },
   { INTEGRATOR_ADAMSMOULTON,
     { INTEGRATOR_ADAMSMOULTON, INTEGRATOR_ADAMSMOULTON,
       INTEGRATOR_ADAMSMOULTON, INTEGRATOR_ADAMSMOULTON,
-      INTEGRATOR_ADAMSMOULTON, INTEGRATOR_ADAMSMOULTON }
+      INTEGRATOR_ADAMSMOULTON, INTEGRATOR_ADAMSMOULTON },
+    { -1.0/2, -1.0/12, -1.0/24, -19.0/720, -3.0/160, -863.0/60480 },
+    { +1.0/2, +1.0/12, +1.0/24, +19.0/720, +3.0/160, +863.0/60480 }
   },
   { INTEGRATOR_ADAMSBASHFORD,
     { INTEGRATOR_ADAMSBASHFORD, INTEGRATOR_ADAMSBASHFORD,
       INTEGRATOR_ADAMSBASHFORD, INTEGRATOR_ADAMSBASHFORD,
-      INTEGRATOR_ADAMSBASHFORD, INTEGRATOR_ADAMSBASHFORD }
+      INTEGRATOR_ADAMSBASHFORD, INTEGRATOR_ADAMSBASHFORD },
+    { -1.0/2, -5.0/12, -3.0/8, -251.0/720, -95.0/288, -19087.0/60480 },
+    { +1.0/2, +5.0/12, +3.0/8, +251.0/720, +95.0/288, +19087.0/60480 }
   }
 };
 
 /* The function returns the appropriate integration type for the given
-   integration type and order. */
-int integratorType (int IMethod, int order) {
-  return integration_types[IMethod].correctorType[order - 1];
+   corrector integration type and order. */
+int correctorType (int Method, int order) {
+  return integration_types[Method].integratorType[order - 1];
+}
+
+// Returns the error constant for the given corrector.
+nr_double_t getCorrectorError (int Method, int order) {
+  return integration_types[Method].corrErrorConstant[order - 1];
+}
+
+// Returns the error constant for the given predictor.
+nr_double_t getPredictorError (int Method, int order) {
+  return integration_types[Method].predErrorConstant[order - 1];
 }
