@@ -17,15 +17,21 @@
 
 #include "graph.h"
 
+#include <math.h>
+
+
 Graph::Graph(const QString& _Line)
 {
   Line = _Line;
+
+  Type = isGraph;
 
   count  = 0;    // no points in graph
   Points = 0;
   Thick  = 1;
   Color  = 0x0000ff;  // blue
-  
+  isSelected = false;
+
   Points = 0;
   cPoints.setAutoDelete(true);
 }
@@ -40,6 +46,29 @@ void Graph::paint(QPainter *p, int cx, int cy)
 {
   int *pp = Points;
   if(pp == 0) return;
+
+  if(isSelected) {
+    p->setPen(QPen(QPen::darkGray,Thick+4));
+    p->drawPoint(cx+(*pp), cy-(*(pp+1)));
+
+    for(int n=count-1; n>0; n--) {
+      p->drawLine(cx+(*pp), cy-(*(pp+1)), cx+(*(pp+2)), cy-(*(pp+3)));
+      pp += 2;
+    }
+
+    pp = Points;
+    p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
+    p->drawPoint(cx+(*pp), cy-(*(pp+1)));
+
+    for(int n=count-1; n>0; n--) {
+      p->drawLine(cx+(*pp), cy-(*(pp+1)), cx+(*(pp+2)), cy-(*(pp+3)));
+      pp += 2;
+    }
+    p->setPen(QPen(QColor(Color)));
+    return;
+  }
+
+  pp = Points;
   p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
   p->drawPoint(cx+(*pp), cy-(*(pp+1)));
 
@@ -78,4 +107,42 @@ bool Graph::load(const QString& _s)
   if(!ok) return false;
 
   return true;
+}
+
+// --------------------------------------------------------------------------
+// Checks if the coordinates x/y point to the graph. x/y are relative to diagram cx/cy
+// 5 is the precision the user must point onto the graph.
+int Graph::getSelected(int x, int y)
+{
+  int *pp = Points;
+  if(pp == 0) return -1;
+
+//qDebug("c: %d/%d", x, y);
+  double x_double, y_double, phi, sin_phi, cos_phi;
+  int len, xn, yn;
+  int x2, x1 = *(pp++);
+  int y2, y1 = *(pp++);
+
+  for(int n=1; n<count; n++) {   // count-1 runs (because need 2 points per run)
+    x2 = (*pp) - x1;
+    y2 = (*(pp+1)) - y1;
+
+    x_double = double(x-x1);
+    y_double = double(y-y1);
+
+    phi = -atan2(double(y2), double(x2));
+    sin_phi = sin(phi);
+    cos_phi = cos(phi);
+    len = int( sqrt(double( x2*x2 + y2*y2 )) )+5;
+
+    xn = int(x_double*cos_phi - y_double*sin_phi);
+    yn = int(x_double*sin_phi + y_double*cos_phi);
+
+    // lies x/y onto the graph line ?
+    if(xn > -5) if(xn < len) if(yn > -5) if(yn < 5)  return n;
+
+    x1 = *(pp++);  y1 = *(pp++);
+  }
+
+  return -1;
 }

@@ -927,10 +927,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Format Error:
 Wrong line start!</source>
         <translation type="unfinished"></translation>
@@ -944,10 +940,6 @@ Wrong line start!</source>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -969,10 +961,6 @@ Creates a new schematic or data display document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Opens an existing document</source>
         <translation type="unfinished"></translation>
     </message>
@@ -988,10 +976,6 @@ Opens an existing document</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1049,10 +1033,6 @@ Saves all open documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Closes the current document</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1082,10 +1062,6 @@ Sets properties of the file</source>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1129,10 +1105,6 @@ Quits the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1148,10 +1120,6 @@ Cuts the selected section and puts it to the clipboard</source>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1173,10 +1141,6 @@ Copies the selected section to the clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pastes the clipboard contents to the cursor position</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1192,10 +1156,6 @@ Pastes the clipboard contents to the cursor position</source>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1217,10 +1177,6 @@ Deletes the selected components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Undoes the last command</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1236,10 +1192,6 @@ Makes the last action undone</source>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1325,10 +1277,6 @@ Shows the whole page content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Views without magnification</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1340,10 +1288,6 @@ Shows the page content without magnification</source>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1361,10 +1305,6 @@ Zooms the current view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Zooms out the current view</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1379,10 +1319,6 @@ Zooms out the current view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1394,10 +1330,6 @@ Select mode</source>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1485,10 +1417,6 @@ Goes up one hierarchy level, i.e. leaves subcircuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Deactivate/Activate the selected item</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1549,10 +1477,6 @@ Inserts a port symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Inserts a wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1582,10 +1506,6 @@ Inserts a wire or pin label</source>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

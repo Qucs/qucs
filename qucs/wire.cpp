@@ -59,6 +59,14 @@ void Wire::rotate()
   tmp = x2;
   x2  = xm + y2  - ym;
   y2  = ym - tmp + xm;
+
+  if(Label) {
+    tmp = Label->cx;
+    Label->cx = xm + Label->cy - ym;
+    Label->cy = ym - tmp + xm;
+    if(Label->Type == isHWireLabel) Label->Type = isVWireLabel;
+    else Label->Type = isHWireLabel;
+  }
 }
 
 // ----------------------------------------------------------------
@@ -67,7 +75,7 @@ void Wire::setCenter(int x, int y, bool relative)
   if(relative) {
     x1 += x;  x2 += x;
     y1 += y;  y2 += y;
-    if(!Label) Label->setCenter(x, y, true);
+    if(Label) Label->setCenter(x, y, true);
   }
   else {
     x1 = x;  x2 = x;

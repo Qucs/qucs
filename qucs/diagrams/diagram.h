@@ -54,15 +54,15 @@ public:
   
   QString Name;   // identity string for the diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
-  int     GridX, GridY;
   QString xLabel, yLabel;
-  
+
   QPtrList<Graph> Graphs;
   QPtrList<Arc>   Arcs;
   QPtrList<Line>  Lines;
   QPtrList<Text>  Texts;
 
   double xmin, ymin, xmax, ymax;    // least and greatest values of all graph data
+  double xup, xlow, yup, ylow;      // the limits of the diagram
 };
 
 #endif

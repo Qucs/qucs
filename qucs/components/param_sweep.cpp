@@ -51,7 +51,7 @@ Param_Sweep::Param_Sweep()
   Model = ".SW";
   Name  = "SW";
 
-  Props.append(new Property("Sim", "", true, QObject::tr("simulation to perform parameter sweep on")));
+//  Props.append(new Property("Sim", "", true, QObject::tr("simulation to perform parameter sweep on")));
   Props.append(new Property("Param", "R1", true, QObject::tr("parameter to sweep")));
   Props.append(new Property("Start", "5 Ohm", true, QObject::tr("start value for sweep")));
   Props.append(new Property("Stop", "50 Ohm", true, QObject::tr("stop value for sweep")));

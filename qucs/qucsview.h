@@ -101,7 +101,6 @@ public:
   void MMoveMoving2(QMouseEvent *Event);
   void MMovePaste(QMouseEvent *Event);
   void MMovePainting(QMouseEvent *Event);
-  void MMoveWireLabel(QMouseEvent *Event);
   void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to current mouse move method
 
   void MPressSelect(QMouseEvent *Event);
@@ -128,7 +127,6 @@ public:
   void MReleaseMoving(QMouseEvent *Event);
   void MReleaseResizeDiagram(QMouseEvent *Event);
   void MReleasePaste(QMouseEvent *);
-  void MReleaseWireLabel(QMouseEvent *Event);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to current mouse release button method
 
   void endElementMoving();

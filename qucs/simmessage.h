@@ -36,6 +36,7 @@ public:
 	~SimMessage();
 
   bool startProcess(const QStringList& commands);
+  void errorSimEnded();
 
 signals:
   void SimulationEnded(int Status, SimMessage *sim);

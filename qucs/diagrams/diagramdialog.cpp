@@ -192,11 +192,11 @@ void DiagramDialog::slotReadVars(int)
     Line = stream.readLine();
     if(Line.left(4) == "<dep") {
       tmp = Line.section(' ', 2);
-      new QListViewItem(ChooseVars, Line.section(' ', 1, 1), "dep", tmp.remove('>'));
+      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'), "dep", tmp.remove('>'));
     }
     else if(Line.left(6) == "<indep") {
       tmp = Line.section(' ', 2, 2);
-      new QListViewItem(ChooseVars, Line.section(' ', 1, 1), "indep", tmp.remove('>'));
+      new QListViewItem(ChooseVars, Line.section(' ', 1, 1).remove('>'), "indep", tmp.remove('>'));
     }
   }
 
