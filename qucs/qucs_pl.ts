@@ -367,6 +367,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -558,6 +570,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">Podaj nazwę węzła</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Podaj nazwę:</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Porzuć</translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -621,6 +664,29 @@
     <message>
         <source>Discard all</source>
         <translation>Zrezygnuj ze wszystkich</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished">Tworzenie nowego projektu</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished">Nazwa projektu:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished">otwórz nowy projekt</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Twórz</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Porzuć</translation>
     </message>
 </context>
 <context>
@@ -1219,23 +1285,23 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Tworzenie nowego projektu</translation>
+        <translation type="obsolete">Tworzenie nowego projektu</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Nazwa projektu:</translation>
+        <translation type="obsolete">Nazwa projektu:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>otwórz nowy projekt</translation>
+        <translation type="obsolete">otwórz nowy projekt</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Twórz</translation>
+        <translation type="obsolete">Twórz</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Porzuć</translation>
+        <translation type="obsolete">Porzuć</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
@@ -2303,6 +2369,18 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>Wrong document type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="obsolete">Podaj nazwę węzła</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">Podaj nazwę:</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4222,11 +4300,11 @@ Przesuwa tekst właściwości elementu</translation>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation>Podaj nazwę węzła</translation>
+        <translation type="obsolete">Podaj nazwę węzła</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>Podaj nazwę:</translation>
+        <translation type="obsolete">Podaj nazwę:</translation>
     </message>
     <message>
         <source>Info</source>

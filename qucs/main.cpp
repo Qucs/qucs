@@ -174,12 +174,12 @@ QString StringNum(double num, char form, int Precision)
   p = strchr(Buffer, 'e');
   if(p) {
     p++;
-    if(*(p++) == '+') { a = 1; }
-    if(*p == '0') { a++; p++; }
+    if(*(p++) == '+') { a = 1; }   // remove '+' of exponent
+    if(*p == '0') { a++; p++; }    // remove leading zeros of exponent
     if(a > 0)
       do {
         *(p-a) = *p;
-      } while(*(p++) != 0);
+      } while(*(p++) != 0);    // override characters not needed
   }
 
   s = Buffer;

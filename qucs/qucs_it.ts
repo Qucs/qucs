@@ -371,6 +371,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -600,6 +612,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Inserire etichetta:</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancella</translation>
+    </message>
+</context>
+<context>
     <name>LineDialog</name>
     <message>
         <source>OK</source>
@@ -706,6 +749,29 @@
     <message>
         <source>Discard all</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished">Crea nuovo progetto</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished">Nome progetto:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished">apri nuovo progetto</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Crea</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancella</translation>
     </message>
 </context>
 <context>
@@ -1304,23 +1370,23 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Crea nuovo progetto</translation>
+        <translation type="obsolete">Crea nuovo progetto</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Nome progetto:</translation>
+        <translation type="obsolete">Nome progetto:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>apri nuovo progetto</translation>
+        <translation type="obsolete">apri nuovo progetto</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Crea</translation>
+        <translation type="obsolete">Crea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation type="obsolete">Cancella</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -2323,6 +2389,14 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Wrong document type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">Inserire etichetta:</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5111,12 +5185,8 @@ Moves the property text of components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter the label:</source>
-        <translation>Inserire etichetta:</translation>
+        <translation type="obsolete">Inserire etichetta:</translation>
     </message>
 </context>
 <context>

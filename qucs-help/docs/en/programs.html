@@ -29,12 +29,16 @@ assume the default path (<tt>/usr/local/</tt>).
 <tt>/usr/local/bin/qucsedit </tt> - a simple text editor
 <br>
 <tt>/usr/local/bin/qucshelp </tt> - a small program displaying the help system
+<br>
+<tt>/usr/local/bin/qucsconv </tt> - a file format converter (console application)
 <br><br>
 All programs are stand-alone applications and can be started independently.
 The main program (GUI)
 <br>calls <tt>qucsator</tt> when performing a simulation,
-<br>calls <tt>qucsedit</tt> when showing text files and
-<br>calls <tt>qucshelp</tt> when showing the help system.
+<br>calls <tt>qucsedit</tt> when showing text files,
+<br>calls <tt>qucshelp</tt> when showing the help system,
+<br>calls <tt>qucsconv</tt> when placing the SPICE component and when
+performing a simulation with the SPICE component.
 <br><br>
 Furthermore, the following directories are created during installation:
 <br>
@@ -50,6 +54,7 @@ Furthermore, the following directories are created during installation:
 <tt>qucsator [-b] -i netlist -o dataset</tt> (b = progress bar)<br>
 <tt>qucsedit [-r] [file]</tt> (r = read-only)<br>
 <tt>qucshelp</tt> (no arguments)<br>
+<tt>qucsconv -if spice -of qucs -i netlist.inp -o netlist.net</tt><br>
 
 <br><a href="#top">back to the top</a><br>
 </body>

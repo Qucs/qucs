@@ -363,6 +363,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -534,6 +546,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">Inserează Nume de nod</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Introdu eticheta:</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Revocare</translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -597,6 +640,29 @@
     <message>
         <source>Discard all</source>
         <translation>Renunţare totală</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished">Crează un nou proiect</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished">Numele proiectului:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished">Deschide un nou proiect</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Crează</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Revocare</translation>
     </message>
 </context>
 <context>
@@ -1235,23 +1301,23 @@ Fals format de linie a &apos;component&apos;!</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Crează un nou proiect</translation>
+        <translation type="obsolete">Crează un nou proiect</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Numele proiectului:</translation>
+        <translation type="obsolete">Numele proiectului:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>Deschide un nou proiect</translation>
+        <translation type="obsolete">Deschide un nou proiect</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Crează</translation>
+        <translation type="obsolete">Crează</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Revocare</translation>
+        <translation type="obsolete">Revocare</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
@@ -2263,6 +2329,18 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>Wrong document type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="obsolete">Inserează Nume de nod</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">Introdu eticheta:</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4175,11 +4253,11 @@ Mută proprietatea text al componentelor</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
-        <translation>Inserează Nume de nod</translation>
+        <translation type="obsolete">Inserează Nume de nod</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>Introdu eticheta:</translation>
+        <translation type="obsolete">Introdu eticheta:</translation>
     </message>
 </context>
 <context>

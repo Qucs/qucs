@@ -1858,8 +1858,8 @@ void QucsDoc::oneLabel(Node *n1)
 	  if(((Component*)pe)->Model == "GND") {
 	    named = true;
 	    if(pl)
-	      if(pl->pWire) pl->pWire->setName("");
-	      else pl->pNode->setName("");
+	      if(pl->pWire) pl->pWire->setName("", "");
+	      else pl->pNode->setName("", "");
 	    pl = 0;
 	  }
 	continue;
@@ -1910,9 +1910,9 @@ int QucsDoc::placeNodeLabel(WireLabel *pl)
   if(pe) {    // name found ?
     if(pe->Type == isComponent)  return -2;  // ground potential
     if(pe->Type == isWire)
-      ((Wire*)pe)->setName("");
+      ((Wire*)pe)->setName("", "");
     else if(pe->Type == isNode)
-      ((Node*)pe)->setName("");
+      ((Node*)pe)->setName("", "");
   }
 
   pn->Label = pl;   // insert node label

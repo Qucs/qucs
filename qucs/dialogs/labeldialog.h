@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wirelabel.h  -  description
-                             -------------------
-    begin                : Sun Feb 29 2004
+                                labeldialog.h
+                              ----------------
+    begin                : Thu Dec 09 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -15,44 +15,44 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRELABEL_H
-#define WIRELABEL_H
+#ifndef LABELDIALOG_H
+#define LABELDIALOG_H
 
-#include "element.h"
-#include "viewpainter.h"
+#include <qdialog.h>
+#include <qregexp.h>
 
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
-
-class Wire;
-class Node;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QGridLayout;
+class QRegExpValidator;
+class WireLabel;
 
 /**
   *@author Michael Margraf
   */
 
-
-class WireLabel : public Element {
+class LabelDialog : public QDialog  {
+Q_OBJECT
 public:
-  WireLabel(const QString& _Name=0, int _cx=0, int _cy=0,
-            int _x1=0, int _y1=0, ElementType _Type=isNodeLabel);
-  ~WireLabel();
+  LabelDialog(WireLabel*, QWidget *parent=0);
+  ~LabelDialog();
 
-  void paintScheme(QPainter *p);
-  void setCenter(int x, int y, bool relative=false);
-  bool getSelected(int, int);
-  void setName(const QString& Name_);
+  QLineEdit  *NodeName, *InitValue;
 
-  Wire    *pWire;
-  Node    *pNode;
-  QString Name, initValue;
+private slots:
+  void slotExtend();
+  void slotOk();
+  void slotCancel();
 
-  void    paint(ViewPainter*);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
+private:
+  QPushButton *ButtonOk, *ButtonCancel, *ButtonMore;
+  QGridLayout *gbox;
+  QRegExpValidator *Validator1, *Validator2;
+  QRegExp      Expr1, Expr2;
+  QLabel      *Label2;
+
+  WireLabel *pLabel;
 };
 
 #endif

@@ -359,6 +359,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -530,6 +542,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">Inserir nome do nó</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">Entre com o rótulo:</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -589,6 +632,29 @@
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished">Criar novo projeto</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished">Nome do projeto:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished">abrir um novo projeto</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Criar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -1981,23 +2047,23 @@ Formato da linha &apos;componente&apos; errado!</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Criar novo projeto</translation>
+        <translation type="obsolete">Criar novo projeto</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Nome do projeto:</translation>
+        <translation type="obsolete">Nome do projeto:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>abrir um novo projeto</translation>
+        <translation type="obsolete">abrir um novo projeto</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Criar</translation>
+        <translation type="obsolete">Criar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
@@ -2191,6 +2257,18 @@ Usage:  qucsedit [-r] file
         <source>Only one filename allowed!
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="obsolete">Inserir nome do nó</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">Entre com o rótulo:</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4073,11 +4151,11 @@ Moves the property text of components</source>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation>Inserir nome do nó</translation>
+        <translation type="obsolete">Inserir nome do nó</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>Entre com o rótulo:</translation>
+        <translation type="obsolete">Entre com o rótulo:</translation>
     </message>
     <message>
         <source>Info</source>
