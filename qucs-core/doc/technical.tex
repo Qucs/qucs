@@ -318,6 +318,321 @@ the inserted ideal transformer now writes as follows.
 
 With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
 
+\section{Matrix conversions}
+%\addcontentsline{toc}{section}{Matrix conversions}
+
+When dealing with S-parameter analyses it may be necessary or
+convenient to convert the resulting scattering parameter matrix into
+other matrix representations used in microwave engineering.
+
+\subsection{S-Parameter to impedance matrix}
+%\addcontentsline{toc}{subsection}{S-Parameter to impedance matrix}
+
+Converting a scattering parameter matrix to an impedance matrix is
+done by the following formula.
+
+\begin{equation}
+\left[
+\underline{Z}
+\right]
+=
+\left[
+\underline{G}_{ref}
+\right]^{-1}
+\cdot
+\left(
+\left[\underline{E}\right] - \left[\underline{S}\right]
+\right)^{-1}
+\cdot
+\left(
+\left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]^{*}
+\right)
+\cdot
+\left[\underline{G}_{ref}\right]
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{E}\right]$ & = &
+$\begin{bmatrix}
+1 & 0 & \ldots & 0\\
+0 & 1 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 1\\
+\end{bmatrix}$
+identity matrix\\& &\\
+$\left[\underline{S}\right]$ & = & original S-parameter matrix\\& &\\
+$\left[\underline{Z}\right]$ & = & resulting impedance matrix\\& &\\
+$\left[\underline{Z}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
+$\left[\underline{G}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot 
+\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
+$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
+\end{tabular}
+
+And furthermore
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+$\left[\underline{X}\right]^{*}$ & = & 
+complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
+\end{tabular}
+
+\subsection{S-Parameter to admittance matrix}
+%\addcontentsline{toc}{subsection}{S-Parameter to admittance matrix}
+
+Converting a scattering parameter matrix to an admittance matrix can
+be achieved by computing the following formula.
+
+\begin{equation}
+\left[
+\underline{Y}
+\right]
+=
+\left[
+\underline{G}_{ref}
+\right]^{-1}
+\cdot
+\left(
+\left[\underline{S}\right] \cdot \left[\underline{Z}_{ref}\right] + \left[\underline{Z}_{ref}\right]^{*}
+\right)^{-1}
+\cdot
+\left(
+\left[\underline{E}\right] - \left[\underline{S}\right]
+\right)
+\cdot
+\left[\underline{G}_{ref}\right]
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{E}\right]$ & = &
+$\begin{bmatrix}
+1 & 0 & \ldots & 0\\
+0 & 1 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 1\\
+\end{bmatrix}$
+identity matrix\\& &\\
+$\left[\underline{S}\right]$ & = & original S-parameter matrix\\& &\\
+$\left[\underline{Y}\right]$ & = & resulting admittance matrix\\& &\\
+$\left[\underline{Z}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
+$\left[\underline{G}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot 
+\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
+$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
+\end{tabular}
+
+And furthermore
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+$\left[\underline{X}\right]^{*}$ & = & 
+complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
+\end{tabular}
+
+\subsection{Impedance matrix to scattering parameter matrix}
+%\addcontentsline{toc}{subsection}{Impedance matrix to scattering parameter matrix}
+
+Converting an impedance matrix to a scattering parameter matrix is
+done by the following formula.
+
+\begin{equation}
+\left[
+\underline{S}
+\right]
+=
+\left[
+\underline{G}_{ref}
+\right]
+\cdot
+\left(
+\left[\underline{Z}\right] - \left[\underline{Z}_{ref}\right]^{*}
+\right)
+\cdot
+\left(
+\left[\underline{Z}\right] + \left[\underline{Z}_{ref}\right]
+\right)^{-1}
+\cdot
+\left[\underline{G}_{ref}\right]^{-1}
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{E}\right]$ & = &
+$\begin{bmatrix}
+1 & 0 & \ldots & 0\\
+0 & 1 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 1\\
+\end{bmatrix}$
+identity matrix\\& &\\
+$\left[\underline{S}\right]$ & = & resulting S-parameter matrix\\& &\\
+$\left[\underline{Z}\right]$ & = & original impedance matrix\\& &\\
+$\left[\underline{Z}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
+$\left[\underline{G}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot 
+\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
+$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
+\end{tabular}
+
+And furthermore
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+$\left[\underline{X}\right]^{*}$ & = & 
+complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
+\end{tabular}
+
+\subsection{Admittance matrix to scattering parameter matrix}
+%\addcontentsline{toc}{subsection}{Admittance matrix to scattering parameter matrix}
+
+Converting an admittance matrix to a scattering parameter matrix is
+done by the following formula.
+
+\begin{equation}
+\left[
+\underline{S}
+\right]
+=
+\left[
+\underline{G}_{ref}
+\right]
+\cdot
+\left(
+\left[\underline{E}\right] - \left[\underline{Z}_{ref}\right]^{*} \cdot \left[\underline{Y}\right]
+\right)
+\cdot
+\left(
+\left[\underline{E}\right] + \left[\underline{Z}_{ref}\right] \cdot \left[\underline{Y}\right]
+\right)^{-1}
+\cdot
+\left[\underline{G}_{ref}\right]^{-1}
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{E}\right]$ & = &
+$\begin{bmatrix}
+1 & 0 & \ldots & 0\\
+0 & 1 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 1\\
+\end{bmatrix}$
+identity matrix\\& &\\
+$\left[\underline{S}\right]$ & = & resulting S-parameter matrix\\& &\\
+$\left[\underline{Y}\right]$ & = & original admittance matrix\\& &\\
+$\left[\underline{Z}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot Z_{0}$\\& &\\
+$\left[\underline{G}_{ref}\right]$ & = &
+$\left[\underline{E}\right] \cdot 
+\dfrac{1}{2\cdot \sqrt{\left| \text{Re}\left(Z_{0}\right)\right|}}$\\& &\\
+$Z_{0}$ & = & reference impedance (by default $50\ohm$)\\& &\\
+\end{tabular}
+
+And furthermore
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+$\left[\underline{X}\right]^{*}$ & = & 
+complex conjugated matrix of $\left[\underline{X}\right]$\\& &\\
+\end{tabular}
+
+\subsection{Impedance matrix to admittance matrix}
+%\addcontentsline{toc}{subsection}{Impedance matrix to admittance matrix}
+
+Converting an impedance matrix to an admittance matrix is done by the
+following formula.
+
+\begin{equation}
+\left[
+\underline{Y}
+\right]
+=
+\left[
+\underline{Z}
+\right]^{-1}
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{Y}\right]$ & = & resulting admittance matrix\\& &\\
+$\left[\underline{Z}\right]$ & = & original impedance matrix\\& &\\
+\end{tabular}
+
+And furthermore
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+\end{tabular}
+
+\subsection{Admittance matrix to impedance matrix}
+%\addcontentsline{toc}{subsection}{Admittance matrix to impedance matrix}
+
+Converting an admittance matrix to an impedance matrix is done by the
+following formula.
+
+\begin{equation}
+\left[
+\underline{Z}
+\right]
+=
+\left[
+\underline{Y}
+\right]^{-1}
+\end{equation}
+
+With
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{Z}\right]$ & = & resulting impedance matrix\\& &\\
+$\left[\underline{Y}\right]$ & = & original admittance matrix\\& &\\
+\end{tabular}
+
+And furthermore
+
+\addvspace{12pt}
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+\end{tabular}
+
 \section{Scattering parameters of components}
 %\addcontentsline{toc}{section}{Scattering parameters of components}
 
@@ -931,7 +1246,7 @@ current power spectral density $cPSD$ writes as follows.
 \end{pmatrix}
 \end{equation}
 
-To implement the frequency dependecies of all common PSDs the
+To implement the frequency dependencies of all common PSDs the
 following equation can be used.
 
 \begin{equation}
@@ -1376,7 +1691,7 @@ According to the MNA algorithm the equation system is represented by
 \left[A\right] \cdot \left[x\right] = \left[z\right]
 \end{equation}
 
-which is eqivalent to
+which is equivalent to
 
 \begin{equation}
 \begin{bmatrix}
@@ -1467,7 +1782,7 @@ $1\volt$ and the voltage at node 2 is $4\volt$.
 %\addcontentsline{toc}{subsubsection}{How the algorithm relates to basic equations in circuit analysis}
 
 Expanding the matrix representation in eq. (\ref{eq:MNAfull}) to a set
-of equations denotes the follwing equation system consisting of 3 of
+of equations denotes the following equation system consisting of 3 of
 them.
 
 \begin{align}
@@ -1948,7 +2263,7 @@ I_{4}\\
 \end{bmatrix}
 \end{equation}
 
-It is noticable that the additional row (part of the C matrix) and the
+It is noticeable that the additional row (part of the C matrix) and the
 corresponding column (part of the B matrix) are transposed to each
 other.  When considering the turns ratio $T$ being complex introducing
 an additional phase the transformer can be used as phase-shifting
@@ -1958,7 +2273,7 @@ in this case.
 \subsection{Symmetrical transformer}
 %\addcontentsline{toc}{subsection}{Symmetrical transformer}
 
-The ideal symmetrical tranformator, as shown in fig.
+The ideal symmetrical transformer, as shown in fig.
 \ref{fig:acstrafo}, is determined by the following equations which
 introduce two more unknowns in the MNA matrix.
 
@@ -2138,8 +2453,8 @@ I_{2}\\
 \subsection{Isolator}
 %\addcontentsline{toc}{subsection}{Isolator}
 
-The ideal Isolator with reference impedances $Z_1$ (input) and
-$Z_2$ (output) is determined by the following Z parameters.
+The ideal isolator with reference impedances $Z_1$ (input) and $Z_2$
+(output) is determined by the following Z parameters.
 
 \begin{equation}
 Z_{11} = Z_1  \qquad

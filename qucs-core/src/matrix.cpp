@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.4 2004/02/17 15:30:57 ela Exp $
+ * $Id: matrix.cpp,v 1.5 2004/04/28 14:39:19 ela Exp $
  *
  */
 
@@ -271,7 +271,7 @@ matrix& inverse (matrix& a) {
 }
 
 // Convert scattering parameters to impedance matrix.
-matrix& stoz (matrix& s, complex z0 = 50.0) {
+matrix& stoz (matrix& s, complex z0) {
   assert (s.getRows () == s.getCols ());
   int d = s.getRows ();
   matrix e, zref, gref, z, * res;
@@ -283,8 +283,29 @@ matrix& stoz (matrix& s, complex z0 = 50.0) {
   return *res;
 }
 
+// Convert impedance matrix scattering parameters.
+matrix& ztos (matrix& z, complex z0) {
+  assert (z.getRows () == z.getCols ());
+  int d = z.getRows ();
+  matrix e, zref, gref, s, * res;
+  e = eye (d);
+  zref = e * z0;
+  gref = e / (2 * sqrt (fabs (real (z0))));
+  s = gref * (z - conj (zref)) * inverse (z + zref) * inverse (gref);
+  res = new matrix (s);
+  return *res;
+}
+
+// Convert impedance matrix to admittance matrix.
+matrix& ztoy (matrix& z) {
+  assert (z.getRows () == z.getCols ());
+  matrix y;
+  y = inverse (z);
+  return * (new matrix (y));
+}
+
 // Convert scattering parameters to admittance matrix.
-matrix& stoy (matrix& s, complex z0 = 50.0) {
+matrix& stoy (matrix& s, complex z0) {
   assert (s.getRows () == s.getCols ());
   int d = s.getRows ();
   matrix e, zref, gref, y, * res;
@@ -293,6 +314,28 @@ matrix& stoy (matrix& s, complex z0 = 50.0) {
   gref = e / (2 * sqrt (fabs (real (z0))));
   y = inverse (gref) * inverse (s * zref + conj (zref)) * (e - s) * gref;
   res = new matrix (y);
+  return *res;
+}
+
+// Convert admittance matrix to scattering parameters.
+matrix& ytos (matrix& y, complex z0) {
+  assert (y.getRows () == y.getCols ());
+  int d = y.getRows ();
+  matrix e, zref, gref, s, * res;
+  e = eye (d);
+  zref = e * z0;
+  gref = e / (2 * sqrt (fabs (real (z0))));
+  s = gref * (e - conj (zref) * y) * inverse (e + zref * y) * inverse (gref);
+  res = new matrix (s);
+  return *res;
+}
+
+// Convert admittance matrix to impedance matrix.
+matrix& ytoz (matrix& y) {
+  assert (y.getRows () == y.getCols ());
+  matrix z, * res;
+  z = inverse (y);
+  res = new matrix (z);
   return *res;
 }
 

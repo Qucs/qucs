@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.3 2004/04/25 17:08:50 ela Exp $
+ * $Id: check_netlist.cpp,v 1.4 2004/04/28 14:39:19 ela Exp $
  *
  */
 
@@ -372,20 +372,21 @@ static int checker_validate_para (void) {
       /* the 'Sim' property must be an identifier */
       if ((val = checker_find_reference (def, "Sim")) == NULL) {
 	logprint (LOG_ERROR, "checker error, not a valid `Sim' property "
-		  "found in `%s'\n", def->instance);
+		  "found in `%s:%s'\n", def->type, def->instance);
 	errors++;
       }
       else {
 	/* check for self-referring sweeps */
 	if (!strcmp (def->instance, val->ident)) {
-	  logprint (LOG_ERROR, "checker error, definition `%s' refers to "
-		    "itself\n", def->instance);
+	  logprint (LOG_ERROR, "checker error, definition `%s:%s' refers to "
+		    "itself\n", def->type, def->instance);
 	  errors++;
 	}
 	/* look for the referred analysis action definition */
 	if (checker_count_action (val->ident) != 1) {
 	  logprint (LOG_ERROR, "checker error, no such action `%s' found "
-		    "as referred in `%s'\n", val->ident, def->instance);
+		    "as referred in `%s:%s'\n", val->ident, def->type,
+		    def->instance);
 	  errors++;
 	}
 	/* finally detect cyclic definitions */
