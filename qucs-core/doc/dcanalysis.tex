@@ -1680,6 +1680,29 @@ I_{2}\\
 \end{equation}
 
 
+The Z parameter representation is not very practical as new lines
+in the MNA matrix have to be added. More useful are the Y parameters.
+
+\begin{equation}
+\frac{1}{Z_{ref}\cdot (L-1)}\cdot
+\begin{bmatrix}
+ L+1            & -2\cdot\sqrt{L} \\
+-2\cdot\sqrt{L} & L+1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}
+\end{bmatrix}
+\end{equation}
+
+
+
 \subsection{Isolator}
 %\addcontentsline{toc}{subsection}{Isolator}
 
@@ -1699,8 +1722,8 @@ The MNA matrix representation can be derived from the Z parameters in the
 following way.
 \begin{equation}
 \begin{bmatrix}
- . & .  &  1 & 0\\
- . & .  &  0 & 1\\
+ . & .  & 1  & 0 \\
+ . & .  &  0 & 1 \\
 -1 &  0 & Z_{11} & Z_{12}\\
  0 & -1 & Z_{21} & Z_{22}
 \end{bmatrix}
@@ -1719,6 +1742,27 @@ I_{2}\\
 0
 \end{bmatrix}
 \end{equation}
+
+A more useful MNA representation is with Y parameters.
+
+\begin{equation}
+\begin{bmatrix}
+ 1/Z_1 & 0 \\
+ -2/\sqrt{Z_1\cdot Z_2} & 1/Z_2
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}
+\end{bmatrix}
+\end{equation}
+
+
 
 \subsection{Amplifier}
 %\addcontentsline{toc}{subsection}{Amplifier}
