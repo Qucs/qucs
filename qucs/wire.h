@@ -33,13 +33,15 @@
 class Wire : public Element {
 public: 
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+  virtual ~Wire();
 
   virtual void paintScheme(QPainter *p);
   virtual void setCenter(int x, int y, bool relative=false);
+  void    setName(const QString& Name_);
 
   Node    *Port1, *Port2;
   QString Name;
+  int     NameDX, NameDY;  // size of Name string on screen
   int     nx, ny, delta;  // position of the nodename label
 
   void    paint(QPainter *p);

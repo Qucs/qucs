@@ -1,3 +1,16 @@
+2004-02-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* Ctrl+E (electric) for "Wire" mode, Ctrl+R (run) for
+	"Simulate", Ctrl+D for "Deactivate"
+	* wire labels don't change their position at Copy&Paste anymore
+	* Wire labels can be moved with  mouse cursor
+	* ~/.qucs/qucs.ini introduced, saving size and position of
+	the main window
+	* the name of equations can be edited, you can add/remove
+	several equations per component
+	* right mouse button in ListView on the left side: delete
+	and rename files
+
 2004-02-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* bitmaps/Makefile.am (XPMS): Added missing pixmaps.
