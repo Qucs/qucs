@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# qucs-edit/Makefile.am
 #
 # Automake input file.
 #
@@ -22,15 +22,23 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = qucs qucs-edit
+bin_PROGRAMS = qucsedit
 
-# Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-core
+#MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
+#MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
+qucsedit_SOURCES = qucsedit.cpp
+
+nodist_qucsedit_SOURCES = $(MOCFILES)
+
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+qucsedit_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+
+noinst_HEADERS = $(MOCHEADERS)
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
 
 CLEANFILES = *~
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log *.gz aclocal.m4 config.h.in \
-	configure
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
+DISTCLEANFILES = *.moc.cpp
