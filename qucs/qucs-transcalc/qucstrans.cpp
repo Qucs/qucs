@@ -701,9 +701,10 @@ double QucsTranscalc::getProperty (QString prop) {
   struct TransValue * val = findProperty (prop);
   if (val) {
     QString str = val->lineedit->text ();
-    val->value = str.toDouble();
+    val->value = str.toDouble ();
     return val->value;
   }
+  return 0;
 }
 
 /* Returns the given property unit. */

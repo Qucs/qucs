@@ -108,6 +108,7 @@ void SimMessage::slotDisplayMsg()
   QString s = QString(SimProcess.readStdout());
   //qDebug(s);
   while((i = s.find('\r')) >= 0) {
+    if (s.find('\n') == i + 1) break; // necessary on Win32 platforms
     if(wasLF) {
       ProgressText += s.left(i-1);
     }
