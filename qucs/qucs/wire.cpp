@@ -20,6 +20,8 @@
 
 Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2, const QString& _Name)
 {
+  cx = 0;
+  cy = 0;
   x1 = _x1;
   y1 = _y1;
   x2 = _x2;
@@ -30,12 +32,31 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2, const QString
 
   nx=0; ny=0; delta=0;
 
-  isWire = true;
+  Type = isWire;
   isSelected = false;
 }
 
 Wire::~Wire()
 {
+}
+
+// ----------------------------------------------------------------
+void Wire::paintScheme(QPainter *p)
+{
+  p->drawLine(x1, y1, x2, y2);
+}
+
+// ----------------------------------------------------------------
+void Wire::setCenter(int x, int y, bool relative)
+{
+  if(relative) {
+    x1 += x;  x2 += x;
+    y1 += y;  y2 += y;
+  }
+  else {
+    x1 = x;  x2 = x;
+    y1 = y;  y2 = y;
+  }
 }
 
 // ----------------------------------------------------------------
@@ -80,15 +101,14 @@ bool Wire::isHorizontal()
 // save it to an ASCII file or to transport it via the clipboard.
 QString Wire::save()
 {
-  QString num;
-  QString s  = "<"+num.setNum(x1);
-          s += " "+num.setNum(y1);    // numbers must be in different lines !?!
-          s += " "+num.setNum(x2);
-          s += " "+num.setNum(y2);
+  QString s  = "<"+QString::number(x1);
+          s += " "+QString::number(y1);
+          s += " "+QString::number(x2);
+          s += " "+QString::number(y2);
           s += " \""+Name +"\" ";
-          s += num.setNum(nx)+" ";
-          s += num.setNum(ny)+" ";
-          s += num.setNum(delta)+">";
+          s += QString::number(nx)+" ";
+          s += QString::number(ny)+" ";
+          s += QString::number(delta)+">";
   return s;
 }
 

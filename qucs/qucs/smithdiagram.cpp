@@ -24,125 +24,150 @@
 
 SmithDiagram::SmithDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  dx = 200;
-  dy = 200;
+  x2 = 200;
+  y2 = 200;
 
   GridOn = true;
-  GridX = 4;    // number of arcs with im(z)=const
-  GridY = 4;    // number of arcs with re(z)=const
+  GridX = 4;    // number of arcs with re(z)=const
+  GridY = 4;    // number of arcs with im(z)=const
 
   Name = "Smith";
+
+  rMAX = 1.0;
+  calcDiagram();    // calculate circles for smith chart with |r|=1
 }
 
 SmithDiagram::~SmithDiagram()
 {
 }
 
-// --------------------------------------------------------------
-void SmithDiagram::paint(QPainter *p)
+// ------------------------------------------------------------
+// calculate the screen coordinates for the graph data
+void SmithDiagram::calcData(Graph *g)
 {
-  int dx2 = dx>>1;
-  p->setPen(QPen(Qt::lightGray, 1, Qt::SolidLine));
-  p->drawLine(cx, cy-dx2, cx+dx, cy-dx2);   // horizontal line im(r)=0
+  if(yg2 > 1.01) rMAX = 1.05*yg2;
+  else rMAX = 1.0;
+
+  int *p = g->Points;
+  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
+    *(p++) = cx+(x2>>1)+int(cp->yr/rMAX*double(x2>>1));
+    *(p++) = cy-(y2>>1)-int(cp->yi/rMAX*double(y2>>1));
+  }
+
+  calcDiagram();
+}
 
 
-  if(GridOn) {
+// ------------------------------------------------------------
+// calculate the circles and arcs of the smith chart
+void SmithDiagram::calcDiagram()
+{
+  Lines.clear();
+  Texts.clear();
+  Arcs.clear();
 
-    // **********************************************************************************
-    // draw arcs with im(z)=const
-    double im, x, y, n_cos, n_sin;
-    int    theta, beta, m;
-    
-    for(m=1; m<GridX; m++) {
-      n_cos = cos(M_PI*double(m)/GridX);
-      n_sin = sin(M_PI*double(m)/GridX);
-      im = (1-n_cos)/n_sin; // * pow(y2,0.7);
-      x  = 1-fabs(im);
-      y  = -im - fabs(im);
+if(GridOn) {
+  int dx2 = x2>>1;
 
-//      if(y2 == 1) {       // Smith-Chart mit |r|=1
-        beta  = int(16*180*atan2(n_sin-im,n_cos-1)/M_PI); //angle(r - Mitte);
+  double im, n_cos, n_sin, real, real1, real2, root, rMAXq = rMAX*rMAX;
+  int    theta, beta, m, x, y;
+
+  // ....................................................
+  // draw arcs with im(z)=const
+
+  for(m=1; m<GridY; m++) {
+    n_sin = M_PI*double(m)/double(GridY);
+    n_cos = cos(n_sin);
+    n_sin = sin(n_sin);
+    im = (1-n_cos)/n_sin * pow(rMAX,0.7);  // rMAX^0.7 is beauty correction
+    x  = int((1-im)/rMAX*dx2);
+    y  = int(im/rMAX*x2);
+
+    if(rMAX <= 1.0) {       // Smith chart with |r|=1
+      beta  = int(16*180*atan2(n_sin-im,n_cos-1)/M_PI);
+      if(beta<0) beta += 16*360;
+      theta = 16*270-beta;
+    }
+    else {         // Smith chart with |r|>1
+      im = 1/im;
+      real  = (rMAXq+1)/(rMAXq-1);
+      root =  real*real - im*im-1;
+      if(root<0) {       // circle lies completely within the Smith chart ?
+        beta = 0;        // yes, ...
+        theta = 16*360;  // ... draw whole circle
+      }
+      else {
+        real1 =  sqrt(root)-real;   // calculate both intersections with most outer circle
+        real2 = -sqrt(root)-real;
+
+        root  = (real1+1)*(real1+1) + im*im;
+        n_cos = (real1*real1 + im*im - 1) / root;
+        n_sin = 2*im / root;
+        beta  = int(16*180*atan2(n_sin-1/im,n_cos-1)/M_PI);
         if(beta<0) beta += 16*360;
-        theta = 16*270-beta;
-//      }
-//      else {         // Smith-Chart mit |r|>1
-/*            Reell  = (rMAXq+1)/(rMAXq-1);
-            Wurzel =  Reell*Reell - Im*Im-1;
-            if Wurzel<0     % liegt Kreis vollkommen in Smith-Chart ?
-                beta = 0;       % ja, ...
-                theta = 2*pi;   % ... dann Vollkreis zeichnen
-            else
-                Reell1 =  sqrt(Wurzel)-Reell;   % beide Schnittpunkte mit Außenkreis berechnen
-                Reell2 = -sqrt(Wurzel)-Reell;
 
-                r = (Reell1+j*Im-1) / (Reell1+j*Im+1);
-                beta = angle(r - Mitte);        % Anfangswinkel
-                r = (Reell2+j*Im-1) / (Reell2+j*Im+1);
-                theta = angle(r - Mitte);       % Endwinkel
-            end*/
-//      }
 
-/*        if beta<0
-            beta = 2*pi + beta;   % Wertebereich 0...2*pi
-        end
-        if (theta<0) | (theta<beta)
-            theta = 2*pi + theta;   % Wertebereich anpassen (evtl. >2*pi)
-        end
-*/
-      p->drawArc(cx+dx2+int(x*dx2), cy-dx2+int(y*dx2), int(fabs(im)*dx), int(fabs(im)*dx), beta, theta);
-      p->drawArc(cx+dx2+int(x*dx2), cy-dx2,
-                 int(fabs(im)*dx), int(fabs(im)*dx), beta+theta-16*180, theta);
+        root  = (real2+1)*(real2+1) + im*im;
+        n_cos = (real2*real2 + im*im - 1) / root;
+        n_sin = 2*im / root;
+        theta  = int(16*180*atan2(n_sin-1/im,n_cos-1)/M_PI);
+        if(theta<0) theta += 16*360;
+        theta = theta - beta;   // arc length
+//  QMessageBox::critical(0, "Error", QString::number(beta/16)+"  "+QString::number(theta/16));
+        if(theta < 0) theta = 16*360+theta;
+      }
     }
 
-    // **********************************************************************************
-    // draw  arcs with Re(z)=const
-    #define rMAX 1.0
-    
-    for(m=1; m<GridY; m++) {
-      x = m*(rMAX+1)/GridY - rMAX;   // distribute circles uniformly
-      y = (1-x)/2;    // radius
+    Arcs.append(new Arc(cx+dx2+x, cy-dx2-y, y, y, beta, theta, QPen(QPen::lightGray,1)));
+    Arcs.append(new Arc(cx+dx2+x, cy-dx2  , y, y, 16*360-beta-theta, theta, QPen(QPen::lightGray,1)));
+  }
 
-      p->drawArc(cx+dx2+int(x*dx2), cy-dx2-int(y*dx2), int(y*dx), int(y*dx), 0, 16*360);
-/*        if abs(abs(r)-1) > 0.4      % sieht unschön aus (zu nah an |r|=1) ?
+  // ....................................................
+  // draw  arcs with Re(z)=const
+  for(m=1; m<GridX; m++) {
+    im = m*(rMAX+1)/GridX - rMAX;
+    x  = int(im/rMAX*double(dx2));
+    im = (1-im);
+    y  = int(im/rMAX*double(dx2));    // diameter
+
+    Arcs.append(new Arc(cx+dx2+x, cy-dx2-(y>>1), y, y, 0, 16*360, QPen(QPen::lightGray,1)));
+/*        if abs(abs(r)-1) > 0.4      // do not draw if to close to most outer circle (beauty correction)
             linecount=linecount+1;
             ChartLinehandles(linecount,1)=plot(Kreis, 'color',txtC,'linewidth',1,...
                                                 'HandleVisibility', 'off');     % linke Kreisbögen zeichnen
         end*/
 
-/*        if rMAX > 1     % rechte Kreisbögen zeichnen ?
-            r     = Mitte + 3*Radius;
-            Reell = (1+r)/(1-r);
-            Im    = - Reell*Reell - 2*Reell*(rMAXq+1)/(rMAXq-1) - 1;
-            if Im <= 0      % liegt Kreis vollständig im Smith-Chart ?
-                Kreis = 2 - Kreis;    % ja, dann Kreis an r=1 spiegeln
-            else
-                r = (Reell+j*sqrt(Im)-1) / (Reell+j*sqrt(Im)+1);
-                beta = angle(r - 2+Mitte);        % Anfangswinkel
-                Kreis = 2-Mitte + Radius*exp(j*linspace(beta,2*pi-beta,nn));
-            end
-            linecount=linecount+1;
-            ChartLinehandles(linecount,1)=plot(Kreis, 'color',txtC,'linewidth',1,...
-                                                'HandleVisibility', 'off');     % Kreis zeichnen
-        end*/
+    if(rMAX > 1.0) {    // draw arcs on the rigth-handed side ?
+      im = (rMAXq-1)/(im*(im/2+1)) - 1;
+      if(im>=1)
+        Arcs.append(new Arc(cx+dx2+x+y, cy-dx2-(y>>1), y, y, 0, 16*360, QPen(QPen::lightGray,1)));
+      else {
+        beta  = int(16*180/M_PI*acos(im));
+        theta = 2*(16*180-beta);
+        Arcs.append(new Arc(cx+dx2+x+y, cy-dx2-(y>>1), y, y, beta, theta, QPen(QPen::lightGray,1)));
+      }
     }
-  } // of if(GridOn)
-  
-  p->setPen(QPen(Qt::black, 1, Qt::SolidLine));
-  p->drawArc(cx, cy-dx, dx, dx, 0, 16*360);
-//  p->drawText(cx+dy, cy+15, QString::number(y2));
-
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    pg->paint(p);
-}
-
-// ------------------------------------------------------------
-void SmithDiagram::calcData(Graph *g)
-{
-  int *p = g->Points;
-  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = cx+(dx>>1)+int(cp->yr/y2*double(dx>>1));
-    *(p++) = cy-(dy>>1)-int(cp->yi/y2*double(dy>>1));
   }
+
+
+  // horizontal line Im(r)=0
+  Lines.append(new Line(cx, cy-dx2, cx+x2, cy-dx2, QPen(QPen::lightGray,1)));
+
+  // ....................................................
+  if(rMAX > 1.0) {  // draw circle with |r|=1 ?
+    x = int(x2/rMAX);
+    Arcs.append(new Arc(cx+dx2-(x>>1), cy-dx2-(x>>1), x, x, 0, 16*360, QPen(QPen::black,1)));
+
+    // vertical line Re(r)=1 (visible only if |r|>1)
+    x = int(x2/rMAX)>>1;
+    y = int(sqrt(rMAXq-1)/rMAX*dx2);
+    Lines.append(new Line(cx+dx2+x, cy-dx2-y, cx+dx2+x, cy-dx2+y, QPen(QPen::lightGray,1)));
+
+    Texts.append(new Text(cx, cy-4, QString::number(rMAX)));
+  }
+}  // of if(GridOn)
+
+  Arcs.append(new Arc(cx, cy-x2, x2, x2, 0, 16*360, QPen(QPen::black,1)));  // outer most circle
 }
 
 // ------------------------------------------------------------

@@ -19,8 +19,17 @@
 
 Element::Element()
 {
+  Type = isDummy;
 }
 
 Element::~Element()
+{
+}
+
+void Element::paintScheme(QPainter *)
+{
+}
+
+void Element::setCenter(int, int, bool)
 {
 }

@@ -29,11 +29,11 @@
 #include <qpoint.h>
 
 
-DiagramDialog::DiagramDialog(Diagram *d, QDir *_ProjDir, QWidget *parent, const char *name )
+DiagramDialog::DiagramDialog(Diagram *d, QWidget *parent, const char *name )
                                   : QDialog(parent, name, Qt::WDestructiveClose)
 {
   Diag = d;
-  ProjDir = _ProjDir;
+//  ProjDir = _ProjDir;
   setCaption("Edit Diagram Properties");
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
@@ -113,11 +113,17 @@ DiagramDialog::DiagramDialog(Diagram *d, QDir *_ProjDir, QWidget *parent, const 
 
   // ...........................................................
   // put all data files into ComboBox
-  QStringList Elements = ProjDir->entryList("*.dat", QDir::Files, QDir::Name);
+  QDir ProjDir(".");
+  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it)
     ChooseData->insertItem((*it).left((*it).length()-4));
   slotReadVars(0);  // put variables into the ListView
+
+  // ...........................................................
+  // put all graphs into the ListBox
+  for(Graph *ptr1 = Diag->Graphs.first(); ptr1 != 0; ptr1 = Diag->Graphs.next())
+    SelectedVars->insertItem(ptr1->Line);
 }
 
 DiagramDialog::~DiagramDialog()
@@ -127,7 +133,8 @@ DiagramDialog::~DiagramDialog()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotReadVars(int)
 {
-  QString DocName = ProjDir->absPath()+"/"+ChooseData->currentText()+".dat";
+//  QString DocName = ProjDir->absPath()+"/"+ChooseData->currentText()+".dat";
+  QString DocName = ChooseData->currentText()+".dat";
 //    QMessageBox::critical(0, "Error", "Cannot load document: "+DocName);
   
   QFile file(DocName);
@@ -172,7 +179,8 @@ void DiagramDialog::slotApplyGraphInput()
 
     Graph *g = new Graph(GraphInput->text());   // create a new graph
     Diag->Graphs.append(g);
-    Diag->loadVarData(ProjDir->absPath()+"/"+ChooseData->currentText()+".dat");
+//    Diag->loadVarData(ProjDir->absPath()+"/"+ChooseData->currentText()+".dat");
+    Diag->loadVarData(ChooseData->currentText()+".dat");
   }
   else {
 //    SelectedVars->
@@ -192,6 +200,8 @@ void DiagramDialog::slotNewGraph()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotOK()
 {
+  slotApply();
+  reject();
 }
 
 // --------------------------------------------------------------------------

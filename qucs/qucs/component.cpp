@@ -31,7 +31,10 @@
 // ***********************************************************************************
 Component::Component()
 {
-  isWire = false;
+//  isWire = false;
+//  isDiag = false;
+  Type = isComponent;
+
   cx = 0;
   cy = 0;
 
@@ -66,10 +69,14 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 // -------------------------------------------------------
-void Component::setCenter(int x, int y)
+void Component::setCenter(int x, int y, bool relative)
 {
-  cx = x;  // new component center
-  cy = y;
+  if(relative) {
+    cx += x;  cy += y;
+  }
+  else {
+    cx = x;  cy = y;
+  }
 }
 
 // -------------------------------------------------------

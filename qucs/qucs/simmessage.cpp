@@ -20,7 +20,9 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qvgroupbox.h>
-//#include <qsize.h>
+#include <qhbox.h>
+#include <qpushbutton.h>
+#include <qtimer.h>
 
 
 SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
@@ -28,6 +30,7 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   setCaption("Qucs Simulation Messages");
   
   QVBoxLayout *all = new QVBoxLayout(this);
+  all->setSpacing(5);
   QVGroupBox *Group1 = new QVGroupBox("Progress:",this);
   all->addWidget(Group1);
 
@@ -45,8 +48,53 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   ErrText->setReadOnly(true);
   ErrText->setMinimumSize(400,80);
 
+//  QHBox *Butts = new QHBox(this);
+//  all->addWidget(Butts);
+  QPushButton *Abort = new QPushButton("Abort", this);//Butts);
+  all->addWidget(Abort);
+  connect(Abort,SIGNAL(clicked()),SLOT(slotClose()));
+  
+  // ........................................................
+  connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
+  connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
 }
 
 SimMessage::~SimMessage()
 {
+}
+
+// ------------------------------------------------------------------------
+bool SimMessage::startProcess(const QStringList& commands)
+{
+  if(SimProcess.isRunning()) return false;
+
+  SimProcess.setArguments(commands);
+  if(!SimProcess.start()) return false;
+  
+  return true;
+}
+
+// ------------------------------------------------------------------------
+// Is called when the process sends an output to stdout.
+void SimMessage::slotDisplayMsg()
+{
+  ProgText->insert(QString(SimProcess.readStdout()));
+}
+
+// ------------------------------------------------------------------------
+// Is called when the process sends an output to stderr.
+void SimMessage::slotDisplayErr()
+{
+  ErrText->insert(QString(SimProcess.readStderr()));
+}
+
+// ------------------------------------------------------------------------
+void SimMessage::slotClose()
+{
+  if(SimProcess.isRunning()) {
+    SimProcess.tryTerminate();
+    QTimer::singleShot(2000,&SimProcess,SLOT(kill()));
+  }
+
+  done(1);
 }

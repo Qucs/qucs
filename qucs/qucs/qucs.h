@@ -67,8 +67,12 @@ class QucsApp : public QMainWindow
     void initStatusBar();  // setup the statusbar
     void initView();       // setup the mainview
 
-    bool queryExit();      // overloaded for Message box on last window exit
+    //bool queryExit();      // overloaded for Message box on last window exit
+    bool closeAllFiles();
 
+    
+  protected:
+    void closeEvent(QCloseEvent* Event);
     
   public slots:
     void slotFileNew();     // generate a new schematic in the view TabBar
@@ -77,6 +81,7 @@ class QucsApp : public QMainWindow
     void slotFileSaveAs();  // save a document under a different filename
     void slotFileSaveAll(); // save all open documents
     void slotFileClose();   // close the actual file
+    void slotFileSettings();// open dialog to change file settings
     void slotFilePrint();   // print the actual file
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put the marked object into the clipboard and remove it from the document
@@ -89,7 +94,8 @@ class QucsApp : public QMainWindow
     void slotViewToolBar(bool toggle);    // toggle the toolbar
     void slotViewStatusBar(bool toggle);  // toggle the statusbar
 
-    void slotHelpAbout();    // shows an about dlg
+    void slotHelpAbout();    // shows an about dialog
+    void slotHelpAboutQt();  // shows the standard about dialog for Qt
 
 
     void slotZoomIn();  // Zoom in by 2
@@ -109,6 +115,7 @@ class QucsApp : public QMainWindow
     void slotProjDelButt();
     void slotChangeView(int id);
     void slotSimulate();
+    void slotChangePage();
     void slotSelect(bool on);
     void slotEditActivate(bool on);
     void slotInsertLabel(bool on);
@@ -132,19 +139,18 @@ class QucsApp : public QMainWindow
     /** actions for the application initialized in initActions() and used to en/disable them
       * according to your needs during the program */
     QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs, *fileSaveAll, *fileClose;
-    QAction *filePrint, *fileQuit;
+    QAction *fileSettings, *filePrint, *fileQuit;
     QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
     QAction *projNew, *projOpen, *projDel;
     QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magPlus, *magMinus, *select;
     QAction *editRotate, *editMirror, *intoH, *popH, *editActivate, *wire, *editDelete;
     QAction *simulate, *dpl_sch;
     QAction *viewToolBar, *viewStatusBar;
-    QAction *helpAboutApp;
+    QAction *helpAboutApp, *helpAboutQt;
 
     QAction *activeAction;    // pointer to the action selected by the user
     
 // ********* Widgets on the main area **********************************
-//  private:
     QTabWidget    *TabView;
     QTabBar       *WorkView;
 

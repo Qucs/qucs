@@ -21,17 +21,27 @@
 #include <qdialog.h>
 
 #include <qtextedit.h>
+#include <qprocess.h>
 
 /**
   *@author Michael Margraf
   */
 
 class SimMessage : public QDialog  {
+   Q_OBJECT
 public: 
 	SimMessage(QWidget *parent=0);
 	~SimMessage();
 
-//private:
+  bool startProcess(const QStringList& commands);
+
+public slots:
+  void slotDisplayMsg();
+  void slotDisplayErr();
+  void slotClose();
+  
+public:
+  QProcess   SimProcess;
   QTextEdit *ProgText, *ErrText;
 
 };

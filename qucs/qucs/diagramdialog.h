@@ -36,7 +36,7 @@
 class DiagramDialog : public QDialog  {
 Q_OBJECT
 public: 
-	DiagramDialog(Diagram *d, QDir *_ProjDir, QWidget *parent=0, const char *name=0);
+	DiagramDialog(Diagram *d, QWidget *parent=0, const char *name=0);
 	~DiagramDialog();
 
   bool loadVarData(const QString& var);
@@ -53,7 +53,7 @@ public slots:
 
 public:
   Diagram *Diag;
-  QDir    *ProjDir;
+//  QDir    *ProjDir;
   
   QComboBox *ChooseData;
   QListView *ChooseVars;

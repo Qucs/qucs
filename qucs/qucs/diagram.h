@@ -19,6 +19,7 @@
 #define DIAGRAM_H
 
 #include "graph.h"
+#include "component.h"
 
 #include <qfile.h>
 
@@ -27,29 +28,44 @@
   *@author Michael Margraf
   */
 
-class Diagram {
+struct Text {
+  Text(int _x, int _y, const QString& _s)
+       : x(_x), y(_y), s(_s) {};
+  int   x, y;
+  QString s;
+};
+
+
+class Diagram : public Element {
 public: 
 	Diagram(int _cx=0, int _cy=0);
 	virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual void paint(QPainter *p);
+  virtual void calcDiagram();
   virtual void calcData(Graph *g);
+  virtual void paintScheme(QPainter *p);
+  virtual void setCenter(int x, int y, bool relative=false);
+  void    paint(QPainter *p);
+  void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();
-  bool load(const QString& Line, QTextStream *stream);
+  bool    load(const QString& Line, QTextStream *stream);
 
-  void paintScheme(QPainter *p);
-  void setCenter(int _cx, int _cy);
   bool loadVarData(const QString& fileName);
   int  loadIndepVarData(const QString& var, const QString& fileName);
   
-  QString Name;
-  int     cx, cy, dx, dy;
+  QString Name;   // identity string for the diagram type (e.g. Polar)
+//  int     cx, cy;   // center of the diagram (screen coordinates in pixels)
   bool    GridOn;
   int     GridX, GridY;
   QPtrList<Graph> Graphs;
+  QPtrList<Arc>   Arcs;
+  QPtrList<Line>  Lines;
+  QPtrList<Text>  Texts;
 
-  double x1, y1, x2, y2;
+//  bool isSelected;
+
+  double xg1, yg1, xg2, yg2;    // least and greatest values of all graph data
 };
 
 #endif
