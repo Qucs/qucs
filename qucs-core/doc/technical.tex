@@ -4583,17 +4583,70 @@ Y =
 \end{bmatrix}
 \end{equation}
 
+
+\subsection{Transmission line}
+%\addcontentsline{toc}{subsection}{Transmission line}
+
+A transmission line is normally described by its ABCD-matrix.
+(Note that in ABCD-matrizes the current $i_2$ is defined to
+flow out of the output port.)
+\begin{equation}
+(\underline{A}) =
+\begin{pmatrix}
+\cosh(\gamma\cdot l)       & Z_L\cdot \sinh(\gamma\cdot l)\\
+\sinh(\gamma\cdot l) / Z_L & \cosh(\gamma\cdot l)
+\end{pmatrix}
+\end{equation}
+
+This can easily recalculated into impedance parameters:
+\begin{equation}
+Z_{11} = Z_{22} = \frac{Z_L}{\tanh(\gamma\cdot l)}
+\end{equation}
+\begin{equation}
+Z_{12} = Z_{21} = \frac{Z_L}{\sinh(\gamma\cdot l)}
+\end{equation}
+
+Or into admittance parameters:
+\begin{equation}
+Y_{11} = Y_{22} = \frac{1}{Z_L \cdot \tanh(\gamma\cdot l)}
+\end{equation}
+\begin{equation}
+Y_{12} = Y_{21} = \frac{1}{-Z_L\cdot \sinh(\gamma\cdot l)}
+\end{equation}
+
+For ideal (lossless) transmission lines they write accordingly:
+\begin{equation}
+Z_{11} = Z_{22} = \frac{Z_L}{j\cdot\tan(\beta\cdot l)}
+\end{equation}
+\begin{equation}
+Z_{12} = Z_{21} = \frac{Z_L}{j\cdot\sin(\beta\cdot l)}
+\end{equation}
+\begin{equation}
+Y_{11} = Y_{22} = \frac{1}{j\cdot Z_L \cdot \tan(\beta\cdot l)}
+\end{equation}
+\begin{equation}
+Y_{12} = Y_{21} = \frac{1}{-j\cdot Z_L\cdot \sinh(\beta\cdot l)}
+\end{equation}
+
+
 \subsection{Phase shifter}
 %\addcontentsline{toc}{subsection}{Phase shifter}
+
+A phase shifter is nothing else than an ideal transmission line
+with negative length:
+\begin{equation}
+Z_{11} = Z_{22} = \frac{j\cdot Z_{Ref}}{\tan(\phi)}
+\end{equation}
+\begin{equation}
+Z_{12} = Z_{21} = \frac{j\cdot Z_{Ref}}{\sin(\phi)}
+\end{equation}
+
 
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
 \subsection{Isolator}
 %\addcontentsline{toc}{subsection}{Isolator}
-
-\subsection{Transmission line}
-%\addcontentsline{toc}{subsection}{Transmission line}
 
 \chapter{Transient Analysis}
 %\addcontentsline{toc}{chapter}{Transient Analysis}
