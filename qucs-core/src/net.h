@@ -1,7 +1,7 @@
 /*
  * net.h - net class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.8 2004-06-04 16:01:47 ela Exp $
+ * $Id: net.h,v 1.9 2004-07-11 10:22:13 ela Exp $
  *
  */
 
@@ -41,7 +41,9 @@ class net : public object
   circuit * getRoot (void) { return root; }
   void setRoot (circuit * c) { root = c; }
   void insertCircuit (circuit *);
-  void removeCircuit (circuit *);
+  void removeCircuit (circuit *, int dropping = 1);
+  int containsCircuit (circuit *);
+  int checkCircuitChain (void);
   void list (void);
   void reducedCircuit (circuit *);
   node * findConnectedNode (node *);

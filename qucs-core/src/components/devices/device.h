@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.h,v 1.2 2004-07-10 14:45:27 ela Exp $
+ * $Id: device.h,v 1.3 2004-07-11 10:22:13 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __DEVICE_H__
 
 class circuit;
+class node;
 class net;
 
 class device
@@ -34,7 +35,9 @@ class device
   friend circuit * splitResistance (circuit *, circuit *, net *,
 				    char *, char *, int);
   friend void disableResistance (circuit *, circuit *, net *, int);
-  friend void applyResistance (circuit *, nr_double_t);
+  friend circuit * splitCapacitance (circuit *, circuit *, net *,
+				     char *, node *, node *);
+  friend void disableCapacitance (circuit *, circuit *, net *);
   friend nr_double_t pnVoltage (nr_double_t, nr_double_t, nr_double_t,
 				nr_double_t);
   friend nr_double_t pnCurrent (nr_double_t, nr_double_t, nr_double_t);
@@ -43,6 +46,7 @@ class device
 				    nr_double_t, nr_double_t);
   friend nr_double_t pnCapacitance (nr_double_t, nr_double_t, nr_double_t,
 				    nr_double_t);
+  friend nr_double_t pnCriticalVoltage (nr_double_t, nr_double_t);
 };
 
 #endif /* __DEVICE_H__ */

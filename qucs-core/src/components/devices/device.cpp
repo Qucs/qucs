@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.3 2004-07-10 14:45:27 ela Exp $
+ * $Id: device.cpp,v 1.4 2004-07-11 10:22:13 ela Exp $
  *
  */
 
@@ -37,20 +37,8 @@
 #include "net.h"
 #include "constants.h"
 #include "device.h"
-
-/* The function fills in the necessary values for all types of
-   analyses into the given arbitrary resistor circuit. */
-void applyResistance (circuit * res, nr_double_t Rs) {
-  // apply constant MNA entries
-  nr_double_t g = 1.0 / Rs;
-  res->setY (1, 1, +g); res->setY (2, 2, +g);
-  res->setY (1, 2, -g); res->setY (2, 1, -g);
-
-  // apply constant S-Matrix
-  nr_double_t r = Rs / circuit::z0;
-  res->setS (1, 1, r / (r + 2.0)); res->setS (1, 2, 2.0 / (r + 2.0));
-  res->setS (2, 2, r / (r + 2.0)); res->setS (2, 1, 2.0 / (r + 2.0));
-}
+#include "resistor.h"
+#include "capacitor.h"
 
 /* This function can be used to create an extra resistor circuit.  If
    the 'res' argument is NULL then the new circuit is created, the
@@ -61,11 +49,11 @@ void applyResistance (circuit * res, nr_double_t Rs) {
    subnet:   the netlist object
    c:        name of the additional circuit
    n:        name of the inserted (internal) node
-   internal: number of new internal node (the orignal external node) */
+   internal: number of new internal node (the original external node) */
 circuit * splitResistance (circuit * base, circuit * res, net * subnet,
 			   char * c, char * n, int internal) {
   if (res == NULL) {
-    res = new circuit (2);
+    res = new resistor ();
     res->setName (circuit::createInternal (c, base->getName ()));
     res->setNode (1, base->getNode(internal)->getName ());
     res->setNode (2, circuit::createInternal (n, base->getName ()), 1);
@@ -81,8 +69,31 @@ circuit * splitResistance (circuit * base, circuit * res, net * subnet,
 void disableResistance (circuit * base, circuit * res, net * subnet,
 			int internal) {
   if (res != NULL) {
-    subnet->removeCircuit (res);
+    subnet->removeCircuit (res, 0);
     base->setNode (internal, res->getNode(1)->getName (), 0);
+  }
+}
+
+/* This function creates a new capacitance circuit if the given one is
+   not NULL.  The new circuit is connected between the given nodes and
+   a name is applied based upon the parents (base) name and the given
+   name 'c'.  The circuit is then put into the netlist. */
+circuit * splitCapacitance (circuit * base, circuit * cap, net * subnet,
+			    char * c, node * n1, node * n2) {
+  if (cap == NULL) {
+    cap = new capacitor ();
+    cap->setName (circuit::createInternal (c, base->getName ()));
+    cap->setNode (1, n1->getName ());
+    cap->setNode (2, n2->getName ());
+  }
+  subnet->insertCircuit (cap);
+  return cap;
+}
+
+// The function removes the given capacitance circuit from the netlist.
+void disableCapacitance (circuit *, circuit * cap, net * subnet) {
+  if (cap != NULL) {
+    subnet->removeCircuit (cap, 0);
   }
 }
 
@@ -134,4 +145,9 @@ nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
   else
     C = Cj * (1 + Mj * Uj / Vj);
   return C;
+}
+
+// Compute critical voltage of pn-junction.
+nr_double_t pnCriticalVoltage (nr_double_t Iss, nr_double_t Ute) {
+  return Ute * log (Ute / M_SQRT2 / Iss);
 }

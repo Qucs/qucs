@@ -1,3 +1,28 @@
+2004-07-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Simplified computation of S-parameters.
+	Code cleanups using the new helper functionality in device
+	class.
+
+	* devices/device.cpp: Removed applyResistance() function.
+	Now using a real resistor circuit for additional external
+	resistances of non-linear devices.  Changed all callers.
+	New functions splitCapacitance() and disableCapacitance()
+	which can be used to add an additional capacitance to the
+	netlist.
+	(pnCriticalVoltage): New function calculating the critical
+	voltage of a pn-junction (often used in DC analysis).
+
+	* devices/bjt.cpp: Partly implemented the small signal
+	model.  Needs some testing...
+
+	* resistor.cpp (calcDC): Also compute the MNA matrix
+	entries in calcDC().  This is useful if a resistor circuits
+	resistance is controlled by another circuit.
+
+	* capacitor.cpp: Using admittance to for the S-parameter
+	matrix instead the impedance.
+
 2004-07-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/device.cpp: Made all public functions 'friend'.

@@ -4597,21 +4597,100 @@ I_{CE_{eq}} &= I_{T} - g_{mf} \cdot V_{BE} + g_{mr} \cdot V_{BC}
 Equations for the real conductances in both equivalent circuits for
 the intrinsic BJT have already been given.
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.55\linewidth]{spsgp}
+\end{center}
+\caption{small signal model of intrinsic BJT}
+\label{fig:spsgp}
+\end{figure}
+\FloatBarrier
+
+The junctions depletion capacitances in the SGP model write as
+follows:
+\begin{align}
+C_{BE_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{JE}\cdot \left(1 - \dfrac{V_{BE}}{V_{JE}}\right)^{-M_{JE}} & \text{ for } V_{BE} \le F_{C}\cdot V_{JE}\\
+\dfrac{C_{JE}}{\left(1 - F_{C}\right)^{M_{JE}}}\cdot \left(1 + \dfrac{M_{JE}\cdot \left(V_{BE} - F_{C}\cdot V_{JE}\right)}{V_{JE}\cdot \left(1 - F_{C}\right)}\right) & \text{ for } V_{BE} > F_{C}\cdot V_{JE}
+\end{array}
+\end{cases}\\
+C_{BC_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{JC}\cdot \left(1 - \dfrac{V_{BC}}{V_{JC}}\right)^{-M_{JC}} & \text{ for } V_{BC} \le F_{C}\cdot V_{JC}\\
+\dfrac{C_{JC}}{\left(1 - F_{C}\right)^{M_{JC}}}\cdot \left(1 + \dfrac{M_{JC}\cdot \left(V_{BC} - F_{C}\cdot V_{JC}\right)}{V_{JC}\cdot \left(1 - F_{C}\right)}\right) & \text{ for } V_{BC} > F_{C}\cdot V_{JC}
+\end{array}
+\end{cases}\\
+C_{CS_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{JS}\cdot \left(1 - \dfrac{V_{CS}}{V_{JS}}\right)^{-M_{JS}} & \text{ for } V_{CS} \le 0\\
+C_{JS}\cdot \left(1 + M_{JS}\cdot \dfrac{V_{CS}}{V_{JS}}\right) & \text{ for } V_{CS} > 0
+\end{array}
+\end{cases}
+\end{align}
+
+The base-collector depletion capacitance is split into two components:
+an external and an internal.
+\begin{align}
+C_{BCI_{dep}} &= X_{CJC}\cdot C_{BC_{dep}}\\
+C_{BCX_{dep}} &= \left(1 - X_{CJC}\right)\cdot C_{BC_{dep}}
+\end{align}
+
+The base-emitter diffusion capacitance can be obtained using the
+following equation.
+\begin{equation}
+C_{BE_{diff}} = \dfrac{\partial Q_{BE}}{\partial V_{BE}}
+\;\;\;\; \text{ with } \;\;\;\;
+Q_{BE} = \dfrac{I_F}{Q_B}\cdot T_{FF}
+\end{equation}
+
+Thus the diffusion capacitance depends on the bias-dependent effective
+forward transit time $T_{FF}$ which is defined as:
 \begin{equation}
 T_{FF} = T_F \cdot\left(1 + X_{TF} \cdot \left(\dfrac{I_F}{I_F + I_{TF}}\right)^2 \cdot \exp{\left(\dfrac{V_{BC}}{1.44\cdot V_{TF}}\right)}\right)
 \end{equation}
 
+With
 \begin{equation}
 \frac{\partial T_{FF}}{\partial V_{BE}} = \dfrac{T_F\cdot X_{TF}\cdot 2\cdot g_{IF}\cdot I_F\cdot I_{TF}}{\left(I_F + I_{TF}\right)^3}\cdot \exp{\left(\dfrac{V_{BC}}{1.44\cdot V_{TF}}\right)}
 \end{equation}
 
-\begin{equation}
-Q_{BE} = \dfrac{I_F}{Q_B}\cdot T_{FF}
-\end{equation}
-
+the base-emitter diffusion capacitance can finally be written as:
 \begin{equation}
 C_{BE_{diff}} = \dfrac{\partial Q_{BE}}{\partial V_{BE}} = \dfrac{1}{Q_B}\cdot \left(I_F\cdot \dfrac{\partial T_{FF}}{\partial V_{BE}} + T_{FF}\cdot\left(g_{IF} - \dfrac{I_F}{Q_B}\cdot \dfrac{\partial Q_B}{\partial V_{BE}}\right)\right)
 \end{equation}
+
+The base-collector diffusion capacitance writes as follows:
+\begin{equation}
+C_{BC_{diff}} = \dfrac{\partial Q_{BC}}{\partial V_{BC}} = T_{R} \cdot g_{IR}
+\end{equation}
+
+With these calculations made it is now possible to define the small
+signal Y-parameters of the intrinsic BJT.  The Y-parameter matrix can
+be converted to S-parameters.
+\begin{equation}
+Y =
+\begin{bmatrix}
+Y_{BC} + Y_{BE} & -Y_{BC} & -Y_{BE} & 0\\
+g_{mf} - Y_{BC} - g_{mr} & Y_{CS} + Y_{BC} + g_{mr}& - g_{mf} & -Y_{CS}\\
+g_{mr} - g_{mf} - Y_{BE} & -g_{mr} & Y_{BE} + g_{mf} & 0\\
+0 & -Y_{CS} & 0 & Y_{CS}\\
+\end{bmatrix}
+\end{equation}
+
+with
+\begin{align}
+Y_{BC} &= g_{\mu} + j\omega \left(C_{BCI_{dep}} + C_{BC_{diff}}\right)\\
+Y_{BE} &= g_{\pi} + j\omega \left(C_{BE_{dep}} + C_{BE_{diff}}\right)\\
+Y_{CS} &= j\omega C_{CS_{dep}}
+\end{align}
+
+The external capacitance $C_{BCX}$ connected between the internal
+collector node and the external base node is separately modeled if it
+is non-zero and if there is a non-zero base resistance.
 
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}

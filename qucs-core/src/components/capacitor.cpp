@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.4 2004-05-18 15:19:03 ela Exp $
+ * $Id: capacitor.cpp,v 1.5 2004-07-11 10:22:13 ela Exp $
  *
  */
 
@@ -45,9 +45,9 @@ capacitor::capacitor () : circuit (2) {
 
 void capacitor::calcSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
-  complex z = rect (0, -1.0 / (2.0 * M_PI * frequency * c));
-  setS (1, 1,   z / (z + 2.0));
-  setS (2, 2,   z / (z + 2.0));
-  setS (1, 2, 2.0 / (z + 2.0));
-  setS (2, 1, 2.0 / (z + 2.0));
+  complex y = 2 * rect (0, 2.0 * M_PI * frequency * c);
+  setS (1, 1, 1.0 / (1.0 + y));
+  setS (2, 2, 1.0 / (1.0 + y));
+  setS (1, 2, y / (1.0 + y));
+  setS (2, 1, y / (1.0 + y));
 }

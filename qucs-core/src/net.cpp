@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.13 2004-07-08 06:38:43 ela Exp $
+ * $Id: net.cpp,v 1.14 2004-07-11 10:22:12 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@ using namespace std;
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <assert.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -90,6 +91,9 @@ net::net (net & n) : object (n) {
 /* This function prepends the given circuit to the list of registered
    circuits. */
 void net::insertCircuit (circuit * c) {
+  assert (!containsCircuit (c));
+
+  // chain circuit appropriately
   if (root) root->setPrev (c);
   c->setNext (root);
   c->setPrev (NULL);
@@ -110,7 +114,8 @@ void net::insertCircuit (circuit * c) {
 
 /* The function removes the given circuit from the list of registered
    circuits. */
-void net::removeCircuit (circuit * c) {
+void net::removeCircuit (circuit * c, int dropping) {
+  assert (containsCircuit (c));
 
   // adjust the circuit chain appropriately
   if (c == root) {
@@ -127,13 +132,23 @@ void net::removeCircuit (circuit * c) {
 
   // shift the circuit object to the drop list
   if (c->isOriginal ()) {
-    if (drop) drop->setPrev (c);
-    c->setNext (drop);
-    c->setPrev (NULL);
-    drop = c;
+    if (dropping) {
+      if (drop) drop->setPrev (c);
+      c->setNext (drop);
+      c->setPrev (NULL);
+      drop = c;
+    }
   }
   // really destroy the circuit object
   else delete c;
+}
+
+/* The function returns non-zero if the given circuit is already part
+   of the netlist. It return zero if not. */
+int net::containsCircuit (circuit * cand) {
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+    if (c == cand) return 1;
+  return 0;
 }
 
 /* This function prepends the given analysis to the list of registered
@@ -392,11 +407,37 @@ void net::insertedNode (node * c) {
   c->setName (n);
 }
 
+/* This helper function checks whether the circuit chain of the
+   netlist is properly working.  It returns the number of errors or
+   zero if there are no errors. */
+int net::checkCircuitChain (void) {
+  int error = 0;
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->getPrev ())
+      if (c->getPrev()->getNext () != c) {
+	error++;
+	logprint (LOG_ERROR, "ERROR: prev->next != circuit '%s'\n",
+		  c->getName ());
+      }
+    if (c->getNext ())
+      if (c->getNext()->getPrev () != c) {
+	error++;
+	logprint (LOG_ERROR, "ERROR: next->prev != circuit '%s'\n",
+		  c->getName ());
+      }
+  }
+  return error;
+}
+
 #if DEBUG
 // DEBUG function: Lists the netlist.
 void net::list (void) {
-  logprint (LOG_STATUS, "DEBUG: netlist `%s'\n", getName ());
+  logprint (LOG_STATUS, "DEBUG: netlist `%s' (%d circuits, "
+	    "%d ports, %d nodes)\n", getName (), root->countPorts (),
+	    root->countPorts (), root->countNodes ());
+  // go through circuit list
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    // list each circuit
     logprint (LOG_STATUS, "       %s[", c->getName ());
     for (int i = 1; i <= c->getSize (); i++) {
       logprint (LOG_STATUS, "%s-%d", 
