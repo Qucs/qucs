@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.9 2004-05-12 00:02:23 ela Exp $
+ * $Id: msline.cpp,v 1.10 2004-05-12 11:39:45 ela Exp $
  *
  */
 
@@ -215,24 +215,20 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
 				       nr_double_t er, nr_double_t frequency,
 				       char * Model) {
 
-  nr_double_t e, fp, f, g, z, k;
+  nr_double_t e, f, g, z, k;
 
   ZlEffFreq = ZlEff;
   ErEffFreq = ErEff;
 
   // GETSINGER
   if (!strcmp (Model, "Getsinger")) {
+    nr_double_t g, f, d;
     g = 0.6 + 0.009 * ZlEff;
-    fp = C0 / 2 / h * ZlEff / MU0;
-    f = g * SQR (frequency / fp);
-    e = er - (er - ErEff) / (1 + f);
-    fprintf (stderr, "GETSINGER1 e = %g\n", e);
-
-    g = 0.6 + 0.009 * ZlEff;
-    k = er / ErEff * g;
     f = 2 * MU0 * h * frequency / ZlEff;
-    e = ErEff * (1 + k * SQR (f)) / (1 + g * SQR (f));
-    fprintf (stderr, "GETSINGER2 e = %g\n", e);
+    e = er - (er - ErEff) / (1 + g * SQR (f));
+    d = (er - e) * (e - ErEff) / e / (er - ErEff);
+    z = ZlEff * sqrt (e / ErEff) / (1 + d);
+    fprintf (stderr, "GETSINGER e = %g, z = %g\n", e, z);
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
