@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.9 2004/07/03 10:56:40 ela Exp $
+ * $Id: matrix.cpp,v 1.10 2004/07/18 17:22:46 ela Exp $
  *
  */
 
@@ -364,6 +364,19 @@ matrix& inverseGaussJordan (matrix& a) {
   }
   delete b;
   return *e;
+}
+
+/* Convert scattering parameters with the reference impedance 'zref'
+   to scattering parameters with the reference impedance 'z0'. */
+matrix& stos (matrix& s, complex zref, complex z0) {
+  assert (s.getRows () == s.getCols ());
+  int d = s.getRows ();
+  matrix e, r, n, * res;
+  e = eye (d);
+  r = e * (z0 - zref) / (z0 + zref);
+  n = (s - r) * inverse (e - r * s);
+  res = new matrix (n);
+  return *res;
 }
 
 // Convert scattering parameters to impedance matrix.

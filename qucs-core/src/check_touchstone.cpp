@@ -1,7 +1,7 @@
 /*
  * check_touchstone.cpp - checker for Touchstone files
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.1 2003/12/20 19:03:27 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.2 2004/07/18 17:22:45 ela Exp $
  *
  */
 
@@ -36,8 +36,11 @@
 #include "complex.h"
 #include "object.h"
 #include "vector.h"
+#include "matrix.h"
 #include "dataset.h"
 #include "strlist.h"
+#include "circuit.h"
+#include "components/constants.h"
 #include "check_touchstone.h"
 
 strlist * touchstone_idents = NULL;
@@ -184,12 +187,12 @@ static void touchstone_options_eval (void) {
    appropriate variable name. */
 static char * touchstone_create_set (int i, int j) {
   static char text[16];
-  sprintf (text, "%c%d%d", touchstone_options.parameter, i, j);
+  sprintf (text, "%c[%d,%d]", touchstone_options.parameter, i, j);
   if (touchstone_options.ports == 2) {
     /* handle special case for 2-port touchstone data, '21' data
        precedes the '12' data */
     if (i != j)
-      sprintf (text, "%c%d%d", touchstone_options.parameter, j, i);
+      sprintf (text, "%c[%d,%d]", touchstone_options.parameter, j, i);
   }
   return text;
 }
@@ -234,17 +237,91 @@ static void touchstone_create (void) {
 	}
 	else if (!strcmp (touchstone_options.format, "MA")) {
 	  val = polar (real (root->get (pos + 0)),
-		       real (root->get (pos + 1)) * M_PI / 180.0);
+		       rad (real (root->get (pos + 1))));
 	}
 	else if (!strcmp (touchstone_options.format, "dB")) {
 	  val = polar (pow (10.0, real (root->get (pos + 0)) / 20.0),
-		       real (root->get (pos + 1)) * M_PI / 180.0);
+		       rad (real (root->get (pos + 1))));
 	}
-	/* correct the reference impedance */
-	val *= (touchstone_options.resistance / 50.0);
 	v->add (val);
 	v = (vector *) v->getNext ();
       }
+    }
+  }
+}
+
+// The function re-normalizes S-parameters.
+static void touchstone_normalize_sp (void) {
+  int ports = touchstone_options.ports;
+  vector * v = touchstone_result->getVariables ();
+  int len = v->getSize ();
+  matrix s = matrix (ports);
+  
+  for (int n = 0; n < len; n++) {
+    v = touchstone_result->getVariables ();
+    for (int i = 1; i <= ports; i++) {
+      for (int j = 1; j <= ports; j++) {
+	s.set (i, j, v->get (n));
+	v = (vector *) v->getNext ();
+      }
+    }
+    s = stos (s, touchstone_options.resistance, circuit::z0);
+    v = touchstone_result->getVariables ();
+    for (int i = 1; i <= ports; i++) {
+      for (int j = 1; j <= ports; j++) {
+	v->set (s.get (i, j), n);
+	v = (vector *) v->getNext ();
+      }
+    }    
+  }
+}
+
+/* The function transforms the reference impedance given in the
+   touchstone file to the internal reference impedance 50 Ohms. */
+static void touchstone_normalize (void) {
+  vector * v = touchstone_result->getVariables ();
+  int ports = touchstone_options.ports;
+
+  if (touchstone_options.parameter == 'S') {
+    touchstone_normalize_sp ();
+    return;
+  }
+
+  for (int i = 1; i <= ports; i++) {
+    for (int j = 1; j <= ports; j++) {
+      switch (touchstone_options.parameter) {
+      case 'Y':
+	*v *= circuit::z0 / touchstone_options.resistance;
+	break;
+      case 'Z':
+	*v *= touchstone_options.resistance / circuit::z0;
+	break;
+      case 'G':
+	if (ports <= 2) {
+	  if (i == 1 && j == 1)
+	    *v *= circuit::z0 / touchstone_options.resistance;
+	  else if (i == 2 && j == 2)
+	    *v *= touchstone_options.resistance / circuit::z0;
+	}
+	else {
+	  logprint (LOG_ERROR, "checker error, impedance transformation for "
+		    "G-parameter %d-ports not defined\n", ports);
+	}
+	break;
+      case 'H':
+	if (ports <= 2) {
+	  if (i == 1 && j == 1)
+	    *v *= touchstone_options.resistance / circuit::z0;
+	  else if (i == 2 && j == 2)
+	    *v *= circuit::z0 / touchstone_options.resistance;
+	}
+	else {
+	  logprint (LOG_ERROR, "checker error, impedance transformation for "
+		    "H-parameter %d-ports not defined\n", ports);
+	}
+	break;
+      }
+      v = (vector *) v->getNext ();
     }
   }
 }
@@ -284,7 +361,7 @@ int touchstone_check (void) {
 	      touchstone_idents->length ());
     errors++;
   }
-  /* touchstone is case insenstive */
+  /* touchstone is case insensitive */
   for (int i = 0; i < touchstone_idents->length (); i++) {
     for (char * p = touchstone_idents->get (i); *p != '\0'; p++)
       *p = tolower (*p);
@@ -329,7 +406,10 @@ int touchstone_check (void) {
   touchstone_options_eval ();
 
   /* finally create a dataset */
-  if (!errors) touchstone_create ();
+  if (!errors) {
+    touchstone_create ();
+    touchstone_normalize ();
+  }
 
   /* free temporary memory */
   touchstone_finalize ();

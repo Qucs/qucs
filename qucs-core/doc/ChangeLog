@@ -1,3 +1,9 @@
+2004-07-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Strip thickness correction}):
+	Added a section about the strip thickness effects on quasi-
+	static characteristics of a microstrip line.
+
 2004-07-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{S-parameter of the single

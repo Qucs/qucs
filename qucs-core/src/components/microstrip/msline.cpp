@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.17 2004/07/12 18:14:59 ela Exp $
+ * $Id: msline.cpp,v 1.18 2004/07/18 17:22:46 ela Exp $
  *
  */
 
@@ -121,11 +121,13 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
   if (!strcmp (Model, "Wheeler")) {
     nr_double_t a, b, c, d, x, dW1, dWr, Wr;
 
+    // compute strip thickness effect
     dW1 = t / M_PI * log (4 * M_E / sqrt (sqr (t / h) + 
 					  sqr (M_1_PI / (W / t + 1.10))));
     dWr = (1 + 1 / er) / 2 * dW1;
     Wr  = W + dWr;
 
+    // compute characteristic impedance
     if (W / h < 3.3) {
       c = log (4 * h / Wr + sqrt (sqr (4 * h / Wr) + 2));
       b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
@@ -138,6 +140,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
       z = Z0 / 2 / x / sqrt (er);
     }
 
+    // compute effective dielectric constant
     if (W / h < 1.3) {
       a = log (8 * h / Wr) + sqr (Wr / h) / 32;
       b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
@@ -149,8 +152,6 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
       b = Wr / h / 2 + M_1_PI * log (8.5397 * Wr / h + 16.0547);
       e = er * sqr ((b - a) / b);
     }
-
-    fprintf (stderr, "WHEELER e = %g, z = %g\n", e, z);
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
@@ -165,27 +166,32 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
   else if (!strcmp (Model, "Hammerstad")) {
     nr_double_t a, b, du1, du, u, ur, u1, cr, c1, zr, z1;
 
-    u = W / h;
+    u = W / h; // normalized width
+    t = t / h; // normalized thickness
+
+    // compute strip thickness effect
     du1 = t / M_PI * log (1 + 4 * M_E / t / sqr (coth (sqrt (6.517 * W / h))));
     du = du1 * (1 + sech (sqrt (er - 1))) / 2;
     u1 = u + du1;
     ur = u + du;
 
+    // compute impedances for homogeneous medium
     cr = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / ur, 0.7528));
     zr = Z0 / 2 / M_PI * log (cr / ur + sqrt (1 + sqr (2 / ur)));
     c1 = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / u1, 0.7528));
     z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + sqr (2 / u1)));
     
+    // compute effective dielectric constant
     a = 1 +
       1 / 49 * log ((quadr (ur) + sqr (ur / 52)) / (quadr (ur) + 0.432)) + 
       1 / 18.7 * log (1 + cubic (ur / 18.1));
     b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
     e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
 
+    // compute final characteristic impedance and dielectric constant
+    // including strip thickness effects
     z = zr / sqrt (e);
     e = e * sqr (z1 / zr);
-
-    fprintf (stderr, "HAMMERSTAD e = %g, z = %g\n", e, z);
   }
 
   ZlEff = z;

@@ -4753,10 +4753,12 @@ obtained accuracy gives errors at least less than those caused by
 physical tolerances and is better than $0.01\%$ for $W/h \le 1$ and
 $0.03\%$ for $W/h \le 1000$.
 
-\begin{equation}
-Z_{L}\left(W, h, \varepsilon_{r}\right) =
-\frac{Z_{F0}}{2\pi\cdot\sqrt{\varepsilon_{r}}}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}
-\end{equation}
+\begin{align}
+\label{eq:HandJZL0}
+Z_{L1}\left(W, h\right) &=
+\frac{Z_{F0}}{2\pi}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}\\
+Z_{L}\left(W, h, \varepsilon_{r}\right) &= \dfrac{Z_{L1} \left(W, h\right)}{\sqrt{\varepsilon_{r}}} = \frac{Z_{F0}}{2\pi\cdot\sqrt{\varepsilon_{r}}}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}
+\end{align}
 
 with
 \begin{align}
@@ -4797,7 +4799,7 @@ For narrow strips ($W/h \le 1.3$):
 with
 \begin{align}
 A &= \ln{\left(8\dfrac{h}{W}\right)} + \dfrac{1}{32}\cdot\left(\dfrac{W}{h}\right)^2\\
-B &= \dfrac{1}{2}\cdot \dfrac{\varepsilon_r - 1}{\varepsilon_r + 1} \cdot\left(0.4516 + \dfrac{0.2416}{\varepsilon_r}\right)
+B &= \dfrac{1}{2}\cdot \dfrac{\varepsilon_r - 1}{\varepsilon_r + 1} \cdot\left(\ln{\dfrac{\pi}{2}} + \dfrac{1}{\varepsilon_r}\ln{\dfrac{4}{\pi}}\right)
 \end{align}
 
 For wide strips ($W/h > 1.3$):
@@ -4806,15 +4808,16 @@ For wide strips ($W/h > 1.3$):
 \end{equation}
 with
 \begin{align}
-D &= \dfrac{\varepsilon_r - 1}{2\pi \varepsilon_r}\cdot\left(\ln{\left(2.1349\dfrac{W}{h} + 4.0137\right)} - \dfrac{0.5169}{\varepsilon_r}\right)\\
-E &= \dfrac{1}{2}\cdot\dfrac{W}{h} + \dfrac{1}{\pi}\cdot \ln{\left(8.5397\dfrac{W}{h} + 16.0547\right)}
+D &= \dfrac{\varepsilon_r - 1}{2\pi \varepsilon_r}\cdot\left(\ln{\left(\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)\right)} - \dfrac{1}{\varepsilon_r} \ln{\dfrac{e\pi^{2}}{16}}\right)\\
+E &= \dfrac{1}{2}\cdot\dfrac{W}{h} + \dfrac{1}{\pi}\cdot \ln{\left(\pi e \dfrac{W}{h} + 16.0547\right)}
 \end{align}
 
 The accuracy of the E. Hammerstad and O. Jensen \cite{Hammerstad} model
 is better than 0.2\% at least for $\varepsilon_r < 128$ and $0.01 \le
 W/h \le 100$.
 \begin{equation}
-\varepsilon_{r_{eff}} = \frac{\varepsilon_{r} + 1}{2} + \frac{\varepsilon_{r} - 1}{2}\cdot\left(1 + 10\frac{h}{W}\right)^{-ab}
+\label{eq:HandJErEff}
+\varepsilon_{r_{eff}}\left(W, h, \varepsilon_r\right) = \frac{\varepsilon_{r} + 1}{2} + \frac{\varepsilon_{r} - 1}{2}\cdot\left(1 + 10\frac{h}{W}\right)^{-ab}
 \end{equation}
 
 with
@@ -4822,6 +4825,56 @@ with
 a &= 1 + \frac{1}{49}\cdot\ln{\left(\frac{u^{4} + \left(\dfrac{u}{52}\right)^{2}}{u^{4} + 0.432}\right)} + \frac{1}{18.7}\cdot\ln{\left(1 + \left(\frac{u}{18.1}\right)^{3}\right)}\\
 b &= 0.564\cdot\left(\frac{\varepsilon_{r} - 0.9}{\varepsilon_{r} + 3}\right)^{0.053}\\
 u &= \frac{W}{h}
+\end{align}
+
+\subsection{Strip thickness correction}
+%\addcontentsline{toc}{subsection}{Strip thickness correction}
+
+The formulas given for the quasi-static characteristic impedance and
+effective dielectric constant in the previous sections are based upon
+an infinite thin microstrip line thickness $t = 0$.  A finite
+thickness $t$ can be compensated by a reduction of width.  That means
+a strip with the width $W$ and the finite thickness $t$ appears to be
+a wider strip.
+
+\subsubsection{Wheeler}
+%\addcontentsline{toc}{subsubsection}{Wheeler}
+
+Harold A. Wheeler \cite{Wheeler} proposes the following equation to
+account for the strip thickness effect based on free space without
+dielectric.
+\begin{equation}
+\Delta W_1 = \dfrac{t}{\pi} \ln{\dfrac{4 e}{\sqrt{\left(\dfrac{t}{h}\right)^2 + \left(\dfrac{1/\pi}{W/t + 1.10}\right)}}}
+\end{equation}
+
+For the mixed media case with dielectric he obtains the approximation
+\begin{equation}
+\Delta W_r = \dfrac{1}{2} \Delta W_1 \left(1 + \dfrac{1}{\varepsilon_r}\right)
+\end{equation}
+
+\subsubsection{Hammerstad and Jensen}
+%\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}
+
+E. Hammerstad and O. Jensen are using the method described by Wheeler
+\cite{Wheeler} to account for a non-zero strip thickness.  However,
+some modifications in his equations have been made, which give better
+accuracy for narrow strips and for substrates with low dielectric
+constant.  For the homogeneous media the correction is
+\begin{equation}
+\Delta W_1 = \dfrac{t}{h\cdot\pi} \ln{\left(1 + \dfrac{4e}{\dfrac{t}{h}\cdot \coth^2{\sqrt{6.517 W}}}\right)}
+\end{equation}
+
+and for the mixed media the correction is
+\begin{equation}
+\Delta W_r = \dfrac{1}{2} \Delta W_1 \left(1 + \text{sech} \sqrt{\varepsilon_r - 1}\right)
+\end{equation}
+
+By defining corrected strip widths, $W_1 = W + \Delta W_1$ and $W_r =
+W + \Delta W_r$, the effect of strip thickness may be included in the
+equations \eqref{eq:HandJZL0} and \eqref{eq:HandJErEff}.
+\begin{align}
+Z_L \left(W, h, t, \varepsilon_r\right) &= \dfrac{Z_{L1} \left(W_r, h\right)}{\sqrt{\varepsilon_{r_{eff}} \left(W_r, h, \varepsilon_r\right)}}\\
+\varepsilon_{r_{eff}} \left(W, h, t, \varepsilon_r\right) &= \varepsilon_{r_{eff}} \left(W_r, h, \varepsilon_r\right) \cdot \left(\dfrac{Z_{L1} \left(W_1, h\right)}{Z_{L1} \left(W_r, h\right)}\right)^2
 \end{align}
 
 \subsection{Dispersion}
