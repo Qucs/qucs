@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.cpp,v 1.5 2004/07/08 06:38:43 ela Exp $
+ * $Id: property.cpp,v 1.6 2004/10/06 14:40:05 ela Exp $
  *
  */
 
@@ -135,10 +135,11 @@ property * property::findProperty (char * n) {
 
 // Short macro in order to obtain the correct constant value.
 #define D(con) ((constant *) (con))->d
+#define S(con) ((constant *) (con))->s
 
 // Returns the property's value as string.
 char * property::getString (void) {
-  //if (var != NULL) return var->getString ();
+  if (var != NULL) return S (var->getConstant ());
   return str;
 }
 

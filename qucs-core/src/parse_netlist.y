@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.8 2004/07/16 19:14:37 ela Exp $
+ * $Id: parse_netlist.y,v 1.9 2004/10/06 14:40:05 ela Exp $
  *
  */
 
@@ -55,6 +55,8 @@
 %token REAL
 %token IMAG
 %token COMPLEX
+%token Character
+%token STRING
 
 %right '='
 %left '-' '+'
@@ -67,6 +69,7 @@
   char * ident;
   char * str;
   double d;
+  char chr;
   struct definition_t * definition;
   struct definition_t * subcircuit;
   struct node_t * node;
@@ -87,6 +90,8 @@
 %type <str> ScaleOrUnit
 %type <d> REAL IMAG
 %type <c> COMPLEX
+%type <chr> Character
+%type <str> STRING
 %type <definition> DefinitionLine ActionLine DefBody DefBodyLine
 %type <subcircuit> DefBegin SubcircuitBody
 %type <node> IdentifierList
@@ -254,6 +259,14 @@ Constant:
   | IMAG {
     $$ = new eqn::constant (eqn::TAG_COMPLEX);
     $$->c = new complex (0.0, $1);
+  }
+  | Character {
+    $$ = new eqn::constant (eqn::TAG_CHAR);
+    $$->chr = $1;
+  }
+  | STRING {
+    $$ = new eqn::constant (eqn::TAG_STRING);
+    $$->s = $1;
   }
 ;
 
