@@ -2,6 +2,7 @@
 
 	* devices/bjt.cpp: Started to implement the DC model of the
 	standard SGP (Spice Gummel Poon) model fo BJTs.
+	Fixed the Rbb model of SGP.
 
 2004-07-04  Stefan Jahn  <stefan@lkcc.org>
 
