@@ -1,3 +1,21 @@
+2003-11-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* bitmaps/Makefile.am (picdatadir): Adjusted installation path
+	of bitmaps.
+
+	* qucsdoc.cpp (QucsDoc): Made much more string representations
+	translatable.
+
+	* qucs.cpp (initActions): Remove "bitmaps/" from hardcoded
+	bitmap locations.  BITMAPDIR now contains the full-qualified
+	location.
+	Made much more string representations translatable.
+
+	* main.cpp (main): Using LANGUAGEDIR instead of ".".
+
+	* Makefile.am (langdata_DATA): Added translation installation
+	path.
+
 2003-10-30  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
 	* qucsdoc.cpp, qucs.cpp: Using BITMAPDIR definition from
