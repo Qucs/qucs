@@ -145,14 +145,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>frequency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sweep Parameter:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -199,6 +191,10 @@
     <message>
         <source>Properties</source>
         <translation type="unfinished">Propriedades</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

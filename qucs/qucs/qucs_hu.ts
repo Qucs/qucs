@@ -138,67 +138,71 @@
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Léptetés</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szimuláció:</translation>
     </message>
     <message>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">frekvencia</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">idő</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Léptetés paraméter: </translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>lineáris</translation>
     </message>
     <message>
         <source>logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation>logaritmikus</translation>
     </message>
     <message>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>lista</translation>
     </message>
     <message>
         <source>constant</source>
-        <translation type="unfinished"></translation>
+        <translation>állandó</translation>
     </message>
     <message>
         <source>Values:</source>
-        <translation type="unfinished"></translation>
+        <translation>Értékek:</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Start:</translation>
     </message>
     <message>
         <source>Stop:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop:</translation>
     </message>
     <message>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lépésszám:</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szám:</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished">Tulajdonságok</translation>
+        <translation>Tulajdonságok</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -345,95 +349,95 @@
     </message>
     <message>
         <source>stars</source>
-        <translation type="unfinished"></translation>
+        <translation>csillagok</translation>
     </message>
     <message>
         <source>circles</source>
-        <translation type="unfinished"></translation>
+        <translation>körök</translation>
     </message>
     <message>
         <source>arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>nyilak</translation>
     </message>
     <message>
         <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-tengely:</translation>
     </message>
     <message>
         <source>smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>smith tengely</translation>
     </message>
     <message>
         <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>poláris tengely</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>baloldali tengely</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>jobboldali tengely</translation>
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>baloldali Y-tengely cimke:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>jobboldali Y-tengely cimke:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>logaritmikus rácsozat a baloldali Y tengelyen</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>logaritmikus rácsozat a jobboldali Y tengelyen</translation>
     </message>
     <message>
         <source>x-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X-tengely</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation type="unfinished"></translation>
+        <translation>manuális</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>start</translation>
     </message>
     <message>
         <source>step</source>
-        <translation type="unfinished"></translation>
+        <translation>lépés</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation type="unfinished"></translation>
+        <translation>stop</translation>
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Smith tengely</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Poláris tengely</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>baloldali Y-tengely</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>szám</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>baloldali Y-tengely</translation>
     </message>
     <message>
         <source>Limits</source>
-        <translation type="unfinished"></translation>
+        <translation>Határadatok</translation>
     </message>
 </context>
 <context>
@@ -492,35 +496,35 @@
     </message>
     <message>
         <source>solid</source>
-        <translation>folytonos</translation>
+        <translation>tömör</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 1 (legsürübb)</translation>
     </message>
     <message>
         <source>dense 2</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 2</translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 3</translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 4</translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 5</translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 6</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation type="unfinished"></translation>
+        <translation>sürü 7 (legritkább)</translation>
     </message>
     <message>
         <source>horizontal line</source>
@@ -532,23 +536,23 @@
     </message>
     <message>
         <source>crossed lines</source>
-        <translation type="unfinished"></translation>
+        <translation>keresztezett vonalak</translation>
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>harántcsíkos hátradőlő</translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>harántcsíkos előredőlő</translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation type="unfinished"></translation>
+        <translation>átlósan keresztezett</translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation>Kitöltés stílus</translation>
+        <translation>Kitöltési stílus</translation>
     </message>
     <message>
         <source>OK</source>
@@ -609,31 +613,31 @@
     <name>LabelDialog</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished">Csomópont Beadása</translation>
+        <translation>Csomópont Beadása</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished">Cimke:</translation>
+        <translation>Cimke:</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kezdeti csomóponti feszültség:</translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűkebb...</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bővebb...</translation>
     </message>
 </context>
 <context>
@@ -702,23 +706,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished">Új projekt létrehozás</translation>
+        <translation>Új projekt létrehozás</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished">Projekt név:</translation>
+        <translation>Projekt név:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished">új projekt megnyitása</translation>
+        <translation>új projekt megnyitása</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Létrehozás</translation>
+        <translation>Létrehozás</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
@@ -877,7 +881,7 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Független adat mérete nem elérhető &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
@@ -957,7 +961,7 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>frekvencia kitevő</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
@@ -965,7 +969,7 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation>járulékos frekvencia idő</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
@@ -1201,7 +1205,7 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
-        <translation type="unfinished"></translation>
+        <translation>áttétel</translation>
     </message>
     <message>
         <source>delay time</source>
@@ -1263,19 +1267,19 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>szubsztrát definició neve</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>a vonal szélessége</translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation type="unfinished"></translation>
+        <translation>a rés szélessége</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>a vonal hossza</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
@@ -1315,15 +1319,15 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>müködési pontok mentése az adatbeállításba</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation type="unfinished"></translation>
+        <translation>iterációk maximális száma a hibáig</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation> beágyazott kapcsolás csomopontjainak mentése az adatbeállításba</translation>
     </message>
     <message>
         <source>diode</source>
@@ -1363,7 +1367,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>átviteli idő</translation>
     </message>
     <message>
         <source>Diode</source>
@@ -1379,7 +1383,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>eredmény mentése az adatbeállításba</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
@@ -1403,15 +1407,15 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmonikus egyensúly szimuláció</translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>harmonikusok száma</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmonikus egyensúly</translation>
     </message>
     <message>
         <source>inductor</source>
@@ -1439,11 +1443,11 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>impulzus előtti és utáni áram</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>impulzus áram</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
@@ -1471,7 +1475,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>magas impulzus áram</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
@@ -1731,35 +1735,35 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>kiürítéses MOSFET</translation>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip sarok</translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>szubsztrát</translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>vonal szélessége</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Sarok</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>páros mikrosztrip vonal</translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>vonalak közötti távolság</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip modell</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
@@ -1767,75 +1771,75 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Páros Mikrosztrip Vonal</translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip kereszteződés</translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>1-es vonal szélessége</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>2-es vonal szélessége</translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>3-es vonal szélessége</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>4-es vonal szélessége</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Kereszteződés</translation>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip rés</translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>1-es vonal szélessége</translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>2-es vonal szélessége</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>térköz a mikrosztrip végei között</translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>kvázi-sztatikus mikrosztrip modell</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Rés</translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip vonal</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Vonal</translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip levágott kanyar</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Levágott Kanyar</translation>
     </message>
     <message>
         <source>microstrip open</source>
-        <translation type="unfinished"></translation>
+        <translation>nyitott mikrosztrip</translation>
     </message>
     <message>
         <source>microstrip open end model</source>
@@ -1843,31 +1847,31 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyitott Mikrosztrip</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip ellenállás lépés</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>a vonal 1. szélessége</translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>a vonal 2. szélessége</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Lépcső</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>mikrosztrip elágazás</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip Elágazás</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
@@ -1927,11 +1931,11 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>kivezetések száma</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>kivezetés impedancia</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
@@ -1943,7 +1947,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S paraméter fájl</translation>
     </message>
     <message>
         <source>file</source>
@@ -1951,11 +1955,11 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>s paraméter fájl neve</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation type="unfinished"></translation>
+        <translation>interpolációs típus</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -1963,23 +1967,23 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>S paraméter szimuláció</translation>
     </message>
     <message>
         <source>calculate noise parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>zaj paraméter számolás</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>bemenet zaj forma</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>kimenet zaj forma</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>S-paraméter szimuláció</translation>
     </message>
     <message>
         <source>subcircuit</source>
@@ -1987,51 +1991,51 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation>név a qucs kapcsolási rajz fájlhoz</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation> kivezetés a beágyazott kapcsoláshoz</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation> beágyazott kapcsolásban lévő kivezetések száma</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Beágyazott kapcsolás kivezetés</translation>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>szubsztrát definició</translation>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>relatív permitivitás</translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation type="unfinished"></translation>
+        <translation>vastagság méterben</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation type="unfinished"></translation>
+        <translation>fémezés vastagsága</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>érintő veszteség</translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
-        <translation type="unfinished"></translation>
+        <translation>a fém saját ellenállása</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>rms szubsztrát érdesség</translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Szubsztrát</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
@@ -2051,19 +2055,19 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation>ideális csőtáp vonal</translation>
+        <translation>ideális tápvonal</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>karakterisztikus ellenállás</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>a vonal elektromos hossza</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation>Csőtáp vonal</translation>
+        <translation>Tápvonal</translation>
     </message>
     <message>
         <source>ideal transformer</source>
@@ -2095,15 +2099,15 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>integrációs módszer</translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>integrációs módszer sorrendje</translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>kezdeti lépésméret másodpercekben</translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
@@ -2139,7 +2143,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation>áttétel (transzkonduktance)</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
@@ -2151,7 +2155,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>rms feszültség Voltban</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
@@ -2175,7 +2179,7 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>zajfeszültség-sűrűség A^2/Hz-ben</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
@@ -2187,11 +2191,11 @@ Helytelen &apos;component&apos; sor!</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>impulzus előtti és utáni feszültség</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>impulzus feszültség</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
@@ -2293,31 +2297,31 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Helytelen dokumentum típus:</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>nincsenek véltozók</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>nincs adat</translation>
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>ideális erősítő</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>feszültség erősítés</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Erősítő</translation>
     </message>
     <message>
         <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>preferált konvergencia algoritmus</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
@@ -2337,27 +2341,27 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>műveleti erősítő</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>maximum és minimum kimeneti feszültség abszolútértéke</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>Műveleti Erősítő</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE kötéslista fájl</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>spice</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE kötéslista</translation>
     </message>
 </context>
 <context>
@@ -2444,7 +2448,7 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <source>transmission lines</source>
-        <translation>Csőtáp vonalak</translation>
+        <translation>Tápvonalak</translation>
     </message>
     <message>
         <source>nonlinear components</source>
@@ -2864,7 +2868,7 @@ Hibák:
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>Smith grafikon</translation>
+        <translation>Smith Diagram</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -2936,19 +2940,19 @@ Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE kötéslista</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>Belépő Smith</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Poláris-Smith kombinált</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Smith-Poláris kombinált</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -4207,21 +4211,24 @@ Qt univerzális áramkör szimuláció
     <message>
         <source>French by Vincent Habchi, F5RCS
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Vincent Habchi, F5RCS - Francia
+</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Toyoyuki ISHIKAWA - Japán
+</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Giorgio Luparia - Olasz
+</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Bús József - Magyar</translation>
     </message>
 </context>
 <context>
