@@ -51,9 +51,9 @@ Resistor::~Resistor()
 void Resistor::createSymbol(bool european)
 {
   if(european) {
-    Lines.append(new Line(-19, -9, 19, -9,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-18, -9, 18, -9,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( 18, -9, 18,  9,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line( 19,  9,-19,  9,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 18,  9,-18,  9,QPen(QPen::darkBlue,2)));
     Lines.append(new Line(-18,  9,-18, -9,QPen(QPen::darkBlue,2)));
     Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
     Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
