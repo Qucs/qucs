@@ -84,8 +84,11 @@ public:
   void  oneLabel(Node*);
   Element* getWireLabel(Node*);
   void  setCompPorts(Component*);
-  void  copyCompsWires(int&, int&, int&, int&);
-  bool  copyCompsWiresPaints(int&, int&, int&, int&);
+  void  copyComponents(int&, int&, int&, int&);
+  void  copyComponents2(int&, int&, int&, int&);
+  void  copyWires(int&, int&, int&, int&);
+  void  copyPaintings(int&, int&, int&, int&);
+  bool  copyComps2WiresPaints(int&, int&, int&, int&);
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();

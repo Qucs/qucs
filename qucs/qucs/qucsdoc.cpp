@@ -1039,7 +1039,8 @@ Component* QucsDoc::selectedComponent(int x, int y)
 // ---------------------------------------------------
 Diagram* QucsDoc::selectedDiagram(int x, int y)
 {
-  for(Diagram *ptr1 = Diags.first(); ptr1 != 0; ptr1 = Diags.next())  // test all diagrams
+  // test all diagrams
+  for(Diagram *ptr1 = Diags.first(); ptr1 != 0; ptr1 = Diags.next())
     if(ptr1->getSelected(x, y))
       return ptr1;
 
@@ -1069,7 +1070,8 @@ Wire* QucsDoc::selectedWire(int x, int y)
 // ---------------------------------------------------
 Painting* QucsDoc::selectedPainting(int x, int y)
 {
-  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next())  // test all paintings
+  // test all paintings
+  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next())
     if(pp->getSelected(x,y))
       return pp;
 
@@ -1961,26 +1963,35 @@ void QucsDoc::setCompPorts(Component *pc)
 }
 
 // ---------------------------------------------------
-void QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
+void QucsDoc::copyComponents(int& x1, int& y1, int& x2, int& y2)
 {
-  x1=INT_MAX;
-  y1=INT_MAX;
-  x2=INT_MIN;
-  y2=INT_MIN;
-  Wire *pw;
   Component *pc;
-  WireLabel *pl;
-//  int bx1, by1, bx2, by2;
-
+  int bx1, by1, bx2, by2;
   // find bounds of all selected components
   for(pc = Comps.first(); pc != 0; ) {
     if(pc->isSelected) {
-//      pc->Bounding(bx1, by1, bx2, by2);
-//      if(bx1 < x1) x1 = bx1;
-//      if(bx2 > x2) x2 = bx2;
-//      if(by1 < y1) y1 = by1;
-//      if(by2 > y2) y2 = by2;
+      pc->Bounding(bx1, by1, bx2, by2);  // is needed because of "distribute
+      if(bx1 < x1) x1 = bx1;             // uniformly"
+      if(bx2 > x2) x2 = bx2;
+      if(by1 < y1) y1 = by1;
+      if(by2 > y2) y2 = by2;
 
+      ElementCache.append(pc);
+      deleteComp(pc);
+      pc = Comps.current();
+      continue;
+    }
+    pc = Comps.next();
+  }
+}
+
+// ---------------------------------------------------
+void QucsDoc::copyComponents2(int& x1, int& y1, int& x2, int& y2)
+{
+  Component *pc;
+  // find bounds of all selected components
+  for(pc = Comps.first(); pc != 0; ) {
+    if(pc->isSelected) {
       // is better for unsymmetrical components
       if(pc->cx < x1)  x1 = pc->cx;
       if(pc->cx > x2)  x2 = pc->cx;
@@ -1994,7 +2005,13 @@ void QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
     }
     pc = Comps.next();
   }
+}
 
+// ---------------------------------------------------
+void QucsDoc::copyWires(int& x1, int& y1, int& x2, int& y2)
+{
+  Wire *pw;
+  WireLabel *pl;
   for(pw = Wires.first(); pw != 0; )  // find bounds of all selected wires
     if(pw->isSelected) {
       if(pw->x1 < x1) x1 = pw->x1;
@@ -2013,10 +2030,8 @@ void QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
 }
 
 // ---------------------------------------------------
-bool QucsDoc::copyCompsWiresPaints(int& x1, int& y1, int& x2, int& y2)
+void QucsDoc::copyPaintings(int& x1, int& y1, int& x2, int& y2)
 {
-  copyCompsWires(x1, y1, x2, y2);
-
   Painting *pp;
   int bx1, by1, bx2, by2;
   // find boundings of all selected paintings
@@ -2033,8 +2048,20 @@ bool QucsDoc::copyCompsWiresPaints(int& x1, int& y1, int& x2, int& y2)
       pp = Paints.current();
     }
     else pp = Paints.next();
+}
 
-  if(y1 == INT_MAX) return false;   // no element selected
+// ---------------------------------------------------
+bool QucsDoc::copyComps2WiresPaints(int& x1, int& y1, int& x2, int& y2)
+{
+  x1=INT_MAX;
+  y1=INT_MAX;
+  x2=INT_MIN;
+  y2=INT_MIN;
+  copyComponents2(x1, y1, x2, y2);
+  copyWires(x1, y1, x2, y2);
+  copyPaintings(x1, y1, x2, y2);
+
+  if(y1 == INT_MAX) return false;  // no element selected
   return true;
 }
 
@@ -2045,8 +2072,14 @@ bool QucsDoc::rotateElements()
   Wires.setAutoDelete(false);
   Comps.setAutoDelete(false);
 
-  int x1, y1, x2, y2, tmp;
-  if(!copyCompsWiresPaints(x1, y1, x2, y2)) return false;
+  int tmp;
+  int x1=INT_MAX, y1=INT_MAX;
+  int x2=INT_MIN, y2=INT_MIN;
+  copyComponents(x1, y1, x2, y2);
+  copyWires(x1, y1, x2, y2);
+  copyPaintings(x1, y1, x2, y2);
+  if(y1 == INT_MAX) return false;   // no element selected
+
   Wires.setAutoDelete(true);
   Comps.setAutoDelete(true);
 
@@ -2113,7 +2146,7 @@ bool QucsDoc::mirrorXComponents()
   Comps.setAutoDelete(false);
 
   int x1, y1, x2, y2;
-  if(!copyCompsWiresPaints(x1, y1, x2, y2)) return false;
+  if(!copyComps2WiresPaints(x1, y1, x2, y2)) return false;
   Wires.setAutoDelete(true);
   Comps.setAutoDelete(true);
 
@@ -2164,7 +2197,7 @@ bool QucsDoc::mirrorYComponents()
   Comps.setAutoDelete(false);
 
   int x1, y1, x2, y2;
-  if(!copyCompsWiresPaints(x1, y1, x2, y2)) return false;
+  if(!copyComps2WiresPaints(x1, y1, x2, y2)) return false;
   Wires.setAutoDelete(true);
   Comps.setAutoDelete(true);
 
@@ -2487,8 +2520,13 @@ int QucsDoc::copyElements(int& x1, int& y1, int& x2, int& y2)
   Wires.setAutoDelete(false);
   Comps.setAutoDelete(false);
 
+  x1=INT_MAX;
+  y1=INT_MAX;
+  x2=INT_MIN;
+  y2=INT_MIN;
   // take components and wires out of list, check their boundings
-  copyCompsWires(x1, y1, x2, y2);
+  copyComponents(x1, y1, x2, y2);
+  copyWires(x1, y1, x2, y2);
   int number = ElementCache.count();
 
   Wires.setAutoDelete(true);
