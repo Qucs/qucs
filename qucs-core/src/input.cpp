@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.8 2004/02/17 15:30:57 ela Exp $
+ * $Id: input.cpp,v 1.9 2004/03/07 08:33:01 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@ using namespace std;
 #include "environment.h"
 #include "input.h"
 #include "check_netlist.h"
+#include "equation.h"
 
 // Constructor creates an unnamed instance of the input class.
 input::input () : object () {
@@ -92,6 +93,7 @@ int input::netlist (net * netlist) {
 
 #if DEBUG
   netlist_list ();
+  equation_list ();
 #endif /* DEBUG */
 
   logprint (LOG_STATUS, "creating netlist...\n");

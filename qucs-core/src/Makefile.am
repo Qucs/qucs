@@ -34,17 +34,17 @@ INCLUDES = -I$(top_srcdir)/src/components \
 
 qucsator_LDADD = libqucsator.a components/libcomponent.a
 
-qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.c operatingpoint.cpp    \
-	parse_netlist.c scan_netlist.c node.cpp net.cpp input.cpp eqnsys.cpp \
+qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
+	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
-	parasweep.cpp matrix.cpp
+	parasweep.cpp matrix.cpp eqnsys.cpp equation.cpp
 
 noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h     \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h      \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h        \
 	nodelist.h variable.h environment.h parasweep.h eqnsys.h            \
-	operatingpoint.h libqucsator.h
+	operatingpoint.h libqucsator.h equation.h
 
 noinst_LIBRARIES = libqucsator.a
 
@@ -53,11 +53,11 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c
 
-generated_FILES = scan_netlist.c parse_netlist.c scan_dataset.cpp \
-	parse_dataset.cpp tokens_dataset.h tokens_netlist.h       \
+generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
+	parse_dataset.cpp tokens_dataset.h tokens_netlist.h           \
 	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp
 
-scan_netlist.c: scan_netlist.l
+scan_netlist.cpp: scan_netlist.l
 	$(LEX) -o$@ $<
 
 scan_dataset.cpp: scan_dataset.l
@@ -66,7 +66,7 @@ scan_dataset.cpp: scan_dataset.l
 scan_touchstone.cpp: scan_touchstone.l
 	$(LEX) -o$@ $<
 
-parse_netlist.c: parse_netlist.y
+parse_netlist.cpp: parse_netlist.y
 	$(YACC) -v -o $@ --defines=tokens_netlist.h $<
 
 parse_dataset.cpp: parse_dataset.y
