@@ -36,7 +36,7 @@ nodist_libdiagrams_a_SOURCES = $(MOCFILES)
 noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   smithdiagram.h tabdiagram.h diagrams.h marker.h
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
