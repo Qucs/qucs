@@ -150,11 +150,11 @@
     </message>
     <message>
         <source>frequency</source>
-        <translation>frequenza</translation>
+        <translation type="obsolete">frequenza</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>tempo</translation>
+        <translation type="obsolete">tempo</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
@@ -203,6 +203,10 @@
     <message>
         <source>Properties</source>
         <translation>Proprietà</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2263,7 +2267,7 @@ Wrong &apos;painting&apos; line delimiter!</source>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Versione Editor Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
@@ -2378,7 +2382,9 @@ Wrong &apos;painting&apos; line delimiter!</source>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+Editor di testo minimale per Qucs
+</translation>
     </message>
     <message>
         <source>
@@ -2473,7 +2479,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">netlist SPICE</translation>
     </message>
     <message>
         <source>no variables</source>
