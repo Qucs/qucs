@@ -45,7 +45,7 @@ public:
   void drawRectD(int, int, int, int);
   void drawRoundRect(int, int, int, int);
   void drawEllipse(int, int, int, int);
-  int  drawArc(int, int, int, int, int, int);
+  void drawArc(int, int, int, int, int, int);
   int  drawText(const QString&, int, int, int *Height=0);
   void fillRect(int, int, int, int, const QColor&);
   void eraseRect(int, int, int, int);
