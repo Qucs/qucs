@@ -519,7 +519,7 @@ bool Diagram::loadVarData(const QString& fileName)
     *(p++) = x;
     *(p++) = y;
     if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-    if(isfinite(x)) {
+    if(finite(x)) {
       if(x > ymax) ymax = x;
       if(x < ymin) ymin = x;
     }
@@ -585,7 +585,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
       return -1;
     }
     *(p++) = x;
-    if(isfinite(x)) {
+    if(finite(x)) {
       if(x > xmax) xmax = x;
       if(x < xmin) xmin = x;
     }
