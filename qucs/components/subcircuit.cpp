@@ -80,9 +80,13 @@ void Subcircuit::recreate()
   else
     FileName = Props.getFirst()->Value;
 
+  tx = INT_MIN;
+  ty = INT_MIN;
   if(loadSymbol(FileName) > 0) {
+    if(tx == INT_MIN)  tx = x1+4;
+    if(ty == INT_MIN)  ty = y2+4;
     performModification();
-    return;
+  return;
   }
 
   No = QucsApp::testFile(FileName);
@@ -124,15 +128,15 @@ void Subcircuit::remakeSymbol(int No)
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+2;
 
+  tx = x1+4;
+  ty = y2+4;
+
   performModification();
 }
 
 // ---------------------------------------------------------------------
 void Subcircuit::performModification()
 {
-  tx = x1+4;
-  ty = y2+4;
-
   bool mmir = mirroredX;
   int  rrot = rotated;
   if(mmir)  mirrorX();   // mirror
@@ -232,7 +236,7 @@ int Subcircuit::analyseLine(const QString& Row)
   int i1, i2, i3, i4, i5, i6;
 
   s    = Row.section(' ',0,0);    // component type
-  if(s == "PortSym") {
+  if((s == "PortSym") || (s == ".PortSym")) {
     if(!getIntegers(Row, &i1, &i2, &i3))  return -1;
     for(i6 = Ports.count(); i6<i3; i6++)  // if ports not in numerical order
       Ports.append(new Port(0, 0));
@@ -273,6 +277,13 @@ int Subcircuit::analyseLine(const QString& Row)
     if(i2 < y1)  y1 = i2;
     if(i2+i4 > y2)  y2 = i2+i4;
     return 1;
+  }
+  else if(s == ".ID") {
+    if(!getIntegers(Row, &i1, &i2))  return -1;
+    tx = i1;
+    ty = i2;
+    Name = Row.section(' ',3,3);
+    if(Name.isEmpty())  Name = "SUB";
   }
   else if(s == "Text") {
   }

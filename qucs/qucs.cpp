@@ -501,14 +501,15 @@ void QucsApp::slotChangeView(int id)
   QucsDoc *d = view->Docs.current();
   d->PosX = view->contentsX();    // save position for old document
   d->PosY = view->contentsY();
-  bool oldMode = d->symbolMode;
 
   d = view->Docs.at(WorkView->indexOf(id));   // new current document
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
-  if(d->symbolMode != oldMode) { // which mode: schematic or symbol editor ?
-    d->symbolMode = oldMode;  // because it's changed by following function
+
+  // which mode: schematic or symbol editor ?
+  if((CompChoose->count() > 1) == d->symbolMode) {
+    d->symbolMode = !(d->symbolMode);  // it's changed by following function
     changeSchematicSymbolMode(d);
   }
 
@@ -837,7 +838,6 @@ void QucsApp::slotFileClose()
     }
   }
 
-  bool oldMode = view->Docs.current()->symbolMode;
   view->Docs.remove();
 
   if(view->Docs.isEmpty())  // if no document left, create an untitled
@@ -846,8 +846,9 @@ void QucsApp::slotFileClose()
   nextDocument(true);
 
   QucsDoc *d = view->Docs.current();
-  if(d->symbolMode != oldMode) {  // which mode: schematic or symbol editor ?
-    d->symbolMode = oldMode;  // because it's changed by following function
+  // which mode: schematic or symbol editor ?
+  if((CompChoose->count() > 1) == d->symbolMode) {
+    d->symbolMode = !(d->symbolMode);  // it's changed by following function
     changeSchematicSymbolMode(d);
   }
 
@@ -1965,6 +1966,8 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     // If a symbol does not yet exist, create one.
     if(d->SymbolPaints.count() == countPort) {
       int h = 30*((countPort-1)/2) + 10;
+      d->SymbolPaints.prepend(new ID_Text(-20, h+4));
+
       d->SymbolPaints.append(
 	new GraphicLine(-20, -h, 40,  0, QPen(QPen::darkBlue,2)));
       d->SymbolPaints.append(
@@ -1980,13 +1983,13 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 	i++;
 	d->SymbolPaints.append(
 	  new GraphicLine(-30, y, 10, 0, QPen(QPen::darkBlue,2)));
-	d->SymbolPaints.at(i-1)->setCenter(-30,  y);
+	d->SymbolPaints.at(i)->setCenter(-30,  y);
 
 	if(i == countPort)  break;
 	i++;
 	d->SymbolPaints.append(
 	  new GraphicLine( 20, y, 10, 0, QPen(QPen::darkBlue,2)));
-	d->SymbolPaints.at(i-1)->setCenter(30,  y);
+	d->SymbolPaints.at(i)->setCenter(30,  y);
 	y += 60;
       }
     }
