@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.3 2005-02-01 22:56:54 raimi Exp $
+ * $Id: mstee.cpp,v 1.4 2005-02-05 12:43:45 margraf Exp $
  *
  */
 
@@ -163,8 +163,10 @@ void mstee::calcPropagation (nr_double_t f) {
   L2 = 0.5 * MAX (Wa, Wb) - d2;
 
   // turn ratio of transformers in main arms
-  Ta2 = 1 - M_PI * sqr (f / fpa) * (sqr (r) / 12 + sqr (0.5 - d2 / Da));
-  Tb2 = 1 - M_PI * sqr (f / fpb) * (sqr (r) / 12 + sqr (0.5 - d2 / Db));
+  Ta2 = 1 - M_PI * sqr (f / fpa) *
+        (sqr (Zla / Zl2) / 12 + sqr (0.5 - d2 / Da));
+  Tb2 = 1 - M_PI * sqr (f / fpb) *
+        (sqr (Zlb / Zl2) / 12 + sqr (0.5 - d2 / Db));
 
   // shunt susceptance
   Bt = 5.5 * sqrt (Da * Db / lda / ldb) * (er + 2) / er /
