@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.28 2004-09-01 21:40:20 ela Exp $
+ * $Id: msline.cpp,v 1.29 2004-09-02 08:02:15 ela Exp $
  *
  */
 
@@ -280,7 +280,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
       0.065683 * exp (-8.7513 * W / h);
     p2 = 0.33622 * (1 - exp (-0.03442 * er));
     p3 = 0.0363 * exp (-4.6 * W / h) * (1 - exp (- pow (fs / 38.7, 4.97)));
-    p4 = 1 + 2.751 * (1 - exp (- (pow (er / 15.916, 8))));
+    p4 = 1 + 2.751 * (1 - exp (- pow (er / 15.916, 8)));
     p  = p1 * p2 * pow ((0.1844 + p3 * p4) * fs, 1.5763);
     e  = er - (er - ErEff) / (1 + p);
 

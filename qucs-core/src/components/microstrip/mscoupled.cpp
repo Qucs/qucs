@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.7 2004-09-01 21:40:20 ela Exp $
+ * $Id: mscoupled.cpp,v 1.8 2004-09-02 08:02:15 ela Exp $
  *
  */
 
@@ -64,20 +64,78 @@ void mscoupled::calcSP (nr_double_t frequency) {
   nr_double_t rho   = subst->getPropertyDouble ("rho");
   nr_double_t D     = subst->getPropertyDouble ("D");
 
-  // initialize local variables
-  nr_double_t u, g;
+  // quasi-static analysis
   nr_double_t Zle, ErEffe, Zlo, ErEffo;
+  analysQuasiStatic (W, h, s, t, er, SModel, Zle, Zlo, ErEffe, ErEffo);
+
+  // analyse dispersion of Zl and Er
+  nr_double_t ZleFreq, ErEffeFreq, ZloFreq, ErEffoFreq;
+  analyseDispersion (W, h, s, er, Zle, Zlo, ErEffe, ErEffo, frequency, DModel,
+		     ZleFreq, ZloFreq, ErEffeFreq, ErEffoFreq);
+
+  // analyse losses of line
+  nr_double_t ace, aco, ade, ado;
+  msline::analyseLoss (W, t, er, rho, D, tand, ZleFreq, ZloFreq, ErEffeFreq,
+		       frequency, "Hammerstad", ace, ade);
+  msline::analyseLoss (W, t, er, rho, D, tand, ZloFreq, ZleFreq, ErEffoFreq,
+		       frequency, "Hammerstad", aco, ado);
+
+  // compute propagation constants for even and odd mode
+  complex ge, go;
+  nr_double_t ae, ao, be, bo, k0;
+  k0 = 2 * M_PI * frequency / C0;
+  ae = ace + ade;
+  ao = aco + ado;
+  be = sqrt (ErEffeFreq) * k0;
+  bo = sqrt (ErEffoFreq) * k0;
+  ge = rect (ae, be);
+  go = rect (ao, bo);
+  
+  // compute abbreviations
+  complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
+  Ee = (sqr (ZleFreq) + sqr (z0)) * sinh (ge * l);
+  Eo = (sqr (ZloFreq) + sqr (z0)) * sinh (go * l);
+  De = 2 * ZleFreq * z0 * cosh (ge * l) + Ee;
+  Do = 2 * ZloFreq * z0 * cosh (go * l) + Eo;
+  Xe = (sqr (ZleFreq) - sqr (z0)) * sinh (ge * l) / 2 / De;
+  Xo = (sqr (ZloFreq) - sqr (z0)) * sinh (go * l) / 2 / Do;
+  Ye = Zle * z0 / De;
+  Yo = Zlo * z0 / Do;
+
+  // reflexion coefficients
+  setS (1, 1, Xe + Xo); setS (2, 2, Xe + Xo);
+  setS (3, 3, Xe + Xo); setS (4, 4, Xe + Xo);
+  // through paths
+  setS (1, 2, Ye + Yo); setS (2, 1, Ye + Yo);
+  setS (3, 4, Ye + Yo); setS (4, 3, Ye + Yo);
+  // coupled paths
+  setS (1, 4, Xe - Xo); setS (4, 1, Xe - Xo);
+  setS (2, 3, Xe - Xo); setS (3, 2, Xe - Xo);
+  // isolated paths
+  setS (1, 3, Ye - Yo); setS (3, 1, Ye - Yo);
+  setS (2, 4, Ye - Yo); setS (4, 2, Ye - Yo);
+}
+
+/* The function calculates the quasi-static dielectric constants and
+   characteristic impedances for the even and odd mode based upon the
+   given line and substrate properties for parallel coupled microstrip
+   lines. */
+void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
+				   nr_double_t t, nr_double_t er,
+				   char * SModel, nr_double_t& Zle,
+				   nr_double_t& Zlo, nr_double_t& ErEffe,
+				   nr_double_t& ErEffo) {
+  // initialize default return values
   ErEffe = ErEffo = er;
-  //  Zle = Zlo = z0;
-  Zlo = 25.0; Zle = 100.0;   // more realistic values
+  Zlo = 42.2; Zle = 55.7;
 
   // normalized width and gap
-  u = W / h;
-  g = s / h;
+  nr_double_t u = W / h;
+  nr_double_t g = s / h;
 
   // HAMMERSTAD and JENSEN
   if (!strcmp (SModel, "Hammerstad")) {
-    nr_double_t Zl1, Fe, Fo, a, b, fo, Mu, Alpha, Beta;
+    nr_double_t Zl1, Fe, Fo, a, b, fo, Mu, Alpha, Beta, ErEff;
     nr_double_t Pe, Po, r, fo1, q, p, n, Psi, Phi, m, Theta;
 
     // modifying equations for even mode
@@ -103,6 +161,7 @@ void mscoupled::calcSP (nr_double_t frequency) {
     q = exp (-1.366 - g);
     p = exp (-0.745 * pow (g, 0.295)) / cosh (pow (g, 0.68));
     fo = fo1 * exp (p * log (u) + q * sin (M_PI * log (u) / M_LN10));
+
     Mu = g * exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
     msline::Hammerstad_ab (Mu, er, a, b);
     Fe = pow (1 + 10 / Mu, -a * b);
@@ -113,42 +172,65 @@ void mscoupled::calcSP (nr_double_t frequency) {
     ErEffe = (er + 1) / 2 + (er - 1) / 2 * Fe;
     ErEffo = (er + 1) / 2 + (er - 1) / 2 * Fo;
 
+    msline::Hammerstad_er (u, er, a, b, ErEff);  // single microstrip
+
     // first variant
     Zl1 = Z0 / (u + 1.98 * pow (u, 0.172));
+    Zl1 /= sqrt (ErEff);
 
     // second variant
     msline::Hammerstad_zl (u, Zl1);
+    Zl1 /= sqrt (ErEff);
 
     Zle = Zl1 / (1 - Zl1 * Pe / Z0);
     Zlo = Zl1 / (1 - Zl1 * Po / Z0);
   }
   // KIRSCHNING and JANSEN
   else if (!strcmp (SModel, "Kirschning")) {
-    nr_double_t a, b, ae, be, ao, bo, v, c, d, ErEff, Zl1;
+    nr_double_t a, b, ae, be, ao, bo, v, co, d, ErEff, Zl1;
     nr_double_t q1, q2, q3, q4, q5, q6, q7, q8, q9, q10;
 
+    // consider effect of finite strip thickness (JANSEN only)
+    nr_double_t ue = u;
+    nr_double_t uo = u;
+    if (t != 0 && s > 10 * (2 * t)) {
+      nr_double_t dW = 0;
+      if (u >= M_1_PI / 2 && M_1_PI / 2 > 2 * t)
+	dW = t * (1 + log (2 * h / t)) / M_PI;
+      else if (W > 2 * t)
+	dW = t * (1 + log (4 * M_PI * W / t)) / M_PI;
+      nr_double_t dt = t * h / s / er;
+      nr_double_t We = W + dW * (1 - 0.5 * exp (-0.69 * dW / dt));
+      nr_double_t Wo = We + dt;
+      ue = We / h;
+      uo = Wo / h;
+    }
+    
     // even relative dielectric constant
-    v = u * (20 + sqr (g)) / (10 + sqr (g)) + g * exp (-g);
+    v = ue * (20 + sqr (g)) / (10 + sqr (g)) + g * exp (-g);
     msline::Hammerstad_ab (v, er, ae, be);
     msline::Hammerstad_er (v, er, ae, be, ErEffe);
 
     // odd relative dielectric constant
-    msline::Hammerstad_ab (u, er, a, b);
-    msline::Hammerstad_er (u, er, a, b, ErEff);
-    d = 0.593 + 0.694 * exp (-0.562 * u);
+    msline::Hammerstad_ab (uo, er, a, b);
+    msline::Hammerstad_er (uo, er, a, b, ErEff);
+    d = 0.593 + 0.694 * exp (-0.562 * uo);
     bo = 0.747 * er / (0.15 + er);
-    c = bo - (bo - 0.207) * exp (-0.414 * u);
-    ao = 0.7287 * (ErEff - (er + 1) / 2) * (1 - exp (-0.179 * u));
-    ErEffo = ((er + 1) / 2 + ao - ErEff) * exp (-c * pow (g, d)) + ErEff;
+    co = bo - (bo - 0.207) * exp (-0.414 * uo);
+    ao = 0.7287 * (ErEff - (er + 1) / 2) * (1 - exp (-0.179 * uo));
+    ErEffo = ((er + 1) / 2 + ao - ErEff) * exp (-co * pow (g, d)) + ErEff;
+
+    // characteristic impedance of single line
+    msline::Hammerstad_zl (u, Zl1);
+    Zl1 /= sqrt (ErEff);
 
     // even characteristic impedance
-    msline::Hammerstad_zl (u, Zl1);
-    q1 = 0.8695 * pow (u, 0.194);
+    q1 = 0.8695 * pow (ue, 0.194);
     q2 = 1 + 0.7519 * g + 0.189 * pow (g, 2.31);
     q3 = 0.1975 + pow (16.6 + pow (8.4 / g, 6), -0.387) +
       log (pow (g, 10) / (1 + pow (g / 3.4, 10))) / 241;
     q4 = q1 / q2 * 2 /
-      (exp (-g) * pow (u, q3) + (2 - exp (-g)) * pow (u, -q3));
+      (exp (-g) * pow (ue, q3) + (2 - exp (-g)) * pow (ue, -q3));
     Zle = sqrt (ErEff / ErEffe) * Zl1 / (1 - Zl1 * sqrt (ErEff) * q4 / Z0);
 
     // odd characteristic impedance
@@ -158,15 +240,32 @@ void mscoupled::calcSP (nr_double_t frequency) {
     q7 = (10 + 190 * sqr (g)) / (1 + 82.3 * cubic (g));
     q8 = exp (-6.5 - 0.95 * log (g) - pow (g / 0.15, 5));
     q9 = log (q7) * (q8 + 1 / 16.5);
-    q10 = (q2 * q4 - q5 * exp (log (u) * q6 * pow (u, -q9))) / q2;
+    q10 = (q2 * q4 - q5 * exp (log (uo) * q6 * pow (uo, -q9))) / q2;
     Zlo = sqrt (ErEff / ErEffo) * Zl1 / (1 - Zl1 * sqrt (ErEff) * q10 / Z0);
   }
+}
 
-  nr_double_t ZleFreq, ErEffeFreq, ZloFreq, ErEffoFreq;
+/* The function computes the dispersion effects on the dielectric
+   constants and characteristic impedances for the even and odd mode
+   of parallel coupled microstrip lines. */
+void mscoupled::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
+				   nr_double_t er, nr_double_t Zle,
+				   nr_double_t Zlo, nr_double_t ErEffe,
+				   nr_double_t ErEffo, nr_double_t frequency,
+				   char * DModel, nr_double_t& ZleFreq,
+				   nr_double_t& ZloFreq,
+				   nr_double_t& ErEffeFreq,
+				   nr_double_t& ErEffoFreq) {
+
+  // initialize default return values
   ZleFreq = Zle;
   ErEffeFreq = ErEffe;
   ZloFreq = Zlo;
   ErEffoFreq = ErEffo;
+
+  // normalized width and gap
+  nr_double_t u = W / h;
+  nr_double_t g = s / h;
 
   // GETSINGER
   if (!strcmp (DModel, "Getsinger")) {
@@ -213,48 +312,6 @@ void mscoupled::calcSP (nr_double_t frequency) {
     Fo = p1 * p2 * pow ((p3 * p4 + 0.1844) * fn * p15, 1.5763);
     ErEffoFreq = er - (er - ErEffo) / (1 + Fo);
   }
-
-  // analyse losses of line
-  nr_double_t ace, aco, ade, ado;
-  msline::analyseLoss (W, t, er, rho, D, tand, ZleFreq, ZloFreq, ErEffeFreq,
-		       frequency, "Hammerstad", ace, ade);
-  msline::analyseLoss (W, t, er, rho, D, tand, ZloFreq, ZleFreq, ErEffoFreq,
-		       frequency, "Hammerstad", aco, ado);
-
-  // compute propagation constants for even and odd mode
-  complex ge, go;
-  nr_double_t ae, ao, be, bo, k0;
-  k0 = 2 * M_PI * frequency / C0;
-  ae = ace + ade;
-  ao = aco + ado;
-  be = sqrt (ErEffeFreq) * k0;
-  bo = sqrt (ErEffoFreq) * k0;
-  ge = rect (ae, be);
-  go = rect (ao, bo);
-  
-  // compute abbreviations
-  complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
-  Ee = (sqr (ZleFreq) + sqr (z0)) * sinh (ge * l);
-  Eo = (sqr (ZloFreq) + sqr (z0)) * sinh (go * l);
-  De = 2 * ZleFreq * z0 * cosh (ge * l) + Ee;
-  Do = 2 * ZloFreq * z0 * cosh (go * l) + Eo;
-  Xe = (sqr (ZleFreq) - sqr (z0)) * sinh (ge * l) / 2 / De;
-  Xo = (sqr (ZloFreq) - sqr (z0)) * sinh (go * l) / 2 / Do;
-  Ye = Zle * z0 / De;
-  Yo = Zlo * z0 / Do;
-
-  // reflexion coefficients
-  setS (1, 1, Xe + Xo); setS (2, 2, Xe + Xo);
-  setS (3, 3, Xe + Xo); setS (4, 4, Xe + Xo);
-  // through paths
-  setS (1, 2, Ye + Yo); setS (2, 1, Ye + Yo);
-  setS (3, 4, Ye + Yo); setS (4, 3, Ye + Yo);
-  // coupled paths
-  setS (1, 4, Xe - Xo); setS (4, 1, Xe - Xo);
-  setS (2, 3, Xe - Xo); setS (3, 2, Xe - Xo);
-  // isolated paths
-  setS (1, 3, Ye - Yo); setS (3, 1, Ye - Yo);
-  setS (2, 4, Ye - Yo); setS (4, 2, Ye - Yo);
 }
 
 void mscoupled::initDC (dcsolver *) {

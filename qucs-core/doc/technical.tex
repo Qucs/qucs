@@ -6080,6 +6080,7 @@ $0.03\%$ for $W/h \le 1000$.
 \label{eq:HandJZL0}
 Z_{L1}\left(W, h\right) &=
 \frac{Z_{F0}}{2\pi}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}\\
+\label{eq:HandJZL0Er}
 Z_{L}\left(W, h, \varepsilon_{r}\right) &= \dfrac{Z_{L1} \left(W, h\right)}{\sqrt{\varepsilon_{r}}} = \frac{Z_{F0}}{2\pi\cdot\sqrt{\varepsilon_{r}}}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}
 \end{align}
 
@@ -6680,7 +6681,7 @@ Q_4 &= \frac{Q_1}{Q_2}\cdot \frac{2}{ \exp\left(-g\right)\cdot u^{Q_3} + (2-\exp
 with $Z_L(0)$ and $\varepsilon_{eff}(0)$ being again quantities for a
 zero-thickness single microstrip line of width $W$ according to
 \cite{Hammerstad} (see also eq. \eqref{eq:HandJErEff} and
-\eqref{eq:HandJZL0}).
+\eqref{eq:HandJZL0Er}).
 
 \addvspace{12pt}
 
@@ -6806,7 +6807,8 @@ range which should cover that used in practice.
 
 The homogeneous mode impedances are
 \begin{equation}
-Z_{L,e,o}\left(u, g\right) = \dfrac{Z_{L1}(u)}{1 - Z_{L1}(u)\cdot \Phi_{e,o}\left(u,g\right) / Z_{F0}}
+\label{eq:HandJZLeo}
+Z_{L,e,o}\left(u, g\right) = \dfrac{Z_{L}(u)}{1 - Z_{L}(u)\cdot \Phi_{e,o}\left(u,g\right) / Z_{F0}}
 \end{equation}
 
 The effective dielectric constants are
@@ -6822,7 +6824,10 @@ F_{o}\left(u,g,\varepsilon_r\right) &= f_o\left(u,g,\varepsilon_r\right)\cdot \l
 
 whence $a(u)$ and $b\left(\varepsilon_r\right)$ denote
 eqs. \eqref{eq:HandJa} and \eqref{eq:HandJb} of the single microstrip
-line.  The modifying equations for the even mode are as follows
+line.  The characteristic impedance of the single microstrip line
+$Z_L\left(u\right)$ also defined in \cite{Hammerstad} is given by
+eq. \eqref{eq:HandJZL0Er}.  The modifying equations for the even mode
+are as follows
 \begin{align}
 \Phi_e\left(u,g\right) &= \dfrac{\varphi(u)}{\Psi(g)\cdot \left(\alpha(g)\cdot u^{m(g)} +\left(1-\alpha(g)\right)\cdot u^{-m(g)}\right)}\\
 \varphi(u) &= 0.8645\cdot u^{0.172}\\
@@ -6846,8 +6851,18 @@ f_o\left(u,g,\varepsilon_r\right) &= f_{o1}\left(g,\varepsilon_r\right)\cdot \ex
 p(g) &= \dfrac{\exp{\left(-0.745\cdot g^{0.295}\right)}}{\cosh{\left(g^{0.68}\right)}}\\
 q(g) &= \exp{\left(-1.366-g\right)}\\
 f_{o1}\left(g,\varepsilon_r\right) &= 1 - \exp{\left(-0.179\cdot g^{0.15} - \dfrac{0.328\cdot g^{r\left(g,\varepsilon_r\right)}}{\ln{\left(e + \left(g/7\right)^{2.8}\right)}}\right)}\\
-r\left(g,\varepsilon_r\right) &= 1+0.15\cdot\left(1 - \dfrac{\exp{\left(1-\left(\varepsilon_r - 1\right)^2/8.2\right)}}{1+g^{-6}}\right)\\
-Z_{L1}(u) &= \dfrac{Z_{F0}}{u + 1.98\cdot u^{0.172}}
+r\left(g,\varepsilon_r\right) &= 1+0.15\cdot\left(1 - \dfrac{\exp{\left(1-\left(\varepsilon_r - 1\right)^2/8.2\right)}}{1+g^{-6}}\right)
+\end{align}
+
+The quasi-static characteristic impedance $Z_L(u)$ of a zero-thickness
+single microstrip line denoted in eq. \eqref{eq:HandJZLeo} can either
+be calculated using the below equations with $\varepsilon_{r_{eff}}$
+being the quasi-static effective dielectric constant defined by
+eq. \eqref{eq:HandJErEff} or using eqs. \eqref{eq:HandJZL0Er} and
+\eqref{eq:HandJErEff}.
+\begin{align}
+Z_{L1}(u) &= \dfrac{Z_{F0}}{u + 1.98\cdot u^{0.172}}\\
+Z_{L}(u) &= \dfrac{Z_{L1}(u)}{\sqrt{\varepsilon_{r_{eff}}}}
 \end{align}
 
 The errors in the even and odd mode impedances $Z_{L,e}$ and $Z_{L,e}$

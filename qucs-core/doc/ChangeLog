@@ -1,3 +1,8 @@
+2004-09-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Hammerstad and Jensen}): Fixed
+	descriptions and formulas of parallel coupled microstrip lines.
+
 2004-08-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Edwards and Owens}): Documented
