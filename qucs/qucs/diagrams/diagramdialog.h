@@ -31,6 +31,7 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 
+class QVBoxLayout;
 
 /**
   *@author Michael Margraf
@@ -63,6 +64,7 @@ public slots:
   void slotSetNumMode(int);
   void slotSetGridBox(int);
   void slotSetGraphStyle(int);
+  void slotSetYAxis(int);
 
 public:
   Diagram *Diag;
@@ -73,10 +75,11 @@ public:
   QListBox  *GraphList;
 
   QRegExp     Expr;
-  QLineEdit   *GraphInput, *Property2, *xLabel, *yLabel;
-  QCheckBox   *GridOn, *GridLogX, *GridLogY;
-  QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3;
-  QComboBox   *PropertyBox, *GridStyleBox;
+  QVBoxLayout *all;   // the mother of all widgets
+  QLineEdit   *GraphInput, *Property2, *xLabel, *ylLabel, *yrLabel;
+  QCheckBox   *GridOn, *GridLogX, *GridLogYl, *GridLogYr;
+  QLabel      *GridLabel1, *GridLabel2, *Label1, *Label2, *Label3, *Label4;
+  QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;
   bool changed, toTake;
   QPtrList<Graph>  Graphs;

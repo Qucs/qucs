@@ -59,6 +59,9 @@ void Marker::initText(int n)
       return;
   }
 
+  Axis *pa;
+  if(pGraph->yAxisNo == 0)  pa = &(Diag->ylAxis);
+  else  pa = &(Diag->yrAxis);
   double num, *py = (pGraph->cPointsY) + 2*n;
   Text = "";
   nVarPos = 0;
@@ -68,7 +71,7 @@ void Marker::initText(int n)
   int nn, x, y, d, dmin = INT_MAX;
   for(nn=n % pD->count; nn<pD->count; nn++) {
     num = *(pD->Points + nn);
-    Diag->calcCoordinate(num, *py, *(py+1), &x, &y);
+    Diag->calcCoordinate(num, *py, *(py+1), &x, &y, pa);
     x -= cx;
     y -= cy;
     d = x*x + y*y;
@@ -103,7 +106,7 @@ void Marker::initText(int n)
 	    break;
   }
 
-  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
+  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy, pa);
 
   getTextSize(QucsSettings.font);
 }
@@ -153,7 +156,10 @@ void Marker::createText()
 	    break;
   }
 
-  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
+  Axis *pa;
+  if(pGraph->yAxisNo == 0)  pa = &(Diag->ylAxis);
+  else  pa = &(Diag->yrAxis);
+  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy, pa);
 
   getTextSize(QucsSettings.font);
 }

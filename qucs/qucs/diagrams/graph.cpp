@@ -230,6 +230,7 @@ Graph* Graph::sameNewOne()
 
   pg->Precision = Precision;
   pg->numMode   = numMode;
+  pg->yAxisNo   = yAxisNo;
 
   for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
     pg->Markers.append(pm->sameNewOne(pg));

@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation>Rótulo do Eixo-y:</translation>
+        <translation type="obsolete">Rótulo do Eixo-y:</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -261,7 +261,7 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation>Eixo Y da Grade logaritimico</translation>
+        <translation type="obsolete">Eixo Y da Grade logaritimico</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -278,6 +278,34 @@
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -633,7 +661,7 @@ Campo &apos;Descrição&apos; não está fechado!</translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation>Tipo de documento errado!</translation>
+        <translation type="obsolete">Tipo de documento errado!</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -2107,6 +2135,10 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3892,7 +3924,7 @@ Qt universal circuit simulator
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation>Francês por Eric Marzolf
+        <translation type="obsolete">Francês por Eric Marzolf
 </translation>
     </message>
     <message>
@@ -3917,6 +3949,11 @@ Qt universal circuit simulator
         <source>Move Component Text
 
 Moves the property text of components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

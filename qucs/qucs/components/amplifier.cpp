@@ -37,7 +37,7 @@ Amplifier::Amplifier()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "Ampl";
+  Model = "Amp";
   Name  = "X";
 
   Props.append(new Property("G", "10", true,

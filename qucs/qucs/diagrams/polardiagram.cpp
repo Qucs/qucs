@@ -15,10 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "polardiagram.h"
 #include "main.h"
 
@@ -42,18 +38,18 @@ PolarDiagram::~PolarDiagram()
 
 // ------------------------------------------------------------
 void PolarDiagram::calcCoordinate(double, double yr, double yi,
-				  int *px, int *py)
+				  int *px, int *py, Axis*)
 {
   *px = (x2>>1)+int(yr/xAxis.up*double(x2>>1) + 0.5);
   *py = (y2>>1)+int(yi/ylAxis.up*double(y2>>1) + 0.5);
 }
 
 // --------------------------------------------------------------
-bool PolarDiagram::calcDiagram()
+int PolarDiagram::calcDiagram()
 {
-  if(!Lines.isEmpty()) Lines.clear();
-  if(!Texts.isEmpty()) Texts.clear();
-  if(!Arcs.isEmpty()) Arcs.clear();
+  Lines.clear();
+  Texts.clear();
+  Arcs.clear();
 
   // x and y line
   Lines.append(new Line(x2>>1, y2, x2>>1, 0, GridPen));
@@ -65,7 +61,7 @@ bool PolarDiagram::calcDiagram()
     ylAxis.max = fabs(ylAxis.min);  // also fit negative values
 
 
-  if(GridOn) {
+  if(xAxis.GridOn) {
 
     double numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
     Expo = floor(log10(ylAxis.max/numGrids));
@@ -118,7 +114,7 @@ bool PolarDiagram::calcDiagram()
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi),
 			QPen(QPen::black,0)));
 
-  return true;
+  return 1;
 }
 
 // ------------------------------------------------------------

@@ -1,3 +1,8 @@
+2004-11-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed many small bugs
+	* implemented right y axis for rectangluar diagram
+
 2004-10-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* open the documents given in command line

@@ -40,11 +40,11 @@ TabDiagram::~TabDiagram()
 
 // ------------------------------------------------------------
 // calculates the text in the tabular
-bool TabDiagram::calcDiagram()
+int TabDiagram::calcDiagram()
 {
-  if(!Lines.isEmpty()) Lines.clear();
-  if(!Texts.isEmpty()) Texts.clear();
-  if(!Arcs.isEmpty()) Arcs.clear();
+  Lines.clear();
+  Texts.clear();
+  Arcs.clear();
 
   QSize r;
   QFontMetrics  metrics(QucsSettings.font);
@@ -60,8 +60,8 @@ bool TabDiagram::calcDiagram()
   Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
 
   Graph *g = Graphs.first();
-  if(g == 0) return false;
-  if(g->cPointsX.isEmpty()) return false;
+  if(g == 0) return 0;
+  if(g->cPointsX.isEmpty()) return 0;
 
   // ................................................
   double *py, *px;
@@ -77,7 +77,7 @@ bool TabDiagram::calcDiagram()
         Lines.append(new Line(x2-6, y2-4, x2+7, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-7, x2+6, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-1, x2+6, y2-4, QPen(QPen::red,2)));
-        return false;
+        return 0;
       }
     }
     Texts.append(new Text(x-4, y2-2, Str)); // independent variable
@@ -97,7 +97,7 @@ bool TabDiagram::calcDiagram()
             Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(QPen::red,2)));
             Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(QPen::red,2)));
             Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(QPen::red,2)));
-            return false;
+            return 0;
           }
         }
 
@@ -127,14 +127,14 @@ bool TabDiagram::calcDiagram()
         Lines.append(new Line(x2-6, y2-4, x2+7, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-7, x2+6, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-1, x2+6, y2-4, QPen(QPen::red,2)));
-        return false;
+        return 0;
       }
     }
     Texts.append(new Text(x, y2-2, Str));  // dependent variable
 
 
     py = g->cPointsY;
-    if (!g->cPointsX.getFirst()) return false;
+    if (!g->cPointsX.getFirst()) return 0;
     for(int z=g->cPointsX.getFirst()->count * g->countY; z>0; z--) {
       if(y < tHeight) break;
       switch(g->numMode) {
@@ -155,7 +155,7 @@ bool TabDiagram::calcDiagram()
           Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(QPen::red,2)));
           Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(QPen::red,2)));
           Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(QPen::red,2)));
-          return false;
+          return 0;
         }
       }
 
@@ -166,7 +166,7 @@ bool TabDiagram::calcDiagram()
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
   }
 
-  return true;
+  return 1;
 }
 
 // ------------------------------------------------------------

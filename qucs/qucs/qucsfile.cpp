@@ -21,6 +21,7 @@
 
 #include "qucsfile.h"
 
+#include"node.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "qucsdoc.h"
@@ -509,8 +510,6 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     else if(cstr == "EArc") p = new EllipseArc();
     else if(cstr == ".PortSym") p = new PortSymbol();
     else if(cstr == ".ID") p = new ID_Text();
-    // all other paintings are for schematics only
-    else if(Doc->symbolMode) continue;
     else if(cstr == "Text") p = new GraphicText();
     else if(cstr == "Rectangle") p = new Rectangle();
     else if(cstr == "Arrow") p = new Arrow();
@@ -561,7 +560,7 @@ bool QucsFile::load()
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
     QMessageBox::critical(0, QObject::tr("Error"),
- 		 QObject::tr("Wrong document type!"));
+ 		 QObject::tr("Wrong document type: ")+Doc->DocName);
     return false;
   }
 

@@ -30,7 +30,7 @@ public:
   ~TabDiagram();
 
   TabDiagram* newOne();
-  bool   calcDiagram();
+  int    calcDiagram();
 };
 
 #endif

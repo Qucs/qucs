@@ -54,14 +54,18 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   toTake = false;   // double-clicked variable be inserted into graph list ?
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
-  
-  QVBoxLayout *all = new QVBoxLayout(this); // to provide neccessary size
+
+  all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
 
   // ...........................................................
   QVBox *Tab1 = new QVBox(this);
   Tab1->setSpacing(5);
+
+  Label4 = 0;
+  yrLabel = 0;
+  yAxisBox = 0;
 
   QVButtonGroup *InputGroup = new QVButtonGroup(tr("Graph Input"), Tab1);
   GraphInput = new QLineEdit(InputGroup);
@@ -89,9 +93,21 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   }
   else {
     Label1 = new QLabel(tr("Color:"),Box2);
-    ColorButt = new QPushButton("        ",Box2);
+    ColorButt = new QPushButton("   ",Box2);
+    ColorButt->setMinimumWidth(50);
     ColorButt->setEnabled(false);
     connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
+    Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
+
+    Label3 = new QLabel(tr("Style:"),Box2);
+    Label3->setEnabled(false);
+    PropertyBox = new QComboBox(Box2);
+    PropertyBox->insertItem(tr("solid line"));
+    PropertyBox->insertItem(tr("dash line"));
+    PropertyBox->insertItem(tr("dot line"));
+    PropertyBox->insertItem(tr("long dash line"));
+    connect(PropertyBox, SIGNAL(activated(int)),
+			 SLOT(slotSetGraphStyle(int)));
     Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
 
     Label2 = new QLabel(tr("Thickness:"),Box2);
@@ -100,18 +116,19 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2->setMaximumWidth(25);
     Property2->setText("0");
 
-    QHBox *Box3 = new QHBox(InputGroup);
-    Box3->setSpacing(5);
-    Label3 = new QLabel(tr("Style:"),Box3);
-    Label3->setEnabled(false);
-    PropertyBox = new QComboBox(Box3);
-    PropertyBox->insertItem(tr("solid line"));
-    PropertyBox->insertItem(tr("dash line"));
-    PropertyBox->insertItem(tr("dot line"));
-    PropertyBox->insertItem(tr("long dash line"));
-    connect(PropertyBox, SIGNAL(activated(int)),
-			 SLOT(slotSetGraphStyle(int)));
-    Box3->setStretchFactor(new QWidget(Box3), 5); // stretchable placeholder
+    if(Diag->Name == "Rect") {
+      QHBox *Box3 = new QHBox(InputGroup);
+      Box3->setSpacing(5);
+
+      Label4 = new QLabel(tr("y-Axis:"),Box3);
+      Label4->setEnabled(false);
+      yAxisBox = new QComboBox(Box3);
+      yAxisBox->insertItem(tr("left Axis"));
+      yAxisBox->insertItem(tr("right Axis"));
+      yAxisBox->setEnabled(false);
+      connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
+      Box3->setStretchFactor(new QWidget(Box3), 5); // stretchable placeholder
+    }
   }
   connect(Property2, SIGNAL(textChanged(const QString&)),
 			SLOT(slotSetProp2(const QString&)));
@@ -152,57 +169,68 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
   // ...........................................................
     QWidget *Tab2 = new QWidget(t);
-    QGridLayout *gp = new QGridLayout(Tab2,8,2,5,5);
+    QGridLayout *gp = new QGridLayout(Tab2,10,2,5,5);
 
   if(Diag->Name != "Tab") {
     gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), 0,0);
     xLabel = new QLineEdit(Tab2);
     gp->addWidget(xLabel,0,1);
 
-    gp->addWidget(new QLabel(tr("y-Axis Label:"), Tab2), 1,0);
-    yLabel = new QLineEdit(Tab2);
-    gp->addWidget(yLabel,1,1);
+    gp->addWidget(new QLabel(tr("left y-Axis Label:"), Tab2), 1,0);
+    ylLabel = new QLineEdit(Tab2);
+    gp->addWidget(ylLabel,1,1);
+
+    if(Diag->Name == "Rect") {
+      gp->addWidget(new QLabel(tr("right y-Axis Label:"), Tab2), 2,0);
+      yrLabel = new QLineEdit(Tab2);
+      gp->addWidget(yrLabel,2,1);
+    }
 
     GridOn = new QCheckBox(tr("show Grid"), Tab2);
     connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
-    gp->addMultiCellWidget(GridOn,2,2,0,1);
+    gp->addMultiCellWidget(GridOn,3,3,0,1);
 
     GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
-    gp->addWidget(GridLabel1, 3,0);
+    gp->addWidget(GridLabel1, 4,0);
     GridColorButt = new QPushButton("        ",Tab2);
     connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
-    gp->addWidget(GridColorButt, 3,1);
+    gp->addWidget(GridColorButt, 4,1);
 
     GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
-    gp->addWidget(GridLabel2, 4,0);
+    gp->addWidget(GridLabel2, 5,0);
     GridStyleBox = new QComboBox(Tab2);
     GridStyleBox->insertItem(tr("solid line"));
     GridStyleBox->insertItem(tr("dash line"));
     GridStyleBox->insertItem(tr("dot line"));
     GridStyleBox->insertItem(tr("dash dot line"));
     GridStyleBox->insertItem(tr("dash dot dot line"));
-    gp->addWidget(GridStyleBox, 4,1);
+    gp->addWidget(GridStyleBox, 5,1);
 
     // ...........................................................
     // transfer the diagram properties to the dialog
     xLabel->setText(Diag->xAxis.Label);
-    yLabel->setText(Diag->ylAxis.Label);
-    GridOn->setChecked(Diag->GridOn);
-    if(!Diag->GridOn) slotSetGridBox(QButton::Off);
+    ylLabel->setText(Diag->ylAxis.Label);
+    if(yrLabel)  yrLabel->setText(Diag->yrAxis.Label);
+    GridOn->setChecked(Diag->xAxis.GridOn);
+    if(!Diag->xAxis.GridOn) slotSetGridBox(QButton::Off);
     GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
     GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
 
     if(Diag->Name == "Rect") {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogX,5,5,0,1);
+      gp->addMultiCellWidget(GridLogX,6,6,0,1);
 
-      GridLogY = new QCheckBox(tr("logarithmical Y Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogY,6,6,0,1);
+      GridLogYl = new QCheckBox(tr("logarithmical left Y Axis Grid"), Tab2);
+      gp->addMultiCellWidget(GridLogYl,7,7,0,1);
+
+      GridLogYr = new QCheckBox(tr("logarithmical right Y Axis Grid"), Tab2);
+      gp->addMultiCellWidget(GridLogYr,8,8,0,1);
 
       // ...........................................................
       // transfer the diagram properties to the dialog
       GridLogX->setChecked(Diag->xAxis.log);
-      GridLogY->setChecked(Diag->ylAxis.log);
+      GridLogYl->setChecked(Diag->ylAxis.log);
+      GridLogYr->setChecked(Diag->yrAxis.log);
     }
   }
 
@@ -251,6 +279,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
 DiagramDialog::~DiagramDialog()
 {
+  delete all;   // delete all widgets from heap
 }
 
 // --------------------------------------------------------------------------
@@ -303,7 +332,6 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
   QString s1 = Item->text(0);
   if(ChooseData->currentText() != defaultDataSet.section('.',0,0))
     s1 = ChooseData->currentText() + ":" + s1;
-
   GraphInput->setText(s.left(i) + s1 + s.right(s.length()-i));
 
   if(s.isEmpty()) {
@@ -317,10 +345,15 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
       g->Thick = Property2->text().toInt();
       ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
-      g->Style =  PropertyBox->currentItem();
+      g->Style   = PropertyBox->currentItem();
+      if(yAxisBox) {
+        g->yAxisNo = yAxisBox->currentItem();
+        yAxisBox->setEnabled(true);
+        Label4->setEnabled(true);
+      }
 
-     Label3->setEnabled(true);
-     ColorButt->setEnabled(true);
+      Label3->setEnabled(true);
+      ColorButt->setEnabled(true);
     }
     else {
       g->Precision = Property2->text().toInt();
@@ -359,6 +392,11 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
     Property2->setText(QString::number(g->Thick));
     ColorButt->setPaletteBackgroundColor(g->Color);
     PropertyBox->setCurrentItem(g->Style);
+    if(yAxisBox) {
+      yAxisBox->setCurrentItem(g->yAxisNo);
+      yAxisBox->setEnabled(true);
+      Label4->setEnabled(true);
+    }
 
     Label3->setEnabled(true);
     ColorButt->setEnabled(true);
@@ -390,6 +428,11 @@ void DiagramDialog::slotDeleteGraph()
     ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
     Property2->setText("0");
+    if(yAxisBox) {
+      yAxisBox->setCurrentItem(0);
+      yAxisBox->setEnabled(false);
+      Label4->setEnabled(false);
+    }
 
     Label3->setEnabled(false);
     ColorButt->setEnabled(false);
@@ -417,6 +460,7 @@ void DiagramDialog::slotNewGraph()
     g->Color = ColorButt->paletteBackgroundColor();
     g->Thick = Property2->text().toInt();
     g->Style = PropertyBox->currentItem();
+    if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
   }
   else {
     g->Precision = Property2->text().toInt();
@@ -450,13 +494,14 @@ void DiagramDialog::slotApply()
     }
     if(Diag->ylAxis.Label.isEmpty())
       Diag->ylAxis.Label = ""; // can be not 0 and empty!
-    if(yLabel->text().isEmpty()) yLabel->setText("");
-    if(Diag->ylAxis.Label != yLabel->text()) {
-      Diag->ylAxis.Label = yLabel->text();
+    if(ylLabel->text().isEmpty()) ylLabel->setText("");
+    if(Diag->ylAxis.Label != ylLabel->text()) {
+      Diag->ylAxis.Label = ylLabel->text();
       changed = true;
     }
-    if(Diag->GridOn != GridOn->isChecked()) {
-      Diag->GridOn = GridOn->isChecked();
+    if(Diag->xAxis.GridOn != GridOn->isChecked()) {
+      Diag->xAxis.GridOn = GridOn->isChecked();
+      Diag->ylAxis.GridOn = GridOn->isChecked();
       changed = true;
     }
     if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
@@ -468,12 +513,24 @@ void DiagramDialog::slotApply()
       changed = true;
     }
     if(Diag->Name == "Rect") {
+      if(Diag->yrAxis.Label.isEmpty())
+        Diag->yrAxis.Label = ""; // can be not 0 and empty!
+      if(yrLabel->text().isEmpty()) yrLabel->setText("");
+      if(Diag->yrAxis.Label != yrLabel->text()) {
+        Diag->yrAxis.Label = yrLabel->text();
+        changed = true;
+      }
+
       if(Diag->xAxis.log != GridLogX->isChecked()) {
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
       }
-      if(Diag->ylAxis.log != GridLogY->isChecked()) {
-        Diag->ylAxis.log = GridLogY->isChecked();
+      if(Diag->ylAxis.log != GridLogYl->isChecked()) {
+        Diag->ylAxis.log = GridLogYl->isChecked();
+        changed = true;
+      }
+      if(Diag->yrAxis.log != GridLogYr->isChecked()) {
+        Diag->yrAxis.log = GridLogYr->isChecked();
         changed = true;
       }
     }
@@ -604,4 +661,17 @@ void DiagramDialog::copyDiagramGraphs()
 {
   for(Graph *pg = Diag->Graphs.first(); pg != 0; pg = Diag->Graphs.next())
     Graphs.append(pg->sameNewOne());
+}
+
+// --------------------------------------------------------------------------
+// Is called if the combobox changes that defines which y axis uses the graph.
+void DiagramDialog::slotSetYAxis(int axis)
+{
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
+
+  Graph *g = Graphs.at(i);
+  g->yAxisNo = axis;
+  changed = true;
+  toTake  = false;
 }

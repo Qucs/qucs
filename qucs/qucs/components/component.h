@@ -18,16 +18,14 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "viewpainter.h"
 #include "element.h"
-#include "node.h"
-
 
 #include <qptrlist.h>
 #include <qpen.h>
 #include <qpoint.h>
 #include <qwidget.h>
 
+class ViewPainter;
 class QString;
 
 /**
