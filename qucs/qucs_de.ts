@@ -1069,6 +1069,17 @@ Ungültiger Zeilenanfang!</translation>
     </message>
 </context>
 <context>
+    <name>QucsActions</name>
+    <message>
+        <source>Inserting clipboard contents...</source>
+        <translation type="unfinished">Füge den Inhalt der Zwischenablage ein...</translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Fertig.</translation>
+    </message>
+</context>
+<context>
     <name>QucsApp</name>
     <message>
         <source>New</source>
@@ -2130,7 +2141,7 @@ Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>Inserting clipboard contents...</source>
-        <translation>Füge den Inhalt der Zwischenablage ein...</translation>
+        <translation type="obsolete">Füge den Inhalt der Zwischenablage ein...</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
@@ -3680,6 +3691,10 @@ Qt universal circuit simulator
     <message>
         <source>French by Eric Marzolf</source>
         <translation>Französisch von Eric Marzolf</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

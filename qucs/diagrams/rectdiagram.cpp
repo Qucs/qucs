@@ -49,9 +49,9 @@ void RectDiagram::calcData(Graph *g)
 //  if(p == 0) return;
   double *px;
   double *py = g->cPointsY;
-  for(int i=g->countX2; i>0; i--) {
+  for(int i=g->countY; i>0; i--) {
     px = g->cPointsX.getFirst()->Points;
-    for(int z=g->countX1; z>0; z--) {
+    for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
       *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2);
       // preserve negative values if not complex number
       if(fabs(*(py+1)) < 1e-250) {

@@ -1,5 +1,5 @@
 /***************************************************************************
-                          QucsInit.cpp  -  description
+                          qucsinit.cpp  -  description
                              -------------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
@@ -22,6 +22,7 @@
 #include "qucsinit.h"
 
 #include "qucs.h"
+#include "qucsactions.h"
 
 #include <qaction.h>
 #include <qaccel.h>
@@ -40,7 +41,8 @@ QucsInit::~QucsInit()
 // makes the whole job
 void QucsInit::perform(QucsApp *p_)
 {
-  App = p_;
+  App  = p_;
+  Acts = &(App->Acts);
 
   initActions();
   initMenuBar();
@@ -147,35 +149,39 @@ void QucsInit::initActions()
 	tr("Copy\n\nCopies the selected section to the clipboard"));
   connect(App->editCopy, SIGNAL(activated()), App, SLOT(slotEditCopy()));
 
-  App->editPaste = new QAction(tr("Paste"),
+  Acts->editPaste = new QAction(tr("Paste"),
                           QIconSet(QImage(BITMAPDIR "editpaste.png")),
                           tr("&Paste"), CTRL+Key_V, App);
-  App->editPaste->setStatusTip(
+  Acts->editPaste->setStatusTip(
 	tr("Pastes the clipboard contents to the cursor position"));
-  App->editPaste->setWhatsThis(
+  Acts->editPaste->setWhatsThis(
 	tr("Paste\n\nPastes the clipboard contents to the cursor position"));
-  App->editPaste->setToggleAction(true);
-  connect(App->editPaste, SIGNAL(toggled(bool)),
-	  App, SLOT(slotEditPaste(bool)));
+  Acts->editPaste->setToggleAction(true);
+  connect(Acts->editPaste, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotEditPaste(bool)));
 
-  App->editDelete = new QAction(tr("Delete"),
+  Acts->editDelete = new QAction(tr("Delete"),
                            QIconSet(QImage(BITMAPDIR "editdelete.png")),
                            tr("&Delete"), Key_Delete, App);
-  App->editDelete->setStatusTip(tr("Deletes the selected components"));
-  App->editDelete->setWhatsThis(
+  Acts->editDelete->setStatusTip(tr("Deletes the selected components"));
+  Acts->editDelete->setWhatsThis(
 	tr("Delete\n\nDeletes the selected components"));
-  App->editDelete->setToggleAction(true);
-  connect(App->editDelete, SIGNAL(toggled(bool)),
-	  App, SLOT(slotEditDelete(bool)));
+  Acts->editDelete->setToggleAction(true);
+  connect(Acts->editDelete, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotEditDelete(bool)));
   // to ease usage with notebooks, backspace can also be used to delete
   mainAccel->connectItem(mainAccel->insertItem(Key_Backspace),
-                         App->editDelete, SLOT(toggle()) );
+                         Acts->editDelete, SLOT(toggle()) );
 
   // cursor left/right to move marker on a graph
   mainAccel->connectItem(mainAccel->insertItem(Key_Left),
                          App->view, SLOT(slotMarkerLeft()));
   mainAccel->connectItem(mainAccel->insertItem(Key_Right),
                          App->view, SLOT(slotMarkerRight()));
+  mainAccel->connectItem(mainAccel->insertItem(Key_Up),
+                         App->view, SLOT(slotMarkerUp()));
+  mainAccel->connectItem(mainAccel->insertItem(Key_Down),
+                         App->view, SLOT(slotMarkerDown()));
 
   App->undo = new QAction(tr("Undo"), QIconSet(QImage(BITMAPDIR "undo.png")),
                      tr("&Undo"), CTRL+Key_Z, App);
@@ -241,13 +247,13 @@ void QucsInit::initActions()
   App->magMinus->setWhatsThis(tr("Reduce\n\nZooms out the current view"));
   connect(App->magMinus, SIGNAL(activated()), App, SLOT(slotZoomOut()));
 
-  App->select = new QAction(tr("Select"),
+  Acts->select = new QAction(tr("Select"),
                        QIconSet(QImage(BITMAPDIR "pointer.png")),
                        tr("Select"), Key_Escape, App);
-  App->select->setStatusTip(tr("Select mode"));
-  App->select->setWhatsThis(tr("Select\n\nSelect mode"));
-  App->select->setToggleAction(true);
-  connect(App->select, SIGNAL(toggled(bool)), App, SLOT(slotSelect(bool)));
+  Acts->select->setStatusTip(tr("Select mode"));
+  Acts->select->setWhatsThis(tr("Select\n\nSelect mode"));
+  Acts->select->setToggleAction(true);
+  connect(Acts->select, SIGNAL(toggled(bool)), Acts, SLOT(slotSelect(bool)));
 
   App->selectAll = new QAction(tr("Select All"), tr("Select All"),
                           CTRL+Key_A, App);
@@ -256,36 +262,37 @@ void QucsInit::initActions()
 	tr("Select All\n\nSelects all elements of the document"));
   connect(App->selectAll, SIGNAL(activated()), App, SLOT(slotSelectAll()));
 
-  App->editRotate = new QAction(tr("Rotate"),
+  Acts->editRotate = new QAction(tr("Rotate"),
                            QIconSet(QImage(BITMAPDIR "rotate_ccw.png")),
                            tr("Rotate"), CTRL+Key_R, App);
-  App->editRotate->setStatusTip(tr("Rotates the selected component by 90°"));
-  App->editRotate->setWhatsThis(
+  Acts->editRotate->setStatusTip(tr("Rotates the selected component by 90°"));
+  Acts->editRotate->setWhatsThis(
     tr("Rotate\n\nRotates the selected component by 90° counter-clockwise"));
-  App->editRotate->setToggleAction(true);
-  connect(App->editRotate, SIGNAL(toggled(bool)),
-	  App, SLOT(slotEditRotate(bool)));
+  Acts->editRotate->setToggleAction(true);
+  connect(Acts->editRotate, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotEditRotate(bool)));
 
-  App->editMirror = new QAction(tr("Mirror about X Axis"),
-                           QIconSet(QImage(BITMAPDIR "mirror.png")),
-                           tr("Mirror about X Axis"), 0, App);
-  App->editMirror->setStatusTip(tr("Mirrors the selected item about X axis"));
-  App->editMirror->setWhatsThis(
+  Acts->editMirror = new QAction(tr("Mirror about X Axis"),
+			  QIconSet(QImage(BITMAPDIR "mirror.png")),
+			  tr("Mirror about X Axis"), 0, App);
+  Acts->editMirror->setStatusTip(
+			  tr("Mirrors the selected item about X axis"));
+  Acts->editMirror->setWhatsThis(
 	tr("Mirror about X Axis\n\nMirrors the selected item about X Axis"));
-  App->editMirror->setToggleAction(true);
-  connect(App->editMirror, SIGNAL(toggled(bool)),
-	  App, SLOT(slotEditMirrorX(bool)));
+  Acts->editMirror->setToggleAction(true);
+  connect(Acts->editMirror, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotEditMirrorX(bool)));
 
-  App->editMirrorY = new QAction(tr("Mirror about Y Axis"),
-                            QIconSet(QImage(BITMAPDIR "mirrory.png")),
-                            tr("Mirror about Y Axis"), CTRL+Key_M, App);
-  App->editMirrorY->setStatusTip(
+  Acts->editMirrorY = new QAction(tr("Mirror about Y Axis"),
+			    QIconSet(QImage(BITMAPDIR "mirrory.png")),
+			    tr("Mirror about Y Axis"), CTRL+Key_M, App);
+  Acts->editMirrorY->setStatusTip(
 	tr("Mirrors the selected item about Y axis"));
-  App->editMirrorY->setWhatsThis(
+  Acts->editMirrorY->setWhatsThis(
 	tr("Mirror about Y Axis\n\nMirrors the selected item about Y Axis"));
-  App->editMirrorY->setToggleAction(true);
-  connect(App->editMirrorY, SIGNAL(toggled(bool)),
-	App, SLOT(slotEditMirrorY(bool)));
+  Acts->editMirrorY->setToggleAction(true);
+  connect(Acts->editMirrorY, SIGNAL(toggled(bool)),
+	Acts, SLOT(slotEditMirrorY(bool)));
 
   App->intoH = new QAction(tr("Go into Subcircuit"),
                       QIconSet(QImage(BITMAPDIR "bottom.png")),
@@ -305,63 +312,63 @@ void QucsInit::initActions()
   connect(App->popH, SIGNAL(activated()), App, SLOT(slotPopHierarchy()));
   App->popH->setEnabled(false);  // only enabled if useful !!!!
 
-  App->editActivate = new QAction(tr("Deactivate/Activate"),
+  Acts->editActivate = new QAction(tr("Deactivate/Activate"),
                              QIconSet(QImage(BITMAPDIR "deactiv.png")),
                              tr("Deactivate/Activate"), CTRL+Key_D, App);
-  App->editActivate->setStatusTip(
+  Acts->editActivate->setStatusTip(
 	tr("Deactivate/Activate the selected item"));
-  App->editActivate->setWhatsThis(
+  Acts->editActivate->setWhatsThis(
 	tr("Deactivate/Activate\n\nDeactivate/Activate the selected item"));
-  App->editActivate->setToggleAction(true);
-  connect(App->editActivate, SIGNAL(toggled(bool)),
-	  App, SLOT(slotEditActivate(bool)));
+  Acts->editActivate->setToggleAction(true);
+  connect(Acts->editActivate, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotEditActivate(bool)));
 
-  App->insEquation = new QAction(tr("Insert Equation"),
+  Acts->insEquation = new QAction(tr("Insert Equation"),
                             QIconSet(QImage(BITMAPDIR "equation.png")),
                             tr("Insert Equation"), 0, App);
-  App->insEquation->setStatusTip(tr("Inserts equation"));
-  App->insEquation->setWhatsThis(
+  Acts->insEquation->setStatusTip(tr("Inserts equation"));
+  Acts->insEquation->setWhatsThis(
 	tr("Insert Equation\n\nInserts a user defined equation"));
-  App->insEquation->setToggleAction(true);
-  connect(App->insEquation, SIGNAL(toggled(bool)),
-	App, SLOT(slotInsertEquation(bool)));
+  Acts->insEquation->setToggleAction(true);
+  connect(Acts->insEquation, SIGNAL(toggled(bool)),
+	Acts, SLOT(slotInsertEquation(bool)));
 
-  App->insGround = new QAction(tr("Insert Ground"),
+  Acts->insGround = new QAction(tr("Insert Ground"),
                           QIconSet(QImage(BITMAPDIR "ground.png")),
                           tr("Insert Ground"), CTRL+Key_G, App);
-  App->insGround->setStatusTip(tr("Inserts ground"));
-  App->insGround->setWhatsThis(
+  Acts->insGround->setStatusTip(tr("Inserts ground"));
+  Acts->insGround->setWhatsThis(
 	tr("Insert Ground\n\nInserts a ground symbol"));
-  App->insGround->setToggleAction(true);
-  connect(App->insGround, SIGNAL(toggled(bool)),
-	  App, SLOT(slotInsertGround(bool)));
+  Acts->insGround->setToggleAction(true);
+  connect(Acts->insGround, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotInsertGround(bool)));
 
-  App->insPort = new QAction(tr("Insert Port"),
+  Acts->insPort = new QAction(tr("Insert Port"),
                         QIconSet(QImage(BITMAPDIR "port.png")),
                         tr("Insert Port"), 0, App);
-  App->insPort->setStatusTip(tr("Inserts port"));
-  App->insPort->setWhatsThis(tr("Insert Port\n\nInserts a port symbol"));
-  App->insPort->setToggleAction(true);
-  connect(App->insPort, SIGNAL(toggled(bool)),
-	  App, SLOT(slotInsertPort(bool)));
+  Acts->insPort->setStatusTip(tr("Inserts port"));
+  Acts->insPort->setWhatsThis(tr("Insert Port\n\nInserts a port symbol"));
+  Acts->insPort->setToggleAction(true);
+  connect(Acts->insPort, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotInsertPort(bool)));
 
-  App->insWire = new QAction(tr("Insert Wire"),
+  Acts->insWire = new QAction(tr("Insert Wire"),
                         QIconSet(QImage(BITMAPDIR "wire.png")),
                         tr("Wire"), CTRL+Key_E, App);
-  App->insWire->setStatusTip(tr("Inserts a wire"));
-  App->insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
-  App->insWire->setToggleAction(true);
-  connect(App->insWire, SIGNAL(toggled(bool)), App, SLOT(slotSetWire(bool)));
+  Acts->insWire->setStatusTip(tr("Inserts a wire"));
+  Acts->insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
+  Acts->insWire->setToggleAction(true);
+  connect(Acts->insWire, SIGNAL(toggled(bool)), Acts, SLOT(slotSetWire(bool)));
 
-  App->insLabel = new QAction(tr("Insert Wire/Pin Label"),
+  Acts->insLabel = new QAction(tr("Insert Wire/Pin Label"),
                          QIconSet(QImage(BITMAPDIR "nodename.png")),
                          tr("Wire Label"), CTRL+Key_L, App);
-  App->insLabel->setStatusTip(tr("Inserts a wire or pin label"));
-  App->insLabel->setWhatsThis(
+  Acts->insLabel->setStatusTip(tr("Inserts a wire or pin label"));
+  Acts->insLabel->setWhatsThis(
 	tr("Wire Label\n\nInserts a wire or pin label"));
-  App->insLabel->setToggleAction(true);
-  connect(App->insLabel, SIGNAL(toggled(bool)),
-	  App, SLOT(slotInsertLabel(bool)));
+  Acts->insLabel->setToggleAction(true);
+  connect(Acts->insLabel, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotInsertLabel(bool)));
 
   App->simulate = new QAction(tr("Simulate"),
                          QIconSet(QImage(BITMAPDIR "gear.png")),
@@ -380,15 +387,15 @@ void QucsInit::initActions()
 	tr("Changes to data display or schematic page"));
   connect(App->dpl_sch, SIGNAL(activated()), App, SLOT(slotChangePage()));
 
-  App->setMarker = new QAction(tr("Set Marker"),
+  Acts->setMarker = new QAction(tr("Set Marker"),
                           QIconSet(QImage(BITMAPDIR "marker.png")),
                           tr("Set Marker on Graph"), CTRL+Key_B, App);
-  App->setMarker->setStatusTip(tr("Sets a marker on a diagram's graph"));
-  App->setMarker->setWhatsThis(
+  Acts->setMarker->setStatusTip(tr("Sets a marker on a diagram's graph"));
+  Acts->setMarker->setWhatsThis(
 	tr("Set Marker\n\nSets a marker on a diagram's graph"));
-  App->setMarker->setToggleAction(true);
-  connect(App->setMarker, SIGNAL(toggled(bool)),
-	App, SLOT(slotSetMarker(bool)));
+  Acts->setMarker->setToggleAction(true);
+  connect(Acts->setMarker, SIGNAL(toggled(bool)),
+	Acts, SLOT(slotSetMarker(bool)));
 
   App->showMsg = new QAction(tr("Show Last Messages"),
                         tr("Show Last Messages"), 0, App);
@@ -469,26 +476,26 @@ void QucsInit::initMenuBar()
   editMenu->insertSeparator();
   App->editCut->addTo(editMenu);
   App->editCopy->addTo(editMenu);
-  App->editPaste->addTo(editMenu);
-  App->editDelete->addTo(editMenu);
+  Acts->editPaste->addTo(editMenu);
+  Acts->editDelete->addTo(editMenu);
   editMenu->insertSeparator();
-  App->select->addTo(editMenu);
+  Acts->select->addTo(editMenu);
   App->selectAll->addTo(editMenu);
-  App->editRotate->addTo(editMenu);
-  App->editMirror->addTo(editMenu);
-  App->editMirrorY->addTo(editMenu);
-  App->editActivate->addTo(editMenu);
+  Acts->editRotate->addTo(editMenu);
+  Acts->editMirror->addTo(editMenu);
+  Acts->editMirrorY->addTo(editMenu);
+  Acts->editActivate->addTo(editMenu);
   editMenu->insertSeparator();
   App->intoH->addTo(editMenu);
   App->popH->addTo(editMenu);
 
   insMenu=new QPopupMenu();  // menuBar entry insMenu
-  App->insWire->addTo(insMenu);
-  App->insLabel->addTo(insMenu);
-  App->insEquation->addTo(insMenu);
-  App->insGround->addTo(insMenu);
-  App->insPort->addTo(insMenu);
-  App->setMarker->addTo(insMenu);
+  Acts->insWire->addTo(insMenu);
+  Acts->insLabel->addTo(insMenu);
+  Acts->insEquation->addTo(insMenu);
+  Acts->insGround->addTo(insMenu);
+  Acts->insPort->addTo(insMenu);
+  Acts->setMarker->addTo(insMenu);
 
   projMenu=new QPopupMenu();  // menuBar entry projMenu
   App->projNew->addTo(projMenu);
@@ -543,8 +550,8 @@ void QucsInit::initToolBar()
   editToolbar = new QToolBar(App);
   App->editCut->addTo(editToolbar);
   App->editCopy->addTo(editToolbar);
-  App->editPaste->addTo(editToolbar);
-  App->editDelete->addTo(editToolbar);
+  Acts->editPaste->addTo(editToolbar);
+  Acts->editDelete->addTo(editToolbar);
   App->undo->addTo(editToolbar);
   App->redo->addTo(editToolbar);
 
@@ -555,21 +562,21 @@ void QucsInit::initToolBar()
   App->magMinus->addTo(viewToolbar);
 
   workToolbar = new QToolBar(App);
-  App->select->addTo(workToolbar);
-  App->editMirror->addTo(workToolbar);
-  App->editMirrorY->addTo(workToolbar);
-  App->editRotate->addTo(workToolbar);
+  Acts->select->addTo(workToolbar);
+  Acts->editMirror->addTo(workToolbar);
+  Acts->editMirrorY->addTo(workToolbar);
+  Acts->editRotate->addTo(workToolbar);
   App->intoH->addTo(workToolbar);
   App->popH->addTo(workToolbar);
-  App->editActivate->addTo(workToolbar);
-  App->insWire->addTo(workToolbar);
-  App->insLabel->addTo(workToolbar);
-  App->insEquation->addTo(workToolbar);
-  App->insGround->addTo(workToolbar);
-  App->insPort->addTo(workToolbar);
+  Acts->editActivate->addTo(workToolbar);
+  Acts->insWire->addTo(workToolbar);
+  Acts->insLabel->addTo(workToolbar);
+  Acts->insEquation->addTo(workToolbar);
+  Acts->insGround->addTo(workToolbar);
+  Acts->insPort->addTo(workToolbar);
   App->simulate->addTo(workToolbar);
   App->dpl_sch->addTo(workToolbar);
-  App->setMarker->addTo(workToolbar);
+  Acts->setMarker->addTo(workToolbar);
   workToolbar->addSeparator();    // <<<=======================
   QWhatsThis::whatsThisButton(workToolbar);
 
@@ -620,14 +627,16 @@ void QucsInit::slotViewStatusBar(bool toggle)
 void QucsInit::slotHelpAbout()
 {
   QMessageBox::about(App, tr("About..."),
-    tr("Qucs Version ")+PACKAGE_VERSION+tr("\nQt universal circuit simulator\n")+
+    tr("Qucs Version ")+PACKAGE_VERSION+
+    tr("\nQt universal circuit simulator\n")+
     tr("Copyright (C) 2003,2004 by Michael Margraf\n")+
     tr("Simulator by Stefan Jahn\n")+
     tr("Special thanks to Jens Flucke\n\n")+
     tr("Translations:\n")+
     tr("German by Stefan Jahn\n")+
     tr("Polish by Dariusz Pienkowski\n")+
-    tr("French by Eric Marzolf"));
+    tr("French by Eric Marzolf")+
+    tr("Italian by Giorgio Luparia"));
 }
 
 // ########################################################################

@@ -25,13 +25,13 @@
 SUBDIRS = bitmaps components diagrams paintings dialogs docs
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucsview.h qucs.h qucsinit.h
+MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucs_SOURCES = node.cpp \
   element.cpp qucsdoc.cpp wire.cpp \
   qucsview.cpp qucs.cpp main.cpp wirelabel.cpp qucsfile.cpp \
-  qucsinit.cpp $(MOCFILES)
+  qucsinit.cpp qucsactions.cpp $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)

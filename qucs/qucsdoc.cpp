@@ -1018,20 +1018,16 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
 // ---------------------------------------------------
 bool QucsDoc::setMarker(int x, int y)
 {
-  int n, *p;
-  double *px, *py;
+  int n;
   // test all diagrams
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
     if(pd->getSelected(x, y)) {
 
       // test all graphs of the diagram
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
-        n = pg->getSelected(x-pd->cx, pd->cy-y);
+        n  = pg->getSelected(x-pd->cx, pd->cy-y);
         if(n > 0) {
-          px = pg->cPointsX.getFirst()->Points + n-1;
-          py = pg->cPointsY + 2*(n-1);
-          p = pg->Points + 2*(n-1);
-          Marker *pm = new Marker(pd, pg, *p, *(p+1), *px, *py, *(py+1));
+          Marker *pm = new Marker(pd, pg, n-1);
           pd->Markers.append(pm);
           setChanged(true);
           return true;
@@ -1046,40 +1042,29 @@ bool QucsDoc::setMarker(int x, int y)
 // Moves the marker pointer left/right on the graph.
 bool QucsDoc::MarkerLeftRight(bool left)
 {
-  int n;
-  double *px;
   bool acted = false;
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
     // test all markers of the diagram
     for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
       if(pm->isSelected) {
-        Graph *pg = pm->pGraph;
-        px = pg->cPointsX.getFirst()->Points;
-	if(!px) continue;
-        for(n=0; n<pg->countX1; n++) {
-          if(pm->xpos <= *px) break;
-          px++;
-        }
-        if(n == pg->countX1) px--;
+	if(!pm->moveLeftRight(left)) continue;
+	acted = true;
+      }
+    }
+  return acted;
+}
 
-        if(left) {
-          if(px <= pg->cPointsX.getFirst()->Points) continue;
-          px--;  // one position to the left
-	  n--;
-        }
-        else {
-          if(px >= (pg->cPointsX.getFirst()->Points+pg->countX1)) continue;
-          px++;  // one position to the right
-	  n++;
-        }
-        pm->xpos = *px;
-        pm->yr = *(pg->cPointsY + 2*n);
-	pm->yi = *(pg->cPointsY + 2*n+1);
-        pm->createText();
-        int *pi = pg->Points + 2*n;
-        pm->cx = *pi;
-        pm->cy = *(pi+1);
-        acted = true;
+// ---------------------------------------------------
+// Moves the marker pointer up/down on the more-dimensional graph.
+bool QucsDoc::MarkerUpDown(bool up)
+{
+  bool acted = false;
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    // test all markers of the diagram
+    for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
+      if(pm->isSelected) {
+	if(!pm->moveUpDown(up)) continue;
+	acted = true;
       }
     }
   return acted;
@@ -1092,72 +1077,111 @@ bool QucsDoc::MarkerLeftRight(bool left)
 Element* QucsDoc::selectElement(int x, int y, bool flag)
 {
   Element *pe_1st=0, *pe_sel=0;
-  for(Component *pc = Comps.last(); pc != 0; pc = Comps.prev())    // test all components
+  // test all components
+  for(Component *pc = Comps.last(); pc != 0; pc = Comps.prev())
     if(pc->getSelected(x, y)) {
       if(flag) { pc->isSelected ^= flag; return pc; }
-      if(pe_sel != 0) { pe_sel->isSelected = false; pc->isSelected = true; return pc; }
-      if(pe_1st == 0) pe_1st = pc;   // give access to elements that lie beneath
+      if(pe_sel != 0) {
+	pe_sel->isSelected = false;
+	pc->isSelected = true;
+	return pc;
+      }
+      if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
       if(pc->isSelected) pe_sel = pc;
     }
 
   WireLabel *pl;
-  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev()) {    // test all wires and wire labels
+  // test all wires and wire labels
+  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev()) {
     if(pw->getSelected(x, y)) {
       if(flag) { pw->isSelected ^= flag; return pw; }
-      if(pe_sel != 0) { pe_sel->isSelected = false; pw->isSelected = true; return pw; }
-      if(pe_1st == 0) pe_1st = pw;   // give access to elements that lie beneath
+      if(pe_sel != 0) {
+	pe_sel->isSelected = false;
+	pw->isSelected = true;
+	return pw;
+      }
+      if(pe_1st == 0) pe_1st = pw;  // give access to elements lying beneath
       if(pw->isSelected) pe_sel = pw;
     }
     pl = pw->Label;
     if(pl) if(pl->getSelected(x, y)) {
       if(flag) { pl->isSelected ^= flag; return pl; }
-      if(pe_sel != 0) { pe_sel->isSelected = false; pl->isSelected = true; return pl; }
-      if(pe_1st == 0) pe_1st = pl;   // give access to elements that lie beneath
+      if(pe_sel != 0) {
+	pe_sel->isSelected = false;
+	pl->isSelected = true;
+	return pl;
+      }
+      if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
       if(pl->isSelected) pe_sel = pl;
     }
   }
 
-  for(Node *pn = Nodes.last(); pn != 0; pn = Nodes.prev()) {    // test all node labels
+  // test all node labels
+  for(Node *pn = Nodes.last(); pn != 0; pn = Nodes.prev()) {
     pl = pn->Label;
     if(pl) if(pl->getSelected(x, y)) {
       if(flag) { pl->isSelected ^= flag; return pl; }
-      if(pe_sel != 0) { pe_sel->isSelected = false; pl->isSelected = true; return pl; }
-      if(pe_1st == 0) pe_1st = pl;   // give access to elements that lie beneath
+      if(pe_sel != 0) {
+	pe_sel->isSelected = false;
+	pl->isSelected = true;
+	return pl;
+      }
+      if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
       if(pl->isSelected) pe_sel = pl;
     }
   }
 
-  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev()) {   // test all diagrams
-    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next()) // test markers of diagram
+  // test all diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev()) {
+    // test markers of diagram
+    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next())
       if(pm->getSelected(x-pd->cx, pd->cy-y) > 0) {
         if(flag) { pm->isSelected ^= flag; return pm; }
-        if(pe_sel != 0) { pe_sel->isSelected = false; pm->isSelected = true; return pm; }
-        if(pe_1st == 0) pe_1st = pm;   // give access to elements that lie beneath
+        if(pe_sel != 0) {
+	  pe_sel->isSelected = false;
+	  pm->isSelected = true;
+	  return pm;
+	}
+        if(pe_1st == 0) pe_1st = pm;  // give access to elements lying beneath
         if(pm->isSelected) pe_sel = pm;
       }
 
     if(pd->getSelected(x, y)) {
 
-      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
+      // test graphs of diagram
+      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
         if(pg->getSelected(x-pd->cx, pd->cy-y) > 0) {
           if(flag) { pg->isSelected ^= flag; return pg; }
-          if(pe_sel != 0) { pe_sel->isSelected = false; pg->isSelected = true; return pg; }
-          if(pe_1st == 0) pe_1st = pg;   // give access to elements that lie beneath
+          if(pe_sel != 0) {
+	    pe_sel->isSelected = false;
+	    pg->isSelected = true;
+	    return pg;
+	  }
+          if(pe_1st == 0) pe_1st = pg;  // access to elements lying beneath
           if(pg->isSelected) pe_sel = pg;
         }
 
       if(flag) { pd->isSelected ^= flag; return pd; }
-      if(pe_sel != 0) { pe_sel->isSelected = false; pd->isSelected = true; return pd; }
-      if(pe_1st == 0) pe_1st = pd;   // give access to elements that lie beneath
+      if(pe_sel != 0) {
+	pe_sel->isSelected = false;
+	pd->isSelected = true;
+	return pd;
+      }
+      if(pe_1st == 0) pe_1st = pd;  // give access to elements lying beneath
       if(pd->isSelected) pe_sel = pd;
     }
   }
 
-  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())    // test all paintings
+  // test all paintings
+  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
     if(pp->getSelected(x, y)) {
       if(flag) { pp->isSelected ^= flag; return pp; }
-      if(pe_sel != 0) { pe_sel->isSelected = false; pp->isSelected = true; return pp; }
-      if(pe_1st == 0) pe_1st = pp;   // give access to elements that lie beneath
+      if(pe_sel != 0) {
+	pe_sel->isSelected = false;
+	pp->isSelected = true;
+	return pp;
+      }
+      if(pe_1st == 0) pe_1st = pp;  // give access to elements lying beneath
       if(pp->isSelected) pe_sel = pp;
     }
 
