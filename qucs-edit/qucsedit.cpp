@@ -34,6 +34,7 @@
 
 QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
 {
+  setIcon (QPixmap(BITMAPDIR "big.qucs.xpm"));  // set application icon
   setCaption("QucsEdit " PACKAGE_VERSION " - " + tr("File: "));
 
   QVBoxLayout *v = new QVBoxLayout(this);

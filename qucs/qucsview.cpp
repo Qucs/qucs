@@ -623,6 +623,9 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
   if(drawn) // erase old scheme
     for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
       pe->paintScheme(&painter);
+//      if(pe->Type == isWire)  if(((Wire*)pe)->Label)
+//        if(!((Wire*)pe)->Label->isSelected)
+//          ((Wire*)pe)->Label->paintScheme(&painter);
 
   drawn = true;
   d->setOnGrid(MAx2, MAy2);
@@ -635,6 +638,9 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
   // paint afterwards to avoid conflict between wire and label painting
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
     pe->paintScheme(&painter);
+//    if(pe->Type == isWire)  if(((Wire*)pe)->Label)
+//      if(!((Wire*)pe)->Label->isSelected)
+//        ((Wire*)pe)->Label->paintScheme(&painter);
 
   MAx1 = MAx2;
   MAy1 = MAy2;
