@@ -4175,11 +4175,6 @@ Qt universal circuit simulator
         <translation></translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki ISHIKAWA
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Italian by Giorgio Luparia
 </source>
         <translation></translation>
@@ -4196,6 +4191,11 @@ Qt universal circuit simulator
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation type="unfinished"></translation>
     </message>

@@ -5706,7 +5706,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation>Japanisch von Toyoyuki ISHIKAWA
+        <translation type="obsolete">Japanisch von Toyoyuki ISHIKAWA
 </translation>
     </message>
     <message>
@@ -5735,6 +5735,12 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
 </source>
         <translation>Besonderen Dank an Jens Flucke und Raimund Jacob
 
+</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation>Japanisch von Toyoyuki Ishikawa
 </translation>
     </message>
 </context>

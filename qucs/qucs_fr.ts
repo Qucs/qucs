@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>Points per decade:</source>
-        <translation type="unfinished"></translation>
+        <translation>Points par decade :</translation>
     </message>
 </context>
 <context>
@@ -2378,20 +2378,20 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>calcul des tensions de bruit</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>métallisation inférieure du substrat</translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>température en degrés</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">© Copyright 2003, 2004 par Michael Margraf
+        <translation>© Copyright 2003, 2004 par Michael Margraf
  {2004, 2005?}</translation>
     </message>
 </context>
@@ -2982,7 +2982,7 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier les paramètres</translation>
     </message>
 </context>
 <context>
@@ -3066,7 +3066,7 @@ Un petit éditeur sans prétention pour Qucs
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">© Copyright 2003, 2004 par Michael Margraf
+        <translation>© Copyright 2003, 2004 par Michael Margraf
  {2004, 2005?}</translation>
     </message>
 </context>
@@ -4250,7 +4250,7 @@ Déplace la légende du composant</translation>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation>Japonaise par Toyoyuki Ishikawa
+        <translation type="obsolete">Japonaise par Toyoyuki Ishikawa
 </translation>
     </message>
     <message>
@@ -4265,12 +4265,19 @@ Déplace la légende du composant</translation>
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">© Copyright 2003, 2004 par Michael Margraf
+        <translation>© Copyright 2003, 2004 par Michael Margraf
  {2003, 2004, 2005?}</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
+</source>
+        <translation>Remerciements à Jean Flucke et Raimund Jacob
+
+</translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation type="unfinished"></translation>
     </message>
