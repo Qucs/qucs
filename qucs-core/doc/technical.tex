@@ -2541,22 +2541,57 @@ I_{3}\\
 \section{Quasi-static characteristic impedance}
 %\addcontentsline{toc}{section}{Quasi-static characteristic impedance}
 
-Wheeler \cite{Wheeler2}:
+Harold A. Wheeler \cite{Wheeler2} formulated his analysis equations
+based upon a conformal mapping of the dielectric boundary with
+parallel conductor strips separated by a dielectric sheet.
 
-wide strips:
+\addvspace{12pt}
+
+For wide strips he obtains the approximation
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
 \frac{Z_{F0}\cdot \sqrt{\dfrac{1}{\varepsilon_{r}}}}{\dfrac{W}{2h} + \dfrac{1}{\pi}\ln{4} + \dfrac{\varepsilon_{r} + 1}{2\pi \varepsilon_{r}} \ln{\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)} + \dfrac{\varepsilon_{r} - 1}{2\pi \varepsilon_{r}^{2}}\cdot \ln{\dfrac{e\pi^{2}}{16}}}
 \end{equation}
 
-narrow strips:
+For narrow strips he obtains the approximation
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
 \frac{Z_{F0}}{\pi \sqrt{\varepsilon_{r}}} \cdot \left(\ln{\frac{8h}{W}} + \frac{1}{8}\left(\frac{W}{2h}\right)^{2} - \frac{1}{2}\cdot \frac{\varepsilon_{r} - 1}{\varepsilon_{r} + 1}\left(\ln{\frac{\pi}{2}} + \frac{1}{\varepsilon_{r}} \ln{\frac{4}{\pi}}\right)\right)
 \end{equation}
 
+Hammerstad and Jensen \cite{Hammerstad}:
+
+\begin{equation}
+Z_{L}\left(W, h, \varepsilon_{r}\right) =
+\frac{Z_{F0}}{2\pi\cdot\sqrt{\varepsilon_{r}}}\cdot\ln{\left(f_{u}\frac{h}{W} + \sqrt{1 + \left(\frac{2h}{W}\right)^{2}}\right)}
+\end{equation}
+
+With
+\begin{align}
+f_{u} &= 6 + \left(2\pi - 6\right)\cdot\exp{\left(-\left(30.666\cdot\frac{h}{W}\right)^{0.7528}\right)}
+\end{align}
+
 \section{Quasi-static effective dielectric constant}
 %\addcontentsline{toc}{section}{Quasi-static effective dielectric constant}
+
+Wheeler \cite{Wheeler}:
+
+narrow strips:
+\begin{equation}
+\varepsilon_{r_{eff}} = \frac{\varepsilon_{r} + 1}{2} + \frac{Z_{F0}}{2\pi Z_{L}}\cdot \frac{\varepsilon_{r} - 1}{2}\cdot \left(\ln{\frac{\pi}{2}} + \frac{1}{\varepsilon_{r}} \ln{\frac{4}{\pi}}\right)
+\end{equation}
+
+Hammerstad and Jensen \cite{Hammerstad}:
+\begin{equation}
+\varepsilon_{r_{eff}} = \frac{\varepsilon_{r} + 1}{2} + \frac{\varepsilon_{r} - 1}{2}\cdot\left(1 + 10\frac{h}{W}\right)^{-ab}
+\end{equation}
+
+With
+\begin{align}
+a &= 1 + \frac{1}{49}\cdot\ln{\left(\frac{u^{4} + \left(\dfrac{u}{52}\right)^{2}}{u^{4} + 0.432}\right)} + \frac{1}{18.7}\cdot\ln{\left(1 + \left(\frac{u}{18.1}\right)^{3}\right)}\\
+b &= 0.564\cdot\left(\frac{\varepsilon_{r} - 0.9}{\varepsilon_{r} + 3}\right)^{0.053}\\
+u &= \frac{W}{h}
+\end{align}
 
 \section{Dispersion}
 %\addcontentsline{toc}{section}{Dispersion}
@@ -2605,6 +2640,51 @@ m_{c} &=
 \end{array}
 \end{cases}
 \end{align}
+
+Getsinger \cite{Getsinger}:
+
+\begin{equation}
+\varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + G\cdot \left(\dfrac{f}{f_{p}}\right)^{2}}
+\end{equation}
+
+With
+\begin{align}
+f_{p} &= \frac{Z_{L}}{2\mu_{0} h}\\
+G &= 0.6 + 0.009\cdot Z_{L}
+\end{align}
+
+Getsinger \cite{Getsinger2} (wave impedance model):
+
+\begin{equation}
+Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}
+\end{equation}
+
+Getsinger \cite{Getsinger3} (group-delay model):
+
+\begin{equation}
+Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r}(f)}{\varepsilon_{r_{eff}}}}\cdot\frac{1}{1 + D(f)}
+\end{equation}
+
+With
+\begin{align}
+D(f) &= \frac{\left(\varepsilon_{r} - \varepsilon_{r}(f)\right)\cdot\left(\varepsilon_{r}(f) - \varepsilon_{r_{eff}}\right)}{\varepsilon_{r}(f)\cdot\left(\varepsilon_{r} - \varepsilon_{r_{eff}}\right)}
+\end{align}
+
+Hammerstad and Jensen \cite{Hammerstad}:
+
+\begin{equation}
+\varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + G\cdot \left(\dfrac{f}{f_{p}}\right)^{2}}
+\end{equation}
+
+With
+\begin{align}
+f_{p} &= \frac{Z_{L}}{2\mu_{0} h}\\
+G &= \frac{\pi^{2}}{12}\cdot\frac{\varepsilon_{r} - 1}{\varepsilon_{r_{eff}}}\cdot\sqrt{\frac{2\pi\cdot Z_{L}}{Z_{F0}}}
+\end{align}
+
+\begin{equation}
+Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}\cdot\frac{\varepsilon_{r}(f) - 1}{\varepsilon_{r_{eff}} - 1}
+\end{equation}
 
 
 \section{Transmission losses}
