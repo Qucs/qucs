@@ -199,6 +199,7 @@ AH_TOP([
 
 # Add here all your Makefiles. This are created by configure.
 AC_CONFIG_FILES([Makefile 
+		 qucs-edit/Makefile
 		 qucs/Makefile
 		 qucs/bitmaps/Makefile
 		 qucs/components/Makefile
