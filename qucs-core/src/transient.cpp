@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.11 2004/10/09 19:59:42 ela Exp $
+ * $Id: transient.cpp,v 1.12 2004/10/10 07:23:22 ela Exp $
  *
  */
 
@@ -221,9 +221,10 @@ void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
       }
 #if !FIXEDCOEFF
       if (order == 2) {
+	nr_double_t f = - delta[0] / (2 * delta[1]);
 	coefficients[0] = 1;
-	coefficients[1] = (1 + delta[0] / (2 * delta[1])) * delta[0];
-	coefficients[2] = (- delta[0] / (2 * delta[1])) * delta[0];
+	coefficients[1] = (1 - f) * delta[0];
+	coefficients[2] = f * delta[0];
       }
 #endif
     }
