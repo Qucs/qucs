@@ -52,6 +52,9 @@ AC_Sim::AC_Sim()
 			QObject::tr("stop frequency in Hertz")));
   Props.append(new Property("Points", "19", true,
 			QObject::tr("number of simulation steps")));
+  Props.append(new Property("Noise", "no", false,
+			QObject::tr("calculate noise voltages")+
+			" [yes, no]"));
 }
 
 AC_Sim::~AC_Sim()

@@ -2463,6 +2463,10 @@ Stosowanie:  qucsedit [-r] plik
         <source>no data</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>calculate noise voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

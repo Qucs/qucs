@@ -2363,6 +2363,10 @@ Használat:  qucsedit [-r] fájl
         <source>SPICE netlist</source>
         <translation>SPICE kötéslista</translation>
     </message>
+    <message>
+        <source>calculate noise voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

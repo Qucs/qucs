@@ -2603,6 +2603,10 @@ Verwendung:  qucsedit [-r] Datei
         <source>no data</source>
         <translation>keine Daten</translation>
     </message>
+    <message>
+        <source>calculate noise voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

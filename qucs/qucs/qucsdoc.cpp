@@ -1341,7 +1341,6 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
         }
 
     if(pd->getSelected(x, y)) {
-
       if(pd->Name[0] == 'T')    // tabular diagram ?
         if(x< pd->cx) {      // clicked on scroll bar ?
 	  pd->Type = isDiagramScroll;
@@ -1350,7 +1349,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 
       // test graphs of diagram
       for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
-        if(pg->getSelected(x-pd->cx, pd->cy-y) > 0) {
+        if(pg->getSelected(x-pd->cx, pd->cy-y) >= 0) {
           if(flag) { pg->isSelected ^= flag; return pg; }
           if(pe_sel) {
 	    pe_sel->isSelected = false;
