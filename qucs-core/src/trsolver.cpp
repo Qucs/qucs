@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.6 2004-09-14 19:33:09 ela Exp $
+ * $Id: trsolver.cpp,v 1.7 2004-09-17 11:48:52 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 #include "transient.h"
 
 #define dState 0 // delta T state
+#define rState 1 // right hand side state
 
 // Constructor creates an unnamed instance of the trsolver class.
 trsolver::trsolver ()
@@ -94,9 +95,10 @@ void trsolver::initSteps (void) {
 /* This is the transient netlist solver.  It prepares the circuit list
    for each requested time and solves it then. */
 void trsolver::solve (void) {
-  nr_double_t time, current = 0;
+  nr_double_t time;
   int error = 0;
   runs++;
+  current = 0;
 
   // Create time sweep if necessary.
   initSteps ();
@@ -104,6 +106,7 @@ void trsolver::solve (void) {
   // First calculate a initial state using the non-linear DC analysis.
   setDescription ("DC");
   initDC ();
+  setCalculation ((calculate_func_t) &calcDC);
   solve_pre ();
   error = solve_nonlinear ();
   if (error) {
@@ -113,64 +116,44 @@ void trsolver::solve (void) {
 
   // Initialize transient analysis.
   setDescription ("transient");
-  init ();
+  initTR ();
+  setCalculation ((calculate_func_t) &calcTR);
   swp->reset ();
 
   int running = 0;
   //delta /= 10;
   //updateCoefficients (delta, 1);
-  //updateCoefficients (delta, 1);
+  //setState (dState, delta);
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
     time = swp->next ();
     logprogressbar (i, swp->getSize (), 40);
 
-#if DEBUG && 0
+#if DEBUG && 1
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for t = %e\n",
 	      getName (), (double) time);
 #endif
 
     do {
-      calc (current);
-      error += solve_linear (); // Start the linear solver.
+      error += predictor ();  // Run predictor.
+      error += corrector ();  // Run corrector process.
 
-      nr_double_t save = delta;
-      if (running > 2) {
-	delta = checkDelta ();
-	if (delta > deltaMax) delta = deltaMax;
-	if (delta < deltaMin) delta = deltaMin;
-
-	if (delta > 0.9 * save) {
-	  updateCoefficients (delta, 1);
-	  rejected = 0;
-#if DEBUG && 0
-	  logprint (LOG_STATUS,
-		    "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
-		    current, delta);
-#endif
-	  savePreviousIteration ();
-	}
-	else if (save > delta) {
-	  updateCoefficients (delta);
-	  rejected++;
-#if DEBUG && 0
-	  logprint (LOG_STATUS,
-		    "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
-		    current, delta);
-#endif
-	  current -= delta;
-	} else {
-	  updateCoefficients (delta, 1);
-	}
+      // Now advance in time or not...
+      if (running > 1 && 0) {
+	adjustDelta ();
       }
       else {
 	updateCoefficients (delta, 1);
+	nextStates ();
+	setState (dState, delta);
+	rejected = 0;
       }
       current += delta;
+
       running++;
     }
-    while (current < time);
+    while (current < time); // Hit a requested time point?
     
     // Save results.
 #if DEBUG && 0
@@ -183,10 +166,78 @@ void trsolver::solve (void) {
   logprogressclear (40);
 }
 
+// Macro for the n-th state of the right hand side vector history.
+#define RHS(state) (rhs[(int) getState (rState, (state))])
+
+/* This function predicts a start value for the right hand side vector
+   for the iterative corrector process. */
+int trsolver::predictor (void) {
+  int error = 0;
+  *x = * RHS (1);  // TODO: This is too a simple predictor...
+  saveRHS ();
+  * RHS (0) = *x;
+  return error;
+}
+
+/* The function iterates through the solutions of the integration
+   process until a certain error tolerance has been reached. */
+int trsolver::corrector (void) {
+  int error = 0;
+  error += solve_nonlinear ();
+  return error;
+}
+
+// The function advances one more timestep.
+void trsolver::nextStates (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->nextState ();
+  }
+  * RHS (0) = *x;
+  nextState ();
+}
+
+/* This function tries to adapt the current timestep according to the
+   global truncation error. */
+void trsolver::adjustDelta (void) {
+  nr_double_t save = delta;
+  delta = checkDelta ();
+  if (delta > deltaMax) delta = deltaMax;
+  if (delta < deltaMin) delta = deltaMin;
+
+  if (delta > 0.9 * save) {
+    updateCoefficients (delta, 1);
+    nextStates ();
+    setState (dState, delta);
+    rejected = 0;
+#if DEBUG && 1
+    logprint (LOG_STATUS,
+	      "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
+	      current, delta);
+#endif
+  }
+  else if (save > delta) {
+    updateCoefficients (delta);
+    setState (dState, delta);
+    rejected++;
+#if DEBUG && 1
+    logprint (LOG_STATUS,
+	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
+	      current, delta);
+#endif
+    current -= delta;
+  } else {
+    updateCoefficients (delta, 1);
+    nextStates ();
+    setState (dState, delta);
+    rejected = 0;
+  }
+}
+
 /* Goes through the list of circuit objects and runs its calcDC()
    function. */
-void trsolver::calc (void) {
-  circuit * root = subnet->getRoot ();
+void trsolver::calcDC (trsolver * self) {
+  circuit * root = self->getNet()->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->calcDC ();
   }
@@ -194,11 +245,10 @@ void trsolver::calc (void) {
 
 /* Goes through the list of circuit objects and runs its calcTR()
    function. */
-void trsolver::calc (nr_double_t time) {
-  circuit * root = subnet->getRoot ();
+void trsolver::calcTR (trsolver * self) {
+  circuit * root = self->getNet()->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (!rejected) c->nextState ();
-    c->calcTR (time);
+    c->calcTR (self->current);
   }
 }
 
@@ -213,7 +263,7 @@ void trsolver::initDC (void) {
 
 /* Goes through the list of circuit objects and runs its initTR()
    function. */
-void trsolver::init (void) {
+void trsolver::initTR (void) {
   IMethod = getPropertyString ("IntegrationMethod");
   order = getPropertyInteger ("Order");
   nr_double_t start = getPropertyDouble ("Start");
@@ -232,9 +282,15 @@ void trsolver::init (void) {
   calcCoefficients (IMethod, order, coefficients, delta);
 
   // initialize step history
-  setStates (1);
+  setStates (2);
   initStates ();
   fillState (dState, delta);
+
+  // initalize history of right hand side vectors (solutions)
+  for (int i = 0; i < 8; i++) {
+    rhs[i] = new tmatrix<nr_double_t> (*x);
+    setState (rState, (nr_double_t) i, i);
+  }
 
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
@@ -272,7 +328,7 @@ nr_double_t trsolver::checkDelta (void) {
   abstol = 1e-6;
 
   for (int r = 1; r <= N; r++) {
-    dif = z->get (r, 1) - zprev->get (r, 1);
+    dif = x->get (r, 1) - RHS(0)->get (r, 1);
     rel = abs (x->get (r, 1));
     tol = reltol * rel + abstol;
 
@@ -314,7 +370,5 @@ void trsolver::updateCoefficients (nr_double_t delta, int next) {
       //coefficients[i] *= getState (dState, i) / getState (dState, i - 1);
       coefficients[i] *= c / delta;
     }
-    nextState ();
   }
-  setState (dState, delta);
 }

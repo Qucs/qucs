@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.5 2004-09-14 19:33:09 ela Exp $
+ * $Id: nasolver.h,v 1.6 2004-09-17 11:48:52 ela Exp $
  *
  */
 
@@ -44,19 +44,22 @@ class nasolver : public analysis
   nasolver (char *);
   nasolver (nasolver &);
   ~nasolver ();
-  virtual void calc (void) { }
-  int solve_once (void);
-  int solve_nonlinear (void);
-  int solve_linear (void);
+  int  solve_once (void);
+  int  solve_nonlinear (void);
+  int  solve_linear (void);
   void solve_pre (void);
   void solve_post (void);
   void setDescription (char * n) { desc = n; }
   char * getDescription (void) { return desc; }
   void saveResults (char *, char *, int, vector * f = NULL);
+  typedef void (* calculate_func_t) (nasolver<nr_type_t> *);
+  void setCalculation (calculate_func_t f) { calculate_func = f; }
+  void calculate (void) { if (calculate_func) (*calculate_func) (this); }
 
  protected:
   void savePreviousIteration (void);
-  int countNodes (void);
+  int  countNodes (void);
+  void saveRHS (void);
 
  private:
   void createMatrix (void);
@@ -74,7 +77,7 @@ class nasolver : public analysis
   char * createOP (char *, char *);
   void saveNodeVoltages (void);
   void saveBranchCurrents (void);
-  int checkConvergence (void);
+  int  checkConvergence (void);
   void saveVariable (char *, nr_type_t, vector * f = NULL);
   nr_type_t MatValX (complex, complex *);
   nr_type_t MatValX (complex, nr_double_t *);
@@ -84,6 +87,7 @@ class nasolver : public analysis
   tmatrix<nr_type_t> * x;
   tmatrix<nr_type_t> * xprev;
   tmatrix<nr_type_t> * zprev;
+  int iterations;
 
  private:
   nodelist * nlist;
@@ -94,6 +98,7 @@ class nasolver : public analysis
 
  private:
   char * desc;
+  calculate_func_t calculate_func;
 };
 
 #include "nasolver.cpp"

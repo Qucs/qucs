@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.29 2004-09-12 14:09:19 ela Exp $
+ * $Id: dcsolver.cpp,v 1.30 2004-09-17 11:48:52 ela Exp $
  *
  */
 
@@ -70,10 +70,18 @@ void dcsolver::solve (void) {
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
   init ();
+  setCalculation ((calculate_func_t) &calc);
 
   // start the iterative solver
   solve_pre ();
-  solve_nonlinear ();
+  int error = solve_nonlinear ();
+#if DEBUG
+  if (!error) {
+    logprint (LOG_STATUS,
+	      "NOTIFY: %s: convergence reached after %d iterations\n",
+	      getName (), iterations);
+  }
+#endif /* DEBUG */
 
   // save results and cleanup the solver
   saveResults ("V", "I", saveOPs);
@@ -82,8 +90,8 @@ void dcsolver::solve (void) {
 
 /* Goes through the list of circuit objects and runs its calcDC()
    function. */
-void dcsolver::calc (void) {
-  circuit * root = subnet->getRoot ();
+void dcsolver::calc (dcsolver * self) {
+  circuit * root = self->getNet()->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->calcDC ();
   }

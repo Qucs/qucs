@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.10 2004-09-14 19:33:09 ela Exp $
+ * $Id: capacitor.cpp,v 1.11 2004-09-17 11:48:52 ela Exp $
  *
  */
 
@@ -75,19 +75,12 @@ void capacitor::initTR (void) {
   setStates (2);
 }
 
-void capacitor::calcTR (nr_double_t t) {
+void capacitor::calcTR (nr_double_t) {
   nr_double_t c = getPropertyDouble ("C");
   nr_double_t g, i;
   nr_double_t v = real (getV (1) - getV (2));
 
-  if (t == 0.0) { // initial transient guess
-    fillState (qState, v * c);
-    integrate (qState, c, g, i);
-    fillState (cState, getState (cState));
-  }
-
-  //fprintf (stderr, "vcap = %g\n", v);
-  setState (qState, v * c);
+  setState (qState, c * v);
   integrate (qState, c, g, i);
   setY (1, 1, +g); setY (2, 2, +g);
   setY (1, 2, -g); setY (2, 1, -g);

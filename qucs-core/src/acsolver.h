@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.h,v 1.1 2004-09-06 06:40:07 ela Exp $
+ * $Id: acsolver.h,v 1.2 2004-09-17 11:48:52 ela Exp $
  *
  */
 
@@ -37,12 +37,13 @@ class acsolver : public nasolver<complex>
   acsolver (acsolver &);
   ~acsolver ();
   void solve (void);
-  void calc (nr_double_t);
+  static void calc (acsolver *);
   void init (void);
   void saveAllResults (nr_double_t);
 
  private:
   sweep * swp;
+  nr_double_t freq;
 };
 
 #endif /* __ACSOLVER_H__ */
