@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# qucs/docs/Makefile.am
+# qucs/docs/de/Makefile.am
 #
 # Automake input file.
 #
@@ -22,9 +22,17 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = en es fr de
+HTML = index.html short.html start.html mathfunc.html subcircuit.html \
+  programs.html
+PIC  = qucshaupt.png paste.png wire.png select.png inhalttab.png \
+  unterschaltung.png
 
-dist_man_MANS = qucs.1
+EXTRA_DIST = $(HTML) $(PIC)
+
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/de
+docdata_DATA = $(EXTRA_DIST)
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in
+

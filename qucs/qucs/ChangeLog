@@ -1,3 +1,8 @@
+2005-02-28  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
+
+	* docs/de/index.html: Committed german documentation translatted
+	by Jens Flucke.
+
 2005-02-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* main.cpp (main): Made the Qucs application relocatable
