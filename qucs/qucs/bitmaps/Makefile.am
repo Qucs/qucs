@@ -34,7 +34,7 @@ XPMS = ac_voltage.xpm arrow.xpm capacitor.xpm dc_current.xpm dc_voltage.xpm  \
   pshifter.xpm iprobe.xpm noise_current.xpm noise_volt.xpm msmbend.xpm       \
   msopen.xpm filledellipse.xpm filledrect.xpm ac_current.xpm npn.xpm pnp.xpm \
   nfet.xpm pfet.xpm nmosfet.xpm pmosfet.xpm dmosfet.xpm msgap.xpm npnsub.xpm \
-  pnpsub.xpm
+  pnpsub.xpm dmosfet_sub.xpm nmosfet_sub.xpm pmosfet_sub.xpm
 
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png     \
   deactiv.png bottom.png editpaste.png equation.png fileclose.png            \

@@ -65,7 +65,7 @@ MOSFET_sub::MOSFET_sub()
   Props.append(new Property("Phi", "0.6 V", false,
 	QObject::tr("surface potential")));
   Props.append(new Property("Lambda", "0.0", true,
-	QObject::tr("channel-length modulation parameter")));
+	QObject::tr("channel-length modulation parameter in 1/V")));
   Props.append(new Property("Rd", "0.0 Ohm", false,
 	QObject::tr("drain ohmic resistance")));
   Props.append(new Property("Rs", "0.0 Ohm", false,
