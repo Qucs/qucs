@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.h,v 1.5 2004/10/07 19:49:35 ela Exp $
+ * $Id: transient.h,v 1.6 2004/10/09 19:59:42 ela Exp $
  *
  */
 
@@ -40,8 +40,7 @@ class integrator;
 class transient
 {
  public:
-  friend void calcCorrectorCoeff (int, int, nr_double_t *, nr_double_t *,
-				  int&);
+  friend void calcCorrectorCoeff (int, int, nr_double_t *, nr_double_t *);
   friend void calcPredictorCoeff (int, int, nr_double_t *, nr_double_t *);
   friend void integrateEuler (integrator *, int, nr_double_t, nr_double_t&,
 			      nr_double_t&);

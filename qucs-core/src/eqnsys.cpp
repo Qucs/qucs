@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.16 2004/09/23 14:09:11 ela Exp $
+ * $Id: eqnsys.cpp,v 1.17 2004/10/09 19:59:42 ela Exp $
  *
  */
 
@@ -41,7 +41,6 @@
 #include "complex.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
-#include "constants.h"
 #include "exception.h"
 #include "exceptionstack.h"
 

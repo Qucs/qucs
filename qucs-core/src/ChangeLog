@@ -1,3 +1,11 @@
+2004-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Respond to non-convergence problems by
+	starting damped NR iterations.
+
+	* nasolver.cpp: Started to implement damped Newton-Raphson
+	algorithms (limiting schemes).
+
 2004-10-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolver.cpp: Fixed a bug occurring when ports of a

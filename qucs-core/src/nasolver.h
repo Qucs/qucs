@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.7 2004/10/07 19:49:35 ela Exp $
+ * $Id: nasolver.h,v 1.8 2004/10/09 19:59:42 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __NASOLVER_H__
 
 #include "tmatrix.h"
+#include "eqnsys.h"
 
 #define SAVE_OPS 1 // save operating points
 #define SAVE_ALL 2 // also save subcircuit nodes and operating points
@@ -72,6 +73,8 @@ class nasolver : public analysis
   void createIMatrix (void);
   void createEMatrix (void);
   void runMNA (void);
+  void applyAttenuation (void);
+  void lineSearch (void);
   char * createV (int, char *, int);
   char * createI (int, char *, int);
   char * createOP (char *, char *);
@@ -88,10 +91,13 @@ class nasolver : public analysis
   tmatrix<nr_type_t> * xprev;
   tmatrix<nr_type_t> * zprev;
   int iterations;
+  int attenuation;
+  int linesearch;
 
  private:
   nodelist * nlist;
   tmatrix<nr_type_t> * A;
+  eqnsys<nr_type_t> * eqns;
   nr_double_t reltol;
   nr_double_t abstol;
   nr_double_t vntol;
