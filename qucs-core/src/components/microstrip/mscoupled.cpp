@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.4 2004/08/29 14:51:11 margraf Exp $
+ * $Id: mscoupled.cpp,v 1.5 2004/08/30 20:55:19 ela Exp $
  *
  */
 
@@ -68,7 +68,7 @@ void mscoupled::calcSP (nr_double_t frequency) {
   nr_double_t u, g;
   nr_double_t Zle, ErEffe, Zlo, ErEffo;
   ErEffe = ErEffo = er;
-//  Zle = Zlo = z0;
+  //  Zle = Zlo = z0;
   Zlo = 25.0; Zle = 100.0;   // more realistic values
 
   // normalized width and gap

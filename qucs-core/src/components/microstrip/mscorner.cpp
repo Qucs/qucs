@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.6 2004/08/20 10:45:36 ela Exp $
+ * $Id: mscorner.cpp,v 1.7 2004/08/30 20:55:19 ela Exp $
  *
  */
 
@@ -82,9 +82,9 @@ void mscorner::calcSP (nr_double_t frequency) {
   complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
 
   // check frequency validity
-  if (frequency/h > 1e6) {
+  if (frequency*h > 12e6) {
     logprint (LOG_STATUS, "WARNING: Model for microstrip corner defined for "
-	      "freq/h [mm] <= 1GHz (is %g)\n", frequency/h);
+	      "freq*h <= 12MHz (is %g)\n", frequency*h);
   }
 
   // create S-parameter matrix

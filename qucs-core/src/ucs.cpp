@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.9 2004/08/21 13:29:07 ela Exp $
+ * $Id: ucs.cpp,v 1.10 2004/08/30 20:55:18 ela Exp $
  *
  */
 
@@ -73,6 +73,7 @@ int main (int argc, char ** argv) {
 	"  -v, --version  display version information and exit\n"
 	"  -i FILENAME    use file as input netlist (default stdin)\n"
 	"  -o FILENAME    use file as output dataset (default stdout)\n"
+	"  -b, --bar      enable textual progress bar\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -83,9 +84,8 @@ int main (int argc, char ** argv) {
       outfile = argv[++i];
       file_status = stdout;
     }
-    else if (!strcmp (argv[i], "-b")) {
+    else if (!strcmp (argv[i], "-b") || !strcmp (argv[i], "--bar")) {
       progressbar_enable = 1;
-      i++;
     }
   }
 

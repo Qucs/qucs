@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.c,v 1.5 2004/08/22 11:01:19 ela Exp $
+ * $Id: logging.c,v 1.6 2004/08/30 20:55:18 ela Exp $
  *
  */
 
@@ -64,7 +64,7 @@ void logprogressbar (nr_double_t current, nr_double_t final, int points) {
     for (i = 0; i < (current / final) * points; i++)
       logprint (LOG_STATUS, "*");
     for (; i < points; i++) logprint (LOG_STATUS, " ");
-    logprint (LOG_STATUS, "] %.4g%%      \r", current * 100.0 / final);
+    logprint (LOG_STATUS, "] %.2f%%      \r", current * 100.0 / final);
   }
 }
 

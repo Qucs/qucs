@@ -1,3 +1,8 @@
+2004-08-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* ucs.cpp (main): Fixed bug when using the '-b' command
+	line parameter.  Added help text concerning the option.
+
 2004-08-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp: Including 'ieeefp.h' if necessary.
