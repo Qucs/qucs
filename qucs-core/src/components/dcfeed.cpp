@@ -1,7 +1,7 @@
 /*
  * dcfeed.cpp - DC feed class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcfeed.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: dcfeed.cpp,v 1.3 2004-05-18 15:19:03 ela Exp $
  *
  */
 
@@ -42,4 +42,12 @@ dcfeed::dcfeed () : circuit (2) {
   setS (1, 2, 0.0);
   setS (2, 1, 0.0);
   type = CIR_DCFEED;
+  setVoltageSources (1);
+}
+
+void dcfeed::calcDC (void) {
+  setC (1, 1, +1.0); setC (1, 2, -1.0);
+  setB (1, 1, +1.0); setB (1, 2, -1.0);
+  setE (1, 0.0);
+  setD (1, 1, 0.0);
 }

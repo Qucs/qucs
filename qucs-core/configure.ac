@@ -79,7 +79,8 @@ AC_DEFINE_UNQUOTED(nr_double_t, $double_type,
 unset double_type
 
 # Checks for library functions.
-AC_CHECK_FUNCS([floor pow sqrt strdup strerror])
+AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin tan atan sinh cosh tanh \
+                fabs strdup strerror])
 
 # Definitions at top of <config.h>.
 AH_TOP([

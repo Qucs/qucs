@@ -1,3 +1,15 @@
+2004-05-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcfeed.cpp: Implemented DC model (zero voltage source).
+
+	* dcblock.h (class dcblock):  Implemented DC model as
+	zero current source.
+
+	* capacitor.h (class capacitor): Implemented DC model as
+	zero current source.
+
+	* inductor.cpp: Implemented DC model (zero voltage source).
+
 2004-05-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Implemented influence of finite strip

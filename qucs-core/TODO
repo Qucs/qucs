@@ -23,8 +23,10 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Handle special DC models for dc-block, dc-feed, inductor,
-  capacitor and resistor R=0.
+- What about resistors with R=0?
+- Implement DC model for phaseshifter and bias T.
+	- Handle special DC models for dc-block, dc-feed, inductor and
+	  capacitor.
 - Use LU decomposition for matrix inversion and determinants.
 - Implement sec(), cosec(), sech(), cosech(), si() and sign() functions.
 - Fix dependency in dataset variables when e.g. using max().
