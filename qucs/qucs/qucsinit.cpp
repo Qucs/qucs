@@ -125,8 +125,7 @@ void QucsInit::initActions()
 	tr("Print File\n\nPrints the current document"));
   connect(App->filePrint, SIGNAL(activated()), App, SLOT(slotFilePrint()));
 
-  App->fileQuit = new QAction(tr("Exit"), tr("E&xit"),
-                         QAccel::stringToKey(tr("Ctrl+Q")), App);
+  App->fileQuit = new QAction(tr("Exit"), tr("E&xit"), CTRL+Key_Q, App);
   App->fileQuit->setStatusTip(tr("Quits the application"));
   App->fileQuit->setWhatsThis(tr("Exit\n\nQuits the application"));
   connect(App->fileQuit, SIGNAL(activated()), App, SLOT(slotFileQuit()));
@@ -138,6 +137,33 @@ void QucsInit::initActions()
 	tr("Qucs Settings\n\nSets properties of the application"));
   connect(App->applSettings, SIGNAL(activated()),
 	  App, SLOT(slotApplSettings()));
+
+  App->alignTop = new QAction(tr("Align top"), tr("Align top"),
+				CTRL+Key_T, App);
+  App->alignTop->setStatusTip(tr("Align top selected elements"));
+  App->alignTop->setWhatsThis(
+	tr("Align top\n\nAlign selected elements to their upper edge"));
+  connect(App->alignTop, SIGNAL(activated()), App, SLOT(slotAlignTop()));
+
+  App->alignBottom = new QAction(tr("Align bottom"), tr("Align bottom"),
+					0, App);
+  App->alignBottom->setStatusTip(tr("Align bottom selected elements"));
+  App->alignBottom->setWhatsThis(
+	tr("Align bottom\n\nAlign selected elements to their lower edge"));
+  connect(App->alignBottom, SIGNAL(activated()),
+	  App, SLOT(slotAlignBottom()));
+
+  App->alignLeft = new QAction(tr("Align left"), tr("Align left"), 0, App);
+  App->alignLeft->setStatusTip(tr("Align left selected elements"));
+  App->alignLeft->setWhatsThis(
+	tr("Align left\n\nAlign selected elements to their left edge"));
+  connect(App->alignLeft, SIGNAL(activated()), App, SLOT(slotAlignLeft()));
+
+  App->alignRight = new QAction(tr("Align right"), tr("Align right"), 0, App);
+  App->alignRight->setStatusTip(tr("Align right selected elements"));
+  App->alignRight->setWhatsThis(
+	tr("Align right\n\nAlign selected elements to their right edge"));
+  connect(App->alignRight, SIGNAL(activated()), App, SLOT(slotAlignRight()));
 
   App->editCut = new QAction(tr("Cut"),
 			QIconSet(QImage(BITMAPDIR "editcut.png")),
@@ -464,7 +490,7 @@ void QucsInit::initActions()
 // #########################################################################
 void QucsInit::initMenuBar()
 {
-  fileMenu=new QPopupMenu();  // menuBar entry fileMenu
+  fileMenu = new QPopupMenu();  // menuBar entry fileMenu
   App->fileNew->addTo(fileMenu);
   App->fileOpen->addTo(fileMenu);
   App->fileClose->addTo(fileMenu);
@@ -479,7 +505,13 @@ void QucsInit::initMenuBar()
   fileMenu->insertSeparator();
   App->fileQuit->addTo(fileMenu);
 
-  editMenu=new QPopupMenu();  // menuBar entry editMenu
+  alignMenu = new QPopupMenu();  // submenu for "editMenu"
+  App->alignTop->addTo(alignMenu);
+  App->alignBottom->addTo(alignMenu);
+  App->alignLeft->addTo(alignMenu);
+  App->alignRight->addTo(alignMenu);
+
+  editMenu = new QPopupMenu();  // menuBar entry editMenu
   App->undo->addTo(editMenu);
   App->redo->addTo(editMenu);
   editMenu->insertSeparator();
@@ -494,11 +526,12 @@ void QucsInit::initMenuBar()
   Acts->editMirror->addTo(editMenu);
   Acts->editMirrorY->addTo(editMenu);
   Acts->editActivate->addTo(editMenu);
+  editMenu->insertItem(tr("Align"), alignMenu);
   editMenu->insertSeparator();
   App->intoH->addTo(editMenu);
   App->popH->addTo(editMenu);
 
-  insMenu=new QPopupMenu();  // menuBar entry insMenu
+  insMenu = new QPopupMenu();  // menuBar entry insMenu
   Acts->insWire->addTo(insMenu);
   Acts->insLabel->addTo(insMenu);
   Acts->insEquation->addTo(insMenu);
@@ -506,18 +539,18 @@ void QucsInit::initMenuBar()
   Acts->insPort->addTo(insMenu);
   Acts->setMarker->addTo(insMenu);
 
-  projMenu=new QPopupMenu();  // menuBar entry projMenu
+  projMenu = new QPopupMenu();  // menuBar entry projMenu
   App->projNew->addTo(projMenu);
   App->projOpen->addTo(projMenu);
   App->projDel->addTo(projMenu);
 
-  simMenu=new QPopupMenu();  // menuBar entry simMenu
+  simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);
   App->dpl_sch->addTo(simMenu);
   App->showMsg->addTo(simMenu);
   App->showNet->addTo(simMenu);
 
-  viewMenu=new QPopupMenu();  // menuBar entry viewMenu
+  viewMenu = new QPopupMenu();  // menuBar entry viewMenu
   App->magAll->addTo(viewMenu);
   App->magOne->addTo(viewMenu);
   App->magPlus->addTo(viewMenu);
@@ -527,7 +560,7 @@ void QucsInit::initMenuBar()
   viewToolBar->addTo(viewMenu);
   viewStatusBar->addTo(viewMenu);
 
-  helpMenu=new QPopupMenu();  // menuBar entry helpMenu
+  helpMenu = new QPopupMenu();  // menuBar entry helpMenu
   App->helpIndex->addTo(helpMenu);
   App->helpGetStart->addTo(helpMenu);
   helpMenu->insertSeparator();

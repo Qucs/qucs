@@ -60,7 +60,7 @@ private:
 
   // menus contain the items of their menubar
   QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu;
-  QPopupMenu *helpMenu;
+  QPopupMenu *helpMenu, *alignMenu;
 
   QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;
 

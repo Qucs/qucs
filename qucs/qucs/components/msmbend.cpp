@@ -40,17 +40,15 @@ MSmbend::MSmbend()
   x1 = -30; y1 = -9;
   x2 =   9; y2 = 30;
 
-  tx = x1+4;
-  ty = y2+4;
+  tx = x2+4;
+  ty = y1+4;
   Model = "MMBEND";
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));
-  Props.append(new Property("W1", "1 mm", true,
-		QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "2 mm", true,
-		QObject::tr("width of line 2")));
+  Props.append(new Property("W", "1 mm", true,
+		QObject::tr("width of line")));
 }
 
 MSmbend::~MSmbend()
