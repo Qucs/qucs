@@ -1,3 +1,8 @@
+2004-08-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msopen.cpp: Fixed formulas for open end and
+	added 'Model' parameter.
+
 2004-08-16  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
 	* devices/bjt.cpp: Implemented excess phase parameter of

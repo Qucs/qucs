@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msopen.h,v 1.1 2004-08-07 10:48:47 margraf Exp $
+ * $Id: msopen.h,v 1.2 2004-08-16 21:49:55 ela Exp $
  *
  */
 
@@ -30,7 +30,8 @@ class msopen : public circuit
  public:
   msopen ();
   static nr_double_t calcCend (nr_double_t, nr_double_t, nr_double_t,
-				nr_double_t, nr_double_t, char*, char*);
+			       nr_double_t, nr_double_t, char *, char *,
+			       char *);
   void calcSP (nr_double_t);
   void calcDC (void);
 };

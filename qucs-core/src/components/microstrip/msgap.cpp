@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msgap.cpp,v 1.2 2004-08-15 16:24:36 margraf Exp $
+ * $Id: msgap.cpp,v 1.3 2004-08-16 21:49:54 ela Exp $
  *
  */
 
@@ -71,8 +71,10 @@ void msgap::calcSP (nr_double_t frequency) {
     flip = true;
   }
 
-  nr_double_t C1 = msopen::calcCend (frequency, w1, h, t, er, SModel, DModel);
-  nr_double_t C2 = msopen::calcCend (frequency, w2, h, t, er, SModel, DModel);
+  nr_double_t C1 = msopen::calcCend (frequency, w1, h, t, er,
+				     SModel, DModel, "Kirschning");
+  nr_double_t C2 = msopen::calcCend (frequency, w2, h, t, er,
+				     SModel, DModel, "Kirschning");
 
 
   w2 /= w1;
