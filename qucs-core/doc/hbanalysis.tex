@@ -90,12 +90,17 @@ respectively.
 
 A simulation result is found if the currents through the
 interconnections are the same for the linear and the non-linear
-subcircuit. So, the non-linear equation system that needs to be
-solved writes:
+subcircuit. This principle actually gave the harmonic balance
+simulation its name, because through the interconnections the
+currents of the linear and non-linear subcircuits have to be
+\textit{balanced} at every \textit{harmonic} frequency. (To
+be precise the described method is called KCL-HB, Kirchhoff's
+current law harmonic balance.) So, the non-linear equation
+system that needs to be solved writes:
 \begin{equation}
 (\underline{0})
-  = (\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
-    + j\cdot (\underline{\Omega})\cdot (\underline{Q}) + (\underline{I}_G)
+  = \underbrace{(\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})}_{\text{linear}}
+  + \underbrace{j\cdot (\underline{\Omega})\cdot (\underline{Q}) + (\underline{I}_G)}_{\text{non-linear}}
 \end{equation}
 where matrix $(\underline{\Omega})$ contains the angular frequencies
 on the first main diagonal and zeros anywhere else, $(\underline{0})$
@@ -160,7 +165,6 @@ V_K\\
  \\
 \end{matrix}
 \end{equation}
-
 After having solved it, $Z_{1,n}$...$Z_{N+M,n}$ are obtained
 simply by subtraction of the node voltages:
 \begin{equation}
@@ -214,7 +218,8 @@ is the current of the non-linear circuit partition.
 \subsection{Frequency-Time Domain Transformation}
 
 During every iteration step, the time domain values have to be transformed
-into frequency domain and back. A standard Fourier Transformation is not
+into frequency domain and afterwards back again. A standard Fourier
+Transformation is not
 useful, because with multi-tone excitation many mixing products appear.
 The best way to cope with this problem is to use two-dimensional
 Fast-Fourier-Transformation (2D-FFT).
