@@ -2122,7 +2122,7 @@ Falsches &apos;painting&apos; Zeilenformat!</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabe der Simulationsergebnisse und Arbeitspunkte von Teilschaltungen in den Datensatz</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
@@ -2201,51 +2201,51 @@ Verwendung:  qucsedit [-r] Dateiname
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Pulsstromquelle</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom vor und nach dem Puls</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom während des Pulses</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Anfangszeit des Pulses</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Endzeit des Pulses</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Anstiegszeit des Pulses</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Abfallszeit des Pulses</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Strompulsquelle</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Spannungspulsquelle</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannung vor und nach dem Puls</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannung während des Pulses</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungspulsquelle</translation>
     </message>
 </context>
 <context>
@@ -3976,6 +3976,14 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     <message>
         <source>Elliptic Arc</source>
         <translation>Ellipsenbogen</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation>Schaltkreissymbol bearbeiten</translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation>Schaltplan bearbeiten</translation>
     </message>
 </context>
 <context>

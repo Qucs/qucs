@@ -1806,7 +1806,7 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 {
   if(d->symbolMode) {
     d->symbolMode = false;
-    symEdit->setMenuText("Edit Circuit Symbol");
+    symEdit->setMenuText(tr("Edit Circuit Symbol"));
     switchEditMode(true);
 
     d->Comps  = &(d->DocComps);
@@ -1826,7 +1826,7 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     Acts.select->setOn(true);
 
     d->symbolMode = true;
-    symEdit->setMenuText("Edit Schematic");
+    symEdit->setMenuText(tr("Edit Schematic"));
     switchEditMode(false);
 
     d->Comps  = &(SymbolComps);
