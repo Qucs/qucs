@@ -283,6 +283,7 @@ void ComponentDialog::slotApplyProperty()
   }
 
   prop->setSelected(item, true);
+  prop->ensureItemVisible(item);
   slotSelectProperty(item);   // switch to the next property
 }
 

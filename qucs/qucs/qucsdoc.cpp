@@ -1095,13 +1095,13 @@ bool QucsDoc::MarkerLeftRight(bool left)
   bool acted = false;
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
     for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
-      // test all markers of the diagram
-      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+      // test all markers of the graph
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
 	if(pm->isSelected) {
-	  if(!pm->moveLeftRight(left)) continue;
-	  acted = true;
+	  pm->moveLeftRight(left);
+	  acted = true;  // even though marker is not neccessarily moved
 	}
-      }
+
   if(acted)  setChanged(true, true, 'm');
   return acted;
 }
@@ -1113,13 +1113,13 @@ bool QucsDoc::MarkerUpDown(bool up)
   bool acted = false;
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
     for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
-      // test all markers of the diagram
-      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+      // test all markers of the graph
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
 	if(pm->isSelected) {
-	  if(!pm->moveUpDown(up)) continue;
-	  acted = true;
+	  pm->moveUpDown(up);
+	  acted = true;  // even though marker is not neccessarily moved
 	}
-      }
+
   if(acted)  setChanged(true, true, 'm');
   return acted;
 }
@@ -1929,16 +1929,22 @@ void QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
   Wire *pw;
   Component *pc;
   WireLabel *pl;
-  int bx1, by1, bx2, by2;
+//  int bx1, by1, bx2, by2;
 
   // find bounds of all selected components
   for(pc = Comps.first(); pc != 0; ) {
     if(pc->isSelected) {
-      pc->Bounding(bx1, by1, bx2, by2);
-      if(bx1 < x1) x1 = bx1;
-      if(bx2 > x2) x2 = bx2;
-      if(by1 < y1) y1 = by1;
-      if(by2 > y2) y2 = by2;
+//      pc->Bounding(bx1, by1, bx2, by2);
+//      if(bx1 < x1) x1 = bx1;
+//      if(bx2 > x2) x2 = bx2;
+//      if(by1 < y1) y1 = by1;
+//      if(by2 > y2) y2 = by2;
+
+      // is better for unsymmetrical components
+      if(pc->cx < x1)  x1 = pc->cx;
+      if(pc->cx > x2)  x2 = pc->cx;
+      if(pc->cy < y1)  y1 = pc->cy;
+      if(pc->cy > y2)  y2 = pc->cy;
 
       ElementCache.append(pc);
       deleteComp(pc);

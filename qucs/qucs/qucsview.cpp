@@ -175,36 +175,88 @@ void QucsView::setPainter(QPainter *p, QucsDoc *d)
 }
 
 // -----------------------------------------------------------
-void QucsView::slotMarkerLeft()
+void QucsView::slotCursorLeft()
 {
-  if(Docs.current()->MarkerLeftRight(true)) {
+  QucsDoc *d = Docs.current();
+  if(d->MarkerLeftRight(true)) {
     viewport()->repaint();
     drawn = false;
+    return;   // if marker selected, do not move other elements
   }
+  movingElements.clear();
+  d->copySelectedElements(&movingElements);
+  if(movingElements.isEmpty()) {
+    slotScrollLeft();
+    return;
+  }
+
+  MAx1 = -(d->GridX);  MAy1 = 0;   // move "GridX" to left
+  MovingElements();
+  MAx3 = 1;  // sign for moved elements
+  endElementMoving();
 }
 
-void QucsView::slotMarkerRight()
+void QucsView::slotCursorRight()
 {
-  if(Docs.current()->MarkerLeftRight(false)) {
+  QucsDoc *d = Docs.current();
+  if(d->MarkerLeftRight(false)) {
     viewport()->repaint();
     drawn = false;
+    return;   // if marker selected, do not move other elements
   }
+  movingElements.clear();
+  d->copySelectedElements(&movingElements);
+  if(movingElements.isEmpty()) {
+    slotScrollRight();
+    return;
+  }
+
+  MAx1 = d->GridX;  MAy1 = 0;   // move "GridX" to right
+  MovingElements();
+  MAx3 = 1;  // sign for moved elements
+  endElementMoving();
 }
 
-void QucsView::slotMarkerUp()
+void QucsView::slotCursorUp()
 {
-  if(Docs.current()->MarkerUpDown(true)) {
+  QucsDoc *d = Docs.current();
+  if(d->MarkerUpDown(true)) {
     viewport()->repaint();
     drawn = false;
+    return;   // if marker selected, do not move other elements
   }
+  movingElements.clear();
+  d->copySelectedElements(&movingElements);
+  if(movingElements.isEmpty()) {
+    slotScrollUp();
+    return;
+  }
+
+  MAx1 = 0;  MAy1 = -(d->GridY);   // move "GridY" up
+  MovingElements();
+  MAx3 = 1;  // sign for moved elements
+  endElementMoving();
 }
 
-void QucsView::slotMarkerDown()
+void QucsView::slotCursorDown()
 {
-  if(Docs.current()->MarkerUpDown(false)) {
+  QucsDoc *d = Docs.current();
+  if(d->MarkerUpDown(false)) {
     viewport()->repaint();
     drawn = false;
+    return;   // if marker selected, do not move other elements
   }
+  movingElements.clear();
+  d->copySelectedElements(&movingElements);
+  if(movingElements.isEmpty()) {
+    slotScrollDown();
+    return;
+  }
+
+  MAx1 = 0;  MAy1 = d->GridY;   // move "GridY" down
+  MovingElements();
+  MAx3 = 1;  // sign for moved elements
+  endElementMoving();
 }
 
 // -----------------------------------------------------------
@@ -246,7 +298,7 @@ void QucsView::endElementMoving()
   QucsDoc *d = Docs.current();
 
   for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
-    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
+//    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
     switch(pe->Type) {
       case isWire:
 	if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
@@ -282,6 +334,39 @@ void QucsView::endElementMoving()
   enlargeView(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
   viewport()->repaint();
   drawn = false;
+}
+
+// -----------------------------------------------------------
+// Moves elements in "movingElements" by MAx1/MAy1
+void QucsView::MovingElements()
+{
+  Wire *pw;
+  Element *pe;
+  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+    if(pe->Type == isWire) {
+      pw = (Wire*)pe;   // connecting wires are not moved completely
+
+      if(int(pw->Port1) > 3) {
+	pw->x1 += MAx1;  pw->y1 += MAy1;
+	if(pw->Label) { pw->Label->cx += MAx1;  pw->Label->cy += MAy1; }
+      }
+      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; }
+              if(int(pw->Port1) & 2) { pw->y1 += MAy1; } }
+
+      if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
+      else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
+              if(int(pw->Port2) & 2) pw->y2 += MAy1; }
+
+      if(pw->Label) {      // root of node label must lie on wire
+        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
+        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
+        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
+        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
+      }
+
+    }
+    else pe->setCenter(MAx1, MAy1, true);
+  }
 }
 
 // -----------------------------------------------------------
@@ -521,32 +606,7 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
   MAy1 = MAy2 - MAy1;
   MAx3 += MAx1;  MAy3 += MAy1;   // keep track of the complete movement
 
-  Wire *pw;
-  for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
-    if(pe->Type == isWire) {
-      pw = (Wire*)pe;   // connecting wires are not moved completely
-
-      if(int(pw->Port1) > 3) {
-	pw->x1 += MAx1;  pw->y1 += MAy1;
-	if(pw->Label) { pw->Label->cx += MAx1;  pw->Label->cy += MAy1; }
-      }
-      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if(int(pw->Port1) & 2) { pw->y1 += MAy1; } }
-
-      if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
-              if(int(pw->Port2) & 2) pw->y2 += MAy1; }
-
-      if(pw->Label) {      // root of node label must lie on wire
-        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
-        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
-        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
-        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
-      }
-
-    }
-    else pe->setCenter(MAx1, MAy1, true);
-  }
+  MovingElements();   // moves elements by MAx1/MAy1
 
   // paint afterwards to avoid conflict between wire and label painting
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next())

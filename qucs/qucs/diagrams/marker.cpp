@@ -169,6 +169,10 @@ void Marker::makeInvalid()
 {
   cx = 0;
   cy = 0;
+  if(Diag) if(Diag->Name != "Rect") {
+    cx = Diag->x2 >> 1;
+    cy = Diag->y2 >> 1;
+  }
   Text = QObject::tr("invalid");
 
   QFontMetrics  metrics(QucsSettings.font);

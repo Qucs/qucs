@@ -694,16 +694,18 @@ bool QucsFile::createSubNetlist(QTextStream *stream)
 {
   if(!giveNodeNames(stream)) return false;
 
-  int i;
+  int i, z;
   QStringList sl;
+  QStringList::Iterator it;
   Component *pc;
   // collect all subcircuit ports and sort their node names into "sl"
   for(pc = Comps->first(); pc != 0; pc = Comps->next())
     if(pc->Model == "Port") {
       i  = pc->Props.first()->Value.toInt();
-      for(int z=sl.size(); z<i; z++)
+      for(z=sl.size(); z<i; z++)
 	sl.append(" ");
-      sl.insert(sl.at(i), pc->Ports.getFirst()->Connection->Name);
+      it = sl.at(i-1);
+      (*it) = pc->Ports.getFirst()->Connection->Name;
     }
 
   QString  Type = Doc->DocName;

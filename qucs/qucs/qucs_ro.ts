@@ -869,10 +869,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>microstrip cross</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1850,6 +1846,18 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>excess phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip dispersion model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open end model (Kirschning,Hammerstad)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

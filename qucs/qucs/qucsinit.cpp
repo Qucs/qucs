@@ -232,13 +232,13 @@ void QucsInit::initActions()
 
   // cursor left/right to move marker on a graph
   mainAccel->connectItem(mainAccel->insertItem(Key_Left),
-                         App->view, SLOT(slotMarkerLeft()));
+                         App->view, SLOT(slotCursorLeft()));
   mainAccel->connectItem(mainAccel->insertItem(Key_Right),
-                         App->view, SLOT(slotMarkerRight()));
+                         App->view, SLOT(slotCursorRight()));
   mainAccel->connectItem(mainAccel->insertItem(Key_Up),
-                         App->view, SLOT(slotMarkerUp()));
+                         App->view, SLOT(slotCursorUp()));
   mainAccel->connectItem(mainAccel->insertItem(Key_Down),
-                         App->view, SLOT(slotMarkerDown()));
+                         App->view, SLOT(slotCursorDown()));
   mainAccel->connectItem(mainAccel->insertItem(Key_Tab),
                          App, SLOT(slotNextTab()));
 
