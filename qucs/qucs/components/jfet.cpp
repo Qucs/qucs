@@ -78,6 +78,14 @@ JFET::JFET()
 		QObject::tr("forward-bias junction capacitance coefficient")));
   Props.append(new Property("M", "0.5", false,
 		QObject::tr("gate P-N grading coefficient")));
+  Props.append(new Property("Kf", "0.0", false,
+		QObject::tr("flicker noise coefficient")));
+  Props.append(new Property("Af", "1.0", false,
+		QObject::tr("flicker noise exponent")));
+  Props.append(new Property("Ffe", "1.0", false,
+		QObject::tr("flicker noise frequency exponent")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
 }
 
 JFET::~JFET()
