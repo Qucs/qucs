@@ -140,7 +140,7 @@ void QucsDoc::setName(const QString& _Name)
 
 // ---------------------------------------------------
 // Sets the document to be changed or not to be changed.
-void QucsDoc::setChanged(bool c, bool fillStack)
+void QucsDoc::setChanged(bool c, bool fillStack, char Op)
 {
   if((!DocChanged) && c) {
     Tab->setIconSet(QPixmap(smallsave_xpm));
@@ -166,9 +166,17 @@ void QucsDoc::setChanged(bool c, bool fillStack)
     QString *Curr = UndoStack.current();
     while(Curr != UndoStack.last())
       UndoStack.remove();   // remove "Redo" items
-    UndoStack.append(new QString(File.createUndoString()));
+
+    if(Op == 'm')
+      if(UndoStack.current()->at(0) == 'm')  // only one move marker action
+        UndoStack.remove();
+
+    UndoStack.append(new QString(File.createUndoString(Op)));
 //qDebug("time: %d ms", t.elapsed());
-    while(UndoStack.count() > QucsSettings.maxUndo)   // "while..." because
+    if(!App->undo->isEnabled()) App->undo->setEnabled(true);
+    if(App->redo->isEnabled())  App->undo->setEnabled(false);
+
+    while(UndoStack.count() > QucsSettings.maxUndo)  // "while..." because
       UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
   }
 }
@@ -1084,7 +1092,7 @@ bool QucsDoc::MarkerLeftRight(bool left)
 	acted = true;
       }
     }
-  if(acted)  setChanged(true, true);
+  if(acted)  setChanged(true, true, 'm');
   return acted;
 }
 
@@ -1101,7 +1109,7 @@ bool QucsDoc::MarkerUpDown(bool up)
 	acted = true;
       }
     }
-  if(acted)  setChanged(true, true);
+  if(acted)  setChanged(true, true, 'm');
   return acted;
 }
 
@@ -2506,6 +2514,13 @@ bool QucsDoc::undo()
 
   File.rebuild(UndoStack.prev());
   reloadGraphs();  // load recent simulation data
+
+  QString *ps = UndoStack.current();
+  if(ps != UndoStack.getFirst())  App->undo->setEnabled(true);
+  else  App->undo->setEnabled(false);
+  if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
+  else  App->redo->setEnabled(false);
+
   return true;
 }
 
@@ -2516,5 +2531,12 @@ bool QucsDoc::redo()
 
   File.rebuild(UndoStack.next());
   reloadGraphs();  // load recent simulation data
+
+  QString *ps = UndoStack.current();
+  if(ps != UndoStack.getFirst())  App->undo->setEnabled(true);
+  else  App->undo->setEnabled(false);
+  if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
+  else  App->redo->setEnabled(false);
+
   return true;
 }

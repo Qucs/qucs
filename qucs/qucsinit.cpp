@@ -190,6 +190,8 @@ void QucsInit::initActions()
                          App->view, SLOT(slotMarkerUp()));
   mainAccel->connectItem(mainAccel->insertItem(Key_Down),
                          App->view, SLOT(slotMarkerDown()));
+  mainAccel->connectItem(mainAccel->insertItem(Key_Tab),
+                         App, SLOT(slotNextTab()));
 
   App->undo = new QAction(tr("Undo"), QIconSet(QImage(BITMAPDIR "undo.png")),
 			  tr("&Undo"), CTRL+Key_Z, App);

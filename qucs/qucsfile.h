@@ -40,7 +40,7 @@ public:
 
   QString createClipboardFile();
   bool    pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe);
-  QString createUndoString();
+  QString createUndoString(char);
   bool    rebuild(QString *s);
 
 private:

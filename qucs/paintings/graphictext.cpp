@@ -158,7 +158,7 @@ QString GraphicText::save()
   t.replace('\n', "\\n");
 
   // the 'Text' property has to be the last within the line !
-  QString s = "   <Text "+QString::number(cx)+" "+QString::number(cy)+" "
+  QString s = "<Text "+QString::number(cx)+" "+QString::number(cy)+" "
 		+ QString::number(Font.pointSize())+" "+Color.name()+" "
 		+ QString::number(Angle) + " \""+t+"\">";
   return s;

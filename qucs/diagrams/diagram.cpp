@@ -548,7 +548,7 @@ Diagram* Diagram::newOne()
 // ------------------------------------------------------------
 QString Diagram::save()
 {
-  QString s = "   <"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = "<"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   if(GridOn) s+= "1 ";
   else s += "0 ";

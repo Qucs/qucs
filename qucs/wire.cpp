@@ -141,7 +141,7 @@ void Wire::setName(const QString& Name_, int delta_, int x_, int y_)
 // save it to an ASCII file or to transport it via the clipboard.
 QString Wire::save()
 {
-  QString s  = "   <"+QString::number(x1)+" "+QString::number(y1);
+  QString s  = "<"+QString::number(x1)+" "+QString::number(y1);
           s += " "+QString::number(x2)+" "+QString::number(y2);
   if(Label) {
           s += " \""+Label->Name +"\" ";
