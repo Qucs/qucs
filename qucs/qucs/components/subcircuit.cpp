@@ -229,12 +229,16 @@ int Subcircuit::analyseLine(const QString& Row)
 {
   QPen Pen;
   QString s;
-  int i1, i2, i3, i4;//, i5, i6;
+  int i1, i2, i3, i4, i5, i6;
 
   s    = Row.section(' ',0,0);    // component type
   if(s == "PortSym") {
     if(!getIntegers(Row, &i1, &i2, &i3))  return -1;
-    Ports.append(new Port(i1, i2));
+    for(i6 = Ports.count(); i6<i3; i6++)  // if ports not in numerical order
+      Ports.append(new Port(0, 0));
+
+    Ports.at(i3-1)->x  = i1;
+    Ports.current()->y = i2;
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1 > x2)  x2 = i1;
@@ -260,6 +264,15 @@ int Subcircuit::analyseLine(const QString& Row)
     return 1;
   }
   else if(s == "EArc") {
+    if(!getIntegers(Row, &i1, &i2, &i3, &i4, &i5, &i6))  return -1;
+    if(!getPen(Row, Pen, 7))  return -1;
+    Arcs.append(new Arc(i1, i2, i3, i4, i5, i6, Pen));
+
+    if(i1 < x1)  x1 = i1;  // keep track of component boundings
+    if(i1+i3 > x2)  x2 = i1+i3;
+    if(i2 < y1)  y1 = i2;
+    if(i2+i4 > y2)  y2 = i2+i4;
+    return 1;
   }
   else if(s == "Text") {
   }

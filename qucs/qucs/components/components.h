@@ -76,6 +76,8 @@
 #include "iprobe.h"
 #include "volt_noise.h"
 #include "ampere_noise.h"
+#include "vpulse.h"
+#include "ipulse.h"
 
 
 #endif

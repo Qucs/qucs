@@ -89,10 +89,10 @@ QucsApp::QucsApp()
 
 
   // switch on the 'select' action
-  Acts.select->blockSignals(true);
+//  Acts.select->blockSignals(true);
   Acts.select->setOn(true);
-  Acts.select->blockSignals(false);
-  Acts.slotSelect(true);
+//  Acts.select->blockSignals(false);
+//  Acts.slotSelect(true);
 
   HierarchyHistory.setAutoDelete(true);
 
@@ -1373,10 +1373,10 @@ pInfoFunc lumpedComponents[18] =
    &Isolator::info, &Circulator::info, &Gyrator::info, &Phaseshifter::info,
    &iProbe::info, 0};
 
-pInfoFunc Sources[12] =
+pInfoFunc Sources[14] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
    &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
-   &CCCS::info, &VCVS::info, &CCVS::info, 0};
+   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info, 0};
 
 pInfoFunc TransmissionLines[13] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
@@ -1816,6 +1816,9 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     d->Paints = &(d->DocPaints);
   }
   else {
+    // go into select modus to avoid placing a forbidden element
+    Acts.select->setOn(true);
+
     d->symbolMode = true;
     symEdit->setMenuText("Edit Schematic");
     switchEditMode(false);
@@ -1829,6 +1832,11 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     int countPort = 0;
     for(Component *pc = d->DocComps.first(); pc!=0; pc = d->DocComps.next())
       if(pc->Model == "Port")  countPort++;
+
+    int countSymPort = countPort;
+    Painting *pp;
+    for(pp = d->SymbolPaints.first(); pp!=0; pp = d->SymbolPaints.next())
+      if(pp->Name == "PortSym ")  countSymPort--;
 
     // If a symbol does not yet exist, create one.
     if(d->SymbolPaints.isEmpty()) {
@@ -1849,15 +1857,37 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 	d->SymbolPaints.append(
 	  new GraphicLine(-30, y, 10, 0, QPen(QPen::darkBlue,2)));
 	d->SymbolPaints.append(new PortSymbol(-30,  y, i));
-//    Texts.append(new Text(-25,y-3,QString::number(i)));
 
 	if(i == countPort)  break;
 	i++;
 	d->SymbolPaints.append(
 	  new GraphicLine( 20, y, 10, 0, QPen(QPen::darkBlue,2)));
 	d->SymbolPaints.append(new PortSymbol( 30,  y, i));
-//    Texts.append(new Text( 20,y-3,QString::number(i)));
 	y += 60;
+      }
+    }
+    // If the number of ports is not equal, remove or add some.
+    else if(countSymPort < 0) {  // remove ports
+      QString num;
+      for(int z=-countSymPort; z>0; z--) {
+        num = QString::number(countPort + z);
+        for(pp = d->SymbolPaints.last(); pp!=0; pp = d->SymbolPaints.prev())
+	  if(pp->Name == "PortSym ")
+	    if(((PortSymbol*)pp)->numberStr == num) {
+	      d->SymbolPaints.remove();
+	      break;
+	    }
+      }
+    }
+    else if(countSymPort > 0) {  // add ports
+      int x1, x2, y1, y2;
+      d->sizeOfAll(x1, y1, x2, y2);
+      x1 += 10;
+      y2 += 10;
+      d->setOnGrid(x1, y1);
+      for(int z=countSymPort-1; z>=0; z--) {
+	d->SymbolPaints.append(new PortSymbol(x1, y2, countPort-z));
+	x1 += 20;
       }
     }
   }
@@ -1871,9 +1901,9 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 void QucsApp::slotSymbolEdit()
 {
   QucsDoc *d = view->Docs.current();
+  d->switchPaintMode();   // twist the view coordinates
   changeSchematicSymbolMode(d);
 
-  d->switchPaintMode();   // twist the view coordinates
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
