@@ -30,16 +30,16 @@ public:
   ~GraphicText();
 
   void paintScheme(QPainter*);
-  void getCenter(int& x, int &y);
-  void setCenter(int x, int y, bool relative=false);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
 
   GraphicText* newOne();
-  bool load(const QString& s);
+  bool load(const QString&);
   QString save();
-  void paint(QPainter *p);
-  void MouseMoving(int x, int y, int, int, QPainter *p, bool drawn);
+  void paint(ViewPainter*);
+  void MouseMoving(int, int, int, int, QPainter*, bool);
   bool MousePressing();
-  bool getSelected(int x, int y);
+  bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);
 
   void rotate();

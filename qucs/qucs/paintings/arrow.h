@@ -32,6 +32,7 @@ public:
   Arrow();
   ~Arrow();
 
+  void paint(ViewPainter*);
   void paintScheme(QPainter*);
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
@@ -39,7 +40,6 @@ public:
   Arrow* newOne();
   bool load(const QString&);
   QString save();
-  void paint(QPainter*);
   void MouseMoving(int, int, int, int, QPainter*, bool);
   bool MousePressing();
   bool getSelected(int, int);

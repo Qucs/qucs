@@ -18,6 +18,7 @@
 #ifndef WIRE_H
 #define WIRE_H
 
+#include "viewpainter.h"
 #include "element.h"
 #include "components/component.h"    // because of struct Port
 #include "wirelabel.h"
@@ -36,6 +37,7 @@ public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
   ~Wire();
 
+  void paint(ViewPainter*);
   void paintScheme(QPainter*);
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
@@ -45,7 +47,6 @@ public:
   Node      *Port1, *Port2;
   WireLabel *Label;
 
-  void    paint(QPainter*);
   void    rotate();
   QString save();
   bool    load(const QString&);

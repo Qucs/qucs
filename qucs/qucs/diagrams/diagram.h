@@ -21,6 +21,7 @@
 #include "graph.h"
 #include "marker.h"
 #include "element.h"
+#include "viewpainter.h"
 
 #include <qfile.h>
 
@@ -42,7 +43,7 @@ public:
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(QPainter*);
-  void    paint(QPainter*);
+  void    paint(ViewPainter*);
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    ResizeTouched(int, int);

@@ -24,28 +24,21 @@ HB_Sim::HB_Sim()
   Description = QObject::tr("Harmonic balance simulation");
 
   QString  s = Description;
-  s[s.findRev(" ")] = '\n';    // break line before the word "simulation"
+  int a = s.findRev(" ");
+  s[a] = '\n';    // break line before the word "simulation"
   QFontMetrics  metrics(QucsSettings.largeFont);
   QSize r = metrics.size(0, s);
-  int xb = (r.width()  >> 1) + 6;
-  int yb = (r.height() >> 1) + 4;
+  int xb = r.width()  + 15;
+  int yb = r.height() + 15;
 
-  Lines.append(new Line(-xb,-yb, xb,-yb,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-xb, yb, xb, yb,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-xb,-yb,-xb, yb,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( xb,-yb, xb, yb,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text(0, 0, s.left(a)));
+  Texts.append(new Text(0, 0, s.mid(a+1)));
 
-  Lines.append(new Line(-xb+5, yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-xb,   yb,  -xb+5, yb+5,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( xb,   yb,   xb+4, yb+5,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( xb+4,-yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( xb,  -yb,   xb+4,-yb+5,QPen(QPen::darkBlue,2)));
+  x1 = -10; y1 = -9;
+  x2 = x1+xb+8; y2 = y1+yb+8;
 
-  x1 = -xb-4; y1 = -yb-4;
-  x2 =  xb+8; y2 =  yb+9;
-
-  tx = x1+8;
-  ty = y2+4;
+  tx = 0;
+  ty = y2+1;
   Model = ".HB";
   Name  = "HB";
 

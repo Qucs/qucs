@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "wirelabel.h"
+#include "viewpainter.h"
 #include "wire.h"
 #include "main.h"
 
@@ -39,20 +40,20 @@ WireLabel::~WireLabel()
 // ----------------------------------------------------------------
 void WireLabel::paintScheme(QPainter *p)
 {
-  p->drawRect(x1, y1, x2, -y2);
+  p->drawRect(x1, y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
-    if(cy < y1-(y2>>1))
-      p->drawLine(cx, cy, x1, y1-y2);
-    else
+    if(cy < y1+(y2>>1))
       p->drawLine(cx, cy, x1, y1);
+    else
+      p->drawLine(cx, cy, x1, y1+y2);
   }
   else {
-    if(cy < y1-(y2>>1))
-      p->drawLine(cx, cy, x1+x2, y1-y2);
-    else
+    if(cy < y1+(y2>>1))
       p->drawLine(cx, cy, x1+x2, y1);
+    else
+      p->drawLine(cx, cy, x1+x2, y1+y2);
   }
 }
 
@@ -90,19 +91,21 @@ void WireLabel::setCenter(int x_, int y_, bool relative)
 bool WireLabel::getSelected(int x, int y)
 {
   if(x1 <= x)
-    if(y1 >= y)
+    if(y1 <= y)
       if((x1+x2) >= x)
-        if((y1-y2) <= y)
+        if((y1+y2) >= y)
           return true;
 
   return false;
 }
 
 // ----------------------------------------------------------------
-void WireLabel::paint(QPainter *p)
+void WireLabel::paint(ViewPainter *p)
 {
-  p->setPen(QPen(QPen::darkMagenta,0));
+  p->Painter->setPen(QPen(QPen::black,1));
+  x2 = p->drawText(Name, x1, y1, &y2);
 
+  p->Painter->setPen(QPen(QPen::darkMagenta,0));
   int xpaint=0, ypaint=4;
   switch(Type) {
     case isVWireLabel:  ypaint=0;  xpaint=4;
@@ -114,40 +117,50 @@ void WireLabel::paint(QPainter *p)
     default:            ;
   }
 
-  if(cx < x1+(x2>>1)) {    // where should frame be painted ?
-    if(cy < y1-(y2>>1)) {
-      p->drawLine(x1-2, y1-y2, x1-2, y1);
-      p->drawLine(x1-2, y1-y2, x1+13, y1-y2);
-      p->drawLine(cx+xpaint, cy+ypaint, x1-2, y1-y2);
+  int c, d;
+  int a = int(double(x2) / p->Scale) >> 1;
+  int b = int(double(y2) / p->Scale) >> 1;
+  if(cx < x1+a) {    // where should frame be painted ?
+    if(cy < y1+b) {
+      p->map(x1-3, y1-2, &a, &b);    // low right
+      c = a + (x2>>1);
+      d = b + y2;
+      p->map(cx+xpaint, cy+ypaint, &xpaint, &ypaint);
     }
     else {
-      p->drawLine(x1-2, y1+2, x1-2, y1-y2+2);
-      p->drawLine(x1-2, y1+2, x1+17, y1+2);
-      p->drawLine(cx+xpaint, cy-ypaint, x1-2, y1+2);
+      p->map(x1-3, y1+1, &a, &b);    // up right
+      b += y2;
+      c  = a + (x2>>1);
+      d  = b - y2;
+      p->map(cx+xpaint, cy-ypaint, &xpaint, &ypaint);
     }
   }
   else {
-    if(cy < y1-(y2>>1)) {
-      p->drawLine(x1+x2+2, y1-y2, x1+x2+2, y1);
-      p->drawLine(x1+x2+2, y1-y2, x1+x2-13, y1-y2);
-      p->drawLine(cx-xpaint, cy+ypaint, x1+x2+2, y1-y2);
+    if(cy < y1+b) {
+      p->map(x1+3, y1-2, &a, &b);   // low left
+      a += x2;
+      c  = a - (x2>>1);
+      d  = b + y2;
+      p->map(cx+xpaint, cy-ypaint, &xpaint, &ypaint);
     }
     else {
-      p->drawLine(x1+x2+2, y1+2, x1+x2+2, y1-y2+2);
-      p->drawLine(x1+x2+2, y1+2, x1+x2-13, y1+2);
-      p->drawLine(cx-xpaint, cy-ypaint, x1+x2+2, y1+2);
+      p->map(x1+3, y1+1, &a, &b);    // up left
+      a += x2;
+      b += y2;
+      c  = a - (x2>>1);
+      d  = b - y2;
+      p->map(cx-xpaint, cy-ypaint, &xpaint, &ypaint);
     }
   }
+  p->Painter->drawLine(a, b, c, b);
+  p->Painter->drawLine(a, b, a, d);
+  p->Painter->drawLine(xpaint, ypaint, a, b);
 
-  p->setWorldXForm(false);
-  p->setPen(QPen(QPen::black,1));
-  p->worldMatrix().map(x1, y1, &xpaint, &ypaint);
-  p->drawText(xpaint, ypaint, Name);
-  p->setWorldXForm(true);
-
+  x2 = int(double(x2) / p->Scale);
+  y2 = int(double(y2) / p->Scale);
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(x1-2, y1+2, x2+4, -y2-2);
+    p->Painter->setPen(QPen(QPen::darkGray,3));
+    p->drawRoundRect(x1-2, y1-2, x2+6, y2+5);
   }
 }
 
@@ -157,7 +170,7 @@ void WireLabel::setName(const QString& Name_)
   Name = Name_;
 
   QFontMetrics  metrics(QucsSettings.font);    // get size of text
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Name);
+  QSize r = metrics.size(0, Name);
   x2 = r.width();
   y2 = r.height()-2;    // remember size of text
 }

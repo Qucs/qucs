@@ -48,21 +48,17 @@ Graph::~Graph()
 }
 
 // ---------------------------------------------------------------------
-void Graph::paint(QPainter *p, int x0, int y0)
+void Graph::paint(ViewPainter *p, int x0, int y0)
 {
-  // draw markers
-  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
-    pm->paint(p, x0, y0);
-
   int *pp = Points;
   if(pp == 0) {
-    p->setPen(QPen(QColor(Color)));   // set color for xlabel text
+    p->Painter->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
 
   int n1;
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,Thick+4));
+    p->Painter->setPen(QPen(QPen::darkGray,Thick+4));
     for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
       do {
@@ -79,7 +75,7 @@ void Graph::paint(QPainter *p, int x0, int y0)
     }
 
     pp = Points;
-    p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
+    p->Painter->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
     for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
       do {
@@ -94,12 +90,12 @@ void Graph::paint(QPainter *p, int x0, int y0)
       } while(*pp > -9);
       pp++;
     }
-    p->setPen(QPen(QColor(Color)));   // set color for xlabel text
+    p->Painter->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
 
   // **** not selected ****
-  p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
+  p->Painter->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
   for(n1=countY; n1>0; n1--) {
     p->drawPoint(x0+(*pp), y0-(*(pp+1)));
     do {
@@ -213,38 +209,6 @@ int Graph::getSelected(int x, int y)
   }
 
   return -1;
-
-/* ------------------------------------------------------------
-   This algorithm is not bad, but not very fast.
-   ------------------------------------------------------------
-  double x_double, y_double, phi, sin_phi, cos_phi;
-  int len, xn, yn;
-  int x2, x1 = *(pp++);
-  int y2, y1 = *(pp++);
-
-  for(int n=1; n<count; n++) { // count-1 runs (need 2 points per run)
-    x2 = (*pp) - x1;
-    y2 = (*(pp+1)) - y1;
-
-    x_double = double(x-x1);
-    y_double = double(y-y1);
-
-    phi = -atan2(double(y2), double(x2));
-    sin_phi = sin(phi);
-    cos_phi = cos(phi);
-    len = int( sqrt(double( x2*x2 + y2*y2 )) )+5;
-
-    xn = int(x_double*cos_phi - y_double*sin_phi);
-    yn = int(x_double*sin_phi + y_double*cos_phi);
-
-    // lies x/y onto the graph line ?
-    if(xn > -5) if(xn < len) if(yn > -5) if(yn < 5)  return n;
-
-    x1 = *(pp++);  y1 = *(pp++);
-  }
-
-  return -1;
-  ------------------------------------------------------------ */
 }
 
 // -----------------------------------------------------------------------

@@ -18,6 +18,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include "viewpainter.h"
 #include "element.h"
 #include "node.h"
 
@@ -41,6 +42,7 @@ public:
 
   virtual Component* newOne();
   virtual void recreate();
+  void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
@@ -48,7 +50,6 @@ public:
   void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&);
   bool    getSelected(int, int);
-  void    paint(QPainter*);
   void    rotate();
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis

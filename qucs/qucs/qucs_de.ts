@@ -577,6 +577,10 @@
         <source>magnitude/angle (radian)</source>
         <translation>Betrag/Phase (Bogenmaß)</translation>
     </message>
+    <message>
+        <source>transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessageBox</name>
@@ -2300,6 +2304,10 @@ Verwendung:  qucsedit [-r] Datei
 </source>
         <translation>    -h  Anzeige dieser Hilfe und Ende
 </translation>
+    </message>
+    <message>
+        <source> &lt;invalid&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4041,11 +4049,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation>Schaltkreissymbol bearbeiten</translation>
+        <translation type="unfinished">Schaltkreissymbol bearbeiten</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation>Schaltplan bearbeiten</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This will delete the files

@@ -45,24 +45,24 @@ Arrow::~Arrow()
 }
 
 // --------------------------------------------------------------------------
-void Arrow::paint(QPainter *p)
+void Arrow::paint(ViewPainter *p)
 {
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,Pen.width()+5));
+    p->Painter->setPen(QPen(QPen::darkGray,Pen.width()+5));
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
     p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
-    p->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
+    p->Painter->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
     p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
 
-    p->setPen(QPen(QPen::darkRed,2));
-    p->drawRect(cx-5, cy-5, 10, 10);  // markers for changing the size
-    p->drawRect(cx+x2-5, cy+y2-5, 10, 10);
+    p->Painter->setPen(QPen(QPen::darkRed,2));
+    p->drawResizeRect(cx, cy);  // markers for changing the size
+    p->drawResizeRect(cx+x2, cy+y2);
     return;
   }
-  p->setPen(Pen);
+  p->Painter->setPen(Pen);
   p->drawLine(cx, cy, cx+x2, cy+y2);
   p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
   p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);

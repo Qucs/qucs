@@ -20,6 +20,7 @@
 #endif
 
 #include "smithdiagram.h"
+#include "main.h"
 
 #include <math.h>
 
@@ -159,7 +160,8 @@ if(GridOn) {
     y = int(sqrt(rMAXq-1)/xup*dx2);
     Lines.append(new Line(dx2+x, dx2+y, dx2+x, dx2-y, GridPen));
 
-    Texts.append(new Text(0, 4, QString::number(xup)));
+    Texts.append(
+	new Text(0, QucsSettings.font.pointSize()+4, StringNum(xup)));
   }
 }  // of if(GridOn)
 

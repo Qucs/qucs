@@ -1,3 +1,13 @@
+2004-10-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* homemade function for double to string conversion
+	* class "viewpainter" to draw nice looking fonts
+
+2004-10-04  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new marker property: transparent = yes/no
+	* Font size scaled with zoom -> looks nicer
+
 2004-10-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* dialogs/simmessage.cpp (slotDisplayMsg): Fixed layout

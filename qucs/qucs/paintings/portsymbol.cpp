@@ -45,18 +45,18 @@ PortSymbol::~PortSymbol()
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::paint(QPainter *p)
+void PortSymbol::paint(ViewPainter *p)
 {
-  p->setPen(QPen(QPen::red,1));  // like open node
+  p->Painter->setPen(QPen(QPen::red,1));  // like open node
   p->drawEllipse(cx-4, cy-4, 8, 8);
 
-  p->setPen(QPen(QPen::lightGray,1));
+  p->Painter->setPen(QPen(QPen::lightGray,1));
   p->drawRect(cx-x1, cy-y1, x2, y2);
 
-  p->drawText(cx-x1+5, cy-y1+y2-5, numberStr);
+  p->drawText(numberStr, cx-x1+5, cy-y1+y2-5);
 
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,3));
+    p->Painter->setPen(QPen(QPen::darkGray,3));
     p->drawRoundRect(cx-x1-4, cy-y1-4, x2+8, y2+8);
   }
 }
