@@ -48,12 +48,17 @@ struct Arc {
 
 struct Port {
   Port() {};
-  Port(int _x, int _y)
-       : x(_x), y(_y) {};
+  Port(int _x, int _y) : x(_x), y(_y) {};
   int   x, y;
   Node *Connection;
 };
   
+struct Text {
+  Text(int _x, int _y, const QString& _s) : x(_x), y(_y), s(_s) {};
+  int   x, y;
+  QString s;
+};
+
 struct Property {
   Property(const QString& _Name="", const QString& _Value="", bool _display=false, const QString& Desc="")
            : Name(_Name), Value(_Value), display(_display), Description(Desc) {};
@@ -74,6 +79,7 @@ public:
   void    paint(QPainter *p);
   void    rotate();
   void    mirrorX();  // mirror about X axis
+  void    mirrorY();  // mirror about Y axis
   QString NetList();
   QString save();
   bool    load(const QString& s);
@@ -86,13 +92,28 @@ public:
   QPtrList<Line>     Lines;
   QPtrList<Arc>      Arcs;
   QPtrList<Port>     Ports;
+  QPtrList<Text>     Texts;
   QPtrList<Property> Props;
 
   bool     isActive; // should it be used in simulation or not ?
-//  int      cx, cy;   // center of component schematic
   int      tx, ty;   // upper left corner of text (position)
   QString  Description;
   QString  Sign, Model, Name;
+};
+
+
+class SParamFile : public Component  {
+public:
+	SParamFile(int No);
+	virtual ~SParamFile();
+  virtual SParamFile* newOne();
+};
+
+class Equation : public Component  {
+public:
+	Equation();
+	virtual ~Equation();
+  virtual Equation* newOne();
 };
 
 // ####################################################################################

@@ -43,12 +43,18 @@ public:
 
   void paint(QPainter *p);
 
-  Node*      insertWireNode1(Wire *e);
-  Node*      insertWireNode2(Wire *e);
-  int        insertWire(Wire *w);
+  int      insertWireNode1(Wire *w);
+  bool     connectHWires1(Wire *w);
+  bool     connectVWires1(Wire *w);
+  int      insertWireNode2(Wire *w);
+  bool     connectHWires2(Wire *w);
+  bool     connectVWires2(Wire *w);
+  int      insertWire(Wire *w);
+
   Component* selectedComponent(int x, int y);
   Diagram*   selectedDiagram(int x, int y);
   Wire*      selectedWire(int x, int y);
+  void       selectWireLine(Element *pe, Node *pn, bool ctrl);
   Element*   selectElement(int x, int y, bool flag);
   void       deselectElements(Element *e);
   void  NewMovingWires(QPtrList<Element> *p, Node *pn);
@@ -60,8 +66,12 @@ public:
   Node* insertNode(int x, int y, Element *e);
   void  insertRawComponent(Component *c);
   void  insertComponent(Component *c);
+  void  setCompPorts(Component *pc);
+  bool  copyCompsWires(int& x1, int& y1, int& x2, int& y2);
   bool  rotateComponents();
   bool  mirrorXComponents();
+  bool  mirrorYComponents();
+  bool  oneTwoWires(Node *n);
   void  deleteComp(Component *c);
   void  deleteWire(Wire *w);
   bool  deleteElements();
@@ -99,6 +109,7 @@ public:
   bool GridOn;
 
   QPtrList<Element> *Cache;
+  QPtrList<Element> ElementCache;
 };
 
 
