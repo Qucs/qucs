@@ -1060,49 +1060,51 @@ void QucsView::MPressActivate(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressMirrorX(QMouseEvent *Event)
 {
-  int x = int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1;
-  int y = int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1;
+  QucsDoc *d = Docs.current();
+  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
 
   // no use in mirroring wires or diagrams
-  Component *c = Docs.current()->selectedComponent(x, y);
+  Component *c = d->selectedComponent(x, y);
   if(c) {
-    if(c->Ports.count() < 1) return;  // do not mirror components without ports
+    if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorX();
-    Docs.current()->setCompPorts(c);
+    d->setCompPorts(c);
   }
   else {
-    Painting *p = Docs.current()->selectedPainting(x, y);
+    Painting *p = d->selectedPainting(x, y);
     if(p == 0) return;
     p->mirrorX();
   }
 
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true, true);
+  d->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
 void QucsView::MPressMirrorY(QMouseEvent *Event)
 {
-  int x = int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1;
-  int y = int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1;
+  QucsDoc *d = Docs.current();
+  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
 
   // no use in mirroring wires or diagrams
-  Component *c = Docs.current()->selectedComponent(x, y);
+  Component *c = d->selectedComponent(x, y);
   if(c) {
-    if(c->Ports.count() < 1) return;  // do not mirror components without ports
+    if(c->Ports.count() < 1) return;  // only mirror components with ports
     c->mirrorY();
-    Docs.current()->setCompPorts(c);
+    d->setCompPorts(c);
   }
   else {
-    Painting *p = Docs.current()->selectedPainting(x, y);
+    Painting *p = d->selectedPainting(x, y);
     if(p == 0) return;
     p->mirrorY();
   }
 
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true, true);
+  d->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -1553,7 +1555,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
       pe->isSelected = false;
       switch(pe->Type) {
 	case isWire:
-	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
+	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2)  break;
 	  d->insertWire((Wire*)pe);
 	  if (d->Wires->containsRef ((Wire*)pe))
 	    enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
@@ -1568,6 +1570,10 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 	  d->Paints->append((Painting*)pe);
 	  ((Painting*)pe)->Bounding(x1,y1,x2,y2);
 	  enlargeView(x1, y1, x2, y2);
+	  break;
+	case isMovingLabel:
+	  pe->Type = isNodeLabel;
+	  d->placeNodeLabel((WireLabel*)pe);
 	  break;
 	default:
 	  d->insertComponent((Component*)pe);

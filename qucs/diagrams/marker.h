@@ -48,7 +48,7 @@ public:
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();
   bool    load(const QString& Line);
-  int     getSelected(int, int);
+  bool    getSelected(int, int);
   Marker* sameNewOne(Graph*);
 
   Diagram *Diag;     // the corresponding diagram

@@ -115,6 +115,7 @@ public slots:
     void slotCMenuOpen();
     void slotCMenuRename();
     void slotCMenuDelete();
+    void slotCMenuDelGroup();
 
 // ########################################################################
 //  private slots:

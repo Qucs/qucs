@@ -501,7 +501,7 @@ int QucsDoc::insertWireNode1(Wire *w)
   }
 
 
-  
+
   Wire *pw;
   // check if the new node lies upon an existing wire
   for(Wire *ptr2 = Wires->first(); ptr2 != 0; ptr2 = Wires->next()) {
@@ -1063,6 +1063,17 @@ Component* QucsDoc::searchSelSubcircuit()
 }
 
 // ---------------------------------------------------
+/*Element* QucsDoc::selectedElement(int x, int y, QPtrList<Element> *pe)
+{
+  // test all elements
+  for(Element *p = pe->first(); p != 0; p = pe->next())
+    if(p->getSelected(x, y))
+      return p;
+
+  return 0;
+}*/
+
+// ---------------------------------------------------
 Component* QucsDoc::selectedComponent(int x, int y)
 {
   // test all components
@@ -1072,18 +1083,18 @@ Component* QucsDoc::selectedComponent(int x, int y)
 
   return 0;
 }
-
+/*
 // ---------------------------------------------------
 Diagram* QucsDoc::selectedDiagram(int x, int y)
 {
   // test all diagrams
-  for(Diagram *ptr1 = Diags->first(); ptr1 != 0; ptr1 = Diags->next())
-    if(ptr1->getSelected(x, y))
-      return ptr1;
+  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
+    if(pd->getSelected(x, y))
+      return pd;
 
   return 0;
 }
-
+*/
 // ---------------------------------------------------
 Node* QucsDoc::selectedNode(int x, int y)
 {
@@ -1269,7 +1280,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
       // test markers of graphs
       for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
-        if(pm->getSelected(x-pd->cx, pd->cy-y) > 0) {
+        if(pm->getSelected(x-pd->cx, pd->cy-y)) {
           if(flag) { pm->isSelected ^= flag; return pm; }
           if(pe_sel) {
 	    pe_sel->isSelected = false;
@@ -1840,6 +1851,32 @@ void QucsDoc::oneLabel(Node *n1)
 }
 
 // ---------------------------------------------------
+int QucsDoc::placeNodeLabel(WireLabel *pl)
+{
+  Node *pn;
+  int x = pl->cx;
+  int y = pl->cy;
+
+  // check if new node lies upon an existing node
+  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) // check every node
+    if(pn->cx == x) if(pn->cy == y) break;
+
+  if(!pn)  return -1;
+
+  Element *pe = getWireLabel(pn);
+  if(pe) {    // name found ?
+    if(pe->Type == isComponent)  return -2;  // ground potential
+    if(pe->Type == isWire)
+      ((Wire*)pe)->setName("");
+    else if(pe->Type == isNode)
+      ((Node*)pe)->setName("");
+  }
+
+  pn->Label = pl;   // insert node label
+  return 0;
+}
+
+// ---------------------------------------------------
 // Test, if wire line is already labeled and returns a pointer to the
 // labeled element.
 Element* QucsDoc::getWireLabel(Node *pn_)
@@ -1880,7 +1917,7 @@ Element* QucsDoc::getWireLabel(Node *pn_)
           Cons.findRef(pn);
         }
       }
-  return 0;
+  return 0;   // no wire label found
 }
 
 // ---------------------------------------------------

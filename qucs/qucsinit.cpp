@@ -110,7 +110,7 @@ void QucsInit::initActions()
   connect(App->fileClose, SIGNAL(activated()), App, SLOT(slotFileClose()));
 
   App->symEdit = new QAction(tr("Edit Circuit Symbol"),
-				tr("Edit Circuit Symbol"), 0, App);
+				tr("Edit Circuit Symbol"), CTRL+Key_U, App);
   App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
   App->symEdit->setWhatsThis(
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
@@ -480,7 +480,7 @@ void QucsInit::initActions()
 	Acts, SLOT(slotSetMarker(bool)));
 
   App->showMsg = new QAction(tr("Show Last Messages"),
-                        tr("Show Last Messages"), 0, App);
+                        tr("Show Last Messages"), Key_F5, App);
   App->showMsg->setStatusTip(tr("Shows last simulation messages"));
   App->showMsg->setWhatsThis(
     tr("Show Last Messages\n\nShows the messages of the last simulation"));

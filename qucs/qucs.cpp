@@ -87,13 +87,7 @@ QucsApp::QucsApp()
   Printer.setOrientation(QPrinter::Landscape);
   Printer.setColorMode(QPrinter::Color);
 
-
-  // switch on the 'select' action
-//  Acts.select->blockSignals(true);
-  Acts.select->setOn(true);
-//  Acts.select->blockSignals(false);
-//  Acts.slotSelect(true);
-
+  Acts.select->setOn(true);  // switch on the 'select' action
   HierarchyHistory.setAutoDelete(true);
 
   // creates a document called "untitled"
@@ -211,6 +205,8 @@ void QucsApp::initCursorMenu()
   ContentMenu->insertItem(tr("Open"),   this, SLOT(slotCMenuOpen()));
   ContentMenu->insertItem(tr("Rename"), this, SLOT(slotCMenuRename()));
   ContentMenu->insertItem(tr("Delete"), this, SLOT(slotCMenuDelete()));
+  ContentMenu->insertItem(tr("Delete Group"),
+			this, SLOT(slotCMenuDelGroup()));
 
   connect(Content,
 	  SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)),
@@ -274,40 +270,136 @@ void QucsApp::slotCMenuRename()
 }
 
 // ----------------------------------------------------------
-// for menu that appears if right mouse button is pressed on a file in the "Content" ListView.
+// for menu that appears if right mouse button is pressed on a file in
+// the "Content" ListView.
 void QucsApp::slotCMenuDelete()
 {
   QListViewItem *item = Content->selectedItem();
   if(item == 0) return;
+  QString FileName = QucsWorkDir.filePath(item->text(0));
 
   QucsDoc *dc = view->Docs.current();
   // search, if file is open
   for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {
-    if(d->DocName == QucsWorkDir.filePath(item->text(0))) {
+    if(d->DocName == FileName) {
       QMessageBox::critical(this, tr("Error"),
                    tr("Cannot delete an open file!"));
       view->Docs.findRef(dc);
       return;
     }
   }
-  view->Docs.findRef(dc);
+  view->Docs.findRef(dc);  // back to the real current document
 
   int n = QMessageBox::warning(this, tr("Warning"),
                  tr("This will delete the file permanently! Continue ?"),
                  tr("No"), tr("Yes"));
   if(n != 1) return;
 
-  if(!QFile::remove(QucsWorkDir.filePath(item->text(0)))) {
+  if(!QFile::remove(FileName)) {
     QMessageBox::critical(this, tr("Error"),
 		tr("Cannot delete schematic: ")+item->text(0));
     return;
   }
-  if(ConSchematics == item->parent())
-    ConSchematics->takeItem(item);
-  else if(ConDisplays == item->parent())
-    ConDisplays->takeItem(item);
-  else
-    ConDatasets->takeItem(item);
+//  if(ConSchematics == item->parent())
+//    ConSchematics->takeItem(item);
+//  else if(ConDisplays == item->parent())
+//    ConDisplays->takeItem(item);
+//  else
+//    ConDatasets->takeItem(item);
+
+  item->parent()->takeItem(item);
+  delete item;
+}
+
+// ----------------------------------------------------------
+// for menu that appears if right mouse button is pressed on a file in
+// the "Content" ListView
+// Deletes all files with that name (with suffix "sch", "dpl", "dat").
+void QucsApp::slotCMenuDelGroup()
+{
+  QListViewItem *item = Content->selectedItem();
+  if(item == 0) return;
+  QString s = item->text(0);
+  s = s.left(s.length()-4);  // cut off suffix from file name
+
+  QString NameSCH = QucsWorkDir.filePath(s+".sch");
+  QString NameDPL = QucsWorkDir.filePath(s+".dpl");
+  QString NameDAT = QucsWorkDir.filePath(s+".dat");
+
+  QucsDoc *dc = view->Docs.current();
+  // search, if files are open
+  for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {
+    if(d->DocName == NameSCH) {
+      QMessageBox::critical(this, tr("Error"),
+                   tr("Cannot delete the open file: ")+NameSCH);
+      view->Docs.findRef(dc);
+      return;
+    }
+    if(d->DocName == NameDPL) {
+      QMessageBox::critical(this, tr("Error"),
+                   tr("Cannot delete the open file: ")+NameDPL);
+      view->Docs.findRef(dc);
+      return;
+    }
+  }
+  view->Docs.findRef(dc);  // back to the real current document
+
+  bool SCH_exists = QFile::exists(NameSCH);
+  bool DPL_exists = QFile::exists(NameDPL);
+  bool DAT_exists = QFile::exists(NameDAT);
+
+  QString Str;
+  if(SCH_exists)  Str += s+".sch\n";
+  if(DPL_exists)  Str += s+".dpl\n";
+  if(DAT_exists)  Str += s+".dat\n";
+
+  int n = QMessageBox::warning(this, tr("Warning"),
+	  tr("This will delete the files\n"+Str+"permanently! Continue ?"),
+	  tr("No"), tr("Yes"));
+  if(n != 1) return;
+
+  // remove files .................
+  if(SCH_exists)
+    if(!QFile::remove(NameSCH)) {
+      QMessageBox::critical(this, tr("Error"),
+		tr("Cannot delete schematic: ")+s+".sch");
+      return;
+    }
+  if(DPL_exists)
+    if(!QFile::remove(NameDPL)) {
+      QMessageBox::critical(this, tr("Error"),
+		tr("Cannot delete schematic: ")+s+".dpl");
+      return;
+    }
+  if(DAT_exists)
+    if(!QFile::remove(NameDAT)) {
+      QMessageBox::critical(this, tr("Error"),
+		tr("Cannot delete schematic: ")+s+".dat");
+      return;
+    }
+
+  // remove items from listview ........
+  if(SCH_exists) {
+    item = Content->findItem(s+".sch", 0);
+    if(item) {
+      item->parent()->takeItem(item);
+      delete item;
+    }
+  }
+  if(DPL_exists) {
+    item = Content->findItem(s+".dpl", 0);
+    if(item) {
+      item->parent()->takeItem(item);
+      delete item;
+    }
+  }
+  if(DAT_exists) {
+    item = Content->findItem(s+".dat", 0);
+    if(item) {
+      item->parent()->takeItem(item);
+      delete item;
+    }
+  }
 }
 
 // ----------------------------------------------------------
@@ -744,12 +836,19 @@ void QucsApp::slotFileClose()
     }
   }
 
+  bool oldMode = view->Docs.current()->symbolMode;
   view->Docs.remove();
 
   if(view->Docs.isEmpty())  // if no document left, create an untitled
     view->Docs.append(new QucsDoc(this, ""));
 
   nextDocument(true);
+
+  QucsDoc *d = view->Docs.current();
+  if(d->symbolMode != oldMode) {  // which mode: schematic or symbol editor ?
+    d->symbolMode = oldMode;  // because it's changed by following function
+    changeSchematicSymbolMode(d);
+  }
 
   statusBar()->message(tr("Ready."));
 }
@@ -1836,10 +1935,10 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     d->Paints = &(d->SymbolPaints);
 
     // If the number of ports is not equal, remove or add some.
-    int countPort = d->adjustPortNumbers();
+    unsigned int countPort = d->adjustPortNumbers();
 
     // If a symbol does not yet exist, create one.
-    if(d->SymbolPaints.isEmpty()) {
+    if(d->SymbolPaints.count() == countPort) {
       int h = 30*((countPort-1)/2) + 10;
       d->SymbolPaints.append(
 	new GraphicLine(-20, -h, 40,  0, QPen(QPen::darkBlue,2)));
@@ -1851,7 +1950,7 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 	new GraphicLine(-20, -h,  0,2*h, QPen(QPen::darkBlue,2)));
 //  Texts.append(new Text( -7,  0,"sub"));
 
-      int i=0, y = 10-h;
+      unsigned int i=0, y = 10-h;
       while(i<countPort) {
 	i++;
 	d->SymbolPaints.append(

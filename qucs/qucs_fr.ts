@@ -2476,11 +2476,11 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Circuit Symbol</source>
+        <source>Delete Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Schematic</source>
+        <source>Cannot delete the open file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
