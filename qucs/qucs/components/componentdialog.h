@@ -42,6 +42,7 @@ public:
 
 private slots:
   void slotButtOK();
+  void slotButtCancel();
   void slotSelectProperty(QListViewItem *item);
   void slotApplyInput();
   void slotApplyState(int State);
@@ -62,7 +63,7 @@ private:
   QPushButton *BrowseButt, *ButtAdd, *ButtRem;
   QCheckBox   *disp;
   Component   *Comp;
-  bool        changed;
+  bool        changed, transfered;
 };
 
 #endif

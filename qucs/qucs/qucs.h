@@ -22,7 +22,6 @@
 #include <qapplication.h>
 #include <qmainwindow.h>
 #include <qaction.h>
-#include <qaccel.h>
 #include <qmenubar.h>
 #include <qpopupmenu.h>
 #include <qtoolbar.h>
@@ -45,41 +44,37 @@
 
 
 // application specific includes
+#include "qucsinit.h"
 #include "qucsview.h"
 #include "dialogs/simmessage.h"
 
+
 /**
-  * This Class is the base class for your application. It sets up the main
-  * window and providing a menubar, toolbar
-  * and statusbar. For the main view, an instance of class QucsView is
-  * created which creates your view.
+  * This Class is the base class for the application. It sets up the main
+  * window and providing a menubar, toolbar and statusbar. For the main view,
+  * an instance of class QucsView is created which creates the view.
   */
 class QucsApp : public QMainWindow
 {
   Q_OBJECT
-  
-  public:
+public:
     QucsApp();
     ~QucsApp();
 
     bool loadSettings();   // loads the settings file and restores the settings
     void saveSettings();   // saves the settings in the settings file
 
-    void initActions();    // initializes all QActions of the application
-    void initMenuBar();    // creates the menu_bar and inserts the menuitems
-    void initToolBar();    // creates the toolbars
-    void initStatusBar();  // setup the statusbar
     void initView();       // setup the mainview
     void initCursorMenu();
 
     bool closeAllFiles();
     int  testFile(const QString& DocName);
 
-    
-  protected:
+
+protected:
     void closeEvent(QCloseEvent* Event);
-    
-  public slots:
+
+public slots:
     void slotFileNew();     // generate a new schematic in the view TabBar
     void slotFileOpen();    // open a document
     void slotFileSave();    // save a document
@@ -96,14 +91,9 @@ class QucsApp : public QMainWindow
     void slotEditRotate(bool on);  // rotate the selected components
     void slotEditMirrorX(bool on); // mirror the selected components about the X axis
     void slotEditMirrorY(bool on); // mirror the selected components about the Y axis
-    
-    void slotViewToolBar(bool toggle);    // toggle the toolbar
-    void slotViewStatusBar(bool toggle);  // toggle the statusbar
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
     void slotGettingStarted();  // shows a HTML docu: Getting started
-    void slotHelpAbout();       // shows an about dialog
-    void slotHelpAboutQt();     // shows the standard about dialog for Qt
 
     void slotIntoHierarchy();
     void slotPopHierarchy();
@@ -111,7 +101,7 @@ class QucsApp : public QMainWindow
     void slotShowAll();
     void slotShowOne();
     void slotZoomIn();  // Zoom in by 2
-    void slotZoomOut(); // Zoom out by 2    
+    void slotZoomOut(); // Zoom out by 2
     void slotInsertEquation(bool on);
     void slotInsertGround(bool on);
     void slotInsertPort(bool on);
@@ -123,7 +113,7 @@ class QucsApp : public QMainWindow
     void slotCMenuRename();
     void slotCMenuDelete();
 
-// ##########################################################################################
+// ########################################################################
 //  private slots:
     void slotMenuOpenProject();
     void slotOpenProject(QListBoxItem *item);
@@ -148,35 +138,28 @@ class QucsApp : public QMainWindow
     void slotInsertLabel(bool on);
     void slotSetMarker(bool on);
 
-//    void slotActivateCopy(bool on);
-
-  private:
-
+public:
     QucsView   *view;   // the working area with schematics, data displays etc.
-    QPrinter   Printer; // printer global in order to remember the user settings
 
-
-    // menus contain the items of their menubar
-    QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu, *helpMenu;
-    QPopupMenu *ContentMenu;    // menu appearing by right mouse button on content listview
-    
-    QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;    // the toolbars
-
-    /** actions for the application initialized in initActions() and used to en/disable them
-      * according to your needs during the program */
-    QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs, *fileSaveAll, *fileClose;
-    QAction *fileSettings, *filePrint, *fileQuit;
+    QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs;
+    QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
     QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
     QAction *projNew, *projOpen, *projDel;
-    QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magOne, *magPlus, *magMinus;
-    QAction *select, *editRotate, *editMirror, *editMirrorY, *intoH, *popH, *editActivate, *wire;
-    QAction *editDelete, *simulate, *dpl_sch, *selectAll, *showMsg, *showNet, *setMarker;
-    QAction *viewToolBar, *viewStatusBar;
-    QAction *helpAboutApp, *helpAboutQt, *helpIndex, *helpGetStart;
+    QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magOne;
+    QAction *magPlus, *magMinus, *select, *editRotate, *editMirror;
+    QAction *editMirrorY, *intoH, *popH, *editActivate, *wire, *editDelete;
+    QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet, *setMarker;
+    QAction *helpIndex, *helpGetStart;
 
     QAction *activeAction;    // pointer to the action selected by the user
 
-    QAccel *mainAccel;     // to set more than one key to one action
+private:
+    QPrinter   Printer; // printer is global (to remember the user settings)
+    QucsInit   Init;    // initializes toolbars, menubar, actions ...
+
+    // menu appearing by right mouse button click on content listview
+    QPopupMenu *ContentMenu;
+
 // ********* Widgets on the main area **********************************
     QTabWidget    *TabView;
     QTabBar       *WorkView;
@@ -188,14 +171,16 @@ class QucsApp : public QMainWindow
     QComboBox     *CompChoose;
     QIconView     *CompComps;
 
-    
 // ********** Properties ************************************************
     QString       ProjName;   // name of the project, that is open
     QPtrList<QString> HierarchyHistory; // keeps track of the "go into subcircuit"
 
-    
+    QString       QucsFileFilter;
+
+
 // ********** Methods ***************************************************
     bool saveCurrentFile();
+    bool saveAs();
     void readProjects();
     void OpenProject(const QString& Path, const QString& Name);
     bool DeleteProject(const QString& Path, const QString& Name);

@@ -47,8 +47,7 @@ public:
   bool    load(const QString& Line);
   int     getSelected(int x, int y);
 
-  int  count, *Points;
-//  QPtrList<cPoint> cPoints;
+  int    *Points, count;
   double *cPointsX, *cPointsY;
   QString Line, IndepVar;
   QColor  Color;

@@ -47,9 +47,14 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   h2->setSpacing(5);
   v->addWidget(h2);
 
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h2);     // first => activated by pressing RETURN
+  QHBox *h3 = new QHBox(this);
+  h2->setSpacing(5);
+  v->addWidget(h3);
+
+  // first => activated by pressing RETURN
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
   connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h2);
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   new QLabel(tr("Text color: "), h1);
@@ -57,13 +62,23 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 
-  new QLabel(tr("          Text size: "), h1);
-  Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
-  QValidator *Validator = new QRegExpValidator(Expr, this);
+  QWidget *place1 = new QWidget(h1); // stretchable placeholder
+  h1->setStretchFactor(place1,5);
+
+  new QLabel(tr("Text size: "), h1);
   TextSize = new QLineEdit(h1);
-  TextSize->setValidator(Validator);
+  TextSize->setValidator(new QIntValidator(1, 50, this));
   TextSize->setMaximumWidth(35);
   TextSize->setText("12");
+
+  QWidget *place2 = new QWidget(h2); // stretchable placeholder
+  h2->setStretchFactor(place2,5);
+
+  new QLabel(tr("Rotation angle: "), h2);
+  Angle = new QLineEdit(h2);
+  Angle->setValidator(new QIntValidator(0, 359, this));
+  Angle->setMaximumWidth(35);
+  Angle->setText("0");
 
   text->setFocus();
 }

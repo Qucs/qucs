@@ -2,9 +2,18 @@
 
 	* qucs_it.ts: Applied changes made by Gorgio.  Thanks.
 
+2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* strongly improved save as function
+	* outsourced the initialization of QucsApp into QucsInit
+	* polar diagrams correctly fit negative values
+	* rectangle diagrams can show data containing of one point
+	* fixed bug in component dialog (add property)
+	* improved marker handling
+
 2004-04-26  Stefan Jahn  <stefan@lkcc.org>
 
-	* docs/en/Makefile.am (PIC): Added 'mathfunc.html' and 
+	* docs/en/Makefile.am (PIC): Added 'mathfunc.html' and
 	'contab.png' files to be installable files.
 
 2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>

@@ -20,10 +20,10 @@
 
 #include <qdialog.h>
 
-#include <qregexp.h>
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qtextedit.h>
+#include <qvalidator.h>
 
 
 /**
@@ -32,7 +32,7 @@
 
 class GraphicTextDialog : public QDialog  {
 Q_OBJECT
-public: 
+public:
   GraphicTextDialog(QWidget *parent=0, const char *name=0);
   ~GraphicTextDialog();
 
@@ -40,8 +40,7 @@ private slots:
   void slotSetColor();
 
 public:
-  QRegExp     Expr;
-  QLineEdit   *TextSize;
+  QLineEdit   *TextSize, *Angle;
   QPushButton *ColorButt;
   QTextEdit   *text;
 };

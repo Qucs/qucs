@@ -84,7 +84,7 @@ if(GridOn) {
     y  = int(im/xup*x2);
 
     if(xup <= 1.0) {       // Smith chart with |r|=1
-      beta  = int(16*180*atan2(n_sin-im,n_cos-1)/M_PI);
+      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PIl);
       if(beta<0) beta += 16*360;
       theta = 16*270-beta;
     }
@@ -103,14 +103,14 @@ if(GridOn) {
         root  = (real1+1)*(real1+1) + im*im;
         n_cos = (real1*real1 + im*im - 1) / root;
         n_sin = 2*im / root;
-        beta  = int(16*180*atan2(n_sin-1/im,n_cos-1)/M_PI);
+        beta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PIl);
         if(beta<0) beta += 16*360;
 
 
         root  = (real2+1)*(real2+1) + im*im;
         n_cos = (real2*real2 + im*im - 1) / root;
         n_sin = 2*im / root;
-        theta  = int(16*180*atan2(n_sin-1/im,n_cos-1)/M_PI);
+        theta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PIl);
         if(theta<0) theta += 16*360;
         theta = theta - beta;   // arc length
         if(theta < 0) theta = 16*360+theta;
@@ -138,7 +138,7 @@ if(GridOn) {
       if(im>=1)
         Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, 0, 16*360, QPen(QPen::lightGray,1)));
       else {
-        beta  = int(16*180/M_PI*acos(im));
+        beta  = int(16.0*180.0/M_PIl*acos(im));
         theta = 2*(16*180-beta);
         Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, beta, theta, QPen(QPen::lightGray,1)));
       }

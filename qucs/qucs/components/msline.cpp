@@ -46,7 +46,7 @@ MSline::MSline()
   Props.append(new Property("Subst", "Subst1", true, QObject::tr("name of substrate definition")));
   Props.append(new Property("W", "1 mm", true, QObject::tr("width of the line")));
   Props.append(new Property("L", "10 mm", true, QObject::tr("length of the line")));
-  Props.append(new Property("Model", "Kirschning", false, QObject::tr("microstrip model |Kirschning|Kobayashi|Yamashita")));
+  Props.append(new Property("Model", "Kirschning", false, QObject::tr("microstrip model (Kirschning,Kobayashi,Yamashita)")));
 }
 
 MSline::~MSline()
