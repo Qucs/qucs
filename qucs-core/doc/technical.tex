@@ -6746,56 +6746,53 @@ Y_{e,o} = \frac{Z_{L,e,o}\cdot Z_L}{D_{e,o}}
 \end{figure}
 \FloatBarrier
 
-
-
 \section{Microstrip open}
-An open can be modeled by a longer effective microstrip line
-length $\Delta l$ \cite{Kirschning7}.
+%\addcontentsline{toc}{section}{Microstrip open}
+
+A microstrip open end can be modeled by a longer effective microstrip
+line length $\Delta l$ as described by M. Kirschning, R.H. Jansen and
+N.H.L. Koster \cite{Kirschning7}.
 \begin{equation}
 \frac{\Delta l}{h} = \frac{Q_1\cdot Q_3\cdot Q_5}{Q_4}
 \end{equation}
-\begin{equation}
-Q_1 = 0.434907\cdot \frac{\epsilon_{r,eff}^{0.81}+0.26}{\epsilon_{r,eff}^{0.81}-0.189}\cdot
-      \frac{\left( \frac{w}{h} \right)^{0.8544} + 0.236}{\left( \frac{w}{h} \right)^{0.8544} + 0.87}
-\end{equation}
-\begin{equation}
-Q_2 = 1 + \frac{\left( \frac{w}{h} \right) ^{0.371}}{2.358\cdot \epsilon_r + 1}
-\end{equation}
-\begin{equation}
-Q_3 = 1 + \frac{0.5274}{\epsilon_{r,eff}^{0.9236}} \cdot
-      \arctan\left( 0.084\cdot\left( \frac{w}{h} \right) ^\frac{1.9413}{Q_2} \right)
-\end{equation}
-\begin{equation}
-Q_4 = 1 + 0.0377\cdot \left( 6-5\cdot\exp(0.036\cdot(1-\epsilon_r))\cdot
-      \arctan\left( 0.067\cdot\left(\frac{w}{h}\right)^{1.456} \right) \right)
-\end{equation}
-\begin{equation}
-Q_5 = 1 - 0.218\cdot \exp\left( -7.5\cdot\frac{w}{h} \right)
-\end{equation}
-The numerical error is $<2.5$\% for $0.01\le w/h \le 100$ and $1\le\epsilon_r\le 50$.
+
+\begin{align}
+Q_1 &= 0.434907\cdot \dfrac{\varepsilon_{r,eff}^{0.81}+0.26}{\varepsilon_{r,eff}^{0.81}-0.189}\cdot
+      \dfrac{\left( W/h \right)^{0.8544} + 0.236}{\left( W/h \right)^{0.8544} + 0.87}\\
+Q_2 &= 1 + \dfrac{\left( W/h \right) ^{0.371}}{2.358\cdot \varepsilon_r + 1}\\
+Q_3 &= 1 + \dfrac{0.5274}{\varepsilon_{r,eff}^{0.9236}} \cdot
+      \arctan\left( 0.084\cdot\left( W/h \right) ^{\tfrac{1.9413}{Q_2}} \right)\\
+Q_4 &= 1 + 0.0377\cdot \left( 6-5\cdot\exp{\left(0.036\cdot\left(1-\varepsilon_r\right)\right)} \right)\cdot
+      \arctan\left( 0.067\cdot\left(W/h\right)^{1.456} \right)\\
+Q_5 &= 1 - 0.218\cdot \exp{\left( -7.5\cdot W/h \right)}
+\end{align}
+
+The numerical error is less than $2.5$\% for $0.01\le W/h \le 100$ and
+$1\le\varepsilon_r\le 50$.
 
 \addvspace{12pt}
 
-Another model was published by Hammerstad \cite{Hammerstad2}:
+Another microstrip open end model was published by E. Hammerstad
+\cite{Hammerstad2}:
 \begin{equation}
-\frac{\Delta l}{h} = 0.102\cdot \frac{u+0.106}{u+0.264} \cdot
-    \left( 1.166 + \frac{\epsilon_r+1}{\epsilon_r}\cdot \left(0.9+\ln(u+2.475) \right) \right)
+\dfrac{\Delta l}{h} = 0.102\cdot \dfrac{W/h+0.106}{W/h+0.264} \cdot
+    \left( 1.166 + \dfrac{\varepsilon_r+1}{\varepsilon_r}\cdot \left(0.9+\ln{\left(W/h+2.475\right)} \right) \right)
 \end{equation}
-Here the numerical error is $<1.7$\% for $u = w/h < 20$.
+
+Here the numerical error is less than $1.7$\% for $W/h < 20$.
 
 \addvspace{12pt}
 
-In order to simplify calculations,
-the equivalent additional line length $\Delta l$ can be transformed
-into an equivalent open end capacitance $C_{end}$:
+In order to simplify calculations, the equivalent additional line
+length $\Delta l$ can be transformed into an equivalent open end
+capacitance $C_{end}$:
 \begin{equation}
 \label{eqn:Cend}
-C_{end} = C'\cdot \Delta l = \frac{\sqrt{\epsilon_{r,eff}}}{c_0\cdot Z_L} \Delta l
+C_{end} = C'\cdot \Delta l = \dfrac{\sqrt{\varepsilon_{r,eff}}}{c_0\cdot Z_L} \Delta l
 \end{equation}
+
 With $C'$ being the capacitance per length and $c_0$ = 299 792 458 m/s
 being the vacuum light velocity.
-
-
 
 \section{Microstrip gap}
 The model of a microstrip gap is shown in figure \ref{fig:MSgap}. The

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.23 2004/08/15 12:25:38 ela Exp $
+ * $Id: dcsolver.cpp,v 1.24 2004/08/16 21:49:53 ela Exp $
  *
  */
 
@@ -489,6 +489,9 @@ int dcsolver::checkConvergence (void) {
     i_abs = abs (x->get (r + N, 1) - xprev->get (r + N, 1));
     i_rel = abs (x->get (r + N, 1));
     if (i_abs >= abstol + reltol * i_rel) return 0;
+    v_abs = abs (z->get (r + N, 1) - zprev->get (r + N, 1));
+    v_rel = abs (z->get (r + N, 1));
+    if (v_abs >= vntol + reltol * v_rel) return 0;
   }
   return 1;
 }
