@@ -26,9 +26,10 @@ files.
 Version 0.0.2
 -------------
 
+ * DC dependent s-parameter analysis of diode possible
  * Qucs available under MacOS 10.3
  * implemented equation solver
- * parameter sweep
+ * multi-dimensional parameter sweeps
  * DC simulation for passive elements and controlled sources
  * implemented s-parameters of DC and AC components
  * support for arbitrary port impedances
