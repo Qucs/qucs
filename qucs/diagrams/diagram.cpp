@@ -413,7 +413,7 @@ bool Diagram::loadVarData(const QString& fileName)
   }
 
   counting  *= g->countY;
-  g->Points  = new int[2*counting+1024];  // create memory for points
+  g->Points  = new int[2*counting+4*1024];  // create memory for points
   // reserve 1024 extra bytes for dash line etc.
 
   // *****************************************************************
