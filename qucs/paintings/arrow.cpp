@@ -217,19 +217,52 @@ bool Arrow::MousePressing()
 // 5 is the precision the user must point onto the painting.
 bool Arrow::getSelected(int x, int y)
 {
-  double x_double = double(x-cx);
-  double y_double = double(y-cy);
+  int A, xn, yn;
+  // first check if coordinates match the arrow body
+  x  -= cx;
+  y  -= cy;
 
-  double phi = -atan2(double(y2), double(x2));
-  double sin_phi = sin(phi);
-  double cos_phi = cos(phi);
-  int len = int( sqrt(double( x2*x2 + y2*y2 )) )+5;
-  
-  int xn = int(x_double*cos_phi - y_double*sin_phi);
-  int yn = int(x_double*sin_phi + y_double*cos_phi);
+  if(x < -5) { if(x < x2-5) goto Head1; }    // lies point between x coordinates ?
+  else { if(x > x2+5) goto Head1; }
+  if(y < -5) { if(y < y2-5) goto Head1; }    // lies point between y coordinates ?
+  else { if(y > y2+5) goto Head1; }
 
-  // lies x/y onto the arrow body ?
-  if(xn > -5) if(xn < len) if(yn > -5) if(yn < 5) return true;
+  A  = x2*y - x*y2;         // calculate the rectangle area spanned
+  A *= A;                   // avoid the need for square root
+  A -= 25*(x2*x2 + y2*y2);  // substract selectable area
+
+  if(A <= 0)  return true;     // lies x/y onto the graph line ?
+
+Head1:    // check if coordinates match the first arrow head line
+  xn = xp1-x2;  x  -= x2;
+  yn = yp1-y2;  y  -= y2;
+
+  if(x < -5) { if(x < xn-5) goto Head2; }    // lies point between x coordinates ?
+  else { if(x > xn+5) goto Head2; }
+  if(y < -5) { if(y < yn-5) goto Head2; }    // lies point between y coordinates ?
+  else { if(y > yn+5) goto Head2; }
+
+  A  = xn*y - x*yn;         // calculate the rectangle area spanned
+  A *= A;                   // avoid the need for square root
+  A -= 25*(xn*xn + yn*yn);  // substract selectable area
+
+  if(A <= 0)  return true;     // lies x/y onto the graph line ?
+
+Head2:    // check if coordinates match the second arrow head line
+  xn = xp2-x2;
+  yn = yp2-y2;
+
+  if(x < -5) { if(x < xn-5) return false; }    // lies point between x coordinates ?
+  else { if(x > xn+5) return false; }
+  if(y < -5) { if(y < yn-5) return false; }    // lies point between y coordinates ?
+  else { if(y > yn+5) return false; }
+
+  A  = xn*y - x*yn;         // calculate the rectangle area spanned
+  A *= A;                   // avoid the need for square root
+  A -= 25*(xn*xn + yn*yn);  // substract selectable area
+
+  if(A <= 0)  return true;     // lies x/y onto the graph line ?
+
   return false;
 }
 

@@ -172,19 +172,20 @@ bool GraphicLine::MousePressing()
 // 5 is the precision the user must point onto the painting.
 bool GraphicLine::getSelected(int x, int y)
 {
-  double x_double = double(x-cx);
-  double y_double = double(y-cy);
+  x  -= cx;
+  if(x < -5) { if(x < x2-5) return false; }    // lies point between x coordinates ?
+  else { if(x > x2+5) return false; }
 
-  double phi = -atan2(double(y2), double(x2));
-  double sin_phi = sin(phi);
-  double cos_phi = cos(phi);
-  int len = int( sqrt(double( x2*x2 + y2*y2 )) )+5;
+  y  -= cy;
+  if(y < -5) { if(y < y2-5) return false; }    // lies point between y coordinates ?
+  else { if(y > y2+5) return false; }
 
-  int xn = int(x_double*cos_phi - y_double*sin_phi);
-  int yn = int(x_double*sin_phi + y_double*cos_phi);
+  int A  = x2*y - x*y2;     // calculate the rectangle area spanned
+  A *= A;                   // avoid the need for square root
+  A -= 25*(x2*x2 + y2*y2);  // substract selectable area
 
-  // lies x/y onto the line ?
-  if(xn > -5) if(xn < len) if(yn > -5) if(yn < 5) return true;
+  if(A <= 0)  return true;     // lies x/y onto the graph line ?
+
   return false;
 }
 
