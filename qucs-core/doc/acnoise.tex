@@ -312,7 +312,8 @@ This section describes the noise current correlation matrices of noisy
 components.  The equations are built for RMS noise currents with
 $1\hertz$ bandwidth.
 
-\addvspace{12pt}
+\subsection{Resistor}
+%\addcontentsline{toc}{subsection}{Resistor}
 
 Resistor with resistance $R$ and temperature $T$:
 \begin{equation}
@@ -323,6 +324,9 @@ Resistor with resistance $R$ and temperature $T$:
 \end{pmatrix}
 \end{equation}
 
+\subsection{Noise current source}
+%\addcontentsline{toc}{subsection}{Noise current source}
+
 Noise current source with a current power spectral density of $cPSD$:
 \begin{equation}
 (\underline{C}_Y) = cPSD \cdot
@@ -332,16 +336,18 @@ Noise current source with a current power spectral density of $cPSD$:
 \end{pmatrix}
 \end{equation}
 
-A noise voltage source (voltage power spectral density $vPSD$)
-cannot be modeled with the noise current
-matrix. That is why one has to use a noise current source
-(current power spectral density $cPSD$) connected to a gyrator
-(transimpedance $R$) satisfying the equation
+\subsection{Noise voltage source}
+%\addcontentsline{toc}{subsection}{Noise voltage source}
+
+A noise voltage source (voltage power spectral density $vPSD$) cannot
+be modeled with the noise current matrix.  That is why one has to use
+a noise current source (current power spectral density $cPSD$)
+connected to a gyrator (transimpedance $R$) satisfying the equation
 \begin{equation}
 vPSD = cPSD \cdot R
 \end{equation}
-Figure \ref{fig:Unoise} shows an example.
 
+Figure \ref{fig:Unoise} shows an example.
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=9cm]{Unoise}
@@ -351,6 +357,40 @@ Figure \ref{fig:Unoise} shows an example.
 \end{figure}
 \FloatBarrier
 
+The MNA matrix entries of the above construct (gyrator ratio $R=1$) is
+similiar to a voltage source with zero voltage.
+\begin{equation}
+\begin{bmatrix}
+.&.& -1\\
+.&.& 1\\
+1 & -1 & 0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+I_x
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0
+\end{bmatrix}
+\end{equation}
+
+The appropriate noise current correlation matrix yields:
+\begin{equation}
+(\underline{C}_Y) = cPSD \cdot
+\begin{pmatrix}
+ 0 & 0 & 0\\
+ 0 & 0 & 0\\
+ 0 & 0 & 1\\
+\end{pmatrix}
+\end{equation}
+
+\subsection{Attenuator}
+%\addcontentsline{toc}{subsection}{Attenuator}
 
 Attenuator with (power) attenuation $L$, reference impedance $Z_{ref}$
 and temperature $T$:
@@ -363,6 +403,9 @@ and temperature $T$:
 \end{pmatrix}
 \end{equation}
 
+\subsection{Isolator}
+%\addcontentsline{toc}{subsection}{Isolator}
+
 Isolator with reference impedance $Z_1$ (input) and $Z_2$ (output) and
 temperature $T$:
 \begin{equation}
@@ -372,6 +415,9 @@ temperature $T$:
 -2/\sqrt{Z_1\cdot Z_2} &  1/Z_2 \\
 \end{pmatrix}
 \end{equation}
+
+\subsection{Diode}
+%\addcontentsline{toc}{subsection}{Diode}
 
 Diode (for details on the parameters see section \ref{sec:nw_diode}):
 \begin{equation}

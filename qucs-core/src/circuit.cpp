@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.36 2005/02/08 23:08:31 raimi Exp $
+ * $Id: circuit.cpp,v 1.37 2005/02/14 19:56:43 raimi Exp $
  *
  */
 
@@ -57,6 +57,7 @@ circuit::circuit () : object (), integrator () {
   subst = NULL;
   vsource = 0;
   vsources = 0;
+  nsources = 0;
   oper = NULL;
   inserted = -1;
   subcircuit = NULL;
@@ -78,6 +79,7 @@ circuit::circuit (int s) : object (), integrator () {
   subst = NULL;
   vsource = 0;
   vsources = 0;
+  nsources = 0;
   oper = NULL;
   inserted = -1;
   subcircuit = NULL;
@@ -96,6 +98,7 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
   subst = c.subst;
   vsource = c.vsource;
   vsources = c.vsources;
+  nsources = c.nsources;
   inserted = c.inserted;
   subnet = c.subnet;
   subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
@@ -114,8 +117,9 @@ circuit::circuit (const circuit & c) : object (c), integrator (c) {
     }
     // copy each noise-correlation parameter
     if (c.MatrixN) {
-      allocMatrixN ();
-      memcpy (MatrixN, c.MatrixN, size * size * sizeof (complex));
+      allocMatrixN (nsources);
+      int i = size + nsources;
+      memcpy (MatrixN, c.MatrixN, i * i * sizeof (complex));
     }
     // copy each G-MNA entry
     if (c.MatrixY) {
@@ -175,7 +179,7 @@ void circuit::setSize (int s) {
     // re-create matrix and node information space
     nodes = new node[size];
     allocMatrixS ();
-    allocMatrixN ();
+    allocMatrixN (nsources);
     allocMatrixMNA ();
   }
 }
@@ -190,12 +194,10 @@ void circuit::allocMatrixS (void) {
 }
 
 /* Allocates the noise correlation matrix memory. */
-void circuit::allocMatrixN (void) {
-  if (MatrixN) {
-    memset (MatrixN, 0, size * size * sizeof (complex));
-  } else {
-    MatrixN = new complex[size * size];
-  }
+void circuit::allocMatrixN (int sources) {
+  nsources = sources;
+  if (MatrixN) delete[] MatrixN;
+  MatrixN = new complex[(size + sources) * (size + sources)];
 }
 
 /* Allocates the matrix memory for the MNA matrices. */
@@ -460,12 +462,12 @@ void circuit::setS (int x, int y, complex z) {
 
 // Returns the noise-correlation-parameter at the given matrix position.
 complex circuit::getN (int r, int c) { 
-  return MatrixN[c - 1 + (r - 1) * size];
+  return MatrixN[c - 1 + (r - 1) * (size + nsources)];
 }
 
 // Sets the noise-correlation-parameter at the given matrix position.
 void circuit::setN (int r, int c, complex z) {
-  MatrixN[c - 1 + (r - 1) * size] = z;
+  MatrixN[c - 1 + (r - 1) * (size + nsources)] = z;
 }
 
 // Returns the number of internal voltage sources for DC analysis.
@@ -477,6 +479,17 @@ int circuit::getVoltageSources (void) {
 void circuit::setVoltageSources (int s) {
   assert (s >= 0);
   vsources = s;
+}
+
+// Returns the number of internal noise sources for AC analysis.
+int circuit::getNoiseSources (void) {
+  return nsources;
+}
+
+// Sets the number of internal noise voltage sources for AC analysis.
+void circuit::setNoiseSources (int s) {
+  assert (s >= 0);
+  nsources = s;
 }
 
 /* The function returns an internal node or circuit name with the

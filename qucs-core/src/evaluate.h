@@ -1,7 +1,7 @@
 /*
  * evaluate.h - definitions for Qucs equation evaluations
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.13 2004/11/29 19:03:34 raimi Exp $
+ * $Id: evaluate.h,v 1.14 2005/02/14 19:56:43 raimi Exp $
  *
  */
 
@@ -355,6 +355,13 @@ public:
   static constant * eye_m  (constant *);
   static constant * adjoint_m  (constant *);
   static constant * adjoint_mv (constant *);
+
+  static constant * rollet_m  (constant *);
+  static constant * rollet_mv (constant *);
+  static constant * mu1_m  (constant *);
+  static constant * mu1_mv (constant *);
+  static constant * mu2_m  (constant *);
+  static constant * mu2_mv (constant *);
 };
 
 // Type of application function.

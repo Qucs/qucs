@@ -1,3 +1,22 @@
+2005-02-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp (applications): Added stability factor equations.
+	Available as Rollet(), Mu() and Mu2().
+
+2005-02-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolver.cpp: New function able to reorder vectors according
+	to the pivot exchange table during LU decomposition.
+	Also enhanced the creation of the noise current correlation
+	matrix to work with additional noise voltage sources.
+
+	* circuit.cpp: Enhanced noise matrices to work with
+	additional (augmented) MNA matrices.
+
+	* acsolver.cpp (solve_noise): Made voltage sources working
+	with the AC noise algorithm.  Possible we get noise currents
+	correctly now?
+
 2005-02-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* acsolver.cpp (solve_noise): Finally made the AC noise

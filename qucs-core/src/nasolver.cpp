@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.30 2005/02/08 23:08:33 raimi Exp $
+ * $Id: nasolver.cpp,v 1.31 2005/02/14 19:56:43 raimi Exp $
  *
  */
 
@@ -636,17 +636,18 @@ void nasolver<nr_type_t>::createGMatrix (void) {
   }
 }
 
-/* The following function creates the NxN noise current correlation
-   matrix. */
+/* The following function creates the (N+M)x(N+M) noise current
+   correlation matrix used during the AC noise computations.  */
 template <class nr_type_t>
 void nasolver<nr_type_t>::createNoiseMatrix (void) {
   int pr, pc, N = countNodes ();
+  int M = countVoltageSources ();
   nr_type_t n;
   struct nodelist_t * nr, * nc;
   circuit * ct;
 
   // create new Cy matrix if necessary
-  if (C != NULL) delete C; C = new tmatrix<nr_type_t> (N);
+  if (C != NULL) delete C; C = new tmatrix<nr_type_t> (N + M);
 
   // go through each column of the Cy matrix
   for (int c = 1; c <= N; c++) {
@@ -666,6 +667,23 @@ void nasolver<nr_type_t>::createNoiseMatrix (void) {
 	  }
       // put value into Cy matrix
       C->set (r, c, n);
+    }
+  }
+
+  // go through each additional voltage source and put coefficients into
+  // the noise current correlation matrix
+  circuit * vsr, * vsc;
+  for (int r = 1; r <= M; r++) {
+    vsr = findVoltageSource (r);
+    for (int c = 1; c <= M; c++) {
+      vsc = findVoltageSource (c);
+      n = 0.0;
+      if (vsr == vsc) {
+	int ri = vsr->getSize () + r - vsr->getVoltageSource () + 1;
+	int ci = vsc->getSize () + c - vsc->getVoltageSource () + 1;
+	n = MatVal (vsr->getN (ri, ci));
+      }
+      C->set (r + N, c + N, n);
     }
   }
 }
@@ -786,6 +804,22 @@ void nasolver<nr_type_t>::runMNA (void) {
       steepestDescent ();
     }
   }
+}
+
+/* The function exchanges the rows of a real vector according to the
+   pivot exchanges done during LU decomposition. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::reorderVector (tvector<nr_double_t> * v) {
+  int * change = eqns->getExchangeVector ();
+  v->reorder (change);
+}
+
+/* The function exchanges the rows of a complex vector according to
+   the pivot exchanges done during LU decomposition. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::reorderVector (tvector<complex> * v) {
+  int * change = eqns->getExchangeVector ();
+  v->reorder (change);
 }
 
 /* This function applies a damped Newton-Raphson (limiting scheme) to

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.6 2005/02/12 09:49:31 raimi Exp $
+ * $Id: tvector.cpp,v 1.7 2005/02/14 19:56:44 raimi Exp $
  *
  */
 
@@ -281,6 +281,13 @@ int tvector<nr_type_t>::isFinite (void) {
   for (int i = 0; i < size; i++)
     if (!finite (real (data[i]))) return 0;
   return 1;
+}
+
+// The functions reorders the vector according to the given index array.
+template <class nr_type_t>
+void tvector<nr_type_t>::reorder (int * idx) {
+  tvector<nr_type_t> old = *this;
+  for (int i = 0; i < size; i++) data[i] = old.get (idx[i]);
 }
 
 #ifdef DEBUG

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.9 2005/02/12 09:49:31 raimi Exp $
+ * $Id: acsolver.cpp,v 1.10 2005/02/14 19:56:43 raimi Exp $
  *
  */
 
@@ -42,7 +42,7 @@ acsolver::acsolver () : nasolver<complex> () {
   swp = NULL;
   type = ANALYSIS_AC;
   setDescription ("AC");
-  vn = NULL;
+  xn = NULL;
   noise = 0;
 }
 
@@ -51,21 +51,21 @@ acsolver::acsolver (char * n) : nasolver<complex> (n) {
   swp = NULL;
   type = ANALYSIS_AC;
   setDescription ("AC");
-  vn = NULL;
+  xn = NULL;
   noise = 0;
 }
 
 // Destructor deletes the acsolver class object.
 acsolver::~acsolver () {
   if (swp) delete swp;
-  if (vn) delete vn;
+  if (xn) delete xn;
 }
 
 /* The copy constructor creates a new instance of the acsolver class
    based on the given acsolver object. */
 acsolver::acsolver (acsolver & o) : nasolver<complex> (o) {
   swp = o.swp ? new sweep (*(o.swp)) : NULL;
-  vn = o.vn ? new tvector<nr_double_t> (*(o.vn)) : NULL;
+  xn = o.xn ? new tvector<nr_double_t> (*(o.xn)) : NULL;
   noise = o.noise;
 }
 
@@ -129,7 +129,7 @@ void acsolver::init (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) c->calcOperatingPoints ();
     c->initAC ();
-    if (noise) c->initNoise ();
+    if (noise) c->initNoiseAC ();
   }
 }
 
@@ -152,18 +152,22 @@ void acsolver::saveAllResults (nr_double_t freq) {
 }
 
 /* The function computes the final noise results and puts them into
-   the dataset. */
+   the output dataset. */
 void acsolver::saveNoiseResults (vector * f) {
-  for (int r = 1; r <= countNodes (); r++) {
-    x->set (r, vn->get (r) * sqrt (kB * T0));
+  int N = countNodes ();
+  int M = countVoltageSources ();
+  for (int r = 1; r <= N + M; r++) {
+    // renormalise the results
+    x->set (r, xn->get (r) * sqrt (kB * T0));
   }
-  saveResults ("vn", NULL, 0, f);
+  saveResults ("vn", "in", 0, f);
 }
 
 /* This function runs the AC noise analysis.  It saves its results in
-   the 'vn' vector. */
+   the 'xn' vector. */
 void acsolver::solve_noise (void) {
   int N = countNodes ();
+  int M = countVoltageSources ();
 
   // save usual AC results
   tvector<complex> xsave = *x;
@@ -171,10 +175,10 @@ void acsolver::solve_noise (void) {
   // create the Cy matrix
   createNoiseMatrix ();
   // create noise result vector if necessary
-  if (vn == NULL) vn = new tvector<nr_double_t> (N);
+  if (xn == NULL) xn = new tvector<nr_double_t> (N + M);
 
   // temporary result vector for transimpedances
-  tvector<complex> vz = tvector<complex> (N);
+  tvector<complex> zn = tvector<complex> (N + M);
 
   // transpose the MNA matrix and ensure skipping LU decomposition
   A->transpose ();
@@ -182,15 +186,19 @@ void acsolver::solve_noise (void) {
   convHelper = CONV_None;
   eqnAlgo = ALGO_LU_SUBSTITUTION_DOOLITTLE; // LU matrix is transposed
 
-  // compute noise voltage for each node
-  for (int i = 1; i <= N; i++) {
+  // compute noise voltage for each node (and voltage source)
+  for (int i = 1; i <= N + M; i++) {
     z->set (0); z->set (i, -1); // modify right hand side appropriately
     runMNA ();                  // solve
-    vz.set (*x, 1, N);          // save transimpedance vector
+    zn = *x;                    // save transimpedance vector
+    reorderVector (&zn);        // adjust result order
 
     // compute actual noise voltage
-    vn->set (i, sqrt (real (scalar (vz * (*C), conj (vz)))));
+    xn->set (i, sqrt (real (scalar (zn * (*C), conj (zn)))));
   }
+
+  // adjust AC noise result order
+  reorderVector (xn);
 
   // restore usual AC results
   *x = xsave;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.34 2005/02/08 23:08:32 raimi Exp $
+ * $Id: circuit.h,v 1.35 2005/02/14 19:56:43 raimi Exp $
  *
  */
 
@@ -61,8 +61,9 @@ class circuit : public object, public integrator
   virtual void calcSP (nr_double_t) { }
   virtual void initDC (void) { allocMatrixMNA (); }
   virtual void calcDC (void) { }
-  virtual void initNoise (void) { allocMatrixN (); }
+  virtual void initNoiseSP (void) { allocMatrixN (); }
   virtual void calcNoiseSP (nr_double_t) { }
+  virtual void initNoiseAC (void) { allocMatrixN (vsources); }
   virtual void calcNoiseAC (nr_double_t) { }
   virtual void initAC (void) { allocMatrixMNA (); }
   virtual void calcAC (nr_double_t) { }
@@ -100,6 +101,8 @@ class circuit : public object, public integrator
   void setVSource (bool v) { MODFLAG (v, CIRCUIT_VSOURCE); }
   bool isISource (void) { return RETFLAG (CIRCUIT_ISOURCE); }
   void setISource (bool i) { MODFLAG (i, CIRCUIT_ISOURCE); }
+  int  getNoiseSources (void);
+  void setNoiseSources (int);
 
   // s-parameter helpers
   int  getPort (void) { return pacport; }
@@ -166,7 +169,7 @@ class circuit : public object, public integrator
 
   // matrix operations
   void   allocMatrixS (void);
-  void   allocMatrixN (void);
+  void   allocMatrixN (int sources = 0);
   void   allocMatrixMNA (void);
   void   freeMatrixMNA (void);
   void   setMatrixS (matrix);
@@ -187,6 +190,7 @@ class circuit : public object, public integrator
   int pacport;
   int vsource;
   int vsources;
+  int nsources;
   int inserted;
   int flag;
   complex * MatrixS;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.41 2005/02/08 23:08:34 raimi Exp $
+ * $Id: spsolver.cpp,v 1.42 2005/02/14 19:56:44 raimi Exp $
  *
  */
 
@@ -107,7 +107,7 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
   complex p;
 
   // allocate S-parameter and noise corellation matrices
-  result->initSP (); if (noise) result->initNoise ();
+  result->initSP (); if (noise) result->initNoiseSP ();
 
   // interconnected port numbers
   int k = n1->getPort (), l = n2->getPort ();
@@ -170,7 +170,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   complex p;
 
   // allocate S-parameter and noise corellation matrices
-  result->initSP (); if (noise) result->initNoise ();
+  result->initSP (); if (noise) result->initNoiseSP ();
 
   // connected port numbers
   int k = n1->getPort (), l = n2->getPort ();
@@ -551,7 +551,7 @@ void spsolver::init (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) c->calcOperatingPoints ();
     c->initSP ();
-    if (noise) c->initNoise ();
+    if (noise) c->initNoiseSP ();
   }
 }
 
@@ -687,7 +687,7 @@ void spsolver::insertTee (node ** nodes, char * name) {
   result->getNode(3)->setPort (3);
   // put the tee into the circuit list and initialize it
   subnet->insertCircuit (result);
-  result->initSP (); if (noise) result->initNoise ();
+  result->initSP (); if (noise) result->initNoiseSP ();
   // put the tee's first node into the node collection
   nodes[1] = result->getNode (1);
   tees++;
@@ -718,7 +718,7 @@ void spsolver::insertCross (node ** nodes, char * name) {
   result->getNode(4)->setPort (4);
   // put the cross into the circuit list and initialize it
   subnet->insertCircuit (result);
-  result->initSP (); if (noise) result->initNoise ();
+  result->initSP (); if (noise) result->initNoiseSP ();
   // put the cross's first node into the node collection
   nodes[1] = result->getNode (1);
   crosses++;
@@ -760,7 +760,7 @@ void spsolver::insertOpen (node * n) {
     subnet->insertedCircuit (result);
     result->setNode (1, n->getName ());
     subnet->insertCircuit (result);
-    result->initSP (); if (noise) result->initNoise ();
+    result->initSP (); if (noise) result->initNoiseSP ();
     opens++;
   }
 }
@@ -785,7 +785,7 @@ void spsolver::insertGround (node * n) {
     result->getNode(1)->setPort (1);
     n->setName (result->getNode(1)->getName ());
     subnet->insertCircuit (result);
-    result->initSP (); if (noise) result->initNoise ();
+    result->initSP (); if (noise) result->initNoiseSP ();
     grounds++;
   }
 }
@@ -929,7 +929,7 @@ void spsolver::insertDifferentialPorts (void) {
       subnet->insertCircuit (result);
 
       // allocate S-parameter and noise correlation matrices
-      result->initSP (); if (noise) result->initNoise ();
+      result->initSP (); if (noise) result->initNoiseSP ();
     }
   }
 }
