@@ -1696,9 +1696,9 @@ introduces one more unknown in the MNA matrix.
 \FloatBarrier
 
 \begin{equation}
-V_{2} - V_{3} = T\cdot\left(V_{1} -V_{4}\right)
+T\cdot\left(V_{2} - V_{3}\right) = V_{1} -V_{4}
 \quad \rightarrow \quad
-T\cdot V_{1} - V_{2} + V_{3} - T\cdot V_{4} = 0
+V_{1} - T\cdot V_{2} + T\cdot V_{3} - V_{4} = 0
 \label{eq:trafo}
 \end{equation}
 
@@ -1706,17 +1706,17 @@ The new unknown variable $I_{t}$ must be considered by the four
 remaining simple equations.
 
 \begin{equation}
-I_{1} = T\cdot I_{t} \quad I_{2} = -I_{t} \quad I_{3} = +I_{t} \quad I_{4} = -T\cdot I_{t}
+I_{1} = -I_{t} \quad I_{2} = T\cdot I_{t} \quad I_{3} = -T\cdot I_{t} \quad I_{4} = I_{t}
 \end{equation}
 
 And in matrix representation this is:
 \begin{equation}
 \begin{pmatrix}
-.&.&.&.& T\\
 .&.&.&.& -1\\
-.&.&.&.& 1\\
+.&.&.&.& T\\
 .&.&.&.& -T\\
-T & -1 & 1 & -T & 0
+.&.&.&.& 1\\
+1 & -T & T & -1 & 0
 \end{pmatrix}
 \cdot
 \begin{pmatrix}
@@ -1760,39 +1760,39 @@ introduce one more unknown in the MNA matrix.
 \FloatBarrier
 
 \begin{equation}
-T_{1}\cdot\left(V_{1} - V_{6}\right) = V_{2} - V_{3}
+T_{1}\cdot\left(V_{2} - V_{3}\right) = V_{1} - V_{6}
 \quad \rightarrow \quad
-T_{1}\cdot V_{1} - V_{2} + V_{3} - T_{1}\cdot V_{6} = 0
+V_{1} - T_{1}\cdot V_{2} + T_{1}\cdot V_{3} - V_{6} = 0
 \end{equation}
 \begin{equation}
-T_{2}\cdot\left(V_{5} - V_{4}\right) = V_{2} - V_{3}
+T_{2}\cdot\left(V_{2} - V_{3}\right) = V_{5} - V_{4}
 \quad \rightarrow \quad
-- V_{2} + V_{3} - T_{2}\cdot V_{4} + T_{2}\cdot V_{5} = 0
+- T_{2}\cdot V_{2} + T_{2}\cdot V_{3} - V_{4} + V_{5} = 0
 \label{eq:acstrafo}
 \end{equation}
 
-The new unknown variable $I_{t}$ must be considered by the eight
-remaining simple equations.
+The new unknown variables $I_{T1}$ and $I_{T2}$ must be considered by
+the eight remaining simple equations.
 
 \begin{equation}
-I_{1} = T_{1}\cdot I_{t} \quad I_{2} = -I_{t} \quad I_{3} = I_{t} \quad I_{6} = -T_{1}\cdot I_{t}
+I_{1} = -I_{T1} \quad I_{2} = T_{1}\cdot I_{T1} \quad I_{3} = -T_{1}\cdot I_{T1} \quad I_{6} = I_{T1}
 \end{equation}
 \begin{equation}
-I_{2} = -I_{t} \quad I_{3} = +I_{t} \quad I_{4} = -T_{2}\cdot I_{t} \quad I_{5} = T_{2}\cdot I_{t}
+I_{2} = T_{2}\cdot I_{T2} \quad I_{3} = -T_{2}\cdot I_{T2} \quad I_{4} = I_{T2} \quad I_{5} = -I_{T2}
 \end{equation}
 
 The matrix representation needs to be augmented by two more new rows
 and their corresponding columns.
 \begin{equation}
 \begin{pmatrix}
-.&.&.&.&.&.& T_{1} & 0\\
-.&.&.&.&.&.& -1 & -1\\
-.&.&.&.&.&.& 1 & 1\\
-.&.&.&.&.&.& 0 & -T_{2}\\
-.&.&.&.&.&.& 0 & T_{2}\\
-.&.&.&.&.&.& -T_{1} & 0\\
-T_{1} & -1 & 1 & 0 & 0 & -T_{1} & 0 & 0\\
-0 & -1 & 1 & -T_{2} & T_{2} & 0 & 0 & 0
+.&.&.&.&.&.& 1 & 0\\
+.&.&.&.&.&.& T_{1} & +T_{2}\\
+.&.&.&.&.&.& -T_{1} & -T_{2}\\
+.&.&.&.&.&.& 0 & +1\\
+.&.&.&.&.&.& 0 & -1\\
+.&.&.&.&.&.& +1 & 0\\
+1 & -T_{1} & T_{1} & 0 & 0 & -1 & 0 & 0\\
+0 & -T_{2} & T_{2} & -1 & 1 & 0 & 0 & 0
 \end{pmatrix}
 \cdot
 \begin{pmatrix}
@@ -1802,8 +1802,8 @@ V_{3}\\
 V_{4}\\
 V_{5}\\
 V_{6}\\
-I_{t}\\
-I_{t}
+I_{T1}\\
+I_{T2}
 \end{pmatrix}
 =
 \begin{pmatrix}
@@ -1835,9 +1835,9 @@ MNA matrix.
 \FloatBarrier
 
 \begin{equation}
-I_{in} = -\frac{1}{R}\cdot\left(V_{2} - V_{3}\right)
+I_{in} = \frac{1}{R}\cdot\left(V_{2} - V_{3}\right)
 \quad \rightarrow \quad
--\frac{1}{R}\cdot V_{2} + \frac{1}{R}\cdot V_{3} - I_{in} = 0
+\frac{1}{R}\cdot V_{2} - \frac{1}{R}\cdot V_{3} - I_{in} = 0
 \end{equation}
 \begin{equation}
 V_{2} - V_{3} = \frac{1}{R}\cdot\left(V_{1} - V_{4}\right)
@@ -1850,18 +1850,18 @@ The new unknown variables $I_{out}$ and $I_{in}$ must be considered by
 the four remaining simple equations.
 
 \begin{equation}
-I_{1} = -I_{in} \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = I_{in}
+I_{1} = I_{in} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = -I_{in}
 \end{equation}
 
 The matrix representation needs to be augmented by two more new rows
 (for the new unknown variables) and their corresponding columns.
 \begin{equation}
 \begin{pmatrix}
-.&.&.&.& -1 & 0\\
-.&.&.&.& 0 & -1\\
-.&.&.&.& 0 & 1\\
 .&.&.&.& 1 & 0\\
-0 & -\frac{1}{R} & \frac{1}{R} & 0 & -1 & 0\\
+.&.&.&.& 0 & 1\\
+.&.&.&.& 0 & -1\\
+.&.&.&.& -1 & 0\\
+0 & +\frac{1}{R} & -\frac{1}{R} & 0 & -1 & 0\\
 \frac{1}{R} & -1 & 1 & -\frac{1}{R} & 0 & 0
 \end{pmatrix}
 \cdot

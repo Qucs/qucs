@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.3 2004/01/30 21:40:35 ela Exp $
+ * $Id: trafo.cpp,v 1.4 2004/02/14 15:28:39 ela Exp $
  *
  */
 
@@ -69,8 +69,8 @@ void trafo::calcS (nr_double_t frequency) {
 
 void trafo::calcY (void) {
   nr_double_t t = getPropertyDouble ("T");
-  setB (1, 1, +t); setB (1, 2, -1); setB (1, 1, +1); setB (1, 1, -t);
-  setC (1, 1, +t); setC (1, 2, -1); setC (1, 1, +1); setC (1, 1, -t);
+  setB (1, 1, -1); setB (1, 2, +t); setB (1, 3, -t); setB (1, 4, +1);
+  setC (1, 1, +1); setC (1, 2, -t); setC (1, 3, +t); setC (1, 4, -1);
   setD (1, 0);
   setE (1, 0);
 }

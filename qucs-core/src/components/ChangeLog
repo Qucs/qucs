@@ -1,3 +1,11 @@
+2004-02-14  Stefan Jahn  <stefan@at66hft.ee.tu-berlin.de>
+
+	* gyrator.cpp: Fixed MNA matrices for gyrator.
+
+	* strafo.cpp: Fixed MNA matrices for symmetrical transformer.
+
+	* trafo.cpp: Fixed the A matrix of the ideal transformer.
+
 2004-02-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* ccvs.cpp, cccs.cpp: Fixed MNA stamps for DC analysis.
