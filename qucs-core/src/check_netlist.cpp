@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.32 2004-07-28 17:09:44 ela Exp $
+ * $Id: check_netlist.cpp,v 1.33 2004-07-30 06:25:54 ela Exp $
  *
  */
 
@@ -482,6 +482,20 @@ static struct value_t * checker_find_reference (struct definition_t * def,
   return NULL;
 }
 
+/* The function looks for the given property key within the properties
+   of the given definition line and returns its value if the property
+   is not an identifier.  Otherwise the the function returns NULL. */
+static struct value_t * checker_find_prop_value (struct definition_t * def,
+						 char * key) {
+  struct pair_t * pair;
+  for (pair = def->pairs; pair != NULL; pair = pair->next) {
+    if (!strcmp (pair->key, key))
+      if (pair->value->ident == NULL)
+	return pair->value;
+  }
+  return NULL;
+}
+
 /* This function looks for the specified property 'key' in the given
    definition and return its value (a string reference) if it is a
    reference.  Otherwise the function returns NULL and emits an
@@ -751,6 +765,49 @@ static int checker_validate_para (struct definition_t * root) {
   return errors;
 }
 
+/* This function returns the next port definition in the given list of
+   definitions or NULL if there is no such definition. */
+static struct definition_t * checker_find_port (struct definition_t * root) {
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (def->action == PROP_COMPONENT && !strcmp (def->type, "Pac")) {
+      return def;
+    }
+  }
+  return NULL;
+}
+
+/* This function checks whether the port numbers for the S-parameter
+   analysis are unique or not.  It returns zero on success and
+   non-zero if it detected duplicate entries. */
+static int checker_validate_ports (struct definition_t * root) {
+  int p, errors = 0;
+  struct value_t * val;
+  struct definition_t * port, * def = root;
+  char * prop = "Num";
+  while ((def = checker_find_port (def)) != NULL) {
+    if ((val = checker_find_prop_value (def, prop)) != NULL) {
+      p = (int) val->value;
+      port = root;
+      while ((port = checker_find_port (port)) != NULL) {
+	if (port != def) {
+	  if ((val = checker_find_prop_value (port, prop)) != NULL) {
+	    if (p == (int) val->value) {
+	      logprint (LOG_ERROR, "line %d: checker error, `%s' definitions "
+			"with duplicate `%s=%d' property found: `%s:%s' and "
+			"`%s:%s'\n", def->line, def->type, prop, p, def->type,
+			def->instance, port->type, port->instance);
+	      errors++;
+	    }
+	  }
+	}
+	port = port->next;
+      }
+    }
+    def = def->next;
+  }
+  return errors;
+}
+
 /* This function checks the actions to be taken in the netlist.  It
    returns zero on success, non-zero otherwise. */
 static int checker_validate_actions (struct definition_t * root) {
@@ -783,6 +840,7 @@ static int checker_validate_actions (struct definition_t * root) {
     }
   }
   errors += checker_validate_para (root);
+  errors += checker_validate_ports (root);
   return errors;
 }
 
@@ -1122,6 +1180,7 @@ checker_copy_subcircuits (struct definition_t * type,
       // assign new instance name to the element
       sprintf (txt, "%s.%s.%s", type->instance, inst->instance, def->instance);
       copy->instance = strdup (txt);
+      copy->subcircuit = strdup (type->instance);
       // translate and assign node list
       checker_xlat_subcircuit_nodes (type, inst, def);
       checker_copy_subcircuit_nodes (type, inst, def, copy);
@@ -1265,6 +1324,7 @@ static void netlist_free_pairs (struct pair_t * pair) {
 static void netlist_free_definition (struct definition_t * def) {
   netlist_free_nodes (def->nodes);
   if (!def->copy) netlist_free_pairs (def->pairs);
+  if (def->subcircuit) free (def->subcircuit);
   free (def->type);
   free (def->instance);
   free (def);

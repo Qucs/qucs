@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.h,v 1.3 2004-07-11 10:22:13 ela Exp $
+ * $Id: device.h,v 1.4 2004-07-30 06:25:55 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@ class device
   friend circuit * splitCapacitance (circuit *, circuit *, net *,
 				     char *, node *, node *);
   friend void disableCapacitance (circuit *, circuit *, net *);
+  friend int deviceEnabled (circuit *);
   friend nr_double_t pnVoltage (nr_double_t, nr_double_t, nr_double_t,
 				nr_double_t);
   friend nr_double_t pnCurrent (nr_double_t, nr_double_t, nr_double_t);

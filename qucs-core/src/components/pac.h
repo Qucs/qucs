@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.h,v 1.3 2004-02-17 15:30:58 ela Exp $
+ * $Id: pac.h,v 1.4 2004-07-30 06:25:55 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class pac : public circuit
 {
  public:
   pac ();
+  void calcSP (nr_double_t);
   void calcDC (void);
 };
 

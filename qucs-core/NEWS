@@ -32,7 +32,7 @@ Version 0.0.3
  * additional noise analysis with s-parameters
  * constants like 'pi' can be used in equations without defining them
  * much more documentation
- * microstrip models diffentiate between quasi-static and dispersion
+ * microstrip models differentiate between quasi-static and dispersion
  * equation results can be selected for dataset export
  * DC simulation can output operating points of nonlinear devices
  * DC model for phase shifter implemented

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.22 2004-07-26 06:30:28 ela Exp $
+ * $Id: circuit.cpp,v 1.23 2004-07-30 06:25:54 ela Exp $
  *
  */
 
@@ -55,6 +55,8 @@ circuit::circuit () : object () {
   oper = NULL;
   inserted = -1;
   linear = 1;
+  enabled = 0;
+  subcircuit = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -77,6 +79,8 @@ circuit::circuit (int s) : object () {
   oper = NULL;
   inserted = -1;
   linear = 1;
+  subcircuit = NULL;
+  enabled = 0;
   type = CIR_UNKNOWN;
 }
 
@@ -92,6 +96,8 @@ circuit::circuit (const circuit & c) : object (c) {
   nSources = c.nSources;
   inserted = c.inserted;
   linear = c.linear;
+  enabled = 0;
+  subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
 
   if (size > 0) {
     // copy each node and set its circuit to the current circuit object
@@ -129,6 +135,7 @@ circuit::~circuit () {
     delete[] MatrixY;
     delete[] nodes;
   }
+  if (subcircuit) free (subcircuit);
   deleteOperatingPoints ();
 }
 
@@ -173,6 +180,12 @@ void circuit::setNode (int i, char * n, int intern) {
 // Returns one of the circuit's nodes.
 node * circuit::getNode (int i) {
   return &nodes[i - 1];
+}
+
+// Sets the subcircuit reference for the circuit object.
+void circuit::setSubcircuit (char * n) {
+  if (subcircuit) free (subcircuit);
+  subcircuit = n ? strdup (n) : NULL;
 }
 
 /* This function counts the number of signals (ports) within the list

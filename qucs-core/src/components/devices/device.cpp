@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.4 2004-07-11 10:22:13 ela Exp $
+ * $Id: device.cpp,v 1.5 2004-07-30 06:25:55 ela Exp $
  *
  */
 
@@ -95,6 +95,15 @@ void disableCapacitance (circuit *, circuit * cap, net * subnet) {
   if (cap != NULL) {
     subnet->removeCircuit (cap, 0);
   }
+}
+
+/* This function checks whether the given circuit object exists and is
+   chained within the current netlist.  It returns non-zero if so and
+   zero otherwise. */
+int deviceEnabled (circuit * c) {
+  if (c != NULL && c->isEnabled ())
+    return 1;
+  return 0;
 }
 
 /* The function limits the forward pn-voltage for each DC iteration in

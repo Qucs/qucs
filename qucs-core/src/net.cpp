@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.14 2004-07-11 10:22:12 ela Exp $
+ * $Id: net.cpp,v 1.15 2004-07-30 06:25:54 ela Exp $
  *
  */
 
@@ -99,11 +99,13 @@ void net::insertCircuit (circuit * c) {
   c->setPrev (NULL);
   root = c;
   nCircuits++;
+  c->setEnabled (1);
 
-  // handle AC power sources as s-parameter ports
-  if (c->getType () == CIR_PAC) {
+  /* handle AC power sources as s-parameter ports if it is not part of
+     a subcircuit */
+  if (c->getType () == CIR_PAC && c->getSubcircuit () == NULL) {
     nPorts++;
-    if (!c->isPort ()) c->setPort (nPorts);
+    if (!c->isPort ()) c->setPort (c->getPropertyInteger ("Num"));
   }
   // handle DC voltage sources
   if (c->getVoltageSources () > 0) {
@@ -127,6 +129,7 @@ void net::removeCircuit (circuit * c, int dropping) {
     c->getPrev()->setNext (c->getNext ());
   }
   nCircuits--;
+  c->setEnabled (0);
   if (c->isPort ()) nPorts--;
   if (c->isVoltageSource ()) nSources -= c->getVoltageSources ();
 

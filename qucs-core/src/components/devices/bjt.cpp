@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.8 2004-07-28 17:09:44 ela Exp $
+ * $Id: bjt.cpp,v 1.9 2004-07-30 06:25:55 ela Exp $
  *
  */
 
@@ -55,7 +55,6 @@
 bjt::bjt () : circuit (4) {
   cbcx = rb = re = rc = NULL;
   type = CIR_BJT;
-  enabled = 0;
 }
 
 void bjt::calcSP (nr_double_t frequency) {
@@ -150,9 +149,8 @@ void bjt::initDC (dcsolver * solver) {
   subnet = solver->getNet ();
 
   // disable additional base-collector capacitance
-  if (enabled) {
+  if (deviceEnabled (cbcx)) {
     disableCapacitance (this, cbcx, subnet);
-    enabled = 0;
   }
 
   // possibly insert series resistance at emitter
@@ -437,15 +435,13 @@ void bjt::initSP (spsolver * solver) {
   /* if necessary then insert external capacitance between internal
      collector node and external base node */
   if (Rbb != 0 && Cbcx != 0) {
-    if (!enabled) {
+    if (!deviceEnabled (cbcx)) {
       cbcx = splitCapacitance (this, cbcx, subnet, "Cbcx", rb->getNode (1),
 			       getNode (NODE_C));
-      enabled = 1;
     }
     cbcx->setProperty ("C", Cbcx);  // S-parameters will be computed
   }
   else {
     disableCapacitance (this, cbcx, subnet);
-    enabled = 0;
   }
 }

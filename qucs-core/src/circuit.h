@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.20 2004-07-26 06:30:28 ela Exp $
+ * $Id: circuit.h,v 1.21 2004-07-30 06:25:54 ela Exp $
  *
  */
 
@@ -64,6 +64,10 @@ class circuit : public object
   void print (void);
   int isPort (void) { return port; }
   void setPort (int p) { port = p; }
+  int isEnabled (void) { return enabled; }
+  void setEnabled (int e) { enabled = e; }
+  char * getSubcircuit (void) { return subcircuit; }
+  void setSubcircuit (char *);
   void setInternalVoltageSource (int i) { internal = i; }
   int isInternalVoltageSource (void) { return internal; }
   int isVoltageSource (void) { return source; }
@@ -122,6 +126,7 @@ class circuit : public object
   int internal;
   int inserted;
   int linear;
+  int enabled;
   complex * MatrixS;
   complex * MatrixN;
   complex * MatrixY;
@@ -131,7 +136,7 @@ class circuit : public object
   complex MatrixE[MAX_CIR_VSRCS];
   complex MatrixI[MAX_CIR_PORTS];
   complex MatrixV[MAX_CIR_PORTS];
-
+  char * subcircuit;
   node * nodes;
   substrate * subst;
   operatingpoint * oper;

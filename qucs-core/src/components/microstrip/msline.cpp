@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.18 2004-07-18 17:22:46 ela Exp $
+ * $Id: msline.cpp,v 1.19 2004-07-30 06:25:55 ela Exp $
  *
  */
 
@@ -65,15 +65,15 @@ void msline::calcSP (nr_double_t frequency) {
   /* local variables */
   complex s11, s21, n, g;
   nr_double_t z, y, a, b, k0, ds, Kr, Rs, Ki, ac, ad, l0;
+  nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
 
   // quasi-static effective dielectric constant of substrate + line and
   // the impedance of the microstrip line
-  analyseQuasiStatic (W, h, t, er, SModel);
+  analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
 
-  // TODO: influence of t
-
-  // analyse dispersion of Zl and Er
-  analyseDispersion (W, h, er, frequency, DModel);
+  // analyse dispersion of Zl and Er (use WEff here?)
+  analyseDispersion (W, h, er, ZlEff, ErEff, frequency, DModel,
+		     ZlEffFreq, ErEffFreq);
 
   // conductor losses: HAMMERSTAD and JENSEN
   Rs = sqrt (M_PI * frequency * MU0 * rho); // skin resistance
@@ -107,15 +107,20 @@ void msline::calcSP (nr_double_t frequency) {
 }
 
 /* This function calculates the quasi-static impedance of a microstrip
-   line and the value of the effective dielectric constant for the
-   given microstrip line and substrate properties. */
+   line, the value of the effective dielectric constant and the
+   effective width due to the finite conductor thickness for the given
+   microstrip line and substrate properties. */
 void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
-				 nr_double_t er, char * Model) {
+				 nr_double_t er, char * Model,
+				 nr_double_t& ZlEff, nr_double_t& ErEff,
+				 nr_double_t& WEff) {
 
   nr_double_t z, e;
 
+  // default values
   e = er;
   z = z0;
+  WEff = W;
 
   // WHEELER
   if (!strcmp (Model, "Wheeler")) {
@@ -125,7 +130,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     dW1 = t / M_PI * log (4 * M_E / sqrt (sqr (t / h) + 
 					  sqr (M_1_PI / (W / t + 1.10))));
     dWr = (1 + 1 / er) / 2 * dW1;
-    Wr  = W + dWr;
+    Wr  = WEff = W + dWr;
 
     // compute characteristic impedance
     if (W / h < 3.3) {
@@ -160,7 +165,6 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     c = 6 + (2 * M_PI - 6) * exp (- pow (30.666 * h / W, 0.7528));
     d = Z0 / 2 / M_PI * log (c * h / W + sqrt (1 + sqr (2 * h / W)));
     z = d / sqrt (e);
-    fprintf (stderr, "SCHNEIDER e = %g, z = %g\n", e, z);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
@@ -174,6 +178,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     du = du1 * (1 + sech (sqrt (er - 1))) / 2;
     u1 = u + du1;
     ur = u + du;
+    WEff = ur * h;
 
     // compute impedances for homogeneous medium
     cr = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / ur, 0.7528));
@@ -202,10 +207,14 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
    effective dielectric constant and the microstrip line impedance for
    the given frequency. */
 void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
-				nr_double_t frequency, char * Model) {
+				nr_double_t ZlEff, nr_double_t ErEff,
+				nr_double_t frequency, char * Model,
+				nr_double_t& ZlEffFreq,
+				nr_double_t& ErEffFreq) {
 
   nr_double_t e, z;
 
+  // default values
   z = ZlEffFreq = ZlEff;
   e = ErEffFreq = ErEff;
 
@@ -216,7 +225,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     f = 2 * MU0 * h * frequency / ZlEff;
     e = er - (er - ErEff) / (1 + g * sqr (f));
     d = (er - e) * (e - ErEff) / e / (er - ErEff);
-    z = ZlEff * sqrt (e / ErEff) / (1 + d);
+    z = ZlEff * sqrt (e / ErEff) / (1 + d);  // group delay model
     fprintf (stderr, "GETSINGER e = %g, z = %g\n", e, z);
   }
   // SCHNEIDER
