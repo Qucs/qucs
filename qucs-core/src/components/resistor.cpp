@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.3 2004-01-28 18:19:07 ela Exp $
+ * $Id: resistor.cpp,v 1.4 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -40,7 +40,7 @@ resistor::resistor () : circuit (2) {
   type = CIR_RESISTOR;
 }
 
-void resistor::calcS (nr_double_t frequency) {
+void resistor::calcSP (nr_double_t) {
   nr_double_t r = getPropertyDouble ("R") / z0;
   setS (1, 1, r / (r + 2.0));
   setS (2, 2, r / (r + 2.0));
@@ -48,6 +48,8 @@ void resistor::calcS (nr_double_t frequency) {
   setS (2, 1, 2.0 / (r + 2.0));
 }
 
-void resistor::calcY (void) {
-  setY (1.0 / getPropertyDouble ("R"));
+void resistor::calcDC (void) {
+  nr_double_t g = 1.0 / getPropertyDouble ("R");
+  setY (1, 1, +g); setY (2, 2, +g);
+  setY (1, 2, -g); setY (2, 1, -g);
 }

@@ -1,7 +1,7 @@
 /*
- * isolator.h - isolator class definitions
+ * libqucsator.h - qucsator library include file
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,28 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.h,v 1.3 2004-02-17 15:30:58 ela Exp $
+ * $Id: libqucsator.h,v 1.1 2004-02-17 15:30:57 ela Exp $
  *
  */
 
-#ifndef __ISOLATOR_H__
-#define __ISOLATOR_H__
+#ifndef __LIBQUCSATOR_H__
+#define __LIBQUCSATOR_H__
 
-class isolator : public circuit
-{
- public:
-  isolator ();
-  void calcSP (nr_double_t);
-};
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <iostream>
 
-#endif /* __ISOLATOR_H__ */
+typedef double nr_double_t;
+
+#include "logging.h"
+#include "complex.h"
+#include "object.h"
+#include "strlist.h"
+#include "vector.h"
+#include "dataset.h"
+#include "check_dataset.h"
+#include "check_touchstone.h"
+
+#endif /* __LIBQUCSATOR_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.3 2004-01-13 23:23:01 ela Exp $
+ * $Id: isolator.cpp,v 1.4 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -42,7 +42,7 @@ isolator::isolator () : circuit (2) {
   type = CIR_ISOLATOR;
 }
 
-void isolator::calcS (nr_double_t frequency) {
+void isolator::calcSP (nr_double_t) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t s1 = (z1 - z0) / (z1 + z0);

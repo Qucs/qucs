@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.2 2004-02-13 20:31:45 ela Exp $
+ * $Id: object.cpp,v 1.3 2004-02-17 15:30:57 ela Exp $
  *
  */
 
@@ -134,6 +134,12 @@ int object::getPropertyInteger (char * n) {
   if (p != NULL)
     return p->getInteger ();
   return 0;
+}
+
+/* The function checks whether the object has got a certain property
+   value.  If so it returns non-zero, otherwise it returns zero. */
+int object::hasProperty (char * n) {
+  return (prop && prop->findProperty (n)) ? 1 : 0;
 }
 
 /* This function copies all properties in the given property list into

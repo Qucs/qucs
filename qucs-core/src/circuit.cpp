@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.7 2004-02-01 22:36:03 ela Exp $
+ * $Id: circuit.cpp,v 1.8 2004-02-17 15:30:57 ela Exp $
  *
  */
 
@@ -37,18 +37,20 @@
 #include "property.h"
 #include "circuit.h"
 #include "substrate.h"
+#include "operatingpoint.h"
 #include "component_id.h"
 
 // Constructor creates an unnamed instance of the circuit class.
 circuit::circuit () : object () {
   size = 0;
-  data = NULL;
+  MatrixS = MatrixY = NULL;
   nodes = NULL;
   port = 0;
   org = 1;
   subst = NULL;
   source = 0;
   nSources = 0;
+  oper = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -56,13 +58,15 @@ circuit::circuit () : object () {
    certain number of ports. */
 circuit::circuit (int s) : object () {
   size = s;
-  data = new complex[s * s];
+  MatrixS = new complex[s * s];
+  MatrixY = new complex[s * s];
   nodes = new node[s];
   port = 0;
   org = 1;
   subst = NULL;
   source = 0;
   nSources = 0;
+  oper = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -74,13 +78,11 @@ circuit::circuit (const circuit & c) : object (c) {
   org = c.org;
   type = c.type;
   subst = c.subst;
-  Y = c.Y;
   source = c.source;
   nSources = c.nSources;
-  nodes = new node[size];
-  data = new complex[size * size];
 
   // copy each node and set its circuit to the current circuit object
+  nodes = new node[size];
   for (int i = 0; i < size; i++) {
     node * n = new node (c.nodes[i]);
     n->setCircuit (this);
@@ -88,17 +90,22 @@ circuit::circuit (const circuit & c) : object (c) {
     delete n;
   }
   // copy each s parameter
-  for (int i = 0; i < size * size; i++) {
-    complex * z = new complex (c.data[i]);
-    data[i] = * z;
-    delete z;
-  }
+  MatrixS = new complex[size * size];
+  memcpy (MatrixS, c.MatrixS, size * size * sizeof (complex));
+  // copy each G-MNA entry
+  MatrixY = new complex[size * size];
+  memcpy (MatrixY, c.MatrixY, size * size * sizeof (complex));
+
+  // copy operating points
+  copyOperatingPoints (c.oper);
 }
 
 // Destructor deletes a circuit object.
 circuit::~circuit () {
-  delete[] data;
+  delete[] MatrixS;
+  delete[] MatrixY;
   delete[] nodes;
+  deleteOperatingPoints ();
 }
 
 /* This function sets the name and port number of one of the circuit's
@@ -238,4 +245,95 @@ complex circuit::getV (int port) {
 // Sets the circuits voltage value at the given port.
 void circuit::setV (int port, complex z) {
   MatrixV[port - 1] = z;
+}
+
+/* Returns the circuits G-MNA matrix value depending on the port
+   numbers. */
+complex circuit::getY (int r, int c) {
+  return MatrixY[(r - 1) * size + c - 1];
+}
+
+/* Sets the circuits G-MNA matrix value depending on the port
+   numbers. */
+void circuit::setY (int r, int c, complex y) {
+  MatrixY[(r - 1) * size + c - 1] = y;
+}
+
+/* Returns the circuits G-MNA matrix value depending on the port
+   numbers. */
+nr_double_t circuit::getG (int r, int c) {
+  return real (MatrixY[(r - 1) * size + c - 1]);
+}
+
+/* Sets the circuits G-MNA matrix value depending on the port
+   numbers. */
+void circuit::setG (int r, int c, nr_double_t y) {
+  MatrixY[(r - 1) * size + c - 1] = y;
+}
+
+/* This function adds a operating point consisting of a key and a
+   value to the circuit. */
+void circuit::addOperatingPoint (char * n, nr_double_t val) {
+  operatingpoint * p = new operatingpoint (n, val);
+  p->setNext (oper);
+  oper = p;
+}
+
+/* Returns the requested operating point value which has been
+   previously added as its double representation.  If there is no such
+   operating point the function returns zero. */
+nr_double_t circuit::getOperatingPoint (char * n) {
+  operatingpoint * p = oper->findOperatingPoint (n);
+  if (p != NULL) return p->getValue ();
+  return 0.0;
+}
+
+/* This function sets the operating point specified by the given name
+   to the value passed to the function. */
+void circuit::setOperatingPoint (char * n, nr_double_t val) {
+  operatingpoint * p = oper->findOperatingPoint (n);
+  if (p != NULL)
+    p->setValue (val);
+  else
+    addOperatingPoint (n, val);
+}
+
+/* The function checks whether the circuit has got a certain operating
+   point value.  If so it returns non-zero, otherwise it returns
+   zero. */
+int circuit::hasOperatingPoint (char * n) {
+  return (oper && oper->findOperatingPoint (n)) ? 1 : 0;
+}
+
+/* This function copies all properties in the given operating point
+   list into a circuit object. */
+void circuit::copyOperatingPoints (operatingpoint * org) {
+  operatingpoint * p;
+  oper = NULL;
+  while (org != NULL) {
+    p = new operatingpoint (*org);
+    p->setNext (oper);
+    oper = p;
+    org = org->getNext ();
+  }
+}
+
+// Deletes all operating points of a circuit object.
+void circuit::deleteOperatingPoints (void) {
+  operatingpoint * n;
+  for (operatingpoint * p = oper; p != NULL; p = n) {
+    n = p->getNext ();
+    delete p;
+  }
+  oper = NULL;
+}
+
+// Returns the S-parameter at the given matrix position.
+complex circuit::getS (int x, int y) { 
+  return MatrixS[x - 1 + (y - 1) * size];
+}
+
+// Sets the S-parameter at the given matrix position.
+void circuit::setS (int x, int y, complex z) {
+  MatrixS[x - 1 + (y - 1) * size] = z;
 }

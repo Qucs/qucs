@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.1 2004-01-13 23:23:01 ela Exp $
+ * $Id: phaseshifter.cpp,v 1.2 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -28,24 +28,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-#ifndef M_PI
-#define M_PI 3.1415926535897932384626433832795
-#endif
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "constants.h"
 #include "phaseshifter.h"
 
 phaseshifter::phaseshifter () : circuit (2) {
   type = CIR_PHASESHIFTER;
 }
 
-void phaseshifter::calcS (nr_double_t frequency) {
+void phaseshifter::calcSP (nr_double_t) {
   nr_double_t p = getPropertyDouble ("phi");
   p = p * M_PI / 180.0;
   nr_double_t z = getPropertyDouble ("Zref");

@@ -1,7 +1,7 @@
 /*
  * matrix.cpp - matrix class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.3 2004-02-01 22:36:03 ela Exp $
+ * $Id: matrix.cpp,v 1.4 2004-02-17 15:30:57 ela Exp $
  *
  */
 
@@ -71,6 +71,18 @@ matrix::matrix (const matrix & m) {
     data[i] = * z;
     delete z;
   }
+}
+
+/* The assignment copy constructor creates a new instance based on the
+   given matrix object. */
+const matrix& matrix::operator=(const matrix & m) {
+  if (&m != this) {
+    rows = m.rows;
+    cols = m.cols;
+    data = new complex[rows * cols];
+    memcpy (data, m.data, sizeof (complex) * rows * cols);
+  }
+  return *this;
 }
 
 // Destructor deletes a matrix object.
@@ -225,7 +237,7 @@ complex adjoint (matrix& a, int u, int v) {
   }
   complex z = det (*res);
   delete res;
-  return ((u + v) % 2) ? -z : z;
+  return ((u + v) & 1) ? -z : z;
 }
 
 // Compute determinant of the given matrix.
@@ -282,4 +294,28 @@ matrix& stoy (matrix& s, complex z0 = 50.0) {
   y = inverse (gref) * inverse (s * zref + conj (zref)) * (e - s) * gref;
   res = new matrix (y);
   return *res;
+}
+
+// The function swaps the given rows with each other.
+void matrix::exchangeRows (int r1, int r2) {
+  assert (r1 <= rows && r2 <= rows);
+  complex * s = new complex[cols];
+  int len = sizeof (complex) * cols;
+  r1--; r2--;
+  memcpy (s, &data[r1 * cols], len);
+  memcpy (&data[r1 * cols], &data[r2 * cols], len);
+  memcpy (&data[r2 * cols], s, len);
+  delete s;
+}
+
+// The function swaps the given columns with each other.
+void matrix::exchangeCols (int c1, int c2) {
+  assert (c1 <= cols && c2 <= cols);
+  complex s;
+  c1--; c2--;
+  for (int r = 0; r < rows * cols; r += cols) {
+    s = data[r + c1];
+    data[r + c1] = data[r + c2];
+    data[r + c2] = s;
+  }
 }

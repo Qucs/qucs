@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.c,v 1.7 2004-02-13 20:31:45 ela Exp $
+ * $Id: check_netlist.c,v 1.8 2004-02-17 15:30:57 ela Exp $
  *
  */
 
@@ -86,6 +86,8 @@ struct definition definition_available[] =
     { "Idc", 2, 0, { "I", NULL }, { NULL } },
     /* AC voltage source */
     { "Vac", 2, 0, { "U", "f", NULL }, { NULL } },
+    /* AC current source */
+    { "Iac", 2, 0, { "I", "f", NULL }, { NULL } },
     /* phase shifter */
     { "PShift", 2, 0, { "phi", "Zref", NULL }, { NULL } },
     /* gyrator */

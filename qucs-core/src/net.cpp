@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.6 2004-02-13 20:31:45 ela Exp $
+ * $Id: net.cpp,v 1.7 2004-02-17 15:30:57 ela Exp $
  *
  */
 
@@ -69,6 +69,12 @@ net::net (char * n) : object (n) {
 
 // Destructor deletes the net class object.
 net::~net () {
+  circuit * n;
+  for (circuit * c = root; c != NULL; c = n) {
+    n = (circuit *) c->getNext ();
+    delete c;
+  }
+  root = NULL;
 }
 
 /* The copy constructor creates a new instance of the net class based
@@ -128,7 +134,6 @@ void net::removeCircuit (circuit * c) {
   }
   // really destroy the circuit object
   else delete c;
-
 }
 
 /* This function prepends the given analysis to the list of registered

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.7 2004-02-13 20:31:45 ela Exp $
+ * $Id: dcsolver.cpp,v 1.8 2004-02-17 15:30:57 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@ using namespace std;
 #include "nodelist.h"
 #include "strlist.h"
 #include "matrix.h"
+#include "eqnsys.h"
 #include "component_id.h"
 #include "dcsolver.h"
 
@@ -93,7 +94,7 @@ void dcsolver::solve (void) {
 #endif
   createNodelist ();
   nlist->assignNodes ();
-#if DEBUG
+#if DEBUG && 0
   logprint (LOG_STATUS, "NodeList:\n");
   nlist->print ();
 #endif
@@ -182,6 +183,9 @@ void dcsolver::createMatrix (void) {
   z = new matrix (N + M, 1);
   createIMatrix ();
   createEMatrix ();
+
+  // Create empty solution vector.
+  if (x == NULL) x = new matrix (N + M, 1);
 }
 
 /* The B matrix is an MxN matrix with only 0, 1 and -1 elements.  Each
@@ -283,9 +287,10 @@ void dcsolver::createDMatrix (void) {
    have contribute to one entry in the G matrix -- at the appropriate
    location on the diagonal. */
 void dcsolver::createGMatrix (void) {
-  int N = countNodes ();
+  int pr, pc, N = countNodes ();
   nr_double_t g;
   struct nodelist_t * nr, * nc;
+  circuit * cir;
 
   // run the calculation of the conductance for each circuit
   calc ();
@@ -300,16 +305,23 @@ void dcsolver::createGMatrix (void) {
       // diagonal matrix element ?
       if (c == r) {
 	// sum up the conductance of each connected circuit
-	for (int i = 0; i < nc->nNodes; i++)
-	  g += real (nc->nodes[i]->getCircuit()->getY ());
+	for (int i = 0; i < nc->nNodes; i++) {
+	  cir = nc->nodes[i]->getCircuit ();
+	  pc = pr = nc->nodes[i]->getPort ();
+	  g += cir->getG (pr, pc);
+	}
       }
       // off diagonal
       else {
 	// sum up negative conductance of each circuit in between both nodes
 	for (int a = 0; a < nc->nNodes; a++)
 	  for (int b = 0; b < nr->nNodes; b++)
-	    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ())
-	      g -= real (nc->nodes[a]->getCircuit()->getY ());
+	    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ()) {
+	      cir = nc->nodes[a]->getCircuit ();
+	      pc = nc->nodes[a]->getPort ();
+	      pr = nr->nodes[b]->getPort ();
+	      g += cir->getG (pr, pc);
+	    }
       }
       // put value into G matrix
       A->set (r, c, g);
@@ -384,17 +396,20 @@ circuit * dcsolver::findVoltageSource (int n) {
 /* The matrix equation Ax = z is solved by x = A^-1*z.  The function
    applies the operation to the previously generated matrices. */
 void dcsolver::runMNA (void) {
-#if DEBUG
+#if DEBUG && 0
   logprint (LOG_ERROR, "A =\n");
   A->print ();
 #endif
-#if DEBUG
+#if DEBUG && 0
   logprint (LOG_ERROR, "z =\n");
   z->print ();
 #endif
-  if (x != NULL) delete x;
-  x = new matrix (inverse (*A) * *z);
-#if DEBUG
+  eqnsys * e = new eqnsys ();
+  e->setAlgo (ALGO_GAUSS);
+  e->passEquationSys (A, x, z);
+  e->solve ();
+  delete e;
+#if DEBUG && 0
   logprint (LOG_ERROR, "x =\n");
   x->print ();
 #endif
@@ -457,21 +472,21 @@ void dcsolver::saveNodeVoltages (void) {
 }
 
 
-/* Goes through the list of circuit objects and runs its calcY()
+/* Goes through the list of circuit objects and runs its calcDC()
    function. */
 void dcsolver::calc (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->calcY ();
+    c->calcDC ();
   }
 }
 
-/* Goes through the list of circuit objects and runs its initY()
+/* Goes through the list of circuit objects and runs its initDC()
    function. */
 void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initY ();
+    c->initDC ();
   }
 }
 

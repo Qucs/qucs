@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.cpp,v 1.3 2004-01-13 23:23:01 ela Exp $
+ * $Id: circulator.cpp,v 1.4 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@ circulator::circulator () : circuit (3) {
   type = CIR_CIRCULATOR;
 }
 
-void circulator::calcS (nr_double_t frequency) {
+void circulator::calcSP (nr_double_t) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t z3 = getPropertyDouble ("Z3");

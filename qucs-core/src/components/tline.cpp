@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.cpp,v 1.3 2004-02-01 13:10:38 margraf Exp $
+ * $Id: tline.cpp,v 1.4 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -28,25 +28,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-#ifndef M_PI
-#define M_PI 3.1415926535897932384626433832795
-#endif
-#define C 299792458.0 /* speed of light */
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "constants.h"
 #include "tline.h"
 
 tline::tline () : circuit (2) {
   type = CIR_TLINE;
 }
 
-void tline::calcS (nr_double_t frequency) {
+void tline::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t r = (z - z0) / (z + z0);

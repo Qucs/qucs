@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.4 2004-02-14 15:28:39 ela Exp $
+ * $Id: strafo.cpp,v 1.5 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@ strafo::strafo () : circuit (6) {
   setVoltageSources (2);
 }
 
-void strafo::calcS (nr_double_t frequency) {
+void strafo::calcSP (nr_double_t) {
 
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
@@ -68,7 +68,7 @@ void strafo::calcS (nr_double_t frequency) {
   setS (6, 4, z6);     setS (6, 5, -z6);    setS (6, 6, z1);
 }
 
-void strafo::calcY (void) {
+void strafo::calcDC (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
 

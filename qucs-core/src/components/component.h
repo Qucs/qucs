@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.5 2004-02-09 18:27:42 ela Exp $
+ * $Id: component.h,v 1.6 2004-02-17 15:30:58 ela Exp $
  *
  */
 
@@ -55,6 +55,7 @@
 #include "vdc.h"
 #include "idc.h"
 #include "vac.h"
+#include "iac.h"
 #include "phaseshifter.h"
 #include "gyrator.h"
 #include "tline.h"

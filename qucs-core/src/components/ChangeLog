@@ -1,3 +1,16 @@
+2004-02-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* iac.cpp (iac): New component representing the AC current
+	source.
+
+	* pac.cpp: Implemented DC calculation.
+
+2004-02-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* diode.cpp, resistor.cpp: Changed Y matrix (G-MNA) entries.
+	Added S-parameter calculation to diode model including the 
+	operating point computation.
+
 2004-02-14  Stefan Jahn  <stefan@at66hft.ee.tu-berlin.de>
 
 	* gyrator.cpp: Fixed MNA matrices for gyrator.

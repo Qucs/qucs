@@ -1,7 +1,7 @@
 /*
- * isolator.h - isolator class definitions
+ * iac.cpp - AC current source class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,28 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.h,v 1.3 2004-02-17 15:30:58 ela Exp $
+ * $Id: iac.cpp,v 1.1 2004-02-17 15:30:58 ela Exp $
  *
  */
 
-#ifndef __ISOLATOR_H__
-#define __ISOLATOR_H__
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
-class isolator : public circuit
-{
- public:
-  isolator ();
-  void calcSP (nr_double_t);
-};
+#include <stdio.h>
+#include <stdlib.h>
 
-#endif /* __ISOLATOR_H__ */
+#include "complex.h"
+#include "object.h"
+#include "node.h"
+#include "circuit.h"
+#include "component_id.h"
+#include "iac.h"
+
+iac::iac () : circuit (2) {
+  setS (1, 1, 1.0);
+  setS (1, 2, 0.0);
+  setS (2, 1, 0.0);
+  setS (2, 2, 1.0);
+  type = CIR_IAC;
+}
