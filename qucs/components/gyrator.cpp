@@ -48,8 +48,8 @@ Gyrator::Gyrator()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "gyrator";
-  Model = "gyrator";
+  Sign  = "Gyrator";
+  Model = "Gyrator";
   Name  = "X";
 
   Props.append(new Property("R", "50 Ohm", true, "gyrator ratio"));
