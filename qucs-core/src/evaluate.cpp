@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.24 2005-02-14 19:56:43 raimi Exp $
+ * $Id: evaluate.cpp,v 1.25 2005-02-28 09:28:45 raimi Exp $
  *
  */
 
@@ -58,9 +58,9 @@ using namespace qucs;
 #define INT(con) ((int) D (con))
 
 // Throws a math exception.
-#define THROW_MATH_EXCEPTION(txt,args...) do { \
+#define THROW_MATH_EXCEPTION(txt) do { \
   qucs::exception * e = new qucs::exception (EXCEPTION_MATH); \
-  e->setText (txt, ## args); throw_exception (e); } while (0)
+  e->setText (txt); throw_exception (e); } while (0)
 
 /* The QUCS_CONCAT macros create a new concatenated symbol for the
    compiler in a portable way.  It is essential to use these macros
@@ -1654,8 +1654,10 @@ void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
     vres = new vector (dsize * size);
     int len = deps ? solver::getDataSize (deps->get (didx)) : v->getSize ();
     if (i < 0 || i >= len) {
-      THROW_MATH_EXCEPTION ("vector index %d (%d) out of bounds [%d,%d]",
-			    idx, i, 0, len - 1);
+      char txt[256];
+      sprintf (txt, "vector index %d (%d) out of bounds [%d,%d]",
+	       idx, i, 0, len - 1);
+      THROW_MATH_EXCEPTION (txt);
     } else {
       int k, n;
       for (n = k = 0; k < dsize * size; n += skip, k++) {
@@ -1685,8 +1687,10 @@ constant * evaluate::index_v_2 (constant * args) {
   int skip = 1, size = 1;
   res->v = new vector (*v);
   if (!EQUATION_HAS_DEPS (args->getResult (0), 2)) {
-    THROW_MATH_EXCEPTION ("invalid number of vector indices (%d > %d)", 2,
-			  EQUATION_DEPS (args->getResult (0)));
+    char txt[256];
+    sprintf (txt, "invalid number of vector indices (%d > %d)", 2,
+	     EQUATION_DEPS (args->getResult (0)));
+    THROW_MATH_EXCEPTION (txt);
     return res;
   }
   extract_vector (args, 1, skip, size, res);
@@ -2291,5 +2295,5 @@ struct application_t eqn::applications[] = {
   { "Mu2",    TAG_DOUBLE,  evaluate::mu2_m,     1, { TAG_MATRIX } },
   { "Mu2",    TAG_VECTOR,  evaluate::mu2_mv,    1, { TAG_MATVEC } },
 
-  { NULL, 0, NULL, 0, { } /* end of list */ }
+  { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };

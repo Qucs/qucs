@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.6 2005-02-24 21:54:21 raimi Exp $
+ * $Id: cpwline.cpp,v 1.7 2005-02-28 09:28:48 raimi Exp $
  *
  */
 
@@ -50,8 +50,12 @@
 
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
+# ifndef isnan
 # define isnan(x)  _isnan(x)
+# endif
+# ifndef isinf
 # define isinf(x)  (!_finite(x) && !_isnan(x))
+# endif
 #endif
 
 cpwline::cpwline () : circuit (2) {

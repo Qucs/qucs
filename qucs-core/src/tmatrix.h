@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.8 2005-02-08 23:08:35 raimi Exp $
+ * $Id: tmatrix.h,v 1.9 2005-02-28 09:28:45 raimi Exp $
  *
  */
 
@@ -32,7 +32,7 @@ class tmatrix;
 template <class nr_type_t>
 tmatrix<nr_type_t> inverse (tmatrix<nr_type_t>);
 template <class nr_type_t>
-tmatrix<nr_type_t> eye (int);
+tmatrix<nr_type_t> teye (int);
 template <class nr_type_t>
 tmatrix<nr_type_t> operator * (tmatrix<nr_type_t>, tmatrix<nr_type_t>);
 template <class nr_type_t>
@@ -62,9 +62,9 @@ class tmatrix
   void print (void);
 
   // some basic matrix operations
-  friend tmatrix inverse<> (tmatrix);
-  friend tmatrix eye<nr_type_t> (int);
 #ifndef _MSC_VER
+  friend tmatrix inverse<> (tmatrix);
+  friend tmatrix teye<nr_type_t> (int);
   friend tmatrix operator *<> (tmatrix, tmatrix);
   friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
   friend tvector<nr_type_t> operator *<> (tvector<nr_type_t>, tmatrix);
