@@ -42,6 +42,8 @@ public:
   bool    pasteFromClipboard(QTextStream*, QPtrList<Element>*);
   QString createUndoString(char);
   bool    rebuild(QString *);
+  QString createSymbolUndoString(char);
+  bool    rebuildSymbol(QString *);
 
   bool  createSubNetlist(QTextStream*);
   bool  createNetlist(QFile*);
