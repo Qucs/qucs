@@ -1,7 +1,7 @@
 /*
  * dataset.cpp - dataset class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: dataset.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -130,6 +130,27 @@ void dataset::appendVariable (vector * v) {
   }
   v->setNext (NULL);
 }
+
+/* This function assigns dependency entries to variable vectors which
+   do have the specified origin. */
+void dataset::assignDependency (char * origin, char * n) {
+  for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
+    if (v->getOrigin () && origin && !strcmp (v->getOrigin (), origin)) {
+      strlist * deplist = v->getDependencies ();
+      if (deplist != NULL) {
+	if (!deplist->contains (n)) {
+	  deplist->append (n);
+	}
+      }
+      else {
+	deplist = new strlist ();
+	deplist->add (n);
+	v->setDependencies (deplist);
+      }
+    }
+  }
+}
+
 
 /* The function goes through the list of dependencies in the dataset
    and returns the vector specified by the given name.  Otherwise the

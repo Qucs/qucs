@@ -1,7 +1,7 @@
 /*
  * property.cpp - generic property class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.cpp,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: property.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include <math.h>
 
 #include "complex.h"
+#include "variable.h"
 #include "property.h"
 
 // Constructor creates an unnamed instance of the property class.
@@ -40,31 +41,44 @@ property::property () {
   name = NULL;
   value = 0.0;
   str = NULL;
+  var = NULL;
   next = NULL;
 }
 
 // Constructor creates a named instance of the property class.
 property::property (char * n) {
-  name = strdup (n);
+  name = n ? strdup (n) : NULL;
   value = 0.0;
   str = NULL;
+  var = NULL;
   next = NULL;
 }
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (char * n, char * val) {
-  name = strdup (n);
-  str = strdup (val);
+  name = n ? strdup (n) : NULL;
+  str = val ? strdup (val) : NULL;
   value = 0.0;
+  var = NULL;
   next = NULL;
 }
 
 /* This full qualified constructor creates an instance of the property
    class containing both the key and the value of the property. */
 property::property (char * n, nr_double_t val) {
-  name = strdup (n);
+  name = n ? strdup (n) : NULL;
   value = val;
+  str = NULL;
+  next = NULL;
+}
+
+/* This full qualified constructor creates an instance of the property
+   class containing both the key and the value of the property. */
+property::property (char * n, variable * val) {
+  name = n ? strdup (n) : NULL;
+  var = val;
+  value = 0.0;
   str = NULL;
   next = NULL;
 }
@@ -73,25 +87,23 @@ property::property (char * n, nr_double_t val) {
    based on the given property object. */
 property::property (const property & p) {
   name = str = NULL;
-  if (p.name)
-    name = strdup (p.name);
-  if (p.str)
-    str = strdup (p.str);
+  if (p.name) name = strdup (p.name);
+  if (p.str) str = strdup (p.str);
   value = p.value;
   next = p.next;
+  var = p.var;
 }
 
 // Destructor deletes the property object.
 property::~property () {
-  free (name);
-  free (str);
+  if (name) free (name);
+  if (str) free (str);
 }
 
 // Sets the name of the property.
 void property::setName (char * n) {
-  if (name)
-    free (name);
-  name = strdup (n);
+  if (name) free (name);
+  name = n ? strdup (n) : NULL;
 }
 
 // Returns the name of the property.
@@ -113,15 +125,18 @@ property * property::findProperty (char * n) {
 
 // Returns the property's value as string.
 char * property::getString (void) {
+  //if (var != NULL) return var->getString ();
   return str;
 }
 
 // Returns the property's value as double.
 nr_double_t property::getDouble (void) {
+  if (var != NULL) return var->getDouble ();
   return value;
 }
 
 // Returns the property's value as integer.
 int property::getInteger (void) {
+  if (var != NULL) return var->getInteger ();
   return (int) floor (value);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.6 2004/02/09 18:26:08 ela Exp $
+ * $Id: input.cpp,v 1.7 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -40,6 +40,9 @@ using namespace std;
 #include "analysis.h"
 #include "spsolver.h"
 #include "dcsolver.h"
+#include "parasweep.h"
+#include "variable.h"
+#include "environment.h"
 #include "input.h"
 #include "check_netlist.h"
 
@@ -47,6 +50,7 @@ using namespace std;
 input::input () : object () {
   fd = stdin;
   subnet = NULL;
+  env = NULL;
 }
 
 // Constructor creates an named instance of the input class.
@@ -57,6 +61,7 @@ input::input (char * file) : object (file) {
     fd = stdin;
   }
   subnet = NULL;
+  env = NULL;
 }
 
 // Destructor deletes an input object.
@@ -116,17 +121,27 @@ void input::factory (void) {
       if ((a = createAnalysis (def->type)) != NULL) {
 	// add the properties to analysis
 	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
-	  if (pairs->value->ident)
+	  if (pairs->value->ident) {
+	    if (pairs->value->var) {
+	      // put new parameter sweep variable into environment
+	      variable * v = new variable (pairs->value->ident);
+	      env->addVariable (v);
+	    }
 	    a->addProperty (pairs->key, pairs->value->ident);
-	  else
+	  } else {
 	    a->addProperty (pairs->key, pairs->value->value);
+	  }
 	a->setName (def->instance);
 	subnet->insertAnalysis (a);
       }
     }
+  }
+
+  // go through the list of input definitions
+  for (def = definition_root; def != NULL; def = def->next) {
 
     // handle component definitions
-    else {
+    if (!def->action) {
       c = createCircuit (def->type);
       o = (object *) c;
       c->setName (def->instance);
@@ -138,10 +153,18 @@ void input::factory (void) {
 
       // add the properties to circuit
       for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
-	if (pairs->value->ident)
-	  o->addProperty (pairs->key, pairs->value->ident);
-	else
+	if (pairs->value->ident) {
+	  if (pairs->value->var) {
+	    // at this stage it should be ensured that the variable is
+	    // already in the root environment
+	    variable * v = env->getVariable (pairs->value->ident);
+	    o->addProperty (pairs->key, v);
+	  } else {
+	    o->addProperty (pairs->key, pairs->value->ident);
+	  }
+	} else {
 	  o->addProperty (pairs->key, pairs->value->value);
+	}
 
       // insert the circuit into the netlist object
       subnet->insertCircuit (c);
@@ -210,6 +233,8 @@ analysis * input::createAnalysis (char * type) {
     return new spsolver ();
   else if (!strcmp (type, "DC"))
     return new dcsolver ();
+  else if (!strcmp (type, "SW"))
+    return new parasweep ();
 
   logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
   return NULL;

@@ -1,7 +1,7 @@
 /*
  * vector.h - vector class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: vector.h,v 1.2 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -45,6 +45,8 @@ class vector : public object
   void reverse (void);
   strlist * getDependencies (void) { return dependencies; }
   void setDependencies (strlist * s) { dependencies = s; }
+  void setOrigin (char *);
+  char * getOrigin (void);
 
   // operator functions
   friend vector * operator + (vector &, vector &);
@@ -76,6 +78,7 @@ class vector : public object
   int capacity;
   strlist * dependencies;
   complex * data;
+  char * origin;
 };
 
 #endif /* __VECTOR_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: complex.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -127,7 +127,7 @@ complex operator+(const nr_double_t r1, const complex z2) {
   return complex (r1 + z2.r, z2.i);
 }
 
-complex  operator+(const complex z1, const nr_double_t r2) {
+complex operator+(const complex z1, const nr_double_t r2) {
   return complex (z1.r + r2, z1.i);
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.3 2003/12/26 14:04:07 ela Exp $
+ * $Id: net.h,v 1.4 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class circuit;
 class node;
 class analysis;
 class dataset;
+class environment;
 
 class net : public object
 {
@@ -56,11 +57,15 @@ class net : public object
   int getReduced (void) { return reduced; }
   void setReduced (int r) { reduced = r; }
   int getVoltageSources (void) { return nSources; }
+  void orderAnalysis (void);
+  environment * getEnv (void) { return env; }
+  void setEnv (environment * e) { env = e; }
 
  private:
   circuit * drop;
   circuit * root;
   analysis * actions;
+  environment * env;
   int nPorts;
   int nSources;
   int nCircuits;

@@ -1,7 +1,7 @@
 /*
  * analysis.h - analysis class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.h,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: analysis.h,v 1.3 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -27,6 +27,18 @@
 
 class dataset;
 class net;
+class object;
+class environment;
+
+enum analysis_type {
+  ANALYSIS_UNKNOWN = -1,
+  ANALYSIS_SWEEP,
+  ANALYSIS_DC,
+  ANALYSIS_AC,
+  ANALYSIS_HBALANCE,
+  ANALYSIS_TRANSIENT,
+  ANALYSIS_SPARAMETER
+};
 
 class analysis : public object
 {
@@ -40,10 +52,19 @@ class analysis : public object
   void setData (dataset * d) { data = d; }
   net * getNet (void) { return subnet; }
   void setNet (net * netlist) { subnet = netlist; }
+  environment * getEnv (void) { return env; }
+  void setEnv (environment * e) { env = e; }
+  analysis * getAnalysis (void) { return actions; }
+  void setAnalysis (analysis * a) { actions = a; }
+  int getType (void) { return type; }
+  void setType (int t) { type = t; }
 
  protected:
+  int type;
   net * subnet;
   dataset * data;
+  environment * env;
+  analysis * actions;
 };
 
 #endif /* __ANALYSIS_H__ */

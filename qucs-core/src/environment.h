@@ -1,7 +1,7 @@
 /*
- * input.h - input netlist class definitions
+ * environment.h - variable environment class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,37 +18,32 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.3 2004/02/13 20:31:45 ela Exp $
+ * $Id: environment.h,v 1.1 2004/02/13 20:31:45 ela Exp $
  *
  */
 
-#ifndef __INPUT_H__
-#define __INPUT_H__
+#ifndef __ENVIRONMENT_H__
+#define __ENVIRONMENT_H__
 
-class net;
-class circuit;
-class analysis;
-class environment;
+class variable;
 
-class input : public object
+class environment
 {
  public:
-  input ();
-  input (char *);
-  ~input ();
-  int netlist (net *);
-  FILE * getFile (void) { return fd; }
-  void setFile (FILE * f) { fd = f; }
-  void factory (void);
-  circuit * createCircuit (char *);
-  analysis * createAnalysis (char *);
-  environment * getEnv (void) { return env; }
-  void setEnv (environment * e) { env = e; }
+  environment ();
+  environment (char *);
+  environment (const environment &);
+  virtual ~environment ();
+  void setName (char *);
+  char * getName (void);
+  void copyVariables (variable *);
+  void deleteVariables (void);
+  void addVariable (variable *);
+  variable * getVariable (char *);
 
  private:
-  FILE * fd;
-  net * subnet;
-  environment * env;
+  char * name;
+  variable * root;
 };
 
-#endif /* __INPUT_H__ */
+#endif /* __ENVIRONMENT_H__ */

@@ -1,7 +1,7 @@
 /*
  * ucs.cpp - main program implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.1 2003/12/21 13:25:38 ela Exp $
+ * $Id: ucs.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
  *
  */
 
@@ -36,7 +36,7 @@ using namespace std;
 #include "net.h"
 #include "input.h"
 #include "dataset.h"
-#include "matrix.h"
+#include "environment.h"
 
 int main (int argc, char ** argv) {
 
@@ -45,6 +45,7 @@ int main (int argc, char ** argv) {
   input * in;
   circuit * gnd;
   dataset * out;
+  environment * root;
 
   loginit ();
 
@@ -69,9 +70,16 @@ int main (int argc, char ** argv) {
     }
   }
 
+  // create root environment
+  root = new environment ("root");
+
   // create netlist object and input
   subnet = new net ("subnet");
   in = infile ? new input (infile) : new input ();
+
+  // pass root environment to netlist object and input
+  subnet->setEnv (root);
+  in->setEnv (root);
   
   // get input netlist
   if (in->netlist (subnet) != 0)
