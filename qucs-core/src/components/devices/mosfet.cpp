@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.9 2004/09/25 21:09:46 ela Exp $
+ * $Id: mosfet.cpp,v 1.10 2004/10/04 17:17:45 ela Exp $
  *
  */
 
@@ -561,4 +561,42 @@ void mosfet::initAC (void) {
 
 void mosfet::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
+}
+
+#define qgdState 0 // gate-drain charge state
+#define cgdState 1 // gate-drain current state
+#define qgsState 2 // gate-source charge state
+#define cgsState 3 // gate-source current state
+#define qbdState 4 // bulk-drain charge state
+#define cbdState 5 // bulk-drain current state
+#define qbsState 6 // bulk-source charge state
+#define cbsState 7 // bulk-source current state
+#define qgbState 8 // gate-bulk charge state
+#define cgbState 9 // gate-bulk current state
+
+void mosfet::initTR (void) {
+  setStates (10);
+  initDC ();
+}
+
+void mosfet::calcTR (nr_double_t) {
+  calcDC ();
+  calcOperatingPoints ();
+
+  nr_double_t Cgd = getOperatingPoint ("Cgd");
+  nr_double_t Cgs = getOperatingPoint ("Cgs");
+  nr_double_t Cbd = getOperatingPoint ("Cbd");
+  nr_double_t Cbs = getOperatingPoint ("Cbs");
+  nr_double_t Cgb = getOperatingPoint ("Cgb");
+  nr_double_t Ugd = getOperatingPoint ("Vgd");
+  nr_double_t Ugs = getOperatingPoint ("Vgs");
+  nr_double_t Ubd = getOperatingPoint ("Vbd");
+  nr_double_t Ubs = getOperatingPoint ("Vbs");
+  nr_double_t Ugb = Ugs - Ubs;
+
+  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd);
+  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs);
+  transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd);
+  transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs);
+  transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb);
 }

@@ -215,6 +215,7 @@ These kind of differential equation systems are called stiff.
 
 For a polynom of order $k$ the number of required coefficients is
 \begin{equation}
+\label{eq:MultiStepCondition}
 2p + 3 \ge k + 1
 \end{equation}
 
@@ -231,6 +232,11 @@ This can be achieved by the following equation system
 \sum^p_{i=1} (-i)^j a_i + j \sum^p_{i=-1} (-i)^{j-1} b_i = 1 & \textrm{ for } j = 1\ldots k
 \end{split}
 \end{equation}
+
+The different linear multistep integration methods which can be
+constructed by the equation system \eqref{eq:MultiStepSys} vary in the
+equality condition corresponding with \eqref{eq:MultiStepCondition}
+and the choice of coefficients which are set to zero.
 
 \subsubsection{Gear}
 %\addcontentsline{toc}{subsubsection}{Gear}
@@ -436,7 +442,8 @@ the complex plane are visualized in the following figure.
 
 For values of $h\lambda$ in region II the numerical method must be
 stable and accurate, in region I accurate and in region III only
-stable.  Outside these region is of no particular interest.
+stable.  The area outside the specified regions are of no particular
+interest.
 
 \addvspace{12pt}
 
