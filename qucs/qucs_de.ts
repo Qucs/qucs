@@ -220,6 +220,117 @@
     </message>
 </context>
 <context>
+    <name>FillDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Line Color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>      Line Width: </source>
+        <translation type="unfinished">Linienbreite: </translation>
+    </message>
+    <message>
+        <source>Line Style: </source>
+        <translation type="unfinished">Linienstil: </translation>
+    </message>
+    <message>
+        <source>solid line</source>
+        <translation type="unfinished">durchgezogene Linie</translation>
+    </message>
+    <message>
+        <source>dash line</source>
+        <translation type="unfinished">gestrichelte Linie</translation>
+    </message>
+    <message>
+        <source>dot line</source>
+        <translation type="unfinished">gepunktete Linie</translation>
+    </message>
+    <message>
+        <source>dash dot line</source>
+        <translation type="unfinished">Strich-Punkt-Linie</translation>
+    </message>
+    <message>
+        <source>dash dot dot line</source>
+        <translation type="unfinished">Strich-Punkt-Punkt-Linie</translation>
+    </message>
+    <message>
+        <source>Fill Color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill Style: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no filling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>solid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 1 (densest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 2 (densest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 3 (densest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 4 (densest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 5 (densest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 6 (densest)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 7 (least dense)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>horizontal line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vertical line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>crossed lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hatched backwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hatched forwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diagonal crossed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
@@ -2756,6 +2867,14 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     <message>
         <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
         <translation>Qucs-Dokumente (*.sch *.dpl);;Alle Dateien (*)</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

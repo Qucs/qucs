@@ -17,6 +17,8 @@
 
 #include "componentdialog.h"
 
+#include "../qucsview.h"
+
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qmessagebox.h>
@@ -319,6 +321,8 @@ void ComponentDialog::slotApplyInput()
 	Property(item->text(0), item->text(1), display, item->text(3)));
   }
   transfered = true;     // applied changed to the component itself
+
+  if(changed) ((QucsView*)parent())->viewport()->repaint();
 }
 
 // -------------------------------------------------------------------------

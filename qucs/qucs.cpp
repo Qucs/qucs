@@ -67,6 +67,7 @@ QucsApp::QucsApp()
 
   if(!loadSettings())
     resize(600,400);
+//  resize(maximumSize());
 
 
   initView();
@@ -117,8 +118,6 @@ bool QucsApp::loadSettings()
                                  resize(x,y); }
   }
   file.close();
-//  resize(600,400);
-//  resize(maximumSize());
   return true;
 }
 
@@ -230,14 +229,14 @@ void QucsApp::initView()
   // ---------------------------------------------------------------------
   readProjects();   // reads all projects and inserts them into the ListBox
 
-  view->Docs.append(new QucsDoc(WorkView, ""));  // creates a document called "untitled"
+  // creates a document called "untitled"
+  view->Docs.append(new QucsDoc(WorkView, ""));
 
-  // ...............................................................
-//  connect(view, SIGNAL(CompsSelected(bool)), this, SLOT(slotActivateCopy(bool)));
 }
 
 // ----------------------------------------------------------
-// Menu that appears if right mouse button is pressed on a file in the "Content" ListView.
+// Menu that appears if right mouse button is pressed on a file in the
+// "Content" ListView.
 void QucsApp::initCursorMenu()
 {
   ContentMenu = new QPopupMenu(Content);
@@ -432,6 +431,8 @@ bool QucsApp::gotoPage(const QString& Name)
   if(!d->load()) {    // load document if possible
     view->Docs.remove();
     view->Docs.at(No);
+    view->viewport()->repaint();
+    view->drawn = false;
     return false;
   }
 
@@ -460,7 +461,6 @@ void QucsApp::slotFileSettings()
 {
   SettingsDialog *d = new SettingsDialog(view->Docs.current(), this);
   d->exec();
-  delete d;
   view->viewport()->repaint();
   view->drawn = false;
 }
@@ -483,7 +483,7 @@ void QucsApp::slotFileOpen()
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(".", QucsFileFilter, this,
-                                           "", tr("Enter a Schematic Name"));
+					"", tr("Enter a Schematic Name"));
   if(!s.isEmpty())  gotoPage(s); //openDocument(s);
   else statusBar()->message(tr("Opening aborted"), 2000);
 
@@ -1250,80 +1250,144 @@ void QucsApp::slotSetCompView(int index)
   CompComps->clear();   // clear the IconView
   switch(index) {
     case COMBO_passive:
-      new QIconViewItem(CompComps, tr("Resistor"), QImage(BITMAPDIR "resistor.xpm"));
-      new QIconViewItem(CompComps, tr("Resistor US"), QImage(BITMAPDIR "resistor_us.xpm"));
-      new QIconViewItem(CompComps, tr("Capacitor"), QImage(BITMAPDIR "capacitor.xpm"));
-      new QIconViewItem(CompComps, tr("Inductor"), QImage(BITMAPDIR "inductor.xpm"));
-      new QIconViewItem(CompComps, tr("Ground"), QImage(BITMAPDIR "ground.xpm"));
-      new QIconViewItem(CompComps, tr("Subcircuit Port"), QImage(BITMAPDIR "port.xpm"));
-      new QIconViewItem(CompComps, tr("Transformer"), QImage(BITMAPDIR "transformer.xpm"));
-      new QIconViewItem(CompComps, tr("symmetric Transformer"), QImage(BITMAPDIR "symtrans.xpm"));
-      new QIconViewItem(CompComps, tr("dc Block"), QImage(BITMAPDIR "dcblock.xpm"));
-      new QIconViewItem(CompComps, tr("dc Feed"), QImage(BITMAPDIR "dcfeed.xpm"));
-      new QIconViewItem(CompComps, tr("Bias T"), QImage(BITMAPDIR "biast.xpm"));
-      new QIconViewItem(CompComps, tr("Attenuator"), QImage(BITMAPDIR "attenuator.xpm"));
-      new QIconViewItem(CompComps, tr("Isolator"), QImage(BITMAPDIR "isolator.xpm"));
-      new QIconViewItem(CompComps, tr("Circulator"), QImage(BITMAPDIR "circulator.xpm"));
-      new QIconViewItem(CompComps, tr("Gyrator"), QImage(BITMAPDIR "gyrator.xpm"));
-      new QIconViewItem(CompComps, tr("Phase Shifter"), QImage(BITMAPDIR "pshifter.xpm"));
-      new QIconViewItem(CompComps, tr("Current Probe"), QImage(BITMAPDIR "iprobe.xpm"));
+      new QIconViewItem(CompComps, tr("Resistor"),
+		QImage(BITMAPDIR "resistor.xpm"));
+      new QIconViewItem(CompComps, tr("Resistor US"),
+		QImage(BITMAPDIR "resistor_us.xpm"));
+      new QIconViewItem(CompComps, tr("Capacitor"),
+		QImage(BITMAPDIR "capacitor.xpm"));
+      new QIconViewItem(CompComps, tr("Inductor"),
+		QImage(BITMAPDIR "inductor.xpm"));
+      new QIconViewItem(CompComps, tr("Ground"),
+		QImage(BITMAPDIR "ground.xpm"));
+      new QIconViewItem(CompComps, tr("Subcircuit Port"),
+		QImage(BITMAPDIR "port.xpm"));
+      new QIconViewItem(CompComps, tr("Transformer"),
+		QImage(BITMAPDIR "transformer.xpm"));
+      new QIconViewItem(CompComps, tr("symmetric Transformer"),
+		QImage(BITMAPDIR "symtrans.xpm"));
+      new QIconViewItem(CompComps, tr("dc Block"),
+		QImage(BITMAPDIR "dcblock.xpm"));
+      new QIconViewItem(CompComps, tr("dc Feed"),
+		QImage(BITMAPDIR "dcfeed.xpm"));
+      new QIconViewItem(CompComps, tr("Bias T"),
+		QImage(BITMAPDIR "biast.xpm"));
+      new QIconViewItem(CompComps, tr("Attenuator"),
+		QImage(BITMAPDIR "attenuator.xpm"));
+      new QIconViewItem(CompComps, tr("Isolator"),
+		QImage(BITMAPDIR "isolator.xpm"));
+      new QIconViewItem(CompComps, tr("Circulator"),
+		QImage(BITMAPDIR "circulator.xpm"));
+      new QIconViewItem(CompComps, tr("Gyrator"),
+		QImage(BITMAPDIR "gyrator.xpm"));
+      new QIconViewItem(CompComps, tr("Phase Shifter"),
+		QImage(BITMAPDIR "pshifter.xpm"));
+      new QIconViewItem(CompComps, tr("Current Probe"),
+		QImage(BITMAPDIR "iprobe.xpm"));
       break;
     case COMBO_Sources:
-      new QIconViewItem(CompComps, tr("dc Voltage Source"), QImage(BITMAPDIR "dc_voltage.xpm"));
-      new QIconViewItem(CompComps, tr("dc Current Source"), QImage(BITMAPDIR "dc_current.xpm"));
-      new QIconViewItem(CompComps, tr("ac Voltage Source"), QImage(BITMAPDIR "ac_voltage.xpm"));
-      new QIconViewItem(CompComps, tr("Power Source"), QImage(BITMAPDIR "source.xpm"));
-      new QIconViewItem(CompComps, tr("Noise Voltage Source"), QImage(BITMAPDIR "noise_volt.xpm"));
-      new QIconViewItem(CompComps, tr("Noise Current Source"), QImage(BITMAPDIR "noise_current.xpm"));
-      new QIconViewItem(CompComps, tr("Voltage Controlled Current Source"), QImage(BITMAPDIR "vccs.xpm"));
-      new QIconViewItem(CompComps, tr("Current Controlled Current Source"), QImage(BITMAPDIR "cccs.xpm"));
-      new QIconViewItem(CompComps, tr("Voltage Controlled Voltage Source"), QImage(BITMAPDIR "vcvs.xpm"));
-      new QIconViewItem(CompComps, tr("Current Controlled Voltage Source"), QImage(BITMAPDIR "ccvs.xpm"));
+      new QIconViewItem(CompComps, tr("dc Voltage Source"),
+		QImage(BITMAPDIR "dc_voltage.xpm"));
+      new QIconViewItem(CompComps, tr("dc Current Source"),
+		QImage(BITMAPDIR "dc_current.xpm"));
+      new QIconViewItem(CompComps, tr("ac Voltage Source"),
+		QImage(BITMAPDIR "ac_voltage.xpm"));
+      new QIconViewItem(CompComps, tr("Power Source"),
+		QImage(BITMAPDIR "source.xpm"));
+      new QIconViewItem(CompComps, tr("Noise Voltage Source"),
+		QImage(BITMAPDIR "noise_volt.xpm"));
+      new QIconViewItem(CompComps, tr("Noise Current Source"),
+		QImage(BITMAPDIR "noise_current.xpm"));
+      new QIconViewItem(CompComps, tr("Voltage Controlled Current Source"),
+		QImage(BITMAPDIR "vccs.xpm"));
+      new QIconViewItem(CompComps, tr("Current Controlled Current Source"),
+		QImage(BITMAPDIR "cccs.xpm"));
+      new QIconViewItem(CompComps, tr("Voltage Controlled Voltage Source"),
+		QImage(BITMAPDIR "vcvs.xpm"));
+      new QIconViewItem(CompComps, tr("Current Controlled Voltage Source"),
+		QImage(BITMAPDIR "ccvs.xpm"));
       break;
     case COMBO_TLines:
-      new QIconViewItem(CompComps, tr("Transmission Line"), QImage(BITMAPDIR "tline.xpm"));
-      new QIconViewItem(CompComps, tr("Substrate"), QImage(BITMAPDIR "substrate.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Line"), QImage(BITMAPDIR "msline.xpm"));
-      new QIconViewItem(CompComps, tr("Coupled Microstrip Line"), QImage(BITMAPDIR "mscoupled.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Step"), QImage(BITMAPDIR "msstep.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Corner"), QImage(BITMAPDIR "mscorner.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Tee"), QImage(BITMAPDIR "mstee.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Cross"), QImage(BITMAPDIR "mscross.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Mitered Bend"), QImage(BITMAPDIR "msmbend.xpm"));
-      new QIconViewItem(CompComps, tr("Microstrip Open"), QImage(BITMAPDIR "msopen.xpm"));
-      new QIconViewItem(CompComps, tr("Coplanar Line"), QImage(BITMAPDIR "coplanar.xpm"));
+      new QIconViewItem(CompComps, tr("Transmission Line"),
+		QImage(BITMAPDIR "tline.xpm"));
+      new QIconViewItem(CompComps, tr("Substrate"),
+		QImage(BITMAPDIR "substrate.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Line"),
+		QImage(BITMAPDIR "msline.xpm"));
+      new QIconViewItem(CompComps, tr("Coupled Microstrip Line"),
+		QImage(BITMAPDIR "mscoupled.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Step"),
+		QImage(BITMAPDIR "msstep.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Corner"),
+		QImage(BITMAPDIR "mscorner.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Tee"),
+		QImage(BITMAPDIR "mstee.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Cross"),
+		QImage(BITMAPDIR "mscross.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Mitered Bend"),
+		QImage(BITMAPDIR "msmbend.xpm"));
+      new QIconViewItem(CompComps, tr("Microstrip Open"),
+		QImage(BITMAPDIR "msopen.xpm"));
+      new QIconViewItem(CompComps, tr("Coplanar Line"),
+		QImage(BITMAPDIR "coplanar.xpm"));
       break;
     case COMBO_nonlinear:
-      new QIconViewItem(CompComps, tr("Diode"), QImage(BITMAPDIR "diode.xpm"));
+      new QIconViewItem(CompComps, tr("Diode"),
+		QImage(BITMAPDIR "diode.xpm"));
       break;
     case COMBO_File:
-      new QIconViewItem(CompComps, tr("1-port S parameter file"), QImage(BITMAPDIR "spfile1.xpm"));
-      new QIconViewItem(CompComps, tr("2-port S parameter file"), QImage(BITMAPDIR "spfile2.xpm"));
-      new QIconViewItem(CompComps, tr("3-port S parameter file"), QImage(BITMAPDIR "spfile3.xpm"));
-      new QIconViewItem(CompComps, tr("4-port S parameter file"), QImage(BITMAPDIR "spfile4.xpm"));
-      new QIconViewItem(CompComps, tr("5-port S parameter file"), QImage(BITMAPDIR "spfile5.xpm"));
-      new QIconViewItem(CompComps, tr("6-port S parameter file"), QImage(BITMAPDIR "spfile6.xpm"));
+      new QIconViewItem(CompComps, tr("1-port S parameter file"),
+		QImage(BITMAPDIR "spfile1.xpm"));
+      new QIconViewItem(CompComps, tr("2-port S parameter file"),
+		QImage(BITMAPDIR "spfile2.xpm"));
+      new QIconViewItem(CompComps, tr("3-port S parameter file"),
+		QImage(BITMAPDIR "spfile3.xpm"));
+      new QIconViewItem(CompComps, tr("4-port S parameter file"),
+		QImage(BITMAPDIR "spfile4.xpm"));
+      new QIconViewItem(CompComps, tr("5-port S parameter file"),
+		QImage(BITMAPDIR "spfile5.xpm"));
+      new QIconViewItem(CompComps, tr("6-port S parameter file"),
+		QImage(BITMAPDIR "spfile6.xpm"));
       break;
     case COMBO_Sims:
-      new QIconViewItem(CompComps, tr("dc simulation"), QImage(BITMAPDIR "dc.xpm"));
-      new QIconViewItem(CompComps, tr("Transient simulation"), QImage(BITMAPDIR "tran.xpm"));
-      new QIconViewItem(CompComps, tr("ac simulation"), QImage(BITMAPDIR "ac.xpm"));
-      new QIconViewItem(CompComps, tr("S-parameter simulation"), QImage(BITMAPDIR "sparameter.xpm"));
-      new QIconViewItem(CompComps, tr("Harmonic balance"), QImage(BITMAPDIR "hb.xpm"));
-      new QIconViewItem(CompComps, tr("Parameter sweep"), QImage(BITMAPDIR "sweep.xpm"));
+      new QIconViewItem(CompComps, tr("dc simulation"),
+		QImage(BITMAPDIR "dc.xpm"));
+      new QIconViewItem(CompComps, tr("Transient simulation"),
+		QImage(BITMAPDIR "tran.xpm"));
+      new QIconViewItem(CompComps, tr("ac simulation"),
+		QImage(BITMAPDIR "ac.xpm"));
+      new QIconViewItem(CompComps, tr("S-parameter simulation"),
+		QImage(BITMAPDIR "sparameter.xpm"));
+      new QIconViewItem(CompComps, tr("Harmonic balance"),
+		QImage(BITMAPDIR "hb.xpm"));
+      new QIconViewItem(CompComps, tr("Parameter sweep"),
+		QImage(BITMAPDIR "sweep.xpm"));
       break;
     case COMBO_Paints:
-      new QIconViewItem(CompComps, tr("Line"), QImage(BITMAPDIR "line.xpm"));
-      new QIconViewItem(CompComps, tr("Arrow"), QImage(BITMAPDIR "arrow.xpm"));
-      new QIconViewItem(CompComps, tr("Text"), QImage(BITMAPDIR "text.xpm"));
-      new QIconViewItem(CompComps, tr("Ellipse"), QImage(BITMAPDIR "ellipse.xpm"));
-      new QIconViewItem(CompComps, tr("Rectangle"), QImage(BITMAPDIR "rectangle.xpm"));
+      new QIconViewItem(CompComps, tr("Line"),
+		QImage(BITMAPDIR "line.xpm"));
+      new QIconViewItem(CompComps, tr("Arrow"),
+		QImage(BITMAPDIR "arrow.xpm"));
+      new QIconViewItem(CompComps, tr("Text"),
+		QImage(BITMAPDIR "text.xpm"));
+      new QIconViewItem(CompComps, tr("Ellipse"),
+		QImage(BITMAPDIR "ellipse.xpm"));
+      new QIconViewItem(CompComps, tr("Rectangle"),
+		QImage(BITMAPDIR "rectangle.xpm"));
+      new QIconViewItem(CompComps, tr("filled Ellipse"),
+		QImage(BITMAPDIR "filledellipse.xpm"));
+      new QIconViewItem(CompComps, tr("filled Rectangle"),
+		QImage(BITMAPDIR "filledrect.xpm"));
       break;
     case COMBO_Diagrams:
-      new QIconViewItem(CompComps, tr("Cartesian"), QImage(BITMAPDIR "rect.xpm"));
-      new QIconViewItem(CompComps, tr("Polar"), QImage(BITMAPDIR "polar.xpm"));
-      new QIconViewItem(CompComps, tr("Tabular"), QImage(BITMAPDIR "tabular.xpm"));
-      new QIconViewItem(CompComps, tr("Smith Chart"), QImage(BITMAPDIR "smith.xpm"));
+      new QIconViewItem(CompComps, tr("Cartesian"),
+		QImage(BITMAPDIR "rect.xpm"));
+      new QIconViewItem(CompComps, tr("Polar"),
+		QImage(BITMAPDIR "polar.xpm"));
+      new QIconViewItem(CompComps, tr("Tabular"),
+		QImage(BITMAPDIR "tabular.xpm"));
+      new QIconViewItem(CompComps, tr("Smith Chart"),
+		QImage(BITMAPDIR "smith.xpm"));
       break;
   }
 }
@@ -1434,11 +1498,13 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
           break;
     case COMBO_Paints:
           switch(CompComps->index(item)) {
-              case 0: view->selPaint = new GraphicLine(); break;
-              case 1: view->selPaint = new Arrow();       break;
-              case 2: view->selPaint = new GraphicText(); break;
-              case 3: view->selPaint = new Ellipse();     break;
-              case 4: view->selPaint = new Rectangle();   break;
+              case 0: view->selPaint = new GraphicLine();    break;
+              case 1: view->selPaint = new Arrow();          break;
+              case 2: view->selPaint = new GraphicText();    break;
+              case 3: view->selPaint = new Ellipse();        break;
+              case 4: view->selPaint = new Rectangle();      break;
+              case 5: view->selPaint = new FilledEllipse();  break;
+              case 6: view->selPaint = new FilledRect();     break;
           }
           if(view->drawn) view->viewport()->repaint();
           view->drawn = false;
