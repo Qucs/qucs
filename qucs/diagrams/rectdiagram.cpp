@@ -76,6 +76,8 @@ void RectDiagram::calcDiagram()
 
   if(fabs(xmax-xmin) < 1e-200) { xmax += xmax; xmin -= xmin; }
   if(fabs(ymax-ymin) < 1e-200) { ymax += ymax; ymin -= ymin; }
+  if(ymax == 0 && ymin == 0) { ymax = 1; ymin = -1; }
+  if(xmax == 0 && xmin == 0) { xmax = 1; xmin = -1; }
   xlow = xmin;  xup = xmax;
   ylow = ymin;  yup = ymax;
 
@@ -96,7 +98,6 @@ void RectDiagram::calcDiagram()
   double corr = floor((xmax-xmin)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
-
 
   double zD = GridStep-fmod(xmax, GridStep);
   // expand grid to the right edge of diagram ?

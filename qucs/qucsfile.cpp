@@ -305,7 +305,7 @@ void QucsFile::simpleInsertWire(Wire *pw)
 
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {   // wire with length zero are just node labels
     pn->Label = pw->Label;
-    pn->Label->Type = isNodeLabel;
+    if (pn->Label) pn->Label->Type = isNodeLabel;
     delete pw;           // delete wire because this is not a wire
     return;
   }
