@@ -140,6 +140,70 @@
         <source>All Files</source>
         <translation>Wszystkie pliki</translation>
     </message>
+    <message>
+        <source>Sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sweep Parameter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>constant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Values:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">Właściwości</translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>

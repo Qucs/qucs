@@ -93,8 +93,6 @@ QucsApp::QucsApp()
   Acts.select->setOn(true);  // switch on the 'select' action
   HierarchyHistory.setAutoDelete(true);
 
-  Programs.setAutoDelete(true);
-
   // creates a document called "untitled"
   view->Docs.append(new QucsDoc(this, ""));
 
@@ -913,10 +911,7 @@ void QucsApp::slotFileQuit()
 				      tr("Yes"), tr("No"));
   if(exit == 0)
     if(closeAllFiles()) {
-      for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next()) {
-        pp->disconnect(this);
-        pp->kill();   // terminate all running sub-programs
-      }
+      emit signalKillEmAll();   // kill all subprocesses
       qApp->quit();
     }
 
@@ -929,10 +924,7 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 {
   Event->ignore();
   if(closeAllFiles()) {
-    for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next()) {
-      pp->disconnect(this);
-      pp->kill();   // terminate all running sub-programs
-    }
+    emit signalKillEmAll();   // kill all subprocesses
     qApp->quit();
   }
 }
@@ -989,8 +981,8 @@ void QucsApp::showHTML(const QString& Page)
     return;
   }
 
-  Programs.append(QucsHelp);
-  connect(QucsHelp, SIGNAL(processExited()), SLOT(slotDeleteProcess()));
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), QucsHelp, SLOT(kill()));
 }
 
 // ########################################################################
@@ -1102,10 +1094,7 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString)),
 		this, SLOT(slotChangePage(QString)));
 
-  Programs.append(&(sim->SimProcess)); // process into list, but not on slot !
 
-//  sim.ProgText->clear();
-//  sim.ErrText->clear();
   sim->show();
 
   QDate d = QDate::currentDate();   // get date of today
@@ -1132,6 +1121,9 @@ void QucsApp::slotSimulate()
     sim->errorSimEnded();
     return;
   }
+
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), &(sim->SimProcess), SLOT(kill()));
 }
 
 // ------------------------------------------------------------------------
@@ -1183,12 +1175,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     file.close();
   }
 
-  for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
-    if(pp == &(sim->SimProcess)) {
-      Programs.take();
-      break;
-    }
-
   if(shouldClosed) sim->slotClose();  // close and delete simulation window
 }
 
@@ -1219,19 +1205,8 @@ void QucsApp::editFile(const QString& File)
     return;
   }
 
-  Programs.append(QucsEditor);
-  connect(QucsEditor, SIGNAL(processExited()), SLOT(slotDeleteProcess()));
-}
-
-// ------------------------------------------------------------------------
-// Is called when an external program exits and deltes the process object.
-void QucsApp::slotDeleteProcess()
-{
-  for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
-    if(!pp->isRunning()) {
-      Programs.remove();   // is auto-delete
-      break;
-    }
+  // to kill it before qucs ends
+  connect(this, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
 }
 
 // ------------------------------------------------------------------------

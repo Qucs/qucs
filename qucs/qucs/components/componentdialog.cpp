@@ -22,9 +22,12 @@
 
 #include <qlayout.h>
 #include <qhbox.h>
+#include <qvbox.h>
 #include <qmessagebox.h>
 #include <qvalidator.h>
 #include <qfiledialog.h>
+
+#include <math.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
@@ -32,70 +35,214 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 {
   resize(400, 250);
   setCaption(tr("Edit Component Properties"));
+  Comp  = c;
+  Doc   = d;
+  QString s;
 
-  mainWidget = new QGridLayout(this,10,2,5,5);
+  all = new QVBoxLayout(this); // to provide neccessary size
+  QGridLayout *gp2;
+  QWidget *myParent = this;
+  ValInteger = new QIntValidator(1, 1000000, this);
 
-  QHBox *h2 = new QHBox(this);
-  h2->setSpacing(5);
-  mainWidget->addMultiCellWidget(h2,9,9,0,1);
-  connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()),
-	  SLOT(slotButtOK()));
-  connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
-	  SLOT(slotApplyInput()));
-  connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()),
-	  SLOT(slotButtCancel()));
+  checkSim  = 0;  editSim   = 0;  comboType = 0;  checkParam = 0;
+  editStart = 0;  editStop  = 0;  editNumber = 0;
 
-  QLabel *label1 = new QLabel(this);
-  mainWidget->addMultiCellWidget(label1,0,0,0,1);
+  // ...........................................................
+  // if simulation component
+  if((Comp->Model[0] == '.') &&
+     (Comp->Model != ".DC") && (Comp->Model != ".HB")) {
+    QTabWidget *t = new QTabWidget(this);
+    all->addWidget(t);
 
-  QHBox *h5 = new QHBox(this);
+    QWidget *Tab1 = new QWidget(t);
+    t->addTab(Tab1, tr("Sweep"));
+    QGridLayout *gp = new QGridLayout(Tab1, 9,3,5,5);
+
+    gp->addMultiCellWidget(new QLabel(Comp->Description, Tab1), 0,0,0,1);
+
+    int row=1;
+    editParam = new QLineEdit(Tab1);
+    checkParam = new QCheckBox(tr("display in schematic"), Tab1);
+    if(Comp->Model == ".SW") {   // parameter sweep
+      textSim = new QLabel(tr("Simulation:"), Tab1);
+      gp->addWidget(textSim, row,0);
+      editSim = new QLineEdit(Tab1);
+      gp->addWidget(editSim, row,1);
+      checkSim = new QCheckBox(tr("display in schematic"), Tab1);
+      gp->addWidget(checkSim, row++,2);
+    }
+    else {
+      editParam->setReadOnly(true);
+      checkParam->setDisabled(true);
+      if(Comp->Model != ".TR")    // transient simulation
+        editParam->setText(tr("frequency"));
+      else
+        editParam->setText(tr("time"));
+    }
+
+    gp->addWidget(new QLabel(tr("Sweep Parameter:"), Tab1), row,0);
+    gp->addWidget(editParam, row,1);
+    gp->addWidget(checkParam, row++,2);
+
+    textType = new QLabel(tr("Type:"), Tab1);
+    gp->addWidget(textType, row,0);
+    comboType = new QComboBox(Tab1);
+    comboType->insertItem(tr("linear"));
+    comboType->insertItem(tr("logarithmic"));
+    comboType->insertItem(tr("list"));
+    comboType->insertItem(tr("constant"));
+    gp->addWidget(comboType, row,1);
+    connect(comboType, SIGNAL(activated(int)), SLOT(slotSimTypeChange(int)));
+    checkType = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkType, row++,2);
+
+    textValues = new QLabel(tr("Values:"), Tab1);
+    gp->addWidget(textValues, row,0);
+    editValues = new QLineEdit(Tab1);
+    gp->addWidget(editValues, row++,1);
+
+    textStart  = new QLabel(tr("Start:"), Tab1);
+    gp->addWidget(textStart, row,0);
+    editStart  = new QLineEdit(Tab1);
+    gp->addWidget(editStart, row,1);
+    checkStart = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkStart, row++,2);
+
+    textStop   = new QLabel(tr("Stop:"), Tab1);
+    gp->addWidget(textStop, row,0);
+    editStop   = new QLineEdit(Tab1);
+    gp->addWidget(editStop, row,1);
+    checkStop = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkStop, row++,2);
+
+    textStep   = new QLabel(tr("Step:"), Tab1);
+    gp->addWidget(textStep, row,0);
+    editStep   = new QLineEdit(Tab1);
+    gp->addWidget(editStep, row++,1);
+
+    textNumber = new QLabel(tr("Number:"), Tab1);
+    gp->addWidget(textNumber, row,0);
+    editNumber = new QLineEdit(Tab1);
+    editNumber->setValidator(ValInteger);
+    gp->addWidget(editNumber, row,1);
+    checkNumber = new QCheckBox(tr("display in schematic"), Tab1);
+    gp->addWidget(checkNumber, row++,2);
+
+
+    if(Comp->Model == ".SW") {   // parameter sweep
+      editSim->setText(Comp->Props.first()->Value);
+      checkSim->setChecked(Comp->Props.current()->display);
+      s = Comp->Props.next()->Value;
+      checkType->setChecked(Comp->Props.current()->display);
+      editParam->setText(Comp->Props.next()->Value);
+      checkParam->setChecked(Comp->Props.current()->display);
+    }
+    else {
+      s = Comp->Props.first()->Value;
+      checkType->setChecked(Comp->Props.current()->display);
+    }
+    editStart->setText(Comp->Props.next()->Value);
+    checkStart->setChecked(Comp->Props.current()->display);
+    editStop->setText(Comp->Props.next()->Value);
+    checkStop->setChecked(Comp->Props.current()->display);
+    editNumber->setText(Comp->Props.next()->Value);
+    checkNumber->setChecked(Comp->Props.current()->display);
+
+    int tNum = 0;
+    if(s[0] == 'l') {
+      if(s[1] == 'i') {
+	if(s[2] != 'n')
+	  tNum = 2;
+      }
+      else  tNum = 1;
+    }
+    else  tNum = 3;
+    comboType->setCurrentItem(tNum);
+
+    slotNumberChanged(0);
+    slotSimTypeChange(tNum);   // not automatically ?!?
+
+    connect(editStart, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotNumberChanged(const QString&)));
+    connect(editStop, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotNumberChanged(const QString&)));
+    connect(editStep, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotStepChanged(const QString&)));
+    connect(editNumber, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotNumberChanged(const QString&)));
+
+    if(checkSim)
+      connect(checkSim, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkType, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkParam, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkStart, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkStop, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkNumber, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+
+
+    QWidget *Tab2 = new QWidget(t);
+    t->addTab(Tab2, tr("Properties"));
+    gp2 = new QGridLayout(Tab2, 9,2,5,5);
+    myParent = Tab2;
+  }
+  else {   // no simulation component
+    gp2 = new QGridLayout(0, 9,2,5,5);
+    all->addLayout(gp2);
+  }
+
+
+  // ...........................................................
+  gp2->addMultiCellWidget(new QLabel(Comp->Description, myParent), 0,0,0,1);
+
+  QHBox *h5 = new QHBox(myParent);
   h5->setSpacing(5);
-  mainWidget->addWidget(h5,1,0);
-  QLabel *label2 = new QLabel(h5);
-  label2->setText(tr("Name:"));
+  gp2->addWidget(h5, 1,0);
+  new QLabel(tr("Name:"), h5);
   CompNameEdit = new QLineEdit(h5);
   connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
-  prop = new QListView(this);
+  prop = new QListView(myParent);
   prop->setMinimumSize(200, 150);
   prop->addColumn(tr("Name"));
   prop->addColumn(tr("Value"));
   prop->addColumn(tr("display"));
   prop->addColumn(tr("Description"));
   prop->setSorting(-1);   // no sorting
-  mainWidget->addMultiCellWidget(prop,2,8,0,0);
+  gp2->addMultiCellWidget(prop, 2,8,0,0);
 
-  Name = new QLabel(this);
-  mainWidget->addWidget(Name,2,1);
+  Name = new QLabel(myParent);
+  gp2->addWidget(Name, 2,1);
 
   Expr.setPattern("[^\"=]+");  // valid expression for property input 'edit'
   Validator = new QRegExpValidator(Expr, this);
+  Expr.setPattern("[\\w_]+");  // valid expression for property input 'edit'
+  ValRestrict = new QRegExpValidator(Expr, this);
 
-  Description = new QLabel(this);
-  mainWidget->addWidget(Description,3,1);
+  Description = new QLabel(myParent);
+  gp2->addWidget(Description, 3,1);
 
   // hide, because it only replaces 'Description' in some cases
-  NameEdit = new QLineEdit(this);
+  NameEdit = new QLineEdit(myParent);
   NameEdit->setShown(false);
-  NameEdit->setValidator(Validator);
-  mainWidget->addWidget(NameEdit,3,1);
+  NameEdit->setValidator(ValRestrict);
+  gp2->addWidget(NameEdit, 3,1);
   connect(NameEdit, SIGNAL(returnPressed()), SLOT(slotApplyPropName()));
 
-  edit = new QLineEdit(this);
+  edit = new QLineEdit(myParent);
   edit->setMinimumWidth(150);
-  mainWidget->addWidget(edit,4,1);
+  gp2->addWidget(edit, 4,1);
   edit->setValidator(Validator);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
   // hide, because it only replaces 'edit' in some cases
-  ComboEdit = new QComboBox(false,this);
+  ComboEdit = new QComboBox(false, myParent);
   ComboEdit->setShown(false);
-  mainWidget->addWidget(ComboEdit,4,1);
+  gp2->addWidget(ComboEdit, 4,1);
   connect(ComboEdit, SIGNAL(activated(const QString&)),
 	  SLOT(slotApplyChange(const QString&)));
 
-  QHBox *h3 = new QHBox(this);
-  mainWidget->addWidget(h3,5,1);
+  QHBox *h3 = new QHBox(myParent);
+  gp2->addWidget(h3, 5,1);
   h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
   EditButt = new QPushButton(tr("Edit"),h3);
   EditButt->setEnabled(false);
@@ -106,45 +253,54 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
-  disp = new QCheckBox(tr("display in schematic"),this);
-  mainWidget->addWidget(disp,6,1);
+  disp = new QCheckBox(tr("display in schematic"), myParent);
+  gp2->addWidget(disp, 6,1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
 
   QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
   v->addStretch(2);
-  mainWidget->addLayout(v,7,1);
+  gp2->addLayout(v,7,1);
 
-  QHBox *h4 = new QHBox(this);
+  QHBox *h4 = new QHBox(myParent);
   h4->setSpacing(5);
-  mainWidget->addMultiCellWidget(h4,8,8,1,1);
+  gp2->addMultiCellWidget(h4, 8,8,1,1);
   ButtAdd = new QPushButton(tr("Add"),h4);
+  ButtAdd->setEnabled(false);
   ButtRem = new QPushButton(tr("Remove"),h4);
+  ButtRem->setEnabled(false);
   connect(ButtAdd, SIGNAL(clicked()), SLOT(slotButtAdd()));
   connect(ButtRem, SIGNAL(clicked()), SLOT(slotButtRem()));
 
+  // ...........................................................
+  QHBox *h2 = new QHBox(this);
+  h2->setSpacing(5);
+  all->addWidget(h2);
+  connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()),
+	  SLOT(slotButtOK()));
+  connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
+	  SLOT(slotApplyInput()));
+  connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()),
+	  SLOT(slotButtCancel()));
+
   // ------------------------------------------------------------
-  Comp  = c;
-  Doc   = d;
-  label1->setText(c->Description);
-  CompNameEdit->setText(c->Name);
+  CompNameEdit->setText(Comp->Name);
   changed = transfered = false;
 
-  c->TextSize(tx_Dist, ty_Dist);
-  int tmp = c->tx+tx_Dist - c->x1;
+  Comp->TextSize(tx_Dist, ty_Dist);
+  int tmp = Comp->tx+tx_Dist - Comp->x1;
   if((tmp > 0) || (tmp < -6))  tx_Dist = 0;  // remember the text position
-  tmp = c->ty+ty_Dist - c->y1;
+  tmp = Comp->ty+ty_Dist - Comp->y1;
   if((tmp > 0) || (tmp < -6))  ty_Dist = 0;
 
-//  prop->clear();
-
-  QString s;
   // insert all properties into the ListBox
-  for(Property *p = c->Props.last(); p != 0; p = c->Props.prev()) {
+  for(Property *p = Comp->Props.last(); p != 0; p = Comp->Props.prev()) {
+    if(Comp->Model[0] == '.') if(p->Name == "Points")
+      break;   // do not insert if already on first tab
     if(p->display) s = tr("yes");
     else s = tr("no");
     QString str = p->Description;
     correctDesc (str);
-    prop->insertItem(new QListViewItem(prop, p->Name, p->Value, s, str));
+    new QListViewItem(prop, p->Name, p->Value, s, str);
   }
 
   if(prop->childCount() > 0) {
@@ -158,8 +314,10 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
 ComponentDialog::~ComponentDialog()
 {
-  delete mainWidget;
+  delete all;
   delete Validator;
+  delete ValRestrict;
+  delete ValInteger;
 }
 
 // -------------------------------------------------------------------------
@@ -369,6 +527,7 @@ void ComponentDialog::slotButtCancel()
 // Is called, if the "Apply"-button is pressed.
 void ComponentDialog::slotApplyInput()
 {
+  QString tmp;
   Component *pc;
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
   else
@@ -382,6 +541,47 @@ void ComponentDialog::slotApplyInput()
       changed = true;
     }
   }
+
+
+  bool display;
+  Comp->Props.clear();
+  // apply all the new property values, i.e. rebuild the properties
+  if(editSim) {
+    display = checkSim->isChecked();
+    Comp->Props.append(new
+	Property("Sim", editSim->text(), display, QString("--")));
+  }
+  if(comboType) {
+    display = checkType->isChecked();
+//    tmp = tmp.section('[')
+    switch(comboType->currentItem()) {
+      case 1:  tmp = "log";   break;
+      case 2:  tmp = "list";  break;
+      case 3:  tmp = "const"; break;
+      default: tmp = "lin";   break;
+    }
+    Comp->Props.append(new
+	Property("Type", tmp, display, QString("--")));
+  }
+  if(checkParam) if(checkParam->isEnabled()) {
+    display = checkParam->isChecked();
+    Comp->Props.append(new
+	Property("Param", editParam->text(), display, QString("--")));
+  }
+  if(editStart) {
+    display = checkStart->isChecked();
+    Comp->Props.append(new
+	Property("Start", editStart->text(), display, QString("--")));
+
+    display = checkStop->isChecked();
+    Comp->Props.append(new
+	Property("Stop", editStop->text(), display, QString("--")));
+
+    display = checkNumber->isChecked();
+    Comp->Props.append(new
+	Property("Points", editNumber->text(), display, QString("--")));
+  }
+
 
   QListViewItem *item = prop->firstChild();
  if(item != 0) {
@@ -397,9 +597,8 @@ void ComponentDialog::slotApplyInput()
       changed = true;
     }
 
-  bool display;
-  Comp->Props.clear();
-  // apply all the new property values, i.e. rebuild the properties
+
+  // apply all the new property values in the ListView
   for(item = prop->firstChild(); item != 0; item = item->itemBelow()) {
     display = (item->text(2) == tr("yes"));
     Comp->Props.append(new
@@ -420,7 +619,7 @@ void ComponentDialog::slotApplyInput()
       ty_Dist = dy;
     }
 
-    QString tmp = Comp->Name;  // is sometimes changed by "recreate"
+    tmp = Comp->Name;    // is sometimes changed by "recreate"
     Doc->Comps->setAutoDelete(false);
     Doc->deleteComp(Comp);
     Comp->recreate();   // to apply changes to the schematic symbol
@@ -486,4 +685,138 @@ void ComponentDialog::slotButtRem()
   changed = true;
 
   slotSelectProperty(next_item);
+}
+
+// -------------------------------------------------------------------------
+void ComponentDialog::slotSimTypeChange(int Type)
+{
+  changed = true;
+
+  if(Type < 2) {
+    if(!editNumber->isEnabled()) {  // was the other mode before ?
+      editStart->blockSignals(true);  // do not calculate step again
+      editStop->blockSignals(true);
+      editNumber->blockSignals(true);
+      editStart->setText(editValues->text().section(';', 0, 0));
+      editStop->setText(editValues->text().section(';', -1, -1));
+      editNumber->setText("2");
+      editStart->blockSignals(false);  // do not calculate step again
+      editStop->blockSignals(false);
+      editNumber->blockSignals(false);
+    }
+    textValues->setDisabled(true);
+    editValues->setDisabled(true);
+    textStart->setDisabled(false);
+    editStart->setDisabled(false);
+    textStop->setDisabled(false);
+    editStop->setDisabled(false);
+    textStep->setDisabled(false);
+    editStep->setDisabled(false);
+    textNumber->setDisabled(false);
+    editNumber->setDisabled(false);
+    if(Type == 1)   // logarithmic ?
+      textStep->setText("Points per decade");
+    else
+      textStep->setText("Step");
+  }
+  else {
+    if(!editValues->isEnabled())   // was the other mode before ?
+      editValues->setText(editStart->text() + "; " + editStop->text());
+
+    textValues->setDisabled(false);
+    editValues->setDisabled(false);
+    textStart->setDisabled(true);
+    editStart->setDisabled(true);
+    textStop->setDisabled(true);
+    editStop->setDisabled(true);
+    textStep->setDisabled(true);
+    editStep->setDisabled(true);
+    textNumber->setDisabled(true);
+    editNumber->setDisabled(true);
+    textStep->setText("Step");
+  }
+}
+
+// -------------------------------------------------------------------------
+// Is called when "Start", "Stop" or "Number" is edited.
+void ComponentDialog::slotNumberChanged(const QString&)
+{
+  changed = true;
+
+  QString Unit, tmp;
+  double x, y, Factor, ftmp;
+  if(comboType->currentItem() == 1) {   // logarithmic ?
+    str2num(editStop->text(), x, Unit, Factor);
+    x *= Factor;
+    str2num(editStart->text(), y, Unit, Factor);
+    y *= Factor;
+    if(y == 0.0)  y = x / 10.0;
+    if(x == 0.0)  x = y * 10.0;
+    if(y == 0.0) { y = 1.0;  x = 10.0; }
+    x = editNumber->text().toDouble() / log10(fabs(x / y));
+    Unit = QString::number(x);
+  }
+  else {
+    str2num(editStop->text(), x, Unit, Factor);
+    x *= Factor;
+    str2num(editStart->text(), y, Unit, Factor);
+    y *= Factor;
+    x = (x - y) / (editNumber->text().toDouble() - 1.0);
+
+    str2num(editStep->text(), y, tmp, ftmp);
+    if(ftmp != 1.0) {
+      Unit = tmp;
+      Factor = ftmp;
+    }
+
+    Unit = QString::number(x/Factor) + " " + Unit;
+  }
+
+  editStep->blockSignals(true);  // do not calculate step again
+  editStep->setText(Unit);
+  editStep->blockSignals(false);
+}
+
+// -------------------------------------------------------------------------
+void ComponentDialog::slotStepChanged(const QString& Step)
+{
+  changed = true;
+
+  QString Unit;
+  double x, y, Factor;
+  if(comboType->currentItem() == 1) {   // logarithmic ?
+    str2num(editStop->text(), x, Unit, Factor);
+    x *= Factor;
+    str2num(editStart->text(), y, Unit, Factor);
+    y *= Factor;
+
+    x /= y;
+    str2num(Step, y, Unit, Factor);
+    y *= Factor;
+
+    x = log10(fabs(x)) * y;
+  }
+  else {
+    str2num(editStop->text(), x, Unit, Factor);
+    x *= Factor;
+    str2num(editStart->text(), y, Unit, Factor);
+    y *= Factor;
+
+    x -= y;
+    str2num(Step, y, Unit, Factor);
+    y *= Factor;
+
+    x /= y;
+  }
+
+  editNumber->blockSignals(true);  // do not calculate number again
+  editNumber->setText(QString::number(floor(x + 1.0)));
+  editNumber->blockSignals(false);
+}
+
+// -------------------------------------------------------------------------
+// Is called if one of the "display on schematic" CheckBoxes is clicked.
+void ComponentDialog::slotSetChanged(int)
+{
+  changed = true;
 }
