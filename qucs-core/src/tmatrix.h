@@ -18,12 +18,24 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.3 2004/10/12 18:13:09 ela Exp $
+ * $Id: tmatrix.h,v 1.4 2004/10/21 13:51:17 ela Exp $
  *
  */
 
 #ifndef __TMATRIX_H__
 #define __TMATRIX_H__
+
+template <class nr_type_t>
+class tmatrix;
+
+template <class nr_type_t>
+tmatrix<nr_type_t> inverse (tmatrix<nr_type_t>);
+template <class nr_type_t>
+tmatrix<nr_type_t> eye (int);
+template <class nr_type_t>
+tmatrix<nr_type_t> operator * (tmatrix<nr_type_t>, tmatrix<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tmatrix<nr_type_t>, tvector<nr_type_t>);
 
 template <class nr_type_t>
 class tmatrix
@@ -45,12 +57,10 @@ class tmatrix
   void print (void);
 
   // some basic matrix operations
-  friend tmatrix inverse<nr_type_t> (tmatrix);
-  static tmatrix eye (int);
-  friend tmatrix<nr_type_t> operator *<nr_type_t> (tmatrix<nr_type_t>,
-						   tmatrix<nr_type_t>);
-  friend tvector<nr_type_t> operator *<nr_type_t> (tmatrix<nr_type_t>,
-						   tvector<nr_type_t>);
+  friend tmatrix inverse<> (tmatrix);
+  friend tmatrix eye<> (int);
+  friend tmatrix operator *<> (tmatrix, tmatrix);
+  friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
 
  private:
   int cols;

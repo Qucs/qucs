@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.4 2004/10/12 18:13:09 ela Exp $
+ * $Id: tmatrix.cpp,v 1.5 2004/10/21 13:51:17 ela Exp $
  *
  */
 
@@ -156,7 +156,7 @@ tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
 
   // create temporary matrix and the result matrix
   b = tmatrix<nr_type_t> (a);
-  e = tmatrix<nr_type_t>::eye (n);
+  e = eye<nr_type_t> (n);
 
   // create the eye matrix in 'b' and the result in 'e'
   for (i = 1; i <= n; i++) {
@@ -197,7 +197,7 @@ tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
 
 // Create identity matrix with specified number of rows and columns.
 template <class nr_type_t>
-tmatrix<nr_type_t> tmatrix<nr_type_t>::eye (int n) {
+tmatrix<nr_type_t> eye (int n) {
   tmatrix<nr_type_t> res (n);
   for (int r = 1; r <= n; r++) res.set (r, r, 1);
   return res;
