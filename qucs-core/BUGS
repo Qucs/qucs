@@ -25,7 +25,8 @@ send Qucs bug reports to <qucs-bugs@lists.sourceforge.net>.
 
 Bug:         B0001
 From:	     Stefan Jahn <stefan@lkcc.org>
-State:       unfixed
+State:       fixed (2004-10-19/stefan)
 Date:	     2004-09-01
 Description: Parallel coupled microstrip models do not work.  In fact the
 	     characteristic impedances for even and odd mode are wrong.
+Fix:	     Found the appropriate publication by Kirschning.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.33 2004-10-16 16:42:30 ela Exp $
+ * $Id: circuit.cpp,v 1.34 2004-10-19 11:17:14 ela Exp $
  *
  */
 
@@ -541,7 +541,8 @@ void circuit::voltageSource (int n, int pos, int neg, nr_double_t value) {
 void circuit::transientCapacitance (int qstate, int pos, int neg,
 				    nr_double_t cap, nr_double_t voltage,
 				    nr_double_t charge) {
-  nr_double_t g, i, cstate = qstate + 1;
+  nr_double_t g, i;
+  int cstate = qstate + 1;
   setState (qstate, charge);
   integrate (qstate, cap, g, i);
   addY (pos, pos, +g); addY (neg, neg, +g);
