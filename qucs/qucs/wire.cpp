@@ -126,8 +126,12 @@ void Wire::setName(const QString& Name_, int delta_, int x_, int y_)
   }
 
   if(!Label) {
-    if(isHorizontal()) Label = new WireLabel(Name_, x1+delta_, y1, x_, y_, isHWireLabel);
-    else Label = new WireLabel(Name_, x1, y1+delta_, x_, y_, isVWireLabel);
+    if(isHorizontal())
+      Label = new WireLabel(Name_, x1+delta_, y1, x_, y_, isHWireLabel);
+    else
+      Label = new WireLabel(Name_, x1, y1+delta_, x_, y_, isVWireLabel);
+    Label->pNode = 0;
+    Label->pWire = this;
   }
   else Label->setName(Name_);
 }

@@ -52,7 +52,7 @@ public:
   bool loadVarData(const QString& fileName);
   int  loadIndepVarData(const QString& var, const QString& FileString);
 
-  QString Name;   // identity string for the diagram type (e.g. Polar), used for saving etc.
+  QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
   QString xLabel, yLabel;
 
@@ -62,8 +62,8 @@ public:
   QPtrList<Line>   Lines;
   QPtrList<Text>   Texts;
 
-  double xmin, ymin, xmax, ymax;    // least and greatest values of all graph data
-  double xup, xlow, yup, ylow;      // the limits of the diagram
+  double xmin, ymin, xmax, ymax; // least and greatest values of all graph data
+  double xup, xlow, yup, ylow;   // the limits of the diagram
 };
 
 #endif
