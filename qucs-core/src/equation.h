@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.11 2004-07-03 10:56:40 ela Exp $
+ * $Id: equation.h,v 1.12 2004-07-04 11:16:16 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include "complex.h"
 #include "vector.h"
 #include "matrix.h"
+#include "matvec.h"
 #include "evaluate.h"
 
 class strlist;
@@ -106,10 +107,11 @@ private:
 
 enum ConstantTag {
   TAG_UNKNOWN = -1,
-  TAG_DOUBLE = 0,   /* double constant        */
-  TAG_COMPLEX,      /* complex value          */
-  TAG_VECTOR,       /* list of complex values */
-  TAG_MATRIX        /* complex matrix         */
+  TAG_DOUBLE = 0,   /* double constant          */
+  TAG_COMPLEX,      /* complex value            */
+  TAG_VECTOR,       /* list of complex values   */
+  TAG_MATRIX,       /* complex matrix           */
+  TAG_MATVEC,       /* list of complex matrices */
 };
 
 /* This class represents any type of constant expression. */
@@ -131,6 +133,7 @@ public:
     complex * c;
     vector * v;
     matrix * m;
+    matvec * mv;
   };
 };
 
@@ -229,10 +232,13 @@ public:
   dataset * getDataset (void) { return data; }
   void solve (void);
   node * addEquationData (vector *);
+  node * addEquationData (matvec *);
   vector * dataVector (node *);
   void checkinDataset (void);
   void checkoutDataset (void);
   int dataSize (strlist *);
+  void findMatrixVectors (vector *);
+  char * isMatrixVector (char *, int&, int&);
 
 public:
   node * equations;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.13 2004-07-03 10:56:40 ela Exp $
+ * $Id: equation.cpp,v 1.14 2004-07-04 11:16:16 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "object.h"
 #include "vector.h"
 #include "matrix.h"
+#include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
 #include "equation.h"
@@ -113,6 +114,11 @@ char * constant::toString (void) {
       }
       strcat (txt, "]");
     }
+    break;
+  case TAG_MATVEC:
+    sprintf (str, "[%dx%d](%d)",
+	     mv->getRows (), mv->getCols (), mv->getSize ());
+    txt = strdup (str);
     break;
   default:
     txt = strdup ("(no such type)");
@@ -853,6 +859,8 @@ vector * solver::dataVector (node * eqn) {
     v = new vector ();
     v->add (* (eqn->getResult()->c));
     break;
+  default:
+    return NULL;
   }
   v->setName (A(eqn)->result);
   return v;
@@ -873,6 +881,124 @@ void solver::checkinDataset (void) {
     node * eqn = addEquationData (v);
     eqn->setDataDependencies (v->getDependencies ());
   }
+  findMatrixVectors (data->getDependencies ());
+  findMatrixVectors (data->getVariables ());
+}
+
+/* This function searches through the dataset of the equation solver
+   for possible matrix vectors.  These are detected by the vectors'
+   names (e.g. S[1,1]).  The matrix vectors found in the dataset get
+   converted and saved into the set of equations.  */
+void solver::findMatrixVectors (vector * v) {
+  vector * vec;
+  strlist * deps;
+  char * p, * cand;
+  int s, r, c, a, b, n = 1;
+
+  // initialize the  'found' flag
+  for (vec = v; vec != NULL; vec = (vector *) vec->getNext ())
+    vec->setRequested (0);
+
+  // loop through the dataset vector until no more matrix vector is found
+  do {
+    r = c = s = 0; cand = NULL; deps = NULL;
+    // go through the dataset
+    for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
+      // skip detected vectors
+      if (vec->getRequested ()) continue;
+      // is the vector a possible matrix vector element ?
+      if ((p = isMatrixVector (vec->getName (), a, b)) != NULL) {
+	if (cand != NULL) {
+	  // does this vectors name equals the current one ?
+	  if (!strcmp (p, cand) && s == vec->getSize ()) {
+	    // save largest row and column index and set the 'found' flag
+	    if (a > r) r = a;
+	    if (b > c) c = b;
+	    vec->setRequested (n);
+	  }
+	}
+	else {
+	  /* new possible matrix vector:
+	     save its name, row and column index, its size (length of
+	     the vector) and data dependencies; then set the 'found' flag */
+	  cand = strdup (p);
+	  r = a;
+	  c = b;
+	  s = vec->getSize ();
+	  vec->setRequested (n);
+	  deps = vec->getDependencies ();
+	}
+	free (p);
+      }
+    }
+
+    // new matrix vector detected
+    if (cand != NULL) {
+      // create a new matrix vector and set the appropriate name
+      matvec * mv = new matvec (s, r, c);
+      mv->setName (cand);
+      // go through the dataset vector once again
+      for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
+	// and collect the vectors with the same 'found' flags
+	if (vec->getRequested () == n) {
+	  p = isMatrixVector (vec->getName (), a, b);
+	  mv->set (vec, a, b);
+	  free (p);
+	}
+      }
+      // now store this new matrix vector into the set of equations
+      node * eqn = addEquationData (mv);
+      if (deps == NULL) {
+	strlist * deps = new strlist ();
+	deps->add (mv->getName ());
+      }
+      eqn->setDataDependencies (deps);
+      free (cand); cand = NULL;
+    }
+    // increase the current 'found' flag
+    n++;
+  } while (cand != NULL);
+}
+
+/* The function investigates the given vectors name.  If this name
+   matches the 'A[r,c]' pattern it returns the name 'A' and saves the
+   row and column indices as well.  The caller is responsible to
+   'free()' the returned string.  If the vectors name does not match
+   the pattern the function returns NULL. */
+char * solver::isMatrixVector (char * n, int& r, int& c) {
+  char * p;
+  int len;
+  if ((p = index (n, '[')) != NULL) {     // find first '['
+    r = atoi (p + 1);                     // get first index
+    if ((p = index (p, ',')) != NULL) {   // find the ','
+      c = atoi (p + 1);                   // get second index
+      if ((p = index (p, ']')) != NULL) { // find trailing ']'
+	if (p[1] == '\0') {               // identifier must end in ']'
+	  // parse actual identifier
+	  len = index (n, '[') - n + 1;
+	  p = (char *) malloc (len);
+	  memcpy (p, n, len - 1);
+	  p[len - 1] = '\0';
+	  return p;
+	}
+      }
+    }
+  }
+  return NULL;
+}
+
+/* The function creates an assignment equation from the given matrix
+   vector and returns it.  The new assignment is appended to the list
+   of available equations. */
+node * solver::addEquationData (matvec * mv) {
+  constant * con = new constant (TAG_MATVEC);
+  con->mv = mv;
+  assignment * assign = new assignment ();
+  assign->result = strdup (mv->getName ());
+  assign->body = con;
+  assign->setNext (equations);
+  equations = assign;
+  return assign;
 }
 
 /* This function goes through the given string list and calculates the
@@ -906,6 +1032,7 @@ void solver::checkoutDataset (void) {
     // is the equation result already in the dataset ?
     if (dep == NULL && var == NULL) {
       vector * v = dataVector (eqn);
+      if (v == NULL) continue;
 
       // collect inherited dataset dependencies
       strlist * sub, * datadeps = NULL;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.1 2004-07-03 10:56:40 ela Exp $
+ * $Id: matvec.h,v 1.2 2004-07-04 11:16:16 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __MATVEC_H__
 
 class matrix;
+class complex;
 
 class matvec
 {
@@ -37,15 +38,30 @@ class matvec
   int getSize (void) { return size; }
   int getCols (void) { return cols; }
   int getRows (void) { return rows; }
+  void setName (char *);
+  char * getName (void);
   void set (vector *, int, int);
-  void set (matrix *, int);
+  void set (matrix&, int);
   vector * get (int, int);
-  matrix * get (int);
+  matrix& get (int);
+
+  // operator functions
+  friend matvec& operator + (matvec&, matvec&);
+  friend matvec& operator - (matvec&, matvec&);
+  friend matvec& operator * (matvec&, complex);
+  friend matvec& operator / (matvec&, complex);
+  friend matvec& operator * (complex, matvec&);
+  friend matvec& operator * (matvec&, matvec&);
+
+  // intrinsic operator functions
+  matvec& operator += (matvec&);
+  matvec& operator -= (matvec&);
 
  private:
   int size;
   int rows;
   int cols;
+  char * name;
   matrix * data;
 };
 

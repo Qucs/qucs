@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.5 2004-04-30 17:27:41 margraf Exp $
+ * $Id: evaluate.h,v 1.6 2004-07-04 11:16:16 ela Exp $
  *
  */
 
@@ -47,6 +47,8 @@ public:
   static constant * plus_v_c (constant *);
   static constant * plus_c_v (constant *);
   static constant * plus_v_v (constant *);
+
+  static constant * plus_mv_mv (constant *);
 
   static constant * minus_d (constant *);
   static constant * minus_c (constant *);
