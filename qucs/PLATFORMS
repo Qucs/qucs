@@ -5,6 +5,7 @@ canonical host name          	compiler  	Qt version	release	results
 
 i686-pc-linux-gnu		gcc 2.95.4	Qt 3.3.0	0.0.2	ok
 i586-pc-linux-gnu		gcc 2.95.3	Qt 3.1.2	0.0.2	ok
+x86_64-unknown-linux-gnu	gcc 3.3.4	Qt 3.3.3	0.0.4	ok
 i686-pc-cygwin			gcc 2.95.3-10	Qt 3.2.3	0.0.2	ok
 sparc-sun-solaris2.9		gcc 2.95.3	Qt 3.1.1	0.0.2	ok
 powerpc-apple-darwin7.4.0	gcc 3.3		Qt 3.3.2	0.0.2	ok
