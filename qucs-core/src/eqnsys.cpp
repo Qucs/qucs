@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.13 2004/08/22 11:01:19 ela Exp $
+ * $Id: eqnsys.cpp,v 1.14 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -42,7 +42,7 @@ using namespace std;
 
 #include "logging.h"
 #include "complex.h"
-#include "matrix.h"
+#include "tmatrix.h"
 #include "eqnsys.h"
 #include "constants.h"
 #include "exception.h"
@@ -55,21 +55,24 @@ using namespace std;
 using namespace qucs;
 
 // Constructor creates an unnamed instance of the eqnsys class.
-eqnsys::eqnsys () {
+template <class nr_type_t>
+eqnsys<nr_type_t>::eqnsys () {
   A = B = X = NULL;
 }
 
 // Destructor deletes the eqnsys class object.
-eqnsys::~eqnsys () {
+template <class nr_type_t>
+eqnsys<nr_type_t>::~eqnsys () {
   if (A != NULL) delete A;
   if (B != NULL) delete B;
 }
 
 /* The copy constructor creates a new instance of the eqnsys class
    based on the given eqnsys object. */
-eqnsys::eqnsys (eqnsys & e) {
-  if (e.A != NULL) A = new matrix (*(e.A));
-  if (e.B != NULL) B = new matrix (*(e.B));
+template <class nr_type_t>
+eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
+  if (e.A != NULL) A = new tmatrix<nr_type_t> (*(e.A));
+  if (e.B != NULL) B = new tmatrix<nr_type_t> (*(e.B));
   X = e.X;
 }
 
@@ -79,18 +82,22 @@ eqnsys::eqnsys (eqnsys & e) {
    vector.  The reference pointer to the X matrix is going to be the
    solution vector.  Both the matrices A and B will be locally
    copied. */
-void eqnsys::passEquationSys (matrix * nA, matrix * refX, matrix * nB) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
+					 tmatrix<nr_type_t> * refX,
+					 tmatrix<nr_type_t> * nB) {
   if (A != NULL) delete A;
   if (B != NULL) delete B;
-  A = new matrix (*nA);
-  B = new matrix (*nB);
+  A = new tmatrix<nr_type_t> (*nA);
+  B = new tmatrix<nr_type_t> (*nB);
   X = refX;
 }
 
 /* Depending on the algorithm applied to the equation system solver
    the function stores the solution of the system into the matrix
    pointed to by the X matrix reference. */
-void eqnsys::solve (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve (void) {
 #if DEBUG && 0
   time_t t = time (NULL);
 #endif  
@@ -121,15 +128,17 @@ void eqnsys::solve (void) {
 }
 
 /* Simple matrix inversion is used to solve the equation system. */
-void eqnsys::solve_inverse (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_inverse (void) {
   *X = inverse (*A) * *B;
 }
 
 /* The function solves the equation system applying Gaussian
    elimination with full column pivoting only (no row pivoting). */
-void eqnsys::solve_gauss (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_gauss (void) {
   nr_double_t MaxPivot;
-  complex f;
+  nr_type_t f;
   int i, c, r, pivot, N = A->getCols ();
   
   // triangulate the matrix
@@ -171,9 +180,10 @@ void eqnsys::solve_gauss (void) {
 /* The function solves the equation system applying a modified
    Gaussian elimination with full column pivoting only (no row
    pivoting). */
-void eqnsys::solve_gauss_jordan (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   nr_double_t MaxPivot;
-  complex f;
+  nr_type_t f;
   int i, c, r, pivot, N = A->getCols ();
 
   // create the eye matrix
@@ -220,11 +230,12 @@ void eqnsys::solve_gauss_jordan (void) {
    very useful when dealing with equation systems where the left hand
    side (the A matrix) does not change but the right hand side (the B
    vector) only. */
-void eqnsys::solve_lu (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_lu (void) {
   nr_double_t MaxPivot;
-  complex f;
+  nr_type_t f;
   int k, i, c, r, pivot, N = A->getCols ();
-  matrix * Y = new matrix (N, 1);
+  tmatrix<nr_type_t> * Y = new tmatrix<nr_type_t> (N, 1);
   int * change = new int[N];
 
   // initialize pivot exchange table
@@ -312,8 +323,9 @@ void eqnsys::solve_lu (void) {
    Newton-Raphson iteration it is a good initial guess and the method
    is very likely to converge.  On divergence the method falls back to
    LU decomposition. */
-void eqnsys::solve_iterative (void) {
-  complex f;
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_iterative (void) {
+  nr_type_t f;
   int error, conv, i, c, r, N = A->getCols ();
   int MaxIter = N; // -> less than N^3 operations
   nr_double_t reltol = 1e-4;
@@ -345,7 +357,7 @@ void eqnsys::solve_iterative (void) {
   }
 
   // the current X vector is a good initial guess for the iteration
-  matrix * Xprev = new matrix (*X);
+  tmatrix<nr_type_t> * Xprev = new tmatrix<nr_type_t> (*X);
 
   // start iterating here
   i = 0; error = 0;
@@ -400,8 +412,9 @@ void eqnsys::solve_iterative (void) {
    iterative algorithm.  It is a modification of the Gauss-Seidel
    method and is called successive over relaxation.  The function uses
    an adaptive scheme to adjust the relaxation parameter. */
-void eqnsys::solve_sor (void) {
-  complex f;
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_sor (void) {
+  nr_type_t f;
   int error, conv, i, c, r, N = A->getCols ();
   int MaxIter = N; // -> less than N^3 operations
   nr_double_t reltol = 1e-4;
@@ -433,7 +446,7 @@ void eqnsys::solve_sor (void) {
   }
 
   // the current X vector is a good initial guess for the iteration
-  matrix * Xprev = new matrix (*X);
+  tmatrix<nr_type_t> * Xprev = new tmatrix<nr_type_t> (*X);
 
   // start iterating here
   i = 0; error = 0;
@@ -493,7 +506,8 @@ void eqnsys::solve_sor (void) {
 /* The function computes the convergence criteria for iterative
    methods like Jacobi or Gauss-Seidel as defined by Schmidt and
    v.Mises. */
-nr_double_t eqnsys::convergence_criteria (void) {
+template <class nr_type_t>
+nr_double_t eqnsys<nr_type_t>::convergence_criteria (void) {
   nr_double_t f = 0;
   for (int r = 1; r <= A->getCols (); r++) {
     for (int c = 1; c <= A->getCols (); c++) {
@@ -506,7 +520,8 @@ nr_double_t eqnsys::convergence_criteria (void) {
 /* The function tries to ensure that there are non-zero diagonal
    elements in the equation system matrix A.  This is required for
    iterative solution methods. */
-void eqnsys::ensure_diagonal (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::ensure_diagonal (void) {
   ensure_diagonal_MNA ();
 }
 
@@ -516,7 +531,8 @@ void eqnsys::ensure_diagonal (void) {
    nodal analysis.  It takes advantage of the fact that the zero
    diagonal elements have pairs of 1 und -1 on the same column and
    row. */
-void eqnsys::ensure_diagonal_MNA (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
   int restart, exchanged, begin = 1, pairs;
   int pivot1, pivot2, i, N = A->getCols ();
   do {
@@ -554,7 +570,8 @@ void eqnsys::ensure_diagonal_MNA (void) {
 
 /* Helper function for the above ensure_diagonal_MNA() function.  It
    looks for the pairs of 1 and -1 on the given row and column index. */
-int eqnsys::countPairs (int i, int& r1, int& r2) {
+template <class nr_type_t>
+int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
   int pairs = 0, N = A->getCols ();
   for (int r = 1; r <= N; r++) {
     if (fabs (real (A->get (r, i))) == 1.0) {
@@ -574,7 +591,8 @@ int eqnsys::countPairs (int i, int& r1, int& r2) {
 /* The function tries to raise the absulute value of diagonal elements
    by swapping rows and thereby make the A matrix diagonally
    dominant. */
-void eqnsys::preconditioner (void) {
+template <class nr_type_t>
+void eqnsys<nr_type_t>::preconditioner (void) {
   int pivot, r, N = A->getCols ();
   nr_double_t MaxPivot;
   for (int i = 1; i <= N; i++) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.h,v 1.2 2004/05/22 09:17:25 ela Exp $
+ * $Id: iac.h,v 1.3 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -29,7 +29,8 @@ class iac : public circuit
 {
  public:
   iac ();
-  void calcDC (void) { }
+  void initDC (dcsolver *);
+  void initAC (acsolver *);
 };
 
 #endif /* __IAC_H__ */

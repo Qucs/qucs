@@ -1,3 +1,9 @@
+2004-09-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* vac.cpp, resistor.cpp, iprobe.cpp, inductor.cpp,
+	capacitor.cpp, iac.cpp, pac.cpp: Implemented AC analysis
+	callbacks.
+
 2004-09-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Added dispersion model of

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.h,v 1.4 2004/05/22 09:17:25 ela Exp $
+ * $Id: vac.h,v 1.5 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -29,7 +29,8 @@ class vac : public circuit
 {
  public:
   vac ();
-  void calcDC (void);
+  void initDC (dcsolver *);
+  void initAC (acsolver *);
 };
 
 #endif /* __VAC_H__ */

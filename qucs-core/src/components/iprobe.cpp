@@ -1,5 +1,5 @@
 /*
- * iprobe.cpp - DC current probe class implementation
+ * iprobe.cpp - AC/DC current probe class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iprobe.cpp,v 1.1 2004/02/09 18:27:42 ela Exp $
+ * $Id: iprobe.cpp,v 1.2 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -37,7 +37,22 @@
 #include "vdc.h"
 #include "iprobe.h"
 
-iprobe::iprobe () : vdc () {
+iprobe::iprobe () : circuit (2) {
+  setS (1, 1, 0.0);
+  setS (1, 2, 1.0);
+  setS (2, 1, 1.0);
+  setS (2, 2, 0.0);
   type = CIR_IPROBE;
-  addProperty ("U", 0.0);
+  setVoltageSources (1);
+}
+
+void iprobe::initDC (dcsolver *) {
+  setC (1, 1, +1.0); setC (1, 2, -1.0);
+  setB (1, 1, +1.0); setB (2, 1, -1.0);
+  setE (1, 0.0);
+  setD (1, 1, 0.0);
+}
+
+void iprobe::initAC (acsolver *) {
+  initDC (NULL);
 }

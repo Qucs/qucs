@@ -1,3 +1,28 @@
+2004-09-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* acsolver.h (class acsolver): New class implementing
+	the AC simulation.
+
+	* eqnsys.h (class eqnsys): Made this class a template
+	using the tmatrix template.  Thus the DC analysis runs
+	twice as fast (using <nr_double_t> instead of <complex>
+	values) and the solvers can also used by other types of
+	simulations.
+
+	* complex.h (class complex): Added abs(), norm() and real()
+	for real arguments as well.  Thus they can be used by the
+	tmatrix template.
+
+	* circuit.cpp: Bigger code cleanups and better documentation
+	for some basic circuit functionality.
+
+	* nasolver.h (class nasolver): New class implementing the
+	modified nodal analysis code.  Thus it may be used by other
+	simulation (e.g. AC and transient) as well.
+
+	* dcsolver.cpp: Cleaned up the DC solver code using the new
+	nasolver class.
+
 2004-09-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: Implemented numerical differentiation of

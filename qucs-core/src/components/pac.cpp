@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.4 2004/07/30 06:25:55 ela Exp $
+ * $Id: pac.cpp,v 1.5 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
@@ -42,14 +43,23 @@ pac::pac () : circuit (2) {
 
 void pac::calcSP (nr_double_t) {
   nr_double_t z = getPropertyDouble ("Z") / z0;
-  setS (1, 1, z / (z + 2.0));
-  setS (2, 2, z / (z + 2.0));
-  setS (1, 2, 2.0 / (z + 2.0));
-  setS (2, 1, 2.0 / (z + 2.0));
+  setS (1, 1, z / (z + 2));
+  setS (2, 2, z / (z + 2));
+  setS (1, 2, 2 / (z + 2));
+  setS (2, 1, 2 / (z + 2));
 }
 
 void pac::calcDC (void) {
   nr_double_t g = 1.0 / getPropertyDouble ("Z");
+  clearI ();
   setY (1, 1, +g); setY (2, 2, +g);
   setY (1, 2, -g); setY (2, 1, -g);
+}
+
+void pac::calcAC (nr_double_t) {
+  nr_double_t p = getPropertyDouble ("P");
+  nr_double_t r = getPropertyDouble ("Z");
+  nr_double_t i = sqrt (p / r);
+  calcDC ();
+  setI (1, +i); setI (2, -i);
 }

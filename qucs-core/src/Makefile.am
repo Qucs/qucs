@@ -39,16 +39,18 @@ qucsator_LDADD = libqucsator.a \
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
-	parasweep.cpp matrix.cpp eqnsys.cpp equation.cpp evaluate.cpp        \
-	sweep.cpp
+	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp
 
-noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
-	tokens_netlist.h dataset.h logging.h node.h property.h vector.h     \
-	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h      \
-	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h        \
-	nodelist.h variable.h environment.h parasweep.h eqnsys.h sweep.h    \
-	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h    \
-	exceptionstack.h matvec.h constants.h consts.h
+noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp
+
+noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
+	tokens_netlist.h dataset.h logging.h node.h property.h vector.h       \
+	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h        \
+	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h object.h \
+	nodelist.h variable.h environment.h parasweep.h eqnsys.h sweep.h      \
+	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h      \
+	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
+	circuit.h acsolver.h
 
 noinst_LIBRARIES = libqucsator.a
 
@@ -56,7 +58,7 @@ libqucsator_a_SOURCES = dataset.cpp check_dataset.cpp parse_dataset.cpp     \
 	scan_dataset.cpp check_touchstone.cpp vector.cpp object.cpp         \
 	property.cpp parse_touchstone.cpp scan_touchstone.cpp variable.cpp  \
 	complex.cpp strlist.cpp logging.c exception.cpp exceptionstack.cpp  \
-	matvec.cpp
+	matvec.cpp matrix.cpp
 
 generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
 	parse_dataset.cpp tokens_dataset.h tokens_netlist.h           \

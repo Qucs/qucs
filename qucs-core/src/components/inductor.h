@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.h,v 1.4 2004/05/18 15:19:03 ela Exp $
+ * $Id: inductor.h,v 1.5 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -30,7 +30,10 @@ class inductor : public circuit
  public:
   inductor ();
   void calcSP (nr_double_t);
+  void initDC (dcsolver *);
   void calcDC (void);
+  void initAC (acsolver *);
+  void calcAC (nr_double_t);
 };
 
 #endif /* __INDUCTOR_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.31 2004/08/22 11:01:19 ela Exp $
+ * $Id: spsolver.cpp,v 1.32 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -83,8 +83,8 @@ spsolver::~spsolver () {
    based on the given spsolver object. */
 spsolver::spsolver (spsolver & n) : analysis (n) {
   noise = n.noise;
-  if (n.swp) swp = new sweep (*n.swp);
-  if (n.nlist) nlist = new nodelist (*n.nlist);
+  swp = n.swp ? new sweep (*n.swp) : NULL;
+  nlist = n.nlist ? new nodelist (*n.nlist) : NULL;
 }
 
 /* This function joins two nodes of a single circuit (interconnected
@@ -544,7 +544,6 @@ void spsolver::solve (void) {
 
   nr_double_t freq;
   int ports;
-  circuit * root;
 
   runs++;
 
@@ -589,8 +588,7 @@ void spsolver::solve (void) {
     freq = swp->next ();
     logprogressbar (i, swp->getSize (), 40);
 
-    root = subnet->getRoot ();
-    ports = root->countNodes ();
+    ports = subnet->countNodes ();
     subnet->setReduced (0);
     calc (freq);
 

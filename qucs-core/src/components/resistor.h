@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.h,v 1.6 2004/07/26 06:30:29 ela Exp $
+ * $Id: resistor.h,v 1.7 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -33,6 +33,8 @@ class resistor : public circuit
   void calcNoise (nr_double_t);
   void calcDC (void);
   void initDC (dcsolver *);
+  void calcAC (nr_double_t);
+  void initAC (acsolver *);
 };
 
 #endif /* __RESISTOR_H__ */

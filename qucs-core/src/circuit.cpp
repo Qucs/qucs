@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.24 2004/08/12 13:59:53 ela Exp $
+ * $Id: circuit.cpp,v 1.25 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -47,11 +47,11 @@ circuit::circuit () : object () {
   size = 0;
   MatrixN = MatrixS = MatrixY = NULL;
   nodes = NULL;
-  port = 0;
-  org = 1;
+  pacport = 0;
+  original = 1;
   subst = NULL;
-  source = 0;
-  nSources = 0;
+  vsource = 0;
+  vsources = 0;
   oper = NULL;
   inserted = -1;
   linear = 1;
@@ -71,11 +71,11 @@ circuit::circuit (int s) : object () {
     MatrixY = new complex[s * s];
     nodes = new node[s];
   }
-  port = 0;
-  org = 1;
+  pacport = 0;
+  original = 1;
   subst = NULL;
-  source = 0;
-  nSources = 0;
+  vsource = 0;
+  vsources = 0;
   oper = NULL;
   inserted = -1;
   linear = 1;
@@ -88,12 +88,12 @@ circuit::circuit (int s) : object () {
    circuit object. */
 circuit::circuit (const circuit & c) : object (c) {
   size = c.size;
-  port = c.port;
-  org = c.org;
+  pacport = c.pacport;
+  original = c.original;
   type = c.type;
   subst = c.subst;
-  source = c.source;
-  nSources = c.nSources;
+  vsource = c.vsource;
+  vsources = c.vsources;
   inserted = c.inserted;
   linear = c.linear;
   enabled = 0;
@@ -188,38 +188,6 @@ void circuit::setSubcircuit (char * n) {
   subcircuit = n ? strdup (n) : NULL;
 }
 
-/* This function counts the number of signals (ports) within the list
-   of circuits. */
-int circuit::countPorts (void) {
-  int count = 0;
-  for (circuit * c = this; c != NULL; c = (circuit *) c->getNext ()) {
-    if (c->isPort ())
-      count++;
-  }
-  return count;
-}
-
-/* This function counts the number of circuits within the list 
-   of circuits. */
-int circuit::countCircuits (void) {
-  int count = 0;
-  for (circuit * c = this; c != NULL; c = (circuit *) c->getNext ()) {
-    count++;
-  }
-  return count;
-}
-
-/* This function counts the number of circuits within the list 
-   of circuits. */
-int circuit::countNodes (void) {
-  int count = 0;
-  for (circuit * c = this; c != NULL; c = (circuit *) c->getNext ()) {
-    if (!c->isPort ())
-      count += c->getSize ();
-  }
-  return count;
-}
-
 #if DEBUG
 // DEBUG function:  Prints the S parameters of this circuit object.
 void circuit::print (void) {
@@ -247,7 +215,7 @@ void circuit::setSubstrate (substrate * s) {
 /* Returns the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
 complex circuit::getB (int port, int nr) {
-  return MatrixB[(nr - source) * size + port - 1];
+  return MatrixB[(nr - vsource) * size + port - 1];
 }
 
 /* Sets the circuits B-MNA matrix value of the given voltage source
@@ -259,7 +227,7 @@ void circuit::setB (int port, int nr, complex z) {
 /* Returns the circuits C-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
 complex circuit::getC (int nr, int port) {
-  return MatrixC[(nr - source) * size + port - 1];
+  return MatrixC[(nr - vsource) * size + port - 1];
 }
 
 /* Sets the circuits C-MNA matrix value of the given voltage source
@@ -271,19 +239,19 @@ void circuit::setC (int nr, int port, complex z) {
 /* Returns the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
 complex circuit::getD (int r, int c) {
-  return MatrixD[(r - source) * nSources + c - source];
+  return MatrixD[(r - vsource) * vsources + c - vsource];
 }
 
 /* Sets the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
 void circuit::setD (int r, int c, complex z) {
-  MatrixD[(r - 1) * nSources + c - 1] = z;
+  MatrixD[(r - 1) * vsources + c - 1] = z;
 }
 
 /* Returns the circuits E-MNA matrix value of the given voltage source
    built in the circuit. */
 complex circuit::getE (int nr) {
-  return MatrixE[nr - source];
+  return MatrixE[nr - vsource];
 }
 
 /* Sets the circuits E-MNA matrix value of the given voltage source
@@ -417,13 +385,13 @@ void circuit::setN (int r, int c, complex z) {
 
 // Returns the number of internal voltage sources for DC analysis.
 int circuit::getVoltageSources (void) {
-  return nSources;
+  return vsources;
 }
 
 // Sets the number of internal voltage sources for DC analysis.
 void circuit::setVoltageSources (int s) {
   assert (s >= 0 && s <= MAX_CIR_VSRCS);
-  nSources = s;
+  vsources = s;
 }
 
 /* The function returns an internal node or circuit name with the
@@ -471,4 +439,58 @@ matrix& circuit::getMatrixN (void) {
   matrix * res = new matrix (size);
   memcpy (res->getData (), MatrixN, sizeof (complex) * size * size);
   return *res;
+}
+
+/* This function copies the matrix elements inside the given matrix to
+   the internal G-MNA matrix of the circuit. */
+void circuit::setMatrixY (matrix & y) {
+  int r = y.getRows ();
+  int c = y.getCols ();
+  // copy matrix elements
+  if (r > 0 && c > 0 && r * c == size * size) {
+    memcpy (MatrixY, y.getData (), sizeof (complex) * r * c);
+  }
+}
+
+/* The function return a matrix containing the G-MNA matrix of the
+   circuit. */
+matrix& circuit::getMatrixY (void) {
+  matrix * res = new matrix (size);
+  memcpy (res->getData (), MatrixY, sizeof (complex) * size * size);
+  return *res;
+}
+
+// The function cleans up the B-MNA matrix entries.
+void circuit::clearB (void) {
+  memset (MatrixB, 0, sizeof (complex) * size * vsources);
+}
+
+// The function cleans up the C-MNA matrix entries.
+void circuit::clearC (void) {
+  memset (MatrixC, 0, sizeof (complex) * size * vsources);
+}
+
+// The function cleans up the D-MNA matrix entries.
+void circuit::clearD (void) {
+  memset (MatrixD, 0, sizeof (complex) * vsources * vsources);
+}
+
+// The function cleans up the E-MNA matrix entries.
+void circuit::clearE (void) {
+  memset (MatrixE, 0, sizeof (complex) * vsources);
+}
+
+// The function cleans up the I-MNA matrix entries.
+void circuit::clearI (void) {
+  memset (MatrixI, 0, sizeof (complex) * size);
+}
+
+// The function cleans up the V-MNA matrix entries.
+void circuit::clearV (void) {
+  memset (MatrixV, 0, sizeof (complex) * size);
+}
+
+// The function cleans up the G-MNA matrix entries.
+void circuit::clearY (void) {
+  memset (MatrixY, 0, sizeof (complex) * size * size);
 }

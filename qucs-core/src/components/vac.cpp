@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.4 2004/05/23 15:27:26 ela Exp $
+ * $Id: vac.cpp,v 1.5 2004/09/06 06:40:07 ela Exp $
  *
  */
 
@@ -45,9 +45,14 @@ vac::vac () : circuit (2) {
   setVoltageSources (1);
 }
 
-void vac::calcDC (void) {
+void vac::initDC (dcsolver *) {
   setC (1, 1, +1.0); setC (1, 2, -1.0);
   setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
   setD (1, 1, 0.0);
+  setE (1, 0.0);
+}
+
+void vac::initAC (acsolver *) {
+  initDC (NULL);
+  setE (1, getPropertyDouble ("U"));
 }
