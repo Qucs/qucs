@@ -181,9 +181,10 @@ class QucsApp : public QMainWindow
 
     
 // ********** Methods ***************************************************
-//    void openDocument(const QString& Name);
+    bool saveCurrentFile();
+    void readProjects();
     void OpenProject(const QString& Path, const QString& Name);
-    void DeleteProject(const QString& Path, const QString& Name);
+    bool DeleteProject(const QString& Path, const QString& Name);
     void updatePortNumber(int No);
     bool gotoPage(const QString& Name);
     

@@ -49,9 +49,11 @@ public:
   bool loadVarData(const QString& fileName);
   int  loadIndepVarData(const QString& var, const QString& fileName);
   
-  QString Name;   // identity string for the diagram type (e.g. Polar)
+  QString Name;   // identity string for the diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
   int     GridX, GridY;
+  QString xLabel, yLabel;
+  
   QPtrList<Graph> Graphs;
   QPtrList<Arc>   Arcs;
   QPtrList<Line>  Lines;

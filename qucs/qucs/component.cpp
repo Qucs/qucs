@@ -307,20 +307,17 @@ QString Component::NetList()
 // -------------------------------------------------------
 QString Component::save()
 {
-  QString num;
-  QString s = "<"+Sign;
+  QString s = "   <"+Sign;
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
 
   if(isActive) s += " 1";
   else s += " 0";
-  s += " "+num.setNum(cx);  // all numbers must be in different lines !?!
-  s += " "+num.setNum(cy);
-  s += " "+num.setNum(tx);
-  s += " "+num.setNum(ty);
+  s += " "+QString::number(cx)+" "+QString::number(cy);
+  s += " "+QString::number(tx)+" "+QString::number(ty);
   if(mirroredX) s += " 1";
   else s += " 0";
-  s += " "+num.setNum(rotated);
+  s += " "+QString::number(rotated);
   
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {   // write all properties
     s += " \""+p1->Value+"\"";
@@ -370,10 +367,8 @@ bool Component::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',7,7);    // mirroredX
-  if(n.toInt(&ok) == 1) mirroredX = true;
-  else mirroredX = false;
+  if(n.toInt(&ok) == 1) mirrorX();  // mirror component
   if(!ok) return false;
-  if(mirroredX) mirrorX();  // mirror component
 
   n  = s.section(' ',8,8);    // rotated
   tmp = n.toInt(&ok);
@@ -1615,8 +1610,8 @@ MSline::MSline()
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
 
-  x1 = -30; y1 = -9;
-  x2 =  30; y2 =  9;
+  x1 = -30; y1 =-11;
+  x2 =  30; y2 = 11;
 
   tx = x1+4;
   ty = y2+4;
@@ -1624,9 +1619,10 @@ MSline::MSline()
   Model = QString("MLIN");
   Name  = QString("MS");
 
-  Props.append(new Property("Subst", "Subst1", true, "substrate"));
+  Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
   Props.append(new Property("W", "1 mm", true, "width of the line"));
   Props.append(new Property("L", "10 mm", true, "length of the line"));
+  Props.append(new Property("Model", "Kirschning", false, "microstrip model |Kirschning|Kobayashi|Yamashita"));
 }
 
 MSline::~MSline()
@@ -1636,6 +1632,61 @@ MSline::~MSline()
 MSline* MSline::newOne()
 {
   return new MSline();
+}
+
+// ------------------------------------------------------------------------
+MScoupled::MScoupled()
+{
+  Description = "coupled microstrip line";
+
+  Lines.append(new Line(-30,-12,-16,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,-30,-30,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 20,-12, 30,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,-30, 30,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-11,-20, 25,-20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-21, -4, 15, -4,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-11,-20,-21, -4,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 25,-20, 15, -4,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-30, 12,-20, 12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30, 30,-30, 12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 16, 12, 30, 12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30, 30, 30, 12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15,  4, 21,  4,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-25, 20, 11, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15,  4,-25, 20,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 21,  4, 11, 20,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-22,-16,-26, -8,QPen(QPen::darkBlue,2)));
+
+  Ports.append(new Port(-30,-30));
+  Ports.append(new Port( 30,-30));
+  Ports.append(new Port( 30, 30));
+  Ports.append(new Port(-30, 30));
+
+  x1 = -30; y1 =-33;
+  x2 =  30; y2 = 33;
+
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = QString("CMS");
+  Model = QString("CMS");
+  Name  = QString("MS");
+
+  Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
+  Props.append(new Property("W", "1 mm", true, "width of the line"));
+  Props.append(new Property("L", "10 mm", true, "length of the line"));
+  Props.append(new Property("S", "1 mm", true, "spacing between the lines"));
+  Props.append(new Property("Model", "Kirschning", false, "microstrip model |Kirschning|Kobayashi|Yamashita"));
+}
+
+MScoupled::~MScoupled()
+{
+}
+
+MScoupled* MScoupled::newOne()
+{
+  return new MScoupled();
 }
 
 // ------------------------------------------------------------------------
@@ -1829,6 +1880,62 @@ MScross* MScross::newOne()
   return new MScross();
 }
 
+
+// ------------------------------------------------------------------------
+Coplanar::Coplanar()
+{
+  Description = "coplanar line";
+
+  Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-13, -8, 23, -8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-23,  8, 13,  8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-13, -8,-23,  8,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 23, -8, 13,  8,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-25,-13, 25,-13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 16,-21, 24,-13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  8,-21, 16,-13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0,-21,  8,-13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -8,-21,  0,-13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-16,-21, -8,-13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-24,-21,-16,-13,QPen(QPen::darkBlue,2)));
+  
+  Lines.append(new Line(-25, 13, 25, 13,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-24, 13,-16, 21,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-16, 13, -8, 21,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -8, 13,  0, 21,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  0, 13,  8, 21,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  8, 13, 16, 21,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 16, 13, 24, 21,QPen(QPen::darkBlue,2)));
+
+  Ports.append(new Port(-30, 0));
+  Ports.append(new Port( 30, 0));
+
+  x1 = -30; y1 =-24;
+  x2 =  30; y2 = 24;
+
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = QString("CLIN");
+  Model = QString("CLIN");
+  Name  = QString("CL");
+
+  Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
+  Props.append(new Property("W", "1 mm", true, "width of the line"));
+  Props.append(new Property("S", "1 mm", true, "width of a gap"));
+  Props.append(new Property("L", "10 mm", true, "length of the line"));
+//  Props.append(new Property("Model", "Kirschning", false, "microstrip model |Kirschning|Kobayashi|Yamashita"));
+}
+
+Coplanar::~Coplanar()
+{
+}
+
+Coplanar* Coplanar::newOne()
+{
+  return new Coplanar();
+}
 
 // ******************************************************************************************
 // **********                                                                      **********

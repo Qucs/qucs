@@ -1,7 +1,7 @@
 /***************************************************************************
-                          smithdiagram.h  -  description
+                          painting.cpp  -  description
                              -------------------
-    begin                : Sat Oct 18 2003
+    begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,25 +15,24 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SMITHDIAGRAM_H
-#define SMITHDIAGRAM_H
+#include "painting.h"
 
-#include "diagram.h"
+Painting::Painting()
+{
+  Type = isPainting;
+  State = 0;
+}
 
+Painting::~Painting()
+{
+}
 
-/**
-  *@author Michael Margraf
-  */
+Painting* Painting::newOne()
+{
+  return new Painting();
+}
 
-class SmithDiagram : public Diagram  {
-public: 
-	SmithDiagram(int _cx=0, int _cy=0);
-	~SmithDiagram();
-
-
-  virtual SmithDiagram* newOne();
-  virtual void calcData(Graph *g);
-  virtual void calcDiagram();
-};
-
-#endif
+QString Painting::save()
+{
+  return QString();
+}
