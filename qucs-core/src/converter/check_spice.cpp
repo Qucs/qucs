@@ -1,7 +1,7 @@
 /*
  * check_spice.cpp - checker for a Spice netlist
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.9 2004/12/15 19:55:33 raimi Exp $
+ * $Id: check_spice.cpp,v 1.10 2005/01/13 23:21:35 raimi Exp $
  *
  */
 
@@ -1383,27 +1383,27 @@ spice_post_translator (struct definition_t * root) {
     }
     // post-process mutual inductors (transformer)
     if (!def->action && !strcmp (def->type, "Tr")) {
-      struct definition_t * target;
+      struct definition_t * target1, * target2;
       char * linst1 = def->values->ident;       // get inductivity 1
       char * linst2 = def->values->next->ident; // get inductivity 2
-      nr_double_t l1, l2, k;
+      nr_double_t l1, l2, k, t;
       char * n1, * n2, * n3, * n4;
       struct node_t * nn;
 
       // initialize local variables
       n1 = n2 = n3 = n4 = NULL;
-      l1 = l2 = k = 0;
+      l1 = l2 = k = t = 0;
 
       // find and handle inductivity 1
-      target = spice_find_definition (root, "L", linst1);
-      if (target == NULL) {
+      target1 = spice_find_definition (root, "L", linst1);
+      if (target1 == NULL) {
 	fprintf (stderr, "spice error, no such inductor `%s' found as "
 		 "referenced by %s `%s'\n", linst1, def->type, def->instance);
 	spice_errors++;
       }
       else {
-	l1 = spice_get_property_value (target, "L");
-	nn = spice_get_node (target, 2);
+	l1 = spice_get_property_value (target1, "L");
+	nn = spice_get_node (target1, 2);
 	n4 = nn->node;
 	nn->node = strdup (spice_create_intern_node ());
 	n1 = strdup (nn->node);
@@ -1411,15 +1411,15 @@ spice_post_translator (struct definition_t * root) {
       spice_value_done (def->values);
 
       // find and handle inductivity 2
-      target = spice_find_definition (root, "L", linst2);
-      if (target == NULL) {
+      target2 = spice_find_definition (root, "L", linst2);
+      if (target2 == NULL) {
 	fprintf (stderr, "spice error, no such inductor `%s' found as "
 		 "referenced by %s `%s'\n", linst2, def->type, def->instance);
 	spice_errors++;
       }
       else {
-	l2 = spice_get_property_value (target, "L");
-	nn = spice_get_node (target, 2);
+	l2 = spice_get_property_value (target2, "L");
+	nn = spice_get_node (target2, 2);
 	n3 = nn->node;
 	nn->node = strdup (spice_create_intern_node ());
 	n2 = strdup (nn->node);
@@ -1437,19 +1437,23 @@ spice_post_translator (struct definition_t * root) {
 	    break;
 	  }
 	}
-	k = spice_get_property_value (def, "T");
 	// apply the turns ratio of the transformer and its nodes
-	spice_set_property_value (def, "T", sqrt (l1 / l2));
+	k = spice_get_property_value (def, "T");
+	t = sqrt (l1 / l2);
+	spice_set_property_value (def, "T", t);
 	spice_append_node (def, n1);
 	spice_append_node (def, n2);
 	spice_append_node (def, n3);
 	spice_append_node (def, n4);
+	// adapt inductivities of original inductors
+	spice_set_property_value (target1, "L", l1 - k * l1);
+	spice_set_property_value (target2, "L", l2 - k * l1 / t / t);
 	// insert the actual mutual inductance if necessary
-	if (k < 1) {
+	if (k > 0) {
 	  struct definition_t * Mind = spice_create_definition (def, "L");
 	  spice_append_node (Mind, n1);
 	  spice_append_node (Mind, n4);
-	  spice_set_property_value (Mind, "L", k * l1 / (1 - k));
+	  spice_set_property_value (Mind, "L", k * l1);
 	  root = spice_add_definition (root, Mind);
 	}
 	free (n1); free (n2); free (n3); free (n4);
@@ -1548,7 +1552,7 @@ spice_translate_action (struct definition_t * root,
 			       spice_get_property_value (def, "Start"),
 			       spice_get_property_value (def, "Stop"),
 			       spice_get_property_value (def, "Points"));
-    spice_set_property_value (def, "Points", v);
+    spice_set_property_value (def, "Points", v + 1);
     spice_set_property_string (def, "Type", type);
     free (type);
   }
