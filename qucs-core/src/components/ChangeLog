@@ -1,3 +1,8 @@
+2004-09-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Added dispersion model of
+	characteristic impedance by Pramanick.
+
 2004-09-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msopen.cpp: Implemented microstrip open end

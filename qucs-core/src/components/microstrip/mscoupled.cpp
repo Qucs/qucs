@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.8 2004-09-02 08:02:15 ela Exp $
+ * $Id: mscoupled.cpp,v 1.9 2004-09-04 06:50:59 ela Exp $
  *
  */
 
@@ -144,7 +144,7 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     Alpha = 0.5 * exp (-g);
     Psi = 1 + g / 1.45 + pow (g, 2.09) / 3.95;
     Phi = 0.8645 * pow (u, 0.172);
-    Pe = Phi / (Psi / (Alpha * pow (u, m) + (1 - Alpha) * pow (u, -m)));
+    Pe = Phi / (Psi * (Alpha * pow (u, m) + (1 - Alpha) * pow (u, -m)));
 
     // modifying equations for odd mode
     n = (1 / 17.7 + exp (-6.424 - 0.76 * log (g) - pow (g / 0.23, 5))) *
@@ -160,7 +160,7 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
 		   0.328 * pow (g, r) / log (M_E + pow (g / 7, 2.8)));
     q = exp (-1.366 - g);
     p = exp (-0.745 * pow (g, 0.295)) / cosh (pow (g, 0.68));
-    fo = fo1 * exp (p * log (u) + q * sin (M_PI * log (u) / M_LN10));
+    fo = fo1 * exp (p * log (u) + q * sin (M_PI * log10 (u)));
 
     Mu = g * exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
     msline::Hammerstad_ab (Mu, er, a, b);
