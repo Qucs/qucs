@@ -1,7 +1,7 @@
 /*
  * eqnsys.h - equations system solver class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.9 2004/10/25 21:01:31 ela Exp $
+ * $Id: eqnsys.h,v 1.10 2005/02/12 09:49:31 raimi Exp $
  *
  */
 
@@ -31,6 +31,8 @@ enum algo_type {
   ALGO_GAUSS,
   ALGO_GAUSS_JORDAN,
   ALGO_LU_DECOMPOSITION,
+  ALGO_LU_SUBSTITUTION_CROUT,
+  ALGO_LU_SUBSTITUTION_DOOLITTLE,
   ALGO_JACOBI,
   ALGO_GAUSS_SEIDEL,
   ALGO_SOR
@@ -63,6 +65,8 @@ class eqnsys
   void solve_gauss (void);
   void solve_gauss_jordan (void);
   void solve_lu (void);
+  void solve_lu_subst_crout (void);
+  void solve_lu_subst_doolittle (void);
   void solve_iterative (void);
   void solve_sor (void);
   nr_double_t convergence_criteria (void);
