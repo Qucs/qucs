@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.8 2004/12/01 20:23:46 raimi Exp $
+ * $Id: nodelist.cpp,v 1.9 2004/12/20 18:41:17 raimi Exp $
  *
  */
 
@@ -315,19 +315,28 @@ void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
   nl->nNodes--;
 }
 
+/* This function is used as sorting criteria for the S-parameter
+   analysis.  It returns the number of nodes a join of the two
+   circuits connected to the given node would yield. */
 static int sortfunc (struct nodelist_t * n) {
-  int i, p;
-  for (p = 0, i = 0; i < n->nNodes; i++) {
-    if (n->nodes[i]->getCircuit()->getPort ()) return -1;
-    p += n->nodes[i]->getCircuit()->getSize ();
+  int p;
+  circuit * c1 = n->nodes[0]->getCircuit ();
+  circuit * c2 = n->nNodes > 1 ? n->nodes[1]->getCircuit () : NULL;
+  if (c1->getPort () || (c2 && c2->getPort ())) return -1;
+  if (c1 == c2) { // interconnect
+    p = c1->getSize () - 2;
+  } else {        // connect
+    p = c1->getSize () + (c2 ? c2->getSize () - 2 : 0);
   }
   return p;
 }
 
+/* The function evaluates the sorting criteria of the given two nodes.
+   It returns non-zero if 'n1' should be inserted before 'n2'. */
 static int insfunc (struct nodelist_t * n1, struct nodelist_t * n2) {
   int p1 = sortfunc (n1);
   int p2 = sortfunc (n2);
-  return ((p1 <= p2) || (p2 < 0)) && p1 >= 0;
+  return p1 >= 0 && (p1 <= p2 || p2 < 0);
 }
 
 /* The function inserts the given node structure into the node list.
