@@ -1,0 +1,1010 @@
+%
+% This document contains the chapter about transient analysis.
+%
+
+\chapter{Transient Analysis}
+%\addcontentsline{toc}{chapter}{Transient Analysis}
+
+The transient simulation is the calculation of a networks response on
+arbitrary excitations.  The results are network quantities (branch
+currents and node voltages) as a function of time.  Substantial for
+the transient analysis is the consideration of energy storing
+components, i.e. inductors and capacitors.
+
+\addvspace{12pt}
+
+The relations between current and voltage of ideal capacitors and
+inductors are given by
+\begin{equation}
+V_C(t) = \dfrac{1}{C}\int I_C(t) \cdot dt
+\;\;\;\; \textrm{ and } \;\;\;\;
+I_L(t) = \dfrac{1}{L}\int V_L(t) \cdot dt
+\end{equation}
+
+or in terms of differential equations
+\begin{equation}
+I_C(t) = C\cdot \dfrac{d V_C}{d t}
+\;\;\;\; \textrm{ and } \;\;\;\;
+V_L(t) = L\cdot \dfrac{d I_L}{d t}
+\end{equation}
+
+To calculate these quantities in a computer program numerical
+integration methods are required.  With the current-voltage relations
+of these components at hand it is possible to apply the modified nodal
+analysis algorithm in order to calculate the networks response.  This
+means the transient analysis attempts to find an approximation to the
+analytical solution at discrete time points using numeric integration.
+
+\section{Integration methods}
+%\addcontentsline{toc}{section}{Integration methods}
+\label{sec:IntegrationMethods}
+
+The following differential equation is going to be solved.
+\begin{equation}
+\dfrac{d x}{d t} = \dot{x}(t) = f(x,t)
+\label{eq:IntEquation}
+\end{equation}
+
+This differential equation is transformed into an algorithm-dependent
+finite difference equation by quantizing and replacing
+\begin{equation}
+\dot{x}(t) = \lim_{h \rightarrow 0} \dfrac{x(t+h) - x(t)}{h}
+\end{equation}
+
+by the following equation.
+\begin{equation}
+\dot{x}^n = \dfrac{x^{n+1} - x^{n}}{h^{n}}
+\end{equation}
+
+There are several linear single- and multi-step numerical integration
+methods available, each having advantages and disadvantages concerning
+aspects of stability and accuracy.  Integration methods can also be
+classified into implicit and explicit methods.  Explicit methods are
+inexpensive per step but limited in stability and therefore not used
+in the field of circuit simulation to obtain a correct and stable
+solution.  Implicit methods are more expensive per step, have better
+stability and therefore suitable for circuit simulation.
+
+\subsection{Properties of numerical integration methods}
+%\addcontentsline{toc}{subsection}{Properties of numerical integration methods}
+
+Beforehand some definitions and explanations regarding the terms often
+used in the following sections are made in order to avoid bigger
+confusions later on.
+
+\begin{itemize}
+\item step size\\
+The step size is defined by the arguments difference of successive
+solution vectors, i.e. the time step $h^n$ during transient analysis
+with $n$ being the $n$-th integration step.
+\begin{equation}
+h^n = t^{n+1} - t ^n
+\end{equation}
+
+\item order\\
+The order $k$ of an integration method is defined as follows: With two
+successive solution vectors $x^{n+1}$ and $x^{n}$ given, the successor
+$x^{n+1}$ can be expressed by $x^{n}$ by a finite Taylor series.  The
+order of an integrations method equals the power of the step size up
+to which the approximate solution of the Taylor series differs less
+than $x^{n}$ from the true solution $x^{n+1}$.
+
+\item truncation error\\
+The truncation error $\varepsilon_T$ depends on the order $k$ of the
+integration method and results from the remainder term of the Taylor
+series.
+
+\item stability\\
+In order to obtain an accurate network solution integration methods
+are required to be stable for a given step size $h$.  Various
+stability definitions exist.  This property is explained more in
+detail in the following sections.  Basically it determines the
+usability of an integration algorithm.
+
+\item single- and multistep methods\\
+Single step methods only use $x^n$ in order to calculate $x^{n+1}$,
+multi step methods use $x^i$ with $0 \le i < n$.
+
+\item implicit and explicit methods\\
+When using explicit integration methods the evaluation of the
+integration formula is sufficient for each integration step.  With
+implicit methods at hand it is necessary to solve an equation system
+(with non-linear networks a non-linear equation system) because for
+the calculation of $x^{n+1}$, apart from $x^n$ and $\dot{x}^n$, also
+$\dot{x}^{n+1}$ is used.  For the transient analysis of electrical
+networks the implicit methods are better qualified than the explicit
+methods.
+\end{itemize}
+
+\subsection{Elementary Methods}
+%\addcontentsline{toc}{subsection}{Elementary Methods}
+
+\subsubsection{Backward Euler}
+%\addcontentsline{toc}{subsubsection}{Backward Euler}
+
+In the implicit Euler method the right hand side of
+eq. \eqref{eq:IntEquation} is substituted by $f(x^n, t^n)$ which
+yields
+\begin{equation}
+\label{eq:BEInt}
+f(x,t) = f(x^n, t^n)
+\;\;\;\; \rightarrow \;\;\;\;
+x^{n+1} = x^n + h^n\cdot f(x^n, t^n)
+\end{equation}
+
+The backward euler integration method is a first order single-step
+method.
+
+\subsubsection{Forward Euler}
+%\addcontentsline{toc}{subsubsection}{Forward Euler}
+
+In the explicit Euler method the right hand side of
+eq. \eqref{eq:IntEquation} is substituted by $f(x^{n+1}, t^{n+1})$ which
+yields
+\begin{equation}
+f(x,t) = f(x^{n+1}, t^{n+1})
+\;\;\;\; \rightarrow \;\;\;\;
+x^{n+1} = x^n + h^n\cdot f(x^{n+1}, t^{n+1})
+\end{equation}
+
+The explicit Euler method has stability problems.  The step size is
+limited by stability.  In general explicit time marching integration
+methods are not suitable for circuit analysis where computation with
+large steps may be necessary when the solution changes slowly
+(i.e. when the accuracy does not require small steps).
+
+\subsubsection{Trapezoidal method}
+%\addcontentsline{toc}{subsubsection}{Trapezoidal method}
+
+For the bilinear (also called trapezoidal) integration method $f(x,t)$
+is substituted by
+\begin{equation}
+f(x,t) = \dfrac{1}{2}\cdot \left(f(x^{n+1}, t^{n+1}) + f(x^{n}, t^{n})\right)
+\end{equation}
+
+which yields
+\begin{equation}
+\label{eq:TRInt}
+x^{n+1} = x^n + \dfrac{h^n}{2}\cdot \left(f(x^{n+1}, t^{n+1}) + f(x^{n}, t^{n})\right)
+\end{equation}
+
+In each integration step the average value of the intervals beginning
+and end is taken into account.  The trapezoidal rule integration
+method is a second order single-step method.  There is no more
+accurate second order integration method than the trapezoidal method.
+
+\begin{center}
+\begin{figure}[ht]
+\begin{minipage}[t]{0.33\linewidth}
+\centering
+\includegraphics[height=1.8cm]{feuler}
+forward-euler
+\end{minipage}
+\begin{minipage}[t]{0.33\linewidth}
+\centering
+\includegraphics[height=1.8cm]{beuler}
+backward-euler
+\end{minipage}
+\begin{minipage}[t]{0.33\linewidth}
+\centering
+\includegraphics[height=1.8cm]{trapez}
+trapezoidal
+\end{minipage}
+\end{figure}
+\FloatBarrier
+\end{center}
+
+\subsection{Linear Multistep Methods}
+%\addcontentsline{toc}{subsection}{Linear Multistep Methods}
+
+For higher order multi-step integration methods the general purpose
+method of resolution for the equation $\dot{x} = f(x,t)$
+\begin{equation}
+\label{eq:GenPurposeInt}
+x^{n+1} = \sum^p_{i=0} a_i\cdot x^{n-i} + h \sum^p_{i=-1} b_i\cdot f(x^{n-i}, t^{n-i})
+\end{equation}
+
+is used.  With $b_{-1} = 0$ the method is explicit and therefore not
+suitable for obtaining the correct and stable solution.  When $b_{-1}
+\ne 0$ the method is implicit and suitable for circuit simulation,
+i.e. suitable for solving stiff problems.  For differential equation
+systems describing electrical networks the eigenvalues strongly vary.
+These kind of differential equation systems are called stiff.
+
+\addvspace{12pt}
+
+For a polynom of order $k$ the number of required coefficients is
+\begin{equation}
+2p + 3 \ge k + 1
+\end{equation}
+
+The $2p +3$ coeffcients are choosen to satisfy
+\begin{equation}
+x^{n+1} = x(t^{n+1})
+\end{equation}
+
+This can be achieved by the following equation system
+\begin{equation}
+\begin{split}
+\label{eq:MultiStepSys}
+\sum^p_{i=0} a_i = 1\\
+\sum^p_{i=1} (-i)^j a_i + j \sum^p_{i=-1} (-i)^{j-1} b_i = 1 & \textrm{ for } j = 1\ldots k
+\end{split}
+\end{equation}
+
+\subsubsection{Gear}
+%\addcontentsline{toc}{subsubsection}{Gear}
+
+The Gear formulae (also called BDF - backward differentiation
+formulae) have great importance within the multi-step integration
+methods used in transient analysis programs.  The conditions
+\begin{equation}
+p = k - 1
+\;\;\;\; \textrm{ and } \;\;\;\;
+b_0 = b_1 = \ldots = b_{k-1} = 0
+\end{equation}
+
+due to the following equation system
+\begin{equation}
+\label{eq:GearCoeff}
+\left[\begin{array}{lrrrr}
+0 & 1 &  1 &  1 &   1\\
+1 & 0 & -1 & -2 &  -3\\
+2 & 0 &  1 &  4 &   9\\
+3 & 0 & -1 & -8 & -27\\
+4 & 0 &  1 & 16 &  81\\
+\end{array}\right]
+\cdot
+\begin{bmatrix}
+b_{-1}\\
+a_0\\
+a_1\\
+a_2\\
+a_3\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\\
+\end{bmatrix}
+\end{equation}
+
+for the Gear formulae of order $4$.  Order $k = 1$ yields the implicit
+Euler method.  The example given in the equation system
+\eqref{eq:GearCoeff} results in the following integration formula.
+\begin{equation}
+\label{eq:GearInt}
+\begin{split}
+x^{n+1} &= a_0\cdot x^{n} + a_1\cdot x^{n-1} + a_2\cdot x^{n-2} + a_3\cdot x^{n-3} + h\cdot b_{-1}\cdot f(x^{n+1}, t^{n+1})\\
+&= \dfrac{48}{25}\cdot x^{n} - \dfrac{36}{25}\cdot x^{n-1} + \dfrac{16}{25}\cdot x^{n-2} - \dfrac{3}{25}\cdot x^{n-3} + h\cdot \dfrac{12}{25}\cdot f(x^{n+1}, t^{n+1})
+\end{split}
+\end{equation}
+
+There is no more stable second order integration method than the
+Gear's method of second order.  Only implicit Gear methods with order
+$k \le 6$ are zero stable.
+
+\subsubsection{Adams-Bashford}
+%\addcontentsline{toc}{subsubsection}{Adams-Bashford}
+
+The Adams-Bashford algorithm is an explicit multi-step integration
+method whence
+\begin{equation}
+p = k - 1
+\;\;\;\; \textrm{ and } \;\;\;\;
+a_1 = a_2 = \ldots = a_{k-1} = 0
+\;\;\;\; \textrm{ and } \;\;\;\;
+b_{-1} = 0
+\end{equation}
+
+is set to satisfy the equation system \eqref{eq:MultiStepSys}.  The
+equation system of the Adams-Bashford coefficients of order 4 is as
+follows.
+\begin{equation}
+\left[\begin{array}{lrrrr}
+1 & 0 &  0 &   0 &    0\\
+0 & 1 &  1 &   1 &    1\\
+0 & 0 & -2 &  -4 &   -6\\
+0 & 0 &  3 &  12 &   27\\
+0 & 0 & -4 & -32 & -108\\
+\end{array}\right]
+\cdot
+\begin{bmatrix}
+a_0\\
+b_0\\
+b_1\\
+b_2\\
+b_3\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\\
+\end{bmatrix}
+\end{equation}
+
+This equation system results in the following integration formula.
+\begin{equation}
+\begin{split}
+x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{0}\cdot f^{n} + h\cdot b_{1}\cdot f^{n-1} + h\cdot b_{2}\cdot f^{n-2} + h\cdot b_{3}\cdot f^{n-3}\\
+&= x^{n} + h\cdot \dfrac{55}{24}\cdot f^{n} - h\cdot \dfrac{59}{24}\cdot f^{n-1} + h\cdot \dfrac{37}{24}\cdot f^{n-2} - h\cdot \dfrac{9}{24}\cdot f^{n-3}\\
+\end{split}
+\end{equation}
+
+The Adams-Bashford formula of order 1 yields the backward Euler
+integration method.
+
+\subsubsection{Adams-Moulton}
+%\addcontentsline{toc}{subsubsection}{Adams-Moulton}
+
+The Adams-Moulton algorithm is an implicit multi-step integration
+method whence
+\begin{equation}
+p = k - 2
+\;\;\;\; \textrm{ and } \;\;\;\;
+a_1 = a_2 = \ldots = a_{k-2} = 0
+\end{equation}
+
+is set to satisfy the equation system \eqref{eq:MultiStepSys}.  The
+equation system of the Adams-Moulton coefficients of order 4 is as
+follows.
+\begin{equation}
+\left[\begin{array}{lrrrr}
+1 & 0 &  0 &   0 &    0\\
+0 & 1 &  1 &   1 &    1\\
+0 & 2 &  0 &  -2 &   -4\\
+0 & 3 &  0 &   3 &   12\\
+0 & 4 &  0 &  -4 &  -32\\
+\end{array}\right]
+\cdot
+\begin{bmatrix}
+a_0\\
+b_{-1}\\
+b_0\\
+b_1\\
+b_2\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\\
+\end{bmatrix}
+\end{equation}
+
+This equation system results in the following integration formula.
+\begin{equation}
+\label{eq:MoultonInt}
+\begin{split}
+x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{-1}\cdot f^{n+1} + h\cdot b_{0}\cdot f^{n} + h\cdot b_{1}\cdot f^{n-1} + h\cdot b_{2}\cdot f^{n-2}\\
+&= x^{n} + h\cdot \dfrac{9}{24}\cdot f^{n+1} + h\cdot \dfrac{19}{24}\cdot f^{n} - h\cdot \dfrac{5}{24}\cdot f^{n-1} + h\cdot \dfrac{1}{24}\cdot f^{n-2}\\
+\end{split}
+\end{equation}
+
+The Adams-Moulton formula of order 1 yields the forward Euler
+integration method and the formula of order 2 yields the trapezoidal
+rule.
+
+\subsection{Stability considerations}
+%\addcontentsline{toc}{subsection}{Stability considerations}
+
+When evaluating the numerical formulations given for both implicit and
+explicit integration formulas once rounding errors are unavoidable.
+For small values of $h$ the evaluation must be repeated very often and
+thus the rounding error possibly accumulates.  With higher order
+algorithms it is possible to enlarge the step width and thereby reduce
+the error accumulation.
+
+\addvspace{12pt}
+
+On the other hand it is questionable whether the construction of
+implicit algorithms is really valuable because of the higher
+computation effort caused by the necessary iteration (indices
+$~^{n+1}$ on both sides of the equation).  In practice there is a class
+of differential equations which can be reasonably handled by implicit
+algorithms where explicit algorithms completely fail because of the
+impracticable reduction of the step width.  This class of differential
+equations are called stiff problems.  The effect of stiffness causes
+for small variations in the actual solution to be computed very large
+deviations in the solution which get damped.
+
+\addvspace{12pt}
+
+For the stability prediction of integration algorithms with regard to
+nonlinear differential equations and equation systems the simple and
+linear test differential equation
+\begin{equation}
+\dot{x} = \lambda x
+\;\;\;\; \textrm{ with } \;\;\;\;
+\lambda \in \mathbb{C}, \text{Re}\left\{\lambda\right\} < 0, x \ge 0
+\end{equation}
+
+is used.  The condition $\text{Re}\left\{\lambda\right\} < 0$ ensures
+the solution to be decreasing.  The general purpose method of
+resolution given in \eqref{eq:GenPurposeInt} can be solved by the
+polynomial method setting
+\begin{equation}
+x^k = z^k
+\;\;\;\; \textrm{ with } \;\;\;\;
+z \in \mathbb{C}
+\end{equation}
+
+Thus we get the characteristic polynom
+\begin{align}
+\label{eq:characteristicPolynom}
+\varphi\left(z\right) &= \varrho\left(z\right) + h\lambda \cdot \eta\left(z\right) = 0\\
+&= \sum^{n-1}_{i=-1} a_i\cdot z^{n-i} + h\lambda \sum^{n-1}_{i=-1} b_i\cdot z^{n-i}
+\end{align}
+
+Because of the conditions defined by \eqref{eq:MultiStepSys} the above
+eq. \eqref{eq:characteristicPolynom} can only be true for
+\begin{equation}
+\left|z\right| < 1
+\end{equation}
+
+which describes the inner unity circle on the complex plane.  In order
+to compute the boundary of the area of absolute stability it is
+necessary to calculate
+\begin{equation}
+\label{eq:StabArea}
+\mu\left(z\right) = h\lambda = -\dfrac{\varrho\left(z\right)}{\eta\left(z\right)}
+\;\;\;\; \textrm{ with } \;\;\;\;
+z = e^{j\vartheta}, 0 \le \vartheta \le 2\pi
+\end{equation}
+
+These equations describe closed loops. The inner of these loops
+describe the area of absolute stability.  Because $\lambda \le 0$ and
+$h \ge 0$ only the left half of the complex plane is of particular
+interest.  An integration algorithm is call zero-stable if the
+stability area encloses $\mu = 0$.  Given this condition the algorithm
+is as a matter of principle usable, otherwise not.  If an algorithms
+stability area encloses the whole left half plane it is called
+A-stable.  A-stable algorithms are stable for any $h$ and all $\lambda
+< 0$.  Any other kind of stability area introduces certain
+restrictions for $\mu$.
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
+\includegraphics[width=1\linewidth]{stabgear}
+\end{center}
+\caption{areas of absolute stability for order 1\ldots 6 Gear formulae}
+\label{fig:StabGear}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
+\includegraphics[width=1\linewidth]{stabmoulton}
+\end{center}
+\caption{areas of absolute stability for order 1\ldots 6 Adams-Moulton formulae}
+\label{fig:StabMoulton}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
+\includegraphics[width=1\linewidth]{stabbashford}
+\end{center}
+\caption{areas of absolute stability for order 1\ldots 6 Adams-Bashford formulae}
+\label{fig:StabBashford}
+\end{figure}
+\FloatBarrier
+
+The figures \ref{fig:StabGear}, \ref{fig:StabMoulton} and
+\ref{fig:StabBashford} visualize the evaluation of
+eq. \eqref{eq:StabArea} for the discussed integration methods.  All of
+the implicit formulae are zero-stable, thus principally usable.  The
+forward Euler, Gear order 2 and the trapezoidal integration methods
+are A-stable.  Fig. \ref{fig:StabGear} shows why the Gear formulae are
+of such great importance for the transient analysis of electrical
+networks.  With least restrictions for $\mu$ they can be stabilized.
+
+\section{Predictor-corrector methods}
+%\addcontentsline{toc}{section}{Predictor-corrector methods}
+
+In section \ref{sec:IntegrationMethods} on pages
+\pageref{sec:IntegrationMethods} ff. various integration methods have
+been discussed.  The elementary as well as linear multistep methods
+(in order to get more accurate methods) always assumed $a_{-1} = -1$
+in its general form.  Explicit methods were encountered by $b_{-1} =
+0$ and implicit methods by $b_{-1} \ne 0$.  Implicit methods have been
+shown to have a limited area of stability and explicit methods to have
+a larger range of stability.  With increasing order $k$ the linear
+multistep methods interval of absolute stability (intersection of the
+area of absolute stability in the complex plane with the real axis)
+decreases except for the implicit Gear formulae.
+
+\addvspace{12pt}
+
+For these given reasons implicit methods can be used to obtain
+solutions of ordinary differential equation systems describing so
+called stiff problems.  Now considering e.g. the implicit
+Adams-Moulton formulae of order 3
+\begin{equation}
+\label{eq:AM3}
+x^{n+1} = x^{n} + h\cdot \dfrac{5}{12}\cdot f^{n+1} + h\cdot \dfrac{8}{12}\cdot f^{n} - h\cdot \dfrac{1}{12}\cdot f^{n-1}
+\end{equation}
+
+clarifies that $f^{n+1}$ is necessary to calculate $x^{n+1}$ (and the
+other way around as well).  Every implicit integration method has this
+particular property.  The above equation can be solved using
+iteration.  This iteration is said to be convergent if the integration
+method is consistent and zero-stable.  A linear multistep method that
+is at least first-order is called a consistent method.  Zero-stability
+and consistency are necessary for convergence.  The converse is also
+true.
+
+\addvspace{12pt}
+
+The iteration introduces a second index $m$.
+\begin{equation}
+\label{eq:AM3iterate}
+x^{n+1,m+1} = x^{n} + h\cdot \dfrac{5}{12}\cdot f^{n+1,m} + h\cdot \dfrac{8}{12}\cdot f^{n} - h\cdot \dfrac{1}{12}\cdot f^{n-1}
+\end{equation}
+
+This iteration will converge for an arbitrary initial guess
+$x^{n+1,0}$ only limited by the step size $h$.  In practice successive
+iterations are processed unless
+\begin{equation}
+\left|x^{n+1,m+1} - x^{n+1,m}\right| < \varepsilon_{abs} + \varepsilon_{rel}\cdot \left|x^{n+1,m}\right|
+\end{equation}
+
+The disadvantage for this method is that the number of iterations
+until it converges is unknown.  Alternatively it is possible to use a
+fixed number of correction steps.  A cheap way of providing a good
+initial guess $x^{n+1,0}$ is using an explicit integration method,
+e.g. the Adams-Bashford formula of order 3.
+\begin{equation}
+\label{eq:AB3}
+x^{n+1,0} = x^{n} + h\cdot \dfrac{23}{12}\cdot f^{n} - h\cdot \dfrac{16}{12}\cdot f^{n-1} + h\cdot \dfrac{5}{12}\cdot f^{n-2}
+\end{equation}
+
+Equation \eqref{eq:AB3} requires no iteration process and can be used
+to obtain the initial guess.  The combination of evaluating a single
+explicit integration method (the predictor step) in order to provide a
+good initial guess for the successive evaluation of an implicit method
+(the corrector step) using iteration is called predictor-corrector
+method.  The motivation using an implicit integration method is its
+fitness for solving stiff problems.  The explicit method (though
+possibly unstable) is used to provide a good initial guess for the
+corrector steps.
+
+\subsection{Order and local truncation error}
+%\addcontentsline{toc}{subsection}{Order and local truncation error}
+
+The order of an integration method results from the truncation error
+$\varepsilon_T$ which is defined as
+\begin{equation}
+\varepsilon_T = x\left(t^{n+1}\right) - x^{n+1}
+\end{equation}
+
+meaning the deviation of the exact solution $x\left(t^{n+1}\right)$
+from the approximate solution $x^{n+1}$ obtained by the integration
+method.  For explicit integration methods with $b_{-1} = 0$ the local
+truncation error $\varepsilon_{LTE}$ yields
+\begin{equation}
+\varepsilon_{LTE} = x\left(t^{n+1}\right) - x^{n+1}
+\end{equation}
+
+and for implicit integration methods with $b_{-1} \ne 0$ it is
+\begin{equation}
+\varepsilon_{LTE} \approx x\left(t^{n+1}\right) - x^{n+1}
+\end{equation}
+
+Going into equation \eqref{eq:GenPurposeInt} and setting $a_{-1} = -1$
+the truncation error is defined as
+\begin{equation}
+\label{eq:LTE}
+\varepsilon_{LTE} = \sum^p_{i=-1} a_i\cdot x\left(t^{n-i}\right) + h \sum^p_{i=-1} b_i\cdot f(x\left(t^{n-i}\right), t^{n-i})
+\end{equation}
+
+With the Taylor series expansions
+\begin{align}
+x\left(t^{n+i}\right) &= x\left(t^{n}\right) + \dfrac{\left(ih\right)}{1!} \dot{x}\left(t^{n}\right) + \dfrac{\left(ih\right)^2}{2!} \ddot{x}\left(t^{n}\right) + \ldots\\
+f(x\left(t^{n+i}\right), t^{n+i}) = \dot{x}\left(t^{n+i}\right) &= \dot{x}\left(t^{n}\right) + \dfrac{\left(ih\right)}{1!} \ddot{x}\left(t^{n}\right) + \dfrac{\left(ih\right)^2}{2!} \dddot{x}\left(t^{n}\right) + \ldots
+\end{align}
+
+the local truncation error as defined by eq. \eqref{eq:LTE} can be
+written as
+\begin{equation}
+\varepsilon_{LTE} = C_0\cdot x\left(t^n\right) + C_1 h\cdot \dot{x}\left(t^n\right) + C_2 h^2\cdot \ddot{x}\left(t^n\right) + \ldots
+\end{equation}
+
+The error terms $C_0$, $C_1$ and $C_2$ in their general form can then
+be expressed by the following equation.
+\begin{equation}
+\label{eq:ErrorConstant}
+C_{q} = -\dfrac{1}{q!}\cdot \sum_{i=-1}^{p-1} a_i\cdot \left(p - i\right)^{q} - \dfrac{1}{\left(q - 1\right)!} \sum_{i=-1}^{p-1} b_i\cdot \left(p - i\right)^{q - 1}
+\end{equation}
+
+A linear multistep integration method is of order $k$ if
+\begin{equation}
+\varepsilon_{LTE} = C_{k+1}\cdot h^{k+1}\cdot x^{(k+1)}\left(t^n\right) + O\left(h^{k+2}\right)
+\end{equation}
+
+The error constant $C_{k+1}$ of an $p$-step integration method of
+order $k$ is then defined as
+\begin{equation}
+C_{k+1} = -\dfrac{1}{\left(k + 1\right)!}\cdot \sum_{i=-1}^{p-1} a_i\cdot \left(p - i\right)^{k+1} - \dfrac{1}{k!} \sum_{i=-1}^{p-1} b_i\cdot \left(p - i\right)^k
+\end{equation}
+
+The practical computation of these error constants is now going to be
+explained using the Adams-Moulton formula of order 3 given by
+eq. \eqref{eq:AM3}.  For this third order method with $a_{-1} = -1$,
+$a_0=1$, $b_{-1}=5/12$, $b_0=8/12$ and $b_1=-1/12$ the following
+values are obtained using eq. \eqref{eq:ErrorConstant}.
+\begin{align}
+C_0 &= -\dfrac{1}{0!}\cdot\left(-1\cdot 2^0 + 1\cdot 1^0\right) = 0\\
+C_1 &= -\dfrac{1}{1!}\cdot\left(-1\cdot 2^1 + 1\cdot 1^1\right)
+       -\dfrac{1}{0!}\cdot\left(\dfrac{5}{12} 2^0 + \dfrac{8}{12} 1^0 - \dfrac{1}{12} 0^0\right) = 0\\
+C_2 &= -\dfrac{1}{2!}\cdot\left(-1\cdot 2^2 + 1\cdot 1^2\right)
+       -\dfrac{1}{1!}\cdot\left(\dfrac{5}{12} 2^1 + \dfrac{8}{12} 1^1 - \dfrac{1}{12} 0^1\right) = 0\\
+C_3 &= -\dfrac{1}{3!}\cdot\left(-1\cdot 2^3 + 1\cdot 1^3\right)
+       -\dfrac{1}{2!}\cdot\left(\dfrac{5}{12} 2^2 + \dfrac{8}{12} 1^2 - \dfrac{1}{12} 0^2\right) = 0\\
+C_4 &= -\dfrac{1}{4!}\cdot\left(-1\cdot 2^4 + 1\cdot 1^4\right)
+       -\dfrac{1}{3!}\cdot\left(\dfrac{5}{12} 2^3 + \dfrac{8}{12} 1^3 - \dfrac{1}{12} 0^3\right) = -\dfrac{1}{24}
+\end{align}
+
+In similar ways it can be verified for each of the discussed linear
+multistep integration methods that
+\begin{equation}
+C_p = 0 \;\;\;\; \forall \;\;\;\; 0 \le p \le k
+\end{equation}
+
+The following table summarizes the error constants for the implicit
+Gear formulae (also called BDF - backward differention formulae).
+
+\begin{center}
+\begin{tabular}{r|c|c|c|c|c|c}
+\setlength{\fboxsep}{6pt}
+& \multicolumn{6}{c}{implicit Gear formulae (BDF)}\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{steps $n$} & 1 & 2 & 3 & 4 & 5 & 6\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{order $k$} & 1 & 2 & 3 & 4 & 5 & 6\\
+\hline
+error constant $C_{k+1}$ & $-\dfrac{1}{2}$ & $-\dfrac{2}{9}$ & $-\dfrac{3}{22}$ & $-\dfrac{12}{125}$ & $-\dfrac{10}{137}$ &
+\setlength{\fboxrule}{0pt}
+\fbox{$-\dfrac{20}{343}$}
+\end{tabular}
+\end{center}
+
+The following table summarizes the error constants for the explicit
+Adams-Bashford formulae.
+
+\begin{center}
+\begin{tabular}{r|c|c|c|c|c|c}
+\setlength{\fboxsep}{6pt}
+& \multicolumn{6}{c}{explicit Adams-Bashford}\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{steps $n$} & 1 & 2 & 3 & 4 & 5 & 6\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{order $k$} & 1 & 2 & 3 & 4 & 5 & 6\\
+\hline
+error constant $C_{k+1}$ & $\dfrac{1}{2}$ & $\dfrac{5}{12}$ & $\dfrac{3}{8}$ &
+\setlength{\fboxrule}{0pt}
+\fbox{$\dfrac{251}{720}$} & $\dfrac{95}{288}$ & $\dfrac{19087}{60480}$
+\end{tabular}
+\end{center}
+
+The following table summarizes the error constants for the implicit
+Adams-Moulton formulae.
+
+\begin{center}
+\begin{tabular}{r|c|c|c|c|c|c}
+\setlength{\fboxsep}{6pt}
+& \multicolumn{6}{c}{implicit Adams-Moulton}\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{steps $n$} & 1 & 1 & 2 & 3 & 4 & 5\\
+\hline
+\setlength{\fboxrule}{0pt}
+\fbox{order $k$} & 1 & 2 & 3 & 4 & 5 & 6\\
+\hline
+error constant $C_{k+1}$ & $-\dfrac{1}{2}$ & $-\dfrac{1}{12}$ & $-\dfrac{1}{24}$ & $-\dfrac{19}{720}$ &
+\setlength{\fboxrule}{0pt}
+\fbox{$-\dfrac{3}{160}$} & $-\dfrac{863}{60480}$
+\end{tabular}
+\end{center}
+
+\subsection{Milne's estimate}
+%\addcontentsline{toc}{subsection}{Milne's estimate}
+
+The locale truncation error of the predictor of order $k^{*}$ may be
+defined as
+\begin{equation}
+\varepsilon^{*}_{LTE} = C^{*}_{k^{*}+1}\cdot h^{k^{*}+1}\cdot x^{(k^{*}+1)}\left(t^n\right) + O\left(h^{k^{*}+2}\right)
+\end{equation}
+
+and that of the corresponding corrector method of order $k$
+\begin{equation}
+\varepsilon_{LTE} = C_{k+1}\cdot h^{k+1}\cdot x^{(k+1)}\left(t^n\right) + O\left(h^{k+2}\right)
+\end{equation}
+
+If a predictor and a corrector method with same orders $k = k^{*}$ are
+used the locale truncation error of the predictor-corrector method
+yields
+\begin{equation}
+\varepsilon_{LTE} \approx \dfrac{C_{k+1}}{C^{*}_{k+1} - C_{k+1}}\cdot \left(x^{n+1, m} - x^{n+1, 0}\right)
+\end{equation}
+
+This approximation is called Milne's estimate.
+
+\subsection{Adaptive step-size control}
+%\addcontentsline{toc}{subsection}{Adaptive step-size control}
+
+For all numerical integration methods used for the transient analysis
+of electrical networks the choice of a proper step-size is essential.
+If the step-size is too large, the results become inaccurate or even
+completely wrong when the region of absolute stability is left.  And
+if the step-size is too small the calculation requires more time than
+necessary without raising the accuracy.  Usually a chosen initial
+step-size cannot be used overall the requested time of calculation.
+
+\addvspace{12pt}
+
+Basically a step-size $h$ is chosen such that
+\begin{equation}
+\varepsilon_{LTE} < \varepsilon_{abs} + \varepsilon_{rel}\cdot \left|x^{n+1,m}\right|
+\end{equation}
+
+Forming a step-error quotient
+\begin{equation}
+q = \dfrac{\varepsilon_{LTE}}{\varepsilon_{abs} + \varepsilon_{rel}\cdot \left|x^{n+1,m}\right|}
+\end{equation}
+
+yields the following algorithm for the step-size control.  The initial
+step size $h^0$ is chosen sufficiently small.  After each integration
+step every step-error quotient gets computed and the largest $q_{max}$
+is then checked.
+
+\addvspace{12pt}
+
+If $q_{max} > 1$, then a reduction of the current step-size is
+necessary.  As new step-size the following expression is used
+\begin{equation}
+h^n = \left(\dfrac{\varepsilon}{q_{max}}\right)^{\tfrac{1}{k + 1}}\cdot h^n
+\end{equation}
+
+with $k$ denoting the order of the corrector-predictor method and
+$\varepsilon < 1$ (e.g. $\approx 0.8)$.  If necessary the process must
+be repeated.
+
+\addvspace{12pt}
+
+If $q_{max} > 1$, then the calculated value in the current step gets
+accepted and the new step-size is
+\begin{equation}
+h^{n+1} = \left(\dfrac{\varepsilon}{q_{max}}\right)^{\tfrac{1}{k + 1}}\cdot h^n
+\end{equation}
+
+\section{Energy-storage components}
+%\addcontentsline{toc}{section}{Energy-storage components}
+
+As already mentioned it is essential for the transient analysis to
+consider the energy storing effects of components.  The following
+section describes how the modified nodal analysis can be used to take
+this into account.
+
+\subsection{Capacitor}
+%\addcontentsline{toc}{subsection}{Capacitor}
+
+The relation between current and voltage in terms of a differential
+equation for an ideal capacitor is
+\begin{equation}
+\label{eq:ConstCap}
+I_C(t) = C\cdot \dfrac{d V_C}{d t}
+\end{equation}
+
+With
+\begin{equation}
+\dfrac{I_C(V, t)}{C} = \dfrac{d V_C}{d t} = f(x,t)
+\end{equation}
+
+the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt},
+\eqref{eq:GearInt} and \eqref{eq:MoultonInt} can be applied to the
+problem.  Rewriting them in an explicit form regarding the next
+integration current results in
+\begin{align}
+\label{eq:EulerIC}
+I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n}\\
+I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n\\
+I_C^{n+1} &= \dfrac{C}{b_{-1}\cdot h^{n}} V_C^{n+1} - \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{a_1\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-1} - \ldots - \dfrac{a_{k-1}\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-k+1}\\
+I_C^{n+1} &= \underbrace{\dfrac{C}{b_{-1}\cdot h^{n}}}_{g_{eq}} V_C^{n+1} \underbrace{- \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{b_0}{b_{-1}} I_C^n - \dfrac{b_1}{b_{-1}} I_C^{n-1} - \ldots - \dfrac{b_{k-2}}{b_{-1}} I_C^{n-k+2}}_{I_{eq}}
+\end{align}
+
+Each of these equations can be rewritten as
+\begin{equation}
+I_C^{n+1} = g_{eq}\cdot V_C^{n+1} + I_{eq}
+\end{equation}
+
+which leads to the following companion model representing a current
+source with its accompanied internal resistance.
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.35\linewidth]{transcap}
+\end{center}
+\caption{companion equivalent circuit of a capacitor during transient analysis}
+\label{fig:TransCap}
+\end{figure}
+\FloatBarrier
+
+Thus the complete MNA matrix equation for an ideal capacitance writes
+as follows.
+\begin{equation}
+\begin{bmatrix}
++g_{eq} & -g_{eq}\\
+-g_{eq} & +g_{eq}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1^{n+1}\\
+V_2^{n+1}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_{eq}\\
++I_{eq}\\
+\end{bmatrix}
+\end{equation}
+
+\subsection{Inductor}
+%\addcontentsline{toc}{subsection}{Inductor}
+
+The relation between current and voltage in terms of a differential
+equation for an ideal inductor can be written as
+\begin{equation}
+V_L(t) = L\cdot \dfrac{d I_L}{d t}
+\end{equation}
+
+With
+\begin{equation}
+\dfrac{V_L(I, t)}{L} = \dfrac{d I_L}{d t} = f(x,t)
+\end{equation}
+
+the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt},
+\eqref{eq:GearInt} and \eqref{eq:MoultonInt} can be applied to the
+problem.  Rewriting them in an explicit form regarding the next
+integration voltage results in
+\begin{align}
+V_L^{n+1} &= \dfrac{L}{h^{n}} I_L^{n+1} - \dfrac{L}{h^{n}} I_L^{n}\\
+V_L^{n+1} &= \dfrac{2L}{h^{n}} I_L^{n+1} - \dfrac{2L}{h^{n}} I_L^{n} - V_L^n\\
+V_L^{n+1} &= \dfrac{L}{b_{-1}\cdot h^{n}} I_L^{n+1} - \dfrac{a_0\cdot L}{b_{-1}\cdot h^{n}} I_L^{n} - \dfrac{a_1\cdot L}{b_{-1}\cdot h^{n}} I_L^{n-1} - \ldots - \dfrac{a_{k-1}\cdot L}{b_{-1}\cdot h^{n}} I_L^{n-k+1}\\
+V_L^{n+1} &= \underbrace{\dfrac{L}{b_{-1}\cdot h^{n}}}_{r_{eq}} I_L^{n+1} \underbrace{- \dfrac{a_0\cdot L}{b_{-1}\cdot h^{n}} I_L^{n} - \dfrac{b_0}{b_{-1}} V_L^n - \dfrac{b_1}{b_{-1}} V_L^{n-1} - \ldots - \dfrac{b_{k-2}}{b_{-1}} V_L^{n-k+2}}_{V_{eq}}
+\end{align}
+
+Each of these equations can be rewritten as
+\begin{equation}
+V_L^{n+1} = r_{eq}\cdot I_L^{n+1} + V_{eq}
+\end{equation}
+
+which leads to the following companion model representing a voltage
+source with its accompanied internal resistance.
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.375\linewidth]{transind}
+\end{center}
+\caption{companion equivalent circuit of a inductor during transient analysis}
+\end{figure}
+\FloatBarrier
+
+Thus the complete MNA matrix equation for an ideal inductor writes
+as follows.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & +1\\
+0 & 0 & -1\\
++1 & -1 & -r_{eq}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1^{n+1}\\
+V_2^{n+1}\\
+I_L^{n+1}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+V_{eq}\\
+\end{bmatrix}
+\end{equation}
+
+It also possible to model the ideal inductor as a current source with
+an internal resistance which would yield a similar equivalent circuit
+as for the capacitor.  But with the proposed model it is possible to
+use alike computation schemes for capacitors and inductors.  Charges
+become flues, capacitances become inductances and finally voltages
+become currents and the other way around.  Everything else (especially
+the coeffcients in the integration formulas) can be reused.
+
+\subsection{Depletion Capacitance}
+%\addcontentsline{toc}{subsection}{Depletion Capacitance}
+
+For non-constant capacitances, especially depletion capacitance used
+in non-linear devices, instead of eq. \eqref{eq:ConstCap} the
+following equation holds.
+\begin{equation}
+I_C(t) = \dfrac{d Q}{d t}
+\end{equation}
+
+With
+\begin{equation}
+d Q = C\cdot d V_C
+\;\;\;\; \textrm{ and } \;\;\;\;
+\left.\dfrac{d V_C}{d Q}\right|_{Q^{(m)}} = \dfrac{1}{C}
+\end{equation}
+
+equation \eqref{eq:NRgeneral} can be written as
+\begin{equation}
+V_C^{(m + 1)} = V_C^{(m)} - \dfrac{Q\left(V_C^{(m)}\right)}{C^{(m)}}
+\end{equation}
+
+yielding a similar iterative algorithm as already used for the
+non-linear DC analysis described in section \ref{sec:NRmethod} on page
+\pageref{sec:NRmethod}.  The indices $~^{(m)}$ indicated the $m$-th
+Newton-Raphson iteration.  With this knowledge at hand it is possible
+to rewrite the explicit formula for the forward Euler integration
+\eqref{eq:EulerIC} as
+\begin{equation}
+\begin{split}
+I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
+&= \dfrac{C^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{C^{n}}{h^{n}} V_C^{n}
+\end{split}
+\end{equation}
+
+The double indices now indicate the $n$-th integration step and the
+$m$-th Newton-Raphson iteration.  The same can be done for the other
+integration formulas and results also in a similar equivalent
+companion model as shown in fig. \ref{fig:TransCap}.  The capacitance
+$C$ within the above equations is computed according to the
+appropriate (non-linear) model formulations, e.g.
+\begin{equation}
+C^{n+1,m} = C_{0}\cdot \left(1 - \dfrac{V_{C}^{n+1,m}}{V_{j}}\right)^{-M}
+\end{equation}
+
+\subsection{Diffusion Capacitance}
+%\addcontentsline{toc}{subsection}{Diffusion Capacitance}
+
+The current through a diffusion capacitance can be approximated by
+\begin{equation}
+I_C(t) = \tau_D \dfrac{d I_D}{d t}
+\end{equation}
+
+whence $\tau_D$ specifies the transit time through a pn-junction.  The
+above formula can be rewritten as
+\begin{equation}
+I_C(t) = \tau_D \dfrac{d I_D}{d V_C}\cdot \dfrac{d V_C}{d t} = \tau_D \cdot g_D \cdot \dfrac{d V_C}{d t}
+\end{equation}
+
+which means that eq. \eqref{eq:EulerIC} yields now
+\begin{equation}
+\begin{split}
+I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
+&= \dfrac{\tau_D\cdot g_D^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{\tau_D\cdot g_D^{n}}{h^{n}} V_C^{n}\\
+&= \dfrac{C^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{C^{n}}{h^{n}} V_C^{n}
+\end{split}
+\end{equation}
+
+Similar to the diffusion capacitance a Newton-Raphson iteration is
+necessary.  Also the formulas for the other integration methods can be
+easily rewritten and the equivalent companion model shown in
+fig. \ref{fig:TransCap} is valid as well.

@@ -68,40 +68,42 @@ eplot (x, y,"",0,[0 0 0],1);
 y = [-5 5]; x = [0 0];
 eplot (x, y,"",0,[0 0 0],1);
 
+output_precision = 12;
+
 Bashford1 = [0 1; -1 1] ./ 1;
 area = zpoly (Bashford1(1,:), Bashford1(2,:), z);
-disp("AB1 error constants");
-disp(econst (Bashford1(1,:), Bashford1(2,:), 1, 1));
+printf("AB1 error constants: ");
+disp(econst (Bashford1(1,:), Bashford1(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Bashford2 = [0 3 -1; -2 2 0] ./ 2;
 area = zpoly (Bashford2(1,:), Bashford2(2,:), z);
-disp("AB2 error constants");
-disp(econst (Bashford2(1,:), Bashford2(2,:), 2, 2));
+printf("AB2 error constants: ");
+disp(econst (Bashford2(1,:), Bashford2(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Bashford3 = [0 23 -16 5; -12 12 0 0] ./ 12;
 area = zpoly (Bashford3(1,:), Bashford3(2,:), z);
-disp("AB3 error constants");
-disp(econst (Bashford3(1,:), Bashford3(2,:), 3, 3));
+printf("AB3 error constants: ");
+disp(econst (Bashford3(1,:), Bashford3(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Bashford4 = [0 55 -59 37 -9; -24 24 0 0 0] ./ 24;
 area = zpoly (Bashford4(1,:), Bashford4(2,:), z);
-disp("AB4 error constants");
-disp(econst (Bashford4(1,:), Bashford4(2,:), 4, 4));
+printf("AB4 error constants: ");
+disp(econst (Bashford4(1,:), Bashford4(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Bashford5 = [0 1901 -2774 2616 -1274 251; -720 720 0 0 0 0] ./ 720;
 area =  zpoly (Bashford5(1,:), Bashford5(2,:), z);
-disp("AB5 error constants");
-disp(econst (Bashford5(1,:), Bashford5(2,:), 5, 5));
+printf("AB5 error constants: ");
+disp(econst (Bashford5(1,:), Bashford5(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Bashford6 = [0 4277 -7923 9982 -7298 2877 -475; -1440 1440 0 0 0 0 0] ./ 1440;
 area = zpoly (Bashford6(1,:), Bashford6(2,:), z);
-disp("AB6 error constants");
-disp(econst (Bashford6(1,:), Bashford6(2,:), 6, 6));
+printf("AB6 error constants: ");
+disp(econst (Bashford6(1,:), Bashford6(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 eclose (1,0);

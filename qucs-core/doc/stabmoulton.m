@@ -68,40 +68,42 @@ eplot (x, y,"",0,[0 0 0],1);
 y = [-5 5]; x = [0 0];
 eplot (x, y,"",0,[0 0 0],1);
 
+output_precision = 12;
+
 Moulton1 = [1 0; -1 1] ./ 1;
 area = zpoly (Moulton1(1,:), Moulton1(2,:), z);
-disp("AM1 error constants");
-disp(econst (Moulton1(1,:), Moulton1(2,:), 1, 0));
+printf("AM1 error constants: ");
+disp(econst (Moulton1(1,:), Moulton1(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
-Moulton2 = [1 1 0; -2 2 0] ./ 2;
+Moulton2 = [1 1; -2 2] ./ 2;
 area = zpoly (Moulton2(1,:), Moulton2(2,:), z);
-disp("AM2 error constants");
-disp(econst (Moulton2(1,:), Moulton2(2,:), 2, 1));
+printf("AM2 error constants: ");
+disp(econst (Moulton2(1,:), Moulton2(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
-Moulton3 = [5 8 -1 0; -12 12 0 0] ./ 12;
+Moulton3 = [5 8 -1; -12 12 0] ./ 12;
 area = zpoly (Moulton3(1,:), Moulton3(2,:), z);
-disp("AM3 error constants");
-disp(econst (Moulton3(1,:), Moulton3(2,:), 3, 2));
+printf("AM3 error constants: ");
+disp(econst (Moulton3(1,:), Moulton3(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
-Moulton4 = [9 19 -5 1 0; -24 24 0 0 0] ./ 24;
+Moulton4 = [9 19 -5 1; -24 24 0 0] ./ 24;
 area = zpoly (Moulton4(1,:), Moulton4(2,:), z);
-disp("AM4 error constants");
-disp(econst (Moulton4(1,:), Moulton4(2,:), 4, 3));
+printf("AM4 error constants: ");
+disp(econst (Moulton4(1,:), Moulton4(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
-Moulton5 = [251 646 -264 106 -19 0; -720 720 0 0 0 0] ./ 720;
+Moulton5 = [251 646 -264 106 -19; -720 720 0 0 0] ./ 720;
 area =  zpoly (Moulton5(1,:), Moulton5(2,:), z);
-disp("AM5 error constants");
-disp(econst (Moulton5(1,:), Moulton5(2,:), 5, 4));
+printf("AM5 error constants: ");
+disp(econst (Moulton5(1,:), Moulton5(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
-Moulton6 = [475 1427 -798 482 -173 27 0; -1440 1440 0 0 0 0 0] ./ 1440;
+Moulton6 = [475 1427 -798 482 -173 27; -1440 1440 0 0 0 0] ./ 1440;
 area = zpoly (Moulton6(1,:), Moulton6(2,:), z);
-disp("AM6 error constants");
-disp(econst (Moulton6(1,:), Moulton6(2,:), 6, 5));
+printf("AM6 error constants: ");
+disp(econst (Moulton6(1,:), Moulton6(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 eclose (1,0);
