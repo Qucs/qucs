@@ -215,11 +215,184 @@ where $\tilde{I}_{n,k}$ is the current of the linear circuit
 partition for node $n$ and frequency $k$ and $\hat{I}_{n,k}$
 is the current of the non-linear circuit partition.
 
+
 \subsection{Frequency-Time Domain Transformation}
 
 During every iteration step, the time domain values have to be transformed
 into frequency domain and afterwards back again. A standard Fourier
 Transformation is not
 useful, because with multi-tone excitation many mixing products appear.
-The best way to cope with this problem is to use two-dimensional
-Fast-Fourier-Transformation (2D-FFT).
+The best way to cope with this problem is to use multi-dimensional
+Fast-Fourier-Transformation (FFT). The information in this subsection
+stems from \cite{Press}, where the theoretical background is explained,
+too.
+
+\addvspace{12pt}
+
+First, the one-dimensional FFT will be discused. The FFT is a strongly
+optimized discrete Fourier Transformation (DFT). It takes advantage of
+the symmetry and periodicity of the trigonometric functions in order
+to avoid redundancy. To achieve this, the number of data samples must
+be a power of two (2, 4, 8, 16, 32, ...). As first step, the data array
+is reordered by the bit-reversal method. Finally, the frequency domain
+values are calculated with the Danielson-Lanzcos algorithm. The
+following source code was taken from \cite{Press} and contains only a
+few changes. (The function \texttt{SWAP(X, Y)} exchanges the values in
+\texttt{X} and \texttt{Y}.)
+
+\addvspace{12pt}
+
+Parameters:\\
+\begin{tabular}{lcl}
+\texttt{num}    & - & number of complex samples\\
+\texttt{data[]} & - & array containing the data samples,\\
+                &   & real and imaginary part in alternating order (length: 2*\texttt{num})\\
+\texttt{isign}  & - & is 1 to calculate FFT and -1 to calculate inverse FFT
+\end{tabular}
+
+\addvspace{12pt}
+
+
+\texttt{>\quad // bit reversal method} \\
+\texttt{>\quad int i, j, m, n;} \\
+\texttt{>\quad n = 2*num;} \\
+\texttt{>\quad j = 0;} \\
+\texttt{>\quad for (i=0; i<n; i+=2) \{} \\
+\texttt{>\quad \qquad if(j > i) \{   // was index already swapped ?} \\
+\texttt{>\quad \qquad\qquad SWAP(data[j], data[i]);   // swap real part} \\
+\texttt{>\quad \qquad\qquad SWAP(data[j+1], data[i+1]);   // swap imaginary part} \\
+\texttt{>\quad \qquad \}} \\
+\texttt{>\quad \qquad m = n/2;} \\
+\texttt{>\quad \qquad while (m >= 2 \&\& j >= m) \{  // calculate next swap index} \\
+\texttt{>\quad \qquad\qquad j -= m;} \\
+\texttt{>\quad \qquad\qquad m >>= 1;} \\
+\texttt{>\quad \qquad \}} \\
+\texttt{>\quad \qquad j += m;} \\
+\texttt{>\quad \}} \\
+\texttt{>\quad } \\
+\texttt{>\quad // Danielson-Lanzcos algorithm} \\
+\texttt{>\quad int mmax, istep;} \\
+\texttt{>\quad double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr;} \\
+\texttt{>\quad mmax = 2;} \\
+\texttt{>\quad while (n > mmax) \{} \\
+\texttt{>\quad \qquad istep = mmax << 1;} \\
+\texttt{>\quad \qquad theta = isign * (2*pi/mmax);} \\
+\texttt{>\quad \qquad wtemp = sin(0.5*theta);} \\
+\texttt{>\quad \qquad wpr = -2.0*wtemp*wtemp;} \\
+\texttt{>\quad \qquad wpi = sin(theta);} \\
+\texttt{>\quad \qquad wr = 1.0;} \\
+\texttt{>\quad \qquad wi = 0.0;} \\
+\texttt{>\quad \qquad for (m=1; m<mmax; m+=2) \{} \\
+\texttt{>\quad \qquad\qquad for (i=m; i<=n; i+=istep) \{} \\
+\texttt{>\quad \qquad\qquad\qquad j = i+mmax;} \\
+\texttt{>\quad \qquad\qquad\qquad tempr = wr*data[j-1] - wi*data[j];} \\
+\texttt{>\quad \qquad\qquad\qquad tempi = wr*data[j] + wi*data[j-1];} \\
+\texttt{>\quad \qquad\qquad\qquad data[j-1] = data[i-1] - tempr;} \\
+\texttt{>\quad \qquad\qquad\qquad data[j] = data[i] - tempi;} \\
+\texttt{>\quad \qquad\qquad\qquad data[i-1] += tempr;} \\
+\texttt{>\quad \qquad\qquad\qquad data[i] += tempi;} \\
+\texttt{>\quad \qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad wr = (wtemp=wr)*wpr - wi*wpi + wr;} \\
+\texttt{>\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi;} \\
+\texttt{>\quad \qquad \}} \\
+\texttt{>\quad \qquad mmax = istep;} \\
+\texttt{>\quad \}} \\
+
+\addvspace{12pt}
+
+There are many other FFT algorithms mainly aiming at higher speed.
+Two that are worth mentioning are base-4 FFT (about 20\% faster)
+and the Winograd Fourier transform algorithm (up to 100\% faster).
+However, the algorithms are much more complex.
+
+\addvspace{12pt}
+
+Fourier Transformations in more than one dimension soon become
+very time consuming. Using FFT mechanisms is therefore mandatory.
+A more-dimensional Fourier Transformation consists of many
+one-dimensional Fourier Transformations (1D-FFT). First, 1D-FFTs
+are performed for the data of the first dimension at every index
+of the second dimension. The results are used as input data for
+the second dimension that is performed the same way with respect
+to the third dimension. This procedure is continued until all
+dimensions are calculated. The following routine computes the
+$n$-dimensional FFT and was taken from \cite{Press}.
+
+\addvspace{12pt}
+
+Parameters:\\
+\begin{tabular}{lcl}
+\texttt{ndim}   & - & number of dimensions\\
+\texttt{num[]}  & - & array containing the number of complex samples for every dimension\\
+\texttt{data[]} & - & array containing the data samples,\\
+                &   & real and imaginary part in alternating order (length: 2*sum of \texttt{num[]}),\\
+                &   & going through the array, the first dimension changes least rapidly !\\
+                &   & all subscripts range from 1 to maximum value !\\
+\texttt{isign}  & - & is 1 to calculate FFT and -1 to calculate inverse FFT
+\end{tabular}
+
+\addvspace{12pt}
+
+\texttt{>\quad int idim, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2;} \\
+\texttt{>\quad int ibit, k1, k2, n, nprev, nrem, ntot;} \\
+\texttt{>\quad double tempi, tempr, wtemp, theta, wr, wi, wpi, wpr;} \\
+\texttt{>\quad } \\
+\texttt{>\quad ntot = 1;} \\
+\texttt{>\quad for (idim=1; idim<=ndim; idim++) // compute total number of complex values} \\
+\texttt{>\quad \qquad ntot *= num[idim];} \\
+\texttt{>\quad } \\
+\texttt{>\quad nprev = 1;} \\
+\texttt{>\quad for (idim=ndim; idim>=1; idim--) \{ // main loop over the dimensions} \\
+\texttt{>\quad \qquad n = num[idim];} \\
+\texttt{>\quad \qquad nrem = ntot/(n*nprev);} \\
+\texttt{>\quad \qquad ip1 = nprev << 1;} \\
+\texttt{>\quad \qquad ip2 = ip1*n;} \\
+\texttt{>\quad \qquad ip3 = ip2*nrem;} \\
+\texttt{>\quad \qquad i2rev = 1;} \\
+\texttt{>\quad } \\
+\texttt{>\quad \qquad for (i2=1; i2<=ip2; i2+=ip1) \{ // bit-reversal method} \\
+\texttt{>\quad \qquad\qquad if (i2 < i2rev) \{} \\
+\texttt{>\quad \qquad\qquad\qquad for (i1=i2; i1<=i2+ip1-2; i1+=2) \{} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad for (i3=i1; i3<=ip3; i3+=ip2) \{} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad i3rev = i2rev+i3-i2;} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3],data[i3rev]);} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3+1],data[i3rev+1]);} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad ibit=ip2 >> 1;} \\
+\texttt{>\quad \qquad\qquad while (ibit >= ip1 \&\& i2rev > ibit) \{} \\
+\texttt{>\quad \qquad\qquad\qquad i2rev -= ibit;} \\
+\texttt{>\quad \qquad\qquad\qquad ibit >>= 1;} \\
+\texttt{>\quad \qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad i2rev += ibit;} \\
+\texttt{>\quad \qquad \}} \\
+\texttt{>\quad } \\
+\texttt{>\quad \qquad ifp1 = ip1;} \\
+\texttt{>\quad \qquad while (ifp1 < ip2) \{ // Danielson-Lanzcos algorithm} \\
+\texttt{>\quad \qquad\qquad ifp2 = ifp1 << 1;} \\
+\texttt{>\quad \qquad\qquad theta = isign*2*pi/(ifp2/ip1);} \\
+\texttt{>\quad \qquad\qquad wtemp = sin(0.5*theta);} \\
+\texttt{>\quad \qquad\qquad wpr = -2.0*wtemp*wtemp;} \\
+\texttt{>\quad \qquad\qquad wpi = sin(theta);} \\
+\texttt{>\quad \qquad\qquad wr = 1.0; wi = 0.0;} \\
+\texttt{>\quad \qquad\qquad for (i3=1; i3<=ifp1; i3+=ip1) \{} \\
+\texttt{>\quad \qquad\qquad\qquad for (i1=i3; i1<=i3+ip1-2; i1+=2) \{} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad for (i2=i1; i2<=ip3; i2+=ifp2) \{} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad k1 = i2;} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad k2 = k1+ifp1;} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad tempr = wr*data[k2] - wi*data[k2+1];} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad tempi = wr*data[k2+1] + wi*data[k2];} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad data[k2] = data[k1] - tempr;} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad data[k2+1] = data[k1+1] - tempi;} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad\qquad data[k1] += tempr; data[k1+1] += tempi;} \\
+\texttt{>\quad \qquad\qquad\qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad\qquad wr = (wtemp=wr)*wpr-wi*wpi+wr;} \\
+\texttt{>\quad \qquad\qquad\qquad wi = wi*wpr+wtemp*wpi+wi;} \\
+\texttt{>\quad \qquad\qquad \}} \\
+\texttt{>\quad \qquad\qquad ifp1 = ifp2;} \\
+\texttt{>\quad \qquad \}} \\
+\texttt{>\quad \qquad nprev *= n;} \\
+\texttt{>\quad \}} \\
+
