@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "main.h"
+#include "node.h"
 #include "qucsview.h"
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"

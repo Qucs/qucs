@@ -15,10 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "arrow.h"
 #include "arrowdialog.h"
 

@@ -193,7 +193,7 @@
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation>nazwa osi y:</translation>
+        <translation type="obsolete">nazwa osi y:</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -285,7 +285,35 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation>wstaw punkt pracy do ybioru wzników</translation>
+        <translation type="obsolete">wstaw punkt pracy do ybioru wzników</translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -663,7 +691,7 @@ Pole &apos;Painting&apos; nie zostało zamknięte!</translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation>Nieodpowiedni rodzaj dokumentu!</translation>
+        <translation type="obsolete">Nieodpowiedni rodzaj dokumentu!</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -2219,6 +2247,10 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3844,7 +3876,7 @@ Qt universal circuit simulator</translation>
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation>Fransuskie - Eric Marzolf</translation>
+        <translation type="obsolete">Fransuskie - Eric Marzolf</translation>
     </message>
     <message>
         <source>Application Settings</source>
@@ -4067,6 +4099,11 @@ Moves the property text of components</source>
         <translation>Przesuń Tekst Elementu
 
 Przesuwa tekst właściwości elementu</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

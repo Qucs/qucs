@@ -18,16 +18,15 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "wire.h"
-#include "node.h"
-#include "diagrams/diagram.h"
-#include "components/component.h"
-
 #include <qfont.h>
 #include <qcolor.h>
 #include <qptrlist.h>
 
 class QucsApp;
+class Wire;
+class Node;
+class Diagram;
+class Component;
 
 
 struct tQucsSettings {

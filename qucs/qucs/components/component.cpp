@@ -17,6 +17,8 @@
 
 #include "components.h"
 #include "main.h"
+#include "node.h"
+#include "viewpainter.h"
 
 #include <qpoint.h>
 #include <qpainter.h>
@@ -523,6 +525,7 @@ QString Component::NetList()
   QString s = Model+":"+Name;
   if(s.at(0) == '#')  s.remove(0,1);
 
+  // output all node names
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;   // node names
   if(Model.at(0) == '_') {    // add port ? (e.g. BJT without substrate)
@@ -532,7 +535,10 @@ QString Component::NetList()
       s += " "+Ports.at(2)->Connection->Name;
     s.remove(0,1);  // remove leading '_'
   }
+  else if(Model == "MVIA")
+    s += " gnd";   // add ground node
 
+  // output all properties
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
     if(p2->Name != "Symbol")
       if(p2->Name == "File") {
@@ -550,7 +556,7 @@ QString Component::NetList()
 	s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";    // properties
       }
       else
-	s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties
+	s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties *****
 
   return s;
 }
@@ -753,6 +759,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "JT") c = new BJTsub();
 	break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
+	else if(cstr == "mp") c = new Amplifier();
         break;
   case 'M' : if(cstr == "LIN") c = new MSline();
 	else if(cstr == "OSFET") c = new MOSFET_sub();
@@ -764,8 +771,11 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "OPEN") c = new MSopen();
 	else if(cstr == "GAP") c = new MSgap();
 	else if(cstr == "COUPLED") c = new MScoupled();
+	else if(cstr == "VIA") c = new MSvia();
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
+        break;
+  case 'O' : if(cstr == "pAmp") c = new OpAmp();
         break;
   case '.' : if(cstr == "DC") c = new DC_Sim();
         else if(cstr == "AC") c = new AC_Sim();

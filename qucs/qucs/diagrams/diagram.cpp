@@ -15,10 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 using namespace std;
 
 #include "diagram.h"
@@ -52,10 +48,11 @@ Diagram::Diagram(int _cx, int _cy)
   ylAxis.min = ylAxis.low = yrAxis.min = yrAxis.low = 0.0;
   xAxis.max = xAxis.up =
   ylAxis.max = ylAxis.up = yrAxis.max = yrAxis.up = 1.0;
+  xAxis.GridOn = ylAxis.GridOn = true;
+  yrAxis.GridOn = false;
 
   Type = isDiagram;
   isSelected = false;
-  GridOn  = true;
   GridPen = QPen(QPen::lightGray,0);
   Graphs.setAutoDelete(true);
   Arcs.setAutoDelete(true);
@@ -92,7 +89,7 @@ void Diagram::paint(ViewPainter *p)
 
     p->map(cx+(x2>>1), cy+y1, &x, &y);
     if(xAxis.Label.isEmpty()) {
-      // write all x labels
+      // write all x labels ----------------------------------------
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
 	DataX *pD = pg->cPointsX.getFirst();
 	if(!pD) continue;
@@ -103,7 +100,7 @@ void Diagram::paint(ViewPainter *p)
       }
     }
     else {
-      // write x label text
+      // write x label text -----------------------------------------
       p->Painter->setPen(Qt::black);
       s = p->Painter->fontMetrics().size(0, xAxis.Label);
       p->Painter->drawText(x-(s.width()>>1), y, xAxis.Label);
@@ -114,8 +111,9 @@ void Diagram::paint(ViewPainter *p)
     p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
     p->map(cx-x1, cy-(y2>>1), &x, &y);
     if(ylAxis.Label.isEmpty()) {
-      // draw y-label for all graphs
+      // draw left y-label for all graphs ------------------------------
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+        if(pg->yAxisNo != 0)  continue;
         p->Painter->setPen(pg->Color);
 	if(pg->Points) {
 	  s = p->Painter->fontMetrics().size(0, pg->Var);
@@ -132,6 +130,30 @@ void Diagram::paint(ViewPainter *p)
 	p->Painter->setPen(Qt::black);
 	s = p->Painter->fontMetrics().size(0, ylAxis.Label);
 	p->Painter->drawText(-y-(s.width()>>1), x, ylAxis.Label);
+    }
+
+    p->Painter->setWorldMatrix(QWMatrix(0.0,1.0,-1.0,0.0, 0, 0));
+    p->map(cx+x3, cy-(y2>>1), &x, &y);
+    if(yrAxis.Label.isEmpty()) {
+      // draw right y-label for all graphs ------------------------------
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+        if(pg->yAxisNo != 1)  continue;
+        p->Painter->setPen(pg->Color);
+	if(pg->Points) {
+	  s = p->Painter->fontMetrics().size(0, pg->Var);
+	  p->Painter->drawText(y-(s.width()>>1), -x, pg->Var);
+	}
+	else {     // if no data => <invalid>
+	  s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
+	  p->Painter->drawText(y-(s.width()>>1), -x, pg->Var+INVALID_STR);
+	}
+	x += p->LineSpacing;
+      }
+    }
+    else {
+	p->Painter->setPen(Qt::black);
+	s = p->Painter->fontMetrics().size(0, yrAxis.Label);
+	p->Painter->drawText(y-(s.width()>>1), -x, yrAxis.Label);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
@@ -166,19 +188,19 @@ void Diagram::paintScheme(QPainter *p)
 }
 
 // ------------------------------------------------------------
-bool Diagram::calcDiagram()
+int Diagram::calcDiagram()
 {
-  return true;
+  return 0;
 }
 
 // ------------------------------------------------------------
-void Diagram::calcData(Graph *g, bool valid)
+void Diagram::calcData(Graph *g, int valid)
 {
   if(g->Points != 0) { free(g->Points);  g->Points = 0; }
   if(Name[0] == 'T')  return;   // no graph within tabulars
-  if(!valid)  return;
+  if((valid | g->yAxisNo) == 0)  return;
 
-    
+
   if(g->countY == 0) return;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 4;
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
@@ -189,6 +211,9 @@ void Diagram::calcData(Graph *g, bool valid)
   int i, z;
   double *px;
   double *py = g->cPointsY;
+  Axis *pa;
+  if(g->yAxisNo == 0)  pa = &ylAxis;
+  else  pa = &yrAxis;
 
   double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->Style) {
@@ -196,7 +221,7 @@ void Diagram::calcData(Graph *g, bool valid)
       for(i=g->countY; i>0; i--) {
 	px = g->cPointsX.getFirst()->Points;
 	for(z=g->cPointsX.getFirst()->count; z>0; z--) {
-	  calcCoordinate(*px, *py, *(py+1), p, p+1);
+	  calcCoordinate(*px, *py, *(py+1), p, p+1, pa);
 	  px++;
 	  py += 2;
 	  p  += 2;
@@ -217,14 +242,14 @@ void Diagram::calcData(Graph *g, bool valid)
     Flag = 1;
     dist = -Stroke;
     px = g->cPointsX.getFirst()->Points;
-    calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
+    calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp, pa);
     px++;  py += 2;
     *(p++) = xtmp;
     *(p++) = ytmp;
     for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
-      calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
+      calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp, pa);
       px++;  py += 2;
       dx = xtmp - dx;
       dy = ytmp - dy;
@@ -316,8 +341,9 @@ bool Diagram::ResizeTouched(int x, int y)
 // --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
-  ylAxis.min = xAxis.min = DBL_MAX;
-  ylAxis.max = xAxis.max = -DBL_MAX;
+  ylAxis.numGraphs = yrAxis.numGraphs = 0;
+  ylAxis.min = yrAxis.min = xAxis.min =  DBL_MAX;
+  ylAxis.max = yrAxis.max = xAxis.max = -DBL_MAX;
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);  // load data, determine max/min values
@@ -326,9 +352,17 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     ylAxis.min = 0.0;
     ylAxis.max = 1.0;
   }
+  if(yrAxis.min > yrAxis.max) {
+    yrAxis.min = 0.0;
+    yrAxis.max = 1.0;
+  }
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
     xAxis.max = 1.0;
+  }
+  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
+    if(ylAxis.min > yrAxis.min)  ylAxis.min = yrAxis.min;
+    if(ylAxis.max < yrAxis.max)  ylAxis.max = yrAxis.max;
   }
 
   updateGraphData();
@@ -338,8 +372,8 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 // Calculate diagram again without reading dataset from file.
 void Diagram::recalcGraphData()
 {
-  ylAxis.min = xAxis.min = DBL_MAX;
-  ylAxis.max = xAxis.max = -DBL_MAX;
+  ylAxis.min = yrAxis.min = xAxis.min =  DBL_MAX;
+  ylAxis.max = yrAxis.max = xAxis.max = -DBL_MAX;
 
   int z;
   double x, y, *p;
@@ -354,27 +388,43 @@ void Diagram::recalcGraphData()
       if(x < xAxis.min) xAxis.min = x;
     }
 
+    Axis *pa;
+    if(pg->yAxisNo == 0)  pa = &ylAxis;
+    else  pa = &yrAxis;
     p = pg->cPointsY;
     for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
       x = *(p++);
       y = *(p++);
       if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(x > ylAxis.max) ylAxis.max = x;
-      if(x < ylAxis.min) ylAxis.min = x;
+      if(x > pa->max) pa->max = x;
+      if(x < pa->min) pa->min = x;
     }
   }
 
-  if((ylAxis.min > ylAxis.max) || (xAxis.min > xAxis.max)) {
-    ylAxis.min = xAxis.min = 0.0;
-    ylAxis.max = xAxis.max = 1.0;
+  if(xAxis.min > xAxis.max) {
+    xAxis.min = 0.0;
+    xAxis.max = 1.0;
   }
+  if(ylAxis.min > ylAxis.max) {
+    ylAxis.min = 0.0;
+    ylAxis.max = 1.0;
+  }
+  if(yrAxis.min > yrAxis.max) {
+    yrAxis.min = 0.0;
+    yrAxis.max = 1.0;
+  }
+  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
+    if(ylAxis.min > yrAxis.min)  ylAxis.min = yrAxis.min;
+    if(ylAxis.max < yrAxis.max)  ylAxis.max = yrAxis.max;
+  }
+
   updateGraphData();
 }
 
 // ------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
-  bool valid = calcDiagram();   // do not calculate graph data if invalid
+  int valid = calcDiagram();   // do not calculate graph data if invalid
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
     calcData(pg, valid);   // calculate graph coordinates
@@ -498,6 +548,11 @@ bool Diagram::loadVarData(const QString& fileName)
   counting  *= g->countY;
   p = new double[2*counting]; // memory for dependent variables
   g->cPointsY = p;
+  Axis *pa;
+  if(g->yAxisNo == 0)  pa = &ylAxis;   // for which axis
+  else  pa = &yrAxis;
+  (pa->numGraphs)++;    // count graphs
+
   double x, y;
   QRegExp WhiteSpace("\\s");
   QRegExp noWhiteSpace("\\S");
@@ -529,8 +584,8 @@ bool Diagram::loadVarData(const QString& fileName)
     *(p++) = y;
     if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
     if(finite(x)) {
-      if(x > ylAxis.max) ylAxis.max = x;
-      if(x < ylAxis.min) ylAxis.min = x;
+      if(x > pa->max) pa->max = x;
+      if(x < pa->min) pa->min = x;
     }
 
     i = FileString.find(noWhiteSpace, j);
@@ -636,12 +691,16 @@ QString Diagram::save()
 {
   QString s = "<"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
-  if(GridOn) s+= "1 ";
+  if(xAxis.GridOn) s+= "1 ";
   else s += "0 ";
   s += GridPen.color().name() + " " + QString::number(GridPen.style());
   if(xAxis.log) s+= " 1";  else s += " 0";
-  if(ylAxis.log) s+= "1";   else s += "0";
-  s += " \""+xAxis.Label+"\" \""+ylAxis.Label+"\">\n";
+//  if(ylAxis.log) s+= "1";   else s += "0";
+  char c = '0';
+  if(ylAxis.log)  c |= 1;
+  if(yrAxis.log)  c |= 2;
+  s += c;
+  s += " \""+xAxis.Label+"\" \""+ylAxis.Label+"\" \""+yrAxis.Label+"\">\n";
 
   for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
     s += pg->save()+"\n";
@@ -678,26 +737,28 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // GridOn
-  GridOn = n.at(0) != '0';
+  xAxis.GridOn = ylAxis.GridOn = n.at(0) != '0';
 
   n  = s.section(' ',6,6);    // color for GridPen
-  if(n.at(0) == '#') {    // backward compatible
-    QColor co;
-    co.setNamedColor(n);
-    GridPen.setColor(co);
-    if(!GridPen.color().isValid()) return false;
+  QColor co;
+  co.setNamedColor(n);
+  GridPen.setColor(co);
+  if(!GridPen.color().isValid()) return false;
 
-    n  = s.section(' ',7,7);    // line style
-    GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
-    if(!ok) return false;
+  n  = s.section(' ',7,7);    // line style
+  GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
+  if(!ok) return false;
 
-    n  = s.section(' ',8,8);    // xlog, ylog
-    xAxis.log = n.at(0) != '0';
-    ylAxis.log = n.at(1) != '0';
-  }
+  char c;
+  n  = s.section(' ',8,8);    // xlog, ylog
+  xAxis.log = n.at(0) != '0';
+  c = n.at(1).latin1();
+  ylAxis.log = ((c - '0') & 1) == 1;
+  yrAxis.log = ((c - '0') & 2) == 2;
 
   xAxis.Label = s.section('"',1,1);    // xLabel
-  ylAxis.Label = s.section('"',3,3);    // yLabel
+  ylAxis.Label = s.section('"',3,3);   // yLabel left
+  yrAxis.Label = s.section('"',5,5);   // yLabel right
 
   Graph *pg;
   // .......................................................

@@ -15,10 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
-
 #include "graphictext.h"
 #include "graphictextdialog.h"
 #include "main.h"

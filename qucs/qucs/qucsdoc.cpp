@@ -25,6 +25,7 @@
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "main.h"
+#include "node.h"
 
 #include <qfileinfo.h>
 #include <qimage.h>
