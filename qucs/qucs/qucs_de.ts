@@ -3979,11 +3979,19 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppe löschen</translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Geöffnete Datei kann nicht gelöscht werden: </translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation>Schaltkreissymbol bearbeiten</translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation>Schaltplan bearbeiten</translation>
     </message>
 </context>
 <context>
