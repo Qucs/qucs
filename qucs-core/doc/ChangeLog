@@ -1,3 +1,9 @@
+2004-08-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Large signal model}): Fixed bug
+	in Id model of junction FET.  Replaced the O of O. Jensen to
+	the norwegian {\O}.
+
 2004-08-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Mixed Two-Port matrix

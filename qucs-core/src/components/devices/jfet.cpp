@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.12 2004/08/01 16:08:03 ela Exp $
+ * $Id: jfet.cpp,v 1.13 2004/08/03 15:36:20 ela Exp $
  *
  */
 
@@ -196,7 +196,7 @@ void jfet::calcDC (void) {
     // normal mode, cutoff region
     if (Ugst <= 0) {
       Ids = 0;
-      gm = 0;
+      gm  = 0;
       gds = 0;
     }
     else {
@@ -205,7 +205,7 @@ void jfet::calcDC (void) {
       if (Ugst <= Uds) {
 	Ids = b * Ugst * Ugst;
 	gm  = b * 2 * Ugst;
-	gds = l * b * Ugst * Ugst;
+	gds = l * beta * Ugst * Ugst;
       }
       // normal mode, linear region
       else {

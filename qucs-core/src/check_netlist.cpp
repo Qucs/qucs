@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.36 2004/08/01 23:08:19 ela Exp $
+ * $Id: check_netlist.cpp,v 1.37 2004/08/03 15:36:19 ela Exp $
  *
  */
 
@@ -306,6 +306,43 @@ struct define_t definition_available[] =
       { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
+  /* fet: level 1 */
+  { "MOSFET", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
+    { { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
+      { "Vt0", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kp", PROP_REAL, { 2e-5, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Gamma", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Phi", PROP_REAL, { 0.6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rg", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 100e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "Ld", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W", PROP_REAL, { 100e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "Tox", PROP_REAL, { 1e-7, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "Cgso", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgdo", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgbo", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cbd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cbs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Pb", PROP_REAL, { 0.8, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
+      { "Mj", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 } },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 - PROP_VAL_MIN } },
+      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nsub", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nss", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tpg", PROP_INT, { 1, PROP_NO_STR }, { -1 , 1 } },
+      { "Uo", PROP_REAL, { 600, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  },
 
   /* microstrip substrate */
   { "SUBST", 0, PROP_COMPONENT, PROP_SUBSTRATE, PROP_LINEAR,
@@ -529,6 +566,7 @@ struct special_t {
 static struct special_t checker_specials[] = {
   { "JFET",   "Type",      { "nfet", "pfet", NULL } },
   { "BJT",    "Type",      { "npn", "pnp", NULL } },
+  { "MOSFET", "Type",      { "nfet", "pfet", NULL } },
   { "SP",     "Noise",     { "yes", "no", NULL } },
   { "SP",     "Type",      { "lin", "log", NULL } },
   { "DC",     "saveOPs",   { "yes", "no", NULL } },
