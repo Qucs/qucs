@@ -2950,6 +2950,10 @@ Szerkeszti a kapcsolási rajzot</translation>
         <source>Smith-Polar Combi</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4216,7 +4220,7 @@ Qt univerzális áramkör szimuláció
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hungarian by Bus Jozsef</source>
+        <source>Hungarian by Jozsef Bus</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

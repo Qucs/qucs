@@ -24,19 +24,15 @@
 #include "main.h"
 
 #include <qscrollview.h>
-#include <qwidget.h>
 #include <qptrlist.h>
 #include <qstring.h>
-#include <qpen.h>
-#include <qpoint.h>
-#include <qpainter.h>
-#include <qlabel.h>
-#include <qcolor.h>
 #include <qevent.h>
-#include <qdir.h>
 
 
 class Wire;
+class QWidget;
+class QPainter;
+class QPopupMenu;
 
 
 // **************************************************************************
@@ -52,12 +48,12 @@ public:
   QucsView(QWidget *parent=0);
   ~QucsView();
 
-  float Zoom(float s);
+  float Zoom(float);
   bool   pasteElements();
-  void   enlargeView(int x1, int y1, int x2, int y2);
-  void   setPainter(QPainter *p, QucsDoc *d);
+  void   enlargeView(int, int, int, int);
+  void   setPainter(QPainter*, QucsDoc*);
   void   eraseCross();
-  void   editLabel(WireLabel *pl);
+  void   editLabel(WireLabel*);
 
   Component *selComp;   // component selected in IconView
   Diagram   *selDiag;   // diagram selected in IconView
@@ -68,21 +64,24 @@ public:
 
   QPtrList<Element> movingElements;
 
+  // menu appearing by right mouse button click on component
+  QPopupMenu *ComponentMenu;
+
   // -------------------------------------------------------------------
   QPtrList<QucsDoc>  Docs; // document instances (schematics, data displays)
 
 protected:
-  void drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph);
-  void contentsMouseMoveEvent(QMouseEvent *Event);
-  void contentsMousePressEvent(QMouseEvent *Event);
-  void contentsMouseDoubleClickEvent(QMouseEvent *Event);
-  void contentsMouseReleaseEvent(QMouseEvent *Event);
-  void contentsWheelEvent(QWheelEvent *Event);
+  void drawContents(QPainter*, int, int, int, int);
+  void contentsMouseMoveEvent(QMouseEvent*);
+  void contentsMousePressEvent(QMouseEvent*);
+  void contentsMouseDoubleClickEvent(QMouseEvent*);
+  void contentsMouseReleaseEvent(QMouseEvent*);
+  void contentsWheelEvent(QWheelEvent*);
 
-  bool ScrollUp(int step);
-  bool ScrollDown(int step);
-  bool ScrollLeft(int step);
-  bool ScrollRight(int step);
+  bool ScrollUp(int);
+  bool ScrollDown(int);
+  bool ScrollLeft(int);
+  bool ScrollRight(int);
 
 protected slots:
   void slotScrollUp();
@@ -95,6 +94,8 @@ public slots:
   void slotCursorRight();
   void slotCursorUp();
   void slotCursorDown();
+
+  void slotEditElement();
 
 public:
   void MouseDoNothing(QMouseEvent*);
@@ -158,9 +159,14 @@ public:
   void endElementMoving();
 
 private:
+  void editElement(QMouseEvent*);
+  void rightPressMenu(QMouseEvent*);
+  void PressLabel(QMouseEvent*);
+
   int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   bool isMoveEqual;
   Element *focusElement;
+  QMouseEvent *focusMEvent;
   Wire *labeledWire;     // remember the wire whose label is moving
   ViewPainter Painter;
 };

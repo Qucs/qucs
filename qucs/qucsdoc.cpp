@@ -1261,8 +1261,7 @@ bool QucsDoc::MarkerUpDown(bool up)
 // ---------------------------------------------------
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
-// If 'flag' is true, the element can be deselected and
-// already selected elements are not deselected.
+// If 'flag' is true, the element can be deselected.
 Element* QucsDoc::selectElement(int x, int y, bool flag)
 {
   Element *pe_1st=0, *pe_sel=0;

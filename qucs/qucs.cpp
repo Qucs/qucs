@@ -85,6 +85,19 @@ QucsApp::QucsApp()
   Acts.init(this);
   initCursorMenu();
 
+
+  // define menu appearing by right mouse button on component
+  view->ComponentMenu->insertItem(
+	tr("Edit Properties"), view, SLOT(slotEditElement()));
+  Acts.moveText->addTo(view->ComponentMenu);
+  Acts.onGrid->addTo(view->ComponentMenu);
+  view->ComponentMenu->insertSeparator();
+  Acts.editActivate->addTo(view->ComponentMenu);
+  Acts.editRotate->addTo(view->ComponentMenu);
+  Acts.editMirror->addTo(view->ComponentMenu);
+  Acts.editMirrorY->addTo(view->ComponentMenu);
+
+
   // default settings of the printer
   Printer = new QPrinter(QPrinter::PrinterResolution);
   Printer->setOrientation(QPrinter::Landscape);
@@ -211,11 +224,10 @@ void QucsApp::fillComboBox(bool setAll)
 void QucsApp::initCursorMenu()
 {
   ContentMenu = new QPopupMenu(Content);
-  ContentMenu->insertItem(tr("Open"),   this, SLOT(slotCMenuOpen()));
+  ContentMenu->insertItem(tr("Open"), this, SLOT(slotCMenuOpen()));
   ContentMenu->insertItem(tr("Rename"), this, SLOT(slotCMenuRename()));
   ContentMenu->insertItem(tr("Delete"), this, SLOT(slotCMenuDelete()));
-  ContentMenu->insertItem(tr("Delete Group"),
-			this, SLOT(slotCMenuDelGroup()));
+  ContentMenu->insertItem(tr("Delete Group"), this, SLOT(slotCMenuDelGroup()));
 
   connect(Content,
 	  SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)),
