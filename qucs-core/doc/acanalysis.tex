@@ -319,3 +319,37 @@ The Y-parameters of a multi-port component defined by its S-parameters
 as described in section \ref{sec:spfile} of page \pageref{sec:spfile}
 required for a small signal AC analysis can be obtained by converting
 the S-parameters into Y-parameters.
+
+
+\subsection{Non-ideal Transformer}
+
+Many simulators support non-ideal transformers (e.g. mutual inductor
+in SPICE). An often used model consists of finite inductances and
+a not perfect coupling (straw inductance). This model has three
+parameters: Inductance of primary coil $L_1$, inductance of secondary
+coil $L_2$ and coupling factor $k=0...1$.\\
+This model can be replaced by the equivalent circuit depicted in
+figure \ref{fig:nitrafo}. The values are calculated as follows.
+
+\begin{equation}
+\text{turn ratio:}  \qquad  T = \sqrt{\frac{L_1}{L_2}}
+\end{equation}
+\begin{equation}
+\text{mutual inductance:}  \qquad  M = k\cdot L_1
+\end{equation}
+\begin{equation}
+\text{primary inductance:}  \qquad  L_{1,new} = L_1 - M
+\end{equation}
+\begin{equation}
+\text{secondary inductance:}  \qquad  L_{2,new} = L_2 - \frac{M}{N^2}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=7.5cm]{nitrafo}
+\end{center}
+\caption{Equivalent circuit of non-ideal transformer}
+\label{fig:nitrafo}
+\end{figure}
+\FloatBarrier
+
