@@ -2989,7 +2989,7 @@ point of the function itself than the original point.  In mathematical
 terms this means to linearise the function $f$ at a starting value
 $V^{(0)}$.
 \begin{equation}
-f\left(V^{(0)} + \Delta V\right) \approx f\left(V^{(0)}\right) + \left.\dfrac{\partial f\left(V^{(0)}\right)}{\partial V}\right|_{V^{(0)}}\cdot \Delta V
+f\left(V^{(0)} + \Delta V\right) \approx f\left(V^{(0)}\right) + \left.\dfrac{\partial f\left(V\right)}{\partial V}\right|_{V^{(0)}}\cdot \Delta V
 \;\;\;\; \text{ with } \;\;\;\;
 \Delta V = V^{(1)} - V^{(0)}
 \label{eq:NRapprox}
@@ -2997,12 +2997,12 @@ f\left(V^{(0)} + \Delta V\right) \approx f\left(V^{(0)}\right) + \left.\dfrac{\p
 
 Setting $f(V^{(1)}) = 0$ gives
 \begin{equation}
-V^{(1)} = V^{(0)} - \dfrac{f\left(V^{(0)}\right)}{\left.\dfrac{\partial f\left(V^{(0)}\right)}{\partial V}\right|_{V^{(0)}}}
+V^{(1)} = V^{(0)} - \dfrac{f\left(V^{(0)}\right)}{\left.\dfrac{\partial f\left(V\right)}{\partial V}\right|_{V^{(0)}}}
 \end{equation}
 
 or in the general case with $m$ being the number of iteration
 \begin{equation}
-V^{(m + 1)} = V^{(m)} - \dfrac{f\left(V^{(m)}\right)}{\left.\dfrac{\partial f\left(V^{(m)}\right)}{\partial V}\right|_{V^{(m)}}}
+V^{(m + 1)} = V^{(m)} - \dfrac{f\left(V^{(m)}\right)}{\left.\dfrac{\partial f\left(V\right)}{\partial V}\right|_{V^{(m)}}}
 \label{eq:NRgeneral}
 \end{equation}
 
