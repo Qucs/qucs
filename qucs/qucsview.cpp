@@ -1550,7 +1550,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
 
   Component *c;
   Diagram *dia;
-  ComponentDialog *d;
+  ComponentDialog *cd;
   DiagramDialog *ddia;
   MarkerDialog *mdia;
 
@@ -1558,8 +1558,9 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
     case isComponent:
          c = (Component*)focusElement;
          if(c->Model == "GND") return;
-         d = new ComponentDialog(c, this);  // is WDestructiveClose
-         if(d->exec() == 1) {
+	 // ComponentDialog is WDestructiveClose
+         cd = new ComponentDialog(c, &(Docs.current()->Comps), this);
+         if(cd->exec() == 1) {
            int x1, y1, x2, y2;
            x2 = Docs.current()->Comps.findRef(c);
            Docs.current()->Comps.take();

@@ -1,5 +1,9 @@
 2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
+	* component name can be edited
+
+2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
 	* MScoupled can now be loaded
 	* marker set correctly after new upper x bound
 	* undo/redo set changed flag of document

@@ -28,18 +28,18 @@
 #include <qprocess.h>
 
 
-ComponentDialog::ComponentDialog(Component *c,
+ComponentDialog::ComponentDialog(Component *c, QPtrList<Component> *l,
 			QWidget *parent, const char *name )
 			: QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   resize(400, 250);
   setCaption(tr("Edit Component Properties"));
 
-  QGridLayout *g = new QGridLayout(this,9,2,5,5);
+  QGridLayout *g = new QGridLayout(this,10,2,5,5);
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
-  g->addMultiCellWidget(h2,8,8,0,1);
+  g->addMultiCellWidget(h2,9,9,0,1);
   connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()),
 	  SLOT(slotButtOK()));
   connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
@@ -50,6 +50,13 @@ ComponentDialog::ComponentDialog(Component *c,
   QLabel *label1 = new QLabel(this);
   g->addMultiCellWidget(label1,0,0,0,1);
 
+  QHBox *h5 = new QHBox(this);
+  h5->setSpacing(5);
+  g->addWidget(h5,1,0);
+  QLabel *label2 = new QLabel(h5);
+  label2->setText(tr("Name:"));
+  CompNameEdit = new QLineEdit(h5);
+
   prop = new QListView(this);
   prop->setMinimumSize(200, 150);
   prop->addColumn(tr("Name"));
@@ -57,39 +64,39 @@ ComponentDialog::ComponentDialog(Component *c,
   prop->addColumn(tr("display"));
   prop->addColumn(tr("Description"));
   prop->setSorting(-1);   // no sorting
-  g->addMultiCellWidget(prop,1,7,0,0);
+  g->addMultiCellWidget(prop,2,8,0,0);
 
   Name = new QLabel(this);
-  g->addWidget(Name,1,1);
+  g->addWidget(Name,2,1);
 
   Expr.setPattern("[^\"=]+");  // valid expression for property input 'edit'
   QValidator *Validator = new QRegExpValidator(Expr, this);
 
   Description = new QLabel(this);
-  g->addWidget(Description,2,1);
+  g->addWidget(Description,3,1);
 
   // hide, because it only replaces 'Description' in some cases
   NameEdit = new QLineEdit(this);
   NameEdit->setShown(false);
   NameEdit->setValidator(Validator);
-  g->addWidget(NameEdit,2,1);
+  g->addWidget(NameEdit,3,1);
   connect(NameEdit, SIGNAL(returnPressed()), SLOT(slotApplyPropName()));
 
   edit = new QLineEdit(this);
   edit->setMinimumWidth(150);
-  g->addWidget(edit,3,1);
+  g->addWidget(edit,4,1);
   edit->setValidator(Validator);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
   // hide, because it only replaces 'edit' in some cases
   ComboEdit = new QComboBox(false,this);
   ComboEdit->setShown(false);
-  g->addWidget(ComboEdit,3,1);
+  g->addWidget(ComboEdit,4,1);
   connect(ComboEdit, SIGNAL(activated(const QString&)),
 	  SLOT(slotApplyChange(const QString&)));
 
   QHBox *h3 = new QHBox(this);
-  g->addWidget(h3,4,1);
+  g->addWidget(h3,5,1);
   h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
   EditButt = new QPushButton(tr("Edit"),h3);
   EditButt->setEnabled(false);
@@ -101,24 +108,26 @@ ComponentDialog::ComponentDialog(Component *c,
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
   disp = new QCheckBox(tr("display in schematic"),this);
-  g->addWidget(disp,5,1);
+  g->addWidget(disp,6,1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
 
   QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
   v->addStretch(2);
-  g->addLayout(v,6,1);
+  g->addLayout(v,7,1);
 
   QHBox *h4 = new QHBox(this);
   h4->setSpacing(5);
-  g->addMultiCellWidget(h4,7,7,1,1);
+  g->addMultiCellWidget(h4,8,8,1,1);
   ButtAdd = new QPushButton(tr("Add"),h4);
   ButtRem = new QPushButton(tr("Remove"),h4);
   connect(ButtAdd, SIGNAL(clicked()), SLOT(slotButtAdd()));
   connect(ButtRem, SIGNAL(clicked()), SLOT(slotButtRem()));
 
   // ------------------------------------------------------------
-  Comp = c;
+  Comp  = c;
+  cList = l;
   label1->setText(c->Description);
+  CompNameEdit->setText(c->Name);
   changed = transfered = false;
 
 //  prop->clear();
@@ -317,6 +326,18 @@ void ComponentDialog::slotButtCancel()
 // Is called, if the "Apply"-button is pressed.
 void ComponentDialog::slotApplyInput()
 {
+  Component *pc;
+  if(CompNameEdit->text() != Comp->Name) {
+    for(pc = cList->first(); pc!=0; pc = cList->next())
+      if(pc->Name == CompNameEdit->text())
+        break;  // found component with the same name ?
+    if(pc)  CompNameEdit->setText(Comp->Name);
+    else {
+      Comp->Name = CompNameEdit->text();
+      changed = true;
+    }
+  }
+
   QListViewItem *item = prop->firstChild();
   if(item == 0) return;
 

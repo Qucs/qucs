@@ -35,6 +35,7 @@ SubCirPort::SubCirPort()
   Model = "Port";
   Name  = "P";
 
+  // This property must be the first one !
   Props.append(new Property("Num", "1", true,
 		QObject::tr("number of the port within the subcircuit")));
 }

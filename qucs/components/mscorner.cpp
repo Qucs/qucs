@@ -36,8 +36,8 @@ MScorner::MScorner()
   Ports.append(new Port(-30, 0));
   Ports.append(new Port(  0,30));
 
-  x1 = -30; y1 = -9;
-  x2 =   9; y2 = 30;
+  x1 = -30; y1 =-11;
+  x2 =  11; y2 = 30;
 
   tx = x2+4;
   ty = y1+4;
