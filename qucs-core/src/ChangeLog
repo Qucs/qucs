@@ -1,3 +1,11 @@
+2004-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp: It's now possible to simulate circuits with
+	more than a single built in voltage source.
+
+	* circuit.cpp: Applied changes for circuits with more than a
+	single built in voltage source.
+
 2004-01-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp: Generalized the creation of the B, C, D, E and

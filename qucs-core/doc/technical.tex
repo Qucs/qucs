@@ -1034,6 +1034,69 @@ I_{4}\\
 \subsection*{Transformator}
 \addcontentsline{toc}{subsection}{Transformator}
 
+The two winding ideal transformator, as shown in fig.
+\ref{fig:trafo}, is designated by the following equation which
+introduces one more unknown in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\end{center}
+\caption{ideal two winding transformator}
+\label{fig:trafo}
+\end{figure}
+\FloatBarrier
+
+\begin{equation}
+V_{2} - V_{3} = T\cdot\left(V_{1} -V_{4}\right)
+\quad \rightarrow \quad
+T\cdot V_{1} - V_{2} + V_{3} - T\cdot V_{4} = 0
+\label{eq:trafo}
+\end{equation}
+
+The new unknown variable $I_{t}$ must be considered by the four
+remaining simple equations.
+
+\begin{equation}
+I_{1} = T\cdot I_{t} \quad I_{2} = -I_{t} \quad I_{3} = +I_{t} \quad I_{4} = -T\cdot I_{t}
+\end{equation}
+
+And in matrix representation this is:
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.& T\\
+.&.&.&.& -1\\
+.&.&.&.& 1\\
+.&.&.&.& -T\\
+T & -1 & 1 & -T & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{t}
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0
+\end{pmatrix}
+\end{equation}
+
+It is noticable that the additional row (part of the C matrix) and the
+corresponding column (part of the B matrix) are transposed to each
+other.  When considering the turns ratio $T$ being complex introducing
+an additional phase the transformer can be used as phase-shifting
+transformer.  Both the vectors must be conjugated complex transposed
+in this case.
+
+\subsection*{Symmetrical transformator}
+\addcontentsline{toc}{subsection}{Symmetrical transformator}
+
 \subsection*{Gyrator}
 \addcontentsline{toc}{subsection}{Gyrator}
 

@@ -1,3 +1,8 @@
+2004-01-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection*{Transformator}): Documented
+	DC simulation of ideal transformer.
+
 2004-01-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am: Added rules for bibliography creation.

@@ -1,7 +1,7 @@
 /*
  * trafo.cpp - trafo class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: trafo.cpp,v 1.3 2004/01/30 21:40:35 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 
 trafo::trafo () : circuit (4) {
   type = CIR_TRAFO;
+  setVoltageSources (1);
 }
 
 void trafo::calcS (nr_double_t frequency) {
@@ -64,4 +65,12 @@ void trafo::calcS (nr_double_t frequency) {
   setS (4, 2, -z2);
   setS (4, 3,  z2);
   setS (4, 4,  z1);
+}
+
+void trafo::calcY (void) {
+  nr_double_t t = getPropertyDouble ("T");
+  setB (1, 1, +t); setB (1, 2, -1); setB (1, 1, +1); setB (1, 1, -t);
+  setC (1, 1, +t); setC (1, 2, -1); setC (1, 1, +1); setC (1, 1, -t);
+  setD (1, 0);
+  setE (1, 0);
 }

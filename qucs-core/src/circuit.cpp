@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.5 2004/01/28 18:19:05 ela Exp $
+ * $Id: circuit.cpp,v 1.6 2004/01/30 21:40:35 ela Exp $
  *
  */
 
@@ -47,6 +47,8 @@ circuit::circuit () : object () {
   port = 0;
   org = 1;
   subst = NULL;
+  source = 0;
+  nSources = 0;
   type = CIR_UNKNOWN;
 }
 
@@ -59,6 +61,8 @@ circuit::circuit (int s) : object () {
   port = 0;
   org = 1;
   subst = NULL;
+  source = 0;
+  nSources = 0;
   type = CIR_UNKNOWN;
 }
 
@@ -71,6 +75,8 @@ circuit::circuit (const circuit & c) : object (c) {
   type = c.type;
   subst = c.subst;
   Y = c.Y;
+  source = c.source;
+  nSources = c.nSources;
   nodes = new node[size];
   data = new complex[size * size];
 
@@ -162,4 +168,64 @@ substrate * circuit::getSubstrate (void) {
 // Sets the substrate of the circuit object.
 void circuit::setSubstrate (substrate * s) {
   subst = s;
+}
+
+/* Returns the circuits B-MNA matrix value of the given voltage source
+   built in the circuit depending on the port number. */
+complex circuit::getB (int nr, int port) {
+  return MatrixB[(nr - source) * size + port - 1];
+}
+
+/* Sets the circuits B-MNA matrix value of the given voltage source
+   built in the circuit depending on the port number. */
+void circuit::setB (int nr, int port, complex z) {
+  MatrixB[(nr - 1) * size + port - 1] = z;
+}
+
+/* Returns the circuits C-MNA matrix value of the given voltage source
+   built in the circuit depending on the port number. */
+complex circuit::getC (int nr, int port) {
+  return MatrixC[(nr - source) * size + port - 1];
+}
+
+/* Sets the circuits C-MNA matrix value of the given voltage source
+   built in the circuit depending on the port number. */
+void circuit::setC (int nr, int port, complex z) {
+  MatrixC[(nr - 1) * size + port - 1] = z;
+}
+
+/* Returns the circuits D-MNA matrix value of the given voltage source
+   built in the circuit. */
+complex circuit::getD (int nr) {
+  return MatrixD[nr - source];
+}
+
+/* Sets the circuits D-MNA matrix value of the given voltage source
+   built in the circuit. */
+void circuit::setD (int nr, complex z) {
+  MatrixD[nr - 1] = z;
+}
+
+/* Returns the circuits E-MNA matrix value of the given voltage source
+   built in the circuit. */
+complex circuit::getE (int nr) {
+  return MatrixE[nr - source];
+}
+
+/* Sets the circuits E-MNA matrix value of the given voltage source
+   built in the circuit. */
+void circuit::setE (int nr, complex z) {
+  MatrixE[nr - 1] = z;
+}
+
+/* Returns the circuits I-MNA matrix value of the current source built
+   in the circuit. */
+complex circuit::getI (int port) {
+  return MatrixI[port - 1];
+}
+
+/* Sets the circuits I-MNA matrix value of the current source built in
+   the circuit depending on the port number. */
+void circuit::setI (int port, complex z) {
+  MatrixI[port - 1] = z;
 }
