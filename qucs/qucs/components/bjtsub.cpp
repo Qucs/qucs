@@ -133,6 +133,8 @@ BJTsub::BJTsub()
 	QObject::tr("burst noise exponent")));
   Props.append(new Property("Fb", "1.0", false,
 	QObject::tr("burst noise corner frequency in Hertz")));
+  Props.append(new Property("Ptf", "0.0", false,
+	QObject::tr("excess phase in degrees")));
 }
 
 BJTsub::~BJTsub()
