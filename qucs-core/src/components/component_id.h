@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.4 2004-02-01 22:36:03 ela Exp $
+ * $Id: component_id.h,v 1.5 2004-02-09 18:27:42 ela Exp $
  *
  */
 
@@ -57,6 +57,7 @@ enum circuit_type {
   CIR_PHASESHIFTER,
   CIR_GYRATOR,
   CIR_TLINE,
+  CIR_IPROBE,
 
   // microstrip components
   CIR_MSLINE,

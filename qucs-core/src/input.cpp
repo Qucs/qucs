@@ -1,7 +1,7 @@
 /*
  * input.cpp - input netlist class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.5 2004-02-01 22:36:03 ela Exp $
+ * $Id: input.cpp,v 1.6 2004-02-09 18:26:08 ela Exp $
  *
  */
 
@@ -197,6 +197,8 @@ circuit * input::createCircuit (char * type) {
     return new tline ();
   else if (!strcmp (type, "Diode"))
     return new diode ();
+  else if (!strcmp (type, "IProbe"))
+    return new iprobe ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

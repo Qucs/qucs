@@ -1,5 +1,5 @@
 /*
- * diode.cpp - diode class implementation
+ * iprobe.cpp - DC current probe class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.4 2004-02-09 18:27:42 ela Exp $
+ * $Id: iprobe.cpp,v 1.1 2004-02-09 18:27:42 ela Exp $
  *
  */
 
@@ -28,45 +28,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "constants.h"
-#include "diode.h"
+#include "vdc.h"
+#include "iprobe.h"
 
-diode::diode () : circuit (2) {
-  type = CIR_DIODE;
-}
-
-void diode::calcS (nr_double_t frequency) {
-}
-
-void diode::initY (void) {
-  setV (1, 0.0);
-  setV (2, 0.9);
-}
-
-void diode::calcY (void) {
-  nr_double_t Is = getPropertyDouble ("Is");
-  nr_double_t n = getPropertyDouble ("n");
-  nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit;
-
-  T = 290.0;
-  Ut = kB * T / Q;
-  Ud = real (getV (2) - getV (1));
-  Ucrit = Ut * log (Ut / sqrt (2) / Is);
-  //if (Ud > Ucrit) {
-  //  Ud = Ucrit;
-  //}
-  gd = Is / Ut / n * exp (Ud / Ut / n);
-  Id = Is * (exp (Ud / Ut / n) - 1);
-  Ieq = Id - Ud * gd;
-
-  setI (1, +Ieq);
-  setI (2, -Ieq);
-  setY (gd);
+iprobe::iprobe () : vdc () {
+  type = CIR_IPROBE;
+  addProperty ("U", 0.0);
 }

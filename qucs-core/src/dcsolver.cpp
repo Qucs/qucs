@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.5 2004-02-03 21:57:28 ela Exp $
+ * $Id: dcsolver.cpp,v 1.6 2004-02-09 18:26:08 ela Exp $
  *
  */
 
@@ -440,12 +440,17 @@ void dcsolver::savePreviousIteration (void) {
 void dcsolver::saveNodeVoltages (void) {
   int N = countNodes ();
   struct nodelist_t * n;
+  // save all nodes except reference node
   for (int r = 1; r <= N; r++) {
     n = nlist->getNode (r);
     for (int i = 0; i < n->nNodes; i++) {
-      n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (),
-				       x->get (r, 1));
+      n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), x->get (r, 1));
     }
+  }
+  // save reference node
+  n = nlist->getNode (0);
+  for (int i = 0; i < n->nNodes; i++) {
+    n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), 0.0);
   }
 }
 
