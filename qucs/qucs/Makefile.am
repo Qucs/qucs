@@ -46,6 +46,7 @@ noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h \
 TRANSLATIONS = $(srcdir)/qucs_de.ts $(srcdir)/qucs_pl.ts $(srcdir)/qucs_fr.ts \
   $(srcdir)/qucs_it.ts $(srcdir)/qucs_ro.ts $(srcdir)/qucs_pt.ts \
   $(srcdir)/qucs_es.ts
+GENTRANSLATIONS = qtgeneric_untranslated.ts qtgeneric_de.ts qtgeneric_fr.ts
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 %.ts: $(qucs_SOURCES)
@@ -58,13 +59,22 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 	done
 
 %.qm: %.ts
-	$(LRELEASE) $<
+	@qucsfile=$<; \
+	genfile=`echo $< | sed -e 's/qucs_\(..\)\.ts/qtgeneric_\1\.ts/'`; \
+	if test -f $$genfile; then \
+	  grep -v "</TS>" $$qucsfile > tmp.ts; \
+	  grep -v "<!DOCTYPE TS><TS>" $$genfile >> tmp.ts; \
+	else \
+	  cp -f $$qucsfile tmp.ts; \
+	fi; \
+	echo "$(LRELEASE) $$qucsfile"; \
+	$(LRELEASE) tmp.ts; mv -f tmp.qm $@; rm -f tmp.ts
 
 # installation of translations
 langdatadir = ${prefix}/share/qucs/lang
 langdata_DATA = $(TRANSFILES)
 
-EXTRA_DIST = $(TRANSLATIONS)
+EXTRA_DIST = $(TRANSLATIONS) $(GENTRANSLATIONS) README.translations
 
 all-local: $(TRANSLATIONS) $(TRANSFILES)
 
