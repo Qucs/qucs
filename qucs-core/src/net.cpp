@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.16 2004/07/31 16:59:14 ela Exp $
+ * $Id: net.cpp,v 1.17 2004/08/12 13:59:53 ela Exp $
  *
  */
 
@@ -147,7 +147,7 @@ void net::removeCircuit (circuit * c, int dropping) {
 }
 
 /* The function returns non-zero if the given circuit is already part
-   of the netlist. It return zero if not. */
+   of the netlist. It returns zero if not. */
 int net::containsCircuit (circuit * cand) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
     if (c == cand) return 1;

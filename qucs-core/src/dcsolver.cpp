@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.21 2004/07/31 16:59:14 ela Exp $
+ * $Id: dcsolver.cpp,v 1.22 2004/08/12 13:59:53 ela Exp $
  *
  */
 
@@ -581,6 +581,7 @@ void dcsolver::saveResults (void) {
   for (int r = 1; r <= N; r++) {
     if ((n = createV (r)) != NULL) {
       saveVariable (n, x->get (r, 1));
+      free (n);
     }
   }
 
@@ -588,6 +589,7 @@ void dcsolver::saveResults (void) {
   for (int r = 1; r <= M; r++) {
     if ((n = createI (r)) != NULL) {
       saveVariable (n, x->get (r + N, 1));
+      free (n);
     }
   }
 
@@ -601,6 +603,7 @@ void dcsolver::saveResults (void) {
       for (; p != NULL; p = p->getNext ()) {
 	n = createOP (c->getName (), p->getName ());
 	saveVariable (n, p->getValue ());
+	free (n);
       }
     }
   }
@@ -620,22 +623,22 @@ void dcsolver::saveVariable (char * n, complex z) {
 
 // Create an appropriate variable name for operating points.
 char * dcsolver::createOP (char * c, char * n) {
-  static char text[128];
+  char * text = (char *) malloc (strlen (c) + strlen (n) + 2);
   sprintf (text, "%s.%s", c, n);
   return text;
 }
 
 // Create an appropriate variable name for voltages.
 char * dcsolver::createV (int n) {
-  static char text[128];
   if (nlist->isInternal (n)) return NULL;
-  sprintf (text, "%s.V", nlist->get (n));
+  char * node = nlist->get (n);
+  char * text = (char *) malloc (strlen (node) + 3);
+  sprintf (text, "%s.V", node);
   return text;
 }
 
 // Create an appropriate variable name for currents.
 char * dcsolver::createI (int n) {
-  static char text[128];
   circuit * vs = findVoltageSource (n);
 
   if (vs->isInternalVoltageSource ())
@@ -645,9 +648,11 @@ char * dcsolver::createI (int n) {
                  // explicit current probes
 
   // create appropriate current name for single/multiple voltage sources
+  char * name = vs->getName ();
+  char * text = (char *) malloc (strlen (name) + 5);
   if (vs->getVoltageSources () > 1)
-    sprintf (text, "%s.I%d", vs->getName (), n - vs->isVoltageSource () + 1);
+    sprintf (text, "%s.I%d", name, n - vs->isVoltageSource () + 1);
   else
-    sprintf (text, "%s.I", vs->getName ());
+    sprintf (text, "%s.I", name);
   return text;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.7 2004/08/05 21:19:48 ela Exp $
+ * $Id: device.cpp,v 1.8 2004/08/12 13:59:54 ela Exp $
  *
  */
 
@@ -54,10 +54,14 @@ circuit * splitResistance (circuit * base, circuit * res, net * subnet,
 			   char * c, char * n, int internal) {
   if (res == NULL) {
     res = new resistor ();
-    res->setName (circuit::createInternal (c, base->getName ()));
+    char * name = circuit::createInternal (c, base->getName ());
+    char * node = circuit::createInternal (n, base->getName ());
+    res->setName (name);
     res->setNode (1, base->getNode(internal)->getName ());
-    res->setNode (2, circuit::createInternal (n, base->getName ()), 1);
+    res->setNode (2, node, 1);
     subnet->insertCircuit (res);
+    free (name);
+    free (node);
   }
   base->setNode (internal, res->getNode(2)->getName (), 1);
   return res;
@@ -82,9 +86,11 @@ circuit * splitCapacitance (circuit * base, circuit * cap, net * subnet,
 			    char * c, node * n1, node * n2) {
   if (cap == NULL) {
     cap = new capacitor ();
-    cap->setName (circuit::createInternal (c, base->getName ()));
+    char * name = circuit::createInternal (c, base->getName ());
+    cap->setName (name);
     cap->setNode (1, n1->getName ());
     cap->setNode (2, n2->getName ());
+    free (name);
   }
   subnet->insertCircuit (cap);
   return cap;

@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * new microstrip components: gap, open, corner, mitered bend and step
  * simple P- and N-type MOSFET implementation
  * new S-parameter file (currently only touchstone) component
  * subcircuit definitions are now possible

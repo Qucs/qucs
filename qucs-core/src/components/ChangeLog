@@ -1,3 +1,8 @@
+2004-08-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mscorner.cpp: Fixed bug in frequency range
+	detection and brushed up the code a bit.
+
 2004-08-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* constants.h (cubic): Fixed a severe macro bug.  cubic() did

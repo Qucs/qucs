@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.23 2004/07/30 06:25:54 ela Exp $
+ * $Id: circuit.cpp,v 1.24 2004/08/12 13:59:53 ela Exp $
  *
  */
 
@@ -427,9 +427,10 @@ void circuit::setVoltageSources (int s) {
 }
 
 /* The function returns an internal node or circuit name with the
-   given prefix and based on the given circuits name. */
+   given prefix and based on the given circuits name.  The caller is
+   responsible to free() the returned string. */
 char * circuit::createInternal (char * prefix, char * obj) {
-  static char n[128];
+  char * n = (char *) malloc (strlen (prefix) + strlen (obj) + 3);
   sprintf (n, "_%s#%s", prefix, obj);
   return n;
 }

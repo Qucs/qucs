@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.5 2004/07/26 06:30:28 ela Exp $
+ * $Id: matvec.cpp,v 1.6 2004/08/12 13:59:53 ela Exp $
  *
  */
 
@@ -113,7 +113,7 @@ vector& matvec::get (int r, int c) {
 /* This function returns a static text representation with the
    'n[r,c]' scheme indicating a matrix (vector) entry. */
 char * matvec::createMatrixString (char * n, int r, int c) {
-  static char str[256];
+  static char str[256]; // hopefully enough
   sprintf (str, "%s[%d,%d]", n, r, c);
   return str;
 }
@@ -122,7 +122,7 @@ char * matvec::createMatrixString (char * n, int r, int c) {
    'n[r,c]' scheme indicating a matrix (vector) entry but with
    different arguments. */
 char * matvec::createMatrixString (char n, int r, int c) {
-  static char str[256];
+  static char str[256]; // hopefully enough
   sprintf (str, "%c[%d,%d]", n, r, c);
   return str;
 }
