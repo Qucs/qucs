@@ -20,6 +20,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qvgroupbox.h>
+#include <qhgroupbox.h>
 #include <qhbox.h>
 #include <qtimer.h>
 //#include <qmessagebox.h>
@@ -33,6 +34,7 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
 
   QVBoxLayout *all = new QVBoxLayout(this);
   all->setSpacing(5);
+  all->setMargin(5);
   QVGroupBox *Group1 = new QVGroupBox(tr("Progress:"),this);
   all->addWidget(Group1);
 
@@ -43,9 +45,9 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
   ProgText->setMinimumSize(400,80);
   wasLF = false;
 
-  QHBox *HGroup = new QHBox(this);
-  HGroup->setMargin(5);
-  HGroup->setSpacing(5);
+  QHGroupBox *HGroup = new QHGroupBox(this);
+  HGroup->setInsideMargin(5);
+  HGroup->setInsideSpacing(5);
   all->addWidget(HGroup);
   new QLabel(tr("Progress:"), HGroup);
   SimProgress = new QProgressBar(HGroup);
@@ -100,13 +102,19 @@ void SimMessage::slotDisplayMsg()
 {
   int i, Para;
   QString s = QString(SimProcess.readStdout());
-//qDebug(s);
+  //qDebug(s);
   while((i = s.find('\r')) >= 0) {
-    Para = ProgText->paragraphs()-1;
     if(wasLF) {
       ProgressText += s.left(i-1);
     }
     else {
+      int k = s.findRev('\n',i-s.length());
+      if (k > 0) {
+	ProgText->insert(s.left(k));
+	s = s.mid(k+1);
+	i = s.find('\r');
+      }
+      Para = ProgText->paragraphs()-1;
       ProgressText = ProgText->text(Para) + s.left(i-1);
       ProgText->removeParagraph(Para);  // remove last text line
     }
@@ -122,8 +130,8 @@ void SimMessage::slotDisplayMsg()
   if(s.length() < 1)  return;
 
   if(wasLF) {
-    if(ProgressText.find('\n') >= 0) {
-      ProgText->insert(ProgressText);
+    if(s.find('\n') >= 0) {
+      ProgText->insert("\n"+s);
       wasLF = false;
     }
   }
