@@ -223,59 +223,59 @@
     <name>FillDialog</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Line Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienfarbe: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished">Linienbreite: </translation>
+        <translation>Linienbreite: </translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished">Linienstil: </translation>
+        <translation>Linienstil: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished">durchgezogene Linie</translation>
+        <translation>durchgezogene Linie</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished">gestrichelte Linie</translation>
+        <translation>gestrichelte Linie</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished">gepunktete Linie</translation>
+        <translation>gepunktete Linie</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished">Strich-Punkt-Linie</translation>
+        <translation>Strich-Punkt-Linie</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished">Strich-Punkt-Punkt-Linie</translation>
+        <translation>Strich-Punkt-Punkt-Linie</translation>
     </message>
     <message>
         <source>Fill Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Füllfarbe: </translation>
     </message>
     <message>
         <source>Fill Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Füllmuster: </translation>
     </message>
     <message>
         <source>no filling</source>
-        <translation type="unfinished"></translation>
+        <translation>keine Füllung</translation>
     </message>
     <message>
         <source>solid</source>
-        <translation type="unfinished"></translation>
+        <translation>voll ausgefüllt</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
@@ -307,27 +307,27 @@
     </message>
     <message>
         <source>horizontal line</source>
-        <translation type="unfinished"></translation>
+        <translation>horizontale Linie</translation>
     </message>
     <message>
         <source>vertical line</source>
-        <translation type="unfinished"></translation>
+        <translation>vertikale Linie</translation>
     </message>
     <message>
         <source>crossed lines</source>
-        <translation type="unfinished"></translation>
+        <translation>gekreuzte Linien</translation>
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>rechtsschraffiert</translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>linksschraffiert</translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation type="unfinished"></translation>
+        <translation>diagonal gekreuzt</translation>
     </message>
 </context>
 <context>
@@ -2870,11 +2870,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>gefüllte Ellipse</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>gefülltes Rechteck</translation>
     </message>
 </context>
 <context>
