@@ -202,6 +202,37 @@ void QucsView::slotMarkerDown()
 }
 
 // -----------------------------------------------------------
+void QucsView::editLabel(WireLabel *pl)
+{
+  bool OK;
+  QString Name = QInputDialog::getText(tr("Insert Nodename"),
+	tr("Enter the label:"), QLineEdit::Normal, pl->Name, &OK, this);
+  if(!OK) return;
+
+  if(Name.isEmpty()) { // if no name was entered (empty string), delete label
+    if(pl->pWire) pl->pWire->setName("");   // delete name of wire
+    else pl->pNode->setName("");
+  }
+  else {
+    Name.replace(' ', '_');	// label must not contain spaces
+    while(Name.at(0) == '_') Name.remove(0,1);  // must not start with '_'
+    if(Name.isEmpty()) return;
+    if(Name == pl->Name) return;
+
+    int old_x2 = pl->x2;
+    pl->setName(Name);   // set new name
+    if(pl->cx > (pl->x1+(pl->x2>>1)))
+      pl->x1 -= pl->x2 - old_x2; // don't change position due to text width
+  }
+
+  QucsDoc *d = Docs.current();
+  d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
+  viewport()->repaint();
+  drawn = false;
+  Docs.current()->setChanged(true);
+}
+
+// -----------------------------------------------------------
 void QucsView::MouseDoNothing(QMouseEvent*)
 {
 }
@@ -708,20 +739,21 @@ void QucsView::MPressPainting(QMouseEvent *)
 // -----------------------------------------------------------
 void QucsView::MPressLabel(QMouseEvent *Event)
 {
-  int x = int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1;
-  int y = int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1;
+  QucsDoc *d = Docs.current();
+  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
   Wire *pw = 0;
-  Node *pn = Docs.current()->selectedNode(x, y);
+  Node *pn = d->selectedNode(x, y);
   if(!pn) {
-    pw = Docs.current()->selectedWire(x, y);
+    pw = d->selectedWire(x, y);
     if(!pw) return;
   }
 
-  QString Name("");
+  QString Name;
   Element *pe=0;
   // is wire line already labeled ?
-  if(pw) pe = Docs.current()->getWireLabel(pw->Port1);
-  else pe = Docs.current()->getWireLabel(pn);
+  if(pw) pe = d->getWireLabel(pw->Port1);
+  else pe = d->getWireLabel(pn);
   if(pe) {
     if(pe->Type == isComponent) {
       QMessageBox::information(0, tr("Info"),
@@ -735,26 +767,21 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   bool OK;
   Name = QInputDialog::getText(tr("Insert Nodename"),
 		tr("Enter the label:"), QLineEdit::Normal, Name, &OK, this);
-  if(OK)
+  if(!OK) return;
+
   if(!Name.isEmpty()) {
     Name.replace(' ', '_');	// label must not contain spaces
-    while(Name.at(0) == '_') Name.remove(0,1);  // label must not start with '_'
+    while(Name.at(0) == '_') Name.remove(0,1);  // must not start with '_'
     if(Name.isEmpty()) return;
 
     if(pe) {
       if(pe->Type == isWire) ((Wire*)pe)->setName("");  // delete old name
       else ((Node*)pe)->setName("");
     }
-    WireLabel *pl=0;
-    if(pw) {		// set new name
-      pw->setName(Name, x-pw->x1 + y-pw->y1, x+30, y-30);
-      pl = pw->Label;
-    }
-    else { pn->setName(Name, x+30, y-30); pl = pn->Label; }
-    enlargeView(pl->x1, pl->y1-pl->y2, pl->x1+pl->x2, pl->y1);
-    viewport()->repaint();
-    drawn = false;
-    Docs.current()->setChanged(true);
+
+    // set new name
+    if(pw) pw->setName(Name, x-pw->x1 + y-pw->y1, x+30, y-30);
+    else pn->setName(Name, x+30, y-30);
   }
   else {    // if no name was entered (empty string), delete name
     if(pe) {
@@ -765,10 +792,12 @@ void QucsView::MPressLabel(QMouseEvent *Event)
       if(pw) pw->setName("");   // delete name of wire
       else pn->setName("");
     }
-    viewport()->repaint();
-    drawn = false;
-    Docs.current()->setChanged(true);
   }
+
+  d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
+  viewport()->repaint();
+  drawn = false;
+  Docs.current()->setChanged(true);
 }
 
 // -----------------------------------------------------------
@@ -1472,6 +1501,12 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
     case isWire:
          MPressLabel(Event);
          break;
+
+    case isNodeLabel:
+    case isHWireLabel:
+    case isVWireLabel:
+	 editLabel((WireLabel*)focusElement);
+	 break;
 
     case isPainting:
          if( ((Painting*)focusElement)->Dialog() )

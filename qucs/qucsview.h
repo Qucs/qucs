@@ -39,10 +39,10 @@
 
 
 
-// ********************************************************************************
-// ********** This class provides an incomplete base for the application **********
-// ********** view. (scematics, data displays etc.)                      **********
-// ********************************************************************************
+// **************************************************************************
+// ******* This class provides an incomplete base for the application *******
+// ******* view. (scematics, data displays etc.)                      *******
+// **************************************************************************
 
 class QucsView : public QScrollView
 {
@@ -57,6 +57,7 @@ public:
   void   enlargeView(int x1, int y1, int x2, int y2);
   void   setPainter(QPainter *p, QucsDoc *d);
   void   eraseCross();
+  void   editLabel(WireLabel *pl);
 
   Component *selComp;   // component selected in IconView
   Diagram   *selDiag;   // diagram selected in IconView

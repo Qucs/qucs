@@ -312,10 +312,14 @@ bool Diagram::loadVarData(const QString& fileName)
     xmin = 1.0;
     xmax = double(counting);
   }
-  else {
+  else {  // ...................................
     // get independent variables from data file
     g->countY = 1;
     for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
+      if(pD == g->cPointsX.getFirst()) {
+	xmin = DBL_MAX;    // only count the first independent variable
+	xmax = -DBL_MAX;
+      }
       counting = loadIndepVarData(pD->Var, FileString);
       g->countY *= counting;
       if(counting <= 0) {     // failed to load independent variable ?
@@ -428,8 +432,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
     x = Line.toDouble(&ok);  // get number
     if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Too few independent data \"")+
-		   var+"\"");
+		 QObject::tr("Too few independent data \"") + var + "\"");
       return -1;
     }
     *(p++) = x;

@@ -1,8 +1,14 @@
 2004-05-22  Stefan Jahn  <stefan@lkcc.org>
 
-	* qucsdoc.cpp (selectElements): Rearranged the code for 
+	* qucsdoc.cpp (selectElements): Rearranged the code for
 	re-ordering the select area rectangle coordinates.  Seemed
 	to be a compiler bug or something.
+
+2004-05-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* double-click on label opens the label name edit dialog
+	* fixed bug in marker text
+	* fixed bug in diagram calculation
 
 2004-05-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
