@@ -97,7 +97,7 @@ QT_VER=2
 AC_MSG_CHECKING([for Qt headers])
 paths="$QTDIR/include /usr/local/qt/include /usr/include/qt /usr/include/qt3 \
   /usr/include /usr/X11R6/include/X11/qt /usr/X11R6/include/X11/qt \
-  /usr/X11R6/include/qt /usr/X11R6/include/qt2"
+  /usr/X11R6/include/qt /usr/X11R6/include/qt2 /usr/X11R6/include"
 for path in $paths; do
   if test -f "$path/qapplication.h"; then
     QT_INCLUDES=$path
@@ -142,7 +142,7 @@ AC_MSG_RESULT([checking for Qt... $QT_VER ($QT_MTS)])
 AC_MSG_CHECKING([for Qt library])
 paths="$QTDIR/lib /usr/local/qt/lib /usr/lib/qt /usr/lib \
   /usr/X11R6/lib/X11/qt /usr/X11R6/lib/X11/qt /usr/X11R6/lib/qt \
-  /usr/X11R6/lib/qt2"
+  /usr/X11R6/lib/qt2 /usr/X11R6/lib"
 AC_LANG(C++)
 for path in $paths; do
   save_LDFLAGS="$LDFLAGS"
