@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.7 2004-06-26 10:36:14 ela Exp $
+ * $Id: resistor.cpp,v 1.8 2004-06-29 17:36:48 margraf Exp $
  *
  */
 
@@ -56,6 +56,7 @@ void resistor::calcSP (nr_double_t) {
   nr_double_t f = /* kB * */ T * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
   setN (1, 1, +f); setN (2, 2, +f);
   setN (1, 2, -f); setN (2, 1, -f);
+fprintf(stderr,"*****Cstart: %e (%e K)\n", f, T);
 }
 
 void resistor::initDC (dcsolver *) {
