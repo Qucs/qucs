@@ -27,7 +27,7 @@ Version 0.0.3
 -------------
 
  * avoided working directory changes during program execution
- * translation into Polish, Rumanian
+ * translations into Polish and Romanian
  * some new components (e.g. transistors)
  * some new operations (e.g. aligning)
  * undo/redo function

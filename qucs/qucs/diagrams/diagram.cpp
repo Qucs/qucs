@@ -2,7 +2,7 @@
                           diagram.cpp  -  description
                              -------------------
     begin                : Thu Oct 2 2003
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,6 +15,10 @@
  *                                                                         *
  ***************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "diagram.h"
 
 #include "../qucs.h"
@@ -23,11 +27,18 @@
 #include <float.h>
 #include <stdlib.h>
 
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
+
 #include <qtextstream.h>
 #include <qmessagebox.h>
 #include <qregexp.h>
 #include <qdatetime.h>
 
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 
 
 Diagram::Diagram(int _cx, int _cy)

@@ -3544,11 +3544,6 @@ Sets selected elements on grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rumanian by Radu Circa
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close Project</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3582,6 +3577,11 @@ Closes the current project</source>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Romanian by Radu Circa
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
