@@ -61,7 +61,7 @@ extern tQucsSettings QucsSettings;
 struct TransValue {
   char * name;           // label
   double value;          // value
-  QString tip;           // tool tip description
+  QString * tip;         // tool tip description
   char * units[8];       // unit choise
   QLabel * label;        // Qt label widget
   QLineEdit * lineedit;  // Qt value widget
@@ -76,7 +76,7 @@ struct TransArray {
 
 // Extraneous calculation results.
 struct TransResult {
-  QString name;   // textual description
+  QString * name; // textual description
   QLabel * label; // Qt name widget
   QLabel * value; // Qt value widget
 };

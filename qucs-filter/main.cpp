@@ -19,6 +19,8 @@
 # include <config.h>
 #endif
 
+#include <stdlib.h>
+
 #include <qapplication.h>
 #include <qstring.h>
 #include <qtextcodec.h>
@@ -31,20 +33,13 @@
 
 #include "qucsfilter.h"
 
-
-struct tQucsSettings {
-  int x, y;      // position of main window
-  QFont font;
-};
-
-struct tQucsSettings QucsSettings
-     = {200, 100, QFont("Helvetica", 12)};
+struct tQucsSettings QucsSettings;
 
 // #########################################################################
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
-  QFile file(QDir::homeDirPath()+"/.qucs/filterrc");
+  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
   if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
 
   QTextStream stream(&file);
@@ -61,7 +56,7 @@ bool loadSettings()
   }
   file.close();
 
-  file.setName(QDir::homeDirPath()+"/.qucs/filterrc");
+  file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
   if(!file.open(IO_ReadOnly)) return true; // qucs settings not necessary
 
   while(!stream.atEnd()) {
@@ -87,7 +82,7 @@ bool saveApplSettings(QucsFilter *qucs)
       return true;   // nothing has changed
 
 
-  QFile file(QDir::homeDirPath()+"/.qucs/filterrc");
+  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/filterrc"));
   if(!file.open(IO_WriteOnly)) {
     QMessageBox::warning(0, QObject::tr("Warning"),
 			QObject::tr("Cannot save settings !"));
@@ -113,13 +108,32 @@ bool saveApplSettings(QucsFilter *qucs)
 
 int main(int argc, char *argv[])
 {
+  // apply default settings
+  QucsSettings.x = 200;
+  QucsSettings.y = 100;
+  QucsSettings.font = QFont("Helvetica", 12);
+
+  // is application relocated?
+  char * var = getenv ("QUCSDIR");
+  if (var != NULL) {
+    QDir QucsDir = QDir (var);
+    QString QucsDirStr = QucsDir.canonicalPath ();
+    QucsSettings.BitmapDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/bitmaps/");
+    QucsSettings.LangDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/lang/");
+  } else {
+    QucsSettings.BitmapDir = BITMAPDIR;
+    QucsSettings.LangDir = LANGUAGEDIR;
+  }
+
   loadSettings();
 
   QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
+  tor.load( QString("qucs_") + QTextCodec::locale(), QucsSettings.LangDir );
   a.installTranslator( &tor );
 
   QucsFilter *qucs = new QucsFilter();
