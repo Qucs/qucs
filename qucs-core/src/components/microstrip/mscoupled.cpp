@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.11 2004/09/12 14:09:20 ela Exp $
+ * $Id: mscoupled.cpp,v 1.12 2004/09/26 09:58:52 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #include "complex.h"
 #include "object.h"
 #include "node.h"
+#include "matrix.h"
 #include "circuit.h"
 #include "component_id.h"
 #include "substrate.h"
@@ -46,10 +47,9 @@ mscoupled::mscoupled () : circuit (4) {
   type = CIR_MSCOUPLED;
 }
 
-void mscoupled::calcSP (nr_double_t frequency) {
+void mscoupled::calcPropagation (nr_double_t frequency) {
 
   // fetch line properties
-  nr_double_t l = getPropertyDouble ("L");
   nr_double_t W = getPropertyDouble ("W");
   nr_double_t s = getPropertyDouble ("S");
   char * SModel = getPropertyString ("Model");
@@ -81,26 +81,34 @@ void mscoupled::calcSP (nr_double_t frequency) {
 		       frequency, "Hammerstad", aco, ado);
 
   // compute propagation constants for even and odd mode
-  complex ge, go;
-  nr_double_t ae, ao, be, bo, k0;
-  k0 = 2 * M_PI * frequency / C0;
+  nr_double_t k0 = 2 * M_PI * frequency / C0;
   ae = ace + ade;
   ao = aco + ado;
   be = sqrt (ErEffeFreq) * k0;
   bo = sqrt (ErEffoFreq) * k0;
-  ge = rect (ae, be);
-  go = rect (ao, bo);
+  ze = ZleFreq;
+  zo = ZloFreq;
+}
   
+void mscoupled::calcSP (nr_double_t frequency) {
+  // fetch line properties
+  nr_double_t l = getPropertyDouble ("L");
+
+  // compute propagation constants for even and odd mode
+  calcPropagation (frequency);
+  complex ge = rect (ae, be);
+  complex go = rect (ao, bo);
+
   // compute abbreviations
   complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
-  Ee = (sqr (ZleFreq) + sqr (z0)) * sinh (ge * l);
-  Eo = (sqr (ZloFreq) + sqr (z0)) * sinh (go * l);
-  De = 2 * ZleFreq * z0 * cosh (ge * l) + Ee;
-  Do = 2 * ZloFreq * z0 * cosh (go * l) + Eo;
-  Xe = (sqr (ZleFreq) - sqr (z0)) * sinh (ge * l) / 2 / De;
-  Xo = (sqr (ZloFreq) - sqr (z0)) * sinh (go * l) / 2 / Do;
-  Ye = Zle * z0 / De;
-  Yo = Zlo * z0 / Do;
+  Ee = (sqr (ze) + sqr (z0)) * sinh (ge * l);
+  Eo = (sqr (zo) + sqr (z0)) * sinh (go * l);
+  De = 2 * ze * z0 * cosh (ge * l) + Ee;
+  Do = 2 * zo * z0 * cosh (go * l) + Eo;
+  Xe = (sqr (ze) - sqr (z0)) * sinh (ge * l) / 2 / De;
+  Xo = (sqr (zo) - sqr (z0)) * sinh (go * l) / 2 / Do;
+  Ye = ze * z0 / De;
+  Yo = zo * z0 / Do;
 
   // reflexion coefficients
   setS (1, 1, Xe + Xo); setS (2, 2, Xe + Xo);
@@ -145,6 +153,7 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     Psi = 1 + g / 1.45 + pow (g, 2.09) / 3.95;
     Phi = 0.8645 * pow (u, 0.172);
     Pe = Phi / (Psi * (Alpha * pow (u, m) + (1 - Alpha) * pow (u, -m)));
+    // TODO: is this ... Psi * (Alpha ... or ... Psi / (Alpha ... ?
 
     // modifying equations for odd mode
     n = (1 / 17.7 + exp (-6.424 - 0.76 * log (g) - pow (g / 0.23, 5))) *
@@ -397,4 +406,14 @@ void mscoupled::initDC (void) {
     setVoltageSources (2);
     setInternalVoltageSource (1);
   }
+}
+
+void mscoupled::initAC (void) {
+  setVoltageSources (0);
+}
+
+void mscoupled::calcAC (nr_double_t frequency) {
+  // TODO: calculate Y-parameters directly
+  calcSP (frequency);
+  setMatrixY (stoy (getMatrixS ()));
 }

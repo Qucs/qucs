@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.35 2004/09/12 14:09:20 ela Exp $
+ * $Id: msline.cpp,v 1.36 2004/09/26 09:58:52 ela Exp $
  *
  */
 
@@ -42,14 +42,14 @@
 #include "msline.h"
 
 msline::msline () : circuit (2) {
-  alpha = zref = 0;
+  alpha = beta = zl = 0;
   type = CIR_MSLINE;
 }
 
 void msline::calcNoise (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t l = exp (alpha * getPropertyDouble ("L"));
-  nr_double_t z = zref;
+  nr_double_t z = zl;
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
   setN (1, 1, -f * (r * r + l));
@@ -58,10 +58,9 @@ void msline::calcNoise (nr_double_t) {
   setN (2, 1, +f * 2 * r * sqrt (l));
 }
 
-void msline::calcSP (nr_double_t frequency) {
+void msline::calcPropagation (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. L, W */
-  nr_double_t l = getPropertyDouble ("L");
   nr_double_t W = getPropertyDouble ("W");
   char * SModel = getPropertyString ("Model");
   char * DModel = getPropertyString ("DispModel");
@@ -76,8 +75,7 @@ void msline::calcSP (nr_double_t frequency) {
   nr_double_t D     = subst->getPropertyDouble ("D");
 
   /* local variables */
-  complex s11, s21, n, g;
-  nr_double_t z, y, k0, ac, ad;
+  nr_double_t ac, ad;
   nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
 
   // quasi-static effective dielectric constant of substrate + line and
@@ -87,22 +85,30 @@ void msline::calcSP (nr_double_t frequency) {
   // analyse dispersion of Zl and Er (use WEff here?)
   analyseDispersion (WEff, h, er, ZlEff, ErEff, frequency, DModel,
 		     ZlEffFreq, ErEffFreq);
-  zref = ZlEffFreq;
 
   // analyse losses of line
   analyseLoss (WEff, t, er, rho, D, tand, ZlEffFreq, ZlEffFreq, ErEffFreq,
 	       frequency, "Hammerstad", ac, ad);
 
-  // calculate propagation constant and S-parameters
-  z = ZlEffFreq / z0;
-  y = 1 / z;
-  k0 = 2 * M_PI * frequency / C0;
+  // calculate propagation constants and reference impedance
+  zl    = ZlEffFreq;
   alpha = ac + ad;
-  g = rect (ac + ad, sqrt (ErEffFreq) * k0);
-  n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
-  s11 = (z - y) * sinh (g * l) / n;
-  s21 = 2 / n;
+  beta  = sqrt (ErEffFreq) * 2 * M_PI * frequency / C0;
+}
 
+void msline::calcSP (nr_double_t frequency) {
+  nr_double_t l = getPropertyDouble ("L");
+
+  // calculate propagation constants
+  calcPropagation (frequency);
+
+  // calculate S-parameters
+  nr_double_t z = zl / z0;
+  nr_double_t y = 1 / z;
+  complex g = rect (alpha, beta);
+  complex n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
+  complex s11 = (z - y) * sinh (g * l) / n;
+  complex s21 = 2 / n;
   setS (1, 1, s11); setS (2, 2, s11);
   setS (1, 2, s21); setS (2, 1, s21);
 }
@@ -448,12 +454,27 @@ void msline::initDC (void) {
   }
   else {
     // a DC short (voltage source V = 0 volts)
-    setY (1, 1, 0); setY (2, 2, 0); setY (1, 2, 0); setY (2, 1, 0);
-    setC (1, 1, +1.0); setC (1, 2, -1.0);
-    setB (1, 1, +1.0); setB (2, 1, -1.0);
-    setE (1, 0.0);
-    setD (1, 1, 0.0);
+    clearY ();
+    voltageSource (1, 1, 2);
     setVoltageSources (1);
     setInternalVoltageSource (1);
   }
+}
+
+void msline::initAC (void) {
+  setVoltageSources (0);
+}
+
+void msline::calcAC (nr_double_t frequency) {
+  nr_double_t l = getPropertyDouble ("L");
+
+  // calculate propagation constants
+  calcPropagation (frequency);
+
+  // calculate S-parameters
+  complex g = rect (alpha, beta);
+  complex y11 = coth (g * l) / zl;
+  complex y21 = -cosech (g * l) / zl;
+  setY (1, 1, y11); setY (2, 2, y11);
+  setY (1, 2, y21); setY (2, 1, y21);
 }

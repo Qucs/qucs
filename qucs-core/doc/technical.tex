@@ -1480,8 +1480,9 @@ S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
-The scattering parameters of an ideal attenuator with (power) attenuation $L$
-(loss) (or power gain $G=1/L$) in reference to the impedance $Z_{ref}$ writes as follows.
+The scattering parameters of an ideal attenuator with (power)
+attenuation $L$ (loss) (or power gain $G=1/L$) in reference to the
+impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
 r = \frac{Z_{ref}-Z_0}{Z_{ref}+Z_0}
@@ -3552,6 +3553,7 @@ changes when introducing active (and controlled) elements.
 
 \subsection{Voltage controlled current source}
 %\addcontentsline{toc}{subsection}{Voltage controlled current source}
+\label{sec:vccs}
 
 The voltage-dependent current source (VCCS), as shown in fig.
 \ref{fig:vccs}, is determined by the following equation which
@@ -3613,6 +3615,7 @@ right hand column in the matrix keeps the system consistent.
 
 \subsection{Voltage controlled voltage source}
 %\addcontentsline{toc}{subsection}{Voltage controlled voltage source}
+\label{sec:vcvs}
 
 The voltage-dependent voltage source (VCVS), as shown in fig.
 \ref{fig:vcvs}, is determined by the following equation which
@@ -3670,6 +3673,7 @@ I_{4}\\
 
 \subsection{Current controlled current source}
 %\addcontentsline{toc}{subsection}{Current controlled current source}
+\label{sec:cccs}
 
 The current-dependent current source (CCCS), as shown in fig.
 \ref{fig:cccs}, is determined by the following equation which
@@ -3725,6 +3729,7 @@ I_{4}\\
 
 \subsection{Current controlled voltage source}
 %\addcontentsline{toc}{subsection}{Current controlled voltage source}
+\label{sec:ccvs}
 
 The current-dependent voltage source (CCVS), as shown in fig.
 \ref{fig:ccvs}, is determined by the following equations which
@@ -4556,8 +4561,9 @@ C & D
 If not otherwise noted the MNA matrix elements and the extensions of
 the components (section \ref{sec:MNAext} on page \pageref{sec:MNAext})
 for the AC analysis do not differ from those for the DC analysis.  The
-Y-matrices of the non-linear devices are documented in the appropriate
-sections (see chapter \ref{sec:NLdevices}).
+Y-matrices of the non-linear devices and certain microstrip components
+are documented in the appropriate sections (see chapter
+\ref{sec:NLdevices} and \ref{sec:MScomponents}).
 
 \subsection{Capacitor}
 %\addcontentsline{toc}{subsection}{Capacitor}
@@ -4585,70 +4591,238 @@ Y =
 \end{bmatrix}
 \end{equation}
 
-
 \subsection{Transmission line}
 %\addcontentsline{toc}{subsection}{Transmission line}
 
-A transmission line is normally described by its ABCD-matrix.
-(Note that in ABCD-matrizes the current $i_2$ is defined to
-flow out of the output port.)
+A transmission line is usually described by its ABCD-matrix.  (Note
+that in ABCD-matrices, i.e. the chain matrix representation, the
+current $i_2$ is defined to flow out of the output port.)
 \begin{equation}
-(\underline{A}) =
+\left(\underline{A}\right) =
 \begin{pmatrix}
-\cosh(\gamma\cdot l)       & Z_L\cdot \sinh(\gamma\cdot l)\\
-\sinh(\gamma\cdot l) / Z_L & \cosh(\gamma\cdot l)
+\cosh{\left(\gamma\cdot l\right)} & Z_L\cdot \sinh{\left(\gamma\cdot l\right)}\\
+\sinh{\left(\gamma\cdot l\right)} / Z_L & \cosh{\left(\gamma\cdot l\right)}
 \end{pmatrix}
 \end{equation}
 
-This can easily recalculated into impedance parameters:
+These can easily be recalculated into impedance parameters.
+\begin{align}
+Z_{11} = Z_{22} &= \frac{Z_L}{\tanh{\left(\gamma\cdot l\right)}}\\
+Z_{12} = Z_{21} &= \frac{Z_L}{\sinh{\left(\gamma\cdot l\right)}}
+\end{align}
+
+Or in admittance parameter representation it yields
 \begin{equation}
-Z_{11} = Z_{22} = \frac{Z_L}{\tanh(\gamma\cdot l)}
-\end{equation}
-\begin{equation}
-Z_{12} = Z_{21} = \frac{Z_L}{\sinh(\gamma\cdot l)}
+\label{eq:TransLineY}
+\begin{split}
+Y_{11} = Y_{22} &= \frac{1}{Z_L \cdot \tanh{\left(\gamma\cdot l\right)}}\\
+Y_{12} = Y_{21} &= \frac{-1}{Z_L\cdot \sinh{\left(\gamma\cdot l\right)}}
+\end{split}
 \end{equation}
 
-Or into admittance parameters:
-\begin{equation}
-Y_{11} = Y_{22} = \frac{1}{Z_L \cdot \tanh(\gamma\cdot l)}
-\end{equation}
-\begin{equation}
-Y_{12} = Y_{21} = \frac{1}{-Z_L\cdot \sinh(\gamma\cdot l)}
-\end{equation}
-
-For ideal (lossless) transmission lines they write accordingly:
-\begin{equation}
-Z_{11} = Z_{22} = \frac{Z_L}{j\cdot\tan(\beta\cdot l)}
-\end{equation}
-\begin{equation}
-Z_{12} = Z_{21} = \frac{Z_L}{j\cdot\sin(\beta\cdot l)}
-\end{equation}
-\begin{equation}
-Y_{11} = Y_{22} = \frac{1}{j\cdot Z_L \cdot \tan(\beta\cdot l)}
-\end{equation}
-\begin{equation}
-Y_{12} = Y_{21} = \frac{j}{Z_L\cdot \sin(\beta\cdot l)}
-\end{equation}
-
+whence $\gamma$ denotes the propagation constant $\alpha + j\beta$ and
+$l$ is the length of the transmission line.  $Z_L$ represents the
+characteristic impedance of the transmission line.  The Y-parameters
+as defined by eq. \eqref{eq:TransLineY} can be used for the microstrip
+line.  For an ideal, i.e. lossless, transmission lines they write
+accordingly.
+\begin{align}
+Z_{11} = Z_{22} &= \frac{Z_L}{j\cdot\tan{\left(\beta\cdot l\right)}}\\
+Z_{12} = Z_{21} &= \frac{Z_L}{j\cdot\sin{\left(\beta\cdot l\right)}}\\
+Y_{11} = Y_{22} &= \frac{1}{j\cdot Z_L \cdot \tan{\left(\beta\cdot l\right)}}\\
+Y_{12} = Y_{21} &= \frac{j}{Z_L\cdot \sin{\left(\beta\cdot l\right)}}
+\end{align}
 
 \subsection{Phase shifter}
 %\addcontentsline{toc}{subsection}{Phase shifter}
 
-A phase shifter is nothing else than an ideal transmission line
-with negative length:
+A phase shifter is no more than an ideal transmission line with a
+negative length and its Z-parameters write as follows.
+\begin{align}
+Z_{11} = Z_{22} &= \frac{j\cdot Z_{ref}}{\tan(\phi)}\\
+Z_{12} = Z_{21} &= \frac{j\cdot Z_{ref}}{\sin(\phi)}
+\end{align}
+
+The admittance parameters required for the AC analysis result in
+\begin{align}
+Y_{11} = Y_{22} &= \frac{1}{j\cdot Z_{ref} \cdot \tan{\left(\phi\right)}}\\
+Y_{12} = Y_{21} &= \frac{j}{Z_{ref}\cdot \sin{\left(\phi\right)}}
+\end{align}
+
+where $\phi$ denotes the actual phase shift of the device.  For a zero
+phase shift ($\phi = 0$) neither the Z- nor the Y-parameters are
+defined.  That is why during AC analysis a phase shifter with zero
+phase shift represents an ideal short circuit regardless its reference
+impedance.
+
+\addvspace{12pt}
+
+The MNA matrix entries of an ideal short circuit during AC and DC
+analysis correspond to a voltage source with zero voltage.  The
+complete MNA matrix representation writes as follows
 \begin{equation}
-Z_{11} = Z_{22} = \frac{j\cdot Z_{ref}}{\tan(\phi)}
-\end{equation}
-\begin{equation}
-Z_{12} = Z_{21} = \frac{j\cdot Z_{ref}}{\sin(\phi)}
+\begin{bmatrix}
+. & . & +1\\
+. & . & -1\\
++1 & -1 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+I_{br}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+0
+\end{bmatrix}
 \end{equation}
 
+whence $I_{br}$ denote the branch current through the voltage source.
 
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
-\subsection{Isolator}
-%\addcontentsline{toc}{subsection}{Isolator}
+The impedance parameters of an attenuator with the power attenuation
+$L$ (loss) (or power gain $G=1/L$) in reference to the impedance
+$Z_{ref}$ write as follows.
+\begin{align}
+Z_{11} = Z_{22} &= Z_{ref}\cdot\frac{L+1}{L-1}\\
+Z_{12} = Z_{21} &= Z_{ref}\cdot\frac{2\cdot\sqrt{L}}{L-1}
+\end{align}
+
+The Z-parameters can be easily converted into Y-parameters which are
+required for the AC analysis.  An attenuator with a power attenuation
+$L=1$ (no attenuation) yields an ideal short circuit regardless its
+reference impedance very similar to the phase shifter with zero phase
+shift.
+
+\subsection{Controlled sources}
+%\addcontentsline{toc}{subsection}{Controlled sources}
+
+During AC analysis the transfer factors $G$ of the controlled sources
+described in sections \ref{sec:vccs}, \ref{sec:vcvs}, \ref{sec:cccs}
+and \ref{sec:ccvs} on page \pageref{sec:vccs} ff. result in a complex
+value depending on the delay time $T$ and frequency $f$.
+\begin{equation}
+\underline{G} = G\cdot e^{j\omega T} = G\cdot e^{j\cdot 2\pi f\cdot T}
+\end{equation}
+
+No more changes to the MNA matrix entries are necessary in order to
+use those of the DC analysis for the AC analysis.
+
+\section{Other AC components}
+%\addcontentsline{toc}{section}{Other AC components}
+
+The following sections describe the MNA matrix entries required for
+the small signal AC analysis of the remaining components not yet
+discussed in previous sections.  Only components whose MNA matrix
+entries differ from the DC analysis MNA entries are taken into
+account.
+
+\subsection{DC Feed and DC Block}
+%\addcontentsline{toc}{subsection}{DC Feed and DC Block}
+
+Both of the devices exchange their role in AC and DC analysis.  Thus
+the MNA matrix entries of the DC feed during DC analysis correspond to
+the MNA matrix entries of the DC block during AC analysis and the
+other way around.
+
+\addvspace{12pt}
+
+During AC analysis the DC feed corresponds to an ideal open circuit
+with the MNA matrix entries
+\begin{equation}
+\begin{bmatrix}
+. & .\\
+. & .\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+\end{bmatrix}
+\end{equation}
+
+The MNA matrix entries of a DC block correspond to an ideal short
+circuit during AC analysis which is modeled by a voltage source with
+zero voltage.
+\begin{equation}
+\begin{bmatrix}
+. & . & +1\\
+. & . & -1\\
++1 & -1 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+I_{br}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+I_2\\
+0
+\end{bmatrix}
+\end{equation}
+
+\subsection{Bias T}
+%\addcontentsline{toc}{subsection}{Bias T}
+
+Figure \ref{fig:ACbiast} denotes a combination of DC feed and DC
+block.  During AC analysis node 1 and 3 simply exchange their roles in
+comparison to the DC analysis.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=3.5cm]{biast}
+\end{center}
+\caption{bias t}
+\label{fig:ACbiast}
+\end{figure}
+\FloatBarrier
+
+Using the port configuration shown in fig. \ref{fig:ACbiast} the
+complete MNA entries of the bias t during AC analysis write as
+follows.
+\begin{equation}
+\begin{bmatrix}
+ . & . & .  & -1\\
+ . & . & .  &  1\\
+ . & . & .  &  0\\
+-1 & 1 & 0  &  0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+I_{out}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+0
+\end{bmatrix}
+\end{equation}
+
+\subsection{S-parameter container with additional reference port}
+%\addcontentsline{toc}{subsection}{S-parameter container with additional reference port}
+
+The Y-parameters of a multi-port component defined by its S-parameters
+as described in section \ref{sec:spfile} of page \pageref{sec:spfile}
+required for a small signal AC analysis can be obtained by converting
+the S-parameters into Y-parameters.
 
 \chapter{Transient Analysis}
 %\addcontentsline{toc}{chapter}{Transient Analysis}
@@ -6824,6 +6998,7 @@ matrix is known.
 
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
+\label{sec:MScomponents}
 
 \section{Single microstrip line}
 %\addcontentsline{toc}{section}{Single microstrip line}
@@ -7804,6 +7979,7 @@ eq. \eqref{eq:HandJZL0Er}.  The modifying equations for the even mode
 are as follows
 \begin{align}
 \Phi_e\left(u,g\right) &= \dfrac{\varphi(u)}{\Psi(g)\cdot \left(\alpha(g)\cdot u^{m(g)} +\left(1-\alpha(g)\right)\cdot u^{-m(g)}\right)}\\
+% TODO: is this ... Psi * (Alpha ... or ... Psi / (Alpha ... ?
 \varphi(u) &= 0.8645\cdot u^{0.172}\\
 \Psi(g) &= 1 + \dfrac{g}{1.45} + \dfrac{g^{2.09}}{3.95}\\
 \alpha(g) &= 0.5\cdot e^{-g}\\

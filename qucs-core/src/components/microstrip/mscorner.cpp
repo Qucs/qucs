@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.8 2004/09/12 14:09:20 ela Exp $
+ * $Id: mscorner.cpp,v 1.9 2004/09/26 09:58:52 ela Exp $
  *
  */
 
@@ -45,8 +45,6 @@
 
 mscorner::mscorner () : circuit (2) {
   type = CIR_MSCORNER;
-  setVoltageSources (1);
-  setInternalVoltageSource (1);
 }
 
 void mscorner::initSP (void) {
@@ -77,29 +75,40 @@ void mscorner::initSP (void) {
 }
 
 void mscorner::calcSP (nr_double_t frequency) {
-
-  complex z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
-  complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
-
-  // check frequency validity
-  if (frequency*h > 12e6) {
-    logprint (LOG_STATUS, "WARNING: Model for microstrip corner defined for "
-	      "freq*h <= 12MHz (is %g)\n", frequency*h);
-  }
-
-  // create S-parameter matrix
-  matrix z (2);
-  z.set (1, 1, z11);
-  z.set (1, 2, z21);
-  z.set (2, 1, z21);
-  z.set (2, 2, z11);
-  setMatrixS (ztos (z));
+  setMatrixS (ztos (calcMatrixZ (frequency)));
 }
 
-void mscorner::calcDC (void) {
+matrix& mscorner::calcMatrixZ (nr_double_t frequency) {
+  // check frequency validity
+  if (frequency * h > 12e6) {
+    logprint (LOG_STATUS, "WARNING: Model for microstrip corner defined for "
+	      "freq*h <= 12MHz (is %g)\n", frequency * h);
+  }
+
+  // create Z-parameter matrix
+  matrix * z = new matrix (2);
+  complex z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
+  complex z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
+  z->set (1, 1, z11);
+  z->set (1, 2, z21);
+  z->set (2, 1, z21);
+  z->set (2, 2, z11);
+  return *z;
+}
+
+void mscorner::initDC (void) {
   // a DC short (voltage source V = 0 volts)
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+  clearY ();
+  voltageSource (1, 1, 2);
+  setVoltageSources (1);
+  setInternalVoltageSource (1);
+}
+
+void mscorner::initAC (void) {
+  setVoltageSources (0);
+  initSP ();
+}
+
+void mscorner::calcAC (nr_double_t frequency) {
+  setMatrixY (ztoy (calcMatrixZ (frequency)));
 }

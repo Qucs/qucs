@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msopen.cpp,v 1.4 2004/09/02 13:40:00 ela Exp $
+ * $Id: msopen.cpp,v 1.5 2004/09/26 09:58:52 ela Exp $
  *
  */
 
@@ -83,6 +83,10 @@ nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
 }
 
 void msopen::calcSP (nr_double_t frequency) {
+  setS (1, 1, ztor (1 / calcY (frequency)));
+}
+
+complex msopen::calcY (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W = getPropertyDouble ("W");
@@ -126,6 +130,13 @@ void msopen::calcSP (nr_double_t frequency) {
     nr_double_t c = calcCend (frequency, W, h, t, er, SModel, DModel, Model);
     y = rect (0, c * o);
   }
+  return y;
+}
 
-  setS (1, 1, ztor (1 / y));
+void msopen::initDC (void) {
+  setY (1, 1, 0);
+}
+
+void msopen::calcAC (nr_double_t frequency) {
+  setY (1, 1, calcY (frequency));
 }
