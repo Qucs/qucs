@@ -30,3 +30,6 @@ Jens Flucke <jens.flucke@gmx.de> for making up the first draft of the
 Vincent Habchi, F5RCS <10.50@free.fr> for testing the simulator, giving
 	good hints how to improve its functionality and initiating the
 	coplanar issues.
+
+Raimund Jacob  <raimi@lkcc.org> for wildly testing the application and
+	for applying patches to CVS during my time in Munich.

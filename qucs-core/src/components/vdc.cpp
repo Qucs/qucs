@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.12 2004/11/24 19:15:50 raimi Exp $
+ * $Id: vdc.cpp,v 1.13 2004/12/03 18:57:04 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "vdc.h"
 
@@ -53,6 +54,11 @@ void vdc::initSP (void) {
 void vdc::initDC (void) {
   allocMatrixMNA ();
   voltageSource (1, 1, 2, getPropertyDouble ("U"));
+}
+
+void vdc::calcDC (void) {
+  nr_double_t f = getNet()->getSrcFactor ();
+  setE (1, f * getPropertyDouble ("U"));
 }
 
 void vdc::initTR (void) {

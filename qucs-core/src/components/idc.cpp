@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.cpp,v 1.7 2004/11/24 19:15:48 raimi Exp $
+ * $Id: idc.cpp,v 1.8 2004/12/03 18:57:04 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
 #include "component_id.h"
 #include "idc.h"
 
@@ -53,6 +54,12 @@ void idc::initDC (void) {
   nr_double_t i = getPropertyDouble ("I");
   allocMatrixMNA ();
   setI (1, +i); setI (2, -i);
+}
+
+void idc::calcDC (void) {
+  nr_double_t i = getPropertyDouble ("I");
+  nr_double_t f = getNet()->getSrcFactor ();
+  setI (1, +i * f); setI (2, -i * f);
 }
 
 void idc::initAC (void) {

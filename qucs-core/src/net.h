@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.12 2004/10/25 21:01:31 ela Exp $
+ * $Id: net.h,v 1.13 2004/12/03 18:57:03 raimi Exp $
  *
  */
 
@@ -74,9 +74,12 @@ class net : public object
   void setEnv (environment * e) { env = e; }
   int  countPorts (void);
   int  countNodes (void);
+  int  isNonLinear (void);
   void addNodeset (nodeset *);
   void delNodeset (void);
   nodeset * getNodeset (void) { return nset; }
+  void setSrcFactor (nr_double_t f) { srcFactor = f; }
+  nr_double_t getSrcFactor (void) { return srcFactor; }
 
  private:
   nodeset * nset;
@@ -90,6 +93,7 @@ class net : public object
   int reduced;
   int inserted;
   int insertedNodes;
+  nr_double_t srcFactor;
 };
 
 #endif /* __NET_H__ */

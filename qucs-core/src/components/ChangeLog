@@ -1,3 +1,8 @@
+2004-12-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* idc.cpp, vdc.cpp: Using the source factor for the
+	source-stepping convergence helper.
+
 2004-11-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpline.cpp (ellipke): Fixed detection of infinite

@@ -64,7 +64,7 @@ unfixed) have a look at the file BUGS.
 	- AC analysis.
 	- Implement sorted node list for S-parameter analysis in order
 	  to increase speed.
-- What about a damped Newton-Raphson or source-stepping?
+	- What about a damped Newton-Raphson or source-stepping?
 	- Find an efficient algorithm to ensure non-zero diagonal matrix
 	  elements for iterative methods.
 	- Clarify pn-junction noise issue.

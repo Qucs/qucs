@@ -1,3 +1,20 @@
+2004-12-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* net.cpp: Added new function returning the number of non-linear
+	circuits within the netlist.
+
+	* nasolver.cpp: Implemented new convergence helper: the source-
+	stepper.  New function added returning a textual description of
+	the currently used convergence helper.
+	Fixed yet another BIG bug in the MNA solver template occurring
+	when e.g. two or more nodes of a component are connected to each
+	other.
+
+	* dcsolver.cpp: Added new solver property 'convHelper'
+	determining the preferred convergence helper.
+	Using the linear solver if the applied circuit description
+	consists of linear components only.
+
 2004-11-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_dataset.l: Fixed identifier expression to adapt the

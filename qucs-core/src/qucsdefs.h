@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.5 2004/11/10 20:26:37 ela Exp $
+ * $Id: qucsdefs.h,v 1.6 2004/12/03 18:57:03 raimi Exp $
  *
  */
 
@@ -523,6 +523,7 @@ struct define_t qucs_definition_available[] =
       { "saveOPs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "convHelper", PROP_STR, { PROP_NO_VAL, "none" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* parameter sweep */
