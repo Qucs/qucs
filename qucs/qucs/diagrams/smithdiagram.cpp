@@ -43,9 +43,10 @@ void SmithDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
 //  if(p == 0) return;
-  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = (x2>>1)+int(cp->yr/ymax*double(x2>>1));
-    *(p++) = (y2>>1)+int(cp->yi/ymax*double(y2>>1));
+  double *py = g->cPointsY;
+  for(int z=g->count; z>0; z--) {
+    *(p++) = (x2>>1)+int((*(py++))/ymax*double(x2>>1));
+    *(p++) = (y2>>1)+int((*(py++))/ymax*double(y2>>1));
   }
 }
 

@@ -91,6 +91,7 @@ public:
   void  deleteWire(Wire *w);
   bool  deleteElements();
   bool  setMarker(int x, int y);
+  bool  MarkerLeftRight(bool);
 
   bool  giveNodeNames(QTextStream *stream);
   bool  createSubNetlist(QTextStream *stream);

@@ -18,6 +18,7 @@
 #include "qucsview.h"
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
+#include "diagrams/markerdialog.h"
 
 #include <qinputdialog.h>
 #include <qclipboard.h>
@@ -30,10 +31,6 @@
 
 QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 {
-  /** connect doc with the view*/
-//  connect(doc, SIGNAL(documentChanged()), this, SLOT(slotDocumentChanged()));
-
-// #########################################################################################
   setVScrollBarMode(QScrollView::AlwaysOn);
   setHScrollBarMode(QScrollView::AlwaysOn);
   viewport()->setPaletteBackgroundColor(QColor(255,250,225));
@@ -52,15 +49,19 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 
   Docs.setAutoDelete(true);
 
-  connect(horizontalScrollBar(), SIGNAL(prevLine()), SLOT(slotScrollLeft()));
-  connect(horizontalScrollBar(), SIGNAL(nextLine()), SLOT(slotScrollRight()));
+  connect(horizontalScrollBar(), SIGNAL(prevLine()),
+                                 SLOT(slotScrollLeft()));
+  connect(horizontalScrollBar(), SIGNAL(nextLine()),
+                                 SLOT(slotScrollRight()));
   connect(verticalScrollBar(), SIGNAL(prevLine()), SLOT(slotScrollUp()));
   connect(verticalScrollBar(), SIGNAL(nextLine()), SLOT(slotScrollDown()));
 
   // .......................................................................
   // to repair some strange  scrolling artefacts
-  connect(this, SIGNAL(horizontalSliderReleased()), viewport(), SLOT(repaint()));
-  connect(this, SIGNAL(verticalSliderReleased()), viewport(), SLOT(repaint()));
+  connect(this, SIGNAL(horizontalSliderReleased()),
+          viewport(), SLOT(repaint()));
+  connect(this, SIGNAL(verticalSliderReleased()),
+          viewport(), SLOT(repaint()));
 }
 
 
@@ -72,7 +73,8 @@ QucsView::~QucsView()
 // this function is called when the content (schematic or data display) has to be draw
 void QucsView::drawContents(QPainter *p, int, int, int, int)
 {
-  Docs.current()->paintGrid(p, contentsX(), contentsY(), visibleWidth(), visibleHeight());
+  Docs.current()->paintGrid(p, contentsX(), contentsY(),
+                               visibleWidth(), visibleHeight());
 
   p->scale(Docs.current()->Scale, Docs.current()->Scale);
   p->translate(-Docs.current()->ViewX1, -Docs.current()->ViewY1);
@@ -163,15 +165,34 @@ void QucsView::setPainter(QPainter *p, QucsDoc *d)
 }
 
 // -----------------------------------------------------------
+void QucsView::slotMarkerLeft()
+{
+  if(Docs.current()->MarkerLeftRight(true)) {
+    viewport()->repaint();
+    drawn = false;
+    Docs.current()->setChanged(true);
+  }
+}
+
+void QucsView::slotMarkerRight()
+{
+  if(Docs.current()->MarkerLeftRight(false)) {
+    viewport()->repaint();
+    drawn = false;
+    Docs.current()->setChanged(true);
+  }
+}
+
+// -----------------------------------------------------------
 void QucsView::MouseDoNothing(QMouseEvent*)
 {
 }
 
-// *************************************************************************************
-// **********                                                                 **********
-// **********              Functions for serving mouse moving                 **********
-// **********                                                                 **********
-// *************************************************************************************
+// ***********************************************************************
+// **********                                                   **********
+// **********       Functions for serving mouse moving          **********
+// **********                                                   **********
+// ***********************************************************************
 void QucsView::contentsMouseMoveEvent(QMouseEvent *Event)
 {
   (this->*MouseMoveAction)(Event);
@@ -189,7 +210,7 @@ void QucsView::MMovePainting(QMouseEvent *Event)
   int gx = x;
   int gy = y;
   d->setOnGrid(gx, gy);
-  
+
   selPaint->MouseMoving(x, y, gx, gy, &painter, drawn);
   drawn = true;
 }
@@ -637,11 +658,11 @@ void QucsView::MMoveActivate(QMouseEvent *Event)
     painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
 }
 
-// *************************************************************************************
-// **********                                                                 **********
-// **********          Functions for serving mouse button clicking            **********
-// **********                                                                 **********
-// *************************************************************************************
+// ************************************************************************
+// **********                                                    **********
+// **********    Functions for serving mouse button clicking     **********
+// **********                                                    **********
+// ************************************************************************
 void QucsView::contentsMousePressEvent(QMouseEvent *Event)
 {
   (this->*MousePressAction)(Event);
@@ -703,6 +724,7 @@ void QucsView::MPressLabel(QMouseEvent *Event)
     else { pn->setName(Name, x+30, y-30); pl = pn->Label; }
     enlargeView(pl->x1, pl->y1, pl->x1+pl->x2, pl->y1-pl->y2);
     viewport()->repaint();
+    drawn = false;
     Docs.current()->setChanged(true);
   }
   else {    // if no name was entered (empty string), delete name
@@ -715,6 +737,7 @@ void QucsView::MPressLabel(QMouseEvent *Event)
       else pn->setName("");
     }
     viewport()->repaint();
+    drawn = false;
     Docs.current()->setChanged(true);
   }
 }
@@ -764,10 +787,11 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressDelete(QMouseEvent *Event)
 {
-  Element *e
-    = Docs.current()->selectElement(int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
-                                    int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,
-                                    false);
+  QucsDoc *d = Docs.current();
+
+  Element *e = d->selectElement(int(Event->pos().x()/d->Scale)+d->ViewX1,
+                                int(Event->pos().y()/d->Scale)+d->ViewY1,
+                                false);
   if(e != 0) {
     e->isSelected = true;
     Docs.current()->deleteElements();
@@ -1052,8 +1076,10 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 // Is called for setting a marker on a diagram's graph
 void QucsView::MPressMarker(QMouseEvent *Event)
 {
-  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)+Docs.current()->ViewX1;
-  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)+Docs.current()->ViewY1;
+  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)
+             +Docs.current()->ViewX1;
+  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)
+             +Docs.current()->ViewY1;
   Docs.current()->setMarker(MAx1, MAy1);
 
   viewport()->repaint();
@@ -1061,11 +1087,11 @@ void QucsView::MPressMarker(QMouseEvent *Event)
 }
 
 
-// *************************************************************************************
-// **********                                                                 **********
-// **********          Functions for serving mouse button releasing           **********
-// **********                                                                 **********
-// *************************************************************************************
+// ***********************************************************************
+// **********                                                   **********
+// **********    Functions for serving mouse button releasing   **********
+// **********                                                   **********
+// ***********************************************************************
 void QucsView::contentsMouseReleaseEvent(QMouseEvent *Event)
 {
   (this->*MouseReleaseAction)(Event);
@@ -1077,7 +1103,7 @@ void QucsView::MReleaseSelect(QMouseEvent *Event)
   bool ctrl;
   if(Event->state() & ControlButton) ctrl = true;
   else ctrl = false;
-  
+
   if(!ctrl) Docs.current()->deselectElements(focusElement);
 
   if(focusElement != 0)
@@ -1160,6 +1186,8 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
+  MAx3  = focusElement->cx;
+  MAy3  = focusElement->cy;
   if(MAx2 < 0) {    // resize diagram
     focusElement->x2 = -MAx2;
     focusElement->cx = MAx1+MAx2;
@@ -1176,10 +1204,18 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
     focusElement->y2 = MAy2;
     focusElement->cy = MAy1+MAy2;
   }
-  ((Diagram*)focusElement)->updateGraphData();
+  MAx3 -= focusElement->cx;
+  MAy3 -= focusElement->cy;
+
+  Diagram *pd = (Diagram*)focusElement;
+  pd->updateGraphData();
+  for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
+    pm->x1 += MAx3;      // correct changes due to move of diagram corner
+    pm->y1 -= MAy3;
+  }
   isMoveEqual = false;
   Docs.current()->setChanged(true);
-  
+
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
@@ -1191,11 +1227,12 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
 
 // -----------------------------------------------------------
 void QucsView::endElementMoving()
-{  
+{
   int x1, y1, x2, y2;
   QucsDoc *d = Docs.current();
 
-  // insert all moved elements into document and enlarge viewarea if component lies outside the view
+  // insert all moved elements into document and enlarge viewarea
+  // if components lie outside the view
   for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
     switch(pe->Type) {
       case isWire:        if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
@@ -1204,21 +1241,27 @@ void QucsView::endElementMoving()
                           break;
       case isDiagram:     d->Diags.append((Diagram*)pe);
                           enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
-                          d->setChanged(true);
+//                          d->setChanged(true);
                           break;
       case isPainting:    d->Paints.append((Painting*)pe);
                           ((Painting*)pe)->Bounding(x1,y1,x2,y2);
                           enlargeView(x1, y1, x2, y2);
-                          d->setChanged(true);
+//                          d->setChanged(true);
                           break;
       case isComponent:   d->insertRawComponent((Component*)pe);
                           ((Component*)pe)->entireBounds(x1,y1,x2,y2);
                           enlargeView(x1, y1, x2, y2);
                           break;
       case isMovingLabel: d->insertNodeLabel((WireLabel*)pe);
+//                          d->setChanged(true);
                           break;
-      default:          ;  // e.g. isHWireLabelLabel => nothing to do
+      case isMarker:      ((Marker*)pe)->Diag->Markers.append((Marker*)pe);
+                          enlargeView(pe->x1, pe->y1, pe->x1+pe->x2, pe->y1+pe->y2);
+//                          d->setChanged(true);
+                          break;
+      default:            ;  // e.g. isHWireLabel
     }
+    d->setChanged(true);
     pe->isSelected = false;
   }
 
@@ -1314,11 +1357,11 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
   }
 }
 
-// *************************************************************************************
-// **********                                                                 **********
-// **********       Functions for serving mouse button double clicking        **********
-// **********                                                                 **********
-// *************************************************************************************
+// ***********************************************************************
+// **********                                                   **********
+// **********    Functions for mouse button double clicking     **********
+// **********                                                   **********
+// ***********************************************************************
 void QucsView::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 {
   (this->*MouseDoubleClickAction)(Event);
@@ -1333,37 +1376,47 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
   Diagram *dia;
   ComponentDialog *d;
   DiagramDialog *ddia;
+  MarkerDialog *mdia;
 
   switch(focusElement->Type) {
-    case isComponent:  c = (Component*)focusElement;
-                       if(c->Sign == "GND") return;
-                       d = new ComponentDialog(c, this);    // is WDestructiveClose
-                       if(d->exec() == 1) {
-                         int x1, y1, x2, y2;
-                         x2 = Docs.current()->Comps.findRef(c);
-                         Docs.current()->Comps.take();
-                         Docs.current()->setComponentNumber(c); // for ports and power sources
-                         Docs.current()->Comps.append(c);
+    case isComponent:
+         c = (Component*)focusElement;
+         if(c->Sign == "GND") return;
+         d = new ComponentDialog(c, this);  // is WDestructiveClose
+         if(d->exec() == 1) {
+           int x1, y1, x2, y2;
+           x2 = Docs.current()->Comps.findRef(c);
+           Docs.current()->Comps.take();
+           Docs.current()->setComponentNumber(c); // for ports/power sources
+           Docs.current()->Comps.append(c);
 
-                         Docs.current()->setChanged(true);
-                         c->entireBounds(x1,y1,x2,y2);
-                         enlargeView(x1,y1,x2,y2);
-                       }
-                       break;
+           Docs.current()->setChanged(true);
+           c->entireBounds(x1,y1,x2,y2);
+           enlargeView(x1,y1,x2,y2);
+         }
+         break;
 
-    case isDiagram :   dia = (Diagram*)focusElement;
-                       ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
-                       if(ddia->exec()  != QDialog::Rejected)    // is WDestructiveClose
-                         Docs.current()->setChanged(true);
-                       break;
+    case isDiagram :
+         dia = (Diagram*)focusElement;
+         ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
+         if(ddia->exec()  != QDialog::Rejected)   // is WDestructiveClose
+           Docs.current()->setChanged(true);
+         break;
 
-    case isWire:       MPressLabel(Event);
-                       break;
+    case isWire:
+         MPressLabel(Event);
+         break;
 
-    case isPainting:   if( ((Painting*)focusElement)->Dialog() )
-                         Docs.current()->setChanged(true);
-                       break;
-    default :          ;
+    case isPainting:
+         if( ((Painting*)focusElement)->Dialog() )
+           Docs.current()->setChanged(true);
+         break;
+
+    case isMarker:
+         mdia = new MarkerDialog((Marker*)focusElement, this);
+         if(mdia->exec() > 1) Docs.current()->setChanged(true);
+         break;
+    default:  ;
   }
 
   viewport()->repaint();
