@@ -1361,10 +1361,6 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>depletion MOS field-effect transistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>depletion MOSFET</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1702,6 +1698,154 @@ Wrong line start!</source>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias threshold voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transconductance coefficient in A/m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk threshold in sqrt(V)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surface potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lateral diffusion length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>oxide thickness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-source overlap capacitance per meter of channel width in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk-drain junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk-source junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction bottom grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction forward-bias depletion capacitance coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction periphery grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>substrate bulk doping density in 1/cm^3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surface state density in 1/cm^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surface mobility in cm^2/Vs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain and source diffusion sheet resistance in Ohms/square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of equivalent drain squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of equivalent source squares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain diffusion area in m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source diffusion area in m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain junction perimeter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source junction perimeter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

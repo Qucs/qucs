@@ -1319,10 +1319,11 @@ pInfoFunc TransmissionLines[13] =
    &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
    &MScross::info, &MSopen::info, &MSgap::info, &Coplanar::info, 0};
 
-pInfoFunc nonlinearComps[11] =
+pInfoFunc nonlinearComps[] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
    &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
-   &MOSFET::info, &MOSFET::info_p, &MOSFET_depl::info, 0};
+   &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
+   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl, 0};
 
 // #######################################################################
 // Whenever the Component Library ComboBox is changed, this slot fills the Component IconView

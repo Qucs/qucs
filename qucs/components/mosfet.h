@@ -28,6 +28,7 @@ public:
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
   static Component* info_p(QString&, char* &, bool getNewOne=false);
+  static Component* info_depl(QString&, char* &, bool getNewOne=false);
   void recreate();
 };
 

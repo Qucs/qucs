@@ -1,5 +1,5 @@
 /***************************************************************************
-                        mosfet_depl.h  -  description
+                        mosfet_sub.h  -  description
                              -------------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
@@ -15,18 +15,21 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MOSFET_DEPL_H
-#define MOSFET_DEPL_H
+#ifndef MOSFET_SUB_H
+#define MOSFET_SUB_H
 
 #include "component.h"
 
 
-class MOSFET_depl : public Component  {
+class MOSFET_sub : public Component  {
 public:
-  MOSFET_depl();
-  ~MOSFET_depl();
+  MOSFET_sub();
+  ~MOSFET_sub();
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
+  static Component* info_p(QString&, char* &, bool getNewOne=false);
+  static Component* info_depl(QString&, char* &, bool getNewOne=false);
+  void recreate();
 };
 
 #endif

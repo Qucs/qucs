@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "sparamfile.h"
+#include "../main.h"
 
 
 SParamFile::SParamFile(int No)
@@ -52,14 +53,15 @@ SParamFile::SParamFile(int No)
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+15;
 
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
   tx = x1+4;
-  ty = y2+4;
+  ty = y1 - 2*metrics.height() - 4;
   Model = "#SPfile";
   Name  = "X";
 
   Props.append(new Property("File", "test.s2p", true,
 		QObject::tr("name of the s parameter file")));
-  Props.append(new Property("Data", "rectangular", true,
+  Props.append(new Property("Data", "rectangular", false,
 		QObject::tr("interpolation type (rectangular,polar)")));
 }
 

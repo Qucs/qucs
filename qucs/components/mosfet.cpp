@@ -25,16 +25,17 @@ MOSFET::MOSFET()
   Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
-  Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
-
   Lines.append(new Line(-10,-11,  0,-11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0,-11,  0,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 11,  0, 11,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(  0,  0,  0, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,  0,  0,  0,QPen(QPen::darkBlue,2)));
 
+  Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
+
+  // These three lines must be the last.
+  Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
   Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
 
@@ -47,14 +48,15 @@ MOSFET::MOSFET()
 
   tx = x2+4;
   ty = y1+4;
-  Model = "MOSFET";
+  Model = "_MOSFET";
   Name  = "T";
 
-  // this must be the first property in the list !!!
+  // these must be the first properties in the list !!!
   Props.append(new Property("Type", "nfet", false,
 	QObject::tr("polarity (nfet,pfet)")));
   Props.append(new Property("Vt0", "1.0 V", true,
 	QObject::tr("zero-bias threshold voltage")));
+
   Props.append(new Property("Kp", "2e-5", true,
 	QObject::tr("transconductance coefficient in A/m^2")));
   Props.append(new Property("Gamma", "0.0", false,
@@ -155,7 +157,8 @@ MOSFET::~MOSFET()
 Component* MOSFET::newOne()
 {
   MOSFET* p = new MOSFET();
-  p->Props.getFirst()->Value = Props.getFirst()->Value;
+  p->Props.first()->Value = Props.first()->Value;
+  p->Props.next()->Value = Props.next()->Value;
   p->recreate();
   return p;
 }
@@ -183,14 +186,30 @@ Component* MOSFET::info_p(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
+Component* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("depletion MOSFET");
+  BitmapFile = "dmosfet";
+
+  if(getNewOne) {
+    MOSFET* p = new MOSFET();
+    p->Props.first();
+    p->Props.next()->Value = "-1.0 V";
+    p->recreate();
+    return p;
+  }
+  return 0;
+}
+
 // Makes the schematic symbol a n-type, p-type or depletion MOSFET (according
-// to the "Type" property).
+// to the "Type" and "Vt0" properties).
 void MOSFET::recreate()
 {
   Line *pl2 = Lines.last();
   Line *pl1 = Lines.prev();
+  Line *pl3 = Lines.prev();
 
-  if(Props.getFirst()->Value == "nfet") {
+  if(Props.first()->Value == "nfet") {
     pl1->x1 = -9;  pl1->y1 = 0;  pl1->x2 = -4; pl1->y2 = -5;
     pl2->x1 = -9;  pl2->y1 = 0;  pl2->x2 = -4; pl2->y2 =  5;
   }
@@ -199,11 +218,21 @@ void MOSFET::recreate()
     pl2->x1 = -1;  pl2->y1 = 0;  pl2->x2 = -6; pl2->y2 =  5;
   }
 
+  // depletion or enhancement MOSFET ?
+  if(Props.next()->Value.stripWhiteSpace().at(0) == '-') {
+    pl3->x1 = -10;  pl3->y1 = -8;  pl3->x2 = -10; pl3->y2 = 8;
+  }
+  else {
+    pl3->x1 = -10;  pl3->y1 = -4;  pl3->x2 = -10; pl3->y2 = 4;
+  }
+
   if(mirroredX) {
     pl1->y1 = -pl1->y1;
     pl1->y2 = -pl1->y2;
     pl2->y1 = -pl2->y1;
     pl2->y2 = -pl2->y2;
+    pl3->y1 = -pl3->y1;
+    pl3->y2 = -pl3->y2;
   }
 
   int tmp;
@@ -221,5 +250,12 @@ void MOSFET::recreate()
     tmp = -pl2->x2;
     pl2->x2 = pl2->y2;
     pl2->y2 = tmp;
+
+    tmp = -pl3->x1;
+    pl3->x1 = pl3->y1;
+    pl3->y1 = tmp;
+    tmp = -pl3->x2;
+    pl3->x2 = pl3->y2;
+    pl3->y2 = tmp;
   }
 }

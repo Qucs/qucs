@@ -71,6 +71,7 @@ private:
   Component   *Comp;
   QucsDoc     *Doc;
   bool        changed, transfered;
+  int         tx_Dist, ty_Dist;   // remember the text position
 };
 
 #endif

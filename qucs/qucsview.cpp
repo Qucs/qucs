@@ -908,11 +908,10 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
 
-  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)
-		+ Docs.current()->ViewX1;
-  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)
-		+ Docs.current()->ViewY1;
-  focusElement = Docs.current()->selectElement(MAx1, MAy1, Ctrl);
+  QucsDoc *d = Docs.current();
+  MAx1 = int(double(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(double(Event->pos().y())/d->Scale) + d->ViewY1;
+  focusElement = d->selectElement(MAx1, MAy1, Ctrl);
   isMoveEqual = false;   // moving not neccessarily square
 
   if(focusElement)
@@ -970,7 +969,12 @@ void QucsView::MPressSelect(QMouseEvent *Event)
     MouseMoveAction = &QucsView::MMoveSelect;
   }
   else {  // element could be moved
-    Docs.current()->setOnGrid(MAx1, MAy1);
+    if(!Ctrl) {
+      if(!focusElement->isSelected)// Don't move selected elements if clicked
+        d->deselectElements(focusElement); // element was not selected.
+      focusElement->isSelected = true;
+    }
+    d->setOnGrid(MAx1, MAy1);
     MouseMoveAction = &QucsView::MMoveMoving;
   }
 }
@@ -1071,7 +1075,7 @@ void QucsView::MPressRotate(QMouseEvent *Event)
 
   WireLabel *pl;
   int x1, y1, x2, y2;
-  e->isSelected = false;
+//  e->isSelected = false;
   switch(e->Type) {
     case isComponent: if(((Component*)e)->Ports.count() < 1)
                         break;  // do not rotate components without ports
@@ -1119,7 +1123,10 @@ void QucsView::MPressComponent(QMouseEvent *Event)
   case Qt::LeftButton :
     // left mouse button inserts component into the schematic
     if(selComp == 0) break;
+    selComp->TextSize(x1, y1);
     d->insertComponent(selComp);
+    selComp->TextSize(x2, y2);
+    if(selComp->tx < selComp->x1) selComp->tx -= x2 - x1;
 
     // enlarge viewarea if component lies outside the view
     selComp->entireBounds(x1,y1,x2,y2);
