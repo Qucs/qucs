@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.4 2004-05-06 09:47:18 ela Exp $
+ * $Id: msline.cpp,v 1.5 2004-05-06 20:41:17 ela Exp $
  *
  */
 
@@ -68,12 +68,8 @@ void msline::calcSP (nr_double_t frequency) {
   // Getsinger
   ereffi = er - (er - ereff) / (1 + Fi);
 
-  // calculate Z0 (valid for Z0 >= 44 - 2 * er)
-  nr_double_t Hs;
-  Hs  = log (4 * h / W + sqrt (16 * h * h / W / W + 2));
-  Z0  = Hs - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (M_PI_4) / er);
-  Z0 *= 120 / sqrt (2 * (er + 1));
-
+  Z0 = analyseZ0 (W, h, er);
+  fprintf (stderr, "Z0 = %g\n", Z0);
   Z0eff = Z0;
 
   // dispersion: Bianco
@@ -109,4 +105,37 @@ void msline::calcSP (nr_double_t frequency) {
   setS (2, 2, s11);
   setS (1, 2, s21);
   setS (2, 1, s21);
+}
+
+/* This function returns the quasi static impedance of a microstrip
+   line based on the given line width, substrate height and the
+   substrate's relative dielectrical constant. */
+nr_double_t msline::analyseZ0 (nr_double_t W, nr_double_t h, nr_double_t er) {
+
+  nr_double_t x, xprev, xabs, xrel, d, f, c, z1, z2, z, Hs;
+
+  // valid for Z0 >= 44 - 2 * er
+  Hs = log (4 * h / W + sqrt (16 * h * h / W / W + 2));
+  z1 = Hs - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (M_PI_4) / er);
+  z1 = z1 * 120 / sqrt (2 * (er + 1));
+
+  // valid for Z0 < 44 - 2 * er
+  x = 60 * M_PI * M_PI / (44 - 2 * er) / sqrt (er);
+  do {
+    xprev = x;
+    c = W / h - (er - 1) / M_PI / er * (0.293 - 0.517 / er);
+    d = 1 - 2 / (2 * x - 1) + (er - 1) / 2 / er / (x - 1);
+    f = x - 1 - log (2 * x - 1) + (er - 1) / 2 / er * log (x - 1) - M_PI_2 * c;
+    x = x - f / d;
+    xabs = abs (x - xprev);
+    xrel = xabs / x;
+  } while (xabs > 1e-12 || xrel > 1e-6);
+  z2 = 60 * M_PI * M_PI / x / sqrt (er);
+
+  // finally decide
+  if (z1 >= 44 - 2 * er && z2 >= 44 - 2 * er)
+    z = z1;
+  else
+    z = z2;
+  return z;
 }
