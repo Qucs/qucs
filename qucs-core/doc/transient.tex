@@ -1147,7 +1147,7 @@ x^{k+1} = x^k + \alpha\cdot \Delta x^{k+1}
 
 One possibility to choose a value for $\alpha \in [0,1]$ is
 \begin{equation}
-\alpha = \dfrac{\gamma}{\left|\Delta x^{k+1}\right|_{\infty}}
+\alpha = \dfrac{\gamma}{\left\lVert\Delta x^{k+1}\right\rVert_{\infty}}
 \end{equation}
 
 This is a heuristic and does not ensure global convergence, but it can
@@ -1158,7 +1158,7 @@ search into Newton direction and guarantees global convergence.
 \begin{equation}
 x^{k+1} = x^k + \alpha^k \cdot \Delta x^{k+1}
 \;\;\;\; \textrm{ with an } \alpha^k \textrm{ which minimizes } \;\;\;\;
-\left|z\left(x^k + \alpha^k \cdot \Delta x^{k+1}\right)\right|_2
+\left\lVert z\left(x^k + \alpha^k \cdot \Delta x^{k+1}\right)\right\rVert_2
 \end{equation}
 
 The one remaining problem about that line search method for
@@ -1176,6 +1176,7 @@ fig. \ref{fig:ConvProb3}.
 
 \subsection{Continuation schemes}
 %\addcontentsline{toc}{subsection}{Continuation schemes}
+\label{sec:continuation}
 
 The basic idea behind this Newton-Raphson modification is to generate
 a sequence of problems such that a problem is a good initial guess for
@@ -1217,3 +1218,12 @@ solution vector $x\left(\alpha\right)$ is continuous in $\alpha$
 
 \subsubsection{Minimal derivative $\mathrm{g_{min}}$ stepping}
 %\addcontentsline{toc}{subsubsection}{Minimal derivative $\mathrm{g_{min}}$ stepping}
+
+Another possibility to improve convergence of almostly singular
+electrical networks is the so called $g_{min}$ stepping, i.e. adding a
+tiny conductance to ground at each node of the Jacobian $A$ matrix.
+The continuation starts e.g. with $g_{min} = 0.01$ and ends with
+$g_{min} = 0$ reached by the algorithm described in section
+\ref{sec:continuation}.  The equation system is slightly modified by
+adding the current $g_{min}$ to each diagonal element of the matrix
+$A$.

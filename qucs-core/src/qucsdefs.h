@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.2 2004/11/01 08:36:00 ela Exp $
+ * $Id: qucsdefs.h,v 1.3 2004/11/01 10:56:16 ela Exp $
  *
  */
 
@@ -222,6 +222,13 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP },
     { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* operational amplifier */
+  { "OpAmp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 1e6, PROP_NO_STR }, { 1, PROP_VAL_MAX } },
+      PROP_NO_PROP },
+    { { "Umax", PROP_REAL, { 15, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* noise voltage source */

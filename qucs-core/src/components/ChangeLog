@@ -1,5 +1,7 @@
 2004-11-01  Stefan Jahn  <stefan@lkcc.org>
 
+	* opamp.h (class opamp): New component.  Not yet implemented.
+
 	* amplifier.h (class amplifier): New component added.
 
 2004-10-25  Stefan Jahn  <stefan@lkcc.org>
