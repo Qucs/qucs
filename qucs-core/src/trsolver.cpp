@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.14 2004-10-08 11:45:39 ela Exp $
+ * $Id: trsolver.cpp,v 1.15 2004-10-09 19:59:42 ela Exp $
  *
  */
 
@@ -107,7 +107,7 @@ void trsolver::solve (void) {
   int error = 0;
   runs++;
   current = 0;
-  statRejected = statSteps = statIterations = 0;
+  statRejected = statSteps = statIterations = statConvergence = 0;
 
   // Create time sweep if necessary.
   initSteps ();
@@ -133,8 +133,7 @@ void trsolver::solve (void) {
   int running = 0;
   //int currentOrder = 0;
   delta /= 10;
-  updateCoefficients (delta, 1);
-  setState (dState, delta);
+  fillState (dState, delta);
   //adjustOrder (currentOrder, 1);
 
 #if DEBUG
@@ -152,6 +151,14 @@ void trsolver::solve (void) {
 #endif
 
     do {
+#if STEPDEBUG
+      if (delta == deltaMin) {
+	logprint (LOG_ERROR,
+		  "WARNING: %s: minimum delta h = %.3e at t = %.3e\n",
+		  getName (), delta, current);
+      }
+#endif
+      updateCoefficients (delta);
       rejected = 0;
 
       // Run predictor.
@@ -164,16 +171,22 @@ void trsolver::solve (void) {
       // Appropriate exception handling.
       catch_exception () {
       case EXCEPTION_NO_CONVERGENCE:
-	// Reduce step-size if failed to converge.
 	pop_exception ();
+
+	// Reduce step-size if failed to converge.
 	delta /= 2;
 	if (delta < deltaMin) delta = deltaMin;
-	updateCoefficients (delta);
-	setState (dState, delta);
-	rejected++;
+
+	// Update statistics.
 	statRejected++;
+	statConvergence++;
+	rejected++;
 	error = 0;
-#if STEPDEBUG
+
+	// Start using damped Newton-Raphson.
+	linesearch = 1;
+
+#if STEPDEBUG || 1
 	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 		  current, delta);
 #endif
@@ -186,7 +199,10 @@ void trsolver::solve (void) {
       }
       if (error) return;
       if (rejected) continue;
+
+      // Update statistics and no more damped Newton-Raphson.
       statIterations += iterations;
+      linesearch = 0;
 
       // Now advance in time or not...
       if (running > 1) {
@@ -195,9 +211,7 @@ void trsolver::solve (void) {
       }
       else {
 	//fillStates ();
-	updateCoefficients (delta, 1);
 	nextStates ();
-	setState (dState, delta);
 	rejected = 0;
       }
 
@@ -215,9 +229,11 @@ void trsolver::solve (void) {
   }
   solve_post ();
   logprogressclear (40);
-  logprint (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections, "
-	    "average NR-iterations %g\n", getName (), current / statSteps,
-	    statRejected, (double) statIterations / statSteps);
+  logprint (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections\n",
+	    getName (), current / statSteps, statRejected);
+  logprint (LOG_STATUS, "NOTIFY: %s: average NR-iterations %g, "
+	    "%d non-convergences\n", getName (),
+	    (double) statIterations / statSteps, statConvergence);
 }
 
 // Macro for the n-th state of the solution vector history.
@@ -339,10 +355,8 @@ void trsolver::adjustDelta (void) {
   if (delta > deltaMax) delta = deltaMax;
   if (delta < deltaMin) delta = deltaMin;
 
-  if (delta > 0.9 * deltaOld) {
-    updateCoefficients (delta, 1);
+  if (delta > 0.9 * deltaOld) { // accept current delta
     nextStates ();
-    setState (dState, delta);
     rejected = 0;
 #if STEPDEBUG
     logprint (LOG_STATUS,
@@ -350,9 +364,7 @@ void trsolver::adjustDelta (void) {
 	      current, delta);
 #endif
   }
-  else if (deltaOld > delta) {
-    updateCoefficients (delta);
-    setState (dState, delta);
+  else if (deltaOld > delta) { // reject current delta
     rejected++;
     statRejected++;
 #if STEPDEBUG
@@ -361,10 +373,9 @@ void trsolver::adjustDelta (void) {
 	      current, delta);
 #endif
     current -= delta;
-  } else {
-    updateCoefficients (delta, 1);
+  }
+  else {
     nextStates ();
-    setState (dState, delta);
     rejected = 0;
   }
 }
@@ -385,7 +396,7 @@ void trsolver::adjustOrder (int& currentOrder, int stepChanged) {
       setIntegrationMethod (c, type);
     }
     saveState (dState, deltas);
-    calcCorrectorCoeff (type, currentOrder, corrCoeff, deltas, chargeCoeffs);
+    calcCorrectorCoeff (type, currentOrder, corrCoeff, deltas);
   }
 }
 
@@ -442,7 +453,7 @@ void trsolver::initTR (void) {
   fillState (dState, delta);
 
   saveState (dState, deltas);
-  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas, chargeCoeffs);
+  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas);
   calcPredictorCoeff (PMethod, predOrder, predCoeff, deltas);
 
   // initialize history of solution vectors (solutions)
@@ -518,23 +529,9 @@ nr_double_t trsolver::checkDelta (void) {
 }
 
 // The function updates the integration coefficients.
-void trsolver::updateCoefficients (nr_double_t delta, int next) {
-#if 1
-  next = 0;
+void trsolver::updateCoefficients (nr_double_t delta) {
   setState (dState, delta);
   saveState (dState, deltas);
-  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas, chargeCoeffs);
+  calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas);
   calcPredictorCoeff (PMethod, predOrder, predCoeff, deltas);
-#else
-  nr_double_t c = getState (dState);
-  corrCoeff[0] *= c / delta;
-  if (next) {
-    for (int i = 1; i < chargeCoeffs; i++) {
-      corrCoeff[i] *= c / delta;
-    }
-  }
-  for (int i = 1; i < 8; i++) {
-    predCoeff[i] *= delta / c;
-  }
-#endif
 }

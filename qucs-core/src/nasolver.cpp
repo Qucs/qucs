@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.13 2004-10-08 11:45:38 ela Exp $
+ * $Id: nasolver.cpp,v 1.14 2004-10-09 19:59:42 ela Exp $
  *
  */
 
@@ -43,7 +43,7 @@
 #include "strlist.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
-#include "component_id.h"
+#include "constants.h"
 #include "operatingpoint.h"
 #include "exception.h"
 #include "exceptionstack.h"
@@ -60,6 +60,8 @@ nasolver<nr_type_t>::nasolver () : analysis () {
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
+  attenuation = linesearch = 0;
+  eqns = new eqnsys<nr_type_t> ();
 }
 
 // Constructor creates a named instance of the nasolver class.
@@ -71,6 +73,8 @@ nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
+  attenuation = linesearch = 0;
+  eqns = new eqnsys<nr_type_t> ();
 }
 
 // Destructor deletes the nasolver class object.
@@ -82,6 +86,7 @@ nasolver<nr_type_t>::~nasolver () {
   delete x;
   delete xprev;
   delete zprev;
+  delete eqns;
 }
 
 /* The copy constructor creates a new instance of the nasolver class
@@ -98,6 +103,9 @@ nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   vntol = o.vntol;
   desc = o.desc;
   calculate_func = o.calculate_func;
+  attenuation = o.attenuation;
+  linesearch = o.linesearch;
+  eqns = new eqnsys<nr_type_t> (*(o.eqns));
 }
 
 /* The function runs the nodal analysis solver once, reports errors if
@@ -507,23 +515,112 @@ void nasolver<nr_type_t>::assignVoltageSources (void) {
    applies the operation to the previously generated matrices. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::runMNA (void) {
-#if DEBUG && 0
-  logprint (LOG_ERROR, "A =\n");
-  A->print ();
-#endif
-#if DEBUG && 0
-  logprint (LOG_ERROR, "z =\n");
-  z->print ();
-#endif
-  eqnsys<nr_type_t> * e = new eqnsys<nr_type_t> ();
-  e->setAlgo (ALGO_LU_DECOMPOSITION);
-  e->passEquationSys (A, x, z);
-  e->solve ();
-  delete e;
-#if DEBUG && 0
-  logprint (LOG_ERROR, "x =\n");
-  x->print ();
-#endif
+
+  // just solve the equation system here
+  eqns->setAlgo (ALGO_LU_DECOMPOSITION);
+  eqns->passEquationSys (A, x, z);
+  eqns->solve ();
+
+  // if damped Newton-Raphson is requested
+  if (xprev != NULL) {
+    if (attenuation) {
+      applyAttenuation ();
+    } else if (linesearch) {
+      lineSearch ();
+    }
+  }
+}
+
+/* This function applies a damped Newton-Raphson (limiting scheme) to
+   the current solution vector in the form x1 = x0 + a * (x1 - x0).  This
+   convergence helper is heuristic and does not ensure global convergence. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::applyAttenuation (void) {
+  nr_double_t d, alpha = 1.0, dxMax = 0.0;
+  nr_type_t delta;
+  int len = x->getRows ();
+
+  // create solution difference vector and find maximum deviation
+  tmatrix<nr_type_t> * dx = new tmatrix<nr_type_t> (len, 1);
+  for (int r = 1; r <= len; r++) {
+    delta = x->get (r, 1) - xprev->get (r, 1);
+    dx->set (r, 1, delta);
+    d = norm (delta);
+    if (d > dxMax) dxMax = d;
+  }
+
+  // compute appropriate damping factor
+  if (dxMax > 0.0) {
+    nr_double_t g = 1.0;
+    alpha = MIN (0.9, g / dxMax);
+    if (alpha < 0.1) alpha = 0.1;
+  }
+
+  // apply damped solution vector
+  for (int r = 1; r <= len; r++) {
+    x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
+  }
+  delete dx;
+}
+
+/* This is damped Newton-Raphson using nested iterations in order to
+   find a better damping factor.  It identifies a damping factor in
+   the interval [0,1] which minimizes the right hand side vector.  The
+   algorithm actually ensures global convergence but pushes the
+   solution to local minimums, i.e. where the Jacobian matrix A may be
+   singular. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::lineSearch (void) {
+  nr_double_t alpha = 0.5, n, nMin, aprev = 1.0, astep = 0.5, adiff;
+  int dir = -1, r, len = x->getRows ();
+
+  tmatrix<nr_type_t> * dx = new tmatrix<nr_type_t> (len, 1);
+  tmatrix<nr_type_t> * zp = new tmatrix<nr_type_t> (*z);
+
+  // compute solution deciation vector
+  for (nMin = 0, r = 1; r <= len; r++) {
+    nMin += norm (z->get (r, 1) - zprev->get (r, 1));
+    dx->set (r, 1, x->get (r, 1) - xprev->get (r, 1));
+  }
+
+  do {
+    // apply current damping factor and see what happens
+    for (r = 1; r <= len; r++) {
+      x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
+    }
+    saveSolution ();
+    calculate ();
+    createIMatrix ();
+    createEMatrix ();
+
+    // calculate norm of right hand side vector
+    for (n = 0, r = 1; r <= len; r++) {
+      n += norm (z->get (r, 1) - zprev->get (r, 1));
+    }
+
+    // TODO: this is not perfect, but usable
+    astep /= 2;
+    adiff = fabs (alpha - aprev);
+    if (adiff > 0.01) {
+      aprev = alpha;
+      if (n < nMin) {
+	nMin = n;
+	alpha += astep * dir;
+      } else {
+	dir = -dir;
+	alpha += 2 * astep * dir;
+      }
+    }
+  }
+  while (adiff > 0.01);
+
+  // apply final damping factor
+  for (r = 1; r <= len; r++) {
+    x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
+  }
+  *z = *zp;
+  delete zp;
+  delete dx;
 }
 
 /* The function checks whether the iterative algorithm for linearizing

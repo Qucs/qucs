@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.10 2004-10-08 11:45:38 ela Exp $
+ * $Id: transient.cpp,v 1.11 2004-10-09 19:59:42 ela Exp $
  *
  */
 
@@ -48,7 +48,7 @@
    integration methods.  Supported methods are: Gear (order 1-6),
    Trapezoidal, forward Euler and Adams-Moulton (order 1-6). */
 void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
-			 nr_double_t * delta, int& charges) {
+			 nr_double_t * delta) {
 
   tmatrix<nr_double_t> A (order + 1);
   tmatrix<nr_double_t> x (order + 1, 1);
@@ -108,18 +108,15 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
       e.solve ();
       for (r = 0; r <= order; r++) coefficients[r] = x.get (r + 1, 1);
 #endif /* !FIXEDCOEFF */
-      charges = order + 1;
     }
     break;
   case INTEGRATOR_EULER: // FORWARD EULER
     coefficients[COEFF_G] = 1 / delta[0];
     coefficients[1] = - 1 / delta[0];
-    charges = 2;
     break;
   case INTEGRATOR_TRAPEZOIDAL: // TRAPEZOIDAL (bilinear)
     coefficients[COEFF_G] = 2 / delta[0];
     coefficients[1] = - 2 / delta[0];
-    charges = 2;
     break;
   case INTEGRATOR_ADAMSMOULTON: // ADAMS-MOULTON order 1 to 6
     {
@@ -155,7 +152,6 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
       for (i = 2; i <= order; i++) {
 	coefficients[i] = -x.get (i + 1, 1) / k;
       }
-      charges = 2;
     }
     break;
   }
