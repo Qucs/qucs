@@ -16,9 +16,8 @@
  ***************************************************************************/
 
 #include "diagramdialog.h"
-
-#include "../qucsview.h"
-#include "../qucs.h"
+#include "qucsview.h"
+#include "qucs.h"
 
 #include <qvbox.h>
 #include <qlayout.h>

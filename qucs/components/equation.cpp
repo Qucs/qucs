@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "equation.h"
-#include "../main.h"
+#include "main.h"
 
 
 Equation::Equation()

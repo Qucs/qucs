@@ -36,7 +36,7 @@ nodist_libpaintings_a_SOURCES = $(MOCFILES)
 noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<

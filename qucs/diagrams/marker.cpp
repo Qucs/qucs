@@ -18,7 +18,7 @@
 #include "marker.h"
 #include "diagram.h"
 #include "graph.h"
-#include "../main.h"
+#include "main.h"
 
 #include <qstring.h>
 #include <qwidget.h>
