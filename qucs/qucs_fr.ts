@@ -138,67 +138,67 @@
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Variation</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation :</translation>
     </message>
     <message>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>fréquence</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"></translation>
+        <translation>temps</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Variable :</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>linéaire</translation>
     </message>
     <message>
         <source>logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation>logarithmique</translation>
     </message>
     <message>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>liste</translation>
     </message>
     <message>
         <source>constant</source>
-        <translation type="unfinished"></translation>
+        <translation>constante</translation>
     </message>
     <message>
         <source>Values:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeurs : </translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Initiale :</translation>
     </message>
     <message>
         <source>Stop:</source>
-        <translation type="unfinished"></translation>
+        <translation>Finale :</translation>
     </message>
     <message>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas :</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre :</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished">Propriétés</translation>
+        <translation>Propriétés</translation>
     </message>
 </context>
 <context>
@@ -346,95 +346,95 @@
     </message>
     <message>
         <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordonnées :</translation>
     </message>
     <message>
         <source>smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Axe de Smith</translation>
     </message>
     <message>
         <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Axe polaire</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>ordonnée gauche</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>ordonnée droite</translation>
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>variable gauche :</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>variable droite :</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>ordonnées gauches logarithmiques</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>ordonnées droites logarithmiques</translation>
     </message>
     <message>
         <source>x-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>abscisses</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation type="unfinished"></translation>
+        <translation>manuel</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>ordonnées gauches</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>ordonnées droites</translation>
     </message>
     <message>
         <source>Limits</source>
-        <translation type="unfinished"></translation>
+        <translation>Bornes</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>initiale</translation>
     </message>
     <message>
         <source>step</source>
-        <translation type="unfinished"></translation>
+        <translation>pas</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation type="unfinished"></translation>
+        <translation>finale</translation>
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Axe Smith</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Axe polaire</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>nombre</translation>
     </message>
     <message>
         <source>stars</source>
-        <translation type="unfinished"></translation>
+        <translation>étoiles</translation>
     </message>
     <message>
         <source>circles</source>
-        <translation type="unfinished"></translation>
+        <translation>cercles</translation>
     </message>
     <message>
         <source>arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>flèches</translation>
     </message>
 </context>
 <context>
@@ -610,31 +610,31 @@
     <name>LabelDialog</name>
     <message>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus…</translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
+        <translation>Moins…</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished">Insérer un nom d&apos;équipotentielle</translation>
+        <translation>Insérer un nom d&apos;équipotentielle</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished">Saisir le label :</translation>
+        <translation>Saisir le label :</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tension initiale : </translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -703,23 +703,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished">Créer un nouveau projet</translation>
+        <translation>Créer un nouveau projet</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished">Nom du projet :</translation>
+        <translation>Nom du projet :</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished">ouvrir un nouveau projet</translation>
+        <translation>ouvrir un nouveau projet</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -2350,27 +2350,27 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>Algorithme de convergence préféré</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier source Spice</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>Spice</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Schéma Spice</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>aucune variable</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>aucune donnée</translation>
     </message>
 </context>
 <context>
@@ -2944,19 +2944,19 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>Abaque d&apos;admittance</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Mélange Polaire-Smith</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Mélange Smith-Polaire</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Document Spice</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4224,11 @@ Déplace la légende du composant</translation>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Italien par Giorgio Luparia</translation>
     </message>
     <message>
         <source>Hungarian by Bus Jozsef</source>
-        <translation type="unfinished"></translation>
+        <translation>Hongrois par Bus Jozsef</translation>
     </message>
 </context>
 <context>
