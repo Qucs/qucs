@@ -2323,23 +2323,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>overestimation of local truncation error</source>
-        <translation>Überschätzung des lokalen Abbruchfehlers</translation>
-    </message>
-    <message>
-        <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor für die Überbewertung des lokalen Abbruchfehlers</translation>
     </message>
 </context>
 <context>
