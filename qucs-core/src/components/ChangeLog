@@ -1,3 +1,8 @@
+2004-10-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* strafo.cpp, trafo.cpp, devices/mosfet.cpp: Implemented transient
+	analysis functionality.
+
 2004-10-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* irect.h (class irect), vrect.h (class vrect): Two new

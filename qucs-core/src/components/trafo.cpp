@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.8 2004-09-25 21:09:46 ela Exp $
+ * $Id: trafo.cpp,v 1.9 2004-10-04 17:17:45 ela Exp $
  *
  */
 
@@ -61,5 +61,9 @@ void trafo::initDC (void) {
 }
 
 void trafo::initAC (void) {
+  initDC ();
+}
+
+void trafo::initTR (void) {
   initDC ();
 }

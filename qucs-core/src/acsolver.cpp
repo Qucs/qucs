@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.4 2004-09-17 11:48:52 ela Exp $
+ * $Id: acsolver.cpp,v 1.5 2004-10-04 17:17:44 ela Exp $
  *
  */
 
@@ -124,8 +124,8 @@ void acsolver::calc (acsolver * self) {
 void acsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initAC ();
     if (c->isNonLinear ()) c->calcOperatingPoints ();
+    c->initAC ();
   }
 }
 
