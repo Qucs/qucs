@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.9 2004/09/12 14:09:19 ela Exp $
+ * $Id: capacitor.cpp,v 1.10 2004/09/14 19:33:09 ela Exp $
  *
  */
 
@@ -86,6 +86,7 @@ void capacitor::calcTR (nr_double_t t) {
     fillState (cState, getState (cState));
   }
 
+  //fprintf (stderr, "vcap = %g\n", v);
   setState (qState, v * c);
   integrate (qState, c, g, i);
   setY (1, 1, +g); setY (2, 2, +g);
