@@ -146,11 +146,11 @@
     </message>
     <message>
         <source>frequency</source>
-        <translation>fréquence</translation>
+        <translation type="obsolete">fréquence</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>temps</translation>
+        <translation type="obsolete">temps</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
@@ -199,6 +199,10 @@
     <message>
         <source>Properties</source>
         <translation>Propriétés</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

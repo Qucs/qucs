@@ -138,67 +138,71 @@
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Barrido</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulación:</translation>
     </message>
     <message>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">frecuencia</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">tiempo</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetro de Barrido:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>lineal</translation>
     </message>
     <message>
         <source>logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation>logarítmico</translation>
     </message>
     <message>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>lista</translation>
     </message>
     <message>
         <source>constant</source>
-        <translation type="unfinished"></translation>
+        <translation>constante</translation>
     </message>
     <message>
         <source>Values:</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores:</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Inicio:</translation>
     </message>
     <message>
         <source>Stop:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parada:</translation>
     </message>
     <message>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paso:</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Número:</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished">Propiedades</translation>
+        <translation>Propiedades</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -345,95 +349,95 @@
     </message>
     <message>
         <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje Y:</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje izquierdo</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje derecho</translation>
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta del Eje Y izquierdo:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiqueta del Eje Y derecho:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejilla del Eje Y izquierdo logarítmico</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejilla del Eje Y derecho logarítmico</translation>
     </message>
     <message>
         <source>smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje smith</translation>
     </message>
     <message>
         <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje polar</translation>
     </message>
     <message>
         <source>x-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje X</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation type="unfinished"></translation>
+        <translation>manual</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje Y izquierdo</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje Y derecho</translation>
     </message>
     <message>
         <source>Limits</source>
-        <translation type="unfinished"></translation>
+        <translation>Límites</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>inicio</translation>
     </message>
     <message>
         <source>step</source>
-        <translation type="unfinished"></translation>
+        <translation>paso</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation type="unfinished"></translation>
+        <translation>parada</translation>
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje Smith</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Eje Polar</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>número</translation>
     </message>
     <message>
         <source>stars</source>
-        <translation type="unfinished"></translation>
+        <translation>estrellas</translation>
     </message>
     <message>
         <source>circles</source>
-        <translation type="unfinished"></translation>
+        <translation>círculos</translation>
     </message>
     <message>
         <source>arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>flechas</translation>
     </message>
 </context>
 <context>
@@ -609,31 +613,31 @@
     <name>LabelDialog</name>
     <message>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Más...</translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
+        <translation>Menos...</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished">Insertar nombre del nodo</translation>
+        <translation>Insertar nombre del nodo</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished">Escribe la etiqueta:</translation>
+        <translation>Escribe la etiqueta:</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensión inicial del nodo:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -702,23 +706,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished">Crear proyecto nuevo</translation>
+        <translation>Crear proyecto nuevo</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished">Nombre del Proyecto:</translation>
+        <translation>Nombre del Proyecto:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished">abrir proyecto nuevo</translation>
+        <translation>abrir proyecto nuevo</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crear</translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -2310,47 +2314,47 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>amplificador ideal</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ganancia de tensión</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Amplificador</translation>
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>via microstrip</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>díametro del conductor de vía redondeado</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Via Microstrip</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
+        <translation>coeficiente de transconductancia en A/V^2</translation>
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>amplificador operacional</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>AmpOp</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>valor absoluto del voltaje máximo y mínimo de salida</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de documento equivocado:</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
@@ -2362,27 +2366,27 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>algoritmo de convergencia preferido</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>archivo netlist SPICE</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>spice</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>netlist SPICE</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>sin variables</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>sin datos</translation>
     </message>
 </context>
 <context>
@@ -2960,23 +2964,23 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Combi Polar-Smith</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Combi Smith-Polar</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>Admitancia Smith</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>netlist SPICE</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar Propiedades</translation>
     </message>
 </context>
 <context>
@@ -4241,21 +4245,24 @@ Mueve la propiedad texto de los componentes</translation>
     <message>
         <source>French by Vincent Habchi, F5RCS
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Francés por Vincent Habchi, F5RCS
+</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Japonés por Toyoyuki ISHIKAWA
+</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Italiano por Giorgio Luparia
+</translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished"></translation>
+        <translation>Húngaro por Jozsef Bus</translation>
     </message>
 </context>
 <context>
