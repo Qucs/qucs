@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.1 2004-03-07 08:33:01 ela Exp $
+ * $Id: equation.h,v 1.2 2004-03-14 17:42:47 ela Exp $
  *
  */
 
@@ -30,24 +30,61 @@
 #include "vector.h"
 #include "matrix.h"
 
+class strlist;
+
 namespace eqn {
 
-class node;
 class constant;
 class reference;
 class assignment;
 class application;
 
-enum ConstantTag {
-  TAG_UNKNOWN = -1,
-  TAG_DOUBLE = 0,
-  TAG_COMPLEX,
-  TAG_VECTOR,
-  TAG_MATRIX
+enum NodeTag {
+  UNKNOWN = -1,
+  CONSTANT = 0, /* source code constant */
+  REFERENCE,    /* variable reference   */
+  APPLICATION,  /* call to function     */
+  ASSIGNMENT    /* root of equation     */
 };
 
-class constant {
- public:
+/* The equation node base class defines and implements the basic
+   functionality of an equation node.  Possible types of nodes are
+   listed in 'NodeTag'. */
+class node
+{
+public:
+  node ();
+  node (int);
+  virtual ~node ();
+  node * getNext (void) { return next; }
+  void setNext (node * n) { next = n; }
+  int count (void);
+  void append (node *);
+  void setDependencies (strlist *);
+  strlist * getDependencies (void);
+
+  /* These functions should be overloaded by derivative classes. */
+  virtual void print (void) { }
+  virtual void addDependencies (strlist *) { }
+  
+private:
+  int tag;
+  node * next;
+  strlist * dependencies;
+};
+
+enum ConstantTag {
+  TAG_UNKNOWN = -1,
+  TAG_DOUBLE = 0,   /* double constant        */
+  TAG_COMPLEX,      /* complex value          */
+  TAG_VECTOR,       /* list of complex values */
+  TAG_MATRIX        /* complex matrix         */
+};
+
+/* This class represents any type of constant expression. */
+class constant : public node
+{
+public:
   constant ();
   constant (int);
   ~constant ();
@@ -63,71 +100,66 @@ class constant {
   };
 };
 
-class reference {
- public:
+/* The class represents variable references. */
+class reference : public node
+{
+public:
   reference ();
   ~reference ();
   void print (void);
+  void addDependencies (strlist *);
 
- public:
+public:
   char * n;
 };
 
-class assignment {
- public:
+/* This class represents assigments with a left hand and right hand
+   side. */
+class assignment : public node
+{
+public:
   assignment ();
   ~assignment ();
   void print (void);
+  void addDependencies (strlist *);
   
- public:
+public:
   char * result;
   node * body;
 };
 
-class application {
- public:
+/* The application class represents any kind of operation (unary,
+   binary and n-ary ones) containing the appropriate argument list. */
+class application : public node
+{
+public:
   application ();
   ~application ();
   void print (void);
+  void addDependencies (strlist *);
 
- public:
+public:
   char * n;
   int nargs;
   node * args;
   /* todo: function pointer */
 };
 
-enum NodeTag {
-  UNKNOWN = -1,
-  CONSTANT = 0, /* source code constant */
-  REFERENCE,    /* variable reference   */
-  APPLICATION,  /* call to function     */
-  ASSIGNMENT    /* root of equation     */
-};
+/* This class implements the actual functionality regarding a set of
+   equations stored within a netlist. */
+class checker
+{
+public:
+  checker ();
+  ~checker ();
+  void collectDependencies (void);
+  void setEquations (node * eqn) { equations = eqn; }
+  node * getEquations (void) { return equations; }
+  void list (void);
+  int findUndefined (void);
 
-class node {
- public:
-  node ();
-  node (int);
-  ~node ();
-  node * getNext (void) { return next; }
-  void setNext (node * n) { next = n; }
-  int count (void);
-  void append (node *);
-  void print (void);
-
- public:
-  /* todo: semantic type */
-  union {
-    assignment * assign;
-    application * app;
-    reference * ref;
-    constant * con;
-  };
-
- private:
-  int tag;
-  node * next;
+public:
+  node * equations;
 };
 
 /* The global list of equations and expression lists. */
@@ -135,11 +167,5 @@ extern node * equations;
 extern node * expressions;
 
 } /* namespace */
-
-__BEGIN_DECLS
-
-void equation_list (void);
-
-__END_DECLS
 
 #endif /* __EQUATION_H__ */
