@@ -24,8 +24,9 @@
 #include <qfiledialog.h>
 
 
-ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name )
-                                  : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
+ComponentDialog::ComponentDialog(Component *c,
+			QWidget *parent, const char *name )
+			: QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   setCaption(tr("Edit Component Properties"));
 
@@ -38,17 +39,23 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
 	  SLOT(slotButtOK()));
   connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
 	  SLOT(slotApplyInput()));
-  connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()), SLOT(close()));
+  connect(new QPushButton(tr("Cancel"),h2), SIGNAL(clicked()),
+	  SLOT(slotButtCancel()));
 
   QLabel *label1 = new QLabel(this);
   g->addMultiCellWidget(label1,0,0,0,1);
 
   prop = new QListView(this);
   prop->setMinimumSize(200, 150);
+//  prop->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,
+//				  QSizePolicy::MinimumExpanding));
+//  prop->setSizePolicy(QSizePolicy(QSizePolicy::Preferred,
+//				  QSizePolicy::Preferred));
 //  prop->setMaximumSize(250, 500);
   prop->addColumn(tr("Name"));
   prop->addColumn(tr("Value"));
   prop->addColumn(tr("display"));
+  prop->addColumn(tr("Description"));
   prop->setSorting(-1);   // no sorting
   g->addMultiCellWidget(prop,1,7,0,0);
 
@@ -60,8 +67,10 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
 
   Description = new QLabel(this);
   g->addWidget(Description,2,1);
+
+  // hide, because it only replaces 'Description' in some cases
   NameEdit = new QLineEdit(this);
-  NameEdit->setShown(false);   // hide, because it only replaces 'Description' in some cases
+  NameEdit->setShown(false);
   NameEdit->setValidator(Validator);
   g->addWidget(NameEdit,2,1);
   connect(NameEdit, SIGNAL(returnPressed()), SLOT(slotApplyPropName()));
@@ -72,8 +81,9 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   edit->setValidator(Validator);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
+  // hide, because it only replaces 'edit' in some cases
   ComboEdit = new QComboBox(false,this);
-  ComboEdit->setShown(false);   // hide, because it only replaces 'edit' in some cases
+  ComboEdit->setShown(false);
   g->addWidget(ComboEdit,3,1);
   connect(ComboEdit, SIGNAL(activated(const QString&)),
 	  SLOT(slotApplyChange(const QString&)));
@@ -106,7 +116,7 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   // ------------------------------------------------------------
   Comp = c;
   label1->setText(c->Description);
-  changed = false;
+  changed = transfered = false;
 
 //  prop->clear();
 
@@ -115,7 +125,8 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   for(Property *p = c->Props.last(); p != 0; p = c->Props.prev()) {
     if(p->display) s = tr("yes");
     else s = tr("no");
-    prop->insertItem(new QListViewItem(prop,p->Name,p->Value,s));
+    prop->insertItem(new QListViewItem(prop, p->Name, p->Value, s,
+		     p->Description));
   }
 
   if(prop->childCount() > 0) {
@@ -137,25 +148,19 @@ ComponentDialog::~ComponentDialog()
 void ComponentDialog::slotSelectProperty(QListViewItem *item)
 {
   if(item == 0) return;
-  item->setSelected(true);    // if called from another function, this was not yet done
+  item->setSelected(true);  // if called from elsewhere, this was not yet done
 
   if(item->text(2) == tr("yes")) disp->setChecked(true);
   else disp->setChecked(false);
 
-  Property *pp;
-  for(pp = Comp->Props.first(); pp!=0; pp = Comp->Props.next())
-    if(pp->Name == item->text(0)) break;
-
-  if(pp->Name == "File") BrowseButt->setEnabled(true);
+  if(item->text(0) == "File") BrowseButt->setEnabled(true);
   else BrowseButt->setEnabled(false);
 
-  if(pp->Description.isEmpty()) {
+  QString PropDesc = item->text(3);
+  if(PropDesc.isEmpty()) {
     ButtAdd->setEnabled(true);
     ButtRem->setEnabled(true);
-  }
-  else { ButtAdd->setEnabled(false); ButtRem->setEnabled(false); }
 
-  if(pp->Description.isEmpty()) {
     Name->setText("");
     NameEdit->setText(item->text(0));
     edit->setText(item->text(1));
@@ -166,17 +171,21 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
     NameEdit->setFocus();   // edit QLineEdit
   }
   else {
+    ButtAdd->setEnabled(false);
+    ButtRem->setEnabled(false);
+
     Name->setText(item->text(0));
     edit->setText(item->text(1));
 
     NameEdit->setShown(false);
-    NameEdit->setText(item->text(0));  // only for uniformity (perhaps used for adding properties)
+    NameEdit->setText(item->text(0));  // perhaps used for adding properties
     Description->setShown(true);
 
-    QStringList List = List.split('|',pp->Description);
+    PropDesc = PropDesc.mid(PropDesc.find('(')+1);
+    PropDesc.remove(')');
+    QStringList List = List.split(',',PropDesc);
     Description->setText(List.first());
-    if(List.count() > 1) {    // should property values been choosen or been entered ?
-      List.remove(List.begin());
+    if(List.count() > 1) {    // ComboBox with value list or lin edit ?
       ComboEdit->clear();
       ComboEdit->insertStringList(List);
 
@@ -215,12 +224,20 @@ void ComponentDialog::slotApplyChange(const QString& Text)
 // Is called if the "RETURN"-button is pressed in the "edit" Widget.
 void ComponentDialog::slotApplyProperty()
 {
-  prop->currentItem()->setText(1, edit->text());	// apply edit line
-  if(NameEdit->isShown())
-    prop->currentItem()->setText(0, NameEdit->text());	// also apply property name
+  QListViewItem *item = prop->currentItem();
 
-  QListViewItem *item = prop->currentItem()->itemBelow();
-  if(item == 0) {
+  if(item->text(1) != edit->text()) {
+    item->setText(1, edit->text());    // apply edit line
+    changed = true;
+  }
+  if(NameEdit->isShown())	// also apply property name ?
+    if(item->text(0) != NameEdit->text()) {
+      item->setText(0, NameEdit->text());  // apply property name
+      changed = true;
+    }
+
+  item = item->itemBelow();
+  if(!item) {
     slotButtOK();   // close dialog, if it was the last property
     return;
   }
@@ -233,7 +250,11 @@ void ComponentDialog::slotApplyProperty()
 // Is called if the "RETURN"-button is pressed in the "NameEdit" Widget.
 void ComponentDialog::slotApplyPropName()
 {
-  prop->currentItem()->setText(0, NameEdit->text());	// apply property name
+  QListViewItem *item = prop->currentItem();
+  if(item->text(0) != NameEdit->text()) {
+    item->setText(0, NameEdit->text());  // apply property name
+    changed = true;
+  }
   edit->setFocus();   // cursor into "edit" widget
 }
 
@@ -243,8 +264,15 @@ void ComponentDialog::slotApplyState(int State)
 {
   QListViewItem *item = prop->currentItem();
   if(item == 0) return;
-  if(State == QButton::On) item->setText(2, tr("yes"));
-  else item->setText(2, tr("no"));
+
+  QString ButtonState;
+  if(State == QButton::On) ButtonState = tr("yes");
+  else ButtonState = tr("no");
+
+  if(item->text(2) != ButtonState) {
+    item->setText(2, ButtonState);
+    changed = true;
+  }
 }
 
 // -------------------------------------------------------------------------
@@ -252,9 +280,16 @@ void ComponentDialog::slotApplyState(int State)
 void ComponentDialog::slotButtOK()
 {
   slotApplyInput();
-//  close();
   if(changed) done(1);
   else done(0);
+}
+
+// -------------------------------------------------------------------------
+// Is called if the "Cancel"-button is pressed.
+void ComponentDialog::slotButtCancel()
+{
+  if(transfered) done(1);	// changed could have been done before
+  else done(0);			// (by "Apply"-button)
 }
 
 // -------------------------------------------------------------------------
@@ -264,43 +299,43 @@ void ComponentDialog::slotApplyInput()
   QListViewItem *item = prop->firstChild();
   if(item == 0) return;
 
-  prop->currentItem()->setText(1, edit->text());	// apply edit line to current item
-  if(NameEdit->isShown())
-    prop->currentItem()->setText(0, NameEdit->text());	// also apply property name
+  item = prop->currentItem();
+  if(item->text(1) != edit->text()) {
+    item->setText(1, edit->text());    // apply edit line
+    changed = true;
+  }
+  if(NameEdit->isShown())	// also apply property name ?
+    if(item->text(0) != NameEdit->text()) {
+      item->setText(0, NameEdit->text());  // apply property name
+      changed = true;
+    }
 
   bool display;
-  // take all the new property values
-  for(Property *pp = Comp->Props.first(); pp!=0; pp = Comp->Props.next()) {
-    if(pp->Value != item->text(1)) {
-      pp->Value = item->text(1);
-      changed = true;
-    }
-    if(pp->Description.isEmpty())
-      if(pp->Name != item->text(0)) {
-        pp->Name = item->text(0);
-        changed = true;
-      }
-
+  Comp->Props.clear();
+  // apply all the new property values, i.e. rebuild the properties
+  for(item = prop->firstChild(); item != 0; item = item->itemBelow()) {
     display = (item->text(2) == tr("yes"));
-    if(pp->display != display) {
-      pp->display = display;
-      changed = true;
-    }
-
-    item = item->itemBelow();   // next item
+    Comp->Props.append(new
+	Property(item->text(0), item->text(1), display, item->text(3)));
   }
+  transfered = true;     // applied changed to the component itself
 }
 
 // -------------------------------------------------------------------------
 void ComponentDialog::slotBrowseFile()
 {
-  QString s = QFileDialog::getOpenFileName("",tr("All Files (*.*)"),this,"",tr("Select a file"));
-  if(!s.isEmpty()) edit->setText(s);
+  QString s = QFileDialog::getOpenFileName("", tr("All Files (*.*)"),
+					this, "", tr("Select a file"));
+  if(!s.isEmpty()) {
+    edit->setText(s);
+    changed = true;
+  }
   prop->currentItem()->setText(1, s);
 }
 
 // -------------------------------------------------------------------------
-// Is called if the add button is pressed. This is only possible for some properties.
+// Is called if the add button is pressed. This is only possible for some
+// properties.
 void ComponentDialog::slotButtAdd()
 {
   QListViewItem *item = prop->selectedItem();
@@ -309,36 +344,19 @@ void ComponentDialog::slotButtAdd()
   QString s = tr("no");
   if(disp->isChecked()) s = tr("yes");
 
-  prop->setSelected(new QListViewItem(prop, item, NameEdit->text(), edit->text(), s), true);
-
-  int z=1;
-  for(QListViewItem *i = prop->firstChild(); i != 0; i = i->nextSibling()) {    // search selected property
-    if(i == item) {
-      // insert property in component memory at the correct position
-      Comp->Props.insert(z, new Property(NameEdit->text(), edit->text(), disp->isChecked()));
-      break;
-    }
-    z++;   // count the position
-  }
+  prop->setSelected(new QListViewItem(prop, item,
+			NameEdit->text(), edit->text(), s), true);
   changed = true;
 }
 
 // -------------------------------------------------------------------------
-// Is called if the remove button is pressed. This is only possible for some properties.
+// Is called if the remove button is pressed. This is only possible for
+// some properties.
 void ComponentDialog::slotButtRem()
 {
-  if(prop->childCount() < 2) return;     // the last property cannot be removed
+  if(prop->childCount() < 2) return;  // the last property cannot be removed
   QListViewItem *item = prop->selectedItem();
   if(item == 0) return;
-
-  Property *pp = Comp->Props.first();
-  for(QListViewItem *i = prop->firstChild(); i != 0; i = i->nextSibling()) {    // search selected property
-    if(i == item) {
-      Comp->Props.remove();     // delete property in component memory
-      break;
-    }
-    pp = Comp->Props.next();
-  }
 
   QListViewItem *next_item = item->itemBelow();
   if(next_item == 0) next_item = item->itemAbove();

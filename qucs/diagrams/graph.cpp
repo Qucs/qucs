@@ -34,7 +34,6 @@ Graph::Graph(const QString& _Line)
 
   Points = 0;
   cPointsX = cPointsY = 0;
-//  cPoints.setAutoDelete(true);
 }
 
 Graph::~Graph()
@@ -113,9 +112,9 @@ bool Graph::load(const QString& _s)
   return true;
 }
 
-// --------------------------------------------------------------------------
-// Checks if the coordinates x/y point to the graph. x/y are relative to diagram cx/cy
-// 5 is the precision the user must point onto the graph.
+// -----------------------------------------------------------------------
+// Checks if the coordinates x/y point to the graph. x/y are relative to
+// diagram cx/cy. 5 is the precision the user must point onto the graph.
 int Graph::getSelected(int x, int y)
 {
   int *pp = Points;
@@ -130,12 +129,12 @@ int Graph::getSelected(int x, int y)
 
     dx  = x - x1;
     dx2 = (*pp);
-    if(dx < -5) { if(x < dx2-5) continue; }    // lies point between x coordinates ?
+    if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
     else { if(x > dx2+5) continue; }
 
     dy  = y - y1;
     dy2 = (*(pp+1));
-    if(dy < -5) { if(y < dy2-5) continue; }    // lies point between y coordinates ?
+    if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
     else { if(y > dy2+5) continue; }
 
     dx2 -= x1;
@@ -158,7 +157,7 @@ int Graph::getSelected(int x, int y)
   int x2, x1 = *(pp++);
   int y2, y1 = *(pp++);
 
-  for(int n=1; n<count; n++) {   // count-1 runs (because need 2 points per run)
+  for(int n=1; n<count; n++) { // count-1 runs (need 2 points per run)
     x2 = (*pp) - x1;
     y2 = (*(pp+1)) - y1;
 

@@ -116,6 +116,10 @@
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DiagramDialog</name>
@@ -226,15 +230,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>          Text size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation angle: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -682,7 +690,7 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
+        <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -971,6 +979,10 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>emission coefficient</source>
         <translation type="unfinished"></translation>
     </message>
@@ -989,6 +1001,670 @@ Wrong line start!</source>
 </context>
 <context>
     <name>QucsApp</name>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of the project directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content of</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Datasets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Displays</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>content of the open project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>components and diagrams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lumped components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transmission lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nonlinear components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paintings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diagrams</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create work directory !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Qucs document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This document contains unsaved changes!
+Do you want to save the changes before closing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating new schematic...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a Schematic Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving file under new filename...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving all files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exiting application...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to quit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cutting selection...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copying selection to clipboard...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inserting clipboard contents...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create netlist file!
+Aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No page set !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose Project Directory for Opening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot access project directory: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content of &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Project: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot create project directory !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistor US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subcircuit Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symmetric Transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attenuator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isolator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gyrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase Shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Controlled Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Controlled Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coupled Microstrip Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Tee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Mitered Bend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>4-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>5-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>6-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S-parameter simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Harmonic balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No project is selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete an open project !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will destroy all the project
+files permanently !
+Go on ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot remove project file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot remove project directory !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose Project Directory for Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save settings !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter new name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the file permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete schematic: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving will overwrite the old one! Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos; already exists!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>will appear in the content browser! Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot overwrite an open document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The document contains unsaved changes!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to save the changes before closing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display (*.dpl)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsInit</name>
     <message>
         <source>New</source>
         <translation type="unfinished"></translation>
@@ -1584,7 +2260,25 @@ Simulates the current schematic</source>
     <message>
         <source>View Data Display/Schematic
 
-Changes to data display or schematic page</source>
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1752,192 +2446,6 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Projects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>content of the project directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Content of</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Note</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Datasets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data Displays</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schematics</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>content of the open project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lumped components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transmission lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>file data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simulations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>paintings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>diagrams</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create work directory !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Qucs document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This document contains unsaved changes!
-Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating new schematic...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opening file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schematic (*.sch)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter a Schematic Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter Name to Save Document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving file under new filename...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving all files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The document contains unsaved changes!
-Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quit...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cutting selection...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inserting clipboard contents...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Toggle toolbar...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1960,447 +2468,12 @@ Qt universal circuit simulator
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> at </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>creating netlist ....</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot create netlist file!
-Aborted.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>done.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Simulation ended on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Errors occured during simulation on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aborted.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output:
-----------
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-
-
-Errors:
---------
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No page set !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose Project Directory for Opening</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot access project directory: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Content of &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Project: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot create project directory !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistor US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Capacitor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inductor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>symmetric Transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Feed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bias T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attenuator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Isolator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circulator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gyrator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Probe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Controlled Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Substrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coplanar Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Diode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>6-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tabular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith Chart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No project is selected !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete an open project !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will destroy all the project
-files permanently !
-Go on ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot remove project file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot remove project directory !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose Project Directory for Deleting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot save settings !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter new name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will delete the file permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot rename file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete schematic: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete an open file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot rename an open file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Marker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Marker on Graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set Marker
-
-Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
-Simulator by Stefan Jahn
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulator by Stefan Jahn
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2421,12 +2494,12 @@ Simulator by Stefan Jahn
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>French by Eric Marzolf</source>
+        <source>Polish by Dariusz Pienkowski
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Polish by Dariusz Pienkowski
-</source>
+        <source>French by Eric Marzolf</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

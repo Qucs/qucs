@@ -26,6 +26,7 @@
 
 
 class Diagram;
+class Graph;
 
 /**
   *@author Michael Margraf
@@ -33,11 +34,12 @@ class Diagram;
 
 class Marker : public Element {
 public:
-  Marker(Diagram *Diag_, int _cx=0, int _cy=0, double _xpos=0.0,
-         double _yrpos=0.0, double _yipos=0.0, int _gNum=0);
+  Marker(Diagram *Diag_, Graph *pg_=0, int _cx=0, int _cy=0, double _xpos=0.0,
+         double _yrpos=0.0, double _yipos=0.0);
   ~Marker();
 
   void    createText();
+  void    makeInvalid();
   void    paint(QPainter *p, int x0, int y0);
   void    paintScheme(QPainter *p);
   void    setCenter(int x, int y, bool relative);
@@ -47,9 +49,9 @@ public:
   int     getSelected(int x, int y);
 
   Diagram *Diag;    // the corresponding diagram
-  int    GraphNum;  // number of diagram graph the marker is pointing to
-  double xpos;      // x axis value the marker is pointing to
-  double yr, yi;
+  Graph   *pGraph;  // the corresponding graph
+  double  xpos;     // x axis value the marker is pointing to
+  double  yr, yi;
 
   QString Text;     // the string to be displayed in the marker text
   int lookNfeel;    // different marker designs possible
