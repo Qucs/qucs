@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.9 2004-09-20 10:09:54 ela Exp $
+ * $Id: nasolver.cpp,v 1.10 2004-09-23 14:09:11 ela Exp $
  *
  */
 
@@ -134,6 +134,18 @@ int nasolver<nr_type_t>::solve_once (void) {
     }
     throw_exception (e);
     error++;
+    break;
+  case EXCEPTION_SINGULAR:
+    do {
+      d = top_exception()->getData (); pop_exception ();
+      if (d <= countNodes ()) {
+	logprint (LOG_ERROR, "WARNING: %s: inserted virtual resistance at "
+		  "node `%s' connected to [%s]\n", getName (), nlist->get (d),
+		  nlist->getNodeString (d));
+      }
+    }
+    while (top_exception() != NULL &&
+	   top_exception()->getCode () == EXCEPTION_SINGULAR);
     break;
   default:
     estack.print ();
