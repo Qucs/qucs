@@ -44,7 +44,23 @@ Wire::~Wire()
 void Wire::paintScheme(QPainter *p)
 {
   p->drawLine(x1, y1, x2, y2);
-//  p->drawText(50,50,QString::number(x1));
+}
+
+// ----------------------------------------------------------------
+void Wire::rotate()
+{
+  int xm, ym, tmp;
+
+  xm = (x1+x2) >> 1;
+  ym = (y1+y2) >> 1;
+
+  tmp = x1;
+  x1  = xm + y1  - ym;
+  y1  = ym - tmp + xm;
+
+  tmp = x2;
+  x2  = xm + y2  - ym;
+  y2  = ym - tmp + xm;
 }
 
 // ----------------------------------------------------------------

@@ -47,6 +47,7 @@ Component::Component()
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
   Ports.setAutoDelete(true);
+  Texts.setAutoDelete(true);
   Props.setAutoDelete(true);
 }
 
@@ -93,18 +94,28 @@ void Component::paint(QPainter *p)
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
   }
 
+  QFont tmp;
   if(Sign.at(0) == '.') {   // is simulation component (dc, ac, s parameter, ...)
-    QFont tmp = p->font();
+    tmp = p->font();
     p->setFont(QFont("Helvetica",16, QFont::DemiBold));
     p->drawText(cx+x1+8, cy+y1+8, x2-x1, y2-y1, Qt::WordBreak, Description);
     p->setFont(tmp);
   }
 
-  QString s = Name+"\n";
   p->setPen(QPen(QPen::black,1));
-  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())    // write all properties
-    if(p4->display) s += p4->Name+"="+p4->Value+"\n";
-  p->drawText(cx+tx, cy+ty, 120, 120, 0, s);
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {     // write all text
+    tmp = p->font();
+    p->setFont(QFont("Helvetica",10, QFont::Light));
+    p->drawText(cx+pt->x, cy+pt->y, pt->s);
+    p->setFont(tmp);
+  }
+
+  int y=12;
+  p->drawText(cx+tx, cy+ty, 0, 0, Qt::DontClip, Name);
+  for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next()) {    // write all properties
+    if(p4->display) p->drawText(cx+tx, cy+ty+y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
+    y += 12;
+  }
 
   if(!isActive) {
     p->setPen(QPen(QPen::red,1));
@@ -131,8 +142,6 @@ void Component::paintScheme(QPainter *p) //, int x, int y) //const QPoint& pos)
   
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next())     // paint all arcs
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
-
-//  p->drawText(50,50,QString::number(cx));
 }
 
 // -------------------------------------------------------
@@ -167,6 +176,12 @@ void Component::rotate()
     if(p3->angle >= 16*360) p3->angle -= 16*360;;
   }
 
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {     // rotate all text
+    tmp = -pt->x; // - r.width();
+    pt->x = pt->y - 8;
+    pt->y = tmp;
+  }
+
   tmp = -x1;   // rotate boundings
   x1  = y1; y1 = -x2;
   x2  = y2; y2 = tmp;
@@ -188,24 +203,64 @@ void Component::mirrorX()
     p1->y2 = -p1->y2;
   }
 
-  for(Port *p2 = Ports.first(); p2 != 0; p2 = Ports.next()) {  // mirror all ports
+  for(Port *p2 = Ports.first(); p2 != 0; p2 = Ports.next())  // mirror all ports
     p2->y = -p2->y;
-  }
 
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {     // mirror all arcs
     p3->y = -p3->y - p3->h + 1; // +1 is beauty correction
-    if(p3->angle > 180) p3->angle -= 16*360;
+    if(p3->angle > 16*180) p3->angle -= 16*360;
     p3->angle  = -p3->angle;  // mirror
     p3->angle -= p3->arclen;  // go back to end of arc
     if(p3->angle < 0) p3->angle += 16*360;  // angle has to be > 0
   }
 
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())     // mirror all text
+    pt->y = -pt->y + 10;
+
   int tmp = y1;
   y1  = -y2; y2 = -tmp;   // mirror boundings
-  ty  = y2+4;   // mirror text position
+  if(tx<0) ty = y2+4;   // mirror text position
+  else ty = y1+4;
 
   mirroredX = !mirroredX;   // keep track of what's done
   rotated += rotated << 1;
+  rotated &= 3;
+}
+
+// -------------------------------------------------------
+// Mirrors the component about the y-axis.
+void Component::mirrorY()
+{
+  for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {  // mirror all lines
+    p1->x1 = -p1->x1;
+    p1->x2 = -p1->x2;
+  }
+
+  for(Port *p2 = Ports.first(); p2 != 0; p2 = Ports.next())  // mirror all ports
+    p2->x = -p2->x;
+
+  for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next()) {     // mirror all arcs
+    p3->x = -p3->x - p3->w + 1; // +1 is beauty correction
+    p3->angle = 16*180 - p3->angle - p3->arclen;  // mirror
+    if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
+  }
+
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",10, QFont::Light));
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {     // mirror all text
+    QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,pt->s);    // get width of text
+    pt->x = -pt->x - r.width();
+  }
+
+  int tmp = x1;
+  x1  = -x2; x2 = -tmp;   // mirror boundings
+  if(ty<0) tx = x2+4;   // mirror text position
+  else tx = x1+4;
+
+  mirroredX = !mirroredX;   // keep track of what's done
+  rotated += rotated << 1;
+  rotated += 2;
   rotated &= 3;
 }
 
@@ -231,8 +286,6 @@ QString Component::save()
 {
   QString num;
   QString s = "<"+Sign;
-//  if(Model.isEmpty()) s += " *";
-//  else s += " "+Model;
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
 
@@ -268,9 +321,6 @@ bool Component::load(const QString& _s)
 
   QString n;
   Sign = s.section(' ',0,0);    // Sign
-
-//  Model = s.section(' ',1,1);   // Model
-//  if(Model == "*") Model = "";
 
   Name = s.section(' ',1,1);      // Name
   if(Name == "*") Name = "";
@@ -326,10 +376,63 @@ bool Component::load(const QString& _s)
 
 // ******************************************************************************************
 // **********                                                                      **********
-// **********                            The Components                            **********
+// **********                        Data Components, etc.                         **********
 // **********                                                                      **********
 // ******************************************************************************************
 
+SParamFile::SParamFile(int No)
+{
+  Description = "S parameter file";
+
+  int h = 30*((No-1)/2) + 15;
+  Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
+
+
+  int i=0, y = 15-h;
+  while(i<No) {
+    i++;
+    Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port(-30,  y));
+    Texts.append(new Text(-25,y-3,QString::number(i)));
+
+    if(i == No) break;
+    i++;
+    Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port( 30,  y));
+    Texts.append(new Text( 20,y-3,QString::number(i)));
+    y += 60;
+  }
+
+  Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text( 4,h+10,"Ref"));
+  Ports.append(new Port( 0,h+15));    // 'Ref' port
+
+  x1 = -30; y1 = -h-2;
+  x2 =  30; y2 =  h+15;
+
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = QString("SPfile")+QString::number(No);
+  Model = QString("SPfile")+QString::number(No);
+  Name  = QString("X");
+
+  Props.append(new Property("File", "test.s2p", true, "name of the s parameter file"));
+}
+
+SParamFile::~SParamFile()
+{
+}
+
+SParamFile* SParamFile::newOne()
+{
+  int z = Sign.at(6).digitValue();
+  return new SParamFile(z);
+}
+
+// --------------------------------------------------------------------------
 SubCirPort::SubCirPort()
 {
   Description = "port of a subcircuit";
@@ -342,7 +445,7 @@ SubCirPort::SubCirPort()
   x1 = -27; y1 = -8;
   x2 =   0; y2 =  8;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Port");
   Model = QString("");
@@ -361,6 +464,42 @@ SubCirPort* SubCirPort::newOne()
 }
 
 // --------------------------------------------------------------------------
+Equation::Equation()
+{
+  Description = "equation";
+
+  Lines.append(new Line(-24, -6,-24,  6,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-24,  6, 24,  6,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text(-20,  2,"Equation"));
+
+  x1 = -27; y1 = -9;
+  x2 =  27; y2 =  9;
+
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = QString("Eqn");
+  Model = QString("Eqn");
+  Name  = QString("Eqn");
+
+  Props.append(new Property("y", "1", true));
+}
+
+Equation::~Equation()
+{
+}
+
+Equation* Equation::newOne()
+{
+  return new Equation();
+}
+
+
+// ******************************************************************************************
+// **********                                                                      **********
+// **********                            The Components                            **********
+// **********                                                                      **********
+// ******************************************************************************************
+
 Resistor::Resistor()
 {
   Description = "resistor";
@@ -378,13 +517,13 @@ Resistor::Resistor()
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  11;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("R");
   Model = QString("R");
   Name  = QString("R");
 
-  Props.append(new Property("R", "50 Ohm", true));
+  Props.append(new Property("R", "50 Ohm", true, "ohmic resistance in Ohms"));
 //  Props.append(new Property("Noise", "yes", false));
 }
 
@@ -418,7 +557,7 @@ ResistorUS::ResistorUS()
   x1 = -30; y1 = -9;
   x2 =  30; y2 =  9;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Rus");
   Model = QString("R");
@@ -453,7 +592,7 @@ Capacitor::Capacitor()
   x1 = -30; y1 = -13;
   x2 =  30; y2 =  13;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("C");
   Model = QString("C");
@@ -492,7 +631,7 @@ dcBlock::dcBlock()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("DCblock");
   Model = QString("DCblock");
@@ -527,7 +666,7 @@ Inductor::Inductor()
   x1 = -30; y1 = -10;
   x2 =  30; y2 =   6;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("L");
   Model = QString("L");
@@ -567,7 +706,7 @@ dcFeed::dcFeed()
   x1 = -30; y1 = -13;
   x2 =  30; y2 =  13;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("DCfeed");
   Model = QString("dcfeed");
@@ -615,7 +754,7 @@ BiasT::BiasT()
   x1 = -30; y1 = -11;
   x2 =  30; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("BiasT");
   Model = QString("BiasT");
@@ -655,8 +794,7 @@ Transformer::Transformer()
   Lines.append(new Line( -1,-20, -1, 20,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-20,  1, 20,QPen(QPen::darkBlue,1)));
 
-  Lines.append(new Line(-21,-14,-15,-14,QPen(QPen::black,1)));
-  Lines.append(new Line(-18,-14,-18,-6,QPen(QPen::black,1)));
+  Texts.append(new Text(-21, -8,"T"));
   Arcs.append(new Arc(-21,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   
@@ -669,7 +807,7 @@ Transformer::Transformer()
   x1 = -33; y1 = -33;
   x2 =  33; y2 =  33;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Tr");
   Model = QString("Tr");
@@ -714,18 +852,10 @@ symTrafo::symTrafo()
   Lines.append(new Line( -1,-45, -1, 45,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-45,  1, 45,QPen(QPen::darkBlue,1)));
 
-  Lines.append(new Line(-24,-40,-18,-40,QPen(QPen::black,1)));
-  Lines.append(new Line(-21,-40,-21,-32,QPen(QPen::black,1)));
-  Lines.append(new Line(-17,-37,-15,-40,QPen(QPen::black,1)));
-  Lines.append(new Line(-15,-40,-15,-32,QPen(QPen::black,1)));
-
-  Lines.append(new Line(-25, 14,-19, 14,QPen(QPen::black,1)));
-  Lines.append(new Line(-22, 14,-22, 22,QPen(QPen::black,1)));
-  Lines.append(new Line(-13, 15,-18, 22,QPen(QPen::black,1)));
-  Lines.append(new Line(-18, 22,-13, 22,QPen(QPen::black,1)));
-  Arcs.append(new Arc(-18, 14,  5,  5,  0, 16*180,QPen(QPen::black,1)));
+  Texts.append(new Text(-23,-37,"T1"));
+  Texts.append(new Text(-23, 19,"T2"));
   
-  Arcs.append(new Arc(-21,-50,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-21,-54,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-21,  4,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-12, -2,  4,  4,  0, 16*360,QPen(QPen::darkBlue,2)));
@@ -739,7 +869,7 @@ symTrafo::symTrafo()
   x1 = -33; y1 = -63;
   x2 =  33; y2 =  63;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("sTr");
   Model = QString("sTr");
@@ -815,7 +945,7 @@ Attenuator::Attenuator()
   x1 = -30; y1 = -15;
   x2 =  30; y2 =  15;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Attenuator");
   Model = QString("Attenuator");
@@ -856,7 +986,7 @@ Isolator::Isolator()
   x1 = -30; y1 = -15;
   x2 =  30; y2 =  15;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Isolator");
   Model = QString("Isolator");
@@ -893,7 +1023,7 @@ Circulator::Circulator()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Circulator");
   Model = QString("Circulator");
@@ -928,7 +1058,7 @@ Volt_dc::Volt_dc()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("V");
   Model = QString("V");
@@ -964,7 +1094,7 @@ Ampere_dc::Ampere_dc()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("I");
   Model = QString("I");
@@ -1002,7 +1132,7 @@ Volt_ac::Volt_ac()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Vac");
   Model = QString("Vac");
@@ -1053,7 +1183,7 @@ Source_ac::Source_ac()
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Pac");
   Model = QString("Pac");
@@ -1111,7 +1241,7 @@ VCCS::VCCS()
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("VCCS");
   Model = QString("VCCS");
@@ -1165,7 +1295,7 @@ CCCS::CCCS()
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("CCCS");
   Model = QString("CCCS");
@@ -1222,7 +1352,7 @@ VCVS::VCVS()
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("VCVS");
   Model = QString("VCVS");
@@ -1277,7 +1407,7 @@ CCVS::CCVS()
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("CCVS");
   Model = QString("CCVS");
@@ -1321,7 +1451,7 @@ TLine::TLine()
   x1 = -30; y1 =-10;
   x2 =  30; y2 = 10;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("TLIN");
   Model = QString("TLIN");
@@ -1373,7 +1503,7 @@ Substrate::Substrate()
   x1 = -30; y1 =-40;
   x2 =  80; y2 = 16;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("SUBST");
   Model = QString("SUBST");
@@ -1414,7 +1544,7 @@ MSline::MSline()
   x1 = -30; y1 = -9;
   x2 =  30; y2 =  9;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("MLIN");
   Model = QString("MLIN");
@@ -1458,7 +1588,7 @@ MSstep::MSstep()
   x1 = -30; y1 =-13;
   x2 =  30; y2 = 13;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("MSTEP");
   Model = QString("MSTEP");
@@ -1500,7 +1630,7 @@ MScorner::MScorner()
   x1 = -30; y1 = -9;
   x2 =   9; y2 = 30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("MCORN");
   Model = QString("MCORN");
@@ -1546,7 +1676,7 @@ MStee::MStee()
   x1 = -30; y1 = -9;
   x2 =  30; y2 = 30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("MTEE");
   Model = QString("MTEE");
@@ -1603,7 +1733,7 @@ MScross::MScross()
   x1 = -30; y1 =-30;
   x2 =  30; y2 = 30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("MCROSS");
   Model = QString("MCROSS");
@@ -1648,7 +1778,7 @@ Diode::Diode()
   x1 = -30; y1 = -9;
   x2 =  30; y2 =  9;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString("Diode");
   Model = QString("Diode");
@@ -1692,7 +1822,7 @@ DC_Sim::DC_Sim()
   x1 = -60; y1 = -16;
   x2 =  64; y2 =  21;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString(".DC");
   Model = QString(".DC");
@@ -1727,7 +1857,7 @@ AC_Sim::AC_Sim()
   x1 = -60; y1 = -16;
   x2 =  64; y2 =  21;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString(".AC");
   Model = QString(".AC");
@@ -1766,7 +1896,7 @@ TR_Sim::TR_Sim()
   x1 = -49; y1 = -25;
   x2 =  53; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString(".TR");
   Model = QString(".TR");
@@ -1805,7 +1935,7 @@ SP_Sim::SP_Sim()
   x1 = -57; y1 = -25;
   x2 =  61; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString(".SP");
   Model = QString(".SP");
@@ -1844,7 +1974,7 @@ HB_Sim::HB_Sim()
   x1 = -79; y1 = -25;
   x2 =  83; y2 =  30;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString(".HB");
   Model = QString(".HB");
@@ -1882,7 +2012,7 @@ Param_Sweep::Param_Sweep()
   x1 = -50; y1 = -26;
   x2 =  54; y2 =  31;
 
-  tx = x1+5;
+  tx = x1+4;
   ty = y2+4;
   Sign  = QString(".SW");
   Model = QString(".SW");

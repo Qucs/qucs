@@ -54,14 +54,15 @@ public:
   ~QucsView();
 
   double Zoom(double s);
-  bool pasteElements();
+  bool   pasteElements();
 
   Component *selComp;   // component selected in IconView
   Diagram   *selDiag;   // diagram selected in IconView
 
-  bool drawn;   // indicates whether the scheme component was drawn the last time
-//  QDir ProjDir; // holds the project directory, if project open
+  bool    drawn;   // indicates whether the scheme component was drawn the last time
   QString ProjName;
+  double  Scale;    // zoom of the viewport
+  int     xShift, yShift;    // shift of the viewcontent because of negative coordinates
 
   QPtrList<Element> movingElements;
 
@@ -77,8 +78,6 @@ protected:
 
 //private:
 public:
-  double Scale;
-
   void MouseDoNothing(QMouseEvent *Event);
   void MMoveSelect(QMouseEvent *Event);
   void MMoveComponent(QMouseEvent *Event);
@@ -93,6 +92,9 @@ public:
   void MPressSelect(QMouseEvent *Event);
   void MPressDelete(QMouseEvent *Event);
   void MPressActivate(QMouseEvent *Event);
+  void MPressMirrorX(QMouseEvent *Event);
+  void MPressMirrorY(QMouseEvent *Event);
+  void MPressRotate(QMouseEvent *Event);
   void MPressComponent(QMouseEvent *Event);
   void MPressDiagram(QMouseEvent *Event);
   void MPressLabel(QMouseEvent *Event);

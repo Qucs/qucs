@@ -49,7 +49,6 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   Scale   = 1.0; // no scaling
   selComp = 0;  // no component is selected
   selDiag = 0;  // no diagram is selected
-//  focusElement = 0;
 
   Docs.setAutoDelete(true);
 }
@@ -74,7 +73,7 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
     p->setPen(QPen(QPen::black,1));
     for(x=x1; x<x2; x+=dx)
       for(y=y1; y<y2; y+=dy) {
-        p->drawPoint(x,y);
+        p->drawPoint(x,y);    // paint grid
       }
   }
 
@@ -481,6 +480,63 @@ void QucsView::MPressActivate(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+void QucsView::MPressMirrorX(QMouseEvent *Event)
+{
+  // no use in mirroring wires or diagrams
+  Component *c
+    = Docs.current()->selectedComponent(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale));
+  if(c == 0) return;
+  
+  if(c->Ports.count() < 1) return;  // do not mirror components without ports
+  c->mirrorX();
+  Docs.current()->setCompPorts(c);
+
+  viewport()->repaint();
+}
+
+// -----------------------------------------------------------
+void QucsView::MPressMirrorY(QMouseEvent *Event)
+{
+  // no use in mirroring wires or diagrams
+  Component *c
+    = Docs.current()->selectedComponent(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale));
+  if(c == 0) return;
+
+  if(c->Ports.count() < 1) return;  // do not mirror components without ports
+  c->mirrorY();
+  Docs.current()->setCompPorts(c);
+
+  viewport()->repaint();
+}
+
+// -----------------------------------------------------------
+void QucsView::MPressRotate(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+
+  Element *e = d->selectElement(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale),false);
+  if(e == 0) return;
+  
+  e->isSelected = false;
+  switch(e->Type) {
+    case isComponent: if(((Component*)e)->Ports.count() < 1)
+                        break;  // do not rotate components without ports
+                      ((Component*)e)->rotate();
+                      d->setCompPorts(((Component*)e));
+                      break;
+    case isWire:      d->Wires.setAutoDelete(false);
+                      d->deleteWire((Wire*)e);
+                      ((Wire*)e)->rotate();
+                      d->setOnGrid(((Wire*)e)->x1, ((Wire*)e)->y1);
+                      d->setOnGrid(((Wire*)e)->x2, ((Wire*)e)->y2);
+                      d->insertWire((Wire*)e);
+                      d->Wires.setAutoDelete(true);
+    default:          ;
+  }
+  viewport()->repaint();
+}
+
+// -----------------------------------------------------------
 void QucsView::MPressComponent(QMouseEvent *Event)
 {
     QPainter painter(viewport());
@@ -490,10 +546,16 @@ void QucsView::MPressComponent(QMouseEvent *Event)
 
     painter.scale(Scale, Scale);
     
+  int x1, y1, x2, y2;
   switch(Event->button()) { // left mouse button inserts the component into the schematic
   case Qt::LeftButton :
     if(selComp == 0) break;
     Docs.current()->insertComponent(selComp);
+
+    selComp->Bounding(x1,y1,x2,y2);   // enlarge viewarea if component outside the view
+    if(x2 > contentsWidth()) resizeContents(x2+50,contentsHeight());
+    if(y2 > contentsHeight()) resizeContents(contentsWidth(),y2+50);
+    
     viewport()->repaint();
     selComp = selComp->newOne(); // the component is used, so create a new one
     selComp->paintScheme(&painter);
@@ -501,6 +563,7 @@ void QucsView::MPressComponent(QMouseEvent *Event)
 
   case Qt::RightButton :  // right mouse button rotates the component
     if(selComp == 0) break;
+    if(selComp->Ports.count() == 0) break;  // do not rotate components without ports
     selComp->paintScheme(&painter); // erase old component scheme
     selComp->rotate();
     selComp->paintScheme(&painter); // paint new component scheme
@@ -653,8 +716,18 @@ void QucsView::contentsMouseReleaseEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MReleaseSelect(QMouseEvent *Event)
 {
-  if(!(Event->state() & ControlButton))
+  bool ctrl;
+  if(Event->state() & ControlButton) ctrl = true;
+  else ctrl = false;
+  
+  if(!ctrl)
     Docs.current()->deselectElements(focusElement);
+
+  if(Event->button() == LeftButton)
+    if(focusElement->Type == isWire) {
+      Docs.current()->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
+      Docs.current()->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+    }
 
   MouseMoveAction = &QucsView::MouseDoNothing;   // no element moving
   viewport()->repaint();
