@@ -1,3 +1,10 @@
+2004-07-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* inoise.h (class inoise): New component: current noise source.
+
+	* vnoise.h (class vnoise): Added noise voltage source component
+	and made appropriate changes in the netlist checker and factory.
+
 2004-07-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* spfile.cpp (interpolate_lin): Renamed 'rect' into
