@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.h,v 1.4 2004/09/12 14:09:20 ela Exp $
+ * $Id: jfet.h,v 1.5 2004/09/25 13:45:50 ela Exp $
  *
  */
 
@@ -34,6 +34,10 @@ class jfet : public circuit
   void calcDC (void);
   void initDC (void);
   void calcOperatingPoints (void);
+  void calcAC (nr_double_t);
+  matrix& calcMatrixY (nr_double_t);
+  void initTR (void);
+  void calcTR (nr_double_t);
 
  private:
   nr_double_t UgsPrev;
