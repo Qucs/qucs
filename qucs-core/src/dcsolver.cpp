@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.8 2004/02/17 15:30:57 ela Exp $
+ * $Id: dcsolver.cpp,v 1.9 2004/02/18 17:45:11 ela Exp $
  *
  */
 
@@ -405,7 +405,7 @@ void dcsolver::runMNA (void) {
   z->print ();
 #endif
   eqnsys * e = new eqnsys ();
-  e->setAlgo (ALGO_GAUSS);
+  e->setAlgo (ALGO_LU_DECOMPOSITION);
   e->passEquationSys (A, x, z);
   e->solve ();
   delete e;
