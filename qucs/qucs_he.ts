@@ -4145,9 +4145,9 @@ Qt universal circuit simulator
 </translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki ISHIKAWA
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
-        <translation>Japanese by Toyoyuki ISHIKAWA
+        <translation>Japanese by Toyoyuki Ishikawa
 </translation>
     </message>
     <message>
