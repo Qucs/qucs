@@ -1,3 +1,9 @@
+2004-07-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{S-parameter of the single
+	microstrip line}): Added this section documenting the 
+	calculation of the microstrip line S-parameters.
+
 2004-07-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Dispersion}): Added some comments
