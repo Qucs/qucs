@@ -2112,36 +2112,92 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreisbogeneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Falsches &apos;painting&apos; Zeilenformat!</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ergebnisse für Teilschaltungen abspeichern</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Simulationszeitschritte</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>Integrationsverfahren</translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordnung des Integrationsverfahren</translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Anfangsschrittweite in Sekunden</translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>minimale Schrittweite in Sekunden</translation>
+    </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation>Qucs Editor Version </translation>
+    </message>
+    <message>
+        <source>
+very simple text editor for Qucs
+</source>
+        <translation>
+Einfacher Texteditor für Qucs
+</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] filename
+</source>
+        <translation>
+Verwendung:  qucsedit [-r] Dateiname
+</translation>
+    </message>
+    <message>
+        <source>    -r  open file read-only
+</source>
+        <translation>    -r  Dateien werden nur lesend geöffnet
+</translation>
+    </message>
+    <message>
+        <source>Too long command line argument!
+
+</source>
+        <translation>Kommandzeilenargument ist zu lang!
+
+</translation>
+    </message>
+    <message>
+        <source>Wrong command line argument!
+
+</source>
+        <translation>Falsches Kommandozeilenargument!
+
+</translation>
+    </message>
+    <message>
+        <source>Only one filename allowed!
+
+</source>
+        <translation>Es ist nur ein Dateiname erlaubt!
+
+</translation>
     </message>
 </context>
 <context>
@@ -3871,7 +3927,101 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Ellipse Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipsenbogen</translation>
+    </message>
+</context>
+<context>
+    <name>QucsEdit</name>
+    <message>
+        <source>File: </source>
+        <translation>Datei: </translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>Über</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Beenden</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation>Über...</translation>
+    </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation>Qucs Editor Version </translation>
+    </message>
+    <message>
+        <source>
+very simple text editor for Qucs
+</source>
+        <translation>
+Einfacher Texteditor für Qucs
+</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation>Copyright (C) 2004 by Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Enter a Filename</source>
+        <translation>Geben Sie einen Dateinamen ein</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Cannot write file: </source>
+        <translation>Datei kann nicht geschrieben werden:</translation>
+    </message>
+    <message>
+        <source>Cannot read file: </source>
+        <translation>Datei kann nicht gelesen werden:</translation>
+    </message>
+    <message>
+        <source>Closing document</source>
+        <translation>Schließe Dokument</translation>
+    </message>
+    <message>
+        <source>The text contains unsaved changes!
+</source>
+        <translation>Der Text enthält ungespeicherte Änderungen!
+</translation>
+    </message>
+    <message>
+        <source>Do you want to save the changes?</source>
+        <translation>Wollen Sie die Änderungen abspeichern?</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation>&amp;Speichern</translation>
+    </message>
+    <message>
+        <source>&amp;Discard</source>
+        <translation>&amp;Verwerfen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+</context>
+<context>
+    <name>QucsHelp</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation>Qucs Hilfesystem</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation>Hilfeindex</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -5008,17 +5158,25 @@ Druckt ausgewählte Elemente des aktuellen Dokuments</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreissymbol bearbeiten</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeitet das Symbol für diesen Schaltkreis</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreissymol bearbeiten
+
+Bearbeitet das Symbol für diesen Schaltkreis</translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca
+</source>
+        <translation>Portugiesisch von Luciano Franca
+</translation>
     </message>
 </context>
 <context>

@@ -1,3 +1,10 @@
+2004-09-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_de.ts: Updated german translation.
+
+	* Makefile.am (%.ts): Added translations of qucs-help and
+	qucs-edit.
+
 2004-09-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* docs/en/mathfunc.html: Documented some new mathematical

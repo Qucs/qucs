@@ -28,9 +28,11 @@
 #include <qmessagebox.h>
 #include <qdir.h>
 #include <qfont.h>
+#include <qtextcodec.h>
 
 #include "qucshelp.h"
 
+QDir QucsHelpDir; // directory to find helps files
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
@@ -126,6 +128,11 @@ int main(int argc, char *argv[])
   QTranslator tor( 0 );
   tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
   a.installTranslator( &tor );
+
+  QucsHelpDir = QString (DOCDIR) + QTextCodec::locale();
+  if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
+    QucsHelpDir = QString (DOCDIR) + "en";
+  }
 
   QString Page;
   if(argc > 1) Page = argv[1];

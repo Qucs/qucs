@@ -1,3 +1,12 @@
+2004-09-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-help/main.cpp (main): Using locale() string to check
+	whether the documentation directory in the specific language
+	is available.
+
+	* configure.ac: Made the DOCDIR variable for choosing a
+	specific language.
+
 2004-09-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.3 and bumped up to version
