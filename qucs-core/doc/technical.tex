@@ -853,6 +853,105 @@ inverted matrix of $\left[\underline{X}\right]$\\& &\\
 \end{figure}
 \FloatBarrier
 
+There are five different matrix forms for the correlations between the
+quantities at the transmission twoport shown in
+fig. \ref{fig:twoportiv}, each having its special meaning when
+connecting twoports with each other.
+
+\begin{itemize}
+
+\item Y-parameters (also called admittance parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{I}_{1}\\
+\underline{I}_{2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{Y}_{11} & \underline{Y}_{12}\\
+\underline{Y}_{21} & \underline{Y}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{V}_{1}\\
+\underline{V}_{2}
+\end{pmatrix}
+\end{equation}
+
+\item Z-parameters (also called impedance parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{V}_{1}\\
+\underline{V}_{2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{Z}_{11} & \underline{Z}_{12}\\
+\underline{Z}_{21} & \underline{Z}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{I}_{1}\\
+\underline{I}_{2}
+\end{pmatrix}
+\end{equation}
+
+\item H-parameters (also called hybrid parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{V}_{1}\\
+\underline{I}_{2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{H}_{11} & \underline{H}_{12}\\
+\underline{H}_{21} & \underline{H}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{I}_{1}\\
+\underline{V}_{2}
+\end{pmatrix}
+\end{equation}
+
+\item G-parameters (also called C-parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{I}_{1}\\
+\underline{V}_{1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{G}_{11} & \underline{G}_{12}\\
+\underline{G}_{21} & \underline{G}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{V}_{1}\\
+\underline{I}_{2}
+\end{pmatrix}
+\end{equation}
+
+\item A-parameters (also called chain or ABCD-parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{V}_{1}\\
+\underline{I}_{1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{A}_{11} & \underline{A}_{12}\\
+\underline{A}_{21} & \underline{A}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{V}_{2}\\
+-\underline{I}_{2}
+\end{pmatrix}
+\end{equation}
+
+\end{itemize}
+
 \begin{center}
 \begin{figure}[ht]
 \fboxsep=6pt
@@ -896,6 +995,7 @@ cascaded twoports\\[1ex]
 \hline
 \end{tabular}
 \end{figure}
+\FloatBarrier
 \end{center}
 
 Basically there are five different kinds of twoport connections.
@@ -972,6 +1072,46 @@ G &
 \label{fig:twoportab}
 \end{figure}
 \FloatBarrier
+
+\begin{itemize}
+
+\item S-parameters (also called scattering parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{b}_{1}\\
+\underline{b}_{2}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{S}_{11} & \underline{S}_{12}\\
+\underline{S}_{21} & \underline{S}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{a}_{1}\\
+\underline{a}_{2}
+\end{pmatrix}
+\end{equation}
+
+\item T-parameters (also called transfer scattering parameters)
+\begin{equation}
+\begin{pmatrix}
+\underline{a}_{1}\\
+\underline{b}_{1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{T}_{11} & \underline{T}_{12}\\
+\underline{T}_{21} & \underline{T}_{22}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\underline{b}_{2}\\
+\underline{a}_{2}
+\end{pmatrix}
+\end{equation}
+
+\end{itemize}
 
 \begin{tabular}{|c|c|c|}
 \hline
