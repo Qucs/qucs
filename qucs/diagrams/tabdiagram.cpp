@@ -40,15 +40,15 @@ TabDiagram::~TabDiagram()
 
 // ------------------------------------------------------------
 // calculates the text in the tabular
-void TabDiagram::calcDiagram()
+bool TabDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
   Arcs.clear();
 
   Graph *g = Graphs.first();
-  if(g == 0) return;
-  if(g->cPointsX.isEmpty()) return;
+  if(g == 0) return false;
+  if(g->cPointsX.isEmpty()) return false;
 
   QSize r;
   QFontMetrics  metrics(QucsSettings.font);
@@ -77,7 +77,7 @@ void TabDiagram::calcDiagram()
         Lines.append(new Line(x2-6, y2-4, x2+7, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-7, x2+6, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-1, x2+6, y2-4, QPen(QPen::red,2)));
-        return;
+        return false;
       }
     }
     Texts.append(new Text(x-4, y2-tHeight-1, Str)); // independent variable
@@ -97,7 +97,7 @@ void TabDiagram::calcDiagram()
             Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(QPen::red,2)));
             Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(QPen::red,2)));
             Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(QPen::red,2)));
-            return;
+            return false;
           }
         }
 
@@ -128,14 +128,14 @@ void TabDiagram::calcDiagram()
         Lines.append(new Line(x2-6, y2-4, x2+7, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-7, x2+6, y2-4, QPen(QPen::red,2)));
         Lines.append(new Line(x2,   y2-1, x2+6, y2-4, QPen(QPen::red,2)));
-        return;
+        return false;
       }
     }
     Texts.append(new Text(x, y2-tHeight-1, Str));  // dependent variable
 
 
     py = g->cPointsY;
-    if (!g->cPointsX.getFirst()) return;
+    if (!g->cPointsX.getFirst()) return false;
     for(int z=g->cPointsX.getFirst()->count * g->countY; z>0; z--) {
       if(y < 0) break;
       switch(g->numMode) {
@@ -156,7 +156,7 @@ void TabDiagram::calcDiagram()
           Lines.append(new Line(x2-6, y-4, x2+7, y-4, QPen(QPen::red,2)));
           Lines.append(new Line(x2,   y-7, x2+6, y-4, QPen(QPen::red,2)));
           Lines.append(new Line(x2,   y-1, x2+6, y-4, QPen(QPen::red,2)));
-          return;
+          return false;
         }
       }
 
@@ -166,6 +166,8 @@ void TabDiagram::calcDiagram()
     x += colWidth+10;
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
   }
+
+  return true;
 }
 
 // ------------------------------------------------------------

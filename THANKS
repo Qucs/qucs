@@ -1,0 +1,27 @@
+--
+-- THANKS
+-- 
+-- This is free software; you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation; either version 2, or (at your option)
+-- any later version.
+-- 
+-- This software is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+-- 
+-- You should have received a copy of the GNU General Public License
+-- along with this package; see the file COPYING.  If not, write to
+-- the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+-- Boston, MA 02111-1307, USA.  
+--
+
+Here are listed all the people who helped creating this package:
+
+Stefan Jahn <stefan@lkcc.org> for writing all of the scripts, setting
+	up the translation files, sending and fixing numberless bugs,
+	sharing his linux knowledge etc.
+
+Jens Flucke <jens.flucke@gmx.de> for making up the first draft of the
+	homepage.  Also for motivating the project.

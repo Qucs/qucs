@@ -95,10 +95,6 @@ public:
   bool  MarkerLeftRight(bool);
   bool  MarkerUpDown(bool);
 
-  bool  giveNodeNames(QTextStream*);
-  bool  createSubNetlist(QTextStream*);
-  bool  createNetlist(QFile*);
-
   QString copySelected(bool);
   bool    paste(QTextStream*, QPtrList<Element>*);
   bool    load();

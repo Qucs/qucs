@@ -1,0 +1,51 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta name="Author" content="Michael Margraf">
+<title>Qucs - Working with Subcircuits</title>
+</head>
+
+
+
+<body>
+<a name="top" id="top"></a>
+
+<center><h3>
+- Qucs -<br>
+Working with Subcircuits<br>
+</h3></center>
+
+Subcircuits are used to bring more clarity into a schematic. This is
+very useful in large circuits or in circuits, in which a component
+block appears several time.<br>
+In Qucs, each schematic containing a subcircuit port is a subcircuit.
+You can get a subcircuit port by using the toolbar, the components
+listview (in lumped components) or the menu (Insert->Insert port).
+After placing all subcircuit ports (two for example) you need to save
+the schematic (e.g. CTRL-S). By taking a look into the content
+listview (figure 1) you see that now there is a "2-port" right beside
+the schematic name (column "Note"). This note marks all documents
+which are subcircuits. Now change to a schematic where you want to
+use the subcircuit. Then press on the subcircuit name (content
+listview). By entering the document area again, you see that you now
+can place the subcirciut into the main circuit. Do so and complete
+the schematic. You can now perform a simulation. The result is the
+same as if all the components of the subcircuit are placed into the
+circuit directly.<br>
+
+<center>
+<img src="subcircuit.png"><br>Figure 1 - Accesing a subcircuit<br><br>
+</center>
+
+
+If you select a subcircuit component (click on its symbol in the
+schematic) you can step into the subcircuit schematic by pressing
+CTRL-I (of course, this function is also reachable via toolbar
+and via menu). You can step back by pressing CTRL-H.
+<br>
+
+
+<br><a href="#top">back to the top</a><br>
+</body>
+</html>

@@ -43,6 +43,10 @@ public:
   QString createUndoString(char);
   bool    rebuild(QString *s);
 
+  bool  createSubNetlist(QTextStream*);
+  bool  createNetlist(QFile*);
+
+
 private:
   bool  loadProperties(QTextStream *stream);
   void  simpleInsertComponent(Component *c);
@@ -51,6 +55,8 @@ private:
   bool  loadWires(QTextStream *stream, QPtrList<Wire> *List=0);
   bool  loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List);
   bool  loadPaintings(QTextStream *stream, QPtrList<Painting> *List);
+
+  bool  giveNodeNames(QTextStream*);
 
   QucsDoc  *Doc;
   QPtrList<Wire>      *Wires;

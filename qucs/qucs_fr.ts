@@ -1317,10 +1317,6 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Subcircuit Port</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1526,6 +1522,10 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Microstrip Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
