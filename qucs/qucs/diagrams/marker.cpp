@@ -124,6 +124,7 @@ void Marker::createText()
   while((unsigned int)nVarPos < pGraph->cPointsX.count())
     VarPos[nVarPos++] = 0.0;   // fill up VarPos
 
+
   // independent variables
   int n = 0, m = 1, i;
   DataX *pD;
@@ -141,6 +142,7 @@ void Marker::createText()
     VarPos[nVarPos++] = *pp;
     Text += pD->Var + ": " + QString::number(*pp,'g',Precision) + "\n";
   }
+
 
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
@@ -344,8 +346,7 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // ---------------------------------------------------------------------
 QString Marker::save()
 {
-  int GraphNum = Diag->Graphs.findRef(pGraph);
-  QString s  = "\t<Mkr "+QString::number(GraphNum)+" ";
+  QString s  = "<Mkr ";
 
   for(int i=0; i<nVarPos; i++)
     s += QString::number(VarPos[i])+"/";
@@ -370,11 +371,7 @@ bool Marker::load(const QString& _s)
   if(s.section(' ',0,0) != "Mkr") return false;
 
   QString n;
-  n  = s.section(' ',1,1);    // pGraph
-  pGraph = Diag->Graphs.at(n.toInt(&ok));
-  if(!ok) return false;
-
-  n  = s.section(' ',2,2);    // VarPos
+  n  = s.section(' ',1,1);    // VarPos
   nVarPos = 0;
   int i=0, j;
   do {
@@ -385,20 +382,20 @@ bool Marker::load(const QString& _s)
     i = j+1;
   } while(j >= 0);
 
-  n  = s.section(' ',3,3);    // x1
+  n  = s.section(' ',2,2);    // x1
   x1 = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',4,4);    // y1
+  n  = s.section(' ',3,3);    // y1
   y1 = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',5,5);      // Precision
+  n  = s.section(' ',4,4);      // Precision
   if(n.isEmpty()) return true;  //  is optional
   Precision = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',6,6);      // numMode
+  n  = s.section(' ',5,5);      // numMode
   if(n.isEmpty()) return true;  //  is optional
   numMode = n.toInt(&ok);
   if(!ok) return false;
@@ -406,12 +403,34 @@ bool Marker::load(const QString& _s)
   return true;
 }
 
-// --------------------------------------------------------------------------
-// Checks if the coordinates x/y point to the marker text. x/y are relative to diagram cx/cy.
+// ------------------------------------------------------------------------
+// Checks if the coordinates x/y point to the marker text. x/y are relative
+// to diagram cx/cy.
 int Marker::getSelected(int x_, int y_)
 {
   if(x_ >= x1) if(x_ <= x1+x2) if(y_ >= y1) if(y_ <= y1+y2)
     return 1;
 
   return -1;
+}
+
+// ------------------------------------------------------------------------
+Marker* Marker::sameNewOne(Graph *pGraph_)
+{
+  Marker *pm = new Marker(Diag, pGraph_, 0, cx ,cy);
+
+  pm->x1 = x1;  pm->y1 = y1;
+  pm->x2 = x2;  pm->y2 = y2;
+
+  pm->nVarPos = nVarPos;
+  for(int z=0; z<nVarPos; z++)
+    pm->VarPos[z] = VarPos[z];
+
+  pm->Text      = Text;
+  pm->lookNfeel = lookNfeel;
+
+  pm->Precision = Precision;
+  pm->numMode   = numMode;
+
+  return pm;
 }

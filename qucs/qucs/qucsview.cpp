@@ -267,7 +267,7 @@ void QucsView::endElementMoving()
 	d->insertNodeLabel((WireLabel*)pe);
 	break;
       case isMarker:
-	((Marker*)pe)->Diag->Markers.append((Marker*)pe);
+	((Marker*)pe)->pGraph->Markers.append((Marker*)pe);
 	break;
       default: ;
     }
@@ -1463,10 +1463,11 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
 
   Diagram *pd = (Diagram*)focusElement;
   pd->updateGraphData();
-  for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
-    pm->x1 += MAx3;      // correct changes due to move of diagram corner
-    pm->y1 -= MAy3;
-  }
+  for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+    for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+      pm->x1 += MAx3;      // correct changes due to move of diagram corner
+      pm->y1 -= MAy3;
+    }
 
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;

@@ -161,10 +161,7 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
   DocChanged = c;
 
   if(fillStack) {
-//QTime t;
-//QString str;
-//t.start();
-//for(int z=0; z<100; z++) str = File.createClipboardFile();
+
     QString *Curr = UndoStack.current();
     while(Curr != UndoStack.last())
       UndoStack.remove();   // remove "Redo" items
@@ -174,7 +171,7 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
         UndoStack.remove();
 
     UndoStack.append(new QString(File.createUndoString(Op)));
-//qDebug("time: %d ms", t.elapsed());
+
     if(!App->undo->isEnabled()) App->undo->setEnabled(true);
     if(App->redo->isEnabled())  App->redo->setEnabled(false);
 
@@ -1081,7 +1078,7 @@ Marker* QucsDoc::setMarker(int x, int y)
 	n  = pg->getSelected(x-pd->cx, pd->cy-y);
 	if(n > 0) {
 	  Marker *pm = new Marker(pd, pg, n-1, x-pd->cx, pd->cy-y);
-	  pd->Markers.append(pm);
+	  pg->Markers.append(pm);
 	  setChanged(true, true);
 	  return pm;
 	}
@@ -1097,13 +1094,14 @@ bool QucsDoc::MarkerLeftRight(bool left)
 {
   bool acted = false;
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    // test all markers of the diagram
-    for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
-      if(pm->isSelected) {
-	if(!pm->moveLeftRight(left)) continue;
-	acted = true;
+    for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
+      // test all markers of the diagram
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+	if(pm->isSelected) {
+	  if(!pm->moveLeftRight(left)) continue;
+	  acted = true;
+	}
       }
-    }
   if(acted)  setChanged(true, true, 'm');
   return acted;
 }
@@ -1114,13 +1112,14 @@ bool QucsDoc::MarkerUpDown(bool up)
 {
   bool acted = false;
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    // test all markers of the diagram
-    for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
-      if(pm->isSelected) {
-	if(!pm->moveUpDown(up)) continue;
-	acted = true;
+    for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
+      // test all markers of the diagram
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+	if(pm->isSelected) {
+	  if(!pm->moveUpDown(up)) continue;
+	  acted = true;
+	}
       }
-    }
   if(acted)  setChanged(true, true, 'm');
   return acted;
 }
@@ -1183,20 +1182,24 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     }
   }
 
+  Graph *pg;
   // test all diagrams
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev()) {
-    // test markers of diagram
-    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next())
-      if(pm->getSelected(x-pd->cx, pd->cy-y) > 0) {
-        if(flag) { pm->isSelected ^= flag; return pm; }
-        if(pe_sel) {
-	  pe_sel->isSelected = false;
-	  return pm;
-	}
-        if(pe_1st == 0) pe_1st = pm;  // give access to elements lying beneath
-        if(pm->isSelected) pe_sel = pm;
-      }
 
+    for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+      // test markers of graphs
+      for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
+        if(pm->getSelected(x-pd->cx, pd->cy-y) > 0) {
+          if(flag) { pm->isSelected ^= flag; return pm; }
+          if(pe_sel) {
+	    pe_sel->isSelected = false;
+	    return pm;
+	  }
+          if(pe_1st == 0) pe_1st = pm; // give access to elements beneath
+          if(pm->isSelected) pe_sel = pm;
+        }
+
+    // resize area clicked ?
     if(pd->isSelected)
       if(pd->ResizeTouched(x, y))
 	if(pe_1st == 0) {
@@ -1207,7 +1210,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     if(pd->getSelected(x, y)) {
 
       // test graphs of diagram
-      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+      for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
         if(pg->getSelected(x-pd->cx, pd->cy-y) > 0) {
           if(flag) { pg->isSelected ^= flag; return pg; }
           if(pe_sel) {
@@ -1217,6 +1220,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
           if(pe_1st == 0) pe_1st = pg;  // access to elements lying beneath
           if(pg->isSelected) pe_sel = pg;
         }
+
 
       if(flag) { pd->isSelected ^= flag; return pd; }
       if(pe_sel) {
@@ -1273,13 +1277,15 @@ void QucsDoc::deselectElements(Element *e)
   for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {
     if(e != pd)  pd->isSelected = false;
 
-    // test markers of diagram
-    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next())
-      if(e != pm) pm->isSelected = false;
-
     // test graphs of diagram
-    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
       if(e != pg) pg->isSelected = false;
+
+      // test markers of graph
+      for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
+        if(e != pm) pm->isSelected = false;
+    }
+
   }
 
   // test all paintings
@@ -1353,18 +1359,18 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
   // test all diagrams *******************************************
   for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {
     // test graphs of diagram
-    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
       if(pg->isSelected &= flag) z++;
 
-    // test markers of diagram
-    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next()) {
-      pm->Bounding(cx1, cy1, cx2, cy2);
-      if(pd->cx+cx1 >= x1) if(pd->cx+cx2 <= x2)
-        if(pd->cy-cy1 >= y1) if(pd->cy-cy2 <= y2) {
-          pm->isSelected = true;  z++;
-          continue;
-        }
-      if(pm->isSelected &= flag) z++;
+      // test markers of graph
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+	pm->Bounding(cx1, cy1, cx2, cy2);
+	if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
+	    pm->isSelected = true;  z++;
+	    continue;
+          }
+        if(pm->isSelected &= flag) z++;
+      }
     }
 
     // test diagram itself
@@ -1539,13 +1545,14 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
       pd = Diags.current();
     }
     else {
-      for(Marker *pm = pd->Markers.first(); pm != 0; )
-        if(pm->isSelected) {
-          p->append(pm);
-          pd->Markers.take();
-          pm = pd->Markers.current();
-        }
-        else pm = pd->Markers.next();
+      for(Graph *pg = pd->Graphs.first(); pg!=0; pg = pd->Graphs.next())
+        for(Marker *pm = pg->Markers.first(); pm != 0; )
+          if(pm->isSelected) {
+            p->append(pm);
+            pg->Markers.take();
+            pm = pg->Markers.current();
+          }
+          else pm = pg->Markers.next();
 
       pd = Diags.next();
     }
@@ -1863,14 +1870,15 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
     if(y1 < ymin) ymin = y1;
     if(y2 > ymax) ymax = y2;
 
-    // test all markers of diagram
-    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next()) {
-      pm->Bounding(x1, y1, x2, y2);
-      if(x1 < xmin) xmin = x1;
-      if(x2 > xmax) xmax = x2;
-      if(y1 < ymin) ymin = y1;
-      if(y2 > ymax) ymax = y2;
-    }
+    for(Graph *pg = pd->Graphs.first(); pg!=0; pg = pd->Graphs.next())
+      // test all markers of diagram
+      for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
+        pm->Bounding(x1, y1, x2, y2);
+        if(x1 < xmin) xmin = x1;
+        if(x2 > xmax) xmax = x2;
+        if(y1 < ymin) ymin = y1;
+        if(y2 > ymax) ymax = y2;
+      }
   }
 
   // find boundings of all Paintings
@@ -2285,23 +2293,24 @@ bool QucsDoc::deleteElements()
       sel = true;
     }
     else {
-      // all markers of diagram
-      for(Marker *pm = pd->Markers.first(); pm != 0; )
-        if(pm->isSelected) {
-          pd->Markers.remove();
-          pm = pd->Markers.current();
-          sel = true;
-        }
-        else  pm = pd->Markers.next();
-
       // all graphs of diagram
-      for(Graph *pg = pd->Graphs.first(); pg != 0; )
+      for(Graph *pg = pd->Graphs.first(); pg != 0; ) {
+        // all markers of diagram
+        for(Marker *pm = pg->Markers.first(); pm != 0; )
+          if(pm->isSelected) {
+            pg->Markers.remove();
+            pm = pg->Markers.current();
+            sel = true;
+          }
+          else  pm = pg->Markers.next();
+
         if(pg->isSelected) {
           pd->Graphs.remove();
           pg = pd->Graphs.current();
           sel = true;
         }
         else  pg = pd->Graphs.next();
+      }
       pd->recalcGraphData();  // update diagram (resize etc.)
 
       pd = Diags.next();
@@ -2369,7 +2378,11 @@ int QucsDoc::save()
   int result = File.save();
   if(result >= 0) {
     setChanged(false);
-    UndoStack.current()->at(1) = 'i';  // state of being unchanged
+    QString *ps = UndoStack.current();
+    for(QString *p = UndoStack.first(); p != 0; p = UndoStack.next())
+      p->at(1) = ' ';  // state of being changed
+    ps->at(1) = 'i';   // state of being unchanged
+    UndoStack.findRef(ps);  // back to current
   }
   return result;
 }
@@ -2724,17 +2737,18 @@ int QucsDoc::elementsOnGrid()
       count++;
     }
 
-    // test markers of diagram
-    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next())
-      if(pm->isSelected) {
-	x = pm->x1 + pd->cx;
-	y = pm->y1 + pd->cy;
-	setOnGrid(x, y);
-	pm->x1 = x - pd->cx;
-	pm->y1 = y - pd->cy;
-	pm->isSelected = false;
-	count++;
-      }
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
+      // test markers of diagram
+      for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
+        if(pm->isSelected) {
+	  x = pm->x1 + pd->cx;
+	  y = pm->y1 + pd->cy;
+	  setOnGrid(x, y);
+	  pm->x1 = x - pd->cx;
+	  pm->y1 = y - pd->cy;
+	  pm->isSelected = false;
+	  count++;
+        }
   }
 
   // test all paintings
