@@ -57,6 +57,14 @@ MStee::MStee()
 		QObject::tr("width of line 2")));
   Props.append(new Property("W3", "2 mm", true,
 		QObject::tr("width of line 3")));
+  Props.append(new Property("MSModel", "Hammerstad", false,
+	QObject::tr("quasi-static microstrip model")+
+	" [Hammerstad, Wheeler, Schneider]"));
+  Props.append(new Property("MSDispModel", "Kirschning", false,
+	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
+	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
+  Props.append(new Property("Temp", "26.85", true,
+		QObject::tr("temperature in degree Celsius")));
 }
 
 MStee::~MStee()

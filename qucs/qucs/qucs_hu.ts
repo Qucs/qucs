@@ -2367,6 +2367,14 @@ Használat:  qucsedit [-r] fájl
         <source>calculate noise voltages</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>material at the backside of the substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>temperature in degree Celsius</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

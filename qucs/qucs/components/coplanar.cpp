@@ -64,6 +64,9 @@ Coplanar::Coplanar()
 		QObject::tr("width of a gap")));
   Props.append(new Property("L", "10 mm", true,
 		QObject::tr("length of the line")));
+  Props.append(new Property("Backside", "Air", true,
+		QObject::tr("material at the backside of the substrate")+
+		" [Metal, Air]"));
 }
 
 Coplanar::~Coplanar()
