@@ -1,5 +1,20 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>HelpDialog</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation>Qucs Hilfesystem</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation>Hilfeindex</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Schließen</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>untitled</source>
@@ -1270,7 +1285,7 @@ Simulation endete am </translation>
         <source>
 Errors occured during simulation on </source>
         <translation>
-Fehler sind während der Simulation aufgetreten am</translation>
+Fehler sind während der Simulation aufgetreten am </translation>
     </message>
     <message>
         <source>Aborted.
@@ -1334,7 +1349,7 @@ Fehler:
     </message>
     <message>
         <source> - Project: </source>
-        <translation type="unfinished"> - Projekt: </translation>
+        <translation> - Projekt: </translation>
     </message>
     <message>
         <source>Info</source>
@@ -1406,7 +1421,7 @@ Fehler:
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished">Phasenschieber</translation>
+        <translation>Phasenschieber</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
@@ -1599,6 +1614,46 @@ Weiter ?</translation>
     <message>
         <source>Choose Project Directory for Deleting</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation>Hilfeindex</translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation>Hilfeindex...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation>Index der Qucs Hilfe</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation>Hilfe Index
+
+Index der internen Qucs Hilfe</translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation>Starthilfe</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation>Starthilfe...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation>Starthilfe für Qucs</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation>Starthilfe
+
+Kurze Einführung in Qucs</translation>
     </message>
 </context>
 <context>

@@ -22,16 +22,16 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = sim bitmaps components diagrams paintings
+SUBDIRS = sim bitmaps components diagrams paintings docs
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucsview.h settingsdialog.h messagebox.h simmessage.h \
-  fileshowdialog.h qucs.h
+MOCHEADERS = qucsview.h settingsdialog.h messagebox.h simmessage.h qucs.h \
+  fileshowdialog.h helpdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp \
   element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp          \
-  qucsview.cpp qucs.cpp main.cpp $(MOCFILES)
+  qucsview.cpp qucs.cpp main.cpp helpdialog.cpp $(MOCFILES)
 
 INCLUDES = $(QINCLUDES)
 qucs_LDFLAGS = $(QLDFLAGS)
@@ -54,6 +54,7 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 %.qm: %.ts
 	$(LRELEASE) $<
+
 # installation of translations
 langdatadir = ${prefix}/share/qucs/lang
 langdata_DATA = $(TRANSFILES)

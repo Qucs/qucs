@@ -1,5 +1,20 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>HelpDialog</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>untitled</source>
@@ -1476,6 +1491,42 @@ Go on ?</source>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
