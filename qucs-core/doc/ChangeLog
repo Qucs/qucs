@@ -1,3 +1,8 @@
+2004-01-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section*{Extensions to the MNA}): Documented
+	VCCS, VCVS and CCCS for use in DC analysis.
+
 2003-12-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (CLEANFILES): Updated clean files.
