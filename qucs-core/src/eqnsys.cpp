@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.5 2004-07-05 21:41:46 ela Exp $
+ * $Id: eqnsys.cpp,v 1.6 2004-07-11 17:06:09 margraf Exp $
  *
  */
 
@@ -238,7 +238,7 @@ void eqnsys::solve_lu (void) {
     }
     // check pivot element and throw appropriate exception
     if (MaxPivot <= 0) {
-      exception * e = new exception (EXCEPTION_PIVOT);
+      qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
       e->setText ("no pivot != 0 found during LU decomposition");
       e->setData (c);
       throw_exception (e);
@@ -279,7 +279,7 @@ void eqnsys::solve_lu (void) {
 
     // check for possible division by zero
     if (A->get (i, i) == 0) {
-      exception * e = new exception (EXCEPTION_WRONG_VOLTAGE);
+      qucs::exception * e = new qucs::exception (EXCEPTION_WRONG_VOLTAGE);
       e->setText ("forward substitution failed in LU decomposition");
       e->setData (i);
       throw_exception (e);
