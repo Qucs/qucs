@@ -1,3 +1,9 @@
+2004-07-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Two-Port matrix 
+	conversion based on current and voltage}): Added some more
+	twoport theory.
+
 2004-07-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Two-Port transformations}): 
