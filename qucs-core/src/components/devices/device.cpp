@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.12 2004-10-18 16:21:21 ela Exp $
+ * $Id: device.cpp,v 1.13 2004-12-15 19:55:31 raimi Exp $
  *
  */
 
@@ -120,10 +120,19 @@ nr_double_t pnVoltage (nr_double_t Ud, nr_double_t Uold,
   nr_double_t arg;
   if (Ud > Ucrit && fabs (Ud - Uold) > 2 * Ut) {
     if (Uold > 0) {
-      arg = 1 + (Ud - Uold) / Ut;
-      Ud = arg > 0 ? Uold + Ut * log (arg) : Ucrit;
+      arg = (Ud - Uold) / Ut;
+      if (arg > 0)
+	Ud = Uold + Ut * (2 + log (arg - 2));
+      else
+	Ud = Uold - Ut * (2 + log (2 - arg));
     }
-    else Ud = Ut * log (Ud / Ut);
+    else Ud = Uold < 0 ? Ut * log (Ud / Ut) : Ucrit;
+  }
+  else {
+    if (Ud < 0) {
+      arg = Uold > 0 ? -1 - Uold : 2 * Uold - 1;
+      if (Ud < arg) Ud = arg;
+    }
   }
   return Ud;
 }

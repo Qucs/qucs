@@ -1,3 +1,8 @@
+2004-12-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Translation of device properties only if
+	not already adjusted.
+
 2004-11-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed the transformation of mutual

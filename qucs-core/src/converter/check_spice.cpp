@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.8 2004-12-01 20:23:47 raimi Exp $
+ * $Id: check_spice.cpp,v 1.9 2004-12-15 19:55:33 raimi Exp $
  *
  */
 
@@ -839,11 +839,13 @@ void spice_adjust_properties (struct definition_t * def) {
   if (entry) {
     struct pair_t * pair;
     for (pair = def->pairs; pair != NULL; pair = pair->next) {
+      int found = 0;
       // handle required properties
       for (int i = 0; PROP_IS_PROP (entry->required[i]); i++) {
 	if (!strcasecmp (entry->required[i].key, pair->key)) {
 	  free (pair->key);
 	  pair->key = strdup (entry->required[i].key);
+	  found++;
 	  break;
 	}
       }
@@ -852,11 +854,12 @@ void spice_adjust_properties (struct definition_t * def) {
 	if (!strcasecmp (entry->optional[i].key, pair->key)) {
 	  free (pair->key);
 	  pair->key = strdup (entry->optional[i].key);
+	  found++;
 	  break;
 	}
       }
       // some other direct translations
-      spice_adjust_alias_properties (pair);
+      if (!found) spice_adjust_alias_properties (pair);
     }
   }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.16 2004-11-24 19:15:51 raimi Exp $
+ * $Id: diode.cpp,v 1.17 2004-12-15 19:55:31 raimi Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "logging.h"
 #include "complex.h"
 #include "object.h"
 #include "node.h"
@@ -112,6 +113,41 @@ void diode::initDC (void) {
   else {
     disableResistance (this, rs, getNet (), NODE_A);
   }
+
+  // calculate actual breakdown voltage
+  Bv = getPropertyDouble ("Bv");
+  if (Bv != 0) {
+    nr_double_t Ibv, Is, tol, Ut, Xbv, Xibv;
+    Ibv = getPropertyDouble ("Ibv");
+    Is = getPropertyDouble ("Is");
+    Ut = kelvin (T) * kBoverQ;
+    // adjust very small breakdown currents
+    if (Ibv < Is * Bv / Ut) {
+      Ibv = Is * Bv / Ut;
+      Xbv = Bv;
+      logprint (LOG_ERROR, "WARNING: Increased breakdown current to %g to "
+		"match the saturation current %g\n", Ibv, Is);
+    }
+    // fit reverse and forward regions
+    else {
+      int good = 0;
+      tol = 1e-3 * Ibv;
+      Xbv = Bv - Ut * log (1 + Ibv / Is);
+      for (int i = 0; i < 25 ; i++) {
+	Xbv = Bv - Ut * log (Ibv / Is + 1 - Xbv / Ut);
+	Xibv = Is * (exp ((Bv - Xbv) / Ut) - 1 + Xbv / Ut);
+	if (fabs (Xibv - Ibv) < tol) {
+	  Bv = Xbv;
+	  good = 1;
+	  break;
+	}
+      }
+      if (!good) {
+	logprint (LOG_ERROR, "WARNING: Unable to fit reverse and forward "
+		  "diode regions using Bv=%g and Ibv=%g\n", Bv, Ibv);
+      }
+    }
+  }
 }
 
 void diode::calcDC (void) {
@@ -129,17 +165,38 @@ void diode::calcDC (void) {
 
   // critical voltage necessary for bad start values
   Ucrit = pnCriticalVoltage (Is, N * Ut);
-  Uprev = Ud = pnVoltage (Ud, Uprev, Ut * N, Ucrit);
+  if (Bv != 0 && Ud < MIN (0, -Bv + 10 * N * Ut)) {
+    nr_double_t V = -(Ud + Bv);
+    V = pnVoltage (V, -(Uprev + Bv), Ut * N, Ucrit);
+    Ud = -(V + Bv);
+  }
+  else {
+    Ud = pnVoltage (Ud, Uprev, Ut * N, Ucrit);
+  }
+  Uprev = Ud;
 
   // tiny derivative for little junction voltage
-  gtiny = Ud < - 10 * Ut * N ? (Is + Isr) : 0;
+  gtiny = (Ud < - 10 * Ut * N && Bv != 0) ? (Is + Isr) : 0;
 
-  gd = pnConductance (Ud, Is, Ut * N) +
-    pnConductance (Ud, Isr, Ut * Nr) + gtiny;
-  Id = pnCurrent (Ud, Is, Ut * N) +
-    pnCurrent (Ud, Isr, Ut * Nr) + gtiny * Ud;
+  if (Ud >= -3 * N * Ut) { 
+    gd = pnConductance (Ud, Is, Ut * N) +
+      pnConductance (Ud, Isr, Ut * Nr) + gtiny;
+    Id = pnCurrent (Ud, Is, Ut * N) +
+      pnCurrent (Ud, Isr, Ut * Nr) + gtiny * Ud;
+  }
+  else if (Bv == 0 || Ud >= -Bv) {
+    nr_double_t a = 3 * N * Ut / (Ud * M_E);
+    a = cubic (a);
+    Id = -Is * (1 + a) + gtiny * Ud;
+    gd = +Is * 3 * a / Ud + gtiny;
+  }
+  else {
+    nr_double_t a = exp (-(Bv + Ud) / N / Ut);
+    Id = -Is * a + gtiny * Ud;
+    gd = +Is * a / Ut / N + gtiny;
+  }
+
   Ieq = Id - Ud * gd;
-
   setI (NODE_C, +Ieq);
   setI (NODE_A, -Ieq);
 

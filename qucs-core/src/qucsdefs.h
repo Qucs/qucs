@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.8 2004-12-09 20:30:07 raimi Exp $
+ * $Id: qucsdefs.h,v 1.9 2004-12-15 19:55:29 raimi Exp $
  *
  */
 
@@ -261,6 +261,8 @@ struct define_t qucs_definition_available[] =
     { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Isr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Nr", PROP_REAL, { 2, PROP_NO_STR }, { 1, 100 } },
+      { "Bv", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ibv", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 - PROP_VAL_MIN } },
       { "Cp", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
@@ -496,6 +498,16 @@ struct define_t qucs_definition_available[] =
   /* microstrip via hole */
   { "MVIA", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "D", PROP_REAL, { 100e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
+  },
+  /* coplanar line */
+  { "CLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },

@@ -1,3 +1,13 @@
+2004-12-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwline.cpp: Applied Vincent's preliminary
+	implementation of the coplanar line with back-metalization.
+
+	* devices/diode.cpp: Implemented breakdown voltage/current
+	parameters and smoothed the iv-curve.
+
+	* devices/device.cpp: Improved pn-junction voltage delimiter.
+
 2004-12-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Fixed a bug in the BJT model occurring when
