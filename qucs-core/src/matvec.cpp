@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.9 2004/10/12 18:13:09 ela Exp $
+ * $Id: matvec.cpp,v 1.10 2004/10/20 22:58:55 ela Exp $
  *
  */
 
@@ -59,7 +59,12 @@ matvec::matvec (int length, int r, int c) {
   rows = r;
   cols = c;
   name = NULL;
-  data = (length > 0) ? new matrix[length] (r, c) : NULL;
+  if (size > 0) {
+    data = new matrix[size];
+    for (int i = 0; i < size; i++) data[i] = matrix (r, c);
+  } else {
+    data = NULL;
+  }
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -73,7 +78,7 @@ matvec::matvec (const matvec & m) {
 
   // copy matvec elements
   if (size > 0) {
-    data = new matrix[size] (rows, cols);
+    data = new matrix[size];
     for (int i = 0; i < size; i++) data[i] = m.data[i];
   }
 }
