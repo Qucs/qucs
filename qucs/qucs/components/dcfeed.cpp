@@ -41,8 +41,8 @@ dcFeed::dcFeed()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "DCfeed";
-  Model = "dcfeed";
+  Sign  = "DCFeed";
+  Model = "DCFeed";
   Name  = "L";
 }
 

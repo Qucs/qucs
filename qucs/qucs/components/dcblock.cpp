@@ -39,8 +39,8 @@ dcBlock::dcBlock()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "DCblock";
-  Model = "DCblock";
+  Sign  = "DCBlock";
+  Model = "DCBlock";
   Name  = "C";
 }
 
