@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.h,v 1.1 2004-09-11 20:39:29 ela Exp $
+ * $Id: transient.h,v 1.2 2004-09-12 14:09:19 ela Exp $
  *
  */
 
@@ -26,15 +26,18 @@
 #define __TRANSIENT_H__
 
 class circuit;
+class integrator;
 
 class transient
 {
  public:
   friend void calcCoefficients (char *, int, nr_double_t *, nr_double_t);
-  friend void integrateEuler (circuit *, int, nr_double_t, nr_double_t&,
+  friend void integrateEuler (integrator *, int, nr_double_t, nr_double_t&,
 			      nr_double_t&);
-  friend void integrateBilinear (circuit *, int, nr_double_t, nr_double_t&,
+  friend void integrateBilinear (integrator *, int, nr_double_t, nr_double_t&,
 				 nr_double_t&);
+  friend void integrateGear (integrator *, int, nr_double_t, nr_double_t&,
+			     nr_double_t&);
   friend void setIntegrationMethod (circuit *, char *);
 };
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.2 2004-09-09 11:31:51 ela Exp $
+ * $Id: nasolver.h,v 1.3 2004-09-12 14:09:19 ela Exp $
  *
  */
 
@@ -54,6 +54,9 @@ class nasolver : public analysis
   char * getDescription (void) { return desc; }
   void saveResults (char *, char *, int, vector * f = NULL);
 
+ protected:
+  void savePreviousIteration (void);
+
  private:
   void createMatrix (void);
   void assignVoltageSources (void);
@@ -66,7 +69,6 @@ class nasolver : public analysis
   void createIMatrix (void);
   void createEMatrix (void);
   void runMNA (void);
-  void savePreviousIteration (void);
   char * createV (int, char *, int);
   char * createI (int, char *, int);
   char * createOP (char *, char *);
@@ -76,13 +78,15 @@ class nasolver : public analysis
   nr_type_t MatValX (complex, complex *);
   nr_type_t MatValX (complex, nr_double_t *);
 
- private:
-  nodelist * nlist;
-  tmatrix<nr_type_t> * A;
+ protected:
   tmatrix<nr_type_t> * z;
   tmatrix<nr_type_t> * x;
   tmatrix<nr_type_t> * xprev;
   tmatrix<nr_type_t> * zprev;
+
+ private:
+  nodelist * nlist;
+  tmatrix<nr_type_t> * A;
   nr_double_t reltol;
   nr_double_t abstol;
   nr_double_t vntol;

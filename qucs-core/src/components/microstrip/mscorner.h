@@ -19,21 +19,19 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.h,v 1.2 2004-08-12 13:59:54 ela Exp $
+ * $Id: mscorner.h,v 1.3 2004-09-12 14:09:20 ela Exp $
  *
  */
 
 #ifndef __MSCORNER_H__
 #define __MSCORNER_H__
 
-class spsolver;
-
 class mscorner : public circuit
 {
  public:
   mscorner ();
   void calcSP (nr_double_t);
-  void initSP (spsolver *);
+  void initSP (void);
   void calcDC (void);
 
  private:

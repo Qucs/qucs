@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tee.h,v 1.4 2004-09-09 11:31:51 ela Exp $
+ * $Id: tee.h,v 1.5 2004-09-12 14:09:19 ela Exp $
  *
  */
 
@@ -29,7 +29,7 @@ class tee : public circuit
 {
  public:
   tee ();
-  void initDC (dcsolver *);
+  void initDC (void);
 };
 
 #endif /* __TEE_H__ */

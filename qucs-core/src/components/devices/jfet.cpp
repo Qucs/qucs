@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.14 2004-08-19 19:44:24 ela Exp $
+ * $Id: jfet.cpp,v 1.15 2004-09-12 14:09:20 ela Exp $
  *
  */
 
@@ -37,8 +37,6 @@
 #include "node.h"
 #include "circuit.h"
 #include "net.h"
-#include "analysis.h"
-#include "dcsolver.h"
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
@@ -105,7 +103,7 @@ void jfet::calcNoise (nr_double_t frequency) {
   setMatrixN (cytocs (y * z0, getMatrixS ()));
 }
 
-void jfet::initDC (dcsolver * solver) {
+void jfet::initDC (void) {
 
   // initialize starting values
   setV (NODE_G, 0.8);
@@ -121,26 +119,26 @@ void jfet::initDC (dcsolver * solver) {
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
+    rs = splitResistance (this, rs, this->getNet (), "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
   }
   // no series resistance at source
   else {
-    disableResistance (this, rs, solver->getNet (), NODE_S);
+    disableResistance (this, rs, getNet (), NODE_S);
   }
 
   // possibly insert series resistance at drain
   nr_double_t Rd = getPropertyDouble ("Rd");
   if (Rd != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
+    rd = splitResistance (this, rd, getNet (), "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);
     rd->setProperty ("R", Rd);
   }
   // no series resistance at drain
   else {
-    disableResistance (this, rd, solver->getNet (), NODE_D);
+    disableResistance (this, rd, getNet (), NODE_D);
   }
 }
 

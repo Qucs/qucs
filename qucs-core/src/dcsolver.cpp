@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.28 2004-09-09 11:31:51 ela Exp $
+ * $Id: dcsolver.cpp,v 1.29 2004-09-12 14:09:19 ela Exp $
  *
  */
 
@@ -94,6 +94,6 @@ void dcsolver::calc (void) {
 void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initDC (this);
+    c->initDC ();
   }
 }

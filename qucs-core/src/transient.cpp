@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.1 2004-09-11 20:39:29 ela Exp $
+ * $Id: transient.cpp,v 1.2 2004-09-12 14:09:19 ela Exp $
  *
  */
 
@@ -93,37 +93,40 @@ void calcCoefficients (char * IMethod, int order, nr_double_t * coefficients,
 }
 
 // This is the implicit Euler integrator.
-void integrateEuler (circuit * c, int qstate, nr_double_t cap,
+void integrateEuler (integrator * c, int qstate, nr_double_t cap,
 		     nr_double_t& geq, nr_double_t& ceq) {
+  nr_double_t * coeff = c->getCoefficients ();
   int cstate = qstate + 1;
   nr_double_t cur;
-  geq = cap * c->coefficients[COEFF_G];
-  ceq = c->getState (qstate, 1) * c->coefficients[1];
-  cur = c->getState (qstate) * c->coefficients[COEFF_G] + ceq;
+  geq = cap * coeff[COEFF_G];
+  ceq = c->getState (qstate, 1) * coeff[1];
+  cur = c->getState (qstate) * coeff[COEFF_G] + ceq;
   c->setState (cstate, cur);
 }
 
 // Trapezoidal integrator.
-void integrateBilinear (circuit * c, int qstate, nr_double_t cap,
+void integrateBilinear (integrator * c, int qstate, nr_double_t cap,
 			nr_double_t& geq, nr_double_t& ceq) {
+  nr_double_t * coeff = c->getCoefficients ();
   int cstate = qstate + 1;
   nr_double_t cur;
-  geq = cap * c->coefficients[COEFF_G];
-  ceq = c->getState (qstate, 1) * c->coefficients[1] - c->getState (cstate, 1);
-  cur = c->getState (qstate) * c->coefficients[COEFF_G] + ceq;
+  geq = cap * coeff[COEFF_G];
+  ceq = c->getState (qstate, 1) * coeff[1] - c->getState (cstate, 1);
+  cur = c->getState (qstate) * coeff[COEFF_G] + ceq;
   c->setState (cstate, cur);
 }
 
 // Integrator using the Gear coefficients.
-void integrateGear (circuit * c, int qstate, nr_double_t cap,
+void integrateGear (integrator * c, int qstate, nr_double_t cap,
 		    nr_double_t& geq, nr_double_t& ceq) {
+  nr_double_t * coeff = c->getCoefficients ();
   int i, cstate = qstate + 1;
   nr_double_t cur;
-  geq = cap * c->coefficients[COEFF_G];
-  for (ceq = 0, i = 1; i <= c->order; i++) {
-    ceq += c->getState (qstate, i) * c->coefficients[i];
+  geq = cap * coeff[COEFF_G];
+  for (ceq = 0, i = 1; i <= c->getOrder (); i++) {
+    ceq += c->getState (qstate, i) * coeff[i];
   }
-  cur = c->getState (qstate) * c->coefficients[COEFF_G] + ceq;
+  cur = c->getState (qstate) * coeff[COEFF_G] + ceq;
   c->setState (cstate, cur);
 }
 

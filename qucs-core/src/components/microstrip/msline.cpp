@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.34 2004-09-10 16:26:56 ela Exp $
+ * $Id: msline.cpp,v 1.35 2004-09-12 14:09:20 ela Exp $
  *
  */
 
@@ -430,11 +430,10 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
     // dielectric losses
     l0 = C0 / frequency;
     ad = M_PI * er / (er - 1) * (ErEff - 1) / sqrt (ErEff) * tand / l0;
-    //ad = M_PI * sqrt (ErEff) * tand / l0;
   }
 }
 
-void msline::initDC (dcsolver *) {
+void msline::initDC (void) {
   nr_double_t l     = getPropertyDouble ("L");
   nr_double_t W     = getPropertyDouble ("W");
   substrate * subst = getSubstrate ();

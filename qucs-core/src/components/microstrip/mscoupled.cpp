@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.10 2004-09-08 18:25:20 ela Exp $
+ * $Id: mscoupled.cpp,v 1.11 2004-09-12 14:09:20 ela Exp $
  *
  */
 
@@ -374,7 +374,7 @@ void mscoupled::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
   }
 }
 
-void mscoupled::initDC (dcsolver *) {
+void mscoupled::initDC (void) {
   nr_double_t l     = getPropertyDouble ("L");
   nr_double_t W     = getPropertyDouble ("W");
   substrate * subst = getSubstrate ();
