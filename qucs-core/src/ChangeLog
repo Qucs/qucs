@@ -1,5 +1,8 @@
 2004-08-01  Stefan Jahn  <stefan@lkcc.org>
 
+	* check_netlist.cpp: Fixed a bug when nested subcircuits
+	occurred within the netlist.
+
 	* strlist.cpp (toString): The function takes an (optional)
 	argument which specifies the concatinating string.
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.8 2004/08/01 16:08:02 ela Exp $
+ * $Id: eqnsys.cpp,v 1.9 2004/08/01 23:08:20 ela Exp $
  *
  */
 
@@ -33,6 +33,8 @@ using namespace std;
 #include <string.h>
 #include <iostream>
 #include <assert.h>
+#include <time.h>
+#include <math.h>
 
 #include "logging.h"
 #include "complex.h"
@@ -81,6 +83,9 @@ void eqnsys::passEquationSys (matrix * nA, matrix * refX, matrix * nB) {
    the function stores the solution of the system into the matrix
    pointed to by the X matrix reference. */
 void eqnsys::solve (void) {
+#if DEBUG && 0
+  time_t t = time (NULL);
+#endif  
   switch (algo) {
   case ALGO_INVERSE:
     solve_inverse ();
@@ -98,6 +103,10 @@ void eqnsys::solve (void) {
     solve_jacobi ();
     break;
   }
+#if DEBUG && 0
+  logprint (LOG_STATUS, "NOTIFY: %dx%d eqnsys solved in %ld seconds\n",
+	    A->getRows (), A->getCols (), time (NULL) - t);
+#endif
 }
 
 /* Simple matrix inversion is used to solve the equation system. */
@@ -292,15 +301,14 @@ void eqnsys::solve_lu (void) {
    converge.  On divergence the method falls back to LU decomposition. */
 void eqnsys::solve_jacobi (void) {
   complex f;
-  int conv, i, c, r, N = A->getCols ();
-  int MaxIter = 500;
+  int error, conv, i, c, r, N = A->getCols ();
+  int MaxIter = 350;
   nr_double_t reltol = 1e-3;
   nr_double_t abstol = 1e-12;
-  nr_double_t crit;
+  nr_double_t diff, crit;
 
   // ensure that all diagonal values are non-zero
-  for (f = 1, i = 1; i <= N; i++) f *= A->get (i, i);
-  if (f == 0) ensure_diagonal ();
+  ensure_diagonal ();
 
   // decide here about possible convergence
   if ((crit = convergence_criteria ()) >= 1) {
@@ -324,7 +332,7 @@ void eqnsys::solve_jacobi (void) {
   matrix * Xprev = new matrix (*X);
 
   // start iterating here
-  i = 0;
+  i = 0; error = 0;
   do {
     // compute new solution vector
     for (r = 1; r <= N; r++) {
@@ -335,11 +343,12 @@ void eqnsys::solve_jacobi (void) {
     }
     // check for convergence
     for (conv = 1, r = 1; r <= N; r++) {
-      if (abs (X->get (r, 1) - Xprev->get (r, 1)) >= 
-	  abstol + reltol * abs (X->get (r, 1))) {
+      diff = abs (X->get (r, 1) - Xprev->get (r, 1));
+      if (diff >= abstol + reltol * abs (X->get (r, 1))) {
 	conv = 0;
 	break;
       }
+      if (!finite (diff)) { error++; break; }
     }
     // save last values
     *Xprev = *X;
@@ -348,7 +357,7 @@ void eqnsys::solve_jacobi (void) {
 
   delete Xprev;
 
-  if (!conv) {
+  if (!conv || error) {
     logprint (LOG_ERROR,
 	      "WARNING: no jacobi convergence after %d iterations\n", i);
     solve_lu ();
@@ -379,7 +388,11 @@ nr_double_t eqnsys::convergence_criteria (void) {
    iterative solution methods. */
 void eqnsys::ensure_diagonal (void) {
   complex f;
-  int c, i, r, pivot, N = A->getCols ();
+  int k, c, i, r, pivot, N = A->getCols ();
+
+  // get number of zero diagonal elements
+  for (k = 0, i = 1; i <= N; i++) if (A->get (i, i) == 0) k++;
+  if (k <= 0) return;
 
   // TODO: find a better algorithm for that !!!
   for (c = 1; c <= N; c++) {
@@ -405,6 +418,7 @@ void eqnsys::ensure_diagonal (void) {
 	    // substitute unconditionally to get a non-zero element on
 	    // the current row
 	    if (abs (A->get (r, i)) > 0) {
+	      if (abs (A->get (i, r)) > 0) k--;
 	      pivot = r;
 	      break;
 	    }
@@ -421,10 +435,12 @@ void eqnsys::ensure_diagonal (void) {
 	  A->exchangeRows (i, pivot);
 	  B->exchangeRows (i, pivot);
 	}
+	if (k <= 0) goto done;
       }
     }
   }
 
+ done:
   // finally check non-zero diagonals
   for (f = 1, i = 1; i <= N; i++) f *= A->get (i, i);
   assert (f != 0);
