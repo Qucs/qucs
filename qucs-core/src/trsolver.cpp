@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.16 2004-10-09 21:06:27 ela Exp $
+ * $Id: trsolver.cpp,v 1.17 2004-10-10 07:23:22 ela Exp $
  *
  */
 
@@ -273,7 +273,7 @@ void trsolver::predictBashford (void) {
   for (int r = 1; r <= N + M; r++) {
     xn = predCoeff[0] * SOL(1)->get (r, 1); // a0 coefficient
     for (int o = 1; o <= predOrder; o++) {
-      hn = getState (dState, o + 1);        // previous time-step
+      hn = getState (dState, o);            // previous time-step
       // divided differences
       dd = (SOL(o)->get (r, 1) - SOL(o + 1)->get (r, 1)) / hn;
       xn += predCoeff[o] * dd;              // b0, b1, ... coefficients
@@ -292,7 +292,7 @@ void trsolver::predictEuler (void) {
 
   for (int r = 1; r <= N + M; r++) {
     xn = predCoeff[0] * SOL(1)->get (r, 1);
-    hn = getState (dState, 2);
+    hn = getState (dState, 1);
     dd = (SOL(1)->get (r, 1) - SOL(2)->get (r, 1)) / hn;
     xn += predCoeff[1] * dd;
     x->set (r, 1, xn);
@@ -372,7 +372,7 @@ void trsolver::adjustDelta (void) {
 	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 	      current, delta);
 #endif
-    current -= delta;
+    current -= deltaOld;
   }
   else {
     nextStates ();
@@ -395,8 +395,7 @@ void trsolver::adjustOrder (int& currentOrder, int stepChanged) {
       c->setOrder (currentOrder);
       setIntegrationMethod (c, type);
     }
-    saveState (dState, deltas);
-    calcCorrectorCoeff (type, currentOrder, corrCoeff, deltas);
+    predictorType (type, currentOrder, predOrder);
   }
 }
 
@@ -530,11 +529,6 @@ nr_double_t trsolver::checkDelta (void) {
 
 // The function updates the integration coefficients.
 void trsolver::updateCoefficients (nr_double_t delta) {
-  /// --- Why? ---
-  prevState ();
-  setState (dState, delta);
-  nextState ();
-  /// --- End! ---
   setState (dState, delta);
   saveState (dState, deltas);
   calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas);

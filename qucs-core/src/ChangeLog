@@ -1,3 +1,8 @@
+2004-10-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Fixed all predictors (off-by-one indexing into
+	the array of time-steps).
+
 2004-10-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Respond to non-convergence problems by
