@@ -23,9 +23,12 @@ SP_Sim::SP_Sim()
 {
   Description = QObject::tr("S parameter simulation");
 
-  QString  s = Description;
-  s[s.findRev(" ")] = '\n';    // break line before the word "simulation"
-  QFontMetrics  metrics(QucsSettings.largeFont);
+  QString s = Description;
+  int a = s.find(" ");
+  int b = s.findRev(" ");
+  if (a != -1 && b != -1)
+    if (a > (int) s.length() - b) s[a] = '\n'; else s[b] = '\n';
+  QFontMetrics metrics(QucsSettings.largeFont);
   QSize r = metrics.size(0, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
