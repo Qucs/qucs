@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.23 2004/07/07 13:52:19 ela Exp $
+ * $Id: check_netlist.cpp,v 1.24 2004/07/10 14:45:26 ela Exp $
  *
  */
 
@@ -220,14 +220,10 @@ struct define_t definition_available[] =
     { { "Is", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
       { "Nf", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
       { "Nr", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
-      { "Ikf", PROP_REAL,
-	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
-      { "Ikr", PROP_REAL,
-	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
-      { "Vaf", PROP_REAL,
-	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
-      { "Var", PROP_REAL,
-	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Ikf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ikr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vaf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Var", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ise", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ne", PROP_REAL, { 1.5, PROP_NO_STR }, { 1, 100 } },
       { "Isc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
@@ -237,8 +233,23 @@ struct define_t definition_available[] =
       { "Br", PROP_REAL, 
 	{ 1, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
       { "Rbm", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Irb", PROP_REAL,
-	{ PROP_VAL_MAX, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
+      { "Irb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cje", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vje", PROP_REAL, { 0.75, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
+      { "Mje", PROP_REAL, { 0.33, PROP_NO_STR }, { 0, 1 } },
+      { "Cjc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vjc", PROP_REAL, { 0.75, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
+      { "Mjc", PROP_REAL, { 0.33, PROP_NO_STR }, { 0, 1 } },
+      { "Xcjc", PROP_REAL, { 1, PROP_NO_STR }, { 0, 1 } },
+      { "Cjs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vjs", PROP_REAL, { 0.75, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
+      { "Mjs", PROP_REAL, { 0, PROP_NO_STR }, { 0, 1 } },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 10 } },
+      { "Vtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Xtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Itf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP },
     { { "Rc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Re", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.8 2004/07/01 14:18:27 ela Exp $
+ * $Id: check_netlist.h,v 1.9 2004/07/10 14:45:26 ela Exp $
  *
  */
 
@@ -83,8 +83,8 @@ struct define_t {
   int action;                     // is that an action?
   int substrate;                  // is that a substrate?
   int nonlinear;                  // is the component linear?
-  struct property_t required[16]; // required properties
-  struct property_t optional[16]; // optional proberties
+  struct property_t required[64]; // required properties
+  struct property_t optional[64]; // optional proberties
 };
 
 #define PROP_ACTION       1

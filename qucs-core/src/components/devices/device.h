@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.h,v 1.1 2004/06/19 07:34:55 ela Exp $
+ * $Id: device.h,v 1.2 2004/07/10 14:45:27 ela Exp $
  *
  */
 
@@ -31,12 +31,18 @@ class net;
 class device
 {
  public:
-  static nr_double_t pnVoltage (nr_double_t, nr_double_t,
-				nr_double_t, nr_double_t);
-  static circuit * splitResistance (circuit *, circuit *, net *,
+  friend circuit * splitResistance (circuit *, circuit *, net *,
 				    char *, char *, int);
-  static void disableResistance (circuit *, circuit *, net *, int);
-  static void applyResistance (circuit *, nr_double_t);
+  friend void disableResistance (circuit *, circuit *, net *, int);
+  friend void applyResistance (circuit *, nr_double_t);
+  friend nr_double_t pnVoltage (nr_double_t, nr_double_t, nr_double_t,
+				nr_double_t);
+  friend nr_double_t pnCurrent (nr_double_t, nr_double_t, nr_double_t);
+  friend nr_double_t pnConductance (nr_double_t, nr_double_t, nr_double_t);
+  friend nr_double_t pnCapacitance (nr_double_t, nr_double_t, nr_double_t,
+				    nr_double_t, nr_double_t);
+  friend nr_double_t pnCapacitance (nr_double_t, nr_double_t, nr_double_t,
+				    nr_double_t);
 };
 
 #endif /* __DEVICE_H__ */
