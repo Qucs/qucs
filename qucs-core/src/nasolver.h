@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.17 2005/02/21 20:50:39 raimi Exp $
+ * $Id: nasolver.h,v 1.18 2005/02/22 16:41:10 raimi Exp $
  *
  */
 
@@ -79,8 +79,6 @@ class nasolver : public analysis
   void createNoiseMatrix (void);
   void runMNA (void);
   void createMatrix (void);
-  void reorderVector (tvector<nr_double_t> *);
-  void reorderVector (tvector<complex> *);
 
  private:
   void assignVoltageSources (void);

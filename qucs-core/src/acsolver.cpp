@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.10 2005/02/14 19:56:43 raimi Exp $
+ * $Id: acsolver.cpp,v 1.11 2005/02/22 16:41:09 raimi Exp $
  *
  */
 
@@ -180,25 +180,26 @@ void acsolver::solve_noise (void) {
   // temporary result vector for transimpedances
   tvector<complex> zn = tvector<complex> (N + M);
 
-  // transpose the MNA matrix and ensure skipping LU decomposition
+  // create the MNA matrix once again and LU decompose the adjoint matrix
+  createMatrix ();
   A->transpose ();
+  eqnAlgo = ALGO_LU_DECOMPOSITION;
+  runMNA ();
+
+  // ensure skipping LU decomposition
   updateMatrix = 0;
   convHelper = CONV_None;
-  eqnAlgo = ALGO_LU_SUBSTITUTION_DOOLITTLE; // LU matrix is transposed
+  eqnAlgo = ALGO_LU_SUBSTITUTION_CROUT;
 
   // compute noise voltage for each node (and voltage source)
   for (int i = 1; i <= N + M; i++) {
     z->set (0); z->set (i, -1); // modify right hand side appropriately
     runMNA ();                  // solve
     zn = *x;                    // save transimpedance vector
-    reorderVector (&zn);        // adjust result order
 
     // compute actual noise voltage
     xn->set (i, sqrt (real (scalar (zn * (*C), conj (zn)))));
   }
-
-  // adjust AC noise result order
-  reorderVector (xn);
 
   // restore usual AC results
   *x = xsave;
