@@ -1,3 +1,12 @@
+2004-03-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* strlist.cpp (toString, join): Two new functions.  One for
+	returning a string representation of a string list and the
+	other for joining two string lists.
+
+	* equation.cpp (detectCycles, findDuplicate): New functions
+	determining whether there are or duplicate cyclic equations.
+
 2004-03-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* equation.cpp: Started to implement the equation checker.
