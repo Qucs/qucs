@@ -31,9 +31,7 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 160;
   Name = "Rect";
 
-  xLabel = "";
-  yLabel = "";
-
+  xlog = ylog = false;
   calcDiagram();
 }
 
@@ -45,12 +43,18 @@ RectDiagram::~RectDiagram()
 void RectDiagram::calcCoordinate(double x, double yr, double yi,
 				 int *px, int *py)
 {
-  *px = int((x-xlow)/(xup-xlow)*double(x2) + 0.5);
+  if(xlog)  *px = int(log10(x / xlow)/log10(xup / xlow)*double(x2) + 0.5);
+  else  *px = int((x-xlow)/(xup-xlow)*double(x2) + 0.5);
 
-  if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
-    *py = int((yr-ylow)/(yup-ylow)*double(y2) + 0.5);
-  else   // calculate magnitude of complex number
-    *py = int((sqrt(yr*yr + yi*yi)-ylow)/(yup-ylow)*double(y2) + 0.5);
+  if(ylog)
+    *py = int(log10(sqrt(yr*yr + yi*yi)/ylow) / log10(yup/ylow)
+		    *double(y2) + 0.5);
+  else {
+    if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
+      *py = int((yr-ylow)/(yup-ylow)*double(y2) + 0.5);
+    else   // calculate magnitude of complex number
+      *py = int((sqrt(yr*yr + yi*yi)-ylow)/(yup-ylow)*double(y2) + 0.5);
+  }
 }
 
 // --------------------------------------------------------------
@@ -68,9 +72,45 @@ void RectDiagram::calcDiagram()
   ylow = ymin;  yup = ymax;
 
 
-  int z;
+  int z=0;
   double numGrids, Base, Expo, GridStep, corr, zD, zDstep, GridNum;
   // ====  x grid  =======================================================
+if(xlog) {
+  Expo = floor(log10(xmax));
+  Base = xmax/pow(10.0,Expo);
+  if(Base > 3.0001) xup = pow(10.0,Expo+1.0);
+  else  if(Base < 1.0001) xup = pow(10.0,Expo);
+	else xup = 3.0 * pow(10.0,Expo);
+
+  Expo = floor(log10(xmin));
+  Base = xmin/pow(10.0,Expo);
+  if(Base < 2.999) xlow = pow(10.0,Expo);
+  else  if(Base > 9.999) xlow = pow(10.0,Expo+1.0);
+	else xlow = 3.0 * pow(10.0,Expo);
+
+  corr = double(x2) / log10(xup / xlow);
+
+  zD = xlow;
+  zDstep = pow(10.0,Expo);
+  while(z <= x2) {    // create all grid lines
+    if(GridOn)  if(z < x2)  if(z > 0)
+      Lines.append(new Line(z, y2, z, 0, GridPen));  // x grid
+
+    if((zD < 1.5*zDstep) || (z == 0)) {
+      if(fabs(Expo) < 3.0)
+	Texts.append(new Text(z-10, -17, QString::number(zD)));
+      else
+	Texts.append(new Text(z-10, -17, QString::number(zD, 'e', 1)));
+
+      Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));  // x marks
+    }
+
+    zD += zDstep;
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+    z = int(corr*log10(zD / xlow) + 0.5); // "int(...)" implies "floor(...)"
+  }
+}
+else {  // not logarithmical
   numGrids = floor(double(x2)/60.0);   // minimal grid is 60 pixel
   if(numGrids < 1.0) Base = xmax-xmin;
   else Base = (xmax-xmin)/numGrids;
@@ -149,9 +189,52 @@ void RectDiagram::calcDiagram()
     zD += zDstep;
     z = int(zD);
   }
+} // of "if(xlog)"
 
 
+  QSize r;
+  QString tmp;
+  QFontMetrics  metrics(QucsSettings.font);
+  int maxWidth = 0;
   // ====  y grid  =======================================================
+if(ylog) {
+  Expo = floor(log10(ymax));
+  Base = ymax/pow(10.0,Expo);
+  if(Base > 3.0001) yup = pow(10.0,Expo+1.0);
+  else  if(Base < 1.0001) yup = pow(10.0,Expo);
+	else yup = 3.0 * pow(10.0,Expo);
+
+  Expo = floor(log10(ymin));
+  Base = ymin/pow(10.0,Expo);
+  if(Base < 2.999) ylow = pow(10.0,Expo);
+  else  if(Base > 9.999) ylow = pow(10.0,Expo+1.0);
+	else ylow = 3.0 * pow(10.0,Expo);
+
+  corr = double(y2) / log10(yup / ylow);
+
+  z = 0;
+  zD = ylow;
+  zDstep = pow(10.0,Expo);
+  while(z <= y2) {    // create all grid lines
+    if(GridOn)  if(z < y2)  if(z > 0)
+      Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
+
+    if((zD < 1.5*zDstep) || (z == 0)) {
+      if(fabs(Expo) < 3.0)  tmp = QString::number(zD);
+      else tmp = QString::number(zD, 'e',1);
+      r = metrics.size(0, tmp);  // width of text
+      if(maxWidth < r.width()) maxWidth = r.width();
+      Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
+
+      Lines.append(new Line(-5, z, 5, z, QPen(QPen::black,0)));  // y marks
+    }
+
+    zD += zDstep;
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+    z = int(corr*log10(zD / ylow) + 0.5); // "int(...)" implies "floor(...)"
+  }
+}
+else {  // not logarithmical
   numGrids = floor(double(y2)/60.0);   // minimal grid is 60 pixel
   if(numGrids < 1.0) Base = ymax-ymin;
   else Base = (ymax-ymin)/numGrids;
@@ -213,11 +296,6 @@ void RectDiagram::calcDiagram()
   GridNum  = ylow + zD;
   zD /= (yup-ylow)/double(y2);
 
-  QSize r;
-  QString tmp;
-  QFontMetrics  metrics(QucsSettings.font);
-
-  int maxWidth = 0;
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
   while(z <= y2) {    // create all grid lines
@@ -236,7 +314,9 @@ void RectDiagram::calcDiagram()
     zD += zDstep;
     z = int(zD);
   }
+} // of "if(xlog)"
   x1 = maxWidth+14;
+
 
   // outer frame
   Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::black,0)));

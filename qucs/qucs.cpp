@@ -332,13 +332,12 @@ bool QucsApp::closeAllFiles()
   int  Result = 0;
   bool notForAll = true;
   MessageBox *m = new MessageBox(tr("Closing Qucs document"),
-     tr("This document contains unsaved changes!\nDo you want to save the changes before closing?"),this);
+	tr("This document contains unsaved changes!\n"
+	   "Do you want to save the changes before closing?"),this);
 
   // close all files and ask to save changed ones
   for(QucsDoc *ptr = view->Docs.first(); ptr != 0; ) {
-    WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make next document the current
-    view->viewport()->repaint();
-    view->drawn = false;
+    nextDocument(false);
     if(ptr->DocChanged) {
       if(notForAll)  Result = m->exec();
       switch(Result) {
@@ -364,6 +363,33 @@ bool QucsApp::closeAllFiles()
 }
 
 // ########################################################################
+// Switches to the next document. Is called when closing a document.
+void QucsApp::nextDocument(bool loadDiagrams)
+{
+  // make new document the current
+  WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));
+
+  QucsDoc *d = view->Docs.current();
+  view->resizeContents (int(d->Scale*double(d->ViewX2-d->ViewX1)),
+			int(d->Scale*double(d->ViewY2-d->ViewY1)));
+  view->setContentsPos(d->PosX, d->PosY);   // set view area
+
+  if(loadDiagrams)
+    view->Docs.current()->reloadGraphs();  // load recent simulation data
+  view->viewport()->repaint();
+  view->drawn = false;
+
+  QString *ps = d->UndoStack.current();
+  if(ps != d->UndoStack.getFirst())  undo->setEnabled(true);
+  else  undo->setEnabled(false);
+  if(ps != d->UndoStack.getLast())  redo->setEnabled(true);
+  else  redo->setEnabled(false);
+
+  HierarchyHistory.clear();   // no subcircuit history
+  popH->setEnabled(false);
+}
+
+// ########################################################################
 // Is called when another document is selected via the TabBar.
 void QucsApp::slotChangeView(int id)
 {
@@ -379,6 +405,13 @@ void QucsApp::slotChangeView(int id)
   view->Docs.current()->reloadGraphs();  // load recent simulation data
   view->viewport()->repaint();
   view->drawn = false;
+
+
+  QString *ps = d->UndoStack.current();
+  if(ps != d->UndoStack.getFirst())  undo->setEnabled(true);
+  else  undo->setEnabled(false);
+  if(ps != d->UndoStack.getLast())  redo->setEnabled(true);
+  else  redo->setEnabled(false);
 
   HierarchyHistory.clear();   // no subcircuit history
   popH->setEnabled(false);
@@ -430,10 +463,21 @@ bool QucsApp::gotoPage(const QString& Name)
   return true;
 }
 
-/////////////////////////////////////////////////////////////////////
-// SLOT IMPLEMENTATION
-/////////////////////////////////////////////////////////////////////
+// #######################################################################
+// Changes to the next document in the TabBar.
+void QucsApp::slotNextTab()
+{
+  int No = view->Docs.at() + 1;
+  if(view->Docs.current() == view->Docs.getLast())
+    No = 0;
 
+  // make new document the current (calls "slotChangeView()" indirectly)
+  WorkView->setCurrentTab(WorkView->tabAt(No));
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
 void QucsApp::slotFileSettings()
 {
   SettingsDialog *d = new SettingsDialog(view->Docs.current(), this);
@@ -662,18 +706,11 @@ void QucsApp::slotFileClose()
   }
 
   view->Docs.remove();
-  // make new document the current
-  WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));
 
   if(view->Docs.isEmpty())  // if no document left, create an untitled
     view->Docs.append(new QucsDoc(this, ""));
 
-  QucsDoc *d = view->Docs.current();
-  view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
-                       int(d->Scale*double(d->ViewY2-d->ViewY1)));
-  view->setContentsPos(d->PosX, d->PosY);   // set view area
-  view->viewport()->repaint();
-  view->drawn = false;
+  nextDocument(true);
 
   statusBar()->message(tr("Ready."));
 }

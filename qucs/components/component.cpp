@@ -353,7 +353,8 @@ QString Component::NetList()
     s += " "+p1->Connection->Name;    // node names
 
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
-    s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties
+    if(p2->Name != "Symbol")
+      s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties
 
   return s;
 }
@@ -361,7 +362,7 @@ QString Component::NetList()
 // -------------------------------------------------------
 QString Component::save()
 {
-  QString s = "   <"+Model;
+  QString s = "<"+Model;
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
 
