@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.8 2004-08-06 18:24:44 ela Exp $
+ * $Id: diode.cpp,v 1.9 2004-08-14 15:41:56 ela Exp $
  *
  */
 
@@ -64,6 +64,9 @@ void diode::calcSP (nr_double_t frequency) {
 void diode::calcNoise (nr_double_t frequency) {
   nr_double_t Id = getOperatingPoint ("Id");
   nr_double_t Is = getPropertyDouble ("Is") + getPropertyDouble ("Isr");
+
+  // adjust shot noise current if necessary
+  if (Id < -Is) Id = -Is;
 
 #if MICHAEL /* shot noise only */
   nr_double_t gd = getOperatingPoint ("gd");

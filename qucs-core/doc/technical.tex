@@ -2072,7 +2072,10 @@ small.  To achieve a higher numerical precision, it is recommended to
 normalize the noise matrix with $k\cdot T_0$. After the simulation
 they do not have to be denormalized, because the noise parameters can
 be calculated by using equation \eqref{eqn:nparamF} to
-\eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.\\
+\eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
+
+\addvspace{12pt}
+
 The transformer concept to deal with different port impedances and
 with differential ports (as described in section \ref{sec:diffSParam})
 can also be applied to this noise analysis.
@@ -5657,6 +5660,209 @@ C_{BS} &= C_{J}\cdot A_S\\
 C_{BDS} &= C_{JSW}\cdot P_D\\
 C_{BSS} &= C_{JSW}\cdot P_S
 \end{align}
+
+\subsection{Small signal model}
+%\addcontentsline{toc}{subsection}{Small signal model}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.7\linewidth]{spmosfet}
+\end{center}
+\caption{small signal model of intrinsic MOSFET}
+\label{fig:spmosfet}
+\end{figure}
+\FloatBarrier
+
+The bulk-drain and bulk-source capacitances in the MOSFET model split
+into three parts: the junctions depletion capacitance which consists
+of an area and a sidewall part and the diffusion capacitance.
+
+\begin{align}
+C_{BD_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{BD}\cdot \left(1 - \dfrac{V_{BD}}{\Phi_{B}}\right)^{-M_{J}} & \textrm{ for } V_{BD} \le F_{C}\cdot \Phi_{B}\\
+\dfrac{C_{BD}}{\left(1 - F_{C}\right)^{M_{J}}}\cdot \left(1 + \dfrac{M_{J}\cdot \left(V_{BD} - F_{C}\cdot \Phi_{B}\right)}{\Phi_{B}\cdot \left(1 - F_{C}\right)}\right) & \textrm{ for } V_{BD} > F_{C}\cdot \Phi_{B}
+\end{array}
+\end{cases}\\
+C_{BDS_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{BDS}\cdot \left(1 - \dfrac{V_{BD}}{\Phi_{B}}\right)^{-M_{JSW}} & \textrm{ for } V_{BD} \le F_{C}\cdot \Phi_{B}\\
+\dfrac{C_{BDS}}{\left(1 - F_{C}\right)^{M_{JSW}}}\cdot \left(1 + \dfrac{M_{JSW}\cdot \left(V_{BD} - F_{C}\cdot \Phi_{B}\right)}{\Phi_{B}\cdot \left(1 - F_{C}\right)}\right) & \textrm{ for } V_{BD} > F_{C}\cdot \Phi_{B}
+\end{array}
+\end{cases}\\
+C_{BS_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{BS}\cdot \left(1 - \dfrac{V_{BS}}{\Phi_{B}}\right)^{-M_{J}} & \textrm{ for } V_{BS} \le F_{C}\cdot \Phi_{B}\\
+\dfrac{C_{BS}}{\left(1 - F_{C}\right)^{M_{J}}}\cdot \left(1 + \dfrac{M_{J}\cdot \left(V_{BS} - F_{C}\cdot \Phi_{B}\right)}{\Phi_{B}\cdot \left(1 - F_{C}\right)}\right) & \textrm{ for } V_{BS} > F_{C}\cdot \Phi_{B}
+\end{array}
+\end{cases}\\
+C_{BSS_{dep}} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{BSS}\cdot \left(1 - \dfrac{V_{BS}}{\Phi_{B}}\right)^{-M_{JSW}} & \textrm{ for } V_{BS} \le F_{C}\cdot \Phi_{B}\\
+\dfrac{C_{BSS}}{\left(1 - F_{C}\right)^{M_{JSW}}}\cdot \left(1 + \dfrac{M_{JSW}\cdot \left(V_{BS} - F_{C}\cdot \Phi_{B}\right)}{\Phi_{B}\cdot \left(1 - F_{C}\right)}\right) & \textrm{ for } V_{BS} > F_{C}\cdot \Phi_{B}
+\end{array}
+\end{cases}
+\end{align}
+
+The diffusion capacitances of the bulk-drain and bulk-source junctions
+are determined by the transit time of the minority charges through the
+junction.
+\begin{align}
+C_{BD_{diff}} &= g_{bd}\cdot T_T\\
+C_{BS_{diff}} &= g_{bs}\cdot T_T
+\end{align}
+
+Charge storage in the MOSFET consists of capacitances associated with
+parasitics and the intrinsic device.  Parasitic capacitances consist
+of three constant overlap capacitances.  The intrinsic capacitances
+consist of the nonlinear thin-oxide capacitance, which is distributed
+among the gate, drain, source and bulk regions.  The MOS gate
+capacitances, as a nonlinear function of the terminal voltages, are
+modeled by Meyer's piece-wise linear model.
+
+\addvspace{12pt}
+
+The bias-dependent gate-oxide capacitances distribute according to the
+Meyer model as follows.
+
+\begin{itemize}
+\item cutoff regions: $V_{GS} - V_{Th} < 0$
+\begin{itemize}
+\item $V_{GS} - V_{Th} \le -\Phi$
+\begin{align}
+C_{GS} &= 0\\
+C_{GD} &= 0\\
+C_{GB} &= C_{ox}\\
+%\end{align}
+\intertext{
+\item $-\Phi < V_{GS} - V_{Th} \le -\Phi / 2$
+}
+%\begin{align}
+C_{GS} &= 0\\
+C_{GD} &= 0\\
+C_{GB} &= -C_{ox}\cdot\dfrac{V_{GS} - V_{Th}}{\Phi}\\
+%\end{align}
+\intertext{
+\item $-\Phi / 2 < V_{GS} - V_{Th} \le 0$
+}
+%\begin{align}
+C_{GS} &= \dfrac{2}{3}\cdot C_{ox} + \dfrac{4}{3}\cdot C_{ox}\cdot\dfrac{V_{GS} - V_{Th}}{\Phi}\\
+C_{GD} &= 0\\
+C_{GB} &= -C_{ox}\cdot\dfrac{V_{GS} - V_{Th}}{\Phi}
+\end{align}
+\end{itemize}
+\item saturation region: $0 < V_{GS} - V_{Th} < V_{DS}$
+\begin{align}
+C_{GS} &= \dfrac{2}{3}\cdot C_{ox}\\
+C_{GD} &= 0\\
+C_{GB} &= 0\\
+%\end{align}
+\intertext{
+\item linear region: $V_{DS} < V_{GS} - V_{Th}$
+}
+%\begin{align}
+C_{GS} &= \dfrac{2}{3}\cdot C_{ox}\cdot \left(1 - \dfrac{\left(V_{Dsat} - V_{DS}\right)^2}{\left(2\cdot V_{Dsat} - V_{DS}\right)^2}\right)\\
+C_{GD} &= \dfrac{2}{3}\cdot C_{ox}\cdot \left(1 - \dfrac{V_{Dsat}^2}{\left(2\cdot V_{Dsat} - V_{DS}\right)^2}\right)\\
+C_{GB} &= 0
+%\end{align}
+\end{align}
+\end{itemize}
+
+with
+\begin{equation}
+V_{Dsat} =
+\begin{cases}
+\begin{array}{ll}
+V_{GS} - V_{Th} & \textrm{ for } V_{GS} - V_{Th} > 0\\
+0 & \textrm{ otherwise }
+\end{array}
+\end{cases}
+\end{equation}
+
+In the inverse mode of operation $V_{GS}$ and $V_{GD}$ need to be
+exchanged, $V_{DS}$ changes its sign, then the above formulas can be
+applied as well.
+
+\addvspace{12pt}
+
+The constance overlap capacitances compute as follows.
+\begin{align}
+C_{GS_{OVL}} &= C_{GSO}\cdot W\\
+C_{GD_{OVL}} &= C_{GDO}\cdot W\\
+C_{GB_{OVL}} &= C_{GBO}\cdot L_{eff}
+\end{align}
+
+With these definitions it is possible to form the small signal
+Y-parameter matrix of the intrinsic MOSFET device in an operating
+point which can be converted into S-parameters.
+\begin{equation}
+Y =
+\begin{bmatrix}
+\parbox[t]{2.0cm}{\centering $Y_{GS} + Y_{GD} + Y_{GB}$} & -Y_{GD} & -Y_{GS} & -Y_{GB}\\
+g_{m} - Y_{GD} & Y_{GD} + Y_{BD} + Y_{DS} & -Y_{DS} - g_{m} - g_{mb} & -Y_{BD} + g_{mb}\\
+-g_{m} - Y_{GS} & -Y_{DS} & \parbox[t]{2.5cm}{\centering $Y_{GS} + Y_{DS} + Y_{BS} + g_{m} + g_{mb}$} & -Y_{BS} - g_{mb}\\
+-Y_{GB} & -Y_{BD} & -Y_{BS} & Y_{BD} + Y_{BS} + Y_{GB}\\
+\end{bmatrix}
+\end{equation}
+
+with
+\begin{align}
+Y_{GS} &= j\omega \left(C_{GS} + C_{GS_{OVL}}\right)\\
+Y_{GD} &= j\omega \left(C_{GD} + C_{GD_{OVL}}\right)\\
+Y_{GB} &= j\omega \left(C_{GB} + C_{GB_{OVL}}\right)\\
+Y_{BD} &= g_{bd} + j\omega \left(C_{BD_{dep}} + C_{BDS_{dep}} + C_{BD_{diff}}\right)\\
+Y_{BS} &= g_{bs} + j\omega \left(C_{BS_{dep}} + C_{BSS_{dep}} + C_{BS_{diff}}\right)\\
+Y_{DS} &= g_{ds}
+\end{align}
+
+\subsection{Noise model}
+%\addcontentsline{toc}{subsection}{Noise model}
+
+The thermal noise generated by the external resistors $R_G$, $R_S$ and
+$R_D$ is characterized by the following spectral density.
+\begin{equation}
+\dfrac{\overline{i_{R_G}^2}}{\Delta f} = \dfrac{4 k_B T}{R_G}
+\;\;\;\; \textrm{ and } \;\;\;\;
+\dfrac{\overline{i_{R_D}^2}}{\Delta f} = \dfrac{4 k_B T}{R_D}
+\;\;\;\; \textrm{ and } \;\;\;\;
+\dfrac{\overline{i_{R_S}^2}}{\Delta f} = \dfrac{4 k_B T}{R_S}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.73\linewidth]{noisemosfet}
+\end{center}
+\caption{noise model of intrinsic MOSFET}
+\label{fig:noisemosfet}
+\end{figure}
+\FloatBarrier
+
+Channel and flicker noise generated by the DC transconductance $g_m$
+and current flow from drain to source is characterized by the spectral
+density
+\begin{equation}
+\dfrac{\overline{i_{ds}^2}}{\Delta f} = \dfrac{8 k_B T g_m}{3} + K_F\dfrac{I_{DS}^{A_F}}{f^{F_{FE}}}
+\end{equation}
+
+The noise current correlation matrix (admittance representation) of
+the intrinsic MOSFET can be expressed as
+\begin{equation}
+\underline{C}_Y = \Delta f
+\begin{bmatrix}
+0 & 0 & 0 & 0\\
+0 & +\overline{i_{ds}^2} & -\overline{i_{ds}^2} & 0\\
+0 & -\overline{i_{ds}^2} & +\overline{i_{ds}^2} & 0\\
+0 & 0 & 0 & 0\\
+\end{bmatrix}
+\end{equation}
+
+This matrix representation can be easily converted to the noise-wave
+representation $\underline{C}_S$ if the small signal S-parameter
+matrix is known.
 
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.5 2004-08-07 10:49:08 ela Exp $
+ * $Id: mosfet.cpp,v 1.6 2004-08-14 15:41:56 ela Exp $
  *
  */
 
@@ -95,7 +95,7 @@ void mosfet::calcSP (nr_double_t frequency) {
   y.set (NODE_S, NODE_S, Ygs + Yds + Ybs + SourceControl);
   y.set (NODE_S, NODE_B, -Ybs - gmb);
   y.set (NODE_B, NODE_G, -Ygb);
-  y.set (NODE_B, NODE_D, -Yds);
+  y.set (NODE_B, NODE_D, -Ybd);
   y.set (NODE_B, NODE_S, -Ybs);
   y.set (NODE_B, NODE_B, Ybd + Ybs + Ygb);
 

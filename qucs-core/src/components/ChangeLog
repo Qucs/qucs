@@ -1,3 +1,14 @@
+2004-08-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Adjusted invalid backward current for
+	noise calculation.
+
+	* devices/mosfet.cpp: Bugfix in small signal Y-parameter
+	computation.
+
+	* devices/device.cpp (fetCapacitanceMeyer): Fixed bug in
+	distributed gate-oxid capacitance model.
+
 2004-08-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/mscorner.cpp: Fixed bug in frequency range
