@@ -1,7 +1,7 @@
 /*
  * complex.cpp - complex number class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.16 2004-11-29 19:03:33 raimi Exp $
+ * $Id: complex.cpp,v 1.17 2005-01-24 19:36:59 raimi Exp $
  *
  */
 
@@ -84,6 +84,10 @@ nr_double_t imag (nr_double_t) {
 
 complex conj (const complex z) {
   return complex (z.r, -z.i);
+}
+
+nr_double_t conj (nr_double_t r) {
+  return r;
 }
 
 nr_double_t dB (const complex z) {

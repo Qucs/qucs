@@ -1,7 +1,7 @@
 /*
  * tvector.h - simple vector template class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.6 2004-10-27 18:45:19 ela Exp $
+ * $Id: tvector.h,v 1.7 2005-01-24 19:37:00 raimi Exp $
  *
  */
 
@@ -30,11 +30,15 @@ class tvector;
 
 // Forward declarations of friend functions.
 template <class nr_type_t>
+nr_type_t   scalar (tvector<nr_type_t>, tvector<nr_type_t>);
+template <class nr_type_t>
 nr_double_t maxnorm (tvector<nr_type_t>);
 template <class nr_type_t>
 nr_double_t norm (tvector<nr_type_t>);
 template <class nr_type_t>
 nr_type_t   sum (tvector<nr_type_t>);
+template <class nr_type_t>
+tvector<nr_type_t> conj (tvector<nr_type_t>);
 template <class nr_type_t>
 tvector<nr_type_t> operator + (tvector<nr_type_t>, tvector<nr_type_t>);
 template <class nr_type_t>
@@ -67,6 +71,8 @@ class tvector
   ~tvector ();
   nr_type_t get (int);
   void set (int, nr_type_t);
+  void set (nr_type_t);
+  void set (tvector, int, int);
   int  getSize (void) { return size; }
   nr_type_t * getData (void) { return data; }
   void exchangeRows (int, int);
@@ -87,10 +93,15 @@ class tvector
   friend nr_double_t norm<> (tvector);
   friend nr_double_t maxnorm<> (tvector);
   friend nr_type_t   sum<> (tvector);
+  friend nr_type_t   scalar<> (tvector, tvector);
+  friend tvector     conj<> (tvector);
 
   // comparisons
   friend bool operator < <> (tvector, tvector);
   friend bool operator > <> (tvector, tvector);
+
+  // assignment operators
+  tvector operator = (const nr_type_t);
 
  private:
   int size;

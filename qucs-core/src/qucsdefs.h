@@ -1,7 +1,7 @@
 /*
  * qucsdefs.h - netlist definitions for the Qucs netlists
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.9 2004-12-15 19:55:29 raimi Exp $
+ * $Id: qucsdefs.h,v 1.10 2005-01-24 19:36:59 raimi Exp $
  *
  */
 
@@ -556,7 +556,8 @@ struct define_t qucs_definition_available[] =
   { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+    { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
       { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },

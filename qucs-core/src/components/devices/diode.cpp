@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.18 2005-01-17 12:19:02 raimi Exp $
+ * $Id: diode.cpp,v 1.19 2005-01-24 19:37:18 raimi Exp $
  *
  */
 
@@ -87,6 +87,23 @@ void diode::calcNoiseSP (nr_double_t frequency) {
   yc.set (NODE_A, NODE_C, -i); yc.set (NODE_C, NODE_A, -i);
   setMatrixN (cytocs (yc * z0, getMatrixS ()));
 #endif
+}
+
+void diode::calcNoiseAC (nr_double_t frequency) {
+  nr_double_t Id = getOperatingPoint ("Id");
+  nr_double_t Is = getPropertyDouble ("Is") + getPropertyDouble ("Isr");
+
+  // adjust shot noise current if necessary
+  if (Id < -Is) Id = -Is;
+
+  nr_double_t Kf  = getPropertyDouble ("Kf");
+  nr_double_t Af  = getPropertyDouble ("Af");
+  nr_double_t Ffe = getPropertyDouble ("Ffe");
+
+  nr_double_t i = 2 * (Id + 2 * Is) * QoverkB / T0 +    // shot noise
+    Kf * pow (Id, Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
+  setN (NODE_C, NODE_C, +i); setN (NODE_A, NODE_A, +i);
+  setN (NODE_A, NODE_C, -i); setN (NODE_C, NODE_A, -i);
 }
 
 void diode::initDC (void) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inoise.h,v 1.5 2005-01-17 12:19:02 raimi Exp $
+ * $Id: inoise.h,v 1.6 2005-01-24 19:37:16 raimi Exp $
  *
  */
 
@@ -31,6 +31,7 @@ class inoise : public circuit
   inoise ();
   void initSP (void);
   void calcNoiseSP (nr_double_t);
+  void calcNoiseAC (nr_double_t);
 };
 
 #endif /* __INOISE_H__ */

@@ -1,7 +1,7 @@
 /*
  * complex.h - complex number class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.14 2004-11-29 19:03:33 raimi Exp $
+ * $Id: complex.h,v 1.15 2005-01-24 19:36:59 raimi Exp $
  *
  */
 
@@ -51,6 +51,7 @@ class complex
   friend nr_double_t  imag (const complex);  // the imaginary part
   friend nr_double_t  imag (nr_double_t);
   friend complex      conj (const complex);  // the complex conjugate
+  friend nr_double_t  conj (nr_double_t);
   friend nr_double_t  norm (const complex);  // the square of the magnitude
   friend nr_double_t  norm (nr_double_t);
   friend nr_double_t  arg  (const complex);  // the angle in the plane

@@ -1,3 +1,19 @@
+2005-01-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.cpp: Some new 'set()' functionality added.  Computation
+	of scalar product of two vectors added.  New 'conj()' operation.
+
+	* tmatrix.cpp: New 'vector * matrix' function.  New transpose()
+	function.
+
+	* nasolver.cpp: Added functionality for the creation of a noise
+	correlation matrix.  New function returning the number voltage
+	sources.  Saving of node voltages (or branch currents) only if a
+	valid postfix is given.
+
+	* acsolver.cpp (solve_noise): Implemented preliminary AC noise
+	analyses.  To be tested...
+
 2005-01-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_netlist.y: Also allow scales and units in parameter

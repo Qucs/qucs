@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inoise.cpp,v 1.4 2005-01-17 12:19:02 raimi Exp $
+ * $Id: inoise.cpp,v 1.5 2005-01-24 19:37:16 raimi Exp $
  *
  */
 
@@ -56,6 +56,16 @@ void inoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
   nr_double_t ipsd = i / (a + c * pow (frequency, e)) / kB / T0 * z0;
+  setN (1, 1, +ipsd); setN (2, 2, +ipsd);
+  setN (1, 2, -ipsd); setN (2, 1, -ipsd);
+}
+
+void inoise::calcNoiseAC (nr_double_t frequency) {
+  nr_double_t i = getPropertyDouble ("i");
+  nr_double_t e = getPropertyDouble ("e");
+  nr_double_t c = getPropertyDouble ("c");
+  nr_double_t a = getPropertyDouble ("a");
+  nr_double_t ipsd = i / (a + c * pow (frequency, e)) / kB / T0;
   setN (1, 1, +ipsd); setN (2, 2, +ipsd);
   setN (1, 2, -ipsd); setN (2, 1, -ipsd);
 }

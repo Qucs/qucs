@@ -1,7 +1,7 @@
 /*
  * tmatrix.cpp - simple matrix template class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.6 2004-10-25 21:01:32 ela Exp $
+ * $Id: tmatrix.cpp,v 1.7 2005-01-24 19:37:00 raimi Exp $
  *
  */
 
@@ -240,6 +240,33 @@ tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
     res.set (r, z);
   }
   return res;
+}
+
+// Multiplication of vector (transposed) and matrix.
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tvector<nr_type_t> a, tmatrix<nr_type_t> b) {
+  assert (a.getSize () == b.getRows ());
+  int r, c, n = b.getRows ();
+  nr_type_t z;
+  tvector<nr_type_t> res (n);
+
+  for (c = 1; c <= n; c++) {
+    for (r = 1, z = 0; r <= n; r++) z += a.get (r) * b.get (r, c);
+    res.set (c, z);
+  }
+  return res;
+}
+
+// Transpose the matrix in place.
+template <class nr_type_t>
+void tmatrix<nr_type_t>::transpose (void) {
+  nr_type_t v;
+  for (int r = 1; r <= getRows (); r++)
+    for (int c = 1; c < r; c++) {
+      v = get (r, c);
+      set (r, c, get (c, r));
+      set (c, r, v);
+    }
 }
 
 // Checks validity of matrix.
