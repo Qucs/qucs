@@ -2048,11 +2048,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Bipolartransistor</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bipolartransistor mit Substratanschluß</translation>
     </message>
 </context>
 <context>
@@ -3238,7 +3238,7 @@ Fehler:
     </message>
     <message>
         <source>No page set !</source>
-        <translation type="unfinished">Seite nicht gesetzt !</translation>
+        <translation>Seite nicht gesetzt !</translation>
     </message>
     <message>
         <source>Cannot create </source>
