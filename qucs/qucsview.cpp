@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -171,7 +171,6 @@ void QucsView::slotMarkerLeft()
   if(Docs.current()->MarkerLeftRight(true)) {
     viewport()->repaint();
     drawn = false;
-    Docs.current()->setChanged(true);
   }
 }
 
@@ -180,7 +179,6 @@ void QucsView::slotMarkerRight()
   if(Docs.current()->MarkerLeftRight(false)) {
     viewport()->repaint();
     drawn = false;
-    Docs.current()->setChanged(true);
   }
 }
 
@@ -189,7 +187,6 @@ void QucsView::slotMarkerUp()
   if(Docs.current()->MarkerUpDown(true)) {
     viewport()->repaint();
     drawn = false;
-    Docs.current()->setChanged(true);
   }
 }
 
@@ -198,7 +195,6 @@ void QucsView::slotMarkerDown()
   if(Docs.current()->MarkerUpDown(false)) {
     viewport()->repaint();
     drawn = false;
-    Docs.current()->setChanged(true);
   }
 }
 
@@ -230,7 +226,7 @@ void QucsView::editLabel(WireLabel *pl)
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true);
+  Docs.current()->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -264,10 +260,10 @@ void QucsView::endElementMoving()
 	break;
       default: ;
     }
-    d->setChanged(true);
   }
 
   movingElements.clear();
+  d->setChanged(true, true);
 
   // enlarge viewarea if components lie outside the view
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
@@ -776,7 +772,7 @@ void QucsView::MPressPainting(QMouseEvent *)
 
     drawn = false;
     viewport()->repaint();
-    Docs.current()->setChanged(true);
+    Docs.current()->setChanged(true, true);
   }
 }
 
@@ -841,7 +837,7 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true);
+  Docs.current()->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -931,7 +927,7 @@ void QucsView::MPressMirrorX(QMouseEvent *Event)
 
   // no use in mirroring wires or diagrams
   Component *c = Docs.current()->selectedComponent(x, y);
-  if(c != 0) {
+  if(c) {
     if(c->Ports.count() < 1) return;  // do not mirror components without ports
     c->mirrorX();
     Docs.current()->setCompPorts(c);
@@ -944,7 +940,7 @@ void QucsView::MPressMirrorX(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true);
+  Docs.current()->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -955,7 +951,7 @@ void QucsView::MPressMirrorY(QMouseEvent *Event)
 
   // no use in mirroring wires or diagrams
   Component *c = Docs.current()->selectedComponent(x, y);
-  if(c != 0) {
+  if(c) {
     if(c->Ports.count() < 1) return;  // do not mirror components without ports
     c->mirrorY();
     Docs.current()->setCompPorts(c);
@@ -968,7 +964,7 @@ void QucsView::MPressMirrorY(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true);
+  Docs.current()->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -976,8 +972,10 @@ void QucsView::MPressRotate(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
 
-  Element *e = d->selectElement(int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
-                                int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,false);
+  Element *e = d->selectElement(
+	int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
+	int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,
+	false);
   if(e == 0) return;
 
   WireLabel *pl;
@@ -1015,7 +1013,7 @@ void QucsView::MPressRotate(QMouseEvent *Event)
   }
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true);
+  Docs.current()->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -1026,22 +1024,26 @@ void QucsView::MPressComponent(QMouseEvent *Event)
   setPainter(&painter, d);
 
   int x1, y1, x2, y2;
-  switch(Event->button()) { // left mouse button inserts the component into the schematic
+  switch(Event->button()) {
   case Qt::LeftButton :
+    // left mouse button inserts component into the schematic
     if(selComp == 0) break;
     d->insertComponent(selComp);
 
-    selComp->entireBounds(x1,y1,x2,y2);   // enlarge viewarea if component lies outside the view
+    // enlarge viewarea if component lies outside the view
+    selComp->entireBounds(x1,y1,x2,y2);
     enlargeView(x1, y1, x2, y2);
 
     viewport()->repaint();
-    selComp = selComp->newOne(); // the component is used, so create a new one
+    d->setChanged(true, true);
+    selComp = selComp->newOne(); // component is used, so create a new one
     selComp->paintScheme(&painter);
     break;
 
   case Qt::RightButton :  // right mouse button rotates the component
     if(selComp == 0) break;
-    if(selComp->Ports.count() == 0) break;  // do not rotate components without ports
+    if(selComp->Ports.count() == 0)
+      break;  // do not rotate components without ports
     selComp->paintScheme(&painter); // erase old component scheme
     selComp->rotate();
     selComp->paintScheme(&painter); // paint new component scheme
@@ -1072,7 +1074,7 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
   d->Diags.append(selDiag);
   enlargeView(selDiag->cx, selDiag->cy-selDiag->y2,
 	      selDiag->cx+selDiag->x2, selDiag->cy);
-  d->setChanged(true);   // document has been changed
+  d->setChanged(true, true);   // document has been changed
 
   viewport()->repaint();
   selDiag = selDiag->newOne(); // the component is used, so create a new one
@@ -1110,46 +1112,54 @@ void QucsView::MPressWire2(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
+  int set = 0;
   switch(Event->button()) {
   case Qt::LeftButton :
     if(MAx1 == 0) { // which wire direction first ?
       if(MAx2 != MAx3) {
-        if(d->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2)) & 2) {
+	set = d->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2));
+	if(set & 2) {
 	  // if last port is connected, then start a new wire
-          MouseMoveAction = &QucsView::MMoveWire1;
-          MousePressAction = &QucsView::MPressWire1;
-          MouseDoubleClickAction = &QucsView::MouseDoNothing;
-        }
-        if(MAy2 != MAy3) d->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
+	  MouseMoveAction = &QucsView::MMoveWire1;
+	  MousePressAction = &QucsView::MPressWire1;
+	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	}
+	if(MAy2 != MAy3)
+	  set |= d->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
       }
-      else if(MAy2 != MAy3)
-        if(d->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2)) & 2) {
+      else if(MAy2 != MAy3) {
+	set = d->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
+	if(set & 2) {
 	  // if last port is connected, then start a new wire
-          MouseMoveAction = &QucsView::MMoveWire1;
-          MousePressAction = &QucsView::MPressWire1;
-          MouseDoubleClickAction = &QucsView::MouseDoNothing;
-        }
+	  MouseMoveAction = &QucsView::MMoveWire1;
+	  MousePressAction = &QucsView::MPressWire1;
+	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	} }
     }
     else {
       if(MAy2 != MAy3) {
-        if(d->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2)) & 2) {
+	set = d->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2));
+	if(set & 2) {
 	  // if last port is connected, then start a new wire
-          MouseMoveAction = &QucsView::MMoveWire1;
-          MousePressAction = &QucsView::MPressWire1;
-          MouseDoubleClickAction = &QucsView::MouseDoNothing;
-        }
-        if(MAx2 != MAx3) d->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
+	  MouseMoveAction = &QucsView::MMoveWire1;
+	  MousePressAction = &QucsView::MPressWire1;
+	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	}
+	if(MAx2 != MAx3)
+	  set |= d->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
       }
-      else if(MAx2 != MAx3)
-        if(d->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3)) & 2) {
+      else if(MAx2 != MAx3) {
+	set = d->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
+	if(set & 2) {
 	  // if last port is connected, then start a new wire
-          MouseMoveAction = &QucsView::MMoveWire1;
-          MousePressAction = &QucsView::MPressWire1;
-          MouseDoubleClickAction = &QucsView::MouseDoNothing;
-        }
+	  MouseMoveAction = &QucsView::MMoveWire1;
+	  MousePressAction = &QucsView::MPressWire1;
+	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	} }
     }
     viewport()->repaint();
     drawn = false;
+    if(set) d->setChanged(true, true);
     MAx3 = MAx2;
     MAy3 = MAy2;
     break;
@@ -1334,7 +1344,6 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
     pm->y1 -= MAy3;
   }
   isMoveEqual = false;
-  Docs.current()->setChanged(true);
 
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
@@ -1343,6 +1352,7 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
+  Docs.current()->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
@@ -1357,33 +1367,31 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
   case Qt::LeftButton :
     // insert all moved elements into document
     for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
+      pe->isSelected = false;
       switch(pe->Type) {
-        case isWire:
+	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
-	  Docs.current()->insertWire((Wire*)pe);
+	  d->insertWire((Wire*)pe);
 	  if (d->Wires.containsRef ((Wire*)pe))
 	    enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
 	  else pe = NULL;
 	  break;
-        case isDiagram:
-	  Docs.current()->Diags.append((Diagram*)pe);
-	  ((Diagram*)pe)->loadGraphData(Docs.current()->DataSet);
+	case isDiagram:
+	  d->Diags.append((Diagram*)pe);
+	  ((Diagram*)pe)->loadGraphData(d->DataSet);
 	  enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
-	  Docs.current()->setChanged(true);
 	  break;
-        case isPainting:
-	  Docs.current()->Paints.append((Painting*)pe);
+	case isPainting:
+	  d->Paints.append((Painting*)pe);
 	  ((Painting*)pe)->Bounding(x1,y1,x2,y2);
 	  enlargeView(x1, y1, x2, y2);
-	  Docs.current()->setChanged(true);
 	  break;
-        default:
-	  Docs.current()->insertComponent((Component*)pe);
+	default:
+	  d->insertComponent((Component*)pe);
 	  ((Component*)pe)->entireBounds(x1,y1,x2,y2);
 	  enlargeView(x1, y1, x2, y2);
 	  break;
       }
-      if (pe) pe->isSelected = false;
     }
 
     pasteElements();
@@ -1394,6 +1402,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 
     drawn = false;
     viewport()->repaint();
+    d->setChanged(true, true);
     break;
 
   // ............................................................
@@ -1476,7 +1485,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
            Docs.current()->setComponentNumber(c); // for ports/power sources
            Docs.current()->Comps.append(c);
 
-           Docs.current()->setChanged(true);
+           Docs.current()->setChanged(true, true);
            c->entireBounds(x1,y1,x2,y2);
            enlargeView(x1,y1,x2,y2);
          }
@@ -1486,7 +1495,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
          dia = (Diagram*)focusElement;
          ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
          if(ddia->exec()  != QDialog::Rejected)   // is WDestructiveClose
-           Docs.current()->setChanged(true);
+           Docs.current()->setChanged(true, true);
          break;
 
     case isWire:
@@ -1501,12 +1510,12 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
 
     case isPainting:
          if( ((Painting*)focusElement)->Dialog() )
-           Docs.current()->setChanged(true);
+           Docs.current()->setChanged(true, true);
          break;
 
     case isMarker:
          mdia = new MarkerDialog((Marker*)focusElement, this);
-         if(mdia->exec() > 1) Docs.current()->setChanged(true);
+         if(mdia->exec() > 1) Docs.current()->setChanged(true, true);
          break;
     default:  ;
   }

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -82,17 +82,17 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2)
   if(ty < y1) _y1 = ty+cy;
 
   QFontMetrics  metrics(QucsSettings.font);
-  QRect r = metrics.boundingRect(0,0,0,0,Qt::AlignAuto, Name);
+  QSize r = metrics.size(0, Name);
   if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
   if((ty+r.height()) > y2) _y2 = ty+r.height()+cy;
 
-  int dy=12; // due to 'Name' text
+  int dy=r.height(); // due to 'Name' text
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
-      r = metrics.boundingRect(0,0,0,0,Qt::AlignAuto, pp->Name+"="+pp->Value);
+      r = metrics.size(0, pp->Name+"="+pp->Value);
       if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
-      dy += 12;
+      dy += r.height();
     }
   if((ty+dy) > y2) _y2 = ty+dy+cy;
 }
@@ -116,7 +116,7 @@ bool Component::getSelected(int x_, int y_)
 // -------------------------------------------------------
 void Component::paint(QPainter *p)
 {
-  
+
   // paint all lines
   for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
     p->setPen(p1->style);
@@ -143,12 +143,12 @@ void Component::paint(QPainter *p)
   p->setFont(f);
 
   int Height = p->font().pointSize();
-  int y=Height;
+  int y = cy+ty+Height;
   p->drawText(cx+tx, cy+ty, 0, 0, Qt::DontClip, Name);
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
-      p->drawText(cx+tx, cy+ty+y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
+      p->drawText(cx+tx, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
       y += Height;
     }
 
@@ -185,7 +185,7 @@ void Component::paintScheme(QPainter *p)
 // Rotates the component 90° counter-clockwise around its center
 void Component::rotate()
 {
-  int tmp;
+  int tmp, dx, dy;
 
   // rotate all lines
   for(Line *p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
@@ -226,10 +226,24 @@ void Component::rotate()
   tmp = -x1;   // rotate boundings
   x1  = y1; y1 = -x2;
   x2  = y2; y2 = tmp;
-  
-  tmp = tx;    // rotate text position
+
+  tmp = -tx;    // rotate text position
   tx  = ty;
   ty  = tmp;
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  dx = metrics.width(Name);
+  dy = metrics.height();
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display) {
+      // get width of text
+      tmp = metrics.width(pp->Name+"="+pp->Value);
+      if(tmp > dx) dx = tmp;
+      dy += metrics.height();
+    }
+  if(tx > x2) ty = y1-ty+y2;
+  else if(ty < y1) ty -= dy;
+  else if(tx < x1) { tx += dy-dx;  ty = y1-ty+y2; }
+  else ty -= dx;
 
   rotated++;  // keep track of what's done
   rotated &= 3;
@@ -264,8 +278,13 @@ void Component::mirrorX()
 
   int tmp = y1;
   y1  = -y2; y2 = -tmp;   // mirror boundings
-  if(tx<0) ty = y2+4;     // mirror text position
-  else ty = y1+4;
+
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  int dy = metrics.height();    // for "Name"
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display)  dy += metrics.height();
+  if((tx > x1) && (tx < x2)) ty = -ty-dy;     // mirror text position
+  else ty = y1+ty+y2;
 
   mirroredX = !mirroredX;    // keep track of what's done
   rotated += rotated << 1;
@@ -293,18 +312,27 @@ void Component::mirrorY()
     if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
   }
 
-  QRect r;
-  QFontMetrics  metrics(QucsSettings.smallFont);
+  int tmp;
+  QFontMetrics  smallMetrics(QucsSettings.smallFont);
   // mirror all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
-    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, pt->s); // width of text
-    pt->x = -pt->x - r.width();
+    tmp = smallMetrics.width(pt->s);   // width of text
+    pt->x = -pt->x - tmp;
   }
 
-  int tmp = x1;
+  tmp = x1;
   x1  = -x2; x2 = -tmp;   // mirror boundings
-  if(ty<0) tx = x2+4;     // mirror text position
-  else tx = x1+4;
+
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  int dx = metrics.width(Name);
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display) {
+      // get width of text
+      tmp = metrics.width(pp->Name+"="+pp->Value);
+      if(tmp > dx)  dx = tmp;
+    }
+  if((ty > y1) && (ty < y2)) tx = -tx-dx;     // mirror text position
+  else tx = x1+tx+x2;
 
   mirroredX = !mirroredX;   // keep track of what's done
   rotated += rotated << 1;
@@ -318,8 +346,8 @@ QString Component::NetList()
   if(Model.isEmpty()) return QString("");   // dummy elements (e.g. ground)
   if(!isActive) return QString("");         // should it be simulated ?
   QString s = Model+":"+Name;
-  
-  
+
+
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;    // node names
 

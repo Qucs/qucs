@@ -3,7 +3,7 @@
                              -------------------
     begin                : Wed Sep 3 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -22,6 +22,7 @@
 #include "qucsdoc.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
+#include "main.h"
 
 #include <qmessagebox.h>
 #include <qfileinfo.h>
@@ -111,6 +112,9 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name) : File(this)
   Nodes.setAutoDelete(true);
   Diags.setAutoDelete(true);
   Paints.setAutoDelete(true);
+
+  UndoStack.setAutoDelete(true);
+  UndoStack.append(new QString("<Qucs Schematic " PACKAGE_VERSION));
 }
 
 QucsDoc::~QucsDoc()
@@ -135,23 +139,34 @@ void QucsDoc::setName(const QString& _Name)
 
 // ---------------------------------------------------
 // Sets the document to be changed or not to be changed.
-void QucsDoc::setChanged(bool c)
+void QucsDoc::setChanged(bool c, bool fillStack)
 {
-  if((!DocChanged) & c) {
+  if((!DocChanged) && c) {
     Tab->setIconSet(QPixmap(smallsave_xpm));
-    if(Bar != 0) {
+    if(Bar) {
       Bar->layoutTabs();
       Bar->repaint();
     }
   }
-  else if(DocChanged & (!c)) {
+  else if(DocChanged && (!c)) {
     Tab->setIconSet(QIconSet(0));   // no icon in TabBar
-    if(Bar != 0) {
+    if(Bar) {
       Bar->layoutTabs();
       Bar->repaint();
     }
   }
   DocChanged = c;
+
+  if(fillStack) {
+//QTime t;
+//QString str;
+//t.start();
+//for(int z=0; z<100; z++) str = File.createClipboardFile();
+    UndoStack.append(new QString(File.createUndoString()));
+//qDebug("time: %d ms", t.elapsed());
+    while(UndoStack.count() > QucsSettings.maxUndo)   // "while..." because
+      UndoStack.removeFirst();    // "maxUndo" could be decreased meanwhile
+  }
 }
 
 // ---------------------------------------------------
@@ -321,8 +336,6 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
     }
     c->Sign = "GND";    // rebuild component sign
   }
-
-  setChanged(true);
 }
 
 // ---------------------------------------------------
@@ -365,8 +378,6 @@ void QucsDoc::insertComponent(Component *c)
     c->Name += QString::number(max);  // create name with new number
   }
 
-
-  setChanged(true);
   setComponentNumber(c); // important for power sources and subcircuit ports
   Comps.append(c);   // insert component at appropriate position
 }
@@ -700,7 +711,7 @@ bool QucsDoc::connectHWires2(Wire *w)
   Wire *pw;
   Node *n = w->Port2;
 
-  pw = (Wire*)n->Connections.last();  // last connection is the new wire itself
+  pw = (Wire*)n->Connections.last(); // last connection is the new wire itself
   for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev()) {
     if(pw->Type != isWire) continue;
     if(!pw->isHorizontal()) continue;
@@ -718,7 +729,8 @@ bool QucsDoc::connectHWires2(Wire *w)
       Wires.removeRef(pw);
       return true;
     }
-    // (if new wire lies complete within an existing one, was already check before)
+    // (if new wire lies complete within an existing one, was already
+    // checked before)
 
     if(pw->Port1->Connections.count() < 2) {
       // existing wire lies within the new one
@@ -748,7 +760,7 @@ bool QucsDoc::connectVWires2(Wire *w)
   Wire *pw;
   Node *n = w->Port2;
 
-  pw = (Wire*)n->Connections.last();  // last connection is the new wire itself
+  pw = (Wire*)n->Connections.last(); // last connection is the new wire itself
   for(pw = (Wire*)n->Connections.prev(); pw!=0; pw = (Wire*)n->Connections.prev()) {
     if(pw->Type != isWire) continue;
     if(pw->isHorizontal()) continue;
@@ -766,7 +778,8 @@ bool QucsDoc::connectVWires2(Wire *w)
       Wires.removeRef(pw);
       return true;
     }
-    // (if new wire lies complete within an existing one, was already check before)
+    // (if new wire lies complete within an existing one, was already
+    // checked before)
 
     if(pw->Port1->Connections.count() < 2) {
       // existing wire lies within the new one
@@ -839,9 +852,11 @@ int QucsDoc::insertWire(Wire *w)
   int  n1, n2;
   Wire *pw, *nw;
   Node *pn, *pn2;
+  Element *pe;
   // ................................................................
-  // check if the new line covers existing nodes
-  for(pw = Wires.current(); pw != 0; pw = Wires.next()) // in order to also check new appearing wires
+  // Check if the new line covers existing nodes.
+  // In order to also check new appearing wires -> use "for"-loop
+  for(pw = Wires.current(); pw != 0; pw = Wires.next())
     for(pn = Nodes.first(); pn != 0; ) {  // check every node
       if(pn->cx == pw->x1) {
         if(pn->cy <= pw->y1) { pn = Nodes.next(); continue; }
@@ -856,10 +871,11 @@ int QucsDoc::insertWire(Wire *w)
       n1 = 2; n2 = 3;
       pn2 = pn;
       // check all connections of the current node
-      for(Element *pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next()) {
+      for(pe=pn->Connections.first(); pe!=0; pe=pn->Connections.next()) {
         if(pe->Type != isWire) continue;
         nw = (Wire*)pe;
-        if(pw->isHorizontal() != nw->isHorizontal()) continue;  // wire lies within the new ?
+	// wire lies within the new ?
+	if(pw->isHorizontal() != nw->isHorizontal()) continue;
 
         pn  = nw->Port1;
         pn2 = nw->Port2;
@@ -906,10 +922,9 @@ int QucsDoc::insertWire(Wire *w)
       pn = Nodes.next();
     }
 
-  if (Wires.containsRef (w))
-    oneLabel(w->Port1); // if two wire lines with different labels are connected, delete one label
-  setChanged(true);
-  return con;
+  if (Wires.containsRef (w))  // if two wire lines with different labels ...
+    oneLabel(w->Port1);       // ... are connected, delete one label
+  return con | 0x0200;   // sent also end flag
 }
 
 // ---------------------------------------------------
@@ -948,7 +963,8 @@ Component* QucsDoc::searchSelSubcircuit()
 // ---------------------------------------------------
 Component* QucsDoc::selectedComponent(int x, int y)
 {
-  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())  // test all components
+  // test all components
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
     if(pc->getSelected(x, y))
       return pc;
 
@@ -1039,7 +1055,7 @@ Marker* QucsDoc::setMarker(int x, int y)
         if(n > 0) {
           Marker *pm = new Marker(pd, pg, n-1);
           pd->Markers.append(pm);
-          setChanged(true);
+          setChanged(true, true);
           return pm;
         }
       }
@@ -1061,6 +1077,7 @@ bool QucsDoc::MarkerLeftRight(bool left)
 	acted = true;
       }
     }
+  if(acted)  setChanged(true, true);
   return acted;
 }
 
@@ -1077,6 +1094,7 @@ bool QucsDoc::MarkerUpDown(bool up)
 	acted = true;
       }
     }
+  if(acted)  setChanged(true, true);
   return acted;
 }
 
@@ -1558,6 +1576,7 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 // rectangle x1/y1, x2/y2.
 void QucsDoc::activateComps(int x1, int y1, int x2, int y2)
 {
+  bool changed = false;
   int  cx1, cy1, cx2, cy2;
   // exchange rectangle coordinates to obtain x1 < x2 and y1 < y2
   cx1 = (x1 < x2) ? x1 : x2; cx2 = (x1 > x2) ? x1 : x2;
@@ -1565,16 +1584,18 @@ void QucsDoc::activateComps(int x1, int y1, int x2, int y2)
   x1 = cx1; x2 = cx2;
   y1 = cy1; y2 = cy2;
 
-  
+
   for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {
     pc->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
       pc->isActive ^= true;    // change "active status"
-      setChanged(true);
+      changed = true;
       if(pc->isActive)    // if existing, delete label on wire line
 	if(pc->Sign == "GND") oneLabel(pc->Ports.getFirst()->Connection);
     }
   }
+
+  if(changed)  setChanged(true, true);
 }
 
 // ---------------------------------------------------
@@ -1586,7 +1607,7 @@ bool QucsDoc::activateComponent(int x, int y)
     pc->Bounding(x1, y1, x2, y2);
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
       pc->isActive ^= true;    // change "active status"
-      setChanged(true);
+      setChanged(true, true);
       if(pc->isActive)    // if existing, delete label on wire line
 	if(pc->Sign == "GND") oneLabel(pc->Ports.getFirst()->Connection);
       return true;
@@ -1609,7 +1630,7 @@ bool QucsDoc::activateComponents()
 	if(pc->Sign == "GND") oneLabel(pc->Ports.getFirst()->Connection);
     }
 
-  setChanged(sel);
+  if(sel) setChanged(true, true);
   return sel;
 }
 
@@ -1969,7 +1990,7 @@ bool QucsDoc::rotateElements()
 
   ElementCache.clear();
 
-  setChanged(true);
+  setChanged(true, true);
   return true;
 }
 
@@ -1995,29 +2016,32 @@ bool QucsDoc::mirrorXComponents()
   // re-insert elements
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
-      case isComponent: pc = (Component*)pe;
-                        pc->mirrorX();   // mirror component !before! mirroring its center
-                        pc->setCenter(pc->cx, (y1<<1) - pc->cy);
-                        insertRawComponent(pc);
-                        break;
-      case isWire:      pw = (Wire*)pe;
-                        pw->y1 = (y1<<1) - pw->y1;
-                        pw->y2 = (y1<<1) - pw->y2;
-                        if(pw->Label)
-                          pw->Label->cy = (y1<<1) - pw->Label->cy;
-                        insertWire(pw);
-                        break;
-      case isPainting:  pp = (Painting*)pe;
-                        pp->getCenter(x2, y2);
-                        pp->mirrorX();   // mirror painting !before! mirroring its center
-                        pp->setCenter(x2, (y1<<1) - y2);
-                        Paints.append(pp);
-                        break;
-      default:          ;
+      case isComponent:
+	pc = (Component*)pe;
+	pc->mirrorX();   // mirror component !before! mirroring its center
+	pc->setCenter(pc->cx, (y1<<1) - pc->cy);
+	insertRawComponent(pc);
+	break;
+      case isWire:
+	pw = (Wire*)pe;
+	pw->y1 = (y1<<1) - pw->y1;
+	pw->y2 = (y1<<1) - pw->y2;
+	if(pw->Label)
+	  pw->Label->cy = (y1<<1) - pw->Label->cy;
+	insertWire(pw);
+	break;
+      case isPainting:
+	pp = (Painting*)pe;
+	pp->getCenter(x2, y2);
+	pp->mirrorX();   // mirror painting !before! mirroring its center
+	pp->setCenter(x2, (y1<<1) - y2);
+	Paints.append(pp);
+	break;
+      default: ;
     }
 
   ElementCache.clear();
-  setChanged(true);
+  setChanged(true, true);
   return true;
 }
 
@@ -2043,29 +2067,32 @@ bool QucsDoc::mirrorYComponents()
   // re-insert elements
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
-      case isComponent: pc = (Component*)pe;
-                        pc->mirrorY();   // mirror component !before! mirroring its center
-                        pc->setCenter((x1<<1) - pc->cx, pc->cy);
-                        insertRawComponent(pc);
-                        break;
-      case isWire:      pw = (Wire*)pe;
-                        pw->x1 = (x1<<1) - pw->x1;
-                        pw->x2 = (x1<<1) - pw->x2;
-                        if(pw->Label)
-                          pw->Label->cx = (x1<<1) - pw->Label->cx;
-                        insertWire(pw);
-                        break;
-      case isPainting:  pp = (Painting*)pe;
-                        pp->getCenter(x2, y2);
-                        pp->mirrorY();   // mirror painting !before! mirroring its center
-                        pp->setCenter((x1<<1) - x2, y2);
-                        Paints.append(pp);
-                        break;
-      default:          ;
+      case isComponent:
+	pc = (Component*)pe;
+	pc->mirrorY();   // mirror component !before! mirroring its center
+	pc->setCenter((x1<<1) - pc->cx, pc->cy);
+	insertRawComponent(pc);
+	break;
+      case isWire:
+	pw = (Wire*)pe;
+	pw->x1 = (x1<<1) - pw->x1;
+	pw->x2 = (x1<<1) - pw->x2;
+	if(pw->Label)
+	  pw->Label->cx = (x1<<1) - pw->Label->cx;
+	insertWire(pw);
+	break;
+      case isPainting:
+	pp = (Painting*)pe;
+	pp->getCenter(x2, y2);
+	pp->mirrorY();   // mirror painting !before! mirroring its center
+	pp->setCenter((x1<<1) - x2, y2);
+	Paints.append(pp);
+	break;
+      default: ;
     }
 
   ElementCache.clear();
-  setChanged(true);
+  setChanged(true, true);
   return true;
 }
 
@@ -2231,9 +2258,10 @@ bool QucsDoc::deleteElements()
     }
     else pp = Paints.next();
 
-  if(sel)
+  if(sel) {
     sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);   // set new document size
-  setChanged(sel);
+    setChanged(sel, true);
+  }
   return sel;
 }
 
@@ -2265,8 +2293,9 @@ bool QucsDoc::paste(QTextStream *stream, QPtrList<Element> *pe)
 // Loads this Qucs document.
 bool QucsDoc::load()
 {
+  UndoStack.clear();
   if(!File.load()) return false;
-  setChanged(false);
+  setChanged(false, true);   // "not changed" state, but put on undo stack
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   return true;
 }
@@ -2275,8 +2304,9 @@ bool QucsDoc::load()
 // Saves this Qucs document.
 int QucsDoc::save()
 {
-  setChanged(false);
-  return File.save();
+  int result = File.save();
+  if(result >= 0) setChanged(false);
+  return result;
 }
 
 // ---------------------------------------------------
@@ -2345,7 +2375,8 @@ bool QucsDoc::giveNodeNames(QTextStream *stream)
     if(!p1->Name.isEmpty()) continue;    // already named ?
     p1->Name = "_net" + QString::number(z++);   // create node name
     Cons.append(p1);
-    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())   // create list with connections to the node
+    // create list with connections to the node
+    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
       for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
         if(pe->Type == isWire) {
           pw = (Wire*)pe;
@@ -2406,7 +2437,8 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
   if(!NetlistFile->open(IO_WriteOnly)) return false;
 
   QTextStream stream(NetlistFile);
-  stream << "# Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";    // first line is docu
+  // first line is docu
+  stream << "# Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
 
 
   if(!giveNodeNames(&stream)) {
@@ -2424,4 +2456,16 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
   NetlistFile->close();
 
   return true;
+}
+
+// ---------------------------------------------------
+bool QucsDoc::undo()
+{
+  if(UndoStack.count() < 2)  return false;
+  else {
+    UndoStack.removeLast();    // last item is current state  !!!
+    if(!File.rebuild(UndoStack.current()))
+      qDebug("Fehler!");
+    return true;
+  }
 }

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -25,6 +25,7 @@
 #include <qlayout.h>
 #include <qcolordialog.h>
 #include <qfontdialog.h>
+#include <qvalidator.h>
 
 
 QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
@@ -40,7 +41,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,2,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,3,2,5,5);
 
   QLabel *l1 = new QLabel(tr("Font (set after reload):"), Tab1);
   gp->addWidget(l1,0,0);
@@ -53,6 +54,12 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   BGColorButton = new QPushButton("      ", Tab1);
   connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
   gp->addWidget(BGColorButton,1,1);
+
+  QLabel *l3 = new QLabel(tr("maximum undo operations:"), Tab1);
+  gp->addWidget(l3,2,0);
+  undoNumEdit = new QLineEdit(Tab1);
+  undoNumEdit->setValidator(new QIntValidator(0, 200, undoNumEdit));
+  gp->addWidget(undoNumEdit,2,1);
 
 
   t->addTab(Tab1, tr("Design"));
@@ -99,6 +106,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   FontButton->setText(Font.toString());
   BGColorButton->setPaletteBackgroundColor(
 	App->view->viewport()->paletteBackgroundColor());
+  undoNumEdit->setText(QString::number(QucsSettings.maxUndo));
 }
 
 QucsSettingsDialog::~QucsSettingsDialog()
@@ -124,17 +132,21 @@ void QucsSettingsDialog::slotApply()
     changed = true;
   }
 
-  QFont tmpFont(App->font());
-  if(App->font() != Font) {
-    QucsSettings.font = Font;
+  if(savingFont != Font) {
+    savingFont = Font;
 //    App->setFont(Font);
 //    App->ContentMenu->setFont(Font);
     changed = true;
   }
 
+  bool ok;
+  if(QucsSettings.maxUndo != undoNumEdit->text().toUInt(&ok)) {
+    QucsSettings.maxUndo = undoNumEdit->text().toInt(&ok);
+    changed = true;
+  }
+
   if(changed) {
     saveApplSettings(App);  // also sets the small and large font
-    QucsSettings.font = tmpFont;
     App->repaint();
   }
 }

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Mon May 24  2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -28,9 +28,12 @@ struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
   QFont font, largeFont, smallFont;
   QColor BGColor;      // background color of view area
+
+  unsigned int maxUndo;    // size of undo stack
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
+extern QFont savingFont;       // to remember which font to save in "qucsrc"
 
 bool saveApplSettings(QucsApp *qucs);
 

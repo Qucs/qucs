@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -593,7 +593,7 @@ void QucsApp::slotFileSaveAs()
 
   if(!saveAs()) {
     view->blockSignals(false);
-    statusBar()->message(tr("Saving aborted"), 2000);
+    statusBar()->message(tr("Saving aborted"), 3000);
     statusBar()->message(tr("Ready."));
     return;
   }
@@ -1008,7 +1008,7 @@ void QucsApp::slotChangePage()
       return;
     }
   }
-  
+
   int cNo = view->Docs.at();
   view->Docs.findRef(Doc);  // back to the last current
   WorkView->setCurrentTab(WorkView->tabAt(cNo));  // make new doc the current
@@ -1239,45 +1239,16 @@ pInfoFunc nonlinearComps[9] =
 // with the appropriat components.
 void QucsApp::slotSetCompView(int index)
 {
-int i=-1;
 char *File;
 QString Name;
-Component*  (*Infos) (QString&, char* &, bool);
+pInfoFunc *Infos = 0;
 
   CompComps->clear();   // clear the IconView
   switch(index) {
-    case COMBO_passive:
-	 while(lumpedComponents[++i] != 0) {
-	   Infos = lumpedComponents[i];
-	   (*Infos) (Name, File, false);
-	   new QIconViewItem(CompComps, Name,
-			QImage(BITMAPDIR+QString(File)+".xpm"));
-	 }
-	 break;
-    case COMBO_Sources:
-	 while(Sources[++i] != 0) {
-	   Infos = Sources[i];
-	   (*Infos) (Name, File, false);
-	   new QIconViewItem(CompComps, Name,
-			QImage(BITMAPDIR+QString(File)+".xpm"));
-	 }
-	 break;
-    case COMBO_TLines:
-	 while(TransmissionLines[++i] != 0) {
-	   Infos = TransmissionLines[i];
-	   (*Infos) (Name, File, false);
-	   new QIconViewItem(CompComps, Name,
-			QImage(BITMAPDIR+QString(File)+".xpm"));
-	 }
-	 break;
-    case COMBO_nonlinear:
-	 while(nonlinearComps[++i] != 0) {
-	   Infos = nonlinearComps[i];
-	   (*Infos) (Name, File, false);
-	   new QIconViewItem(CompComps, Name,
-			QImage(BITMAPDIR+QString(File)+".xpm"));
-	 }
-	 break;
+    case COMBO_passive:   Infos = &lumpedComponents[0];  break;
+    case COMBO_Sources:   Infos = &Sources[0];           break;
+    case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
+    case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
     case COMBO_File:
       new QIconViewItem(CompComps, tr("1-port S parameter file"),
 		QImage(BITMAPDIR "spfile1.xpm"));
@@ -1291,15 +1262,8 @@ Component*  (*Infos) (QString&, char* &, bool);
 		QImage(BITMAPDIR "spfile5.xpm"));
       new QIconViewItem(CompComps, tr("6-port S parameter file"),
 		QImage(BITMAPDIR "spfile6.xpm"));
-      break;
-    case COMBO_Sims:
-	 while(Simulations[++i] != 0) {
-	   Infos = Simulations[i];
-	   (*Infos) (Name, File, false);
-	   new QIconViewItem(CompComps, Name,
-			QImage(BITMAPDIR+QString(File)+".xpm"));
-	 }
-	 break;
+      return;
+    case COMBO_Sims:     Infos = &Simulations[0];  break;
     case COMBO_Paints:
       new QIconViewItem(CompComps, tr("Line"),
 		QImage(BITMAPDIR "line.xpm"));
@@ -1315,7 +1279,7 @@ Component*  (*Infos) (QString&, char* &, bool);
 		QImage(BITMAPDIR "filledellipse.xpm"));
       new QIconViewItem(CompComps, tr("filled Rectangle"),
 		QImage(BITMAPDIR "filledrect.xpm"));
-      break;
+      return;
     case COMBO_Diagrams:
       new QIconViewItem(CompComps, tr("Cartesian"),
 		QImage(BITMAPDIR "rect.xpm"));
@@ -1325,7 +1289,14 @@ Component*  (*Infos) (QString&, char* &, bool);
 		QImage(BITMAPDIR "tabular.xpm"));
       new QIconViewItem(CompComps, tr("Smith Chart"),
 		QImage(BITMAPDIR "smith.xpm"));
-      break;
+      return;
+  }
+
+  while(*Infos != 0) {
+    (**Infos) (Name, File, false);
+    new QIconViewItem(CompComps, Name,
+		QImage(BITMAPDIR+QString(File)+".xpm"));
+    Infos++;
   }
 }
 
@@ -1358,7 +1329,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   activeAction = 0;
 
 
-  Component*  (*Infos) (QString&, char* &, bool) = 0;
+  pInfoFunc Infos = 0;
   switch(CompChoose->currentItem()) {
     case COMBO_passive:
 	 Infos = lumpedComponents[CompComps->index(item)];
@@ -1410,12 +1381,11 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
           view->MouseReleaseAction = &QucsView::MouseDoNothing;
           view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
           return;
-    default:  return;   // do not run into uninitialized "Infos"
   }
 
   char *Dummy2;
   QString Dummy1;
-  view->selComp = (*Infos) (Dummy1, Dummy2, true);
+  if(Infos) view->selComp = (*Infos) (Dummy1, Dummy2, true);
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
@@ -1560,4 +1530,13 @@ void QucsApp::slotProjDelButt()
   if(!DeleteProject(QDir::homeDirPath()+"/.qucs/"+item->text()+"_prj",
 	item->text()))  return;
   Projects->removeItem(Projects->currentItem());  // remove from project list
+}
+
+// #######################################################################
+// Is called, when "Undo"-Button is pressed.
+void QucsApp::slotEditUndo()
+{
+  view->Docs.current()->undo();
+  view->viewport()->repaint();
+  view->drawn = false;
 }
