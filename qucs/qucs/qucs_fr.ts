@@ -918,10 +918,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ideality coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Format Error:
 Wrong line start!</source>
         <translation type="unfinished"></translation>
@@ -972,6 +968,22 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Too few independent data&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>junction potential</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
