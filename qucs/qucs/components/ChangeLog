@@ -1,3 +1,9 @@
+2004-07-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* bjtsub.cpp (BJTsub), bjt.cpp (BJT): Added model parameters.
+
+	* jfet.cpp (JFET): Added noise model parameters.
+
 2004-07-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* sp_sim.cpp (SP_Sim): Inserting line break in component 
