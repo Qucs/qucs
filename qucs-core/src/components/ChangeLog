@@ -1,3 +1,8 @@
+2004-07-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Implemented some of the operating points
+	of the SGP model.
+
 2004-07-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Started to implement the DC model of the

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.2 2004/07/07 17:00:41 ela Exp $
+ * $Id: bjt.cpp,v 1.3 2004/07/08 23:20:44 ela Exp $
  *
  */
 
@@ -121,10 +121,9 @@ void bjt::calcDC (void) {
   nr_double_t Rbm  = getPropertyDouble ("Rbm");
   nr_double_t Irb  = getPropertyDouble ("Irb");
 
-  nr_double_t T, Ut, Ube, Ubc, If, Ir, It, Qb, Q1, Q2, Ibe, Ibc, Rbb;
-  nr_double_t Iben, Ibcn, Ibei, Ibci, gbe, gbc, gif, gir, gitf, gitr, git;
-  nr_double_t Uce, IeqB, IeqC, IeqE, IeqS, dQbdUbe, dQbdUbc, UbeCrit, UbcCrit;
-  nr_double_t gtiny, gbei, gben, gbci, gbcn;
+  nr_double_t T, Ut, Ube, Ubc, Ir, It, Q1, Q2, Ibe, Ibc, Rbb;
+  nr_double_t Iben, Ibcn, Ibei, Ibci, gbe, gbc, gtiny;
+  nr_double_t Uce, IeqB, IeqC, IeqE, IeqS, UbeCrit, UbcCrit;
 
   T = -K + 26.5;
   Ut = T * kB / Q;
@@ -183,7 +182,7 @@ void bjt::calcDC (void) {
   if (Irb != 0) {
     nr_double_t a, b, z;
     a = (Ibci + Ibcn + Ibei + Iben) / Irb;
-    z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / sqrt (24 / sqr (M_PI) * a);
+    z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
     b = tan (z);
     Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
   }
@@ -223,4 +222,71 @@ void bjt::calcDC (void) {
 
 void bjt::calcOperatingPoints (void) {
 
+  // fetch device model parameters
+  nr_double_t Cje0 = getPropertyDouble ("Cje");
+  nr_double_t Vje  = getPropertyDouble ("Vje");
+  nr_double_t Mje  = getPropertyDouble ("Mje");
+  nr_double_t Cjc0 = getPropertyDouble ("Cjc");
+  nr_double_t Vjc  = getPropertyDouble ("Vjc");
+  nr_double_t Mjc  = getPropertyDouble ("Mjc");
+  nr_double_t Xcjc = getPropertyDouble ("Xcjc");
+  nr_double_t Cjs0 = getPropertyDouble ("Cjs");
+  nr_double_t Vjs  = getPropertyDouble ("Vjs");
+  nr_double_t Mjs  = getPropertyDouble ("Mjs");
+  nr_double_t Fc   = getPropertyDouble ("Fc");
+  nr_double_t Vtf  = getPropertyDouble ("Vtf");
+  nr_double_t Tf   = getPropertyDouble ("Tf");
+  nr_double_t Xtf  = getPropertyDouble ("Xtf");
+  nr_double_t Itf  = getPropertyDouble ("Itf");
+  nr_double_t Tr   = getPropertyDouble ("Tr");
+
+  nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Usc, Cbc, Ccs;
+
+  Ube = real (getV (NODE_B) - getV (NODE_E));
+  Ubc = real (getV (NODE_B) - getV (NODE_C));
+  Usc = real (getV (NODE_S) - getV (NODE_C));
+
+  // depletion capacitance of base-emitter diode
+  if (Ube <= Fc * Vje)
+    Cbe = Cje0 * pow (1 - Ube / Vje, -Mje);
+  else
+    Cbe = Cje0 / pow (1 - Fc, Mje) * 
+      (1 + Mje * (Ube - Fc * Vje) / Vje / (1 - Fc));
+
+  // diffusion capacitance of base-emitter diode
+  nr_double_t e, Tff, dTffdUbe;
+  e = exp (Ubc / 1.44 / Vtf);
+  Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
+  dTffdUbe = Tf * Xtf * 2 * gif * If * Itf / cubic (If + Itf) * e;
+
+  Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
+
+  // depletion and diffusion capacitance of base-collector diode
+  if (Ubc <= Fc * Vjc)
+    Cbc = Cjc0 * pow (1 - Ubc / Vjc, -Mjc);
+  else
+    Cbc = Cjc0 / pow (1 - Fc, Mjc) * 
+      (1 + Mjc * (Ubc - Fc * Vjc) / Vjc / (1 - Fc));
+
+  Cbci = Cbc * Xcjc + Tr * gir;
+  Cbcx = Cbc * (1 - Xcjc);
+
+  // depletion capacitance of collector-substrate diode
+  if (Usc <= 0)
+    Ccs = Cjs0 * pow (1 - Usc / Vjs, -Mjs);
+  else
+    Ccs = Cjs0 * (1 + Mjc * Usc / Vjs);
+
+  // finally save the operating points
+  setOperatingPoint ("Cbe", Cbe);
+  setOperatingPoint ("Cbci", Cbci);
+  setOperatingPoint ("Cbcx", Cbcx);
+  setOperatingPoint ("Ccs", Ccs);
+  setOperatingPoint ("gm", git);
+  setOperatingPoint ("gmu", gbei + gben);
+  setOperatingPoint ("go", gitr);
+  setOperatingPoint ("gpi", gbci + gbcn);
+  setOperatingPoint ("Vbe", Ube);
+  setOperatingPoint ("Vbc", Ubc);
+  setOperatingPoint ("Vce", Ube - Ubc);
 }
