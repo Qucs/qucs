@@ -1,7 +1,7 @@
 /***************************************************************************
-                          diagramdialog.h  -  description
+                          fileshowdialog.h  -  description
                              -------------------
-    begin                : Sun Oct 5 2003
+    begin                : Mon Nov 17 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,53 +15,20 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef DIAGRAMDIALOG_H
-#define DIAGRAMDIALOG_H
-
-#include "diagram.h"
+#ifndef FILESHOWDIALOG_H
+#define FILESHOWDIALOG_H
 
 #include <qdialog.h>
-#include <qcombobox.h>
-#include <qlistbox.h>
-#include <qlistview.h>
-#include <qlineedit.h>
-#include <qdir.h>
-#include <qpoint.h>
-
 
 /**
   *@author Michael Margraf
   */
 
-class DiagramDialog : public QDialog  {
-Q_OBJECT
+class FileShowDialog : public QDialog  {
+   Q_OBJECT
 public: 
-	DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent=0, const char *name=0);
-	~DiagramDialog();
-
-  bool loadVarData(const QString& var);
-  
-public slots:
-  void slotReadVars(int index);
-  void slotTakeVar(QListViewItem *Item);
-  void slotSelectGraph(int index);
-  void slotNewGraph();
-  void slotDeleteGraph();
-  void slotApplyGraphInput();
-  void slotOK();
-  void slotApply();
-  void slotFuncHelp();
-
-public:
-  Diagram *Diag;
-  QString defaultDataSet;
-    
-  QComboBox *ChooseData;
-  QListView *ChooseVars;
-  QListBox  *GraphList;
-
-  QLineEdit *GraphInput, *xLabel, *yLabel;
-  bool changed;
+	FileShowDialog(const QString& _FileName, QWidget *parent=0, const char *name=0);
+	~FileShowDialog();
 };
 
 #endif

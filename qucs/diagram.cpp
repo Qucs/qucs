@@ -101,13 +101,16 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
   ymin = xmin = DBL_MAX;
-  ymax = ymax = -DBL_MAX;
+  ymax = xmax = -DBL_MAX;
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);    // load data and determine max and min values
+//QMessageBox::critical(0, "Error", QString::number(xmin)+"  "+QString::number(xmax)+" * "+QString::number(ymin)+"  "+QString::number(ymax));
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     calcData(pg);   // calculate graph coordinates
+
+  calcDiagram();
 }
 
 // --------------------------------------------------------------------------
@@ -141,6 +144,7 @@ bool Diagram::loadVarData(const QString& fileName)
 
   tmp = Line.section(' ', 2, 2);
   tmp.remove('>');
+  g->IndepVar = tmp;
 /*  int n =*/ loadIndepVarData(tmp, fileName);    // get independent variable
 
 //  g->Line = var;
@@ -177,7 +181,6 @@ bool Diagram::loadVarData(const QString& fileName)
       if(y > ymax) ymax = y;
       if(y < ymin) ymin = y;
       p = g->cPoints.next();
-//QMessageBox::critical(0, "Error", QString::number(x)+"  "+QString::number(y));
       i = Line.find(' ');
     }
     Line = stream.readLine();
@@ -227,7 +230,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
   g->cPoints.clear();
 
   int i;
-  double x, xmin=1e45, xmax=-1e45;
+  double x;
   Line = stream.readLine();
   while(Line.left(2) != "</") {
     Line = Line.stripWhiteSpace();
@@ -238,8 +241,6 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
       Line = Line.mid(i+1);
 
       x = tmp.toDouble(&ok);  // get number
-//      *(p++) = cx+int(x);
-//      p++;
       g->cPoints.append(new cPoint(x,0,0));
       if(x > xmax) xmax = x;
       if(x < xmin) xmin = x;
@@ -248,8 +249,6 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
     }
     Line = stream.readLine();
   }
-
-//  xg1 = xmin; xg2 = xmax;
 
   file.close();
   return n;
@@ -289,7 +288,7 @@ QString Diagram::save()
 }
 
 // ------------------------------------------------------------
-bool Diagram::load(const QString& Line, QTextStream *stream, const QString& DataSet)
+bool Diagram::load(const QString& Line, QTextStream *stream)
 {
   bool ok;
   QString s = Line;
@@ -337,10 +336,6 @@ bool Diagram::load(const QString& Line, QTextStream *stream, const QString& Data
     Graph *g = new Graph();
     if(!g->load(s)) return false;
     Graphs.append(g);
-//    n = ((QFile*)stream->device())->name();
-//    n.replace(QString(".sch"),QString(".dat"));
-//QMessageBox::critical(0, "Error", n);
-    if(!loadVarData(DataSet)) calcDiagram();
   }
 
   return false;   // end tag missing

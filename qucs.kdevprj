@@ -109,12 +109,12 @@ install_location=
 type=DATA
 
 [qucs/Makefile.am]
-files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h,qucs/settingsdialog.cpp,qucs/settingsdialog.h,qucs/tabdiagram.cpp,qucs/tabdiagram.h,qucs/messagebox.cpp,qucs/messagebox.h
+files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h,qucs/settingsdialog.cpp,qucs/settingsdialog.h,qucs/tabdiagram.cpp,qucs/tabdiagram.h,qucs/messagebox.cpp,qucs/messagebox.h,qucs/fileshowdialog.cpp,qucs/fileshowdialog.h
 sub_dirs=bitmaps,sim
 type=prog_main
 
 [qucs/bitmaps/Makefile.am]
-files=qucs/bitmaps/ac_voltage.xpm,qucs/bitmaps/arrow.xpm,qucs/bitmaps/capacitor.xpm,qucs/bitmaps/circle.xpm,qucs/bitmaps/dc_current.xpm,qucs/bitmaps/dc_voltage.xpm,qucs/bitmaps/fileopen.png,qucs/bitmaps/filesave.png,qucs/bitmaps/inductor.xpm,qucs/bitmaps/line.xpm,qucs/bitmaps/msline.xpm,qucs/bitmaps/polar.xpm,qucs/bitmaps/rect.xpm,qucs/bitmaps/rectangle.xpm,qucs/bitmaps/resistor.xpm,qucs/bitmaps/resistor_us.xpm,qucs/bitmaps/smith.xpm,qucs/bitmaps/source.xpm,qucs/bitmaps/symtrans.xpm,qucs/bitmaps/tabular.xpm,qucs/bitmaps/text.xpm,qucs/bitmaps/tline.xpm,qucs/bitmaps/transformer.xpm,qucs/bitmaps/editdelete.png,qucs/bitmaps/editcut.png,qucs/bitmaps/editcopy.png,qucs/bitmaps/deactiv.png,qucs/bitmaps/bottom.png,qucs/bitmaps/editpaste.png,qucs/bitmaps/equation.png,qucs/bitmaps/fileclose.png,qucs/bitmaps/fileprint.png,qucs/bitmaps/filesaveall.png,qucs/bitmaps/gear.png,qucs/bitmaps/ground.png,qucs/bitmaps/ground.xpm,qucs/bitmaps/mirror.png,qucs/bitmaps/nodename.png,qucs/bitmaps/pointer.png,qucs/bitmaps/port.png,qucs/bitmaps/rebuild.png,qucs/bitmaps/redo.png,qucs/bitmaps/rotate_ccw.png,qucs/bitmaps/top.png,qucs/bitmaps/undo.png,qucs/bitmaps/viewmag+.png,qucs/bitmaps/viewmag-.png,qucs/bitmaps/viewmagfit.png,qucs/bitmaps/wire.png,qucs/bitmaps/filenew.png,qucs/bitmaps/dc.xpm,qucs/bitmaps/hb.xpm,qucs/bitmaps/sparameter.xpm,qucs/bitmaps/sweep.xpm,qucs/bitmaps/tran.xpm,qucs/bitmaps/cccs.xpm,qucs/bitmaps/ccvs.xpm,qucs/bitmaps/vccs.xpm,qucs/bitmaps/vcvs.xpm,qucs/bitmaps/ac.xpm,qucs/bitmaps/attenuator.xpm,qucs/bitmaps/biast.xpm,qucs/bitmaps/circulator.xpm,qucs/bitmaps/dcblock.xpm,qucs/bitmaps/dcfeed.xpm,qucs/bitmaps/diode.xpm,qucs/bitmaps/isolator.xpm,qucs/bitmaps/mscorner.xpm,qucs/bitmaps/mscross.xpm,qucs/bitmaps/msstep.xpm,qucs/bitmaps/mstee.xpm,qucs/bitmaps/substrate.xpm,qucs/bitmaps/port.xpm,qucs/bitmaps/mirrory.png,qucs/bitmaps/spfile1.xpm,qucs/bitmaps/spfile2.xpm,qucs/bitmaps/spfile3.xpm,qucs/bitmaps/spfile4.xpm,qucs/bitmaps/spfile5.xpm,qucs/bitmaps/spfile6.xpm
+files=qucs/bitmaps/ac_voltage.xpm,qucs/bitmaps/arrow.xpm,qucs/bitmaps/capacitor.xpm,qucs/bitmaps/circle.xpm,qucs/bitmaps/dc_current.xpm,qucs/bitmaps/dc_voltage.xpm,qucs/bitmaps/fileopen.png,qucs/bitmaps/filesave.png,qucs/bitmaps/inductor.xpm,qucs/bitmaps/line.xpm,qucs/bitmaps/msline.xpm,qucs/bitmaps/polar.xpm,qucs/bitmaps/rect.xpm,qucs/bitmaps/rectangle.xpm,qucs/bitmaps/resistor.xpm,qucs/bitmaps/resistor_us.xpm,qucs/bitmaps/smith.xpm,qucs/bitmaps/source.xpm,qucs/bitmaps/symtrans.xpm,qucs/bitmaps/tabular.xpm,qucs/bitmaps/text.xpm,qucs/bitmaps/tline.xpm,qucs/bitmaps/transformer.xpm,qucs/bitmaps/editdelete.png,qucs/bitmaps/editcut.png,qucs/bitmaps/editcopy.png,qucs/bitmaps/deactiv.png,qucs/bitmaps/bottom.png,qucs/bitmaps/editpaste.png,qucs/bitmaps/equation.png,qucs/bitmaps/fileclose.png,qucs/bitmaps/fileprint.png,qucs/bitmaps/filesaveall.png,qucs/bitmaps/gear.png,qucs/bitmaps/ground.png,qucs/bitmaps/ground.xpm,qucs/bitmaps/mirror.png,qucs/bitmaps/nodename.png,qucs/bitmaps/pointer.png,qucs/bitmaps/port.png,qucs/bitmaps/rebuild.png,qucs/bitmaps/redo.png,qucs/bitmaps/rotate_ccw.png,qucs/bitmaps/top.png,qucs/bitmaps/undo.png,qucs/bitmaps/viewmag+.png,qucs/bitmaps/viewmag-.png,qucs/bitmaps/viewmagfit.png,qucs/bitmaps/wire.png,qucs/bitmaps/filenew.png,qucs/bitmaps/dc.xpm,qucs/bitmaps/hb.xpm,qucs/bitmaps/sparameter.xpm,qucs/bitmaps/sweep.xpm,qucs/bitmaps/tran.xpm,qucs/bitmaps/cccs.xpm,qucs/bitmaps/ccvs.xpm,qucs/bitmaps/vccs.xpm,qucs/bitmaps/vcvs.xpm,qucs/bitmaps/ac.xpm,qucs/bitmaps/attenuator.xpm,qucs/bitmaps/biast.xpm,qucs/bitmaps/circulator.xpm,qucs/bitmaps/dcblock.xpm,qucs/bitmaps/dcfeed.xpm,qucs/bitmaps/diode.xpm,qucs/bitmaps/isolator.xpm,qucs/bitmaps/mscorner.xpm,qucs/bitmaps/mscross.xpm,qucs/bitmaps/msstep.xpm,qucs/bitmaps/mstee.xpm,qucs/bitmaps/substrate.xpm,qucs/bitmaps/port.xpm,qucs/bitmaps/mirrory.png,qucs/bitmaps/spfile1.xpm,qucs/bitmaps/spfile2.xpm,qucs/bitmaps/spfile3.xpm,qucs/bitmaps/spfile4.xpm,qucs/bitmaps/spfile5.xpm,qucs/bitmaps/spfile6.xpm,qucs/bitmaps/viewmag1.png
 sub_dirs=
 type=normal
 
@@ -586,6 +586,12 @@ install=false
 install_location=
 type=DATA
 
+[qucs/bitmaps/viewmag1.png]
+dist=true
+install=false
+install_location=
+type=DATA
+
 [qucs/bitmaps/viewmagfit.png]
 dist=true
 install=false
@@ -661,6 +667,18 @@ install_location=
 type=SOURCE
 
 [qucs/element.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[qucs/fileshowdialog.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/fileshowdialog.h]
 dist=true
 install=false
 install_location=

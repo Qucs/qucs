@@ -31,18 +31,15 @@
 // ***********************************************************************************
 Component::Component()
 {
-//  isWire = false;
-//  isDiag = false;
   Type = isComponent;
-
-  cx = 0;
-  cy = 0;
 
   mirroredX = false;
   rotated = 0;
-
   isSelected = false;
   isActive   = true;
+
+  cx = 0;
+  cy = 0;
 
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
@@ -70,14 +67,40 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 // -------------------------------------------------------
+// Boundings including the component text.
+void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2)
+{
+  _x1 = x1+cx;
+  _y1 = y1+cy;
+  _x2 = x2+cx;
+  _y2 = y2+cy;
+
+  // text boundings
+  if(tx < x1) _x1 = tx+cx;
+  if(ty < y1) _y1 = ty+cy;
+
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",12, QFont::Light));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name);      // get width of text
+  if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
+  if((ty+r.height()) > y2) _y2 = ty+r.height()+cy;
+
+  int dy=12; // due to 'Name' text
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display) {
+      r = p.boundingRect(0,0,0,0,Qt::AlignAuto,pp->Name+"="+pp->Value);      // get width of text
+      if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
+      dy += 12;
+    }
+  if((ty+dy) > y2) _y2 = ty+dy+cy;
+}
+
+// -------------------------------------------------------
 void Component::setCenter(int x, int y, bool relative)
 {
-  if(relative) {
-    cx += x;  cy += y;
-  }
-  else {
-    cx = x;  cy = y;
-  }
+  if(relative) { cx += x;  cy += y; }
+  else { cx = x;  cy = y; }
 }
 
 // -------------------------------------------------------
@@ -389,6 +412,7 @@ SParamFile::SParamFile(int No)
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text( -6,  0,"file"));
 
 
   int i=0, y = 15-h;
@@ -428,8 +452,58 @@ SParamFile::~SParamFile()
 
 SParamFile* SParamFile::newOne()
 {
-  int z = Sign.at(6).digitValue();
+  int z = Sign.mid(6).toInt();
   return new SParamFile(z);
+}
+
+// --------------------------------------------------------------------------
+Subcircuit::Subcircuit(int No)
+{
+  Description = "subcircuit";
+
+  int h = 30*((No-1)/2) + 15;
+  Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text( -7,  0,"sub"));
+
+  
+  int i=0, y = 15-h;
+  while(i<No) {
+    i++;
+    Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port(-30,  y));
+    Texts.append(new Text(-25,y-3,QString::number(i)));
+
+    if(i == No) break;
+    i++;
+    Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port( 30,  y));
+    Texts.append(new Text( 20,y-3,QString::number(i)));
+    y += 60;
+  }
+
+  x1 = -30; y1 = -h-2;
+  x2 =  30; y2 =  h+2;
+
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = QString("Sub")+QString::number(No);
+  Model = QString("Sub")+QString::number(No);
+  Name  = QString("SUB");
+
+  Props.append(new Property("File", "test.sch", true, "name of qucs schematic file"));
+}
+
+Subcircuit::~Subcircuit()
+{
+}
+
+Subcircuit* Subcircuit::newOne()
+{
+  int z = Sign.mid(3).toInt();
+  return new Subcircuit(z);
 }
 
 // --------------------------------------------------------------------------
@@ -951,7 +1025,7 @@ Attenuator::Attenuator()
   Model = QString("Attenuator");
   Name  = QString("X");
 
-  Props.append(new Property("L", "10 dB", true, "attenuation"));
+  Props.append(new Property("A", "10 dB", true, "attenuation"));
 }
 
 Attenuator::~Attenuator()
