@@ -2364,6 +2364,18 @@ Use:  qucsedit [-r] archivo
         <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SPICE netlist file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2948,6 +2960,10 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
