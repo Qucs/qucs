@@ -1,5 +1,8 @@
 2004-09-12  Stefan Jahn  <stefan@lkcc.org>
 
+	* states.h (class states): New class to reuse save-state
+	variables in the transient solver itself.
+
 	* trsolver.cpp (checkDelta): Started to implement the timestep
 	adjuster for the transient analysis.
 

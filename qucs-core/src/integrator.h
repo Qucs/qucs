@@ -18,31 +18,22 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: integrator.h,v 1.1 2004-09-12 14:09:19 ela Exp $
+ * $Id: integrator.h,v 1.2 2004-09-12 18:10:21 ela Exp $
  *
  */
 
 #ifndef __INTEGRATOR_H__
 #define __INTEGRATOR_H__
 
-class integrator
+#include "states.h"
+
+class integrator : public states<nr_double_t>
 {
  public:
   // constructor and destructor set
   integrator ();
   integrator (const integrator &);
   ~integrator ();
-
-  // save-state variables for transient analysis
-  nr_double_t getState (int, int n = 0);
-  void setState (int, nr_double_t, int n = 0);
-  void initStates (void);
-  void clearStates (void);
-  int getStates (void) { return states; }
-  void setStates (int n) { states = n; }
-  void nextState (void);
-  void prevState (void);
-  void fillState (int, nr_double_t);
 
   // integration specific
   typedef void (* integrate_func_t)
@@ -58,9 +49,6 @@ class integrator
   nr_double_t * getCoefficients (void) { return coefficients; }
 
  private:
-  nr_double_t * stateval;
-  int states;
-  int currentstate;
   int order;
   nr_double_t * coefficients;
   integrate_func_t integrate_func;
