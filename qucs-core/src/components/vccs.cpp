@@ -1,7 +1,7 @@
 /*
  * vccs.cpp - vccs class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vccs.cpp,v 1.3 2004-01-28 18:19:07 ela Exp $
+ * $Id: vccs.cpp,v 1.4 2004-01-30 21:40:35 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@
 
 vccs::vccs () : circuit (4) {
   type = CIR_VCCS;
+  setVoltageSources (1);
 }
 
 void vccs::calcS (nr_double_t frequency) {
@@ -74,8 +75,8 @@ void vccs::calcS (nr_double_t frequency) {
 }
 
 void vccs::calcY (void) {
-  setC (1, +1.0); setC (2, +0.0); setC (3, +0.0); setC (4, -1.0);
-  setB (1, +0.0); setB (2, +1.0); setB (3, -1.0); setB (4, +0.0);
-  setD (-1.0 / getPropertyDouble ("G"));
-  setE (+0.0);
+  setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
+  setB (1, 1, +0.0); setB (1, 2, +1.0); setB (1, 3, -1.0); setB (1, 4, +0.0);
+  setD (1, -1.0 / getPropertyDouble ("G"));
+  setE (1, +0.0);
 }

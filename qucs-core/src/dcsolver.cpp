@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.2 2004-01-28 18:19:05 ela Exp $
+ * $Id: dcsolver.cpp,v 1.3 2004-01-30 21:40:35 ela Exp $
  *
  */
 
@@ -87,7 +87,7 @@ void dcsolver::solve (void) {
   createNodelist ();
   nlist->assignNodes ();
 #if DEBUG
-  logprint (LOG_STATUS, "NodeList\n");
+  logprint (LOG_STATUS, "NodeList:\n");
   nlist->print ();
 #endif
 #if DEBUG
@@ -182,7 +182,7 @@ void dcsolver::createBMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  val = real (vs->getB (n->nodes[i]->getPort ()));
+	  val = real (vs->getB (c, n->nodes[i]->getPort ()));
 	  break;
 	}
       }
@@ -217,7 +217,7 @@ void dcsolver::createCMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  val = real (vs->getC (n->nodes[i]->getPort ()));
+	  val = real (vs->getC (r, n->nodes[i]->getPort ()));
 	  break;
 	}
       }
@@ -239,7 +239,7 @@ void dcsolver::createDMatrix (void) {
     for (int c = 1; c <= M; c++) {
       val = 0.0;
       if (r == c) {
-	val = real (vs->getD ());
+	val = real (vs->getD (r));
       }
       A->set (r + N, c + N, val);
     }
@@ -329,7 +329,7 @@ void dcsolver::createEMatrix (void) {
   // go through each voltage source
   for (int r = 1; r <= M; r++) {
     vs = findVoltageSource (r);
-    val = real (vs->getE ());
+    val = real (vs->getE (r));
     // put value into e matrix
     z->set (r + N, 1, val);
   }  
@@ -346,7 +346,8 @@ int dcsolver::countNodes (void) {
 circuit * dcsolver::findVoltageSource (int n) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (c->isVoltageSource () == n)
+    if (n >= c->isVoltageSource () && 
+	n <= c->isVoltageSource () + c->getVoltageSources () - 1)
       return c;
   }
   return NULL;
@@ -429,6 +430,7 @@ char * dcsolver::createV (int n) {
 // Create an appropriate variable name for currents.
 char * dcsolver::createI (int n) {
   static char text[128];
-  sprintf (text, "I_%s", findVoltageSource(n)->getName ());
+  circuit * vs = findVoltageSource (n);
+  sprintf (text, "I_%s_%d", vs->getName (), n - vs->isVoltageSource () + 1);
   return text;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.4 2004-01-28 18:19:05 ela Exp $
+ * $Id: net.cpp,v 1.5 2004-01-30 21:40:35 ela Exp $
  *
  */
 
@@ -92,12 +92,9 @@ void net::insertCircuit (circuit * c) {
     if (!c->isPort ()) c->setPort (nPorts);
   }
   // handle DC voltage sources
-  else if (c->getType () == CIR_VDC ||
-	   c->getType () == CIR_VCCS ||
-	   c->getType () == CIR_VCVS ||
-	   c->getType () == CIR_CCCS) {
-    nSources++;
-    if (!c->isVoltageSource ()) c->setVoltageSource (nSources);
+  if (c->getVoltageSources () > 0) {
+    if (!c->isVoltageSource ()) c->setVoltageSource (nSources + 1);
+    nSources += c->getVoltageSources ();
   }
 }
 
@@ -116,7 +113,7 @@ void net::removeCircuit (circuit * c) {
   }
   nCircuits--;
   if (c->isPort ()) nPorts--;
-  if (c->isVoltageSource ()) nSources--;
+  if (c->isVoltageSource ()) nSources -= c->getVoltageSources ();
 
   // shift the circuit object to the drop list
   if (c->isOriginal ()) {

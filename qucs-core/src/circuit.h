@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.5 2004-01-28 18:19:05 ela Exp $
+ * $Id: circuit.h,v 1.6 2004-01-30 21:40:35 ela Exp $
  *
  */
 
@@ -50,6 +50,8 @@ class circuit : public object
   void setPort (int p) { port = p; }
   int isVoltageSource (void) { return source; }
   void setVoltageSource (int s) { source = s; }
+  int getVoltageSources (void) { return nSources; }
+  void setVoltageSources (int s) { nSources = s; }
   int isOriginal (void) { return org; }
   void setOriginal (int o) { org = o; }
   int countCircuits (void);
@@ -59,16 +61,16 @@ class circuit : public object
   int getType (void) { return type; }
   substrate * getSubstrate (void);
   void setSubstrate (substrate *);
-  complex getB (int port) { return MatrixB[port - 1]; }
-  complex getC (int port) { return MatrixC[port - 1]; }
-  complex getD (void) { return MatrixD[0]; }
-  complex getE (void) { return MatrixE[0]; }
-  complex getI (int port) { return MatrixI[port - 1]; }
-  void setB (int port, complex z) { MatrixB[port - 1] = z; }
-  void setC (int port, complex z) { MatrixC[port - 1] = z; }
-  void setD (complex z) { MatrixD[0] = z; }
-  void setE (complex z) { MatrixE[0] = z; }
-  void setI (int port, complex z) { MatrixI[port - 1] = z; }
+  complex getB (int, int);
+  complex getC (int, int);
+  complex getD (int);
+  complex getE (int);
+  complex getI (int);
+  void setB (int, int, complex);
+  void setC (int, int, complex);
+  void setD (int, complex);
+  void setE (int, complex);
+  void setI (int, complex);
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -78,14 +80,15 @@ class circuit : public object
   int size;
   int port;
   int source;
+  int nSources;
   int org;
   complex * data;
   complex Y;
-  complex MatrixB[4];
-  complex MatrixC[4];
-  complex MatrixD[1];
-  complex MatrixE[1];
-  complex MatrixI[4];
+  complex MatrixB[2 * 6];
+  complex MatrixC[2 * 6];
+  complex MatrixD[2];
+  complex MatrixE[2];
+  complex MatrixI[6];
 
   node * nodes;
   substrate * subst;

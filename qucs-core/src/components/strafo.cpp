@@ -1,7 +1,7 @@
 /*
  * strafo.cpp - symmetrical trafo class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: strafo.cpp,v 1.3 2004-01-30 21:40:35 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 
 strafo::strafo () : circuit (6) {
   type = CIR_STRAFO;
+  setVoltageSources (2);
 }
 
 void strafo::calcS (nr_double_t frequency) {
@@ -65,4 +66,21 @@ void strafo::calcS (nr_double_t frequency) {
   setS (5, 4, 1 - z2); setS (5, 5, z2);     setS (5, 6, -z6);
   setS (6, 1, 1 - z1); setS (6, 2, -z4);    setS (6, 3, z4); 
   setS (6, 4, z6);     setS (6, 5, -z6);    setS (6, 6, z1);
+}
+
+void strafo::calcY (void) {
+  nr_double_t t1 = getPropertyDouble ("T1");
+  nr_double_t t2 = getPropertyDouble ("T2");
+  setB (1, 1, + t1); setB (1, 2, -1.0); setB (1, 3, +1.0);
+  setB (1, 4, +0.0); setB (1, 5, +0.0); setB (1, 6, - t1);
+  setB (2, 1, +0.0); setB (2, 2, -1.0); setB (2, 3, +1.0);
+  setB (2, 4, - t2); setB (2, 5, + t2); setB (2, 6, +0.0);
+  setC (1, 1, + t1); setC (1, 2, -1.0); setC (1, 3, +1.0);
+  setC (1, 4, +0.0); setC (1, 5, +0.0); setC (1, 6, - t1);
+  setC (2, 1, +0.0); setC (2, 2, -1.0); setC (2, 3, +1.0);
+  setC (2, 4, - t2); setC (2, 5, + t2); setC (2, 6, +0.0);
+  setD (1, 0.0);
+  setD (2, 0.0);
+  setE (1, 0.0);
+  setE (2, 0.0);
 }
