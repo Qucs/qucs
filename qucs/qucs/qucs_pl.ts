@@ -2641,6 +2641,14 @@ Czy chcesz kontynuować ?</translation>
         <source>Cannot delete the open file: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
