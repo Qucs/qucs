@@ -1,3 +1,7 @@
+2004-08-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* msopen.cpp (MSopen): Added 'Model' property.
+
 2004-08-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* mosfet_depl.cpp (MOSFET_depl), mosfet.cpp (MOSFET): Added
