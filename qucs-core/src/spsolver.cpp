@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.20 2004/07/21 16:25:09 ela Exp $
+ * $Id: spsolver.cpp,v 1.21 2004/07/26 06:30:28 ela Exp $
  *
  */
 
@@ -396,6 +396,7 @@ void spsolver::calc (nr_double_t freq) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->calcSP (freq);
+    if (noise) c->calcNoise (freq);
   }
 }
 
@@ -483,7 +484,7 @@ void spsolver::reduce (void) {
 void spsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initSP ();
+    c->initSP (this);
     if (c->isNonLinear ())
       c->calcOperatingPoints ();
   }

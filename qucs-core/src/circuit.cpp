@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.21 2004/07/21 16:25:08 ela Exp $
+ * $Id: circuit.cpp,v 1.22 2004/07/26 06:30:28 ela Exp $
  *
  */
 
@@ -423,11 +423,38 @@ char * circuit::createInternal (char * prefix, char * obj) {
 
 /* This function copies the matrix elements inside the given matrix to
    the internal S-parameter matrix of the circuit. */
-void circuit::copyMatrixS (matrix & s) {
+void circuit::setMatrixS (matrix & s) {
   int r = s.getRows ();
   int c = s.getCols ();
   // copy matrix elements
   if (r > 0 && c > 0 && r * c == size * size) {
     memcpy (MatrixS, s.getData (), sizeof (complex) * r * c);
   }
+}
+
+/* The function return a matrix containing the S-parameters of the
+   circuit. */
+matrix& circuit::getMatrixS (void) {
+  matrix * res = new matrix (size);
+  memcpy (res->getData (), MatrixS, sizeof (complex) * size * size);
+  return *res;
+}
+
+/* This function copies the matrix elements inside the given matrix to
+   the internal noise correlation matrix of the circuit. */
+void circuit::setMatrixN (matrix & n) {
+  int r = n.getRows ();
+  int c = n.getCols ();
+  // copy matrix elements
+  if (r > 0 && c > 0 && r * c == size * size) {
+    memcpy (MatrixN, n.getData (), sizeof (complex) * r * c);
+  }
+}
+
+/* The function return a matrix containing the noise correlation
+   matrix of the circuit. */
+matrix& circuit::getMatrixN (void) {
+  matrix * res = new matrix (size);
+  memcpy (res->getData (), MatrixN, sizeof (complex) * size * size);
+  return *res;
 }

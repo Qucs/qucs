@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.h,v 1.4 2004/04/04 09:11:06 ela Exp $
+ * $Id: attenuator.h,v 1.5 2004/07/26 06:30:28 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class attenuator : public circuit
  public:
   attenuator ();
   void calcSP (nr_double_t);
+  void calcNoise (nr_double_t);
   void calcDC (void);
 };
 

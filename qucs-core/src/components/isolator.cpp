@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.5 2004/04/04 09:11:06 ela Exp $
+ * $Id: isolator.cpp,v 1.6 2004/07/26 06:30:29 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "constants.h"
 #include "component_id.h"
 #include "isolator.h"
 
@@ -51,6 +52,17 @@ void isolator::calcSP (nr_double_t) {
   setS (1, 1, s1);
   setS (2, 2, s2);
   setS (2, 1, sqrt (1 - s1 * s1) * sqrt (1 - s2 * s2));
+}
+
+void isolator::calcNoise (nr_double_t) {
+  nr_double_t z1 = getPropertyDouble ("Z1");
+  nr_double_t z2 = getPropertyDouble ("Z2");
+  nr_double_t r = (z0 - z1) / (z0 + z2);
+  nr_double_t f = 4 * z0 / sqr (z1 + z0);
+  setN (1, 1, f * z1);
+  setN (1, 2, f * sqrt (z1 * z2) * r);
+  setN (2, 1, f * sqrt (z1 * z2) * r);
+  setN (2, 2, f * z2 * r * r);
 }
 
 void isolator::calcDC (void) {

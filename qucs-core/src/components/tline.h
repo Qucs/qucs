@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.h,v 1.2 2004/02/17 15:30:58 ela Exp $
+ * $Id: tline.h,v 1.3 2004/07/26 06:30:29 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class tline : public circuit
  public:
   tline ();
   void calcSP (nr_double_t);
+  void calcDC (void);
 };
 
 #endif /* __TLINE_H__ */

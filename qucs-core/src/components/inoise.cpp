@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inoise.cpp,v 1.1 2004/07/24 00:15:58 ela Exp $
+ * $Id: inoise.cpp,v 1.2 2004/07/26 06:30:29 ela Exp $
  *
  */
 
@@ -46,7 +46,7 @@ inoise::inoise () : circuit (2) {
   type = CIR_INOISE;
 }
 
-void inoise::calcSP (nr_double_t frequency) {
+void inoise::calcNoise (nr_double_t frequency) {
   nr_double_t i = getPropertyDouble ("i");
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");

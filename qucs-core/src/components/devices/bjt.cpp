@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.5 2004/07/11 10:22:13 ela Exp $
+ * $Id: bjt.cpp,v 1.6 2004/07/26 06:30:29 ela Exp $
  *
  */
 
@@ -96,7 +96,7 @@ void bjt::calcSP (nr_double_t frequency) {
   y.set (NODE_S, NODE_C, -Ycs);
   y.set (NODE_S, NODE_E, 0);
   y.set (NODE_S, NODE_S, Ycs);
-  copyMatrixS (ytos (y));
+  setMatrixS (ytos (y));
 }
 
 void bjt::initDC (dcsolver * solver) {

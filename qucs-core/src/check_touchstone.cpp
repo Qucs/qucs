@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.4 2004/07/22 21:04:46 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.5 2004/07/26 06:30:28 ela Exp $
  *
  */
 
@@ -293,15 +293,23 @@ static void touchstone_create (void) {
     else if (touchstone_options.noise) {
       /* fill frequency vector */
       nf->add (real (root->get (0)) * touchstone_options.factor);
-      /* fill noise parameter vectors */
+      /* fill minimum noise figure vector */
       v = touchstone_result->findVariable ("Fmin");
       val = pow (10.0, real (root->get (1)) / 10.0);
       v->add (val);
+      /* fill optimal noise reflexion coefficient vector */
       v = touchstone_result->findVariable ("Gopt");
       val = polar (real (root->get (2)), rad (real (root->get (3))));
+      if (circuit::z0 != touchstone_options.resistance) {
+	// re-normalize reflexion coefficient if necessary
+	nr_double_t r = (circuit::z0 - touchstone_options.resistance) / 
+	  (circuit::z0 + touchstone_options.resistance);
+	val = (val - r) / (1 - r * val);
+      }
       v->add (val);
+      /* fill eqivalent noise resistance vector */
       v = touchstone_result->findVariable ("Rn");
-      val = real (root->get (4)) * circuit::z0 / touchstone_options.resistance;
+      val = real (root->get (4)) * touchstone_options.resistance;
       v->add (val);
     }
   }
@@ -344,13 +352,10 @@ static void touchstone_normalize (void) {
   vector * v = touchstone_result->getVariables ();
   int ports = touchstone_options.ports;
 
-  // nothing to do here
-  if (touchstone_options.resistance == circuit::z0)
-    return;
-
-  // transform S-parameters
+  // transform S-parameters if necessary
   if (touchstone_options.parameter == 'S') {
-    touchstone_normalize_sp ();
+    if (touchstone_options.resistance != circuit::z0)
+      touchstone_normalize_sp ();
     return;
   }
   // transform any other X-parameters
@@ -358,22 +363,22 @@ static void touchstone_normalize (void) {
     for (int j = 1; j <= ports; j++) {
       switch (touchstone_options.parameter) {
       case 'Y': // Y-parameters
-	*v *= circuit::z0 / touchstone_options.resistance;
+	*v /= touchstone_options.resistance;
 	break;
       case 'Z': // Z-parameters
-	*v *= touchstone_options.resistance / circuit::z0;
+	*v *= touchstone_options.resistance;
 	break;
       case 'G': // hybrid G-parameters
 	if (i == 1 && j == 1)
-	  *v *= circuit::z0 / touchstone_options.resistance;
+	  *v /= touchstone_options.resistance;
 	else if (i == 2 && j == 2)
-	  *v *= touchstone_options.resistance / circuit::z0;
+	  *v *= touchstone_options.resistance;
 	break;
       case 'H': // hybrid H-parameters
 	if (i == 1 && j == 1)
-	  *v *= touchstone_options.resistance / circuit::z0;
+	  *v *= touchstone_options.resistance;
 	else if (i == 2 && j == 2)
-	  *v *= circuit::z0 / touchstone_options.resistance;
+	  *v /= touchstone_options.resistance;
 	break;
       }
       v = (vector *) v->getNext ();

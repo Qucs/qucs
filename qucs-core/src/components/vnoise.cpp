@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vnoise.cpp,v 1.1 2004/07/24 00:15:58 ela Exp $
+ * $Id: vnoise.cpp,v 1.2 2004/07/26 06:30:29 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@ vnoise::vnoise () : circuit (2) {
   setVoltageSources (1);
 }
 
-void vnoise::calcSP (nr_double_t frequency) {
+void vnoise::calcNoise (nr_double_t frequency) {
   nr_double_t u = getPropertyDouble ("u");
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");

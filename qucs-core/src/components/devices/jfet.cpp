@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.7 2004/07/11 10:22:13 ela Exp $
+ * $Id: jfet.cpp,v 1.8 2004/07/26 06:30:29 ela Exp $
  *
  */
 
@@ -79,7 +79,7 @@ void jfet::calcSP (nr_double_t frequency) {
   y.set (NODE_S, NODE_G, -Ygs - gm);
   y.set (NODE_S, NODE_D, -Yds);
   y.set (NODE_S, NODE_S, Ygs + Yds + gm);
-  copyMatrixS (ytos (y));
+  setMatrixS (ytos (y));
 }
 
 void jfet::initDC (dcsolver * solver) {
