@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.3 2004/02/08 17:50:56 margraf Exp $
+ * $Id: diode.cpp,v 1.4 2004/02/09 18:27:42 ela Exp $
  *
  */
 
@@ -52,6 +52,7 @@ void diode::initY (void) {
 
 void diode::calcY (void) {
   nr_double_t Is = getPropertyDouble ("Is");
+  nr_double_t n = getPropertyDouble ("n");
   nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit;
 
   T = 290.0;
@@ -61,8 +62,8 @@ void diode::calcY (void) {
   //if (Ud > Ucrit) {
   //  Ud = Ucrit;
   //}
-  gd = Is / Ut * exp (Ud / Ut);
-  Id = Is * (exp (Ud / Ut) - 1);  //Id = Is * exp (Ud / Ut - 1);
+  gd = Is / Ut / n * exp (Ud / Ut / n);
+  Id = Is * (exp (Ud / Ut / n) - 1);
   Ieq = Id - Ud * gd;
 
   setI (1, +Ieq);

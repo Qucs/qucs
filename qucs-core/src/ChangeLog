@@ -1,3 +1,19 @@
+2004-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp: Additionally saving the reference node voltage
+	value into the components's nodes.
+
+	* check_netlist.c, input.cpp: Incorporated the new DC current
+	probe.
+	
+	* check_netlist.c: Allowing the new paramter 'n' (ideality
+	coefficient of the saturation current).
+
+	* variable.cpp, variable.h: New files.  The variable class
+	is going to be the big calculator merging all kinds of math
+	types.  Also it will be the base object for calculation
+	environments and global variables.
+
 2004-02-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp: Non-linear DC circuit analysis is somewhat

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.c,v 1.5 2004/02/03 21:57:28 ela Exp $
+ * $Id: check_netlist.c,v 1.6 2004/02/09 18:26:08 ela Exp $
  *
  */
 
@@ -92,9 +92,11 @@ struct definition definition_available[] =
     { "Gyrator", 4, 0, { "R", "Zref", NULL }, { NULL } },
     /* ideal transmission line */
     { "TLIN", 2, 0, { "Z", "L", NULL }, { NULL } },
+    /* DC current probe */
+    { "IProbe", 2, 0, { NULL }, { NULL } },
 
     /* diode */
-    { "Diode", 2, 0, { "Is", NULL }, { NULL } },
+    { "Diode", 2, 0, { "Is", "n", NULL }, { NULL } },
 
     /* s-parameter analysis */
     { "SP", 0, 1, { "Start", "Stop", "Step", NULL }, { NULL } },

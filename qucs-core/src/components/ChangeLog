@@ -1,3 +1,12 @@
+2004-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* diode.cpp: New parameter 'n' representing the ideality
+	coefficient of the saturation current.
+
+	* iprobe.cpp (iprobe): New component.  The DC current probe
+	can be used for measuring DC currents.  It is simply based on
+	the DC voltage source with a voltage of zero volts.
+
 2004-02-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp: Fixed iterative implementation of the simple diode
