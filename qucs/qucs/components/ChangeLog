@@ -1,3 +1,8 @@
+2004-08-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* mosfet_depl.cpp (MOSFET_depl), mosfet.cpp (MOSFET): Added
+	model properties.
+
 2004-08-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp (Diode): Added some more new component

@@ -1157,10 +1157,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>polarity (n,p)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MOS field-effect transistor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1694,6 +1690,122 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linear capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recombination current parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emission coefficient for Isr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias threshold voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transconductance coefficient in A/m^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surface potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>drain ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>source ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate ohmic resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>channel length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lateral diffusion length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>oxide thickness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-source overlap capacitance per meter of channel width in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk-drain junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias bulk-source junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction potential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction bottom grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk junction forward-bias depletion capacitance coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bulk transit time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>substrate bulk doping density in 1/cm^3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surface state density in 1/cm^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>surface mobility in cm^2/Vs</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
