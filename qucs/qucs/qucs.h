@@ -41,6 +41,7 @@
 #include <qiconview.h>
 #include <qcombobox.h>
 #include <qtabwidget.h>
+#include <qdir.h>
 
 
 // application specific includes
@@ -49,6 +50,7 @@
 #include "qucsview.h"
 #include "dialogs/simmessage.h"
 
+extern QDir QucsWorkDir;
 
 /**
   * This Class is the base class for the application. It sets up the main

@@ -17,6 +17,8 @@
 
 #include "diagram.h"
 
+#include "../qucs.h"
+
 #include <math.h>
 #include <float.h>
 
@@ -326,6 +328,7 @@ bool Diagram::loadVarData(const QString& fileName)
     Variable = g->Var.mid(pos+1);
   }
 
+  file.setName(QucsWorkDir.filePath(file.name()));
   if(!file.open(IO_ReadOnly)) {
     QMessageBox::critical(0, QObject::tr("Error"),
                  QObject::tr("Cannot load dataset: ")+file.name());

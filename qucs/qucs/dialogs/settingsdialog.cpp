@@ -2,7 +2,7 @@
                           settingsdialog.cpp  -  description
                              -------------------
     begin                : Mon Oct 20 2003
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -62,6 +62,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   QWidget *Tab2 = new QWidget(t);
   QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
   Check_GridOn = new QCheckBox(tr("show Grid"),Tab2);
+  gp2->addMultiCellWidget(Check_GridOn,0,0,0,1);
 
   QValidator *Validator = new QIntValidator(0,1000, this);
 
