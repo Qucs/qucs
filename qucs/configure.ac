@@ -51,6 +51,19 @@ if test "x$GCC" = xyes; then
   fi
 fi
 
+# Check for new platforms.
+osversion="`grep \"$host\" $srcdir/PLATFORMS 2>/dev/null`"
+if test "x$osversion" = "x"; then
+  AC_MSG_RESULT([
+  The $PACKAGE package has never been compiled or run on this platform.  
+  Please send an email to <qucs-devel@lists.sourceforge.net> including your
+  compiler and Qt version and whether it worked correctly or not.  The
+  '$host' line will then be added to the PLATFORMS file included
+  in this package.
+])
+fi
+unset osversion
+
 # Release specific. Uncomment this line.
 # AC_CONFIG_SUBDIRS(qucs-core)
 
@@ -61,6 +74,13 @@ AC_PATH_PROG(LUPDATE, lupdate, :)
 # Check for MOC/UIC support.
 AC_PATH_PROG(MOC, moc, :)
 AC_PATH_PROG(UIC, uic, :)
+if test "$MOC" = ":"; then
+  AC_MSG_WARN([
+  The $PACKAGE package needs the 'Qt Meta Object Compiler' to compile properly.
+  Though Qt itself may be properly installed including headers and libraries
+  the 'moc' program is missing.  Possibly you need to install the full 
+  development package of Qt.])
+fi
 
 # Check for X11
 AC_PATH_XTRA
