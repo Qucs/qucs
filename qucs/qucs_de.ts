@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -37,6 +37,14 @@
         <source>display in schematic</source>
         <translation>im Schaltplan anzeigen</translation>
     </message>
+    <message>
+        <source>All Files (*.*)</source>
+        <translation>Alle Dateien (*.*)</translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation>Datei auswählen</translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -47,6 +55,10 @@
     <message>
         <source>ERROR: Cannot read file: </source>
         <translation>FEHLER: Datei kann nicht gelesen werden: </translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -62,6 +74,29 @@
     <message>
         <source>Close</source>
         <translation>Schließen</translation>
+    </message>
+</context>
+<context>
+    <name>MessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation>Alle speichern</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Verwerfen</translation>
+    </message>
+    <message>
+        <source>DiscardAll</source>
+        <translation>Alle verwerfen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -191,6 +226,14 @@ Falsches &apos;painting&apos; Zeilenformat!</translation>
 Unknown field!</source>
         <translation>Dateiformatfehler:
 Unbekanntes Feld!</translation>
+    </message>
+    <message>
+        <source>resistor</source>
+        <translation>Widerstand</translation>
+    </message>
+    <message>
+        <source>ohmic resistance in Ohms</source>
+        <translation>Ohmscher Widerstand in Ohm</translation>
     </message>
 </context>
 <context>
@@ -1749,7 +1792,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Anwenden</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1766,6 +1809,33 @@ Kurze Einführung in Qucs</translation>
     <message>
         <source>Grid</source>
         <translation>Gitternetz</translation>
+    </message>
+</context>
+<context>
+    <name>SimMessage</name>
+    <message>
+        <source>Qucs Simulation Messages</source>
+        <translation>Qucs Simulationsnachrichten</translation>
+    </message>
+    <message>
+        <source>Progress:</source>
+        <translation>Fortschritt:</translation>
+    </message>
+    <message>
+        <source>Errors and Warnings:</source>
+        <translation>Fehler und Warnungen:</translation>
+    </message>
+    <message>
+        <source>Goto display page</source>
+        <translation>Zur Anzeigeseite gehen</translation>
+    </message>
+    <message>
+        <source>Abort simulation</source>
+        <translation>Simulation abbrechen</translation>
+    </message>
+    <message>
+        <source>Close window</source>
+        <translation>Fenster schließen</translation>
     </message>
 </context>
 </TS>

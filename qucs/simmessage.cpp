@@ -27,11 +27,11 @@
 
 SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
 {
-  setCaption("Qucs Simulation Messages");
+  setCaption(tr("Qucs Simulation Messages"));
   
   QVBoxLayout *all = new QVBoxLayout(this);
   all->setSpacing(5);
-  QVGroupBox *Group1 = new QVGroupBox("Progress:",this);
+  QVGroupBox *Group1 = new QVGroupBox(tr("Progress:"),this);
   all->addWidget(Group1);
 
   ProgText = new QTextEdit(Group1);
@@ -41,7 +41,7 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   ProgText->setMinimumSize(400,80);
 
   
-  QVGroupBox *Group2 = new QVGroupBox("Errors and Warnings:",this);
+  QVGroupBox *Group2 = new QVGroupBox(tr("Errors and Warnings:"),this);
   all->addWidget(Group2);
 
   ErrText = new QTextEdit(Group2);
@@ -53,11 +53,11 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   QHBox *Butts = new QHBox(this);
   all->addWidget(Butts);
 
-  Display = new QPushButton("Goto display page", Butts);
+  Display = new QPushButton(tr("Goto display page"), Butts);
   Display->setDisabled(true);
   connect(Display,SIGNAL(clicked()),SLOT(slotDisplayButton()));
 
-  Abort = new QPushButton("Abort simulation", Butts);
+  Abort = new QPushButton(tr("Abort simulation"), Butts);
   connect(Abort,SIGNAL(clicked()),SLOT(slotClose()));
 
   // ........................................................
@@ -73,7 +73,7 @@ SimMessage::~SimMessage()
 // ------------------------------------------------------------------------
 bool SimMessage::startProcess(const QStringList& commands)
 {
-  Abort->setText("Abort simulation");
+  Abort->setText(tr("Abort simulation"));
   Display->setDisabled(true);
 
   SimProcess.blockSignals(false);
@@ -103,7 +103,7 @@ void SimMessage::slotDisplayErr()
 // Is called when the simulation process terminates.
 void SimMessage::slotSimEnded()
 {
-  Abort->setText("Close window");
+  Abort->setText(tr("Close window"));
   Display->setDisabled(false);
 
   emit SimulationEnded(SimProcess.exitStatus());
