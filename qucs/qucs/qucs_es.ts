@@ -4204,7 +4204,7 @@ Simulador universal de circuitos Qt
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Agradecimiento especial a Jens Flucke
+        <translation type="obsolete">Agradecimiento especial a Jens Flucke
 
 </translation>
     </message>
@@ -4293,6 +4293,12 @@ Mueve la propiedad texto de los componentes</translation>
 </source>
         <translation type="unfinished">Copyright (C) 2003, 2004, 2005 por Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -3987,7 +3987,7 @@ Simulateur universel sous Qt
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Remerciements � Jens Flucke
+        <translation type="obsolete">Remerciements � Jens Flucke
 
 </translation>
     </message>
@@ -4267,6 +4267,12 @@ Déplace la légende du composant</translation>
 </source>
         <translation type="unfinished">© Copyright 2003, 2004 par Michael Margraf
  {2003, 2004, 2005?}</translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
