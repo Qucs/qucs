@@ -894,8 +894,12 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
 Wire* QucsDoc::selectWireLabel(int x, int y)
 {
   for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev())    // test all wires
-    if(pw->nx <= x) if(pw->ny >= y) if((pw->nx+pw->NameDX) >= x) if((pw->ny-pw->NameDY) <= y)
-      return pw;
+    if(!pw->Name.isEmpty())
+      if(pw->nx <= x)
+        if(pw->ny >= y)
+          if((pw->nx+pw->NameDX) >= x)
+            if((pw->ny-pw->NameDY) <= y)
+              return pw;
   return 0;
 }
 
@@ -1366,6 +1370,13 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
     if(pw->x2 > xmax) xmax = pw->x2;
     if(pw->y1 < ymin) ymin = pw->y1;
     if(pw->y2 > ymax) ymax = pw->y2;
+
+    if(!pw->Name.isEmpty()) {     // check position of wire label
+      if(pw->nx < xmin) xmin = pw->nx;
+      if((pw->nx+pw->NameDX) > xmax) xmax = pw->nx+pw->NameDX;
+      if((pw->ny-pw->NameDY) < ymin) ymin = pw->ny-pw->NameDY;
+      if(pw->ny > ymax) ymax = pw->ny;
+    }
   }
 
   for(pd = Diags.first(); pd != 0; pd = Diags.next()) {  // find bounds of all diagrams

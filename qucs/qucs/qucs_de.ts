@@ -970,6 +970,10 @@ Unbekanntes Feld!</translation>
         <source>ideality coefficient</source>
         <translation>Idealitätsfaktor</translation>
     </message>
+    <message>
+        <source>simulation to perform parameter sweep on</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2365,7 +2369,7 @@ Fehler:
     </message>
     <message>
         <source>Transienten simulation</source>
-        <translation>Transientsimulation</translation>
+        <translation type="obsolete">Transientsimulation</translation>
     </message>
     <message>
         <source>ac simulation</source>
@@ -2557,6 +2561,10 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

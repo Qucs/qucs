@@ -22,19 +22,28 @@ TR_Sim::TR_Sim()
 {
   Description = QObject::tr("transient simulation");
 
-  Lines.append(new Line(-45,-21, 45,-21,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-45, 21, 45, 21,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-45,-21,-45, 21,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 45,-21, 45, 21,QPen(QPen::darkBlue,2)));
+  QWidget  w;
+  QPainter p(&w);
+  QString  s = Description;
+  s.replace(" ","\n");
+  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  int xb = (r.width()  >> 1) + 6;
+  int yb = (r.height() >> 1) + 4;
 
-  Lines.append(new Line(-41, 26, 49, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-45, 21,-41, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 45, 21, 49, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 49,-16, 49, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 45,-21, 49,-16,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb, xb,-yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb, yb, xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb,-xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,-yb, xb, yb,QPen(QPen::darkBlue,2)));
 
-  x1 = -49; y1 = -25;
-  x2 =  53; y2 =  30;
+  Lines.append(new Line(-xb+5, yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,   yb,  -xb+5, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,   yb,   xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb+4,-yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,  -yb,   xb+4,-yb+5,QPen(QPen::darkBlue,2)));
+
+  x1 = -xb-4; y1 = -yb-4;
+  x2 =  xb+8; y2 =  yb+9;
 
   tx = x1+4;
   ty = y2+4;

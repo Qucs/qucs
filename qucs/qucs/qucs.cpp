@@ -100,7 +100,7 @@ QucsApp::~QucsApp()
 // Loads the settings file and restores the settings.
 bool QucsApp::loadSettings()
 {
-  QFile file(QDir::homeDirPath()+"/.qucs/qucs.ini");
+  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
   if(!file.open(IO_ReadOnly)) return false;    // settings file does not exist
 
   QString Line, Setting;
@@ -112,9 +112,9 @@ bool QucsApp::loadSettings()
     Line = stream.readLine();
     Setting = Line.section('=',0,0);
     Line    = Line.section('=',1,1);
-    if(Setting == "Position") { x = Line.section(",",0,0).toInt(&ok);
-                                y = Line.section(",",1,1).toInt(&ok);
-                                move(x,y); }
+    if(Setting == "Position")  { x = Line.section(",",0,0).toInt(&ok);
+                                 y = Line.section(",",1,1).toInt(&ok);
+                                 move(x,y); }
     else if(Setting == "Size") { x = Line.section(",",0,0).toInt(&ok);
                                  y = Line.section(",",1,1).toInt(&ok);
                                  resize(x,y); }
@@ -129,7 +129,7 @@ bool QucsApp::loadSettings()
 // Saves the settings in the settings file.
 void QucsApp::saveSettings()
 {
-  QFile file(QDir::homeDirPath()+"/.qucs/qucs.ini");
+  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
   if(!file.open(IO_WriteOnly)) {    // settings file cannot be created
     QMessageBox::warning(this, tr("Warning"), tr("Cannot save settings !"));
     return;
@@ -1684,7 +1684,7 @@ void QucsApp::slotSetCompView(int index)
           break;
     case COMBO_Sims:
           new QIconViewItem(CompComps, tr("dc simulation"), QImage(BITMAPDIR "dc.xpm"));
-          new QIconViewItem(CompComps, tr("Transienten simulation"), QImage(BITMAPDIR "tran.xpm"));
+          new QIconViewItem(CompComps, tr("Transient simulation"), QImage(BITMAPDIR "tran.xpm"));
           new QIconViewItem(CompComps, tr("ac simulation"), QImage(BITMAPDIR "ac.xpm"));
           new QIconViewItem(CompComps, tr("S-parameter simulation"), QImage(BITMAPDIR "sparameter.xpm"));
           new QIconViewItem(CompComps, tr("Harmonic balance"), QImage(BITMAPDIR "hb.xpm"));

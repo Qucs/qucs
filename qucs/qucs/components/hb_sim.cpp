@@ -22,19 +22,28 @@ HB_Sim::HB_Sim()
 {
   Description = QObject::tr("Harmonic balance simulation");
 
-  Lines.append(new Line(-75,-21, 75,-21,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-75, 21, 75, 21,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-75,-21,-75, 21,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 75,-21, 75, 21,QPen(QPen::darkBlue,2)));
+  QWidget  w;
+  QPainter p(&w);
+  QString  s = Description;
+  s[s.findRev(" ")] = '\n';    // break line before the word "simulation"
+  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  int xb = (r.width()  >> 1) + 6;
+  int yb = (r.height() >> 1) + 4;
 
-  Lines.append(new Line(-71, 26, 79, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-75, 21,-71, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 75, 21, 79, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 79,-16, 79, 26,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 75,-21, 79,-16,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb, xb,-yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb, yb, xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb,-xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,-yb, xb, yb,QPen(QPen::darkBlue,2)));
 
-  x1 = -79; y1 = -25;
-  x2 =  83; y2 =  30;
+  Lines.append(new Line(-xb+5, yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,   yb,  -xb+5, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,   yb,   xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb+4,-yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,  -yb,   xb+4,-yb+5,QPen(QPen::darkBlue,2)));
+
+  x1 = -xb-4; y1 = -yb-4;
+  x2 =  xb+8; y2 =  yb+9;
 
   tx = x1+4;
   ty = y2+4;

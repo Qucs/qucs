@@ -77,6 +77,7 @@ protected:
   void contentsMousePressEvent(QMouseEvent *Event);
   void contentsMouseDoubleClickEvent(QMouseEvent *Event);
   void contentsMouseReleaseEvent(QMouseEvent *Event);
+  void contentsWheelEvent(QWheelEvent *Event);
 
 public:
   void MouseDoNothing(QMouseEvent *Event);

@@ -22,19 +22,26 @@ AC_Sim::AC_Sim()
 {
   Description = QObject::tr("ac simulation");
 
-  Lines.append(new Line(-56,-12, 56,-12,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-56, 12, 56, 12,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-56,-12,-56, 12,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 56,-12, 56, 12,QPen(QPen::darkBlue,2)));
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Description);      // get size of text
+  int xb = (r.width()  >> 1) + 6;
+  int yb = (r.height() >> 1) + 4;
 
-  Lines.append(new Line(-51, 17, 60, 17,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-56, 12,-51, 17,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 56, 12, 60, 17,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 60, -7, 60, 17,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 56,-12, 60, -7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb, xb,-yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb, yb, xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb,-xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,-yb, xb, yb,QPen(QPen::darkBlue,2)));
 
-  x1 = -60; y1 = -16;
-  x2 =  64; y2 =  21;
+  Lines.append(new Line(-xb+5, yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,   yb,  -xb+5, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,   yb,   xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb+4,-yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,  -yb,   xb+4,-yb+5,QPen(QPen::darkBlue,2)));
+
+  x1 = -xb-4; y1 = -yb-4;
+  x2 =  xb+8; y2 =  yb+9;
 
   tx = x1+4;
   ty = y2+4;
