@@ -39,7 +39,7 @@ struct tQucsSettings {
   QFont font;
 };
 
-tQucsSettings QucsSettings
+struct tQucsSettings QucsSettings
      = {60, 30, 640, 400,    // position and size
 	QFont("Helvetica", 12)};
 

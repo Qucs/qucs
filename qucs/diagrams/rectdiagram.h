@@ -30,7 +30,7 @@ public:
   ~RectDiagram();
 
 
-  RectDiagram* newOne();
+  Diagram* newOne();
   int  calcDiagram();
   bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
   bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);

@@ -108,7 +108,7 @@ void GraphicText::setCenter(int x, int y, bool relative)
 }
 
 // -----------------------------------------------------------------------
-GraphicText* GraphicText::newOne()
+Painting* GraphicText::newOne()
 {
   return new GraphicText();
 }

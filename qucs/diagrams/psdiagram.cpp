@@ -99,7 +99,7 @@ int PSDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-PSDiagram* PSDiagram::newOne()
+Diagram* PSDiagram::newOne()
 {
   return new PSDiagram();
 }

@@ -31,7 +31,7 @@ public:
   ~SmithDiagram();
 
 
-  SmithDiagram* newOne();
+  Diagram* newOne();
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(double* &, double* &, int*, int*, Axis*);

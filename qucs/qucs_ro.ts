@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Salvează</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">Salvează tot</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">Renunţare</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">Renunţare totală</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Revocare</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -679,15 +702,15 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Salvează</translation>
+        <translation type="obsolete">Salvează</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Salvează tot</translation>
+        <translation type="obsolete">Salvează tot</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Renunţare</translation>
+        <translation type="obsolete">Renunţare</translation>
     </message>
     <message>
         <source>DiscardAll</source>
@@ -695,11 +718,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Revocare</translation>
+        <translation type="obsolete">Revocare</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Renunţare totală</translation>
+        <translation type="obsolete">Renunţare totală</translation>
     </message>
 </context>
 <context>
@@ -4327,6 +4350,11 @@ Mută proprietatea text al componentelor</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>

@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">שמור</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">שמור הכל</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">התעלם</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">התעלם מהכל</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">בטל</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -660,23 +683,23 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>שמור</translation>
+        <translation type="obsolete">שמור</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>שמור הכל</translation>
+        <translation type="obsolete">שמור הכל</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>התעלם</translation>
+        <translation type="obsolete">התעלם</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>התעלם מהכל</translation>
+        <translation type="obsolete">התעלם מהכל</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>בטל</translation>
+        <translation type="obsolete">בטל</translation>
     </message>
 </context>
 <context>
@@ -4146,6 +4169,11 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation>Japanese by Toyoyuki Ishikawa
 </translation>

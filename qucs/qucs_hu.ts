@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Mentés</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">Mindent ment</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">Eldobás</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">Mindent eldob</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -683,23 +706,23 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Mentés</translation>
+        <translation type="obsolete">Mentés</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Mindent ment</translation>
+        <translation type="obsolete">Mindent ment</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Eldobás</translation>
+        <translation type="obsolete">Eldobás</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Mindent eldob</translation>
+        <translation type="obsolete">Mindent eldob</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
 </context>
 <context>
@@ -4262,6 +4285,11 @@ Qt univerzális áramkör szimuláció
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>

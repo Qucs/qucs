@@ -457,7 +457,7 @@ bool QucsApp::closeAllFiles()
 {
   int  Result = 0;
   bool notForAll = true;
-  MessageBox *m = new MessageBox(tr("Closing Qucs document"),
+  CloseMessageBox *m = new CloseMessageBox(tr("Closing Qucs document"),
 	tr("This document contains unsaved changes!\n"
 	   "Do you want to save the changes before closing?"),this);
 
