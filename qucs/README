@@ -30,7 +30,7 @@ e.g. DC, AC, S parameter and harmonic balance analysis.
 Requirements
 ============
 
-Qucs neeads Qt <http.//www.trolltech.com>.  This current version is
+Qucs needs Qt <http://www.trolltech.com>.  This current version is
 known to work with Qt 3.1 and later.
 
 
