@@ -1,3 +1,8 @@
+2004-10-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.tex (section{Convergence}): Wrote something about
+	limiting and continuation schemes for convergence improvements.
+
 2004-10-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.tex (section{Convergence}): Started to document

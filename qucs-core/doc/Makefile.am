@@ -57,7 +57,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   xcircuit.fig picircuit.fig mscoupled.fig msgap.fig mosphysical.fig          \
   mostypes.fig mosfet.fig mosband.fig dcmosfet.fig spmosfet.fig msgapphys.fig \
   noisemosfet.fig mscoupledphys.fig spfile.fig spnfile.fig transcap.fig       \
-  feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig
+  feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
+  convprob2.fig convprob3.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)

@@ -1103,3 +1103,117 @@ transient analysis (see section \ref{sec:convergenceDC} on page
 \pageref{sec:convergenceDC}) as well.  In order to improve the overall
 convergence behaviour it is possible to improve the models on the one
 hand and/or to improve the algorithms on the other hand.
+
+\addvspace{12pt}
+
+The implications during Newton-Raphson iterations solving the linear
+equation system
+\begin{equation}
+\left[A\left(x^k\right)\right] \cdot \left[x^{k+1}\right] = \left[z\left(x^k\right)\right]
+\end{equation}
+
+are continuous device model equations (with continuous derivatives as
+well), floating nodes (make the Jacobian matrix $A$ singular) and the
+initial guess $x^0$.  The convergence problems which in fact occur are
+local minimums causing the matrix $A$ to be singular, nearly singular
+matrices and overflow problems.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{convprob1}
+\end{center}
+\label{fig:ConvProb1}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.9\linewidth]{convprob2}
+\end{center}
+\label{fig:ConvProb2}
+\end{figure}
+\FloatBarrier
+
+\subsection{Limiting schemes}
+%\addcontentsline{toc}{subsection}{Limiting schemes}
+
+The modified (damped) Newton-Raphson schemes are based on the
+limitation of the solution vector $x^k$ in each iteration.
+\begin{equation}
+x^{k+1} = x^k + \alpha\cdot \Delta x^{k+1}
+\;\;\;\; \textrm{ with } \;\;\;\;
+\Delta x^{k+1} = x^{k+1} - x^k
+\end{equation}
+
+One possibility to choose a value for $\alpha \in [0,1]$ is
+\begin{equation}
+\alpha = \dfrac{\gamma}{\left|\Delta x^{k+1}\right|_{\infty}}
+\end{equation}
+
+This is a heuristic and does not ensure global convergence, but it can
+help solving some of the discussed problems.  Another possibility is
+to pick a value $\alpha^k$ which minimizes the $L_2$ norm of the right
+hand side vector.  This method performs a one-dimensional (line)
+search into Newton direction and guarantees global convergence.
+\begin{equation}
+x^{k+1} = x^k + \alpha^k \cdot \Delta x^{k+1}
+\;\;\;\; \textrm{ with an } \alpha^k \textrm{ which minimizes } \;\;\;\;
+\left|z\left(x^k + \alpha^k \cdot \Delta x^{k+1}\right)\right|_2
+\end{equation}
+
+The one remaining problem about that line search method for
+convergence improvement is its iteration into local minimums where the
+Jacobian matrix is singular.  The damped Newton-Raphson method
+``pushes'' the matrix into singularity as depicted in
+fig. \ref{fig:ConvProb3}.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.55\linewidth]{convprob3}
+\caption{singular Jacobian problem}
+\label{fig:ConvProb3}
+\end{figure}
+\FloatBarrier
+
+\subsection{Continuation schemes}
+%\addcontentsline{toc}{subsection}{Continuation schemes}
+
+The basic idea behind this Newton-Raphson modification is to generate
+a sequence of problems such that a problem is a good initial guess for
+the following one, because Newton basically converges given a close
+initial guess.
+
+\addvspace{12pt}
+
+The template algorithm for this modification is to solve the equation
+system
+\begin{align}
+\left[A\right] \cdot \left[x\right] - \left[z\right] &= 0\\
+F\left(x\left(\lambda\right), \lambda\right) &= 0
+\end{align}
+
+with the parameter $\lambda \in [0,1]$ given that
+$x\left(\lambda\right)$ is sufficiently smooth.
+$F\left(x\left(0\right), 0\right)$ starts the continuation and
+$F\left(x\left(1\right), 1\right)$ ends the continuation.  The
+algorithm outline is as follows: First solve the problem
+$F\left(x\left(0\right), 0\right)$, e.g. set $\lambda = \Delta\lambda
+= 0.01$ and try to solve $F\left(x\left(\lambda\right),
+\lambda\right)$.  If Newton-Raphson converged then increase $\lambda$
+by $\Delta\lambda$ and double $\Delta\lambda = 2\cdot \Delta\lambda$,
+otherwise half $\Delta\lambda = 0.5\cdot \Delta\lambda$ and set
+$\lambda = \lambda_{prev} + \Delta\lambda$.  Repeat this until
+$\lambda = 1$.
+
+\subsubsection{Source stepping}
+%\addcontentsline{toc}{subsubsection}{Source stepping}
+
+Applied to the solution of (non-linear) electrical networks one may
+think of $\alpha \in [0,1]$ as a multiplier for the source vector $S$
+yielding $S\left(\alpha\right) = \alpha S$.  Varying $\alpha$ form 0
+to 1 and solve at each $\alpha$.  The actual circuit solution is done
+when $\alpha = 1$.  This method is called source stepping.  The
+solution vector $x\left(\alpha\right)$ is continuous in $\alpha$
+(hence the name continuation scheme).
+
+\subsubsection{Minimal derivative $\mathrm{g_{min}}$ stepping}
+%\addcontentsline{toc}{subsubsection}{Minimal derivative $\mathrm{g_{min}}$ stepping}
