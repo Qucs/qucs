@@ -19,6 +19,7 @@
 #define NODE_H
 
 #include "element.h"
+#include "wirelabel.h"
 
 #include <qpainter.h>
 #include <qptrlist.h>
@@ -27,18 +28,19 @@
   *@author Michael Margraf
   */
 
-class Node {
-public: 
-	Node(int _x, int _y);
-	~Node();
+class Node : public Element {
+public:
+  Node(int _x, int _y);
+  ~Node();
 
-  void    paint(QPainter *p);
-  
-  int x, y;
+  void  paint(QPainter *p);
+  bool  getSelected(int x_, int y_);
+  void  setName(const QString& Name_, int x_=0, int y_=0);
+
   QPtrList<Element> Connections;
 
-  bool isNamed;   // name given by the user ?
-  QString Name;
+  WireLabel *Label;     // label for node name
+  QString Name;   // node name used by creation of netlist
 };
 
 #endif

@@ -24,7 +24,7 @@
 
 
 MessageBox::MessageBox(const QString& Caption, const QString& Text, QWidget *parent, const char *name)
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   setCaption(Caption);
 

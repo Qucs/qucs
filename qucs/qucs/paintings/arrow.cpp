@@ -297,7 +297,10 @@ bool Arrow::Dialog()
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());
 
-  if(d->exec() == QDialog::Rejected) return false;
+  if(d->exec() == QDialog::Rejected) {
+    delete d;
+    return false;
+  }
 
   if(Width  != d->HeadWidth->text().toDouble()) {
     Width = d->HeadWidth->text().toDouble();
@@ -323,5 +326,7 @@ bool Arrow::Dialog()
   beta   = atan2(double(Width), double(Height));
   Length = sqrt(Width*Width + Height*Height);
   calcArrowHead();
+
+  delete d;
   return changed;
 }

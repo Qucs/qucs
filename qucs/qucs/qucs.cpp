@@ -391,10 +391,6 @@ void QucsApp::initActions()
   helpAboutQt->setWhatsThis(tr("About Qt\n\nAbout Qt by Trolltech"));
   connect(helpAboutQt, SIGNAL(activated()), this, SLOT(slotHelpAboutQt()));
 
-  // ................................................................
-  connect(&sim, SIGNAL(SimulationEnded(int)), this, SLOT(slotAfterSimulation(int)));
-  connect(&sim, SIGNAL(displayDataPage()), this, SLOT(slotChangePage()));
-
 }
 
 void QucsApp::initMenuBar()
@@ -975,7 +971,7 @@ void QucsApp::slotFileSaveAll()
       WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make document the current
     saveCurrentFile();
   }
-  
+
   view->Docs.findRef(tmp);
   view->blockSignals(false);
   WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // back to the current document
@@ -1169,14 +1165,14 @@ void QucsApp::slotViewStatusBar(bool toggle)
 // ###################################################################################
 void QucsApp::slotHelpIndex()
 {
-  HelpDialog *d = new HelpDialog("index.html",this);
+  HelpDialog *d = new HelpDialog("index.html");
   d->show();
 }
 
 // ###################################################################################
 void QucsApp::slotGettingStarted()
 {
-  HelpDialog *d = new HelpDialog("start.html",this);
+  HelpDialog *d = new HelpDialog("start.html");
   d->show();
 }
 
@@ -1247,12 +1243,15 @@ void QucsApp::slotChangeView(int id)
 // ###################################################################################
 void QucsApp::slotShowAll()
 {
-  int x1, y1, x2, y2;
-  view->Docs.current()->sizeOfAll(x1, y1, x2, y2);
+  int x1 = view->Docs.current()->UsedX1;
+  int y1 = view->Docs.current()->UsedY1;
+  int x2 = view->Docs.current()->UsedX2;
+  int y2 = view->Docs.current()->UsedY2;
+
   if(x2==0) if(y2==0) if(x1==0) if(y1==0) return;
   x1 -= 40;  y1 -= 40;
   x2 += 40;  y2 += 40;
-  
+
   double xScale = double(view->visibleWidth()) / double(x2-x1);
   double yScale = double(view->visibleHeight()) / double(y2-y1);
   if(xScale > yScale) xScale = yScale;
@@ -1274,8 +1273,12 @@ void QucsApp::slotShowOne()
 {
   view->Docs.current()->Scale = 1.0;
 
-  int x1, y1, x2, y2;
-  view->Docs.current()->sizeOfAll(x1, y1, x2, y2);
+  int x1 = view->Docs.current()->UsedX1;
+  int y1 = view->Docs.current()->UsedY1;
+  int x2 = view->Docs.current()->UsedX2;
+  int y2 = view->Docs.current()->UsedY2;
+
+//  view->Docs.current()->sizeOfAll(x1, y1, x2, y2);
   if(x2==0) if(y2==0) if(x1==0) if(y1==0) x2 = y2 = 800;
 
   view->Docs.current()->ViewX1 = x1-40;
@@ -1308,48 +1311,55 @@ void QucsApp::slotSimulate()
   if(view->Docs.current()->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveCurrentFile()) return;            // ... save schematic befor simulating
 
-  sim.ProgText->clear();
-  sim.ErrText->clear();
-  sim.show();
+  SimMessage *sim = new SimMessage(this);
+  // disconnect is automatically performed, if one of the involved objects is destroyed !
+  connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
+               SLOT(slotAfterSimulation(int, SimMessage*)));
+  connect(sim, SIGNAL(displayDataPage()), this, SLOT(slotChangePage()));
+
+//  sim.ProgText->clear();
+//  sim.ErrText->clear();
+  sim->show();
 
   QDate d = QDate::currentDate();   // get date of today
   QTime t = QTime::currentTime();   // get time
-  sim.ProgText->insert(tr("Starting new simulation on ")+d.toString("ddd dd. MMM yyyy"));
-  sim.ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n\n");
+  sim->ProgText->insert(tr("Starting new simulation on ")+d.toString("ddd dd. MMM yyyy"));
+  sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n\n");
 
-  sim.ProgText->insert(tr("creating netlist ...."));
+  sim->ProgText->insert(tr("creating netlist ...."));
   QFile NetlistFile("netlist.txt");
   if(!view->Docs.current()->createNetlist(&NetlistFile)) {
-    sim.ErrText->insert(tr("ERROR: Cannot create netlist file!\nAborted."));
-    sim.slotSimEnded();
+    sim->ErrText->insert(tr("ERROR: Cannot create netlist file!\nAborted."));
+    sim->slotSimEnded();
     return;
   }
-  sim.ProgText->insert(tr("done.\n"));
+  sim->ProgText->insert(tr("done.\n"));
 
   QStringList com;
   com << BINARYDIR "qucsator" << "-i" << "netlist.txt";
   com  << "-o" << view->Docs.current()->DataSet;
-  if(!sim.startProcess(com)) {
-    sim.ErrText->insert(tr("ERROR: Cannot start simulator!"));
-    sim.slotSimEnded();
+  if(!sim->startProcess(com)) {
+    sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
+    sim->slotSimEnded();
     return;
   }
 }
 
 // -------------------------------------------------------------------------------
 // Is called after the simulation process terminates.
-void QucsApp::slotAfterSimulation(int Status)
+void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
+  bool shouldClosed = false;     // should simulation window close after simualtion
   QDate d = QDate::currentDate();   // get date of today
   QTime t = QTime::currentTime();   // get time
 
   if(Status == 0) {  // errors ocurred ?
-    sim.ProgText->insert(tr("\nSimulation ended on ")+d.toString("ddd dd. MMM yyyy"));
-    sim.ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
-    sim.ProgText->insert(tr("Ready.\n"));
+    sim->ProgText->insert(tr("\nSimulation ended on ")+d.toString("ddd dd. MMM yyyy"));
+    sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
+    sim->ProgText->insert(tr("Ready.\n"));
 
     if(view->Docs.current()->SimOpenDpl) {
-      sim.slotClose();    // close simulation window
+      shouldClosed = true;
       slotChangePage();   // switch to the corresponding data display page
       view->viewport()->update();
     }
@@ -1364,9 +1374,9 @@ void QucsApp::slotAfterSimulation(int Status)
       new QListViewItem(ConDatasets, (*it).ascii());*/
   }
   else {
-    sim.ProgText->insert(tr("\nErrors occured during simulation on ")+d.toString("ddd dd. MMM yyyy"));
-    sim.ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
-    sim.ProgText->insert(tr("Aborted.\n"));
+    sim->ProgText->insert(tr("\nErrors occured during simulation on ")+d.toString("ddd dd. MMM yyyy"));
+    sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
+    sim->ProgText->insert(tr("Aborted.\n"));
   }
 
 
@@ -1375,31 +1385,31 @@ void QucsApp::slotAfterSimulation(int Status)
     int z;
     QTextStream stream(&file);
     stream << tr("Output:\n----------\n\n");
-    for(z=0; z<=sim.ProgText->paragraphs(); z++)
-      stream << sim.ProgText->text(z) << "\n";
+    for(z=0; z<=sim->ProgText->paragraphs(); z++)
+      stream << sim->ProgText->text(z) << "\n";
     stream << tr("\n\n\nErrors:\n--------\n\n");
-    for(z=0; z<sim.ErrText->paragraphs(); z++)
-      stream << sim.ErrText->text(z) << "\n";
+    for(z=0; z<sim->ErrText->paragraphs(); z++)
+      stream << sim->ErrText->text(z) << "\n";
     file.close();
   }
+
+  if(shouldClosed) sim->slotClose();    // close and delete simulation window
 }
 
 // -------------------------------------------------------------------------------
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  FileShowDialog *d = new FileShowDialog("log.txt");
-  d->exec();
-  delete d;
+  FileShowDialog *d = new FileShowDialog("log.txt", this);
+  d->show();
 }
 
 // -------------------------------------------------------------------------------
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  FileShowDialog *d = new FileShowDialog("netlist.txt");
-  d->exec();
-  delete d;
+  FileShowDialog *d = new FileShowDialog("netlist.txt", this);
+  d->show();
 }
 
 // -------------------------------------------------------------------------------
@@ -2017,7 +2027,7 @@ void QucsApp::slotSelect(bool on)
 // Is called when the select all action is activated.
 void QucsApp::slotSelectAll()
 {
-  view->Docs.current()->selectComponents(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
+  view->Docs.current()->selectElements(INT_MIN, INT_MIN, INT_MAX, INT_MAX, true);
   view->viewport()->repaint();
   view->drawn = false;
 }
@@ -2053,7 +2063,7 @@ void QucsApp::slotEditActivate(bool on)
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
-  
+
   view->viewport()->repaint();
   view->drawn = false;
 }

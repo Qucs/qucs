@@ -20,17 +20,57 @@
 
 #include <qpainter.h>
 
+class Node;
 
 /**
   *@author Michael Margraf
   */
 
-enum ElementType {isDummy, isComponent, isWire, isDiagram, isPainting};
-  
+struct Line {
+  Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
+       : x1(_x1), y1(_y1), x2(_x2), y2(_y2), style(_style) {};
+  int   x1, y1, x2, y2;
+  QPen  style;
+};
+
+struct Arc {
+  Arc(int _x, int _y, int _w, int _h, int _angle, int _arclen, QPen _style)
+       : x(_x), y(_y), w(_w), h(_h), angle(_angle), arclen(_arclen), style(_style) {};
+  int   x, y, w, h, angle, arclen;
+  QPen  style;
+};
+
+struct Port {
+  Port() {};
+  Port(int _x, int _y) : x(_x), y(_y) {};
+  int   x, y;
+  Node *Connection;
+};
+
+struct Text {
+  Text(int _x, int _y, const QString& _s) : x(_x), y(_y), s(_s) {};
+  int   x, y;
+  QString s;
+};
+
+struct Property {
+  Property(const QString& _Name="", const QString& _Value="", bool _display=false, const QString& Desc="")
+           : Name(_Name), Value(_Value), display(_display), Description(Desc) {};
+  QString Name, Value;
+  bool    display;   // show on schematic or not ?
+  QString Description;
+};
+
+
+
+enum ElementType {isDummy, isComponent, isWire, isHWireLabel, isVWireLabel, isNodeLabel, isMovingLabel,
+                  isDiagram, isPainting, isNode};
+
+
 class Element {
 public: 
-	Element();
-	virtual ~Element();
+  Element();
+  virtual ~Element();
 
   virtual void paintScheme(QPainter *p);
   virtual void setCenter(int x, int y, bool relative=false);

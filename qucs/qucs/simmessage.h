@@ -38,7 +38,7 @@ public:
   bool startProcess(const QStringList& commands);
 
 signals:
-  void SimulationEnded(int Status);
+  void SimulationEnded(int Status, SimMessage *sim);
   void displayDataPage();
 
 public slots:

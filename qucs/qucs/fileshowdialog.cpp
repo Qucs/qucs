@@ -26,7 +26,7 @@
 
 
 FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const char *name )
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name, FALSE, Qt::WDestructiveClose)
 {
   setCaption(tr("File: ")+FileName);
 

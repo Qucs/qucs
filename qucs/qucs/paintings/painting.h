@@ -28,12 +28,11 @@
 
 class Painting : public Element  {
 public: 
-	Painting();
-	~Painting();
+  Painting();
+  ~Painting();
 
-//  virtual void paintScheme(QPainter *p);
-//  virtual void setCenter(int x, int y, bool relative=false);
   virtual void getCenter(int&, int &) {};
+  virtual bool getSelected(int, int) { return false; };
 
   virtual Painting* newOne();
   virtual bool load(const QString&) { return true; };
@@ -41,7 +40,6 @@ public:
   virtual void paint(QPainter*) {};
   virtual void MouseMoving(int, int, int, int, QPainter*, bool) {};
   virtual bool MousePressing() { return false; };
-  virtual bool getSelected(int, int) { return false; };
   virtual void Bounding(int&, int&, int&, int&) {};
 
   virtual void rotate() {};

@@ -25,7 +25,7 @@
 //#include <qmessagebox.h>
 
 
-SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
+SimMessage::SimMessage(QWidget *parent) : QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
   setCaption(tr("Qucs Simulation Messages"));
 
@@ -106,7 +106,7 @@ void SimMessage::slotSimEnded()
   Abort->setText(tr("Close window"));
   Display->setDisabled(false);
 
-  emit SimulationEnded(SimProcess.exitStatus());
+  emit SimulationEnded(SimProcess.exitStatus(), this);
 }
 
 // ------------------------------------------------------------------------

@@ -25,7 +25,7 @@
 
 
 GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name)
 {
   setCaption(tr("Edit Text Properties"));
 
@@ -42,6 +42,16 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   h1->setSpacing(5);
   v->addWidget(h1);
 
+
+  QHBox *h2 = new QHBox(this);
+  h2->setSpacing(5);
+  v->addWidget(h2);
+
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h2);     // first => activated by pressing RETURN
+  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h2);
+  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
+
   new QLabel(tr("Text color: "), h1);
   ColorButt = new QPushButton("        ",h1);
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
@@ -54,16 +64,6 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   TextSize->setValidator(Validator);
   TextSize->setMaximumWidth(35);
   TextSize->setText("12");
-
-
-  QHBox *h2 = new QHBox(this);
-  h2->setSpacing(5);
-  v->addWidget(h2);
-
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h2);
-  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h2);
-  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   text->setFocus();
 }

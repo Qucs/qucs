@@ -25,7 +25,7 @@
 
 
 ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name )
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   setCaption(tr("Edit Component Properties"));
 
