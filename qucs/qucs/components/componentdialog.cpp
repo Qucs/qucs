@@ -61,7 +61,7 @@ ComponentDialog::ComponentDialog(Component *c,
   Name = new QLabel(this);
   g->addWidget(Name,1,1);
 
-  Expr.setPattern("[^\"=,]+");  // valid expression for property input 'edit'
+  Expr.setPattern("[^\"=]+");  // valid expression for property input 'edit'
   QValidator *Validator = new QRegExpValidator(Expr, this);
 
   Description = new QLabel(this);
