@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.7 2004/04/30 17:27:41 margraf Exp $
+ * $Id: vector.cpp,v 1.8 2004/04/30 22:27:03 ela Exp $
  *
  */
 
@@ -61,7 +61,7 @@ vector::vector (const vector & v) : object (v) {
   capacity = v.capacity;
   data = (complex *) malloc (sizeof (complex) * capacity);
   memcpy (data, v.data, sizeof (complex) * size);
-  dependencies = new strlist (*v.dependencies);
+  dependencies = v.dependencies ? new strlist (*v.dependencies) : NULL;
   origin = v.origin ? strdup (v.origin) : NULL;
 }
 

@@ -1,3 +1,8 @@
+2004-04-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Added no-define directive to AM_INIT_AUTOMAKE,
+	changed all callers of the VERSION #define to use PACKAGE_VERSION.
+
 2003-11-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Suppressing '-g' compiler option when debug 

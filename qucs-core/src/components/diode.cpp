@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.6 2004/04/28 14:39:19 ela Exp $
+ * $Id: diode.cpp,v 1.7 2004/04/30 22:27:03 ela Exp $
  *
  */
 
@@ -60,18 +60,20 @@ void diode::initDC (void) {
 void diode::calcDC (void) {
   nr_double_t Is = getPropertyDouble ("Is");
   nr_double_t n = getPropertyDouble ("n");
-  nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit;
+  nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit, gtiny;
 
-  T = 290.0;
+  T = -K + 26.5;
   Ut = kB * T / Q;
   Ud = real (getV (2) - getV (1));
-  Ucrit = Ut * log (Ut / sqrt (2) / Is);
-  //if (Ud > Ucrit) {
-  //  Ud = Ucrit;
-  //}
-  gd = Is / Ut / n * exp (Ud / Ut / n);
+
+  // critical voltage necessary for bad start values
+  Ucrit = n * Ut * log (Ut / sqrt (2) / Is);
+  // tiny derivative for little junction voltage
+  gtiny = Ud < - 10 * Ut * n ? Is : 0;
+
+  gd = Is / Ut / n * exp (Ud / Ut / n) + gtiny;
   //fprintf(stderr, "gd=%g, Ud=%g\n", gd, Ud);
-  Id = Is * (exp (Ud / Ut / n) - 1);
+  Id = Is * (exp (Ud / Ut / n) - 1) + gtiny * Ud;
   Ieq = Id - Ud * gd;
 
   setI (1, +Ieq);
@@ -90,7 +92,7 @@ void diode::calcOperatingPoints (void) {
   
   nr_double_t Ud, Id, Ut, T, gd, Cd;
 
-  T = 290.0;
+  T = -K + 26.5;
   Ut = kB * T / Q;
   Ud = real (getV (2) - getV (1));
   gd = Is / Ut / n * exp (Ud / Ut / n);

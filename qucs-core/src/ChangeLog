@@ -1,3 +1,7 @@
+2004-05-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: Fixed copy constructor.
+
 2004-04-28  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* class complex: sin(), cos(), tan(), cot(), arcsin(), arccos(),
