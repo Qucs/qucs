@@ -32,7 +32,8 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 //  enableClipper(TRUE);
   setVScrollBarMode(QScrollView::AlwaysOn);
   setHScrollBarMode(QScrollView::AlwaysOn);
-  viewport()->setBackgroundMode(PaletteBase);   // white background (typically)
+//  viewport()->setBackgroundMode(PaletteBase);   // white background (typically)
+  viewport()->setPaletteBackgroundColor(QColor(255,250,225));
   resizeContents(800,800);
   viewport()->setMouseTracking(true);
 

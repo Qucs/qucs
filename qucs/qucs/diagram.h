@@ -34,14 +34,19 @@ public:
 
   virtual Diagram* newOne();
   virtual void paint(QPainter *p);
+  virtual void calcData(Graph *g);
+  QString save();
+  bool load(const QString& Line, QTextStream *stream);
+
   void paintScheme(QPainter *p);
   void setCenter(int _cx, int _cy);
-  bool loadVarData(const QString& var, const QString& fileName);
+  bool loadVarData(const QString& fileName);
   int  loadIndepVarData(const QString& var, const QString& fileName);
   
-  int  cx, cy, dx, dy;
-  bool GridOn;
-  int  GridX, GridY;
+  QString Name;
+  int     cx, cy, dx, dy;
+  bool    GridOn;
+  int     GridX, GridY;
   QPtrList<Graph> Graphs;
 
   double x1, y1, x2, y2;
