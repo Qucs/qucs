@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.61 2004/10/25 07:55:46 ela Exp $
+ * $Id: check_netlist.cpp,v 1.62 2004/10/25 21:01:31 ela Exp $
  *
  */
 
@@ -583,6 +583,12 @@ struct define_t definition_available[] =
   /* subcircuit instance */
   { "Sub", PROP_NODES, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Type", PROP_STR, { PROP_NO_VAL, "DEF1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* nodeset definition */
+  { "NodeSet", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 0, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -1334,6 +1340,7 @@ checker_copy_subcircuit (struct definition_t * sub) {
   copy->action = sub->action;
   copy->nonlinear = sub->nonlinear;
   copy->substrate = sub->substrate;
+  copy->nodeset = sub->nodeset;
   copy->define = sub->define;
   copy->pairs = sub->pairs;
   copy->type = strdup (sub->type);
@@ -1790,6 +1797,8 @@ static int netlist_checker_intern (struct definition_t * root) {
       errors++;
     }
     else {
+      /* mark nodeset definitions */
+      def->nodeset = !strcmp (def->type, "NodeSet") ? 1 : 0;
       /* mark nonlinear circuit definitions */
       def->nonlinear = available->nonlinear;
       /* mark substrate definitions */

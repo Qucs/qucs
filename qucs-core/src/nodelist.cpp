@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.6 2004/10/03 10:30:51 ela Exp $
+ * $Id: nodelist.cpp,v 1.7 2004/10/25 21:01:31 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@
 // Constructor creates an instance of the nodelist class.
 nodelist::nodelist () {
   root = last = NULL;
+  narray = NULL;
   txt = NULL;
   sorting = 0;
 }
@@ -53,6 +54,7 @@ nodelist::nodelist () {
    connected to. */
 nodelist::nodelist (net * subnet) {
   root = last = NULL;
+  narray = NULL;
   txt = NULL;
   sorting = 0;
 
@@ -83,6 +85,7 @@ nodelist::nodelist (net * subnet) {
 nodelist::nodelist (const nodelist & o) {
   struct nodelist_t * n;
   root = last = NULL;
+  narray = NULL;
   for (n = o.root; n != NULL; n = n->next) append (copy (n));
   txt = o.txt ? strdup (o.txt) : NULL;
   sorting = o.sorting;
@@ -97,6 +100,7 @@ nodelist::~nodelist () {
     root = next;
   }
   if (txt) free (txt);
+  if (narray) free (narray);
 }
 
 // The function copies the given node with all its properties.
@@ -201,26 +205,20 @@ int nodelist::contains (char * str) {
 /* This function returns the node name positioned at the specified
    location in the node name list. */
 char * nodelist::get (int nr) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next)
-    if (n->n == nr) return n->name;
-  return NULL;
+  return narray[nr]->name;
 }
 
 /* This function returns non-zero if the node positioned at the
    specified location in the node name list is marked internal and
    zero otherwise. */
 int nodelist::isInternal (int nr) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next)
-    if (n->n == nr) return n->internal;
-  return 0;
+  return narray[nr]->internal;
 }
 
 /* The function returns the nodelist structure at the specified
    location in the node name list. */
 struct nodelist_t * nodelist::getNode (int nr) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next)
-    if (n->n == nr) return n;
-  return NULL;
+  return narray[nr];
 }
 
 /* The function returns the nodelist structure with the given name in
@@ -236,19 +234,16 @@ struct nodelist_t * nodelist::getNode (char * name) {
 char * nodelist::getNodeString (int nr) {
   if (txt) free (txt); txt = NULL;
   // find the specified node
-  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
-    if (n->n == nr) {
-      // append circuit names connected to the node
-      int len = (n->nNodes - 1) + 1;
-      txt = (char *) malloc (len); txt[0] = '\0';
-      for (int i = 0; i < n->nNodes; i++) {
-	char * str = n->nodes[i]->getCircuit()->getName ();
-	len += strlen (str);
-	txt = (char *) realloc (txt, len);
-	strcat (txt, str);
-	if (i != n->nNodes - 1) strcat (txt, ",");
-      }
-    }
+  struct nodelist_t * n = getNode (nr);
+  // append circuit names connected to the node
+  int len = (n->nNodes - 1) + 1;
+  txt = (char *) malloc (len); txt[0] = '\0';
+  for (int i = 0; i < n->nNodes; i++) {
+    char * str = n->nodes[i]->getCircuit()->getName ();
+    len += strlen (str);
+    txt = (char *) realloc (txt, len);
+    strcat (txt, str);
+    if (i != n->nNodes - 1) strcat (txt, ",");
   }
   return txt;
 }
@@ -262,13 +257,23 @@ struct nodelist_t * nodelist::getLastNode (void) {
 // This function enumerates the nodes in the node name list.
 void nodelist::assignNodes (void) {
   int i = 1;
+
+  // create fast array access possibility
+  if (narray) free (narray);
+  narray = (struct nodelist_t **)
+    malloc (sizeof (struct nodelist_t *) * length ());
+
   for (struct nodelist_t * n = root; n != NULL; n = n->next) {
     // ground node gets a zero counter
-    if (!strcmp (n->name, "gnd"))
+    if (!strcmp (n->name, "gnd")) {
       n->n = 0;
+      narray[0] = n;
+    }
     // others get a unique number greater than zero
-    else
+    else {
+      narray[i] = n;
       n->n = i++;
+    }
   }
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.8 2004/10/12 18:13:08 ela Exp $
+ * $Id: eqnsys.h,v 1.9 2004/10/25 21:01:31 ela Exp $
  *
  */
 
@@ -53,7 +53,9 @@ class eqnsys
   void solve (void);
 
  private:
+  int update;
   int algo;
+  int * change;
   tmatrix<nr_type_t> * A;
   tvector<nr_type_t> * B;
   tvector<nr_type_t> * X;

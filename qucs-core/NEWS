@@ -26,6 +26,9 @@ files.
 Version 0.0.5
 -------------
 
+ * added microstrip via hole implementation
+ * node-set functionality for DC and transient analysis
+
 Version 0.0.4
 -------------
 

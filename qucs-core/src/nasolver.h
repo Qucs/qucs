@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.9 2004/10/12 18:13:09 ela Exp $
+ * $Id: nasolver.h,v 1.10 2004/10/25 21:01:31 ela Exp $
  *
  */
 
@@ -63,6 +63,7 @@ class nasolver : public analysis
   int  countNodes (void);
   void saveSolution (void);
   circuit * findVoltageSource (int);
+  void applyNodeset (void);
 
  private:
   void createMatrix (void);
@@ -71,8 +72,9 @@ class nasolver : public analysis
   void createBMatrix (void);
   void createCMatrix (void);
   void createDMatrix (void);
-  void createIMatrix (void);
-  void createEMatrix (void);
+  void createIVector (void);
+  void createEVector (void);
+  void createZVector (void);
   void runMNA (void);
   void applyAttenuation (void);
   void lineSearch (void);
@@ -91,17 +93,19 @@ class nasolver : public analysis
   tvector<nr_type_t> * x;
   tvector<nr_type_t> * xprev;
   tvector<nr_type_t> * zprev;
+  tmatrix<nr_type_t> * A;
   int iterations;
   int attenuation;
   int linesearch;
+  int fixpoint;
 
  private:
   nodelist * nlist;
-  tmatrix<nr_type_t> * A;
   eqnsys<nr_type_t> * eqns;
   nr_double_t reltol;
   nr_double_t abstol;
   nr_double_t vntol;
+  int updateMatrix;
 
  private:
   char * desc;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.19 2004/10/23 18:47:10 ela Exp $
+ * $Id: mosfet.cpp,v 1.20 2004/10/25 21:01:33 ela Exp $
  *
  */
 
@@ -131,10 +131,6 @@ void mosfet::calcNoise (nr_double_t frequency) {
 void mosfet::initDC (void) {
 
   // initialize starting values
-  setV (NODE_G, 0.8);
-  setV (NODE_D, 0.0);
-  setV (NODE_S, 0.0);
-  setV (NODE_B, 0.0);
   UgdPrev = real (getV (NODE_G) - getV (NODE_D));
   UgsPrev = real (getV (NODE_G) - getV (NODE_S));
   UbsPrev = real (getV (NODE_B) - getV (NODE_S));

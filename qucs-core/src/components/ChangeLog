@@ -1,5 +1,9 @@
 2004-10-25  Stefan Jahn  <stefan@lkcc.org>
 
+	* devices/jfet.cpp, devices/diode.cpp, devices/mosfet.cpp,
+	devices/bjt.cpp: Don't initialize node voltages within the
+	component itself.  Now done by the nodesetter.
+
 	* microstrip/msvia.h (class msvia): New component added:
 	microstrip via hole to ground.
 

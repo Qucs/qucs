@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.27 2004/10/25 07:55:46 ela Exp $
+ * $Id: trsolver.cpp,v 1.28 2004/10/25 21:01:32 ela Exp $
  *
  */
 
@@ -107,6 +107,7 @@ void trsolver::solve (void) {
   int error = 0, convError = 0;
   runs++;
   current = 0;
+  fixpoint = 0;
   statRejected = statSteps = statIterations = statConvergence = 0;
 
   // Create time sweep if necessary.
@@ -117,6 +118,7 @@ void trsolver::solve (void) {
   initDC ();
   setCalculation ((calculate_func_t) &calcDC);
   solve_pre ();
+  applyNodeset ();
 
   // Run the DC solver once.
   try_running () {
@@ -151,6 +153,7 @@ void trsolver::solve (void) {
   initTR ();
   setCalculation ((calculate_func_t) &calcTR);
   solve_pre ();
+  applyNodeset ();
   swp->reset ();
 
   int running = 0;
@@ -229,7 +232,7 @@ void trsolver::solve (void) {
       if (rejected) continue;
 
       // check whether Jacobian matrix is still non-singular
-      if (!x->isFinite ()) {
+      if (!A->isFinite ()) {
 	logprint (LOG_ERROR, "ERROR: %s: Jacobian singular at t = %.3e, "
 		  "aborting %s analysis\n", getName (), current,
 		  getDescription ());
@@ -244,6 +247,7 @@ void trsolver::solve (void) {
       if (running > 1) {
 	adjustDelta ();
 	adjustOrder ();
+	//fixpoint = (deltaOld == delta) ? 1 : 0;
       }
       else {
 	//fillStates ();
