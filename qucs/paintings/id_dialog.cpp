@@ -28,7 +28,7 @@
 ID_Dialog::ID_Dialog(QWidget *parent) : QDialog(parent)
 {
   setCaption(tr("Edit Subcircuit Properties"));
-  rx = new QRegExp("[A-Za-z][A-Za-z0-9_]{1,9}");
+  rx = new QRegExp("[A-Za-z][A-Za-z0-9_]*");
   Validator = new QRegExpValidator(*rx, this);
 
   v = new QVBoxLayout(this);
