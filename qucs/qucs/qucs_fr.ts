@@ -3020,11 +3020,11 @@ Modifie ce schéma</translation>
         <translation>Lancement du programme de synthèse impossible !</translation>
     </message>
     <message>
-        <source>3D-Cartesian</source>
+        <source>Cannot start line calculation program!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
+        <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4382,6 +4382,11 @@ Lance QucsFilter</translation>
 </translation>
     </message>
     <message>
+        <source>Swedish by Markus Gothe
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Line calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4393,11 +4398,6 @@ Lance QucsFilter</translation>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Swedish by Markus Gothe
-</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1254,7 +1254,8 @@ void QucsApp::slotCallFilter()
 // Is called to start the transmission line calculation program.
 void QucsApp::slotCallLine()
 {
-  QProcess *QucsLine = new QProcess(QString(BINARYDIR "qucstrans"));
+  QProcess *QucsLine =
+    new QProcess(QString(QucsSettings.BinDir + "qucstrans"));
   if(!QucsLine->start()) {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot start line calculation program!"));
