@@ -1,3 +1,8 @@
+2004-09-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp: Pass singular matrix to the nasolver via
+	exception but insert a virtual resistance and continue.
+
 2004-09-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* states.cpp (saveState): New function saving a certain state

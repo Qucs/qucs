@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.15 2004/09/08 18:25:19 ela Exp $
+ * $Id: eqnsys.cpp,v 1.16 2004/09/23 14:09:11 ela Exp $
  *
  */
 
@@ -249,11 +249,19 @@ void eqnsys<nr_type_t>::solve_lu (void) {
     }
     // check pivot element and throw appropriate exception
     if (MaxPivot <= 0) {
+#if 0
       qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
       e->setText ("no pivot != 0 found during LU decomposition");
-      e->setData (c);
+      e->setData (i);
       throw_exception (e);
       goto fail;
+#else /* insert virtual resistance */
+      qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR);
+      e->setText ("no pivot != 0 found during LU decomposition");
+      e->setData (i);
+      A->set (i, i, 1e-12); // virtual resistance to ground
+      throw_exception (e);
+#endif
     }
 
     // swap matrix rows if necessary and remember that step in the
