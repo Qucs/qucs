@@ -4437,9 +4437,9 @@ Q_2 = \frac{I_F}{I_{KF}} + \frac{I_R}{I_{KR}}
 \end{equation}
 
 The forward transconductance $g_{mf}$ of the forward transfer current
-$I_{TF}$ is obtained by derivating $I_{TF}$ from $V_{BE}$.  The
-reverse transconductance $g_{mr}$ can be calculated by derivating
-$I_{TR}$ from $V_{BC}$.
+$I_{TF}$ is obtained by differentiating $I_{TF}$ with respect to
+$V_{BE}$.  The reverse transconductance $g_{mr}$ can be calculated by
+differentiating $I_{TR}$ with respect to $V_{BC}$.
 \begin{align}
 \label{eq:SGPgmf}
 g_{mf} &= \frac{\partial I_{TF}}{\partial V_{BE}} = \frac{1}{Q_B}\cdot\left(g_{IF} - \frac{I_F}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BE}}\right)\\
@@ -4717,7 +4717,7 @@ dielectric sheet.
 For wide strips ($W/h > 3.3$) he obtains the approximation
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
-\frac{Z_{F0}}{2\sqrt{\varepsilon_{r}}}\cdot\frac{1}{\dfrac{W}{2h} + \dfrac{1}{\pi}\ln{4} + \dfrac{\varepsilon_{r} + 1}{2\pi \varepsilon_{r}} \ln{\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)} + \dfrac{\varepsilon_{r} - 1}{2\pi \varepsilon_{r}^{2}}\cdot \ln{\dfrac{e\pi^{2}}{16}}}
+\frac{Z_{F0}}{2\sqrt{\varepsilon_{r}}}\cdot\frac{1}{\dfrac{W}{2h} + \dfrac{1}{\pi}\ln{4} + \dfrac{\varepsilon_{r} + 1}{2\pi \varepsilon_{r}} \ln{\left(\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)\right)} + \dfrac{\varepsilon_{r} - 1}{2\pi \varepsilon_{r}^{2}}\cdot \ln{\dfrac{e\pi^{2}}{16}}}
 \end{equation}
 
 For narrow strips ($W/h < 3.3$) he obtains the approximation

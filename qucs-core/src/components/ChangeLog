@@ -1,3 +1,8 @@
+2004-07-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* constants.h (quadr): Renamed quad() to quadr() to avoid
+	name clash with some platforms defining quad as data type.
+
 2004-07-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Simplified computation of S-parameters.

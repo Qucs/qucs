@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.16 2004-06-27 15:11:49 ela Exp $
+ * $Id: msline.cpp,v 1.17 2004-07-12 18:14:59 ela Exp $
  *
  */
 
@@ -177,7 +177,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + sqr (2 / u1)));
     
     a = 1 +
-      1 / 49 * log ((quad (ur) + sqr (ur / 52)) / (quad (ur) + 0.432)) + 
+      1 / 49 * log ((quadr (ur) + sqr (ur / 52)) / (quadr (ur) + 0.432)) + 
       1 / 18.7 * log (1 + cubic (ur / 18.1));
     b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
     e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
