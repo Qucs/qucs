@@ -62,8 +62,8 @@ QucsApp::QucsApp()
 {
   setCaption("Qucs " PACKAGE_VERSION);
 
-  QucsFileFilter = tr("Schematic (*.sch);; Data Display (*.dpl);;")+
-                   tr("Qucs Documents (*.sch *dpl);; Any File (*)");
+  QucsFileFilter = tr("Schematic (*.sch);;Data Display (*.dpl);;")+
+                   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
 
   if(!loadSettings())
     resize(600,400);

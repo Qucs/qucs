@@ -43,5 +43,3 @@ int main(int argc, char *argv[])
   qucs->show();
   return a.exec();
 }
-
-

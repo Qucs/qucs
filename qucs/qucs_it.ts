@@ -484,10 +484,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Too few independent data&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ac simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1012,6 +1008,10 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>rms substrate roughness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too few independent data &quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2399,14 +2399,6 @@ Continuare ?</translation>
         <translation>Scegli la Directory del Progetto per l&apos;Eliminazione</translation>
     </message>
     <message>
-        <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Data Display (*.dpl)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2447,6 +2439,14 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Do you want to save the changes before closing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

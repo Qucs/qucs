@@ -47,7 +47,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -243,11 +243,11 @@
     </message>
     <message>
         <source>Text size: </source>
-        <translation>Textgröße:</translation>
+        <translation>Textgröße: </translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation>Drehwinkel:</translation>
+        <translation>Drehwinkel: </translation>
     </message>
 </context>
 <context>
@@ -301,7 +301,7 @@
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -615,15 +615,15 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation>Referenzimpedanz von Port 1</translation>
+        <translation>Referenzimpedanz von Tor 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation>Referenzimpedanz von Port 2</translation>
+        <translation>Referenzimpedanz von Tor 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation>Referenzimpedanz von Port 3</translation>
+        <translation>Referenzimpedanz von Tor 3</translation>
     </message>
     <message>
         <source>coplanar line</source>
@@ -651,11 +651,11 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation>DC Block</translation>
+        <translation>DC-Sperre</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation>DC Feed</translation>
+        <translation>DC-Zuführung</translation>
     </message>
     <message>
         <source>diode</source>
@@ -675,7 +675,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation>Gyrator (Impendanzinverter)</translation>
+        <translation>Gyrator (Impedanzinverter)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
@@ -791,7 +791,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>step size for sweep</source>
-        <translation>Schritteweite für den Durchlauf</translation>
+        <translation>Schrittweite für den Durchlauf</translation>
     </message>
     <message>
         <source>resistor (US symbol)</source>
@@ -815,7 +815,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
@@ -823,7 +823,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
@@ -847,7 +847,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation>Verlustwinkel</translation>
+        <translation>dielektrischer Verlustwinkel</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
@@ -971,15 +971,15 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation>Spannungstransformationverhältnis der Spule 1</translation>
+        <translation>Spannungstransformationsverhältnis der Spule 1</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation>Spannungstransformationverhältnis der Spule 2</translation>
+        <translation>Spannungstransformationsverhältnis der Spule 2</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
-        <translation>Spannungstransformationverhältnis</translation>
+        <translation>Spannungstransformationsverhältnis</translation>
     </message>
     <message>
         <source>saturation current</source>
@@ -1013,11 +1013,11 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge des unabhängigen Datensatzes unbekannt &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu wenige Datensatzeinträge in &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
@@ -1026,10 +1026,6 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>&quot; not found</source>
         <translation>&quot; nicht gefunden</translation>
-    </message>
-    <message>
-        <source>Too few independent data&quot;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
@@ -1066,6 +1062,10 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>rms substrate roughness</source>
         <translation>effektive Oberflächenrautiefe</translation>
+    </message>
+    <message>
+        <source>Too few independent data &quot;</source>
+        <translation>Zu wenige Datensatzeinträge in &quot;</translation>
     </message>
 </context>
 <context>
@@ -2308,11 +2308,11 @@ Fehler:
     </message>
     <message>
         <source>dc Block</source>
-        <translation>DC Sperre</translation>
+        <translation>DC-Sperre</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation>DC Zuführung</translation>
+        <translation>DC-Zuführung</translation>
     </message>
     <message>
         <source>Bias T</source>
@@ -2412,31 +2412,31 @@ Fehler:
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation>1-Port S-Parameter Datei</translation>
+        <translation>1-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation>2-Port S-Parameter Datei</translation>
+        <translation>2-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation>3-Port S-Parameter Datei</translation>
+        <translation>3-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation>4-Port S-Parameter Datei</translation>
+        <translation>4-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation>5-Port S-Parameter Datei</translation>
+        <translation>5-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation>6-Port S-Parameter Datei</translation>
+        <translation>6-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation>dc Simulation</translation>
+        <translation>DC-Simulation</translation>
     </message>
     <message>
         <source>Transienten simulation</source>
@@ -2444,7 +2444,7 @@ Fehler:
     </message>
     <message>
         <source>ac simulation</source>
-        <translation>ac Simulation</translation>
+        <translation>AC-Simulation</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
@@ -2636,7 +2636,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Transientsimulation</translation>
     </message>
     <message>
         <source>Set Marker</source>
@@ -2706,7 +2706,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation>Offene Datei kann nicht  überschrieben werden</translation>
+        <translation>Geöffnete Datei kann nicht  überschrieben werden</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
@@ -2720,11 +2720,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
-        <translation>Schaltplan (*.sch);; Datenvisualisierung (*.dpl);;</translation>
+        <translation type="obsolete">Schaltplan (*.sch);; Datenvisualisierung (*.dpl);;</translation>
     </message>
     <message>
         <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
-        <translation>Qucs-Sokumente (*.sch *dpl);; Alle Dateien (*)</translation>
+        <translation type="obsolete">Qucs-Sokumente (*.sch *dpl);; Alle Dateien (*)</translation>
     </message>
     <message>
         <source>Data Display (*.dpl)</source>
@@ -2733,6 +2733,18 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     <message>
         <source>Enter a Document Name</source>
         <translation>Geben Sie einen Dokumentennamen ein</translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *.dpl);; Any File (*)</source>
+        <translation type="obsolete">Qucs-Dokumente (*.sch *.dpl);; Alle Dateien (*)</translation>
+    </message>
+    <message>
+        <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
+        <translation>Schaltplan (*.sch);;Datenvisualisierung (*.dpl);;</translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
+        <translation>Qucs-Dokumente (*.sch *.dpl);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -2763,7 +2775,7 @@ Erzeugt einen neuen Schaltplan oder eine Datenvisualisierung</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">Ö&amp;ffnen</translation>
+        <translation>Ö&amp;ffnen...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
@@ -2803,7 +2815,7 @@ Speichert das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Speichern &amp;unter</translation>
+        <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
@@ -2879,7 +2891,7 @@ Setzt die Eigenschaften der Datei</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Drucken</translation>
+        <translation>&amp;Drucken...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
@@ -3063,7 +3075,7 @@ Erzeugt ein neues Projekt</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished">Projekt ö&amp;ffnen</translation>
+        <translation>Projekt ö&amp;ffnen...</translation>
     </message>
     <message>
         <source>Opens a project</source>
@@ -3083,7 +3095,7 @@ Opens an existing project</source>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished">Projekt &amp;löschen</translation>
+        <translation>Projekt &amp;löschen...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
@@ -3543,7 +3555,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished">Ü&amp;ber Qucs..</translation>
+        <translation>Ü&amp;ber Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
@@ -3632,18 +3644,20 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
 </source>
-        <translation></translation>
+        <translation>Simulator von Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation></translation>
+        <translation>Besonderen Dank an Jens Flucke
+</translation>
     </message>
     <message>
         <source>Translations:
