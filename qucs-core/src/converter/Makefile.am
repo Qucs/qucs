@@ -36,7 +36,7 @@ noinst_HEADERS = tokens_spice.h check_spice.h qucs_producer.h
 generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h
 
 scan_spice.cpp: scan_spice.l
-	$(LEX) -o$@ $<
+	$(LEX) --nounistd -o$@ $<
 
 parse_spice.cpp: parse_spice.y
 	$(YACC) -v -o $@ --defines=tokens_spice.h $<
