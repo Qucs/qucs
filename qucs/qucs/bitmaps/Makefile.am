@@ -22,27 +22,27 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-XPMS = ac_voltage.xpm arrow.xpm capacitor.xpm dc_current.xpm dc_voltage.xpm  \
-  inductor.xpm line.xpm msline.xpm polar.xpm rect.xpm rectangle.xpm          \
-  resistor.xpm resistor_us.xpm smith.xpm source.xpm symtrans.xpm tabular.xpm \
-  text.xpm tline.xpm transformer.xpm ground.xpm dc.xpm hb.xpm sparameter.xpm \
-  sweep.xpm tran.xpm cccs.xpm ccvs.xpm vccs.xpm vcvs.xpm ac.xpm              \
-  attenuator.xpm biast.xpm circulator.xpm dcblock.xpm dcfeed.xpm diode.xpm   \
-  isolator.xpm mscorner.xpm mscross.xpm msstep.xpm mstee.xpm substrate.xpm   \
-  port.xpm spfile1.xpm spfile2.xpm spfile3.xpm spfile4.xpm spfile5.xpm       \
-  spfile6.xpm coplanar.xpm ellipse.xpm mscoupled.xpm gyrator.xpm             \
-  pshifter.xpm iprobe.xpm noise_current.xpm noise_volt.xpm msmbend.xpm       \
-  msopen.xpm filledellipse.xpm filledrect.xpm ac_current.xpm npn.xpm pnp.xpm \
-  nfet.xpm pfet.xpm nmosfet.xpm pmosfet.xpm dmosfet.xpm msgap.xpm npnsub.xpm \
-  pnpsub.xpm dmosfet_sub.xpm nmosfet_sub.xpm pmosfet_sub.xpm ellipsearc.xpm  \
-  vpulse.xpm ipulse.xpm vrect.xpm irect.xpm msvia.xpm amplifier.xpm opamp.xpm\
-  ysmith.xpm
+XPMS = ac_voltage.xpm arrow.xpm capacitor.xpm dc_current.xpm dc_voltage.xpm   \
+  inductor.xpm line.xpm msline.xpm polar.xpm rect.xpm rectangle.xpm           \
+  resistor.xpm resistor_us.xpm smith.xpm source.xpm symtrans.xpm tabular.xpm  \
+  text.xpm tline.xpm transformer.xpm ground.xpm dc.xpm hb.xpm sparameter.xpm  \
+  sweep.xpm tran.xpm cccs.xpm ccvs.xpm vccs.xpm vcvs.xpm ac.xpm               \
+  attenuator.xpm biast.xpm circulator.xpm dcblock.xpm dcfeed.xpm diode.xpm    \
+  isolator.xpm mscorner.xpm mscross.xpm msstep.xpm mstee.xpm substrate.xpm    \
+  port.xpm spfile1.xpm spfile2.xpm spfile3.xpm spfile4.xpm spfile5.xpm        \
+  spfile6.xpm coplanar.xpm ellipse.xpm mscoupled.xpm gyrator.xpm              \
+  pshifter.xpm iprobe.xpm noise_current.xpm noise_volt.xpm msmbend.xpm        \
+  msopen.xpm filledellipse.xpm filledrect.xpm ac_current.xpm npn.xpm pnp.xpm  \
+  nfet.xpm pfet.xpm nmosfet.xpm pmosfet.xpm dmosfet.xpm msgap.xpm npnsub.xpm  \
+  pnpsub.xpm dmosfet_sub.xpm nmosfet_sub.xpm pmosfet_sub.xpm ellipsearc.xpm   \
+  vpulse.xpm ipulse.xpm vrect.xpm irect.xpm msvia.xpm amplifier.xpm opamp.xpm \
+  ysmith.xpm smithpolar.xpm polarsmith.xpm
 
-PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png     \
-  deactiv.png bottom.png editpaste.png equation.png fileclose.png            \
-  fileprint.png filesaveall.png gear.png ground.png mirror.png nodename.png  \
-  pointer.png port.png rebuild.png redo.png rotate_ccw.png top.png undo.png  \
-  viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png  \
+PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \
+  deactiv.png bottom.png editpaste.png equation.png fileclose.png             \
+  fileprint.png filesaveall.png gear.png ground.png mirror.png nodename.png   \
+  pointer.png port.png rebuild.png redo.png rotate_ccw.png top.png undo.png   \
+  viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png   \
   viewmag1.png marker.png
 
 ICONS = big.button.qucs.xpm big.qucs.xpm tiny.button.qucs.xpm tiny.qucs.xpm
