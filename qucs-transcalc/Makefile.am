@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# qucs-transcalc/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,25 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc
+bin_PROGRAMS = qucstrans
 
-# Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-help qucs-core
+SUBDIRS = bitmaps
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
+MOCHEADERS = qucstrans.h
+MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
+
+qucstrans_SOURCES = main.cpp qucstrans.cpp
+
+nodist_qucstrans_SOURCES = $(MOCFILES)
+
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+qucstrans_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
+
+noinst_HEADERS = $(MOCHEADERS)
+
+%.moc.cpp: %.h
+	$(MOC) -o $@ $<
 
 CLEANFILES = *~
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
+DISTCLEANFILES = *.moc.cpp
