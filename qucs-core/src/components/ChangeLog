@@ -1,3 +1,8 @@
+2004-06-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* jfet.h (class jfet): Started to implement the DC model of
+	a simple junction FET.
+
 2004-06-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* resistor.cpp: It is now possible to set R=0.  In this case

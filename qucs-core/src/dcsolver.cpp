@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.14 2004-06-04 16:01:47 ela Exp $
+ * $Id: dcsolver.cpp,v 1.15 2004-06-05 12:20:35 ela Exp $
  *
  */
 
@@ -353,8 +353,9 @@ void dcsolver::createIMatrix (void) {
     for (int i = 0; i < n->nNodes; i++) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
-      if (is->getType () == CIR_IDC ||
-	  is->getType () == CIR_DIODE) {
+      if (is->getType () == CIR_IDC   ||
+	  is->getType () == CIR_DIODE ||
+	  is->getType () == CIR_JFET) {
 	val += real (is->getI (n->nodes[i]->getPort ()));
       }
     }
