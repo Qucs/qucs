@@ -79,7 +79,7 @@ void Marker::initText(int n)
   QString Text_;
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
-  if(fabs(yi) < 1e-250) Text_ = QString::number(yr);
+  if(fabs(yi) < 1e-250) Text_ = QString::number(yr,'g',Precision);
   else {
     Text_ = QString::number(yi,'g',Precision);
     if(Text_.at(0) == '-') { Text_.at(0) = 'j'; Text_ = '-'+Text_; }
@@ -132,7 +132,7 @@ void Marker::createText()
   QString Text_;
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
-  if(fabs(yi) < 1e-250) Text_ = QString::number(yr);
+  if(fabs(yi) < 1e-250) Text_ = QString::number(yr,'g',Precision);
   else {
     Text_ = QString::number(yi,'g',Precision);
     if(Text_.at(0) == '-') { Text_.at(0) = 'j'; Text_ = '-'+Text_; }
