@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.8 2005-02-08 23:08:36 raimi Exp $
+ * $Id: tvector.h,v 1.9 2005-02-12 09:49:31 raimi Exp $
  *
  */
 
@@ -72,6 +72,7 @@ class tvector
   nr_type_t get (int);
   void set (int, nr_type_t);
   void set (nr_type_t);
+  void set (nr_type_t, int, int);
   void set (tvector, int, int);
   int  getSize (void) { return size; }
   nr_type_t * getData (void) { return data; }

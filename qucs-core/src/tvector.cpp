@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.5 2005-01-24 19:37:00 raimi Exp $
+ * $Id: tvector.cpp,v 1.6 2005-02-12 09:49:31 raimi Exp $
  *
  */
 
@@ -114,6 +114,12 @@ void tvector<nr_type_t>::set (int i, nr_type_t z) {
 template <class nr_type_t>
 void tvector<nr_type_t>::set (nr_type_t z) {
   for (int i = 0; i < getSize (); i++) data[i] = z;
+}
+
+// Sets the specified tvector elements to the given value.
+template <class nr_type_t>
+void tvector<nr_type_t>::set (nr_type_t z, int start, int stop) {
+  for (int i = start; i <= stop; i++) data[i - 1] = z;
 }
 
 // Copies the specified elements from the given tvector.

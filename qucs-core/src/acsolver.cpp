@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.8 2005-02-01 22:56:35 raimi Exp $
+ * $Id: acsolver.cpp,v 1.9 2005-02-12 09:49:31 raimi Exp $
  *
  */
 
@@ -99,6 +99,7 @@ void acsolver::solve (void) {
 #endif
     
     // start the linear solver
+    eqnAlgo = ALGO_LU_DECOMPOSITION;
     solve_linear ();
 
     // compute noise if requested
@@ -179,6 +180,7 @@ void acsolver::solve_noise (void) {
   A->transpose ();
   updateMatrix = 0;
   convHelper = CONV_None;
+  eqnAlgo = ALGO_LU_SUBSTITUTION_DOOLITTLE; // LU matrix is transposed
 
   // compute noise voltage for each node
   for (int i = 1; i <= N; i++) {

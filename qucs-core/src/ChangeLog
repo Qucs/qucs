@@ -1,3 +1,13 @@
+2005-02-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* acsolver.cpp (solve_noise): Finally made the AC noise
+	analysis work using the Doolittle substitutions of the
+	transposed Crout LU matrix.
+
+	* eqnsys.cpp: Two new functions performing the forward and
+	backward substitutions of an LU decomposed matrix (Crout and
+	Doolittle definitions).
+
 2005-02-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* Made loads of tiny changes for compatibility with the

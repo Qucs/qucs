@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.23 2005-02-08 23:08:32 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.24 2005-02-12 09:49:31 raimi Exp $
  *
  */
 
@@ -119,6 +119,12 @@ void eqnsys<nr_type_t>::solve (void) {
     break;
   case ALGO_LU_DECOMPOSITION:
     solve_lu ();
+    break;
+  case ALGO_LU_SUBSTITUTION_CROUT:
+    solve_lu_subst_crout ();
+    break;
+  case ALGO_LU_SUBSTITUTION_DOOLITTLE:
+    solve_lu_subst_doolittle ();
     break;
   case ALGO_JACOBI: case ALGO_GAUSS_SEIDEL:
     solve_iterative ();
@@ -240,10 +246,10 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   throw_exception (e); }
 
 /* This function decomposites the left hand matrix into an upper U and
-   lower L matrix.  The algorithm is called LU decomposition.  It is
-   very useful when dealing with equation systems where the left hand
-   side (the A matrix) does not change but the right hand side (the B
-   vector) only. */
+   lower L matrix.  The algorithm is called LU decomposition (Crout's
+   definition).  It is very useful when dealing with equation systems
+   where the left hand side (the A matrix) does not change but the
+   right hand side (the B vector) only. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_lu (void) {
   nr_double_t MaxPivot;
@@ -307,12 +313,26 @@ void eqnsys<nr_type_t>::solve_lu (void) {
   }
 
  noupdate:
+  // finally solve the equation system
+  solve_lu_subst_crout ();
+#if LU_FAILURE
+ fail:
+#endif
+}
+
+/* The function is used in order to run the forward and backward
+   substitutions using the LU decomposed matrix (Crout's definition -
+   Uii are ones).  */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_lu_subst_crout (void) {
+  nr_type_t f;
+  int i, c, N = A->getCols ();
+  tvector<nr_type_t> Y (N);
+
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
     f = B->get (change[i - 1]);
-    for (c = 1; c <= i - 1; c++)
-      f -= A->get (i, c) * Y.get (c);
-
+    for (c = 1; c <= i - 1; c++) f -= A->get (i, c) * Y.get (c);
     // check for possible division by zero
     if (A->get (i, i) == 0) {
 #if LU_FAILURE
@@ -325,7 +345,6 @@ void eqnsys<nr_type_t>::solve_lu (void) {
       VIRTUAL_RES ("forward substitution failed in LU decomposition", i);
 #endif
     }
-
     f /= A->get (i, i);
     Y.set (i, f);
   }
@@ -333,12 +352,52 @@ void eqnsys<nr_type_t>::solve_lu (void) {
   // backward substitution in order to solve UX = Y
   for (i = N; i > 0; i--) {
     f = Y.get (i);
-    for (c = i + 1; c <= N; c++)
-      f -= A->get (i, c) * X->get (c);
-    // remember that the Uii diagonal are ones only
+    for (c = i + 1; c <= N; c++) f -= A->get (i, c) * X->get (c);
+    // remember that the Uii diagonal are ones only in Crout's definition
     X->set (i, f);
   }
+#if LU_FAILURE
+ fail:
+#endif
+}
 
+/* The function is used in order to run the forward and backward
+   substitutions using the LU decomposed matrix (Doolittle's
+   definition - Lii are ones).  This function is here because of
+   transposed LU matrices as used in the AC noise analysis. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_lu_subst_doolittle (void) {
+  nr_type_t f;
+  int i, c, N = A->getCols ();
+  tvector<nr_type_t> Y (N);
+
+  // forward substitution in order to solve LY = B
+  for (i = 1; i <= N; i++) {
+    f = B->get (change[i - 1]);
+    for (c = 1; c <= i - 1; c++) f -= A->get (i, c) * Y.get (c);
+    // remember that the Lii diagonal are ones only in Doolittle's definition
+    Y.set (i, f);
+  }
+   
+  // backward substitution in order to solve UX = Y
+  for (i = N; i > 0; i--) {
+    f = Y.get (i);
+    for (c = i + 1; c <= N; c++) f -= A->get (i, c) * X->get (c);
+    // check for possible division by zero
+    if (A->get (i, i) == 0) {
+#if LU_FAILURE
+      qucs::exception * e = new qucs::exception (EXCEPTION_WRONG_VOLTAGE);
+      e->setText ("backward substitution failed in LU decomposition");
+      e->setData (i);
+      throw_exception (e);
+      goto fail;
+#else /* insert virtual resistance */
+      VIRTUAL_RES ("backward substitution failed in LU decomposition", i);
+#endif
+    }
+    f /= A->get (i, i);
+    X->set (i, f);
+  }
 #if LU_FAILURE
  fail:
 #endif
