@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "main.h"
 #include "qucsview.h"
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
@@ -29,12 +30,11 @@
 #include <stdlib.h>
 
 
-QucsView::QucsView(QWidget *parent) : QScrollView(parent)
+QucsView::QucsView(tQucsSettings *ps, QWidget *parent) : QScrollView(parent)
 {
   setVScrollBarMode(QScrollView::AlwaysOn);
   setHScrollBarMode(QScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(QColor(255,250,225));
-  resizeContents(800,800);
+  viewport()->setPaletteBackgroundColor(ps->BGColor);
   viewport()->setMouseTracking(true);
 
   MouseMoveAction = &QucsView::MouseDoNothing;
@@ -134,7 +134,8 @@ bool QucsView::pasteElements()
 
 
 // -----------------------------------------------------------
-// Enlarge the viewport area if the coordinates x1-x2/y1-y2 exceeds the visible area.
+// Enlarge the viewport area if the coordinates x1-x2/y1-y2 exceed the
+// visible area.
 void QucsView::enlargeView(int x1, int y1, int x2, int y2)
 {
   int dx=0, dy=0;
@@ -230,6 +231,49 @@ void QucsView::editLabel(WireLabel *pl)
   viewport()->repaint();
   drawn = false;
   Docs.current()->setChanged(true);
+}
+
+// -----------------------------------------------------------
+// Reinserts all elements (moved by the user) back into the schematic.
+void QucsView::endElementMoving()
+{
+  Element *pe;
+  QucsDoc *d = Docs.current();
+
+  for(pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
+    pe->isSelected = false;  // deselect first (maybe afterwards pe == NULL)
+    switch(pe->Type) {
+      case isWire:
+	if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
+	d->insertWire((Wire*)pe);
+	break;
+      case isDiagram:
+	d->Diags.append((Diagram*)pe);
+	break;
+      case isPainting:
+	d->Paints.append((Painting*)pe);
+	break;
+      case isComponent:
+	d->insertRawComponent((Component*)pe);
+	break;
+      case isMovingLabel:
+	d->insertNodeLabel((WireLabel*)pe);
+	break;
+      case isMarker:
+	((Marker*)pe)->Diag->Markers.append((Marker*)pe);
+	break;
+      default: ;
+    }
+    d->setChanged(true);
+  }
+
+  movingElements.clear();
+
+  // enlarge viewarea if components lie outside the view
+  d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
+  enlargeView(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
+  viewport()->repaint();
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1071,7 +1115,8 @@ void QucsView::MPressWire2(QMouseEvent *Event)
     if(MAx1 == 0) { // which wire direction first ?
       if(MAx2 != MAx3) {
         if(d->insertWire(new Wire(MAx3, MAy2, MAx2, MAy2)) & 2) {
-          MouseMoveAction = &QucsView::MMoveWire1;  // if last port connected, then start a new wire
+	  // if last port is connected, then start a new wire
+          MouseMoveAction = &QucsView::MMoveWire1;
           MousePressAction = &QucsView::MPressWire1;
           MouseDoubleClickAction = &QucsView::MouseDoNothing;
         }
@@ -1079,7 +1124,8 @@ void QucsView::MPressWire2(QMouseEvent *Event)
       }
       else if(MAy2 != MAy3)
         if(d->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2)) & 2) {
-          MouseMoveAction = &QucsView::MMoveWire1;  // if last port connected, then start a new wire
+	  // if last port is connected, then start a new wire
+          MouseMoveAction = &QucsView::MMoveWire1;
           MousePressAction = &QucsView::MPressWire1;
           MouseDoubleClickAction = &QucsView::MouseDoNothing;
         }
@@ -1087,7 +1133,8 @@ void QucsView::MPressWire2(QMouseEvent *Event)
     else {
       if(MAy2 != MAy3) {
         if(d->insertWire(new Wire(MAx2, MAy3, MAx2, MAy2)) & 2) {
-          MouseMoveAction = &QucsView::MMoveWire1;  // if last port connected, then start a new wire
+	  // if last port is connected, then start a new wire
+          MouseMoveAction = &QucsView::MMoveWire1;
           MousePressAction = &QucsView::MPressWire1;
           MouseDoubleClickAction = &QucsView::MouseDoNothing;
         }
@@ -1095,7 +1142,8 @@ void QucsView::MPressWire2(QMouseEvent *Event)
       }
       else if(MAx2 != MAx3)
         if(d->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3)) & 2) {
-          MouseMoveAction = &QucsView::MMoveWire1;  // if last port connected, then start a new wire
+	  // if last port is connected, then start a new wire
+          MouseMoveAction = &QucsView::MMoveWire1;
           MousePressAction = &QucsView::MPressWire1;
           MouseDoubleClickAction = &QucsView::MouseDoNothing;
         }
@@ -1288,67 +1336,6 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
-
-  viewport()->repaint();
-  drawn = false;
-}
-
-// -----------------------------------------------------------
-void QucsView::endElementMoving()
-{
-  int x1, y1, x2, y2;
-  QucsDoc *d = Docs.current();
-
-  // insert all moved elements into document and enlarge viewarea
-  // if components lie outside the view
-  for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
-    switch(pe->Type) {
-      case isWire:
-	if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
-	d->insertWire((Wire*)pe);
-	if (d->Wires.containsRef ((Wire*)pe))
-	  enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
-	else pe = NULL;
-	break;
-      case isDiagram:
-	d->Diags.append((Diagram*)pe);
-	enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
-//	d->setChanged(true);
-	break;
-      case isPainting:
-	d->Paints.append((Painting*)pe);
-	((Painting*)pe)->Bounding(x1,y1,x2,y2);
-	enlargeView(x1, y1, x2, y2);
-//	d->setChanged(true);
-	break;
-      case isComponent:
-	d->insertRawComponent((Component*)pe);
-	((Component*)pe)->entireBounds(x1,y1,x2,y2);
-	enlargeView(x1, y1, x2, y2);
-	break;
-      case isMovingLabel:
-	d->insertNodeLabel((WireLabel*)pe);
-	enlargeView(pe->x1, pe->y1-pe->y2, pe->x1+pe->x2, pe->y1);
-//	d->setChanged(true);
-	break;
-      case isMarker:
-	((Marker*)pe)->Diag->Markers.append((Marker*)pe);
-	((Marker*)pe)->Bounding(x1,y1,x2,y2);
-	enlargeView(x1, y1, x2, y2);
-//	d->setChanged(true);
-	break;
-      case isHWireLabel:
-      case isVWireLabel:
-      case isNodeLabel:
-	enlargeView(pe->x1, pe->y1-pe->y2, pe->x1+pe->x2, pe->y1);
-	break;
-      default: ;
-    }
-    d->setChanged(true);
-    if (pe) pe->isSelected = false;
-  }
-
-  movingElements.clear();
 
   viewport()->repaint();
   drawn = false;

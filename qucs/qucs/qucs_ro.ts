@@ -1121,6 +1121,18 @@ Wrong &apos;component&apos; line format!</source>
         <source>Too few independent data &quot;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ideal ac current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save settings !</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -1137,10 +1149,6 @@ Wrong &apos;component&apos; line format!</source>
     <name>QucsApp</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot save settings !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1800,6 +1808,10 @@ Go on ?</source>
         <source>filled Rectangle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ac Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>
@@ -1909,14 +1921,6 @@ Saves all open documents</source>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2643,6 +2647,63 @@ Qt universal circuit simulator
     <message>
         <source>French by Eric Marzolf
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Application Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Settings
+
+Sets properties of the application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsSettingsDialog</name>
+    <message>
+        <source>Edit Qucs Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document Background Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Design</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Values</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

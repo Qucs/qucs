@@ -25,11 +25,12 @@
 noinst_LIBRARIES = libdialogs.a
 
 MOCHEADERS = fileshowdialog.h helpdialog.h messagebox.h settingsdialog.h \
-     simmessage.h
+     simmessage.h qucssettingsdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdialogs_a_SOURCES = fileshowdialog.cpp helpdialog.cpp messagebox.cpp \
-     settingsdialog.cpp newprojdialog.cpp simmessage.cpp $(MOCFILES)
+     settingsdialog.cpp newprojdialog.cpp simmessage.cpp \
+     qucssettingsdialog.cpp $(MOCFILES)
 
 noinst_HEADERS = newprojdialog.h $(MOCHEADERS)
 

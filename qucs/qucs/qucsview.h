@@ -36,6 +36,7 @@
 #include "components/components.h"
 #include "wire.h"
 #include "qucsdoc.h"
+#include "main.h"
 
 
 
@@ -49,7 +50,7 @@ class QucsView : public QScrollView
   Q_OBJECT
 
 public:
-  QucsView(QWidget *parent=0);
+  QucsView(tQucsSettings *ps, QWidget *parent=0);
   ~QucsView();
 
   double Zoom(double s);
@@ -63,7 +64,7 @@ public:
   Diagram   *selDiag;   // diagram selected in IconView
   Painting  *selPaint;  // painting selected in IconView
 
-  bool    drawn;   // indicates whether the scheme component was drawn the last time
+  bool    drawn;  // indicates whether the scheme element was drawn last time
   QString ProjName;
 
   QPtrList<Element> movingElements;

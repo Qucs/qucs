@@ -1,4 +1,4 @@
--- 
+--
 -- NEWS
 -- 
 -- Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
@@ -33,3 +33,14 @@ Version 0.0.2
 
  * translations into german
  * modified build system, no more kdevelop
+ * a (very modest) help system
+ * deleting and rename of documents
+ * some new components and paintings
+ * runs more stable
+ * mouse cursor symbols show active action
+ * document area more flexible for resize and zoom
+ * equation support
+ * strongly improved handling with wire labels
+ * diagrams more beautiful
+ * diagrams can show independent and more-dimensional graphs
+ * markers can be set on graphs
