@@ -108,7 +108,8 @@ AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  src/Makefile
                  src/components/Makefile
-                 src/components/microstrip/Makefile])
+                 src/components/microstrip/Makefile
+                 src/components/devices/Makefile])
 AC_OUTPUT
 
 # Print results.

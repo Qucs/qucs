@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.8 2004/06/05 12:20:38 ela Exp $
+ * $Id: component.h,v 1.9 2004/06/19 07:34:55 ela Exp $
  *
  */
 
@@ -61,8 +61,8 @@
 #include "tline.h"
 #include "iprobe.h"
 
-#include "diode.h"
-#include "jfet.h"
+#include "devices/diode.h"
+#include "devices/jfet.h"
 
 #include "microstrip/substrate.h"
 #include "microstrip/msline.h"

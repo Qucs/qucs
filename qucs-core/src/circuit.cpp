@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.15 2004/06/09 23:55:41 ela Exp $
+ * $Id: circuit.cpp,v 1.16 2004/06/19 07:34:55 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@
 #include "node.h"
 #include "property.h"
 #include "circuit.h"
-#include "substrate.h"
+#include "microstrip/substrate.h"
 #include "operatingpoint.h"
 #include "component_id.h"
 

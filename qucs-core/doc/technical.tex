@@ -1159,8 +1159,9 @@ R_n = \frac{Z_0}{4\cdot k\cdot T_0}\cdot
 \begin{tabular}{ll}
 With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
      & \quad standard temperature $T_0 = 290$K\\
-\end{tabular} \\ \\
+\end{tabular}
 
+\addvspace{12pt}
 
 Calculating the noise wave correlation coefficients from the noise parameters
 also is straightforward:
@@ -1231,17 +1232,24 @@ operation:
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
 
 Many components do not produce any noise. Every element of their noise
-correlation matrix therefore equals exactly zero. Examples are lossless,
-passive components, i.e. capacitors, inductors, transformers, circulators,
-phase shifters. Furthermore ideal voltage and current sources (without internal
-resistance) as well as gyrators also don't produce any noise.\\
+correlation matrix therefore equals exactly zero. Examples are
+lossless, passive components, i.e. capacitors, inductors,
+transformers, circulators, phase shifters. Furthermore ideal voltage
+and current sources (without internal resistance) as well as gyrators
+also don't produce any noise.
 
-If one wants to calculate the noise wave correlation matrix of a component,
-the most universal method is to take noise voltages and noise currents and then
-derive the noise waves by the use of equation \ref{equ:waves}. However, this
-can be very difficulty.\\
-A passive, linear circuit produces only thermal noise and thus, its noise waves
-can be calculated with Bosma's theorem (assuming thermodynamic equilibrium):
+\addvspace{12pt}
+
+If one wants to calculate the noise wave correlation matrix of a
+component, the most universal method is to take noise voltages and
+noise currents and then derive the noise waves by the use of equation
+\ref{equ:waves}. However, this can be very difficulty.
+
+\addvspace{12pt}
+
+A passive, linear circuit produces only thermal noise and thus, its
+noise waves can be calculated with Bosma's theorem (assuming
+thermodynamic equilibrium):
 
 \begin{equation}
 (\underline{C}) = k\cdot T\cdot \left( (\underline{E}) - (\underline{S})\cdot(\underline{S})^{*T} \right)
@@ -3388,9 +3396,28 @@ g_{m} - Y_{GD} & Y_{GD} + Y_{DS} & -Y_{DS} - g_{m}\\
 
 with
 \begin{align}
-Y_{GD} &= g_{gd} + j\omega C_{gd}\\
-Y_{GS} &= g_{gs} + j\omega C_{gs}\\
+Y_{GD} &= g_{gd} + j\omega C_{GD}\\
+Y_{GS} &= g_{gs} + j\omega C_{GS}\\
 Y_{DS} &= g_{ds}
+\end{align}
+
+The junction capacitances are modeled with the following equations.
+
+\begin{align}
+C_{GD} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{gd}\cdot \left(1 - \dfrac{V_{GD}}{P_{b}}\right)^{-M} & \text{ for } V_{GD} \le F_{c}\cdot P_{b}\\
+\dfrac{C_{gd}}{\left(1 - F_{c}\right)^{M}}\cdot \left(1 + \dfrac{M\cdot \left(V_{GD} - F_{c}\cdot P_{b}\right)}{P_{b}\cdot \left(1 - F_{c}\right)}\right) & \text{ for } V_{GD} > F_{c}\cdot P_{b}
+\end{array}
+\end{cases}\\
+C_{GS} &= 
+\begin{cases}
+\begin{array}{ll}
+C_{gs}\cdot \left(1 - \dfrac{V_{GS}}{P_{b}}\right)^{-M} & \text{ for } V_{GS} \le F_{c}\cdot P_{b}\\
+\dfrac{C_{gs}}{\left(1 - F_{c}\right)^{M}}\cdot \left(1 + \dfrac{M\cdot \left(V_{GS} - F_{c}\cdot P_{b}\right)}{P_{b}\cdot \left(1 - F_{c}\right)}\right) & \text{ for } V_{GS} > F_{c}\cdot P_{b}
+\end{array}
+\end{cases}
 \end{align}
 
 \chapter{Microstrip components}

@@ -1,3 +1,8 @@
+2004-06-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{Junction FET}): Documented modelling
+	the junction capacitances of JFET diodes.
+
 2004-06-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Junction FET}): Scribbled down 

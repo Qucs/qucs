@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.h,v 1.1 2004/06/05 12:20:38 ela Exp $
+ * $Id: jfet.h,v 1.1 2004/06/19 07:34:55 ela Exp $
  *
  */
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.h,v 1.7 2004/06/04 16:01:47 ela Exp $
+ * $Id: diode.h,v 1.1 2004/06/19 07:34:55 ela Exp $
  *
  */
 
@@ -35,13 +35,6 @@ class diode : public circuit
   void calcDC (void);
   void initDC (dcsolver *);
   void calcOperatingPoints (void);
-
-  static nr_double_t pnVoltage (nr_double_t, nr_double_t,
-				nr_double_t, nr_double_t);
-  static circuit * splitResistance (circuit *, circuit *, net *,
-				    char *, char *, int);
-  static void disableResistance (circuit *, circuit *, net *, int);
-  static void applyResistance (circuit *, nr_double_t);
 
  private:
   nr_double_t Uprev;

@@ -29,11 +29,12 @@ SUBDIRS = components
 
 bin_PROGRAMS = qucsator
 
-INCLUDES = -I$(top_srcdir)/src/components \
-	-I$(top_srcdir)/src/components/microstrip
+INCLUDES = -I$(top_srcdir)/src/components
 
-qucsator_LDADD = libqucsator.a components/libcomponent.a \
-	components/microstrip/libmicrostrip.a
+qucsator_LDADD = libqucsator.a \
+	components/libcomponent.a \
+	components/microstrip/libmicrostrip.a \
+	components/devices/libdevices.a
 
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
