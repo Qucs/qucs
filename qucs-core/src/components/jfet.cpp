@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.1 2004-06-05 12:20:38 ela Exp $
+ * $Id: jfet.cpp,v 1.2 2004-06-06 13:01:45 ela Exp $
  *
  */
 
@@ -87,14 +87,14 @@ void jfet::initDC (dcsolver * solver) {
 }
 
 void jfet::calcDC (void) {
-  nr_double_t Is  = getPropertyDouble ("Is");
-  nr_double_t n   = getPropertyDouble ("N");
-  nr_double_t Vt0 = getPropertyDouble ("Vt0");
-  nr_double_t l   = getPropertyDouble ("Lambda");
-  nr_double_t b   = getPropertyDouble ("Beta");
+  nr_double_t Is   = getPropertyDouble ("Is");
+  nr_double_t n    = getPropertyDouble ("N");
+  nr_double_t Vt0  = getPropertyDouble ("Vt0");
+  nr_double_t l    = getPropertyDouble ("Lambda");
+  nr_double_t beta = getPropertyDouble ("Beta");
 
-  nr_double_t Ugs, Ugd, Id, Ut, T, gm, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
-  nr_double_t Uds, ggs, Igs, ggd, Igd, Ig, Ugst, Ids, gds, Ugdt, gtiny;
+  nr_double_t Ugs, Ugd, Ut, T, gm, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
+  nr_double_t Uds, ggs, Igs, ggd, Igd, Ids, gds, gtiny;
 
   T = -K + 26.5;
   Ut = T * kB / Q;
@@ -119,71 +119,65 @@ void jfet::calcDC (void) {
   ggd = Is / Ut / n * exp (Ugd / Ut / n) + gtiny;
   Igd = Is * (exp (Ugd / Ut / n) - 1) + gtiny * Ugd;
 
-  Ig = Igs + Igd;
-
   if (Uds >= 0) {
-    Ugst = Ugs - Vt0;
+    nr_double_t Ugst = Ugs - Vt0;
+    // normal mode, cutoff region
     if (Ugst < 0) {
       Ids = 0;
       gm = 0;
       gds = 0;
     }
     else {
+      nr_double_t b = beta * (1 + l * Uds);
+      // normal mode, saturation region
       if (Ugst <= Uds) {
-	Ids = b * (1 + l * Uds) * pow (Ugst, 2);
-	gm = 2 * b * (1 + l * Uds) * Ugst;
-	gds = l * b * pow (Ugst, 2);
+	Ids = b * Ugst * Ugst;
+	gm  = b * 2 * Ugst;
+	gds = l * b * Ugst * Ugst;
       }
+      // normal mode, linear region
       else {
-	Ids = b * (1 + l * Uds) * Uds * (2 * Ugst - Uds);
-	gm = 2 * b * (1 + l * Uds) * Uds;
-	gds = 2 * b * (1 + l * Uds) * (Ugst - Uds) +
-	  l * b * Uds * (2 * Ugst - Uds);
+	Ids = b * Uds * (2 * Ugst - Uds);
+	gm  = b * 2 * Uds;
+	gds = b * 2 * (Ugst - Uds) + l * beta * Uds * (2 * Ugst - Uds);
       }
     }
   }
   else {
-    Ugdt = Ugd - Vt0;
+    nr_double_t Ugdt = Ugd - Vt0;
+    // inverse mode, cutoff region
     if (Ugdt < 0) {
       Ids = 0;
-      gm = 0;
+      gm  = 0;
       gds = 0;
     }
     else {
+      nr_double_t b = beta * (1 - l * Uds);
+      // inverse mode, saturation region
       if (Ugdt <= -Uds) {
-	Ids = - b * (1 + l * Uds) * pow (Ugdt, 2);
-	gm = - 2 * b * (1 + l * Uds) * Ugdt;
-	gds = l * b * pow (Ugdt, 2) - gm;
+	Ids = - b * Ugdt * Ugdt;
+	gm  = - b * 2 * Ugdt;
+	gds = beta * l * Ugdt * Ugdt + b * 2 * Ugdt;
       }
+      // inverse mode, linear region
       else {
-	Ids = b * (1 + l * Uds) * Uds * (2 * Ugdt + Uds);
-	gm = 2 * b * (1 + l * Uds) * Uds;
-	gds = 2 * b * (1 + l * Uds) * Ugdt +
-	  l * b * Uds * (2 * Ugdt + Uds);
+	Ids = b * Uds * (2 * Ugdt + Uds);
+	gm  = b * 2 * Uds;
+	gds = 2 * b * Ugdt - beta * l * Uds * (2 * Ugdt + Uds);
       }
     }
   }
 
-  Id = Ids - Igd;
-  
-  IeqG = -Igd - Igs;
-  IeqD = Igd + gm * Ugs + gds * Uds - Id;
-  IeqS = Igs - gm * Ugs - gds * Uds + Id;
+  IeqG = Igs - ggs * Ugs;
+  IeqD = Igd - ggd * Ugd;
+  IeqS = Ids - gm * Ugs - gds * Uds;
 
-  setI (1, IeqG);
-  setI (2, IeqD);
-  setI (3, IeqS);
-
-  IeqG = Igd - ggd * Ugd;
-  IeqD = (Ig - Igd) - ggs * Ugs;
-  IeqS = (Id + Igd) - gds * Uds - gm * Ugs;
-
-  setI (1, -IeqD - IeqG);
-  setI (2, -IeqS + IeqG);
-  setI (3, +IeqS + IeqD);
+  setI (1, -IeqG - IeqD);
+  setI (2, +IeqD - IeqS);
+  setI (3, +IeqG + IeqS);
 
   setY (1, 1, ggs + ggd); setY (1, 2, -ggd); setY (1, 3, -ggs);
-  setY (2, 1, -ggd + gm); setY (2, 2, +gds + ggd); setY (2, 3, -gm - gds);
+  setY (2, 1, -ggd + gm); setY (2, 2, gds + ggd); setY (2, 3, -gm - gds);
   setY (3, 1, -ggs - gm); setY (3, 2, -gds); setY (3, 3, ggs + gds + gm);
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.12 2004-06-04 16:01:47 ela Exp $
+ * $Id: diode.cpp,v 1.13 2004-06-06 13:01:45 ela Exp $
  *
  */
 
@@ -102,15 +102,14 @@ void diode::applyResistance (circuit * res, nr_double_t Rs) {
    internal: number of new internal node (the orignal external node) */
 circuit * diode::splitResistance (circuit * base, circuit * res, net * subnet,
 				  char * c, char * n, int internal) {
-  int external = (internal == 1) ? 2 : 1;
   if (res == NULL) {
     res = new circuit (2);
     res->setName (createInternal (c, base->getName ()));
-    res->setNode (external, base->getNode(internal)->getName ());
-    res->setNode (internal, createInternal (n, base->getName ()), 1);
+    res->setNode (1, base->getNode(internal)->getName ());
+    res->setNode (2, createInternal (n, base->getName ()), 1);
     subnet->insertCircuit (res);
   }
-  base->setNode (internal, res->getNode(internal)->getName (), 1);
+  base->setNode (internal, res->getNode(2)->getName (), 1);
   return res;
 }
 
@@ -119,10 +118,9 @@ circuit * diode::splitResistance (circuit * base, circuit * res, net * subnet,
    node. */
 void diode::disableResistance (circuit * base, circuit * res, net * subnet,
 			       int internal) {
-  int external = (internal == 1) ? 2 : 1;
   if (res != NULL) {
     subnet->removeCircuit (res);
-    base->setNode (internal, res->getNode(external)->getName (), 0);
+    base->setNode (internal, res->getNode(1)->getName (), 0);
   }
 }
 
