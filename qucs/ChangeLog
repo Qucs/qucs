@@ -1,3 +1,7 @@
+2005-02-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: LDFLAGS additions for FreeBSD users.
+
 2005-02-18  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
 
 	* configure.ac: Add another paths to look for Qt header/library in.
