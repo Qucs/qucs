@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.3 2004/04/19 18:42:21 ela Exp $
+ * $Id: complex.h,v 1.4 2004/04/25 16:26:04 margraf Exp $
  *
  */
 
@@ -59,6 +59,11 @@ class complex
   friend complex     pow (nr_double_t, const complex);
   friend complex     pow (const complex, const complex);
   friend nr_double_t abs (const complex);
+  friend complex     sin (const complex);
+  friend complex     cos (const complex);
+  friend complex     tan (const complex);
+  friend complex     ztor (const complex z, nr_double_t zref = 50.0);
+  friend complex     rtoz (const complex r, nr_double_t zref = 50.0);
 
   // operator functions
   friend complex operator + (const complex, const complex);

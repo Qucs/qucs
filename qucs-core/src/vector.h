@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.4 2004/04/19 18:42:22 ela Exp $
+ * $Id: vector.h,v 1.5 2004/04/25 16:26:04 margraf Exp $
  *
  */
 
@@ -60,12 +60,17 @@ class vector : public object
   friend vector * pow   (vector &, const complex);
   friend vector * pow   (const complex, vector &);
   friend vector * pow   (vector &, vector &);
+  friend vector * ztor  (vector & v, nr_double_t zref = 50.0);
+  friend vector * rtoz  (vector & v, nr_double_t zref = 50.0);
 
   // overloaded math functions
   friend vector * abs   (vector &);
   friend vector * log10 (vector &);
   friend vector * exp   (vector &);
   friend vector * sqrt  (vector &);
+  friend vector * sin   (vector &);
+  friend vector * cos   (vector &);
+  friend vector * tan   (vector &);
 
   // operator functions
   friend vector * operator + (vector &, vector &);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.5 2004/04/19 18:42:22 ela Exp $
+ * $Id: vector.cpp,v 1.6 2004/04/25 16:26:04 margraf Exp $
  *
  */
 
@@ -209,6 +209,40 @@ vector * pow (vector & v1, vector & v2) {
     return result;
   }
   return &v1;
+}
+
+vector * sin (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (sin (v.get (i)), i);
+  return result;
+}
+
+vector * cos (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (cos (v.get (i)), i);
+  return result;
+}
+
+vector * tan (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++) result->set (tan (v.get (i)), i);
+  return result;
+}
+
+// converts impedance to reflexion coeffizient
+vector * ztor (vector & v, nr_double_t zref) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result->set (ztor (v.get (i), zref), i);
+  return result;
+}
+
+// converts reflexion coeffizient to impedance
+vector * rtoz (vector & v, nr_double_t zref) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize (); i++)
+    result->set (rtoz (v.get (i), zref), i);
+  return result;
 }
 
 vector& vector::operator=(const complex c) {
