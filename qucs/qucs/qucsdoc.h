@@ -59,6 +59,7 @@ public:
   Wire*      selectedWire(int x, int y);
   Painting*  selectedPainting(int x, int y);
   void       selectWireLine(Element *pe, Node *pn, bool ctrl);
+  Wire*      selectWireLabel(int x, int y);
   Element*   selectElement(int x, int y, bool flag);
   int        selectComponents(int x1, int y1, int x2, int y2, bool flag);
   void       deselectElements(Element *e);

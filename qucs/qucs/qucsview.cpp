@@ -309,7 +309,7 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
 
   MAx2 = int(Event->pos().x()/d->Scale) + d->ViewX1;
   MAy2 = int(Event->pos().y()/d->Scale) + d->ViewY1;
-  
+
   d->setOnGrid(MAx2, MAy2);
   MAx1 = MAx2 - MAx1;
   MAy1 = MAy2 - MAy1;
@@ -419,6 +419,30 @@ void QucsView::MMovePaste(QMouseEvent *Event)
   MouseReleaseAction = &QucsView::MReleasePaste;
 }
 
+// -----------------------------------------------------------
+// Moves the label of a wire.
+void QucsView::MMoveWireLabel(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  setPainter(&painter, d);
+
+  int dx=0, dy=0;
+  if(labeledWire->isHorizontal()) dx = labeledWire->delta;
+  else dx = labeledWire->delta;
+  if(drawn) {
+    painter.drawLine(labeledWire->x1+dx, labeledWire->y1+dy, MAx1, MAy1);   // erase old line
+    painter.drawRect(MAx1, MAy1, labeledWire->NameDX+3, -labeledWire->NameDY-3);   // erase old rectangle
+  }
+  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  d->setOnGrid(MAx1, MAy1);
+
+  painter.drawLine(labeledWire->x1+dx, labeledWire->y1+dy, MAx1, MAy1);   // paint new line
+  painter.drawRect(MAx1, MAy1, labeledWire->NameDX+3, -labeledWire->NameDY-3);   // paint new rectangle
+  drawn = true;
+}
+
 // *************************************************************************************
 // **********                                                                 **********
 // **********          Functions for serving mouse button clicking            **********
@@ -453,7 +477,7 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   QString Name("");
   Wire *pw2 = Docs.current()->getWireLabel(pw);   // is wire line already labeled ?
   if(pw2 != 0) Name = pw2->Name;
-  
+
   bool OK;
   Name = QInputDialog::getText(tr("Insert Nodename"), tr("Enter the label:"), QLineEdit::Normal,
                                        Name, &OK, this);
@@ -462,12 +486,14 @@ void QucsView::MPressLabel(QMouseEvent *Event)
     while(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'
     if(Name.isEmpty()) return;
 
-    if(pw2 != 0) pw2->Name = "";  // delete old name
-    pw->Name = Name;
-    pw->delta = x-pw->x1 + y-pw->y1;
-    pw->nx = x + 30;
-    pw->ny = y - 30;
-    enlargeView(pw->nx, pw->ny, pw->nx, pw->ny);
+    if(pw2 != 0) pw2->setName("");  // delete old name of wire line
+    if(pw->Name.isEmpty()) {
+      pw->delta = x-pw->x1 + y-pw->y1;
+      pw->nx = x + 30;
+      pw->ny = y - 30;
+    }
+    pw->setName(Name);
+    enlargeView(pw->nx, pw->ny, pw->nx+pw->NameDX+3, pw->ny-pw->NameDY-3);
     viewport()->repaint();
     Docs.current()->setChanged(true);
   }
@@ -486,6 +512,16 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   viewport()->repaint();
   if(Event->button() != Qt::LeftButton) return;
   if(focusElement == 0) {
+    Wire* pw = Docs.current()->selectWireLabel(MAx1, MAy1);    // pressed on a wire label ?
+    if(pw != 0) {
+      labeledWire = pw;
+      MouseReleaseAction = &QucsView::MReleaseWireLabel;
+      MouseMoveAction = &QucsView::MMoveWireLabel;
+      MousePressAction = &QucsView::MouseDoNothing;
+      MouseDoubleClickAction = &QucsView::MouseDoNothing;
+      return;
+    }
+
     MAx2 = 0;  // if not clicking on an element => open a rectangle
     MAy2 = 0;
     MouseReleaseAction = &QucsView::MReleaseSelect2;
@@ -494,7 +530,7 @@ void QucsView::MPressSelect(QMouseEvent *Event)
     MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
   else {  // element could be moved
-  
+
     if(focusElement->Type == isDiagram)   // resize diagram ?
       if(((Diagram*)focusElement)->ResizeTouched(MAx1, MAy1, MAx2, MAy2)) {
         if(((Diagram*)focusElement)->Name == "Polar") isMoveEqual = true;   // diagram must be square
@@ -507,7 +543,7 @@ void QucsView::MPressSelect(QMouseEvent *Event)
         MouseDoubleClickAction = &QucsView::MouseDoNothing;
         return;
       }
-  
+
     Docs.current()->setOnGrid(MAx1, MAy1);
     MouseMoveAction = &QucsView::MMoveMoving;
     MousePressAction = &QucsView::MouseDoNothing;
@@ -645,7 +681,7 @@ void QucsView::MPressComponent(QMouseEvent *Event)
 
     selComp->entireBounds(x1,y1,x2,y2);   // enlarge viewarea if component lies outside the view
     enlargeView(x1, y1, x2, y2);
-    
+
     viewport()->repaint();
     selComp = selComp->newOne(); // the component is used, so create a new one
     selComp->paintScheme(&painter);
@@ -997,7 +1033,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
     drawn = false;
     viewport()->repaint();
     break;
-    
+
   case Qt::RightButton :  // right button rotates the elements
     setPainter(&painter, d);
 
@@ -1038,6 +1074,24 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 
   default: ;    // avoids compiler warnings
   }
+}
+
+// -----------------------------------------------------------
+void QucsView::MReleaseWireLabel(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+  labeledWire->nx = MAx1;
+  labeledWire->ny = MAy1;    // set new position of wire label
+  drawn = false;
+  viewport()->repaint();
+
+  MouseMoveAction = &QucsView::MouseDoNothing;
+  MousePressAction = &QucsView::MPressSelect;
+  MouseReleaseAction = &QucsView::MReleaseSelect;
+  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+
+  Docs.current()->setChanged(true);
 }
 
 // *************************************************************************************

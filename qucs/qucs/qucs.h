@@ -61,11 +61,15 @@ class QucsApp : public QMainWindow
     QucsApp();
     ~QucsApp();
 
+    bool loadSettings();   // loads the settings file and restores the settings
+    void saveSettings();   // saves the settings in the settings file
+
     void initActions();    // initializes all QActions of the application
     void initMenuBar();    // creates the menu_bar and inserts the menuitems
     void initToolBar();    // creates the toolbars
     void initStatusBar();  // setup the statusbar
     void initView();       // setup the mainview
+    void initCursorMenu();
 
     bool closeAllFiles();
     int  testFile(const QString& DocName);
@@ -112,6 +116,12 @@ class QucsApp : public QMainWindow
     void slotInsertPort(bool on);
     void slotSetWire(bool on);
 
+    // for menu that appears by right click in content ListView
+    void slotShowContentMenu(QListViewItem *item, const QPoint& point, int);
+    void slotCMenuOpen();
+    void slotCMenuRename();
+    void slotCMenuDelete();
+
 // ##########################################################################################
 //  private slots:
     void slotMenuOpenProject();
@@ -148,6 +158,7 @@ class QucsApp : public QMainWindow
 
     // menus contain the items of their menubar
     QPopupMenu *fileMenu, *editMenu, *insMenu, *projMenu, *simMenu, *viewMenu, *helpMenu;
+    QPopupMenu *ContentMenu;    // menu appearing by right mouse button on content listview
     
     QToolBar *fileToolbar, *editToolbar, *viewToolbar, *workToolbar;    // the toolbars
 

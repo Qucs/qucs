@@ -40,6 +40,7 @@
 #include <qdir.h>
 #include <qpainter.h>
 #include <qfiledialog.h>
+#include <qinputdialog.h>
 #include <qclipboard.h>
 
 #include <limits.h>
@@ -58,7 +59,10 @@
 QucsApp::QucsApp()
 {
   setCaption("Qucs " VERSION);
-  resize(600,400);
+
+  if(!loadSettings())
+    resize(600,400);
+
 
   ///////////////////////////////////////////////////////////////////
   // call inits to invoke all other construction parts
@@ -68,15 +72,16 @@ QucsApp::QucsApp()
   initStatusBar();
 
   initView();
+  initCursorMenu();
 
   viewToolBar->setOn(true);
   viewStatusBar->setOn(true);
 
-  
+
   // default settings of the printer
   Printer.setOrientation(QPrinter::Landscape);
   Printer.setColorMode(QPrinter::Color);
-  
+
 
   // switch on the 'select' action
   select->blockSignals(true);
@@ -89,6 +94,54 @@ QucsApp::QucsApp()
 
 QucsApp::~QucsApp()
 {
+}
+
+// #########################################################################################
+// Loads the settings file and restores the settings.
+bool QucsApp::loadSettings()
+{
+  QFile file(QDir::homeDirPath()+"/.qucs/qucs.ini");
+  if(!file.open(IO_ReadOnly)) return false;    // settings file does not exist
+
+  QString Line, Setting;
+  QTextStream stream(&file);
+
+  int  x, y;
+  bool ok;
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    Setting = Line.section('=',0,0);
+    Line    = Line.section('=',1,1);
+    if(Setting == "Position") { x = Line.section(",",0,0).toInt(&ok);
+                                y = Line.section(",",1,1).toInt(&ok);
+                                move(x,y); }
+    else if(Setting == "Size") { x = Line.section(",",0,0).toInt(&ok);
+                                 y = Line.section(",",1,1).toInt(&ok);
+                                 resize(x,y); }
+  }
+  file.close();
+//  resize(600,400);
+//  resize(maximumSize());
+  return true;
+}
+
+// #########################################################################################
+// Saves the settings in the settings file.
+void QucsApp::saveSettings()
+{
+  QFile file(QDir::homeDirPath()+"/.qucs/qucs.ini");
+  if(!file.open(IO_WriteOnly)) {    // settings file cannot be created
+    QMessageBox::warning(this, tr("Warning"), tr("Cannot save settings !"));
+    return;
+  }
+
+  QString Line;
+  QTextStream stream(&file);
+
+  stream << "Settings file, Qucs " VERSION "\n";
+  stream << "Position=" << x() << "," << y() << "\n";
+  stream << "Size=" << width() << "," << height() << "\n";
+  file.close();
 }
 
 // #########################################################################################
@@ -252,7 +305,7 @@ void QucsApp::initActions()
   connect(popH, SIGNAL(activated()), this, SLOT(slotPopHierarchy()));
   popH->setEnabled(false);  // only enabled if useful !!!!
 
-  editActivate = new QAction(tr("Deactivate/Activate"), QIconSet(QImage(BITMAPDIR "deactiv.png")), tr("Deactivate/Activate"), 0, this);
+  editActivate = new QAction(tr("Deactivate/Activate"), QIconSet(QImage(BITMAPDIR "deactiv.png")), tr("Deactivate/Activate"), QAccel::stringToKey(tr("Ctrl+D")), this);
   editActivate->setStatusTip(tr("Deactivate/Activate the selected item"));
   editActivate->setWhatsThis(tr("Deactivate/Activate\n\nDeactivate/Activate the selected item"));
   editActivate->setToggleAction(true);
@@ -276,7 +329,7 @@ void QucsApp::initActions()
   insPort->setToggleAction(true);
   connect(insPort, SIGNAL(toggled(bool)), this, SLOT(slotInsertPort(bool)));
 
-  insWire = new QAction(tr("Insert Wire"), QIconSet(QImage(BITMAPDIR "wire.png")), tr("Wire"), 0, this);
+  insWire = new QAction(tr("Insert Wire"), QIconSet(QImage(BITMAPDIR "wire.png")), tr("Wire"), QAccel::stringToKey(tr("Ctrl+E")), this);
   insWire->setStatusTip(tr("Inserts a wire"));
   insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
   insWire->setToggleAction(true);
@@ -288,7 +341,7 @@ void QucsApp::initActions()
   insLabel->setToggleAction(true);
   connect(insLabel, SIGNAL(toggled(bool)), this, SLOT(slotInsertLabel(bool)));
 
-  simulate = new QAction(tr("Simulate"), QIconSet(QImage(BITMAPDIR "gear.png")), tr("Simulate"), 0, this);
+  simulate = new QAction(tr("Simulate"), QIconSet(QImage(BITMAPDIR "gear.png")), tr("Simulate"), QAccel::stringToKey(tr("Ctrl+R")), this);
   simulate->setStatusTip(tr("Simulates the current schematic"));
   simulate->setWhatsThis(tr("Simulate\n\nSimulates the current schematic"));
   connect(simulate, SIGNAL(activated()), this, SLOT(slotSimulate()));
@@ -567,6 +620,104 @@ void QucsApp::initView()
 //  connect(view, SIGNAL(CompsSelected(bool)), this, SLOT(slotActivateCopy(bool)));
 }
 
+// ----------------------------------------------------------
+// Menu that appears if right mouse button is pressed on a file in the "Content" ListView.
+void QucsApp::initCursorMenu()
+{
+  ContentMenu = new QPopupMenu(Content);
+  ContentMenu->insertItem(tr("Open"),   this, SLOT(slotCMenuOpen()));
+  ContentMenu->insertItem(tr("Rename"), this, SLOT(slotCMenuRename()));
+  ContentMenu->insertItem(tr("Delete"), this, SLOT(slotCMenuDelete()));
+
+  connect(Content, SIGNAL(contextMenuRequested(QListViewItem*, const QPoint&, int)),
+             this, SLOT(slotShowContentMenu(QListViewItem*, const QPoint&, int)));
+}
+
+// ----------------------------------------------------------
+// Is called if right mouse button is pressed on a file in the "Content" ListView.
+// It shows a menu.
+void QucsApp::slotShowContentMenu(QListViewItem *item, const QPoint& point, int)
+{
+  if(item)
+    if(item->parent() != 0)   // no component, but item "schematic", ...
+      ContentMenu->popup(point);
+}
+
+// ----------------------------------------------------------
+// for menu that appears if right mouse button is pressed on a file in the "Content" ListView.
+void QucsApp::slotCMenuOpen()
+{
+  QListViewItem *i = Content->selectedItem();
+  if(i == 0) return;
+
+  slotOpenContent(i);
+}
+
+// ----------------------------------------------------------
+// for menu that appears if right mouse button is pressed on a file in the "Content" ListView.
+void QucsApp::slotCMenuRename()
+{
+  QListViewItem *i = Content->selectedItem();
+  if(i == 0) return;
+
+  QucsDoc *dc = view->Docs.current();
+  for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {  // search, if file is open
+    if(d->DocName == QDir::current().path()+"/"+i->text(0)) {
+      QMessageBox::critical(this, tr("Error"), tr("Cannot rename an open file!"));
+      view->Docs.findRef(dc);
+      return;
+    }
+  }
+  view->Docs.findRef(dc);
+
+  QString Name   = i->text(0);
+  QString Suffix = Name.right(4);    // remember suffix
+
+  bool ok;
+  QString s = QInputDialog::getText(tr("Rename file"), tr("Enter new name:"),
+                                    QLineEdit::Normal, Name.left(Name.length()-4), &ok, this);
+  if(!ok) return;
+  if(s.isEmpty()) return;
+
+  QDir file("");
+  if(!file.rename(Name, s+Suffix)) {
+    QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: ")+Name);
+    return;
+  }
+  i->setText(0, s+Suffix);
+}
+
+// ----------------------------------------------------------
+// for menu that appears if right mouse button is pressed on a file in the "Content" ListView.
+void QucsApp::slotCMenuDelete()
+{
+  QListViewItem *item = Content->selectedItem();
+  if(item == 0) return;
+
+  QucsDoc *dc = view->Docs.current();
+  for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {  // search, if file is open
+    if(d->DocName == QDir::current().path()+"/"+item->text(0)) {
+      QMessageBox::critical(this, tr("Error"), tr("Cannot delete an open file!"));
+      view->Docs.findRef(dc);
+      return;
+    }
+  }
+  view->Docs.findRef(dc);
+
+  int n = QMessageBox::warning(this, tr("Warning"), tr("This will delete the file permanently! Continue ?"),
+                               tr("No"), tr("Yes"));
+  if(n != 1) return;
+
+  if(!QFile::remove(item->text(0)))
+    QMessageBox::critical(this, tr("Error"), tr("Cannot delete schematic: ")+item->text(0));
+
+  if(ConSchematics == item->parent())
+    ConSchematics->takeItem(item);
+  else if(ConDisplays == item->parent())
+    ConDisplays->takeItem(item);
+  else
+    ConDatasets->takeItem(item);
+}
 
 // ----------------------------------------------------------
 // Checks situation and reads all existing Qucs projects
@@ -574,8 +725,10 @@ void QucsApp::readProjects()
 {
   QDir ProjDir;
   if(!ProjDir.cd(QDir::homeDirPath()+"/.qucs"))   // is work directory already existing ?
-    if(!ProjDir.mkdir(QDir::homeDirPath()+"/.qucs"))  // no, then create it
+    if(!ProjDir.mkdir(QDir::homeDirPath()+"/.qucs")) {  // no, then create it
       QMessageBox::warning(this, tr("Warning"), tr("Cannot create work directory !"));
+      return;
+    }
   ProjDir.setPath(QDir::homeDirPath()+"/.qucs");
   QDir::setCurrent(QDir::homeDirPath()+"/.qucs");
 
@@ -599,7 +752,7 @@ bool QucsApp::closeAllFiles()
   bool notForAll = true;
   MessageBox *m = new MessageBox(tr("Closing Qucs document"),
      tr("This document contains unsaved changes!\nDo you want to save the changes before closing?"),this);
-    
+
   // close all files and ask to save changed ones
   for(QucsDoc *ptr = view->Docs.first(); ptr != 0; ) {
     WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make next document the current
@@ -893,7 +1046,11 @@ void QucsApp::slotFileQuit()
                                     tr("Do you really want to quit?"),
                                     QMessageBox::Ok, QMessageBox::Cancel);
   if(exit == 1)
-    if(closeAllFiles())  qApp->quit();
+    if(closeAllFiles()) {
+      saveSettings();
+      qApp->quit();
+    }
+
 
   statusBar()->message(tr("Ready."));
 }
@@ -903,7 +1060,10 @@ void QucsApp::slotFileQuit()
 void QucsApp::closeEvent(QCloseEvent* Event)
 {
   Event->ignore();
-  if(closeAllFiles())  qApp->quit();
+  if(closeAllFiles()) {
+    saveSettings();
+    qApp->quit();
+  }
 }
 
 // --------------------------------------------------------------------
@@ -1209,7 +1369,7 @@ void QucsApp::slotAfterSimulation(int Status)
     sim.ProgText->insert(tr("Aborted.\n"));
   }
 
-  
+
   QFile file("log.txt");    // save simulator messages
   if(file.open(IO_WriteOnly)) {
     int z;
@@ -1255,7 +1415,7 @@ void QucsApp::slotChangePage()
   
   QFileInfo Info;
   QucsDoc *d;
-  
+
   for(d = view->Docs.first(); d!=0; d = view->Docs.next()) {  // search, if page is already loaded
     Info.setFile(d->DocName);
     if(Info.fileName() == Name) break;
