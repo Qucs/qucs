@@ -1,3 +1,23 @@
+2004-07-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Changed the scanner appropriately for the
+	new parser functionality.
+
+	* parse_netlist.y: New application 'array' implemented which
+	can do indexing array-like structures.
+
+	* exception.h, exceptionstack.h: Put exception and 
+	exceptionstack classes into the qucs:: namespace to avoid name
+	clashes with standard C++ classes.  Changed all callers.
+
+	* evaluate.cpp: Implemented 'array' functionality for
+	indexing vectors, matrices and matrix vectors.
+
+	* equation.cpp: Implemented usage of matrices.  Also added
+	support for matrix, vector and matrix vector indices.
+	Fixed a bug when accessing results in argument lists (the
+	expression lists).  Exporting matrix vectors correctly now.
+
 2004-07-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* matvec.cpp: When get()'ting a vector from a matrix vector

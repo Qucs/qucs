@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exception.cpp,v 1.1 2004/07/03 10:56:40 ela Exp $
+ * $Id: exception.cpp,v 1.2 2004/07/05 21:41:46 ela Exp $
  *
  */
 
@@ -32,6 +32,8 @@
 #include <stdarg.h>
 
 #include "exception.h"
+
+using namespace qucs;
 
 // Constructor creates an instance of the exception class.
 exception::exception () {

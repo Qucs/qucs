@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exceptionstack.cpp,v 1.1 2004/07/03 10:56:40 ela Exp $
+ * $Id: exceptionstack.cpp,v 1.2 2004/07/05 21:41:46 ela Exp $
  *
  */
 
@@ -34,8 +34,10 @@
 #include "exception.h"
 #include "exceptionstack.h"
 
+using namespace qucs;
+
 // Global exception stack.
-exceptionstack estack;
+exceptionstack qucs::estack;
 
 // Constructor creates an instance of the exception stack class.
 exceptionstack::exceptionstack () {

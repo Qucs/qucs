@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.11 2004/07/04 11:16:16 ela Exp $
+ * $Id: evaluate.cpp,v 1.12 2004/07/05 21:41:46 ela Exp $
  *
  */
 
@@ -1363,6 +1363,40 @@ constant * evaluate::avg_v (constant * args) {
   return res;
 }
 
+// ***************** array indices *****************
+constant * evaluate::index_mv_2 (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  int r = (int) D (args->getResult (1));
+  int c = (int) D (args->getResult (2));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = mv->get (r, c);
+  return res;
+}
+
+constant * evaluate::index_mv_1 (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  int i = (int) D (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = & (mv->get (i));
+  return res;
+}
+
+constant * evaluate::index_v_1 (constant * args) {
+  vector * v = V (args->getResult (0));
+  int i = (int) D (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (v->get (i));
+  return res;
+}
+
+constant * evaluate::index_m_2 (constant * args) {
+  matrix * m = M (args->getResult (0));
+  int r = (int) D (args->getResult (1));
+  int c = (int) D (args->getResult (2));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (m->get (r, c));
+  return res;
+}
 
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
@@ -1591,6 +1625,15 @@ struct application_t eqn::applications[] = {
   { "avg", TAG_DOUBLE,  evaluate::avg_d, 1, { TAG_DOUBLE  } },
   { "avg", TAG_COMPLEX, evaluate::avg_c, 1, { TAG_COMPLEX } },
   { "avg", TAG_COMPLEX, evaluate::avg_v, 1, { TAG_VECTOR  } },
+
+  { "array", TAG_VECTOR, evaluate::index_mv_2, 3,
+    { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
+  { "array", TAG_MATRIX, evaluate::index_mv_1, 2,
+    { TAG_MATVEC, TAG_DOUBLE } },
+  { "array", TAG_COMPLEX, evaluate::index_v_1, 2,
+    { TAG_VECTOR, TAG_DOUBLE } },
+  { "array", TAG_COMPLEX, evaluate::index_m_2, 3,
+    { TAG_MATRIX, TAG_DOUBLE, TAG_DOUBLE } },
 
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };
