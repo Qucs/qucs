@@ -447,6 +447,10 @@
         <source>Rotation around z-Axis:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rotation around x-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>

@@ -22,16 +22,16 @@
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qvalidator.h>
+#include <qlineedit.h>
 
 
 ID_Dialog::ID_Dialog(QWidget *parent) : QDialog(parent)
 {
   setCaption(tr("Edit Subcircuit Properties"));
-//  QRegExp rx("^[A-Z]\\d{0,4}$");
-//  QValidator *Validator   // Qt bug; validators don't work with QLineEdit
-//		= new QRegExpValidator(rx, this);
+  rx = new QRegExp("[A-Za-z][A-Za-z0-9_]{1,9}");
+  Validator = new QRegExpValidator(*rx, this);
 
-  QVBoxLayout *v = new QVBoxLayout(this);
+  v = new QVBoxLayout(this);
   v->setSpacing(5);
   v->setMargin(5);
 
@@ -41,7 +41,7 @@ ID_Dialog::ID_Dialog(QWidget *parent) : QDialog(parent)
 
   new QLabel(tr("Prefix:"), h0);
   Prefix = new QLineEdit(h0);
-//  Prefix->setValidator(Validator);
+  Prefix->setValidator(Validator);
   Prefix->setText("SUB");
 
 
@@ -57,4 +57,7 @@ ID_Dialog::ID_Dialog(QWidget *parent) : QDialog(parent)
 
 ID_Dialog::~ID_Dialog()
 {
+  delete v;
+  delete rx;
+  delete Validator;
 }

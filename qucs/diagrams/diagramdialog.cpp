@@ -37,6 +37,7 @@
 #include <qcolordialog.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
+#include <qslider.h>
 
 
 // standard colors: blue, red, magenta, green, cyan, yellow, black
@@ -81,8 +82,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 		      SLOT(slotResetToTake(const QString&)));
   QHBox *Box2 = new QHBox(InputGroup);
   Box2->setSpacing(5);
-  Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
-  Validator = new QRegExpValidator(Expr, this);
+  Validator = new QIntValidator(0, 360, this);
 
   if(Diag->Name == "Tab") {
     Label1 = new QLabel(tr("Number Notation: "), Box2);
@@ -96,6 +96,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Label2 = new QLabel(tr("Precision:"), Box2);
     Property2 = new QLineEdit(Box2);
     Property2->setValidator(Validator);
+    Property2->setMaxLength(2);
     Property2->setMaximumWidth(25);
     Property2->setText("3");
   }
@@ -125,6 +126,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2 = new QLineEdit(Box2);
     Property2->setValidator(Validator);
     Property2->setMaximumWidth(25);
+    Property2->setMaxLength(2);
     Property2->setText("0");
 
     if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP")){
@@ -189,43 +191,52 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   t->addTab(Tab1, tr("Data"));
 
   // ...........................................................
+  int Row = 0;
   if(Diag->Name != "Tab") {
     QWidget *Tab2 = new QWidget(t);
-    QGridLayout *gp = new QGridLayout(Tab2,12,2,5,5);
+    QGridLayout *gp = new QGridLayout(Tab2,12,3,5,5);
 
-    gp->addWidget(new QLabel(tr("x-Axis Label:"), Tab2), 0,0);
+    gp->addMultiCellWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row,Row,0,0);
     xLabel = new QLineEdit(Tab2);
-    gp->addWidget(xLabel,0,1);
+    gp->addMultiCellWidget(xLabel, Row,Row,1,2);
+    Row++;
 
-    gp->addWidget(new QLabel(tr("left y-Axis Label:"), Tab2), 1,0);
+    gp->addMultiCellWidget(
+		new QLabel(tr("left y-Axis Label:"), Tab2), Row,Row,0,0);
     ylLabel = new QLineEdit(Tab2);
-    gp->addWidget(ylLabel,1,1);
+    gp->addMultiCellWidget(ylLabel, Row,Row,1,2);
+    Row++;
 
-    if(Diag->Name == "Rect") {
-      gp->addWidget(new QLabel(tr("right y-Axis Label:"), Tab2), 2,0);
+    if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
+      gp->addMultiCellWidget(
+		new QLabel(tr("right y-Axis Label:"), Tab2), Row,Row,0,0);
       yrLabel = new QLineEdit(Tab2);
-      gp->addWidget(yrLabel,2,1);
+      gp->addMultiCellWidget(yrLabel, Row,Row,1,2);
+      Row++;
     }
 
     GridOn = new QCheckBox(tr("show Grid"), Tab2);
     connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
-    gp->addMultiCellWidget(GridOn,3,3,0,1);
+    gp->addMultiCellWidget(GridOn, Row,Row,0,2);
+    Row++;
 
     GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
-    gp->addWidget(GridLabel1, 4,0);
+    gp->addMultiCellWidget(GridLabel1, Row,Row,0,0);
     GridColorButt = new QPushButton("        ",Tab2);
     connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
-    gp->addWidget(GridColorButt, 4,1);
+    gp->addMultiCellWidget(GridColorButt, Row,Row,1,2);
+    Row++;
 
     GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
-    gp->addWidget(GridLabel2, 5,0);
+    gp->addMultiCellWidget(GridLabel2, Row,Row,0,0);
     GridStyleBox = new QComboBox(Tab2);
     GridStyleBox->insertItem(tr("solid line"));
     GridStyleBox->insertItem(tr("dash line"));
     GridStyleBox->insertItem(tr("dot line"));
     GridStyleBox->insertItem(tr("dash dot line"));
     GridStyleBox->insertItem(tr("dash dot dot line"));
-    gp->addWidget(GridStyleBox, 5,1);
+    gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
+    Row++;
 
     // ...........................................................
     // transfer the diagram properties to the dialog
@@ -239,13 +250,16 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
     if(Diag->Name == "Rect") {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogX,6,6,0,1);
+      gp->addMultiCellWidget(GridLogX, Row,Row,0,2);
+      Row++;
 
       GridLogY = new QCheckBox(tr("logarithmical left Y Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogY,7,7,0,1);
+      gp->addMultiCellWidget(GridLogY, Row,Row,0,2);
+      Row++;
 
       GridLogZ = new QCheckBox(tr("logarithmical right Y Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogZ,8,8,0,1);
+      gp->addMultiCellWidget(GridLogZ, Row,Row,0,2);
+      Row++;
 
       // ...........................................................
       // transfer the diagram properties to the dialog
@@ -257,14 +271,50 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       GridLogX = GridLogY = GridLogZ = 0;
 
       if(Diag->Name == "Rect3D") {
-        gp->addWidget(new QLabel(tr("Rotation around y-Axis:"), Tab2), 9,0);
-        rotationY = new QLineEdit(Tab2);
-        gp->addWidget(rotationY,9,1);
-        gp->addWidget(new QLabel(tr("Rotation around z-Axis:"), Tab2), 10,0);
-        rotationZ = new QLineEdit(Tab2);
-        gp->addWidget(rotationZ,10,1);
+	gp->addWidget(new QLabel(tr("Rotation around x-Axis:"), Tab2), Row,0);
+	SliderRotX = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotX,
+				 Qt::Horizontal, Tab2);
+	gp->addWidget(SliderRotX, Row,1);
+	connect(SliderRotX, SIGNAL(valueChanged(int)), SLOT(slotNewRotX(int)));
+	rotationX = new QLineEdit(Tab2);
+	rotationX->setValidator(Validator);
+	rotationX->setMaxLength(3);
+	rotationX->setMaximumWidth(40);
+	gp->addWidget(rotationX, Row,2);
+	connect(rotationX, SIGNAL(textChanged(const QString&)),
+			   SLOT(slotEditRotX(const QString&)));
+	Row++;
+
+	gp->addWidget(new QLabel(tr("Rotation around y-Axis:"), Tab2), Row,0);
+	SliderRotY = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotY,
+				 Qt::Horizontal, Tab2);
+	gp->addWidget(SliderRotY, Row,1);
+	connect(SliderRotY, SIGNAL(valueChanged(int)), SLOT(slotNewRotY(int)));
+	rotationY = new QLineEdit(Tab2);
+	rotationY->setValidator(Validator);
+	rotationY->setMaxLength(3);
+	rotationY->setMaximumWidth(40);
+	gp->addWidget(rotationY, Row,2);
+	connect(rotationY, SIGNAL(textChanged(const QString&)),
+			   SLOT(slotEditRotY(const QString&)));
+	Row++;
+
+	gp->addWidget(new QLabel(tr("Rotation around z-Axis:"), Tab2), Row,0);
+	SliderRotZ = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotZ,
+				 Qt::Horizontal, Tab2);
+	gp->addWidget(SliderRotZ, Row,1);
+	connect(SliderRotZ, SIGNAL(valueChanged(int)), SLOT(slotNewRotZ(int)));
+	rotationZ = new QLineEdit(Tab2);
+	rotationZ->setValidator(Validator);
+	rotationZ->setMaxLength(3);
+	rotationZ->setMaximumWidth(40);
+	gp->addWidget(rotationZ, Row,2);
+	connect(rotationZ, SIGNAL(textChanged(const QString&)),
+			   SLOT(slotEditRotZ(const QString&)));
+	Row++;
 
         // transfer the diagram properties to the dialog
+        rotationX->setText(QString::number(((Rect3DDiagram*)Diag)->rotX));
         rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
         rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
       }
@@ -391,7 +441,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
        (Diag->Name == "Polar")) {
        axisZ->setEnabled(false);
     }
-    if(Diag->Name != "Rect") {
+    if(Diag->Name.left(4) != "Rect") {   // cartesian 2D and 3D
       axisX->setEnabled(false);
       startY->setEnabled(false);
       startZ->setEnabled(false);
@@ -517,6 +567,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
       }
+      else g->yAxisNo = 1;   // for Rect3D
 
       Label3->setEnabled(true);
       ColorButt->setEnabled(true);
@@ -627,6 +678,7 @@ void DiagramDialog::slotNewGraph()
     g->Thick = Property2->text().toInt();
     g->Style = PropertyBox->currentItem();
     if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
+    else  g->yAxisNo = 1;   // for "Rect3D"
   }
   else {
     g->Precision = Property2->text().toInt();
@@ -678,7 +730,7 @@ void DiagramDialog::slotApply()
       Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentItem()+1));
       changed = true;
     }
-    if(Diag->Name == "Rect") {
+    if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
       if(Diag->zAxis.Label.isEmpty())
         Diag->zAxis.Label = ""; // can be not 0 and empty!
       if(yrLabel->text().isEmpty()) yrLabel->setText("");
@@ -686,7 +738,9 @@ void DiagramDialog::slotApply()
         Diag->zAxis.Label = yrLabel->text();
         changed = true;
       }
+    }
 
+    if(Diag->Name == "Rect") {
       if(Diag->xAxis.log != GridLogX->isChecked()) {
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
@@ -759,17 +813,24 @@ void DiagramDialog::slotApply()
       changed = true;
     }
 
-    // Rect3D only
-    if(rotationY) {
-      if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toDouble()) {
-        ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toDouble();
-        changed = true;
+    if(Diag->Name == "Rect3D") {
+      if(rotationX) {
+        if(((Rect3DDiagram*)Diag)->rotX != rotationX->text().toInt()) {
+          ((Rect3DDiagram*)Diag)->rotX = rotationX->text().toInt();
+          changed = true;
+        }
       }
-    }
-    if(rotationZ) {
-      if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toDouble()) {
-        ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toDouble();
-        changed = true;
+      if(rotationY) {
+        if(((Rect3DDiagram*)Diag)->rotY != rotationY->text().toInt()) {
+          ((Rect3DDiagram*)Diag)->rotY = rotationY->text().toInt();
+          changed = true;
+        }
+      }
+      if(rotationZ) {
+        if(((Rect3DDiagram*)Diag)->rotZ != rotationZ->text().toInt()) {
+          ((Rect3DDiagram*)Diag)->rotZ = rotationZ->text().toInt();
+          changed = true;
+        }
       }
     }
   }   // of "if(Diag->Name != "Tab")"
@@ -983,4 +1044,46 @@ void DiagramDialog::slotChangeTab(QWidget*)
     if(GridLogZ->isChecked())  stepZ->setEnabled(false);
     else  if(manualZ->isChecked())  stepZ->setEnabled(true);
   }
+}
+
+// --------------------------------------------------------------------------
+// Is called when the slider for rotation angle is changed.
+void DiagramDialog::slotNewRotX(int Value)
+{
+  rotationX->setText(QString::number(Value));
+}
+
+// --------------------------------------------------------------------------
+// Is called when the slider for rotation angle is changed.
+void DiagramDialog::slotNewRotY(int Value)
+{
+  rotationY->setText(QString::number(Value));
+}
+
+// --------------------------------------------------------------------------
+// Is called when the slider for rotation angle is changed.
+void DiagramDialog::slotNewRotZ(int Value)
+{
+  rotationZ->setText(QString::number(Value));
+}
+
+// --------------------------------------------------------------------------
+// Is called when the number (text) for rotation angle is changed.
+void DiagramDialog::slotEditRotX(const QString& Text)
+{
+  SliderRotX->setValue(Text.toInt());
+}
+
+// --------------------------------------------------------------------------
+// Is called when the number (text) for rotation angle is changed.
+void DiagramDialog::slotEditRotY(const QString& Text)
+{
+  SliderRotY->setValue(Text.toInt());
+}
+
+// --------------------------------------------------------------------------
+// Is called when the number (text) for rotation angle is changed.
+void DiagramDialog::slotEditRotZ(const QString& Text)
+{
+  SliderRotZ->setValue(Text.toInt());
 }

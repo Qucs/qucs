@@ -40,7 +40,7 @@ PSDiagram::~PSDiagram()
 }
 
 // ------------------------------------------------------------
-void PSDiagram::calcCoordinate(double* &, double* &yD,
+void PSDiagram::calcCoordinate(double* &, double* &yD, double* &,
 			       int *px, int *py, Axis *pa)
 {
   double yr = *(yD++);
