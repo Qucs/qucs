@@ -27,13 +27,13 @@
 
 class SmithDiagram : public Diagram  {
 public: 
-	SmithDiagram(int _cx=0, int _cy=0);
-	~SmithDiagram();
+  SmithDiagram(int _cx=0, int _cy=0);
+  ~SmithDiagram();
 
 
-  virtual SmithDiagram* newOne();
-  virtual void calcData(Graph *g);
-  virtual void calcDiagram();
+  SmithDiagram* newOne();
+  void   calcData(Graph *g);
+  void   calcDiagram();
 };
 
 #endif

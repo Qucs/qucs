@@ -20,6 +20,7 @@
 
 #include "element.h"
 #include "components/component.h"    // because of struct Port
+#include "wirelabel.h"
 
 #include <qpainter.h>
 #include <qstring.h>
@@ -31,18 +32,17 @@
 
 
 class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-  virtual ~Wire();
+public:
+  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
+  ~Wire();
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
-  void    setName(const QString& Name_);
+  void paintScheme(QPainter *p);
+  void setCenter(int x, int y, bool relative=false);
+  bool getSelected(int x_, int y_);
+  void setName(const QString& Name_, int delta_=0, int x_=0, int y_=0);
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     NameDX, NameDY;  // size of Name string on screen
-  int     nx, ny, delta;   // position of the nodename label
+  Node      *Port1, *Port2;
+  WireLabel *Label;
 
   void    paint(QPainter *p);
   void    rotate();

@@ -25,7 +25,7 @@
 
 
 LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *name)
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name)
 {
   setCaption(_Caption);
 
@@ -36,6 +36,19 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   QHBox *h1 = new QHBox(this);
   h1->setSpacing(5);
   v->addWidget(h1);
+
+  QHBox *h2 = new QHBox(this);
+  h2->setSpacing(5);
+  v->addWidget(h2);
+
+  QHBox *h3 = new QHBox(this);
+  h3->setSpacing(5);
+  v->addWidget(h3);
+
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);   // must be first to get RETURN pressed event
+  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
+  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   new QLabel(tr("Line color: "), h1);
   ColorButt = new QPushButton("        ",h1);
@@ -51,10 +64,6 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   LineWidth->setText("0");
 
 
-  QHBox *h2 = new QHBox(this);
-  h2->setSpacing(5);
-  v->addWidget(h2);
-
   new QLabel(tr("Line Style: "), h2);
   StyleBox = new QComboBox(h2);
   StyleBox->insertItem(tr("solid line"));
@@ -64,15 +73,6 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   StyleBox->insertItem(tr("dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
-
-  QHBox *h3 = new QHBox(this);
-  h3->setSpacing(5);
-  v->addWidget(h3);
-
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
-  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
-  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   ButtOK->setFocus();
 }

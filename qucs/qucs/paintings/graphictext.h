@@ -26,26 +26,26 @@
 
 class GraphicText : public Painting  {
 public: 
-	GraphicText();
-	~GraphicText();
+  GraphicText();
+  ~GraphicText();
 
-  virtual void paintScheme(QPainter*);
-  virtual void getCenter(int& x, int &y);
-  virtual void setCenter(int x, int y, bool relative=false);
+  void paintScheme(QPainter*);
+  void getCenter(int& x, int &y);
+  void setCenter(int x, int y, bool relative=false);
 
-  virtual GraphicText* newOne();
-  virtual bool load(const QString& s);
-  virtual QString save();
-  virtual void paint(QPainter *p);
-  virtual void MouseMoving(int x, int y, int, int, QPainter *p, bool drawn);
-  virtual bool MousePressing();
-  virtual bool getSelected(int x, int y);
-  virtual void Bounding(int&, int&, int&, int&);
+  GraphicText* newOne();
+  bool load(const QString& s);
+  QString save();
+  void paint(QPainter *p);
+  void MouseMoving(int x, int y, int, int, QPainter *p, bool drawn);
+  bool MousePressing();
+  bool getSelected(int x, int y);
+  void Bounding(int&, int&, int&, int&);
 
-  virtual void rotate();
-  virtual void mirrorX();
-  virtual void mirrorY();
-  virtual bool Dialog();
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
 
   QColor   Color;
   int      Size;

@@ -25,7 +25,7 @@
 
 
 ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name)
 {
   setCaption(tr("Edit Arrow Properties"));
   Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
@@ -56,6 +56,20 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   h1->setSpacing(5);
   v->addWidget(h1);
 
+  QHBox *h2 = new QHBox(this);
+  h2->setSpacing(5);
+  v->addWidget(h2);
+
+  QHBox *h3 = new QHBox(this);
+  h3->setSpacing(5);
+  v->addWidget(h3);
+
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);   // must be first button => press RETURN
+  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
+  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
+
+
   new QLabel(tr("Line color: "), h1);
   ColorButt = new QPushButton("        ",h1);
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
@@ -68,10 +82,6 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   LineWidth->setText("0");
 
 
-  QHBox *h2 = new QHBox(this);
-  h2->setSpacing(5);
-  v->addWidget(h2);
-
   new QLabel(tr("Line style: "), h2);
   StyleBox = new QComboBox(h2);
   StyleBox->insertItem(tr("solid line"));
@@ -81,15 +91,6 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   StyleBox->insertItem(tr("dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
-
-  QHBox *h3 = new QHBox(this);
-  h3->setSpacing(5);
-  v->addWidget(h3);
-
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
-  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
-  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   ButtOK->setFocus();
 }

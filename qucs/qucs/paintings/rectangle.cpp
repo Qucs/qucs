@@ -226,7 +226,10 @@ bool Rectangle::Dialog()
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());
 
-  if(d->exec() == QDialog::Rejected) return false;
+  if(d->exec() == QDialog::Rejected) {
+    delete d;
+    return false;
+  }
 
   if(Pen.color() != d->ColorButt->paletteBackgroundColor()) {
     Pen.setColor(d->ColorButt->paletteBackgroundColor());
@@ -241,5 +244,6 @@ bool Rectangle::Dialog()
     changed = true;
   }
 
+  delete d;
   return changed;
 }

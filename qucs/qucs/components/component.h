@@ -33,51 +33,18 @@ class QString;
   *@author Michael Margraf
   */
 
-struct Line {
-  Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
-       : x1(_x1), y1(_y1), x2(_x2), y2(_y2), style(_style) {};
-  int   x1, y1, x2, y2;
-  QPen  style;
-};
-
-struct Arc {
-  Arc(int _x, int _y, int _w, int _h, int _angle, int _arclen, QPen _style)
-       : x(_x), y(_y), w(_w), h(_h), angle(_angle), arclen(_arclen), style(_style) {};
-  int   x, y, w, h, angle, arclen;
-  QPen  style;
-};
-
-struct Port {
-  Port() {};
-  Port(int _x, int _y) : x(_x), y(_y) {};
-  int   x, y;
-  Node *Connection;
-};
-  
-struct Text {
-  Text(int _x, int _y, const QString& _s) : x(_x), y(_y), s(_s) {};
-  int   x, y;
-  QString s;
-};
-
-struct Property {
-  Property(const QString& _Name="", const QString& _Value="", bool _display=false, const QString& Desc="")
-           : Name(_Name), Value(_Value), display(_display), Description(Desc) {};
-  QString Name, Value;
-  bool    display;   // show on schematic or not ?
-  QString Description;
-};
 
 class Component : public Element {
-public: 
-	Component();
-	virtual ~Component();
+public:
+  Component();
+  virtual ~Component();
 
   virtual Component* newOne();
   void    paintScheme(QPainter *p);
   void    setCenter(int x, int y, bool relative=false);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   void    entireBounds(int& _x1, int& _y1, int& _x2, int& _y2);
+  bool    getSelected(int x_, int y_);
   void    paint(QPainter *p);
   void    rotate();
   void    mirrorX();  // mirror about X axis
@@ -102,5 +69,9 @@ public:
   QString  Description;
   QString  Sign, Model, Name;
 };
+
+
+// prototype of independent function
+Component* getComponentFromName(QString& Line);
 
 #endif

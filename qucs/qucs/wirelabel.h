@@ -1,8 +1,8 @@
 /***************************************************************************
-                          polardiagram.h  -  description
+                          wirelabel.h  -  description
                              -------------------
-    begin                : Fri Oct 17 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Sun Feb 29 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
 
@@ -15,25 +15,43 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef POLARDIAGRAM_H
-#define POLARDIAGRAM_H
+#ifndef WIRELABEL_H
+#define WIRELABEL_H
 
-#include "diagram.h"
+#include "element.h"
 
+#include <qpainter.h>
+#include <qstring.h>
+#include <qptrlist.h>
+
+class Wire;
+class Node;
 
 /**
   *@author Michael Margraf
   */
 
-class PolarDiagram : public Diagram  {
-public: 
-  PolarDiagram(int _cx=0, int _cy=0);
-  ~PolarDiagram();
 
+class WireLabel : public Element {
+public:
+  WireLabel(const QString& _Name=0, int _cx=0, int _cy=0, int _x1=0, int _y1=0,
+            ElementType _Type=isNodeLabel);
+  ~WireLabel();
 
-  PolarDiagram* newOne();
-  void   calcDiagram();
-  void   calcData(Graph *g);
+  void paintScheme(QPainter *p);
+  void setCenter(int x, int y, bool relative=false);
+  bool getSelected(int, int);
+  void setName(const QString& Name_);
+
+  Wire    *pWire;
+  Node    *pNode;
+  QString Name;
+
+  void    paint(QPainter *p);
+  void    rotate();
+  QString save();
+  bool    load(const QString& s);
+  bool    isHorizontal();
 };
 
 #endif
