@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.25 2004/10/17 09:44:30 ela Exp $
+ * $Id: trsolver.cpp,v 1.26 2004/10/21 09:00:26 ela Exp $
  *
  */
 
@@ -117,10 +117,30 @@ void trsolver::solve (void) {
   initDC ();
   setCalculation ((calculate_func_t) &calcDC);
   solve_pre ();
-  error = solve_nonlinear ();
+
+  // Run the DC solver once.
+  try_running () {
+    error = solve_nonlinear ();
+  }
+  // Appropriate exception handling.
+  catch_exception () {
+  case EXCEPTION_NO_CONVERGENCE:
+    pop_exception ();
+    linesearch = 1;
+    logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using line search "
+	      "fallback\n", getName (), getDescription ());
+    error = solve_nonlinear ();
+    break;
+  default:
+    // Otherwise return.
+    estack.print ();
+    error++;
+    break;
+  }
+  // Really failed to find initial DC solution?
   if (error) {
-    logprint (LOG_ERROR,
-	      "ERROR: %s: initial DC analysis failed\n", getName ());
+    logprint (LOG_ERROR, "ERROR: %s: %s analysis failed\n",
+	      getName (), getDescription ());
     return;
   }
 

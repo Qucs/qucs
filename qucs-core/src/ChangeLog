@@ -1,5 +1,8 @@
 2004-10-21  Stefan Jahn  <stefan@lkcc.org>
 
+	* trsolver.cpp: Using line search fallback if the initial DC
+	analysis failed to converge.
+
 	* matvec.cpp: Fixed compiler (gcc 3.4.2) error in constructor
 	and copy constructor.
 
