@@ -1,3 +1,21 @@
+2004-06-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp (dropConnections): Removing inserted circuits
+	in the correct order (indicated by those time stamps).  This
+	fixes a bug in s-parameter analysis causing wrong kind of nodes
+	in the netlist.
+
+	* net.cpp (insertedCircuit): Saving 'time stamp' of inserted
+	circuit for s-parameter analysis.
+
+	* circuit.h (class circuit): New private variable saving the
+	'time stamp' of an inserted circuit.
+
+	* check_netlist.cpp: New generic function checking special
+	identifiers in component properties, e.g. Type="nfet" in the
+	JFET component.
+	Allowing 'Type' property in JFET component.
+
 2004-06-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* circuit.cpp (copyMatrixS): New function copying S-parameter

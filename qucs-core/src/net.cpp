@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.11 2004-05-05 07:10:10 ela Exp $
+ * $Id: net.cpp,v 1.12 2004-06-21 23:11:41 ela Exp $
  *
  */
 
@@ -375,11 +375,14 @@ void net::reducedCircuit (circuit * c) {
   c->setName (n);
 }
 
-// Rename the given circuit and mark it as being a inserted one.
+/* Rename the given circuit and mark it as being a inserted one and
+   remember when it was inserted. */
 void net::insertedCircuit (circuit * c) {
   char n[32];
-  sprintf (n, "inserted%d", inserted++);
+  sprintf (n, "inserted%d", inserted);
   c->setName (n);
+  c->setInserted (inserted);
+  inserted++;
 }
 
 // Rename the given node and mark it as being a inserted one.

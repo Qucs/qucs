@@ -18,10 +18,44 @@
 % Boston, MA 02111-1307, USA.  
 %
 
-gset terminal postscript eps "Times-Roman" 20;
-gset output "mscomparezl.eps";
-hold on;
-gplot clear;
+H=100; W=H*4/3+25;
+
+eglobpar;                % access to global parameters
+ePageOrientation=0;      % set page orientation
+
+ePageWidth=W+40;         % set page size and ratio
+ePageHeight=H+25;
+eWinWidth=ePageWidth;
+eWinHeight=ePageHeight;
+
+eopen ("mscomparezl.eps",ePageOrientation,ePageWidth,ePageHeight);
+
+% apply plot rectangle area
+ePlotAreaPos=[22 15];
+ePlotAreaHeight=H;
+ePlotAreaWidth=W;
+
+% set grid options
+eXGridVisible=1; eXGridDash=1;
+eYGridVisible=1; eYGridDash=1;
+
+% set axis layout
+eXAxisNorthValueVisible=0;
+eXAxisSouthScale=[0 1 5];
+eYAxisEastValueVisible=0;
+eYAxisWestScale=[-2 .5 2];
+eYAxisWestLabelDistance=8;
+
+% set axes options
+eAxesValueFontSize=5;
+eAxesLabelFontSize=eAxesValueFontSize;
+eAxesLabelTextFont=1;
+%eAxesTicShortLength=0;
+
+% set legend options
+ePlotLegendFontSize=eAxesValueFontSize;
+ePlotLegendTextFont=eAxesLabelTextFont;
+
 
 Z0     = 376.73031346958504364963;
 M_PI_2 = 1.5707963267948966192313216916397514;
@@ -33,11 +67,15 @@ M_1_PI = 0.3183098861837906715377675267450287;
 u = linspace(0.01,5.01,101);
 er = 9.8;
 
-gset xrange [0:5];
-gset yrange [-2:2];
-gset grid;
-ylabel("deviation of impedance ZL in %");
-xlabel("normalised strip width W/h");
+eXAxisSouthLabelText="normalised strip width W/h";
+eYAxisWestLabelText="deviation of impedance ZL in %";
+eAxesLabelTextFont=1;
+
+% apply legend layout
+ePlotLegendPos=[90 93];
+lb=[2.8 1.9 4.9 1.1];
+bb=[lb(1) lb(2); lb(3) lb(2); lb(3) lb(4); lb(1) lb(4); lb(1) lb(2)];
+eplot(bb(:,1),bb(:,2),"",-1,[1 1 1]);
 
 for i = 1 : length (u)
   if (u(i) < 3.3)
@@ -54,7 +92,7 @@ for i = 1 : length (u)
   zl(i) = z;
 endfor
 zl1 = zl;
-plot (u,(zl1 - zl)./zl1 * 100,"-1;Wheeler;");
+eplot (u,(zl1 - zl)./zl1 * 100,"Wheeler",0,[1 0 0],1);
 
 a = 1 + 1 / 49 * log ((u.^4 + (u / 52).^2) / (u.^4 + 0.432));
 a = a + 1 / 18.7 * log (1 + (u / 18.1).^3);
@@ -64,13 +102,14 @@ f = 6 + (2 * M_PI - 6) * exp (-(30.666 ./ u).^0.7528);
 d = Z0 / 2 / M_PI * log (f ./ u + sqrt (1 + (2 ./ u).^2));
 zl = d ./ sqrt (g);
 zl2 = zl;
-plot (u,(zl' - zl1)./zl1 * 100,"-2;Hammerstad and Jensen;");
+eplot (u,(zl' - zl1)./zl1 * 100,"Hammerstad and Jensen",1,[0 1 0],1);
 
 g = (er + 1) / 2 + (er - 1) / 2 * (1 + 10 ./ u).^(-0.5);
 f = 6 + (2 * M_PI - 6) * exp (-(30.666 ./ u).^0.7528);
 d = Z0 / 2 / M_PI * log (f ./ u + sqrt (1 + (2 ./ u).^2));
 zl = d ./ sqrt (g);
 zl3 = zl;
-plot (u,(zl' - zl1)./zl1 * 100,"-3;Schneider;");
+eplot (u,(zl' - zl1)./zl1 * 100,"Schneider",2,[0 0 1],1);
 
-gset key top right Left reverse;
+eclose (1,0);
+%eview;

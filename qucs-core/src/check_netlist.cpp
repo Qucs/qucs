@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.14 2004-06-20 11:29:34 ela Exp $
+ * $Id: check_netlist.cpp,v 1.15 2004-06-21 23:11:41 ela Exp $
  *
  */
 
@@ -107,7 +107,7 @@ struct definition definition_available[] =
     /* jfet */
     { "JFET", 3, 0, 0, 1, { "Is", "N", "Vt0", "Lambda", "Beta", "M", "Pb",
 			    "Fc", "Cgs", "Cgd", NULL },
-      { "Rd", "Rs", "Isr", "Nr", NULL } },
+      { "Rd", "Rs", "Isr", "Nr", "Type", NULL } },
 
     /* microstrip substrate */
     { "SUBST", 0, 0, 1, 0, { "er", "h", "t", "tand", "rho", "D", NULL },
@@ -209,6 +209,46 @@ static struct value_t * checker_find_variable (char * type, char * key,
   return NULL;
 }
 
+/* Structure defining a certain component type containing special
+   parameter values. */
+struct special_t {
+  char * type;     // component type
+  char * key;      // parameter name
+  char * value[8]; // maximum 7 alternatives for now
+};
+
+// List of special identifiers.
+static struct special_t checker_specials[] = {
+  { "JFET", "Type", { "nfet", "pfet", NULL } },
+  { "BJT",  "Type", { "npn", "pnp", NULL } },
+  { NULL, NULL, { NULL } }
+};
+
+/* This function checks whether the given identifier which occurred in
+   a component property (may also be a variable) is a special
+   identifier used for some properties. It returns zero if the
+   identifier is invalid. */
+static int checker_validate_special (char * ident) {
+  int found = 0;
+  struct value_t * val;
+  struct special_t * special;
+  // go through each special
+  for (int i = 0; checker_specials[i].type != NULL; i++) {
+    special = &checker_specials[i];
+    // find the given identifier in the list of allowed specials
+    val = checker_find_variable (special->type, special->key, ident);
+    if (val != NULL) {
+      // check whether the given identifier is an allowed value
+      for (int n = 0; special->value[n] != NULL; n++) {
+	if (!strcmp (special->value[n], ident)) {
+	  found++;
+	}
+      }
+    }
+  }
+  return found;
+}
+
 /* Resolves the variable of a property value.  Returns non-zero on
    success, otherwise zero. */
 static int checker_resolve_variable (struct value_t * value) {
@@ -234,6 +274,10 @@ static int checker_resolve_variable (struct value_t * value) {
     }
     /* 4. find microstrip model in microstrip components */
     if ((val = checker_find_variable ("MLIN", "Model", value->ident))) {
+      found++;
+    }
+    /* 5. find special identifiers in certain properties */
+    if (checker_validate_special (value->ident)) {
       found++;
     }
     /* TODO: find variable in equations */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.17 2004-06-20 11:29:34 ela Exp $
+ * $Id: circuit.cpp,v 1.18 2004-06-21 23:11:41 ela Exp $
  *
  */
 
@@ -53,6 +53,7 @@ circuit::circuit () : object () {
   source = 0;
   nSources = 0;
   oper = NULL;
+  inserted = -1;
   type = CIR_UNKNOWN;
 }
 
@@ -70,6 +71,7 @@ circuit::circuit (int s) : object () {
   source = 0;
   nSources = 0;
   oper = NULL;
+  inserted = -1;
   type = CIR_UNKNOWN;
 }
 
@@ -83,6 +85,7 @@ circuit::circuit (const circuit & c) : object (c) {
   subst = c.subst;
   source = c.source;
   nSources = c.nSources;
+  inserted = c.inserted;
 
   // copy each node and set its circuit to the current circuit object
   nodes = new node[size];
