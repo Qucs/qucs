@@ -67,8 +67,8 @@ public:
   void updateGraphData();
   void loadGraphData(const QString&);
   void recalcGraphData();
-  bool loadVarData(const QString&);
-  int  loadIndepVarData(const QString&, const QString&, Axis*);
+  bool loadVarData(const QString&, Graph*);
+  int  loadIndepVarData(const QString&, const QString&, Axis*, Graph*);
 
   bool insideDiagram(int, int);
 

@@ -567,7 +567,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
         yAxisBox->setEnabled(true);
         Label4->setEnabled(true);
       }
-      else g->yAxisNo = 1;   // for Rect3D
+      else if(Diag->Name == "Rect3D") g->yAxisNo = 1;
 
       Label3->setEnabled(true);
       ColorButt->setEnabled(true);
@@ -678,7 +678,7 @@ void DiagramDialog::slotNewGraph()
     g->Thick = Property2->text().toInt();
     g->Style = PropertyBox->currentItem();
     if(yAxisBox)  g->yAxisNo = yAxisBox->currentItem();
-    else  g->yAxisNo = 1;   // for "Rect3D"
+    else if(Diag->Name == "Rect3D")  g->yAxisNo = 1;
   }
   else {
     g->Precision = Property2->text().toInt();

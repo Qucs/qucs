@@ -1788,7 +1788,7 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
   for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
     for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next()) {
       pm->x1 += MAx3;      // correct changes due to move of diagram corner
-      pm->y1 -= MAy3;
+      pm->y1 += MAy3;
     }
 
   MouseMoveAction = &QucsView::MouseDoNothing;

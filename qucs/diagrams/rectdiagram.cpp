@@ -257,7 +257,7 @@ if(xAxis.log) {
   }
 }
 else {  // not logarithmical
-  back = calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
+  calcAxisScale(&xAxis, GridNum, zD, zDstep, GridStep, double(x2));
 
   double Expo;
   if(xAxis.up == 0.0)  Expo = log10(fabs(xAxis.up-xAxis.low));

@@ -32,6 +32,7 @@
 #include <qmenubar.h>
 #include <qaction.h>
 #include <qpopupmenu.h>
+#include <qhgroupbox.h>
 #include <qvgroupbox.h>
 #include <qcombobox.h>
 #include <qlabel.h>
@@ -41,7 +42,7 @@
 #include <qscrollview.h>
 #include <qtooltip.h>
 #include <qradiobutton.h>
-#include <qbuttongroup.h>
+#include <qstatusbar.h>
 
 #include "qucstrans.h"
 #include "transline.h"
@@ -51,7 +52,7 @@
 #include "c_microstrip.h"
 
 // Defines maximum number of entries in each property category.
-static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 3, 4, 3 };
+static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 1, 4, 3 };
 
 // Helper #defines for the below transmission line types.
 #define TRANS_RADIOS  { -1, -1, -1, -1 }
@@ -241,33 +242,31 @@ QucsTranscalc::QucsTranscalc() {
   // reserve space for menubar
   QWidget * Space = new QWidget (this);
   Space->setFixedSize (5, menuBar->height ());
-  v->addWidget (Space, 0,0);
+  v->addWidget (Space);
+
+  // main layout
+  QHBox * h = new QHBox (this);
+  h->setSpacing (5);
+  v->addWidget (h);
+//  QVBox * vl = new QVBox (h);
 
   // transmission line type choice
-  QHBoxLayout * ht = new QHBoxLayout ();
-  QVGroupBox * lineGroup = new QVGroupBox (tr("Transmission Line Type"), this);
-  ht->addWidget (lineGroup);
-  ht->addStretch ();
-  v->addLayout (ht);
+  QVGroupBox * lineGroup = new QVGroupBox (tr("Transmission Line Type"), h);
   tranType = new QComboBox (lineGroup);
   tranType->insertItem (tr("Microstrip"));
   tranType->insertItem (tr("Rectangular Waveguide"));
   tranType->insertItem (tr("Coaxial Line"));
   tranType->insertItem (tr("Coupled Microstrip"));
   connect(tranType, SIGNAL(activated(int)), SLOT(slotSelectType(int)));
-
-  // main layout
-  QHBox * h = new QHBox (this);
-  h->setSpacing (5);
-  v->addWidget (h);
-  QVBox * vl = new QVBox (h);
-  QVBox * vr = new QVBox (h);
-
   // setup transmission line picture
-  screen = new QVGroupBox (tr("Microstrip"), vl);
-  pix = new QLabel (screen);
+  pix = new QLabel (lineGroup);
   pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
 				   "microstrip.png")));
+
+  QVBox * vm = new QVBox (h);
+  vm->setSpacing (3);
+  QVBox * vr = new QVBox (h);
+  vr->setSpacing (3);
 
   // init additional translations
   setupTranslations ();
@@ -276,19 +275,16 @@ QucsTranscalc::QucsTranscalc() {
   mode = ModeMicrostrip;
 
   // substrate parameter box
-  QVGroupBox * substrate = new QVGroupBox (tr("Substrate Parameters"), vl);
-  QVBox * v11 = createScrollable (substrate);
-  createPropItems (v11, TRANS_SUBSTRATE);
+  QHGroupBox * substrate = new QHGroupBox (tr("Substrate Parameters"), vm);
+  createPropItems (substrate, TRANS_SUBSTRATE);
 
   // component parameter box
-  QVGroupBox * component = new QVGroupBox (tr("Component Parameters"), vr);
-  QVBox * v12 = createScrollable (component);
-  createPropItems (v12, TRANS_COMPONENT);
+  QHGroupBox * component = new QHGroupBox (tr("Component Parameters"), vm);
+  createPropItems (component, TRANS_COMPONENT);
 
   // physical parameter box
-  QVGroupBox * physical = new QVGroupBox (tr("Physical Parameters"), vr);
-  QVBox * v22 = createScrollable (physical);
-  createPropItems (v22, TRANS_PHYSICAL);
+  QHGroupBox * physical = new QHGroupBox (tr("Physical Parameters"), vr);
+  createPropItems (physical, TRANS_PHYSICAL);
 
   // analyze/sythesize buttons
   QHBox * h2 = new QHBox (vr);
@@ -300,22 +296,20 @@ QucsTranscalc::QucsTranscalc() {
   connect(synthesize, SIGNAL(clicked()), SLOT(slotSynthesize()));
 
   // electrical parameter box
-  QVGroupBox * electrical = new QVGroupBox (tr("Electrical Parameters"), vr);
-  QVBox * v32 = createScrollable (electrical);
-  createPropItems (v32, TRANS_ELECTRICAL);
+  QHGroupBox * electrical = new QHGroupBox (tr("Electrical Parameters"), vr);
+  createPropItems (electrical, TRANS_ELECTRICAL);
 
-  // calculated result box
-  QVGroupBox * calculated = new QVGroupBox (tr("Calculated Results"), vr);
-  result = createScrollable (calculated);
+  calculated = new QHGroupBox (tr("Calculated Results"), vr);
 
   // status line
-  QVGroupBox * statGroup = new QVGroupBox (tr("Status"), this);
-  v->addWidget (statGroup);
-  QLabel * statText = new QLabel ("Status Line", statGroup);
+//  QVGroupBox * statGroup = new QVGroupBox (tr("Status"), this);
+//  v->addWidget (statGroup);
+  QLabel * statText = new QLabel ("Status:", this);
   statText->setAlignment (Qt::AlignCenter);
+  v->addWidget (statText);
 
   // setup calculated result bix
-  createResultItems (result);
+  createResultItems (calculated);
   updateSelection ();
 
   // intantiate transmission lines
@@ -425,47 +419,30 @@ void QucsTranscalc::setupTranslations () {
   t->array[3].item[2].tip = new QString(tr("Electrical Length"));
 }
 
-/* Creates a scrollable container for a parameter category and returns
-   a vertical box container for new children. */
-QVBox * QucsTranscalc::createScrollable (QWidget * parent) {
-  QScrollView * sv = new QScrollView (parent);
-  QVBox * v = new QVBox (sv->viewport ());
-  sv->addChild (v);
-  sv->setHScrollBarMode (QScrollView::AlwaysOff);
-  v->setSpacing (3);
-  v->setMargin (3);
-  return v;
-}
-
 /* Creates a property item 'val' in a parameter category specified by
    its 'box'. */
-void QucsTranscalc::createPropItem (QVBox * parent, TransValue * val,
+void QucsTranscalc::createPropItem (QVBox ** parentRows, TransValue * val,
 				    int box) {
   QRadioButton * r = NULL;
-  QHBox * h;
   QLabel * l;
   QLineEdit * e;
   QComboBox * c;
 
-  // horizontally lined up
-  h = new QHBox (parent);
-  h->setSpacing (2);
-
   // name label
-  l = new QLabel (val->name, h);
+  l = new QLabel (val->name, parentRows[0]);
   l->setAlignment (Qt::AlignRight);
   if (val->tip) QToolTip::add (l, *(val->tip));
   val->label = l;
 
   // editable value text
-  e = new QLineEdit (h);
+  e = new QLineEdit (parentRows[1]);
   e->setText (QString::number (val->value));
   e->setAlignment (Qt::AlignRight);
   if (!val->name) e->setDisabled (true);
   val->lineedit = e;
 
   // unit choice
-  c = new QComboBox (h);
+  c = new QComboBox (parentRows[2]);
   if (!val->units[0]) {
     c->insertItem ("NA");
     c->setDisabled(true);
@@ -483,15 +460,10 @@ void QucsTranscalc::createPropItem (QVBox * parent, TransValue * val,
 
   // special synthesize-computation choice
   if (box == TRANS_PHYSICAL) {
-    r = new QRadioButton (h);
+    r = new QRadioButton (parentRows[3]);
     r->setDisabled (true);
     val->radio = r;
   }
-
-  h->setStretchFactor (l, 2);
-  h->setStretchFactor (e, 2);
-  h->setStretchFactor (c, 2);
-  h->setStretchFactor (r, 1);
 }
 
 /* The function changes the content of a GUI's property entry
@@ -571,14 +543,22 @@ void QucsTranscalc::updateSelection () {
 
 /* The function creates the property items for the given category of
    transmission line parameters. */
-void QucsTranscalc::createPropItems (QVBox * parent, int box) {
+void QucsTranscalc::createPropItems (QHGroupBox * parent, int box) {
   struct TransValue * val, * dup;
   int last = 0, idx = getTypeIndex ();
   val = TransLineTypes[idx].array[box].item;
-  QButtonGroup * g = NULL;
 
-  // create group of exclusive buttons
-  if (box == TRANS_PHYSICAL) g = new QButtonGroup ();
+  QVBox *rows[4];
+  rows[0] = new QVBox (parent);
+  rows[1] = new QVBox (parent);
+  rows[2] = new QVBox (parent);
+  rows[3] = new QVBox (parent);
+
+  parent->layout()->setSpacing (2);
+  rows[0]->setSpacing (2);
+  rows[1]->setSpacing (2);
+  rows[2]->setSpacing (2);
+  rows[3]->setSpacing (2);
 
   // go through each parameter category
   for (int i = 0; i < TransMaxBox[box]; i++) {
@@ -590,8 +570,7 @@ void QucsTranscalc::createPropItems (QVBox * parent, int box) {
       val->tip = NULL;
       val->units[0] = NULL;
     }
-    createPropItem (parent, val, box);
-    if (box == TRANS_PHYSICAL) g->insert (val->radio);
+    createPropItem (rows, val, box);
     // publish the newly created widgets to the other transmission lines
     for (int _mode = 0; _mode < MAX_TRANS_TYPES; _mode++) {
       if (idx != _mode) {
@@ -607,13 +586,12 @@ void QucsTranscalc::createPropItems (QVBox * parent, int box) {
 }
 
 /* Creates a single result item. */
-void QucsTranscalc::createResultItem (QVBox * parent, TransResult * res) {
-  QHBox * h = new QHBox (parent);
-  h->setSpacing (2);
-  QLabel * n = new QLabel (res->name ? *(res->name) + ":" : QString(), h);
+void QucsTranscalc::createResultItem (QVBox ** parentRows, TransResult * res) {
+  QLabel * n =
+      new QLabel (res->name ? *(res->name) + ":" : QString(), parentRows[0]);
   n->setAlignment (Qt::AlignRight);
   res->label = n;
-  QLabel * v = new QLabel (h);
+  QLabel * v = new QLabel (parentRows[1]);
   v->setAlignment (Qt::AlignLeft);
   res->value = v;
   if (!res->name) {
@@ -635,12 +613,21 @@ void QucsTranscalc::updateResultItem (TransResult * res) {
 }
 
 /* Creates all the result items. */
-void QucsTranscalc::createResultItems (QVBox * parent) {
+void QucsTranscalc::createResultItems (QHGroupBox * parent) {
   struct TransResult * res, * dup;
   int idx = getTypeIndex ();
   res = & TransLineTypes[idx].result[0];
+
+  QVBox *rows[2];
+  rows[0] = new QVBox (parent);
+  rows[1] = new QVBox (parent);
+
+  parent->layout()->setSpacing (2);
+  rows[0]->setSpacing (2);
+  rows[1]->setSpacing (2);
+
   for (int i = 0; i < MAX_TRANS_RESULTS; i++) {
-    createResultItem (parent, res);
+    createResultItem (rows, res);
     for (int _mode = 0; _mode < MAX_TRANS_TYPES; _mode++) {
       if (idx != _mode) {
 	dup = & TransLineTypes[_mode].result[i];
@@ -774,7 +761,6 @@ void QucsTranscalc::closeEvent(QCloseEvent *Event)
 void QucsTranscalc::slotSelectType (int Type)
 {
   int _mode = mode;
-  screen->setTitle (tranType->currentText ());
   switch (Type) {
   case 0:
     pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +

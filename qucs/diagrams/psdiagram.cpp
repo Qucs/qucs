@@ -45,8 +45,8 @@ void PSDiagram::calcCoordinate(double* &, double* &yD, double* &,
 {
   double yr = *(yD++);
   double yi = *(yD++);
-  *px = (x2>>1)+int(yr/pa->up*double(x2>>1) + 0.5);
-  *py = (y2>>1)+int(yi/pa->up*double(y2>>1) + 0.5);
+  *px = (x2>>1)+int(yr/pa->up*double(x2)/2.0 + 0.5);
+  *py = (y2>>1)+int(yi/pa->up*double(y2)/2.0 + 0.5);
 }
 
 // --------------------------------------------------------------

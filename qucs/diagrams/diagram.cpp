@@ -78,10 +78,10 @@ Diagram::~Diagram()
 // ------------------------------------------------------------
 void Diagram::paint(ViewPainter *p)
 {
-  // paint all arcs
+  // paint all arcs (1 pixel larger to compensate for strange Qt circles)
   for(struct Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     p->Painter->setPen(pa->style);
-    p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+    p->drawArc(cx+pa->x, cy-pa->y, pa->w+1, pa->h+1, pa->angle, pa->arclen);
   }
 
   // paint all lines
@@ -116,7 +116,6 @@ void Diagram::paint(ViewPainter *p)
       s = p->Painter->fontMetrics().size(0, xAxis.Label);
       p->Painter->drawText(x-(s.width()>>1), y+p->LineSpacing, xAxis.Label);
     }
-
 
     QWMatrix wm = p->Painter->worldMatrix();
     p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
@@ -373,7 +372,7 @@ void Diagram::roundClip(int* &p)
   }
 
   int code = 0;
-  R   = int(sqrt(F));
+  R   = int(sqrt(F)+0.5);
   dt1 = C - R;
   if((dt1 > 0) && (dt1 < D)) { // intersection outside start/end point ?
     *(p-4) = x_1 - x*dt1 / D;
@@ -404,6 +403,18 @@ void Diagram::roundClip(int* &p)
 
 }
 
+
+// ------------------------------------------------------------
+// Enlarge memory block if neccessary.
+#define  FIT_MEMORY_SIZE  \
+  if(p >= p_end) {     \
+    Size += 256;        \
+    tmp = p - g->Points; \
+    p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int)); \
+    p += tmp; \
+    p_end += Size - 9; \
+  } \
+
 // ------------------------------------------------------------
 void Diagram::calcData(Graph *g, int valid)
 {
@@ -412,7 +423,7 @@ void Diagram::calcData(Graph *g, int valid)
   if((valid | g->yAxisNo) == 0)  return;
 
 
-  if(g->countY == 0) return;
+  if(g->cPointsX.count() < 1) return;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
   int *p_end;
@@ -441,22 +452,16 @@ void Diagram::calcData(Graph *g, int valid)
 	calcCoordinate(px, pz, py, p, p+1, pa);
 	p += 2;
 	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
-	  if(p >= p_end) {  // need to enlarge memory block ?
-	    Size += 256;
-	    tmp = p - g->Points;
-	    p = p_end = g->Points
-	      = (int*)realloc(g->Points, Size*sizeof(int));
-	    p += tmp;
-	    p_end += Size - 9;
-	  }
+	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 	  calcCoordinate(px, pz, py, p, p+1, pa);
 	  p += 2;
 	  if(Counter >= 2)   // clipping only if an axis is manual
 	    clip(p);
 	}
-	if(*(p-3) == -2) if(*(p-1) > -2)
-	  p -= 2;  // no single point after "no stroke"
+	if(*(p-3) == -2)
+	  p -= 3;  // no single point after "no stroke"
 	*(p++) = -10;
+//qDebug("s: %d/%d, %d/%d", *(p-4), *(p-3), *(p-2), *(p-1));
 
 //	if(py)  if(py - g->cPointsX.at(1)->Points) {
 	py++;   // because of Rect3D
@@ -477,14 +482,7 @@ void Diagram::calcData(Graph *g, int valid)
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->cPointsX.getFirst()->Points;
 	for(z=g->cPointsX.getFirst()->count; z>0; z--) {  // every point
-	  if(p >= p_end) {  // need to enlarge memory block ?
-	    Size += 256;
-	    tmp = p - g->Points;
-	    p = p_end = g->Points
-	      = (int*)realloc(g->Points, Size*sizeof(int));
-	    p += tmp;
-	    p_end += Size - 9;
-	  }
+	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 	  calcCoordinate(px, pz, py, p, p+1, pa);
 	  if(insideDiagram(*p, *(p+1))) {    // within diagram ?
 	    *(p+2) = xtmp;
@@ -518,13 +516,7 @@ for(int zz=0; zz<60; zz+=2)
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
       if(Flag == 1) if(dist <= 0.0) {
-	if(p >= p_end) {  // need to enlarge memory block ?
-	  Size += 256;
-	  tmp = p - g->Points;
-	  p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int));
-	  p += tmp;
-	  p_end += Size - 9;
-	}
+	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 
 	*(p++) = xtmp;    // if stroke then save points
 	*(p++) = ytmp;
@@ -533,13 +525,7 @@ for(int zz=0; zz<60; zz+=2)
       }
       alpha = atan2(double(dy), double(dx));   // slope for interpolation
       while(dist > 0) {   // stroke or space finished ?
-	if(p >= p_end) {  // need to enlarge memory block ?
-	  Size += 256;
-	  tmp = p - g->Points;
-	  p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int));
-	  p += tmp;
-	  p_end += Size - 9;
-	}
+	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 
 	*(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
 	*(p++) = ytmp - int(dist*sin(alpha) + 0.5);
@@ -564,8 +550,8 @@ for(int zz=0; zz<60; zz+=2)
       }
 
     } // of x loop
-    if(*(p-3) == -2) if(*(p-1) > -2)
-      p -= 2;  // no single point after "no stroke"
+    if(*(p-3) == -2)
+      p -= 3;  // no single point after "no stroke"
     *(p++) = -10;
   } // of y loop
   *p = -100;
@@ -647,7 +633,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    loadVarData(defaultDataSet);  // load data, determine max/min values
+    loadVarData(defaultDataSet, pg);  // load data, determine max/min values
 
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
@@ -665,7 +651,6 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
     if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
   }*/
-
 /*qDebug("x:  %g, %g", xAxis.min, xAxis.max);
 qDebug("y:  %g, %g", yAxis.min, yAxis.max);
 qDebug("z:  %g, %g", zAxis.min, zAxis.max);*/
@@ -739,9 +724,8 @@ void Diagram::updateGraphData()
 }
 
 // --------------------------------------------------------------------------
-bool Diagram::loadVarData(const QString& fileName)
+bool Diagram::loadVarData(const QString& fileName, Graph *g)
 {
-  Graph *g = Graphs.current();
   g->countY = 0;
   g->cPointsX.clear();
   if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
@@ -803,7 +787,11 @@ bool Diagram::loadVarData(const QString& fileName)
     }
   }
 
-  if(i <= 0)  return false;   // return if data name was not found
+  if(i <= 0) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Cannot find variable: ")+Variable);
+    return false;   // return if data name was not found
+  }
 
   Axis *pa;
   // *****************************************************************
@@ -843,12 +831,12 @@ bool Diagram::loadVarData(const QString& fileName)
 	xAxis.max = max_tmp;
       }
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
-      counting = loadIndepVarData(pD->Var, FileString, pa);
-      g->countY *= counting;
+      counting = loadIndepVarData(pD->Var, FileString, pa, g);
       if(counting <= 0) {     // failed to load independent variable ?
-        g->cPointsX.clear();
+	g->cPointsX.clear();
         return false;  // error message was already created
       }
+      g->countY *= counting;
     }
     g->countY /= counting;
   }
@@ -887,7 +875,6 @@ bool Diagram::loadVarData(const QString& fileName)
 		QObject::tr("Too few dependent data \"") + Variable+"\"");
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
-      g->countY = 0;
       return false;
     }
     *(p++) = x;
@@ -909,7 +896,7 @@ bool Diagram::loadVarData(const QString& fileName)
 // --------------------------------------------------------------------------
 // Reads the data of an independent variable. Returns the number of points.
 int Diagram::loadIndepVarData(const QString& var,
-			      const QString& FileString, Axis *pa)
+			      const QString& FileString, Axis *pa, Graph *pg)
 {
   QString Line, tmp;
 
@@ -924,6 +911,18 @@ int Diagram::loadIndepVarData(const QString& var,
       tmp = Line.section(' ', 1, 1);
       if(var == tmp) break;     // found variable with name sought for ?
     }
+    else if(Line.left(3) == "dep")   // dependent variable can also be used...
+      if(Line.section(' ', 3, 3).isEmpty()) {   // ...if only one dependency
+	tmp = Line.section(' ', 1, 1);
+	if(var == tmp) {     // found variable with name sought for ?
+	  int z = FileString.find("<indep "+Line.section(' ', 2, 2)+" ");
+	  if(z <= 0) { i = -1; break; }
+	  tmp = FileString.mid(z, FileString.find('>', z)-z);
+	  Line = Line.section(' ', 0, 1)+" "+tmp.section(' ', 2, 2);
+	  break;
+	}
+      }
+
   } while(i > 0);
 
   if(i <= 0) {
@@ -942,7 +941,7 @@ int Diagram::loadIndepVarData(const QString& var,
   }
 
   double *p = new double[n];     // memory for new independent variable
-  DataX *pD = Graphs.current()->cPointsX.current();
+  DataX *pD = pg->cPointsX.current();
   pD->Points = p;
   pD->count  = n;
 
@@ -957,6 +956,7 @@ int Diagram::loadIndepVarData(const QString& var,
     if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
 		 QObject::tr("Too few independent data \"") + var + "\"");
+      delete[] pD->Points;  pD->Points = 0;
       return -1;
     }
     *(p++) = x;
@@ -1237,8 +1237,8 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     n_cos = cos(n_sin);
     n_sin = sin(n_sin);
     im = (1-n_cos)/n_sin * pow(Axis->up,0.7); // up^0.7 is beauty correction
-    x  = int((1-im)/Axis->up*dx2);
-    y  = int(im/Axis->up*x2);
+    x  = int((1-im)/Axis->up*dx2 + 0.5);
+    y  = int(im/Axis->up*x2 + 0.5);
 
     if(Axis->up <= 1.0) {       // Smith chart with |r|=1
       beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PI);
@@ -1297,8 +1297,8 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 
   for(m=1; m<GridX; m++) {
     im = m*(Axis->up+1.0)/GridX - Axis->up;
-    x  = int(im/Axis->up*double(dx2));        // center
-    y  = int((1.0-im)/Axis->up*double(dx2));  // diameter
+    x  = int(im/Axis->up*double(dx2) + 0.5);        // center
+    y  = int((1.0-im)/Axis->up*double(dx2) + 0.5);  // diameter
 
     if(Zplane)  x += dx2;
     else  x = 0;
@@ -1313,7 +1313,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
       if(im >= 1.0)
 	Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
       else {
-	phi = int(16.0*180.0/M_PI*acos(im));
+	phi = int(16.0*180.0/M_PI*acos(im) + 0.5);
 	len = 16*180-phi;
 	if(Above && Below)  len += len;
 	else if(Below)  phi = 16*180;
@@ -1326,13 +1326,13 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 
   // ....................................................
   if(Axis->up > 1.0) {  // draw circle with |r|=1 ?
-    x = int(x2/Axis->up);
+    x = int(x2/Axis->up + 0.5);
     Arcs.append(new struct Arc(dx2-(x>>1), dx2+(x>>1), x, x, beta, theta,
 			QPen(QPen::black,0)));
 
     // vertical line Re(r)=1 (visible only if |r|>1)
-    x = int(x2/Axis->up)>>1;
-    y = int(sqrt(rMAXq-1)/Axis->up*dx2);
+    x = int(x2/Axis->up + 0.5) >> 1;
+    y = int(sqrt(rMAXq-1)/Axis->up*dx2 + 0.5);
     if(Zplane)  x += dx2;
     else  x = dx2 - x;
     if(Above)  m = y;
@@ -1458,6 +1458,11 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 
 // --------------------------------------------------------------
 // Calculations for Cartesian diagrams (RectDiagram and Rect3DDiagram).
+// parameters:   Axis - pointer to the axis to scale
+//               Dist - length of axis in pixel on the screen
+// return value: "true" if axis runs from largest to smallest value
+//               (only used for logarithmical axes)
+//               GridNum - number where the first numbered grid is placed
 bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				double& zDstep, double& GridStep, double Dist)
 {
