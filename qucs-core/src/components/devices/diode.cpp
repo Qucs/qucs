@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.10 2004/08/19 19:44:24 ela Exp $
+ * $Id: diode.cpp,v 1.11 2004/09/12 14:09:20 ela Exp $
  *
  */
 
@@ -36,8 +36,6 @@
 #include "circuit.h"
 #include "net.h"
 #include "matrix.h"
-#include "analysis.h"
-#include "dcsolver.h"
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
@@ -90,7 +88,7 @@ void diode::calcNoise (nr_double_t frequency) {
 #endif
 }
 
-void diode::initDC (dcsolver * solver) {
+void diode::initDC (void) {
 
   // initialize starting values
   setV (NODE_C, 0.0);
@@ -104,13 +102,13 @@ void diode::initDC (dcsolver * solver) {
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", NODE_A);
+    rs = splitResistance (this, rs, getNet (), "Rs", "anode", NODE_A);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
   }
   // no series resistance
   else {
-    disableResistance (this, rs, solver->getNet (), NODE_A);
+    disableResistance (this, rs, getNet (), NODE_A);
   }
 }
 

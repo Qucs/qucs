@@ -1,3 +1,16 @@
+2004-09-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp (checkDelta): Started to implement the timestep
+	adjuster for the transient analysis.
+
+	* integrator.h (class integrator): New class containing all
+	of the integration specific things of a circuit object.  The
+	circuit object now also inherits the integrator class.
+
+	* circuit.h (class circuit): Removed the analysis argument
+	of the init() functionality of each type of analysis.  Changed
+	all circuit objects.
+
 2004-09-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Started to implement the actual solver.  For

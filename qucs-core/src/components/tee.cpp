@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tee.cpp,v 1.3 2004/09/09 11:31:51 ela Exp $
+ * $Id: tee.cpp,v 1.4 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -49,7 +49,7 @@ tee::tee () : circuit (3) {
   type = CIR_TEE;
 }
 
-void tee::initDC (dcsolver *) {
+void tee::initDC (void) {
   setVoltageSources (3);
   voltageSource (1, 1, 2);
   voltageSource (2, 1, 3);

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.7 2004/08/30 20:55:19 ela Exp $
+ * $Id: mscorner.cpp,v 1.8 2004/09/12 14:09:20 ela Exp $
  *
  */
 
@@ -49,7 +49,7 @@ mscorner::mscorner () : circuit (2) {
   setInternalVoltageSource (1);
 }
 
-void mscorner::initSP (spsolver *) {
+void mscorner::initSP (void) {
 
   // get properties of substrate and corner
   nr_double_t W = getPropertyDouble ("W");

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.16 2004/09/11 20:39:30 ela Exp $
+ * $Id: resistor.cpp,v 1.17 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -59,7 +59,7 @@ void resistor::calcNoise (nr_double_t) {
   setN (1, 2, -f); setN (2, 1, -f);
 }
 
-void resistor::initDC (dcsolver *) {
+void resistor::initDC (void) {
   nr_double_t r = getPropertyDouble ("R");
 
   // for non-zero resistances usual MNA entries
@@ -91,16 +91,16 @@ void resistor::calcDC (void) {
   }
 }
 
-void resistor::initAC (acsolver *) {
-  initDC (NULL);
+void resistor::initAC (void) {
+  initDC ();
 }
 
 void resistor::calcAC (nr_double_t) {
   calcDC ();
 }
 
-void resistor::initTR (trsolver *) {
-  initDC (NULL);
+void resistor::initTR (void) {
+  initDC ();
 }
 
 void resistor::calcTR (nr_double_t) {

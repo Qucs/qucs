@@ -18,14 +18,12 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.h,v 1.3 2004/07/27 16:43:59 ela Exp $
+ * $Id: jfet.h,v 1.4 2004/09/12 14:09:20 ela Exp $
  *
  */
 
 #ifndef __JFET_H__
 #define __JFET_H__
-
-class net;
 
 class jfet : public circuit
 {
@@ -34,7 +32,7 @@ class jfet : public circuit
   void calcSP (nr_double_t);
   void calcNoise (nr_double_t);
   void calcDC (void);
-  void initDC (dcsolver *);
+  void initDC (void);
   void calcOperatingPoints (void);
 
  private:

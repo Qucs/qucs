@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.7 2004/09/07 12:53:11 ela Exp $
+ * $Id: inductor.cpp,v 1.8 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -50,7 +50,7 @@ void inductor::calcSP (nr_double_t frequency) {
   setS (1, 2, 2 / (z + 2)); setS (2, 1, 2 / (z + 2));
 }
 
-void inductor::initDC (dcsolver *) {
+void inductor::initDC (void) {
   voltageSource (1, 1, 2);
   setVoltageSources (1);  
 }
@@ -59,7 +59,7 @@ void inductor::calcDC (void) {
   clearY ();
 }
 
-void inductor::initAC (acsolver *) {
+void inductor::initAC (void) {
   nr_double_t l = getPropertyDouble ("L");
 
   // for non-zero inductance usual MNA entries
@@ -68,7 +68,7 @@ void inductor::initAC (acsolver *) {
   }
   // for zero inductance create a zero voltage source
   else {
-    initDC (NULL);
+    initDC ();
     calcDC ();
   }
 }
@@ -82,4 +82,22 @@ void inductor::calcAC (nr_double_t frequency) {
     setY (1, 1, +y); setY (2, 2, +y);
     setY (1, 2, -y); setY (2, 1, -y);
   }
+}
+
+void inductor::initTR (void) {
+  initDC ();
+  clearY ();
+  setStates (2);
+}
+
+#define fState 0 // flux state
+#define vState 1 // voltage state
+
+void inductor::calcTR (nr_double_t) {
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t r, v;
+
+  integrate (fState, l, r, v);
+  setD (1, 1, -r);
+  setE (1, v);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.5 2004/09/06 06:40:07 ela Exp $
+ * $Id: pac.cpp,v 1.6 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "consts.h"
 #include "pac.h"
 
 pac::pac () : circuit (2) {
@@ -60,6 +61,15 @@ void pac::calcAC (nr_double_t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t i = sqrt (p / r);
+  calcDC ();
+  setI (1, +i); setI (2, -i);
+}
+
+void pac::calcTR (nr_double_t t) {
+  nr_double_t p = getPropertyDouble ("P");
+  nr_double_t r = getPropertyDouble ("Z");
+  nr_double_t f = getPropertyDouble ("f");
+  nr_double_t i = sqrt (p / r) * sin (2 * M_PI * f * t);
   calcDC ();
   setI (1, +i); setI (2, -i);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.25 2004/09/11 20:39:29 ela Exp $
+ * $Id: circuit.h,v 1.26 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -32,14 +32,13 @@ class node;
 class property;
 class substrate;
 class operatingpoint;
-class dcsolver;
-class spsolver;
-class acsolver;
-class trsolver;
 class matrix;
 class transient;
+class net;
 
-class circuit : public object
+#include "integrator.h"
+
+class circuit : public object, public integrator
 {
  public:
   // constructor and destructor set
@@ -49,14 +48,14 @@ class circuit : public object
   ~circuit ();
 
   // functionality to be overloaded by real circuit implementations
-  virtual void initSP (spsolver *) { }
+  virtual void initSP (void) { }
   virtual void calcSP (nr_double_t) { }
-  virtual void initDC (dcsolver *) { }
+  virtual void initDC (void) { }
   virtual void calcDC (void) { }
   virtual void calcNoise (nr_double_t) { }
-  virtual void initAC (acsolver *) { }
+  virtual void initAC (void) { }
   virtual void calcAC (nr_double_t) { }
-  virtual void initTR (trsolver *) { }
+  virtual void initTR (void) { }
   virtual void calcTR (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
 
@@ -69,6 +68,8 @@ class circuit : public object
   void   setSize (int);
   int    isEnabled (void) { return enabled; }
   void   setEnabled (int e) { enabled = e; }
+  void   setNet (net * n) { subnet = n; }
+  net *  getNet (void) { return subnet; }
 
   // subcircuitry
   char * getSubcircuit (void) { return subcircuit; }
@@ -149,37 +150,10 @@ class circuit : public object
   void    setMatrixY (matrix &);
   matrix& getMatrixY (void);
 
-  // save-state variables for transient analysis
-  nr_double_t getState (int, int n = 0);
-  void setState (int, nr_double_t, int n = 0);
-  void initStates (void);
-  void clearStates (void);
-  int getStates (void) { return states; }
-  void setStates (int n) { states = n; }
-  void nextState (void);
-  void prevState (void);
-
-  // integration specific
-  int order;
-  void setOrder (int o) { order = o; }
-  nr_double_t * coefficients;
-  void setCoefficients (nr_double_t * c) { coefficients = c; }
-  typedef void (* integrate_func_t)
-    (circuit *, int, nr_double_t, nr_double_t&, nr_double_t&);
-  integrate_func_t integrate_func;
-  void setIntegration (integrate_func_t f) { integrate_func = f; }
-  void integrate (int qstate, nr_double_t cap, nr_double_t& geq,
-		  nr_double_t& ceq) {
-    (*integrate_func) (this, qstate, cap, geq, ceq);
-  }
-
   static const nr_double_t z0 = 50.0;
 
  protected:
   int type;
-  nr_double_t * stateval;
-  int states;
-  int currentstate;
 
  private:
   int size;
@@ -204,6 +178,7 @@ class circuit : public object
   node * nodes;
   substrate * subst;
   operatingpoint * oper;
+  net * subnet;
 };
 
 #endif /* __CIRCUIT_H__ */

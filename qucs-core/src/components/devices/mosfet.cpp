@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.7 2004/08/19 19:44:24 ela Exp $
+ * $Id: mosfet.cpp,v 1.8 2004/09/12 14:09:20 ela Exp $
  *
  */
 
@@ -38,8 +38,6 @@
 #include "node.h"
 #include "circuit.h"
 #include "net.h"
-#include "analysis.h"
-#include "dcsolver.h"
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
@@ -125,7 +123,7 @@ void mosfet::calcNoise (nr_double_t frequency) {
   setMatrixN (cytocs (y * z0, getMatrixS ()));
 }
 
-void mosfet::initDC (dcsolver * solver) {
+void mosfet::initDC (void) {
 
   // initialize starting values
   setV (NODE_G, 0.8);
@@ -147,38 +145,38 @@ void mosfet::initDC (dcsolver * solver) {
   // possibly insert series resistance at source
   if (Rs != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
+    rs = splitResistance (this, rs, getNet (), "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
   }
   // no series resistance at source
   else {
-    disableResistance (this, rs, solver->getNet (), NODE_S);
+    disableResistance (this, rs, getNet (), NODE_S);
   }
 
   // possibly insert series resistance at gate
   nr_double_t Rg = getPropertyDouble ("Rg");
   if (Rg != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rg = splitResistance (this, rg, solver->getNet (), "Rg", "gate", NODE_G);
+    rg = splitResistance (this, rg, getNet (), "Rg", "gate", NODE_G);
     rg->setProperty ("Temp", T);
     rg->setProperty ("R", Rg);
   }
   // no series resistance at source
   else {
-    disableResistance (this, rg, solver->getNet (), NODE_G);
+    disableResistance (this, rg, getNet (), NODE_G);
   }
 
   // possibly insert series resistance at drain
   if (Rd != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
+    rd = splitResistance (this, rd, getNet (), "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);
     rd->setProperty ("R", Rd);
   }
   // no series resistance at drain
   else {
-    disableResistance (this, rd, solver->getNet (), NODE_D);
+    disableResistance (this, rd, getNet (), NODE_D);
   }
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.h,v 1.5 2004/08/06 18:24:43 ela Exp $
+ * $Id: spfile.h,v 1.6 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -28,7 +28,6 @@
 class vector;
 class matvec;
 class dataset;
-class spsolver;
 
 struct spfile_index_t {
   vector * v;
@@ -41,7 +40,7 @@ class spfile : public circuit
  public:
   spfile ();
   ~spfile ();
-  void initSP (spsolver *);
+  void initSP (void);
   void calcSP (nr_double_t);
   void calcNoise (nr_double_t);
   void createIndex (void);

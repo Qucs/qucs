@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.11 2004/08/19 19:44:24 ela Exp $
+ * $Id: bjt.cpp,v 1.12 2004/09/12 14:09:20 ela Exp $
  *
  */
 
@@ -37,9 +37,6 @@
 #include "node.h"
 #include "circuit.h"
 #include "net.h"
-#include "analysis.h"
-#include "dcsolver.h"
-#include "spsolver.h"
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
@@ -138,7 +135,7 @@ void bjt::calcNoise (nr_double_t frequency) {
   setMatrixN (cytocs (y * z0, getMatrixS ()));
 }
 
-void bjt::initDC (dcsolver * solver) {
+void bjt::initDC (void) {
 
   // apply polarity of BJT
   char * type = getPropertyString ("Type");
@@ -152,37 +149,36 @@ void bjt::initDC (dcsolver * solver) {
   setV (NODE_S, 0.0);
   UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
   UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
-  subnet = solver->getNet ();
 
   // disable additional base-collector capacitance
   if (deviceEnabled (cbcx)) {
-    disableCapacitance (this, cbcx, subnet);
+    disableCapacitance (this, cbcx, getNet ());
   }
 
   // possibly insert series resistance at emitter
   nr_double_t Re = getPropertyDouble ("Re");
   if (Re != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    re = splitResistance (this, re, subnet, "Re", "emitter", NODE_E);
+    re = splitResistance (this, re, getNet (), "Re", "emitter", NODE_E);
     re->setProperty ("R", Re);
     re->setProperty ("Temp", T);
   }
   // no series resistance at emitter
   else {
-    disableResistance (this, re, subnet, NODE_E);
+    disableResistance (this, re, getNet (), NODE_E);
   }
 
   // possibly insert series resistance at collector
   nr_double_t Rc = getPropertyDouble ("Rc");
   if (Rc != 0.0) {
     // create additional circuit if necessary and reassign nodes
-    rc = splitResistance (this, rc, subnet, "Rc", "collector", NODE_C);
+    rc = splitResistance (this, rc, getNet (), "Rc", "collector", NODE_C);
     rc->setProperty ("R", Rc);
     rc->setProperty ("Temp", T);
   }
   // no series resistance at collector
   else {
-    disableResistance (this, rc, subnet, NODE_C);
+    disableResistance (this, rc, getNet (), NODE_C);
   }
 
   // possibly insert base series resistance
@@ -193,13 +189,13 @@ void bjt::initDC (dcsolver * solver) {
   setProperty ("Rbm", Rbm);
   if (Rbm != 0.0) {
     // create additional circuit and reassign nodes
-    rb = splitResistance (this, rb, subnet, "Rbb", "base", NODE_B);
+    rb = splitResistance (this, rb, getNet (), "Rbb", "base", NODE_B);
     rb->setProperty ("R", Rb);
     rb->setProperty ("Temp", T);
   }
   // no series resistance at base
   else {
-    disableResistance (this, rb, subnet, NODE_B);
+    disableResistance (this, rb, getNet (), NODE_B);
     Rbb = 0; // set this operating point
   }
 }
@@ -433,21 +429,20 @@ void bjt::calcOperatingPoints (void) {
   setOperatingPoint ("Ice", It);
 }
 
-void bjt::initSP (spsolver * solver) {
+void bjt::initSP (void) {
   nr_double_t Cbcx = getOperatingPoint ("Cbcx");
   nr_double_t Rbb  = getOperatingPoint ("Rbb");
-  subnet = solver->getNet ();
 
   /* if necessary then insert external capacitance between internal
      collector node and external base node */
   if (Rbb != 0.0 && Cbcx != 0.0) {
     if (!deviceEnabled (cbcx)) {
-      cbcx = splitCapacitance (this, cbcx, subnet, "Cbcx", rb->getNode (1),
+      cbcx = splitCapacitance (this, cbcx, getNet (), "Cbcx", rb->getNode (1),
 			       getNode (NODE_C));
     }
     cbcx->setProperty ("C", Cbcx);  // S-parameters will be computed
   }
   else {
-    disableCapacitance (this, cbcx, subnet);
+    disableCapacitance (this, cbcx, getNet ());
   }
 }

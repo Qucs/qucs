@@ -1,5 +1,5 @@
 /*
- * iprobe.cpp - AC/DC current probe class implementation
+ * iprobe.cpp - AC/DC and transient current probe class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iprobe.cpp,v 1.3 2004/09/11 20:39:30 ela Exp $
+ * $Id: iprobe.cpp,v 1.4 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -45,13 +45,14 @@ iprobe::iprobe () : circuit (2) {
   setVoltageSources (1);
 }
 
-void iprobe::initDC (dcsolver *) {
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+void iprobe::initDC (void) {
+  voltageSource (1, 1, 2);
 }
 
-void iprobe::initAC (acsolver *) {
-  initDC (NULL);
+void iprobe::initAC (void) {
+  initDC ();
+}
+
+void iprobe::initTR (void) {
+  initDC ();
 }

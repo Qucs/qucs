@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.2 2004/09/11 20:39:29 ela Exp $
+ * $Id: trsolver.cpp,v 1.3 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -28,8 +28,11 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+#include <float.h>
 
 #include "object.h"
+#include "logging.h"
 #include "complex.h"
 #include "circuit.h"
 #include "sweep.h"
@@ -64,36 +67,46 @@ trsolver::trsolver (trsolver & o) : nasolver<nr_double_t> (o) {
   swp = o.swp ? new sweep (*o.swp) : NULL;
 }
 
+// This function creates the time sweep if necessary.
+void trsolver::initSteps (void) {
+  if (swp != NULL) return;
+
+  char * type = getPropertyString ("Type");
+  nr_double_t start = getPropertyDouble ("Start");
+  nr_double_t stop = getPropertyDouble ("Stop");
+  int points = getPropertyInteger ("Points");
+
+  if (!strcmp (type, "lin")) {
+    swp = new linsweep ("time");
+    ((linsweep *) swp)->create (start, stop, points);
+  }
+  else if (!strcmp (type, "log")) {
+    swp = new logsweep ("time");
+    ((logsweep *) swp)->create (start, stop, points);
+  }
+}
+
 /* This is the transient netlist solver.  It prepares the circuit list
    for each requested time and solves it then. */
 void trsolver::solve (void) {
-  nr_double_t time, current;
+  nr_double_t time, current = 0;
   runs++;
 
-  // create time sweep if necessary
-  if (swp == NULL) {
-    char * type = getPropertyString ("Type");
-    nr_double_t start = getPropertyDouble ("Start");
-    nr_double_t stop = getPropertyDouble ("Stop");
-    int points = getPropertyInteger ("Points");
+  // Create time sweep if necessary.
+  initSteps ();
 
-    if (!strcmp (type, "lin")) {
-      swp = new linsweep ("time");
-      ((linsweep *) swp)->create (start, stop, points);
-    }
-    else if (!strcmp (type, "log")) {
-      swp = new logsweep ("time");
-      ((logsweep *) swp)->create (start, stop, points);
-    }
-  }
-
-  // initialize node voltages, first guess for non-linear circuits and
-  // generate extra circuits if necessary
-  init ();
+  // First calculate a initial state using the non-linear DC analysis.
+  setDescription ("DC");
+  initDC ();
   solve_pre ();
+  solve_nonlinear ();
 
-  current = 0;
+  // Initialize transient analysis.
+  setDescription ("transient");
+  init ();
   swp->reset ();
+
+  // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
     time = swp->next ();
     logprogressbar (i, swp->getSize (), 40);
@@ -105,17 +118,48 @@ void trsolver::solve (void) {
 
     do {
       calc (current);
-      current += delta;
-      // start the linear solver
+      // Start the linear solver.
       solve_linear ();
+      savePreviousIteration ();
+      nr_double_t save = delta;
+      delta = checkDelta ();
+      if (delta > deltaMax) delta = deltaMax;
+      if (delta < deltaMin) delta = deltaMin;
+      if (save < delta) {
+	calcCoefficients (IMethod, order, coefficients, delta);
+	rejected = 0;
+#if DEBUG
+	logprint (LOG_STATUS, "DEBUG: delta accepted at t = %es, h->%e\n",
+		  current, delta);
+#endif
+      }
+      else if (save > delta) {
+	calcCoefficients (IMethod, order, coefficients, delta);
+	current -= delta;
+	rejected++;
+#if DEBUG
+	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %g, h->%g\n",
+		  current, delta);
+#endif
+      }
+      current += delta;
     }
     while (current < time);
     
-    // save results
+    // Save results.
     saveAllResults (time);
   }
   solve_post ();
   logprogressclear (40);
+}
+
+/* Goes through the list of circuit objects and runs its calcDC()
+   function. */
+void trsolver::calc (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->calcDC ();
+  }
 }
 
 /* Goes through the list of circuit objects and runs its calcTR()
@@ -123,25 +167,47 @@ void trsolver::solve (void) {
 void trsolver::calc (nr_double_t time) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->nextState ();
+    if (!rejected) c->nextState ();
     c->calcTR (time);
+  }
+}
+
+/* Goes through the list of circuit objects and runs its initDC()
+   function. */
+void trsolver::initDC (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->initDC ();
   }
 }
 
 /* Goes through the list of circuit objects and runs its initTR()
    function. */
 void trsolver::init (void) {
-  char * IModel = getPropertyString ("IntegrationMethod");
-  int order = getPropertyInteger ("Order");
+  IMethod = getPropertyString ("IntegrationMethod");
+  order = getPropertyInteger ("Order");
+  nr_double_t start = getPropertyDouble ("Start");
+  nr_double_t stop = getPropertyDouble ("Stop");
+
+  // initialize step values
   delta = getPropertyDouble ("InitialStep");
-  calcCoefficients (IModel, order, coefficients, delta);
+  deltaMin = getPropertyDouble ("MinStep");
+  deltaMax = getPropertyDouble ("MaxStep");
+  if (deltaMax == 0) deltaMax = (stop - start) / 50;
+  if (deltaMin == 0) deltaMin = 1e-9 * deltaMax;
+  if (delta == 0) delta = deltaMax;
+  if (delta < deltaMin) delta = deltaMin;
+  if (delta > deltaMax) delta = deltaMax;
+  
+  calcCoefficients (IMethod, order, coefficients, delta);
+
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initTR (this);
+    c->initTR ();
     c->initStates ();
     c->setCoefficients (coefficients);
     c->setOrder (order);
-    setIntegrationMethod (c, IModel);
+    setIntegrationMethod (c, IMethod);
   }
 }
 
@@ -156,4 +222,51 @@ void trsolver::saveAllResults (nr_double_t time) {
   }
   if (runs == 1) t->add (time);
   saveResults ("Vt", "It", 0, t);
+}
+
+/* This function is meant to adapt the current timestep the transient
+   analysis advanced.  For the computation of the new timestep the
+   truncation error depending on the integration method is used. */
+nr_double_t trsolver::checkDelta (void) {
+  nr_double_t reltol = getPropertyDouble ("reltolTR");
+  nr_double_t abstol = getPropertyDouble ("abstolTR");
+  nr_double_t dif, rel, tol, n = DBL_MAX;
+
+  reltol = 1e-3;
+  abstol = 1e-6;
+
+  for (int r = 1; r <= x->getRows (); r++) {
+    if (!strcmp (IMethod, "Euler")) {
+      dif = z->get (r, 1) - zprev->get (r, 1);
+      rel = abs (x->get (r, 1));
+      tol = reltol * rel + abstol;
+      if (dif != 0) {
+	nr_double_t t = tol * 2 / dif;
+	t = delta * sqrt (fabs (t));
+	n = MIN (n, t);
+      }
+    }
+    else if (!strcmp (IMethod, "Trapezoidal")) {
+      dif = z->get (r, 1) - zprev->get (r, 1);
+      rel = abs (x->get (r, 1));
+      tol = reltol * rel + abstol;
+      if (dif != 0) {
+	nr_double_t t = tol * 3 * (delta + delta) / dif;
+	t = delta * fabs (t);
+	n = MIN (n, t);
+      }
+    }
+    else if (!strcmp (IMethod, "Gear")) {
+      dif = z->get (r, 1) - zprev->get (r, 1);
+      rel = abs (x->get (r, 1));
+      tol = reltol * rel + abstol;
+      if (dif != 0) {
+	nr_double_t t = tol * (order * delta) / dif / delta;
+	t = delta * exp (log (fabs (t)) / (order + 1));
+	n = MIN (n, t);
+      }
+    }
+  }
+  delta = MIN (2 * delta, n);
+  return delta;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.27 2004/09/11 20:39:29 ela Exp $
+ * $Id: circuit.cpp,v 1.28 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -42,13 +42,8 @@
 #include "operatingpoint.h"
 #include "component_id.h"
 
-// Some definitions for the save-state variables.
-#define STATE_SHIFT 3
-#define STATE_NUM   8
-#define STATE_MASK  7
-
 // Constructor creates an unnamed instance of the circuit class.
-circuit::circuit () : object () {
+circuit::circuit () : object (), integrator () {
   size = 0;
   MatrixN = MatrixS = MatrixY = NULL;
   nodes = NULL;
@@ -61,16 +56,14 @@ circuit::circuit () : object () {
   inserted = -1;
   linear = 1;
   enabled = 0;
-  states = 0;
-  currentstate = 0;
-  stateval = NULL;
   subcircuit = NULL;
+  subnet = NULL;
   type = CIR_UNKNOWN;
 }
 
 /* Constructor creates an unnamed instance of the circuit class with a
    certain number of ports. */
-circuit::circuit (int s) : object () {
+circuit::circuit (int s) : object (), integrator () {
   assert (s >= 0 /* && s <= MAX_CIR_PORTS */);
   size = s;
   if (size > 0) {
@@ -87,18 +80,15 @@ circuit::circuit (int s) : object () {
   oper = NULL;
   inserted = -1;
   linear = 1;
-  subcircuit = NULL;
   enabled = 0;
-  states = 0;
-  currentstate = 0;
-  stateval = NULL;
-  coefficients = NULL;
+  subcircuit = NULL;
+  subnet = NULL;
   type = CIR_UNKNOWN;
 }
 
 /* The copy constructor creates a new instance based on the given
    circuit object. */
-circuit::circuit (const circuit & c) : object (c) {
+circuit::circuit (const circuit & c) : object (c), integrator (c) {
   size = c.size;
   pacport = c.pacport;
   original = c.original;
@@ -109,9 +99,7 @@ circuit::circuit (const circuit & c) : object (c) {
   inserted = c.inserted;
   linear = c.linear;
   enabled = 0;
-  states = c.states;
-  currentstate = c.currentstate;
-  coefficients = c.coefficients;
+  subnet = c.subnet;
   subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
 
   if (size > 0) {
@@ -138,13 +126,6 @@ circuit::circuit (const circuit & c) : object (c) {
     MatrixS = MatrixN = MatrixY = NULL;
   }
 
-  // copy state variables if necessary
-  if (states && c.stateval) {
-    int size = states * sizeof (nr_double_t) * STATE_NUM; 
-    stateval = (nr_double_t *) malloc (size);
-    memcpy (stateval, c.stateval, size);
-  }
-
   // copy operating points
   copyOperatingPoints (c.oper);
 }
@@ -157,7 +138,6 @@ circuit::~circuit () {
     delete[] MatrixY;
     delete[] nodes;
   }
-  if (stateval) free (stateval);
   if (subcircuit) free (subcircuit);
   deleteOperatingPoints ();
 }
@@ -527,48 +507,4 @@ void circuit::voltageSource (int n, int pos, int neg, nr_double_t value) {
   setB (pos, n, +1.0); setB (neg, n, -1.0);
   setD (n, n, 0.0);
   setE (n, value);
-}
-
-/* The function allocates and initializes memory for the save-state
-   variables. */
-void circuit::initStates (void) {
-  if (stateval != NULL) free (stateval);
-  if (states) {
-    stateval = (nr_double_t *)
-      calloc (states, sizeof (nr_double_t) * STATE_NUM);
-  }
-  currentstate = 0;
-}
-
-// Clears the save-state variables.
-void circuit::clearStates (void) {
-  if (states && stateval)
-    memset (stateval, 0, states * sizeof (nr_double_t) * STATE_NUM);
-  currentstate = 0;
-}
-
-/* The function returns a save-state variable at the given position.
-   Higher positions mean earlier states.  By default the function
-   returns the current state of the save-state variable. */
-nr_double_t circuit::getState (int state, int n) {
-  int i = (n + currentstate) & STATE_MASK;
-  return stateval[(state << STATE_SHIFT) + i];
-}
-
-/* This function applies the given value to a save-state variable.
-   Higher positions mean earlier states.  By default the function sets
-   the current state of the save-state variable. */
-void circuit::setState (int state, nr_double_t val, int n) {
-  int i = (n + currentstate) & STATE_MASK;
-  stateval[(state << STATE_SHIFT) + i] = val;
-}
-
-// Shifts one state forward.
-void circuit::nextState (void) {
-  if (--currentstate < 0) currentstate = STATE_NUM - 1;
-}
-
-// Shifts one state backward.
-void circuit::prevState (void) {
-  currentstate = (currentstate + 1) & STATE_MASK;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.10 2004/08/15 16:24:36 margraf Exp $
+ * $Id: spfile.cpp,v 1.11 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -43,8 +43,6 @@
 #include "matvec.h"
 #include "dataset.h"
 #include "strlist.h"
-#include "analysis.h"
-#include "spsolver.h"
 #include "spfile.h"
 #include "constants.h"
 
@@ -277,7 +275,7 @@ matrix& spfile::shrinkNoiseMatrix (matrix& n, matrix& s) {
   return *res;
 }
 
-void spfile::initSP (spsolver *) {
+void spfile::initSP (void) {
 
   // load S-parameter file
   char * file = getPropertyString ("File");

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.20 2004/09/08 18:25:19 ela Exp $
+ * $Id: net.cpp,v 1.21 2004/09/12 14:09:19 ela Exp $
  *
  */
 
@@ -100,6 +100,7 @@ void net::insertCircuit (circuit * c) {
   root = c;
   nCircuits++;
   c->setEnabled (1);
+  c->setNet (this);
 
   /* handle AC power sources as s-parameter ports if it is not part of
      a subcircuit */
@@ -132,6 +133,7 @@ void net::removeCircuit (circuit * c, int dropping) {
   }
   nCircuits--;
   c->setEnabled (0);
+  c->setNet (NULL);
   if (c->isPort ()) nPorts--;
   if (c->isVoltageSource ()) nSources -= c->getVoltageSources ();
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.52 2004/09/11 20:39:29 ela Exp $
+ * $Id: check_netlist.cpp,v 1.53 2004/09/12 14:09:18 ela Exp $
  *
  */
 
@@ -497,6 +497,11 @@ struct define_t definition_available[] =
       { "Order", PROP_INT, { 2, PROP_NO_STR }, { 1, 6 } },
       { "InitialStep", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       { "MinStep", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
+      { "MaxIter", PROP_REAL, { 150, PROP_NO_STR }, { 2, 10000 } },
+      { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       PROP_NO_PROP }
   },
   /* subcircuit definition */
