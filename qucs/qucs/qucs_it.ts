@@ -2463,6 +2463,18 @@ Usage:  qucsedit [-r] file
         <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SPICE netlist file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3933,6 +3945,10 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Admittance Smith</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -673,6 +673,9 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
     if(!ok) return false;
   }
 
+  if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+  }
+  
   return true;
 }
 

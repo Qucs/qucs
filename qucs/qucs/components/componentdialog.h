@@ -70,6 +70,7 @@ private slots:
   void slotNumberChanged(const QString&);
   void slotStepChanged(const QString&);
   void slotSetChanged(int);
+  void slotTextChanged(const QString&);
 
 private:
   void correctDesc(QString &desc, QStringList *clst = 0);
@@ -94,8 +95,8 @@ private:
             *textStep, *textNumber;
   QLineEdit *editSim, *editParam, *editValues, *editStart, *editStop,
             *editStep, *editNumber;
-  QCheckBox *checkSim, *checkParam, *checkStart, *checkStop, *checkNumber,
-            *checkType;
+  QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
+            *checkNumber, *checkType;
   QComboBox *comboType;
 };
 

@@ -2352,6 +2352,18 @@ Invocation :  qucsedit [-r] fichier
         <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SPICE netlist file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2932,6 +2944,10 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

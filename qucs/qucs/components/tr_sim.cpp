@@ -38,6 +38,7 @@ TR_Sim::TR_Sim()
   Model = ".TR";
   Name  = "TR";
 
+  // The index of the first 4 properties must not changed. Used in recreate().
   Props.append(new Property("Type", "lin", true,
 	QObject::tr("sweep type")+" [lin, log, list, const]"));
   Props.append(new Property("Start", "0", true,
@@ -89,4 +90,20 @@ Component* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new TR_Sim();
   return 0;
+}
+
+void TR_Sim::recreate()
+{
+  if((Props.getFirst()->Value == "list") ||
+     (Props.getFirst()->Value == "const")) {
+    // Call them "Symbol" to omit them in the netlist.
+    Props.at(1)->Name = "Symbol";
+    Props.next()->Name = "Symbol";
+    Props.next()->Name = "Values";
+  }
+  else {
+    Props.at(1)->Name = "Start";
+    Props.next()->Name = "Stop";
+    Props.next()->Name = "Points";
+  }
 }

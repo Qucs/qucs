@@ -27,6 +27,7 @@ public:
   ~AC_Sim();
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
+  void recreate();
 };
 
 #endif

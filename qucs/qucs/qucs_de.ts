@@ -2587,6 +2587,18 @@ Verwendung:  qucsedit [-r] Datei
         <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SPICE netlist file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4378,6 +4390,10 @@ Bearbeitet den Schaltplan</translation>
     <message>
         <source>Admittance Smith</source>
         <translation>Smith-Diagramm (Admittanz)</translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
