@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.26 2004-08-30 20:55:19 ela Exp $
+ * $Id: msline.cpp,v 1.27 2004-08-31 20:36:25 ela Exp $
  *
  */
 
@@ -322,8 +322,8 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
    coupled microstrip lines by Hammerstad and Jensen. */
 void msline::Hammerstad_ab (nr_double_t u, nr_double_t er, nr_double_t& a,
 			    nr_double_t& b) {
-  a = 1 + 49 * log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) / 49 + 
-    18.7 * log (1 + cubic (u / 18.1)) / 18.7;
+  a = 1 + log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) / 49 + 
+    log (1 + cubic (u / 18.1)) / 18.7;
   b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
 }
 
