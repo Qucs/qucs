@@ -315,6 +315,26 @@
         <source>polar Axis</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>x-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
