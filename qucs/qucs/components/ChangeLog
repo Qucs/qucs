@@ -1,3 +1,7 @@
+2004-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* diode.cpp (Diode): Added new 'n' property to diode model.
+
 2004-02-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* substrate.cpp, symtrafo.cpp, transformer.cpp: Fixed some

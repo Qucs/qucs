@@ -914,6 +914,10 @@ Unknown field!</source>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ideality coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

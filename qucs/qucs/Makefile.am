@@ -48,8 +48,8 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 %.ts: $(qucs_SOURCES)
 	@echo "Updating translations...";
 	@list='$(TRANSLATIONS)'; for file in $$list; do \
-	  $(LUPDATE) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
-	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp -ts $$file; \
+	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
+	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp` -ts $$file; \
 	done
 
 %.qm: %.ts
