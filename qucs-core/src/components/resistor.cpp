@@ -1,7 +1,7 @@
 /*
  * resistor.cpp - resistor class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.4 2004-02-17 15:30:58 ela Exp $
+ * $Id: resistor.cpp,v 1.5 2004-06-04 16:01:47 ela Exp $
  *
  */
 
@@ -48,8 +48,25 @@ void resistor::calcSP (nr_double_t) {
   setS (2, 1, 2.0 / (r + 2.0));
 }
 
+void resistor::initDC (dcsolver *) {
+  nr_double_t r = getPropertyDouble ("R");
+
+  // for non-zero resistances usual MNA entries
+  if (r != 0) {
+    nr_double_t g = 1.0 / r;
+    setY (1, 1, +g); setY (2, 2, +g);
+    setY (1, 2, -g); setY (2, 1, -g);
+    setVoltageSources (0);
+  }
+  // for zero resistances create a zero voltage source
+  else {
+    setY (1, 1, 0); setY (2, 2, 0); setY (1, 2, 0); setY (2, 1, 0);
+    setC (1, 1, +1.0); setC (1, 2, -1.0);
+    setB (1, 1, +1.0); setB (2, 1, -1.0);
+    setVoltageSources (1);
+    setInternalVoltageSource (1);
+  }
+}
+
 void resistor::calcDC (void) {
-  nr_double_t g = 1.0 / getPropertyDouble ("R");
-  setY (1, 1, +g); setY (2, 2, +g);
-  setY (1, 2, -g); setY (2, 1, -g);
 }

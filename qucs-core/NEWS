@@ -26,6 +26,8 @@ files.
 Version 0.0.3
 -------------
 
+ * resistors with R=0 possible in DC analysis
+
 Version 0.0.2
 -------------
 

@@ -1,7 +1,7 @@
 /*
  * nodelist.cpp - node list class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.1 2003-12-26 14:04:07 ela Exp $
+ * $Id: nodelist.cpp,v 1.2 2004-06-04 16:01:47 ela Exp $
  *
  */
 
@@ -69,20 +69,22 @@ nodelist::~nodelist () {
   }
 }
 
-// This function adds a node name to the list.
-void nodelist::add (char * str) {
+// This function adds a node name to the list and saves the internal flag.
+void nodelist::add (char * str, int intern) {
   struct nodelist_t * n;
   n = (struct nodelist_t *) calloc (sizeof (struct nodelist_t), 1);
   n->next = root;
+  n->internal = intern;
   n->name = str ? strdup (str) : NULL;
   root = n;
 }
 
 // This function append a node name to the list.
-void nodelist::append (char * str) {
+void nodelist::append (char * str, int intern) {
   struct nodelist_t * n;
   n = (struct nodelist_t *) calloc (sizeof (struct nodelist_t), 1);
   n->next = NULL;
+  n->internal = intern;
   n->name = str ? strdup (str) : NULL;
   if (root) {
     struct nodelist_t * e;
@@ -113,10 +115,19 @@ int nodelist::contains (char * str) {
 
 /* This function returns the node name positioned at the specified
    location in the node name list. */
-char * nodelist::get (int pos) {
-  struct nodelist_t * n = root;
-  for (int i = 0; i < pos && n != NULL; n = n->next, i++);
-  return n ? n->name : NULL;
+char * nodelist::get (int nr) {
+  for (struct nodelist_t * n = root; n != NULL; n = n->next)
+    if (n->n == nr) return n->name;
+  return NULL;
+}
+
+/* This function returns non-zero if the node positioned at the
+   specified location in the node name list is marked internal and
+   zero otherwise. */
+int nodelist::isInternal (int nr) {
+  for (struct nodelist_t * n = root; n != NULL; n = n->next)
+    if (n->n == nr) return n->internal;
+  return 0;
 }
 
 /* The function returns the nodelist structure at the specified

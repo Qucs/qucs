@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.12 2004-05-22 09:17:24 ela Exp $
+ * $Id: circuit.h,v 1.13 2004-06-04 16:01:47 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@ class node;
 class property;
 class substrate;
 class operatingpoint;
+class dcsolver;
 
 class circuit : public object
 {
@@ -43,9 +44,9 @@ class circuit : public object
   virtual void calcSP (nr_double_t) { }
   virtual void calcDC (void) { }
   virtual void calcAC (nr_double_t) { }
-  virtual void initDC (void) { }
+  virtual void initDC (dcsolver *) { }
   virtual void calcOperatingPoints (void) { }
-  void setNode (int, char *);
+  void setNode (int, char *, int intern = 0);
   node * getNode (int);
   complex getS (int, int);
   void setS (int, int, complex);
@@ -57,6 +58,8 @@ class circuit : public object
   void print (void);
   int isPort (void) { return port; }
   void setPort (int p) { port = p; }
+  void setInternalVoltageSource (int i) { internal = i; }
+  int isInternalVoltageSource (void) { return internal; }
   int isVoltageSource (void) { return source; }
   void setVoltageSource (int s) { source = s; }
   int getVoltageSources (void);
@@ -89,6 +92,7 @@ class circuit : public object
   void copyOperatingPoints (operatingpoint *);
   void deleteOperatingPoints (void);
   int isNonLinear (void);
+  static char * createInternal (char *, char *);
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -100,6 +104,7 @@ class circuit : public object
   int source;
   int nSources;
   int org;
+  int internal;
   complex * MatrixS;
   complex * MatrixY;
   complex MatrixB[MAX_CIR_VSRCS * MAX_CIR_PORTS];
