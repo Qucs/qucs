@@ -233,6 +233,11 @@ AH_TOP([
 AC_CONFIG_FILES([Makefile 
 		 qucs-edit/Makefile
 		 qucs-help/Makefile
+                 qucs-help/docs/Makefile
+                 qucs-help/docs/en/Makefile
+		 qucs-help/docs/de/Makefile
+                 qucs-help/docs/es/Makefile
+                 qucs-help/docs/fr/Makefile
 		 qucs-filter/Makefile
 		 qucs-transcalc/Makefile
 		 qucs-transcalc/bitmaps/Makefile
@@ -241,12 +246,7 @@ AC_CONFIG_FILES([Makefile
 		 qucs/components/Makefile
 		 qucs/diagrams/Makefile
 		 qucs/paintings/Makefile
-		 qucs/dialogs/Makefile
-                 qucs-help/docs/Makefile
-                 qucs-help/docs/en/Makefile
-		 qucs-help/docs/de/Makefile
-                 qucs-help/docs/es/Makefile
-                 qucs-help/docs/fr/Makefile])
+		 qucs/dialogs/Makefile])
 AC_OUTPUT
 
 dnl Print results.
