@@ -43,8 +43,8 @@ MATHFILES = mszl.m mscomparezl.m
 MPSFILES = $(MATHFILES:.m=.eps)
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
-  actrafo.fig opamp.fig gyrator.fig msline.fig
-PSFILES = MNAexample.eps
+  actrafo.fig opamp.fig gyrator.fig msline.fig newton.fig dcdiode.fig
+PSFILES = MNAexample.eps NLexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
 PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
