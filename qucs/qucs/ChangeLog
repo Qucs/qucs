@@ -1,9 +1,16 @@
-2004-11-05  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-11-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* bitmaps/tiny.qucs.xpm: Made tiny Qucs icon transparent.
+
+	* qucsinit.cpp (slotHelpAbout): Added Toyoyuki ISHIKAWA
+	to the list of translators.
+
+2004-11-05  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed many small bugs
 	* implemented right y axis for rectangluar diagram
 
-2004-10-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-10-25  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* open the documents given in command line
 	* component name edit -> RETURN = OK button
@@ -29,7 +36,7 @@
 
 	* qucsinit.cpp (slotHelpAbout): Added proper copyright notice.
 
-2004-10-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-10-23  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed several bugs in subcircuit handling
 
@@ -38,23 +45,23 @@
 	* qucsview.cpp (MPressMoveText): Fixed compiler (gcc 3.4.2)
 	error.
 
-2004-10-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-10-18  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed small bug: no wrong paint after click in "move
 	component text" mode
 
-2004-10-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-10-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* dialog for id_text painting (subcircuit text)
 	* improved printing a little
 	* new action: move component text
 
-2004-10-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-10-14  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* id_text.cpp: text of subcircuit symbols can be
 	repositioned by the user
 
-2004-10-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-10-13  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug in paint routine of the markers
 	* new paintGrid routine in QucsDoc (also works with zoom)
@@ -103,7 +110,7 @@
 
 	* docs/Makefile.am (dist_man_MANS): Added simple man page.
 
-2004-09-26  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-09-26  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* placing component over wire, deletes wire
 	* wire labels move correctly with paste
@@ -124,7 +131,7 @@
 	* docs/en/Makefile.am (HTML): Added missing 'programs.html'
 	file to the list of installed files.
 
-2004-09-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-09-19  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* CTRL+U = edit circuit symbol
 	* F5 = show last message
@@ -133,11 +140,11 @@
 	* new entry in mouse menu: "delete group"
 	* fixed bug that didn't copy node labels
 
-2004-09-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-09-19  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* subcircuit symbols can be defined by the user
 
-2004-09-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-09-12  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* correct cursor symbols at zoom
 
@@ -148,7 +155,7 @@
 	* Makefile.am (%.ts): Added translations of qucs-help and
 	qucs-edit.
 
-2004-09-12  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-09-12  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added new painting: Elliptic Arc
 
@@ -175,11 +182,11 @@
 
 	* qucs_de.ts: Updated german translation.
 
-2004-08-29  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-08-29  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* qucsdoc.cpp: changed the "copy..." functions
 
-2004-08-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-08-24  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* diagrams/graph: Using malloc to store screen points.
 	* many small improvements
@@ -194,7 +201,7 @@
 	* diagrams/graph.h: Using QValueVector for storing screen
 	points.  This fixes a bug when large dotted graphs occurred.
 
-2004-08-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-08-13  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed many little bugs
 
@@ -205,27 +212,27 @@
 	* bitmaps/Makefile.am (XPMS): Added missing files to be
 	installed properly.
 
-2004-08-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-08-08  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* put enhancement and depletion MOSFET into one component
 	class
 	* created a MOSFET with substrate port
 
-2004-08-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-08-07  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug that remembers only one subcircuit history step
 	* update changed subcircuits in all open documents
 
-2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-07-24  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* functions: distribute horizontally/vertically,
 	set on grid
 
-2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-07-24  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* component name can be edited
 
-2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-07-24  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* MScoupled can now be loaded
 	* marker set correctly after new upper x bound
@@ -238,7 +245,7 @@
 
 	* docs/en/Makefile.am (HTML): Added missing files.
 
-2004-07-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-07-18  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* new components: msgap, bjtsub
 	* subcircuit netlist now matches the qucsator style
@@ -270,7 +277,7 @@
 	directories directly.  Changed file and directory references
 	appropriately.
 
-2004-06-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-06-25  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added qucshelp and qucsedit as independent programs
 	* added an "edit" button to the componentdialog
@@ -279,7 +286,7 @@
 	* "Type" parameter in "parameter sweep", "AC simulation",
 	"S parameter simulation"
 
-2004-06-22  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-06-22  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* changes current document by <tab> key.
 	* in diagramdialog: disable property widgets if no graph
@@ -288,13 +295,13 @@
 	* enable/disable undo action accordingly
 	* rectdiagram with logarithmical scale
 
-2004-06-20  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-06-20  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* graphs can be shown dashed (real dashes, i.e. independent
 	of point-to-point distance !!!!)
 	* variables of different datasets can be shown on one page
 
-2004-06-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-06-14  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* resize function for paintings
 	* replaced filledrect, filledellipse and linedialog with
@@ -309,30 +316,30 @@
 	* put Resistor and Resistorus together to one component
 	* implemented "redo" function
 
-2004-06-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-06-10  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* for "move" action: only set "changed" if position really
 	changed
 	* implemented "undo" function
 
-2004-06-06  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-06-06  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added components: BJT, JFET, MOSFET
 	* changes  method to created listview of components in
 	qucs.cpp
 	* better text positioning after rotate/mirror of component
 
-2004-05-30  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-30  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed small bug in creating rectangular diagrams
 
-2004-05-26  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-26  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug in label handling when wire is split into two
 	wires
 	* fixed endless loop when diagram is too small for a grid
 
-2004-05-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-23  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* improved detection of grounded wires and labeled wires
 	* add component ampere_ac
@@ -343,13 +350,13 @@
 	re-ordering the select area rectangle coordinates.  Seemed
 	to be a compiler bug or something.
 
-2004-05-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-21  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* double-click on label opens the label name edit dialog
 	* fixed bug in marker text
 	* fixed bug in diagram calculation
 
-2004-05-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-19  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed many small bugs in the view area handling
 	* filled rectangle and filled ellipse as paintings
@@ -387,19 +394,19 @@
 
 	* qucs.cpp (QucsApp): Fixed Qucs file filter description.
 
-2004-05-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-15  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* markers show more-dimensional data correct
 	* cursor up/down key moves selected markers
 	* outsourced toggle actions into class "QucsActions"
 	* fixed bug in tabdiagram (more-dimensional display)
 
-2004-05-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-10  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed a few bugs with the graph handling
 	* the graph line is now saved within "..."
 
-2004-05-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-05-09  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug after placing diagram dialog
 	* fixed bug in scaling smith chart graphes
@@ -413,7 +420,7 @@
 
 	* qucs_it.ts: Applied changes made by Gorgio.  Thanks.
 
-2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-21  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* strongly improved save as function
 	* outsourced the initialization of QucsApp into QucsInit
@@ -428,37 +435,37 @@
 	* docs/en/Makefile.am (PIC): Added 'mathfunc.html' and
 	'contab.png' files to be installable files.
 
-2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-21  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added document for equation functions in help system
 	* markers an graphs (marker.cpp/.h): pointer can be moved
 	with cursor left/right
 
-2004-04-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* small drawings at the mouse cursor to show the active
 	action
 
-2004-04-11  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-11  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* hinder keyboard input during element moving
 	* CTRL+I=Go into Subcircuit, CTRL+H=Pop outside subcircuit,
 	CTRL+B=set marker, CTRL+G=insert ground
 
-2004-04-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-10  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* strongly speed up reading of datasets
 	* speed up selecting of graphs
 	* CTRL-L=insert wire label
 
-2004-04-03  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-03  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* diagrams can show independent variables
 	* fixed crash with messagebox class
 	* rectdiagram: more beautiful
 	* the graphs of diagrams can be selected.
 
-2004-04-02  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-04-02  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* componentdialog: fixed crash if show box is pressed in
 	components without properties
@@ -466,24 +473,24 @@
 	* backspace can also used for deleting
 	* polardiagram: more beautiful
 
-2004-03-31  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-03-31  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* F1=help, F2=simulate, ctrl+R=rotate, ctrl+M=mirror about y,
 	F4=change to data display/schematic
 
-2004-03-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-03-28  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* placing a ground on a labeled wire line or node deletes
 	the label
 	* new: class "QucsFile" manages load, save, copy, paste
 
-2004-03-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-03-13  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* several simulations can be started
 	* ShowFileDialogs are modeless
 	* wire labels have been improved
 
-2004-02-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-02-28  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* new property for "parameter sweep": Sim
 	* file "qucs.ini" renamed to "qucsrc"
@@ -495,7 +502,7 @@
 	* component drawings of the simulations uses now font metrics
 	for painting the frame
 
-2004-02-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-02-21  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* Ctrl+E (electric) for "Wire" mode, Ctrl+R (run) for
 	"Simulate", Ctrl+D for "Deactivate"
@@ -518,7 +525,7 @@
 	* Makefile.am (%.ts): Using the path transformation command
 	for passing file names to 'lupdate'.
 
-2004-02-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+2004-02-07  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* components/msmbend.cpp, components/msopen.cpp added
 	including their bitmaps.

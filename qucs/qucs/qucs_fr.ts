@@ -3984,6 +3984,11 @@ Déplace la légende du composant</translation>
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Japanese by Toyoyuki ISHIKAWA
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
