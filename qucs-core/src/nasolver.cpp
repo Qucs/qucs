@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.6 2004-09-13 21:05:34 ela Exp $
+ * $Id: nasolver.cpp,v 1.7 2004-09-14 19:33:09 ela Exp $
  *
  */
 
@@ -171,7 +171,7 @@ void nasolver<nr_type_t>::solve_pre (void) {
 
 /* This is the non-linear iterative nodal analysis netlist solver. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::solve_nonlinear (void) {
+int nasolver<nr_type_t>::solve_nonlinear (void) {
   qucs::exception * e;
   int convergence, run = 0, MaxIterations, error = 0;
 
@@ -199,6 +199,7 @@ void nasolver<nr_type_t>::solve_nonlinear (void) {
     e->setText ("no convergence in %s analysis after %d iterations",
 		desc, run);
     throw_exception (e);
+    error++;
   }
 #if DEBUG
   else {
@@ -206,12 +207,13 @@ void nasolver<nr_type_t>::solve_nonlinear (void) {
 	      run);
   }
 #endif /* DEBUG */
+  return error;
 }
 
 /* This is the linear nodal analysis netlist solver. */
 template <class nr_type_t>
-void nasolver<nr_type_t>::solve_linear (void) {
-  solve_once ();
+int nasolver<nr_type_t>::solve_linear (void) {
+  return solve_once ();
 }
 
 /* Applying the MNA (Modified Nodal Analysis) to a circuit with

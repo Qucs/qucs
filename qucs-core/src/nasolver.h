@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.4 2004-09-13 21:05:34 ela Exp $
+ * $Id: nasolver.h,v 1.5 2004-09-14 19:33:09 ela Exp $
  *
  */
 
@@ -46,8 +46,8 @@ class nasolver : public analysis
   ~nasolver ();
   virtual void calc (void) { }
   int solve_once (void);
-  void solve_nonlinear (void);
-  void solve_linear (void);
+  int solve_nonlinear (void);
+  int solve_linear (void);
   void solve_pre (void);
   void solve_post (void);
   void setDescription (char * n) { desc = n; }

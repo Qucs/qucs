@@ -4649,27 +4649,35 @@ by the following equation.
 There are several linear single- and multi-step numerical integration
 methods available, each having advantages and disadvantages concerning
 aspects of stability and accuracy.  Integration methods can also be
-classified into implicit and explicit methods.
+classified into implicit and explicit methods.  Explicit methods are
+inexpensive per step but limited in in stability and therefore not
+used in the field of circuit simulation.  Implicit methods are more
+expensive per step, have better stability and therefore suitable for
+circuit simulation.
 
-\subsection{Single-step methods}
-%\addcontentsline{toc}{subsection}{Single-step methods}
+\subsection{Elementary Methods}
+%\addcontentsline{toc}{subsection}{Elementary Methods}
 
 \subsubsection{Backward Euler}
 %\addcontentsline{toc}{subsubsection}{Backward Euler}
 
-In the explicit Euler method the right hand side of
+In the implicit Euler method the right hand side of
 eq. \eqref{eq:IntEquation} is substituted by $f(x^n, t^n)$ which
 yields
 \begin{equation}
+\label{eq:BEInt}
 f(x,t) = f(x^n, t^n)
 \;\;\;\; \rightarrow \;\;\;\;
 x^{n+1} = x^n + h^n\cdot f(x^n, t^n)
 \end{equation}
 
+The backward euler integration method is a first order single-step
+method.
+
 \subsubsection{Forward Euler}
 %\addcontentsline{toc}{subsubsection}{Forward Euler}
 
-In the implicit Euler method the right hand side of
+In the explicit Euler method the right hand side of
 eq. \eqref{eq:IntEquation} is substituted by $f(x^{n+1}, t^{n+1})$ which
 yields
 \begin{equation}
@@ -4677,6 +4685,12 @@ f(x,t) = f(x^{n+1}, t^{n+1})
 \;\;\;\; \rightarrow \;\;\;\;
 x^{n+1} = x^n + h^n\cdot f(x^{n+1}, t^{n+1})
 \end{equation}
+
+The explicit Euler method has stability problems.  The step size is
+limited by stability.  In general explicit time marching integration
+methods are not suitable for circuit analysis where computation with
+large steps may be necessary when the solution changes slowly
+(i.e. when the accuracy does not require small steps).
 
 \subsubsection{Trapezoidal method}
 %\addcontentsline{toc}{subsubsection}{Trapezoidal method}
@@ -4689,14 +4703,38 @@ f(x,t) = \dfrac{1}{2}\cdot \left(f(x^{n+1}, t^{n+1}) + f(x^{n}, t^{n})\right)
 
 which yields
 \begin{equation}
+\label{eq:TRInt}
 x^{n+1} = x^n + \dfrac{h^n}{2}\cdot \left(f(x^{n+1}, t^{n+1}) + f(x^{n}, t^{n})\right)
 \end{equation}
 
 In each integration step the average value of the intervals beginning
-and end is taken into account.
+and end is taken into account.  The trapezoidal rule integration
+method is a second order single-step method.  There is no more
+accurate second order integration method than the trapezoidal method.
 
-\subsection{Multi-step methods}
-%\addcontentsline{toc}{subsection}{Multi-step methods}
+\begin{center}
+\begin{figure}[ht]
+\begin{minipage}[t]{0.33\linewidth}
+\centering
+\includegraphics[height=1.8cm]{feuler}
+forward-euler
+\end{minipage}
+\begin{minipage}[t]{0.33\linewidth}
+\centering
+\includegraphics[height=1.8cm]{beuler}
+backward-euler
+\end{minipage}
+\begin{minipage}[t]{0.33\linewidth}
+\centering
+\includegraphics[height=1.8cm]{trapez}
+trapezoidal
+\end{minipage}
+\end{figure}
+\FloatBarrier
+\end{center}
+
+\subsection{Linear Multistep Methods}
+%\addcontentsline{toc}{subsection}{Linear Multistep Methods}
 
 For higher order multi-step integration methods the general purpose
 method of resolution for the equation $\dot{x} = f(x,t)$
@@ -4704,7 +4742,16 @@ method of resolution for the equation $\dot{x} = f(x,t)$
 x^{n+1} = \sum^p_{i=0} a_i\cdot x^{n-i} + h \sum^p_{i=-1} b_i\cdot f(x^{n-i}, t^{n-i})
 \end{equation}
 
-is used.  For a polynom of order $k$ the number of required coefficients is
+is used.  With $b_{-1} = 0$ the method is explicit and therefore not
+suitable for circuit simulation.  When $b_{-1} \ne 0$ the method is
+implicit and suitable for circuit simulation, i.e. suitable for
+solving stiff problems.  For differential equation systems describing
+electrical networks the eigenvalues strongly vary.  These kind of
+differential equation systems are called stiff.
+
+\addvspace{12pt}
+
+For a polynom of order $k$ the number of required coefficients is
 \begin{equation}
 2p + 3 \ge k + 1
 \end{equation}
@@ -4731,7 +4778,7 @@ p = k - 1
 b_0 = b_1 = \ldots = b_{k-1} = 0
 \end{equation}
 
-due to the following equation system.
+due to the following equation system
 \begin{equation}
 \label{eq:GearCoeff}
 \begin{bmatrix}
@@ -4763,14 +4810,18 @@ for the Gear formulae of order $4$.  Order $k = 1$ yields the implicit
 Euler method.  The example given in the equation system
 \eqref{eq:GearCoeff} results in the following integration formula.
 \begin{equation}
+\label{eq:GearInt}
 \begin{split}
 x^{n+1} &= a_0\cdot x^{n} + a_1\cdot x^{n-1} + a_2\cdot x^{n-2} + a_3\cdot x^{n-3} + h\cdot b_{-1}\cdot f(x^{n+1}, t^{n+1})\\
 &= \dfrac{48}{25}\cdot x^{n} - \dfrac{36}{25}\cdot x^{n-1} + \dfrac{16}{25}\cdot x^{n-2} - \dfrac{3}{25}\cdot x^{n-3} + h\cdot \dfrac{12}{25}\cdot f(x^{n+1}, t^{n+1})
 \end{split}
 \end{equation}
 
-\subsubsection{Runga-Kutta}
-%\addcontentsline{toc}{subsubsection}{Runga-Kutta}
+There is no more stable second order integration method than the
+Gear's method of second order.
+
+\subsubsection{Runge-Kutta}
+%\addcontentsline{toc}{subsubsection}{Runge-Kutta}
 
 \subsubsection{Adams-Bashford}
 %\addcontentsline{toc}{subsubsection}{Adams-Bashford}
@@ -4781,6 +4832,20 @@ x^{n+1} &= a_0\cdot x^{n} + a_1\cdot x^{n-1} + a_2\cdot x^{n-2} + a_3\cdot x^{n-
 \subsubsection{Capacitor}
 %\addcontentsline{toc}{subsubsection}{Capacitor}
 
+The relation between current and voltage in terms of a differential
+equation for an ideal capacitor is
+\begin{equation}
+I_C(t) = C\cdot \dfrac{d V_C}{d t}
+\end{equation}
+
+With
+\begin{equation}
+\dfrac{I_C(V, t)}{C} = \dfrac{d V_C}{d t} = f(x,t)
+\end{equation}
+
+the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt}
+and \eqref{eq:GearInt} can be applied to the problem.  Rewriting them
+in an explicit form regarding the next iteration current results in
 \begin{align}
 I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n}\\
 I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n\\
@@ -4810,13 +4875,13 @@ as follows.
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
-V_1\\
-V_2\\
+V_1^{n+1}\\
+V_2^{n+1}\\
 \end{bmatrix}
 =
 \begin{bmatrix}
-+I_{eq}\\
--I_{eq}\\
++I_C^{n+1}\\
+-I_C^{n+1}\\
 \end{bmatrix}
 \end{equation}
 

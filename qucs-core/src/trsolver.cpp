@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.5 2004-09-13 21:05:34 ela Exp $
+ * $Id: trsolver.cpp,v 1.6 2004-09-14 19:33:09 ela Exp $
  *
  */
 
@@ -95,6 +95,7 @@ void trsolver::initSteps (void) {
    for each requested time and solves it then. */
 void trsolver::solve (void) {
   nr_double_t time, current = 0;
+  int error = 0;
   runs++;
 
   // Create time sweep if necessary.
@@ -104,12 +105,21 @@ void trsolver::solve (void) {
   setDescription ("DC");
   initDC ();
   solve_pre ();
-  solve_nonlinear ();
+  error = solve_nonlinear ();
+  if (error) {
+    logprint (LOG_ERROR, "ERROR: %: initial DC analysis failed\n", getName ());
+    return;
+  }
 
   // Initialize transient analysis.
   setDescription ("transient");
   init ();
   swp->reset ();
+
+  int running = 0;
+  //delta /= 10;
+  //updateCoefficients (delta, 1);
+  //updateCoefficients (delta, 1);
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
@@ -121,23 +131,20 @@ void trsolver::solve (void) {
 	      getName (), (double) time);
 #endif
 
-    int running = 0;
     do {
       calc (current);
-      // Start the linear solver.
-      solve_linear ();
+      error += solve_linear (); // Start the linear solver.
+
       nr_double_t save = delta;
-      if (running) {
+      if (running > 2) {
 	delta = checkDelta ();
 	if (delta > deltaMax) delta = deltaMax;
 	if (delta < deltaMin) delta = deltaMin;
-	if (save < delta) {
-	  delta = 1.1 * save;
-	  updateCoefficients (delta);
-	  nextState ();
-	  setState (dState, delta);
+
+	if (delta > 0.9 * save) {
+	  updateCoefficients (delta, 1);
 	  rejected = 0;
-#if DEBUG
+#if DEBUG && 0
 	  logprint (LOG_STATUS,
 		    "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
 		    current, delta);
@@ -145,24 +152,20 @@ void trsolver::solve (void) {
 	  savePreviousIteration ();
 	}
 	else if (save > delta) {
-	  delta = 0.9 * save;
 	  updateCoefficients (delta);
-	  //setState (dState, delta);
 	  rejected++;
-#if DEBUG
+#if DEBUG && 0
 	  logprint (LOG_STATUS,
 		    "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
 		    current, delta);
 #endif
 	  current -= delta;
 	} else {
-	  nextState ();
-	  setState (dState, delta);
+	  updateCoefficients (delta, 1);
 	}
       }
       else {
-	nextState ();
-	setState (dState, delta);
+	updateCoefficients (delta, 1);
       }
       current += delta;
       running++;
@@ -170,6 +173,10 @@ void trsolver::solve (void) {
     while (current < time);
     
     // Save results.
+#if DEBUG && 0
+    logprint (LOG_STATUS, "DEBUG: save point at t = %.3e, h = %.3e\n",
+	      current, delta);
+#endif
     saveAllResults (time);
   }
   solve_post ();
@@ -217,8 +224,8 @@ void trsolver::init (void) {
   deltaMin = getPropertyDouble ("MinStep");
   deltaMax = getPropertyDouble ("MaxStep");
   if (deltaMax == 0.0) deltaMax = (stop - start) / 50;
-  if (deltaMin == 0.0) deltaMin = 1e-9 * deltaMax;
-  if (delta == 0.0) delta = stop / 20000;
+  if (deltaMin == 0.0) deltaMin = 1e-11 * deltaMax;
+  if (delta == 0.0) delta = MIN (stop / 200, deltaMax) / 10;
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
   
@@ -278,8 +285,9 @@ nr_double_t trsolver::checkDelta (void) {
     }
     else if (!strcmp (IMethod, "Trapezoidal")) {
       if (dif != 0) {
-	nr_double_t t = delta + getState (dState, 0);
-	t = delta * t * fabs (tol * 3 / dif);
+	nr_double_t del = delta + getState (dState, 1);
+	nr_double_t t = tol * 12 * del / dif;
+	t = exp (log (fabs (t)) / 3);
 	n = MIN (n, t);
       }
     }
@@ -287,8 +295,8 @@ nr_double_t trsolver::checkDelta (void) {
       nr_double_t del = 0;
       for (int i = 0; i <= order; i++) del += getState (dState, i);
       if (dif != 0) {
-	nr_double_t t = tol * del / dif / delta;
-	t = delta * exp (log (fabs (t)) / (order + 1));
+	nr_double_t t = tol * del / dif;
+	t = exp (log (fabs (t)) / (order + 1));
 	n = MIN (n, t);
       }
     }
@@ -298,9 +306,15 @@ nr_double_t trsolver::checkDelta (void) {
 }
 
 // The function updates the integration coefficients.
-void trsolver::updateCoefficients (nr_double_t delta) {
+void trsolver::updateCoefficients (nr_double_t delta, int next) {
   nr_double_t c = getState (dState);
-  for (int i = 0; i < 8; i++) {
-    coefficients[i] *= c / delta;
+  coefficients[0] *= c / delta;
+  if (next) {
+    for (int i = 1; i < 8; i++) {
+      //coefficients[i] *= getState (dState, i) / getState (dState, i - 1);
+      coefficients[i] *= c / delta;
+    }
+    nextState ();
   }
+  setState (dState, delta);
 }
