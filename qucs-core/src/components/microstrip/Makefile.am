@@ -26,9 +26,9 @@
 
 noinst_LIBRARIES = libmicrostrip.a
 
-libmicrostrip_a_SOURCES = substrate.cpp msline.cpp
+libmicrostrip_a_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp
 
-noinst_HEADERS = substrate.h msline.h
+noinst_HEADERS = substrate.h msline.h mscorner.h msmbend.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components
 
