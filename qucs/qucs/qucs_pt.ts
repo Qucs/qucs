@@ -284,6 +284,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>smith Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polar Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>left Axis</source>
         <translation type="unfinished"></translation>
     </message>
@@ -305,14 +313,6 @@
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>smith Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>polar Axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1976,36 +1976,27 @@ Formato da linha &apos;componente&apos; errado!</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Qucs Editor Version </source>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copyright (C) 2004 by Michael Margraf
-</source>
-        <translation type="unfinished">Copyright (C) 2004 by Michael Margraf
-</translation>
-    </message>
-    <message>
-        <source>    -r  open file read-only
-</source>
+        <source> &lt;invalid&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Too long command line argument!
-
-</source>
+        <source>initial phase in degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wrong command line argument!
-
-</source>
+        <source>ideal amplifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Only one filename allowed!
-
-</source>
+        <source>voltage gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Amplifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2041,22 +2032,6 @@ Formato da linha &apos;componente&apos; errado!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ideal rectangle current source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2077,64 +2052,7 @@ Formato da linha &apos;componente&apos; errado!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Very simple text editor for Qucs
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Usage:  qucsedit [-r] file
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>    -h  display this help and exit
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Amplifier</source>
+        <source>transconductance coefficient in A/V^2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2150,15 +2068,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OpAmp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2166,7 +2076,96 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wrong document type: </source>
+        <source>OpAmp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative tolerance of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>overestimation of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal voltage pulse source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage before and after the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of the pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal rectangle voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of high signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    -h  display this help and exit
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    -r  open file read-only
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too long command line argument!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong command line argument!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only one filename allowed!
+
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2691,10 +2690,6 @@ Erros:
         <translation>Ao menos dois elementos devem ser selecionados !</translation>
     </message>
     <message>
-        <source>Elliptic Arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Delete Group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2703,12 +2698,33 @@ Erros:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Circuit Symbol</source>
-        <translation type="unfinished">Editar Símbolo do Circuito</translation>
+        <source>This will delete the files
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Schematic</source>
+        <source>permanently! Continue ?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Editar Símbolo do Circuito</translation>
     </message>
     <message>
         <source>Edits the symbol for this schematic</source>
@@ -2723,6 +2739,10 @@ Edits the symbol for this schematic</source>
 Editar o símbolo para este esquemático</translation>
     </message>
     <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2730,27 +2750,6 @@ Editar o símbolo para este esquemático</translation>
         <source>Edit Schematic
 
 Edits the schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will delete the files
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Admittance Smith</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2774,6 +2773,12 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Qucs Editor Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2822,12 +2827,6 @@ Edits the schematic</source>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>
-Very simple text editor for Qucs
-</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3972,16 +3971,6 @@ Qt universal circuit simulator
         <translation>Novo</translation>
     </message>
     <message>
-        <source>Portuguese by Luciano Franca
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spanish by Jose L. Redrejo Rodriguez
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move Component Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3993,6 +3982,16 @@ Moves the property text of components</source>
     </message>
     <message>
         <source>French by Vincent Habchi, F5RCS
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
         <translation type="unfinished"></translation>
     </message>
