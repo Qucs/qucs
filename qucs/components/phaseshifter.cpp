@@ -1,5 +1,5 @@
 /***************************************************************************
-                          circulator.cpp  -  description
+                          phaseshifter.cpp  -  description
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,47 +15,44 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "circulator.h"
+#include "phaseshifter.h"
 
 
-Circulator::Circulator()
+Phaseshifter::Phaseshifter()
 {
-  Description = "circulator";
+  Description = "phase shifter";
 
-  Arcs.append(new Arc(-14,-14, 29, 29,  0,16*360,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-14,-14, 14,-14,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-14, 14, 14, 14,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-14,-14,-14, 14,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 14,-14, 14, 14,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -9, -9, 18, 18, 0, 16*360,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 10, 10,-10,QPen(QPen::darkBlue,2)));
+
   Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 30,  0, 14,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  0, 14,  0, 30,QPen(QPen::darkBlue,2)));
-
-  Arcs.append(new Arc( -8, -6, 17, 17,16*20,16*150,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  8,  0,  9, -7,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  8,  0,  2, -1,QPen(QPen::darkBlue,2)));
-
-  Lines.append(new Line(-22, -4,-26,  4,QPen(QPen::darkBlue,2)));   // marks port 1
+  Lines.append(new Line( 14,  0, 30,  0,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));
   Ports.append(new Port( 30,  0));
-  Ports.append(new Port(  0, 30));
 
-  x1 = -30; y1 = -16;
-  x2 =  30; y2 =  30;
+  x1 = -30; y1 = -17;
+  x2 =  30; y2 =  17;
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "Circulator";
-  Model = "Circulator";
+  Sign  = "pshift";
+  Model = "pshift";
   Name  = "X";
 
-  Props.append(new Property("Z1", "50 Ohm", false, "reference impedance of port 1"));
-  Props.append(new Property("Z2", "50 Ohm", false, "reference impedance of port 2"));
-  Props.append(new Property("Z3", "50 Ohm", false, "reference impedance of port 3"));
+  Props.append(new Property("phi", "90", true, "phase shift in degree"));
+  Props.append(new Property("Zref", "50 Ohm", false, "reference impedance"));
 }
 
-Circulator::~Circulator()
+Phaseshifter::~Phaseshifter()
 {
 }
 
-Circulator* Circulator::newOne()
+Phaseshifter* Phaseshifter::newOne()
 {
-  return new Circulator();
+  return new Phaseshifter();
 }

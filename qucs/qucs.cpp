@@ -671,7 +671,8 @@ void QucsApp::slotFileSettings()
 // --------------------------------------------------------------
 void QucsApp::slotFileNew()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Creating new schematic..."));
 
   view->Docs.append(new QucsDoc(WorkView, ""));
@@ -683,7 +684,8 @@ void QucsApp::slotFileNew()
 // --------------------------------------------------------------
 void QucsApp::slotFileOpen()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(".", tr("Schematic (*.sch)"), this,
@@ -741,7 +743,8 @@ bool QucsApp::saveCurrentFile()
 // ###################################################################################
 void QucsApp::slotFileSave()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Saving file..."));
   view->blockSignals(true);   // no user interaction during that time
 
@@ -758,7 +761,8 @@ void QucsApp::slotFileSave()
 // ###################################################################################
 void QucsApp::slotFileSaveAs()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Saving file under new filename..."));
   view->blockSignals(true);   // no user interaction during the time
   
@@ -792,7 +796,8 @@ void QucsApp::slotFileSaveAs()
 // ###################################################################################
 void QucsApp::slotFileSaveAll()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Saving all files..."));
 
   QucsDoc *tmp = view->Docs.current();  // remember the current
@@ -814,7 +819,8 @@ void QucsApp::slotFileSaveAll()
 // ###################################################################################
 void QucsApp::slotFileClose()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Closing file..."));
 
   if(view->Docs.current()->DocChanged) {
@@ -846,7 +852,8 @@ void QucsApp::slotFileClose()
 // ###################################################################################
 void QucsApp::slotFilePrint()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Printing..."));
   
   if (Printer.setup(this))  // print dialog
@@ -864,7 +871,8 @@ void QucsApp::slotFilePrint()
 // Exits the application.
 void QucsApp::slotFileQuit()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
+  if(!view->movingElements.isEmpty())
+    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Exiting application..."));
 
   int exit=QMessageBox::information(this, tr("Quit..."),
@@ -1434,16 +1442,18 @@ void QucsApp::slotSetCompView(int index)
           new QIconViewItem(CompComps, tr("Resistor US"), QImage(BITMAPDIR "resistor_us.xpm"));
           new QIconViewItem(CompComps, tr("Capacitor"), QImage(BITMAPDIR "capacitor.xpm"));
           new QIconViewItem(CompComps, tr("Inductor"), QImage(BITMAPDIR "inductor.xpm"));
-          new QIconViewItem(CompComps, tr("Transformer"), QImage(BITMAPDIR "transformer.xpm"));
-          new QIconViewItem(CompComps, tr("symmetric Transformer"), QImage(BITMAPDIR "symtrans.xpm"));
           new QIconViewItem(CompComps, tr("Ground"), QImage(BITMAPDIR "ground.xpm"));
           new QIconViewItem(CompComps, tr("Subcircuit Port"), QImage(BITMAPDIR "port.xpm"));
+          new QIconViewItem(CompComps, tr("Transformer"), QImage(BITMAPDIR "transformer.xpm"));
+          new QIconViewItem(CompComps, tr("symmetric Transformer"), QImage(BITMAPDIR "symtrans.xpm"));
           new QIconViewItem(CompComps, tr("dc Block"), QImage(BITMAPDIR "dcblock.xpm"));
           new QIconViewItem(CompComps, tr("dc Feed"), QImage(BITMAPDIR "dcfeed.xpm"));
           new QIconViewItem(CompComps, tr("Bias T"), QImage(BITMAPDIR "biast.xpm"));
           new QIconViewItem(CompComps, tr("Attenuator"), QImage(BITMAPDIR "attenuator.xpm"));
           new QIconViewItem(CompComps, tr("Isolator"), QImage(BITMAPDIR "isolator.xpm"));
           new QIconViewItem(CompComps, tr("Circulator"), QImage(BITMAPDIR "circulator.xpm"));
+          new QIconViewItem(CompComps, tr("Gyrator"), QImage(BITMAPDIR "gyrator.xpm"));
+          new QIconViewItem(CompComps, tr("Phase Shifter"), QImage(BITMAPDIR "pshifter.xpm"));
           break;
     case COMBO_Sources:
           new QIconViewItem(CompComps, tr("dc Voltage Source"), QImage(BITMAPDIR "dc_voltage.xpm"));
@@ -1539,13 +1549,13 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 3: view->selComp = new Inductor();
                       break;
-              case 4: view->selComp = new Transformer();
+              case 4: view->selComp = new Ground();
                       break;
-              case 5: view->selComp = new symTrafo();
+              case 5: view->selComp = new SubCirPort();
                       break;
-              case 6: view->selComp = new Ground();
+              case 6: view->selComp = new Transformer();
                       break;
-              case 7: view->selComp = new SubCirPort();
+              case 7: view->selComp = new symTrafo();
                       break;
               case 8: view->selComp = new dcBlock();
                       break;
@@ -1558,6 +1568,10 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
               case 12: view->selComp = new Isolator();
                        break;
               case 13: view->selComp = new Circulator();
+                       break;
+              case 14: view->selComp = new Gyrator();
+                       break;
+              case 15: view->selComp = new Phaseshifter();
                        break;
           }
           break;
@@ -1760,14 +1774,15 @@ void QucsApp::slotInsertLabel(bool on)
 // Is called when the select toolbar button is pressed.
 void QucsApp::slotSelect(bool on)
 {
-  if(!view->movingElements.isEmpty())   // elements are moving ?
-    view->endElementMoving();
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
     activeAction = 0;   // no action active
+
+    if(!view->movingElements.isEmpty())   // elements are moving ?
+      view->endElementMoving();           // place them
     return;
   }
   if(activeAction) {
@@ -1783,6 +1798,7 @@ void QucsApp::slotSelect(bool on)
   view->MousePressAction = &QucsView::MPressSelect;
   view->MouseReleaseAction = &QucsView::MReleaseSelect;
   view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+  view->movingElements.clear();   // delete moving elements
 }
 
 // -------------------------------------------------------------------------------
@@ -1863,10 +1879,13 @@ void QucsApp::slotSetWire(bool on)
 void QucsApp::slotEditDelete(bool on)
 {
   if(!view->movingElements.isEmpty()) {   // elements are moving ?
-    editDelete->blockSignals(true);
-    editDelete->setOn(false);  // release toolbar button
-    editDelete->blockSignals(false);
-    return;
+    if(activeAction != editPaste) {
+      editDelete->blockSignals(true);
+      editDelete->setOn(false);  // release toolbar button
+      editDelete->blockSignals(false);
+      return;
+    }
+//    view->movingElements.clear();   // delete elements, if not paste
   }
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
@@ -1887,6 +1906,7 @@ void QucsApp::slotEditDelete(bool on)
       activeAction->blockSignals(true); // do not call toggle slot
       activeAction->setOn(false);       // set last toolbar button off
       activeAction->blockSignals(false);
+      view->movingElements.clear();   // delete elements
     }
     activeAction = editDelete;
 
