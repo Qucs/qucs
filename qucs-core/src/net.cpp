@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.9 2004/04/26 13:50:03 ela Exp $
+ * $Id: net.cpp,v 1.10 2004/05/02 16:59:31 ela Exp $
  *
  */
 
@@ -172,6 +172,14 @@ analysis * net::findAnalysis (char * n) {
   return NULL;
 }
 
+analysis * net::findAnalysis (int type) {
+  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+    if (a->getType () == type)
+      return a;
+  }
+  return NULL;
+}
+
 /* This function runs all registered analyses applied to the current
    netlist. */
 dataset * net::runAnalysis (void) {
@@ -184,11 +192,10 @@ dataset * net::runAnalysis (void) {
     a->setData (out);
   }
 
-  if (!orderAnalysis ()) {
-    // solve the analyses
-    for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
-      a->solve ();
-    }
+  orderAnalysis ();
+  // solve the analyses
+  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+    a->solve ();
   }
   return out;
 }
@@ -222,9 +229,10 @@ analysis * net::findSecondOrder (void) {
 /* The function reorders (prioritizes) the registered analysis to the
    netlist object.  In fact it chains the analyses to be executed in
    a certain order. */
-int net::orderAnalysis (void) {
+void net::orderAnalysis (void) {
   analysis * parent, * child, * a;
-  int error = 0;
+  analysis * dc = findAnalysis (ANALYSIS_DC);
+  int dcApplied = 0;
   do {
     // get second order sweep
     if ((parent = findSecondOrder ()) != NULL) {
@@ -235,12 +243,40 @@ int net::orderAnalysis (void) {
 	char * cn = getChild (a);
 	if (cn != NULL && !strcmp (cn, child->getName ())) {
 	  a->addAnalysis (child);
+	  // apply DC analysis if necessary
+	  if (child->getType () != ANALYSIS_DC && 
+	      child->getType () != ANALYSIS_SWEEP) {
+	    removeAnalysis (dc);
+	    a->addAnalysis (dc);
+	    dcApplied++;
+	  }
 	}
       }
+      // sort the sub-analysis of each parent
+      for (a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+	sortChildAnalyses (a);
+      }
     }
-  } while (parent != NULL && !error);
+  } while (parent != NULL);
 
-  return error;
+  // sort the parent analyses
+  parent = new analysis ();
+  parent->setAnalysis (actions);
+  sortChildAnalyses (parent);
+  actions = parent->getAnalysis ();
+  delete parent;
+}
+
+// This function sorts the analyses of the given parent analysis.
+void net::sortChildAnalyses (analysis * parent) {
+  analysis * next, * alist = parent->getAnalysis ();
+  for (analysis * a = alist; a != NULL; a = next) {
+    next = (analysis *) a->getNext ();
+    if (a->getType () == ANALYSIS_DC) {
+      parent->delAnalysis (a);
+      parent->addAnalysis (a);
+    }
+  }
 }
 
 // Returns the instance name of the given parents child analysis.
