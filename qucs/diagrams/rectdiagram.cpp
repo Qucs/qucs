@@ -42,6 +42,17 @@ RectDiagram::~RectDiagram()
 {
 }
 
+// ------------------------------------------------------------
+void RectDiagram::calcData(Graph *g)
+{
+  int *p = g->Points;
+//  if(p == 0) return;
+  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
+    *(p++) = int((cp->x-xlow)/(xup-xlow)*x2);
+    *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ylow)/(yup-ylow)*y2);
+  }
+}
+
 // --------------------------------------------------------------
 void RectDiagram::calcDiagram()
 {
@@ -159,16 +170,6 @@ void RectDiagram::calcDiagram()
   Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::black,1)));
   Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,1)));
   Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,1)));
-}
-
-// ------------------------------------------------------------
-void RectDiagram::calcData(Graph *g)
-{
-  int *p = g->Points;
-  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = int((cp->x-xlow)/(xup-xlow)*x2);
-    *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ylow)/(yup-ylow)*y2);
-  }
 }
 
 // ------------------------------------------------------------
