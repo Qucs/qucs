@@ -26,13 +26,16 @@ Volt_noise::Volt_noise()
   Lines.append(new Line(-30,  0,-12,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 30,  0, 12,  0,QPen(QPen::darkBlue,2)));
 
-  Lines.append(new Line(-12,  0,  0,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-12,  1,  1,-12,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,  6,  6,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -7, 10, 10, -7,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -2, 12, 12, -2,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port( 30,  0));
   Ports.append(new Port(-30,  0));
 
-  x1 = -30; y1 = -14;
-  x2 =  30; y2 =  14;
+  x1 = -30; y1 = -15;
+  x2 =  30; y2 =  15;
 
   tx = x1+4;
   ty = y2+4;
@@ -41,9 +44,9 @@ Volt_noise::Volt_noise()
   Name  = "V";
 
   Props.append(new Property("u", "1e-6", true, QObject::tr("equivalent voltage density in V/sqrt(Hz)")));
-  Props.append(new Property("e", "0", true, QObject::tr("frequency exponent")));
-  Props.append(new Property("c", "1", true, QObject::tr("frequency coefficient")));
-  Props.append(new Property("a", "0", true, QObject::tr("additive frequency term")));
+  Props.append(new Property("e", "0", false, QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", false, QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", false, QObject::tr("additive frequency term")));
 }
 
 Volt_noise::~Volt_noise()
