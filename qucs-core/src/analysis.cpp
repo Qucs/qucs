@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.cpp,v 1.3 2004-04-13 20:41:17 ela Exp $
+ * $Id: analysis.cpp,v 1.4 2004-05-02 16:59:31 ela Exp $
  *
  */
 
@@ -71,4 +71,17 @@ void analysis::addAnalysis (analysis * a) {
   a->setPrev (NULL);
   a->setNext (actions);
   actions = a;
+}
+
+/* This function deletes the given analysis from the actions being
+   associated with the current analysis object. */
+void analysis::delAnalysis (analysis * a) {
+  if (a == actions) {
+    actions = (analysis *) a->getNext ();
+    if (actions) actions->setPrev (NULL);
+  }
+  else {
+    if (a->getNext ()) a->getNext()->setPrev (a->getPrev ());
+    a->getPrev()->setNext (a->getNext ());
+  }
 }

@@ -1,5 +1,10 @@
 2004-05-02  Stefan Jahn  <stefan@lkcc.org>
 
+	* net.cpp: Implemented implicit dependencies of analyses.
+
+	* analysis.cpp (delAnalysis): Implemented counterpart of
+	addAnalysis().
+
 	* check_netlist.cpp: Appended some more required model
 	parameters to the diode model.
 

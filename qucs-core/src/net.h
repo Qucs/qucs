@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.6 2004-04-26 13:50:03 ela Exp $
+ * $Id: net.h,v 1.7 2004-05-02 16:59:31 ela Exp $
  *
  */
 
@@ -58,11 +58,13 @@ class net : public object
   void setReduced (int r) { reduced = r; }
   int getVoltageSources (void) { return nSources; }
   analysis * findAnalysis (char *);
+  analysis * findAnalysis (int);
   analysis * findSecondOrder (void);
   analysis * getChildAnalysis (analysis *);
   char * getChild (analysis *);
-  int orderAnalysis (void);
+  void orderAnalysis (void);
   analysis * findLastOrder (analysis *);
+  void sortChildAnalyses (analysis *);
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
 
