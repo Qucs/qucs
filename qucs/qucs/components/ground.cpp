@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          ground.cpp  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,35 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
-
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
-
-/**
-  *@author Michael Margraf
-  */
+#include "ground.h"
 
 
-class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+Ground::Ground()
+{
+  Description = "ground (reference potential)";
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  Lines.append(new Line(  0,  0,  0, 10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-11, 10, 11, 10,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line( -7, 16,  7, 16,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line( -3, 22,  3, 22,QPen(QPen::darkBlue,3)));
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
+  Ports.append(new Port(  0,  0));
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
-};
+  x1 = -12; y1 =  0;
+  x2 =  12; y2 = 25;
 
-#endif
+  tx = 0;
+  ty = 0;
+  Sign  = "GND";
+  Model = "";
+  Name  = "";
+}
+
+Ground::~Ground()
+{
+}
+
+Ground* Ground::newOne()
+{
+  return new Ground();
+}

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          inductor.cpp  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,39 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
-
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
-
-/**
-  *@author Michael Margraf
-  */
+#include "inductor.h"
 
 
-class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+Inductor::Inductor()
+{
+  Description = "inductor";
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  Arcs.append(new Arc(-17, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc( -6, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  5, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-17,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 17,  0, 30,  0,QPen(QPen::darkBlue,2)));
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
+  Ports.append(new Port(-30,  0));
+  Ports.append(new Port( 30,  0));
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
-};
+  x1 = -30; y1 = -10;
+  x2 =  30; y2 =   6;
 
-#endif
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = "L";
+  Model = "L";
+  Name  = "L";
+
+  Props.append(new Property("L", "1 nH", true, "inductance in Henry"));
+}
+
+Inductor::~Inductor()
+{
+}
+
+Inductor* Inductor::newOne()
+{
+  return new Inductor();
+}

@@ -16,8 +16,8 @@
  ***************************************************************************/
 
 #include "qucsview.h"
-#include "componentdialog.h"
-#include "diagramdialog.h"
+#include "components/componentdialog.h"
+#include "diagrams/diagramdialog.h"
 
 #include <qinputdialog.h>
 #include <qclipboard.h>
@@ -887,8 +887,8 @@ void QucsView::endElementMoving()
   
   movingElements.clear();
 
-  drawn = false;
   viewport()->repaint();
+  drawn = false;
 }
 
 // -----------------------------------------------------------

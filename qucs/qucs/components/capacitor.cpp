@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          capacitor.cpp  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
-
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
-
-/**
-  *@author Michael Margraf
-  */
+#include "capacitor.h"
 
 
-class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+Capacitor::Capacitor()
+{
+  Description = "capacitor";
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  Lines.append(new Line( -4,-11, -4, 11,QPen(QPen::darkBlue,4)));
+  Lines.append(new Line(  4,-11,  4, 11,QPen(QPen::darkBlue,4)));
+  Lines.append(new Line(-30,  0, -4,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(  4,  0, 30,  0,QPen(QPen::darkBlue,2)));
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
+  Ports.append(new Port(-30,  0));
+  Ports.append(new Port( 30,  0));
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
-};
+  x1 = -30; y1 = -13;
+  x2 =  30; y2 =  13;
 
-#endif
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = "C";
+  Model = "C";
+  Name  = "C";
+
+  Props.append(new Property("C", "1 pF", true, "capacitance in Farad"));
+}
+
+Capacitor::~Capacitor()
+{
+}
+
+Capacitor* Capacitor::newOne()
+{
+  return new Capacitor();
+}

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          diagram.h  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,51 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
+#ifndef DIAGRAM_H
+#define DIAGRAM_H
 
-#include "element.h"
-#include "components/component.h"    // because of struct Port
+#include "graph.h"
+#include "../components/components.h"
 
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
+#include <qfile.h>
+
 
 /**
   *@author Michael Margraf
   */
 
 
-class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
 
+class Diagram : public Element {
+public: 
+	Diagram(int _cx=0, int _cy=0);
+	virtual ~Diagram();
+
+  virtual Diagram* newOne();
+  virtual void calcDiagram();
+  virtual void calcData(Graph *g);
   virtual void paintScheme(QPainter *p);
   virtual void setCenter(int x, int y, bool relative=false);
-
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
-
   void    paint(QPainter *p);
-  void    rotate();
+  void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
+  bool    load(const QString& Line, QTextStream *stream);
+
+  void loadGraphData(const QString& defaultDataSet);
+  bool loadVarData(const QString& fileName);
+  int  loadIndepVarData(const QString& var, const QString& fileName);
+  
+  QString Name;   // identity string for the diagram type (e.g. Polar), used for saving etc.
+  bool    GridOn;
+  int     GridX, GridY;
+  QString xLabel, yLabel;
+  
+  QPtrList<Graph> Graphs;
+  QPtrList<Arc>   Arcs;
+  QPtrList<Line>  Lines;
+  QPtrList<Text>  Texts;
+
+  double xmin, ymin, xmax, ymax;    // least and greatest values of all graph data
 };
 
 #endif

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          polardiagram.h  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Fri Oct 17 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
+#ifndef POLARDIAGRAM_H
+#define POLARDIAGRAM_H
 
-#include "element.h"
-#include "components/component.h"    // because of struct Port
+#include "diagram.h"
 
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
 
 /**
   *@author Michael Margraf
   */
 
-
-class Wire : public Element {
+class PolarDiagram : public Diagram  {
 public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+	PolarDiagram(int _cx=0, int _cy=0);
+	~PolarDiagram();
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
-
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
+  virtual PolarDiagram* newOne();
+  virtual void calcDiagram();
+  virtual void calcData(Graph *g);
 };
 
 #endif
