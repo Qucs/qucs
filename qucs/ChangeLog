@@ -1,3 +1,11 @@
+2004-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* paintings/painting.h: Made 'Name' a QString in order to
+	allow the '==' comparisons.
+
+	* docs/en/Makefile.am (HTML): Added missing 'programs.html'
+	file to the list of installed files.
+
 2004-09-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* CTRL+U = edit circuit symbol
