@@ -1,3 +1,8 @@
+2004-02-07  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
+
+	* added some noise formulas
+	* added description for phase shifter DC model
+
 2004-06-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* radius.m, mszl.m, mscomparezl.m: Using the epstk for 
