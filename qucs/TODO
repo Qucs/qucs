@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- improve wiring algorithm
+- don't change into project directory or any other directory
 - microwave line calculation program
 - filter synthesis program
 - import filters for different data formats (ADS, touchstone, etc.)
