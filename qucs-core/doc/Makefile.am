@@ -43,7 +43,7 @@ OCTAVE = octave
 
 MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
   stabbashford.m
-MATHHELPS = zpoly.m
+MATHHELPS = zpoly.m econst.m
 MPSFILES = $(MATHFILES:.m=.eps)
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
