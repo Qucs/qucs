@@ -38,7 +38,7 @@ qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
   paintings/libpaintings.a dialogs/libdialogs.a
 
-noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h \
+noinst_HEADERS = $(MOCHEADERS) main.h wire.h qucsdoc.h element.h \
   node.h wirelabel.h qucsfile.h
 
 # rules for translations

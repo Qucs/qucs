@@ -110,8 +110,9 @@ void QucsInit::initActions()
 	tr("Close File\n\nCloses the current document"));
   connect(App->fileClose, SIGNAL(activated()), App, SLOT(slotFileClose()));
 
-  App->fileSettings = new QAction(tr("Settings"), tr("Settings..."), 0, App);
-  App->fileSettings->setStatusTip(tr("Settings"));
+  App->fileSettings = new QAction(tr("Document Settings"),
+				  tr("Document Settings..."), 0, App);
+  App->fileSettings->setStatusTip(tr("Document Settings"));
   App->fileSettings->setWhatsThis(
 	tr("Settings\n\nSets properties of the file"));
   connect(App->fileSettings, SIGNAL(activated()),
@@ -130,6 +131,14 @@ void QucsInit::initActions()
   App->fileQuit->setStatusTip(tr("Quits the application"));
   App->fileQuit->setWhatsThis(tr("Exit\n\nQuits the application"));
   connect(App->fileQuit, SIGNAL(activated()), App, SLOT(slotFileQuit()));
+
+  App->QucsSettings = new QAction(tr("Application Settings"),
+				  tr("Application Settings..."), 0, App);
+  App->QucsSettings->setStatusTip(tr("Application Settings"));
+  App->QucsSettings->setWhatsThis(
+	tr("Qucs Settings\n\nSets properties of the application"));
+  connect(App->QucsSettings, SIGNAL(activated()),
+	  App, SLOT(slotQucsSettings()));
 
   App->editCut = new QAction(tr("Cut"),
                         QIconSet(QImage(BITMAPDIR "editcut.png")),
@@ -463,10 +472,10 @@ void QucsInit::initMenuBar()
   App->fileSave->addTo(fileMenu);
   App->fileSaveAll->addTo(fileMenu);
   App->fileSaveAs->addTo(fileMenu);
-  fileMenu->insertSeparator();
+  App->filePrint->addTo(fileMenu);
   App->fileSettings->addTo(fileMenu);
   fileMenu->insertSeparator();
-  App->filePrint->addTo(fileMenu);
+  App->QucsSettings->addTo(fileMenu);
   fileMenu->insertSeparator();
   App->fileQuit->addTo(fileMenu);
 
