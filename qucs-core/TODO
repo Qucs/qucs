@@ -23,8 +23,10 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Implement variable step-size coefficient calculations for transient
-  integrators.
+- Add charge-conversing model for MOS capacitances.
+- Implement variable step-size coefficient for Adams-Bashford.
+	- Implement variable step-size coefficient calculations for
+	  transient integrators.
 - Transient model of phaseshifter.
 - Transient models for controlled sources with time delay.
 - Transient noise analysis.

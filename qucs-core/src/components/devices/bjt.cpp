@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.18 2004/10/17 09:44:30 ela Exp $
+ * $Id: bjt.cpp,v 1.19 2004/10/18 16:21:21 ela Exp $
  *
  */
 
@@ -64,12 +64,10 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Cbe  = getOperatingPoint ("Cbe");
   nr_double_t gbe  = getOperatingPoint ("gpi");
   nr_double_t Cbci = getOperatingPoint ("Cbci");
-  nr_double_t Cbcx = getOperatingPoint ("Cbcx");
   nr_double_t gbc  = getOperatingPoint ("gmu");
   nr_double_t Ccs  = getOperatingPoint ("Ccs");
   nr_double_t gmfr = getOperatingPoint ("gmf");
   nr_double_t gmr  = getOperatingPoint ("gmr");
-  nr_double_t Rbb  = getOperatingPoint ("Rbb");
   nr_double_t Ptf  = getPropertyDouble ("Ptf");
   nr_double_t Tf   = getPropertyDouble ("Tf");
 
