@@ -2705,7 +2705,20 @@ int QucsDoc::adjustPortNumbers()
   }
   else if(countSymPort > 0) {  // add ports
     int x1, x2, y1, y2;
-    sizeOfAll(x1, y1, x2, y2);
+    if(symbolMode)  sizeOfAll(x1, y1, x2, y2);
+    else {
+      Comps  = &SymbolComps;
+      Wires  = &SymbolWires;
+      Nodes  = &SymbolNodes;
+      Diags  = &SymbolDiags;
+      Paints = &SymbolPaints;
+      sizeOfAll(x1, y1, x2, y2);
+      Comps  = &DocComps;
+      Wires  = &DocWires;
+      Nodes  = &DocNodes;
+      Diags  = &DocDiags;
+      Paints = &DocPaints;
+    }
     x1 += 10;
     y2 += 10;
     setOnGrid(x1, y2);
