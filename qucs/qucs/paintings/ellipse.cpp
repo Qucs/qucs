@@ -21,6 +21,7 @@
 
 Ellipse::Ellipse(bool _filled)
 {
+  Name = "Ellipse ";
   isSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(QPen::lightGray);
@@ -141,7 +142,7 @@ bool Ellipse::load(const QString& s)
 // --------------------------------------------------------------------------
 QString Ellipse::save()
 {
-  QString s = "Ellipse " +
+  QString s = Name +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
 	Pen.color().name()  + " " + QString::number(Pen.width()) + " " +

@@ -31,6 +31,7 @@
 
 GraphicText::GraphicText()
 {
+  Name = "Text ";
   isSelected = false;
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
@@ -150,7 +151,7 @@ QString GraphicText::save()
   t.replace('\n', "\\n");
 
   // the 'Text' property has to be the last within the line !
-  QString s = "Text "+QString::number(cx)+" "+QString::number(cy)+" "
+  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" "
 		+ QString::number(Font.pointSize())+" "+Color.name()+" "
 		+ QString::number(Angle) + " \""+t+"\"";
   return s;

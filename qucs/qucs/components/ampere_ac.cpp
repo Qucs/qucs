@@ -44,7 +44,7 @@ Ampere_ac::Ampere_ac()
 
   Props.append(new Property("I", "1 mA", true,
 		QObject::tr("current in Ampere")));
-  Props.append(new Property("f", "1 GHz", true,
+  Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
 }
 

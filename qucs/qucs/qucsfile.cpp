@@ -66,25 +66,25 @@ QString QucsFile::createClipboardFile()
 
   // Build element document.
   s += "<Components>\n";
-  for(pc = Comps->first(); pc != 0; pc = Comps->next())
+  for(pc = Doc->Comps->first(); pc != 0; pc = Comps->next())
     if(pc->isSelected) {
       s += pc->save()+"\n";  z++; }
   s += "</Components>\n";
 
   s += "<Wires>\n";
-  for(pw = Wires->first(); pw != 0; pw = Wires->next())
+  for(pw = Doc->Wires->first(); pw != 0; pw = Wires->next())
     if(pw->isSelected) {
       s += pw->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
-  for(pd = Diags->first(); pd != 0; pd = Diags->next())
+  for(pd = Doc->Diags->first(); pd != 0; pd = Diags->next())
     if(pd->isSelected) {
       s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
-  for(pp = Paints->first(); pp != 0; pp = Paints->next())
+  for(pp = Doc->Paints->first(); pp != 0; pp = Paints->next())
     if(pp->isSelected) {
       s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";
@@ -92,6 +92,21 @@ QString QucsFile::createClipboardFile()
   if(z == 0) return "";   // return empty if no selection
 
   return s;
+}
+
+// -------------------------------------------------------------
+// Only read fields without loading them.
+bool QucsFile::loadIntoNothing(QTextStream *stream)
+{
+  QString Line, cstr;
+  while(!stream->atEnd()) {
+    Line = stream->readLine();
+    if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
+  }
+
+  QMessageBox::critical(0, QObject::tr("Error"),
+	QObject::tr("Format Error:\n'Painting' field is not closed!"));
+  return false;
 }
 
 // -------------------------------------------------------------
@@ -112,7 +127,32 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
     return false;
   }
 
-  // read content *************************
+  // read content in symbol edit mode *************************
+  if(Doc->symbolMode) {
+    while(!stream->atEnd()) {
+      Line = stream->readLine();
+      if(Line == "<Components>") {
+        if(!loadIntoNothing(stream)) return false; }
+      else
+      if(Line == "<Wires>") {
+        if(!loadIntoNothing(stream)) return false; }
+      else
+      if(Line == "<Diagrams>") {
+        if(!loadIntoNothing(stream)) return false; }
+      else
+      if(Line == "<Paintings>") {
+        if(!loadPaintings(stream, (QPtrList<Painting>*)pe)) return false; }
+      else {
+        QMessageBox::critical(0, QObject::tr("Error"),
+		   QObject::tr("Clipboard Format Error:\nUnknown field!"));
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // read content in schematic edit mode *************************
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line == "<Components>") {
@@ -152,9 +192,16 @@ int QucsFile::save()
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
   stream << "<Properties>\n";
-  stream << "  <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
-			<< Doc->ViewX2<<","<<Doc->ViewY2;
-  stream << ","<<Doc->Scale<<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
+  if(Doc->symbolMode) {
+    stream << "  <View=" << Doc->tmpViewX1<<","<<Doc->tmpViewY1<<","
+			 << Doc->tmpViewX2<<","<<Doc->tmpViewY2<< ",";
+    stream <<Doc->tmpScale<<","<<Doc->tmpPosX<<","<<Doc->tmpPosY << ">\n";
+  }
+  else {
+    stream << "  <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
+			 << Doc->ViewX2<<","<<Doc->ViewY2<< ",";
+    stream <<Doc->Scale<<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
+  }
   stream << "  <Grid=" << Doc->GridX<<","<<Doc->GridY<<","
 			<< Doc->GridOn << ">\n";
   stream << "  <DataSet=" << Doc->DataSet << ">\n";
@@ -418,7 +465,7 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
 // -------------------------------------------------------------
 bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
 {
-  Painting *p;
+  Painting *p=0;
   QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -433,14 +480,15 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     }
     Line = Line.mid(1, Line.length()-2);  // cut off start and end character
 
-
     cstr = Line.section(' ',0,0);    // painting type
-         if(cstr == "Rectangle") p = new Rectangle();
+         if(cstr == "Line") p = new GraphicLine();
+    else if(cstr == "EArc") p = new EllipseArc();
+    // all other paintings are for schematics only
+    else if(Doc->symbolMode) continue;
     else if(cstr == "Text") p = new GraphicText();
-    else if(cstr == "Line") p = new GraphicLine();
+    else if(cstr == "Rectangle") p = new Rectangle();
     else if(cstr == "Arrow") p = new Arrow();
     else if(cstr == "Ellipse") p = new Ellipse();
-    else if(cstr == "EArc") p = new EllipseArc();
     else if(cstr == "PortSym") p = new PortSymbol();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),

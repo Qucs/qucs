@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.11 2004-09-08 18:25:19 ela Exp $
+ * $Id: dataset.cpp,v 1.12 2004-09-18 09:46:34 margraf Exp $
  *
  */
 
@@ -31,6 +31,7 @@
 #include <string.h>
 #include <errno.h>
 #include <assert.h>
+#include <math.h>
 
 #include "logging.h"
 #include "complex.h"

@@ -2199,6 +2199,10 @@ Verwendung:  qucsedit [-r] Dateiname
 
 </translation>
     </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3926,7 +3930,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <source>Ellipse Arc</source>
+        <source>Elliptic Arc</source>
         <translation>Ellipsenbogen</translation>
     </message>
 </context>

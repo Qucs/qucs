@@ -191,6 +191,7 @@ private:
     void nextDocument(bool);
     void fillComboBox(bool);
     void switchEditMode(bool);
+    void changeSchematicSymbolMode(QucsDoc*);
 };
 #endif 
 
