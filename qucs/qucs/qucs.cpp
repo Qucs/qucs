@@ -885,7 +885,8 @@ void QucsApp::slotSimulate()
   }
 
   QStringList com;
-  com << "ls" << "-a";
+  com << "/home/student/devel/qucs-sp-0.0.2/qucs_sp" << "-i" << "netlist.net" << "-o";
+  com << view->Docs.current()->DataSet;
   if(!sim.startProcess(com)) {
     sim.ErrText->insert("ERROR: Cannot start simulator!");
     return;
