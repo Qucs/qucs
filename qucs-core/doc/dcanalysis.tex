@@ -1308,25 +1308,30 @@ The operational amplifier could be considered as a special case of a
 voltage controlled current source with infinite forward
 transconductance $G$.  Please note that the presented matrix form is
 only valid in case where there is a finite feedback impedance
-between the output and the inverting input port.\\
-To also allow a feedback circuit to the non-inverting input (e.g.
-for a schmitt trigger), one needs a limited output voltage swing.
-The following equations are often used to model the transmission
-characteristic of operational amplifiers:
+between the output and the inverting input port.
+
+\addvspace{12pt}
+
+To allow a feedback circuit to the non-inverting input (e.g.  for a
+Schmitt trigger), one needs a limited output voltage swing.  The
+following equations are often used to model the transmission
+characteristic of operational amplifiers.
 \begin{equation}
 I_1 = 0 \qquad\qquad I_3 = 0
 \end{equation}
 \begin{equation}
-U_2 = U_{max}\cdot\frac{2}{\pi}\arctan \left( \frac{\pi}{2\cdot U_{max}}\cdot G\cdot (V_1-V_3) \right)
+V_2 = V_{max}\cdot\dfrac{2}{\pi}\arctan \left( \dfrac{\pi}{2\cdot V_{max}}\cdot G\cdot (V_1-V_3) \right)
 \end{equation}
-with $U_{max}$ being the maximum output voltage swing, $G$ the voltage
-amplification. To model the small-signal behaviour (ac analysis), one
-has to differentiate:
+
+with $V_{max}$ being the maximum output voltage swing and $G$ the
+voltage amplification.  To model the small-signal behaviour (AC
+analysis), it is necessary to differentiate:
 \begin{equation}
-g = \frac{\partial U_2}{\partial (U_1-U_3)}
-  = \frac{G}{1+\left( \frac{\pi}{2\cdot U_{max}}\cdot G\cdot (U_1-U_3) \right)^2}
+g = \dfrac{\partial V_2}{\partial (V_1-V_3)}
+  = \dfrac{G}{1+\left( \dfrac{\pi}{2\cdot V_{max}}\cdot G\cdot (V_1-V_3) \right)^2}
 \end{equation}
-This leads to the matrix representation:
+
+This leads to the following matrix representation.
 \begin{equation}
 \begin{bmatrix}
 .&.&.& 0\\
@@ -1349,7 +1354,8 @@ I_{3}\\
 0
 \end{bmatrix}
 \end{equation}
-With this representation, building the S parameters is easy:
+
+With this representation, building the S-parameters is easy.
 \begin{equation}
 (\underline{S}) =
 \begin{bmatrix}
@@ -1358,7 +1364,6 @@ With this representation, building the S parameters is easy:
  0  &  0 &  1
 \end{bmatrix}
 \end{equation}
-
 
 \subsection{Transformer}
 %\addcontentsline{toc}{subsection}{Transformer}

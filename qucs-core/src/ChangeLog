@@ -1,3 +1,12 @@
+2004-11-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Made the OpAmp a
+	non-linear component.  Changed diameter parameter of MVIA from
+	'd' to 'D'.
+
+	* input.cpp: Enabled opamp and amplifier in the component
+	creator.
+
 2004-10-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* netdefs.h, qucsdefs.h: Two new files generalizing netlist

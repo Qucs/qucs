@@ -120,6 +120,7 @@ AH_TOP([
 #endif
 ])
 
+dnl Add here all your Makefiles. These are created by configure.
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  src/Makefile

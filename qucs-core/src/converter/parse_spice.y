@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_spice.y,v 1.6 2004/11/04 14:34:39 ela Exp $
+ * $Id: parse_spice.y,v 1.7 2004/11/10 20:26:38 ela Exp $
  *
  */
 
@@ -51,6 +51,8 @@
 %token Node
 %token Action
 %token Function
+%token StartSub
+%token StopSub
 
 %union {
   char * ident;
@@ -63,7 +65,7 @@
 
 %type <ident> Identifier Node Action Function Value Float
 %type <str> TitleLines
-%type <definition> DefinitionLine
+%type <definition> DefinitionLine BeginSub SubBody Subcircuit SubBodyLine
 %type <value> NodeList PairList Model Expr DcList
 
 %%
@@ -82,7 +84,11 @@ InputList: /* nothing */
 ;
 
 InputLine:
-  DefinitionLine { /* chain definition root */
+  Subcircuit   { /* chain definition root */
+    $1->next = definition_root;
+    definition_root = $1;
+  }
+  | DefinitionLine { /* chain definition root */
     $1->next = definition_root;
     definition_root = $1;
   }
@@ -294,6 +300,49 @@ Model:
     $$->hint = HINT_NAME | HINT_MSTART;
     spice_set_last_hint ($2, HINT_MSTOP);
     $$->next = $2;
+  }
+;
+
+Subcircuit:
+  BeginSub SubBody EndSub {
+    $1->sub = $2;
+    $$ = $1;
+    $2 = NULL;
+  }
+;
+
+BeginSub:
+  StartSub Identifier NodeList Eol {
+    $$ = create_definition ();
+    $$->type = strdup ("Def");
+    $$->instance = $2;
+    $$->values = $3;
+    $$->action = PROP_ACTION;
+    $$->line = spice_lineno;
+  }
+;
+
+SubBody: /* nothing */ { $$ = NULL; }
+  | SubBodyLine SubBody { /* chain definitions here */
+    if ($1) {
+      $1->next = $2;
+      $$ = $1;
+    }
+  }
+;
+
+EndSub:
+  StopSub Eol { /* nothing to do */ }
+;
+
+SubBodyLine:
+  DefinitionLine { /* chain definitions here */
+    $1->next = $$;
+    $$ = $1;
+  }
+  | Subcircuit { /* do nothing here, see subcircuit rule */ }
+  | Eol {
+    $$ = NULL;
   }
 ;
 
