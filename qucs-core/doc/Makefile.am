@@ -25,7 +25,7 @@
 EXTRA_DIST = technical.tex $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) PLATFORMS $(MATHHELPS) $(CHAPTERS)
 
-dist_man_MANS = qucsator.1
+dist_man_MANS = qucsator.1 qucsconv.1
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
   $(MPSFILES) $(PDFFIGURES) $(PDFFILES)

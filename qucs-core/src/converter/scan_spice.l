@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.3 2004-11-01 22:39:35 ela Exp $
+ * $Id: scan_spice.l,v 1.4 2004-11-02 23:48:40 ela Exp $
  *
  */
 
@@ -62,7 +62,9 @@ NUMBER   ({INT}|{FLOAT1}|{FLOAT2}){SFX}?[A-Za-z]*
 SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     {DIGIT}+
 EOL      \r?\n
-FUNCTION ([sS][iI][nN]|[pP][uU][lL][sS][eE])
+FUN1     ([dD][eE][cC]|[lL][iI][nN]|[oO][cC][tT])
+FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE])
+FUNCTION ({FUN1}|{FUN2})
 
 %x COMMENT
 %option yylineno noyywrap nounput prefix="spice_"
@@ -97,7 +99,7 @@ FUNCTION ([sS][iI][nN]|[pP][uU][lL][sS][eE])
   }
 
 <INITIAL>"."{IDENT} {
-    spice_lval.ident = strdup (spice_text);
+    spice_lval.ident = strdup (&spice_text[1]);
     return Action;
 }
 

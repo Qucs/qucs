@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: qucsconv.cpp,v 1.1 2004-10-29 18:01:29 ela Exp $
+ * $Id: qucsconv.cpp,v 1.2 2004-11-02 23:48:40 ela Exp $
  *
  */
 
@@ -71,8 +71,8 @@ int main (int argc, char ** argv) {
 	"  -v, --version  display version information and exit\n"
 	"  -i  FILENAME   use file as input file (default stdin)\n"
 	"  -o  FILENAME   use file as output file (default stdout)\n"
-	"  -if FORMAT     input data specification\n"
-	"  -of FORMAT     output data specification\n"
+	"  -if FORMAT     input data specification (e.g. spice)\n"
+	"  -of FORMAT     output data specification (e.g. qucs)\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
