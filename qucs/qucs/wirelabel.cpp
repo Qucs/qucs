@@ -106,13 +106,10 @@ void WireLabel::paint(ViewPainter *p)
   x2 = p->drawText(Name, x1, y1, &y2);
 
   p->Painter->setPen(QPen(QPen::darkMagenta,0));
-  int xpaint=0, ypaint=4;
+  int xpaint=0, ypaint=4, phi=0;
   switch(Type) {
-    case isVWireLabel:  ypaint=0;  xpaint=4;
-                        p->drawArc(cx-4, cy-4, 9, 9, 16*140, 16*255);
-                        break;
-    case isHWireLabel:  p->drawArc(cx-4, cy-4, 9, 9, 16*230, 16*255);
-                        break;
+    case isVWireLabel:  ypaint=0; xpaint=4; phi=16*140; break;
+    case isHWireLabel:  phi=16*50; break;
     case isNodeLabel:   ypaint = 0;
     default:            ;
   }
@@ -122,12 +119,14 @@ void WireLabel::paint(ViewPainter *p)
   int b = int(double(y2) / p->Scale) >> 1;
   if(cx < x1+a) {    // where should frame be painted ?
     if(cy < y1+b) {
+      if(phi < 16*90)  phi += 16*180;
       p->map(x1-3, y1-2, &a, &b);    // low right
       c = a + (x2>>1);
       d = b + y2;
       p->map(cx+xpaint, cy+ypaint, &xpaint, &ypaint);
     }
     else {
+      phi += 16*180;
       p->map(x1-3, y1+1, &a, &b);    // up right
       b += y2;
       c  = a + (x2>>1);
@@ -144,6 +143,7 @@ void WireLabel::paint(ViewPainter *p)
       p->map(cx-xpaint, cy+ypaint, &xpaint, &ypaint);
     }
     else {
+      if(phi > 16*90)  phi += 16*180;
       p->map(x1+3, y1+1, &a, &b);    // up left
       a += x2;
       b += y2;
@@ -152,6 +152,7 @@ void WireLabel::paint(ViewPainter *p)
       p->map(cx-xpaint, cy-ypaint, &xpaint, &ypaint);
     }
   }
+  if(phi)  p->drawArc(cx-4, cy-4, 9, 9, phi, 16*255);
   p->Painter->drawLine(a, b, c, b);
   p->Painter->drawLine(a, b, a, d);
   p->Painter->drawLine(xpaint, ypaint, a, b);

@@ -329,26 +329,6 @@
     </message>
     <message>
         <source>x-Axis</source>
-        <translation>x-Achse</translation>
-    </message>
-    <message>
-        <source>manual</source>
-        <translation>benutzerdefiniert</translation>
-    </message>
-    <message>
-        <source>left y-Axis</source>
-        <translation>linke y-Achse</translation>
-    </message>
-    <message>
-        <source>right y-Axis</source>
-        <translation>rechte y-Achse</translation>
-    </message>
-    <message>
-        <source>Limits</source>
-        <translation>Begrenzungen</translation>
-    </message>
-    <message>
-        <source>x-Axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -377,6 +357,18 @@
     </message>
     <message>
         <source>stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

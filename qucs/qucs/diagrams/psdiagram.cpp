@@ -40,15 +40,40 @@ PSDiagram::~PSDiagram()
 }
 
 // ------------------------------------------------------------
-int PSDiagram::calcCoordinate(double* &, double* &yD,
+void PSDiagram::calcCoordinate(double* &, double* &yD,
 			       int *px, int *py, Axis *pa)
 {
   double yr = *(yD++);
   double yi = *(yD++);
   *px = (x2>>1)+int(yr/pa->up*double(x2>>1) + 0.5);
   *py = (y2>>1)+int(yi/pa->up*double(y2>>1) + 0.5);
+}
 
-  return regionCode(*px, *py);
+// --------------------------------------------------------------
+void PSDiagram::calcLimits()
+{
+  int i;
+  double a, b;
+  Axis *polarAxis, *smithAxis;
+
+  if(Name == "PS") {
+    smithAxis = &yAxis;
+    polarAxis = &zAxis;
+  }
+  else {
+    polarAxis = &yAxis;
+    smithAxis = &zAxis;
+  }
+
+  calcSmithAxisScale(smithAxis, i, i);
+  smithAxis->limit_min = 0.0;
+  smithAxis->step = double(i);
+  smithAxis->limit_max = smithAxis->up;
+
+  calcPolarAxisScale(polarAxis, a, polarAxis->step, b);
+  polarAxis->limit_min = 0.0;
+  polarAxis->limit_max = polarAxis->up;
+
 }
 
 // --------------------------------------------------------------

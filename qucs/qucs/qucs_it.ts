@@ -3,7 +3,7 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation>Modifica ProprietÃ  Freccia</translation>
+        <translation>Modifica Proprietï¿½ Freccia</translation>
     </message>
     <message>
         <source>Head Length: </source>
@@ -58,7 +58,7 @@
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation>Modifica ProprietÃ  Componente</translation>
+        <translation>Modifica Proprietï¿½ Componente</translation>
     </message>
     <message>
         <source>OK</source>
@@ -145,7 +145,7 @@
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation>Modifica ProprietÃ  Diagramma</translation>
+        <translation>Modifica Proprietï¿½ Diagramma</translation>
     </message>
     <message>
         <source>Graph Input</source>
@@ -205,7 +205,7 @@
     </message>
     <message>
         <source>Properties</source>
-        <translation>ProprietÃ </translation>
+        <translation>Proprietï¿½</translation>
     </message>
     <message>
         <source>OK</source>
@@ -357,6 +357,18 @@
     </message>
     <message>
         <source>stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -526,7 +538,7 @@
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation>Modifica ProprietÃ  Testo</translation>
+        <translation>Modifica Proprietï¿½ Testo</translation>
     </message>
     <message>
         <source>OK</source>
@@ -801,15 +813,15 @@ Campo sconosciuto!</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation>Modifica ProprietÃ  Ellisse</translation>
+        <translation>Modifica Proprietï¿½ Ellisse</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation>Modifica ProprietÃ  Linea</translation>
+        <translation>Modifica Proprietï¿½ Linea</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation>Modifica ProprietÃ  Rettangolo</translation>
+        <translation>Modifica Proprietï¿½ Rettangolo</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
@@ -893,7 +905,7 @@ Campo sconosciuto!</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation>capacitÃ  in Farad</translation>
+        <translation>capacitï¿½ in Farad</translation>
     </message>
     <message>
         <source>current controlled current source</source>
@@ -1196,7 +1208,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation>permittivitÃ  relativa</translation>
+        <translation>permittivitï¿½ relativa</translation>
     </message>
     <message>
         <source>thickness in meters</source>
@@ -1360,7 +1372,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation type="obsolete">polaritÃ  (npn,pnp)</translation>
+        <translation type="obsolete">polaritï¿½ (npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1632,7 +1644,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation type="obsolete">polaritÃ  (nfet,pfet)</translation>
+        <translation type="obsolete">polaritï¿½ (nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
@@ -2461,7 +2473,7 @@ Chiude il documento corrente</translation>
 Sets properties of the file</source>
         <translation type="obsolete">Impostazioni
 
-Imposta le proprietÃ  del file</translation>
+Imposta le proprietï¿½ del file</translation>
     </message>
     <message>
         <source>Print File</source>
@@ -2757,7 +2769,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="obsolete">ModalitÃ  selezione</translation>
+        <translation type="obsolete">Modalitï¿½ selezione</translation>
     </message>
     <message>
         <source>Select
@@ -2765,7 +2777,7 @@ Rimpicciolisce la vista corrente</translation>
 Select mode</source>
         <translation type="obsolete">Seleziona
 
-ModalitÃ  selezione</translation>
+Modalitï¿½ selezione</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -3149,7 +3161,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation>Questo cancellerÃ  definitivamente il file! Continuare?</translation>
+        <translation>Questo cancellerï¿½ definitivamente il file! Continuare?</translation>
     </message>
     <message>
         <source>No</source>
@@ -3602,7 +3614,7 @@ Errori:
         <source>This will destroy all the project
 files permanently !
 Go on ?</source>
-        <translation type="obsolete">Questo cancellerÃ  definitivamente
+        <translation type="obsolete">Questo cancellerï¿½ definitivamente
 tutti i file del progetto !
 Continuare ?</translation>
     </message>
@@ -3641,12 +3653,12 @@ Continuare ?</translation>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation>&apos; esiste giÃ !
+        <translation>&apos; esiste giï¿½!
 </translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation>Il salvataggio sovrascriverÃ  il vecchio file! Continuare?</translation>
+        <translation>Il salvataggio sovrascriverï¿½ il vecchio file! Continuare?</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
@@ -3698,7 +3710,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation>Questo distruggerÃ  tutti i file del progetto permanentemente! Continuare?</translation>
+        <translation>Questo distruggerï¿½ tutti i file del progetto permanentemente! Continuare?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
@@ -4013,7 +4025,7 @@ Chiude il documento corrente</translation>
 Sets properties of the file</source>
         <translation>Impostazioni
 
-Imposta le proprietÃ  del file</translation>
+Imposta le proprietï¿½ del file</translation>
     </message>
     <message>
         <source>Print File</source>
@@ -4309,7 +4321,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>ModalitÃ  selezione</translation>
+        <translation>Modalitï¿½ selezione</translation>
     </message>
     <message>
         <source>Select
@@ -4317,7 +4329,7 @@ Rimpicciolisce la vista corrente</translation>
 Select mode</source>
         <translation>Seleziona
 
-ModalitÃ  selezione</translation>
+Modalitï¿½ selezione</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -4835,7 +4847,7 @@ Qt universal circuit simulator
 Sets properties of the application</source>
         <translation>Impostazioni Qucs
 
-Imposta le proprietÃ  dell&apos;applicazione</translation>
+Imposta le proprietï¿½ dell&apos;applicazione</translation>
     </message>
     <message>
         <source>Document Settings</source>
@@ -5045,7 +5057,7 @@ Moves the property text of components</source>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation>Modifica proprietÃ  di Qucs</translation>
+        <translation>Modifica proprietï¿½ di Qucs</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
@@ -5111,7 +5123,7 @@ Moves the property text of components</source>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation>Modifica ProprietÃ  File</translation>
+        <translation>Modifica Proprietï¿½ File</translation>
     </message>
     <message>
         <source>Data Display:</source>

@@ -37,15 +37,22 @@ PolarDiagram::~PolarDiagram()
 }
 
 // ------------------------------------------------------------
-int PolarDiagram::calcCoordinate(double* &, double* &yD,
+void PolarDiagram::calcCoordinate(double* &, double* &yD,
 				  int *px, int *py, Axis*)
 {
   double yr = *(yD++);
   double yi = *(yD++);
   *px = (x2>>1)+int(yr/yAxis.up*double(x2>>1) + 0.5);
   *py = (y2>>1)+int(yi/yAxis.up*double(y2>>1) + 0.5);
+}
 
-  return regionCode(*px, *py);
+// --------------------------------------------------------------
+void PolarDiagram::calcLimits()
+{
+  double a, b;
+  calcPolarAxisScale(&yAxis, a, yAxis.step, b);
+  yAxis.limit_min = 0.0;
+  yAxis.limit_max = yAxis.up;
 }
 
 // --------------------------------------------------------------

@@ -33,10 +33,11 @@ public:
   RectDiagram* newOne();
   int  calcDiagram();
   void calcAxisScale(Axis*, double&, double&, double&, double&, double);
-  void calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
+  bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
+  void calcLimits();
   bool calcYAxis(Axis*, int);
   void calcData(Graph *g);
-  int  calcCoordinate(double* &, double* &, int*, int*, Axis*);
+  void calcCoordinate(double* &, double* &, int*, int*, Axis*);
 
   QString xLabel, yLabel;
 };
