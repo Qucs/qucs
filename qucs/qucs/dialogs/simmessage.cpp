@@ -106,7 +106,8 @@ void SimMessage::slotSimEnded()
   Abort->setText(tr("Close window"));
   Display->setDisabled(false);
 
-  emit SimulationEnded(SimProcess.exitStatus(), this);
+  int stat = (!SimProcess.normalExit()) ? -1 : SimProcess.exitStatus();
+  emit SimulationEnded(stat, this);
 }
 
 // ------------------------------------------------------------------------
