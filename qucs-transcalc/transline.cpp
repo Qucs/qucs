@@ -18,10 +18,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  * USA.
  *
- * $Id: transline.cpp,v 1.1 2005-03-13 14:46:35 margraf Exp $
+ * $Id: transline.cpp,v 1.2 2005-04-04 08:28:15 raimi Exp $
  *
  */
 
+#include "qucstrans.h"
 #include "transline.h"
 #include "units.h"
 

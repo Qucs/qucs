@@ -18,8 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA, 02111-1307, USA
  *
- * $Id: c_microstrip.cpp,v 1.2 2005-03-19 11:51:31 raimi Exp $
- *
  */
 
 /* c_microstrip.c - Puts up window for coupled microstrips and 
@@ -428,7 +426,7 @@ void c_microstrip::er_eff_freq()
 
   er_eff = er_eff_o_0;
   P_8 = 0.7168 * (1.0 + 1.076 / (1.0 + 0.0576 * (er - 1.0)));
-  P_9 = P_8 - 0.7193 * (1.0 - exp(-pow(f_n / 20.0, 1.424))) * atan(2.481 * pow(er / 8.0, 0.946));
+  P_9 = P_8 - 0.7913 * (1.0 - exp(-pow(f_n / 20.0, 1.424))) * atan(2.481 * pow(er / 8.0, 0.946));
   P_10 = 0.242 * pow(er - 1.0, 0.55);
   P_11 = 0.6366 * (exp(-0.3401 * f_n) - 1.0) * atan(1.263 * pow(u / 3.0, 1.629));
   P_12 = P_9 + (1.0 - P_9) / (1.0 + 1.183 * pow(u, 1.376));
@@ -673,7 +671,7 @@ void c_microstrip::Z0_dispersion()
   Q_16 = (1.0 + 9.0 / (1.0 + 0.403 * pow(e_r - 1.0, 2))) * Q_15;
   Q_17 = 0.394 * (1.0 - exp(-1.47 * pow(u / 7.0, 0.672))) * (1.0 - exp(-4.25 * pow(f_n / 20.0, 1.87)));
   Q_18 = 0.61 * (1.0 - exp(-2.13 * pow(u / 8.0, 1.593))) / (1.0 + 6.544 * pow(g, 4.17));
-  Q_19 = 0.21 * g * g * g * g / ((1.0 + 0.18 * pow(g, 4.19)) * (1.0 + 0.1 * u * u) * (1.0 + pow(f_n / 24.0, 3.0)));
+  Q_19 = 0.21 * g * g * g * g / ((1.0 + 0.18 * pow(g, 4.9)) * (1.0 + 0.1 * u * u) * (1.0 + pow(f_n / 24.0, 3.0)));
   Q_20 = (0.09 + 1.0 / (1.0 + 0.1 * pow(e_r - 1, 2.7))) * Q_19;
   Q_21 = fabs(1.0 - 42.54 * pow(g, 0.133) * exp(-0.812 * g) * pow(u, 2.5) / (1.0 + 0.033 * pow(u, 2.5)));
 
