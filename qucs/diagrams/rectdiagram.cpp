@@ -53,15 +53,15 @@ void RectDiagram::calcData(Graph *g)
   for(int i=g->countY; i>0; i--) {
     px = g->cPointsX.getFirst()->Points;
     for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
-      *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2);
+      *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2 + 0.5);
       // preserve negative values if not complex number
       if(fabs(*(py+1)) < 1e-250) {
-        *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2);
+        *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2 + 0.5);
         py++;   // do not use imaginary part
       }
       else {  // calculate magnitude of complex number
         *(p++) = int((sqrt((*py)*(*py) +
-                 (*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*y2);
+                 (*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*y2 + 0.5);
         py += 2;
       }
     }
@@ -132,13 +132,13 @@ void RectDiagram::calcDiagram()
   }
   else {
     if(GridNum > 0.3) {
+      zD = GridStep-zD;
       if(GridNum > 0.9) {
-	   if(GridNum*double(x2) >= 1.0) { // more than 1 pixel above ?
-	     xlow -= 0.3*GridStep;    // beauty correction
-	     zD   += 0.3*GridStep;
-	   }
+	if((1.0-GridNum)*double(x2) >= 1.0) { // more than 1 pixel above ?
+	  xlow -= 0.3*GridStep;    // beauty correction
+	  zD   += 0.3*GridStep;
+	}
       }
-      else zD = GridStep-zD;
     }
     else { xlow -= zD;  zD = 0.0; }
   }
@@ -213,13 +213,13 @@ void RectDiagram::calcDiagram()
   }
   else {
     if(GridNum > 0.3) {
+      zD = GridStep-zD;
       if(GridNum > 0.9) {
-	   if(GridNum*double(y2) >= 1.0) { // more than 1 pixel above ?
-	     ylow -= 0.3*GridStep;    // beauty correction
-	     zD   += 0.3*GridStep;
-	   }
+	if((1.0-GridNum)*double(y2) >= 1.0) { // more than 1 pixel above ?
+	  ylow -= 0.3*GridStep;    // beauty correction
+	  zD   += 0.3*GridStep;
+	}
       }
-      else zD = GridStep-zD;
     }
     else { ylow -= zD;  zD = 0.0; }
   }
