@@ -1,7 +1,7 @@
 /*
  * circuit.h - circuit class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.3 2003-12-26 14:04:07 ela Exp $
+ * $Id: circuit.h,v 1.4 2004-01-24 17:34:26 ela Exp $
  *
  */
 
@@ -27,6 +27,7 @@
 
 class node;
 class property;
+class substrate;
 
 class circuit : public object
 {
@@ -56,6 +57,8 @@ class circuit : public object
   int countNodes (void);
   void setType (int t) { type = t; }
   int getType (void) { return type; }
+  substrate * getSubstrate (void);
+  void setSubstrate (substrate *);
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -69,6 +72,7 @@ class circuit : public object
   complex * data;
   complex G;
   node * nodes;
+  substrate * subst;
 };
 
 #endif /* __CIRCUIT_H__ */

@@ -29,7 +29,8 @@ SUBDIRS = components
 
 bin_PROGRAMS = qucsator
 
-INCLUDES = -I$(top_srcdir)/src/components
+INCLUDES = -I$(top_srcdir)/src/components \
+	-I$(top_srcdir)/src/components/microstrip
 
 qucsator_LDADD = components/libcomponent.a
 
