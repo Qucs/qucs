@@ -6303,8 +6303,64 @@ P_{1} &= 0.27488 + \left(0.6315 + \frac{0.525}{\left(1 + 0.0157\cdot f_{n}\right
 P_{2} &= 0.33622\cdot \left(1 - \exp\left(-0.03442 \cdot \varepsilon_{r}\right)\right)\\
 P_{3} &= 0.0363 \cdot \exp\left(-4.6\dfrac{W}{h}\right) \cdot \left(1 - \exp\left(- \left(\dfrac{f_{n}}{38.7}\right)^{4.97}\right)\right)\\
 P_{4} &= 1 + 2.751 \cdot \left(1 - \exp\left(- \left(\frac{\varepsilon_{r}}{15.916}\right)^{8}\right)\right)\\
+\label{eq:KirschningFn}
 f_{n} &= f \cdot h = \text{normalised frequency in } \left[\giga\hertz \cdot \milli\meter\right]
 \end{align}
+
+Dispersion of the characteristic impedance according to
+\cite{Kirschning1} can be applied for the range $0 \le h/\lambda_0 \le
+0.1$, $0.1 \le W/h \le 10$ and for substrates with $1 \le
+\varepsilon_r \le 18$ and is is given by the following set of
+equations.
+\begin{align}
+R_1 &= 0.03891\cdot \varepsilon_r^{1.4}\\
+R_2 &= 0.267\cdot u^{7.0}\\
+R_3 &= 4.766\cdot \exp{ \left(-3.228\cdot u^{0.641}\right)}\\
+R_4 &= 0.016 + \left(0.0514\cdot \varepsilon_r\right)^{4.524}\\
+R_5 &= \left(f_n / 28.843\right)^{12.0}\\
+R_6 &= 22.20\cdot u^{1.92}
+\end{align}
+and
+\begin{align}
+R_7 &= 1.206 - 0.3144\cdot \exp{\left(-R_1\right)}\cdot \left(1 - \exp{\left(-R_2\right)}\right)\\
+R_8 &= 1 + 1.275\cdot \left(1 - \exp{ \left(-0.004625\cdot R_3\cdot \varepsilon_r^{1.674}\right)} \cdot \left(f_n / 18.365\right)^{2.745}\right)\\
+R_9 &= 5.086\cdot \dfrac{R_4\cdot R_5}{0.3838 + 0.386\cdot R_4}\cdot \dfrac{\exp{\left(-R_6\right)}}{1 + 1.2992\cdot R_5}\cdot \dfrac{\left(\varepsilon_r - 1\right)^6}{1 + 10\cdot \left(\varepsilon_r - 1\right)^6}
+\end{align}
+and
+\begin{align}
+R_{10} &= 0.00044\cdot \varepsilon_r^{2.136} + 0.0184\\
+R_{11} &= \dfrac{\left(f_n / 19.47\right)^6}{1 + 0.0962\cdot \left(f_n / 19.47\right)^6}\\
+R_{12} &= \dfrac{1}{1 + 0.00245\cdot u^2}\\
+R_{13} &= 0.9408\cdot \varepsilon_{r}(f)^{R_8} - 0.9603\\
+R_{14} &= \left(0.9408 - R_9\right)\cdot \varepsilon_{r_{eff}}^{R_8} - 0.9603\\
+R_{15} &= 0.707\cdot R_{10}\cdot \left(f_n / 12.3\right)^{1.097}\\
+R_{16} &= 1 + 0.0503\cdot \varepsilon_r^2\cdot R_{11}\cdot \left(1 - \exp{ \left(- \left(u / 15\right)^6\right)}\right)\\
+\label{eq:KirschningR17}
+R_{17} &= R_7\cdot \left(1 - 1.1241\cdot \dfrac{R_{12}}{R_{16}}\cdot \exp{ \left(-0.026\cdot f_n^{1.15656} - R_{15}\right)}\right)
+\end{align}
+
+Finally the frequency-dependent characteristic impedance can be
+written as
+\begin{equation}
+\label{eq:KirschningZLdisp}
+Z_L(f_n) = Z_L(0)\cdot \left(\dfrac{R_{13}}{R_{14}}\right)^{R_{17}}
+\end{equation}
+
+The abbreviations used in these expressions are $f_n$ for the
+normalized frequency as denoted in eq. \eqref{eq:KirschningFn} and $u
+= W/h$ for the microstrip width normalised with respect to the
+substrate height.  The terms $Z_L(0)$ and $\varepsilon_{r_{eff}}$
+denote the static values of microstrip characteristic impedance and
+effective dielectric constant.  The value $\varepsilon_{r}(f)$ is the
+frequency dependent effective dielectric constant computed according
+to \cite{Kirschning3}.
+
+\addvspace{12pt}
+
+R.H. Jansen and M. Kirschning remark in \cite{Kirschning1} for the
+implementation of the expressions on a computer, $R_1$, $R_2$ and
+$R_6$ should be restricted to numerical values less or equal 20 in
+order to prevent overflow.
 
 \subsubsection{Yamashita}
 %\addcontentsline{toc}{subsubsection}{Yamashita}
@@ -6847,7 +6903,8 @@ Q_{21} &= \left| 1-42.54\cdot g^{0.133}\cdot \exp\left(-0.812\cdot g\right)
 With $\varepsilon_{eff}(f_n)$ being the single microstrip effective
 dielectric constant according to \cite{Kirschning3} (see eq.
 \eqref{eq:KandJErEff_disp}) and $Q_0$ single microstrip impedance
-dispersion according to (another reference !!!).
+dispersion according to \cite{Kirschning1} (there denoted as $R_{17}$,
+see eq. \eqref{eq:KirschningR17}).
 
 \addvspace{12pt}
 
@@ -6880,8 +6937,9 @@ Q_{29} &= \frac{15.16}{1+0.196\cdot \left(\varepsilon_r-1\right)^2}
 
 with $Z_L(f_n)$ being the frequency-dependent power-current
 characteristic impedance formulation of a single microstrip with width
-$W$ according to (another reference !!!).  Up to $f_n=20$, the numerical
-error of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is less than 2.5\%.
+$W$ according to \cite{Kirschning1} (see
+eq. \eqref{eq:KirschningZLdisp}).  Up to $f_n=20$, the numerical error
+of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is less than 2.5\%.
 
 \subsubsection{Hammerstad and Jensen}
 %\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.2 2004/09/06 12:46:23 ela Exp $
+ * $Id: nasolver.cpp,v 1.3 2004/09/08 18:25:19 ela Exp $
  *
  */
 
@@ -26,12 +26,9 @@
 # include <config.h>
 #endif
 
-using namespace std;
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream>
 
 #include "logging.h"
 #include "complex.h"

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.10 2004/08/30 20:55:18 ela Exp $
+ * $Id: ucs.cpp,v 1.11 2004/09/08 18:25:19 ela Exp $
  *
  */
 
@@ -26,10 +26,7 @@
 # include <config.h>
 #endif
 
-using namespace std;
-
 #include <stdio.h>
-#include <iostream>
 #include <assert.h>
 
 #include "logging.h"

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.31 2004/09/06 12:46:23 ela Exp $
+ * $Id: msline.cpp,v 1.32 2004/09/08 18:25:20 ela Exp $
  *
  */
 
@@ -164,10 +164,16 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
-    nr_double_t d;
-    Hammerstad_er (W / h, er, 1, 0.5, e);
-    Hammerstad_zl (W / h, d);
-    z = d / sqrt (e);
+    // effective dielectric constant
+    e = (er + 1) / 2 + (er - 1) / 2 * sqrt (1 + 10 * h / W);
+    // characteristic impedance
+    if (W / h < 1.0) {
+      z = Z0 / M_PI / 2 * log (8 * h / W + W / 4 / h);
+    }
+    else {
+      z = Z0 / (W / h + 2.42 - 0.44 * h / W + sqr (1 - h / W));
+    }
+    z /= sqrt (e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
@@ -273,40 +279,13 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   }
   // KIRSCHNING and JANSEN
   else if (!strcmp (Model, "Kirschning")) {
-    nr_double_t fs, p, p1, p2, p3, p4;
-    fs = frequency * h / 1e6;
-    p1 = 0.27488 + (0.6315 + 0.525 / pow (1 + 0.0157 * fs, 20)) * W / h - 
-      0.065683 * exp (-8.7513 * W / h);
-    p2 = 0.33622 * (1 - exp (-0.03442 * er));
-    p3 = 0.0363 * exp (-4.6 * W / h) * (1 - exp (- pow (fs / 38.7, 4.97)));
-    p4 = 1 + 2.751 * (1 - exp (- pow (er / 15.916, 8)));
-    p  = p1 * p2 * pow ((0.1844 + p3 * p4) * fs, 1.5763);
-    e  = er - (er - ErEff) / (1 + p);
+    nr_double_t r17, u  = W / h, fn = frequency * h / 1e6;
 
-    nr_double_t r01, r02, r03, r04, r05, r06, r07, r08, r09, r10;
-    nr_double_t r11, r12, r13, r14, r15, r16, r17;
-    r01 = 0.03891 * pow (er, 1.4);
-    r02 = 0.267 * pow (W / h, 7);
-    r03 = 4.766 * exp (-3.228 * pow (W / h, 0.641));
-    r04 = 0.016 + pow (0.0514 * er, 4.524);
-    r05 = pow (fs / 28.843, 12);
-    r06 = 22.20 * pow (W / h, 1.92);
-    r07 = 1.206 - 0.3144 * exp (-r01) * (1 - exp (-r02));
-    r08 = 1 + 1.275 * (1 - exp (-0.004625 * r03 * 
-				pow (er, 1.674) * pow (fs / 18.365, 2.745)));
-    r09 = 5.086 * r04 * r05 / (0.3838 + 0.386 * r04) * 
-      exp (-r06) / (1 + 1.2992 * r05) * 
-      pow (er - 1, 6) / (1 + 10 * pow (er - 1, 6));
-    r10 = 0.00044 * pow (er, 2.136) + 0.0184;
-    r11 = pow (fs / 19.47, 6) / (1 + 0.0962 * pow (fs / 19.47, 6));
-    r12 = 1 / (1 + 0.00245 * sqr (W / h));
-    r13 = 0.9408 * pow (e, r08) - 0.9603;
-    r14 = (0.9408 - r09) * pow (ErEff, r08) - 0.9603;
-    r15 = 0.707 * r10 * pow (fs / 12.3, 1.097);
-    r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - exp (- pow (W / 15 / h, 6)));
-    r17 = r07 * (1 - 1.1241 * r12 / r16 * 
-		 exp (-0.026 * pow (fs, 1.15656) - r15));
-    z = ZlEff * pow (r13 / r14, r17);
+    // dispersion of dielectric constant
+    Kirschning_er (u, fn, er, ErEff, e);
+
+    // dispersion of characteristic impedance
+    Kirschning_zl (u, fn, er, ErEff, e, ZlEff, r17, z);
   }
 
   ZlEffFreq = z;
@@ -354,6 +333,55 @@ void msline::Getsinger_disp (nr_double_t h, nr_double_t er, nr_double_t ErEff,
   z = ZlEff * sqrt (e / ErEff) / (1 + d);  // group delay model
 }
 
+/* This function computes the dispersion of the effective dielectric
+   constant of a single microstrip line.  It is defined in a separate
+   function because it is used within the coupled microstrip lines as
+   well. */
+void msline::Kirschning_er (nr_double_t u, nr_double_t fn, nr_double_t er,
+			    nr_double_t ErEff, nr_double_t& ErEffFreq) {
+  nr_double_t p, p1, p2, p3, p4;
+  p1 = 0.27488 + (0.6315 + 0.525 / pow (1 + 0.0157 * fn, 20)) * u - 
+    0.065683 * exp (-8.7513 * u);
+  p2 = 0.33622 * (1 - exp (-0.03442 * er));
+  p3 = 0.0363 * exp (-4.6 * u) * (1 - exp (- pow (fn / 38.7, 4.97)));
+  p4 = 1 + 2.751 * (1 - exp (- pow (er / 15.916, 8)));
+  p  = p1 * p2 * pow ((0.1844 + p3 * p4) * fn, 1.5763);
+  ErEffFreq  = er - (er - ErEff) / (1 + p);
+}
+
+/* Computes dispersion effects of characteristic impedance of a single
+   microstrip line according to Kirschning and Jansen.  Also used in
+   coupled microstrip lines calculations. */
+void msline::Kirschning_zl (nr_double_t u, nr_double_t fn, nr_double_t er,
+			    nr_double_t ErEff, nr_double_t ErEffFreq,
+			    nr_double_t ZlEff, nr_double_t& r17,
+			    nr_double_t& ZlEffFreq) {
+  nr_double_t r1, r2, r3, r4, r5, r6, r7, r8, r9, r10;
+  nr_double_t r11, r12, r13, r14, r15, r16;
+  r1 = 0.03891 * pow (er, 1.4);
+  r2 = 0.267 * pow (u, 7);
+  r3 = 4.766 * exp (-3.228 * pow (u, 0.641));
+  r4 = 0.016 + pow (0.0514 * er, 4.524);
+  r5 = pow (fn / 28.843, 12);
+  r6 = 22.20 * pow (u, 1.92);
+  r7 = 1.206 - 0.3144 * exp (-r1) * (1 - exp (-r2));
+  r8 = 1 + 1.275 * (1 - exp (-0.004625 * r3 * 
+			     pow (er, 1.674) * pow (fn / 18.365, 2.745)));
+  r9 = 5.086 * r4 * r5 / (0.3838 + 0.386 * r4) * 
+    exp (-r6) / (1 + 1.2992 * r5) * 
+    pow (er - 1, 6) / (1 + 10 * pow (er - 1, 6));
+  r10 = 0.00044 * pow (er, 2.136) + 0.0184;
+  r11 = pow (fn / 19.47, 6) / (1 + 0.0962 * pow (fn / 19.47, 6));
+  r12 = 1 / (1 + 0.00245 * sqr (u));
+  r13 = 0.9408 * pow (ErEffFreq, r8) - 0.9603;
+  r14 = (0.9408 - r9) * pow (ErEff, r8) - 0.9603;
+  r15 = 0.707 * r10 * pow (fn / 12.3, 1.097);
+  r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - exp (- pow (u / 15, 6)));
+  r17 = r7 * (1 - 1.1241 * r12 / r16 * 
+	      exp (-0.026 * pow (fn, 1.15656) - r15));
+  ZlEffFreq = ZlEff * pow (r13 / r14, r17);
+}
+
 /* The function calculates the conductor and dielectric losses of a
    single microstrip line. */
 void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
@@ -388,6 +416,7 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
     // dielectric losses
     l0 = C0 / frequency;
     ad = M_PI * er / (er - 1) * (ErEff - 1) / sqrt (ErEff) * tand / l0;
+    //ad = M_PI * sqrt (ErEff) * tand / l0;
   }
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.30 2004/09/06 06:40:07 ela Exp $
+ * $Id: input.cpp,v 1.31 2004/09/08 18:25:19 ela Exp $
  *
  */
 
@@ -26,14 +26,11 @@
 # include <config.h>
 #endif
 
-using namespace std;
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <assert.h>
-#include <iostream>
 
 #include "logging.h"
 #include "component.h"

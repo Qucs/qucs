@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.7 2004/08/12 13:59:53 ela Exp $
+ * $Id: object.cpp,v 1.8 2004/09/08 18:25:19 ela Exp $
  *
  */
 
@@ -26,12 +26,9 @@
 # include <config.h>
 #endif
 
-using namespace std;
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream>
 #include <assert.h>
 
 #include "logging.h"
