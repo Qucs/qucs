@@ -64,12 +64,15 @@ dnl PACKAGE set before
 KDE_CREATE_SUBDIRSLIST
 
 dnl Create path info.
-BITMAP_PATH="$prefix/share/"
+BITMAP_PATH="$prefix/share/qucs/bitmaps/"
 AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"], [Where the data files go.])
 unset BITMAP_PATH
 BIN_PATH="$prefix/bin/"
 AC_DEFINE_UNQUOTED([BINARYDIR], ["$BIN_PATH"], [Where the binary files go.])
 unset BIN_PATH
+LANG_PATH="$prefix/share/qucs/lang/"
+AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"], [Where the language files go.])
+unset LANG_PATH
 
 dnl add here all your Makefiles. This are created by configure
 AC_CONFIG_FILES([ Makefile ])
