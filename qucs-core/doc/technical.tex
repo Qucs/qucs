@@ -390,16 +390,16 @@ S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
 \addcontentsline{toc}{subsection}{Attenuator}
 
 The scattering parameters of an ideal attenuator with attenuation $L$
-(loss) in reference to the impedance $Z_{ref}$ writes as follows.
+(loss) (or gain $G=1/L$) in reference to the impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
 r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
 \end{equation}
 \begin{equation}
-S_{11} = S_{22} = \frac{r\cdot(1-L^2)}{L^2-r^2}
+S_{11} = S_{22} = \frac{r\cdot(1-G^2)}{G^2-r^2} = \frac{r\cdot(L^2-1)}{1-r^2\cdot L^2}
 \end{equation}
 \begin{equation}
-S_{12} = S_{21} = \frac{L\cdot(1-r^2)}{L^2-r^2}
+S_{12} = S_{21} = \frac{G\cdot(1-r^2)}{G^2-r^2} = \frac{L\cdot(1-r^2)}{1-r^2\cdot L^2}
 \end{equation}
 
 \subsection*{Isolator}
@@ -600,13 +600,13 @@ S_{24} = S_{31} = \frac{G}{2}\cdot \exp(j\pi-j\omega\tau)
 \addcontentsline{toc}{subsection}{Transmission Line}
 
 The scattering matrix of an ideal, lossless transmission line with
-impedance $Z$ and electrical length $L$ writes as follows.
+impedance $Z$ and electrical length $l$ writes as follows.
 
 \begin{equation}
 r = \frac{Z-Z_0}{Z+Z_0}
 \end{equation}
 \begin{equation}
-p = \exp(-j\omega\frac{L}{c})
+p = \exp(-j\omega\frac{l}{c})
 \end{equation}
 \begin{equation}
 S_{11} = S_{22} = \frac{r\cdot(1-p^2)}{1-r^2\cdot p^2} \qquad,\qquad
