@@ -1,7 +1,7 @@
 /*
  * resistor.cpp - resistor class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.18 2004/11/24 19:15:49 raimi Exp $
+ * $Id: resistor.cpp,v 1.19 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -50,7 +50,7 @@ void resistor::calcSP (nr_double_t) {
   setS (2, 1, 2 / (z + 2));
 }
 
-void resistor::calcNoise (nr_double_t) {
+void resistor::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
   nr_double_t r = getPropertyDouble ("R");
   nr_double_t T = getPropertyDouble ("Temp");

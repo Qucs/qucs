@@ -1,7 +1,7 @@
 /*
  * attenuator.cpp - attenuator class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.13 2004/11/24 19:15:47 raimi Exp $
+ * $Id: attenuator.cpp,v 1.14 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -56,7 +56,7 @@ void attenuator::initSP (void) {
   setS (2, 1, s21);
 }
 
-void attenuator::calcNoise (nr_double_t) {
+void attenuator::calcNoiseSP (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");

@@ -1,7 +1,7 @@
 /*
  * bjt.cpp - bipolar junction transistor class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.24 2004/12/15 19:55:30 raimi Exp $
+ * $Id: bjt.cpp,v 1.25 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -102,7 +102,7 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   return y;
 }
 
-void bjt::calcNoise (nr_double_t frequency) {
+void bjt::calcNoiseSP (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Ibe = getOperatingPoint ("Ibe");

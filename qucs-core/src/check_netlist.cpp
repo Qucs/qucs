@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.69 2004/12/15 19:55:28 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.70 2005/01/17 12:19:01 raimi Exp $
  *
  */
 
@@ -586,6 +586,11 @@ static int checker_validate_lists (struct definition_t * root) {
 	    }
 	  }
 	  val->var = eqn::TAG_VECTOR;
+	  // check and evaluate the unit scale in a value list
+	  for (; val != NULL; val = val->next) {
+	    if (!checker_evaluate_scale (val))
+	      errors++;
+	  }
 	}
 	// property 'Start' is invalid
 	if ((val = checker_find_prop_value (def, "Start")) != NULL) {

@@ -1,7 +1,7 @@
 /*
  * inoise.cpp - noise current source class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inoise.cpp,v 1.3 2004/11/24 19:15:48 raimi Exp $
+ * $Id: inoise.cpp,v 1.4 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -50,7 +50,7 @@ void inoise::initSP (void) {
   setS (2, 2, 1.0);
 }
 
-void inoise::calcNoise (nr_double_t frequency) {
+void inoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t i = getPropertyDouble ("i");
   nr_double_t e = getPropertyDouble ("e");
   nr_double_t c = getPropertyDouble ("c");

@@ -1,7 +1,7 @@
 /*
  * bjt.h - bipolar junction transistor class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.h,v 1.13 2004/10/17 09:44:30 ela Exp $
+ * $Id: bjt.h,v 1.14 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -30,7 +30,7 @@ class bjt : public circuit
  public:
   bjt ();
   void calcSP (nr_double_t);
-  void calcNoise (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void initSP (void);
   void calcDC (void);
   void initDC (void);

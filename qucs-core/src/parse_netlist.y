@@ -4,7 +4,7 @@
 /*
  * parse_netlist.y - parser for the Qucs netlist
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.13 2004/12/07 22:33:31 raimi Exp $
+ * $Id: parse_netlist.y,v 1.14 2005/01/17 12:19:01 raimi Exp $
  *
  */
 
@@ -97,7 +97,7 @@
 %type <subcircuit> DefBegin SubcircuitBody
 %type <node> IdentifierList
 %type <pair> PairList
-%type <value> PropertyValue ValueList Value
+%type <value> PropertyValue ValueList Value PropertyReal
 %type <eqn> EquationList Expression ExpressionList
 %type <assign> Equation
 %type <con> Constant Range
@@ -174,8 +174,9 @@ Value:
   | '"' PropertyValue '"' {
     $$ = $2;
   }
+;
 
-PropertyValue:
+PropertyReal:
   REAL {
     $$ = create_value ();
     $$->value = $1;
@@ -191,6 +192,12 @@ PropertyValue:
     $$->scale = $2;
     $$->unit = $3;
   }
+;
+
+PropertyValue:
+  PropertyReal {
+    $$ = $1;
+  }
   | Identifier {
     $$ = create_value ();
     $$->ident = $1;
@@ -201,17 +208,13 @@ PropertyValue:
 ;
 
 ValueList: /* nothing */ { $$ = NULL; }
-  | REAL {
-    struct value_t * here = create_value ();
-    here->value = $1;
-    here->next = $$;
-    $$ = here;
+  | PropertyReal {
+    $1->next = NULL;
+    $$ = $1;
   }
-  | REAL ';' ValueList {
-    struct value_t * here = create_value ();
-    here->value = $1;
-    here->next = $3;
-    $$ = here;
+  | PropertyReal ';' ValueList {
+    $1->next = $3;
+    $$ = $1;
   }
 ;
 

@@ -1,7 +1,7 @@
 /*
  * mosfet.cpp - mosfet class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.22 2004/12/09 20:30:08 raimi Exp $
+ * $Id: mosfet.cpp,v 1.23 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -105,7 +105,7 @@ matrix mosfet::calcMatrixY (nr_double_t frequency) {
   return y;
 }
 
-void mosfet::calcNoise (nr_double_t frequency) {
+void mosfet::calcNoiseSP (nr_double_t frequency) {
   nr_double_t Kf  = getPropertyDouble ("Kf");
   nr_double_t Af  = getPropertyDouble ("Af");
   nr_double_t Ffe = getPropertyDouble ("Ffe");

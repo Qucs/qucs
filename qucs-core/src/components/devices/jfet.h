@@ -1,7 +1,7 @@
 /*
  * jfet.h - jfet class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.h,v 1.8 2004/10/16 16:42:31 ela Exp $
+ * $Id: jfet.h,v 1.9 2005/01/17 12:19:02 raimi Exp $
  *
  */
 
@@ -30,7 +30,7 @@ class jfet : public circuit
  public:
   jfet ();
   void calcSP (nr_double_t);
-  void calcNoise (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void calcDC (void);
   void initDC (void);
   void calcOperatingPoints (void);

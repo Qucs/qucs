@@ -1,8 +1,8 @@
 %
 % This document contains the chapter about AC noise analysis.
 %
-% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
-% Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
+% Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2005 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -10,35 +10,43 @@
 %
 
 \chapter{AC Noise Analysis}
+%\addcontentsline{toc}{chapter}{AC Noise Analysis}
 
 \section{The Concept}
+%\addcontentsline{toc}{section}{The Concept}
 
-To calculate the small signal noise of a circuit, the AC noise analysis
-has to be applied \cite{Blum}. This technique uses the principle of
-the AC analysis
-described in chapter \ref{sec:acMNA} on page \pageref{sec:acMNA}. In
-addition to the MNA matrix $A$ one needs the noise current correlation
-matrix $\underline{C}_Y$ of the circuit, that contains the equivalent
-noise current sources for every node on its main diagonal and their
-correlation on the other positions.\\
-The basic concept of the ac noise analysis is as follows: We want the
+To calculate the small signal noise of a circuit, the AC noise
+analysis has to be applied \cite{Blum}.  This technique uses the
+principle of the AC analysis described in chapter \ref{sec:acMNA} on
+page \pageref{sec:acMNA}.  In addition to the MNA matrix $A$ one needs
+the noise current correlation matrix $\underline{C}_Y$ of the circuit,
+that contains the equivalent noise current sources for every node on
+its main diagonal and their correlation on the other positions.
+
+\addvspace{12pt}
+
+The basic concept of the AC noise analysis is as follows: We want the
 noise voltage at node $i$, so we calculate what voltage arises due to
-the noise source at node $j$. We do that for every $n$ nodes and after
-that we add all the noise voltages (by paying attention to their
-correlation). But that would mean to solve the MNA equation $n$ times.
-Fortunately there is a more easy way. One can perform the
+the noise source at node $j$.  We do that for every $n$ nodes and
+after that we add all the noise voltages (by paying attention to their
+correlation).  But that would mean to solve the MNA equation $n$
+times.  Fortunately there is a more easy way.  One can perform the
 above-mentioned $n$ steps in one single step, if the reciprocal MNA
-matrix is used. This matrix equals the MNA matrix itself, if the
-network is reciprocal. A network that only contains resistors,
-capacitors, inductors and transformers is reciprocal.\\
-The question that needs to be answered now is: How do we get the
-reciprocal MNA matrix for an arbitrary network ? This is
-equivalent to the question: How do we get the MNA matrix of the
-adjoint network. The answer is quite simple: Just transpose the MNA
-matrix!\\
+matrix is used.  This matrix equals the MNA matrix itself, if the
+network is reciprocal.  A network that only contains resistors,
+capacitors, inductors and transformers is reciprocal.
 
-For any network, calculating the noise voltage at node $i$
-is done by the following three steps:
+\addvspace{12pt}
+
+The question that needs to be answered now is: How do we get the
+reciprocal MNA matrix for an arbitrary network? This is equivalent to
+the question: How do we get the MNA matrix of the adjoint network.
+The answer is quite simple: Just transpose the MNA matrix!
+
+\addvspace{12pt}
+
+For any network, calculating the noise voltage at node $i$ is done by
+the following three steps:
 \begin{alignat}{2}
  & \text{1. Solving MNA equation:} & \qquad & \left[A\right]^T \cdot \left[x\right] =
 \left[A\right]^T \cdot
@@ -62,32 +70,40 @@ j \\
  & \text{3. Calculating noise voltage:} & \qquad
  & u_{noise,i} = \sqrt{\left[v\right]^T \cdot \left( \underline{C}_Y \right) \cdot \left[v\right]^*}
 \end{alignat}
+
 If the normal AC analysis has already be done with LU decomposition,
 then the most time consuming work of step 1 has already be done.
 \begin{equation}
 \text{instead of} \qquad Y = L\cdot U \qquad \text{we have} \qquad
 Y^T = U^T \cdot L^T
 \end{equation}
-I.e. $U^T$ becomes the new $L$ matrix and $L^T$ becomes the new $U$
-matrix, and we do not need to solve the matrix equation again,
-because only the right-hand side was changed. So altogether this
-is a quickly done task. (Note that in step 3, only the subvector
-$[v]$ of vector $[x]$ is used. See section \ref{sec:xmatrix} for
-details on this.)\\
-If we want to know the noise voltage at another node, only the
-right-hand side of step 1 changes. That is, a new LU decomposition
-is not needed.\\
-As the noise current correlation matrix contains lots of zeros, it
-is not worthy to create it in the computer memory. Instead, during
-its creation, one can directly apply it to the $\left[v\right]^T$
-vector.
 
+I.e. $U^T$ becomes the new $L$ matrix and $L^T$ becomes the new $U$
+matrix, and we do not need to solve the matrix equation again, because
+only the right-hand side was changed.  So altogether this is a quickly
+done task.  (Note that in step 3, only the subvector $[v]$ of vector
+$[x]$ is used.  See section \ref{sec:xmatrix} for details on this.)
+
+\addvspace{12pt}
+
+If we want to know the noise voltage at another node, only the
+right-hand side of step 1 changes.  That is, a new LU decomposition is
+not needed.
+
+\addvspace{12pt}
+
+As the noise current correlation matrix contains lots of zeros, it is
+not worthy to create it in the computer memory.  Instead, during its
+creation, one can directly apply it to the $\left[v\right]^T$ vector.
 
 \section{Noise Current Correlation Matrix}
+%\addcontentsline{toc}{section}{Noise Current Correlation Matrix}
 
-This section describes the noise current correlation matrixes of
-noisy components. The equations are built for RMS noise currents
-with 1Hz bandwidth.\\ \\
+This section describes the noise current correlation matrices of noisy
+components.  The equations are built for RMS noise currents with
+$1\hertz$ bandwidth.
+
+\addvspace{12pt}
 
 Resistor with resistance $R$ and temperature $T$:
 \begin{equation}
@@ -98,8 +114,7 @@ Resistor with resistance $R$ and temperature $T$:
 \end{pmatrix}
 \end{equation}
 
-Noise current source with a current power spectral density of
-$cPSD$:
+Noise current source with a current power spectral density of $cPSD$:
 \begin{equation}
 (\underline{C}_Y) = cPSD \cdot
 \begin{pmatrix}
@@ -108,20 +123,19 @@ $cPSD$:
 \end{pmatrix}
 \end{equation}
 
-A noise voltage source (voltage power spectral density $vPSD$)
-cannot be modeled with the noise current
-matrix. That is why one has to use a noise current source
-(current power spectral density $cPSD$) connected to a current
-controlled voltage source (transimpedance $R$) satisfying the
-equation
+A noise voltage source (voltage power spectral density $vPSD$) cannot
+be modeled with the noise current matrix.  That is why one has to use
+a noise current source (current power spectral density $cPSD$)
+connected to a current controlled voltage source (transimpedance $R$)
+satisfying the equation
 \begin{equation}
 vPSD = cPSD \cdot R
 \end{equation}
 
-Attenuator with (power) attenuation $L$, reference impedance
-$Z_{ref}$ and temperature $T$:
+Attenuator with (power) attenuation $L$, reference impedance $Z_{ref}$
+and temperature $T$:
 \begin{equation}
-(\underline{C}_Y) = 4\cdot k\cdot T\cdot \text{Re}(\underline{Y})
+(\underline{C}_Y) = 4\cdot k\cdot T\cdot \text{Re}\left(\underline{Y}\right)
  = \frac{4\cdot k\cdot T}{Z_{ref}\cdot (L-1)} \cdot
 \begin{pmatrix}
  L+1            & -2\cdot\sqrt{L} \\
@@ -129,8 +143,8 @@ $Z_{ref}$ and temperature $T$:
 \end{pmatrix}
 \end{equation}
 
-Isolator with reference impedance $Z_1$ (input) and $Z_2$ (output)
-and temperature $T$:
+Isolator with reference impedance $Z_1$ (input) and $Z_2$ (output) and
+temperature $T$:
 \begin{equation}
 (\underline{C}_Y) = 4\cdot k\cdot T\cdot
 \begin{pmatrix}
