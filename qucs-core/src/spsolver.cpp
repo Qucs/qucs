@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.25 2004/08/06 18:24:43 ela Exp $
+ * $Id: spsolver.cpp,v 1.26 2004/08/09 15:34:44 ela Exp $
  *
  */
 
@@ -115,7 +115,7 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
     if (j1 == k || j1 == l) continue;
 
     // assign node name of resulting circuit
-    result->setNode (j2, s->getNode(j1)->getName());
+    result->setNode (j2, s->getNode(j1)->getName ());
 
     // inside S only
     for (i1 = 1; i1 <= s->getSize (); i1++) {
@@ -208,7 +208,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
     if (j1 == l) continue;
 
     // assign node name of resulting circuit
-    result->setNode (j2, t->getNode(j1)->getName());
+    result->setNode (j2, t->getNode(j1)->getName ());
 
     // across T and S
     for (i1 = 1; i1 <= s->getSize (); i1++) {
@@ -774,8 +774,9 @@ void spsolver::saveResults (nr_double_t freq) {
   int res_i, res_j;
   circuit * root = subnet->getRoot ();
 
-  // temporary noise matrices
+  // temporary noise matrices and input port impedance
   complex noise_c[4], noise_s[4];
+  nr_double_t z0 = circuit::z0;
 
   // add current frequency to the dependency of the output dataset
   if ((f = data->findDependency ("frequency")) == NULL) {
@@ -808,6 +809,10 @@ void spsolver::saveResults (nr_double_t freq) {
 	    int ni = getPropertyInteger ("NoiseIP");
 	    int no = getPropertyInteger ("NoiseOP");
 	    if ((res_i == ni || res_i == no) && (res_j == ni || res_j == no)) {
+	      if (ni == res_i) {
+		// assign input port impedance
+		z0 = sig_i->getCircuit()->getPropertyDouble ("Z");
+	      }
 	      ro = (res_i == ni) ? 0 : 1;
 	      co = (res_j == ni) ? 0 : 1;
 	      // save results in temporary data items
@@ -822,14 +827,15 @@ void spsolver::saveResults (nr_double_t freq) {
 
   // finally compute and save noise parameters
   if (noise) {
-    saveNoiseResults (noise_s, noise_c, f);
+    saveNoiseResults (noise_s, noise_c, z0, f);
   }
 }
 
 /* This function takes the s-parameter matrix and noise wave
    correlation matrix and computes the noise parameters based upon
    these values.  Then it save the results into the dataset. */
-void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
+void spsolver::saveNoiseResults (complex s[4], complex c[4],
+				 nr_double_t z0, vector * f) {
   complex c22 = c[3], c11 = c[0], c12 = c[1];
   complex s11 = s[0], s21 = s[2];
   complex n1, n2, F, Sopt, Fmin, Rn;
@@ -855,7 +861,7 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
   // equivalent noise resistance
   Rn   = real ((c11 - 2.0 * real (c12 * conj ((1.0 + s11) / s21)) +
 		c22 * norm ((1.0 + s11) / s21)) / 4.0);
-  Rn   = Rn * circuit::z0;
+  Rn   = Rn * z0;
 
   // add variable data items to dataset
   saveVariable ("F", F, f);

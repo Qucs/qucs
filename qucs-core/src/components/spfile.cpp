@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.7 2004/08/06 18:24:43 ela Exp $
+ * $Id: spfile.cpp,v 1.8 2004/08/09 15:34:45 ela Exp $
  *
  */
 
@@ -243,7 +243,7 @@ matrix& spfile::expandNoiseMatrix (matrix& n, matrix& s) {
 
   // expand noise correlation matrix
   matrix * res = new matrix (ports);
-  *res = (k * n * adjoint (k) - kelvin (T) / T0 * abs (1 - norm (g)) *
+  *res = (k * n * adjoint (k) - kelvin (T) / T0 * fabs (1 - norm (g)) *
 	  d * adjoint (d)) * norm (1 / (1 - g));
   return *res;
 }
@@ -272,7 +272,7 @@ matrix& spfile::shrinkNoiseMatrix (matrix& n, matrix& s) {
   
   // shrink noise correlation matrix
   matrix * res = new matrix (ports - 1);
-  *res = k * n * adjoint (k) + kelvin (T) / T0 * abs (1 - norm (g)) /
+  *res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1 - norm (g)) /
     norm (1 - g * s.get (ports, ports)) * d * adjoint (d);
   return *res;
 }
