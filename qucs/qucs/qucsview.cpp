@@ -17,6 +17,7 @@
 
 #include "qucsview.h"
 #include "componentdialog.h"
+#include "diagramdialog.h"
 
 #include <qinputdialog.h>
 
@@ -42,6 +43,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 
   Scale   = 1.0; // no scaling
   selComp = 0;  // no component is selected
+  selDiag = 0;  // no diagram is selected
 
   Docs.setAutoDelete(true);
 }
@@ -179,6 +181,26 @@ void QucsView::MMoveComponent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+void QucsView::MMoveDiagram(QMouseEvent *Event)
+{
+  if(selDiag == 0) return;
+
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(Scale, Scale);
+  painter.setPen(QPen(black, 0, Qt::DotLine));
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  int x=int(Event->pos().x()/Scale), y=int(Event->pos().y()/Scale);
+
+  if(drawn) selDiag->paintScheme(&painter); // erase old scheme
+  drawn = true;
+  Docs.current()->setOnGrid(x, y);
+  selDiag->setCenter(x, y);
+  selDiag->paintScheme(&painter); // paint scheme at new position
+}
+
+// -----------------------------------------------------------
 void QucsView::MMoveSelect(QMouseEvent *Event)
 {
   QPainter painter(viewport());
@@ -286,6 +308,30 @@ void QucsView::MPressComponent(QMouseEvent *Event)
   default:    // avoids compiler warnings
     break;
   }
+}
+
+// -----------------------------------------------------------
+void QucsView::MPressDiagram(QMouseEvent *)
+{
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());
+  painter.setPen(QPen(black, 0, Qt::DotLine));
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  painter.scale(Scale, Scale);
+
+  if(selDiag == 0) return; //break;
+  Docs.current()->Diags.append(selDiag);
+
+  Docs.current()->setChanged(true);   // document has been changed
+
+  DiagramDialog *d = new DiagramDialog(selDiag, &ProjDir);
+  d->exec();
+  delete d;
+
+  viewport()->repaint();
+  selDiag = selDiag->newOne(); // the component is used, so create a new one
+  selDiag->paintScheme(&painter);
 }
 
 // -----------------------------------------------------------

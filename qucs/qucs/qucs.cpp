@@ -23,6 +23,7 @@
 #include "qucsview.h"
 #include "newprojdialog.h"
 #include "wire.h"
+#include "rectdiagram.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -459,6 +460,7 @@ void QucsApp::initView()
   CompChoose->insertItem("lumped components");
   CompChoose->insertItem("sources");
   CompChoose->insertItem("transmission lines");
+  CompChoose->insertItem("nonlinear components");
   CompChoose->insertItem("simulations");
   CompChoose->insertItem("paintings");
   CompChoose->insertItem("diagrams");
@@ -647,11 +649,8 @@ void QucsApp::slotFileClose()
   view->Docs.remove();
   WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make new document the current
 
-  if(view->Docs.isEmpty()) {  // if no document left, create an untitled
+  if(view->Docs.isEmpty())  // if no document left, create an untitled
     view->Docs.append(new QucsDoc(WorkView, ""));
-//    WorkView->addTab(new QTab("untitled.sch"));  // create
-//    WorkView->setCurrentTab(WorkView->tabAt(WorkView->count()-1));  // make it the current
-  }
 
   view->viewport()->repaint();
   view->drawn = false;
@@ -854,21 +853,18 @@ void QucsApp::OpenProject(const QString& name)
   // put all schematic files into "Content"-ListView
   QStringList Elements = view->ProjDir.entryList("*.sch", QDir::Files, QDir::Name);
   QStringList::iterator it;
-  for(it = Elements.begin(); it != Elements.end(); ++it) {
+  for(it = Elements.begin(); it != Elements.end(); ++it)
      new QListViewItem(ConSchematics, (*it).ascii());
-  }
 
   // put all data display files into "Content"-ListView
   Elements = view->ProjDir.entryList("*.dpl", QDir::Files, QDir::Name);
-  for(it = Elements.begin(); it != Elements.end(); ++it) {
+  for(it = Elements.begin(); it != Elements.end(); ++it)
      new QListViewItem(ConDisplays, (*it).ascii());
-  }
 
   // put all dataset files into "Content"-ListView
   Elements = view->ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
-  for(it = Elements.begin(); it != Elements.end(); ++it) {
+  for(it = Elements.begin(); it != Elements.end(); ++it)
      new QListViewItem(ConDatasets, (*it).ascii());
-  }
 
   TabView->setCurrentPage(1);   // switch to "Content"-Tab
   Content->firstChild()->setOpen(true);  // show schematics
@@ -907,29 +903,46 @@ void QucsApp::slotSetCompView(int index)
              new QIconViewItem(CompComps, "Transformer", QImage("bitmaps/transformer.xpm"));
              new QIconViewItem(CompComps, "symmetric Transformer", QImage("bitmaps/symtrans.xpm"));
              new QIconViewItem(CompComps, "Ground", QImage("bitmaps/ground.xpm"));
+             new QIconViewItem(CompComps, "dc Block", QImage("bitmaps/dcblock.xpm"));
+             new QIconViewItem(CompComps, "dc Feed", QImage("bitmaps/dcfeed.xpm"));
+             new QIconViewItem(CompComps, "Bias T", QImage("bitmaps/biast.xpm"));
+             new QIconViewItem(CompComps, "Attenuator", QImage("bitmaps/attenuator.xpm"));
+             new QIconViewItem(CompComps, "Isolator", QImage("bitmaps/isolator.xpm"));
+             new QIconViewItem(CompComps, "Circulator", QImage("bitmaps/circulator.xpm"));
              break;
     case 1 : new QIconViewItem(CompComps, "dc Voltage Source", QImage("bitmaps/dc_voltage.xpm"));
              new QIconViewItem(CompComps, "dc Current Source", QImage("bitmaps/dc_current.xpm"));
              new QIconViewItem(CompComps, "ac Voltage Source", QImage("bitmaps/ac_voltage.xpm"));
              new QIconViewItem(CompComps, "Power Source", QImage("bitmaps/source.xpm"));
+             new QIconViewItem(CompComps, "Voltage Controlled Current Source", QImage("bitmaps/vccs.xpm"));
+             new QIconViewItem(CompComps, "Current Controlled Current Source", QImage("bitmaps/cccs.xpm"));
+             new QIconViewItem(CompComps, "Voltage Controlled Voltage Source", QImage("bitmaps/vcvs.xpm"));
+             new QIconViewItem(CompComps, "Current Controlled Voltage Source", QImage("bitmaps/ccvs.xpm"));
              break;
     case 2 : new QIconViewItem(CompComps, "Transmission Line", QImage("bitmaps/tline.xpm"));
+             new QIconViewItem(CompComps, "Substrate", QImage("bitmaps/substrate.xpm"));
              new QIconViewItem(CompComps, "Microstrip Line", QImage("bitmaps/msline.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Step", QImage("bitmaps/msstep.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Corner", QImage("bitmaps/mscorner.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Tee", QImage("bitmaps/mstee.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Cross", QImage("bitmaps/mscross.xpm"));
              break;
-    case 3 : new QIconViewItem(CompComps, "dc simulation", QImage("bitmaps/dc.xpm"));
+    case 3 : new QIconViewItem(CompComps, "Diode", QImage("bitmaps/diode.xpm"));
+             break;
+    case 4 : new QIconViewItem(CompComps, "dc simulation", QImage("bitmaps/dc.xpm"));
              new QIconViewItem(CompComps, "Transienten simulation", QImage("bitmaps/tran.xpm"));
              new QIconViewItem(CompComps, "ac simulation", QImage("bitmaps/ac.xpm"));
              new QIconViewItem(CompComps, "S-parameter simulation", QImage("bitmaps/sparameter.xpm"));
              new QIconViewItem(CompComps, "Harmonic balance", QImage("bitmaps/hb.xpm"));
              new QIconViewItem(CompComps, "Parameter sweep", QImage("bitmaps/sweep.xpm"));
              break;
-    case 4 : new QIconViewItem(CompComps, "Line", QImage("bitmaps/line.xpm"));
+    case 5 : new QIconViewItem(CompComps, "Line", QImage("bitmaps/line.xpm"));
              new QIconViewItem(CompComps, "Arrow", QImage("bitmaps/arrow.xpm"));
              new QIconViewItem(CompComps, "Text", QImage("bitmaps/text.xpm"));
              new QIconViewItem(CompComps, "Circle", QImage("bitmaps/circle.xpm"));
              new QIconViewItem(CompComps, "Rectangle", QImage("bitmaps/rectangle.xpm"));
              break;
-    case 5 : new QIconViewItem(CompComps, "Cartesian", QImage("bitmaps/rect.xpm"));
+    case 6 : new QIconViewItem(CompComps, "Cartesian", QImage("bitmaps/rect.xpm"));
              new QIconViewItem(CompComps, "Polar", QImage("bitmaps/polar.xpm"));
              new QIconViewItem(CompComps, "Tabular", QImage("bitmaps/tabular.xpm"));
              new QIconViewItem(CompComps, "Smith Chart", QImage("bitmaps/smith.xpm"));
@@ -941,15 +954,17 @@ void QucsApp::slotSetCompView(int index)
 // Is called when the mouse is clicked within the Component QIconView.
 void QucsApp::slotSelectComponent(QIconViewItem *item)
 {
-  if(view->selComp != 0)
-    delete view->selComp;  // delete previously selected component
+  if(view->selComp != 0)  delete view->selComp;  // delete previously selected component
+  if(view->selDiag != 0)  delete view->selDiag;  // delete previously selected diagram
 
   if(item == 0) {   // mouse button pressed not over an item ?
     CompComps->setSelected(CompComps->currentItem(), false);  // deselect component in ViewList
     view->selComp = 0;   // no component selected
+    view->selDiag = 0;   // no diagram selected
     return;
   }
 
+  // toggle last toolbar button off
   if(activeAction) {
     activeAction->blockSignals(true); // do not call toggle slot
     activeAction->setOn(false);       // set last toolbar button off
@@ -973,6 +988,18 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 6: view->selComp = new Ground();
                       break;
+              case 7: view->selComp = new dcBlock();
+                      break;
+              case 8: view->selComp = new dcFeed();
+                      break;
+              case 9: view->selComp = new BiasT();
+                      break;
+              case 10: view->selComp = new Attenuator();
+                       break;
+              case 11: view->selComp = new Isolator();
+                       break;
+              case 12: view->selComp = new Circulator();
+                       break;
             }
             break;
     case 1: switch(CompComps->index(item)) {
@@ -984,9 +1011,39 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 3: view->selComp = new Source_ac();
                       break;
+              case 4: view->selComp = new VCCS();
+                      break;
+              case 5: view->selComp = new CCCS();
+                      break;
+              case 6: view->selComp = new VCVS();
+                      break;
+              case 7: view->selComp = new CCVS();
+                      break;
+            }
+            break;
+    case 2: switch(CompComps->index(item)) {
+              case 0: view->selComp = new TLine();
+                      break;
+              case 1: view->selComp = new Substrate();
+                      break;
+              case 2: view->selComp = new MSline();
+                      break;
+              case 3: view->selComp = new MSstep();
+                      break;
+              case 4: view->selComp = new MScorner();
+                      break;
+              case 5: view->selComp = new MStee();
+                      break;
+              case 6: view->selComp = new MScross();
+                      break;
             }
             break;
     case 3: switch(CompComps->index(item)) {
+              case 0: view->selComp = new Diode();
+                      break;
+            }
+            break;
+    case 4: switch(CompComps->index(item)) {
               case 0: view->selComp = new DC_Sim();
                       break;
               case 1: view->selComp = new TR_Sim();
@@ -1001,6 +1058,25 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
             }
             break;
+    case 5: if(view->drawn) view->viewport()->repaint();
+            view->drawn = false;
+            view->MouseMoveAction = &QucsView::MouseDoNothing;
+            view->MousePressAction = &QucsView::MouseDoNothing;
+            view->MouseReleaseAction = &QucsView::MouseDoNothing;
+            view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+            return;
+    case 6: switch(CompComps->index(item)) {
+              case 0: view->selDiag = new RectDiagram();
+                      break;
+            }
+
+            if(view->drawn) view->viewport()->repaint();
+            view->drawn = false;
+            view->MouseMoveAction = &QucsView::MMoveDiagram;
+            view->MousePressAction = &QucsView::MPressDiagram;
+            view->MouseReleaseAction = &QucsView::MouseDoNothing;
+            view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+            return;
   }
 
   if(view->drawn) view->viewport()->repaint();
