@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.7 2005/01/24 19:37:00 raimi Exp $
+ * $Id: tmatrix.h,v 1.8 2005/02/08 23:08:35 raimi Exp $
  *
  */
 
@@ -64,9 +64,11 @@ class tmatrix
   // some basic matrix operations
   friend tmatrix inverse<> (tmatrix);
   friend tmatrix eye<nr_type_t> (int);
+#ifndef _MSC_VER
   friend tmatrix operator *<> (tmatrix, tmatrix);
   friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
   friend tvector<nr_type_t> operator *<> (tvector<nr_type_t>, tmatrix);
+#endif
 
  private:
   int cols;

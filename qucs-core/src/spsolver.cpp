@@ -1,7 +1,7 @@
 /*
  * spsolver.cpp - S-parameter solver class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.40 2005/01/17 12:19:01 raimi Exp $
+ * $Id: spsolver.cpp,v 1.41 2005/02/08 23:08:34 raimi Exp $
  *
  */
 
@@ -805,7 +805,7 @@ void spsolver::dropGround (circuit * c) {
    solve the circuit. */
 void spsolver::insertConnections (void) {
 
-  circuit * root;
+  circuit * root, * c;
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: preparing circuit for analysis\n",
 	    getName ());
@@ -814,7 +814,7 @@ void spsolver::insertConnections (void) {
 #if USE_GROUNDS
   // remove original ground circuit from netlist
   root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+  for (c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->getType () == CIR_GROUND) {
       gnd = c;
       subnet->removeCircuit (c, 0);
@@ -826,7 +826,7 @@ void spsolver::insertConnections (void) {
   // insert opens, tee and crosses where necessary
   tees = crosses = opens = grounds = 0;
   root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+  for (c = root; c != NULL; c = (circuit *) c->getNext ()) {
     for (int i = 1; i <= c->getSize (); i++) {
       insertConnectors (c->getNode (i));
       insertOpen (c->getNode (i));
@@ -839,7 +839,7 @@ void spsolver::insertConnections (void) {
 #if USE_GROUNDS
   // insert grounds where necessary
   root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+  for (c = root; c != NULL; c = (circuit *) c->getNext ()) {
     for (int i = 1; i <= c->getSize (); i++) {
       insertGround (c->getNode (i));
     }

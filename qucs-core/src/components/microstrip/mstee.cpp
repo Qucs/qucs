@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.4 2005/02/05 12:43:45 margraf Exp $
+ * $Id: mstee.cpp,v 1.5 2005/02/08 23:08:39 raimi Exp $
  *
  */
 
@@ -113,9 +113,9 @@ void mstee::calcPropagation (nr_double_t f) {
   nr_double_t er = subst->getPropertyDouble ("er");
   nr_double_t h  = subst->getPropertyDouble ("h");
   nr_double_t t  = subst->getPropertyDouble ("t");
-  nr_double_t Wa = subst->getPropertyDouble ("W1");
-  nr_double_t Wb = subst->getPropertyDouble ("W2");
-  nr_double_t W2 = subst->getPropertyDouble ("W3");
+  nr_double_t Wa = getPropertyDouble ("W1");
+  nr_double_t Wb = getPropertyDouble ("W2");
+  nr_double_t W2 = getPropertyDouble ("W3");
   
   nr_double_t Zla, Zlb, Zl2, Era, Erb, Er2;
 
@@ -140,8 +140,8 @@ void mstee::calcPropagation (nr_double_t f) {
   D2 = Z0 / Zl2 * h / sqrt (Er2);
 
   // first higher order mode cut-off frequencies
-  fpa = 0.0004 * Zla / h;
-  fpb = 0.0004 * Zlb / h;
+  fpa = 0.4e6 * Zla / h;
+  fpb = 0.4e6 * Zlb / h;
 
   // effective wavelengths of quasi-TEM mode
   lda = C0 / sqrt (Era) / f;

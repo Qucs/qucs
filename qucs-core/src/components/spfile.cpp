@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.16 2005/02/03 20:40:18 raimi Exp $
+ * $Id: spfile.cpp,v 1.17 2005/02/08 23:08:38 raimi Exp $
  *
  */
 
@@ -150,7 +150,7 @@ matrix spfile::fetch (int idx) {
 // Stores the matrix entry for the given frequency index.
 void spfile::store (int r, int c, complex z, int idx) {
   vector * var = index[(r - 1) * getSize () + c - 1].v;
-  return var->set (z, idx);
+  var->set (z, idx);
 }
 
 /* This function expands the actual S-parameter file data stored

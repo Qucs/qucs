@@ -1,7 +1,7 @@
 /*
  * net.cpp - net class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.24 2004/12/03 18:57:03 raimi Exp $
+ * $Id: net.cpp,v 1.25 2005/02/08 23:08:34 raimi Exp $
  *
  */
 
@@ -214,9 +214,10 @@ analysis * net::findAnalysis (int type) {
    netlist. */
 dataset * net::runAnalysis (void) {
   dataset * out = new dataset ();
+  analysis * a;
 
   // apply some data to all analyses
-  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+  for (a = actions; a != NULL; a = (analysis *) a->getNext ()) {
     a->setEnv (env);
     a->setNet (this);
     a->setData (out);
@@ -224,7 +225,7 @@ dataset * net::runAnalysis (void) {
 
   orderAnalysis ();
   // solve the analyses
-  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+  for (a = actions; a != NULL; a = (analysis *) a->getNext ()) {
     a->solve ();
   }
   return out;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.29 2005/02/01 22:56:40 raimi Exp $
+ * $Id: nasolver.cpp,v 1.30 2005/02/08 23:08:33 raimi Exp $
  *
  */
 
@@ -901,8 +901,9 @@ int nasolver<nr_type_t>::checkConvergence (void) {
   int N = countNodes ();
   int M = countVoltageSources ();
   nr_double_t v_abs, v_rel, i_abs, i_rel;
+  int r;
 
-  for (int r = 1; r <= N; r++) {
+  for (r = 1; r <= N; r++) {
     v_abs = abs (x->get (r) - xprev->get (r));
     v_rel = abs (x->get (r));
     if (v_abs >= vntol + reltol * v_rel) return 0;
@@ -912,7 +913,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
       if (i_abs >= abstol + reltol * i_rel) return 0;
     }
   }
-  for (int r = 1; r <= M; r++) {
+  for (r = 1; r <= M; r++) {
     i_abs = abs (x->get (r + N) - xprev->get (r + N));
     i_rel = abs (x->get (r + N));
     if (i_abs >= abstol + reltol * i_rel) return 0;

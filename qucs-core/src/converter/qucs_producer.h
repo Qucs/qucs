@@ -1,7 +1,7 @@
 /*
  * qucs_producer.h - the Qucs producer definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,16 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.h,v 1.2 2004/11/24 19:16:05 raimi Exp $
+ * $Id: qucs_producer.h,v 1.3 2005/02/08 23:08:40 raimi Exp $
  *
  */
 
 #ifndef __QUCS_PRODUCER_H__
 #define __QUCS_PRODUCER_H__
 
-__BEGIN_DECLS
-
 /* Externalize variables. */
 extern FILE * qucs_out;
 extern int    qucs_actions;
-
-__END_DECLS
 
 /* Available functions of the checker. */
 void qucs_producer (void);

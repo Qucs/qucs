@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.31 2005/01/24 19:37:00 raimi Exp $
+ * $Id: trsolver.cpp,v 1.32 2005/02/08 23:08:35 raimi Exp $
  *
  */
 
@@ -497,11 +497,11 @@ void trsolver::initTR (void) {
   }
 
   // tell circuits about the transient analysis
-  circuit * root = subnet->getRoot ();
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ())
+  circuit *c, * root = subnet->getRoot ();
+  for (c = root; c != NULL; c = (circuit *) c->getNext ())
     initCircuitTR (c);
   // also initialize created circuits
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getPrev ())
+  for (c = root; c != NULL; c = (circuit *) c->getPrev ())
     initCircuitTR (c);
 }
 

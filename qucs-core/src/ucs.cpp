@@ -1,7 +1,7 @@
 /*
  * ucs.cpp - main program implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: ucs.cpp,v 1.16 2004/11/24 19:15:46 raimi Exp $
+ * $Id: ucs.cpp,v 1.17 2005/02/08 23:08:36 raimi Exp $
  *
  */
 
@@ -39,7 +39,9 @@
 #include "environment.h"
 #include "exceptionstack.h"
 
+#if HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 using namespace qucs;
 
@@ -59,7 +61,7 @@ int main (int argc, char ** argv) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
 	"Qucsator " PACKAGE_VERSION "\n"
-	"Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>\n"
+	"Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"
 	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "

@@ -1,3 +1,9 @@
+2005-02-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex: Updated copyright dates.
+
+	* Makefile.am (PSFILES): Added missing 'MNAnoise*.eps' files.
+
 2004-12-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* coplanar.tex (chapter{Coplanar components}): New file

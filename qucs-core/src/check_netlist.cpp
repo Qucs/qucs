@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.73 2005/02/01 22:56:36 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.74 2005/02/08 23:08:16 raimi Exp $
  *
  */
 
@@ -915,16 +915,16 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
    returns zero if not.  Otherwise the function returns non-zero. */
 static int checker_value_in_range (char * instance, struct define_t * def,
 				   struct pair_t * pair) {
-  int errors = 0;
+  int i, errors = 0;
   // go through required properties
-  for (int i = 0; PROP_IS_PROP (def->required[i]); i++) {
+  for (i = 0; PROP_IS_PROP (def->required[i]); i++) {
     if (!strcmp (def->required[i].key, pair->key)) {
       errors += checker_value_in_prop_range (instance, def, pair,
 					     &def->required[i]);
     }
   }
   // go through optional properties
-  for (int i = 0; PROP_IS_PROP (def->optional[i]); i++) {
+  for (i = 0; PROP_IS_PROP (def->optional[i]); i++) {
     if (!strcmp (def->optional[i].key, pair->key)) {
       errors += checker_value_in_prop_range (instance, def, pair,
 					     &def->optional[i]);

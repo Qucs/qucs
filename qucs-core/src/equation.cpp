@@ -1,7 +1,7 @@
 /*
  * equation.cpp - checker for the Qucs equations
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.27 2004/12/07 22:33:31 raimi Exp $
+ * $Id: equation.cpp,v 1.28 2005/02/08 23:08:32 raimi Exp $
  *
  */
 
@@ -706,10 +706,10 @@ int checker::findDuplicate (void) {
     }
   }
   // Emit appropriate error messages.
-  foreach_equation (eqn) {
-    if (eqn->duplicate > 1) {
+  foreach_equation (eqndups) {
+    if (eqndups->duplicate > 1) {
       logprint (LOG_ERROR, "checker error, variable `%s' assigned %dx\n",
-		eqn->result, eqn->duplicate);
+		eqndups->result, eqndups->duplicate);
       err++;
     }
   }

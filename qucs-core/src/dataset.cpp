@@ -1,7 +1,7 @@
 /*
  * dataset.cpp - dataset class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.12 2004/09/18 09:46:34 margraf Exp $
+ * $Id: dataset.cpp,v 1.13 2005/02/08 23:08:32 raimi Exp $
  *
  */
 
@@ -58,26 +58,27 @@ dataset::dataset (char * n) : object (n) {
    dataset object. */
 dataset::dataset (const dataset & d) : object (d) {
   file = d.file ? strdup (d.file) : NULL;
+  vector * v;
   // copy dependency vectors
-  for (vector * v = d.dependencies; v != NULL; v = (vector *) v->getNext ()) {
+  for (v = d.dependencies; v != NULL; v = (vector *) v->getNext ()) {
     addDependency (new vector (*v));
   }
   // copy variable vectors
-  for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
+  for (v = variables; v != NULL; v = (vector *) v->getNext ()) {
     addVariable (new vector (*v));
   }
 }
 
 // Destructor deletes a dataset object.
 dataset::~dataset () {
-  vector * n;
+  vector * n, * v;
   // delete dependency vectors
-  for (vector * v = dependencies; v != NULL; v = n) {
+  for (v = dependencies; v != NULL; v = n) {
     n = (vector *) v->getNext ();
     delete v;
   }
   // delete variable vectors
-  for (vector * v = variables; v != NULL; v = n) {
+  for (v = variables; v != NULL; v = n) {
     n = (vector *) v->getNext ();
     delete v;
   }
@@ -189,12 +190,13 @@ void dataset::applyDependencies (vector * v) {
    dependent) with the given origin.  It returns NULL if there is no
    such vector. */
 vector * dataset::findOrigin (char * n) {
-  for (vector * v = variables; v != NULL; v = (vector *) v->getNext ()) {
+  vector * v;
+  for (v = variables; v != NULL; v = (vector *) v->getNext ()) {
     char * origin = v->getOrigin ();
     if (origin != NULL && n != NULL && !strcmp (n, origin))
       return v;
   }
-  for (vector * v = dependencies; v != NULL; v = (vector *) v->getNext ()) {
+  for (v = dependencies; v != NULL; v = (vector *) v->getNext ()) {
     char * origin = v->getOrigin ();
     if (origin != NULL && n != NULL && !strcmp (n, origin))
       return v;

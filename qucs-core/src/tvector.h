@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.7 2005/01/24 19:37:00 raimi Exp $
+ * $Id: tvector.h,v 1.8 2005/02/08 23:08:36 raimi Exp $
  *
  */
 
@@ -80,6 +80,7 @@ class tvector
   void print (void);
 
   // some basic vector operations
+#ifndef _MSC_VER
   friend tvector operator +<> (tvector, tvector);
   friend tvector operator -<> (tvector, tvector);
   friend tvector operator *<> (tvector, nr_double_t);
@@ -88,6 +89,7 @@ class tvector
   friend tvector operator -<> (tvector);
   friend tvector operator +<> (tvector, nr_type_t);
   friend tvector operator +<> (nr_type_t, tvector);
+#endif
 
   // other operations
   friend nr_double_t norm<> (tvector);
@@ -97,8 +99,10 @@ class tvector
   friend tvector     conj<> (tvector);
 
   // comparisons
+#ifndef _MSC_VER
   friend bool operator < <> (tvector, tvector);
   friend bool operator > <> (tvector, tvector);
+#endif
 
   // assignment operators
   tvector operator = (const nr_type_t);

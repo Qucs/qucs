@@ -60,7 +60,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig
-PSFILES = MNAexample.eps NLexample.eps CYexample.eps
+PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
+  MNAnoise2.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
