@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: resistor.cpp,v 1.3 2004-01-28 18:19:07 ela Exp $
  *
  */
 
@@ -48,7 +48,6 @@ void resistor::calcS (nr_double_t frequency) {
   setS (2, 1, 2.0 / (r + 2.0));
 }
 
-void resistor::calcG (void) {
-  nr_double_t r = getPropertyDouble ("R");
-  setG (1.0 / r);
+void resistor::calcY (void) {
+  setY (1.0 / getPropertyDouble ("R"));
 }

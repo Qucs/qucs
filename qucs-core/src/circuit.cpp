@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.4 2004-01-24 17:34:17 ela Exp $
+ * $Id: circuit.cpp,v 1.5 2004-01-28 18:19:05 ela Exp $
  *
  */
 
@@ -70,6 +70,7 @@ circuit::circuit (const circuit & c) : object (c) {
   org = c.org;
   type = c.type;
   subst = c.subst;
+  Y = c.Y;
   nodes = new node[size];
   data = new complex[size * size];
 

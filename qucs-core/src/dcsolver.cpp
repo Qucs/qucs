@@ -1,7 +1,7 @@
 /*
  * dcsolver.cpp - DC solver class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.1 2003-12-26 14:04:07 ela Exp $
+ * $Id: dcsolver.cpp,v 1.2 2004-01-28 18:19:05 ela Exp $
  *
  */
 
@@ -182,14 +182,7 @@ void dcsolver::createBMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  // positive terminal
-	  if (n->nodes[i]->getPort () == 1) {
-	    val = +1.0;
-	  }
-	  // negative terminal
-	  else {
-	    val = -1.0;
-	  }
+	  val = real (vs->getB (n->nodes[i]->getPort ()));
 	  break;
 	}
       }
@@ -224,14 +217,7 @@ void dcsolver::createCMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  // positive terminal
-	  if (n->nodes[i]->getPort () == 1) {
-	    val = +1.0;
-	  }
-	  // negative terminal
-	  else {
-	    val = -1.0;
-	  }
+	  val = real (vs->getC (n->nodes[i]->getPort ()));
 	  break;
 	}
       }
@@ -246,9 +232,15 @@ void dcsolver::createCMatrix (void) {
 void dcsolver::createDMatrix (void) {
   int M = subnet->getVoltageSources ();
   int N = countNodes ();
-  nr_double_t val = 0.0;
+  circuit * vs;
+  nr_double_t val;
   for (int r = 1; r <= M; r++) {
+    vs = findVoltageSource (r);
     for (int c = 1; c <= M; c++) {
+      val = 0.0;
+      if (r == c) {
+	val = real (vs->getD ());
+      }
       A->set (r + N, c + N, val);
     }
   }
@@ -282,7 +274,7 @@ void dcsolver::createGMatrix (void) {
       if (c == r) {
 	// sum up the conductance of each connected circuit
 	for (int i = 0; i < nc->nNodes; i++)
-	  g += real (nc->nodes[i]->getCircuit()->getG ());
+	  g += real (nc->nodes[i]->getCircuit()->getY ());
       }
       // off diagonal
       else {
@@ -290,7 +282,7 @@ void dcsolver::createGMatrix (void) {
 	for (int a = 0; a < nc->nNodes; a++)
 	  for (int b = 0; b < nr->nNodes; b++)
 	    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ())
-	      g -= real (nc->nodes[a]->getCircuit()->getG ());
+	      g -= real (nc->nodes[a]->getCircuit()->getY ());
       }
       // put value into G matrix
       A->set (r, c, g);
@@ -318,12 +310,7 @@ void dcsolver::createIMatrix (void) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
       if (is->getType () == CIR_IDC) {
-	// positive terminal
-	if (n->nodes[i]->getPort () == 1)
-	  val += is->getPropertyDouble ("I");
-	// negative terminal
-	else
-	  val -= is->getPropertyDouble ("I");
+	val += real (is->getI (n->nodes[i]->getPort ()));
       }
     }
     // put value into i matrix
@@ -342,7 +329,7 @@ void dcsolver::createEMatrix (void) {
   // go through each voltage source
   for (int r = 1; r <= M; r++) {
     vs = findVoltageSource (r);
-    val = vs->getPropertyDouble ("U");
+    val = real (vs->getE ());
     // put value into e matrix
     z->set (r + N, 1, val);
   }  
@@ -383,12 +370,12 @@ void dcsolver::runMNA (void) {
 #endif
 }
 
-/* Goes through the list of circuit objects and runs its calcG()
+/* Goes through the list of circuit objects and runs its calcY()
    function. */
 void dcsolver::calc (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->calcG ();
+    c->calcY ();
   }
 }
 

@@ -1,3 +1,12 @@
+2004-01-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp: Generalized the creation of the B, C, D, E and
+	I matrices for dependent sources like VCCS, CCCS, etc.
+
+	* circuit.h (class circuit): Renamed 'G' functionality into
+	'Y' preparing it for use in AC analysis.  Also added some more
+	functionality regarding the MNA.
+
 2004-01-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* circuit.h (class circuit): Added microstrip substrate 

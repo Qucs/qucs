@@ -1,3 +1,8 @@
+2004-01-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* cccs.cpp, idc.cpp, vccs.cpp, vcvs.cpp, vdc.cpp: Applied
+	new scheme necessary for the MNA matrices.
+
 2004-01-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.h (class msline): New class being a 

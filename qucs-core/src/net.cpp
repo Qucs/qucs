@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.3 2003-12-26 14:04:07 ela Exp $
+ * $Id: net.cpp,v 1.4 2004-01-28 18:19:05 ela Exp $
  *
  */
 
@@ -92,7 +92,10 @@ void net::insertCircuit (circuit * c) {
     if (!c->isPort ()) c->setPort (nPorts);
   }
   // handle DC voltage sources
-  else if (c->getType () == CIR_VDC) {
+  else if (c->getType () == CIR_VDC ||
+	   c->getType () == CIR_VCCS ||
+	   c->getType () == CIR_VCVS ||
+	   c->getType () == CIR_CCCS) {
     nSources++;
     if (!c->isVoltageSource ()) c->setVoltageSource (nSources);
   }

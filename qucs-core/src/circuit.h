@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.4 2004-01-24 17:34:26 ela Exp $
+ * $Id: circuit.h,v 1.5 2004-01-28 18:19:05 ela Exp $
  *
  */
 
@@ -36,14 +36,14 @@ class circuit : public object
   circuit (int);
   circuit (const circuit &);
   ~circuit ();
-  virtual void calcS (nr_double_t) { };
-  virtual void calcG (void) { };
+  virtual void calcS (nr_double_t) { }
+  virtual void calcY (void) { }
   void setNode (int, char *);
   node * getNode (int);
   complex getS (int x, int y) { return data[x - 1 + (y - 1) * size]; }
   void setS (int x, int y, complex z) { data[x - 1 + (y - 1) * size] = z; }
-  complex getG () { return G; }
-  void setG (complex g) { G = g; }
+  complex getY (void) { return Y; }
+  void setY (complex y) { Y = y; }
   int getSize (void) { return size; }
   void print (void);
   int isPort (void) { return port; }
@@ -59,6 +59,16 @@ class circuit : public object
   int getType (void) { return type; }
   substrate * getSubstrate (void);
   void setSubstrate (substrate *);
+  complex getB (int port) { return MatrixB[port - 1]; }
+  complex getC (int port) { return MatrixC[port - 1]; }
+  complex getD (void) { return MatrixD[0]; }
+  complex getE (void) { return MatrixE[0]; }
+  complex getI (int port) { return MatrixI[port - 1]; }
+  void setB (int port, complex z) { MatrixB[port - 1] = z; }
+  void setC (int port, complex z) { MatrixC[port - 1] = z; }
+  void setD (complex z) { MatrixD[0] = z; }
+  void setE (complex z) { MatrixE[0] = z; }
+  void setI (int port, complex z) { MatrixI[port - 1] = z; }
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -70,7 +80,13 @@ class circuit : public object
   int source;
   int org;
   complex * data;
-  complex G;
+  complex Y;
+  complex MatrixB[4];
+  complex MatrixC[4];
+  complex MatrixD[1];
+  complex MatrixE[1];
+  complex MatrixI[4];
+
   node * nodes;
   substrate * subst;
 };
