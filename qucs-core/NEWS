@@ -26,6 +26,7 @@ files.
 Version 0.0.2
 -------------
 
+ * partly documented the know-how implemented in the simulator
  * DC dependent s-parameter analysis of diode possible
  * Qucs available under MacOS 10.3
  * implemented equation solver

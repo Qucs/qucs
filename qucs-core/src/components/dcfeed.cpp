@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcfeed.cpp,v 1.4 2004-05-22 12:33:46 margraf Exp $
+ * $Id: dcfeed.cpp,v 1.5 2004-05-23 15:27:26 ela Exp $
  *
  */
 
@@ -46,8 +46,8 @@ dcfeed::dcfeed () : circuit (2) {
 }
 
 void dcfeed::calcDC (void) {
-  setC (1, 1, -1.0); setC (1, 2, +1.0);
-  setB (1, 1, +1.0); setB (1, 2, -1.0);
+  setC (1, 1, +1.0); setC (1, 2, -1.0);
+  setB (1, 1, +1.0); setB (2, 1, -1.0);
   setE (1, 0.0);
   setD (1, 1, 0.0);
 }

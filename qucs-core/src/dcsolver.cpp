@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.12 2004-04-26 13:50:03 ela Exp $
+ * $Id: dcsolver.cpp,v 1.13 2004-05-23 15:27:26 ela Exp $
  *
  */
 
@@ -213,7 +213,7 @@ void dcsolver::createBMatrix (void) {
       for (int i = 0; i < n->nNodes; i++) {
 	// is voltage source connected to node ?
 	if (n->nodes[i]->getCircuit () == vs) {
-	  val = real (vs->getB (c, n->nodes[i]->getPort ()));
+	  val = real (vs->getB (n->nodes[i]->getPort (), c));
 	  break;
 	}
       }
