@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exception.h,v 1.4 2004-09-23 14:09:11 ela Exp $
+ * $Id: exception.h,v 1.5 2004-11-29 19:03:36 raimi Exp $
  *
  */
 
@@ -36,6 +36,7 @@ enum exception_type {
   EXCEPTION_ZERO_DIVISION,
   EXCEPTION_WRONG_VOLTAGE,
   EXCEPTION_SINGULAR,
+  EXCEPTION_MATH,
 };
 
 class exception

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.13 2004-10-27 18:45:19 ela Exp $
+ * $Id: complex.h,v 1.14 2004-11-29 19:03:33 raimi Exp $
  *
  */
 
@@ -49,6 +49,7 @@ class complex
   friend nr_double_t  real (const complex);  // the real part
   friend nr_double_t  real (nr_double_t);
   friend nr_double_t  imag (const complex);  // the imaginary part
+  friend nr_double_t  imag (nr_double_t);
   friend complex      conj (const complex);  // the complex conjugate
   friend nr_double_t  norm (const complex);  // the square of the magnitude
   friend nr_double_t  norm (nr_double_t);

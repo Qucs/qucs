@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.11 2004-11-24 19:15:46 raimi Exp $
+ * $Id: parse_netlist.y,v 1.12 2004-11-29 19:03:39 raimi Exp $
  *
  */
 
@@ -100,7 +100,7 @@
 %type <value> String
 %type <eqn> EquationList Expression ExpressionList
 %type <assign> Equation
-%type <con> Constant
+%type <con> Constant Range
 %type <ref> Reference
 %type <app> Application
 
@@ -269,8 +269,21 @@ Constant:
     $$ = new eqn::constant (eqn::TAG_STRING);
     $$->s = $1;
   }
+  | Range {
+    $$ = new eqn::constant (eqn::TAG_RANGE);
+  }
 ;
 
+Range:
+  REAL ':' {
+  }
+  | ':' REAL {
+  }
+  | REAL ':' REAL {
+  }
+  | ':' {
+  }
+;
 Reference:
   Identifier {
     $$ = new eqn::reference ();

@@ -1,3 +1,12 @@
+2004-11-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpline.cpp (ellipke): Implemented computation of
+	complete elliptic integral functions of first and second kind.
+
+	* microstrip/cpwline.h (class cpwline), microstrip/cpwline.h
+	(class cpwline): Added template files for the implementations
+	of the coplanar and coplanar waveguide line.
+
 2004-11-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* opamp.cpp: Fixed the non-linear DC analysis for the

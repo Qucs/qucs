@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.25 2004-10-06 14:40:05 ela Exp $
+ * $Id: equation.cpp,v 1.26 2004-11-29 19:03:33 raimi Exp $
  *
  */
 
@@ -41,8 +41,11 @@
 #include "strlist.h"
 #include "equation.h"
 #include "constants.h"
+#include "exception.h"
+#include "exceptionstack.h"
 
 using namespace eqn;
+using namespace qucs;
 
 /* The global list of equations and expression lists. */
 node * eqn::equations = NULL;
@@ -144,6 +147,9 @@ char * constant::toString (void) {
   case TAG_STRING:
     sprintf (str, "'%s'", s);
     txt = strdup (str);
+    break;    
+  case TAG_RANGE:
+    txt = strdup (":");
     break;    
   default:
     txt = strdup ("(no such type)");
@@ -344,7 +350,7 @@ int application::evalType (void) {
       if (nargs != app->nargs) continue;
       // The correct types of arguments?
       for (node * arg = args; arg != NULL; arg = arg->getNext (), nr++) {
-	if (arg->evalType () != app->args[nr]) { nr = -1; break; }
+	if (!(arg->evalType () & app->args[nr])) { nr = -1; break; }
       }
       if (nr == -1) continue;
       // A valid application function?
@@ -390,6 +396,7 @@ node::node () {
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
+  dropDependencies = NULL;
   txt = NULL;
   res = NULL;
   instance = NULL;
@@ -402,6 +409,7 @@ node::node (int type) {
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
+  dropDependencies = NULL;
   txt = NULL;
   res = NULL;
   instance = NULL;
@@ -410,6 +418,8 @@ node::node (int type) {
 // Destructor deletes an instance of the equation node class.
 node::~node () {
   if (dependencies) delete dependencies;
+  if (dataDependencies) delete dataDependencies;
+  if (dropDependencies) delete dropDependencies;
   if (txt) free (txt);
   if (instance) free (instance);
 }
@@ -529,6 +539,20 @@ strlist * node::recurseDependencies (checker * check, strlist * deps) {
   return res;
 }
 
+/* The function adds the given data dependency to the list of
+   dependencies which are going to be dropped during the data
+   export. */
+void node::addDropDependencies (char * dep) {
+  if (dropDependencies == NULL) dropDependencies = new strlist ();
+  dropDependencies->add (dep);
+}
+
+/* The function sets the data dependency list of the equation node. */
+void node::setDataDependencies (strlist * deps) {
+  if (dataDependencies != NULL) delete dataDependencies;
+  dataDependencies = deps ? new strlist (*deps) : NULL;
+}
+
 // Constructor creates an instance of the checker class.
 checker::checker () {
   equations = NULL;
@@ -619,6 +643,7 @@ void checker::list (void) {
 	       eqn->getType () == TAG_CHAR    ? "CHR!" :
 	       eqn->getType () == TAG_STRING  ? "STR!" :
 	       eqn->getType () == TAG_MATVEC  ? "MV!" :
+	       eqn->getType () == TAG_RANGE   ? "R!" :
 	       eqn->getType () == TAG_MATRIX  ? "M!" : "?!") : "");
     eqn->print ();
     logprint (LOG_STATUS, "\n");
@@ -859,7 +884,19 @@ solver::~solver () {
 void solver::solve (void) {
   foreach_equation (eqn) {
     if (eqn->evalPossible && eqn->evaluated == 0) {
+      // exception handling around evaluation
+      try_running () {
       eqn->evaluate ();
+	strlist * deps = collectDataDependencies (eqn);
+	eqn->getResult()->setDataDependencies (deps);
+	delete deps;
+      }
+      // handle evaluation exceptions
+      catch_exception () {
+      default:
+	estack.print ("evaluation");
+	break;
+      }
       eqn->evaluated++;
 #if DEBUG
       logprint (LOG_STATUS, "%s = %s\n", A(eqn)->result, 
@@ -949,6 +986,7 @@ void solver::checkinDataset (void) {
       strlist * deps = new strlist ();
       deps->add (v->getName ());
       eqn->setDataDependencies (deps);
+      delete deps;
     }
   }
   for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
@@ -1023,11 +1061,15 @@ void solver::findMatrixVectors (vector * v) {
       }
       // now store this new matrix vector into the set of equations
       node * eqn = addEquationData (mv);
+      eqn->evaluate ();
       if (deps == NULL) {
 	strlist * deps = new strlist ();
 	deps->add (mv->getName ());
-      }
       eqn->setDataDependencies (deps);
+	delete deps;
+      } else {
+	eqn->setDataDependencies (deps);
+      }
       free (cand); cand = NULL;
     }
     // increase the current 'found' flag
@@ -1049,6 +1091,43 @@ node * solver::addEquationData (matvec * mv) {
   return assign;
 }
 
+/* The function returns the dataset entry length of the given equation
+   node (a constant).  The constant must already been evaluated when
+   this function is called. */
+int solver::dataSize (constant * eqn) {
+  int size = 0;
+  switch (eqn->getType ()) {
+  case TAG_VECTOR: // simple vector
+    size = eqn->getResult()->v->getSize ();
+    break;
+  case TAG_MATVEC: // matrix vector
+    size = eqn->getResult()->mv->getSize ();
+  default:
+    size = 1;
+  }
+  return size;
+}
+
+/* This function returns the dataset entry length of the given
+   variable name.  It must be ensured that the variable actually
+   exists and is already evaluated. */
+int solver::getDataSize (char * var) {
+  node * eqn = checker::findEquation (eqn::equations, var);
+  return dataSize (C (eqn));
+}
+
+/* Depending on the index the function returns the cumulative product
+   of the dataset entries stored in the given dependency list or one
+   if there are no data dependencies at all. */
+int solver::getDependencySize (strlist * deps, int idx) {
+  int size = 1;
+  if (deps == NULL) return 1;
+  for (int i = 0; i < deps->length () - idx; i++) {
+    size *= getDataSize (deps->get (i));
+  }
+  return size;
+}
+
 /* This function goes through the given string list and calculates the
    data entries within these dataset dependencies.  It returns at
    least one no matter whether the data vectors can be found or not. */
@@ -1061,6 +1140,31 @@ int solver::dataSize (strlist * deps) {
     size *= dep ? dep->getSize () : var ? var->getSize () : 1;
   }
   return size;
+}
+
+/* The following function collects the inherited dataset dependencies
+   for the given equation node and returns it as a string list.  It
+   returns NULL if there are no such dependencies. */
+strlist * solver::collectDataDependencies (node * eqn) {
+  strlist * sub, * datadeps = NULL;
+  strlist * deps = eqn->getDependencies ();
+  datadeps = eqn->getDataDependencies ();
+  datadeps = datadeps ? new strlist (*datadeps) : NULL;
+  for (int i = 0; i < deps->length (); i++) {
+    char * var = deps->get (i);
+    node * n = checker::findEquation (eqn::equations, var);
+    sub = strlist::join (datadeps, n->getDataDependencies ());
+    sub->del (n->getResult()->getDropDependencies ());
+    if (datadeps) delete datadeps;
+    datadeps = sub;
+  }
+  datadeps = checker::foldDependencies (datadeps);
+  datadeps->del (eqn->getResult()->getDropDependencies ());
+  if (datadeps->length () == 0) {
+    delete datadeps;
+    datadeps = NULL;
+  }
+  return datadeps;
 }
 
 // The function stores the equation solver results back into a dataset.
@@ -1079,16 +1183,7 @@ void solver::checkoutDataset (void) {
       if (v == NULL) continue;
 
       // collect inherited dataset dependencies
-      strlist * sub, * datadeps = NULL;
-      strlist * deps = eqn->getDependencies ();
-      for (int i = 0; i < deps->length (); i++) {
-	char * var = deps->get (i);
-	node * n = checker::findEquation (equations, var);
-	sub = strlist::join (datadeps, n->getDataDependencies ());
-	if (datadeps) delete datadeps;
-	datadeps = sub;
-      }
-      datadeps = checker::foldDependencies (datadeps);
+      strlist * datadeps = collectDataDependencies (eqn);
 
       // check whether dataset is smaller than its dependencies
       if (v->getSize () <= 1 && dataSize (datadeps) > v->getSize ()) {

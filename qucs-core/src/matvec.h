@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.6 2004-10-12 18:13:09 ela Exp $
+ * $Id: matvec.h,v 1.7 2004-11-29 19:03:37 raimi Exp $
  *
  */
 
@@ -50,27 +50,47 @@ class matvec
 
   // operator functions
   friend matvec operator + (matvec, matvec);
+  friend matvec operator + (matvec, matrix);
+  friend matvec operator + (matrix, matvec);
   friend matvec operator - (matvec, matvec);
-  friend matvec operator * (matvec, complex);
+  friend matvec operator - (matvec, matrix);
+  friend matvec operator - (matrix, matvec);
   friend matvec operator / (matvec, complex);
+  friend matvec operator / (matvec, nr_double_t);
+  friend matvec operator / (matvec, vector);
+  friend matvec operator * (matvec, vector);
+  friend matvec operator * (vector, matvec);
+  friend matvec operator * (matvec, complex);
   friend matvec operator * (complex, matvec);
+  friend matvec operator * (matvec, nr_double_t);
+  friend matvec operator * (nr_double_t, matvec);
   friend matvec operator * (matvec, matvec);
+  friend matvec operator * (matvec, matrix);
+  friend matvec operator * (matrix, matvec);
 
   // intrinsic operator functions
+  matvec operator  - ();
   matvec operator += (matvec);
   matvec operator -= (matvec);
 
   // other operations
   friend matvec transpose (matvec);
   friend matvec conj (matvec);
+  friend vector det       (matvec);
+  friend matvec inverse   (matvec);
+  friend matvec twoport   (matvec, char, char);
+  friend matvec real      (matvec);
+  friend matvec imag      (matvec);
+  friend matvec abs       (matvec);
+  friend matvec arg       (matvec);
+  friend matvec adjoint   (matvec);
+
   friend matvec stoz (matvec, complex z0 = 50.0);
   friend matvec ztos (matvec, complex z0 = 50.0);
   friend matvec ztoy (matvec);
   friend matvec stoy (matvec, complex z0 = 50.0);
   friend matvec ytos (matvec, complex z0 = 50.0);
   friend matvec ytoz (matvec);
-
-  friend matvec twoport (matvec, char, char);
 
  private:
   int size;

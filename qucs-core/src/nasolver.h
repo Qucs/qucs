@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.11 2004-10-27 18:45:19 ela Exp $
+ * $Id: nasolver.h,v 1.12 2004-11-29 19:03:39 raimi Exp $
  *
  */
 
@@ -36,6 +36,8 @@
 #define CONV_Attenuation     1
 #define CONV_LineSearch      2
 #define CONV_SteepestDescent 3
+#define CONV_GMinStepping    4
+#define CONV_SourceStepping  5
 
 class analysis;
 class circuit;
@@ -53,6 +55,7 @@ class nasolver : public analysis
   ~nasolver ();
   int  solve_once (void);
   int  solve_nonlinear (void);
+  int  solve_nonlinear_continuation (void);
   int  solve_linear (void);
   void solve_pre (void);
   void solve_post (void);
@@ -104,6 +107,7 @@ class nasolver : public analysis
   int convHelper;
   int fixpoint;
   int eqnAlgo;
+  nr_double_t gMin, srcFactor;
 
  private:
   nodelist * nlist;

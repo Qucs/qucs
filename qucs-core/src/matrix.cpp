@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.15 2004-10-12 18:13:08 ela Exp $
+ * $Id: matrix.cpp,v 1.16 2004-11-29 19:03:36 raimi Exp $
  *
  */
 
@@ -145,6 +145,16 @@ matrix operator - (matrix a, matrix b) {
   return res;
 }
 
+// Unary minus.
+matrix matrix::operator - () {
+  matrix res (getRows (), getCols ());
+  int r, c, i;
+  for (i = 0, r = 1; r <= getRows (); r++, i++)
+    for (c = 1; c <= getCols (); c++, i++)
+      res.set (r, c, -data[i]);
+  return res;
+}
+
 // Intrinsic matrix subtraction.
 matrix matrix::operator -= (matrix a) {
   assert (a.getRows () == rows && a.getCols () == cols);
@@ -222,6 +232,42 @@ matrix conj (matrix a) {
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
       res.set (r, c, conj (a.get (r, c)));
+  return res;
+}
+
+// Computes magnitude of each matrix element.
+matrix abs (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 1; r <= a.getRows (); r++)
+    for (int c = 1; c <= a.getCols (); c++)
+      res.set (r, c, abs (a.get (r, c)));
+  return res;
+}
+
+// Computes the argument of each matrix element.
+matrix arg (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 1; r <= a.getRows (); r++)
+    for (int c = 1; c <= a.getCols (); c++)
+      res.set (r, c, arg (a.get (r, c)));
+  return res;
+}
+
+// Real part matrix.
+matrix real (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 1; r <= a.getRows (); r++)
+    for (int c = 1; c <= a.getCols (); c++)
+      res.set (r, c, real (a.get (r, c)));
+  return res;
+}
+
+// Imaginary part matrix.
+matrix imag (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 1; r <= a.getRows (); r++)
+    for (int c = 1; c <= a.getCols (); c++)
+      res.set (r, c, imag (a.get (r, c)));
   return res;
 }
 

@@ -26,6 +26,8 @@ files.
 Version 0.0.5
 -------------
 
+ * allowing vector indices with multiply dependencies
+ * new matrix operations, e.g. det(), conj(), transpose() and inverse()
  * reduced memory consumption during netlist checking and instantiating
  * new Qucs-Converter command line tool
  * two new components: amplifier and operational amplifier

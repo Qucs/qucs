@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.21 2004-10-13 22:17:08 ela Exp $
+ * $Id: evaluate.cpp,v 1.22 2004-11-29 19:03:33 raimi Exp $
  *
  */
 
@@ -40,8 +40,12 @@
 #include "constants.h"
 #include "equation.h"
 #include "evaluate.h"
+#include "exception.h"
+#include "exceptionstack.h"
+#include "strlist.h"
 
 using namespace eqn;
+using namespace qucs;
 
 // Short macros in order to obtain the correct constant value.
 #define D(con)   ((constant *) (con))->d
@@ -52,6 +56,11 @@ using namespace eqn;
 #define STR(con) ((constant *) (con))->s
 #define CHR(con) ((constant *) (con))->chr
 #define INT(con) ((int) D (con))
+
+// Throws a math exception.
+#define THROW_MATH_EXCEPTION(txt,args...) do { \
+  qucs::exception * e = new qucs::exception (EXCEPTION_MATH); \
+  e->setText (txt, ## args); throw_exception (e); } while (0)
 
 /* The QUCS_CONCAT macros create a new concatenated symbol for the
    compiler in a portable way.  It is essential to use these macros
@@ -66,7 +75,7 @@ using namespace eqn;
 #endif
 
 // The following macro is meant to be used for some simple functions.
-#define MAKE_FUNC_DEFINITION(cfunc) \
+#define MAKE_FUNC_DEFINITION_0(cfunc) \
 constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) { \
   nr_double_t d = D (args->getResult (0));			  \
   constant * res = new constant (TAG_DOUBLE);			  \
@@ -83,18 +92,49 @@ constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) { \
   res->v = new vector (cfunc (*v)); return res;			  \
 }
 
-MAKE_FUNC_DEFINITION (exp);    // exponential function
-MAKE_FUNC_DEFINITION (sin);    // sine
-MAKE_FUNC_DEFINITION (cos);    // cosine
-MAKE_FUNC_DEFINITION (tan);    // tangent
-MAKE_FUNC_DEFINITION (sinh);   // sine hyperbolicus
-MAKE_FUNC_DEFINITION (cosh);   // cosine hyperbolicus
-MAKE_FUNC_DEFINITION (tanh);   // tangent hyperbolicus
-MAKE_FUNC_DEFINITION (coth);   // cotangent hyperbolicus
-MAKE_FUNC_DEFINITION (sech);   // secans hyperbolicus
-MAKE_FUNC_DEFINITION (cosech); // cosecans hyperbolicus
-MAKE_FUNC_DEFINITION (sign);   // signum function
-MAKE_FUNC_DEFINITION (sinc);   // sin(x)/x aka sinc function
+#define MAKE_FUNC_DEFINITION_1(cfunc) \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_d) (constant * args) {  \
+  nr_double_t d = D (args->getResult (0));                         \
+  constant * res = new constant (TAG_DOUBLE);                      \
+  res->d = cfunc (d); return res;                                  \
+}								   \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_c) (constant * args) {  \
+  complex * c = C (args->getResult (0));                           \
+  constant * res = new constant (TAG_DOUBLE);                      \
+  res->d = cfunc (*c); return res;                                 \
+}								   \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_v) (constant * args) {  \
+  vector * v = V (args->getResult (0));                            \
+  constant * res = new constant (TAG_VECTOR);                      \
+  res->v = new vector (cfunc (*v)); return res;                    \
+}								   \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_m) (constant * args) {  \
+  matrix * m = M (args->getResult (0));                            \
+  constant * res = new constant (TAG_MATRIX);                      \
+  res->m = new matrix (cfunc (*m)); return res;                    \
+}								   \
+constant * evaluate:: QUCS_CONCAT2 (cfunc,_mv) (constant * args) { \
+  matvec * mv = MV (args->getResult (0));                          \
+  constant * res = new constant (TAG_MATVEC);                      \
+  res->mv = new matvec (cfunc (*mv)); return res;                  \
+}
+
+MAKE_FUNC_DEFINITION_0 (exp);    // exponential function
+MAKE_FUNC_DEFINITION_0 (sin);    // sine
+MAKE_FUNC_DEFINITION_0 (cos);    // cosine
+MAKE_FUNC_DEFINITION_0 (tan);    // tangent
+MAKE_FUNC_DEFINITION_0 (sinh);   // sine hyperbolicus
+MAKE_FUNC_DEFINITION_0 (cosh);   // cosine hyperbolicus
+MAKE_FUNC_DEFINITION_0 (tanh);   // tangent hyperbolicus
+MAKE_FUNC_DEFINITION_0 (coth);   // cotangent hyperbolicus
+MAKE_FUNC_DEFINITION_0 (sech);   // secans hyperbolicus
+MAKE_FUNC_DEFINITION_0 (cosech); // cosecans hyperbolicus
+MAKE_FUNC_DEFINITION_0 (sign);   // signum function
+MAKE_FUNC_DEFINITION_0 (sinc);   // sin(x)/x aka sinc function
+
+MAKE_FUNC_DEFINITION_1 (real);   // real value
+MAKE_FUNC_DEFINITION_1 (imag);   // imaginary value
+MAKE_FUNC_DEFINITION_1 (abs);    // absolute value
 
 // ******************** unary plus *************************
 constant * evaluate::plus_d (constant * args) {
@@ -115,6 +155,20 @@ constant * evaluate::plus_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (*v1);
+  return res;
+}
+
+constant * evaluate::plus_m (constant * args) {
+  matrix *    m1 = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1);
+  return res;
+}
+
+constant * evaluate::plus_mv (constant * args) {
+  matvec *    v1 = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1);
   return res;
 }
 
@@ -191,11 +245,35 @@ constant * evaluate::plus_v_v (constant * args) {
   return res;
 }
 
+constant * evaluate::plus_m_m (constant * args) {
+  matrix * m1 = M (args->getResult (0));
+  matrix * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1 + *m2);
+  return res;
+}
+
 constant * evaluate::plus_mv_mv (constant * args) {
   matvec * v1 = MV (args->getResult (0));
   matvec * v2 = MV (args->getResult (1));
   constant * res = new constant (TAG_MATVEC);
   res->mv = new matvec (*v1 + *v2);
+  return res;
+}
+
+constant * evaluate::plus_mv_m (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  matrix * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 + *m2);
+  return res;
+}
+
+constant * evaluate::plus_m_mv (constant * args) {
+  matrix * m1 = M (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*m1 + *v2);
   return res;
 }
 
@@ -248,6 +326,20 @@ constant * evaluate::minus_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (-*v1);
+  return res;
+}
+
+constant * evaluate::minus_m (constant * args) {
+  matrix *    m1 = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (-*m1);
+  return res;
+}
+
+constant * evaluate::minus_mv (constant * args) {
+  matvec *    v1 = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (-*v1);
   return res;
 }
 
@@ -324,6 +416,38 @@ constant * evaluate::minus_v_v (constant * args) {
   return res;
 }
 
+constant * evaluate::minus_m_m (constant * args) {
+  matrix * m1 = M (args->getResult (0));
+  matrix * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1 - *m2);
+  return res;
+}
+
+constant * evaluate::minus_mv_mv (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 - *v2);
+  return res;
+}
+
+constant * evaluate::minus_mv_m (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  matrix * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 - *m2);
+  return res;
+}
+
+constant * evaluate::minus_m_mv (constant * args) {
+  matrix * m1 = M (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*m1 - *v2);
+  return res;
+}
+
 // ****************** multiplication *************************
 constant * evaluate::times_d_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -397,11 +521,144 @@ constant * evaluate::times_v_v (constant * args) {
   return res;
 }
 
+constant * evaluate::times_m_m (constant * args) {
+  matrix * m1 = M (args->getResult (0));
+  matrix * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  if (m1->getCols () != m2->getRows ()) {
+    THROW_MATH_EXCEPTION ("nonconformant arguments in matrix multiplication");
+    res->m = new matrix (m1->getRows (), m2->getCols ());
+  } else {
+    res->m = new matrix (*m1 * *m2);
+  }
+  return res;
+}
+
+constant * evaluate::times_m_c (constant * args) {
+  matrix  * m1 = M (args->getResult (0));
+  complex * c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1 * *c2);
+  return res;
+}
+
+constant * evaluate::times_c_m (constant * args) {
+  complex * c1 = C (args->getResult (0));
+  matrix  * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*c1 * *m2);
+  return res;
+}
+
+constant * evaluate::times_m_d (constant * args) {
+  matrix    * m1 = M (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1 * d2);
+  return res;
+}
+
+constant * evaluate::times_d_m (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  matrix    * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (d1 * *m2);
+  return res;
+}
+
+constant * evaluate::times_mv_mv (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  if (v1->getCols () != v2->getRows ()) {
+    THROW_MATH_EXCEPTION ("nonconformant arguments in matrix multiplication");
+    res->mv = new matvec (v1->getSize (), v1->getRows (), v2->getCols ());
+  } else {
+    res->mv = new matvec (*v1 * *v2);
+  }
+  return res;
+}
+
+constant * evaluate::times_mv_c (constant * args) {
+  matvec  * v1 = MV (args->getResult (0));
+  complex * c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 * *c2);
+  return res;
+}
+
+constant * evaluate::times_c_mv (constant * args) {
+  complex * c1 = C (args->getResult (0));
+  matvec  * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*c1 * *v2);
+  return res;
+}
+
+constant * evaluate::times_mv_d (constant * args) {
+  matvec    * v1 = MV (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 * d2);
+  return res;
+}
+
+constant * evaluate::times_d_mv (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  matvec    * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (d1 * *v2);
+  return res;
+}
+
+constant * evaluate::times_mv_m (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  matrix * m2 = M (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  if (v1->getCols () != m2->getRows ()) {
+    THROW_MATH_EXCEPTION ("nonconformant arguments in matrix multiplication");
+    res->mv = new matvec (v1->getSize (), v1->getRows (), m2->getCols ());
+  } else {
+    res->mv = new matvec (*v1 * *m2);
+  }
+  return res;
+}
+
+constant * evaluate::times_m_mv (constant * args) {
+  matrix * m1 = M (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  if (m1->getCols () != v2->getRows ()) {
+    THROW_MATH_EXCEPTION ("nonconformant arguments in matrix multiplication");
+    res->mv = new matvec (v2->getSize (), m1->getRows (), v2->getCols ());
+  } else {
+    res->mv = new matvec (*m1 * *v2);
+  }
+  return res;
+}
+
+constant * evaluate::times_mv_v (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 * *v2);
+  return res;
+}
+
+constant * evaluate::times_v_mv (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 * *v2);
+  return res;
+}
+
 // ****************** division *************************
 constant * evaluate::over_d_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_DOUBLE);
+  if (d2 == 0.0) THROW_MATH_EXCEPTION ("division by zero");
   res->d = d1 / d2;
   return res;
 }
@@ -410,7 +667,8 @@ constant * evaluate::over_c_c (constant * args) {
   complex *   c1 = C (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex ((*c1) / (*c2));
+  res->c = new complex (*c1 / *c2);
+  if (*c2 == 0.0) THROW_MATH_EXCEPTION ("division by zero");
   return res;
 }
 
@@ -418,7 +676,8 @@ constant * evaluate::over_c_d (constant * args) {
   complex *   c1 = C (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex ((*c1) / d2);
+  res->c = new complex (*c1 / d2);
+  if (d2 == 0.0) THROW_MATH_EXCEPTION ("division by zero");
   return res;
 }
 
@@ -426,7 +685,8 @@ constant * evaluate::over_d_c (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (d1 / (*c2));
+  res->c = new complex (d1 / *c2);
+  if (*c2 == 0.0) THROW_MATH_EXCEPTION ("division by zero");
   return res;
 }
 
@@ -435,6 +695,7 @@ constant * evaluate::over_v_d (constant * args) {
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (*v1 / d2);
+  if (d2 == 0.0) THROW_MATH_EXCEPTION ("division by zero");
   return res;
 }
 
@@ -451,6 +712,7 @@ constant * evaluate::over_v_c (constant * args) {
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (*v1 / *c2);
+  if (*c2 == 0.0) THROW_MATH_EXCEPTION ("division by zero");
   return res;
 }
 
@@ -467,6 +729,46 @@ constant * evaluate::over_v_v (constant * args) {
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (*v1 / *v2);
+  return res;
+}
+
+constant * evaluate::over_m_c (constant * args) {
+  matrix  * m1 = M (args->getResult (0));
+  complex * c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1 / *c2);
+  return res;
+}
+
+constant * evaluate::over_m_d (constant * args) {
+  matrix    * m1 = M (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (*m1 / d2);
+  return res;
+}
+
+constant * evaluate::over_mv_c (constant * args) {
+  matvec  * v1 = MV (args->getResult (0));
+  complex * c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 / *c2);
+  return res;
+}
+
+constant * evaluate::over_mv_d (constant * args) {
+  matvec    * v1 = MV (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 / d2);
+  return res;
+}
+
+constant * evaluate::over_mv_v (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 / *v2);
   return res;
 }
 
@@ -616,71 +918,6 @@ constant * evaluate::power_v_v (constant * args) {
   return res;
 }
 
-// ************** real value **********************
-constant * evaluate::real_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = d1;
-  return res;
-}
-
-constant * evaluate::real_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = real (*c1);
-  return res;
-}
-
-constant * evaluate::real_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (real (*v1));
-  return res;
-}
-
-// ************** imaginary value **********************
-constant * evaluate::imag_d (constant * ) {
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = 0.0;
-  return res;
-}
-
-constant * evaluate::imag_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = imag (*c1);
-  return res;
-}
-
-constant * evaluate::imag_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (imag (*v1));
-  return res;
-}
-
-// ************** absolute value **********************
-constant * evaluate::abs_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = fabs (d1);
-  return res;
-}
-
-constant * evaluate::abs_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = abs (*c1);
-  return res;
-}
-
-constant * evaluate::abs_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (abs (*v1));
-  return res;
-}
-
 // ************** conjugate complex **********************
 constant * evaluate::conj_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -700,6 +937,20 @@ constant * evaluate::conj_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (conj (*v1));
+  return res;
+}
+
+constant * evaluate::conj_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (conj (*m));
+  return res;
+}
+
+constant * evaluate::conj_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (conj (*mv));
   return res;
 }
 
@@ -736,7 +987,7 @@ constant * evaluate::phase_d (constant * args) {
 constant * evaluate::phase_c (constant * args) {
   complex *   c1 = C (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = arg (*c1) * 180.0 / M_PI;
+  res->d = deg (arg (*c1));
   return res;
 }
 
@@ -744,6 +995,20 @@ constant * evaluate::phase_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (deg (arg (*v1)));
+  return res;
+}
+
+constant * evaluate::phase_m (constant * args) {
+  matrix *    m1 = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (deg (arg (*m1)));
+  return res;
+}
+
+constant * evaluate::phase_mv (constant * args) {
+  matvec *    v1 = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (deg (arg (*v1)));
   return res;
 }
 
@@ -766,6 +1031,20 @@ constant * evaluate::arg_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (arg (*v1));
+  return res;
+}
+
+constant * evaluate::arg_m (constant * args) {
+  matrix *    m1 = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (arg (*m1));
+  return res;
+}
+
+constant * evaluate::arg_mv (constant * args) {
+  matvec *    v1 = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (arg (*v1));
   return res;
 }
 
@@ -1345,11 +1624,73 @@ constant * evaluate::index_mv_1 (constant * args) {
   return res;
 }
 
+/* Little helper macros for the following functionality. */
+#define EQUATION_HAS_DEPS(v,n) \
+  ((v)->getDataDependencies() != NULL && \
+   (v)->getDataDependencies()->length() >= n)
+#define EQUATION_DEPS(v) \
+  ((v)->getDataDependencies() ? (v)->getDataDependencies()->length() : 1)
+
+/* This following function is used to get a subset of data entries
+   from a data vector with certain data dependencies. */
+void evaluate::extract_vector (constant * args, int idx, int &skip, int &size,
+			       constant * res) {
+  vector * v = V (args->getResult (0));
+  int i = INT (args->getResult (idx));
+  int type = args->get(idx)->getType ();
+  vector * vres;
+  strlist * deps = args->getResult(0)->getDataDependencies ();
+  int didx = (deps ? deps->length () : 0) - idx;
+  int dsize = solver::getDependencySize (deps, idx);
+
+  // all of the data vector
+  if (type == TAG_RANGE) {
+    vres = new vector (*(res->v));
+    skip *= deps ? solver::getDataSize (deps->get (didx - 1)) : 1;
+    size *= deps ? solver::getDataSize (deps->get (didx)) : 1;
+  }
+  // a subset
+  else {
+    vres = new vector (dsize * size);
+    int len = deps ? solver::getDataSize (deps->get (didx)) : v->getSize ();
+    if (i < 0 || i >= len) {
+      THROW_MATH_EXCEPTION ("vector index %d (%d) out of bounds [%d,%d]",
+			    idx, i, 0, len - 1);
+    } else {
+      int k, n;
+      for (n = k = 0; k < dsize * size; n += skip, k++) {
+	vres->set (res->v->get (dsize * i + n), k);
+      }
+    }
+    if (deps && didx >= 0) {
+      res->addDropDependencies (deps->get (didx));
+    }
+  }
+  if (res->v != NULL) delete res->v;
+  res->v = vres;
+}
+
 constant * evaluate::index_v_1 (constant * args) {
   vector * v = V (args->getResult (0));
-  int i = INT (args->getResult (1));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (v->get (i));
+  constant * res = new constant (TAG_VECTOR);
+  int skip = 1, size = 1;
+  res->v = new vector (*v);
+  extract_vector (args, 1, skip, size, res);
+  return res;
+}
+
+constant * evaluate::index_v_2 (constant * args) {
+  vector * v = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  int skip = 1, size = 1;
+  res->v = new vector (*v);
+  if (!EQUATION_HAS_DEPS (args->getResult (0), 2)) {
+    THROW_MATH_EXCEPTION ("invalid number of vector indices (%d > %d)", 2,
+			  EQUATION_DEPS (args->getResult (0)));
+    return res;
+  }
+  extract_vector (args, 1, skip, size, res);
+  extract_vector (args, 2, skip, size, res);
   return res;
 }
 
@@ -1473,11 +1814,76 @@ constant * evaluate::twoport_mv (constant * args) {
   return res;
 }
 
+constant * evaluate::inverse_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (inverse (*m));
+  return res;
+}
+
+constant * evaluate::inverse_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (inverse (*mv));
+  return res;
+}
+
+constant * evaluate::transpose_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (transpose (*m));
+  return res;
+}
+
+constant * evaluate::transpose_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (transpose (*mv));
+  return res;
+}
+
+constant * evaluate::det_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (det (*m));
+  return res;
+}
+
+constant * evaluate::det_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (det (*mv));
+  return res;
+}
+
+constant * evaluate::eye_m (constant * args) {
+  int i = INT (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (eye (i));
+  return res;
+}
+
+constant * evaluate::adjoint_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (adjoint (*m));
+  return res;
+}
+
+constant * evaluate::adjoint_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (adjoint (*mv));
+  return res;
+}
+
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
   { "+", TAG_DOUBLE,  evaluate::plus_d, 1, { TAG_DOUBLE  } },
   { "+", TAG_COMPLEX, evaluate::plus_c, 1, { TAG_COMPLEX } },
   { "+", TAG_VECTOR,  evaluate::plus_v, 1, { TAG_VECTOR  } },
+  { "+", TAG_MATRIX,  evaluate::plus_m, 1, { TAG_MATRIX  } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv, 1, { TAG_MATVEC } },
 
   { "+", TAG_DOUBLE,  evaluate::plus_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "+", TAG_COMPLEX, evaluate::plus_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
@@ -1488,15 +1894,19 @@ struct application_t eqn::applications[] = {
   { "+", TAG_VECTOR,  evaluate::plus_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
   { "+", TAG_VECTOR,  evaluate::plus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "+", TAG_VECTOR,  evaluate::plus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+  { "+", TAG_MATRIX,  evaluate::plus_m_m, 2, { TAG_MATRIX,  TAG_MATRIX  } },
   { "+", TAG_STRING,  evaluate::plus_s_s, 2, { TAG_STRING,  TAG_STRING  } },
   { "+", TAG_STRING,  evaluate::plus_c_s, 2, { TAG_CHAR,    TAG_STRING  } },
   { "+", TAG_STRING,  evaluate::plus_s_c, 2, { TAG_STRING,  TAG_CHAR    } },
-
   { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC  } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv_m, 2, { TAG_MATVEC, TAG_MATRIX  } },
+  { "+", TAG_MATVEC,  evaluate::plus_m_mv, 2, { TAG_MATRIX, TAG_MATVEC  } },
 
   { "-", TAG_DOUBLE,  evaluate::minus_d, 1, { TAG_DOUBLE  } },
   { "-", TAG_COMPLEX, evaluate::minus_c, 1, { TAG_COMPLEX } },
   { "-", TAG_VECTOR,  evaluate::minus_v, 1, { TAG_VECTOR  } },
+  { "-", TAG_MATRIX,  evaluate::minus_m, 1, { TAG_MATRIX  } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv, 1, { TAG_MATVEC } },
 
   { "-", TAG_DOUBLE,  evaluate::minus_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "-", TAG_COMPLEX, evaluate::minus_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
@@ -1507,6 +1917,10 @@ struct application_t eqn::applications[] = {
   { "-", TAG_VECTOR,  evaluate::minus_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
   { "-", TAG_VECTOR,  evaluate::minus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "-", TAG_VECTOR,  evaluate::minus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+  { "-", TAG_MATRIX,  evaluate::minus_m_m, 2, { TAG_MATRIX,  TAG_MATRIX  } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC } },
+  { "-", TAG_MATVEC,  evaluate::minus_mv_m, 2, { TAG_MATVEC, TAG_MATRIX  } },
+  { "-", TAG_MATVEC,  evaluate::minus_m_mv, 2, { TAG_MATRIX, TAG_MATVEC  } },
 
   { "*", TAG_DOUBLE,  evaluate::times_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "*", TAG_COMPLEX, evaluate::times_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
@@ -1517,6 +1931,18 @@ struct application_t eqn::applications[] = {
   { "*", TAG_VECTOR,  evaluate::times_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
   { "*", TAG_VECTOR,  evaluate::times_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "*", TAG_VECTOR,  evaluate::times_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+  { "*", TAG_MATRIX,  evaluate::times_m_m, 2, { TAG_MATRIX,  TAG_MATRIX  } },
+  { "*", TAG_MATRIX,  evaluate::times_m_c, 2, { TAG_MATRIX,  TAG_COMPLEX } },
+  { "*", TAG_MATRIX,  evaluate::times_c_m, 2, { TAG_COMPLEX, TAG_MATRIX  } },
+  { "*", TAG_MATRIX,  evaluate::times_m_d, 2, { TAG_MATRIX,  TAG_DOUBLE  } },
+  { "*", TAG_MATRIX,  evaluate::times_d_m, 2, { TAG_DOUBLE,  TAG_MATRIX  } },
+  { "*", TAG_MATVEC,  evaluate::times_mv_mv, 2, { TAG_MATVEC,TAG_MATVEC  } },
+  { "*", TAG_MATVEC,  evaluate::times_mv_c, 2, { TAG_MATVEC, TAG_COMPLEX } },
+  { "*", TAG_MATVEC,  evaluate::times_c_mv, 2, { TAG_COMPLEX,TAG_MATVEC  } },
+  { "*", TAG_MATVEC,  evaluate::times_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE  } },
+  { "*", TAG_MATVEC,  evaluate::times_d_mv, 2, { TAG_DOUBLE, TAG_MATVEC  } },
+  { "*", TAG_MATVEC,  evaluate::times_mv_v, 2, { TAG_MATVEC, TAG_VECTOR  } },
+  { "*", TAG_MATVEC,  evaluate::times_v_mv, 2, { TAG_VECTOR, TAG_MATVEC  } },
 
   { "/", TAG_DOUBLE,  evaluate::over_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "/", TAG_COMPLEX, evaluate::over_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
@@ -1527,6 +1953,11 @@ struct application_t eqn::applications[] = {
   { "/", TAG_VECTOR,  evaluate::over_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
   { "/", TAG_VECTOR,  evaluate::over_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "/", TAG_VECTOR,  evaluate::over_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+  { "/", TAG_MATRIX,  evaluate::over_m_c, 2, { TAG_MATRIX,  TAG_COMPLEX } },
+  { "/", TAG_MATRIX,  evaluate::over_m_d, 2, { TAG_MATRIX,  TAG_DOUBLE  } },
+  { "/", TAG_MATVEC,  evaluate::over_mv_c, 2, { TAG_MATRIX, TAG_COMPLEX } },
+  { "/", TAG_MATVEC,  evaluate::over_mv_d, 2, { TAG_MATVEC, TAG_DOUBLE  } },
+  { "/", TAG_MATVEC,  evaluate::over_mv_v, 2, { TAG_MATVEC, TAG_VECTOR  } },
 
   { "%", TAG_DOUBLE,  evaluate::modulo_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "%", TAG_COMPLEX, evaluate::modulo_c_c, 2, { TAG_COMPLEX, TAG_COMPLEX } },
@@ -1551,22 +1982,32 @@ struct application_t eqn::applications[] = {
   { "real", TAG_DOUBLE,  evaluate::real_d, 1, { TAG_DOUBLE  } },
   { "real", TAG_DOUBLE,  evaluate::real_c, 1, { TAG_COMPLEX } },
   { "real", TAG_VECTOR,  evaluate::real_v, 1, { TAG_VECTOR  } },
+  { "real", TAG_MATRIX,  evaluate::real_m, 1, { TAG_MATRIX  } },
+  { "real", TAG_MATVEC,  evaluate::real_mv, 1, { TAG_MATVEC } },
 
   { "imag", TAG_DOUBLE,  evaluate::imag_d, 1, { TAG_DOUBLE  } },
   { "imag", TAG_DOUBLE,  evaluate::imag_c, 1, { TAG_COMPLEX } },
   { "imag", TAG_VECTOR,  evaluate::imag_v, 1, { TAG_VECTOR  } },
+  { "imag", TAG_MATRIX,  evaluate::imag_m, 1, { TAG_MATRIX  } },
+  { "imag", TAG_MATVEC,  evaluate::imag_mv, 1, { TAG_MATVEC } },
 
   { "abs", TAG_DOUBLE,  evaluate::abs_d, 1, { TAG_DOUBLE  } },
   { "abs", TAG_DOUBLE,  evaluate::abs_c, 1, { TAG_COMPLEX } },
   { "abs", TAG_VECTOR,  evaluate::abs_v, 1, { TAG_VECTOR  } },
+  { "abs", TAG_MATRIX,  evaluate::abs_m, 1, { TAG_MATRIX  } },
+  { "abs", TAG_MATVEC,  evaluate::abs_mv, 1, { TAG_MATVEC } },
 
   { "mag", TAG_DOUBLE,  evaluate::abs_d, 1, { TAG_DOUBLE  } },
   { "mag", TAG_DOUBLE,  evaluate::abs_c, 1, { TAG_COMPLEX } },
   { "mag", TAG_VECTOR,  evaluate::abs_v, 1, { TAG_VECTOR  } },
+  { "mag", TAG_MATRIX,  evaluate::abs_m, 1, { TAG_MATRIX  } },
+  { "mag", TAG_MATVEC,  evaluate::abs_mv, 1, { TAG_MATVEC } },
 
   { "conj", TAG_DOUBLE,  evaluate::conj_d, 1, { TAG_DOUBLE  } },
   { "conj", TAG_COMPLEX, evaluate::conj_c, 1, { TAG_COMPLEX } },
   { "conj", TAG_VECTOR,  evaluate::conj_v, 1, { TAG_VECTOR  } },
+  { "conj", TAG_MATRIX,  evaluate::conj_m,  1, { TAG_MATRIX  } },
+  { "conj", TAG_MATVEC,  evaluate::conj_mv, 1, { TAG_MATVEC  } },
 
   { "norm", TAG_DOUBLE,  evaluate::norm_d, 1, { TAG_DOUBLE  } },
   { "norm", TAG_DOUBLE,  evaluate::norm_c, 1, { TAG_COMPLEX } },
@@ -1575,14 +2016,20 @@ struct application_t eqn::applications[] = {
   { "phase", TAG_DOUBLE,  evaluate::phase_d, 1, { TAG_DOUBLE  } },
   { "phase", TAG_DOUBLE,  evaluate::phase_c, 1, { TAG_COMPLEX } },
   { "phase", TAG_VECTOR,  evaluate::phase_v, 1, { TAG_VECTOR  } },
+  { "phase", TAG_MATRIX,  evaluate::phase_m,  1, { TAG_MATRIX } },
+  { "phase", TAG_MATVEC,  evaluate::phase_mv, 1, { TAG_MATVEC } },
 
   { "angle", TAG_DOUBLE,  evaluate::arg_d, 1, { TAG_DOUBLE  } },
   { "angle", TAG_DOUBLE,  evaluate::arg_c, 1, { TAG_COMPLEX } },
   { "angle", TAG_VECTOR,  evaluate::arg_v, 1, { TAG_VECTOR  } },
+  { "angle", TAG_MATRIX,  evaluate::arg_m,  1, { TAG_MATRIX } },
+  { "angle", TAG_MATVEC,  evaluate::arg_mv, 1, { TAG_MATVEC } },
 
   { "arg", TAG_DOUBLE,  evaluate::arg_d, 1, { TAG_DOUBLE  } },
   { "arg", TAG_DOUBLE,  evaluate::arg_c, 1, { TAG_COMPLEX } },
   { "arg", TAG_VECTOR,  evaluate::arg_v, 1, { TAG_VECTOR  } },
+  { "arg", TAG_MATRIX,  evaluate::arg_m,  1, { TAG_MATRIX } },
+  { "arg", TAG_MATVEC,  evaluate::arg_mv, 1, { TAG_MATVEC } },
 
   { "dB", TAG_DOUBLE,  evaluate::dB_d, 1, { TAG_DOUBLE  } },
   { "dB", TAG_DOUBLE,  evaluate::dB_c, 1, { TAG_COMPLEX } },
@@ -1728,8 +2175,10 @@ struct application_t eqn::applications[] = {
     { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
   { "array", TAG_MATRIX, evaluate::index_mv_1, 2,
     { TAG_MATVEC, TAG_DOUBLE } },
-  { "array", TAG_COMPLEX, evaluate::index_v_1, 2,
-    { TAG_VECTOR, TAG_DOUBLE } },
+  { "array", TAG_VECTOR,  evaluate::index_v_1, 2,
+    { TAG_VECTOR, TAG_DOUBLE | TAG_RANGE } },
+  { "array", TAG_VECTOR,  evaluate::index_v_2, 3,
+    { TAG_VECTOR, TAG_DOUBLE | TAG_RANGE, TAG_DOUBLE | TAG_RANGE } },
   { "array", TAG_COMPLEX, evaluate::index_m_2, 3,
     { TAG_MATRIX, TAG_DOUBLE, TAG_DOUBLE } },
   { "array", TAG_CHAR, evaluate::index_s_1, 2, { TAG_STRING, TAG_DOUBLE } },
@@ -1751,6 +2200,16 @@ struct application_t eqn::applications[] = {
     { TAG_MATRIX, TAG_CHAR, TAG_CHAR } },
   { "twoport", TAG_MATVEC, evaluate::twoport_mv, 3,
     { TAG_MATVEC, TAG_CHAR, TAG_CHAR } },
+
+  { "inverse",   TAG_MATRIX,  evaluate::inverse_m,    1, { TAG_MATRIX } },
+  { "inverse",   TAG_MATVEC,  evaluate::inverse_mv,   1, { TAG_MATVEC } },
+  { "transpose", TAG_MATRIX,  evaluate::transpose_m,  1, { TAG_MATRIX } },
+  { "transpose", TAG_MATVEC,  evaluate::transpose_mv, 1, { TAG_MATVEC } },
+  { "det",       TAG_COMPLEX, evaluate::det_m,        1, { TAG_MATRIX } },
+  { "det",       TAG_VECTOR,  evaluate::det_mv,       1, { TAG_MATVEC } },
+  { "eye",       TAG_MATRIX,  evaluate::eye_m,        1, { TAG_DOUBLE } },
+  { "adjoint",   TAG_MATRIX,  evaluate::adjoint_m,    1, { TAG_MATRIX } },
+  { "adjoint",   TAG_MATVEC,  evaluate::adjoint_mv,   1, { TAG_MATVEC } },
 
   { "sign", TAG_DOUBLE,  evaluate::sign_d, 1, { TAG_DOUBLE  } },
   { "sign", TAG_COMPLEX, evaluate::sign_c, 1, { TAG_COMPLEX } },

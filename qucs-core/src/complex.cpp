@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.15 2004-10-27 18:45:19 ela Exp $
+ * $Id: complex.cpp,v 1.16 2004-11-29 19:03:33 raimi Exp $
  *
  */
 
@@ -76,6 +76,10 @@ nr_double_t real (nr_double_t r) {
 
 nr_double_t imag (const complex z) {
   return z.i;
+}
+
+nr_double_t imag (nr_double_t) {
+  return 0.0;
 }
 
 complex conj (const complex z) {

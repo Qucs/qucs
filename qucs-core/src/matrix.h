@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.10 2004-10-12 18:13:09 ela Exp $
+ * $Id: matrix.h,v 1.11 2004-11-29 19:03:36 raimi Exp $
  *
  */
 
@@ -54,13 +54,18 @@ class matrix
   friend matrix operator * (matrix, matrix);
 
   // intrinsic operator functions
+  matrix operator  - ();
   matrix operator += (matrix);
   matrix operator -= (matrix);
 
   // other operations
   friend matrix transpose (matrix);
   friend matrix conj (matrix);
+  friend matrix abs (matrix);
+  friend matrix arg (matrix);
   friend matrix adjoint (matrix);
+  friend matrix real (matrix);
+  friend matrix imag (matrix);
   friend matrix eye (int, int);
   friend matrix eye (int);
   friend complex cofactor (matrix, int, int);

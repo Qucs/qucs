@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.24 2004-11-24 19:15:46 raimi Exp $
+ * $Id: nasolver.cpp,v 1.25 2004-11-29 19:03:37 raimi Exp $
  *
  */
 
@@ -68,6 +68,7 @@ nasolver<nr_type_t>::nasolver () : analysis () {
   convHelper = fixpoint = 0;
   eqnAlgo = ALGO_LU_DECOMPOSITION;
   updateMatrix = 1;
+  gMin = srcFactor = 0;
   eqns = new eqnsys<nr_type_t> ();
 }
 
@@ -83,6 +84,7 @@ nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   convHelper = fixpoint = 0;
   eqnAlgo = ALGO_LU_DECOMPOSITION;
   updateMatrix = 1;
+  gMin = srcFactor = 0;
   eqns = new eqnsys<nr_type_t> ();
 }
 
@@ -116,6 +118,8 @@ nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   eqnAlgo = o.eqnAlgo;
   updateMatrix = o.updateMatrix;
   fixpoint = o.fixpoint;
+  gMin = o.gMin;
+  srcFactor = o.srcFactor;
   eqns = new eqnsys<nr_type_t> (*(o.eqns));
 }
 
@@ -235,6 +239,67 @@ void nasolver<nr_type_t>::applyNodeset (void) {
   saveSolution ();
 }
 
+/* The following function uses the gMin-stepping algorithm in order to
+   solve the given non-linear netlist by continuous iterations. */
+template <class nr_type_t>
+int nasolver<nr_type_t>::solve_nonlinear_continuation (void) {
+  qucs::exception * e;
+  int convergence, run = 0, MaxIterations, error = 0;
+  nr_double_t gStep, gPrev;
+
+  // fetch simulation properties
+  MaxIterations = getPropertyInteger ("MaxIter") / 4 + 1;
+  updateMatrix = 1;
+  fixpoint = 0;
+
+  // initialize the stepper
+  gPrev = gMin = 0.01;
+  gStep = gMin / 100;
+  gMin -= gStep;
+
+  do {
+    // run solving loop until convergence is reached
+    run = 0;
+    do {
+      error = solve_once ();
+      if (!error) {
+	// convergence check
+	convergence = (run > 0) ? checkConvergence () : 0;
+	savePreviousIteration ();
+	run++;
+      }
+      else break;
+    }
+    while (!convergence && run < MaxIterations);
+    iterations += run;
+
+    // not yet converged, so decreased the gMin-step
+    if (run >= MaxIterations || error) {
+      gStep /= 2;
+      // here the absolute minimum step checker
+      if (gStep < 1e-15) {
+	error = 1;
+	e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
+	e->setText ("no convergence in %s analysis after %d gMinStepping "
+		    "iterations", desc, iterations);
+	throw_exception (e);
+	break;
+      }
+      gMin = MAX (gPrev - gStep, 0);
+    } 
+    // converged, increased the gMin-step
+    else {
+      gPrev = gMin;
+      gMin = MAX (gMin - gStep, 0);
+      gStep *= 2;
+    }
+  }
+  // continue until no additional resistances is necessary
+  while (gPrev > 0);
+
+  return error;
+}
+
 /* This is the non-linear iterative nodal analysis netlist solver. */
 template <class nr_type_t>
 int nasolver<nr_type_t>::solve_nonlinear (void) {
@@ -247,6 +312,13 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
   abstol = getPropertyDouble ("abstol");
   vntol = getPropertyDouble ("vntol");
   updateMatrix = 1;
+
+  // yet another non-linear solver
+  if (convHelper == CONV_GMinStepping) {
+    iterations = 0;
+    error = solve_nonlinear_continuation ();
+    return error;
+  }
 
   // run solving loop until convergence is reached
   do {
@@ -306,6 +378,15 @@ void nasolver<nr_type_t>::createMatrix (void) {
     createBMatrix ();
     createCMatrix ();
     createDMatrix ();
+  }
+
+  /* Adjust G matrix if requested. */
+  if (convHelper == CONV_GMinStepping) {
+    int N = countNodes ();
+    int M = subnet->getVoltageSources ();
+    for (int n = 1; n <= N + M; n++) {
+      A->set (n, n, A->get (n, n) + gMin);
+    }
   }
 
   /* Generate the z Matrix.  The z Matrix consists of two (2) minor

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.12 2004-10-13 14:43:17 ela Exp $
+ * $Id: evaluate.h,v 1.13 2004-11-29 19:03:34 raimi Exp $
  *
  */
 
@@ -37,6 +37,8 @@ public:
   static constant * plus_d (constant *);
   static constant * plus_c (constant *);
   static constant * plus_v (constant *);
+  static constant * plus_m (constant *);
+  static constant * plus_mv (constant *);
 
   static constant * plus_d_d (constant *);
   static constant * plus_c_c (constant *);
@@ -47,15 +49,19 @@ public:
   static constant * plus_v_c (constant *);
   static constant * plus_c_v (constant *);
   static constant * plus_v_v (constant *);
+  static constant * plus_m_m (constant *);
   static constant * plus_s_s (constant *);
   static constant * plus_c_s (constant *);
   static constant * plus_s_c (constant *);
-
   static constant * plus_mv_mv (constant *);
+  static constant * plus_mv_m (constant *);
+  static constant * plus_m_mv (constant *);
 
   static constant * minus_d (constant *);
   static constant * minus_c (constant *);
   static constant * minus_v (constant *);
+  static constant * minus_m (constant *);
+  static constant * minus_mv (constant *);
 
   static constant * minus_d_d (constant *);
   static constant * minus_c_c (constant *);
@@ -66,6 +72,10 @@ public:
   static constant * minus_v_c (constant *);
   static constant * minus_c_v (constant *);
   static constant * minus_v_v (constant *);
+  static constant * minus_m_m (constant *);
+  static constant * minus_mv_mv (constant *);
+  static constant * minus_mv_m (constant *);
+  static constant * minus_m_mv (constant *);
 
   static constant * times_d_d (constant *);
   static constant * times_c_c (constant *);
@@ -76,6 +86,20 @@ public:
   static constant * times_v_c (constant *);
   static constant * times_c_v (constant *);
   static constant * times_v_v (constant *);
+  static constant * times_m_m (constant *);
+  static constant * times_m_c (constant *);
+  static constant * times_c_m (constant *);
+  static constant * times_m_d (constant *);
+  static constant * times_d_m (constant *);
+  static constant * times_mv_mv (constant *);
+  static constant * times_mv_c (constant *);
+  static constant * times_c_mv (constant *);
+  static constant * times_mv_d (constant *);
+  static constant * times_d_mv (constant *);
+  static constant * times_mv_m (constant *);
+  static constant * times_m_mv (constant *);
+  static constant * times_mv_v (constant *);
+  static constant * times_v_mv (constant *);
 
   static constant * over_d_d (constant *);
   static constant * over_c_c (constant *);
@@ -86,6 +110,11 @@ public:
   static constant * over_v_c (constant *);
   static constant * over_c_v (constant *);
   static constant * over_v_v (constant *);
+  static constant * over_m_c (constant *);
+  static constant * over_m_d (constant *);
+  static constant * over_mv_c (constant *);
+  static constant * over_mv_d (constant *);
+  static constant * over_mv_v (constant *);
 
   static constant * modulo_d_d (constant *);
   static constant * modulo_c_c (constant *);
@@ -110,18 +139,26 @@ public:
   static constant * real_d (constant *);
   static constant * real_c (constant *);
   static constant * real_v (constant *);
+  static constant * real_m (constant *);
+  static constant * real_mv (constant *);
 
   static constant * imag_d (constant *);
   static constant * imag_c (constant *);
   static constant * imag_v (constant *);
+  static constant * imag_m (constant *);
+  static constant * imag_mv (constant *);
 
   static constant * abs_d (constant *);
   static constant * abs_c (constant *);
   static constant * abs_v (constant *);
+  static constant * abs_m (constant *);
+  static constant * abs_mv (constant *);
 
   static constant * conj_d (constant *);
   static constant * conj_c (constant *);
   static constant * conj_v (constant *);
+  static constant * conj_m (constant *);
+  static constant * conj_mv (constant *);
 
   static constant * norm_d (constant *);
   static constant * norm_c (constant *);
@@ -130,10 +167,14 @@ public:
   static constant * phase_d (constant *);
   static constant * phase_c (constant *);
   static constant * phase_v (constant *);
+  static constant * phase_m (constant *);
+  static constant * phase_mv (constant *);
 
   static constant * arg_d (constant *);
   static constant * arg_c (constant *);
   static constant * arg_v (constant *);
+  static constant * arg_m (constant *);
+  static constant * arg_mv (constant *);
 
   static constant * dB_d (constant *);
   static constant * dB_c (constant *);
@@ -282,9 +323,11 @@ public:
   static constant * sinc_c (constant *);
   static constant * sinc_v (constant *);
 
+  static void extract_vector (constant *, int, int &, int &, constant *);
   static constant * index_mv_2 (constant *);
   static constant * index_mv_1 (constant *);
   static constant * index_v_1 (constant *);
+  static constant * index_v_2 (constant *);
   static constant * index_m_2 (constant *);
   static constant * index_s_1 (constant *);
 
@@ -303,6 +346,15 @@ public:
 
   static constant * twoport_m  (constant *);
   static constant * twoport_mv (constant *);
+  static constant * inverse_m  (constant *);
+  static constant * inverse_mv (constant *);
+  static constant * transpose_m  (constant *);
+  static constant * transpose_mv (constant *);
+  static constant * det_m  (constant *);
+  static constant * det_mv (constant *);
+  static constant * eye_m  (constant *);
+  static constant * adjoint_m  (constant *);
+  static constant * adjoint_mv (constant *);
 };
 
 // Type of application function.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.22 2004-11-10 20:26:37 ela Exp $
+ * $Id: component.h,v 1.23 2004-11-29 19:03:57 raimi Exp $
  *
  */
 
@@ -86,5 +86,7 @@
 #include "microstrip/mstee.h"
 #include "microstrip/mscross.h"
 #include "microstrip/msvia.h"
+#include "microstrip/cpline.h"
+#include "microstrip/cpwline.h"
 
 #endif /* __COMPONENT_H__ */

@@ -26,8 +26,7 @@ SUBDIRS = src doc
 
 EXTRA_DIST = BUGS autogen.sh depcomp RELEASE
 
-CLEANFILES = *~
+CLEANFILES = *~ *.orig *.rej
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
 	stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log *.gz aclocal.m4 config.h.in \
-	configure
+DISTCLEANFILES = config.cache config.log

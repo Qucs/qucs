@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.16 2004-10-06 14:40:05 ela Exp $
+ * $Id: equation.h,v 1.17 2004-11-29 19:03:33 raimi Exp $
  *
  */
 
@@ -66,8 +66,11 @@ public:
   void append (node *);
   void setDependencies (strlist *);
   strlist * getDependencies (void);
-  void setDataDependencies (strlist * deps) { dataDependencies = deps; }
+  void setDataDependencies (strlist *);
   strlist * getDataDependencies (void) { return dataDependencies; }
+  void setDropDependencies (strlist * deps) { dropDependencies = deps; }
+  void addDropDependencies (char *);
+  strlist * getDropDependencies (void) { return dropDependencies; }
   strlist * recurseDependencies (checker *, strlist *);
   node * get (int);
   constant * getResult (int);
@@ -103,17 +106,19 @@ private:
   strlist * dependencies;
   constant * res;
   strlist * dataDependencies;
+  strlist * dropDependencies;
 };
 
 enum ConstantTag {
-  TAG_UNKNOWN = -1,
-  TAG_DOUBLE = 0,   /* double constant          */
-  TAG_COMPLEX,      /* complex value            */
-  TAG_VECTOR,       /* list of complex values   */
-  TAG_MATRIX,       /* complex matrix           */
-  TAG_MATVEC,       /* list of complex matrices */
-  TAG_CHAR,         /* single character         */
-  TAG_STRING,       /* character string         */
+  TAG_UNKNOWN =   0,
+  TAG_DOUBLE  =   1, /* double constant          */
+  TAG_COMPLEX =   2, /* complex value            */
+  TAG_VECTOR  =   4, /* list of complex values   */
+  TAG_MATRIX  =   8, /* complex matrix           */
+  TAG_MATVEC  =  16, /* list of complex matrices */
+  TAG_CHAR    =  32, /* single character         */
+  TAG_STRING  =  64, /* character string         */
+  TAG_RANGE   = 128, /* interval specification   */
 };
 
 /* This class represents any type of constant expression. */
@@ -240,6 +245,10 @@ public:
   vector * dataVector (node *);
   void checkinDataset (void);
   void checkoutDataset (void);
+  static int dataSize (constant *);
+  static int getDependencySize (strlist *, int);
+  static int getDataSize (char *);
+  static strlist * collectDataDependencies (node *);
   int dataSize (strlist *);
   void findMatrixVectors (vector *);
   char * isMatrixVector (char *, int&, int&);
