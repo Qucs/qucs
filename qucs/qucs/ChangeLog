@@ -1,5 +1,12 @@
 2004-05-19  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
+	* diagrams/rectdiagram.cpp (calcDiagram): Fixed an endless
+	loop bug when trying to calculate grid properties for zero
+	ymax and ymin.
+
+	* qucsfile.cpp (simpleInsertWire): Fixed segfault bug when 
+	accessing null pointer.
+
 	* qucsview.cpp (MPressRotate): Fixed possible cause of
 	segfault.
 	(MReleasePaste): Fixed segfault reason when the re-inserted wire
