@@ -2114,6 +2114,38 @@ Wrong &apos;painting&apos; line delimiter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>ideal rectangle current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current at high pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of high pulses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of low pulses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal rectangle voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of high signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>
 Very simple text editor for Qucs
 </source>
@@ -3562,12 +3594,23 @@ Continuare ?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This will delete the files
-</source>
+        <source>Edits the symbol for this schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>permanently! Continue ?</source>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

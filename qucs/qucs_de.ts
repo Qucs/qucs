@@ -2248,6 +2248,38 @@ Verwendung:  qucsedit [-r] Dateiname
         <translation>Spannungspulsquelle</translation>
     </message>
     <message>
+        <source>ideal rectangle current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current at high pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of high pulses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>duration of low pulses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal rectangle voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of high signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangle Voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>
 Very simple text editor for Qucs
 </source>
@@ -4024,6 +4056,36 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     <message>
         <source>permanently! Continue ?</source>
         <translation>unwiderruflich! Fortfahren?</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished">Schaltkreissymbol bearbeiten</translation>
+    </message>
+    <message>
+        <source>Edit Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished">Bearbeitet das Symbol für diesen Schaltkreis</translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished">Schaltkreissymol bearbeiten
+
+Bearbeitet das Symbol für diesen Schaltkreis</translation>
+    </message>
+    <message>
+        <source>Edits the schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Schematic
+
+Edits the schematic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

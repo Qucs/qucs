@@ -463,6 +463,7 @@ bool QucsApp::closeAllFiles()
   }
 
   delete m;
+  switchEditMode(true);   // set schematic edit mode
   return true;
 }
 
@@ -1092,8 +1093,9 @@ void QucsApp::slotSimulate()
   sim->ProgText->insert(tr("done.\n"));
 
   QStringList com;
-  com << BINARYDIR "qucsator" << "-i" << QucsHomeDir.filePath("netlist.txt");
-  com << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
+  com << BINARYDIR "qucsator" << "-b" << "-i"
+      << QucsHomeDir.filePath("netlist.txt")
+      << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
   if(!sim->startProcess(com)) {
     sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
     sim->errorSimEnded();
@@ -1273,7 +1275,11 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 void QucsApp::slotMenuCloseProject()
 {
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  view->Docs.append(new QucsDoc(this, ""));   // create 'untitled' file
+  QucsDoc *d = new QucsDoc(this, "");
+  view->Docs.append(d);   // create 'untitled' file
+  view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
+                       int(d->Scale*double(d->ViewY2-d->ViewY1)));
+  view->setContentsPos(d->PosX, d->PosY);
   view->viewport()->repaint();
   view->drawn = false;
 
@@ -1388,7 +1394,11 @@ int QucsApp::testFile(const QString& DocName)
 void QucsApp::OpenProject(const QString& Path, const QString& Name)
 {
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  view->Docs.append(new QucsDoc(this, ""));   // create 'untitled' file
+  QucsDoc *d = new QucsDoc(this, "");
+  view->Docs.append(d);   // create 'untitled' file
+  view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
+                       int(d->Scale*double(d->ViewY2-d->ViewY1)));
+  view->setContentsPos(d->PosX, d->PosY);
   view->viewport()->repaint();
   view->drawn = false;
 
@@ -1472,10 +1482,11 @@ pInfoFunc lumpedComponents[18] =
    &Isolator::info, &Circulator::info, &Gyrator::info, &Phaseshifter::info,
    &iProbe::info, 0};
 
-pInfoFunc Sources[14] =
+pInfoFunc Sources[16] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
    &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
-   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info, 0};
+   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
+   &vRect::info, &iRect::info, 0};
 
 pInfoFunc TransmissionLines[13] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
@@ -1888,7 +1899,21 @@ void QucsApp::slotDistribVert()
 // #######################################################################
 void QucsApp::switchEditMode(bool SchematicMode)
 {
+  if(SchematicMode) {
+    symEdit->setMenuText(tr("Edit Circuit Symbol"));
+    symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
+    symEdit->setWhatsThis(
+	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
+  }
+  else {
+    symEdit->setMenuText(tr("Edit Schematic"));
+    symEdit->setStatusTip(tr("Edits the schematic"));
+    symEdit->setWhatsThis(tr("Edit Schematic\n\nEdits the schematic"));
+  }
+
+
   fillComboBox(SchematicMode);
+  slotSetCompView(0);
 
   Acts.editActivate->setEnabled(SchematicMode);
   Acts.insEquation->setEnabled(SchematicMode);
@@ -1905,7 +1930,6 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 {
   if(d->symbolMode) {
     d->symbolMode = false;
-    symEdit->setMenuText(tr("Edit Circuit Symbol"));
     switchEditMode(true);
 
     d->Comps  = &(d->DocComps);
@@ -1925,7 +1949,6 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     Acts.select->setOn(true);
 
     d->symbolMode = true;
-    symEdit->setMenuText(tr("Edit Schematic"));
     switchEditMode(false);
 
     d->Comps  = &(SymbolComps);
@@ -1972,7 +1995,6 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     if(ps != d->UndoSymbol.getLast())  redo->setEnabled(true);
     else  redo->setEnabled(false);
   }
-  slotSetCompView(0);
 }
 
 // #######################################################################

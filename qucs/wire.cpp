@@ -69,7 +69,7 @@ void Wire::setCenter(int x, int y, bool relative)
   if(relative) {
     x1 += x;  x2 += x;
     y1 += y;  y2 += y;
-    if(Label) Label->setCenter(x, y, true);
+//    if(Label) Label->setCenter(x, y, true);
   }
   else {
     x1 = x;  x2 = x;

@@ -76,8 +76,18 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
   QucsDoc *d = Docs.current();
   d->paintGrid(p, contentsX(), contentsY(), visibleWidth(), visibleHeight());
 
+  // scale/translate must not be in QucsDoc because d->paint is
+  // also used by print:
   p->scale(d->Scale, d->Scale);
   p->translate(-d->ViewX1, -d->ViewY1);
+
+  // The only possibility to get good looking fonts at any zoom factor,
+  // is the scale the font and disable the painter scaling when drawing
+  //text.
+  QFont qFont = p->font();
+  qFont.setPointSizeFloat( float(d->Scale * double(qFont.pointSize())) );
+  p->setFont(qFont);
+
   d->paint(p);
 //  drawn = false;
 }
@@ -920,9 +930,12 @@ void QucsView::MPressLabel(QMouseEvent *Event)
       else ((Node*)pe)->setName("");
     }
 
+    int xl = x+30;
+    int yl = y-30;
+    d->setOnGrid(xl, yl);
     // set new name
-    if(pw) pw->setName(Name, x-pw->x1 + y-pw->y1, x+30, y-30);
-    else pn->setName(Name, x+30, y-30);
+    if(pw) pw->setName(Name, x-pw->x1 + y-pw->y1, xl, yl);
+    else pn->setName(Name, xl, yl);
   }
   else {    // if no name was entered (empty string), delete name
     if(pe) {
@@ -1575,11 +1588,12 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 	  pe->Type = isNodeLabel;
 	  d->placeNodeLabel((WireLabel*)pe);
 	  break;
-	default:
+	case isComponent:
 	  d->insertComponent((Component*)pe);
 	  ((Component*)pe)->entireBounds(x1,y1,x2,y2);
 	  enlargeView(x1, y1, x2, y2);
 	  break;
+	default: ;
       }
     }
 
