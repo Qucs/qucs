@@ -1,7 +1,7 @@
 /*
  * circulator.h - circulator class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.h,v 1.3 2004/02/17 15:30:58 ela Exp $
+ * $Id: circulator.h,v 1.4 2004/04/26 13:50:03 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class circulator : public circuit
  public:
   circulator ();
   void calcSP (nr_double_t);
+  void calcDC (void);
 };
 
 #endif /* __CIRCULATOR_H__ */
