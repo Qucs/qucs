@@ -117,8 +117,6 @@ void Wire::paint(ViewPainter *p)
     p->Painter->setPen(QPen(QPen::darkBlue,2));
     p->drawLine(x1, y1, x2, y2);
   }
-
-  if(Label) Label->paint(p);
 }
 
 // ----------------------------------------------------------------

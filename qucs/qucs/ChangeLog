@@ -1,3 +1,9 @@
+2004-10-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* dialog for id_text painting (subcircuit text)
+	* improved printing a little
+	* new action: move component text
+
 2004-10-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* id_text.cpp: text of subcircuit symbols can be

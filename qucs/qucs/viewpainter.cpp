@@ -30,12 +30,12 @@ ViewPainter::~ViewPainter()
 }
 
 // -------------------------------------------------------------
-void ViewPainter::init(QPainter *p, double Scale_, int DX_, int DY_)
+void ViewPainter::init(QPainter *p, float Scale_, int DX_, int DY_, int dx_, int dy_)
 {
   Painter = p;
   Scale = Scale_;
-  DX = floor(double(DX_) * Scale);
-  DY = floor(double(DY_) * Scale);
+  DX = floor(float(DX_) * Scale) - float(dx_);
+  DY = floor(float(DY_) * Scale) - float(dy_);
 
   QFont f = p->font();
   f.setPointSizeFloat( float(Scale) * float(f.pointSize()) );
@@ -47,20 +47,20 @@ void ViewPainter::init(QPainter *p, double Scale_, int DX_, int DY_)
 // -------------------------------------------------------------
 void ViewPainter::map(int x1, int y1, int *x, int *y)
 {
-  double z;
-  z  = double(x1)*Scale + DX;
+  float z;
+  z  = float(x1)*Scale + DX;
   *x = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z  = double(y1)*Scale + DY;
+  z  = float(y1)*Scale + DY;
   *y = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 }
 
 // -------------------------------------------------------------
 void ViewPainter::drawPoint(int x1, int y1)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawPoint(x1, y1);
@@ -69,14 +69,14 @@ void ViewPainter::drawPoint(int x1, int y1)
 // -------------------------------------------------------------
 void ViewPainter::drawLine(int x1, int y1, int x2, int y2)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(x2)*Scale + DX;
+  z = float(x2)*Scale + DX;
   x2 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y2)*Scale + DY;
+  z = float(y2)*Scale + DY;
   y2 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawLine(x1, y1, x2, y2);
@@ -85,14 +85,14 @@ void ViewPainter::drawLine(int x1, int y1, int x2, int y2)
 // -------------------------------------------------------------
 void ViewPainter::drawRect(int x1, int y1, int dx, int dy)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dx)*Scale;
+  z = float(dx)*Scale;
   dx = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dy)*Scale;
+  z = float(dy)*Scale;
   dy = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawRect(x1, y1, dx, dy);
@@ -101,10 +101,10 @@ void ViewPainter::drawRect(int x1, int y1, int dx, int dy)
 // -------------------------------------------------------------
 void ViewPainter::drawRectD(int x1, int y1, int dx, int dy)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawRect(x1, y1, dx, dy);
@@ -113,14 +113,14 @@ void ViewPainter::drawRectD(int x1, int y1, int dx, int dy)
 // -------------------------------------------------------------
 void ViewPainter::drawRoundRect(int x1, int y1, int dx, int dy)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dx)*Scale;
+  z = float(dx)*Scale;
   dx = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dy)*Scale;
+  z = float(dy)*Scale;
   dy = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawRoundRect(x1, y1, dx, dy);
@@ -129,14 +129,14 @@ void ViewPainter::drawRoundRect(int x1, int y1, int dx, int dy)
 // -------------------------------------------------------------
 void ViewPainter::drawEllipse(int x1, int y1, int dx, int dy)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dx)*Scale;
+  z = float(dx)*Scale;
   dx = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dy)*Scale;
+  z = float(dy)*Scale;
   dy = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawEllipse(x1, y1, dx, dy);
@@ -146,10 +146,10 @@ void ViewPainter::drawEllipse(int x1, int y1, int dx, int dy)
 // Returns width of text (and height if pointer is not null).
 int ViewPainter::drawText(const QString& Text, int x1, int y1, int *Height)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   QRect r;
@@ -163,15 +163,15 @@ int ViewPainter::drawText(const QString& Text, int x1, int y1, int *Height)
 // Returns width of text (and height if pointer is not null).
 int ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
-  z = double(w)*Scale;
+  z = float(w)*Scale;
   w  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(h)*Scale;
+  z = float(h)*Scale;
   h  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawArc(x1, y1, w, h, Angle, ArcLen);
@@ -180,15 +180,15 @@ int ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
 // -------------------------------------------------------------
 void ViewPainter::fillRect(int x1, int y1, int dx, int dy, const QColor& Color)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
-  z = double(dx)*Scale;
+  z = float(dx)*Scale;
   dx  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dy)*Scale;
+  z = float(dy)*Scale;
   dy  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->fillRect(x1, y1, dx, dy, QBrush(Color));
@@ -197,16 +197,11 @@ void ViewPainter::fillRect(int x1, int y1, int dx, int dy, const QColor& Color)
 // -------------------------------------------------------------
 void ViewPainter::eraseRect(int x1, int y1, int dx, int dy)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-
-/*  z = double(dx)*Scale;
-  dx  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(dy)*Scale;
-  dy  = z > 0.0 ? int(z + 0.5) : int(z - 0.5);*/
 
   Painter->eraseRect(x1, y1, dx, dy);
 }
@@ -216,10 +211,10 @@ void ViewPainter::eraseRect(int x1, int y1, int dx, int dy)
 // of zoom factor.
 void ViewPainter::drawResizeRect(int x1, int y1)
 {
-  double z;
-  z = double(x1)*Scale + DX;
+  float z;
+  z = float(x1)*Scale + DX;
   x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
+  z = float(y1)*Scale + DY;
   y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
 
   Painter->drawRect(x1-5, y1-5, 10, 10);

@@ -24,12 +24,13 @@
 
 noinst_LIBRARIES = libpaintings.a
 
-MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h
+MOCHEADERS = arrowdialog.h graphictextdialog.h filldialog.h id_dialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libpaintings_a_SOURCES = rectangle.cpp painting.cpp arrow.cpp  \
   graphictextdialog.cpp graphictext.cpp graphicline.cpp ellipse.cpp           \
-  arrowdialog.cpp filldialog.cpp portsymbol.cpp ellipsearc.cpp id_text.cpp
+  arrowdialog.cpp filldialog.cpp portsymbol.cpp ellipsearc.cpp id_text.cpp    \
+  id_dialog.cpp
 
 nodist_libpaintings_a_SOURCES = $(MOCFILES)
 
