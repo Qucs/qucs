@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.7 2004-08-01 16:08:03 ela Exp $
+ * $Id: diode.cpp,v 1.8 2004-08-06 18:24:44 ela Exp $
  *
  */
 
@@ -63,13 +63,14 @@ void diode::calcSP (nr_double_t frequency) {
 
 void diode::calcNoise (nr_double_t frequency) {
   nr_double_t Id = getOperatingPoint ("Id");
+  nr_double_t Is = getPropertyDouble ("Is") + getPropertyDouble ("Isr");
 
 #if MICHAEL /* shot noise only */
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
   complex y = rect (gd, Cd * 2.0 * M_PI * frequency);
-  complex f = 2 * z0 * Id / norm (2 * z0 * y + 1) * QoverkB / T0;
+  complex f = 2 * z0 * (Id + 2 * Is) / norm (2 * z0 * y + 1) * QoverkB / T0;
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
 #else
@@ -78,7 +79,7 @@ void diode::calcNoise (nr_double_t frequency) {
   nr_double_t Ffe = getPropertyDouble ("Ffe");
 
   matrix yc = matrix (2);
-  nr_double_t i = 2 * Id * QoverkB / T0 +               // shot noise
+  nr_double_t i = 2 * (Id + 2 * Is) * QoverkB / T0 +    // shot noise
     Kf * pow (Id, Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
   yc.set (NODE_C, NODE_C, +i); yc.set (NODE_A, NODE_A, +i);
   yc.set (NODE_A, NODE_C, -i); yc.set (NODE_C, NODE_A, -i);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.6 2004-08-01 16:08:02 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.7 2004-08-06 18:24:43 ela Exp $
  *
  */
 
@@ -245,7 +245,7 @@ static void touchstone_create (void) {
     v = new vector ("Fmin");
     v->setDependencies (new strlist (*s));
     touchstone_result->appendVariable (v);
-    v = new vector ("Gopt");
+    v = new vector ("Sopt");
     v->setDependencies (new strlist (*s));
     touchstone_result->appendVariable (v);
     v = new vector ("Rn");
@@ -298,7 +298,7 @@ static void touchstone_create (void) {
       val = pow (10.0, real (root->get (1)) / 10.0);
       v->add (val);
       /* fill optimal noise reflexion coefficient vector */
-      v = touchstone_result->findVariable ("Gopt");
+      v = touchstone_result->findVariable ("Sopt");
       val = polar (real (root->get (2)), rad (real (root->get (3))));
       if (circuit::z0 != touchstone_options.resistance) {
 	// re-normalize reflexion coefficient if necessary

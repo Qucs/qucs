@@ -2361,11 +2361,11 @@ The noise wave correlation matrix, therefore, writes as follows.
 \begin{split}
 (\underline{C})
  =  \left| \frac{0.5\cdot Y_0}{g_d+j\omega C_d + 0.5\cdot Y_0}\right|^2  \cdot 2\cdot e\cdot I_S\cdot
-    \left( \exp\left( \frac{V_{d}}{N\cdot V_T} \right) -1 \right) \cdot Z_0\cdot\begin{pmatrix}
+    \left( \exp\left( \frac{V_{d}}{N\cdot V_T} \right) +1 \right) \cdot Z_0\cdot\begin{pmatrix}
    1 & -1\\
   -1 &  1\\
 \end{pmatrix} \\
- = 2\cdot e\cdot Z_0\cdot  I_{d}\cdot
+ = 2\cdot e\cdot Z_0\cdot \left(I_{d} + 2\cdot I_{S}\right)\cdot
     \left| \frac{1}{2\cdot Z_0\cdot (g_d+j\omega C_d) + 1}\right|^2 \cdot
 \begin{pmatrix}
    1 & -1\\
@@ -2375,8 +2375,9 @@ The noise wave correlation matrix, therefore, writes as follows.
 \label{eqn:diode_noise}
 \end{equation}
 
-Where $e$ is charge of an electron, $V_T$ temperature voltage, $g_d$
-(dynamic) conductance of the diode and $C_d$ its junction capacitance.
+Where $e$ is charge of an electron, $V_T$ the temperature voltage,
+$g_d$ the (dynamic) conductance of the diode and $C_d$ its junction
+capacitance.
 
 \addvspace{12pt}
 
@@ -5373,7 +5374,7 @@ The transconductance coefficient $K_P$ can be calculated using
 K_P = \mu_0\cdot C'_{ox}
 \end{equation}
 
-The surface potential $\Phi$ results in
+The surface potential $\Phi$ is given by
 \begin{equation}
 \Phi = 2\cdot V_T\cdot \ln{\left(\dfrac{N_{SUB}}{n_i}\right)}
 \;\;\;\; \textrm{ with the intrinsic density } \;
@@ -5390,24 +5391,37 @@ The bulk threshold $\gamma$ is
 And finally the zero-bias threshold voltage $V_{T0}$ writes as
 follows.
 \begin{equation}
-V_{T0} = \Phi_{FB} - \dfrac{e\cdot N_{SS}}{C'_{ox}} + \Phi + \gamma\cdot\sqrt{\Phi}
+V_{T0} = V_{FB} + \Phi + \gamma\cdot\sqrt{\Phi}
 \end{equation}
 
+Whereas $V_{FB}$ denotes the flat band voltage consisting of the work
+function difference $\Phi_{MS}$ between the gate and substrate
+material and an additional potential due to the oxide surface charge.
 \begin{equation}
-\Phi_{FB} = \Phi_G - \left(3.25 + \dfrac{1}{2}E_{G_{Si}} + \Phi_{F_{Si}}\right)
+V_{FB} = \Phi_{MS} - \dfrac{e\cdot N_{SS}}{C'_{ox}}
+\end{equation}
+
+The temperature dependent bandgap potential $E_{G}$ of silicon
+(substrate material Si) writes as follows.  With $T = 290\kelvin$ the
+bandgap is approximately $1.12eV$.
+\begin{equation}
+E_{G}\left(T\right) = 1.16 - \dfrac{7.02\cdot 10^{-4}\cdot T^2}{T + 1108}
+\end{equation}
+
+The work function difference $\Phi_{MS}$ gets computed dependent on
+the gate material.  This can be either alumina ($\Phi_{M} = 4.1eV$),
+n-poly-silicon ($\Phi_{M} = 4.15eV$) or p-poly-silicon ($\Phi_{M} =
+5.27eV$).
+\begin{equation}
+\Phi_{MS} = \Phi_{M} - \Phi_{S} = \Phi_{M} - \left(4.15 + \dfrac{1}{2}E_{G} + \dfrac{1}{2}\Phi\right)
 \end{equation}
 \begin{equation}
-E_{G_{Si}}\left(T\right) = 1.16 - \dfrac{7.02\cdot 10^{-4}\cdot T^2}{T + 1108}
-\end{equation}
-\begin{equation}
-\Phi_{F_{Si}} = \dfrac{1}{2}\Phi
-\end{equation}
-\begin{equation}
-\Phi_G =
+\Phi_{M} =
 \begin{cases}
 \begin{array}{ll}
-3.2 & \textrm{ for } T_{PG} = 0, \textrm{ i.e. alumina}\\
-3.25 + \dfrac{1}{2} E_{G_{Si}} - \dfrac{1}{2} E_{G_{Si}}\cdot T_{PG}& \textrm{ for } T_{PG} \ne 0
+4.1 & \textrm{ for } T_{PG} = +0, \textrm{ i.e. alumina}\\
+4.15 + E_{G} & \textrm{ for } T_{PG} = -1, \textrm{ i.e. same as bulk }\\
+4.15 & \textrm{ for } T_{PG} = +1, \textrm{ i.e. opposite to bulk }\\
 \end{array}
 \end{cases}
 \end{equation}
