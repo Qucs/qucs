@@ -1,0 +1,8 @@
+---------------------------------------------------------------
+canonical host name          	compiler  	release	results
+  (tools versions)                     
+---------------------------------------------------------------
+
+i686-pc-linux-gnu		gcc 2.95.4	0.0.2	ok
+i586-pc-linux-gnu		gcc 2.95.3	0.0.2	ok
+i686-pc-cygwin			gcc 2.95.3-10	0.0.2	ok
