@@ -214,7 +214,7 @@ int Graph::getSelected(int x, int y)
       A *= A;                  // avoid the need for square root
       A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
 
-      if(A <= 0)  return z*countX + zi;  // lies x/y onto the graph line ?
+      if(A <= 0)  return z*countX;// + zi;  // lies x/y onto the graph line ?
     } while(true);
     pp++;
   }

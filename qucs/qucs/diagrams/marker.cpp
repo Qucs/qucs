@@ -62,14 +62,14 @@ void Marker::initText(int n)
   Axis *pa;
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
-  double *num, *py = (pGraph->cPointsY) + 2*n;
+  double *num, *py = pGraph->cPointsY + 2*n;
   Text = "";
   nVarPos = 0;
   DataX *pD = pGraph->cPointsX.first();
 
   // find exact marker position
   int nn, x, y, d, dmin = INT_MAX;
-  for(nn=n % pD->count; nn<pD->count; nn++) {
+  for(nn=0; nn<pD->count; nn++) {
     num = pD->Points + nn;
     Diag->calcCoordinate(num, py, &x, &y, pa);
     x -= cx;
@@ -79,12 +79,11 @@ void Marker::initText(int n)
       dmin = d;
       n = (n - n % pD->count) + nn;
     }
-    py += 2;
   }
   if(dmin == INT_MAX)
-    n = (n - n % pD->count) + nn - 1; // take last position
+    n = n + nn - 1; // take last position
 
-  // independent variables
+  // gather text of all independent variables
   nn = n;
   for(; pD!=0; pD = pGraph->cPointsX.next()) {
     num = pD->Points + (nn % pD->count);
@@ -93,7 +92,7 @@ void Marker::initText(int n)
     nn /= pD->count;
   }
 
-  // dependent variable
+  // gather text of dependent variable
   py = (pGraph->cPointsY) + 2*n;
   Text += pGraph->Var + ": ";
   switch(numMode) {
@@ -106,7 +105,8 @@ void Marker::initText(int n)
   }
 
   num = &(VarPos[0]);
-  if(Diag->calcCoordinate(num, py, &cx, &cy, pa) != 0)
+  Diag->calcCoordinate(num, py, &cx, &cy, pa);
+  if(Diag->regionCode(cx, cy) != 0)
     if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
       cx = Diag->x2 >> 1;        // ... point to origin
       cy = Diag->y2 >> 1;
@@ -167,7 +167,8 @@ void Marker::createText()
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
   pp = &(VarPos[0]);
-  if(Diag->calcCoordinate(pp, py, &cx, &cy, pa) != 0)
+  Diag->calcCoordinate(pp, py, &cx, &cy, pa);
+  if(Diag->regionCode(cx, cy) != 0)
     if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
       cx = Diag->x2 >> 1;        // ... point to origin
       cy = Diag->y2 >> 1;

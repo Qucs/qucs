@@ -49,8 +49,9 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual int calcDiagram();
-  virtual int calcCoordinate(double* &, double* &, int*, int*, Axis*);
+  virtual int  calcDiagram();
+  virtual void calcCoordinate(double* &, double* &, int*, int*, Axis*) {};
+  virtual void calcLimits() {};
   void    calcData(Graph*, int);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
@@ -68,11 +69,14 @@ public:
   bool loadVarData(const QString&);
   int  loadIndepVarData(const QString&, const QString&);
 
+  void calcSmithAxisScale(Axis*, int&, int&);
   void createSmithChart(Axis*, int Mode=7);
+  void calcPolarAxisScale(Axis*, double&, double&, double&);
   void createPolarDiagram(Axis*, int Mode=3);
 
   int  regionCode(int, int);
-  int  clip(int*, int);
+  void clip(int* &);
+  void roundClip(int* &);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;

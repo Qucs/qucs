@@ -351,6 +351,18 @@
         <source>stop</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Smith Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>

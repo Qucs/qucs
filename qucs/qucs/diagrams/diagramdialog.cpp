@@ -234,18 +234,19 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
       gp->addMultiCellWidget(GridLogX,6,6,0,1);
 
-      GridLogYl = new QCheckBox(tr("logarithmical left Y Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogYl,7,7,0,1);
+      GridLogY = new QCheckBox(tr("logarithmical left Y Axis Grid"), Tab2);
+      gp->addMultiCellWidget(GridLogY,7,7,0,1);
 
-      GridLogYr = new QCheckBox(tr("logarithmical right Y Axis Grid"), Tab2);
-      gp->addMultiCellWidget(GridLogYr,8,8,0,1);
+      GridLogZ = new QCheckBox(tr("logarithmical right Y Axis Grid"), Tab2);
+      gp->addMultiCellWidget(GridLogZ,8,8,0,1);
 
       // ...........................................................
       // transfer the diagram properties to the dialog
       GridLogX->setChecked(Diag->xAxis.log);
-      GridLogYl->setChecked(Diag->yAxis.log);
-      GridLogYr->setChecked(Diag->zAxis.log);
+      GridLogY->setChecked(Diag->yAxis.log);
+      GridLogZ->setChecked(Diag->zAxis.log);
     }
+    else  GridLogX = GridLogY = GridLogZ = 0;
 
     t->addTab(Tab2, tr("Properties"));
 
@@ -295,7 +296,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     startY->setValidator(ValDouble);
 
     QVBox *VBox7 = new QVBox(axisY);
-    new QLabel(tr("step"), VBox7);
+    if((Diag->Name=="Smith") || (Diag->Name=="ySmith") || (Diag->Name=="PS"))
+      new QLabel(tr("number"), VBox7);
+    else  new QLabel(tr("step"), VBox7);
     stepY = new QLineEdit(VBox7);
     stepY->setValidator(ValDouble);
 
@@ -324,7 +327,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     startZ->setValidator(ValDouble);
 
     QVBox *VBox11 = new QVBox(axisZ);
-    new QLabel(tr("step"), VBox11);
+    if(Diag->Name == "SP")  new QLabel(tr("number"), VBox11);
+    else  new QLabel(tr("step"), VBox11);
     stepZ = new QLineEdit(VBox11);
     stepZ->setValidator(ValDouble);
 
@@ -346,6 +350,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     else  manualY->setChecked(true);
     if(Diag->zAxis.autoScale)  slotManualZ(QButton::Off);
     else  manualZ->setChecked(true);
+
+    Diag->calcLimits();    // inserts auto-scale values if not manual
 
     startX->setText(QString::number(Diag->xAxis.limit_min));
     stepX->setText(QString::number(Diag->xAxis.step));
@@ -369,7 +375,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       startZ->setEnabled(false);
     }
   }
+  else  stepX = 0;
 
+  connect(t, SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeTab(QWidget*)));
   // ...........................................................
   QHBox *Butts = new QHBox(this);
   Butts->setSpacing(5);
@@ -661,12 +669,12 @@ void DiagramDialog::slotApply()
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
       }
-      if(Diag->yAxis.log != GridLogYl->isChecked()) {
-        Diag->yAxis.log = GridLogYl->isChecked();
+      if(Diag->yAxis.log != GridLogY->isChecked()) {
+        Diag->yAxis.log = GridLogY->isChecked();
         changed = true;
       }
-      if(Diag->zAxis.log != GridLogYr->isChecked()) {
-        Diag->zAxis.log = GridLogYr->isChecked();
+      if(Diag->zAxis.log != GridLogZ->isChecked()) {
+        Diag->zAxis.log = GridLogZ->isChecked();
         changed = true;
       }
     }
@@ -867,8 +875,9 @@ void DiagramDialog::slotManualX(int state)
   if(state == QButton::On) {
     if(Diag->Name == "Rect")
       startX->setEnabled(true);
-    stepX->setEnabled(true);
     stopX->setEnabled(true);
+    if(GridLogX) if(GridLogX->isChecked())  return;
+    stepX->setEnabled(true);
   }
   else {
     startX->setEnabled(false);
@@ -883,8 +892,9 @@ void DiagramDialog::slotManualY(int state)
   if(state == QButton::On) {
     if(Diag->Name == "Rect")
       startY->setEnabled(true);
-    stepY->setEnabled(true);
     stopY->setEnabled(true);
+    if(GridLogY) if(GridLogY->isChecked())  return;
+    stepY->setEnabled(true);
   }
   else {
     startY->setEnabled(false);
@@ -899,12 +909,32 @@ void DiagramDialog::slotManualZ(int state)
   if(state == QButton::On) {
     if(Diag->Name == "Rect")
       startZ->setEnabled(true);
-    stepZ->setEnabled(true);
     stopZ->setEnabled(true);
+    if(GridLogZ) if(GridLogZ->isChecked())  return;
+    stepZ->setEnabled(true);
   }
   else {
     startZ->setEnabled(false);
     stepZ->setEnabled(false);
     stopZ->setEnabled(false);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Is called if the current tab of the QTabWidget changes.
+void DiagramDialog::slotChangeTab(QWidget*)
+{
+  if(stepX == 0) return;   // defined ?
+  if(GridLogX) {
+    if(GridLogX->isChecked())  stepX->setEnabled(false);
+    else  if(manualX->isChecked())  stepX->setEnabled(true);
+  }
+  if(GridLogY) {
+    if(GridLogY->isChecked())  stepY->setEnabled(false);
+    else  if(manualY->isChecked())  stepY->setEnabled(true);
+  }
+  if(GridLogZ) {
+    if(GridLogZ->isChecked())  stepZ->setEnabled(false);
+    else  if(manualZ->isChecked())  stepZ->setEnabled(true);
   }
 }

@@ -1210,8 +1210,8 @@ Marker* QucsDoc::setMarker(int x, int y)
       // test all graphs of the diagram
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
 	n  = pg->getSelected(x-pd->cx, pd->cy-y);
-	if(n > 0) {
-	  Marker *pm = new Marker(pd, pg, n-1, x-pd->cx, y-pd->cy);
+	if(n >= 0) {
+	  Marker *pm = new Marker(pd, pg, n, x-pd->cx, y-pd->cy);
 	  pg->Markers.append(pm);
 	  setChanged(true, true);
 	  return pm;
