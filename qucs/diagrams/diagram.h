@@ -42,9 +42,11 @@ public:
   virtual void setCenter(int x, int y, bool relative=false);
   void    paint(QPainter *p);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
+  bool    ResizeTouched(int& MAx1, int& MAy1, int& MAx2, int& MAy2);
   QString save();
   bool    load(const QString& Line, QTextStream *stream);
 
+  void updateGraphData();
   void loadGraphData(const QString& defaultDataSet);
   bool loadVarData(const QString& fileName);
   int  loadIndepVarData(const QString& var, const QString& fileName);
