@@ -27,6 +27,7 @@ Version 0.0.3
 -------------
 
  * increased speed of S-parameter simulation
+ * implementation of parallel coupled microstrip lines
  * new microstrip components: gap, open, corner, mitered bend and step
  * simple P- and N-type MOSFET implementation
  * new S-parameter file (currently only touchstone) component

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: sweep.cpp,v 1.4 2004-08-19 19:44:23 ela Exp $
+ * $Id: sweep.cpp,v 1.5 2004-08-22 15:38:27 ela Exp $
  *
  */
 
@@ -165,7 +165,9 @@ void linsweep::create (nr_double_t start, nr_double_t stop, int points) {
   setSize (points);
   for (int i = 0; i < points; i++) {
     val = start + (i * step);
-    if (fabs (val) < fabs (step) / 2) val = 0.0;
+    if (i != 0 && fabs (val) < fabs (step) / 2 &&
+	fabs (val - (start + (i - 1) * step)) < fabs (step))
+      val = 0.0;
     set (i, val);
   }
 }

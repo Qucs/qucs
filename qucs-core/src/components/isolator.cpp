@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.6 2004-07-26 06:30:29 ela Exp $
+ * $Id: isolator.cpp,v 1.7 2004-08-22 15:38:28 ela Exp $
  *
  */
 
@@ -55,10 +55,11 @@ void isolator::calcSP (nr_double_t) {
 }
 
 void isolator::calcNoise (nr_double_t) {
+  nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t r = (z0 - z1) / (z0 + z2);
-  nr_double_t f = 4 * z0 / sqr (z1 + z0);
+  nr_double_t f = 4 * z0 / sqr (z1 + z0) * kelvin (T) / T0;
   setN (1, 1, f * z1);
   setN (1, 2, f * sqrt (z1 * z2) * r);
   setN (2, 1, f * sqrt (z1 * z2) * r);

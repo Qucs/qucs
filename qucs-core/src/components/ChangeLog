@@ -1,5 +1,10 @@
 2004-08-22  Stefan Jahn  <stefan@lkcc.org>
 
+	* microstrip/msline.cpp: Implemented noise calculation.
+
+	* attenuator.cpp, isolator.cpp: 'Temp' property added for noise
+	analysis.
+
 	* microstrip/msline.cpp: Fixed quasi-static formulas when
 	metal thickness turns out to be zero.
 

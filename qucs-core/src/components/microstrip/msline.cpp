@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.23 2004-08-22 11:01:20 ela Exp $
+ * $Id: msline.cpp,v 1.24 2004-08-22 15:38:28 ela Exp $
  *
  */
 
@@ -42,7 +42,20 @@
 #include "msline.h"
 
 msline::msline () : circuit (2) {
+  alpha = zref = 0;
   type = CIR_MSLINE;
+}
+
+void msline::calcNoise (nr_double_t) {
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t l = exp (alpha / getPropertyDouble ("L"));
+  nr_double_t z = zref;
+  nr_double_t r = (z - z0) / (z + z0);
+  nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
+  setN (1, 1, -f * (r * r + l));
+  setN (2, 2, -f * (r * r + l));
+  setN (1, 2, +f * 2 * r * sqrt (l));
+  setN (2, 1, +f * 2 * r * sqrt (l));
 }
 
 void msline::calcSP (nr_double_t frequency) {
@@ -74,6 +87,7 @@ void msline::calcSP (nr_double_t frequency) {
   // analyse dispersion of Zl and Er (use WEff here?)
   analyseDispersion (W, h, er, ZlEff, ErEff, frequency, DModel,
 		     ZlEffFreq, ErEffFreq);
+  zref = ZlEffFreq;
 
   // analyse losses of line
   analyseLoss (W, t, er, rho, D, tand, ZlEffFreq, ZlEffFreq, ErEffFreq,
@@ -83,7 +97,7 @@ void msline::calcSP (nr_double_t frequency) {
   z = ZlEffFreq / z0;
   y = 1 / z;
   k0 = 2 * M_PI * frequency / C0;
-  a = ac + ad;
+  alpha = a = ac + ad;
   b = sqrt (ErEffFreq) * k0;
   g = rect (a, b);
   n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
