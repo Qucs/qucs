@@ -47,19 +47,22 @@ void RectDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
 //  if(p == 0) return;
-  double *px = g->cPointsX;
+  double *px;
   double *py = g->cPointsY;
-  for(int z=g->count; z>0; z--) {
-    *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2);
-    // preserve negative values if not complex number
-    if(fabs(*(py+1)) < 1e-250) {
-      *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2);
-      py++;   // do not use imaginary part
-    }
-    else {  // calculate magnitude of complex number
-      *(p++) = int((sqrt((*py)*(*py) +
-               (*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*y2);
-      py += 2;
+  for(int i=g->countX2; i>0; i--) {
+    px = g->cPointsX.getFirst()->Points;
+    for(int z=g->countX1; z>0; z--) {
+      *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2);
+      // preserve negative values if not complex number
+      if(fabs(*(py+1)) < 1e-250) {
+        *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2);
+        py++;   // do not use imaginary part
+      }
+      else {  // calculate magnitude of complex number
+        *(p++) = int((sqrt((*py)*(*py) +
+                 (*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*y2);
+        py += 2;
+      }
     }
   }
 }
@@ -89,20 +92,21 @@ void RectDiagram::calcDiagram()
     if(Base < 7.5) Base = 5.0;
     else { Base = 1.0; Expo++; }
   }
-  double GridStep = Base * pow(10.0,Expo);  // distance between grids in real coordinates
+  double GridStep = Base * pow(10.0,Expo); // grid distance (real coordinates)
   double corr = floor((xmax-xmin)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
 
   double zD = GridStep-fmod(xmax, GridStep);
-  if(zD/GridStep < 0.2)  xup = xmax+zD;   // expand grid to the right edge of diagram ?
+  // expand grid to the right edge of diagram ?
+  if(zD/GridStep < 0.2)  xup = xmax+zD;
 
   zD = fmod(xmin, GridStep); // expand grid to the left edge of diagram ?
   if(zD/GridStep < 0.2) { xlow = xmin-zD;  zD = 0.0; }
   else zD = GridStep-zD;
 
-  double zDstep = GridStep/(xup-xlow)*double(x2);  // distance between grids in pixel
+  double zDstep = GridStep/(xup-xlow)*double(x2);  // grid distance in pixel
   double GridNum  = xlow + zD;
   zD /= (xup-xlow)/double(x2);
 
@@ -115,8 +119,8 @@ void RectDiagram::calcDiagram()
     GridNum += GridStep;
 
     if(GridOn)  if(z < x2)  if(z > 0)
-      Lines.append(new Line(z, y2, z, 0, QPen(QPen::lightGray,1)));   // x axis grid
-    Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,1)));   // x axis marks
+      Lines.append(new Line(z, y2, z, 0, QPen(QPen::lightGray,0))); // x grid
+    Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));   // x marks
     zD += zDstep;
     z = int(zD);
   }
@@ -135,23 +139,23 @@ void RectDiagram::calcDiagram()
     if(Base < 7.5) Base = 5.0;
     else { Base = 1.0; Expo++; }
   }
-  GridStep = Base * pow(10.0,Expo);     // distance between grids in real coordinates
+  GridStep = Base * pow(10.0,Expo);   // grid distance in real coordinates
   corr = floor((ymax-ymin)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
 
   zD = GridStep-fmod(ymax, GridStep);
-  if(fabs(zD/GridStep) <= 0.2)  yup = ymax+zD; // expand grid to the upper edge of diagram ?
+  // expand grid to the upper edge of diagram ?
+  if(fabs(zD/GridStep) <= 0.2)  yup = ymax+zD;
 
   zD = fmod(ymin, GridStep); // expand grid to the lower edge of the diagram ?
   GridNum = zD/GridStep;
   if(GridNum > 0.2) zD = GridStep-zD;
   else if(GridNum < -0.2) zD *= -1.0;
        else { ylow = ymin-zD;  zD = 0.0; }
-//qDebug("zD: %g", zD);
 
-  zDstep = GridStep/(yup-ylow)*double(y2);     // distance between grids in pixel
+  zDstep = GridStep/(yup-ylow)*double(y2); // distance between grids in pixel
   GridNum  = ylow + zD;
   zD /= (yup-ylow)/double(y2);
 
@@ -166,15 +170,15 @@ void RectDiagram::calcDiagram()
   while(z <= y2) {    // create all grid lines
     if(fabs(Expo) < 3.0)  tmp = QString::number(GridNum);
     else QString::number(GridNum, 'e', 0);
-    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,tmp);      // get width of text
+    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,tmp);   // get width of text
     if(maxWidth < r.width()) maxWidth = r.width();
 
-    Texts.append(new Text(-r.width()-7, z-5, tmp));     // place text aligned right
+    Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
     GridNum += GridStep;
 
     if(GridOn)  if(z < y2)  if(z > 0)
-      Lines.append(new Line(0, z, x2, z, QPen(QPen::lightGray,1)));   // y axis grid
-    Lines.append(new Line(-5, z, 5, z, QPen(QPen::black,1)));   // y axis marks
+      Lines.append(new Line(0, z, x2, z, QPen(QPen::lightGray,0))); // y grid
+    Lines.append(new Line(-5, z, 5, z, QPen(QPen::black,0)));   // y marks
     zD += zDstep;
     z = int(zD);
   }
@@ -182,10 +186,10 @@ void RectDiagram::calcDiagram()
 
 
   // outer frame
-  Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::black,1)));
-  Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::black,1)));
-  Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,1)));
-  Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,1)));
+  Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::black,0)));
+  Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::black,0)));
+  Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,0)));
+  Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,0)));
 }
 
 // ------------------------------------------------------------

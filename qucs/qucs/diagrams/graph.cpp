@@ -22,18 +22,19 @@
 
 Graph::Graph(const QString& _Line)
 {
-  Line = _Line;
-
   Type = isGraph;
 
-  count  = 0;    // no points in graph
+  Var    = _Line;
+  countX1 = countX2 = 0;    // no points in graph
   Points = 0;
-  Thick  = 1;
+  Thick  = 0;
   Color  = 0x0000ff;  // blue
   isSelected = false;
 
   Points = 0;
-  cPointsX = cPointsY = 0;
+  cPointsY = 0;
+
+  cPointsX.setAutoDelete(true);
 }
 
 Graph::~Graph()
@@ -50,33 +51,40 @@ void Graph::paint(QPainter *p, int x0, int y0)
     return;
   }
 
+  int n1, n2;
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Thick+4));
-    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-
-    for(int n=count-1; n>0; n--) {
-      p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+    for(n1=countX2-1; n1>0; n1--) {
+      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+      for(n2=countX1-1; n2>0; n2--) {
+        p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+        pp += 2;
+      }
       pp += 2;
     }
 
     pp = Points;
     p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
-    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-
-    for(int n=count-1; n>0; n--) {
-      p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+    for(n1=countX2-1; n1>0; n1--) {
+      p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+      for(n2=countX1-1; n2>0; n2--) {
+        p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+        pp += 2;
+      }
       pp += 2;
     }
     p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
 
-  pp = Points;
+  // **** not selected ****
   p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
-  p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-
-  for(int n=count-1; n>0; n--) {
-    p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+  for(n1=countX2; n1>0; n1--) {
+    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
+    for(n2=countX1-1; n2>0; n2--) {
+      p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+      pp += 2;
+    }
     pp += 2;
   }
 }
@@ -84,7 +92,7 @@ void Graph::paint(QPainter *p, int x0, int y0)
 // ---------------------------------------------------------------------
 QString Graph::save()
 {
-  QString s = "      <"+Line+" "+Color.name()+" "+QString::number(Thick)+">";
+  QString s = "      <"+Var+" "+Color.name()+" "+QString::number(Thick)+">";
   return s;
 }
 
@@ -98,7 +106,7 @@ bool Graph::load(const QString& _s)
   if(s.at(s.length()-1) != '>') return false;
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  Line  = s.section(' ',0,0);    // Line
+  Var  = s.section(' ',0,0);    // Var
 
   QString n;
   n  = s.section(' ',1,1);    // Color
@@ -124,7 +132,8 @@ int Graph::getSelected(int x, int y)
   int dx, dx2, x1;
   int dy, dy2, y1;
 
-  for(int n=1; n<count; n++) {   // count-1 runs (because need 2 points per run)
+  int runs = countX1 * countX2;
+  for(int n=1; n<runs; n++) {  // count-1 runs (need 2 points per run)
     x1 = *(pp++);  y1 = *(pp++);
 
     dx  = x - x1;
