@@ -1,3 +1,8 @@
+2004-08-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug that remembers only one subcircuit history step
+	* update changed subcircuits in all open documents
+
 2004-07-24  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* functions: distribute horizontally/vertically,

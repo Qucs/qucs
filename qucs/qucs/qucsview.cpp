@@ -1611,7 +1611,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
          c = (Component*)focusElement;
          if(c->Model == "GND") return;
 	 // ComponentDialog is WDestructiveClose
-         cd = new ComponentDialog(c, &(Docs.current()->Comps), this);
+         cd = new ComponentDialog(c, Docs.current(), this);
          if(cd->exec() == 1) {
            int x1, y1, x2, y2;
            x2 = Docs.current()->Comps.findRef(c);
