@@ -41,7 +41,7 @@ eYGridVisible=1; eYGridDash=1;
 
 % set axis layout
 eXAxisNorthValueVisible=0;
-eXAxisSouthScale=[0 1 5];
+%eXAxisSouthScale=[-1 1 1];
 eYAxisEastValueVisible=0;
 eYAxisWestScale=[0 50 250];
 eYAxisWestLabelDistance=8;
@@ -64,29 +64,25 @@ M_PI   = 3.1415926535897932384626433832795029;
 M_2_PI = 0.6366197723675813430755350534900574;
 M_1_PI = 0.3183098861837906715377675267450287;
 
-u = linspace(0.01,5.01,101);
+u = linspace(0.1,10.1,101);
 k = [1 2.1 2.5 3.78 9.8 12.9 16];
+k = [1 3.78 9.5];
 
 eXAxisSouthLabelText="normalised strip width W/h";
 eYAxisWestLabelText="impedance ZL in Ohm";
 eAxesLabelTextFont=1;
+eXAxisSouthScaleType=2;
 
 for n = 1 : length (k)
   er = k(n);
-  for i = 1 : length (u)
-    if (u(i) < 3.3)
-      c = log (4 / u(i) + sqrt (16 / u(i)^2 + 2));
-      z = c - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (2*M_2_PI) / er);
-      z = z * Z0 / M_PI / sqrt (2 * (er + 1));
-    else
-      c = u(i) / 2 + log (4) / M_PI;
-      c = c + (er + 1) / 2 / M_PI / er * log (M_PI_2 * e * (u(i) / 2 + 0.94));
-      c = c + (er - 1) / 2 / M_PI / er^2 * log (e * M_PI^2 / 16);
-      z = Z0 / 2 / sqrt (er) / c;
-    endif
-    zl(i,n) = z;
-  endfor
-  eplot (u,zl(:,n),"",0,[0 0 0],1);
+  a = 1 + 1 / 49 * log ((u.^4 + (u / 52).^2) / (u.^4 + 0.432));
+  a = a + 1 / 18.7 * log (1 + (u / 18.1).^3);
+  b = 0.564 * ((er - 0.9) / (er + 3))^0.053;
+  g = (er + 1) / 2 + (er - 1) / 2 * (1 + 10 ./ u).^(-a * b);
+  f = 6 + (2 * M_PI - 6) * exp (-(30.666 ./ u).^0.7528);
+  d = Z0 / 2 / M_PI * log (f ./ u + sqrt (1 + (2 ./ u).^2));
+  zl = d ./ sqrt (g);
+  eplot (u,zl,"",0,[0 0 0],1);
 endfor
 
 eclose (1,0);

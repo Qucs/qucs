@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.12 2004-09-06 06:40:07 ela Exp $
+ * $Id: complex.cpp,v 1.13 2004-09-09 11:31:51 ela Exp $
  *
  */
 
@@ -59,7 +59,7 @@ nr_double_t norm (const complex z) {
 }
 
 nr_double_t norm (nr_double_t r) {
-  return fabs (r) * fabs (r);
+  return r * r;
 }
 
 nr_double_t arg (const complex z) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.3 2004-09-08 18:25:19 ela Exp $
+ * $Id: nasolver.cpp,v 1.4 2004-09-09 11:31:51 ela Exp $
  *
  */
 
@@ -588,7 +588,7 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
 
   // add node voltage variables
   for (int r = 1; r <= N; r++) {
-    if ((n = createV (r, volts)) != NULL) {
+    if ((n = createV (r, volts, saveOPs)) != NULL) {
       saveVariable (n, x->get (r, 1), f);
       free (n);
     }
@@ -603,10 +603,11 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
   }
 
   // save operating points of non-linear circuits if requested
-  if (saveOPs) {
+  if (saveOPs & SAVE_OPS) {
     circuit * root = subnet->getRoot ();
     for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
       if (!c->isNonLinear ()) continue;
+      if (c->getSubcircuit () && !(saveOPs & SAVE_ALL)) continue;
       c->calcOperatingPoints ();
       operatingpoint * p = c->getOperatingPoints ();
       for (; p != NULL; p = p->getNext ()) {
@@ -647,9 +648,10 @@ char * nasolver<nr_type_t>::createOP (char * c, char * n) {
 /* Creates an appropriate variable name for voltages.  The caller is
    responsible to free() the returned string. */
 template <class nr_type_t>
-char * nasolver<nr_type_t>::createV (int n, char * volts) {
+char * nasolver<nr_type_t>::createV (int n, char * volts, int saveOPs) {
   if (nlist->isInternal (n)) return NULL;
   char * node = nlist->get (n);
+  if (strchr (node, '.') && !(saveOPs & SAVE_ALL)) return NULL;
   char * text = (char *) malloc (strlen (node) + 2 + strlen (volts));
   sprintf (text, "%s.%s", node, volts);
   return text;
@@ -668,7 +670,12 @@ char * nasolver<nr_type_t>::createI (int n, char * amps, int saveOPs) {
   /* save only current through real voltage sources and explicit
      current probes */
   int type = vs->getType ();
-  if (type != CIR_VDC && type != CIR_VAC && type != CIR_IPROBE && !saveOPs)
+  if (type != CIR_VDC && type != CIR_VAC && type != CIR_IPROBE &&
+      !(saveOPs & SAVE_OPS))
+    return NULL;
+
+  // don't output subcircuit components if not requested
+  if (vs->getSubcircuit () && !(saveOPs & SAVE_ALL))
     return NULL;
                  
   // create appropriate current name for single/multiple voltage sources

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.50 2004-09-06 06:40:07 ela Exp $
+ * $Id: check_netlist.cpp,v 1.51 2004-09-09 11:31:51 ela Exp $
  *
  */
 
@@ -462,6 +462,7 @@ struct define_t definition_available[] =
       { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
       { "saveOPs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* parameter sweep */
@@ -645,6 +646,7 @@ static struct special_t checker_specials[] = {
   { "SP",     "Type",        { "lin", "log", NULL } },
   { "AC",     "Type",        { "lin", "log", NULL } },
   { "DC",     "saveOPs",     { "yes", "no", NULL } },
+  { "DC",     "saveAll",     { "yes", "no", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },

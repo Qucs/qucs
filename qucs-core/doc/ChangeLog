@@ -1,3 +1,10 @@
+2004-09-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Schneider}): Documented
+	all the M.V. Schneider formulae.
+
+	* mszl.m: Plotting Hammerstad instead of Wheeler.
+
 2004-09-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Kirschning and Jansen}):

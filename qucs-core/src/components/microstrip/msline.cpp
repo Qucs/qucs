@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.32 2004-09-08 18:25:20 ela Exp $
+ * $Id: msline.cpp,v 1.33 2004-09-09 11:31:51 ela Exp $
  *
  */
 
@@ -164,16 +164,28 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
+
+    nr_double_t dW = 0, u = W / h;
+
+    // consider strip thickness equations
+    if (t != 0 && t < W / 2) {
+      nr_double_t arg = (u < M_1_PI / 2) ? 2 * M_PI * W / t : h / t;
+      dW = t / M_PI * (1 + log (2 * arg));
+      if (t / dW >= 0.75) dW = 0;
+    }
+    WEff = W + dW; u = WEff / h;
+
     // effective dielectric constant
-    e = (er + 1) / 2 + (er - 1) / 2 * sqrt (1 + 10 * h / W);
+    e = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 / u);
+
     // characteristic impedance
-    if (W / h < 1.0) {
-      z = Z0 / M_PI / 2 * log (8 * h / W + W / 4 / h);
+    if (u < 1.0) {
+      z = M_1_PI / 2 * log (8 / u + u / 4);
     }
     else {
-      z = Z0 / (W / h + 2.42 - 0.44 * h / W + sqr (1 - h / W));
+      z = 1 / (u + 2.42 - 0.44 / u + pow (1 - 1 / u, 6));
     }
-    z /= sqrt (e);
+    z = Z0 * z / sqrt (e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {

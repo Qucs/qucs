@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.1 2004-09-06 06:40:07 ela Exp $
+ * $Id: nasolver.h,v 1.2 2004-09-09 11:31:51 ela Exp $
  *
  */
 
@@ -26,6 +26,9 @@
 #define __NASOLVER_H__
 
 #include "tmatrix.h"
+
+#define SAVE_OPS 1 // save operating points
+#define SAVE_ALL 2 // also save subcircuit nodes and operating points
 
 class analysis;
 class circuit;
@@ -64,7 +67,7 @@ class nasolver : public analysis
   void createEMatrix (void);
   void runMNA (void);
   void savePreviousIteration (void);
-  char * createV (int, char *);
+  char * createV (int, char *, int);
   char * createI (int, char *, int);
   char * createOP (char *, char *);
   void saveNodeVoltages (void);
