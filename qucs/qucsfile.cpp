@@ -159,7 +159,7 @@ int QucsFile::save()
   stream << "<Components>\n";    // save all components
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
     stream << pc->save() << "\n";
-    if(pc->Sign == "Port") z++;
+    if(pc->Model == "Port") z++;
   }
   stream << "</Components>\n";
 
@@ -383,13 +383,13 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
     else if(cstr == "<Smith") d = new SmithDiagram();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nUnknown diagram!"));
+		   QObject::tr("Format Error:\nUnknown diagram!"));
       return false;
     }
 
     if(!d->load(Line, stream)) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nWrong 'diagram' line format!"));
+		QObject::tr("Format Error:\nWrong 'diagram' line format!"));
       delete d;
       return false;
     }
@@ -397,7 +397,7 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
-               QObject::tr("Format Error:\n'Diagram' field is not closed!"));
+	       QObject::tr("Format Error:\n'Diagram' field is not closed!"));
   return false;
 }
 
@@ -418,8 +418,8 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     else if(cstr == "<Line") p = new GraphicLine();
     else if(cstr == "<Arrow") p = new Arrow();
     else if(cstr == "<Ellipse") p = new Ellipse();
-    else if(cstr == "<FilledEllipse") p = new FilledEllipse();
-    else if(cstr == "<FilledRect") p = new FilledRect();
+    else if(cstr == "<FilledEllipse") p = new Ellipse(true);
+    else if(cstr == "<FilledRect") p = new Rectangle(true);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nUnknown painting!"));

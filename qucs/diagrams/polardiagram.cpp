@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Oct 17 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -48,8 +48,8 @@ void PolarDiagram::calcData(Graph *g)
   if(p == 0) return;
   double *py = g->cPointsY;
   for(int z = (g->cPointsX.getFirst()->count)*(g->countY); z>0; z--) {
-    *(p++) = (x2>>1)+int((*(py++))/xup*double(x2>>1));
-    *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1));
+    *(p++) = (x2>>1)+int((*(py++))/xup*double(x2>>1) + 0.5);
+    *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1) + 0.5);
   }
 }
 

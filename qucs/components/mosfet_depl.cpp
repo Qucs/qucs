@@ -3,7 +3,7 @@
                              -------------------
     begin                : Fri Jun 4 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -44,8 +44,7 @@ MOSFET_depl::MOSFET_depl()
 
   tx = x2+4;
   ty = y1+4;
-  Sign  = "dMOSFET";
-  Model = "dMOSFET";
+  Model = "DMOSFET";
   Name  = "T";
 
 //  Props.append(new Property("Type", "n", true,

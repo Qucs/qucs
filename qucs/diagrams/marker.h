@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Apr 10 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -60,6 +60,7 @@ public:
   int lookNfeel;    // different marker designs possible
 
   int  Precision;   // number of digits to show
+  int  numMode;     // real/imag or polar (deg/rad)
 };
 
 #endif

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -16,13 +16,15 @@
  ***************************************************************************/
 
 #include "rectangle.h"
-#include "linedialog.h"
+#include "filldialog.h"
 
 
-Rectangle::Rectangle()
+Rectangle::Rectangle(bool _filled)
 {
   isSelected = false;
   Pen = QPen(QColor());
+  Brush = QBrush(QPen::lightGray);
+  filled = _filled;
   cx = cy = 0;
   x1 = x2 = 0;
   y1 = y2 = 0;
@@ -37,13 +39,23 @@ void Rectangle::paint(QPainter *p)
 {
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Pen.width()+5));
+    if(filled)  p->setBrush(Brush);
     p->drawRect(cx, cy, x2, y2);
     p->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
+    p->setBrush(QBrush::NoBrush);
     p->drawRect(cx, cy, x2, y2);
+
+    p->setPen(QPen(QPen::darkRed,2));
+    p->drawRect(cx-5, cy+y2-5, 10, 10);  // markers for changing the size
+    p->drawRect(cx-5, cy-5, 10, 10);
+    p->drawRect(cx+x2-5, cy+y2-5, 10, 10);
+    p->drawRect(cx+x2-5, cy-5, 10, 10);
     return;
   }
   p->setPen(Pen);
+  if(filled)  p->setBrush(Brush);
   p->drawRect(cx, cy, x2, y2);
+  p->setBrush(QBrush::NoBrush);  // no filling for the next paintings
 }
 
 // --------------------------------------------------------------------------
@@ -114,16 +126,77 @@ bool Rectangle::load(const QString& _s)
   Pen.setStyle((Qt::PenStyle)n.toInt(&ok));
   if(!ok) return false;
 
+  n  = s.section(' ',8,8);    // fill color
+  if(n.isEmpty()) return true;    // backward compatibel
+  co.setNamedColor(n);
+  Brush.setColor(co);
+  if(!Brush.color().isValid()) return false;
+
+  n  = s.section(' ',9,9);    // fill style
+  Brush.setStyle((Qt::BrushStyle)n.toInt(&ok));
+  if(!ok) return false;
+
+  n  = s.section(' ',10,10);    // filled
+  if(n.isEmpty()) { filled = true; return true; }  // backward compatibel
+  if(n.toInt(&ok) == 0) filled = false;
+  else filled = true;
+  if(!ok) return false;
+
   return true;
 }
 
 // --------------------------------------------------------------------------
 QString Rectangle::save()
 {
-  QString s = "   <Rectangle "+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += QString::number(x2)+" "+QString::number(y2)+" ";
-  s += Pen.color().name()+" "+QString::number(Pen.width())+" "+QString::number(Pen.style())+">";
+  QString s = "   <Rectangle " +
+	QString::number(cx) + " " + QString::number(cy) + " " +
+	QString::number(x2) + " " + QString::number(y2) + " " +
+	Pen.color().name() + " " + QString::number(Pen.width()) + " " +
+	QString::number(Pen.style()) + " " +
+	Brush.color().name() + " " + QString::number(Brush.style());
+  if(filled) s += " 1>";
+  else s += " 0>";
   return s;
+}
+
+// --------------------------------------------------------------------------
+// Checks if the resize area was clicked.
+bool Rectangle::ResizeTouched(int x, int y)
+{
+  State = -1;
+  if(x < cx-5) return false;
+  if(y < cy-5) return false;
+  if(x > cx+x2+5) return false;
+  if(y > cy+y2+5) return false;
+
+  State = 0;
+  if(x < cx+5)  State = 1;
+  else if(x <= cx+x2-5) { State = -1; return false; }
+  if(y < cy+5)  State |= 2;
+  else if(y <= cy+y2-5) { State = -1; return false; }
+
+  return true;
+}
+
+// --------------------------------------------------------------------------
+// Mouse move action during resize.
+void Rectangle::MouseResizeMoving(int x, int y, QPainter *p)
+{
+  paintScheme(p);  // erase old painting
+  switch(State) {
+    case 0: x2 = x-cx; y2 = y-cy; // lower right corner
+	    break;
+    case 1: x2 -= x-cx; cx = x; y2 = y-cy; // lower left corner
+	    break;
+    case 2: x2 = x-cx; y2 -= y-cy; cy = y; // upper right corner
+	    break;
+    case 3: x2 -= x-cx; cx = x; y2 -= y-cy; cy = y; // upper left corner
+	    break;
+  }
+  if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
+  if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
+
+  paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
@@ -141,10 +214,22 @@ void Rectangle::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool draw
 
 
   p->setPen(Qt::SolidLine);
-  if(drawn) p->drawRect(cx+13, cy, 18, 12);  // erase old cursor symbol
+  if(drawn) {
+    p->drawRect(cx+13, cy, 18, 12);  // erase old cursor symbol
+    if(filled) {   // hatched ?
+      p->drawLine(cx+14, cy+6, cx+19, cy+1);
+      p->drawLine(cx+26, cy+1, cx+17, cy+10);
+      p->drawLine(cx+29, cy+5, cx+24, cy+10);
+    }
+  }
   cx = x;
   cy = y;
   p->drawRect(cx+13, cy, 18, 12);  // paint new cursor symbol
+  if(filled) {   // hatched ?
+    p->drawLine(cx+14, cy+6, cx+19, cy+1);
+    p->drawLine(cx+26, cy+1, cx+17, cy+10);
+    p->drawLine(cx+29, cy+5, cx+24, cy+10);
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -156,7 +241,7 @@ bool Rectangle::MousePressing()
     y1 = y2;    // first corner is determined
   }
   else {
-    if(x1 < x2) { cx = x1; x2 = x2-x1; }    // cx/cy should always be the upper left corner
+    if(x1 < x2) { cx = x1; x2 = x2-x1; } // cx/cy to upper left corner
     else { cx = x2; x2 = x1-x2; }
     if(y1 < y2) { cy = y1; y2 = y2-y1; }
     else { cy = y2; y2 = y1-y2; }
@@ -171,6 +256,15 @@ bool Rectangle::MousePressing()
 // Checks if the coordinates x/y point to the painting.
 bool Rectangle::getSelected(int x, int y)
 {
+  if(filled) {
+    if(x > (cx+x2)) return false;   // coordinates outside the rectangle ?
+    if(y > (cy+y2)) return false;
+    if(x < cx) return false;
+    if(y < cy) return false;
+
+    return true;
+  }
+
   // 5 is the precision the user must point onto the rectangle
   if(x > (cx+x2+5)) return false;   // coordinates outside the rectangle ?
   if(y > (cy+y2+5)) return false;
@@ -178,7 +272,9 @@ bool Rectangle::getSelected(int x, int y)
   if(y < (cy-5)) return false;
 
   // coordinates inside the rectangle ?
-  if(x < (cx+x2-5)) if(x > (cx+5)) if(y < (cy+y2-5)) if(y > (cy+5)) return false;
+  if(x < (cx+x2-5)) if(x > (cx+5)) if(y < (cy+y2-5)) if(y > (cy+5))
+    return false;
+
   return true;
 }
 
@@ -221,10 +317,14 @@ bool Rectangle::Dialog()
 {
   bool changed = false;
 
-  LineDialog *d = new LineDialog(QObject::tr("Edit Rectangle Properties"));
+  FillDialog *d = new FillDialog(QObject::tr("Edit Rectangle Properties"));
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());
+  d->FillColorButt->setPaletteBackgroundColor(Brush.color());
+  d->SetFillComboBox(Brush.style());
+  d->CheckFilled->setChecked(filled);
+  d->slotCheckFilled(filled);
 
   if(d->exec() == QDialog::Rejected) {
     delete d;
@@ -241,6 +341,18 @@ bool Rectangle::Dialog()
   }
   if(Pen.style()  != d->LineStyle) {
     Pen.setStyle(d->LineStyle);
+    changed = true;
+  }
+  if(filled != d->CheckFilled->isChecked()) {
+    filled = d->CheckFilled->isChecked();
+    changed = true;
+  }
+  if(Brush.color() != d->FillColorButt->paletteBackgroundColor()) {
+    Brush.setColor(d->FillColorButt->paletteBackgroundColor());
+    changed = true;
+  }
+  if(Brush.style()  != d->FillStyle) {
+    Brush.setStyle(d->FillStyle);
     changed = true;
   }
 

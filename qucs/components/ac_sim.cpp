@@ -44,7 +44,6 @@ AC_Sim::AC_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = ".AC";
   Model = ".AC";
   Name  = "AC";
 

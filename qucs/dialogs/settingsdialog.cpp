@@ -3,7 +3,7 @@
                              -------------------
     begin                : Mon Oct 20 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -63,8 +63,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
   Check_GridOn = new QCheckBox(tr("show Grid"),Tab2);
 
-  Expr.setPattern("[0-9]{1,3}");  // valid expression for property input
-  QValidator *Validator = new QRegExpValidator(Expr, this);
+  QValidator *Validator = new QIntValidator(0,1000, this);
 
   QLabel *l3 = new QLabel(tr("horizontal Grid:"), Tab2);
   gp2->addWidget(l3,1,0);
