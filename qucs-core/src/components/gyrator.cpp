@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.1 2004/01/13 23:23:01 ela Exp $
+ * $Id: gyrator.cpp,v 1.2 2004/01/31 13:54:53 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 
 gyrator::gyrator () : circuit (4) {
   type = CIR_GYRATOR;
+  setVoltageSources (2);
 }
 
 void gyrator::calcS (nr_double_t frequency) {
@@ -54,4 +55,16 @@ void gyrator::calcS (nr_double_t frequency) {
   setS (4, 1, 1.0 - s1);
   setS (1, 2, +s2); setS (2, 4, +s2); setS (3, 1, +s2); setS (4, 3, +s2);
   setS (1, 3, -s2); setS (2, 1, -s2); setS (3, 4, -s2); setS (4, 2, -s2);
+}
+
+void gyrator::calcY (void) {
+  nr_double_t r = getPropertyDouble ("R");
+  setB (1, 1, -1.0); setB (1, 2, +0.0); setB (1, 3, +0.0); setB (1, 4, +1.0);
+  setB (2, 1, +0.0); setB (2, 2, -1.0); setB (2, 3, +1.0); setB (2, 4, +0.0);
+  setC (1, 1, +0.0); setC (1, 2, -1/r); setC (1, 3, +1/r); setC (1, 4, +0.0);
+  setC (2, 1, +1/r); setC (2, 2, -1.0); setC (2, 3, +1.0); setC (2, 4, -1/r);
+  setD (1, -1.0);
+  setD (2, +0.0);
+  setE (1, +0.0);
+  setE (2, +0.0);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.h,v 1.1 2004/01/13 23:23:01 ela Exp $
+ * $Id: gyrator.h,v 1.2 2004/01/31 13:54:53 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class gyrator : public circuit
  public:
   gyrator ();
   void calcS (nr_double_t);
+  void calcY (void);
 };
 
 #endif /* __GYRATOR_H__ */
