@@ -62,9 +62,9 @@ qucs_%.ts: $(qucs_SOURCES)
 	@qucsfile=$<; tmpfile="tmp.ts"; \
 	genfile=`echo $< | sed -e 's/qucs_\(..\)\.ts/qtgeneric_\1\.ts/'`; \
 	if test -f $$genfile; then \
-	  echo "incorporating '$$genfile'..."; \
+	  echo "Incorporating '$$genfile'..."; \
 	  grep -v "</TS>" $$qucsfile > $$tmpfile; \
-	  grep -v "<!DOCTYPE TS><TS>" $$genfile >> $$tmpfile; \
+	  grep -v "<\!DOCTYPE TS><TS>" $$genfile >> $$tmpfile; \
 	else \
 	  cp -f $$qucsfile $$tmpfile; \
 	fi; \
