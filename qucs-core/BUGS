@@ -1,7 +1,7 @@
 -- 
 -- BUGS
 -- 
--- Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -30,3 +30,31 @@ Date:	     2004-09-01
 Description: Parallel coupled microstrip models do not work.  In fact the
 	     characteristic impedances for even and odd mode are wrong.
 Fix:	     Found the appropriate publication by Kirschning.
+
+Bug:         B0002
+From:	     Stefan Jahn <stefan@lkcc.org>
+State:       unfixed
+Date:	     2005-03-01
+Description: Depending on the netlist input order it may occur that a DC
+	     analysis converges or does not converge.
+
+Bug:         B0003
+From:	     Stefan Jahn <stefan@lkcc.org>
+State:       unfixed
+Date:	     2005-03-01
+Description: Noise correlation matrices of microstrip components can't be
+	     calculated assuming a simple attenuation.
+
+Bug:         B0004
+From:	     Stefan Jahn <stefan@lkcc.org>
+State:       unfixed
+Date:	     2005-03-01
+Description: Noise correlation matrices of microstrip components can't be
+	     calculated assuming a simple attenuation because of the
+	     transition time effects.
+
+Bug:         B0005
+From:	     Stefan Jahn <stefan@lkcc.org>
+State:       unfixed
+Date:	     2005-03-01
+Description: Output resistance of the BJT model is much too high.

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(qucs-core,0.0.5,qucs-bugs@lists.sourceforge.net)
+AC_INIT(qucs-core,0.0.6,qucs-bugs@lists.sourceforge.net)
 AC_CONFIG_SRCDIR([src/circuit.cpp])
 AC_CONFIG_HEADERS([config.h])
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.h,v 1.4 2005/02/08 23:08:40 raimi Exp $
+ * $Id: check_spice.h,v 1.5 2005/03/02 07:36:20 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #define HINT_MSTART      32
 #define HINT_MSTOP       64
 
+/* Externalize variables used by the scanner and parser. */
 extern int spice_lineno;
 extern FILE * spice_in;
 

@@ -1,7 +1,7 @@
 /*
  * check_touchstone.h - checker definitions for Touchstone files
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.h,v 1.2 2004/07/22 21:04:46 ela Exp $
+ * $Id: check_touchstone.h,v 1.3 2005/03/02 07:36:20 raimi Exp $
  *
  */
 
@@ -52,11 +52,13 @@ struct touchstone_t {
   int lines;
 };
 
-__BEGIN_DECLS
-
 /* Externalize variables used by the scanner and parser. */
 extern int touchstone_lineno;
 extern FILE * touchstone_in;
+
+__BEGIN_DECLS
+
+/* Externalize variables used by the scanner and parser. */
 extern struct touchstone_t touchstone_options;
 
 /* Available functions of the checker. */
