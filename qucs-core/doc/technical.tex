@@ -114,8 +114,13 @@ outgoing wave $\underline{b}$:
 \underline{b} = \frac{u-Z_0^*\cdot i}{\sqrt{\text{Re}(Z_0)}}
 \label{equ:waves}
 \end{equation}
-where $u$ is (peak) voltage, $i$ (peak) current and $Z_0$ reference
+where $u$ is (effective) voltage, $i$ (effective) current and $Z_0$ reference
 impedance. The waves are related to power in the following way.
+\begin{equation}
+P = \left( |\underline{a}|^2 - |\underline{b}|^2 \right)
+\end{equation}
+Sometimes waves are defined with peak voltages and peak currents.
+The only difference that appears then is the relation to power:
 \begin{equation}
 P = \frac{1}{2}\cdot \left( |\underline{a}|^2 - |\underline{b}|^2 \right)
 \end{equation}
@@ -172,7 +177,8 @@ With
 \addvspace{12pt}
 
 \begin{tabular}{rll}
-$Z_{0}$ & = & $50\ohm$\\& &\\
+$Z_{n}$ & = & norm impedance after the normalizing process\\& &\\
+$Z_{n,before}$ & = & norm impedance before the normalizing process\\& &\\
 $\left[\underline{E}\right]$ & = &
 $\begin{pmatrix}
 1 & 0 & \ldots & 0\\
@@ -1726,7 +1732,7 @@ $Z_S=R_S+j\cdot X_s$, or source reflexion coefficient $r_S$.
 
 Where $SNR_{in}$ and $SNR_{out}$ are the signal to noise ratios at the
 input and output, respectively, $T_{equi}$ is the equivalent (input)
-noise temperature.  Note that $G_S$ does not equal $1/R_S$.
+noise temperature.  Note that $G_n$ does not equal $1/R_n$.
 
 \addvspace{12pt}
 
@@ -1787,7 +1793,7 @@ $\underline{b}_{noise,i}'$ writes as follows:
     \underline{b}_{noise,l}\cdot
             \frac{\underline{S}_{ik}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
 \end{equation}
-The noise wave $\underline{b}_{noise,j}$ does not contribute to the
+The noise wave $\underline{b}_{noise,j}$ does not contribute to
 $\underline{b}_{noise,i}'$, because no path leads to port $i$.
 Calculating $\underline{b}_{noise,j}'$ is quite alike:
 \begin{equation}
@@ -1798,30 +1804,33 @@ Calculating $\underline{b}_{noise,j}'$ is quite alike:
             \frac{\underline{T}_{jl}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
 \end{equation}
 Now we can derive the first element of the new noise correlation matrix:
-\begin{eqnarray}
-\underline{c}_{ij}' = & & \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,j}^*} \\
- & + & \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,l}^*}\cdot
+\begin{equation}
+\begin{split}
+\underline{c}_{ij}' = & \quad \overline{\underline{b}_{noise,i}'\cdot\underline{b}_{noise,j}'^*} \\
+ = & \quad\; \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,j}^*} \\
+ & + \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,l}^*}\cdot
        \left( \frac{\underline{T}_{jl}\cdot \underline{S}_{kk}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
                 \right) ^*
        \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,k}^*}\cdot
        \left( \frac{\underline{T}_{jl}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}} \right) ^* \\
- & + & \overline{\underline{b}_{noise,k}\cdot\underline{b}_{noise,j}^*}\cdot
+ & + \overline{\underline{b}_{noise,k}\cdot\underline{b}_{noise,j}^*}\cdot
        \frac{\underline{T}_{ll}\cdot \underline{S}_{ik}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}} \\
- & + & \overline{\underline{b}_{noise,k}\cdot\underline{b}_{noise,l}^*}\cdot
+ & + \overline{\underline{b}_{noise,k}\cdot\underline{b}_{noise,l}^*}\cdot
        \frac{\underline{T}_{ll}\cdot \underline{S}_{ik}\cdot \underline{T}_{jl}^* \cdot\underline{S}_{kk}^*}
             {| 1-\underline{S}_{kk}\cdot\underline{T}_{ll} |^2} +
        \overline{\underline{b}_{noise,k}\cdot\underline{b}_{noise,k}^*}\cdot
        \frac{\underline{T}_{ll}\cdot \underline{S}_{ik}\cdot \underline{T}_{jl}^*}
             {| 1-\underline{S}_{kk}\cdot\underline{T}_{ll} |^2} \\
- & + & \overline{\underline{b}_{noise,l}\cdot\underline{b}_{noise,j}^*}\cdot
+ & + \overline{\underline{b}_{noise,l}\cdot\underline{b}_{noise,j}^*}\cdot
        \frac{\underline{S}_{ik}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}} \\
- & + & \overline{\underline{b}_{noise,l}\cdot\underline{b}_{noise,l}^*}\cdot
+ & + \overline{\underline{b}_{noise,l}\cdot\underline{b}_{noise,l}^*}\cdot
        \frac{\underline{S}_{ik}\cdot \underline{T}_{jl}^*\cdot \underline{S}_{kk}^*}
             {| 1-\underline{S}_{kk}\cdot\underline{T}_{ll} |^2} +
        \overline{\underline{b}_{noise,l}\cdot\underline{b}_{noise,k}^*}\cdot
        \frac{\underline{S}_{ik}\cdot \underline{T}_{jl}^*}
             {| 1-\underline{S}_{kk}\cdot\underline{T}_{ll} |^2}
-\end{eqnarray}
+\end{split}
+\end{equation}
 The noise waves of different circuits are uncorrelated and therefore
 their time average product equals zero. (e.g.
 $\overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,j}^*} = 0$)
@@ -1963,6 +1972,14 @@ writes as follows.
   1 & 1\\
 \end{pmatrix}
 \end{equation}
+
+The noise wave correlation matrix of a grounded resistor with resistance $R$
+is a matrix consisting of one element and writes as follows.
+
+\begin{equation}
+(\underline{C}) = k\cdot T\cdot\frac{4\cdot R\cdot Z_0}{(R+Z_0)^2}
+\end{equation}
+
 
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}

@@ -382,7 +382,7 @@ void ComponentDialog::slotButtAdd()
 // some properties.
 void ComponentDialog::slotButtRem()
 {
-  if(prop->childCount() < 2) return;  // the last property cannot be removed
+  if(prop->childCount() < 3) return;  // the last property cannot be removed
   QListViewItem *item = prop->selectedItem();
   if(item == 0) return;
 

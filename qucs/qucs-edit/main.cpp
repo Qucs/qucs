@@ -110,6 +110,16 @@ bool saveApplSettings(QucsEdit *qucs)
   return true;
 }
 
+// #########################################################################
+void showOptions()
+{
+  fprintf(stdout, QObject::tr("Qucs Editor Version ")+PACKAGE_VERSION+
+    QObject::tr("\nvery simple text editor for Qucs\n")+
+    QObject::tr("Copyright (C) 2004 by Michael Margraf\n")+
+    QObject::tr("\nUsage:  qucsedit [-r] filename\n")+
+    QObject::tr("    -r  open file read-only\n"));
+}
+
 
 // #########################################################################
 // ##########                                                     ##########
@@ -125,8 +135,33 @@ int main(int argc, char *argv[])
   a.setFont(QucsSettings.font);
 
   bool readOnly = false;
-  QString FileName;
-  if(argc > 0)  FileName = argv[1];
+  QString FileName, s;
+  for(int i=1; i<argc; i++) {
+    s = argv[i];
+    if(s.at(0) == '-') {
+      if(s.length() != 2) {
+	fprintf(stdout, QObject::tr("Too long command line argument!\n\n"));
+	showOptions();
+	return -1;
+      }
+      switch(s.at(1).latin1()) {
+	case 'r': readOnly = true;
+		  break;
+	case 'h': showOptions();
+		  return 0;
+	default :
+	  fprintf(stderr, QObject::tr("Wrong command line argument!\n\n"));
+	  showOptions();
+	  return -1;
+      }
+    }
+    else  if(FileName.isEmpty())  FileName = s;
+	  else {
+	    fprintf(stderr, QObject::tr("Only one filename allowed!\n\n"));
+	    showOptions();
+	    return -1;
+	  }
+  }
 
   QTranslator tor( 0 );
   tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
