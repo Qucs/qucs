@@ -16,18 +16,24 @@
  ***************************************************************************/
 
 #include "equation.h"
+#include "../main.h"
 
 
 Equation::Equation()
 {
   Description = QObject::tr("equation");
 
-  Lines.append(new Line(-24, -6,-24,  6,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-24,  6, 24,  6,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text(-20,  2,QObject::tr("Equation")));
+  QFontMetrics  metrics(QucsSettings.font);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Description);
+  int xb = r.width()  >> 1;
+  int yb = r.height() >> 1;
 
-  x1 = -27; y1 = -9;
-  x2 =  27; y2 =  9;
+  Lines.append(new Line(-xb, -yb, -xb,  yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,  yb,  xb,  yb,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text(-xb+4,  yb-4, QObject::tr("Equation")));
+
+  x1 = -xb-3; y1 = -yb-3;
+  x2 =  xb+3; y2 =  yb+3;
 
   tx = x1+4;
   ty = y2+4;

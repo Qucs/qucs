@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "components.h"
+#include "../main.h"
 
 #include <qpoint.h>
 #include <qpainter.h>
@@ -80,10 +81,8 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2)
   if(tx < x1) _x1 = tx+cx;
   if(ty < y1) _y1 = ty+cy;
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name); // get width of text
+  QFontMetrics  metrics(QucsSettings.font);
+  QRect r = metrics.boundingRect(0,0,0,0,Qt::AlignAuto, Name);
   if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
   if((ty+r.height()) > y2) _y2 = ty+r.height()+cy;
 
@@ -91,7 +90,7 @@ void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2)
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
-      r = p.boundingRect(0,0,0,0,Qt::AlignAuto,pp->Name+"="+pp->Value);
+      r = metrics.boundingRect(0,0,0,0,Qt::AlignAuto, pp->Name+"="+pp->Value);
       if((tx+r.width()) > x2) _x2 = tx+r.width()+cx;
       dy += 12;
     }
@@ -130,22 +129,18 @@ void Component::paint(QPainter *p)
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
   }
 
-  QFont tmp;
+  QFont f = p->font();   // restore current font
   if(Sign.at(0) == '.') {   // is simulation component (dc, ac, ...)
-    tmp = p->font();
-    p->setFont(QFont("Helvetica",16, QFont::DemiBold));
+    p->setFont(QucsSettings.largeFont);
     p->drawText(cx+x1+8, cy+y1+8, x2-x1, y2-y1, Qt::WordBreak, Description);
-    p->setFont(tmp);
   }
 
   p->setPen(QPen(QPen::black,1));
+  p->setFont(QucsSettings.smallFont);
   // write all text
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
-    tmp = p->font();
-    p->setFont(QFont("Helvetica",10, QFont::Light));
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
     p->drawText(cx+pt->x, cy+pt->y, pt->s);
-    p->setFont(tmp);
-  }
+  p->setFont(f);
 
   int y=12;
   p->drawText(cx+tx, cy+ty, 0, 0, Qt::DontClip, Name);
@@ -297,12 +292,11 @@ void Component::mirrorY()
     if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
   }
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",10, QFont::Light));
+  QRect r;
+  QFontMetrics  metrics(QucsSettings.smallFont);
   // mirror all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
-    QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,pt->s);  // width of text
+    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, pt->s); // width of text
     pt->x = -pt->x - r.width();
   }
 
@@ -457,7 +451,7 @@ Component* getComponentFromName(QString& Line)
   Line = Line.stripWhiteSpace();
   if(Line.at(0) != '<') {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Format Error:\nWrong line start!"));
+			QObject::tr("Format Error:\nWrong line start!"));
     return 0;
   }
 
@@ -469,15 +463,15 @@ Component* getComponentFromName(QString& Line)
   // letter of their name
   switch(first) {
   case 'R' : if(cstr.isEmpty()) c = new Resistor();
-        else if(cstr == "us") c = new ResistorUS();
-        break;
+	else if(cstr == "us") c = new ResistorUS();
+	break;
   case 'C' : if(cstr.isEmpty()) c = new Capacitor();
-        else if(cstr == "CCS") c = new CCCS();
-        else if(cstr == "CVS") c = new CCVS();
-        else if(cstr == "irculator") c = new Circulator();
-        break;
+	else if(cstr == "CCS") c = new CCCS();
+	else if(cstr == "CVS") c = new CCVS();
+	else if(cstr == "irculator") c = new Circulator();
+	break;
   case 'L' : if(cstr.isEmpty()) c = new Inductor();
-        break;
+	break;
   case 'G' : if(cstr == "ND") c = new Ground();
         else if(cstr == "yrator") c = new Gyrator();
         break;

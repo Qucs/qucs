@@ -61,16 +61,15 @@
 #define  COMBO_Diagrams  7
 
 
-QucsApp::QucsApp(tQucsSettings *ps)
+QucsApp::QucsApp()
 {
-  globalSettings = ps;
   setCaption("Qucs " PACKAGE_VERSION);
 
   QucsFileFilter = tr("Schematic (*.sch);;Data Display (*.dpl);;")+
 		   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
 
-  move  (globalSettings->x,  globalSettings->y);
-  resize(globalSettings->dx, globalSettings->dy);
+  move  (QucsSettings.x,  QucsSettings.y);
+  resize(QucsSettings.dx, QucsSettings.dy);
 //  resize(maximumSize());
 
 
@@ -112,7 +111,7 @@ void QucsApp::initView()
   TabView  = new QTabWidget(Hsplit);    // tabs on the left side
   QVBox *WorkGroup = new QVBox(Hsplit);
   WorkView = new QTabBar(WorkGroup);    // tab on the right side
-  view = new QucsView(globalSettings, WorkGroup); // work area with documents
+  view = new QucsView(WorkGroup);    // work area with documents
 
   connect(WorkView, SIGNAL(selected(int)), SLOT(slotChangeView(int)));
 
@@ -423,7 +422,7 @@ void QucsApp::slotFileSettings()
 }
 
 // --------------------------------------------------------------
-void QucsApp::slotQucsSettings()
+void QucsApp::slotApplSettings()
 {
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
@@ -1088,11 +1087,15 @@ int QucsApp::testFile(const QString& DocName)
 
 
   // read header **************************
-  if(stream.atEnd()) {
-    file.close();
-    return -2;
-  }
-  Line = stream.readLine();
+  do {
+    if(stream.atEnd()) {
+      file.close();
+      return -2;
+    }
+    Line = stream.readLine();
+    Line = Line.stripWhiteSpace();
+  } while(Line.isEmpty());
+  
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
     return -3;

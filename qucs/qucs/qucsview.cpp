@@ -30,11 +30,11 @@
 #include <stdlib.h>
 
 
-QucsView::QucsView(tQucsSettings *ps, QWidget *parent) : QScrollView(parent)
+QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 {
   setVScrollBarMode(QScrollView::AlwaysOn);
   setHScrollBarMode(QScrollView::AlwaysOn);
-  viewport()->setPaletteBackgroundColor(ps->BGColor);
+  viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
 
   MouseMoveAction = &QucsView::MouseDoNothing;
