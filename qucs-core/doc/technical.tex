@@ -1,3 +1,5 @@
+% This document describes the ee knowhow used in Qucs.
+
 \documentclass[10pt]{report}
 \usepackage{a4wide}
 \usepackage{epsfig}
@@ -110,6 +112,7 @@ outgoing wave $\underline{b}$:
 \begin{equation}
 \underline{a} = \frac{u+Z_0\cdot i}{\sqrt{\text{Re}(Z_0)}} \qquad
 \underline{b} = \frac{u-Z_0^*\cdot i}{\sqrt{\text{Re}(Z_0)}}
+\label{equ:waves}
 \end{equation}
 where $u$ is (peak) voltage, $i$ (peak) current and $Z_0$ reference
 impedance. The waves are related to power in the following way.
@@ -1156,7 +1159,26 @@ R_n = \frac{Z_0}{4\cdot k\cdot T_0}\cdot
 \begin{tabular}{ll}
 With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
      & \quad standard temperature $T_0 = 290$K\\
-\end{tabular}
+\end{tabular} \\ \\
+
+
+Calculating the noise wave correlation coefficients from the noise parameters
+also is straightforward:
+\begin{equation}
+\underline{c}_{11} = k\cdot T_{min}\cdot (|S_{11}|^2-1) + K_x\cdot |1-S_{11}\cdot\Gamma_{opt}|^2
+\end{equation}
+\begin{equation}
+\underline{c}_{22} = |S_{21}|^2\cdot\left( k\cdot T_{min} + K_x\cdot|\Gamma_{opt}|^2 \right)
+\end{equation}
+\begin{equation}
+\underline{c}_{12} =
+\underline{c}_{21}^* = -S_{21}^*\cdot\Gamma_{opt}^*\cdot K_x + \frac{S_{11}}{S_{21}}\cdot\underline{c}_{22}
+\end{equation}
+with
+\begin{equation}
+K_x = \frac{4\cdot k\cdot T_0\cdot R_n}{Z_0\cdot|1+\Gamma_{opt}|^2}
+\end{equation}
+
 
 
 \section{Noise Wave Correlation Matrix in CAE}
@@ -1212,7 +1234,20 @@ Many components do not produce any noise. Every element of their noise
 correlation matrix therefore equals exactly zero. Examples are lossless,
 passive components, i.e. capacitors, inductors, transformers, circulators,
 phase shifters. Furthermore ideal voltage and current sources (without internal
-resistance) as well as gyrators also don't produce any noise.
+resistance) as well as gyrators also don't produce any noise.\\
+
+If one wants to calculate the noise wave correlation matrix of a component,
+the most universal method is to take noise voltages and noise currents and then
+derive the noise waves by the use of equation \ref{equ:waves}. However, this
+can be very difficulty.\\
+A passive, linear circuit produces only thermal noise and thus, its noise waves
+can be calculated with Bosma's theorem (assuming thermodynamic equilibrium):
+
+\begin{equation}
+(\underline{C}) = k\cdot T\cdot \left( (\underline{E}) - (\underline{S})\cdot(\underline{S})^{*T} \right)
+\end{equation}
+with $(\underline{S})$ being the S parameter matrix and $(\underline{E})$ identity matrix.
+
 
 \subsection{Resistor}
 %\addcontentsline{toc}{subsection}{Resistor}
@@ -1227,6 +1262,41 @@ ideal, ohmic resistor with resistance $R$ writes as follows.
   -1 &  1\\
 \end{pmatrix}
 \end{equation}
+
+\subsection{Attenuator}
+%\addcontentsline{toc}{subsection}{Attenuator}
+
+Being on temperature $T$, the noise wave correlation matrix of an
+ideal attenuator with attenuation $L$ (loss) writes as follows.
+
+\begin{equation}
+(\underline{C}) = k\cdot T\cdot\frac{(L-1)\cdot(r^2-1)}{(L-r^2)^2}\cdot
+\begin{pmatrix}
+  -r^2-L           & 2\cdot r\sqrt{L}\\
+  2\cdot r\sqrt{L} & -r^2-L\\
+\end{pmatrix}
+\end{equation}
+with
+\begin{equation}
+r=\frac{Z_{ref}-Z_0}{Z_{ref}+Z_0}
+\end{equation}
+
+
+\subsection{Isolator}
+%\addcontentsline{toc}{subsection}{Isolator}
+
+Being on temperature $T$, the noise wave correlation matrix of an
+ideal isolator with reference impedance $Z_1$ and $Z_2$ (input and
+output) writes as follows.
+
+\begin{equation}
+(\underline{C}) = \frac{4\cdot k\cdot T\cdot Z_0}{(Z_1+Z_0)^2}\cdot
+\begin{pmatrix}
+  Z_1           & \sqrt{Z_1\cdot Z_2}\cdot\frac{Z_0-Z_1}{Z_0+Z_2}\\
+  \sqrt{Z_1\cdot Z_2}\cdot\frac{Z_0-Z_1}{Z_0+Z_2} & Z_2\cdot\left(\frac{Z_1-Z_0}{Z_2+Z_0}\right)^2\\
+\end{pmatrix}
+\end{equation}
+
 
 \subsection{Noise sources}
 %\addcontentsline{toc}{subsection}{Noise sources}

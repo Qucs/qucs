@@ -3,6 +3,7 @@
 	* added components: BJT, JFET, MOSFET
 	* changes  method to created listview of components in
 	qucs.cpp
+	* better text positioning after rotate/mirror of component
 
 2004-05-30  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 

@@ -3,7 +3,7 @@
                              -------------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -36,7 +36,9 @@ tQucsSettings QucsSettings
      = {0, 0, 600, 400,    // position and size
 	QFont("Helvetica", 12), QFont("Helvetica", 16, QFont::DemiBold),
 	QFont("Helvetica", 10, QFont::Light),
-	QColor(255, 250, 225)};
+	QColor(255, 250, 225), 20};
+
+QFont savingFont;    // to remember which font to save in "qucsrc"
 
 // #########################################################################
 // Loads the settings file and stores the settings.
@@ -61,6 +63,7 @@ bool loadSettings()
 	QucsSettings.dy = Line.section(",",1,1).toInt(&ok); }
     else if(Setting == "Font") {
 	QucsSettings.font.fromString(Line);
+	savingFont = QucsSettings.font;
 
 	QucsSettings.largeFont = QucsSettings.font;
 	int i = QucsSettings.font.pointSize();  i += i/3;
@@ -75,6 +78,8 @@ bool loadSettings()
 	QucsSettings.BGColor.setNamedColor(Line);
 	if(!QucsSettings.BGColor.isValid())
 	  QucsSettings.BGColor.setRgb(255, 250, 225); }
+    else if(Setting == "maxUndo") {
+	QucsSettings.maxUndo = Line.toInt(&ok); }
   }
 
   file.close();
@@ -98,9 +103,10 @@ bool saveApplSettings(QucsApp *qucs)
   stream << "Settings file, Qucs " PACKAGE_VERSION "\n"
     << "Position=" << qucs->x() << "," << qucs->y() << "\n"
     << "Size=" << qucs->width() << "," << qucs->height() << "\n"
-    << "Font=" << QucsSettings.font.toString() << "\n"
+    << "Font=" << savingFont.toString() << "\n"
     << "BGColor=" << qucs->view->viewport()->paletteBackgroundColor().name()
-    << "\n";
+    << "\n"
+    << "maxUndo=" << QucsSettings.maxUndo << "\n";
   file.close();
 
   return true;
@@ -126,5 +132,7 @@ int main(int argc, char *argv[])
   QucsApp *qucs = new QucsApp();
   a.setMainWidget(qucs);
   qucs->show();
-  return a.exec();
+  int result = a.exec();
+  saveApplSettings(qucs);
+  return result;
 }

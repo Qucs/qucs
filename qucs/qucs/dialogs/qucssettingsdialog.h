@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun May 23 2004
     copyright            : (C) 2003 by Michael Margraf
-    email                : margraf@mwt.ee.tu-berlin.de
+    email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,6 +23,7 @@
 #include <qdialog.h>
 #include <qpushbutton.h>
 #include <qfont.h>
+#include <qlineedit.h>
 
 /**
   *@author Michael Margraf
@@ -46,6 +47,7 @@ public:
 
   QFont    Font;
   QPushButton *FontButton, *BGColorButton;
+  QLineEdit   *undoNumEdit;
 };
 
 #endif

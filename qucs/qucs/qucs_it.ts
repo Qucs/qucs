@@ -3754,6 +3754,10 @@ Sets properties of the application</source>
         <source>Font (set after reload):</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>maximum undo operations:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsView</name>
