@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.2 2004/03/07 08:33:01 ela Exp $
+ * $Id: scan_netlist.l,v 1.3 2004/03/08 21:08:50 ela Exp $
  *
  */
 
@@ -51,7 +51,7 @@ EXCEPT   ("mm")
 SU       ({PFX}|{UNT}|{PFX}{UNT}|{EXCEPT})
 SPACE    [ \t]
 RINT     [+-]?{DIGIT}+
-IINT     [+-]?[ij]{1}{DIGIT}+
+IINT     [+-]?[ij]{1}{DIGIT}*
 RFLOAT1  [+-]?{DIGIT}+{EXPONENT}
 RFLOAT2  [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 IFLOAT1  [+-]?[ij]{1}{DIGIT}+{EXPONENT}
@@ -59,9 +59,18 @@ IFLOAT2  [+-]?[ij]{1}{DIGIT}*"."{DIGIT}+({EXPONENT})?
 CREAL    ({RFLOAT1}|{RFLOAT2}|{RINT})
 CIMAG    ({IFLOAT1}|{IFLOAT2}|{IINT})
 COMPLEX  {CREAL}{CIMAG}
+URINT    {DIGIT}+
+UIINT    [ij]{1}{DIGIT}*
+URFLOAT1 {DIGIT}+{EXPONENT}
+URFLOAT2 {DIGIT}*"."{DIGIT}+({EXPONENT})?
+UIFLOAT1 [ij]{1}{DIGIT}+{EXPONENT}
+UIFLOAT2 [ij]{1}{DIGIT}*"."{DIGIT}+({EXPONENT})?
+UCREAL   ({URFLOAT1}|{URFLOAT2}|{URINT})
+UCIMAG   ({UIFLOAT1}|{UIFLOAT2}|{UIINT})
+UCOMPLEX {UCREAL}{UCIMAG}
 
 
-%x COMMENT STR
+%x COMMENT STR EQN
 %option yylineno noyywrap nounput prefix="netlist_"
 
 %%
@@ -71,17 +80,18 @@ COMPLEX  {CREAL}{CIMAG}
     return ScaleOrUnit;
   }
 <INITIAL>"Eqn" { /* special equation case */
+    BEGIN(EQN);
     return Eqn;
   }
 <INITIAL,STR>{ID} { /* identify identifier */
     netlist_lval.ident = strdup (netlist_text); 
     return Identifier; 
   }
-<INITIAL,STR>{CREAL} { /* identify real float */
+<INITIAL,STR>{CREAL} { /* identify (signed) real float */
     netlist_lval.d = strtod (netlist_text, NULL);
     return REAL;
   }
-<INITIAL,STR>{CIMAG} { /* identify imaginary float */
+<INITIAL,STR>{CIMAG} { /* identify (signed) imaginary float */
     if (netlist_text[0] == 'i' || netlist_text[0] == 'j')
       netlist_text[0] = '0';
     else
@@ -89,7 +99,7 @@ COMPLEX  {CREAL}{CIMAG}
     netlist_lval.d = strtod (netlist_text, NULL);
     return IMAG;
   }
-<INITIAL,STR>{COMPLEX} { /* identify complete complex number */
+<INITIAL,STR>{COMPLEX} { /* identify complete (signed) complex number */
     int i = 0;
     while (netlist_text[i] != 'i' && netlist_text[i] != 'j') i++;
     netlist_text[i] = netlist_text[i - 1];
@@ -98,7 +108,7 @@ COMPLEX  {CREAL}{CIMAG}
     netlist_lval.c.i = strtod (&netlist_text[i], NULL);
     return COMPLEX;
   }
-<INITIAL>{ID}{SPACE}*= {  /* identify 'identifier =' assign */
+<INITIAL,EQN>{ID}{SPACE}*= {  /* identify 'identifier =' assign */
     int len = netlist_leng - 2;
     while (isspace (netlist_text[len])) len--;
     netlist_lval.ident = (char *) calloc (len + 2, 1);
@@ -111,7 +121,7 @@ COMPLEX  {CREAL}{CIMAG}
 <INITIAL>"="   { /* pass the '=' to the parser */ return '='; }
 <INITIAL>\r?\n { /* detect end of line */ return Eol; }
 
-<INITIAL>{SPACE}|\\\r?\n /* skip spaces and the trailing '\' */
+<INITIAL,EQN>{SPACE}|\\\r?\n /* skip spaces and the trailing '\' */
 
 <INITIAL>"#" { /* leave these characters */
     BEGIN(COMMENT);
@@ -140,18 +150,38 @@ COMPLEX  {CREAL}{CIMAG}
 	      netlist_lineno);
     return Eol;
   }
-<STR>{SPACE} /* skip spaces */
-
-<STR>"+" { return '+'; }
-<STR>"-" { return '-'; }
-<STR>"*" { return '*'; }
-<STR>"/" { return '/'; }
-<STR>"(" { return '('; }
-<STR>")" { return ')'; }
-<STR>"^" { return '^'; }
-<STR>"," { return ','; }
+<STR,EQN>{SPACE} /* skip spaces */
 
 <STR>. { /* any other character is invalid */
+    logprint (LOG_ERROR, 
+	      "line %d: syntax error, unrecognized character: `%s'\n", 
+	      netlist_lineno, netlist_text);
+    return InvalidCharacter;
+  }
+
+<EQN>[-+*/(),^:\"] { /* return operators unchanged */
+    return netlist_text[0];
+  }
+
+<EQN>{UCREAL} { /* identify unsigned real float */
+    netlist_lval.d = strtod (netlist_text, NULL);
+    return REAL;
+  }
+<EQN>{UCIMAG} { /* identify unsigned imaginary float */
+    if (netlist_text[0] == 'i' || netlist_text[0] == 'j')
+      netlist_text[0] = '0';
+    else
+      netlist_text[1] = '0';
+    netlist_lval.d = strtod (netlist_text, NULL);
+    return IMAG;
+  }
+<EQN>{ID} { /* identify identifier */
+    netlist_lval.ident = strdup (netlist_text); 
+    return Identifier; 
+  }
+<EQN>\r?\n { /* detect end of line */ BEGIN(INITIAL); return Eol; }
+
+<EQN>. { /* any other character in invalid */
     logprint (LOG_ERROR, 
 	      "line %d: syntax error, unrecognized character: `%s'\n", 
 	      netlist_lineno, netlist_text);

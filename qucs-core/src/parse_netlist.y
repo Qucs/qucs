@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.2 2004/03/07 08:33:01 ela Exp $
+ * $Id: parse_netlist.y,v 1.3 2004/03/08 21:08:50 ela Exp $
  *
  */
 
@@ -243,10 +243,6 @@ Constant:
     $$ = new eqn::constant (eqn::TAG_COMPLEX);
     $$->c = new complex (0.0, $1);
   }
-  | COMPLEX {
-    $$ = new eqn::constant (eqn::TAG_COMPLEX);
-    $$->c = new complex ($1.r, $1.i);
-  }
 ;
 
 Reference:
@@ -293,7 +289,10 @@ Application:
     $$->args = $1;
   }
   | '+' Expression %prec POS {
-    /* nothing todo here */
+    $$ = new eqn::application ();
+    $$->n = strdup ("+");
+    $$->nargs = 1;
+    $$->args = $2;
   }
   | '-' Expression %prec NEG {
     $$ = new eqn::application ();
