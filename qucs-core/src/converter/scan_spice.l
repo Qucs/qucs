@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.5 2004/11/04 08:48:32 ela Exp $
+ * $Id: scan_spice.l,v 1.6 2004/11/04 14:34:39 ela Exp $
  *
  */
 
@@ -63,7 +63,7 @@ SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     {DIGIT}+
 EOL      \r?\n
 FUN1     ([dD][eE][cC]|[lL][iI][nN]|[oO][cC][tT])
-FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE]|[vV])
+FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE]|[vV]|[aA][cC][cC][tT])
 FUNCTION ({FUN1}|{FUN2})
 
 %x COMMENT

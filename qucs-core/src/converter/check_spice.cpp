@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.5 2004/11/04 08:48:32 ela Exp $
+ * $Id: check_spice.cpp,v 1.6 2004/11/04 14:34:39 ela Exp $
  *
  */
 
@@ -86,6 +86,21 @@ struct define_t spice_definition_available[] =
   /* voltage-controlled voltage source */
   { "E", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* current-controlled current source */
+  { "F", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* current-controlled voltage source */
+  { "H", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* transformer (mutual inductors) */
+  { "K", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "T", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* BJT device */
@@ -509,6 +524,9 @@ spice_device_table[] = {
   { "I", "Idc"    },
   { "G", "VCCS"   },
   { "E", "VCVS"   },
+  { "F", "CCCS"   },
+  { "H", "CCVS"   },
+  { "K", "Tr"     },
   { NULL, NULL }
 };
 
@@ -528,31 +546,44 @@ static void spice_translate_type (struct definition_t * def) {
 // Helper structure for node translations.
 struct node_translation_t {
   char * type;    // the type of definition
+  int pass;       // pass number when the translation should be performed
   int Mapping[6]; // node ordering
   int Default[6]; // default nodes
 }
 node_translations[] = {
-  { "BJT",
+  { "BJT", 0,
     { 2, 1, 3, 4, -1 },
     { 1, 2, 3, 0, -1 }
   },
-  { "MOSFET",
+  { "MOSFET", 0,
     { 2, 1, 3, 4, -1 },
     { 1, 2, 3, 3, -1 }
   },
-  { "JFET",
+  { "JFET", 0,
     { 2, 1, 3, -1 },
     { 1, 2, 3, -1 }
   },
-  { "VCCS",
+  { "VCCS", 0,
     { 3, 1, 2, 4, -1 },
     { 1, 2, 3, 4, -1 }
   },
-  { "VCVS",
+  { "VCVS", 0,
     { 3, 1, 2, 4, -1 },
     { 1, 2, 3, 4, -1 }
   },
-  { NULL, { -1 }, { -1 } }
+  { "CCCS", 1,
+    { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
+  },
+  { "CCVS", 1,
+    { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
+  },
+  { "Tr", 1,
+    { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
+  },
+  { NULL, 0, { -1 }, { -1 } }
 };
 
 // Counts the number of nodes stored in the given definition.
@@ -573,6 +604,21 @@ static void spice_free_nodes (struct node_t * node) {
   }
 }
 
+/* The following function free()'s the given value. */
+void netlist_free_value (struct value_t * value) {
+  if (value->ident) free (value->ident);
+  if (value->unit)  free (value->unit);
+  if (value->scale) free (value->scale);
+  free (value);
+}
+
+/* Deletes the given key/value pair. */
+void netlist_free_pair (struct pair_t * pair) {
+  if (pair->value) netlist_free_value (pair->value);
+  free (pair->key);
+  free (pair);
+}
+
 // The function returns the node specified at the given position.
 static struct node_t * spice_get_node (struct definition_t * def, int pos) {
   struct node_t * node;
@@ -584,14 +630,14 @@ static struct node_t * spice_get_node (struct definition_t * def, int pos) {
 
 /* This function transforms the collected node information in the
    Spice list into the appropriate Qucs definition. */
-static void spice_translate_nodes (struct definition_t * def) {
+static void spice_translate_nodes (struct definition_t * def, int pass) {
   struct node_translation_t * nodes;
   struct node_t * node;
   // find node translator
   for (nodes = node_translations; nodes->type != NULL; nodes++) {
     if (!strcmp (nodes->type, def->type)) break;
   }
-  if (nodes->type == NULL) return;
+  if (nodes->type == NULL || pass != nodes->pass) return;
 
   struct define_t * entry = spice_get_qucs_definition (def);
   // adjust the number of nodes and append default nodes
@@ -768,14 +814,6 @@ spice_find_property (struct value_t * values, char * prop) {
   return NULL;
 }
 
-/* The following function free()'s the given value. */
-static void spice_free_value (struct value_t * value) {
-  if (value->ident) free (value->ident);
-  if (value->unit)  free (value->unit);
-  if (value->scale) free (value->scale);
-  free (value);
-}
-
 /* This function appends the given key/value pair to the given
    definition.  If the replace flag is non-zero the pair gets
    replaced.  If the replace flag is zero and the pair already exists
@@ -785,7 +823,7 @@ static void spice_append_pair (struct definition_t * def, const char * prop,
   struct pair_t * p = spice_find_property (def, prop);
   if (p != NULL) {
     if (replace) {
-      spice_free_value (p->value);
+      netlist_free_value (p->value);
       p->value = spice_create_value (value);
       return;
     }
@@ -819,7 +857,7 @@ static void spice_adjust_instance (struct definition_t * def) {
 static void spice_fixup_definition (struct definition_t * def) {
   spice_adjust_instance (def);
   spice_adjust_properties (def);
-  spice_translate_nodes (def);
+  spice_translate_nodes (def, 0);
   spice_translate_units (def);
   spice_adjust_default_properties (def);
 }
@@ -1214,6 +1252,42 @@ static int spice_post_translator (void) {
 	}
       }
     }
+    // post-process current-controlled current/voltage source
+    if (!def->action && (!strcmp (def->type, "CCCS") ||
+			 !strcmp (def->type, "CCVS"))) {
+      struct definition_t * target;
+      struct pair_t * prop = def->pairs; // get first property
+      char * key = prop->key;            // and its key
+      // adjust the controlling nodes of the source
+      target = spice_find_definition ("Vdc", key);
+      spice_adjust_vsource_nodes (def, target);      
+      spice_translate_nodes (def, 1);
+      // and the properties of the source
+      prop = spice_find_property (def, "G");
+      netlist_free_pair (prop);
+      def->pairs->next = NULL;
+      strcpy (key, "G");
+      if (!strcmp (def->type, "CCVS")) {
+	double v = spice_get_property_value (def, "G");
+	spice_set_property_value (def, "G", 1 / v);
+      }
+    }
+    // post-process mutual inductors (transformer)
+    if (!def->action && !strcmp (def->type, "Tr")) {
+      struct definition_t * target;
+      char * l1 = def->values->ident;
+      char * l2 = def->pairs->key;
+      target = spice_find_definition ("L", l1);
+      spice_adjust_isource_nodes (def, target);      
+      target = spice_find_definition ("L", l2);
+      spice_adjust_isource_nodes (def, target);      
+      spice_translate_nodes (def, 1);
+      struct pair_t * prop = spice_find_property (def, l2);
+      double v = spice_get_property_value (def, l2);
+      spice_set_property_value (def, "T", 1 / v);
+      def->pairs = prop->next;
+      netlist_free_pair (prop);
+    }
     if (def->define == NULL) {
       def->text = spice_untranslated_text (def);
     }
@@ -1341,7 +1415,7 @@ static int spice_translator (void) {
    - file includes
    - transmission line
        - voltage dependent sources
-   - current dependent sources
+       - current dependent sources
    - initial conditions
    - options
    - mutual inductors (transformer)
