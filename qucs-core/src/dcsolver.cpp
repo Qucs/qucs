@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.4 2004-02-01 22:36:03 ela Exp $
+ * $Id: dcsolver.cpp,v 1.5 2004-02-03 21:57:28 ela Exp $
  *
  */
 
@@ -52,12 +52,14 @@ using namespace std;
 dcsolver::dcsolver () : analysis () {
   nlist = NULL;
   A = z = x = NULL;
+  xprev = zprev = NULL;
 }
 
 // Constructor creates a named instance of the dcsolver class.
 dcsolver::dcsolver (char * n) : analysis (n) {
   nlist = NULL;
   A = z = x = NULL;
+  xprev = zprev = NULL;
 }
 
 // Destructor deletes the dcsolver class object.
@@ -67,6 +69,7 @@ dcsolver::~dcsolver () {
   delete z;
   delete x;
   delete xprev;
+  delete zprev;
 }
 
 /* The copy constructor creates a new instance of the dcsolver class
@@ -76,13 +79,13 @@ dcsolver::dcsolver (dcsolver & o) : analysis (o) {
   A = new matrix (*(o.A));
   z = new matrix (*(o.z));
   x = new matrix (*(o.x));
-  xprev = new matrix (*(o.xprev));
+  xprev = zprev = NULL;
 }
 
 /* This is the DC netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void dcsolver::solve (void) {
-  int convergence, run = 0;
+  int convergence, run = 0, MaxIterations = 1000;
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: creating node list for DC analysis\n");
 #endif
@@ -95,18 +98,26 @@ void dcsolver::solve (void) {
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: solving DC netlist\n");
 #endif
+  // initialize node voltages, first guess for non-linear circuits
+  init ();
+  // run solving loop until convergence is reached
   do {
     createMatrix ();
     runMNA ();
     saveNodeVoltages ();
-    convergence = checkConvergence ();
+    convergence = (run > 0) ? checkConvergence () : 0;
+    savePreviousIteration ();
     run++;
   }
-  while (!convergence);
+  while (!convergence && run < MaxIterations);
 #if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: convergence reached after %d iterations\n",
-	    run);
-#endif
+  if (run < MaxIterations) {
+    logprint (LOG_STATUS, "NOTIFY: convergence reached after %d iterations\n",
+	      run);
+  } else {
+    logprint (LOG_ERROR, "ERROR: no convergence after %d iterations\n", run);
+  }
+#endif /* DEBUG */
   saveResults ();
 }
 
@@ -152,6 +163,7 @@ void dcsolver::createMatrix (void) {
                               | C D |
 			      +-   -+.
      Each of these minor matrices is going to be generated here. */
+  if (A != NULL) delete A;
   A = new matrix (M + N);
   createGMatrix ();
   createBMatrix ();
@@ -164,6 +176,7 @@ void dcsolver::createMatrix (void) {
                               | e |
 			      +- -+.
      Each of these minor matrices is going to be generated here. */
+  if (z != NULL) delete z;
   z = new matrix (N + M, 1);
   createIMatrix ();
   createEMatrix ();
@@ -370,40 +383,60 @@ circuit * dcsolver::findVoltageSource (int n) {
    applies the operation to the previously generated matrices. */
 void dcsolver::runMNA (void) {
 #if DEBUG
-  logprint (LOG_STATUS, "A =\n");
+  logprint (LOG_ERROR, "A =\n");
   A->print ();
 #endif
 #if DEBUG
-  logprint (LOG_STATUS, "z =\n");
+  logprint (LOG_ERROR, "z =\n");
   z->print ();
 #endif
+  if (x != NULL) delete x;
   x = new matrix (inverse (*A) * *z);
 #if DEBUG
-  logprint (LOG_STATUS, "x =\n");
+  logprint (LOG_ERROR, "x =\n");
   x->print ();
 #endif
 }
 
+/* The function checks whether the iterative algorithm for linearizing
+   the non-linear components in the network shows convergence.  It
+   returns non-zero if it converges and zero otherwise. */
 int dcsolver::checkConvergence (void) {
   int N = countNodes ();
-  nr_double_t v_abs, v_rel, e_abs, e_rel;
-  v_abs = v_rel = 0.0;
+  int M = subnet->getVoltageSources ();
+  nr_double_t v_abs, v_rel, i_abs, i_rel;
+  nr_double_t reltol = 1e-3;
+  nr_double_t abstol = 1e-12; // 1pA
+  nr_double_t vntol  = 1e-6;  // 1uV
+
   for (int r = 1; r <= N; r++) {
-    if (xprev != NULL) {
-      v_abs += abs (x->get (r, 1) - xprev->get (r, 1));
-    }
-    else {
-      v_abs += abs (x->get (r, 1));
-    }
-    v_rel += abs (x->get (r, 1));
+    v_abs = abs (x->get (r, 1) - xprev->get (r, 1));
+    v_rel = abs (x->get (r, 1));
+    if (v_abs >= vntol + reltol * v_rel) return 0;
+    i_abs = abs (z->get (r, 1) - zprev->get (r, 1));
+    i_rel = abs (z->get (r, 1));
+    if (i_abs >= abstol + reltol * i_rel) return 0;
   }
-  e_abs = 1e-30;
-  e_rel = 1e-6;
-  xprev = x;
-  printf ("v_abs = %e, v_rel = %e\n", v_abs, v_rel);
-  return (v_abs < e_abs + e_rel * v_rel) ? 1 : 0;
+  for (int r = 1; r <= M; r++) {
+    i_abs = abs (x->get (r + N, 1) - xprev->get (r + N, 1));
+    i_rel = abs (x->get (r + N, 1));
+    if (i_abs >= abstol + reltol * i_rel) return 0;
+  }
+  return 1;
 }
 
+/* The function saves the solution and right hand vector of the previous
+   iteration. */
+void dcsolver::savePreviousIteration (void) {
+  if (xprev != NULL) delete xprev;
+  xprev = new matrix (*x);
+  if (zprev != NULL) delete zprev;
+  zprev = new matrix (*z);
+}
+
+/* This function goes through solution (the x vector) and saves the
+   node voltages of the last iteration into each non-linear
+   circuit. */
 void dcsolver::saveNodeVoltages (void) {
   int N = countNodes ();
   struct nodelist_t * n;
@@ -423,6 +456,15 @@ void dcsolver::calc (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->calcY ();
+  }
+}
+
+/* Goes through the list of circuit objects and runs its initY()
+   function. */
+void dcsolver::init (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->initY ();
   }
 }
 

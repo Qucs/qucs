@@ -1,7 +1,7 @@
 /*
  * diode.cpp - diode class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.1 2004-02-01 22:36:03 ela Exp $
+ * $Id: diode.cpp,v 1.2 2004-02-03 21:57:38 ela Exp $
  *
  */
 
@@ -45,22 +45,27 @@ diode::diode () : circuit (2) {
 void diode::calcS (nr_double_t frequency) {
 }
 
+void diode::initY (void) {
+  setV (1, 0.0);
+  setV (2, 0.9);
+}
+
 void diode::calcY (void) {
   nr_double_t Is = getPropertyDouble ("Is");
-  nr_double_t Ud, Id, Ut, T, gd;
-  static nr_double_t Idprev = 0.0;
+  nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit;
 
-  Is = 1e-15;
   T = 290.0;
   Ut = kB * T / Q;
-  Ud = real (getV (1) - getV (2));
-  printf ("Ud = %e\n", Ud);
+  Ud = real (getV (2) - getV (1));
+  Ucrit = Ut * log (Ut / sqrt (2) / Is);
+  //if (Ud > Ucrit) {
+  //  Ud = Ucrit;
+  //}
   gd = Is / Ut * exp (Ud / Ut);
-  printf ("gd = %e\n", gd);
-  Id = Idprev - Ud * gd;
-  Idprev = Id;
+  Id = Is * exp (Ud / Ut - 1);
+  Ieq = Id - Ud * gd;
 
-  setI (1, +Id);
-  setI (2, -Id);
+  setI (1, +Ieq);
+  setI (2, -Ieq);
   setY (gd);
 }

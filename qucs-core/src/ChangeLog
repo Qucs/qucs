@@ -1,3 +1,8 @@
+2004-02-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp: Non-linear DC circuit analysis is somewhat
+	working now.
+
 2004-02-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp: First attempt to implement nonlinear
