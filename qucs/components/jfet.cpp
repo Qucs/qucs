@@ -49,7 +49,7 @@ JFET::JFET()
 
   // this must be the first property in the list !!!
   Props.append(new Property("Type", "nfet", true,
-		QObject::tr("polarity (nfet,pfet)")));
+		QObject::tr("polarity")+" [nfet, pfet]"));
   Props.append(new Property("Vt0", "-2.0 V", true,
 		QObject::tr("threshold voltage")));
   Props.append(new Property("Beta", "1e-4", true,

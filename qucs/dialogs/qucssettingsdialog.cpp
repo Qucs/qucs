@@ -62,7 +62,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   QLabel *l3 = new QLabel(tr("maximum undo operations:"), Tab1);
   gp->addWidget(l3,2,0);
   undoNumEdit = new QLineEdit(Tab1);
-  undoNumEdit->setValidator(new QIntValidator(0, 200, undoNumEdit));
+  undoNumEdit->setValidator(new QIntValidator(0, 200, this));
   gp->addWidget(undoNumEdit,2,1);
 
   QLabel *l4 = new QLabel(tr("text editor:"), Tab1);

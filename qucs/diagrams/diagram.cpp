@@ -98,7 +98,7 @@ void Diagram::paint(QPainter *p)
       // draw y-label for all graphs
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         p->setPen(pg->Color);
-	if(pg->Points) {
+	if(!pg->Points.isEmpty()) {
 	  // get width of text
 	  r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var);
 	  p->drawText(-cy+((y2-r.width())>>1), cx-delta, pg->Var);
@@ -153,17 +153,16 @@ bool Diagram::calcDiagram()
 void Diagram::calcData(Graph *g, bool valid)
 {
   if((Name[0] == 'T') || (!valid)) {   // no graph within tabulars
-    if(g->Points != 0) {
-      delete[] g->Points;  // memory is of no use in this diagram type
-      g->Points = 0;
+    if(!g->Points.isEmpty()) {
+      g->Points.clear();  // memory is of no use in this diagram type
     }
     return;
   }
 
-  int *p = g->Points;
-  if(p == 0) return;
+  int xtmp, ytmp;
   double *px;
   double *py = g->cPointsY;
+  g->Points.clear();
 
   double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->Style) {
@@ -171,21 +170,22 @@ void Diagram::calcData(Graph *g, bool valid)
       for(int i=g->countY; i>0; i--) {
         px = g->cPointsX.getFirst()->Points;
         for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
-          calcCoordinate(*px, *py, *(py+1), p, p+1);
+          calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
+          g->Points.append(xtmp);
+          g->Points.append(ytmp);
           px++;
           py += 2;
-          p  += 2;
         }
-        *(p++) = -10;
+        g->Points.append(-10);
       }
-      *p = -100;
+      g->Points.append(-100);
       return;
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
     case 2: Stroke =  2.0; Space =  4.0;  break;   // dot line
     case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
   }
 
-  int dx, dy, xtmp, ytmp;
+  int dx, dy;
   double alpha, dist;
   int Flag;    // current state: 1=stroke, 0=space
   for(int i=g->countY; i>0; i--) {
@@ -194,8 +194,8 @@ void Diagram::calcData(Graph *g, bool valid)
     px = g->cPointsX.getFirst()->Points;
     calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
     px++;  py += 2;
-    *(p++) = xtmp;
-    *(p++) = ytmp;
+    g->Points.append(xtmp);
+    g->Points.append(ytmp);
     for(int z=g->cPointsX.getFirst()->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
@@ -205,33 +205,34 @@ void Diagram::calcData(Graph *g, bool valid)
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
       if(Flag == 1) if(dist <= 0) {
-	*(p++) = xtmp;    // if stroke then save points
-	*(p++) = ytmp;
+	g->Points.append(xtmp);    // if stroke then save points
+	g->Points.append(ytmp);
 	continue;
       }
       alpha   = atan2(dy, dx);   // slope for interpolation
       while(dist > 0) {   // stroke or space finished ?
-        *(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
-        *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+	// linearly interpolate
+        g->Points.append(xtmp - int(dist*cos(alpha) + 0.5));
+        g->Points.append(ytmp - int(dist*sin(alpha) + 0.5));
 
          if(Flag == 0) {
             dist -= Stroke;
             if(dist <= 0) {
-               *(p++) = xtmp;  // don't forget point after ...
-               *(p++) = ytmp;  // ... interpolated point
+               g->Points.append(xtmp);  // don't forget point after ...
+               g->Points.append(ytmp);  // ... interpolated point
             }
          }
          else {
             dist -= Space;
-            *(p++) = -2;  // value for interrupt stroke
+            g->Points.append(-2);  // value for interrupt stroke
          }
          Flag ^= 1; // toggle between stroke and space
       }
 
     } // of x loop
-    *(p++) = -10;
+    g->Points.append(-10);
   } // of y loop
-  *p = -100;
+  g->Points.append(-100);
 
 }
 
@@ -347,7 +348,7 @@ bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
   g->countY = 0;
-  if(g->Points != 0) { delete[] g->Points;  g->Points = 0; }
+  if(!g->Points.isEmpty()) g->Points.clear();
   g->cPointsX.clear();
   if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Var.isEmpty()) return false;
@@ -451,9 +452,7 @@ bool Diagram::loadVarData(const QString& fileName)
     g->countY /= counting;
   }
 
-  counting  *= g->countY;
-  g->Points  = new int[2*counting+4*1024];  // create memory for points
-  // reserve 1024 extra bytes for dash line etc.
+  counting *= g->countY;
 
   // *****************************************************************
   // get dependent variables *****************************************
@@ -486,7 +485,7 @@ bool Diagram::loadVarData(const QString& fileName)
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
       g->countY = 0;
-      delete[] g->Points;  g->Points = 0;
+      g->Points.clear();
       return false;
     }
     *(p++) = x;

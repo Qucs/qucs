@@ -1,3 +1,12 @@
+2004-08-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* diagrams/markerdialog.cpp (MarkerDialog): Set maximum
+	precision value to 12 (for Qt versions where the QIntValidator
+	really works).
+
+	* diagrams/graph.h: Using QValueVector for storing screen
+	points.  This fixes a bug when large dotted graphs occurred.
+
 2004-08-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed many little bugs

@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation>Wszystkie pliki (*.*)</translation>
+        <translation type="obsolete">Wszystkie pliki (*.*)</translation>
     </message>
     <message>
         <source>Select a file</source>
@@ -134,6 +134,10 @@
     </message>
     <message>
         <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Files</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1196,7 +1200,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation>polarność (npn,pnp)</translation>
+        <translation type="obsolete">polarność (npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1480,11 +1484,11 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>schematic symbol (european,US)</source>
-        <translation>symbol (europejski, US)</translation>
+        <translation type="obsolete">symbol (europejski, US)</translation>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation>polarność (nfet,pfet)</translation>
+        <translation type="obsolete">polarność (nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
@@ -1512,7 +1516,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>put operating points into dataset (yes,no)</source>
-        <translation>umieść punkt pracy w wynikach (tak,nie)</translation>
+        <translation type="obsolete">umieść punkt pracy w wynikach (tak,nie)</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
@@ -1520,19 +1524,19 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>put result into dataset (yes,no)</source>
-        <translation>umieść wyniki w pliku z wynikami (tak,nie)</translation>
+        <translation type="obsolete">umieść wyniki w pliku z wynikami (tak,nie)</translation>
     </message>
     <message>
         <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
-        <translation>kwasi stayczny model lini mikropaskowej (Hammerstad,Wheeler,Schneider)</translation>
+        <translation type="obsolete">kwasi stayczny model lini mikropaskowej (Hammerstad,Wheeler,Schneider)</translation>
     </message>
     <message>
         <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
-        <translation>dyspersyjny model linii mikropaskowej (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick) </translation>
+        <translation type="obsolete">dyspersyjny model linii mikropaskowej (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick) </translation>
     </message>
     <message>
         <source>calculate noise parameters (yes,no)</source>
-        <translation>obliczaj parametrz syumowe (tak,nie)</translation>
+        <translation type="obsolete">obliczaj parametrz syumowe (tak,nie)</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
@@ -1544,7 +1548,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>sweep type (lin,log)</source>
-        <translation>rodzaj przemiatania (lin,log)</translation>
+        <translation type="obsolete">rodzaj przemiatania (lin,log)</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
@@ -1728,10 +1732,6 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>interpolation type (rectangular,polar)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1927,7 +1927,39 @@ Błędny początek linii!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip open end model (Kirschning,Hammerstad)</source>
+        <source>sweep type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polarity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put operating points into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>put result into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quasi-static microstrip model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open end model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>schematic symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
