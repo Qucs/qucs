@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.8 2004-04-30 17:27:41 margraf Exp $
+ * $Id: complex.cpp,v 1.9 2004-05-02 12:02:11 ela Exp $
  *
  */
 
@@ -93,13 +93,13 @@ complex ln (const complex z) {
 // returns the first result of decimal logarithm z
 complex log10 (const complex z) {
   nr_double_t phi = arg (z);
-  return complex (log10 (abs (z)), phi * M_LOG10El);
+  return complex (log10 (abs (z)), phi * M_LOG10E);
 }
 
 // returns the first result of binary logarithm z
 complex log2 (const complex z) {
   nr_double_t phi = arg (z);
-  return complex (log (abs (z)) * M_LOG2El, phi * M_LOG2El);
+  return complex (log (abs (z)) * M_LOG2E, phi * M_LOG2E);
 }
 
 complex pow (const complex z, nr_double_t d) {
@@ -117,14 +117,14 @@ complex pow (const complex z1, const complex z2) {
 complex sin (const complex z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return (polar (exp (-i), r - M_PI_2l) -
-          polar (exp (i), -r - M_PI_2l)) / 2.0;
+  return (polar (exp (-i), r - M_PI_2) -
+          polar (exp (i), -r - M_PI_2)) / 2.0;
 }
 
 complex arcsin (const complex z) {
-  nr_double_t re = real (z);
-  nr_double_t im = imag (z);
-  return complex (0.0, -1.0) * ln (complex (-im, re) + sqrt(1.0 - z*z));
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return complex (0.0, -1.0) * ln (rect (-i, r) + sqrt (1.0 - z * z));
 }
 
 complex cos (const complex z) {
@@ -134,31 +134,27 @@ complex cos (const complex z) {
 }
 
 complex arccos (const complex z) {
-  return complex (0.0, 1.0) * ln (z + sqrt (z*z - 1.0));
+  return complex (0.0, 1.0) * ln (z + sqrt (z * z - 1.0));
 }
 
 complex tan (const complex z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return complex (0.0, -1.0) +
-         complex (0.0, 2.0) / (polar (exp (-i), r) + 1.0);
+  return rect (0.0, -1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) + 1.0);
 }
 
 complex arctan (const complex z) {
-  return complex (0.0, -0.5) *
-         ln ( complex(0.0, 2.0) / (z + complex(0.0, 1.0)) - 1.0);
+  return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z + rect (0.0, 1.0)) - 1.0);
 }
 
 complex cot (const complex z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return complex (0.0, 1.0) +
-         complex (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
+  return rect (0.0, 1.0) + rect (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
 }
 
 complex arccot (const complex z) {
-  return complex (0.0, -0.5) *
-         ln ( complex(0.0, 2.0) / (z - complex(0.0, 1.0)) + 1.0);
+  return rect (0.0, -0.5) * ln (rect (0.0, 2.0) / (z - rect (0.0, 1.0)) + 1.0);
 }
 
 complex sinh (const complex z) {
@@ -178,7 +174,7 @@ complex cosh (const complex z) {
 }
 
 complex arcosh (const complex z) {
-  return ln (z + sqrt (z*z - 1));
+  return ln (z + sqrt (z * z - 1));
 }
 
 complex tanh (const complex z) {
@@ -198,7 +194,7 @@ complex coth (const complex z) {
 }
 
 complex arcoth (const complex z) {
-  return 0.5 * ln ( 2.0 / (z - 1.0) + 1.0);
+  return 0.5 * ln (2.0 / (z - 1.0) + 1.0);
 }
 
 // converts impedance to reflexion coefficient
@@ -212,11 +208,11 @@ complex rtoz (const complex r, nr_double_t zref) {
 }
 
 complex floor (const complex z) {
-  return complex (floor (real (z)), floor (imag (z)));
+  return rect (floor (real (z)), floor (imag (z)));
 }
 
 complex polar (const nr_double_t mag, const nr_double_t ang) {
-  return complex (mag * cos (ang), mag * sin (ang));
+  return rect (mag * cos (ang), mag * sin (ang));
 }
 
 complex rect (const nr_double_t x, const nr_double_t y) {

@@ -1,3 +1,12 @@
+2004-05-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Appended some more required model
+	parameters to the diode model.
+
+	* spsolver.cpp: Implemented a function which restores the 
+	original netlist.  Modifications were necessary because of the
+	actual analysis algorithm.
+
 2004-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: Fixed copy constructor.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.h,v 1.2 2004-04-13 20:41:17 ela Exp $
+ * $Id: spsolver.h,v 1.3 2004-05-02 12:02:11 ela Exp $
  *
  */
 
@@ -37,6 +37,7 @@ class spsolver : public analysis
   spsolver (spsolver &);
   ~spsolver ();
   void calc (nr_double_t);
+  void init (void);
   void reduce (void);
   void solve (void);
   void insertConnections (void);
@@ -47,6 +48,10 @@ class spsolver : public analysis
   circuit * connectedJoin (node *, node *);
   void saveResults (nr_double_t);
   char * createSP (int, int);
+  void dropTees (void);
+  void dropOpens (void);
+  void dropDifferentialPorts (void);
+  void dropConnections (void);
 
  private:
   int runs;

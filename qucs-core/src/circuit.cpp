@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.9 2004-04-04 09:11:05 ela Exp $
+ * $Id: circuit.cpp,v 1.10 2004-05-02 12:02:11 ela Exp $
  *
  */
 
@@ -336,4 +336,11 @@ complex circuit::getS (int x, int y) {
 // Sets the S-parameter at the given matrix position.
 void circuit::setS (int x, int y, complex z) {
   MatrixS[x - 1 + (y - 1) * size] = z;
+}
+
+// Returns non-zero if the circuit is non-linear (DC dependent).
+int circuit::isNonLinear (void) {
+  if (type == CIR_DIODE)
+    return 1;
+  return 0;
 }

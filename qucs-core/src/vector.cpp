@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.8 2004-04-30 22:27:03 ela Exp $
+ * $Id: vector.cpp,v 1.9 2004-05-02 12:02:11 ela Exp $
  *
  */
 
@@ -135,9 +135,8 @@ nr_double_t vector::maximum () {
   nr_double_t d, max_D = -DBL_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    if(fabs (arg (c)) < M_PI_2l) d = abs (c);
-    else d = -abs (c);
-    if(d > max_D) max_D = d;
+    d = fabs (arg (c)) < M_PI_2l ? abs (c) : -abs (c);
+    if (d > max_D) max_D = d;
   }
   return max_D;
 }
@@ -150,27 +149,26 @@ nr_double_t vector::minimum () {
   nr_double_t d, min_D = DBL_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    if(fabs (arg (c)) < M_PI_2l) d = abs (c);
-    else d = -abs (c);
-    if(d < min_D) min_D = d;
+    d = fabs (arg (c)) < M_PI_2l ? abs (c) : -abs (c);
+    if (d < min_D) min_D = d;
   }
   return min_D;
 }
 
 complex sum (vector & v) {
-  complex result(0.0);
+  complex result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result;
 }
 
 complex prod (vector & v) {
-  complex result(1.0);
+  complex result (1.0);
   for (int i = 0; i < v.getSize (); i++) result *= v.get (i);
   return result;
 }
 
 complex avg (vector & v) {
-  complex result(0.0);
+  complex result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result / v.getSize ();
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.4 2004-04-28 14:39:19 ela Exp $
+ * $Id: check_netlist.cpp,v 1.5 2004-05-02 12:02:11 ela Exp $
  *
  */
 
@@ -100,7 +100,7 @@ struct definition definition_available[] =
     { "IProbe", 2, 0, 0, { NULL }, { NULL } },
 
     /* diode */
-    { "Diode", 2, 0, 0, { "Is", "n", NULL }, { NULL } },
+    { "Diode", 2, 0, 0, { "Is", "n", "z", "Cj0", "Vd", NULL }, { NULL } },
 
     /* microstrip substrate */
     { "SUBST", 0, 0, 1, { "er", "h", "t", "tand", NULL }, { NULL } },
