@@ -1,5 +1,60 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>ArrowDialog</name>
+    <message>
+        <source>Edit Arrow Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Head Length: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>      Head Width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>      Line Width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line style: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>solid line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash dot dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -45,6 +100,97 @@
         <source>Select a file</source>
         <translation>Datei auswählen</translation>
     </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DiagramDialog</name>
+    <message>
+        <source>Edit Diagram Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Graph Input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>       Thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>x-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>show Grid</source>
+        <translation type="unfinished">Gitternetz anzeigen</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished">Übernehmen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Function Help</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
@@ -62,6 +208,29 @@
     </message>
 </context>
 <context>
+    <name>GraphicTextDialog</name>
+    <message>
+        <source>Edit Text Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>          Text size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>HelpDialog</name>
     <message>
         <source>Qucs Help System</source>
@@ -74,6 +243,49 @@
     <message>
         <source>Close</source>
         <translation>Schließen</translation>
+    </message>
+</context>
+<context>
+    <name>LineDialog</name>
+    <message>
+        <source>Line color: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>      Line Width: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Style: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>solid line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash dot dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -97,6 +309,29 @@
     <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -234,6 +469,469 @@ Unbekanntes Feld!</translation>
     <message>
         <source>ohmic resistance in Ohms</source>
         <translation>Ohmscher Widerstand in Ohm</translation>
+    </message>
+    <message>
+        <source>Edit Ellipse Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Line Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Rectangle Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load dataset: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac simulation</source>
+        <translation type="unfinished">ac Simulation</translation>
+    </message>
+    <message>
+        <source>start frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stop frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency steps in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal dc current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current in Ampere</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noise current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equivalent current density in A/sqrt(Hz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency exponent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>additive frequency term</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attenuator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attenuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bias t</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitance in Farad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current controlled current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward transfer factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delay time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current controlled voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance of port 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance of port 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance of port 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coplanar line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of substrate definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of a gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc simulation</source>
+        <translation type="unfinished">dc Simulation</translation>
+    </message>
+    <message>
+        <source>dc block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ground (reference potential)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gyrator (impedance inverter)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gyrator ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Harmonic balance simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of harmonics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductance in Henry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>isolator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance of input port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance of output port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of line 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of line 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coupled microstrip line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spacing between the lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of line 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of line 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip impedance step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width 1 of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width 2 of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip tee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parameter to sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start value for sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stop value for sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>step size for sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistor (US symbol)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S parameter simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of the s parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs schematic file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>port of a subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of the port within the subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>substrate definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>permittivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>thickness in meters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>thickness of metalization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loss tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal symmetrical transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ration of coil 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ration of coil 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal transmission line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>characteristic impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>electrical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start time in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stop time in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>time step in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage controlled current source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forward transconductance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage controlled voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal ac voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rms voltage in Volts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal dc voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage in Volts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noise voltage source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equivalent voltage density in V/sqrt(Hz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject::QObject</name>
+    <message>
+        <source>phase shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>phase shift in degree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reference impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac power source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of the port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>port impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac power in Watts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>frequency in Hertz</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1747,6 +2445,18 @@ Short introduction into Qucs</source>
         <translation>Starthilfe
 
 Kurze Einführung in Qucs</translation>
+    </message>
+    <message>
+        <source>Current Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Current Source</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
