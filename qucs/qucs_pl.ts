@@ -926,6 +926,10 @@ Unknown field!</source>
         <source>ideality coefficient</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>simulation to perform parameter sweep on</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2273,10 +2277,6 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transienten simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ac simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2404,6 +2404,10 @@ Go on ?</source>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
