@@ -28,7 +28,7 @@
 FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const char *name )
                                   : QDialog(parent, name, Qt::WDestructiveClose)
 {
-  setCaption("File: "+FileName);
+  setCaption(tr("File: ")+FileName);
 
   QVBoxLayout *v = new QVBoxLayout(this);
   v->setSpacing(5);
@@ -40,7 +40,7 @@ FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const c
   text->setMinimumSize(320,350);
   v->addWidget(text);
 
-  QPushButton *ButtOK = new QPushButton("OK",this);
+  QPushButton *ButtOK = new QPushButton(tr("OK"),this);
   v->addWidget(ButtOK);
   connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
   ButtOK->setFocus();
@@ -48,7 +48,7 @@ FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const c
   // .................................................
   QFile file(FileName);
   if(!file.open(IO_ReadOnly)) {
-    text->setText("ERROR: Cannot read file: "+FileName+" !!!");
+    text->setText(tr("ERROR: Cannot read file: ")+FileName+" !!!");
     return;
   }
 

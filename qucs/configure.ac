@@ -107,16 +107,20 @@ AC_LANG(C)
 
 # Create path info.
 BITMAP_PATH="$prefix/share/qucs/bitmaps/"
-AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"], [Where the data files go.])
+AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"],
+  [Where the data files go.])
 unset BITMAP_PATH
 BIN_PATH="$prefix/bin/"
-AC_DEFINE_UNQUOTED([BINARYDIR], ["$BIN_PATH"], [Where the binary files go.])
+AC_DEFINE_UNQUOTED([BINARYDIR], ["$BIN_PATH"],
+  [Where the binary files go.])
 unset BIN_PATH
 LANG_PATH="$prefix/share/qucs/lang/"
-AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"], [Where the language files go.])
+AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"],
+  [Where the language files go.])
 unset LANG_PATH
 DOC_PATH="$prefix/share/qucs/docs/en/"
-AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"], [Where the documentation files go.])
+AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"],
+  [Where the documentation files go.])
 unset DOC_PATH
 
 # Add here all your Makefiles. This are created by configure.
