@@ -1,7 +1,7 @@
 /*
- * vdc.cpp - DC voltage source class implementation
+ * vrect.cpp - rectangular pulse voltage source class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.11 2004/10/03 10:30:51 ela Exp $
+ * $Id: vrect.cpp,v 1.1 2004/10/03 10:30:51 ela Exp $
  *
  */
 
@@ -28,33 +28,52 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "vdc.h"
+#include "consts.h"
+#include "vrect.h"
 
-vdc::vdc () : circuit (2) {
+vrect::vrect () : circuit (2) {
   setS (1, 1, 0.0);
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
-  type = CIR_VDC;
+  type = CIR_VRECT;
   setVSource (true);
-}
-
-void vdc::initDC (void) {
   setVoltageSources (1);
-  voltageSource (1, 1, 2, getPropertyDouble ("U"));
 }
 
-void vdc::initTR (void) {
+void vrect::initDC (void) {
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t u  = getPropertyDouble ("U") * th / (th + tl);
+  voltageSource (1, 1, 2);
+  setE (1, u);
+}
+
+void vrect::initAC (void) {
+  initDC ();
+  setE (1, 0);
+}
+
+void vrect::initTR (void) {
   initDC ();
 }
 
-void vdc::initAC (void) {
-  initDC ();
-  setE (1, 0.0);
+void vrect::calcTR (nr_double_t t) {
+  nr_double_t u  = getPropertyDouble ("U");
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t ut = 0;
+
+  t = t - (th + tl) * floor (t / (th + tl));
+  if (t < th) { // high pulse
+    ut = u;
+  }
+  setE (1, ut);
 }

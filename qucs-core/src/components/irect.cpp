@@ -1,7 +1,7 @@
 /*
- * idc.cpp - DC current source class implementation
+ * irect.cpp - rectangular pulse current source class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.cpp,v 1.6 2004/10/03 10:30:51 ela Exp $
+ * $Id: irect.cpp,v 1.1 2004/10/03 10:30:51 ela Exp $
  *
  */
 
@@ -28,32 +28,48 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "idc.h"
+#include "irect.h"
 
-idc::idc () : circuit (2) {
+irect::irect () : circuit (2) {
   setS (1, 1, 1.0);
   setS (1, 2, 0.0);
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
-  type = CIR_IDC;
+  type = CIR_IRECT;
   setISource (true);
 }
 
-void idc::initDC (void) {
-  nr_double_t i = getPropertyDouble ("I");
+void irect::initDC (void) {
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t i  = getPropertyDouble ("I") * th / (th + tl);
   setI (1, +i); setI (2, -i);
 }
 
-void idc::initAC (void) {
+void irect::initAC (void) {
   clearI ();
 }
 
-void idc::initTR (void) {
+void irect::initTR (void) {
   initDC ();
+}
+
+void irect::calcTR (nr_double_t t) {
+  nr_double_t i  = getPropertyDouble ("I");
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t it = 0;
+
+  t = t - (th + tl) * floor (t / (th + tl));
+  if (t < th) { // high pulse
+    it = i;
+  }
+  setI (1, +it); setI (2, -it);
 }

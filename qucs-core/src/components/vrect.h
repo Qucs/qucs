@@ -1,7 +1,7 @@
 /*
- * idc.cpp - DC current source class implementation
+ * vrect.h - rectangular pulse voltage source class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,42 +18,21 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.cpp,v 1.6 2004/10/03 10:30:51 ela Exp $
+ * $Id: vrect.h,v 1.1 2004/10/03 10:30:51 ela Exp $
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#ifndef __VRECT_H__
+#define __VRECT_H__
 
-#include <stdio.h>
-#include <stdlib.h>
+class vrect : public circuit
+{
+ public:
+  vrect ();
+  void initDC (void);
+  void initAC (void);
+  void initTR (void);
+  void calcTR (nr_double_t);
+};
 
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "idc.h"
-
-idc::idc () : circuit (2) {
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
-  type = CIR_IDC;
-  setISource (true);
-}
-
-void idc::initDC (void) {
-  nr_double_t i = getPropertyDouble ("I");
-  setI (1, +i); setI (2, -i);
-}
-
-void idc::initAC (void) {
-  clearI ();
-}
-
-void idc::initTR (void) {
-  initDC ();
-}
+#endif /* __VRECT_H__ */

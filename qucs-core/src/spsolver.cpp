@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.34 2004/09/12 14:09:19 ela Exp $
+ * $Id: spsolver.cpp,v 1.35 2004/10/03 10:30:51 ela Exp $
  *
  */
 
@@ -454,7 +454,7 @@ void spsolver::reduce (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
 
     // skip signal ports
-    if (c->isPort ()) continue;
+    if (c->getPort ()) continue;
 
     // and each node in the circuit
     for (int i = 1; i <= c->getSize (); i++) {
@@ -751,7 +751,7 @@ void spsolver::dropConnections (void) {
 void spsolver::insertDifferentialPorts (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (c->isPort ()) {
+    if (c->getPort ()) {
 
       // create an ideal transformer and assign its node names
       circuit * result = new itrafo ();
@@ -818,7 +818,7 @@ void spsolver::saveResults (nr_double_t freq) {
   // go through the list of remaining circuits
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     // skip signals
-    if (!c->isPort ()) {
+    if (!c->getPort ()) {
       // handle each s-parameter
       for (int i = 1; i <= c->getSize (); i++) {
 	for (int j = 1; j <= c->getSize (); j++) {

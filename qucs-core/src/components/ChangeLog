@@ -1,3 +1,8 @@
+2004-10-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* irect.h (class irect), vrect.h (class vrect): Two new
+	components added:  periodic rectangular pulse generators.
+
 2004-09-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Implemented preliminary transient model

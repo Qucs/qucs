@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.10 2004/09/23 14:09:11 ela Exp $
+ * $Id: nasolver.cpp,v 1.11 2004/10/03 10:30:51 ela Exp $
  *
  */
 
@@ -442,10 +442,7 @@ void nasolver<nr_type_t>::createIMatrix (void) {
     for (int i = 0; i < n->nNodes; i++) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
-      if (is->getType () == CIR_IDC || is->getType () == CIR_IAC ||
-	  is->getType () == CIR_IPULSE || is->getType () == CIR_PAC ||
-	  is->getType () == CIR_CAPACITOR || is->getType () == CIR_INDUCTOR ||
-	  is->isNonLinear ()) {
+      if (is->isISource () || is->isNonLinear ()) {
 	val += MatVal (is->getI (n->nodes[i]->getPort ()));
       }
     }
@@ -485,8 +482,8 @@ template <class nr_type_t>
 circuit * nasolver<nr_type_t>::findVoltageSource (int n) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (n >= c->isVoltageSource () && 
-	n <= c->isVoltageSource () + c->getVoltageSources () - 1)
+    if (n >= c->getVoltageSource () && 
+	n <= c->getVoltageSource () + c->getVoltageSources () - 1)
       return c;
   }
   return NULL;
@@ -704,9 +701,7 @@ char * nasolver<nr_type_t>::createI (int n, char * amps, int saveOPs) {
 
   /* save only current through real voltage sources and explicit
      current probes */
-  int type = vs->getType ();
-  if (type != CIR_VDC && type != CIR_VAC && type != CIR_IPROBE &&
-      type != CIR_VPULSE && !(saveOPs & SAVE_OPS))
+  if (!vs->isVSource () && !(saveOPs & SAVE_OPS))
     return NULL;
 
   // don't output subcircuit components if not requested
@@ -717,7 +712,7 @@ char * nasolver<nr_type_t>::createI (int n, char * amps, int saveOPs) {
   char * name = vs->getName ();
   char * text = (char *) malloc (strlen (name) + 4 + strlen (amps));
   if (vs->getVoltageSources () > 1)
-    sprintf (text, "%s.%s%d", name, amps, n - vs->isVoltageSource () + 1);
+    sprintf (text, "%s.%s%d", name, amps, n - vs->getVoltageSource () + 1);
   else
     sprintf (text, "%s.%s", name, amps);
   return text;

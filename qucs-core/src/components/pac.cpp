@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.6 2004/09/12 14:09:19 ela Exp $
+ * $Id: pac.cpp,v 1.7 2004/10/03 10:30:51 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 
 pac::pac () : circuit (2) {
   type = CIR_PAC;
+  setISource (true);
 }
 
 void pac::calcSP (nr_double_t) {

@@ -235,9 +235,10 @@ This can be achieved by the following equation system
 \subsubsection{Gear}
 %\addcontentsline{toc}{subsubsection}{Gear}
 
-The Gear formulae (also called BDF - backward differentiation
-formulae) have great importance within the multi-step integration
-methods used in transient analysis programs.  The conditions
+The Gear \cite{Gear} formulae (also called BDF - backward
+differentiation formulae) have great importance within the multi-step
+integration methods used in transient analysis programs.  The
+conditions
 \begin{equation}
 p = k - 1
 \;\;\;\; \textrm{ and } \;\;\;\;
@@ -415,6 +416,27 @@ impracticable reduction of the step width.  This class of differential
 equations are called stiff problems.  The effect of stiffness causes
 for small variations in the actual solution to be computed very large
 deviations in the solution which get damped.
+
+\addvspace{12pt}
+
+The numerical methods used for the transient analysis are required to
+be stiffly stable and accurate as well.  The regions requirements in
+the complex plane are visualized in the following figure.
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
+\includegraphics[width=0.7\linewidth]{stiffstable}
+\end{center}
+\caption{stability requirements for stiff differential equation systems}
+\label{fig:StiffStable}
+\end{figure}
+\FloatBarrier
+
+For values of $h\lambda$ in region II the numerical method must be
+stable and accurate, in region I accurate and in region III only
+stable.  Outside these region is of no particular interest.
 
 \addvspace{12pt}
 
