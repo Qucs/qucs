@@ -48,7 +48,7 @@ Ampere_noise::Ampere_noise()
   Name  = "I";
 
   Props.append(new Property("i", "1e-6", true,
-		QObject::tr("equivalent current density in A/sqrt(Hz)")));
+		QObject::tr("current power spectral density in A^2/Hz")));
   Props.append(new Property("e", "0", false,
 		QObject::tr("frequency exponent")));
   Props.append(new Property("c", "1", false,

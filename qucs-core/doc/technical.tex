@@ -69,7 +69,7 @@ Documentation License".
 }
 \makeatother
 
-\author{Michael Margraf \\ Stefan Jahn}
+\author{Stefan Jahn \\ Michael Margraf}
 \title{Qucs}
 \date{}
 
@@ -367,7 +367,7 @@ P_{1} = \underline{S}_{kj}\cdot \underline{T}_{ml}
 
 Thus the new S-parameter $\underline{S}'_{mj}$ yields to
 \begin{equation}
-\underline{S}'_{mj} = \dfrac{\underline{b}_{m}}{\underline{a}_{j}} 
+\underline{S}'_{mj} = \dfrac{\underline{b}_{m}}{\underline{a}_{j}}
 = \dfrac{P_{1}\cdot 1}{1 - L_{11}}
 = \dfrac{\underline{S}_{kj}\cdot \underline{T}_{ml}}{1 - \underline{S}_{kk}\cdot \underline{T}_{ll}}
 \end{equation}
@@ -2052,7 +2052,7 @@ be calculated by using equation \eqref{eqn:nparamF} to
 %\addcontentsline{toc}{section}{Noise Correlation Matrix Transformations}
 
 The noise wave correlation matrix of a passive linear circuit
-generating thermal noise only can be calculated using Bosma's theorem.
+generating thermal noise can simply be calculated using Bosma's theorem.
 The noise wave correlation matrices of active devices can be
 determined by forming the noise current correlation matrix and then
 transforming it to the equivalent noise wave correlation matrix.
@@ -2337,12 +2337,13 @@ The noise wave correlation matrix, therefore, writes as follows.
 \begin{equation}
 \begin{split}
 (\underline{C})
- =  \frac{2\cdot e\cdot I_S}{2\cdot Z_0\cdot g_D + 1}\cdot
+ =  \left| \frac{0.5\cdot Y_0}{g_D+j\omega C_j + 0.5\cdot Y_0}\right|^2  \cdot 2\cdot e\cdot I_S\cdot
     \left( \exp\left( \frac{U_{dc}}{n\cdot U_T} \right) +1 \right) \cdot Z_0\cdot\begin{pmatrix}
    1 & -1\\
   -1 &  1\\
 \end{pmatrix} \\
- = \frac{e\cdot Z_0}{Z_0\cdot g_D + 0.5}\cdot (I_{dc}+2\cdot I_S)\cdot
+ = 2\cdot e\cdot Z_0\cdot  (I_{dc}+2\cdot I_S)\cdot
+    \left| \frac{1}{2\cdot Z_0\cdot (g_D+j\omega C_j) + 1}\right|^2 \cdot
 \begin{pmatrix}
    1 & -1\\
   -1 &  1\\
@@ -2351,7 +2352,9 @@ The noise wave correlation matrix, therefore, writes as follows.
 \label{eqn:diode_noise}
 \end{equation}
 
-Where $e$ is charge of an electron, $U_T$ temperature voltage.  To be
+Where $e$ is charge of an electron, $U_T$ temperature voltage, $g_D$
+(dynamically) conductance of the diode and $C_j$ junction capacitance.
+To be
 very precise, the equation above only holds for diodes whose field and
 diffusion current dominate absolutely (diffusion limited diode),
 i.e. $n=1$.  Many diodes also generate a generation/recombination
@@ -5875,29 +5878,45 @@ impedance formulation of a single microstrip with width $w$ according to (z).
 Up to $f_n=20$, the numerical error of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is
 less than 2.5\%.\\ \\
 
-After endless equations, the S parameters can now be defined \cite{Edwards}:
+After endless equations, the S parameters (according fig. \ref{fig:mscoupled})
+can now be defined \cite{Edwards}:\\
+reflexion coefficients
 \begin{equation}
-\begin{split}
-\underline{S}_{41} = \frac{Z_{L,e}\cdot Z_L\cdot \cos(\beta_e\cdot l)
-         + j\cdot Z_{L,e}^2\cdot \sin(\beta_e\cdot l)}
-	{2\cdot Z_{L,e}\cdot Z_L\cdot \cos(\beta_e\cdot l)
-         + j\cdot (Z_{L,e}^2 + Z_L^2)\cdot \sin(\beta_e\cdot l)} \\
-      - \frac{Z_{L,o}\cdot Z_L\cdot \cos(\beta_o\cdot l)
-         + j\cdot Z_{L,o}^2\cdot \sin(\beta_o\cdot l)}
-	{2\cdot Z_{L,o}\cdot Z_L\cdot \cos(\beta_o\cdot l)
-         + j\cdot (Z_{L,o}^2 + Z_L^2)\cdot \sin(\beta_o\cdot l)}
-\end{split}
+S_{11} = S_{22} = S_{33} = S{44} = X_e + X_o
+\end{equation}
+through paths
+\begin{equation}
+S_{12} = S_{21} = S_{34} = S_{43} = Y_e + Y_o
+\end{equation}
+coupled paths
+\begin{equation}
+S_{14} = S_{41} = S_{23} = S_{32} = X_e - X_o
+\end{equation}
+isolated paths
+\begin{equation}
+S_{13} = S_{31} = S_{24} = S_{42} = Y_e - Y_o
+\end{equation}
+with denominator
+\begin{equation}
+D_{e,o} = 2\cdot Z_{L,e,o}\cdot Z_L\cdot \cosh(\gamma_{e,o}\cdot l)
+         + (Z_{L,e,o}^2 + Z_L^2)\cdot \sinh(\gamma_{e,o}\cdot l)
+\end{equation}
+and
+\begin{equation}
+X_{e,o} = \frac{(Z_{L,e,o}^2 - Z_L^2)\cdot \sinh(\gamma_{e,o}\cdot l)}{2\cdot D_{e,o}}
 \end{equation}
 \begin{equation}
-\begin{split}
-\underline{S}_{31} = \frac{Z_{L,e}\cdot Z_L}
-	{2\cdot Z_{L,e}\cdot Z_L\cdot \cos(\beta_e\cdot l)
-         + j\cdot (Z_{L,e}^2 + Z_L^2)\cdot \sin(\beta_e\cdot l)} \\
-      - \frac{Z_{L,o}\cdot Z_L}
-	{2\cdot Z_{L,o}\cdot Z_L\cdot \cos(\beta_o\cdot l)
-         + j\cdot (Z_{L,o}^2 + Z_L^2)\cdot \sin(\beta_o\cdot l)}
-\end{split}
+Y_{e,o} = \frac{Z_{L,e,o}\cdot Z_L}{D_{e,o}}
 \end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{mscoupled}
+\end{center}
+\caption{coupled microstrip line}
+\label{fig:mscoupled}
+\end{figure}
+\FloatBarrier
 
 
 

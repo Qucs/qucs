@@ -36,16 +36,16 @@ BJTsub::BJTsub()
   Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));
+  Ports.append(new Port(  0,-30));
   Ports.append(new Port(  0, 30));
   Ports.append(new Port( 30,  0));
-  Ports.append(new Port(  0,-30));
 
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
 
   tx = x2+4;
   ty = y1+4;
-  Model = "BJTsub";
+  Model = "BJT";
   Name  = "T";
 
   // this must be the first property in the list  !!!
