@@ -1255,7 +1255,9 @@ void QucsView::endElementMoving()
     switch(pe->Type) {
       case isWire:        if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
                           d->insertWire((Wire*)pe);
-                          enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
+			  if (d->Wires.containsRef ((Wire*)pe))
+			    enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
+			  else pe = NULL;
                           break;
       case isDiagram:     d->Diags.append((Diagram*)pe);
                           enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
@@ -1280,7 +1282,7 @@ void QucsView::endElementMoving()
       default:            ;  // e.g. isHWireLabel
     }
     d->setChanged(true);
-    pe->isSelected = false;
+    if (pe) pe->isSelected = false;
   }
 
   movingElements.clear();
