@@ -1,0 +1,4 @@
+2003-10-30    Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
+
+	* configure.in: Made the BITMAPDIR defintion available through
+	<config.h>.
