@@ -509,11 +509,15 @@
     </message>
     <message>
         <source>DiscardAll</source>
-        <translation>Zrezygnuj ze wszystkich</translation>
+        <translation type="obsolete">Zrezygnuj ze wszystkich</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Porzuć</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2445,7 +2449,7 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>Data Display (*.dpl)</source>
-        <translation>Prezentacja wyników (*.dpl)</translation>
+        <translation type="obsolete">Prezentacja wyników (*.dpl)</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
@@ -2453,11 +2457,11 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
-        <translation>Schematy (*.sch);; Preyentacje wyników (*.dpl);;</translation>
+        <translation type="obsolete">Schematy (*.sch);; Preyentacje wyników (*.dpl);;</translation>
     </message>
     <message>
         <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
-        <translation>Dokumenty programu Qucs (*.sch *.dpl);;Wszystkie pliki (*)</translation>
+        <translation type="obsolete">Dokumenty programu Qucs (*.sch *.dpl);;Wszystkie pliki (*)</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
@@ -2481,6 +2485,22 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Any File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

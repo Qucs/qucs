@@ -44,7 +44,7 @@ MessageBox::MessageBox(const QString& Caption, const QString& Text, QWidget *par
   connect(SaveAll, SIGNAL(clicked()), SLOT(slotSaveAll()));
   QPushButton *Discard = new QPushButton(tr("Discard"), Butts);
   connect(Discard, SIGNAL(clicked()), SLOT(slotDiscard()));
-  QPushButton *DiscardAll = new QPushButton(tr("DiscardAll"), Butts);
+  QPushButton *DiscardAll = new QPushButton(tr("Discard all"), Butts);
   connect(DiscardAll, SIGNAL(clicked()), SLOT(slotDiscardAll()));
   QPushButton *Cancel = new QPushButton(tr("Cancel"), Butts);
   connect(Cancel, SIGNAL(clicked()), SLOT(slotCancel()));

@@ -336,6 +336,7 @@ void Diagram::recalcGraphData()
   // get maximum and minimum values
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
     DataX *pD=pg->cPointsX.getFirst();
+    if(pD == 0) continue;
     p = pD->Points;
     for(z=pD->count; z>0; z--) { // check every x coordinate (1. dimension)
       x = *(p++);
