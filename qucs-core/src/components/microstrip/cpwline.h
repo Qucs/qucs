@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.h,v 1.4 2005-02-03 20:40:20 raimi Exp $
+ * $Id: cpwline.h,v 1.5 2005-03-14 21:59:09 raimi Exp $
  *
  */
 
@@ -30,12 +30,14 @@ class cpwline : public circuit
 {
  public:
   cpwline ();
-  void calcSP (nr_double_t);
   void initSP (void);
+  void calcSP (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void initDC (void);
   void initTR (void);
   void initAC (void);
   void calcAC (nr_double_t);
+  void calcNoiseAC (nr_double_t);
 
   static void ellipke (nr_double_t, nr_double_t &, nr_double_t &);
   static nr_double_t ellipk (nr_double_t);

@@ -1,7 +1,7 @@
 /*
  * mscoupled.h - parallel coupled microstrip lines class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.h,v 1.5 2004-09-26 09:58:52 ela Exp $
+ * $Id: mscoupled.h,v 1.6 2005-03-14 21:59:09 raimi Exp $
  *
  */
 
@@ -31,9 +31,11 @@ class mscoupled : public circuit
   mscoupled ();
   void initDC (void);
   void calcSP (nr_double_t);
+  void calcNoiseSP (nr_double_t);
   void calcPropagation (nr_double_t);
   void initAC (void);
   void calcAC (nr_double_t);
+  void calcNoiseAC (nr_double_t);
 
   static void analysQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
 				 nr_double_t, nr_double_t, char *,

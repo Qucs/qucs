@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.25 2005-02-28 09:28:45 raimi Exp $
+ * $Id: evaluate.cpp,v 1.26 2005-03-14 21:59:06 raimi Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "constants.h"
+#include "circuit.h"
 #include "equation.h"
 #include "evaluate.h"
 #include "exception.h"
@@ -1946,6 +1947,137 @@ constant * evaluate::mu2_mv (constant * args) {
   return res;
 }
 
+constant * evaluate::linspace (constant * args) {
+  nr_double_t start = D (args->getResult (0));
+  nr_double_t stop = D (args->getResult (1));
+  int points = INT (args->getResult (2));
+  constant * res = new constant (TAG_VECTOR);
+  if (points < 2) {
+    THROW_MATH_EXCEPTION ("number of points must be greater than 1");
+    res->v = new vector ();
+    return res;
+  }
+  vector * k = new vector (points);
+  for (int i = 0; i < points; i++)
+    k->set (start + (i * ((stop - start) / (points - 1))), i);
+  res->v = k;
+  return res;
+}
+
+constant * evaluate::noise_circle_d (constant * args) {
+  vector * Sopt = V (args->getResult (0));
+  vector * Fmin = V (args->getResult (1));
+  vector * Rn   = V (args->getResult (2));
+  nr_double_t F = D (args->getResult (3));
+  vector * arc  = V (args->getResult (4));
+
+  constant * res = new constant (TAG_VECTOR);
+  vector N = circuit::z0 / 4 / *Rn * (F - *Fmin) * norm (1 + *Sopt);
+  vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
+  vector C = *Sopt / (1 + N);
+  vector * circle = new vector (C.getSize () * arc->getSize ());
+  int i, a, d; complex v;
+  for (i = 0, d = 0; i < C.getSize (); i++) {
+    for (a = 0; a < arc->getSize (); a++, d++) {
+      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      circle->set (v, d);
+    }
+  }
+
+  if (args->get(4)->getTag () != REFERENCE) {
+    THROW_MATH_EXCEPTION ("5th argument must be a variable reference");
+  } else {
+    res->addPrepDependencies (((reference *) args->get(4))->n);
+  }
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::noise_circle_v (constant * args) {
+  vector * Sopt = V (args->getResult (0));
+  vector * Fmin = V (args->getResult (1));
+  vector * Rn   = V (args->getResult (2));
+  vector * F    = V (args->getResult (3));
+  vector * arc  = V (args->getResult (4));
+
+  constant * res = new constant (TAG_VECTOR);
+  vector * circle =
+    new vector (Sopt->getSize () * arc->getSize () * F->getSize ());
+  int i, a, d, f; complex v; vector N, R, C;
+  for (i = 0, d = 0; i < Sopt->getSize (); i++) {
+    for (f = 0; f < F->getSize (); f++) {
+      N = circuit::z0 / 4 / *Rn * (F->get (f) - *Fmin) * norm (1 + *Sopt);
+      R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
+      C = *Sopt / (1 + N);
+      for (a = 0; a < arc->getSize (); a++, d++) {
+	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+	circle->set (v, d);
+      }
+    }
+  }
+
+  if (args->get(3)->getTag () != REFERENCE) {
+    THROW_MATH_EXCEPTION ("4th argument must be a variable reference");
+  } else {
+    res->addPrepDependencies (((reference *) args->get(3))->n);
+  }
+  if (args->get(4)->getTag () != REFERENCE) {
+    THROW_MATH_EXCEPTION ("5th argument must be a variable reference");
+  } else {
+    res->addPrepDependencies (((reference *) args->get(4))->n);
+  }
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::stab_circle_l (constant * args) {
+  matvec * S = MV (args->getResult (0));
+  vector * arc = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  vector D = norm (S->get (2, 2)) - norm (det (*S));
+  vector C = (conj (S->get (2, 2)) - S->get (1, 1) * conj (det (*S))) / D;
+  vector R = abs (S->get (1, 2)) * abs (S->get (2, 1)) / D;
+  vector * circle = new vector (S->getSize () * arc->getSize ());
+  int a, d, i; complex v;
+  for (i = 0, d = 0; i < S->getSize (); i++) {
+    for (a = 0; a < arc->getSize (); a++, d++) {
+      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      circle->set (v, d);
+    }
+  }
+  if (args->get(1)->getTag () != REFERENCE) {
+    THROW_MATH_EXCEPTION ("2nd argument must be a variable reference");
+  } else {
+    res->addPrepDependencies (((reference *) args->get(1))->n);
+  }
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::stab_circle_s (constant * args) {
+  matvec * S = MV (args->getResult (0));
+  vector * arc = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  vector D = norm (S->get (1, 1)) - norm (det (*S));
+  vector C = (conj (S->get (1, 1)) - S->get (2, 2) * conj (det (*S))) / D;
+  vector R = abs (S->get (1, 2)) * abs (S->get (2, 1)) / D;
+  vector * circle = new vector (S->getSize () * arc->getSize ());
+  int a, d, i; complex v;
+  for (i = 0, d = 0; i < S->getSize (); i++) {
+    for (a = 0; a < arc->getSize (); a++, d++) {
+      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      circle->set (v, d);
+    }
+  }
+  if (args->get(1)->getTag () != REFERENCE) {
+    THROW_MATH_EXCEPTION ("2nd argument must be a variable reference");
+  } else {
+    res->addPrepDependencies (((reference *) args->get(1))->n);
+  }
+  res->v = circle;
+  return res;
+}
+
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
   { "+", TAG_DOUBLE,  evaluate::plus_d, 1, { TAG_DOUBLE  } },
@@ -2294,6 +2426,17 @@ struct application_t eqn::applications[] = {
   { "Mu",     TAG_VECTOR,  evaluate::mu1_mv,    1, { TAG_MATVEC } },
   { "Mu2",    TAG_DOUBLE,  evaluate::mu2_m,     1, { TAG_MATRIX } },
   { "Mu2",    TAG_VECTOR,  evaluate::mu2_mv,    1, { TAG_MATVEC } },
+
+  { "linspace", TAG_VECTOR, evaluate::linspace, 3,
+    { TAG_DOUBLE, TAG_DOUBLE, TAG_DOUBLE } },
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_d, 5,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE, TAG_VECTOR } },
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_v, 5,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
+  { "StabCircleL", TAG_VECTOR, evaluate::stab_circle_l, 2,
+    { TAG_MATVEC, TAG_VECTOR } },
+  { "StabCircleS", TAG_VECTOR, evaluate::stab_circle_s, 2,
+    { TAG_MATVEC, TAG_VECTOR } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.24 2005-02-03 20:40:19 raimi Exp $
+ * $Id: mosfet.cpp,v 1.25 2005-03-14 21:59:09 raimi Exp $
  *
  */
 
@@ -382,13 +382,13 @@ void mosfet::calcDC (void) {
   if (Uds >= 0) {
     Ugs = fetVoltage (Ugs, UgsPrev, Vto * pol);
     Uds = Ugs - Ugd;
-    Uds = fetVoltage (Uds, UdsPrev, Vto * pol);
+    Uds = fetVoltageDS (Uds, UdsPrev);
     Ugd = Ugs - Uds;
   }
   else {
     Ugd = fetVoltage (Ugd, UgdPrev, Vto * pol);
     Uds = Ugs - Ugd;
-    Uds = -fetVoltage (-Uds, -UdsPrev, Vto * pol);
+    Uds = -fetVoltageDS (-Uds, -UdsPrev);
     Ugs = Ugd + Uds;
   }
   if (Uds >= 0) {

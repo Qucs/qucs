@@ -1,7 +1,7 @@
 /*
  * analysis.cpp - analysis class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.cpp,v 1.6 2004-12-07 22:33:31 raimi Exp $
+ * $Id: analysis.cpp,v 1.7 2005-03-14 21:59:06 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "complex.h"
 #include "sweep.h"
 #include "vector.h"
+#include "ptrlist.h"
 #include "analysis.h"
 
 // Constructor creates an unnamed instance of the analysis class.
@@ -66,7 +67,7 @@ analysis::analysis (analysis & a) : object (a) {
   data = a.data;
   subnet = a.subnet;
   env = a.env;
-  actions = a.actions;
+  actions = a.actions ? new ptrlist<analysis> (*a.actions) : NULL;
   type = a.type;
   runs = a.runs;
 }
@@ -74,22 +75,14 @@ analysis::analysis (analysis & a) : object (a) {
 /* This function adds the given analysis to the actions being
    associated with the current analysis object. */
 void analysis::addAnalysis (analysis * a) {
-  a->setPrev (NULL);
-  a->setNext (actions);
-  actions = a;
+  if (!actions) actions = new ptrlist<analysis> ();
+  actions->add (a);
 }
 
 /* This function deletes the given analysis from the actions being
    associated with the current analysis object. */
 void analysis::delAnalysis (analysis * a) {
-  if (a == actions) {
-    actions = (analysis *) a->getNext ();
-    if (actions) actions->setPrev (NULL);
-  }
-  else {
-    if (a->getNext ()) a->getNext()->setPrev (a->getPrev ());
-    a->getPrev()->setNext (a->getNext ());
-  }
+  if (actions) actions->del (a);
 }
 
 /* The following function creates a sweep object depending on the

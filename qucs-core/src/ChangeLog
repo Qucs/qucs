@@ -1,3 +1,24 @@
+2005-03-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* net.cpp: Fixed a bug occurring when the users specifies
+	a setup requiring an extra DC analysis in the main sweep.
+
+	* ptrlist.cpp: New template class for lists of pointers.
+
+2005-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* strlist.cpp: New helper functions to add/append whole
+	string lists.
+
+	* qucsdefs.h (qucs_definition_available): Added optional
+	'Temp' parameter to the 'Pac' and 'MCOUPLED' components.
+
+	* evaluate.cpp: Implemented a 'linspace' function as well
+	as stability circles and noise circles.
+
+	* equation.cpp: Evaluators can now add new data dependencies
+	to their results.
+
 2005-02-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp (THROW_MATH_EXCEPTION): Made this macro

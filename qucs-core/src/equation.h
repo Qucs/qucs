@@ -1,7 +1,7 @@
 /*
  * equation.h - checker definitions for Qucs equations
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.17 2004-11-29 19:03:33 raimi Exp $
+ * $Id: equation.h,v 1.18 2005-03-14 21:59:06 raimi Exp $
  *
  */
 
@@ -71,6 +71,9 @@ public:
   void setDropDependencies (strlist * deps) { dropDependencies = deps; }
   void addDropDependencies (char *);
   strlist * getDropDependencies (void) { return dropDependencies; }
+  void setPrepDependencies (strlist * deps) { prepDependencies = deps; }
+  void addPrepDependencies (char *);
+  strlist * getPrepDependencies (void) { return prepDependencies; }
   strlist * recurseDependencies (checker *, strlist *);
   node * get (int);
   constant * getResult (int);
@@ -107,6 +110,7 @@ private:
   constant * res;
   strlist * dataDependencies;
   strlist * dropDependencies;
+  strlist * prepDependencies;
 };
 
 enum ConstantTag {

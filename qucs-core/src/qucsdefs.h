@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.12 2005-02-01 22:56:40 raimi Exp $
+ * $Id: qucsdefs.h,v 1.13 2005-03-14 21:59:07 raimi Exp $
  *
  */
 
@@ -71,7 +71,9 @@ struct define_t qucs_definition_available[] =
       { "Z", PROP_REAL, { 50, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
       { "Num", PROP_INT, { 1, PROP_NO_STR }, { 1, MAX_PORTS } },
       PROP_NO_PROP },
-    { { "P", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "P", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* circulator */
   { "Circulator", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -426,7 +428,8 @@ struct define_t qucs_definition_available[] =
       { "Model", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
       { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* microstrip corner */
   { "MCORN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

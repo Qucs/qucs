@@ -1,7 +1,7 @@
 /*
  * analysis.h - analysis class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.h,v 1.7 2004-12-07 22:33:31 raimi Exp $
+ * $Id: analysis.h,v 1.8 2005-03-14 21:59:06 raimi Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class net;
 class object;
 class environment;
 class sweep;
+template <class type_t> class ptrlist;
 
 enum analysis_type {
   ANALYSIS_UNKNOWN = -1,
@@ -55,8 +56,8 @@ class analysis : public object
   void setNet (net * netlist) { subnet = netlist; }
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
-  analysis * getAnalysis (void) { return actions; }
-  void setAnalysis (analysis * a) { actions = a; }
+  ptrlist<analysis> * getAnalysis (void) { return actions; }
+  void setAnalysis (ptrlist<analysis> * a) { actions = a; }
   void addAnalysis (analysis *);
   void delAnalysis (analysis *);
   int  getType (void) { return type; }
@@ -69,7 +70,7 @@ class analysis : public object
   net * subnet;
   dataset * data;
   environment * env;
-  analysis * actions;
+  ptrlist<analysis> * actions;
 };
 
 #endif /* __ANALYSIS_H__ */

@@ -227,6 +227,7 @@ For the mixed media case with dielectric he obtains the approximation
 M.V. Schneider \cite{Schneider} derived the following approximate
 expressions.
 \begin{equation}
+\label{eq:DeltaSchneider}
 \Delta W =
 \begin{cases}
 \begin{array}{ll}
@@ -1077,6 +1078,41 @@ G &=
 \end{cases}
 \end{align}
 
+\subsection{Strip thickness correction}
+%\addcontentsline{toc}{subsection}{Strip thickness correction}
+
+According to R.H. Jansen \cite{Jansen} corrected strip width values
+have been found in the range of technologically meaningful geometries
+to be
+\begin{align}
+W_{t,e} &= W + \Delta W\cdot \left(1 - 0.5\cdot \exp{\left(-0.69\cdot\dfrac{\Delta W}{\Delta t}\right)}\right)\\
+W_{t,o} &= W_{t,e} + \Delta t
+\end{align}
+
+with
+\begin{equation}
+\Delta t = \dfrac{2\cdot t\cdot h}{s\cdot \varepsilon_r}
+\;\;\;\; \textrm{ for } \;\;\;\; s \gg 2 t
+\end{equation}
+
+The author refers to the modifications of the strip width of a single
+microstrip line $\Delta W$ given by Hammerstad and Bekkadal.  See also
+eq. \eqref{eq:DeltaSchneider} on page \pageref{eq:DeltaSchneider}.
+\begin{equation}
+\label{eq:DeltaHammerstad}
+\Delta W =
+\begin{cases}
+\begin{array}{ll}
+\dfrac{t}{\pi}\cdot\left(1 + \ln{\left(\dfrac{2h}{t}\right)}\right) & \textrm{ for } W > \dfrac{h}{2\pi} > 2 t\\
+&\\
+\dfrac{t}{\pi}\cdot\left(1 + \ln{\left(\dfrac{4\pi W}{t}\right)}\right) & \textrm{ for } \dfrac{h}{2\pi} \ge W > 2 t
+\end{array}
+\end{cases}
+\end{equation}
+
+For large spacings $s$ the single line formulae
+\eqref{eq:DeltaHammerstad} applies.
+
 \subsection{Transmission losses}
 %\addcontentsline{toc}{subsection}{Transmission losses}
 
@@ -1089,7 +1125,7 @@ and even current distribution factors (modification of
 eq. \eqref{eq:HandJKi}).
 
 \begin{equation}
-K_e = K_o = \exp{\left(-1.2\cdot\left(\dfrac{Z_{L,e} + Z_{L,o}}{2\cdot Z_{F0}}\right)^{0.7}\right)}
+K_{i,e} = K_{i,o} = \exp{\left(-1.2\cdot\left(\dfrac{Z_{L,e} + Z_{L,o}}{2\cdot Z_{F0}}\right)^{0.7}\right)}
 \end{equation}
 
 \subsection{S-parameters of parallel coupled microstrip lines}

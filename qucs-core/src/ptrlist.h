@@ -1,7 +1,7 @@
 /*
- * strlist.h - string list class definitions
+ * ptrlist.h - pointer list template class definitions
  *
- * Copyright (C) 2003, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,42 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.h,v 1.6 2005-03-14 21:59:07 raimi Exp $
+ * $Id: ptrlist.h,v 1.1 2005-03-14 21:59:07 raimi Exp $
  *
  */
 
-#ifndef __STRLIST_H__
-#define __STRLIST_H__
+#ifndef __PTRLIST_H__
+#define __PTRLIST_H__
 
-struct strlist_t {
-  char * str;
-  struct strlist_t * next;
-};
-
-class strlist
+template <class type_t>
+class ptrentry
 {
  public:
-  strlist ();
-  strlist (const strlist &);
-  ~strlist ();
-  void add (char *);
-  void add (strlist *);
-  void append (char *);
-  void append (strlist *);
-  struct strlist_t * getRoot (void) { return root; }
-  int length (void);
-  int contains (char *);
-  char * get (int);
-  int index (char *);
-  static strlist * join (strlist *, strlist *);
-  void del (strlist *);
-  char * toString (char * concat = " ");
-
- private:
-  struct strlist_t * root;
-  char * txt;
+  type_t * data;
+  ptrentry * next;
+  ptrentry * prev;
 };
 
-#endif /* __STRLIST_H__ */
+template <class type_t>
+class ptrlist
+{
+ public:
+  ptrlist ();
+  ~ptrlist ();
+  ptrlist (const ptrlist &);
+  void add (type_t *);
+  void append (type_t *);
+  void del (type_t *);
+  int  length (void);
+  int  contains (type_t *);
+  int  index (type_t *);
+  type_t * get (int);
+
+ private:
+  int size;
+  ptrentry<type_t> * root;
+};
+
+#include "ptrlist.cpp"
+
+#endif /* __PTRLIST_H__ */

@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about non-linear devices.
 %
-% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -855,6 +855,32 @@ Y_{CS} &= j\omega C_{CS_{dep}}
 The external capacitance $C_{BCX}$ connected between the internal
 collector node and the external base node is separately modeled if it
 is non-zero and if there is a non-zero base resistance.
+
+\addvspace{12pt}
+
+The SPICE variant of the above small signal equivalent circuit with
+the transconductance $g_m$ and the output conductance $g_0$ is
+depicted in fig. \ref{fig:spsgp_spice}.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.55\linewidth]{spsgp_spice}
+\end{center}
+\caption{small signal model of intrinsic BJT in SPICE}
+\label{fig:spsgp_spice}
+\end{figure}
+\FloatBarrier
+
+The appropriate MNA matrix (Y-parameters) can be written as
+\begin{equation}
+Y =
+\begin{bmatrix}
+Y_{BC} + Y_{BE} & -Y_{BC} & -Y_{BE} & 0\\
+g_{m} - Y_{BC} & Y_{CS} + Y_{BC} + g_{0} & - g_{m} - g_{0} & -Y_{CS}\\
+- g_{m} - Y_{BE} & -g_{0} & Y_{BE} + g_{m} + g_{0} & 0\\
+0 & -Y_{CS} & 0 & Y_{CS}\\
+\end{bmatrix}
+\end{equation}
 
 \subsection{Noise model}
 %\addcontentsline{toc}{subsection}{Noise model}

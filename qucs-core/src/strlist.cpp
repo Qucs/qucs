@@ -1,7 +1,7 @@
 /*
  * strlist.cpp - string list class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.cpp,v 1.6 2004-11-29 19:03:39 raimi Exp $
+ * $Id: strlist.cpp,v 1.7 2005-03-14 21:59:07 raimi Exp $
  *
  */
 
@@ -66,6 +66,16 @@ void strlist::add (char * str) {
   s->next = root;
   s->str = str ? strdup (str) : NULL;
   root = s;
+}
+
+// The function adds the given string list to the list.
+void strlist::add (strlist * lst) {
+  if (lst) for (int i = lst->length () - 1; i >= 0; i--) add (lst->get (i));
+}
+
+// The function apends the given string list to the list.
+void strlist::append (strlist * lst) {
+  if (lst) for (int i = 0; i < lst->length (); i++) append (lst->get (i));
 }
 
 // This function append a string to the list.

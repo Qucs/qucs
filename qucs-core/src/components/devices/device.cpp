@@ -1,7 +1,7 @@
 /*
  * device.cpp - device class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.13 2004-12-15 19:55:31 raimi Exp $
+ * $Id: device.cpp,v 1.14 2005-03-14 21:59:09 raimi Exp $
  *
  */
 
@@ -139,12 +139,12 @@ nr_double_t pnVoltage (nr_double_t Ud, nr_double_t Uold,
 
 // The function computes the exponential pn-junction current.
 nr_double_t pnCurrent (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
-  return Iss * (exp (Upn / Ute) - 1);
+  return Iss * (exp (MIN (Upn / Ute, 709)) - 1);
 }
 
 // The function computes the exponential pn-junction current's derivative.
 nr_double_t pnConductance (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
-  return Iss * exp (Upn / Ute) / Ute;
+  return Iss * exp (MIN (Upn / Ute, 709)) / Ute;
 }
 
 // Computes pn-junction depletion capacitance.
@@ -214,7 +214,7 @@ nr_double_t pnCriticalVoltage (nr_double_t Iss, nr_double_t Ute) {
    convergence. */
 nr_double_t fetVoltage (nr_double_t Ufet, nr_double_t Uold, nr_double_t Uth) {
   nr_double_t Utsthi = fabs (2 * (Uold - Uth)) + 2.0;
-  nr_double_t Utstlo = Utsthi / 2 + 2.0;
+  nr_double_t Utstlo = Utsthi / 2;
   nr_double_t Utox   = Uth + 3.5;
   nr_double_t DeltaU = Ufet - Uold;
 

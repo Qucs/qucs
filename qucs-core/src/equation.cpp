@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.28 2005-02-08 23:08:32 raimi Exp $
+ * $Id: equation.cpp,v 1.29 2005-03-14 21:59:06 raimi Exp $
  *
  */
 
@@ -397,6 +397,7 @@ node::node () {
   dependencies = NULL;
   dataDependencies = NULL;
   dropDependencies = NULL;
+  prepDependencies = NULL;
   txt = NULL;
   res = NULL;
   instance = NULL;
@@ -410,6 +411,7 @@ node::node (int type) {
   dependencies = NULL;
   dataDependencies = NULL;
   dropDependencies = NULL;
+  prepDependencies = NULL;
   txt = NULL;
   res = NULL;
   instance = NULL;
@@ -420,6 +422,7 @@ node::~node () {
   if (dependencies) delete dependencies;
   if (dataDependencies) delete dataDependencies;
   if (dropDependencies) delete dropDependencies;
+  if (prepDependencies) delete prepDependencies;
   if (txt) free (txt);
   if (instance) free (instance);
 }
@@ -545,6 +548,13 @@ strlist * node::recurseDependencies (checker * check, strlist * deps) {
 void node::addDropDependencies (char * dep) {
   if (dropDependencies == NULL) dropDependencies = new strlist ();
   dropDependencies->add (dep);
+}
+
+/* The function adds the given data dependency to the list of
+   dependencies which are going to be prepend. */
+void node::addPrepDependencies (char * dep) {
+  if (prepDependencies == NULL) prepDependencies = new strlist ();
+  prepDependencies->add (dep);
 }
 
 /* The function sets the data dependency list of the equation node. */
@@ -1155,8 +1165,15 @@ strlist * solver::collectDataDependencies (node * eqn) {
     node * n = checker::findEquation (eqn::equations, var);
     sub = strlist::join (datadeps, n->getDataDependencies ());
     sub->del (n->getResult()->getDropDependencies ());
+    sub->add (n->getResult()->getPrepDependencies ());
     if (datadeps) delete datadeps;
     datadeps = sub;
+  }
+  if (datadeps) {
+    datadeps->add (eqn->getResult()->getPrepDependencies ());
+  } else {
+    datadeps = strlist::join (datadeps,
+			      eqn->getResult()->getPrepDependencies ());
   }
   datadeps = checker::foldDependencies (datadeps);
   datadeps->del (eqn->getResult()->getDropDependencies ());

@@ -1,3 +1,20 @@
+2005-03-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp, microstrip/mscoupled.cpp: Fixed
+	strip thickness	corrections and conductor losses.
+
+	* devices/mosfet.cpp: Fixed small bug.  Better convergence
+	achieved.
+
+2005-03-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* pac.cpp, microstrip/msline.cpp, microstrip/mscoupled.cpp,
+	microstrip/cpwline.cpp: Implemented AC and S-parameter noise
+	calculation using Bosma's theorem.
+
+	* devices/bjt.cpp: Fixed small signal equivalent circuit for
+	AC and S-parameter analysis.
+
 2005-02-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Fixed bug in AC admittance calculation.

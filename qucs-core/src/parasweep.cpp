@@ -1,7 +1,7 @@
 /*
  * parasweep.cpp - parameter sweep class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.9 2004-12-07 22:33:31 raimi Exp $
+ * $Id: parasweep.cpp,v 1.10 2005-03-14 21:59:07 raimi Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "vector.h"
 #include "dataset.h"
 #include "net.h"
+#include "ptrlist.h"
 #include "analysis.h"
 #include "variable.h"
 #include "environment.h"
@@ -106,7 +107,8 @@ void parasweep::solve (void) {
     logprint (LOG_STATUS, "NOTIFY: %s: running netlist for %s = %g\n",
 	      getName (), n, D (val));
 #endif
-    for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+    for (int k = 0; k < actions->length (); k++) {
+      analysis * a = actions->get (k);
       a->solve ();
       // assign variable dataset dependencies to last order analyses
       analysis * last = subnet->findLastOrder (a);

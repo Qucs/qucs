@@ -40,21 +40,18 @@ Description: Depending on the netlist input order it may occur that a DC
 
 Bug:         B0003
 From:	     Stefan Jahn <stefan@lkcc.org>
-State:       unfixed
-Date:	     2005-03-01
-Description: Noise correlation matrices of microstrip components can't be
-	     calculated assuming a simple attenuation.
-
-Bug:         B0004
-From:	     Stefan Jahn <stefan@lkcc.org>
-State:       unfixed
+State:       fixed (2005-03-08/stefan)
 Date:	     2005-03-01
 Description: Noise correlation matrices of microstrip components can't be
 	     calculated assuming a simple attenuation because of the
 	     transition time effects.
+Fix:	     The calculation is performed using Bosma's theorem.
 
-Bug:         B0005
+Bug:         B0004
 From:	     Stefan Jahn <stefan@lkcc.org>
-State:       unfixed
+State:       fixed (2005-03-08/stefan)
 Date:	     2005-03-01
-Description: Output resistance of the BJT model is much too high.
+Description: AC output resistance of the BJT model is much too high.
+Fix:         Use conservative small signal equivalent circuit description
+	     instead of the 'NEWSGP' which works nice for DC calculation
+	     anyway.

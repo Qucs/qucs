@@ -26,6 +26,9 @@ files.
 Version 0.0.6
 -------------
 
+ * implementation of noise and stability circle formulas
+ * fixed noise calculations of microstrip/coplanar components
+
 Version 0.0.5
 -------------
 
