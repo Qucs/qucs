@@ -1,0 +1,80 @@
+-- 
+-- README
+-- 
+-- Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+-- 
+-- This is free software; you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation; either version 2, or (at your option)
+-- any later version.
+-- 
+-- This software is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+-- 
+-- You should have received a copy of the GNU General Public License
+-- along with this package; see the file COPYING.  If not, write to
+-- the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+-- Boston, MA 02111-1307, USA.  
+--
+
+
+Description
+===========
+
+Qucs SP is a command line s-parameter simulator.  It takes a network
+list in a certain format as input and outputs a Qucs dataset.  It has
+been programmed for usage in the Qucs project but can also be used by
+other applications.
+
+Requirements
+============
+
+Currently there are no dependencies on other software projects.
+
+Installation
+============
+
+Unpack the distribution tarball:
+
+    $ tar xvzf qucs-sp-<version>.tar.gz               (using GNU tar)
+    $ gzip -cd qucs-sp-<version>.tar.gz | tar xvf -   (using another tar)
+  
+Change into the source directory:
+
+    $ cd qucs-sp-<version>
+  
+Configure the source package for your system:
+
+    $ ./configure
+
+Now compile the package:
+
+    $ make
+  
+Install Qucs SP:
+
+    $ make install
+
+You must have root privileges if you want to install the package in the
+standard location (/usr/local) or in any location that is only writable 
+by root.
+
+For further information on installing the package, please consult the
+file INSTALL included in this distribution.
+
+
+Getting the latest CVS snapshot
+===============================
+
+You can always get the latest Qucs SP version from our CVS repository.
+Please use an official release if you want to work with Qucs SP.  The CVS
+version might not even compile.
+
+    $ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/qucs \
+      co qucs-sp
+
+Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
+`configure' with the appropriate options.  Maintainance currently
+requires Autoconf version 2.57 and GNU automake 1.7.0.

@@ -1,0 +1,143 @@
+/* -*-c++-*- */
+
+%{
+/*
+ * parse_dataset.y - parser for the Qucs dataset
+ *
+ * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.  
+ *
+ * $Id: parse_dataset.y,v 1.1 2003/12/20 19:03:26 ela Exp $
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define YYERROR_VERBOSE 42
+#define YYDEBUG 1
+
+#include "logging.h"
+#include "complex.h"
+#include "object.h"
+#include "vector.h"
+#include "dataset.h"
+#include "strlist.h"
+#include "check_dataset.h"
+
+%}
+
+%name-prefix="dataset_"
+
+%token InvalidCharacter
+%token Identifier
+%token REAL
+%token IMAG
+%token Integer
+%token Eol
+%token IndepBegin
+%token DepBegin
+%token IndepEnd
+%token DepEnd
+%token Version
+
+%union {
+  char * ident;
+  double f;
+  long n;
+  vector * v;
+  dataset * data;
+  strlist * list;
+}
+
+%type <list> IdentifierList
+%type <ident> Identifier
+%type <f> REAL IMAG
+%type <n> Integer
+%type <v> FloatList
+%type <data> VersionLine VariableList Variable
+
+%%
+
+Input:
+  VersionLine VariableList { /* describes a valid dataset */ }
+;
+
+VersionLine:
+  Version Eol { /* version line */
+    $$ = dataset_result = new dataset ();
+  }
+;
+
+VariableList: /* nothing */ { }
+  | Variable VariableList { /* dependent and independent variable vectors */ }
+  | Eol VariableList      { /* skip to next line */ }
+;
+
+Variable:
+  '<' DepBegin Identifier IdentifierList '>' FloatList '<' DepEnd '>' {
+    /* dependent variable vector */
+    dataset_vector->setName ($3);
+    dataset_vector->reverse ();
+    dataset_vector->setDependencies (dataset_idents);
+    dataset_result->appendVariable (dataset_vector);
+    dataset_vector = NULL;
+    dataset_idents = NULL;
+    free ($3);
+  }
+  | '<' IndepBegin Identifier Integer '>' FloatList '<' IndepEnd '>' {
+    /* independent variable vector */
+    dataset_vector->setRequested ($4);
+    dataset_vector->setName ($3);
+    dataset_vector->reverse ();
+    dataset_result->appendDependency (dataset_vector);
+    dataset_vector = NULL;
+    free ($3);
+  }
+;
+
+FloatList: /* nothing */ { $$ = dataset_vector = new vector (); }
+  | REAL FloatList {
+    dataset_vector->add ($1);
+  }
+  | REAL IMAG FloatList {
+    dataset_vector->add (rect ($1, $2));
+  }
+  | IMAG FloatList {
+    dataset_vector->add (rect (0.0, $1));
+  }
+  | Eol FloatList { /* skip to next line */ }
+;
+
+IdentifierList: /* nothing */ { $$ = dataset_idents = new strlist (); }
+  | Identifier IdentifierList {
+    dataset_idents->add ($1);
+    free ($1);
+  }
+;
+
+%%
+
+int dataset_error (char * error) {
+  logprint (LOG_ERROR, "line %d: %s\n", dataset_lineno, error);
+  return 0;
+}

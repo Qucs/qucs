@@ -1,0 +1,202 @@
+\documentclass[10pt]{report}
+\usepackage{a4wide}
+\usepackage{epsfig}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{SIunits}
+\usepackage{psfrag}
+\usepackage{relsize}
+\usepackage[section]{placeins}
+\usepackage{listings}
+
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+  \pdffalse
+\else
+  \pdfoutput=1
+  \pdftrue
+\fi
+
+\ifpdf
+\pdfcompresslevel=9
+\pdfinfo {
+  /Title   (Qucs)
+  /Subject (Technical Papers)
+  /Author  (Stefan Jahn)
+}
+\fi
+
+\makeatletter
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1pt\hfill \kern \z@}
+\renewcommand{\maketitle}{\begin{titlepage}%
+    \let\footnotesize\small
+    \let\footnoterule\relax
+    \parindent \z@
+    \reset@font
+    \null\vfil
+    \vspace*{3cm}
+    \begin{flushleft}
+      \bf \huge \@title
+    \end{flushleft}
+    \par
+    \hrule height 3pt
+    \par
+    \begin{flushright}
+      \LARGE Technical Papers \par
+    \end{flushright}
+    \vskip 60\p@
+    \vfill
+
+
+    \begin{flushright}
+      \Large \@author \par
+    \end{flushright}
+
+    \hrule height 3pt \par
+
+\vspace*{24pt}
+
+Copyright \copyright{} 2003 Michael Margraf 
+\textless margraf@mwt.ee.tu-berlin.de\textgreater \par
+Copyright \copyright{} 2003 Stefan Jahn 
+\textless jahn@mwt.ee.tu-berlin.de\textgreater \par
+
+\vspace*{12pt}
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation.  A copy
+of the license is included in the section entitled "GNU Free
+Documentation License".
+
+\vspace*{1cm}
+
+  \end{titlepage}%
+  \setcounter{footnote}{0}%
+}
+\makeatother
+
+\author{Michael Margraf \\ Stefan Jahn}
+\title{Qucs}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\setlength{\parindent}{0pt}
+\newpage
+
+\chapter*{Mathematical expressions and conversions}
+\addcontentsline{toc}{chapter}{Mathematical expressions and conversions}
+
+\section*{Scattering parameters}
+\addcontentsline{toc}{section}{Scattering parameters}
+
+\subsection*{Recalculating $\mathbf{50\ohm}$-S-parameters for arbitrary port impedances}
+\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
+
+During S-parameter simulation it is necessary to have all components
+in a circuit normalized to the same impedance.  In the field of high
+frequency techniques this is usually $50\ohm$.  In order to allow port
+impedances other than $50\ohm$ in a simulation the following two step
+process must be applied to the resulting S-parameter analysis.
+
+\begin{equation}
+\left[\underline{N}\right] = 
+\left(\left[\underline{S}\right] - \left[\underline{R}\right]\right) \cdot
+\left(\left[\underline{E}\right] - \left[\underline{R}\right] \cdot \left[\underline{S}\right]\right)^{-1}
+\end{equation}
+
+\begin{equation}
+\underline{N}_{nm} = \underline{S}_{nm}\cdot \sqrt{\dfrac{Z^{m}}{Z^{n}}}\cdot
+\dfrac{Z^{n} + Z_{0}}{Z^{m} + Z_{0}}
+\end{equation}
+
+With\\
+
+\begin{tabular}{rll}
+$Z_{0}$ & = & $50\ohm$\\& &\\
+$\left[\underline{E}\right]$ & = &
+$\begin{pmatrix}
+1 & 0 & \ldots & 0\\
+0 & 1 & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & 1\\
+\end{pmatrix}$
+identity matrix\\& &\\
+$\left[\underline{S}\right]$ & = & original $50\ohm$-S-parameter matrix\\& &\\
+$\left[\underline{N}\right]$ & = & recalculated scattering matrix\\& &\\
+$\left[\underline{R}\right]$ & = &
+$\begin{pmatrix}
+\underline{r}(Z_{1}) & 0 & \ldots & 0\\
+0 & \underline{r}(Z_{2}) & \ldots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \ldots & \underline{r}(Z_{n})\\
+\end{pmatrix}$
+reflection coefficient matrix\\& &\\
+$\underline{r}(Z_{n})$ & = &
+$\dfrac{Z_{n} - Z_{0}}{Z_{n} + Z_{0}}$
+reflection coefficient of impedance at port n\\& &\\
+\end{tabular}
+
+And furthermore\\
+
+\begin{tabular}{rll}
+$\left[\underline{X}\right]^{-1}$ & = & 
+inverted matrix of $\left[\underline{X}\right]$\\& &\\
+$\underline{X}_{nm}$ & = & 
+element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
+\end{tabular}
+
+\subsection*{Differential S-parameter ports}
+\addcontentsline{toc}{subsection}{Differential S-parameter ports}
+
+The implemented algorithm for then S-parameter analysis calculates
+S-parameters in terms of the ground node.  In order to allow
+differential S-parameters as well it is necessary to insert an ideal
+impedance transformer with a turns ratio of 1:1 between the
+differential port and the device under test.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=12cm]{differential}
+\end{center}
+\caption{transformation of differential port into single ended port}
+\label{fig:differential}
+\end{figure}
+\FloatBarrier
+
+The S-parameter matrix of the inserted ideal transformer being a three
+port device can be written as follows.
+
+\begin{equation}
+\begin{pmatrix}
+S
+\end{pmatrix}
+= \dfrac{1}{3}\cdot
+\begin{pmatrix}
+1 & 2 & -2\\
+2 & 1 & 2\\
+-2 & 2 & 1\\
+\end{pmatrix}
+\end{equation}
+
+This transformation can be applied to each S-parameter port in a
+circuit regardless whether it is actually differential or not.
+
+\subsection*{Symmetrical transformator}
+\addcontentsline{toc}{subsection}{Symmetrical transformator}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{symtrafo}
+\end{center}
+\caption{symmetrical transformator}
+\label{fig:symtrafo}
+\end{figure}
+\FloatBarrier
+
+\end{document}

@@ -1,0 +1,18 @@
+2003-12-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* vdc.cpp, idc.cpp, vac.cpp: New components.
+
+	* itrafo.cpp: Using a port impedance dependent turns ratio
+	the component is now used to allow other port impedances than
+	50 Ohms.
+
+2003-12-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* strafo.cpp: New component.  Symmetrical 6-port 
+	transformator.
+
+2003-12-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* itrafo.cpp, itrafo.h: New component.  The ideal 3-port 
+	transformator is for allowing differential s parameter ports 
+	only.
