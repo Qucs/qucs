@@ -1,3 +1,9 @@
+2005-04-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucstrans.cpp (slotCopyToClipBoard): Started to implement the
+	clipboard functionality used to created a schematic part for
+	Qucs. Added a regex validator for the editable values.
+
 2005-04-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* optionsdialog.h: Added configuration option dialog.

@@ -567,7 +567,6 @@ void c_microstrip::syn_err_fun(double *f1, double *f2, double s_h, double w_h, d
  * Hinton, J.H., "On design of coupled microstrip lines", IEEE Trans.
  * MTT-28, March 1980
  */
-
 void c_microstrip::synth_width()
 {
   double Z0, e_r;
@@ -575,6 +574,7 @@ void c_microstrip::synth_width()
   double f1, f2, ft1, ft2, j11, j12, j21, j22, d_s_h, d_w_h, err;
   double eps = 1e-04;
 
+  f1 = f2 = 0;
   e_r = er;
 
   Z0 = Z0e / 2.0;
