@@ -19,8 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA, 02111-1307, USA
  *
- * $Id: microstrip.cpp,v 1.1 2005/03/13 14:46:35 margraf Exp $
- *
  */
 
 
@@ -573,6 +571,10 @@ void microstrip::synthesize()
   }
 
   setProperty ("W", w, UNIT_LENGTH, LENGTH_M);
+  /* calculate physical length */
+  ang_l = getProperty ("Ang_l", UNIT_ANG, ANG_RAD);
+  l = C0 / f / sqrt(er_eff * mur_eff) * ang_l / 2.0 / M_PI;    /* in m */
+  setProperty ("L", l, UNIT_LENGTH, LENGTH_M);
 
   /* compute microstrip parameters */
   calc();

@@ -30,6 +30,10 @@ class QVBox;
 class QVBoxLayout;
 class QRadioButton;
 class QGridLayout;
+class QStatusBar;
+class QTextStream;
+class QButtonGroup;
+class QWidgetStack;
 
 class transline;
 
@@ -44,6 +48,12 @@ class transline;
 #define TRANS_PHYSICAL   2
 #define TRANS_ELECTRICAL 3
 
+#define TRANS_FREQS   { "GHz", "Hz", "kHz", "MHz", NULL }
+#define TRANS_OHMS    { "Ohm", "kOhm", NULL }
+#define TRANS_ANGLES  { "Deg", "Rad", NULL }
+#define TRANS_LENGTHS { "mil", "cm", "mm", "m", "um", "in", "ft", NULL }
+#define TRANS_NONES   { "NA", NULL }
+
 // Application settings.
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
@@ -54,6 +64,7 @@ struct tQucsSettings {
   int freq_unit;       // default frequency unit
   int res_unit;        // default resistance unit
   int ang_unit;        // default angle unit
+  QString Mode;        // current mode
 };
 
 extern tQucsSettings QucsSettings;
@@ -64,10 +75,12 @@ struct TransValue {
   double value;          // value
   QString * tip;         // tool tip description
   char * units[8];       // unit choise
+  int unit;              // unit index
   QLabel * label;        // Qt label widget
   QLineEdit * lineedit;  // Qt value widget
   QComboBox * combobox;  // Qt unit widget
   QRadioButton * radio;  // Qt fixed widget
+  QWidgetStack * stack;  // Qt fixed stack
 };
 
 // Array of transmission line values.
@@ -102,6 +115,11 @@ struct TransType {
   int radio[4];
 };
 
+struct TransUnit {
+  char * description;
+  const char * units[8];
+};
+
 /**
   *@author Stefan Jahn
   */
@@ -112,11 +130,19 @@ public:
   QucsTranscalc();
  ~QucsTranscalc();
 
-  void   setProperty (QString, double);
-  double getProperty (QString);
-  char * getUnit (QString);
-  void   setResult (int, char *);
-  bool   isSelected (QString);
+  void    setProperty (QString, double);
+  double  getProperty (QString);
+  void    setUnit (QString, const char *);
+  char *  getUnit (QString);
+  void    setResult (int, char *);
+  bool    isSelected (QString);
+
+  void    saveMode (QTextStream&);
+  void    saveModes (QTextStream&);
+  bool    loadFile (QString, int * _mode = 0);
+  QString getMode (void);
+  void    setMode (QString);
+  static  int translateUnit(const char *, int);
 
 private slots:
   void slotAbout();
@@ -124,10 +150,16 @@ private slots:
   void slotSelectType(int);
   void slotSynthesize();
   void slotAnalyze();
+  void slotValueChanged();
+  void slotFileLoad();
+  void slotFileSave();
+  void slotHelpIntro();
+  void slotOptions();
+  void slotRadioChecked(int);
 
 private:
   void updateSelection ();
-  void createPropItem (QVBox **, TransValue *, int);
+  void createPropItem (QVBox **, TransValue *, int, QButtonGroup *);
   void createResultItem (QVBox **, TransResult *);
   void updateResultItem (TransResult *);
   void createResultItems (QHGroupBox *);
@@ -138,11 +170,16 @@ private:
   void setMode (int);
   struct TransValue * findProperty (QString);
   void setupTranslations ();
+  bool saveFile (QString);
+  void updateMode (void);
+  void storeValues (void);
+  void updatePixmap (int);
 
  private:
   void closeEvent (QCloseEvent*);
 
 private:
+  QStatusBar * statBar;
   QLabel * pix;
   QComboBox * tranType;
   QHGroupBox * calculated;

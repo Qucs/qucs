@@ -24,6 +24,8 @@
 
 bin_PROGRAMS = qucsfilter
 
+dist_man_MANS = qucsfilter.1
+
 MOCHEADERS = qucsfilter.h helpdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
