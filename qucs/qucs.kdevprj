@@ -629,7 +629,7 @@ install_location=
 type=DATA
 
 [qucs/components/Makefile.am]
-files=qucs/components/resistor.cpp,qucs/components/resistor.h,qucs/components/component.cpp,qucs/components/component.h,qucs/components/components.h,qucs/components/resistorus.cpp,qucs/components/resistorus.h,qucs/components/capacitor.cpp,qucs/components/capacitor.h,qucs/components/inductor.cpp,qucs/components/inductor.h,qucs/components/biast.cpp,qucs/components/biast.h,qucs/components/dcblock.cpp,qucs/components/dcblock.h,qucs/components/dcfeed.cpp,qucs/components/dcfeed.h,qucs/components/ground.cpp,qucs/components/ground.h,qucs/components/subcirport.cpp,qucs/components/subcirport.h,qucs/components/symtrafo.cpp,qucs/components/symtrafo.h,qucs/components/transformer.cpp,qucs/components/transformer.h,qucs/components/ampere_dc.cpp,qucs/components/ampere_dc.h,qucs/components/attenuator.cpp,qucs/components/attenuator.h,qucs/components/circulator.cpp,qucs/components/circulator.h,qucs/components/equation.cpp,qucs/components/equation.h,qucs/components/isolator.cpp,qucs/components/isolator.h,qucs/components/source_ac.cpp,qucs/components/source_ac.h,qucs/components/sparamfile.cpp,qucs/components/sparamfile.h,qucs/components/subcircuit.cpp,qucs/components/subcircuit.h,qucs/components/volt_ac.cpp,qucs/components/volt_ac.h,qucs/components/volt_dc.cpp,qucs/components/volt_dc.h,qucs/components/ac_sim.cpp,qucs/components/ac_sim.h,qucs/components/cccs.cpp,qucs/components/cccs.h,qucs/components/ccvs.cpp,qucs/components/ccvs.h,qucs/components/coplanar.cpp,qucs/components/coplanar.h,qucs/components/dc_sim.cpp,qucs/components/dc_sim.h,qucs/components/diode.cpp,qucs/components/diode.h,qucs/components/hb_sim.cpp,qucs/components/hb_sim.h,qucs/components/mscorner.cpp,qucs/components/mscorner.h,qucs/components/mscoupled.cpp,qucs/components/mscoupled.h,qucs/components/mscross.cpp,qucs/components/mscross.h,qucs/components/msline.cpp,qucs/components/msline.h,qucs/components/msstep.cpp,qucs/components/msstep.h,qucs/components/mstee.cpp,qucs/components/mstee.h,qucs/components/param_sweep.cpp,qucs/components/param_sweep.h,qucs/components/sp_sim.cpp,qucs/components/sp_sim.h,qucs/components/substrate.cpp,qucs/components/substrate.h,qucs/components/tline.cpp,qucs/components/tline.h,qucs/components/tr_sim.cpp,qucs/components/tr_sim.h,qucs/components/vccs.cpp,qucs/components/vccs.h,qucs/components/vcvs.cpp,qucs/components/vcvs.h,qucs/components/componentdialog.cpp,qucs/components/componentdialog.h
+files=qucs/components/resistor.cpp,qucs/components/resistor.h,qucs/components/component.cpp,qucs/components/component.h,qucs/components/components.h,qucs/components/resistorus.cpp,qucs/components/resistorus.h,qucs/components/capacitor.cpp,qucs/components/capacitor.h,qucs/components/inductor.cpp,qucs/components/inductor.h,qucs/components/biast.cpp,qucs/components/biast.h,qucs/components/dcblock.cpp,qucs/components/dcblock.h,qucs/components/dcfeed.cpp,qucs/components/dcfeed.h,qucs/components/ground.cpp,qucs/components/ground.h,qucs/components/subcirport.cpp,qucs/components/subcirport.h,qucs/components/symtrafo.cpp,qucs/components/symtrafo.h,qucs/components/transformer.cpp,qucs/components/transformer.h,qucs/components/ampere_dc.cpp,qucs/components/ampere_dc.h,qucs/components/attenuator.cpp,qucs/components/attenuator.h,qucs/components/circulator.cpp,qucs/components/circulator.h,qucs/components/equation.cpp,qucs/components/equation.h,qucs/components/isolator.cpp,qucs/components/isolator.h,qucs/components/source_ac.cpp,qucs/components/source_ac.h,qucs/components/sparamfile.cpp,qucs/components/sparamfile.h,qucs/components/subcircuit.cpp,qucs/components/subcircuit.h,qucs/components/volt_ac.cpp,qucs/components/volt_ac.h,qucs/components/volt_dc.cpp,qucs/components/volt_dc.h,qucs/components/ac_sim.cpp,qucs/components/ac_sim.h,qucs/components/cccs.cpp,qucs/components/cccs.h,qucs/components/ccvs.cpp,qucs/components/ccvs.h,qucs/components/coplanar.cpp,qucs/components/coplanar.h,qucs/components/dc_sim.cpp,qucs/components/dc_sim.h,qucs/components/diode.cpp,qucs/components/diode.h,qucs/components/hb_sim.cpp,qucs/components/hb_sim.h,qucs/components/mscorner.cpp,qucs/components/mscorner.h,qucs/components/mscoupled.cpp,qucs/components/mscoupled.h,qucs/components/mscross.cpp,qucs/components/mscross.h,qucs/components/msline.cpp,qucs/components/msline.h,qucs/components/msstep.cpp,qucs/components/msstep.h,qucs/components/mstee.cpp,qucs/components/mstee.h,qucs/components/param_sweep.cpp,qucs/components/param_sweep.h,qucs/components/sp_sim.cpp,qucs/components/sp_sim.h,qucs/components/substrate.cpp,qucs/components/substrate.h,qucs/components/tline.cpp,qucs/components/tline.h,qucs/components/tr_sim.cpp,qucs/components/tr_sim.h,qucs/components/vccs.cpp,qucs/components/vccs.h,qucs/components/vcvs.cpp,qucs/components/vcvs.h,qucs/components/componentdialog.cpp,qucs/components/componentdialog.h,qucs/components/gyrator.cpp,qucs/components/gyrator.h,qucs/components/phaseshifter.cpp,qucs/components/phaseshifter.h
 sharedlib_LDFLAGS=-version-info 0:0:0
 sharedlib_rootname=components
 sub_dirs=
@@ -845,6 +845,18 @@ install=false
 install_location=
 type=HEADER
 
+[qucs/components/gyrator.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/components/gyrator.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
 [qucs/components/hb_sim.cpp]
 dist=true
 install=false
@@ -960,6 +972,18 @@ install_location=
 type=SOURCE
 
 [qucs/components/param_sweep.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[qucs/components/phaseshifter.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/components/phaseshifter.h]
 dist=true
 install=false
 install_location=

@@ -1,6 +1,6 @@
 ####### kdevelop will overwrite this part!!! (begin)##########
 
-SUBDIRS = qucs
+SUBDIRS = qucs 
 
 EXTRA_DIST = qucs.kdevprj admin AUTHORS COPYING ChangeLog INSTALL README TODO qucs.lsm qucs.spec NEWS autogen.sh 
 
