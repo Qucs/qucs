@@ -211,7 +211,7 @@ int QucsFile::save()
   else {
     stream << "  <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","
 			 << Doc->ViewX2<<","<<Doc->ViewY2<< ",";
-    stream <<Doc->Scale<<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
+    stream << Doc->Scale <<","<<Doc->PosX<<","<<Doc->PosY << ">\n";
   }
   stream << "  <Grid=" << Doc->GridX<<","<<Doc->GridY<<","
 			<< Doc->GridOn << ">\n";
@@ -229,14 +229,14 @@ int QucsFile::save()
   int z=0;   // to count number of subcircuit ports
   stream << "<Components>\n";    // save all components
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
-    stream << "  "<< pc->save() << "\n";
+    stream << "  " << pc->save() << "\n";
     if(pc->Model == "Port") z++;
   }
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
   for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    stream << "  "  << pw->save() << "\n";
+    stream << "  " << pw->save() << "\n";
 
   // save all labeled nodes as wires
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
@@ -725,8 +725,8 @@ bool QucsFile::rebuildSymbol(QString *s)
 
 // ---------------------------------------------------
 // Follows the wire lines in order to determine the node names for
-// each component.
-bool QucsFile::giveNodeNames(QTextStream *stream)
+// each component. Output into "stream", NodeSets are collected in "NS".
+bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
 {
   Node *p1, *p2;
   Wire *pw;
@@ -734,7 +734,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
 
   // delete the node names
   for(p1 = Nodes->first(); p1 != 0; p1 = Nodes->next())
-    if(p1->Label) p1->Name = p1->Label->Name;
+    if(p1->Label)  p1->Name = p1->Label->Name;
     else p1->Name = "";
 
   // set the wire names to the connected node
@@ -758,15 +758,21 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
                return false;
              }
 	     d->DocName = s;
-	     d->File.createSubNetlist(stream);
+	     d->File.createSubNetlist(stream, countInit);
 	     delete d;
            }
 
 
+  bool setName=false;
   QPtrList<Node> Cons;
   // work on named nodes first in order to preserve the user given names
   for(p1 = Nodes->first(); p1 != 0; p1 = Nodes->next()) {
     if(p1->Name.isEmpty()) continue;
+    if(p1->Label)
+      if(!p1->Label->initValue.isEmpty())
+	NS += "NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
+	      " U=\"" + p1->Label->initValue + "\"\n";
+
     Cons.append(p1);
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
       for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
@@ -776,16 +782,24 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
             if(pw->Port1->Name.isEmpty()) {
               pw->Port1->Name = p1->Name;
               Cons.append(pw->Port1);
-              Cons.findRef(p2);
+              setName = true;
             }
           }
           else {
             if(pw->Port2->Name.isEmpty()) {
               pw->Port2->Name = p1->Name;
               Cons.append(pw->Port2);
-              Cons.findRef(p2);
+              setName = true;
             }
           }
+	  if(setName) {
+	    Cons.findRef(p2);   // back to current Connection
+	    if(pw->Label)
+	      if(!pw->Label->initValue.isEmpty())
+		NS += "NodeSet:NS" + QString::number(countInit++) + " " +
+		      p1->Name + " U=\"" + pw->Label->initValue + "\"\n";
+	    setName = false;
+	  }
         }
     Cons.clear();
   }
@@ -796,6 +810,11 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
   for(p1 = Nodes->first(); p1!=0; p1 = Nodes->next()) { // work on all nodes
     if(!p1->Name.isEmpty()) continue;    // already named ?
     p1->Name = "_net" + QString::number(z++);   // create node name
+    if(p1->Label)
+      if(!p1->Label->initValue.isEmpty())
+	NS += "NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
+	      " U=\"" + p1->Label->initValue + "\"\n";
+
     Cons.append(p1);
     // create list with connections to the node
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
@@ -806,16 +825,24 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
             if(pw->Port1->Name.isEmpty()) {
               pw->Port1->Name = p1->Name;
               Cons.append(pw->Port1);
-              Cons.findRef(p2);   // back to current Connection
+              setName = true;
             }
           }
           else {
             if(pw->Port2->Name.isEmpty()) {
               pw->Port2->Name = p1->Name;
               Cons.append(pw->Port2);
-              Cons.findRef(p2);
+              setName = true;
             }
           }
+	  if(setName) {
+	    Cons.findRef(p2);   // back to current Connection
+	    if(pw->Label)
+	      if(!pw->Label->initValue.isEmpty())
+		NS += "NodeSet:Nb" + QString::number(countInit++) + " " +
+		      p1->Name + " U=\"" + pw->Label->initValue + "\"\n";
+	    setName = false;
+	  }
         }
     Cons.clear();
   }
@@ -825,9 +852,10 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
 
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'NetlistFile'.
-bool QucsFile::createSubNetlist(QTextStream *stream)
+bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit)
 {
-  if(!giveNodeNames(stream)) return false;
+  QString s;
+  if(!giveNodeNames(stream, s, countInit)) return false;
 
   int i, z;
   QStringList sl;
@@ -849,15 +877,16 @@ bool QucsFile::createSubNetlist(QTextStream *stream)
   if(Type.at(0) <= '9') if(Type.at(0) >= '0')  Type = '_' + Type;
   Type.replace(QRegExp("\\W"), "_"); // replace all none [a-zA-Z0-9] with _
   (*stream) << "\n.Def:" << Type << " " << sl.join(" ") << "\n";
+  (*stream) << s;  // outputs the NodeSets (if any)
 
 
-  QString s;
   // write all components with node names into the netlist file
   for(pc = Comps->first(); pc != 0; pc = Comps->next()) {
     if(pc->Model.at(0) == '.') continue;  // no simulations in subcircuits
     if(pc->Model == "Eqn") continue;  // no equations in subcircuits
     s = pc->NetList();
-    if(!s.isEmpty()) (*stream) << "   " << s << "\n";
+    if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
+      (*stream) << "   " << s << "\n";
   }
 
   (*stream) << ".Def:End\n\n";
@@ -876,14 +905,16 @@ bool QucsFile::createNetlist(QFile *NetlistFile)
   stream << "# Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
 
 
-  if(!giveNodeNames(&stream)) {
+  QString s;
+  int countInit = 0;
+  if(!giveNodeNames(&stream, s, countInit)) {
     NetlistFile->close();
     StringList.clear();
     return false;
   }
+  stream << s;  // outputs the NodeSets (if any)
 
   // .................................................
-  QString s;
   // write all components with node names into the netlist file
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
     s = pc->NetList();

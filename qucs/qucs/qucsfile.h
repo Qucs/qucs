@@ -45,7 +45,7 @@ public:
   QString createSymbolUndoString(char);
   bool    rebuildSymbol(QString *);
 
-  bool  createSubNetlist(QTextStream*);
+  bool  createSubNetlist(QTextStream*, int&);
   bool  createNetlist(QFile*);
 
 
@@ -59,7 +59,7 @@ private:
   bool  loadPaintings(QTextStream*, QPtrList<Painting>*);
   bool  loadIntoNothing(QTextStream*);
 
-  bool  giveNodeNames(QTextStream*);
+  bool  giveNodeNames(QTextStream*, QString&, int&);
 
   QucsDoc  *Doc;
   QPtrList<Wire>      *Wires;

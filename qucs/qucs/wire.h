@@ -42,7 +42,7 @@ public:
   void setCenter(int, int, bool relative=false);
   void getCenter(int&, int&);
   bool getSelected(int, int);
-  void setName(const QString&, int delta_=0, int x_=0, int y_=0);
+  void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
 
   Node      *Port1, *Port2;
   WireLabel *Label;

@@ -1,4 +1,4 @@
--- 
+--
 -- README
 -- 
 -- Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
@@ -25,7 +25,11 @@ Description
 
 Qucs is a circuit simulator with graphical user interface.  The
 software aims to support all kinds of circuit simulation types,
-e.g. DC, AC, S-parameter and harmonic balance analysis.
+e.g. DC, AC, S-parameter and harmonic balance analysis. For
+details see homepage:
+
+http://qucs.sourceforge.net
+
 
 Requirements
 ============
