@@ -87,10 +87,11 @@ void GraphicText::setCenter(int x, int y, bool relative)
 {
   if(relative) {  cx += x;  cy += y;  }
   else {  cx = x;  cy = y;  }
-    double phi = M_PI/180.0*double(Angle);
-    double sine = sin(phi), cosine = cos(phi);
-    cx_d = double(cx)*cosine - double(cy)*sine;
-    cy_d = double(cy)*cosine + double(cx)*sine;
+
+  double phi = M_PI/180.0*double(Angle);
+  double sine = sin(phi), cosine = cos(phi);
+  cx_d = double(cx)*cosine - double(cy)*sine;
+  cy_d = double(cy)*cosine + double(cx)*sine;
 }
 
 // -----------------------------------------------------------------------
@@ -141,8 +142,8 @@ bool GraphicText::load(const QString& _s)
 
   Text.replace("\\n", "\n");
   Text.replace("\\\\", "\\");
-  QFontMetrics  metrics(Font);    // get size of text
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
+  QFontMetrics  metrics(Font);
+  QSize r = metrics.size(0, Text);    // get size of text
   x2 = r.width();
   y2 = r.height();
 
@@ -258,6 +259,7 @@ void GraphicText::mirrorY()
 // If there were changes, it returns 'true'.
 bool GraphicText::Dialog()
 {
+  QFont f(QucsSettings.font);   // to avoid wrong text width
   bool changed = false;
 
   GraphicTextDialog *d = new GraphicTextDialog();
@@ -275,6 +277,7 @@ bool GraphicText::Dialog()
     Color = d->ColorButt->paletteBackgroundColor();
     changed = true;
   }
+  f.setPointSize(d->TextSize->text().toInt());   // to avoid wrong text width
   if(Font.pointSize()  != d->TextSize->text().toInt()) {
     Font.setPointSize(d->TextSize->text().toInt());
     changed = true;
@@ -294,10 +297,10 @@ bool GraphicText::Dialog()
       changed = true;
     }
 
-  QFontMetrics  metrics(Font);    // get size of text
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Text);
-  x2 = r.width();
-  y2 = r.height();
+  QFontMetrics  m(f);
+  QSize s = m.size(0, Text);    // get size of text
+  x2 = s.width();
+  y2 = s.height();
 
   delete d;
   return changed;

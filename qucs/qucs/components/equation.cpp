@@ -23,17 +23,18 @@ Equation::Equation()
 {
   Description = QObject::tr("equation");
 
-  QFontMetrics  metrics(QucsSettings.font);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, Description);
+  QFontMetrics  metrics(QucsSettings.smallFont);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto,
+				QObject::tr("Equation"));
   int xb = r.width()  >> 1;
   int yb = r.height() >> 1;
 
   Lines.append(new Line(-xb, -yb, -xb,  yb,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-xb,  yb,  xb,  yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,  yb,  xb+3,yb,QPen(QPen::darkBlue,2)));
   Texts.append(new Text(-xb+4,  yb-4, QObject::tr("Equation")));
 
-  x1 = -xb-3; y1 = -yb-3;
-  x2 =  xb+3; y2 =  yb+3;
+  x1 = -xb-3; y1 = -yb-5;
+  x2 =  xb+7; y2 =  yb+3;
 
   tx = x1+4;
   ty = y2+4;
