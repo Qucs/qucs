@@ -1,5 +1,55 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>ComponentDialog</name>
+    <message>
+        <source>Edit Component Properties</source>
+        <translation>Komponenteneigenschaften bearbeiten</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Wert</translation>
+    </message>
+    <message>
+        <source>display</source>
+        <translation>Anzeige</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation>Durchsuchen</translation>
+    </message>
+    <message>
+        <source>display in schematic</source>
+        <translation>im Schaltplan anzeigen</translation>
+    </message>
+</context>
+<context>
+    <name>FileShowDialog</name>
+    <message>
+        <source>File: </source>
+        <translation>Datei: </translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot read file: </source>
+        <translation>FEHLER: Datei kann nicht gelesen werden: </translation>
+    </message>
+</context>
+<context>
     <name>HelpDialog</name>
     <message>
         <source>Qucs Help System</source>
@@ -1665,6 +1715,57 @@ Kurze Einführung in Qucs</translation>
     <message>
         <source>Enter the label:</source>
         <translation>Bezeichnung eingeben:</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Data Display:</source>
+        <translation>Datenvisualisierung:</translation>
+    </message>
+    <message>
+        <source>Data Set:</source>
+        <translation>Datensatz:</translation>
+    </message>
+    <message>
+        <source>open data display after simulation</source>
+        <translation>Öffnen der Datenvisualisierung nach Simulation</translation>
+    </message>
+    <message>
+        <source>show Grid</source>
+        <translation>Gitternetz anzeigen</translation>
+    </message>
+    <message>
+        <source>horizontal Grid:</source>
+        <translation>horizontales Gitternetz:</translation>
+    </message>
+    <message>
+        <source>vertical Grid:</source>
+        <translation>vertikales Gitternetz:</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Edit File Properties</source>
+        <translation>Dateieigenschaften bearbeiten</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation>Simulation</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation>Gitternetz</translation>
     </message>
 </context>
 </TS>
