@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.4 2004-03-14 17:42:47 ela Exp $
+ * $Id: parse_netlist.y,v 1.5 2004-04-19 18:42:21 ela Exp $
  *
  */
 
@@ -56,7 +56,7 @@
 
 %right '='
 %left '-' '+'
-%left '*' '/'
+%left '*' '/' '%'
 %left NEG     /* unary negation */
 %left POS     /* unary non-negation */
 %right '^'
@@ -282,6 +282,13 @@ Application:
   | Expression '/' Expression {
     $$ = new eqn::application ();
     $$->n = strdup ("/");
+    $$->nargs = 2;
+    $1->append ($3);
+    $$->args = $1;
+  }
+  | Expression '%' Expression {
+    $$ = new eqn::application ();
+    $$->n = strdup ("%");
     $$->nargs = 2;
     $1->append ($3);
     $$->args = $1;

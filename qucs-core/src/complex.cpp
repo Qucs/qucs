@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.3 2004-04-18 18:37:16 margraf Exp $
+ * $Id: complex.cpp,v 1.4 2004-04-19 18:42:21 ela Exp $
  *
  */
 
@@ -70,53 +70,49 @@ complex conj (const complex z) {
 }
 
 nr_double_t dB (const complex z) {
-  return 10*log10 (z.r*z.r + z.i*z.i);
+  return 10.0 * log10 (z.r * z.r + z.i * z.i);
 }
 
-// creates the first result of square root z
+// returns the first result of square root z
 complex sqrt (const complex z) {
-  nr_double_t phi = arg(z);
-  if(phi < 0.0) phi += 2.0*M_PI;
-  return polar(sqrt(abs(z)), phi/2.0);
+  nr_double_t phi = arg (z);
+  if (phi < 0.0) phi += 2.0 * M_PI;
+  return polar (sqrt (abs (z)), phi / 2.0);
 }
 
 complex exp (const complex z) {
-  nr_double_t mag = exp(real(z));
-  return  complex( mag*cos(imag(z)), mag*sin(imag(z)));
+  nr_double_t mag = exp (real (z));
+  return complex (mag * cos (imag (z)), mag * sin (imag (z)));
 }
 
-// creates the first result of natural logarithm z
+// returns the first result of natural logarithm z
 complex ln (const complex z) {
-  nr_double_t phi = arg(z);
-  if(phi < 0.0) phi += 2.0*M_PI;
-  return complex(log(abs(z)), phi);
+  nr_double_t phi = arg (z);
+  if (phi < 0.0) phi += 2.0 * M_PI;
+  return complex (log (abs (z)), phi);
 }
 
-// creates the first result of decimal logarithm z
+// returns the first result of decimal logarithm z
 complex log10 (const complex z) {
-  nr_double_t phi = arg(z);
-  if(phi < 0.0) phi += 2.0*M_PI;
-  return complex(log10(abs(z)), phi*log10(exp(1)));
+  nr_double_t phi = arg (z);
+  if (phi < 0.0) phi += 2.0 * M_PI;
+  return complex (log10 (abs (z)), phi * log10 (exp (1)));
 }
 
 complex pow (const complex z, nr_double_t d) {
-  return polar(pow(abs(z), d), arg(z)*d);
+  return polar (pow (abs (z), d), arg (z) * d);
 }
 
 complex pow (nr_double_t d, const complex z) {
-  return exp(z * log(d));
+  return exp (z * log (d));
 }
 
 complex pow (const complex z1, const complex z2) {
-  return exp(z2 * ln(z1));
+  return exp (z2 * ln (z1));
 }
 
 complex floor (const complex z) {
-  return complex(floor(real(z)), floor(imag(z)));
-}
-
-complex modulo (const complex z1, const complex z2) {
-  return z1 - z2*floor(z1/z2);
+  return complex (floor (real (z)), floor (imag (z)));
 }
 
 complex polar (const nr_double_t mag, const nr_double_t ang) {
@@ -235,6 +231,10 @@ complex& complex::operator/=(const complex z) {
 complex operator/(const nr_double_t z1, const complex z2) {
   nr_double_t n = norm (z2);
   return complex (z1 * z2.r / n, -z1 * z2.i / n);
+}
+
+complex operator%(const complex z1, const complex z2) {
+  return z1 - z2 * floor (z1 / z2);
 }
 
 complex& complex::operator=(const complex z) {

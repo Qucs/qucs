@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.6 2004-03-28 11:24:44 ela Exp $
+ * $Id: equation.h,v 1.7 2004-04-19 18:42:21 ela Exp $
  *
  */
 
@@ -194,7 +194,7 @@ public:
   void setEquations (node * eqn) { equations = eqn; }
   node * getEquations (void) { return equations; }
   void list (void);
-  int findUndefined (void);
+  int findUndefined (int);
   strlist * getVariables (void);
   int findDuplicate (void);
   static node * findEquation (node *, char *);
