@@ -63,7 +63,7 @@ MStee::MStee()
   Props.append(new Property("MSDispModel", "Kirschning", false,
 	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
-  Props.append(new Property("Temp", "26.85", true,
+  Props.append(new Property("Temp", "26.85", false,
 		QObject::tr("temperature in degree Celsius")));
 }
 
