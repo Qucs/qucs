@@ -44,6 +44,8 @@ MSvia::MSvia()
 		QObject::tr("substrate")));
   Props.append(new Property("D", "1 mm", true,
 		QObject::tr("diameter of round via conductor")));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature in degree Celsius")));
 }
 
 MSvia::~MSvia()

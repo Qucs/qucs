@@ -25,10 +25,11 @@
 class QComboBox;
 class QLineEdit;
 class QLabel;
-class QVGroupBox;
+class QHGroupBox;
 class QVBox;
 class QVBoxLayout;
 class QRadioButton;
+class QGridLayout;
 
 class transline;
 
@@ -126,13 +127,12 @@ private slots:
 
 private:
   void updateSelection ();
-  void createPropItem (QVBox *, TransValue *, int);
-  void createResultItem (QVBox *, TransResult *);
+  void createPropItem (QVBox **, TransValue *, int);
+  void createResultItem (QVBox **, TransResult *);
   void updateResultItem (TransResult *);
-  void createResultItems (QVBox *);
+  void createResultItems (QHGroupBox *);
   void updateResultItems ();
-  QVBox * createScrollable (QWidget *);
-  void createPropItems (QVBox *, int);
+  void createPropItems (QHGroupBox *, int);
   int getTypeIndex ();
   void updatePropItem (TransValue *);
   void setMode (int);
@@ -143,11 +143,10 @@ private:
   void closeEvent (QCloseEvent*);
 
 private:
-  QVGroupBox * screen;
   QLabel * pix;
   QComboBox * tranType;
-  QVBox * result;
+  QHGroupBox * calculated;
   int mode;
 };
-  
+
 #endif /* QUCSTRANS_H */
