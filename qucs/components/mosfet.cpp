@@ -112,6 +112,23 @@ MOSFET::MOSFET()
 		    "1 = opposite to bulk")));
   Props.append(new Property("Uo", "600.0", false,
 	QObject::tr("surface mobility in cm^2/Vs")));
+  Props.append(new Property("Rsh", "0.0", false,
+	QObject::tr("drain and source diffusion sheet resistance in "
+		    "Ohms/square")));
+  Props.append(new Property("Nrd", "1", false,
+	QObject::tr("drain squares")));
+  Props.append(new Property("Nrs", "1", false,
+	QObject::tr("source squares")));
+  Props.append(new Property("Cj", "0.0", false,
+	QObject::tr("zero-bias bulk junction bottom capacitance per square "
+		    "meter of junction area in F/m^2")));
+  Props.append(new Property("Js", "0.0", false,
+	QObject::tr("bulk junction saturation current per square "
+		    "meter of junction area in A/m^2")));
+  Props.append(new Property("Ad", "0.0", false,
+	QObject::tr("drain diffusion area in m^2")));
+  Props.append(new Property("As", "0.0", false,
+	QObject::tr("source diffusion area in m^2")));
   Props.append(new Property("Kf", "0.0", false,
 	QObject::tr("flicker noise coefficient")));
   Props.append(new Property("Af", "1.0", false,
