@@ -119,9 +119,62 @@ not needed.
 
 \addvspace{12pt}
 
-As the noise current correlation matrix contains lots of zeros, it is
-not worthy to create it in the computer memory.  Instead, during its
-creation, one can directly apply it to the $\left[v\right]^T$ vector.
+When using either Crout's or Doolittle's definition of the LU
+decomposition during the AC analysis the decomposition representation
+changes during the AC noise analysis as the matrix $A$ gets
+transposed.  This means:
+\begin{equation}
+A = L\cdot U \;\text{ with }\;
+L = 
+\begin{bmatrix}
+l_{11} & 0 & \ldots & 0\\
+l_{21} & l_{22} & \ddots & \vdots\\
+\vdots &  & \ddots & 0\\
+l_{n1} & \ldots & \ldots & l_{nn}
+\end{bmatrix}
+\;\text{ and }\;
+U =
+\begin{bmatrix}
+1 & u_{12} & \ldots & u_{1n}\\
+0 & 1 &  & \vdots\\
+\vdots & \ddots & \ddots & \vdots\\
+0 & \ldots & 0 & 1
+\end{bmatrix}
+\end{equation}
+
+becomes
+\begin{equation}
+A^T = U^T\cdot L^T \;\text{ with }\;
+L = 
+\begin{bmatrix}
+1 & 0 & \ldots & 0\\
+l_{21} & 1 & \ddots & \vdots\\
+\vdots &  & \ddots & 0\\
+l_{n1} & \ldots & \ldots & 1
+\end{bmatrix}
+\;\text{ and }\;
+U =
+\begin{bmatrix}
+u_{11} & u_{12} & \ldots & u_{1n}\\
+0 & u_{22} &  & \vdots\\
+\vdots & \ddots & \ddots & \vdots\\
+0 & \ldots & 0 & u_{nn}
+\end{bmatrix}
+\end{equation}
+
+Thus the forward substitution (as described in section
+\ref{sec:CroutFSubst}) and the backward substitution (as described in
+section \ref{sec:CroutBSubst}) must be slightly modified.
+\begin{align}
+y_{i} &= z_{i} - \sum_{k=1}^{i-1} y_{k}\cdot l_{ik} & i = 1,\ldots,n
+\end{align}
+\begin{align}
+x_{i} &= \frac{y_{i}}{u_{ii}} - \sum_{k=i+1}^{n} x_{k}\cdot \frac{u_{ik}}{u_{ii}} & i = n,\ldots,1
+\end{align}
+
+Now the diagonal elements $l_{ii}$ can be neglected in the forward
+substitution but the $u_{ii}$ elements must be considered in the
+backward substitution.
 
 \subsection{A Simple Example}
 %\addcontentsline{toc}{subsection}{A Simple Example}

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.34 2004-12-03 18:57:03 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.35 2005-02-17 16:02:35 raimi Exp $
  *
  */
 
@@ -76,7 +76,7 @@ void dcsolver::solve (void) {
   solve_pre ();
 
   // local variables for the fallback thingies
-  int retry = -1, error, fallback = 0;
+  int retry = -1, error, fallback = 0, preferred;
   int helpers[] = {
     CONV_SourceStepping,
     CONV_GMinStepping,
@@ -99,6 +99,7 @@ void dcsolver::solve (void) {
   } else if (!strcmp (helper, "SourceStepping")) {
     convHelper = CONV_SourceStepping;
   }
+  preferred = convHelper;
 
   if (!subnet->isNonLinear ()) {
     // Start the linear solver.
@@ -123,6 +124,7 @@ void dcsolver::solve (void) {
     catch_exception () {
     case EXCEPTION_NO_CONVERGENCE:
       pop_exception ();
+      if (preferred == helpers[fallback] && preferred) fallback++;
       convHelper = helpers[fallback++];
       if (convHelper != -1) {
 	logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using fallback "

@@ -1,3 +1,8 @@
+2005-02-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp: If a preferred convergence algorithm is
+	requested skip this one in the fallback list.
+
 2005-02-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp (applications): Added stability factor equations.

@@ -1,5 +1,5 @@
 %
-% This document contains the qucs netlist grammar
+% This document contains the qucs netlist grammar.
 %
 % Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
 %
@@ -34,7 +34,7 @@
 %
 % How the grammar works
 %
-The grammer is presented using a version of the Extended Backus-Naur
+The grammar is presented using a version of the Extended Backus-Naur
 Form (EBNF) which works as follows:
 
 \vskip0.5em
@@ -46,7 +46,7 @@ $B | C$&
 Produces $B$ or $C$.\\
 
 $\{ A \}$&
-Arbitrary repitition of form $A$. No repitition is allowed as well.\\
+Arbitrary repetition of form $A$. No repetition is allowed as well.\\
 
 [ $A$ ]&
 Form $A$ is optional.\\
@@ -87,12 +87,12 @@ lines.
 \begin{grammar}
 \heading{Definition}
 
-\produces{DefinitionLine}{\ntok{Identifier} \tok{:} \ntok{Identifer}
+\produces{DefinitionLine}{\ntok{Identifier} \tok{:} \ntok{Identifier}
          \rep{\ntok{Identifier}} PairList \ntok{Eol}}
 \end{grammar}
 
-Nodes of the circuit are defined by providing paramters for an
-identifier.
+Components of the circuit are defined by providing its nodes and
+parameters for a property.
 
 %
 % Subcircuits
@@ -111,14 +111,16 @@ identifier.
 \produces{DefEnd}{\tok{.} \tok{Def} \tok{:} \tok{End}}
 \end{grammar}
 
-Subcircuits are recursivly defined by blocks of definitions.
+Subcircuits are recursively defined by blocks of component
+definitions.
 
 %
 % Action
 \begin{grammar}
 \heading{Action}
 
-\produces{ActionLine}{\tok{.} \ntok{Identifier} \tok{:} PairList \ntok{Eol}}
+\produces{ActionLine}{\tok{.} \ntok{Identifier} \tok{:} \ntok{Identifier}
+   PairList \ntok{Eol}}
 \end{grammar}
 
 Defines what to simulate with the circuit.
@@ -129,7 +131,7 @@ Defines what to simulate with the circuit.
 \heading{Equation}
 
 \produces{EquationLine}{\tok{Eqn} \tok{:}
-   \ntok{Identifier} Equation \rep{Equation}}
+   \ntok{Identifier} Equation \rep{Equation}  \ntok{Eol}}
 \produces{Equation}{\ntok{Identifier} \tok{=} \tok{``} Expression \tok{``}}
 \end{grammar}
 
@@ -153,7 +155,8 @@ expressions on their right hand side.
 \produces{PropertyReal}{\ntok{Real} \opt{\ntok{Scale} \opt{\ntok{Unit}}}}
 \end{grammar}
 
-The above constructs are used to define nodes and actions.
+The above constructs are used to define properties (parameters) of
+components and actions.
 
 %
 % Mathematical Expressions
