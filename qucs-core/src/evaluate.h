@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.10 2004-10-06 14:40:05 ela Exp $
+ * $Id: evaluate.h,v 1.11 2004-10-12 20:33:58 ela Exp $
  *
  */
 
@@ -191,6 +191,14 @@ public:
   static constant * arccot_c (constant *);
   static constant * arccot_v (constant *);
 
+  static constant * sec_d (constant *);
+  static constant * sec_c (constant *);
+  static constant * sec_v (constant *);
+
+  static constant * cosec_d (constant *);
+  static constant * cosec_c (constant *);
+  static constant * cosec_v (constant *);
+
   static constant * sinh_d (constant *);
   static constant * sinh_c (constant *);
   static constant * sinh_v (constant *);
@@ -222,6 +230,14 @@ public:
   static constant * coth_d (constant *);
   static constant * coth_c (constant *);
   static constant * coth_v (constant *);
+
+  static constant * sech_d (constant *);
+  static constant * sech_c (constant *);
+  static constant * sech_v (constant *);
+
+  static constant * cosech_d (constant *);
+  static constant * cosech_c (constant *);
+  static constant * cosech_v (constant *);
 
   static constant * ztor_d (constant *);
   static constant * ztor_c (constant *);

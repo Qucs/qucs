@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.20 2004-10-12 18:13:09 ela Exp $
+ * $Id: trsolver.cpp,v 1.21 2004-10-12 20:33:58 ela Exp $
  *
  */
 
@@ -174,10 +174,10 @@ void trsolver::solve (void) {
 	pop_exception ();
 
 	// Reduce step-size if failed to converge.
-	current -= delta;
+	if (current > 0) current -= delta;
 	delta /= 2;
 	if (delta < deltaMin) delta = deltaMin;
-	current += delta;
+	if (current > 0) current += delta;
 
 	// Update statistics.
 	statRejected++;
