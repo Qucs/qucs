@@ -218,7 +218,8 @@ With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
 \subsection*{Resistor}
 \addcontentsline{toc}{subsection}{Resistor}
 
-The scattering parameters of an ideal, ohmic resistor with resistance $R$ writes as follows.
+The scattering parameters of an ideal, ohmic resistor with resistance
+$R$ writes as follows.
 
 \begin{equation}
 S_{11} = S_{22} = \frac{R}{2\cdot Z_0+R} \\
@@ -230,7 +231,8 @@ S_{12} = S_{21} = 1-S_{11} = \frac{2\cdot Z_0}{2\cdot Z_0+R}
 \subsection*{Capacitor}
 \addcontentsline{toc}{subsection}{Capacitor}
 
-The scattering parameters of an ideal capacitor with capacitance $C$ writes as follows.
+The scattering parameters of an ideal capacitor with capacitance $C$
+writes as follows.
 
 \begin{equation}
 S_{11} = S_{22} = \frac{1}{2\cdot Z_0\cdot j\omega C+1} \\
@@ -242,7 +244,8 @@ S_{12} = S_{21} = 1-S_{11}
 \subsection*{Inductor}
 \addcontentsline{toc}{subsection}{Inductor}
 
-The scattering parameters of an ideal inductor with inductance $L$ writes as follows.
+The scattering parameters of an ideal inductor with inductance $L$
+writes as follows.
 
 \begin{equation}
 S_{11} = S_{22} = \frac{j\omega L}{2\cdot Z_0 + j\omega L} \\
@@ -254,8 +257,8 @@ S_{12} = S_{21} = 1-S_{11}
 \subsection*{DC Block}
 \addcontentsline{toc}{subsection}{DC Block}
 
-A DC block is a capacitor with an infinite capacitance. The scattering parameters,
-therefore, writes as follows.
+A DC block is a capacitor with an infinite capacitance.  The
+scattering parameters, therefore, writes as follows.
 
 \begin{equation}
 \begin{pmatrix}
@@ -271,8 +274,8 @@ S
 \subsection*{DC Feed}
 \addcontentsline{toc}{subsection}{DC Feed}
 
-A DC feed is an inductor with an infinite inductance. The scattering parameters,
-therefore, writes as follows.
+A DC feed is an inductor with an infinite inductance.  The scattering
+parameters, therefore, writes as follows.
 
 \begin{equation}
 \begin{pmatrix}
@@ -288,8 +291,9 @@ S
 \subsection*{Bias T}
 \addcontentsline{toc}{subsection}{Bias T}
 
-A bias T is a combination of a dc block and a dc feed (fig. \ref{fig:biast}).
-The scattering parameters, therefore, writes as follows.
+A bias T is a combination of a DC block and a DC feed
+(fig. \ref{fig:biast}).  The scattering parameters, therefore, writes
+as follows.
 
 \begin{equation}
 \begin{pmatrix}
@@ -315,9 +319,9 @@ S
 \subsection*{Transformer}
 \addcontentsline{toc}{subsection}{Transformer}
 
-Using the port numbers depicted in fig. \ref{fig:trafo}, the scattering
-parameters of an ideal transformer with voltage transformation ratio $T$
-(number of turns) writes as follows.
+Using the port numbers depicted in fig. \ref{fig:trafo}, the
+scattering parameters of an ideal transformer with voltage
+transformation ratio $T$ (number of turns) writes as follows.
 
 \begin{equation}
 S_{14} = S_{22} = S_{33} = S_{41} = \frac{1}{T^2+1}
@@ -341,9 +345,10 @@ S_{11} = S_{23} = S_{32} = S_{44} = T\cdot S_{12}
 \subsection*{Symmetrical transformer}
 \addcontentsline{toc}{subsection}{Symmetrical transformer}
 
-Using the port numbers depicted in fig. \ref{fig:symtrafo}, the scattering
-parameters of an ideal, symmetrical transformer with voltage transformation
-ratio (number of turns) $T_1$ and $T_2$, respectively, writes as follows.
+Using the port numbers depicted in fig. \ref{fig:symtrafo}, the
+scattering parameters of an ideal, symmetrical transformer with
+voltage transformation ratio (number of turns) $T_1$ and $T_2$,
+respectively, writes as follows.
 
 \begin{equation}
 denom = T_1^2+T_2^2+T_1^2\cdot T_2^2
@@ -378,8 +383,8 @@ S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
 \subsection*{Attenuator}
 \addcontentsline{toc}{subsection}{Attenuator}
 
-The scattering parameters of an ideal attenuator with attenuation $L$ (loss) in
-reference to the impedance $Z_{ref}$ writes as follows.
+The scattering parameters of an ideal attenuator with attenuation $L$
+(loss) in reference to the impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
 r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
@@ -394,11 +399,11 @@ S_{12} = S_{21} = \frac{L\cdot(1-r^2)}{L^2-r^2}
 \subsection*{Isolator}
 \addcontentsline{toc}{subsection}{Isolator}
 
-An isolator is a one-way two-port, transporting incomming waves lossless from
-the input (port 1) to the output (port 2), but consuming all waves flowing
-into the output. With the reference impedance of the input $Z_1$ and the one
-of the output $Z_2$, the scattering parameters of an ideal isolator writes as
-follows.
+An isolator is a one-way two-port, transporting incoming waves
+lossless from the input (port 1) to the output (port 2), but consuming
+all waves flowing into the output. With the reference impedance of the
+input $Z_1$ and the one of the output $Z_2$, the scattering parameters
+of an ideal isolator writes as follows.
 
 \begin{equation}
 S_{11} = \frac{Z_1-Z_0}{Z_1+Z_0}
@@ -416,11 +421,11 @@ S_{21} = \sqrt{1-(S_{11})^2}\cdot\sqrt{1-(S_{22})^2}
 \subsection*{Circulator}
 \addcontentsline{toc}{subsection}{Circulator}
 
-A circulator is a 3-port device, transporting incomming waves lossless from port 1
-to port 2, from port 2 to port 3 and from port 3 to port 1. In all other
-directions, there is no energy flow. With the reference impedances $Z_1$, $Z_2$ and
-$Z_3$ for the ports 1, 2 and 3 the scattering matrix of an ideal circulator writes
-as follows.
+A circulator is a 3-port device, transporting incoming waves lossless
+from port 1 to port 2, from port 2 to port 3 and from port 3 to port
+1.  In all other directions, there is no energy flow.  With the
+reference impedances $Z_1$, $Z_2$ and $Z_3$ for the ports 1, 2 and 3
+the scattering matrix of an ideal circulator writes as follows.
 
 \begin{equation}
 denum = 1-r_1\cdot r_2\cdot r_3
@@ -454,8 +459,8 @@ S_{32} = \sqrt{\frac{Z_2}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_2+Z_0}\cdot\frac{1-r_3^2}{d
 \subsection*{Phase shifter}
 \addcontentsline{toc}{subsection}{Phase shifter}
 
-The scattering parameters of an ideal phase shifter with phase shift $\phi$ and
-reference impedance $Z_{ref}$ writes as follows.
+The scattering parameters of an ideal phase shifter with phase shift
+$\phi$ and reference impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
 r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
@@ -471,9 +476,9 @@ S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp(j\cdot\phi)}{1-r^2\cdot\exp(j\cdot 2\ph
 \subsection*{Gyrator}
 \addcontentsline{toc}{subsection}{Gyrator}
 
-A gyrator is an impedance inverter. Thus, for example, it converts a capacitance into
-an inductance and vice versa. The scattering matrix of an ideal gyrator with the
-ratio $R$ writes as follows.
+A gyrator is an impedance inverter.  Thus, for example, it converts a
+capacitance into an inductance and vice versa.  The scattering matrix
+of an ideal gyrator with the ratio $R$ writes as follows.
 
 \begin{equation}
 r = \frac{R}{Z_0} = \frac{1}{G\cdot Z_0}
@@ -491,15 +496,17 @@ S_{12} = -S_{13} = -S_{21} = S_{24} = S_{31} = -S_{34} = -S_{42} = S_{43} = \fra
 \subsection*{Voltage and current sources}
 \addcontentsline{toc}{subsection}{Voltage and current sources}
 
-All voltage sources (AC and DC) are short circuits and therefore their S-parameter
-matrix equals the one of the DC block. All current sources are open circuits and
-therefore their S-parameter matrix equals the one of the DC feed.
+All voltage sources (AC and DC) are short circuits and therefore their
+S-parameter matrix equals the one of the DC block.  All current
+sources are open circuits and therefore their S-parameter matrix
+equals the one of the DC feed.
 
 \subsection*{Controlled voltage and current sources}
 \addcontentsline{toc}{subsection}{Controlled voltage and current sources}
 
-The scattering matrix of the voltage controlled current source depicted in fig.
-\ref{fig:xCCS} (left) writes as follows ($\tau$ is time delay).
+The scattering matrix of the voltage controlled current source
+depicted in fig.  \ref{fig:xCCS} (left) writes as follows ($\tau$ is
+time delay).
 
 \begin{equation}
 S_{11} = S_{22} = S_{33} = S_{44} = 1
@@ -523,8 +530,9 @@ S_{24} = S_{31} = 2\cdot G\cdot \exp(-j\omega\tau)
 \end{figure}
 \FloatBarrier
 
-The scattering matrix of the current controlled current source depicted in fig.
-\ref{fig:xCCS} (right) writes as follows ($\tau$ is time delay).
+The scattering matrix of the current controlled current source
+depicted in fig.  \ref{fig:xCCS} (right) writes as follows ($\tau$ is
+time delay).
 
 \begin{equation}
 S_{14} = S_{22} = S_{33} = S_{41} = 1
@@ -539,8 +547,9 @@ S_{21} = S_{34} = G\cdot \exp(j\pi-j\omega\tau)
 S_{24} = S_{31} = G\cdot \exp(-j\omega\tau)
 \end{equation}
 
-The scattering matrix of the voltage controlled voltage source depicted in fig.
-\ref{fig:xCVS} (left) writes as follows ($\tau$ is time delay).
+The scattering matrix of the voltage controlled voltage source
+depicted in fig.  \ref{fig:xCVS} (left) writes as follows ($\tau$ is
+time delay).
 
 \begin{equation}
 S_{11} = S_{23} = S_{32} = S_{44} = 1
@@ -564,8 +573,9 @@ S_{24} = S_{31} = G\cdot \exp(j\pi-j\omega\tau)
 \end{figure}
 \FloatBarrier
 
-The scattering matrix of the current controlled voltage source depicted in fig.
-\ref{fig:xCVS} (right) writes as follows ($\tau$ is time delay).
+The scattering matrix of the current controlled voltage source
+depicted in fig.  \ref{fig:xCVS} (right) writes as follows ($\tau$ is
+time delay).
 
 \begin{equation}
 S_{14} = S_{23} = S_{32} = S_{41} = 1
@@ -583,8 +593,8 @@ S_{24} = S_{31} = \frac{G}{2}\cdot \exp(j\pi-j\omega\tau)
 \subsection*{Transmission Line}
 \addcontentsline{toc}{subsection}{Transmission Line}
 
-The scattering matrix of an ideal, lossless transmission line with impedance $Z$
-and electrical length $L$ writes as follows.
+The scattering matrix of an ideal, lossless transmission line with
+impedance $Z$ and electrical length $L$ writes as follows.
 
 \begin{equation}
 r = \frac{Z-Z_0}{Z+Z_0}
@@ -606,12 +616,15 @@ With $c$=299 792 458 m/s being the vacuum light velocity.
 \section*{Definition}
 \addcontentsline{toc}{section}{Definition}
 
-In microwave circuits described by scattering parameters, it is advantageous to regard noise as
-noise waves. The noise characteristics of an n-port is then defined completely by one outgoing
-noise wave $\underline{b}_{noise,n}$ at each port (see 2-port example in fig. \ref{fig:Sparam})
-and the correlation between these noise sources.
-Therefore, mathematically, you can characterize a noisy n-port by its $n\times n$ scattering
-matrix $(\underline{S})$ and its $n\times n$ noise wave correlation matrix $(\underline{C})$.
+In microwave circuits described by scattering parameters, it is
+advantageous to regard noise as noise waves.  The noise
+characteristics of an n-port is then defined completely by one
+outgoing noise wave $\underline{b}_{noise,n}$ at each port (see 2-port
+example in fig. \ref{fig:Sparam}) and the correlation between these
+noise sources.  Therefore, mathematically, you can characterize a
+noisy n-port by its $n\times n$ scattering matrix $(\underline{S})$
+and its $n\times n$ noise wave correlation matrix $(\underline{C})$.
+
 \begin{equation}
 \begin{split}
 (\underline{C}) =
@@ -636,16 +649,21 @@ matrix $(\underline{S})$ and its $n\times n$ noise wave correlation matrix $(\un
 \end{pmatrix}
 \end{split}
 \end{equation}
-Where $\overline{x}$ is the time average of $x$ and $\underline{x}^*$ is the conjugate complex
-of $\underline{x}$. As can be seen, the following equations hold:
+
+Where $\overline{x}$ is the time average of $x$ and $\underline{x}^*$
+is the conjugate complex of $\underline{x}$.  As can be seen, the
+following equations hold:
+
 \begin{equation}
 \text{Im}(\underline{c}_{nn}) = \text{Im}(\overline{|b_{noise,n}|^2}) = 0
 \end{equation}
 \begin{equation}
 \underline{c}_{nm} = \underline{c}_{mn}^*
 \end{equation}
-Where $\text{Im}(\underline{x})$ is the imaginary part of $\underline{x}$ and $|\underline{x}|$ is
-the magnitude of $\underline{x}$.
+
+Where $\text{Im}(\underline{x})$ is the imaginary part of
+$\underline{x}$ and $|\underline{x}|$ is the magnitude of
+$\underline{x}$.
 
 \begin{figure}[ht]
 \begin{center}
@@ -660,8 +678,9 @@ the magnitude of $\underline{x}$.
 \section*{Noise Parameters}
 \addcontentsline{toc}{section}{Noise Parameters}
 
-Having the noise wave correlation matrix, one can easily compute the noise parameters.
-The following equations calculate them with regard to port 1 (input) and port 2 (output).
+Having the noise wave correlation matrix, one can easily compute the
+noise parameters.  The following equations calculate them with regard
+to port 1 (input) and port 2 (output).
 \\ \\Noise figure:
 \begin{equation}
 F = 1 + \frac{\underline{c}_{22}}{k\cdot T_0\cdot |\underline{S}_{21}|^2}
@@ -669,7 +688,7 @@ F = 1 + \frac{\underline{c}_{22}}{k\cdot T_0\cdot |\underline{S}_{21}|^2}
 \begin{equation}
 NF\,[\text{dB}]\, = 10\cdot\lg F
 \end{equation}
-\\ \\Optimal source reflexion coefficient:
+\\ \\Optimal source reflection coefficient:
 \begin{equation}
 \Gamma_{opt} = \frac{\eta_2}{2}\cdot\left( 1-\sqrt{1-\frac{4}{|\eta_2|^2}} \right)
 \end{equation}
@@ -708,11 +727,14 @@ With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
 \section*{Noise Wave Correlation Matrix in CAE}
 \addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
 
-We have the noise wave correlation ( $(\underline{C})$, $(\underline{D})$ ) and the scattering
-matrix ( $(\underline{S})$, $(\underline{T})$ ) of two arbitrary circuits and
-want to know the correlation matrix of the special circuit, that results from connecting port $m$
-of circuit 1 with port $k$ of circuit 2 (fig. \ref{fig:nconnect}). The following equations
-perform this operation:
+We have the noise wave correlation ( $(\underline{C})$,
+$(\underline{D})$ ) and the scattering matrix ( $(\underline{S})$,
+$(\underline{T})$ ) of two arbitrary circuits and want to know the
+correlation matrix of the special circuit, that results from
+connecting port $m$ of circuit 1 with port $k$ of circuit 2
+(fig. \ref{fig:nconnect}).  The following equations perform this
+operation:
+
 \begin{equation}
 \underline{c}_{nn}' = \underline{c}_{nn} + \left( \underline{d}_{kk} +
    \underline{c}_{mm}\cdot|\underline{T}_{kk}|^2 \right) \cdot
@@ -745,16 +767,16 @@ perform this operation:
 \section*{Noise Wave Correlation Matrix of Components}
 \addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
 
-Many components do not produce any noise. Every element of their noise correlation matrix
-therefore equals exactly zero. Examples are capacitors, inductors, transformers, voltage and
-current sources.
-
+Many components do not produce any noise. Every element of their noise
+correlation matrix therefore equals exactly zero. Examples are
+capacitors, inductors, transformers, voltage and current sources.
 
 \subsection*{Resistor}
 \addcontentsline{toc}{subsection}{Resistor}
 
-Being on temperature $T$, the noise wave correlation matrix of an ideal, ohmic resistor with
-resistance $R$ writes as follows.
+Being on temperature $T$, the noise wave correlation matrix of an
+ideal, ohmic resistor with resistance $R$ writes as follows.
+
 \begin{equation}
 (\underline{C}) = k\cdot T\cdot\frac{4\cdot R\cdot Z_0}{(2\cdot Z_0+R)^2}\cdot
 \begin{pmatrix}
@@ -763,5 +785,168 @@ resistance $R$ writes as follows.
 \end{pmatrix}
 \end{equation}
 
+\chapter*{DC Analysis}
+\addcontentsline{toc}{chapter}{DC Analysis}
+
+\section*{Extensions to the MNA}
+\addcontentsline{toc}{section}{Extensions to the MNA}
+
+\subsection*{Voltage controlled current source}
+\addcontentsline{toc}{subsection}{Voltage controlled current source}
+
+The voltage-dependent current source (VCCS), as shown in fig.
+\ref{fig:xCCS}, is designated by the following equation which
+introduces one more unknown in the MNA matrix.
+
+\begin{equation}
+I_{out} = G\cdot\left(V_{1} - V_{2}\right)
+\quad \rightarrow \quad
+V_{1} - V_{4} - \frac{1}{G}\cdot I_{out} = 0
+\label{eq:vccs}
+\end{equation}
+
+The new unknown variable $I_{out}$ must be considered by the four
+remaining simple equations.
+
+\begin{equation}
+I_{1} = 0 \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = 0
+\end{equation}
+
+And in matrix representation this is:
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.& 0\\
+.&.&.&.& 1\\
+.&.&.&.& -1\\
+.&.&.&.& 0\\
+1 & 0 & 0 & -1 & -\frac{1}{G}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{out}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+\end{pmatrix}
+\end{equation}
+
+As you can see the last row which has been added by the VCCS
+represents the designating equation (\ref{eq:vccs}).  The additional
+right hand column in the matrix keeps the system consistent.
+
+\subsection*{Voltage controlled voltage source}
+\addcontentsline{toc}{subsection}{Voltage controlled voltage source}
+
+The voltage-dependent voltage source (VCVS), as shown in fig.
+\ref{fig:xCVS}, is designated by the following equation which
+introduces one more unknown in the MNA matrix.
+
+\begin{equation}
+V_{2} - V_{3} = G\cdot \left(V_{1} - V_{4}\right)
+\quad \rightarrow \quad
+V_{1}\cdot G - V_{2} + V_{3} - V_{4}\cdot G = 0
+\label{eq:vcvs}
+\end{equation}
+
+The new unknown variable $I_{out}$ must be considered by the four
+remaining simple equations.
+
+\begin{equation}
+I_{1} = 0 \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = 0
+\end{equation}
+
+And in matrix representation this is:
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.& 0\\
+.&.&.&.& -1\\
+.&.&.&.& 1\\
+.&.&.&.& 0\\
+G & -1 & 1 & -G & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{out}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+\end{pmatrix}
+\end{equation}
+
+\subsection*{Current controlled current source}
+\addcontentsline{toc}{subsection}{Current controlled current source}
+
+The current-dependent current source (CCCS), as shown in fig.
+\ref{fig:xCCS}, is designated by the following equation which
+introduces one more unknown in the MNA matrix.
+
+\begin{equation}
+V_{1} - V_{4} = 0
+\label{eq:cccs}
+\end{equation}
+
+The new unknown variable $I_{out}$ must be considered by the four
+remaining simple equations.
+
+\begin{equation}
+I_{1} = -\frac{1}{G}\cdot I_{out} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = \frac{1}{G}\cdot I_{out}
+\end{equation}
+
+And in matrix representation this is:
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.& -\frac{1}{G}\\
+.&.&.&.& 1\\
+.&.&.&.& -1\\
+.&.&.&.& \frac{1}{G}\\
+1 & 0 & 0 & -1 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{out}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+\end{pmatrix}
+\end{equation}
+
+\subsection*{Current controlled voltage source}
+\addcontentsline{toc}{subsection}{Current controlled voltage source}
+
+\subsection*{Operational amplifier}
+\addcontentsline{toc}{subsection}{Operational amplifier}
+
+\subsection*{Transformator}
+\addcontentsline{toc}{subsection}{Transformator}
+
+\subsection*{Gyrator}
+\addcontentsline{toc}{subsection}{Gyrator}
 
 \end{document}
