@@ -1,3 +1,32 @@
+2004-07-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* circuit.cpp: New functions getMatrixS(), setMatrixS(),
+	getMatrixN() and setMatrixS() for convenience when playing
+	with S-parameters and noise correlation matrices.
+
+	* check_netlist.cpp (definition_available): Added optional
+	'Temp' property to S-parameter file component.
+
+	* vector.cpp: New assignment constructor for convenience.
+
+	* vector.h (class vector): Added additional '+' and '*'
+	operators for convenience and changed all 'friend' return
+	values to be 'vector&' instead of 'vector*'.  Changed all
+	callers.
+
+	* vector.cpp: Two new constructors create an unnamed or named
+	instance with a given initial size.
+
+	* spsolver.cpp: Running calcNoise() for each circuit if
+	requested by the noise analysis.
+
+	* circuit.h (class circuit): Added extra virtual function
+	calcNoise() for noise analysis.
+
+	* check_touchstone.cpp: Fixed re-normalizing functionality
+	of of Y-, Z-, H- and G-parameters and those for the noise
+	parameters as well.
+
 2004-07-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_touchstone.cpp: Support for noise parameters in

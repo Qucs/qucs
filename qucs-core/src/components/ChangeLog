@@ -1,3 +1,17 @@
+2004-07-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Added noise calculation function.
+
+	* tline.cpp: Added DC model being an ideal short.
+
+	* spfile.cpp: Adding an additional reference port using
+	S-parameter matrix transformations.
+
+	* resistor.cpp: Moved noise calculation to calcNoise().
+
+	* attenuator.cpp, isolator.cpp: Added noise calculation
+	function.
+
 2004-07-24  Stefan Jahn  <stefan@lkcc.org>
 
 	* inoise.h (class inoise): New component: current noise source.

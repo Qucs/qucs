@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.3 2004-07-11 10:22:13 ela Exp $
+ * $Id: diode.cpp,v 1.4 2004-07-26 06:30:29 ela Exp $
  *
  */
 
@@ -58,6 +58,14 @@ void diode::calcSP (nr_double_t frequency) {
   setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
   setS (NODE_C, NODE_A, y / (1.0 + y));
   setS (NODE_A, NODE_C, y / (1.0 + y));
+}
+
+void diode::calcNoise (nr_double_t) {
+  nr_double_t Id = getOperatingPoint ("Id");
+  nr_double_t Is = getPropertyDouble ("Is");
+  nr_double_t f  = 2 * Q * Is * (Id + 2 * Is) * z0 / kB / T0;
+  setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
+  setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
 }
 
 void diode::initDC (dcsolver * solver) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.7 2004-04-10 11:29:04 margraf Exp $
+ * $Id: attenuator.cpp,v 1.8 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "constants.h"
 #include "component_id.h"
 #include "attenuator.h"
 
@@ -45,13 +46,24 @@ attenuator::attenuator () : circuit (2) {
 void attenuator::calcSP (nr_double_t) {
   nr_double_t a = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
-  nr_double_t r = (z0 - z) / (z0 + z);
+  nr_double_t r = (z - z0) / (z + z0);
   nr_double_t s11 = r * (1 - a) / (a - r * r);
-  nr_double_t s21 = sqrt(a) * (1 - r * r) / (a - r * r);
+  nr_double_t s21 = sqrt (a) * (1 - r * r) / (a - r * r);
   setS (1, 1, s11);
   setS (2, 2, s11);
   setS (1, 2, s21);
   setS (2, 1, s21);
+}
+
+void attenuator::calcNoise (nr_double_t) {
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t z = getPropertyDouble ("Zref");
+  nr_double_t r = (z - z0) / (z + z0);
+  nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r);
+  setN (1, 1, -f * (r * r + l));
+  setN (2, 2, -f * (r * r + l));
+  setN (1, 2, +f * 2 * r * sqrt (l));
+  setN (2, 1, +f * 2 * r * sqrt (l));
 }
 
 void attenuator::calcDC (void) {

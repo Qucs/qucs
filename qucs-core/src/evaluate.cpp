@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.12 2004-07-05 21:41:46 ela Exp $
+ * $Id: evaluate.cpp,v 1.13 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "object.h"
 #include "vector.h"
 #include "matrix.h"
+#include "components/constants.h"
 #include "equation.h"
 #include "evaluate.h"
 
@@ -107,7 +108,7 @@ constant * evaluate::plus_v_d (constant * args) {
   vector *    v1 = V (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v1 + d2);
+  res->v = new vector (*v1 + d2);
   return res;
 }
 
@@ -115,7 +116,7 @@ constant * evaluate::plus_d_v (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   vector * v2    = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v2 + d1);
+  res->v = new vector (d1 + *v2);
   return res;
 }
 
@@ -123,7 +124,7 @@ constant * evaluate::plus_v_c (constant * args) {
   vector *    v1 = V (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v1 + *c2);
+  res->v = new vector (*v1 + *c2);
   return res;
 }
 
@@ -131,7 +132,7 @@ constant * evaluate::plus_c_v (constant * args) {
   complex *   c1 = C (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v2 + *c1);
+  res->v = new vector (*v2 + *c1);
   return res;
 }
 
@@ -139,7 +140,7 @@ constant * evaluate::plus_v_v (constant * args) {
   vector * v1 = V (args->getResult (0));
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v1 + *v2);
+  res->v = new vector (*v1 + *v2);
   return res;
 }
 
@@ -210,7 +211,7 @@ constant * evaluate::minus_v_d (constant * args) {
   vector *    v1 = V (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v1 - d2);
+  res->v = new vector (*v1 - d2);
   return res;
 }
 
@@ -218,7 +219,7 @@ constant * evaluate::minus_d_v (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   vector * v2    = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (d1 - *v2);
+  res->v = new vector (d1 - *v2);
   return res;
 }
 
@@ -226,7 +227,7 @@ constant * evaluate::minus_v_c (constant * args) {
   vector *    v1 = V (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v1 - *c2);
+  res->v = new vector (*v1 - *c2);
   return res;
 }
 
@@ -234,7 +235,7 @@ constant * evaluate::minus_c_v (constant * args) {
   complex *   c1 = C (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*c1 - *v2);
+  res->v = new vector (*c1 - *v2);
   return res;
 }
 
@@ -242,7 +243,7 @@ constant * evaluate::minus_v_v (constant * args) {
   vector * v1 = V (args->getResult (0));
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (*v1 - *v2);
+  res->v = new vector (*v1 - *v2);
   return res;
 }
 
@@ -283,7 +284,7 @@ constant * evaluate::times_v_d (constant * args) {
   vector *    v1 = V (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) * d2);
+  res->v = new vector (*v1 * d2);
   return res;
 }
 
@@ -291,7 +292,7 @@ constant * evaluate::times_d_v (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v2) * d1);
+  res->v = new vector (d1 * *v2);
   return res;
 }
 
@@ -299,7 +300,7 @@ constant * evaluate::times_v_c (constant * args) {
   vector *    v1 = V (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) * (*c2));
+  res->v = new vector (*v1 * *c2);
   return res;
 }
 
@@ -307,7 +308,7 @@ constant * evaluate::times_c_v (constant * args) {
   complex *   c1 = C (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v2) * (*c1));
+  res->v = new vector (*c1 * *v2);
   return res;
 }
 
@@ -315,7 +316,7 @@ constant * evaluate::times_v_v (constant * args) {
   vector * v1 = V (args->getResult (0));
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) * (*v2));
+  res->v = new vector (*v1 * *v2);
   return res;
 }
 
@@ -356,7 +357,7 @@ constant * evaluate::over_v_d (constant * args) {
   vector *    v1 = V (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) / d2);
+  res->v = new vector (*v1 / d2);
   return res;
 }
 
@@ -364,7 +365,7 @@ constant * evaluate::over_d_v (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   vector * v2    = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = (d1 / (*v2));
+  res->v = new vector (d1 / *v2);
   return res;
 }
 
@@ -372,7 +373,7 @@ constant * evaluate::over_v_c (constant * args) {
   vector *    v1 = V (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) / (*c2));
+  res->v = new vector (*v1 / *c2);
   return res;
 }
 
@@ -380,7 +381,7 @@ constant * evaluate::over_c_v (constant * args) {
   complex *   c1 = C (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*c1) / (*v2));
+  res->v = new vector (*c1 / *v2);
   return res;
 }
 
@@ -388,7 +389,7 @@ constant * evaluate::over_v_v (constant * args) {
   vector * v1 = V (args->getResult (0));
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) / (*v2));
+  res->v = new vector (*v1 / *v2);
   return res;
 }
 
@@ -429,7 +430,7 @@ constant * evaluate::modulo_v_d (constant * args) {
   vector *    v1 = V (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = *v1 % d2;
+  res->v = new vector (*v1 % d2);
   return res;
 }
 
@@ -437,7 +438,7 @@ constant * evaluate::modulo_d_v (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   vector * v2    = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = d1 % *v2;
+  res->v = new vector (d1 % *v2);
   return res;
 }
 
@@ -445,7 +446,7 @@ constant * evaluate::modulo_v_c (constant * args) {
   vector *    v1 = V (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*v1) % (*c2));
+  res->v = new vector (*v1 % *c2);
   return res;
 }
 
@@ -453,7 +454,7 @@ constant * evaluate::modulo_c_v (constant * args) {
   complex *   c1 = C (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ((*c1) % (*v2));
+  res->v = new vector (*c1 % *v2);
   return res;
 }
 
@@ -461,7 +462,7 @@ constant * evaluate::modulo_v_v (constant * args) {
   vector * v1 = V (args->getResult (0));
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = *v1 % *v2;
+  res->v = new vector (*v1 % *v2);
   return res;
 }
 
@@ -502,7 +503,7 @@ constant * evaluate::power_v_d (constant * args) {
   vector *    v1 = V (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = pow (*v1, d2);
+  res->v = new vector (pow (*v1, d2));
   return res;
 }
 
@@ -510,7 +511,7 @@ constant * evaluate::power_d_v (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   vector * v2    = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = pow (d1, *v2);
+  res->v = new vector (pow (d1, *v2));
   return res;
 }
 
@@ -518,7 +519,7 @@ constant * evaluate::power_v_c (constant * args) {
   vector *    v1 = V (args->getResult (0));
   complex *   c2 = C (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = pow (*v1, *c2);
+  res->v = new vector (pow (*v1, *c2));
   return res;
 }
 
@@ -526,7 +527,7 @@ constant * evaluate::power_c_v (constant * args) {
   complex *   c1 = C (args->getResult (0));
   vector *    v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = pow (*c1, *v2);
+  res->v = new vector (pow (*c1, *v2));
   return res;
 }
 
@@ -534,7 +535,7 @@ constant * evaluate::power_v_v (constant * args) {
   vector * v1 = V (args->getResult (0));
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  res->v = pow (*v1, *v2);
+  res->v = new vector (pow (*v1, *v2));
   return res;
 }
 
@@ -556,7 +557,7 @@ constant * evaluate::real_c (constant * args) {
 constant * evaluate::real_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = real (*v1);
+  res->v = new vector (real (*v1));
   return res;
 }
 
@@ -577,7 +578,7 @@ constant * evaluate::imag_c (constant * args) {
 constant * evaluate::imag_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = imag (*v1);
+  res->v = new vector (imag (*v1));
   return res;
 }
 
@@ -599,7 +600,7 @@ constant * evaluate::abs_c (constant * args) {
 constant * evaluate::abs_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = abs (*v1);
+  res->v = new vector (abs (*v1));
   return res;
 }
 
@@ -621,7 +622,7 @@ constant * evaluate::conj_c (constant * args) {
 constant * evaluate::conj_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = conj (*v1);
+  res->v = new vector (conj (*v1));
   return res;
 }
 
@@ -643,7 +644,7 @@ constant * evaluate::norm_c (constant * args) {
 constant * evaluate::norm_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = norm (*v1);
+  res->v = new vector (norm (*v1));
   return res;
 }
 
@@ -665,8 +666,7 @@ constant * evaluate::phase_c (constant * args) {
 constant * evaluate::phase_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arg (*v1);
-  *res->v *= 180.0 / M_PI;
+  res->v = new vector (deg (arg (*v1)));
   return res;
 }
 
@@ -688,7 +688,7 @@ constant * evaluate::arg_c (constant * args) {
 constant * evaluate::arg_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arg (*v1);
+  res->v = new vector (arg (*v1));
   return res;
 }
 
@@ -710,7 +710,7 @@ constant * evaluate::dB_c (constant * args) {
 constant * evaluate::dB_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = dB (*v1);
+  res->v = new vector (dB (*v1));
   return res;
 }
 
@@ -737,7 +737,7 @@ constant * evaluate::sqrt_c (constant * args) {
 constant * evaluate::sqrt_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = sqrt (*v1);
+  res->v = new vector (sqrt (*v1));
   return res;
 }
 
@@ -759,7 +759,7 @@ constant * evaluate::exp_c (constant * args) {
 constant * evaluate::exp_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = exp (*v1);
+  res->v = new vector (exp (*v1));
   return res;
 }
 
@@ -782,7 +782,7 @@ constant * evaluate::ln_c (constant * args) {
 constant * evaluate::ln_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ln (*v1);
+  res->v = new vector (ln (*v1));
   return res;
 }
 
@@ -805,7 +805,7 @@ constant * evaluate::log10_c (constant * args) {
 constant * evaluate::log10_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = log10 (*v1);
+  res->v = new vector (log10 (*v1));
   return res;
 }
 
@@ -828,7 +828,7 @@ constant * evaluate::log2_c (constant * args) {
 constant * evaluate::log2_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = log2 (*v1);
+  res->v = new vector (log2 (*v1));
   return res;
 }
 
@@ -850,7 +850,7 @@ constant * evaluate::sin_c (constant * args) {
 constant * evaluate::sin_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = sin (*v1);
+  res->v = new vector (sin (*v1));
   return res;
 }
 
@@ -872,7 +872,7 @@ constant * evaluate::arcsin_c (constant * args) {
 constant * evaluate::arcsin_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arcsin (*v1);
+  res->v = new vector (arcsin (*v1));
   return res;
 }
 
@@ -894,7 +894,7 @@ constant * evaluate::cos_c (constant * args) {
 constant * evaluate::cos_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = cos (*v1);
+  res->v = new vector (cos (*v1));
   return res;
 }
 
@@ -916,7 +916,7 @@ constant * evaluate::arccos_c (constant * args) {
 constant * evaluate::arccos_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arccos (*v1);
+  res->v = new vector (arccos (*v1));
   return res;
 }
 
@@ -938,7 +938,7 @@ constant * evaluate::tan_c (constant * args) {
 constant * evaluate::tan_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = tan (*v1);
+  res->v = new vector (tan (*v1));
   return res;
 }
 
@@ -960,7 +960,7 @@ constant * evaluate::arctan_c (constant * args) {
 constant * evaluate::arctan_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arctan (*v1);
+  res->v = new vector (arctan (*v1));
   return res;
 }
 
@@ -982,7 +982,7 @@ constant * evaluate::cot_c (constant * args) {
 constant * evaluate::cot_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = cot (*v1);
+  res->v = new vector (cot (*v1));
   return res;
 }
 
@@ -1004,7 +1004,7 @@ constant * evaluate::arccot_c (constant * args) {
 constant * evaluate::arccot_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arccot (*v1);
+  res->v = new vector (arccot (*v1));
   return res;
 }
 
@@ -1026,7 +1026,7 @@ constant * evaluate::sinh_c (constant * args) {
 constant * evaluate::sinh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = sinh (*v1);
+  res->v = new vector (sinh (*v1));
   return res;
 }
 
@@ -1048,7 +1048,7 @@ constant * evaluate::arsinh_c (constant * args) {
 constant * evaluate::arsinh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arsinh (*v1);
+  res->v = new vector (arsinh (*v1));
   return res;
 }
 
@@ -1070,7 +1070,7 @@ constant * evaluate::cosh_c (constant * args) {
 constant * evaluate::cosh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = cosh (*v1);
+  res->v = new vector (cosh (*v1));
   return res;
 }
 
@@ -1092,7 +1092,7 @@ constant * evaluate::arcosh_c (constant * args) {
 constant * evaluate::arcosh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arcosh (*v1);
+  res->v = new vector (arcosh (*v1));
   return res;
 }
 
@@ -1114,7 +1114,7 @@ constant * evaluate::tanh_c (constant * args) {
 constant * evaluate::tanh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = tanh (*v1);
+  res->v = new vector (tanh (*v1));
   return res;
 }
 
@@ -1136,7 +1136,7 @@ constant * evaluate::artanh_c (constant * args) {
 constant * evaluate::artanh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = artanh (*v1);
+  res->v = new vector (artanh (*v1));
   return res;
 }
 
@@ -1158,7 +1158,7 @@ constant * evaluate::coth_c (constant * args) {
 constant * evaluate::coth_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = coth (*v1);
+  res->v = new vector (coth (*v1));
   return res;
 }
 
@@ -1180,7 +1180,7 @@ constant * evaluate::arcoth_c (constant * args) {
 constant * evaluate::arcoth_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = arcoth (*v1);
+  res->v = new vector (arcoth (*v1));
   return res;
 }
 
@@ -1202,7 +1202,7 @@ constant * evaluate::ztor_c (constant * args) {
 constant * evaluate::ztor_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = ztor (*v1);
+  res->v = new vector (ztor (*v1));
   return res;
 }
 
@@ -1224,7 +1224,7 @@ constant * evaluate::rtoz_c (constant * args) {
 constant * evaluate::rtoz_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  res->v = rtoz (*v1);
+  res->v = new vector (rtoz (*v1));
   return res;
 }
 
@@ -1369,7 +1369,7 @@ constant * evaluate::index_mv_2 (constant * args) {
   int r = (int) D (args->getResult (1));
   int c = (int) D (args->getResult (2));
   constant * res = new constant (TAG_VECTOR);
-  res->v = mv->get (r, c);
+  res->v = new vector (mv->get (r, c));
   return res;
 }
 

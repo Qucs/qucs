@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.h,v 1.1 2004-07-21 16:25:09 ela Exp $
+ * $Id: spfile.h,v 1.2 2004-07-26 06:30:29 ela Exp $
  *
  */
 
@@ -26,7 +26,9 @@
 #define __SPFILE_H__
 
 class vector;
+class matvec;
 class dataset;
+class spsolver;
 
 struct spfile_index_t {
   vector * v;
@@ -39,16 +41,37 @@ class spfile : public circuit
  public:
   spfile ();
   ~spfile ();
-  void initSP (void);
+  void initSP (spsolver *);
   void calcSP (nr_double_t);
+  void calcNoise (nr_double_t);
   void createIndex (void);
   complex interpolate (vector *, vector *, nr_double_t);
   complex interpolate_lin (vector *, vector *, nr_double_t, int);
+  complex fetchS (int, int, int);
+  vector& fetchS (int, int);
+  matrix& fetchS (int);
+  void storeS (int, int, complex, int);
+  void expandPort (void);
+  void createVector (int, int);
+  void createNoiseMatrix (void);
+  matrix& correlationMatrix (nr_double_t, complex, nr_double_t, matrix&);
+  nr_double_t noisePara (matrix&, matrix&, nr_double_t&,
+			 complex&, nr_double_t&);
+  matrix& expandNoiseMatrix (matrix&, matrix&);
+  matrix& shrinkNoiseMatrix (matrix&, matrix&);
+  matrix& expandSParaMatrix (matrix&);
+  matrix& shrinkSParaMatrix (matrix&);
+  matrix& getInterpolatedMatrixS (nr_double_t);
 
  private:
   dataset * data;
   struct spfile_index_t * index;
-  vector * dep;
+  vector * sfreq;
+  vector * nfreq;
+  vector * Rn;
+  vector * Fmin;
+  vector * Gopt;
+  matvec * ndata;
 };
 
 #endif /* __SPFILE_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.4 2004-07-21 16:25:09 ela Exp $
+ * $Id: matvec.cpp,v 1.5 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -91,23 +91,23 @@ char * matvec::getName (void) {
 
 /* This function saves the given vector to the matvec object with the
    appropriate matrix indices. */
-void matvec::set (vector * v, int r, int c) {
-  assert (v->getSize () == size && 
+void matvec::set (vector & v, int r, int c) {
+  assert (v.getSize () == size && 
 	  r >= 1 && r <= rows && c >= 1 && c <= cols);
-  for (int i = 0; i < size; i++) data[i].set (r, c, v->get (i));
+  for (int i = 0; i < size; i++) data[i].set (r, c, v.get (i));
 }
 
 /* The function returns the vector specified by the given matrix
    indices.  If the matrix vector has a valid name 'A' the returned
    vector gets the name 'A[r,c]'. */
-vector * matvec::get (int r, int c) {
+vector& matvec::get (int r, int c) {
   assert (r >= 1 && r <= rows && c >= 1 && c <= cols);
   vector * res = new vector ();
   for (int i = 0; i < size; i++) res->add (data[i].get (r, c));
   if (name != NULL) {
     res->setName (createMatrixString (name, r, c));
   }
-  return res;
+  return *res;
 }
 
 /* This function returns a static text representation with the
@@ -229,5 +229,19 @@ matvec& operator * (matvec& a, matvec& b) {
   assert (a.getCols () == b.getRows () && a.getSize () == b.getSize ());
   matvec * res = new matvec (a.getSize (), a.getRows (), b.getCols ());
   for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) * b.get (i), i);
+  return *res;
+}
+
+// Conjugate complex matrix vector.
+matvec& conj (matvec& a) {
+  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res->set (conj (a.get (i)), i);
+  return *res;
+}
+
+// Transpose the matrix vector.
+matvec& transpose (matvec& a) {
+  matvec * res = new matvec (a.getSize (), a.getCols (), a.getRows ());
+  for (int i = 0; i < a.getSize (); i++) res->set (transpose (a.get (i)), i);
   return *res;
 }

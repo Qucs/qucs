@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.18 2004-07-21 16:25:09 ela Exp $
+ * $Id: equation.cpp,v 1.19 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -897,9 +897,9 @@ vector * solver::dataVector (node * eqn) {
       for (int r = 1; r <= mv->getRows (); r++) {
 	for (int c = 1; c <= mv->getCols (); c++) {
 	  // name gets automatically assigned
-	  vector * t = mv->get (r, c);
+	  vector t = mv->get (r, c);
 	  // chain the vectors appropriately
-	  t->setNext (v); v = t;
+	  t.setNext (v); v = &t;
 	}
       }
     }
@@ -1006,7 +1006,7 @@ void solver::findMatrixVectors (vector * v) {
 	// and collect the vectors with the same 'found' flags
 	if (vec->getRequested () == n) {
 	  p = matvec::isMatrixVector (vec->getName (), a, b);
-	  mv->set (vec, a, b);
+	  mv->set (*vec, a, b);
 	  free (p);
 	  vec->setRequested (-1);
 	}

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.8 2004-06-22 19:32:56 ela Exp $
+ * $Id: vector.h,v 1.9 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -37,7 +37,10 @@ class vector : public object
  public:
   vector ();
   vector (char *);
+  vector (int);
+  vector (char *, int);
   vector (const vector &);
+  const vector& operator = (const vector &);
   ~vector ();
   void add (complex);
   void add (vector *);
@@ -61,56 +64,58 @@ class vector : public object
   friend complex avg  (vector & v);
 
   // vector manipulations
-  friend vector * real  (vector &);  // the real part
-  friend vector * imag  (vector &);  // the imaginary part
-  friend vector * conj  (vector &);  // the complex conjugate
-  friend vector * norm  (vector &);  // the square of the magnitude
-  friend vector * arg   (vector &);  // the angle in the plane
-  friend vector * dB    (vector &);
-  friend vector * ln    (vector &);
-  friend vector * log2  (vector &);
-  friend vector * pow   (vector &, const complex);
-  friend vector * pow   (const complex, vector &);
-  friend vector * pow   (vector &, vector &);
-  friend vector * ztor  (vector & v, nr_double_t zref = 50.0);
-  friend vector * rtoz  (vector & v, nr_double_t zref = 50.0);
+  friend vector& real  (vector &);  // the real part
+  friend vector& imag  (vector &);  // the imaginary part
+  friend vector& conj  (vector &);  // the complex conjugate
+  friend vector& norm  (vector &);  // the square of the magnitude
+  friend vector& arg   (vector &);  // the angle in the plane
+  friend vector& dB    (vector &);
+  friend vector& ln    (vector &);
+  friend vector& log2  (vector &);
+  friend vector& pow   (vector &, const complex);
+  friend vector& pow   (const complex, vector &);
+  friend vector& pow   (vector &, vector &);
+  friend vector& ztor  (vector & v, nr_double_t zref = 50.0);
+  friend vector& rtoz  (vector & v, nr_double_t zref = 50.0);
 
   // overloaded math functions
-  friend vector * abs    (vector &);
-  friend vector * log10  (vector &);
-  friend vector * exp    (vector &);
-  friend vector * sqrt   (vector &);
-  friend vector * sin    (vector &);
-  friend vector * arcsin (vector &);
-  friend vector * cos    (vector &);
-  friend vector * arccos (vector &);
-  friend vector * tan    (vector &);
-  friend vector * arctan (vector &);
-  friend vector * cot    (vector &);
-  friend vector * arccot (vector &);
-  friend vector * sinh   (vector &);
-  friend vector * arsinh (vector &);
-  friend vector * cosh   (vector &);
-  friend vector * arcosh (vector &);
-  friend vector * tanh   (vector &);
-  friend vector * artanh (vector &);
-  friend vector * coth   (vector &);
-  friend vector * arcoth (vector &);
+  friend vector& abs    (vector &);
+  friend vector& log10  (vector &);
+  friend vector& exp    (vector &);
+  friend vector& sqrt   (vector &);
+  friend vector& sin    (vector &);
+  friend vector& arcsin (vector &);
+  friend vector& cos    (vector &);
+  friend vector& arccos (vector &);
+  friend vector& tan    (vector &);
+  friend vector& arctan (vector &);
+  friend vector& cot    (vector &);
+  friend vector& arccot (vector &);
+  friend vector& sinh   (vector &);
+  friend vector& arsinh (vector &);
+  friend vector& cosh   (vector &);
+  friend vector& arcosh (vector &);
+  friend vector& tanh   (vector &);
+  friend vector& artanh (vector &);
+  friend vector& coth   (vector &);
+  friend vector& arcoth (vector &);
 
   // operator functions
-  friend vector * operator + (vector &, vector &);
-  friend vector * operator + (vector &, const complex);
-  friend vector * operator - (vector &, vector &);
-  friend vector * operator - (vector &, const complex);
-  friend vector * operator - (const complex, vector &);
-  friend vector * operator * (vector &, vector &);
-  friend vector * operator * (vector &, const complex);
-  friend vector * operator / (vector &, vector &);
-  friend vector * operator / (vector &, const complex);
-  friend vector * operator / (const complex, vector &);
-  friend vector * operator % (vector &, const complex);
-  friend vector * operator % (const complex, vector &);
-  friend vector * operator % (vector &, vector &);
+  friend vector& operator + (vector &, vector &);
+  friend vector& operator + (vector &, const complex);
+  friend vector& operator + (const complex, vector &);
+  friend vector& operator - (vector &, vector &);
+  friend vector& operator - (vector &, const complex);
+  friend vector& operator - (const complex, vector &);
+  friend vector& operator * (vector &, vector &);
+  friend vector& operator * (vector &, const complex);
+  friend vector& operator * (const complex, vector &);
+  friend vector& operator / (vector &, vector &);
+  friend vector& operator / (vector &, const complex);
+  friend vector& operator / (const complex, vector &);
+  friend vector& operator % (vector &, const complex);
+  friend vector& operator % (const complex, vector &);
+  friend vector& operator % (vector &, vector &);
 
   // comparisons
   //  friend int      operator == (const vector *, const vector *);

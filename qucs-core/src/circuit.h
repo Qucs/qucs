@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.19 2004-07-21 16:25:08 ela Exp $
+ * $Id: circuit.h,v 1.20 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@ class property;
 class substrate;
 class operatingpoint;
 class dcsolver;
+class spsolver;
 class matrix;
 
 class circuit : public object
@@ -42,11 +43,11 @@ class circuit : public object
   circuit (int);
   circuit (const circuit &);
   ~circuit ();
+  virtual void initSP (spsolver *) { }
   virtual void calcSP (nr_double_t) { }
-  virtual void initSP (void) { }
-  virtual void calcDC (void) { }
-  virtual void calcAC (nr_double_t) { }
   virtual void initDC (dcsolver *) { }
+  virtual void calcDC (void) { }
+  virtual void calcNoise (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
   void setNode (int, char *, int intern = 0);
   node * getNode (int);
@@ -102,7 +103,10 @@ class circuit : public object
   int isNonLinear (void) { return !linear; }
   void setNonLinear (int nl) { linear = !nl; }
   static char * createInternal (char *, char *);
-  void copyMatrixS (matrix &);
+  void setMatrixS (matrix &);
+  matrix& getMatrixS (void);
+  void setMatrixN (matrix &);
+  matrix& getMatrixN (void);
 
   static const nr_double_t z0 = 50.0;
 

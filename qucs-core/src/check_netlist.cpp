@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.28 2004-07-24 00:10:28 ela Exp $
+ * $Id: check_netlist.cpp,v 1.29 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -192,6 +192,7 @@ struct define_t definition_available[] =
     { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
+      { "Temp", PROP_REAL, { degree (T0), PROP_NO_STR }, { K, PROP_VAL_MAX } },
       PROP_NO_PROP }
   },
   /* noise voltage source */

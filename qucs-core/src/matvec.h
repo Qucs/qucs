@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.3 2004-07-21 16:25:09 ela Exp $
+ * $Id: matvec.h,v 1.4 2004-07-26 06:30:28 ela Exp $
  *
  */
 
@@ -40,9 +40,9 @@ class matvec
   int getRows (void) { return rows; }
   void setName (char *);
   char * getName (void);
-  void set (vector *, int, int);
+  void set (vector&, int, int);
   void set (matrix&, int);
-  vector * get (int, int);
+  vector& get (int, int);
   matrix& get (int);
   static char * createMatrixString (char *, int, int);
   static char * createMatrixString (char, int, int);
@@ -59,6 +59,10 @@ class matvec
   // intrinsic operator functions
   matvec& operator += (matvec&);
   matvec& operator -= (matvec&);
+
+  // other operations
+  friend matvec& transpose (matvec&);
+  friend matvec& conj (matvec&);
 
  private:
   int size;
