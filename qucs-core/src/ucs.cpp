@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.6 2004-07-03 10:56:40 ela Exp $
+ * $Id: ucs.cpp,v 1.7 2004-07-05 21:41:46 ela Exp $
  *
  */
 
@@ -39,6 +39,8 @@ using namespace std;
 #include "equation.h"
 #include "environment.h"
 #include "exceptionstack.h"
+
+using namespace qucs;
 
 int main (int argc, char ** argv) {
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.4 2004-07-03 10:56:40 ela Exp $
+ * $Id: eqnsys.cpp,v 1.5 2004-07-05 21:41:46 ela Exp $
  *
  */
 
@@ -40,6 +40,8 @@ using namespace std;
 #include "eqnsys.h"
 #include "exception.h"
 #include "exceptionstack.h"
+
+using namespace qucs;
 
 // Constructor creates an unnamed instance of the eqnsys class.
 eqnsys::eqnsys () {

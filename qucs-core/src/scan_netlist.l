@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.7 2004-07-03 10:56:40 ela Exp $
+ * $Id: scan_netlist.l,v 1.8 2004-07-05 21:41:46 ela Exp $
  *
  */
 
@@ -48,8 +48,7 @@
 WS       [ \t\n\r]
 SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
 POSTID   "."[a-zA-Z_][a-zA-Z0-9_]*
-MATID    {SIMPLEID}"["[0-9]+","[0-9]+"]"
-ID       ({MATID}|{SIMPLEID}{POSTID}*)
+ID       {SIMPLEID}{POSTID}*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
 PFX      ("dBm"|"dB"|"T"|"G"|"M"|"k"|"m"|"u"|"n"|"p"|"f"|"a")
@@ -166,7 +165,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return InvalidCharacter;
   }
 
-<EQN>[-+*/%(),^:\"] { /* return operators unchanged */
+<EQN>[-+*/%(),^:\"\[\]] { /* return operators unchanged */
     return netlist_text[0];
   }
 

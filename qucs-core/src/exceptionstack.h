@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exceptionstack.h,v 1.1 2004-07-03 10:56:40 ela Exp $
+ * $Id: exceptionstack.h,v 1.2 2004-07-05 21:41:46 ela Exp $
  *
  */
 
 #ifndef __EXCEPTIONSTACK_H__
 #define __EXCEPTIONSTACK_H__
+
+namespace qucs {
 
 class exception;
 
@@ -44,6 +46,8 @@ class exceptionstack
 
 // Global exception stack.
 extern exceptionstack estack;
+
+} /* namespace */
 
 // Some macros used with exception handling.
 #define try_running()        do {

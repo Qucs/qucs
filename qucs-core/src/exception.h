@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exception.h,v 1.1 2004-07-03 10:56:40 ela Exp $
+ * $Id: exception.h,v 1.2 2004-07-05 21:41:46 ela Exp $
  *
  */
 
 #ifndef __EXCEPTION_H__
 #define __EXCEPTION_H__
+
+namespace qucs {
 
 /* Enumerate exception type identifiers. */
 enum exception_type {
@@ -57,5 +59,7 @@ class exception
   char * txt;
   exception * next;
 };
+
+} /* namespace */
 
 #endif /* __EXCEPTION_H__ */

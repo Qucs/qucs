@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.15 2004-07-04 15:46:24 ela Exp $
+ * $Id: equation.cpp,v 1.16 2004-07-05 21:41:46 ela Exp $
  *
  */
 
@@ -111,6 +111,23 @@ char * constant::toString (void) {
 	txt = (char *) realloc (txt, len += strlen (s));
 	strcat (txt, s);
 	if (i != v->getSize () - 1) strcat (txt, ";");
+      }
+      strcat (txt, "]");
+    }
+    break;
+  case TAG_MATRIX:
+    {
+      int len = 3 + (m->getRows () - 1) * (m->getCols () - 1);
+      txt = (char *) malloc (len);
+      strcpy (txt, "[");
+      for (int r = 1; r <= m->getRows (); r++) {
+	for (int c = 1; c <= m->getCols (); c++) {
+	  char * s = Cplx2String (m->get (r, c));
+	  txt = (char *) realloc (txt, len += strlen (s));
+	  strcat (txt, s);
+	  if (c != m->getCols ()) strcat (txt, " ");
+	}
+	if (r != m->getRows ()) strcat (txt, ";");
       }
       strcat (txt, "]");
     }
@@ -269,6 +286,19 @@ char * application::toString (void) {
     txt = (char *) malloc (strlen (n) + strlen (arg1) + strlen (arg2) + 3);
     sprintf (txt, "(%s%s%s)", arg1, n, arg2);
   }
+  // array indices
+  else if (!strcmp (n, "array")) {
+    int len = strlen (args->toString ()) + 3 + nargs - 1;
+    txt = (char *) malloc (len);
+    sprintf (txt, "%s[", args->toString ());
+    for (node * arg = args->getNext (); arg != NULL; arg = arg->getNext ()) {
+      char * str = arg->toString ();
+      txt = (char *) realloc (txt, len += strlen (str));
+      strcat (txt, str);
+      if (arg->getNext ()) strcat (txt, ",");
+    }
+    strcat (txt, "]");
+  }
   // unary and n-ary operations here
   else {
     int len = strlen (n) + 3 + nargs - 1;
@@ -418,17 +448,15 @@ void node::append (node * last) {
 // Returns the equation node at the given argument position.
 node * node::get (int pos) {
   node * n = this;
-  for (int i = 0; i < pos && n != NULL; n = n->getNext ());
+  for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++);
   return n;
 }
 
 // Returns the constant equation node at the given argument position.
 constant * node::getResult (int pos) {
   node * n = this;
-  constant * result = getResult ();
-  for (int i = 0; i < pos && n != NULL; n = n->getNext ())
-    result = n->getResult ();
-  return result;
+  for (int i = 0; i < pos && n != NULL; n = n->getNext (), i++);
+  return n ? n->getResult () : NULL;
 }
 
 // Assigns the dependency list to the equation node object.
@@ -580,6 +608,7 @@ void checker::list (void) {
 	       eqn->getType () == TAG_DOUBLE  ? "D!" :
 	       eqn->getType () == TAG_COMPLEX ? "C!" :
 	       eqn->getType () == TAG_VECTOR  ? "V!" :
+	       eqn->getType () == TAG_MATVEC  ? "MV!" :
 	       eqn->getType () == TAG_MATRIX  ? "M!" : "?!") : "");
     eqn->print ();
     logprint (LOG_STATUS, "\n");
@@ -887,18 +916,22 @@ vector * solver::dataVector (node * eqn) {
 void solver::checkinDataset (void) {
   if (data == NULL) return;
   vector * v;
-  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
-    node * eqn = addEquationData (v);
-    strlist * deps = new strlist ();
-    deps->add (v->getName ());
-    eqn->setDataDependencies (deps);
-  }
-  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
-    node * eqn = addEquationData (v);
-    eqn->setDataDependencies (v->getDependencies ());
-  }
   findMatrixVectors (data->getDependencies ());
   findMatrixVectors (data->getVariables ());
+  for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
+    if (v->getRequested () != -1) {
+      node * eqn = addEquationData (v);
+      strlist * deps = new strlist ();
+      deps->add (v->getName ());
+      eqn->setDataDependencies (deps);
+    }
+  }
+  for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
+    if (v->getRequested () != -1) {
+      node * eqn = addEquationData (v);
+      eqn->setDataDependencies (v->getDependencies ());
+    }
+  }
 }
 
 /* This function searches through the dataset of the equation solver
@@ -960,6 +993,7 @@ void solver::findMatrixVectors (vector * v) {
 	  p = isMatrixVector (vec->getName (), a, b);
 	  mv->set (vec, a, b);
 	  free (p);
+	  vec->setRequested (-1);
 	}
       }
       // now store this new matrix vector into the set of equations
@@ -1041,12 +1075,8 @@ void solver::checkoutDataset (void) {
     // skip variables which don't need to be exported
     if (!eqn->output) continue;
 
-    char * str = A(eqn)->result;
-    vector * dep = data->findDependency (str);
-    vector * var = data->findVariable (str);
-
     // is the equation result already in the dataset ?
-    if (dep == NULL && var == NULL) {
+    if (!findEquationResult (eqn)) {
       vector * v = dataVector (eqn);
       if (v == NULL) continue;
 
@@ -1090,6 +1120,32 @@ void solver::checkoutDataset (void) {
     }
   }
 }
+
+/* This function checks whether the given equation solver result is
+   already within the dataset.  It returns non-zero if so, otherwise
+   the function returns zero. */
+int solver::findEquationResult (node * eqn) {
+  // check each vector of a given matrix vector
+  if (eqn->getType () == TAG_MATVEC) {
+    matvec * mv = eqn->getResult()->mv;
+    char str[256];
+    for (int r = 1; r <= mv->getRows (); r++) {
+      for (int c = 1; c <= mv->getCols (); c++) {
+	sprintf (str, "%s[%d,%d]", A(eqn)->result, r, c);
+	if (data->findDependency (str) || data->findVariable (str))
+	  return 1;
+      }
+    }
+  }
+  // check normal data vectors
+  else {
+    char * str = A(eqn)->result;
+    if (data->findDependency (str) || data->findVariable (str))
+      return 1;
+  }
+  return 0;
+}
+
 
 /* This function is called in order to run the equation checker and
    the solver.  The optional dataset passed to the function receives

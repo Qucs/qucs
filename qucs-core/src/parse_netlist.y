@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.6 2004-06-27 15:11:48 ela Exp $
+ * $Id: parse_netlist.y,v 1.7 2004-07-05 21:41:46 ela Exp $
  *
  */
 
@@ -260,6 +260,14 @@ Application:
     $$->args = $3;
     eqn::expressions = NULL;
   }
+  | Reference '[' ExpressionList ']' {
+    $$ = new eqn::application ();
+    $$->n = strdup ("array");
+    $$->nargs = 1 + $3->count ();
+    $1->setNext ($3);
+    $$->args = $1;
+    eqn::expressions = NULL;
+  }
   | Expression '+' Expression {
     $$ = new eqn::application ();
     $$->n = strdup ("+");
@@ -319,11 +327,11 @@ Application:
 ExpressionList: /* nothing */ { $$ = eqn::expressions = NULL; }
   | Expression {
     $1->setNext (eqn::expressions);
-    eqn::expressions = $1;
+    $$ = eqn::expressions = $1;
   }
   | Expression ',' ExpressionList {
     $1->setNext (eqn::expressions);
-    eqn::expressions = $1;
+    $$ = eqn::expressions = $1;
   }
 ;
 
