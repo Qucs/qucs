@@ -56,7 +56,7 @@ Substrate::Substrate()
   Model = "SUBST";
   Name  = "Subst";
 
-  Props.append(new Property("er", "9.8", true, QObject::tr("permittivity")));
+  Props.append(new Property("er", "9.8", true, QObject::tr("relative permittivity")));
   Props.append(new Property("h", "1 mm", true, QObject::tr("thickness in meters")));
   Props.append(new Property("t", "35 um", true, QObject::tr("thickness of metalization")));
   Props.append(new Property("tand", "0", true, QObject::tr("loss tangent")));

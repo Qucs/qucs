@@ -312,29 +312,6 @@
     </message>
 </context>
 <context>
-    <name>NewProjDialog</name>
-    <message>
-        <source>Create new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>open new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <source>untitled</source>
@@ -782,10 +759,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>permittivity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>thickness in meters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -799,14 +772,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ration of coil 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ration of coil 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -839,10 +804,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -903,6 +864,46 @@ Unknown field!</source>
     </message>
     <message>
         <source>ac power in Watts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative permittivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>saturation current</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

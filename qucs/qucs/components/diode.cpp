@@ -39,6 +39,8 @@ Diode::Diode()
   Sign  = "Diode";
   Model = "Diode";
   Name  = "D";
+
+  Props.append(new Property("Is", "1e-15 A", true, QObject::tr("saturation current")));
 }
 
 Diode::~Diode()
