@@ -729,6 +729,8 @@ Component* getComponentFromName(QString& Line)
     return 0;
   }
 
+  cstr = c->Name;   // is perhaps changed in "recreate" (z.B. subcircuit)
   c->recreate();
+  c->Name = cstr;
   return c;
 }

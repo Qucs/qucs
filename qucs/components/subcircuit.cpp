@@ -86,7 +86,7 @@ void Subcircuit::recreate()
     if(tx == INT_MIN)  tx = x1+4;
     if(ty == INT_MIN)  ty = y2+4;
     performModification();
-  return;
+    return;
   }
 
   No = QucsApp::testFile(FileName);
@@ -225,6 +225,7 @@ int Subcircuit::loadSymbol(const QString& DocName)
     if(Result < 0) return -6;   // line format error
     z += Result;
   }
+
   return -5;   // field not closed
 }
 
@@ -248,7 +249,7 @@ int Subcircuit::analyseLine(const QString& Row)
     if(i1 > x2)  x2 = i1;
     if(i2 < y1)  y1 = i2;
     if(i2 > y2)  y2 = i2;
-    return 1;
+    return 0;   // do not count Ports
   }
   else if(s == "Line") {
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;

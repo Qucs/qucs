@@ -509,10 +509,8 @@ void QucsApp::slotChangeView(int id)
   view->setContentsPos(d->PosX, d->PosY);
 
   // which mode: schematic or symbol editor ?
-  if((CompChoose->count() > 1) == d->symbolMode) {
-    d->symbolMode = !(d->symbolMode);  // it's changed by following function
+  if((CompChoose->count() > 1) == d->symbolMode)
     changeSchematicSymbolMode(d);
-  }
 
   view->Docs.current()->reloadGraphs();  // load recent simulation data
   view->viewport()->repaint();
@@ -848,10 +846,8 @@ void QucsApp::slotFileClose()
 
   QucsDoc *d = view->Docs.current();
   // which mode: schematic or symbol editor ?
-  if((CompChoose->count() > 1) == d->symbolMode) {
-    d->symbolMode = !(d->symbolMode);  // it's changed by following function
+  if((CompChoose->count() > 1) == d->symbolMode)
     changeSchematicSymbolMode(d);
-  }
 
   statusBar()->message(tr("Ready."));
 }
@@ -1930,8 +1926,7 @@ void QucsApp::switchEditMode(bool SchematicMode)
 // #######################################################################
 void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 {
-  if(d->symbolMode) {
-    d->symbolMode = false;
+  if(!d->symbolMode) {
     switchEditMode(true);
 
     d->Comps  = &(d->DocComps);
@@ -1950,13 +1945,12 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     // go into select modus to avoid placing a forbidden element
     Acts.select->setOn(true);
 
-    d->symbolMode = true;
     switchEditMode(false);
 
-    d->Comps  = &(SymbolComps);
-    d->Wires  = &(SymbolWires);
-    d->Nodes  = &(SymbolNodes);
-    d->Diags  = &(SymbolDiags);
+    d->Comps  = &SymbolComps;
+    d->Wires  = &SymbolWires;
+    d->Nodes  = &SymbolNodes;
+    d->Diags  = &SymbolDiags;
     d->Paints = &(d->SymbolPaints);
 
     // If the number of ports is not equal, remove or add some.
@@ -1991,6 +1985,7 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 	d->SymbolPaints.at(i)->setCenter(30,  y);
 	y += 60;
       }
+      d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
     }
 
     QString *ps = d->UndoSymbol.current();
@@ -2008,6 +2003,7 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 void QucsApp::slotSymbolEdit()
 {
   QucsDoc *d = view->Docs.current();
+  d->symbolMode = !(d->symbolMode);  // change mode
   d->switchPaintMode();   // twist the view coordinates
   changeSchematicSymbolMode(d);
 
