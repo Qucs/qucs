@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.11 2004-08-21 13:29:07 ela Exp $
+ * $Id: scan_netlist.l,v 1.12 2004-10-06 14:40:05 ela Exp $
  *
  */
 
@@ -55,6 +55,8 @@ SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
 POSTID   "."[a-zA-Z_][a-zA-Z0-9_]*
 ID       {SIMPLEID}{POSTID}*
 FILE     "{"[^\t\n\r\}]+"}"
+CHR      "'"[^\n\r\']{1}"'"
+STR      "'"[^\n\r\']*"'"
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
 PFX      ("dBm"|"dB"|"T"|"G"|"M"|"k"|"m"|"u"|"n"|"p"|"f"|"a")
@@ -201,8 +203,17 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return IMAG;
   }
 <EQN>{ID} { /* identify identifier */
-    netlist_lval.ident = strdup (netlist_text); 
-    return Identifier; 
+    netlist_lval.ident = strdup (netlist_text);
+    return Identifier;
+  }
+<EQN>{CHR} {
+    netlist_lval.chr = netlist_text[1];
+    return Character;
+  }
+<EQN>{STR} {
+    netlist_lval.str = strdup (&netlist_text[1]);
+    netlist_lval.str[strlen (netlist_lval.str) - 1] = '\0';
+    return STRING;
   }
 <EQN>\r?\n { /* detect end of line */ BEGIN(INITIAL); return Eol; }
 

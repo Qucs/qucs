@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.16 2004-09-01 21:40:19 ela Exp $
+ * $Id: evaluate.cpp,v 1.17 2004-10-06 14:40:05 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <math.h>
 
 #include "logging.h"
@@ -43,11 +44,14 @@
 using namespace eqn;
 
 // Short macros in order to obtain the correct constant value.
-#define D(con)  ((constant *) (con))->d
-#define C(con)  ((constant *) (con))->c
-#define V(con)  ((constant *) (con))->v
-#define M(con)  ((constant *) (con))->m
-#define MV(con) ((constant *) (con))->mv
+#define D(con)   ((constant *) (con))->d
+#define C(con)   ((constant *) (con))->c
+#define V(con)   ((constant *) (con))->v
+#define M(con)   ((constant *) (con))->m
+#define MV(con)  ((constant *) (con))->mv
+#define STR(con) ((constant *) (con))->s
+#define CHR(con) ((constant *) (con))->chr
+#define INT(con) ((int) D (con))
 
 // ******************** unary plus *************************
 constant * evaluate::plus_d (constant * args) {
@@ -149,6 +153,36 @@ constant * evaluate::plus_mv_mv (constant * args) {
   matvec * v2 = MV (args->getResult (1));
   constant * res = new constant (TAG_MATVEC);
   res->mv = new matvec (*v1 + *v2);
+  return res;
+}
+
+constant * evaluate::plus_s_s (constant * args) {
+  char * s1 = STR (args->getResult (0));
+  char * s2 = STR (args->getResult (1));
+  constant * res = new constant (TAG_STRING);
+  char * p = (char *) malloc (strlen (s1) + strlen (s2) + 1);
+  strcpy (p, s1); strcat (p, s2);
+  res->s = p;
+  return res;
+}
+
+constant * evaluate::plus_c_s (constant * args) {
+  char   c1 = CHR (args->getResult (0));
+  char * s2 = STR (args->getResult (1));
+  constant * res = new constant (TAG_STRING);
+  char * p = (char *) malloc (strlen (s2) + 2);
+  p[0] = c1; strcpy (&p[1], s2);
+  res->s = p;
+  return res;
+}
+
+constant * evaluate::plus_s_c (constant * args) {
+  char * s1 = STR (args->getResult (0));
+  char   c2 = CHR (args->getResult (1));
+  constant * res = new constant (TAG_STRING);
+  char * p = (char *) malloc (strlen (s1) + 2);
+  strcpy (p, s1); p[strlen (s1)] = c2; p[strlen (s1) + 1] = '\0';
+  res->s = p;
   return res;
 }
 
@@ -1261,11 +1295,11 @@ constant * evaluate::diff_v_2 (constant * args) {
 }
 
 constant * evaluate::diff_v_3 (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  vector *    v2 = V (args->getResult (1));
-  nr_double_t d3 = D (args->getResult (2));
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  int      i3 = INT (args->getResult (2));
   constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (diff (*v1, *v2, (int) d3));
+  res->v = new vector (diff (*v1, *v2, i3));
   return res;
 }
 
@@ -1384,8 +1418,8 @@ constant * evaluate::avg_v (constant * args) {
 // ***************** array indices *****************
 constant * evaluate::index_mv_2 (constant * args) {
   matvec * mv = MV (args->getResult (0));
-  int r = (int) D (args->getResult (1));
-  int c = (int) D (args->getResult (2));
+  int r = INT (args->getResult (1));
+  int c = INT (args->getResult (2));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (mv->get (r, c));
   return res;
@@ -1393,7 +1427,7 @@ constant * evaluate::index_mv_2 (constant * args) {
 
 constant * evaluate::index_mv_1 (constant * args) {
   matvec * mv = MV (args->getResult (0));
-  int i = (int) D (args->getResult (1));
+  int i = INT (args->getResult (1));
   constant * res = new constant (TAG_MATRIX);
   res->m = & (mv->get (i));
   return res;
@@ -1401,7 +1435,7 @@ constant * evaluate::index_mv_1 (constant * args) {
 
 constant * evaluate::index_v_1 (constant * args) {
   vector * v = V (args->getResult (0));
-  int i = (int) D (args->getResult (1));
+  int i = INT (args->getResult (1));
   constant * res = new constant (TAG_COMPLEX);
   res->c = new complex (v->get (i));
   return res;
@@ -1409,10 +1443,18 @@ constant * evaluate::index_v_1 (constant * args) {
 
 constant * evaluate::index_m_2 (constant * args) {
   matrix * m = M (args->getResult (0));
-  int r = (int) D (args->getResult (1));
-  int c = (int) D (args->getResult (2));
+  int r = INT (args->getResult (1));
+  int c = INT (args->getResult (2));
   constant * res = new constant (TAG_COMPLEX);
   res->c = new complex (m->get (r, c));
+  return res;
+}
+
+constant * evaluate::index_s_1 (constant * args) {
+  char * s = STR (args->getResult (0));
+  int i = INT (args->getResult (1));
+  constant * res = new constant (TAG_CHAR);
+  res->chr = (i >= 0 && i < (int) strlen (s)) ? s[i] : ' ';
   return res;
 }
 
@@ -1501,6 +1543,24 @@ constant * evaluate::ztoy_mv (constant * args) {
   return res;
 }
 
+constant * evaluate::twoport_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  char f = CHR (args->getResult (1));
+  char t = CHR (args->getResult (2));
+  constant * res = new constant (TAG_MATRIX);
+  res->m = new matrix (twoport (*m, toupper (f), toupper (t)));
+  return res;
+}
+
+constant * evaluate::twoport_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  char f = CHR (args->getResult (1));
+  char t = CHR (args->getResult (2));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (twoport (*mv, toupper (f), toupper (t)));
+  return res;
+}
+
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
   { "+", TAG_DOUBLE,  evaluate::plus_d, 1, { TAG_DOUBLE  } },
@@ -1516,6 +1576,9 @@ struct application_t eqn::applications[] = {
   { "+", TAG_VECTOR,  evaluate::plus_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
   { "+", TAG_VECTOR,  evaluate::plus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "+", TAG_VECTOR,  evaluate::plus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+  { "+", TAG_STRING,  evaluate::plus_s_s, 2, { TAG_STRING,  TAG_STRING  } },
+  { "+", TAG_STRING,  evaluate::plus_c_s, 2, { TAG_CHAR,    TAG_STRING  } },
+  { "+", TAG_STRING,  evaluate::plus_s_c, 2, { TAG_STRING,  TAG_CHAR    } },
 
   { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC  } },
 
@@ -1741,6 +1804,7 @@ struct application_t eqn::applications[] = {
     { TAG_VECTOR, TAG_DOUBLE } },
   { "array", TAG_COMPLEX, evaluate::index_m_2, 3,
     { TAG_MATRIX, TAG_DOUBLE, TAG_DOUBLE } },
+  { "array", TAG_CHAR, evaluate::index_s_1, 2, { TAG_STRING, TAG_DOUBLE } },
 
   { "stoy", TAG_MATRIX, evaluate::stoy_m,  1, { TAG_MATRIX } },
   { "stoy", TAG_MATVEC, evaluate::stoy_mv, 1, { TAG_MATVEC } },
@@ -1754,6 +1818,11 @@ struct application_t eqn::applications[] = {
   { "ztos", TAG_MATVEC, evaluate::ztos_mv, 1, { TAG_MATVEC } },
   { "ztoy", TAG_MATRIX, evaluate::ztoy_m,  1, { TAG_MATRIX } },
   { "ztoy", TAG_MATVEC, evaluate::ztoy_mv, 1, { TAG_MATVEC } },
+
+  { "twoport", TAG_MATRIX, evaluate::twoport_m,  3,
+    { TAG_MATRIX, TAG_CHAR, TAG_CHAR } },
+  { "twoport", TAG_MATVEC, evaluate::twoport_mv, 3,
+    { TAG_MATVEC, TAG_CHAR, TAG_CHAR } },
 
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };

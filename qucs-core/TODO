@@ -78,7 +78,7 @@ unfixed) have a look at the file BUGS.
 	- Implement implicit dependencies of analysis types.
 	- Check for duplicate definitions in equations and parameter sweep
 	  variables.
-- Add string constants to equation base class.
+	- Add string constants to equation base class.
 - Allow equation variables in component properties.
 	- Implement class for vectors of matrices.
 	- Check for cyclic analysis definitions.

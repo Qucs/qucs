@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.15 2004-07-21 16:25:09 ela Exp $
+ * $Id: equation.h,v 1.16 2004-10-06 14:40:05 ela Exp $
  *
  */
 
@@ -112,6 +112,8 @@ enum ConstantTag {
   TAG_VECTOR,       /* list of complex values   */
   TAG_MATRIX,       /* complex matrix           */
   TAG_MATVEC,       /* list of complex matrices */
+  TAG_CHAR,         /* single character         */
+  TAG_STRING,       /* character string         */
 };
 
 /* This class represents any type of constant expression. */
@@ -134,6 +136,8 @@ public:
     vector * v;
     matrix * m;
     matvec * mv;
+    char chr;
+    char * s;
   };
 };
 

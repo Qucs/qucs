@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.24 2004-09-28 23:14:24 ela Exp $
+ * $Id: equation.cpp,v 1.25 2004-10-06 14:40:05 ela Exp $
  *
  */
 
@@ -137,6 +137,14 @@ char * constant::toString (void) {
 	     mv->getRows (), mv->getCols (), mv->getSize ());
     txt = strdup (str);
     break;
+  case TAG_CHAR:
+    sprintf (str, "'%c'", chr);
+    txt = strdup (str);
+    break;    
+  case TAG_STRING:
+    sprintf (str, "'%s'", s);
+    txt = strdup (str);
+    break;    
   default:
     txt = strdup ("(no such type)");
     break;
@@ -608,6 +616,8 @@ void checker::list (void) {
 	       eqn->getType () == TAG_DOUBLE  ? "D!" :
 	       eqn->getType () == TAG_COMPLEX ? "C!" :
 	       eqn->getType () == TAG_VECTOR  ? "V!" :
+	       eqn->getType () == TAG_CHAR    ? "CHR!" :
+	       eqn->getType () == TAG_STRING  ? "STR!" :
 	       eqn->getType () == TAG_MATVEC  ? "MV!" :
 	       eqn->getType () == TAG_MATRIX  ? "M!" : "?!") : "");
     eqn->print ();
