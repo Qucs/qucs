@@ -145,7 +145,7 @@ void QucsApp::initView()
   // ----------------------------------------------------------
   // "Content Tab" of the left QTabWidget
   Content = new QListView(this);
-  Content->setRootIsDecorated(true);  // root items should have open/close decoration to their left
+  Content->setRootIsDecorated(true); // open/close decoration for root items
   Content->setSorting(-1);    // no sorting
   Content->addColumn(tr("Content of"));
   Content->addColumn(tr("Note"));
@@ -925,7 +925,7 @@ void QucsApp::slotSimulate()
 
   sim->ProgText->insert(tr("creating netlist ...."));
   QFile NetlistFile(QucsHomeDir.filePath("netlist.txt"));
-  if(!view->Docs.current()->createNetlist(&NetlistFile)) {
+  if(!view->Docs.current()->File.createNetlist(&NetlistFile)) {
     sim->ErrText->insert(tr("ERROR: Cannot create netlist file!\nAborted."));
     sim->errorSimEnded();
     return;
@@ -1198,7 +1198,7 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   view->drawn = false;
 
   QDir ProjDir(QDir::cleanDirPath(Path));
-  if(!ProjDir.exists() || !ProjDir.isReadable()) {  // check the project directory
+  if(!ProjDir.exists() || !ProjDir.isReadable()) { // check project directory
 
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+Path);
@@ -1206,7 +1206,7 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   }
   QucsWorkDir.setPath(ProjDir.path());
 
-  Content->setColumnText(0,tr("Content of '")+Name+tr("'"));  // column text
+  Content->setColumnText(0,tr("Content of '")+Name+tr("'")); // column text
 //  Content->setColumnWidth(0, Content->width()-5);
 
   Content->clear();   // empty content view

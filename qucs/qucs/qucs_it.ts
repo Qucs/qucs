@@ -1431,10 +1431,6 @@ Wrong &apos;component&apos; line format!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Subcircuit Port</source>
         <translation type="unfinished">Porta Sottocircuito</translation>
     </message>
@@ -1640,6 +1636,10 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Microstrip Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

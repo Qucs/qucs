@@ -36,9 +36,9 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual void calcDiagram();
+  virtual bool calcDiagram();
   virtual void calcCoordinate(double, double, double, int*, int*) {};
-  void    calcData(Graph*);
+  void    calcData(Graph*, bool);
   void    setCenter(int, int, bool relative=false);
   void    paintScheme(QPainter*);
   void    paint(QPainter*);
