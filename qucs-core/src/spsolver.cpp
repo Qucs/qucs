@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.10 2004/06/25 22:09:22 ela Exp $
+ * $Id: spsolver.cpp,v 1.11 2004/06/26 10:36:14 ela Exp $
  *
  */
 
@@ -222,10 +222,6 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   return result;
 }
 
-#define sqr(x) ((x) * (x))
-#define exchangeCircuits(c1,c2) { circuit * t = c1; c1 = c2; c2 = t; }
-#define exchangePorts(n1,n2)    { int t = n1; n1 = n2; n2 = t; }
-
 /* This function joins two nodes of a single circuit (interconnected
    nodes) and returns the resulting circuit. */
 void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
@@ -356,12 +352,12 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
 
       // compute C'nn
       if (i2 == j2) {
-	p = c->getN (i1, j1);
-	t = c->getS (i1, k) / (1.0 - c->getS (k, k) * d->getS (l, l));
+	p = c->getN (j1, j1);
+	t = c->getS (j1, k) / (1.0 - c->getS (k, k) * d->getS (l, l));
 	p += 
 	  (d->getN (l, l) + c->getN (k, k) * sqr (abs (d->getS (l, l)))) *
 	  sqr (abs (t));
-	p += 2.0 * real (c->getN (i1, k) * d->getS (l, l) * t);
+	p += 2.0 * real (c->getN (j1, k) * d->getS (l, l) * t);
 	result->setN (i2++, j2, p);
 	fprintf (stderr, "CD: Cnn(%d,%d)\n", i2-1, j2);
       }
@@ -371,10 +367,10 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
 	p = 
 	  (c->getN (k, k) * d->getS (l, l) + 
 	   d->getN (l, l) * conj (c->getS (k, k))) *
-	  c->getS (i1, k) * conj (d->getS (j1, l)) / sqr (abs (t));
+	  c->getS (j1, k) * conj (d->getS (i1, l)) / sqr (abs (t));
 	p +=
-	  c->getN (i1, k) * conj (d->getS (j1, l) / t) + 
-	  d->getN (l, j1) * c->getS (i1, k) / t;
+	  c->getN (j1, k) * conj (d->getS (i1, l) / t) + 
+	  d->getN (l, i1) * c->getS (j1, k) / t;
 	result->setN (i2, j2, p);
 	result->setN (j2, i2, conj (p));
 	i2++;
@@ -387,40 +383,40 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
   }
 
   // handle D block
-  exchangeCircuits (c, d);
-  exchangePorts (l, k);
-  for (j1 = 1; j1 <= c->getSize (); j1++) {
+  for (j1 = 1; j1 <= d->getSize (); j1++) {
 
     // skip connected node
-    if (j1 == k) continue;
+    if (j1 == l) continue;
 
     // across D and C
-    for (i1 = 1; i1 <= d->getSize (); i1++) {
+    for (i1 = 1; i1 <= c->getSize (); i1++) {
 
       // skip connected node
-      if (i1 == l) continue;
+      if (i1 == k) continue;
 
       // compute C'nn
       if (i2 == j2) {
-	p = c->getN (i1, j1);
-	t = c->getS (i1, k) / (1.0 - c->getS (k, k) * d->getS (l, l));
+	p = d->getN (j1, j1);
+	t = d->getS (j1, l) / (1.0 - d->getS (l, l) * c->getS (k, k));
 	p += 
-	  (d->getN (l, l) + c->getN (k, k) * sqr (abs (d->getS (l, l)))) *
+	  (c->getN (k, k) + d->getN (l, l) * sqr (abs (c->getS (k, k)))) *
 	  sqr (abs (t));
-	p += 2.0 * real (c->getN (i1, k) * d->getS (l, l) * t);
+	p += 2.0 * real (d->getN (j1, l) * c->getS (k, k) * t);
 	result->setN (i2++, j2, p);
 	fprintf (stderr, "DC: Cnn(%d,%d)\n", i2-1, j2);
       }
       // compute C'nl
       else if (i2 < j2) {
-	t = 1.0 - c->getS (k, k) * d->getS (l, l);
+	fprintf (stderr, "try: DC: Cnl(%d,%d)\n", i2, j2);
+	fprintf (stderr, "i1 = %d, j1 = %d\n", i1, j1);
+	t = 1.0 - d->getS (l, l) * c->getS (k, k);
 	p = 
-	  (c->getN (k, k) * d->getS (l, l) + 
-	   d->getN (l, l) * conj (c->getS (k, k))) *
-	  c->getS (i1, k) * conj (d->getS (j1, l)) / sqr (abs (t));
+	  (d->getN (l, l) * c->getS (k, k) + 
+	   c->getN (k, k) * conj (d->getS (l, l))) *
+	  d->getS (j1, l) * conj (c->getS (i1, k)) / sqr (abs (t));
 	p +=
-	  c->getN (i1, k) * conj (d->getS (j1, l) / t) + 
-	  d->getN (l, j1) * c->getS (i1, k) / t;
+	  d->getN (j1, l) * conj (c->getS (i1, k) / t) + 
+	  c->getN (k, i1) * d->getS (j1, l) / t;
 	result->setN (i2, j2, p);
 	result->setN (j2, i2, conj (p));
 	i2++;
@@ -429,32 +425,32 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
     }
 
     // inside D
-    for (i1 = 1; i1 <= c->getSize (); i1++) {
+    for (i1 = 1; i1 <= d->getSize (); i1++) {
 
       // skip connected node
-      if (i1 == k) continue;
+      if (i1 == l) continue;
 
       // compute C'nn
       if (i2 == j2) {
-	p = c->getN (i1, j1);
-	t = c->getS (i1, k) / (1.0 - c->getS (k, k) * c->getS (k, k));
+	p = d->getN (i1, i1);
+	t = d->getS (i1, l) / (1.0 - d->getS (l, l) * d->getS (l, l));
 	p += 
-	  (c->getN (k, k) + c->getN (k, k) * sqr (abs (c->getS (k, k)))) *
+	  (d->getN (l, l) + d->getN (l, l) * sqr (abs (d->getS (l, l)))) *
 	  sqr (abs (t));
-	p += 2.0 * real (c->getN (i1, k) * c->getS (k, k) * t);
+	p += 2.0 * real (d->getN (i1, l) * d->getS (l, l) * t);
 	result->setN (i2++, j2, p);
 	fprintf (stderr, "D: Cnn(%d,%d)\n", i2-1, j2);
       }
       // compute C'nl
       else if (i2 < j2) {
-	t = 1.0 - c->getS (k, k) * c->getS (k, k);
+	t = 1.0 - d->getS (l, l) * d->getS (l, l);
 	p = 
-	  (c->getN (k, k) * c->getS (k, k) + 
-	   c->getN (k, k) * conj (c->getS (k, k))) *
-	  c->getS (i1, k) * conj (c->getS (j1, k)) / sqr (abs (t));
+	  (d->getN (l, l) * d->getS (l, l) + 
+	   d->getN (l, l) * conj (d->getS (l, l))) *
+	  d->getS (i1, l) * conj (d->getS (j1, l)) / sqr (abs (t));
 	p +=
-	  c->getN (i1, k) * conj (c->getS (j1, k) / t) + 
-	  c->getN (k, j1) * c->getS (i1, k) / t;
+	  d->getN (i1, l) * conj (d->getS (j1, l) / t) + 
+	  d->getN (l, j1) * d->getS (i1, l) / t;
 	result->setN (i2, j2, p);
 	result->setN (j2, i2, conj (p));
 	i2++;
@@ -806,6 +802,8 @@ void spsolver::saveResults (nr_double_t freq) {
   char * n;
   int res_i, res_j;
   circuit * root = subnet->getRoot ();
+
+  // temporary noise matrices
   complex noise_c[4], noise_s[4];
 
   // add current frequency to the dependency of the output dataset
@@ -833,16 +831,17 @@ void spsolver::saveResults (nr_double_t freq) {
 	  // add variable data item to dataset
 	  saveVariable (n, c->getS (i, j), f);
 
+	  // if noise analysis is requested
 	  if (noise) {
 	    int ro, co;
 	    int ni = getPropertyInteger ("NoiseIP");
 	    int no = getPropertyInteger ("NoiseOP");
-	    if ((res_i == ni || res_i == no) &&
-		(res_j == ni || res_j == no)) {
+	    if ((res_i == ni || res_i == no) && (res_j == ni || res_j == no)) {
 	      ro = (res_i == ni) ? 0 : 1;
 	      co = (res_j == ni) ? 0 : 1;
 	      fprintf (stderr, "C[%d,%d] = %g,%g\n", ro, co, 
 		       real(c->getN (i, j)), imag(c->getN (i, j))); 
+	      // save results in temporary data items
 	      noise_c[co + ro * 2] = c->getN (i, j);
 	      noise_s[co + ro * 2] = c->getS (i, j);
 	    }
@@ -852,40 +851,53 @@ void spsolver::saveResults (nr_double_t freq) {
     }
   }
 
+  // finally compute and save noise parameters
   if (noise) {
     saveNoiseResults (noise_s, noise_c, f);
   }
 }
 
+/* This function takes the s-parameter matrix and noise wave
+   correlation matrix and computes the noise parameters based upon
+   these values.  Then it save the results into the dataset. */
 void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
-  complex s11 = s[0], c11 = c[0];
-  complex s12 = s[1], c12 = c[1];
-  complex s21 = s[2], c21 = c[2];
-  complex s22 = s[3], c22 = c[3];
-  complex n1, n2, F, Gopt, Fmin, Rn;
+  complex s11 = s[0], c11 = c[0] * kB * T0;
+  complex s12 = s[1], c12 = c[1] * kB * T0;
+  complex s21 = s[2], c21 = c[2] * kB * T0;
+  complex s22 = s[3], c22 = c[3] * kB * T0;
+  complex n1, n2, F, Ropt, Fmin, Rn;
 
-  F = 1.0 + c11 / kB / T0 / sqr (abs (s21));
-  n1 = 
+  // linear noise figure
+  F    = 1.0 + c11 / sqr (abs (s21)) / kB / T0;
+  n1   = 
     c11 * sqr (abs (s21)) - real (c12 * s21 * conj (s11)) + 
     c22 * sqr (abs (s11));
-  n2 = (c22 + n1) / (c22 * s11 - c12 * s21);
-  Gopt = n2 / 2.0 * (1.0 - sqrt (1.0 - 4.0 / sqr (abs (n2))));
+  n2   = (c22 + n1) / (c22 * s11 - c12 * s21);
+
+  // optimal source reflection coefficient
+  Ropt = n2 / 2.0 * (1.0 - sqrt (1.0 - 4.0 / sqr (abs (n2))));
+
+  // minimum noise figure
   Fmin = 
-    1.0 + (c22 - n1 * sqr (abs (Gopt))) / 
-    (kB * T0 * sqr (abs (s21)) * (1.0 + sqr (abs (Gopt))));
-  Rn = circuit::z0 * (c11 - 
-		      2 * real (c12 * conj ((1 + s11) / s21)) +
-		      c22 * sqr (abs ((1.0 + s11) / s21))) / 4.0 / kB / T0;
+    1.0 + (c22 - n1 * sqr (abs (Ropt))) / 
+    (kB * T0 * sqr (abs (s21)) * (1.0 + sqr (abs (Ropt))));
+
+  // equivalent noise resistance
+  Rn   = circuit::z0 * (c11 - 
+			2 * real (c12 * conj ((1 + s11) / s21)) +
+			c22 * sqr (abs ((1.0 + s11) / s21))) / 4.0 / kB / T0;
 
   // add variable data items to dataset
   saveVariable ("n1", n1, f);
   saveVariable ("n2", n2, f);
   saveVariable ("F", F, f);
-  saveVariable ("Gopt", Gopt, f);
+  saveVariable ("Gopt", Ropt, f);
   saveVariable ("Fmin", Fmin, f);
   saveVariable ("Rn", Rn, f);
 }
 
+/* Saves the given variable into dataset.  Creates the dataset vector
+   if necessary. */
 void spsolver::saveVariable (char * n, complex z, vector * f) {
   vector * d;
   if ((d = data->findVariable (n)) == NULL) {

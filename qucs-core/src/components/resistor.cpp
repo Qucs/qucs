@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.6 2004/06/25 22:09:23 ela Exp $
+ * $Id: resistor.cpp,v 1.7 2004/06/26 10:36:14 ela Exp $
  *
  */
 
@@ -37,22 +37,23 @@
 #include "resistor.h"
 #include "constants.h"
 
-#define sqr(x) ((x) * (x))
-
 resistor::resistor () : circuit (2) {
   type = CIR_RESISTOR;
 }
 
 void resistor::calcSP (nr_double_t) {
-  nr_double_t r = getPropertyDouble ("R") / z0;
-  setS (1, 1, r / (r + 2.0));
-  setS (2, 2, r / (r + 2.0));
-  setS (1, 2, 2.0 / (r + 2.0));
-  setS (2, 1, 2.0 / (r + 2.0));
 
-  r = getPropertyDouble ("R");
+  // calculate s-parameters
+  nr_double_t r = getPropertyDouble ("R");
+  nr_double_t z = r / z0;
+  setS (1, 1, z / (z + 2.0));
+  setS (2, 2, z / (z + 2.0));
+  setS (1, 2, 2.0 / (z + 2.0));
+  setS (2, 1, 2.0 / (z + 2.0));
+
+  // calculate noise correlation matrix
   nr_double_t T = T0;
-  nr_double_t f = kB * T * 4.0 * r * z0 / sqr (2.0 * z0 + r);
+  nr_double_t f = /* kB * */ T * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
   setN (1, 1, +f); setN (2, 2, +f);
   setN (1, 2, -f); setN (2, 1, -f);
 }

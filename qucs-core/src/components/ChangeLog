@@ -4,6 +4,9 @@
 
 2004-06-26  Stefan Jahn  <stefan@lkcc.org>
 
+	* constants.h: Globally defined sqr, cubic, quad, coth, sech
+	and cosech functions.
+
 	* resistor.cpp: Added noise wave correlation matrix.
 
 2004-06-22  Stefan Jahn  <stefan@lkcc.org>
