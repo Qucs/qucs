@@ -1,3 +1,8 @@
+2004-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/jfet.cpp, devices/diode.cpp: Implemented AC and
+	transient analysis functionality.
+
 2004-09-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* vpulse.h (class vpulse), ipulse.h (class ipulse): New

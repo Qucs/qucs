@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.15 2004-09-12 14:09:20 ela Exp $
+ * $Id: jfet.cpp,v 1.16 2004-09-25 13:45:50 ela Exp $
  *
  */
 
@@ -52,6 +52,10 @@ jfet::jfet () : circuit (3) {
 }
 
 void jfet::calcSP (nr_double_t frequency) {
+  setMatrixS (ytos (calcMatrixY (frequency)));
+}
+
+matrix& jfet::calcMatrixY (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Cgd = getOperatingPoint ("Cgd");
@@ -67,17 +71,18 @@ void jfet::calcSP (nr_double_t frequency) {
   complex Yds = gds;
 
   // build admittance matrix and convert it to S-parameter matrix
-  matrix y = matrix (3);
-  y.set (NODE_G, NODE_G, Ygd + Ygs);
-  y.set (NODE_G, NODE_D, -Ygd);
-  y.set (NODE_G, NODE_S, -Ygs);
-  y.set (NODE_D, NODE_G, gm - Ygd);
-  y.set (NODE_D, NODE_D, Ygd + Yds);
-  y.set (NODE_D, NODE_S, -Yds - gm);
-  y.set (NODE_S, NODE_G, -Ygs - gm);
-  y.set (NODE_S, NODE_D, -Yds);
-  y.set (NODE_S, NODE_S, Ygs + Yds + gm);
-  setMatrixS (ytos (y));
+  matrix * y = new matrix (3);
+  y->set (NODE_G, NODE_G, Ygd + Ygs);
+  y->set (NODE_G, NODE_D, -Ygd);
+  y->set (NODE_G, NODE_S, -Ygs);
+  y->set (NODE_D, NODE_G, gm - Ygd);
+  y->set (NODE_D, NODE_D, Ygd + Yds);
+  y->set (NODE_D, NODE_S, -Yds - gm);
+  y->set (NODE_S, NODE_G, -Ygs - gm);
+  y->set (NODE_S, NODE_D, -Yds);
+  y->set (NODE_S, NODE_S, Ygs + Yds + gm);
+
+  return *y;
 }
 
 void jfet::calcNoise (nr_double_t frequency) {
@@ -297,4 +302,31 @@ void jfet::calcOperatingPoints (void) {
   setOperatingPoint ("Vds", Ugs - Ugd);
   setOperatingPoint ("Cgd", Cgd);
   setOperatingPoint ("Cgs", Cgs);
+}
+
+void jfet::calcAC (nr_double_t frequency) {
+  setMatrixY (calcMatrixY (frequency));
+}
+
+#define qgdState 0 // gate-drain charge state
+#define cgdState 1 // gate-drain current state
+#define qgsState 2 // gate-source charge state
+#define cgsState 3 // gate-source current state
+
+void jfet::initTR (void) {
+  setStates (4);
+  initDC ();
+}
+
+void jfet::calcTR (nr_double_t) {
+  calcDC ();
+  calcOperatingPoints ();
+
+  nr_double_t Ugs = getOperatingPoint ("Vgs");
+  nr_double_t Ugd = getOperatingPoint ("Vgd");
+  nr_double_t Cgs = getOperatingPoint ("Cgs");
+  nr_double_t Cgd = getOperatingPoint ("Cgd");
+
+  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs);
+  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd);
 }

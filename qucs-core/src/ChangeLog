@@ -1,3 +1,8 @@
+2004-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* circuit.cpp (transientCapacitance): Implemented transient
+	analysis helper for voltage controlled capacitances.
+
 2004-09-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp: Pass singular matrix to the nasolver via

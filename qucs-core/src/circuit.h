@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.27 2004-09-13 21:05:34 ela Exp $
+ * $Id: circuit.h,v 1.28 2004-09-25 13:45:49 ela Exp $
  *
  */
 
@@ -83,6 +83,7 @@ class circuit : public object, public integrator
   int  getVoltageSources (void);
   void setVoltageSources (int);
   void voltageSource (int, int, int, nr_double_t value = 0.0);
+  void transientCapacitance (int, int, int, nr_double_t, nr_double_t);
 
   // s-parameter helpers
   int  isPort (void) { return pacport; }
@@ -127,6 +128,8 @@ class circuit : public object, public integrator
   void clearJ (void);
   void clearV (void);
   void clearY (void);
+  void addY (int, int, complex);
+  void addI (int, complex);
 
   // operating point functionality
   void        addOperatingPoint (char *, nr_double_t);

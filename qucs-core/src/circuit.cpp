@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.29 2004-09-13 21:05:34 ela Exp $
+ * $Id: circuit.cpp,v 1.30 2004-09-25 13:45:49 ela Exp $
  *
  */
 
@@ -275,6 +275,12 @@ void circuit::setI (int port, complex z) {
   MatrixI[port - 1] = z;
 }
 
+/* Modifies the circuits I-MNA matrix value of the current source
+   built in the circuit depending on the port number. */
+void circuit::addI (int port, complex z) {
+  MatrixI[port - 1] += z;
+}
+
 /* Returns the circuits J-MNA matrix value of the given voltage source
    built in the circuit. */
 complex circuit::getJ (int nr) {
@@ -307,6 +313,12 @@ complex circuit::getY (int r, int c) {
    numbers. */
 void circuit::setY (int r, int c, complex y) {
   MatrixY[(r - 1) * size + c - 1] = y;
+}
+
+/* Modifies the circuits G-MNA matrix value depending on the port
+   numbers. */
+void circuit::addY (int r, int c, complex y) {
+  MatrixY[(r - 1) * size + c - 1] += y;
 }
 
 /* Returns the circuits G-MNA matrix value depending on the port
@@ -524,4 +536,18 @@ void circuit::voltageSource (int n, int pos, int neg, nr_double_t value) {
   setB (pos, n, +1.0); setB (neg, n, -1.0);
   setD (n, n, 0.0);
   setE (n, value);
+}
+
+/* The function runs the necessary calculation in order to perform a
+   single integration step of a voltage controlled capacitance placed
+   in between the given nodes. */
+void circuit::transientCapacitance (int state, int pos, int neg,
+				    nr_double_t cap, nr_double_t voltage) {
+  nr_double_t g, i;
+  setState (state, cap * voltage);
+  integrate (state, cap, g, i);
+  addY (pos, pos, +g); addY (neg, neg, +g);
+  addY (pos, neg, -g); addY (neg, pos, -g);
+  addI (pos , -i);
+  addI (neg , +i);
 }

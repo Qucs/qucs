@@ -4219,6 +4219,7 @@ system.  The best known is the so called Newton-Raphson method.
 
 \subsection{Newton-Raphson method}
 %\addcontentsline{toc}{subsection}{Newton-Raphson method}
+\label{sec:NRmethod}
 
 The Newton-Raphson method is going to be introduced using the example
 circuit shown in fig. \ref{fig:NLexample} having a single unknown: the
@@ -5121,6 +5122,7 @@ this into account.
 The relation between current and voltage in terms of a differential
 equation for an ideal capacitor is
 \begin{equation}
+\label{eq:ConstCap}
 I_C(t) = C\cdot \dfrac{d V_C}{d t}
 \end{equation}
 
@@ -5134,6 +5136,7 @@ the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt},
 problem.  Rewriting them in an explicit form regarding the next
 integration current results in
 \begin{align}
+\label{eq:EulerIC}
 I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n}\\
 I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n\\
 I_C^{n+1} &= \dfrac{C}{b_{-1}\cdot h^{n}} V_C^{n+1} - \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{a_1\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-1} - \ldots - \dfrac{a_{k-1}\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-k+1}\\
@@ -5152,6 +5155,7 @@ source with its accompanied internal resistance.
 \includegraphics[width=0.35\linewidth]{transcap}
 \end{center}
 \caption{companion equivalent circuit of a capacitor during transient analysis}
+\label{fig:TransCap}
 \end{figure}
 \FloatBarrier
 
@@ -5243,6 +5247,79 @@ use alike computation schemes for capacitors and inductors.  Charges
 become flues, capacitances become inductances and finally voltages
 become currents and the other way around.  Everything else (especially
 the coeffcients in the integration formulas) can be reused.
+
+\subsection{Depletion Capacitance}
+%\addcontentsline{toc}{subsection}{Depletion Capacitance}
+
+For non-constant capacitances, especially depletion capacitance used
+in non-linear devices, instead of eq. \eqref{eq:ConstCap} the
+following equation holds.
+\begin{equation}
+I_C(t) = \dfrac{d Q}{d t}
+\end{equation}
+
+With
+\begin{equation}
+d Q = C\cdot d V_C
+\;\;\;\; \textrm{ and } \;\;\;\;
+\left.\dfrac{d V_C}{d Q}\right|_{Q^{(m)}} = \dfrac{1}{C}
+\end{equation}
+
+equation \eqref{eq:NRgeneral} can be written as
+\begin{equation}
+V_C^{(m + 1)} = V_C^{(m)} - \dfrac{Q\left(V_C^{(m)}\right)}{C^{(m)}}
+\end{equation}
+
+yielding a similar iterative algorithm as already used for the
+non-linear DC analysis described in section \ref{sec:NRmethod} on page
+\pageref{sec:NRmethod}.  The indices $~^{(m)}$ indicated the $m$-th
+Newton-Raphson iteration.  With this knowledge at hand it is possible
+to rewrite the explicit formula for the forward Euler integration
+\eqref{eq:EulerIC} as
+\begin{equation}
+\begin{split}
+I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
+&= \dfrac{C^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{C^{n}}{h^{n}} V_C^{n}
+\end{split}
+\end{equation}
+
+The double indices now indicate the $n$-th integration step and the
+$m$-th Newton-Raphson iteration.  The same can be done for the other
+integration formulas and results also in a similar equivalent
+companion model as shown in fig. \ref{fig:TransCap}.  The capacitance
+$C$ within the above equations is computed according to the
+appropriate (non-linear) model formulations, e.g.
+\begin{equation}
+C^{n+1,m} = C_{0}\cdot \left(1 - \dfrac{V_{C}^{n+1,m}}{V_{j}}\right)^{-M}
+\end{equation}
+
+\subsection{Diffusion Capacitance}
+%\addcontentsline{toc}{subsection}{Diffusion Capacitance}
+
+The current through a diffusion capacitance can be approximated by
+\begin{equation}
+I_C(t) = \tau_D \dfrac{d I_D}{d t}
+\end{equation}
+
+whence $\tau_D$ specifies the transit time through a pn-junction.  The
+above formula can be rewritten as
+\begin{equation}
+I_C(t) = \tau_D \dfrac{d I_D}{d V_C}\cdot \dfrac{d V_C}{d t} = \tau_D \cdot g_D \cdot \dfrac{d V_C}{d t}
+\end{equation}
+
+which means that eq. \eqref{eq:EulerIC} yields now
+\begin{equation}
+\begin{split}
+I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
+&= \dfrac{\tau_D\cdot g_D^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{\tau_D\cdot g_D^{n}}{h^{n}} V_C^{n}\\
+&= \dfrac{C^{n+1,m}}{h^{n}} V_C^{n+1} - \dfrac{C^{n}}{h^{n}} V_C^{n}
+\end{split}
+\end{equation}
+
+Similar to the diffusion capacitance a Newton-Raphson iteration is
+necessary.  Also the formulas for the other integration methods can be
+easily rewritten and the equivalent companion model shown in
+fig. \ref{fig:TransCap} is valid as well.
 
 \chapter{Non-linear devices}
 %\addcontentsline{toc}{chapter}{Non-linear devices}
