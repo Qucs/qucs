@@ -1356,7 +1356,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation>Podukład</translation>
+        <translation type="obsolete">Podukład</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -1564,6 +1564,10 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -99,10 +99,18 @@ void Diagram::paint(QPainter *p)
       // draw y-label for all graphs
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         p->setPen(pg->Color);
-	// get width of text
-        r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var);
-        p->drawText(-cy+((y2-r.width())>>1), cx-delta, pg->Var);
-        delta += r.height();
+	if(pg->Points) {
+	  // get width of text
+	  r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var);
+	  p->drawText(-cy+((y2-r.width())>>1), cx-delta, pg->Var);
+	}
+	else {  // if no data => <invalid>
+	  // get width of text
+	  r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var+" <invalid>");
+	  p->drawText(-cy+((y2-r.width())>>1), cx-delta,
+					       pg->Var+" <invalid>");
+	}
+	delta += r.height();
       }
     }
     else {
@@ -141,14 +149,15 @@ void Diagram::paintScheme(QPainter *p)
 }
 
 // ------------------------------------------------------------
-void Diagram::calcDiagram()
+bool Diagram::calcDiagram()
 {
+  return true;
 }
 
 // ------------------------------------------------------------
-void Diagram::calcData(Graph *g)
+void Diagram::calcData(Graph *g, bool valid)
 {
-  if(Name[0] == 'T') {   // no graph within tabulars
+  if((Name[0] == 'T') || (!valid)) {   // no graph within tabulars
     if(g->Points != 0) {
       delete[] g->Points;  // memory is of no use in this diagram type
       g->Points = 0;
@@ -288,11 +297,12 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 // --------------------------------------------------------------------------
 void Diagram::updateGraphData()
 {
-  calcDiagram();
-
   Graph *pg;
+  bool valid = calcDiagram();   // do not calculate graph data if invalid
+
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    calcData(pg);   // calculate graph coordinates
+    calcData(pg, valid);   // calculate graph coordinates
+
 
   for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next()) {
     pg = Graphs.at(Graphs.findRef(pm->pGraph));

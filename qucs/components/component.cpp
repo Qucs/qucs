@@ -537,8 +537,7 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'S' : if(cstr.left(5) == "Pfile") {
 	       c = new SParamFile(cstr.mid(5).toInt()); }
-        else if(cstr.left(2) == "ub") {
-	       c = new Subcircuit(cstr.mid(2).toInt()); }
+        else if(cstr == "ub")   c = new Subcircuit();
         else if(cstr == "UBST") c = new Substrate();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();

@@ -42,6 +42,7 @@ Graph::Graph(const QString& _Line)
 Graph::~Graph()
 {
   if(Points != 0) delete[] Points;
+  if(cPointsY != 0) delete[] cPointsY;
 }
 
 // ---------------------------------------------------------------------

@@ -1,3 +1,9 @@
+2004-07-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new components: msgap, bjtsub
+	* subcircuit netlist now matches the qucsator style
+	* fixed bug in loading equations
+
 2004-07-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdoc.cpp (QucsDoc): Fixed bug when instantiating a qucsdoc

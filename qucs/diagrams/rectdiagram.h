@@ -31,7 +31,7 @@ public:
 
 
   RectDiagram* newOne();
-  void   calcDiagram();
+  bool   calcDiagram();
   void   calcData(Graph *g);
   void   calcCoordinate(double, double, double, int*, int*);
 
