@@ -1,3 +1,50 @@
+2004-11-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Allowing multiple types of arguments which must
+	be checked by the actual evaluation function.
+
+	* strlist.cpp: New function del() which deletes the each entry
+	in the given string list from the string list object.
+
+	* parse_netlist.y: Allowing array/vector indices specifying
+	whole ranges of identifiers, e.g. 'array[:,1]'.
+
+	* nasolver.cpp: Implemented optional gMin-stepper as
+	convergence helper for non-linear networks.
+
+	* matvec.cpp: Implemented the following new operations:
+	matvec/matrix plus, matvec/matrix minus, unary minus, scaling
+	with doubles and vectors, matvec/matrix multiplication, det(),
+	inverse(), conj(), abs(), arg(), real(), imag(), adjoint().
+
+	* matrix.cpp: Added the following operations: unary minus,
+	abs(), arg(), real() and imag().
+
+	* evaluate.cpp (THROW_MATH_EXCEPTION): The evaluator functions
+	can now throw math exceptions.
+	(MAKE_FUNC_DEFINITION_1): Added new macro simplifying another
+	type of functions.
+	Added more basic operations like '*', '+', '-' for the matrix
+	and matrix vector types.
+	Added conj(), phase(), arg(), inverse(), transpose(), det(),
+	eye() and adjoint() functionality for matrices and matrix
+	vectors	to the list of available functions.
+
+	* equation.h: New constant tag 'RANGE' added.
+
+	* equation.cpp: The evaluation function can now throw math
+	exceptions which are appropriately handled.
+	Added some more functionality to the equation solver allowing
+	to calculate the data entry lengths of equation nodes.
+	During export of the dataset it is now possible to remove
+	data dependencies from output vectors.
+
+	* complex.cpp: Added convenience function imag() for double
+	values.
+
+	* check_netlist.cpp: Implemented checks for the nodeset
+	functionality detecting duplicate and useless nodesets.
+
 2004-11-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp: Implemented fallback variants for the

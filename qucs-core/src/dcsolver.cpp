@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.32 2004/11/24 19:15:45 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.33 2004/11/29 19:03:33 raimi Exp $
  *
  */
 
@@ -78,7 +78,11 @@ void dcsolver::solve (void) {
   // local variables for the fallback thingies
   int retry = -1, error, fallback = 0;
   int helpers[] = {
-    CONV_SteepestDescent, CONV_LineSearch, CONV_Attenuation, -1 };
+    CONV_GMinStepping,
+    CONV_SteepestDescent,
+    CONV_LineSearch,
+    CONV_Attenuation,
+    -1 };
 
   do {
     // Run the DC solver once.

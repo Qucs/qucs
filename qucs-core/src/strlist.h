@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.h,v 1.4 2004/08/01 16:08:02 ela Exp $
+ * $Id: strlist.h,v 1.5 2004/11/29 19:03:39 raimi Exp $
  *
  */
 
@@ -44,6 +44,7 @@ class strlist
   char * get (int);
   int index (char *);
   static strlist * join (strlist *, strlist *);
+  void del (strlist *);
   char * toString (char * concat = " ");
 
  private:

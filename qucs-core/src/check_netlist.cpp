@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.65 2004/11/24 19:15:42 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.66 2004/11/29 19:03:30 raimi Exp $
  *
  */
 
@@ -616,6 +616,60 @@ static int checker_validate_strips (struct definition_t * root) {
 	  }
 #endif
 	}
+      }
+    }
+  }
+  return errors;
+}
+
+/* This function counts the number of occurrences of the given node
+   name in the given netlist definition root. */
+static int checker_count_nodes (struct definition_t * root, char * n) {
+  int count = 0;
+  struct node_t * node;
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (!def->action && !def->nodeset) {
+      for (node = def->nodes; node != NULL; node = node->next)
+	if (!strcmp (node->node, n)) count++;
+    }
+  }
+  return count;
+}
+
+/* The function identifies duplicate nodesets for the same node which
+   is not allowed.  It returns the number of duplications. */
+static int checker_count_nodesets (struct definition_t * root, char * n) {
+  int count = 0;
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (def->nodeset && !def->duplicate) {
+      char * node = def->nodes->node;
+      if (!strcmp (node, n)) {
+	if (++count > 1) def->duplicate = 1;
+      }
+    }
+  }
+  return count;
+}
+
+/* The following function checks whether the nodes specified by the
+   nodeset functionality is valid in its current scope.  It does not
+   check across subcircuit boundaries. */
+static int checker_validate_nodesets (struct definition_t * root) {
+  int errors = 0;
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    if (def->nodeset && checker_count_nodes (def) == 1) {
+      char * node = def->nodes->node;
+      if (checker_count_nodes (root, node) <= 0) {
+	logprint (LOG_ERROR, "line %d: checker error, no such node `%s' found "
+		  "as referenced by `%s:%s'\n", def->line, node, def->type,
+		  def->instance);
+	errors++;
+      }
+      if (checker_count_nodesets (root, node) > 1) {
+	logprint (LOG_ERROR, "line %d: checker error, the node `%s' is not "
+		  "uniquely defined by `%s:%s'\n", def->line, node, def->type,
+		  def->instance);
+	errors++;
       }
     }
   }
@@ -1347,7 +1401,10 @@ static int netlist_checker_intern (struct definition_t * root) {
   }
   /* check microstrip definitions */
   errors += checker_validate_strips (root);
+  /* check subcircuit definitions */
   errors += checker_validate_subcircuits (root);
+  /* check nodeset definitions */
+  errors += checker_validate_nodesets (root);
   return errors;
 }
 

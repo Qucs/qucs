@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.11 2004/10/23 18:47:09 ela Exp $
+ * $Id: matvec.cpp,v 1.12 2004/11/29 19:03:37 raimi Exp $
  *
  */
 
@@ -190,6 +190,19 @@ matvec operator + (matvec a, matvec b) {
   return res;
 }
 
+// Matrix vector addition with single matrix.
+matvec operator + (matvec a, matrix b) {
+  assert (a.getRows () == b.getRows () && a.getCols () == b.getCols ());
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) + b, i);
+  return res;
+}
+
+// Matrix vector addition with single matrix in different order.
+matvec operator + (matrix a, matvec b) {
+  return b + a;
+}
+
 // Intrinsic matrix vector addition.
 matvec matvec::operator += (matvec a) {
   assert (a.getRows () == rows && a.getCols () == cols &&
@@ -204,6 +217,26 @@ matvec operator - (matvec a, matvec b) {
 	  a.getSize () == b.getSize ());
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) - b.get (i), i);
+  return res;
+}
+
+// Matrix vector subtraction with single matrix.
+matvec operator - (matvec a, matrix b) {
+  assert (a.getRows () == b.getRows () && a.getCols () == b.getCols ());
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) - b, i);
+  return res;
+}
+
+// Matrix vector subtraction with single matrix in different order.
+matvec operator - (matrix a, matvec b) {
+  return -b + a;
+}
+
+// Unary minus.
+matvec matvec::operator - () {
+  matvec res (getSize (), getRows (), getCols ());
+  for (int i = 0; i < getSize (); i++) res.set (-data[i], i);
   return res;
 }
 
@@ -227,10 +260,50 @@ matvec operator * (complex z, matvec a) {
   return a * z;
 }
 
+// Scalar matrix vector scaling.
+matvec operator * (matvec a, nr_double_t d) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) * d, i);
+  return res;
+}
+
+// Scalar matrix vector scaling in different order.
+matvec operator * (nr_double_t d, matvec a) {
+  return a * d;
+}
+
+// Matrix vector scaling by a second vector.
+matvec operator * (matvec a, vector b) {
+  assert (a.getSize () == b.getSize ());
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) * b.get (i), i);
+  return res;
+}
+
+// Matrix vector scaling by a second vector in different order.
+matvec operator * (vector a, matvec b) {
+  return b * a;
+}
+
 // Matrix vector scaling.
 matvec operator / (matvec a, complex z) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) / z, i);
+  return res;
+}
+
+// Scalar matrix vector scaling.
+matvec operator / (matvec a, nr_double_t d) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) / d, i);
+  return res;
+}
+
+// Matrix vector scaling by a second vector.
+matvec operator / (matvec a, vector b) {
+  assert (a.getSize () == b.getSize ());
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) / b.get (i), i);
   return res;
 }
 
@@ -242,10 +315,73 @@ matvec operator * (matvec a, matvec b) {
   return res;
 }
 
+// Matrix vector multiplication with a single matrix.
+matvec operator * (matvec a, matrix b) {
+  assert (a.getCols () == b.getRows ());
+  matvec res (a.getSize (), a.getRows (), b.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) * b, i);
+  return res;
+}
+
+// Matrix vector multiplication with a single matrix in different order.
+matvec operator * (matrix a, matvec b) {
+  return b * a;
+}
+
+// Compute determinants of the given matrix vector.
+vector det (matvec a) {
+  vector res (a.getSize ());
+  for (int i = 0; i < a.getSize (); i++) res.set (det (a.get (i)), i);
+  return res;
+}
+
+// Compute inverse matrices of the given matrix vector.
+matvec inverse (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (inverse (a.get (i)), i);
+  return res;
+}
+
 // Conjugate complex matrix vector.
 matvec conj (matvec a) {
   matvec res (a.getSize (), a.getRows (), a.getCols ());
   for (int i = 0; i < a.getSize (); i++) res.set (conj (a.get (i)), i);
+  return res;
+}
+
+// Computes magnitude of each matrix vector element.
+matvec abs (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (abs (a.get (i)), i);
+  return res;
+}
+
+// Computes the argument of each matrix vector element.
+matvec arg (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (arg (a.get (i)), i);
+  return res;
+}
+
+// Real part matrix vector.
+matvec real (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (real (a.get (i)), i);
+  return res;
+}
+
+// Real part matrix vector.
+matvec imag (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (imag (a.get (i)), i);
+  return res;
+}
+
+/* The function returns the adjoint complex matrix vector.  This is
+   also called the adjugate or transpose conjugate. */
+matvec adjoint (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (adjoint (a.get (i)), i);
   return res;
 }
 

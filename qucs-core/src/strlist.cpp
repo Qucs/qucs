@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.cpp,v 1.5 2004/08/01 16:08:02 ela Exp $
+ * $Id: strlist.cpp,v 1.6 2004/11/29 19:03:39 raimi Exp $
  *
  */
 
@@ -118,6 +118,22 @@ char * strlist::get (int pos) {
   struct strlist_t * s = root;
   for (int i = 0; i < pos && s != NULL; s = s->next, i++);
   return s ? s->str : NULL;
+}
+
+/* The function removes each occurrence of the given string list entry
+   from the string list object. */
+void strlist::del (strlist * cand) {
+  if (cand == NULL) return;
+  struct strlist_t * next;
+  strlist * res = new strlist ();
+  while (root) {
+    next = root->next;
+    if (cand->contains (root->str) == 0) res->append (root->str);
+    if (root->str) free (root->str);
+    free (root);
+    root = next;
+  }
+  *this = *res;
 }
 
 /* The function joins the given string lists to each other and returns
