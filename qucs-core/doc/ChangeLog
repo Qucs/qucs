@@ -1,3 +1,8 @@
+2004-06-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Operational amplifier}): Added
+	a note about OPAMP feedback impedance.
+
 2004-02-07  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 
 	* added some noise formulas

@@ -1,3 +1,35 @@
+2004-06-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* parasweep.cpp: Using the new sweep classes for the parameter
+	sweep values.
+
+	* vector.cpp: Fixed a bug in the unary '-' operator which caused
+	the given vector to be modified.  Now it returns a new vector.
+
+	* equation.cpp: Allowing the special 'Export' equation
+	indicating whether the variables defined within the same equation
+	instance are output into the dataset or not.
+
+	* parse_netlist.y: Saving the equation instance name for the
+	new 'Export' equation.
+
+	* scan_netlist.l: Allowing 'x.x' and 'x[a,b]' syntax for 
+	identifiers when scanning equations.
+
+	* dcsolver.cpp: Implemented usage of DC simulation options:
+	MaxIter (maximum iterartion), saveOPs (save operating points),
+	reltol (relative tolerance for convergence), abstol (absolute
+	tolerance for current) and vntol (absolute tolerance for 
+	voltage).
+	(createI): Save only current through real voltage sources and
+	explicit current probes if 'saveOPs' is not given.
+	Changed naming scheme of dataset output variables.  It is now:
+	for node voltages: 'node.V', for currents: 'component.I', for
+	operating points: 'component.xx'.
+
+	* check_netlist.cpp (definition_available): Added 'DispModel'
+	(i.e dispersion model) to microstrip components.
+
 2004-06-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Started to implemented noise analysis.

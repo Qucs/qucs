@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.6 2004/06/25 00:17:23 ela Exp $
+ * $Id: check_netlist.h,v 1.7 2004/06/27 15:11:48 ela Exp $
  *
  */
 
@@ -96,8 +96,10 @@ struct define_t {
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
 #define PROP_NO_RANGE     { 0, 0 }
-#define PROP_POS_RANGE    { 0, +DBL_MAX }
-#define PROP_NEG_RANGE    { -DBL_MAX, 0 }
+#define PROP_VAL_MAX      DBL_MAX
+#define PROP_VAL_MIN      DBL_MIN
+#define PROP_POS_RANGE    { 0, +PROP_VAL_MAX }
+#define PROP_NEG_RANGE    { -PROP_VAL_MAX, 0 }
 
 #define PROP_IS_PROP(prop)   ((prop).key != NULL)
 #define PROP_IS_VAL(prop)    ((prop).defaultval.s == PROP_NO_STR)

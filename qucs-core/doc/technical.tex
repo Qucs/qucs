@@ -1202,17 +1202,22 @@ $Z_S=R_S+j\cdot X_s$, or source reflexion coefficient $r_S$.
 \end{align}
 
 Where $SNR_{in}$ and $SNR_{out}$ are the signal to noise ratios at the
-input and output, respectively, $T_{equi}$ is the equivalent (input) noise
-temperature. (Note that $G_S$ does not equal $1/R_S$.)\\
-All curves with constant noise figures are circles (in all planes, i.e.
-impedance, admittance and reflexion coefficient). A circle in the reflexion
-coefficient plane owns the following parameters.\\ \\
+input and output, respectively, $T_{equi}$ is the equivalent (input)
+noise temperature.  Note that $G_S$ does not equal $1/R_S$.
 
-Center:
+\addvspace{12pt}
+
+All curves with constant noise figures are circles (in all planes,
+i.e. impedance, admittance and reflexion coefficient).  A circle in
+the reflexion coefficient plane owns the following parameters.
+
+\addvspace{12pt}
+
+center point:
 \begin{equation}
 \underline{r}_{center} = \frac{\Gamma_{opt}}{1+N}
 \end{equation}
-Radius:
+radius:
 \begin{equation}
 R = \frac{\sqrt{N^2 + N\cdot(1-|\Gamma_{opt}|^2)}}{1+N}
 \end{equation}
@@ -1423,14 +1428,19 @@ matrix, therefore, writes as follows.
 \label{eqn:diode_noise}
 \end{equation}
 
-Where $e$ is charge of an electron, $U_T$ temperature voltage.
-To be very precise, the equation above only holds for diodes whose field and diffusion
-current dominate absolutely (diffusion limited diode), i.e. $n=1$. Many diodes also
-generate a generation/recombination current ($n\approx 2$). Furthermore some special
-diodes have additional curent or noise components (tunnel diodes, avalanche diodes
-etc.). All these mechanisms are not taken into account in equation
-\ref{eqn:diode_noise}.\\
-The parasitic ohmic resistance in a non-ideal diode, of course, creates thermal noise.
+Where $e$ is charge of an electron, $U_T$ temperature voltage.  To be
+very precise, the equation above only holds for diodes whose field and
+diffusion current dominate absolutely (diffusion limited diode),
+i.e. $n=1$.  Many diodes also generate a generation/recombination
+current ($n\approx 2$).  Furthermore some special diodes have
+additional current or noise components (tunnel diodes, avalanche
+diodes etc.).  All these mechanisms are not taken into account in
+equation \eqref{eqn:diode_noise}.
+
+\addvspace{12pt}
+
+The parasitic ohmic resistance in a non-ideal diode, of course,
+creates thermal noise.
 
 
 \chapter{DC Analysis}
@@ -2611,7 +2621,9 @@ I_{3}\\
 
 The operational amplifier could be considered as a special case of a
 voltage controlled current source with infinite forward
-transconductance $G$.
+transconductance $G$.  Please note that the presented matrix form is
+only valid in case there is any kind of finite feedback impedance
+between the output and input port.
 
 \subsection{Transformer}
 %\addcontentsline{toc}{subsection}{Transformer}
@@ -2900,18 +2912,17 @@ I_{2}\\
 
 \subsection{Phase Shifter}
 
-A phase shifter alters the phase of the input signal independently
-on the frequency. As a result the relation between input and output
-signal is complex. To get the DC model, some simulators use the AC
-formulas and create the real part or the magnitude. This procedure
+A phase shifter alters the phase of the input signal independently on
+the frequency.  As a result the relation between input and output
+signal is complex.  To get the DC model, some simulators use the AC
+formulas and create the real part or the magnitude.  This procedure
 has no physical reason, because it uses an operation that is not
-defined for DC. But one can think in the following direction: As
-a DC quantity is constant, it doesn't change if it is phase-shifted.
-(An AC quantity doesn't change it magnitude, too.) Or to say it
-with other words, for a DC simulation the phase to shift is always
-zero. That leads to the result that the phase sifter is a short
-circuit for DC. So, this is true for all reference impedances.
-
+defined for DC.  But one can think in the following direction: As a DC
+quantity is constant, it doesn't change if it is phase-shifted.  (An
+AC quantity doesn't change it magnitude, too.)  Or to say it with
+other words, for a DC simulation the phase to shift is always zero.
+That leads to the result that the phase shifter is a short circuit for
+DC.  So, this is true for all reference impedances.
 
 \subsection{Circulator}
 %\addcontentsline{toc}{subsection}{Circulator}

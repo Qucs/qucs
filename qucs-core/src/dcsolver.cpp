@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.15 2004/06/05 12:20:35 ela Exp $
+ * $Id: dcsolver.cpp,v 1.16 2004/06/27 15:11:48 ela Exp $
  *
  */
 
@@ -47,6 +47,7 @@ using namespace std;
 #include "matrix.h"
 #include "eqnsys.h"
 #include "component_id.h"
+#include "operatingpoint.h"
 #include "dcsolver.h"
 
 // Constructor creates an unnamed instance of the dcsolver class.
@@ -54,6 +55,8 @@ dcsolver::dcsolver () : analysis () {
   nlist = NULL;
   A = z = x = NULL;
   xprev = zprev = NULL;
+  saveOPs = 0;
+  reltol = abstol = vntol = 0;
   type = ANALYSIS_DC;
 }
 
@@ -62,6 +65,8 @@ dcsolver::dcsolver (char * n) : analysis (n) {
   nlist = NULL;
   A = z = x = NULL;
   xprev = zprev = NULL;
+  saveOPs = 0;
+  reltol = abstol = vntol = 0;
   type = ANALYSIS_DC;
 }
 
@@ -83,15 +88,29 @@ dcsolver::dcsolver (dcsolver & o) : analysis (o) {
   z = new matrix (*(o.z));
   x = new matrix (*(o.x));
   xprev = zprev = NULL;
+  saveOPs = o.saveOPs;
+  reltol = o.reltol;
+  abstol = o.abstol;
+  vntol = o.vntol;
 }
 
 /* This is the DC netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void dcsolver::solve (void) {
-  int convergence, run = 0, MaxIterations = 150;
+  int convergence, run = 0, MaxIterations;
 
-  // initialize node voltages, first guess for non-linear circuits
+  // fetch simulation properties
+  saveOPs = !strcmp (getPropertyString ("saveOPs"), "yes") ? 1 : 0;
+  MaxIterations = getPropertyInteger ("MaxIter");
+  reltol = getPropertyDouble ("reltol");
+  abstol = getPropertyDouble ("abstol");
+  vntol  = getPropertyDouble ("vntol");
+
+  // initialize node voltages, first guess for non-linear circuits and
+  // generate extra circuits if necessary
   init ();
+
+  // create node list, enumerate nodes and voltage sources
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: creating node list for DC analysis\n");
 #endif
@@ -99,17 +118,20 @@ void dcsolver::solve (void) {
   nlist->assignNodes ();
   assignVoltageSources ();
 #if DEBUG
-  logprint (LOG_STATUS, "NodeList:\n");
   nlist->print ();
 #endif
+
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: solving DC netlist\n");
 #endif
+
   // run solving loop until convergence is reached
   do {
-    createMatrix ();
-    runMNA ();
-    saveNodeVoltages ();
+    createMatrix ();     // generate A matrix and z vector
+    runMNA ();           // solve equation system
+    saveNodeVoltages (); // save results into circuits
+
+    // convergence check
     convergence = (run > 0) ? checkConvergence () : 0;
     savePreviousIteration ();
     run++;
@@ -516,39 +538,61 @@ void dcsolver::init (void) {
 void dcsolver::saveResults (void) {
   int N = countNodes ();
   int M = subnet->getVoltageSources ();
-  vector * v, * i;
   char * n;
 
   // add node voltage variables
   for (int r = 1; r <= N; r++) {
     if ((n = createV (r)) != NULL) {
-      if ((v = data->findVariable (n)) == NULL) {
-	v = new vector (n);
-	v->setOrigin (getName ());
-	data->addVariable (v);
-      }
-      v->add (x->get (r, 1));
+      saveVariable (n, x->get (r, 1));
     }
   }
 
   // add branch current variables
   for (int r = 1; r <= M; r++) {
     if ((n = createI (r)) != NULL) {
-      if ((i = data->findVariable (n)) == NULL) {
-	i = new vector (n);
-	i->setOrigin (getName ());
-	data->addVariable (i);
-      }
-      i->add (x->get (r + N, 1));
+      saveVariable (n, x->get (r + N, 1));
     }
   }
+
+  // save operating points of non-linear circuits if requested
+  if (saveOPs) {
+    circuit * root = subnet->getRoot ();
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+      if (!c->isNonLinear ()) continue;
+      c->calcOperatingPoints ();
+      operatingpoint * p = c->getOperatingPoints ();
+      for (; p != NULL; p = p->getNext ()) {
+	n = createOP (c->getName (), p->getName ());
+	saveVariable (n, p->getValue ());
+      }
+    }
+  }
+}
+
+/* Saves the given variable into dataset.  Creates the dataset vector
+   if necessary. */
+void dcsolver::saveVariable (char * n, complex z) {
+  vector * d;
+  if ((d = data->findVariable (n)) == NULL) {
+    d = new vector (n);
+    d->setOrigin (getName ());
+    data->addVariable (d);
+  }
+  d->add (z);
+}
+
+// Create an appropriate variable name for operating points.
+char * dcsolver::createOP (char * c, char * n) {
+  static char text[128];
+  sprintf (text, "%s.%s", c, n);
+  return text;
 }
 
 // Create an appropriate variable name for voltages.
 char * dcsolver::createV (int n) {
   static char text[128];
   if (nlist->isInternal (n)) return NULL;
-  sprintf (text, "V%s", nlist->get (n));
+  sprintf (text, "%s.V", nlist->get (n));
   return text;
 }
 
@@ -556,7 +600,17 @@ char * dcsolver::createV (int n) {
 char * dcsolver::createI (int n) {
   static char text[128];
   circuit * vs = findVoltageSource (n);
-  if (vs->isInternalVoltageSource ()) return NULL;
-  sprintf (text, "I_%s_%d", vs->getName (), n - vs->isVoltageSource () + 1);
+
+  if (vs->isInternalVoltageSource ())
+    return NULL; // don't output internal (helper) voltage sources
+  if (vs->getType () != CIR_VDC && vs->getType () != CIR_IPROBE && !saveOPs)
+    return NULL; // save only current through real voltage sources and
+                 // explicit current probes
+
+  // create appropriate current name for single/multiple voltage sources
+  if (vs->getVoltageSources () > 1)
+    sprintf (text, "%s.I%d", vs->getName (), n - vs->isVoltageSource () + 1);
+  else
+    sprintf (text, "%s.I", vs->getName ());
   return text;
 }

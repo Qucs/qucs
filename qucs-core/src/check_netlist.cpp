@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.17 2004/06/25 22:09:22 ela Exp $
+ * $Id: check_netlist.cpp,v 1.18 2004/06/27 15:11:48 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "strlist.h"
 #include "equation.h"
 #include "check_netlist.h"
+#include "components/constants.h"
 
 struct definition_t * definition_root = NULL;
 struct node_t * node_root = NULL;
@@ -64,22 +65,22 @@ struct define_t definition_available[] =
   /* voltage controlled current source */
   { "VCCS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* current controlled current source */
   { "CCCS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* voltage controlled voltage source */
   { "VCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* current controlled voltage source */
   { "CCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, { 0, DBL_MAX } }, PROP_NO_PROP }
+    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* power source */
   { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -182,7 +183,7 @@ struct define_t definition_available[] =
       { "N", { 1, PROP_NO_STR }, { 1, 100 } },
       { "M", { 0.5, PROP_NO_STR }, { 0, 1 } },
       { "Cj0", { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Vj", { 0.7, PROP_NO_STR }, { DBL_MIN, 10 } }, PROP_NO_PROP },
+      { "Vj", { 0.7, PROP_NO_STR }, { PROP_VAL_MIN, 10 } }, PROP_NO_PROP },
     { { "Rs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tt", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
@@ -194,7 +195,7 @@ struct define_t definition_available[] =
       { "Lambda", { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Beta", { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
       { "M", { 0.5, PROP_NO_STR }, { 0, 1 } },
-      { "Pb", { 1.0, PROP_NO_STR }, { DBL_MIN, 10 } },
+      { "Pb", { 1.0, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
       { "Fc", { 0.5, PROP_NO_STR }, { 0, 10 } },
       { "Cgs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Cgd", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
@@ -220,7 +221,8 @@ struct define_t definition_available[] =
     { { "W", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "L", { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "Model", { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "DispModel", { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "Model", { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -237,13 +239,19 @@ struct define_t definition_available[] =
   /* dc analysis */
   { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "MaxIter", { 150, PROP_NO_STR }, { 2, 10000 } },
+      { "abstol", { 1e-12, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "vntol", { 1e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "reltol", { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "saveOPs", { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "Temp", { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } }, PROP_NO_PROP }
   },
   /* parameter sweep */
   { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Start", { 5, PROP_NO_STR }, PROP_NO_RANGE },
       { "Stop", { 50, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Step", { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Points", { 5, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      { "Type", { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
       { "Param", { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
       { "Sim", { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
@@ -345,9 +353,15 @@ struct special_t {
 
 // List of special identifiers.
 static struct special_t checker_specials[] = {
-  { "JFET", "Type", { "nfet", "pfet", NULL } },
-  { "BJT",  "Type", { "npn", "pnp", NULL } },
-  { "SP",  "Noise", { "yes", "no", NULL } },
+  { "JFET", "Type",      { "nfet", "pfet", NULL } },
+  { "BJT",  "Type",      { "npn", "pnp", NULL } },
+  { "SP",   "Noise",     { "yes", "no", NULL } },
+  { "DC",   "saveOPs",   { "yes", "no", NULL } },
+  { "MLIN", "DispModel", { "Kirschning", "Kobayashi", "Yamashita",
+			   "Getsinger", "Schneider", "Pramanick",
+			   "Hammerstad", NULL } },
+  { "MLIN", "Model",     { "Wheeler", "Schneider", "Hammerstad", NULL } },
+  { "SW",   "Type",      { "lin", "log", NULL } },
   { NULL, NULL, { NULL } }
 };
 
@@ -355,7 +369,7 @@ static struct special_t checker_specials[] = {
    a component property (may also be a variable) is a special
    identifier used for some properties. It returns zero if the
    identifier is invalid. */
-static int checker_validate_special (char * ident) {
+static int checker_validate_special (struct definition_t * def, char * ident) {
   int found = 0;
   struct value_t * val;
   struct special_t * special;
@@ -371,6 +385,11 @@ static int checker_validate_special (char * ident) {
 	  found++;
 	}
       }
+      if (!found) {
+	logprint (LOG_ERROR, "checker error, `%s' is not a valid "
+		  "`%s' property as used in `%s:%s'\n", ident, special->key,
+		  def->type, def->instance);
+      }
     }
   }
   return found;
@@ -378,7 +397,8 @@ static int checker_validate_special (char * ident) {
 
 /* Resolves the variable of a property value.  Returns non-zero on
    success, otherwise zero. */
-static int checker_resolve_variable (struct value_t * value) {
+static int checker_resolve_variable (struct definition_t * def,
+				     struct value_t * value) {
   struct value_t * val;
   if (value->ident != NULL) {
     int found = 0;
@@ -399,18 +419,15 @@ static int checker_resolve_variable (struct value_t * value) {
       value->subst = 1;
       found++;
     }
-    /* 4. find microstrip model in microstrip components */
-    if ((val = checker_find_variable ("MLIN", "Model", value->ident))) {
-      found++;
-    }
-    /* 5. find special identifiers in certain properties */
-    if (checker_validate_special (value->ident)) {
+    /* 4. find special identifiers in certain properties */
+    if (checker_validate_special (def, value->ident)) {
       found++;
     }
     /* TODO: find variable in equations */
     if (!found) {
-      logprint (LOG_ERROR, "checker error, no such variable `%s'\n", 
-		value->ident);
+      logprint (LOG_ERROR, "checker error, no such variable `%s' used in "
+		"a `%s:%s' property\n", value->ident, def->type,
+		def->instance);
       return 0;
     }
   }
@@ -628,10 +645,6 @@ static int checker_validate_actions (void) {
 static char * strip_available[] = {
   "MLIN", NULL };
 
-// List of available microstrip models.
-static char * strip_Model_available[] = {
-  "Kirschning", "Kobayashi", "Yamashita", NULL };
-
 /* This function checks the validity of each microstrip component and
    its substrate and model references.  It returns zero on success,
    emit error messages if necessary and returns non-zero on errors. */
@@ -663,19 +676,6 @@ static int checker_validate_strips (void) {
 	    logprint (LOG_ERROR, "checker error, not a valid `Model' property "
 		      "found in `%s:%s'\n", def->type, def->instance);
 	    errors++;
-	  }
-	  else {
-	    int found = 0;
-	    for (int n = 0; strip_Model_available[n] != NULL; n++) {
-	      if (!strcmp (strip_Model_available[n], val->ident))
-		found++;
-	    }
-	    if (!found) {
-	      logprint (LOG_ERROR, "checker error, `%s' is not a valid "
-			"`Model' property as used in `%s:%s'\n", val->ident,
-			def->type, def->instance);
-	      errors++;
-	    }
 	  }
 	}
       }
@@ -829,7 +829,7 @@ int netlist_checker (void) {
 	  errors++;
 	}
 	/* check variables in properties */
-	if (!checker_resolve_variable (pair->value))
+	if (!checker_resolve_variable (def, pair->value))
 	  errors++;
 	/* check and evaluate the unit scale in a property */
 	if (!checker_evaluate_scale (pair->value))

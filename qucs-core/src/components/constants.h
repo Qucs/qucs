@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.10 2004/06/26 10:36:14 ela Exp $
+ * $Id: constants.h,v 1.11 2004/06/27 15:11:49 ela Exp $
  *
  */
 
@@ -74,5 +74,9 @@
 #define coth(x)   (1 / tanh (x))
 #define sech(x)   (1 / cosh (x))
 #define cosech(x) (1 / sinh (x))
+#define kelvin(x) ((x) - K)
+#define degree(x) (K + (x))
+#define rad(x)    (M_PI * (x) / 180.0)
+#define deg(x)    (180.0 * (x) / M_PI)
 
 #endif /* __CONSTANTS_H__ */

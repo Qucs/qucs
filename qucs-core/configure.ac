@@ -51,6 +51,18 @@ if test "x$GCC" = xyes; then
   fi
 fi
 
+# Check for new platforms.
+osversion="`grep \"$host\" $srcdir/doc/PLATFORMS 2>/dev/null`"
+if test "x$osversion" = "x"; then
+  AC_MSG_RESULT([
+  The $PACKAGE package has never been compiled or run on this platform.  
+  Please send an email to <qucs-devel@lists.sourceforge.net> including your
+  compiler version and whether it worked correctly or not.  '$host' 
+  will then be added to the PLATFORMS file included in this package.
+])
+fi
+unset osversion
+
 # Checks for libraries.
 AC_CHECK_LIB(m, sin)
 
