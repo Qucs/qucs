@@ -52,7 +52,7 @@ public:
 
   QPtrList<DataX>  cPointsX;
   double *cPointsY;
-  int    *Points, countX1, countX2;     // data in screen coordinates
+  int    *Points, countY;     // data in screen coordinates
   QString Var;
   QColor  Color;
   int     Thick;

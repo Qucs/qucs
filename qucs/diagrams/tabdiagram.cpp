@@ -67,6 +67,7 @@ void TabDiagram::calcDiagram()
 
   Graph *g = Graphs.first();
   if(g == 0) return;
+  if(g->cPointsX.isEmpty()) return;
 
   QWidget w;
   QPainter p(&w);
@@ -77,10 +78,11 @@ void TabDiagram::calcDiagram()
 
   // ................................................
   double *py, *px;
-  int counting = g->countX1 * g->countX2, lastCount = 1;
+  int counting, lastCount = 1;
+  counting = g->cPointsX.getFirst()->count * g->countY;
   for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
     Str = pD->Var;
-    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
+    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);   // get width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
       if((x+colWidth) >= x2) {    // enough space for text ?
@@ -92,7 +94,6 @@ void TabDiagram::calcDiagram()
       }
     }
     Texts.append(new Text(x-4, y2-13, Str));  // write independent variable
-
     if(pD->count != 0) {
     y = y2-30;
     counting /= pD->count;   // how many rows to be skipped
@@ -119,7 +120,7 @@ void TabDiagram::calcDiagram()
       if(pD == g->cPointsX.getFirst())
         Lines.append(new Line(0, y+12, x2, y+12, QPen(QPen::black,0)));
     }
-    lastCount = pD->count; }
+    lastCount *= pD->count; }
     x += colWidth+10;
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
   }
@@ -142,11 +143,11 @@ void TabDiagram::calcDiagram()
         return;
       }
     }
-    Texts.append(new Text(x, y2-13, Str));
+    Texts.append(new Text(x, y2-13, Str));   // write dependent variable
 
 
     py = g->cPointsY;
-    for(int z=g->countX1 * g->countX2; z>0; z--) {
+    for(int z=g->cPointsX.getFirst()->count * g->countY; z>0; z--) {
       if(y < 0) break;
       if(fabs(*(py+1)) > 1e-250) {
         Str = QString::number(*(py+1));

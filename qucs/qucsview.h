@@ -92,6 +92,8 @@ protected slots:
 public slots:
   void slotMarkerLeft();
   void slotMarkerRight();
+  void slotMarkerUp();
+  void slotMarkerDown();
 
 public:
   void MouseDoNothing(QMouseEvent *Event);

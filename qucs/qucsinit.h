@@ -25,6 +25,7 @@
 #include <qpopupmenu.h>
 
 class QucsApp;
+class QucsActions;
 
 
 /**
@@ -53,6 +54,7 @@ private:
   void initStatusBar();  // setup the statusbar
 
   QucsApp *App;   // the application that called this instance
+  QucsActions *Acts;
 
   QAction *helpAboutApp, *helpAboutQt, *viewToolBar, *viewStatusBar;
 

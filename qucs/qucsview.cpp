@@ -183,6 +183,24 @@ void QucsView::slotMarkerRight()
   }
 }
 
+void QucsView::slotMarkerUp()
+{
+  if(Docs.current()->MarkerUpDown(true)) {
+    viewport()->repaint();
+    drawn = false;
+    Docs.current()->setChanged(true);
+  }
+}
+
+void QucsView::slotMarkerDown()
+{
+  if(Docs.current()->MarkerUpDown(false)) {
+    viewport()->repaint();
+    drawn = false;
+    Docs.current()->setChanged(true);
+  }
+}
+
 // -----------------------------------------------------------
 void QucsView::MouseDoNothing(QMouseEvent*)
 {
