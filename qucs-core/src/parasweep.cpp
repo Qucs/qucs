@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.4 2004-05-17 19:50:51 ela Exp $
+ * $Id: parasweep.cpp,v 1.5 2004-06-27 15:11:48 ela Exp $
  *
  */
 
@@ -42,28 +42,33 @@ using namespace std;
 #include "analysis.h"
 #include "variable.h"
 #include "environment.h"
+#include "sweep.h"
 #include "parasweep.h"
 
 // Constructor creates an unnamed instance of the parasweep class.
 parasweep::parasweep () : analysis () {
   var = NULL;
+  swp = NULL;
   type = ANALYSIS_SWEEP;
 }
 
 // Constructor creates a named instance of the parasweep class.
 parasweep::parasweep (char * n) : analysis (n) {
   var = NULL;
+  swp = NULL;
   type = ANALYSIS_SWEEP;
 }
 
 // Destructor deletes the parasweep class object.
 parasweep::~parasweep () {
+  if (swp) delete swp;
 }
 
 /* The copy constructor creates a new instance of the parasweep class
    based on the given parasweep object. */
 parasweep::parasweep (parasweep & p) : analysis (p) {
   var = new variable (*p.var);
+  if (p.swp) swp = new sweep (*p.swp);
 }
 
 // Short macro in order to obtain the correct constant value.
@@ -71,21 +76,34 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
 
 /* This is the parameter sweep solver. */
 void parasweep::solve (void) {
-  nr_double_t start, stop, step;
   char * n;
   constant * val;
 
   runs++;
 
-  // get fixed properties
-  start = getPropertyDouble ("Start");
-  stop = getPropertyDouble ("Stop");
-  step = getPropertyDouble ("Step");
+  // get fixed simulation properties
+  n = getPropertyString ("Param");
+
+  // create sweep if necessary
+  if (swp == NULL) {
+    char * type = getPropertyString ("Type");
+    nr_double_t start = getPropertyDouble ("Start");
+    nr_double_t stop = getPropertyDouble ("Stop");
+    nr_double_t points = getPropertyDouble ("Points");
+
+    if (!strcmp (type, "lin")) {
+      swp = new linsweep (n);
+      ((linsweep *) swp)->create (start, stop, points);
+    }
+    else if (!strcmp (type, "log")) {
+      swp = new logsweep (n);
+      ((logsweep *) swp)->create (start, stop, points);
+    }
+  }
 
   // get parameter name and the appropriate variable from the current
   // environment, possibly add the variable to the environment if it
   // does not exist yet (which is somehow useless at all)
-  n = getPropertyString ("Param");
   if ((var = env->getVariable (n)) == NULL) {
     var = new variable (n);
     val = new constant (TAG_DOUBLE);
@@ -95,7 +113,9 @@ void parasweep::solve (void) {
   else val = var->getConstant ();
 
   // run the parameter sweep
-  for (D (val) = start; D (val) <= stop; D (val) += step) {
+  swp->reset ();
+  for (int i = 0; i < swp->getSize (); i++) {
+    D (val) = swp->next ();
     if (runs == 1) saveResults ();
     for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
       a->solve ();

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.10 2004-05-22 19:48:32 ela Exp $
+ * $Id: vector.cpp,v 1.11 2004-06-27 15:11:48 ela Exp $
  *
  */
 
@@ -413,8 +413,9 @@ vector * operator+(vector & v, const complex c) {
 }
 
 vector& vector::operator-() {
-  for (int i = 0; i < getSize (); i++) data[i] *= -1;
-  return *this;
+  vector * result = new vector (*this);
+  for (int i = 0; i < getSize (); i++) result->set (-get (i), i);
+  return *result;
 }
 
 vector& vector::operator-=(vector & v) {

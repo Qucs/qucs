@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.15 2004-06-26 10:36:15 ela Exp $
+ * $Id: msline.cpp,v 1.16 2004-06-27 15:11:49 ela Exp $
  *
  */
 
@@ -50,7 +50,8 @@ void msline::calcSP (nr_double_t frequency) {
   /* how to get properties of this component, e.g. L, W */
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t W = getPropertyDouble ("W");
-  char *  Model = getPropertyString ("Model");
+  char * SModel = getPropertyString ("Model");
+  char * DModel = getPropertyString ("DispModel");
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();
@@ -67,12 +68,12 @@ void msline::calcSP (nr_double_t frequency) {
 
   // quasi-static effective dielectric constant of substrate + line and
   // the impedance of the microstrip line
-  analyseQuasiStatic (W, h, t, er, "Hammerstad");
+  analyseQuasiStatic (W, h, t, er, SModel);
 
   // TODO: influence of t
 
   // analyse dispersion of Zl and Er
-  analyseDispersion (W, h, er, frequency, Model);
+  analyseDispersion (W, h, er, frequency, DModel);
 
   // conductor losses: HAMMERSTAD and JENSEN
   Rs = sqrt (M_PI * frequency * MU0 * rho); // skin resistance

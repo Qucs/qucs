@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.h,v 1.5 2004-06-04 16:01:47 ela Exp $
+ * $Id: dcsolver.h,v 1.6 2004-06-27 15:11:48 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class analysis;
 class circuit;
 class nodelist;
 class matrix;
+class complex;
 
 class dcsolver : public analysis
 {
@@ -56,8 +57,10 @@ class dcsolver : public analysis
   void saveResults (void);
   char * createV (int);
   char * createI (int);
+  char * createOP (char *, char *);
   void saveNodeVoltages (void);
   int checkConvergence (void);
+  void saveVariable (char *, complex);
 
  private:
   nodelist * nlist;
@@ -66,6 +69,10 @@ class dcsolver : public analysis
   matrix * x;
   matrix * xprev;
   matrix * zprev;
+  nr_double_t reltol;
+  nr_double_t abstol;
+  nr_double_t vntol;
+  int saveOPs;
 };
 
 #endif /* __DCSOLVER_H__ */

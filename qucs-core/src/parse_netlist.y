@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.5 2004-04-19 18:42:21 ela Exp $
+ * $Id: parse_netlist.y,v 1.6 2004-06-27 15:11:48 ela Exp $
  *
  */
 
@@ -197,7 +197,9 @@ String:
 
 EquationLine:
   Eqn ':' Identifier Equation EquationList Eol {
+    $4->setInstance ($3);
     $4->setNext (eqn::equations);
+    $4->applyInstance ();
     eqn::equations = $4;
   }
 ;

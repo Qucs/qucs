@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.9 2004-05-22 19:48:32 ela Exp $
+ * $Id: equation.h,v 1.10 2004-06-27 15:11:48 ela Exp $
  *
  */
 
@@ -71,9 +71,13 @@ public:
   node * get (int);
   constant * getResult (int);
   int getType (void) { return type; }
+  int getTag (void) { return tag; }
   void setType (int tag) { type = tag; }
   constant * getResult (void) { return res; } 
   void setResult (constant * r) { res = r; }
+  char * getInstance (void);
+  void setInstance (char *);
+  void applyInstance (void);
 
   /* These functions should be overloaded by derivative classes. */
   virtual void print (void) { }
@@ -88,6 +92,8 @@ public:
   int evalPossible;
   char * txt;
   int evaluated;
+  char * instance;
+  int output;
 
 private:
   int type;
@@ -205,6 +211,7 @@ public:
   void reorderEquations (void);
   node * lastEquation (node *);
   int applyTypes (void);
+  int checkExport (void);
 
 public:
   node * equations;

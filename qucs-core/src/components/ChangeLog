@@ -1,3 +1,8 @@
+2004-06-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Using 'DispModel' and 'Model' 
+	properties correctly.
+
 2004-06-26  Michael Margraf  <michael.margraf@alumni.tu-berlin.de
 
 	* added DC model to phaseshifter.cpp/.h

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.11 2004-06-03 12:42:45 ela Exp $
+ * $Id: equation.cpp,v 1.12 2004-06-27 15:11:48 ela Exp $
  *
  */
 
@@ -49,6 +49,7 @@ node * eqn::expressions = NULL;
 #define A(a) ((assignment *) (a))
 #define N(n) ((node *) (n))
 #define C(c) ((constant *) (c))
+#define R(r) ((reference *) (r))
 
 // Constructor creates an untyped instance of the constant class.
 constant::constant () : node (CONSTANT) {
@@ -340,29 +341,56 @@ constant * application::evaluate (void) {
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
-  evaluated = evalPossible = cycle = duplicate = 0;
+  output = evaluated = evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
   txt = NULL;
   res = NULL;
+  instance = NULL;
 }
 
 // This constructor creates an typed instance of the equation node class.
 node::node (int type) {
   tag = type;
-  evaluated = evalPossible = cycle = duplicate = 0;
+  output = evaluated = evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
   txt = NULL;
   res = NULL;
+  instance = NULL;
 }
 
 // Destructor deletes an instance of the equation node class.
 node::~node () {
   if (dependencies) delete dependencies;
   if (txt) free (txt);
+  if (instance) free (instance);
+}
+
+// Sets the instance name where the node occurred.
+void node::setInstance (char * n) {
+  if (instance) free (instance);
+  instance = n ? strdup (n) : NULL;
+}
+
+// Returns the instance name where the node occurred.
+char * node::getInstance (void) {
+  return instance;
+}
+
+/* The function applies the instance name of the current equation node
+   to any following node within the list up to the node with a valid
+   instance name. */
+void node::applyInstance (void) {
+  char * i = getInstance ();
+  for (node * n = getNext (); n != NULL; n = n->getNext ()) {
+    if (n->getInstance () == NULL)
+      n->setInstance (i);
+    else
+      break;
+  }
 }
 
 // Counts the number of equations node attached to the node.
@@ -485,6 +513,55 @@ void checker::collectDependencies (void) {
     eqn->addDependencies (depends);
     eqn->setDependencies (depends);
   }
+}
+
+/* The following function goes through the list of equations and
+   checks whether there is any kind of 'Export="yes|no"' assignment in
+   it.  Depending on the value the referred equation results are saved
+   into the dataset or not. */
+int checker::checkExport (void) {
+  int errors = 0;
+  assignment * next;
+  // go through all equations
+  for (assignment * eqn = A (equations); eqn != NULL; eqn = next) {
+    next = A (eqn->getNext ());
+    // 'Export' equation found ?
+    if (!strcmp (eqn->result, "Export")) {
+      // is the type and value correct ?
+      if (eqn->body->getTag () != REFERENCE ||
+	  (strcmp (R (eqn->body)->n, "yes") &&
+	   strcmp (R (eqn->body)->n, "no"))) {
+	logprint (LOG_ERROR, "checker error, variable `%s' alternatives "
+		  "are `yes' or `no'\n", eqn->result);
+	errors++;
+      }
+      else {
+	int flag = !strcmp (R (eqn->body)->n, "yes") ? 1 : 0;
+	char * i = eqn->getInstance ();
+	int found = 0;
+	// set output flag for each equation with the same instance name
+	foreach_equation (res) {
+	  if (!strcmp (res->getInstance (), i))
+	    res->output = flag;
+	  if (!strcmp (res->result, "Export") &&
+	      !strcmp (res->getInstance (), i)) {
+	    found++;
+	  }
+	}
+	// check for duplicate definitions of 'Export'
+	if (found > 1) {
+	  logprint (LOG_ERROR, "checker error, variable `%s' "
+		    "occurred %dx in `Eqn:%s'\n", eqn->result, found, i);
+	  errors++;
+	}
+	// drop the 'Export' equation being useless now
+	dropEquation (eqn);
+	delete eqn;
+      }
+    }
+  }
+  eqn::equations = equations;
+  return errors;
 }
 
 // Logs the textual representation of all equations.
@@ -701,6 +778,7 @@ int equation_checker (int noundefined) {
   int err = 0;
   eqn::checker * check = new eqn::checker ();
   check->setEquations (eqn::equations);
+  err += check->checkExport ();
   check->collectDependencies ();
   err += check->findUndefined (noundefined);
   err += check->findDuplicate ();
@@ -816,6 +894,10 @@ void solver::checkoutDataset (void) {
   if (data == NULL) return;
   // go through each equation
   foreach_equation (eqn) {
+
+    // skip variables which don't need to be exported
+    if (!eqn->output) continue;
+
     char * str = A(eqn)->result;
     vector * dep = data->findDependency (str);
     vector * var = data->findVariable (str);
