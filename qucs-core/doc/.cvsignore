@@ -13,3 +13,4 @@ Makefile.in
 *.pdf
 [a-z]*.eps
 Sparam.eps
+IEEEtran.bst

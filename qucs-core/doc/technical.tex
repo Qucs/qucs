@@ -131,13 +131,19 @@ Documentation License".
 
 \include{coplanar}
 
-\chapter*{Bibliography}
-\addcontentsline{toc}{chapter}{Bibliography}
+\begin{appendix}
+
+\include{grammar-qucs}
+
+\chapter{Bibliography}
+%\addcontentsline{toc}{chapter}{Bibliography}
 \def\chapter*{}% to suppress any header
 \def\section*{}% just to be sure
 \renewcommand{\bibname}{}
 \bibliographystyle{IEEEtran}
 \bibliography{literature}
+
+\end{appendix}
 
 \nocite{*}
 
