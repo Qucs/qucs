@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msopen.cpp,v 1.3 2004/08/19 19:44:24 ela Exp $
+ * $Id: msopen.cpp,v 1.4 2004/09/02 13:40:00 ela Exp $
  *
  */
 
@@ -55,12 +55,12 @@ nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
 
   nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
   msline::analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
-  msline::analyseDispersion  (W, h, er, ZlEff, ErEff, frequency, DModel,
+  msline::analyseDispersion  (WEff, h, er, ZlEff, ErEff, frequency, DModel,
 			      ZlEffFreq, ErEffFreq);
 
   W /= h;
   nr_double_t dl = 0;
-   /* Kirschning, Jansen and Koster */
+  /* Kirschning, Jansen and Koster */
   if (!strcmp (Model, "Kirschning")) {
     nr_double_t Q6 = pow (ErEffFreq, 0.81);
     nr_double_t Q7 = pow (W, 0.8544);
@@ -96,8 +96,36 @@ void msopen::calcSP (nr_double_t frequency) {
   nr_double_t h     = subst->getPropertyDouble ("h");
   nr_double_t t     = subst->getPropertyDouble ("t");
 
-  nr_double_t z = -0.5 / M_PI / frequency /
-    calcCend (frequency, W, h, t, er, SModel, DModel, Model);
+  /* local variables */
+  complex y;
+  nr_double_t o = 2 * M_PI * frequency;
 
-  setS (1, 1, rect (-z0, z) / rect (+z0, z));
+  /* Alexopoulos and Wu */
+  if (!strcmp (Model, "Alexopoulos")) {
+    nr_double_t ZlEff, ErEff, WEff, ZlEffFreq, ErEffFreq;
+    msline::analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
+    msline::analyseDispersion  (WEff, h, er, ZlEff, ErEff, frequency, DModel,
+				ZlEffFreq, ErEffFreq);
+
+    if (fabs (er - 9.9) > 0.2) {
+      logprint (LOG_STATUS, "WARNING: Model for microstrip open end defined "
+		"for er = 9.9 (er = %g)\n", er);
+    }
+
+    nr_double_t c1, c2, l2, r2;
+    c1 = (1.125 * tanh (1.358 * W / h) - 0.315) *
+      h / 2.54e-5 / 25 / ZlEffFreq * 1e-12;
+    c2 = (6.832 * tanh (0.0109 * W / h) + 0.919) *
+      h / 2.54e-5 / 25 / ZlEffFreq * 1e-12;
+    l2 = (0.008285 * tanh (0.5665 * W / h) + 0.0103) *
+      h / 2.54e-5 / 25 * ZlEffFreq * 1e-9;
+    r2 = (1.024 * tanh (2.025 * W / h)) * ZlEffFreq;
+    y = rect (0, c1 * o) + 1 / rect (r2, l2 * o - 1 / c2 / o);
+  }
+  else {
+    nr_double_t c = calcCend (frequency, W, h, t, er, SModel, DModel, Model);
+    y = rect (0, c * o);
+  }
+
+  setS (1, 1, ztor (1 / y));
 }

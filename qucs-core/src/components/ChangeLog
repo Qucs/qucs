@@ -1,5 +1,8 @@
 2004-09-02  Stefan Jahn  <stefan@lkcc.org>
 
+	* microstrip/msopen.cpp: Implemented microstrip open end
+	model by Alexopoulos.
+
 	* microstrip/mscoupled.cpp: Fixed bug in microstrip coupled
 	characteristic impedances computation.
 

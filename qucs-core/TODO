@@ -23,6 +23,17 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Coplanar line implementation.
+- Microstrip via hole implementation.
+- Microstrip t-junction.
+- Microstrip cross.
+- Modella, HICUM, MEXTRAM and VBIC bipolar model implementations.
+- MESFET (Curtize, Staatz) implementations.
+- BSIMv3 implementation.
+- Harmonic balance simulation.
+- Transient simulation.
+- AC noise analysis.
+- AC analysis.
 	- Implement sorted node list for S-parameter analysis in order
 	  to increase speed.
 - What about a damped Newton-Raphson or source-stepping?
