@@ -246,7 +246,7 @@ bool Diagram::insideDiagram(int x, int y)
   if(Name.at(0) == 'R')
     return (regionCode(x, y) == 0);
 
-  int R = x2 >> 1;
+  int R = (x2 >> 1) + 1;  // +1 seems better (graph sometimes little outside)
   x -= R;
   y -= R;
   return ((x*x + y*y) <= R*R);

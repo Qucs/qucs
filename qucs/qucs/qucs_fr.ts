@@ -2958,6 +2958,10 @@ Modifie ce schéma</translation>
         <source>SPICE netlist</source>
         <translation>Document Spice</translation>
     </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4227,8 +4231,8 @@ Déplace la légende du composant</translation>
         <translation>Italien par Giorgio Luparia</translation>
     </message>
     <message>
-        <source>Hungarian by Bus Jozsef</source>
-        <translation>Hongrois par Bus Jozsef</translation>
+        <source>Hungarian by Jozsef Bus</source>
+        <translation>Hongrois par Jozsef Bus</translation>
     </message>
 </context>
 <context>

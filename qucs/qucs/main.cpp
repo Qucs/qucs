@@ -168,9 +168,15 @@ QString StringNum(double num, char form, int Precision)
   char *p, Buffer[512], Format[6] = "%.00g";
   QString s;
 
-  Format[4]  = form;
-  Format[2] += Precision / 10;
-  Format[3] += Precision % 10;
+  if(Precision < 0) {
+    Format[1]  = form;
+    Format[2]  = 0;
+  }
+  else {
+    Format[4]  = form;
+    Format[2] += Precision / 10;
+    Format[3] += Precision % 10;
+  }
   sprintf(Buffer, Format, num);
   p = strchr(Buffer, 'e');
   if(p) {
@@ -247,6 +253,105 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
 #include <qregexp.h>
 int main(int argc, char *argv[])
 {
+/*double zD = 1.0e5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.1e5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.12e5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.123e5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.1234567e5;
+qDebug(StringNum(zD, 'e', -1));
+qDebug(" ");
+
+zD = 1.0e5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.1e5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.12e5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.123e5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.1234567e5;
+qDebug(StringNum(zD, 'f', -1));
+qDebug(" ");
+
+zD = 1.0e5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.1e5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.12e5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.123e5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.1234567e5;
+qDebug(StringNum(zD, 'g', -1));
+qDebug(" ");
+
+// ------------------------------------
+
+zD = 1.0e-5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.1e-5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.12e-5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.123e-5;
+qDebug(StringNum(zD, 'e', -1));
+
+zD = 1.1234567e-5;
+qDebug(StringNum(zD, 'e', -1));
+qDebug("\n");
+
+zD = 1.0e-5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.1e-5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.12e-5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.123e-5;
+qDebug(StringNum(zD, 'f', -1));
+
+zD = 1.1234567e-5;
+qDebug(StringNum(zD, 'f', -1));
+qDebug(" ");
+
+zD = 1.0e-5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.1e-5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.12e-5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.123e-5;
+qDebug(StringNum(zD, 'g', -1));
+
+zD = 1.1234567e-5;
+qDebug(StringNum(zD, 'g', -1));
+qDebug(" ");
+
+return 0;*/
 /*double d, Factor;
 QString Unit, s("-2.9E+02eco");
 str2num(s, d, Unit, Factor);

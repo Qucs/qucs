@@ -2974,6 +2974,10 @@ Edita el esquema</translation>
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4250,7 +4254,7 @@ Mueve la propiedad texto de los componentes</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hungarian by Bus Jozsef</source>
+        <source>Hungarian by Jozsef Bus</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
