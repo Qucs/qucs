@@ -2358,6 +2358,10 @@ Usage:  qucsedit [-r] file
         <source>no data</source>
         <translation>データ無し</translation>
     </message>
+    <message>
+        <source>calculate noise voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

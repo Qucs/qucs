@@ -2388,6 +2388,10 @@ Use:  qucsedit [-r] archivo
         <source>no data</source>
         <translation>sin datos</translation>
     </message>
+    <message>
+        <source>calculate noise voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
