@@ -1,5 +1,11 @@
 2004-10-04  Stefan Jahn  <stefan@lkcc.org>
 
+	* devices/diode.cpp, devices/jfet.cpp, devices/bjt.cpp,
+	devices/mosfet.cpp: Fixed AC models.
+
+	* iac.cpp, vac.cpp: Implemented optional 'Phase' parameter for
+	both components.
+
 	* strafo.cpp, trafo.cpp, devices/mosfet.cpp: Implemented transient
 	analysis functionality.
 

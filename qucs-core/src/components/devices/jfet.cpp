@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.16 2004/09/25 13:45:50 ela Exp $
+ * $Id: jfet.cpp,v 1.17 2004/10/04 20:54:23 ela Exp $
  *
  */
 
@@ -302,6 +302,10 @@ void jfet::calcOperatingPoints (void) {
   setOperatingPoint ("Vds", Ugs - Ugd);
   setOperatingPoint ("Cgd", Cgd);
   setOperatingPoint ("Cgs", Cgs);
+}
+
+void jfet::initAC (void) {
+  clearI ();
 }
 
 void jfet::calcAC (nr_double_t frequency) {

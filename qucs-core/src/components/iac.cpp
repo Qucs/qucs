@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.5 2004/10/03 10:30:51 ela Exp $
+ * $Id: iac.cpp,v 1.6 2004/10/04 20:54:23 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "circuit.h"
 #include "component_id.h"
 #include "consts.h"
+#include "constants.h"
 #include "iac.h"
 
 iac::iac () : circuit (2) {
@@ -58,6 +59,7 @@ void iac::initAC (void) {
 
 void iac::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = getPropertyDouble ("I") * sin (2 * M_PI * f * t);
+  nr_double_t p = getPropertyDouble ("Phase");
+  nr_double_t i = getPropertyDouble ("I") * sin (2 * M_PI * f * t + rad (p));
   setI (1, +i); setI (2, -i);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.14 2004/09/27 18:26:21 ela Exp $
+ * $Id: bjt.cpp,v 1.15 2004/10/04 20:54:23 ela Exp $
  *
  */
 
@@ -455,6 +455,7 @@ void bjt::initSP (void) {
 
 void bjt::initAC (void) {
   initSP ();
+  clearI ();
 }
 
 void bjt::calcAC (nr_double_t frequency) {
