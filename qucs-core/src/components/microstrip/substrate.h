@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: substrate.h,v 1.1 2004-01-24 17:35:51 ela Exp $
+ * $Id: substrate.h,v 1.2 2004-04-25 17:08:59 ela Exp $
  *
  */
 
 #ifndef __SUBSTRATE_H__
 #define __SUBSTRATE_H__
+
+#include "object.h"
 
 class substrate : public object
 {

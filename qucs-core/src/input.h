@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.3 2004-02-13 20:31:45 ela Exp $
+ * $Id: input.h,v 1.4 2004-04-25 17:08:50 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@ class input : public object
   void factory (void);
   circuit * createCircuit (char *);
   analysis * createAnalysis (char *);
+  substrate * createSubstrate (char *);
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
 

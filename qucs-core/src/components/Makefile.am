@@ -41,7 +41,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	strafo.h vdc.h idc.h vac.h component_id.h phaseshifter.h gyrator.h   \
 	tline.h diode.h constants.h iprobe.h iac.h
 
-libcomponent_a_LIBADD = microstrip/libmicrostrip.a
+#libcomponent_a_LIBADD = microstrip/libmicrostrip.a
 
 INCLUDES = -I$(top_srcdir)/src
 

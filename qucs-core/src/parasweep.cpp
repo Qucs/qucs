@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.2 2004-04-13 20:41:17 ela Exp $
+ * $Id: parasweep.cpp,v 1.3 2004-04-25 17:08:50 ela Exp $
  *
  */
 
@@ -69,10 +69,14 @@ parasweep::parasweep (parasweep & p) : analysis (p) {
   var = new variable (*p.var);
 }
 
+// Short macro in order to obtain the correct constant value.
+#define D(con) ((constant *) (con))->d
+
 /* This is the parameter sweep solver. */
 void parasweep::solve (void) {
   nr_double_t start, stop, step;
   char * n;
+  constant * val;
 
   // get fixed properties
   start = getPropertyDouble ("Start");
@@ -85,11 +89,14 @@ void parasweep::solve (void) {
   n = getPropertyString ("Param");
   if ((var = env->getVariable (n)) == NULL) {
     var = new variable (n);
+    val = new constant (TAG_DOUBLE);
+    var->setConstant (val);
     env->addVariable (var);
   }
+  else val = var->getConstant ();
 
   // run the parameter sweep
-  for (*var = start; *var <= stop; *var += step) {
+  for (D (val) = start; D (val) <= stop; D (val) += step) {
     if (runs == 0) saveResults ();
     for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
       a->solve ();
@@ -111,5 +118,5 @@ void parasweep::saveResults (void) {
     v->setOrigin (getName ());
     data->addDependency (v);
   }
-  v->add (var->getDouble ());
+  v->add (D (var->getConstant ()));
 }

@@ -18,27 +18,30 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: variable.h,v 1.2 2004-02-13 20:31:45 ela Exp $
+ * $Id: variable.h,v 1.3 2004-04-25 17:08:50 ela Exp $
  *
  */
 
 #ifndef __VARIABLE_H__
 #define __VARIABLE_H__
 
+#include "components/microstrip/substrate.h"
+#include "analysis.h"
+#include "equation.h"
+
+using namespace eqn;
+
 // Enumerate possible types of variables.
 enum variably_type {
-  VAR_UNKNOWN = -1,
-  VAR_VECTOR,
-  VAR_MATRIX,
-  VAR_DOUBLE,
-  VAR_INTEGER,
-  VAR_COMPLEX,
-  VAR_STRING
+  VAR_UNKNOWN = -1, // not yet defined
+  VAR_CONSTANT,     // equation constant
+  VAR_SUBSTRATE,    // substrate definition
+  VAR_ANALYSIS      // analysis
 };
 
-class vector;
-class matrix;
-class complex;
+class substrate;
+class equation;
+class analysis;
 
 class variable
 {
@@ -54,59 +57,20 @@ class variable
 
   void setType (int t) { type = t; }
   int getType (void) { return type; }
-  void setVector (vector * vec) { type = VAR_VECTOR; value.v = vec; }
-  vector * getVector (void) { return value.v; }
-  void setMatrix (matrix * mat) { type = VAR_MATRIX; value.m = mat; }
-  matrix * getMatrix (void) { return value.m; }
-  void setComplex (complex * com) { type = VAR_COMPLEX; value.c = com; }
-  complex * getComplex (void) { return value.c; }
-  void setDouble (nr_double_t dou) { type = VAR_DOUBLE; value.d = dou; }
-  nr_double_t getDouble (void) { return value.d; }
-  void setInteger (int n) { type = VAR_INTEGER; value.i = n; }
-  int getInteger (void) { return value.i; }
-
-  // assignment operations regarding double values
-  variable& operator  = (const nr_double_t);
-  variable& operator += (const nr_double_t);
-  variable& operator -= (const nr_double_t);
-  variable& operator *= (const nr_double_t);
-  variable& operator /= (const nr_double_t);
-  variable  operator +  ();
-  variable  operator -  ();
-
-  // operator functions regarding double values
-  friend variable operator + (const variable, const nr_double_t);
-  friend variable operator + (const nr_double_t,  const variable);
-  friend variable operator - (const variable, const nr_double_t);
-  friend variable operator - (const nr_double_t,  const variable);
-  friend variable operator * (const variable, const nr_double_t);
-  friend variable operator * (const nr_double_t,  const variable);
-  friend variable operator / (const variable, const nr_double_t);
-  friend variable operator / (const nr_double_t,  const variable);
-
-  // comparisons
-  friend int operator == (const variable, const nr_double_t);
-  friend int operator == (const nr_double_t, const variable);
-  friend int operator != (const variable, const nr_double_t);
-  friend int operator != (const nr_double_t, const variable);
-  friend int operator >= (const variable, const nr_double_t);
-  friend int operator >= (const nr_double_t, const variable);
-  friend int operator <= (const variable, const nr_double_t);
-  friend int operator <= (const nr_double_t, const variable);
-  friend int operator >  (const variable, const nr_double_t);
-  friend int operator >  (const nr_double_t, const variable);
-  friend int operator <  (const variable, const nr_double_t);
-  friend int operator <  (const nr_double_t, const variable);
+  void setConstant (constant * c) { type = VAR_CONSTANT; value.c = c; }
+  constant * getConstant (void) { return value.c; }
+  void setSubstrate (substrate * s) { type = VAR_SUBSTRATE; value.s = s; }
+  substrate * getSubstrate (void) { return value.s; }
+  void setAnalysis (analysis * a) { type = VAR_ANALYSIS; value.a = a; }
+  analysis * getAnalysis (void) { return value.a; }
 
  private:
   char * name;
   int type;
   union value_t {
-    vector * v;     // complex vector
-    matrix * m;     // matrix
-    nr_double_t d;  // real number
-    int i;          // integer number
-    complex * c;    // complex number
+    constant * c;  // equation constant
+    substrate * s; // substrate definition
+    analysis * a;  // analysis
   } value;
   variable * next;
 };

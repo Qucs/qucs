@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.2 2004-02-17 15:30:58 ela Exp $
+ * $Id: msline.cpp,v 1.3 2004-04-25 17:08:59 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@ void msline::calcSP (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. L, W */
   nr_double_t l = getPropertyDouble ("L");
-  nr_double_t z = getPropertyDouble ("Z");
+  nr_double_t z = getPropertyDouble ("W"); z = z0;
   nr_double_t r = (z - z0) / (z + z0);
   complex p = polar (1, - 2.0 * M_PI * frequency * l / C);
   complex s11 = r * (1 - p * p) / (1 - p * p - r * r);
@@ -55,7 +55,7 @@ void msline::calcSP (nr_double_t frequency) {
 
   /* how to get properties of the substrate, e.g. Er, H */
   substrate * subst = getSubstrate ();
-  nr_double_t er = subst->getPropertyDouble ("Er");
+  nr_double_t er = subst->getPropertyDouble ("er");
 
   setS (1, 1, s11);
   setS (2, 2, s11);

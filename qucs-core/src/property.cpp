@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.cpp,v 1.3 2004-03-28 11:24:44 ela Exp $
+ * $Id: property.cpp,v 1.4 2004-04-25 17:08:50 ela Exp $
  *
  */
 
@@ -123,6 +123,9 @@ property * property::findProperty (char * n) {
   return NULL;
 }
 
+// Short macro in order to obtain the correct constant value.
+#define D(con) ((constant *) (con))->d
+
 // Returns the property's value as string.
 char * property::getString (void) {
   //if (var != NULL) return var->getString ();
@@ -131,12 +134,12 @@ char * property::getString (void) {
 
 // Returns the property's value as double.
 nr_double_t property::getDouble (void) {
-  if (var != NULL) return var->getDouble ();
+  if (var != NULL) return D (var->getConstant ());
   return value;
 }
 
 // Returns the property's value as integer.
 int property::getInteger (void) {
-  if (var != NULL) return var->getInteger ();
+  if (var != NULL) return (int) floor (D (var->getConstant ()));
   return (int) floor (value);
 }

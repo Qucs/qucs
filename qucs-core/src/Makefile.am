@@ -32,7 +32,8 @@ bin_PROGRAMS = qucsator
 INCLUDES = -I$(top_srcdir)/src/components \
 	-I$(top_srcdir)/src/components/microstrip
 
-qucsator_LDADD = libqucsator.a components/libcomponent.a
+qucsator_LDADD = libqucsator.a components/libcomponent.a \
+	components/microstrip/libmicrostrip.a
 
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
