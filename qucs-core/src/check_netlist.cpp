@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.29 2004/07/26 06:30:28 ela Exp $
+ * $Id: check_netlist.cpp,v 1.30 2004/07/26 22:07:28 ela Exp $
  *
  */
 
@@ -192,7 +192,7 @@ struct define_t definition_available[] =
     { { "File", PROP_STR, { PROP_NO_VAL, "spfile.snp" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Data", PROP_STR, { PROP_NO_VAL, "polar" }, PROP_NO_RANGE },
-      { "Temp", PROP_REAL, { degree (T0), PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       PROP_NO_PROP }
   },
   /* noise voltage source */
@@ -241,6 +241,10 @@ struct define_t definition_available[] =
       { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Isr", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
       { "Nr", PROP_REAL, { 2, PROP_NO_STR }, { 1, 100 } },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
@@ -283,6 +287,7 @@ struct define_t definition_available[] =
     { { "Rc", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Re", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Rb", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
@@ -305,6 +310,20 @@ struct define_t definition_available[] =
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
       { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* microstrip corner */
+  { "MCORN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* microstrip mitered bend */
+  { "MMBEND", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
@@ -761,7 +780,7 @@ static int checker_validate_actions (struct definition_t * root) {
 
 // List of available microstrip components.
 static char * strip_available[] = {
-  "MLIN", NULL };
+  "MLIN", "MCORN", "MMBEND", NULL };
 
 /* This function checks the validity of each microstrip component and
    its substrate and model references.  It returns zero on success,

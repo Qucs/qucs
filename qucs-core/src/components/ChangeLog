@@ -1,3 +1,13 @@
+2004-07-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Considering polarity of BJT in device model
+	equations.
+
+	* devices/jfet.cpp: Added preliminary noise calculation.
+
+	* spfile.cpp: Some code cleanups.  Noise correlation matrix
+	expansion not yet working...
+
 2004-07-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Added noise calculation function.
