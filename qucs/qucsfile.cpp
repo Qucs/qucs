@@ -55,7 +55,7 @@ QString QucsFile::createClipboardFile()
   Painting *pp;
   Component *pc;
 
-  QString s("<Qucs Schematic " VERSION ">\n");
+  QString s("<Qucs Schematic " PACKAGE_VERSION ">\n");
 
   // Build element document.
   s += "<Components>\n";
@@ -99,7 +99,7 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
     return false;
   }
 
-  QString s = VERSION;
+  QString s = PACKAGE_VERSION;
   Line = Line.mid(16, Line.length()-17);
   if(Line != s) {  // wrong version number ?
     QMessageBox::critical(0, QObject::tr("Error"),
@@ -139,7 +139,7 @@ int QucsFile::save()
 
   QTextStream stream(&file);
 
-  stream << "<Qucs Schematic " << VERSION << ">\n";
+  stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
   stream << "<Properties>\n";
   stream << "   <View=" << Doc->ViewX1<<","<<Doc->ViewY1<<","<<Doc->ViewX2<<","<<Doc->ViewY2;
@@ -449,7 +449,7 @@ bool QucsFile::load()
     return false;
   }
 
-  QString s = VERSION;
+  QString s = PACKAGE_VERSION;
   s.remove('.');
   Line = Line.mid(16, Line.length()-17);
   Line.remove('.');
