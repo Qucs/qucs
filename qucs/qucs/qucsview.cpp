@@ -849,7 +849,17 @@ void QucsView::MReleaseActivate(QMouseEvent *Event)
 void QucsView::MReleaseMoving(QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
-  
+  endElementMoving();
+
+  MouseMoveAction = &QucsView::MouseDoNothing;
+  MousePressAction = &QucsView::MPressSelect;
+  MouseReleaseAction = &QucsView::MReleaseSelect;
+  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+}
+
+// -----------------------------------------------------------
+void QucsView::endElementMoving()
+{  
   int x1, y1, x2, y2;
   // insert all moved elements into document and enlarge viewarea if component lies outside the view
   for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
@@ -876,11 +886,6 @@ void QucsView::MReleaseMoving(QMouseEvent *Event)
   }
   
   movingElements.clear();
-
-  MouseMoveAction = &QucsView::MouseDoNothing;
-  MousePressAction = &QucsView::MPressSelect;
-  MouseReleaseAction = &QucsView::MReleaseSelect;
-  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
 
   drawn = false;
   viewport()->repaint();
@@ -1000,6 +1005,11 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
                        d = new ComponentDialog(c, this);
                        if(d->exec() == 1) {
                          int x1, y1, x2, y2;
+                         x2 = Docs.current()->Comps.findRef(c);
+                         Docs.current()->Comps.take();
+                         x1 = Docs.current()->getComponentPos(c); // for ports and power sources
+                         Docs.current()->Comps.insert(x1, c);  // insert at appropriate position
+                         
                          Docs.current()->setChanged(true);
                          c->entireBounds(x1,y1,x2,y2);
                          enlargeView(x1,y1,x2,y2);
@@ -1009,7 +1019,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
 
     case isDiagram :   dia = (Diagram*)focusElement;
                        ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
-                       if(ddia->exec() == 1)
+                       if(ddia->exec()  != QDialog::Rejected)
                          Docs.current()->setChanged(true);
                        delete ddia;
                        break;

@@ -116,6 +116,8 @@ public:
   void MReleasePaste(QMouseEvent *);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to current mouse release button method
 
+  void endElementMoving();
+
 signals:
   void CompsSelected(bool);
 //  void AreaMouseMove(QMouseEvent *Event);
