@@ -46,7 +46,7 @@
 
 // application specific includes
 #include "qucsview.h"
-#include "simmessage.h"
+#include "dialogs/simmessage.h"
 
 /**
   * This Class is the base class for your application. It sets up the main

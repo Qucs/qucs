@@ -204,15 +204,15 @@
     <name>FileShowDialog</name>
     <message>
         <source>File: </source>
-        <translation>Datei: </translation>
+        <translation type="obsolete">Datei: </translation>
     </message>
     <message>
         <source>ERROR: Cannot read file: </source>
-        <translation>FEHLER: Datei kann nicht gelesen werden: </translation>
+        <translation type="obsolete">FEHLER: Datei kann nicht gelesen werden: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
 </context>
 <context>
@@ -242,15 +242,15 @@
     <name>HelpDialog</name>
     <message>
         <source>Qucs Help System</source>
-        <translation>Qucs Hilfesystem</translation>
+        <translation type="obsolete">Qucs Hilfesystem</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation>Hilfeindex</translation>
+        <translation type="obsolete">Hilfeindex</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Schließen</translation>
+        <translation type="obsolete">Schließen</translation>
     </message>
 </context>
 <context>
@@ -300,23 +300,23 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="obsolete">Speichern</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Alle speichern</translation>
+        <translation type="obsolete">Alle speichern</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Verwerfen</translation>
+        <translation type="obsolete">Verwerfen</translation>
     </message>
     <message>
         <source>DiscardAll</source>
-        <translation>Alle verwerfen</translation>
+        <translation type="obsolete">Alle verwerfen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -920,23 +920,23 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>Neues Projekt erstellen</translation>
+        <translation type="obsolete">Neues Projekt erstellen</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>Projektname:</translation>
+        <translation type="obsolete">Projektname:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>neues Projekt öffnen</translation>
+        <translation type="obsolete">neues Projekt öffnen</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Erstellen</translation>
+        <translation type="obsolete">Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>relative permittivity</source>
@@ -2580,78 +2580,78 @@ Kurze Einführung in Qucs</translation>
     <name>SettingsDialog</name>
     <message>
         <source>Data Display:</source>
-        <translation>Datenvisualisierung:</translation>
+        <translation type="obsolete">Datenvisualisierung:</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation>Datensatz:</translation>
+        <translation type="obsolete">Datensatz:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation>Öffnen der Datenvisualisierung nach Simulation</translation>
+        <translation type="obsolete">Öffnen der Datenvisualisierung nach Simulation</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation>Gitternetz anzeigen</translation>
+        <translation type="obsolete">Gitternetz anzeigen</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation>horizontales Gitternetz:</translation>
+        <translation type="obsolete">horizontales Gitternetz:</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation>vertikales Gitternetz:</translation>
+        <translation type="obsolete">vertikales Gitternetz:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>Fertig</translation>
+        <translation type="obsolete">Fertig</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Übernehmen</translation>
+        <translation type="obsolete">Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>Edit File Properties</source>
-        <translation>Dateieigenschaften bearbeiten</translation>
+        <translation type="obsolete">Dateieigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation>Simulation</translation>
+        <translation type="obsolete">Simulation</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation>Gitternetz</translation>
+        <translation type="obsolete">Gitternetz</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation>Qucs Simulationsnachrichten</translation>
+        <translation type="obsolete">Qucs Simulationsnachrichten</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation>Fortschritt:</translation>
+        <translation type="obsolete">Fortschritt:</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation>Fehler und Warnungen:</translation>
+        <translation type="obsolete">Fehler und Warnungen:</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation>Zur Anzeigeseite gehen</translation>
+        <translation type="obsolete">Zur Anzeigeseite gehen</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation>Simulation abbrechen</translation>
+        <translation type="obsolete">Simulation abbrechen</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation>Fenster schließen</translation>
+        <translation type="obsolete">Fenster schließen</translation>
     </message>
 </context>
 </TS>

@@ -22,23 +22,22 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = bitmaps components diagrams paintings docs
+SUBDIRS = bitmaps components diagrams paintings dialogs docs
 bin_PROGRAMS = qucs
 
-MOCHEADERS = qucsview.h settingsdialog.h messagebox.h simmessage.h qucs.h \
-  fileshowdialog.h helpdialog.h
+MOCHEADERS = qucsview.h qucs.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp \
-  element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp          \
-  qucsview.cpp qucs.cpp main.cpp helpdialog.cpp wirelabel.cpp qucsfile.cpp $(MOCFILES)
+qucs_SOURCES = node.cpp \
+  element.cpp qucsdoc.cpp wire.cpp \
+  qucsview.cpp qucs.cpp main.cpp wirelabel.cpp qucsfile.cpp $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
-	paintings/libpaintings.a
+	paintings/libpaintings.a dialogs/libdialogs.a
 
-noinst_HEADERS = $(MOCHEADERS) newprojdialog.h wire.h qucsdoc.h element.h \
+noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h \
   node.h wirelabel.h qucsfile.h
 
 # rules for translations
@@ -49,7 +48,8 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 	@echo "Updating translations...";
 	@list='$(TRANSLATIONS)'; for file in $$list; do \
 	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
-	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp` -ts $$file; \
+	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp\
+	  $(srcdir)/diagrams/*.cpp` -ts $$file; \
 	done
 
 %.qm: %.ts
