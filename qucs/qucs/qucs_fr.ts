@@ -2074,15 +2074,11 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>positive voltage limit at the output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>negative voltage limit at the output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OpAmp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute value of maximum and minimum output voltage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
