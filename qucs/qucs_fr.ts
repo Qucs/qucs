@@ -201,21 +201,6 @@
     </message>
 </context>
 <context>
-    <name>FileShowDialog</name>
-    <message>
-        <source>File: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot read file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
@@ -240,18 +225,6 @@
 </context>
 <context>
     <name>HelpDialog</name>
-    <message>
-        <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LineDialog</name>
@@ -298,49 +271,9 @@
 </context>
 <context>
     <name>MessageBox</name>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Discard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DiscardAll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Create new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>open new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>untitled</source>
         <translation type="unfinished"></translation>
@@ -2357,80 +2290,8 @@ Go on ?</source>
 </context>
 <context>
     <name>SettingsDialog</name>
-    <message>
-        <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data Display:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data Set:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>show Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>horizontal Grid:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vertical Grid:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SimMessage</name>
-    <message>
-        <source>Qucs Simulation Messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Progress:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Errors and Warnings:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Goto display page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Abort simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close window</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 </TS>

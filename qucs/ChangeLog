@@ -1,3 +1,8 @@
+2004-04-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* strongly speed up reading of datasets
+	* speed up selecting of graphs
+
 2004-04-03  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* diagrams can show independent variables

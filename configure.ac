@@ -200,6 +200,7 @@ AC_CONFIG_FILES([Makefile
 		 qucs/components/Makefile
 		 qucs/diagrams/Makefile
 		 qucs/paintings/Makefile
+		 qucs/dialogs/Makefile
                  qucs/docs/Makefile
                  qucs/docs/en/Makefile])
 AC_OUTPUT

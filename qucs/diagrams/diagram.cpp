@@ -22,6 +22,8 @@
 
 #include <qtextstream.h>
 #include <qmessagebox.h>
+#include <qregexp.h>
+
 
 
 Diagram::Diagram(int _cx, int _cy)
@@ -95,7 +97,7 @@ void Diagram::paint(QPainter *p)
     }
     p->restore();
   }
-  
+
   p->setPen(QPen(QPen::black,1));
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())      // write whole text
     p->drawText(cx+pt->x, cy-pt->y, pt->s);
@@ -185,6 +187,10 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);    // load data and determine max and min values
 
+  if((ymin > ymax) || (xmin > xmax)) {
+    ymin = xmin = 0.0;
+    ymax = xmax = 1.0;
+  }
   calcDiagram();
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
@@ -204,7 +210,7 @@ void Diagram::updateGraphData()
 bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
-  if(g->Points != 0) delete[] g->Points;
+  if(g->Points != 0) { delete[] g->Points;  g->Points = 0; }
   if(g->Line.isEmpty()) return false;
 
   QFile file(fileName);
@@ -213,66 +219,68 @@ bool Diagram::loadVarData(const QString& fileName)
     return false;
   }
 
-  QString Line, tmp, tmp0;
-  QTextStream stream(&file);
+  QTextStream ReadWhole(&file);            // to strongly speed up the file read operation ...
+  QString FileString = ReadWhole.read();   // the whole file is read into the memory ...
+  file.close();                            // in one piece
 
-  while(!stream.atEnd()) {    // look for variable name in data file
-    Line = stream.readLine();
-    if(Line.left(4) == "<dep") {
-      tmp = Line.section(' ', 1, 1).remove('>');
+
+  QString Line, tmp;
+
+  int i=0, j=0, k=0;
+  i = FileString.find('<')+1;
+  if(i > 0)
+  do {    // look for variable name in data file
+    j = FileString.find('>', i);
+    Line = FileString.mid(i, j-i);
+    i = FileString.find('<', j)+1;
+    if(Line.left(3) == "dep") {
+      tmp = Line.section(' ', 1, 1);
       if(g->Line != tmp) continue;     // found variable with name sought for ?
-      tmp = Line.section(' ', 2, 2).remove('>');    // name of independent variable
+      tmp = Line.section(' ', 2, 2);   // name of independent variable
       break;
     }
-    if(Line.left(6) == "<indep") {
-      tmp = Line.section(' ', 1, 1).remove('>');
+    if(Line.left(5) == "indep") {
+      tmp = Line.section(' ', 1, 1);
       if(g->Line != tmp) continue;     // found variable with name sought for ?
       tmp = "";        // no independent variable
       break;
     }
-  }
+  } while(i > 0);
 
-  if(stream.atEnd()) {
-    file.close();
-    return false;   // return if data name was not found
-  }
-
+  if(i <= 0)  return false;   // return if data name was not found
   g->IndepVar = tmp;    // name of independet variable (could be empty!)
-
   g->cPoints.clear();
 
-  int i, counting = 0;
+  int counting = 0;
   bool ok;
   double x, y;
-  Line = stream.readLine();
-  while(Line.left(2) != "</") {
-    Line = Line.stripWhiteSpace();
-    Line += ' ';
-    i = Line.find(' ');
-    while(i > 0) {    // extract all numbers in the line
-      tmp  = Line.left(i);
-      Line = Line.mid(i+1);
-
-      i = tmp.find('j');
-      if(i < 0) {
-        x = tmp.toDouble(&ok);
-        y = 0;
-      }
-      else {
-        tmp0 = tmp.mid(i-1);  // imaginary part
-        tmp0.remove('j');
-        y = tmp0.toDouble(&ok);
-        tmp = tmp.left(i-1);  // real part
-        x = tmp.toDouble(&ok);
-      }
-      g->cPoints.append(new cPoint(0,x,y));
-      counting++;
-      y = sqrt(x*x+y*y);
-      if(y > ymax) ymax = y;
-      if(y < ymin) ymin = y;
-      i = Line.find(' ');
+  QRegExp WhiteSpace("\\s");
+  QRegExp noWhiteSpace("\\S");
+  i = FileString.find(noWhiteSpace, j+1);
+  j = FileString.find(WhiteSpace, i);
+  Line = FileString.mid(i, j-i);
+  while(Line.at(0) != '<') {
+    k = Line.find('j');
+    if(k < 0) {
+      x = Line.toDouble(&ok);
+      y = 0;
     }
-    Line = stream.readLine();
+    else {
+      tmp = Line.mid(k);  // imaginary part
+      tmp.at(0) = Line.at(k-1);   // copy sign over "j"
+      y = tmp.toDouble(&ok);
+      Line = Line.left(k-1);  // real part
+      x = Line.toDouble(&ok);
+    }
+    g->cPoints.append(new cPoint(0,x,y));
+    counting++;
+    y = sqrt(x*x+y*y);
+    if(y > ymax) ymax = y;
+    if(y < ymin) ymin = y;
+
+    i = FileString.find(noWhiteSpace, j);
+    j = FileString.find(WhiteSpace, i);
+    Line = FileString.mid(i, j-i);
   }
 
   g->Points = new int[2*counting];    // create memory for points
@@ -289,75 +297,64 @@ bool Diagram::loadVarData(const QString& fileName)
     xmin = 1.0;
     xmax = double(counting);
   }
-  else  loadIndepVarData(g->IndepVar, fileName);    // get independent variable
+  else  if(loadIndepVarData(g->IndepVar, FileString) <= 0) {  // get independent variable
+          delete[] g->Points;
+          g->Points = 0;
+          g->cPoints.clear();
+          return false;
+        }
 
-  file.close();
   return true;
 }
 
 // --------------------------------------------------------------------------
 // Reads the data of an independent variable. Returns the numberof points.
-int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
+int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
 {
-  QFile file(fileName);
-  if(!file.open(IO_ReadOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Cannot load dataset: ")+fileName);
-    return 0;
-  }
-
   QString Line, tmp;
-  QTextStream stream(&file);
 
-  while(!stream.atEnd()) {    // look for variable name in data file
-    Line = stream.readLine();
-    if(Line.left(6) == "<indep") {
+  int i=0, j=0;
+  i = FileString.find('<')+1;
+  if(i > 0)
+  do {    // look for variable name in data file
+    j = FileString.find('>', i);
+    Line = FileString.mid(i, j-i);
+    i = FileString.find('<', j)+1;
+    if(Line.left(5) == "indep") {
       tmp = Line.section(' ', 1, 1);
-      if(var == tmp) break;
+      if(var == tmp) break;     // found variable with name sought for ?
     }
-  }
+  } while(i > 0);
 
-  if(stream.atEnd()) {
-    file.close();
-    return 0;   // return if data name was not found
-  }
-
+  if(i <= 0) return 0;   // return if data name was not found
   Graph *g = Graphs.current();
 
   bool ok;
   tmp = Line.section(' ', 2, 2);  // get number of points
-  tmp.remove('>');
   int n = tmp.toInt(&ok);
 
   cPoint *p = g->cPoints.first();
 
-  int i;
   double x;
-  Line = stream.readLine();
-  while(Line.left(2) != "</") {
-    Line = Line.stripWhiteSpace();
-    Line += ' ';
-    i = Line.find(' ');
-    while(i > 0) {    // extract all numbers in the line
-      tmp  = Line.left(i);
-      Line = Line.mid(i+1);
+  QRegExp WhiteSpace("\\s");
+  QRegExp noWhiteSpace("\\S");
+  i = FileString.find(noWhiteSpace, j+1);
+  j = FileString.find(WhiteSpace, i);
+  Line = FileString.mid(i, j-i);
+  while(Line.at(0) != '<') {
+    x = Line.toDouble(&ok);  // get number
+    p->x = x;
+    if(x > xmax) xmax = x;
+    if(x < xmin) xmin = x;
+    p = g->cPoints.next();
+    if(!p) return n;
 
-      x = tmp.toDouble(&ok);  // get number
-      p->x = x;
-      if(x > xmax) xmax = x;
-      if(x < xmin) xmin = x;
-      p = g->cPoints.next();
-      if(!p) {
-        file.close();
-        return n;
-      }
-
-      i = Line.find(' ');
-    }
-    Line = stream.readLine();
+    i = FileString.find(noWhiteSpace, j);
+    j = FileString.find(WhiteSpace, i);
+    Line = FileString.mid(i, j-i);
   }
 
-  file.close();
-  return n;
+  return 0;     // size of independent and dependet vector don't equal
 }
 
 // ------------------------------------------------------------

@@ -21,14 +21,14 @@
 
 #include "qucs.h"
 #include "qucsview.h"
-#include "newprojdialog.h"
-#include "settingsdialog.h"
 #include "wire.h"
-#include "diagrams/diagrams.h"
-#include "messagebox.h"
-#include "fileshowdialog.h"
 #include "paintings/paintings.h"
-#include "helpdialog.h"
+#include "diagrams/diagrams.h"
+#include "dialogs/messagebox.h"
+#include "dialogs/helpdialog.h"
+#include "dialogs/newprojdialog.h"
+#include "dialogs/fileshowdialog.h"
+#include "dialogs/settingsdialog.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -42,6 +42,7 @@
 #include <qfiledialog.h>
 #include <qinputdialog.h>
 #include <qclipboard.h>
+
 
 #include <limits.h>
 

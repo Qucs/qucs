@@ -117,7 +117,38 @@ int Graph::getSelected(int x, int y)
   int *pp = Points;
   if(pp == 0) return -1;
 
-//qDebug("c: %d/%d", x, y);
+  int A;
+  int dx, dx2, x1;
+  int dy, dy2, y1;
+
+  for(int n=1; n<count; n++) {   // count-1 runs (because need 2 points per run)
+    x1 = *(pp++);  y1 = *(pp++);
+
+    dx  = x - x1;
+    dx2 = (*pp);
+    if(dx < -5) { if(x < dx2-5) continue; }    // lies point between x coordinates ?
+    else { if(x > dx2+5) continue; }
+
+    dy  = y - y1;
+    dy2 = (*(pp+1));
+    if(dy < -5) { if(y < dy2-5) continue; }    // lies point between y coordinates ?
+    else { if(y > dy2+5) continue; }
+
+    dx2 -= x1;
+    dy2 -= y1;
+
+    A  = dx2*dy - dx*dy2;    // calculate the rectangle area spanned
+    A *= A;                  // avoid the need for square root
+    A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
+
+    if(A <= 0)  return n;    // lies x/y onto the graph line ?
+  }
+
+  return -1;
+
+/* ------------------------------------------------------------
+   This algorithm is not bad, but not very fast.
+   ------------------------------------------------------------
   double x_double, y_double, phi, sin_phi, cos_phi;
   int len, xn, yn;
   int x2, x1 = *(pp++);
@@ -145,4 +176,5 @@ int Graph::getSelected(int x, int y)
   }
 
   return -1;
+  ------------------------------------------------------------ */
 }
