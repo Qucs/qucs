@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.38 2004-12-07 22:33:31 raimi Exp $
+ * $Id: spsolver.cpp,v 1.39 2004-12-20 18:41:17 raimi Exp $
  *
  */
 
@@ -40,16 +40,21 @@
 #include "matvec.h"
 #include "dataset.h"
 #include "net.h"
-#include "tee.h"
-#include "open.h"
-#include "itrafo.h"
 #include "analysis.h"
 #include "sweep.h"
 #include "nodelist.h"
 #include "spsolver.h"
 #include "constants.h"
 #include "components/component_id.h"
+#include "components/tee.h"
+#include "components/open.h"
+#include "components/itrafo.h"
+#include "components/cross.h"
+#include "components/ground.h"
 
+/* Evolved optimization flags. */
+#define USE_GROUNDS 1   // use extra grounds ?
+#define USE_CROSSES 1   // use additional cross connectors ?
 #define SORTED_LIST 1   // use sorted node list?
 
 #define TINYS 1.235e-12 // 'tiny' value for singularities
@@ -60,6 +65,8 @@ spsolver::spsolver () : analysis () {
   swp = NULL;
   noise = 0;
   nlist = NULL;
+  tees = crosses = opens = grounds = 0;
+  gnd = NULL;
 }
 
 // Constructor creates a named instance of the spsolver class.
@@ -68,6 +75,8 @@ spsolver::spsolver (char * n) : analysis (n) {
   swp = NULL;
   noise = 0;
   nlist = NULL;
+  tees = crosses = opens = grounds = 0;
+  gnd = NULL;
 }
 
 // Destructor deletes the spsolver class object.
@@ -79,9 +88,14 @@ spsolver::~spsolver () {
 /* The copy constructor creates a new instance of the spsolver class
    based on the given spsolver object. */
 spsolver::spsolver (spsolver & n) : analysis (n) {
+  tees = n.tees;
+  crosses = n.crosses;
+  opens = n.opens;
+  grounds = n.grounds;
   noise = n.noise;
   swp = n.swp ? new sweep (*n.swp) : NULL;
   nlist = n.nlist ? new nodelist (*n.nlist) : NULL;
+  gnd = n.gnd;
 }
 
 /* This function joins two nodes of a single circuit (interconnected
@@ -601,16 +615,19 @@ void spsolver::solve (void) {
   dropConnections ();
 }
 
-/* The function goes through the list of circuit objects and creates T
-   circuits if necessary.  It looks for nodes in the circuit list
-   connected to the given node. */
-void spsolver::insertTee (node * n) {
+/* The function goes through the list of circuit objects and creates
+   tee and cross circuits if necessary.  It looks for nodes in the
+   circuit list connected to the given node. */
+void spsolver::insertConnectors (node * n) {
 
   int count = 0;
   node * nodes[4], * _node;
-  tee * result;
   char * _name = n->getName ();
   circuit * root = subnet->getRoot ();
+
+#if USE_GROUNDS
+  if (!strcmp (_name, "gnd")) return;
+#endif /* USE_GROUNDS */
 
   nodes[0] = n;
 
@@ -624,48 +641,111 @@ void spsolver::insertTee (node * n) {
 
 	  // found a connected node
 	  nodes[++count] = _node;
-	  if (count == 2) {
-
-	    // create a T and assign its node names
-	    result = new tee ();
-	    subnet->insertedCircuit (result);
-	    result->setNode (1, _name);
-	    subnet->insertedNode (result->getNode (2));
-	    subnet->insertedNode (result->getNode (3));
-
-	    // rename the nodes connected to the T
-	    nodes[1]->setName (result->getNode(2)->getName ());
-	    nodes[2]->setName (result->getNode(3)->getName ());
-
-	    // complete the nodes of the T
-	    result->getNode(2)->setCircuit (result);
-	    result->getNode(3)->setCircuit (result);
-	    result->getNode(2)->setPort (2);
-	    result->getNode(3)->setPort (3);
-
-	    // put the T in the circuit list
-	    subnet->insertCircuit (result);
-	    nodes[1] = result->getNode (1);
+#if USE_CROSSES
+	  if (count == 3) {
+	    // create an additional cross and assign its nodes
+	    insertCross (nodes, _name);
 	    count = 1;
-	    result->initSP (); if (noise) result->initNoise ();
 	  }
+#else /* !USE_CROSSES */
+	  if (count == 2) {
+	    // create an additional tee and assign its nodes
+	    insertTee (nodes, _name);
+	    count = 1;
+	  }
+#endif /* !USE_CROSSES */
 	}
       }
     }
   }
+#if USE_CROSSES
+  /* if using crosses there can be a tee left here */
+  if (count == 2) {
+    insertTee (nodes, _name);
+  }
+#endif /* USE_CROSSES */
+}
+
+/* The following function creates a tee circuit with the given nodes
+   and the node name.  The tee's node names are adjusted to be
+   internal nodes. */
+void spsolver::insertTee (node ** nodes, char * name) {
+  circuit * result;
+  // create a tee and assign its node names
+  result = new tee ();
+  subnet->insertedCircuit (result);
+  result->setNode (1, name);
+  subnet->insertedNode (result->getNode (2));
+  subnet->insertedNode (result->getNode (3));
+  // rename the nodes connected to the tee
+  nodes[1]->setName (result->getNode(2)->getName ());
+  nodes[2]->setName (result->getNode(3)->getName ());
+  // complete the nodes of the tee
+  result->getNode(2)->setCircuit (result);
+  result->getNode(3)->setCircuit (result);
+  result->getNode(2)->setPort (2);
+  result->getNode(3)->setPort (3);
+  // put the tee into the circuit list and initialize it
+  subnet->insertCircuit (result);
+  result->initSP (); if (noise) result->initNoise ();
+  // put the tee's first node into the node collection
+  nodes[1] = result->getNode (1);
+  tees++;
+}
+
+/* The following function creates a cross circuit with the given nodes
+   and the node name.  The cross's node names are adjusted to be
+   internal nodes. */
+void spsolver::insertCross (node ** nodes, char * name) {
+  circuit * result;
+  // create a cross and assign its node names
+  result = new cross ();
+  subnet->insertedCircuit (result);
+  result->setNode (1, name);
+  subnet->insertedNode (result->getNode (2));
+  subnet->insertedNode (result->getNode (3));
+  subnet->insertedNode (result->getNode (4));
+  // rename the nodes connected to the cross
+  nodes[1]->setName (result->getNode(2)->getName ());
+  nodes[2]->setName (result->getNode(3)->getName ());
+  nodes[3]->setName (result->getNode(4)->getName ());
+  // complete the nodes of the cross
+  result->getNode(2)->setCircuit (result);
+  result->getNode(3)->setCircuit (result);
+  result->getNode(4)->setCircuit (result);
+  result->getNode(2)->setPort (2);
+  result->getNode(3)->setPort (3);
+  result->getNode(4)->setPort (4);
+  // put the cross into the circuit list and initialize it
+  subnet->insertCircuit (result);
+  result->initSP (); if (noise) result->initNoise ();
+  // put the cross's first node into the node collection
+  nodes[1] = result->getNode (1);
+  crosses++;
 }
 
 /* This function removes an inserted tee from the netlist and restores
    the original node names. */
 void spsolver::dropTee (circuit * c) {
   node * n;
-  char * name;
   if (c->getType () == CIR_TEE) {
-    name = c->getNode(1)->getName ();
-    n = subnet->findConnectedNode (c->getNode (2));
-    n->setName (name);
-    n = subnet->findConnectedNode (c->getNode (3));
-    n->setName (name);
+    char * name = c->getNode(1)->getName ();
+    n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
+    n = subnet->findConnectedNode (c->getNode (3)); n->setName (name);
+    c->setOriginal (0);
+    subnet->removeCircuit (c);
+  }
+}
+
+/* This function removes an inserted cross from the netlist and restores
+   the original node names. */
+void spsolver::dropCross (circuit * c) {
+  node * n;
+  if (c->getType () == CIR_CROSS) {
+    char * name = c->getNode(1)->getName ();
+    n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
+    n = subnet->findConnectedNode (c->getNode (3)); n->setName (name);
+    n = subnet->findConnectedNode (c->getNode (4)); n->setName (name);
     c->setOriginal (0);
     subnet->removeCircuit (c);
   }
@@ -674,15 +754,14 @@ void spsolver::dropTee (circuit * c) {
 /* The function adds an open to the circuit list if the given node is
    unconnected. */
 void spsolver::insertOpen (node * n) {
-
-  circuit * result;
-
-  if (subnet->findConnectedNode (n) == NULL) {
-    result = new open ();
+  if (strcmp (n->getName (), "gnd") &&
+      subnet->findConnectedNode (n) == NULL) {
+    circuit * result = new open ();
     subnet->insertedCircuit (result);
-    result->setNode (1, n->getName());
+    result->setNode (1, n->getName ());
     subnet->insertCircuit (result);
     result->initSP (); if (noise) result->initNoise ();
+    opens++;
   }
 }
 
@@ -694,23 +773,84 @@ void spsolver::dropOpen (circuit * c) {
   }
 }
 
+/* The function adds a ground circuit to the circuit list if the given
+   node is a ground connection. */
+void spsolver::insertGround (node * n) {
+  if (!strcmp (n->getName (), "gnd") && !n->getCircuit()->getPort () &&
+      n->getCircuit()->getType () != CIR_GROUND) {
+    circuit * result = new ground ();
+    subnet->insertedCircuit (result);
+    subnet->insertedNode (result->getNode (1));
+    result->getNode(1)->setCircuit (result);
+    result->getNode(1)->setPort (1);
+    n->setName (result->getNode(1)->getName ());
+    subnet->insertCircuit (result);
+    result->initSP (); if (noise) result->initNoise ();
+    grounds++;
+  }
+}
+
+// This function removes an inserted ground from the netlist.
+void spsolver::dropGround (circuit * c) {
+  if (c->getType () == CIR_GROUND) {
+    node * n = subnet->findConnectedNode (c->getNode (1));
+    n->setName ("gnd");
+    c->setOriginal (0);
+    subnet->removeCircuit (c);
+  }
+}
+
 /* This function prepares the circuit list by adding Ts and opens to
    the circuit list.  With this adjustments the solver is able to
    solve the circuit. */
 void spsolver::insertConnections (void) {
 
-  circuit * root = subnet->getRoot ();
+  circuit * root;
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: %s: preparing circuit for analysis\n",
 	    getName ());
 #endif /* DEBUG */
+
+#if USE_GROUNDS
+  // remove original ground circuit from netlist
+  root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->getType () == CIR_GROUND) {
+      gnd = c;
+      subnet->removeCircuit (c, 0);
+      break;
+    }
+  }
+#endif /* USE_GROUNDS */
+
+  // insert opens, tee and crosses where necessary
+  tees = crosses = opens = grounds = 0;
+  root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     for (int i = 1; i <= c->getSize (); i++) {
-      insertTee (c->getNode (i));
+      insertConnectors (c->getNode (i));
       insertOpen (c->getNode (i));
     }
   }
+
+  // insert S-parameter port transformers
   insertDifferentialPorts ();
+
+#if USE_GROUNDS
+  // insert grounds where necessary
+  root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    for (int i = 1; i <= c->getSize (); i++) {
+      insertGround (c->getNode (i));
+    }
+  }
+#endif /* USE_GROUNDS */
+
+#if DEBUG
+  logprint (LOG_STATUS, "NOTIFY: %s: inserted %d tees, %d crosses, %d opens "
+	    "and %d grounds\n",
+	    getName (), tees, crosses, opens, grounds);
+#endif /* DEBUG */
 }
 
 /* The function is the counterpart of insertConnections().  It removes
@@ -735,12 +875,29 @@ void spsolver::dropConnections (void) {
     // if found, then drop that circuit
     if (cand != NULL) {
       switch (cand->getType ()) {
-      case CIR_OPEN: dropOpen (cand); break;
-      case CIR_TEE: dropTee (cand); break;
-      case CIR_ITRAFO: dropDifferentialPort (cand); break;
+      case CIR_OPEN:
+	dropOpen (cand);
+	break;
+      case CIR_TEE:
+	dropTee (cand);
+	break;
+      case CIR_CROSS:
+	dropCross (cand);
+	break;
+      case CIR_GROUND:
+	dropGround (cand);
+	break;
+      case CIR_ITRAFO:
+	dropDifferentialPort (cand);
+	break;
       }
     }
   } while (cand != NULL);
+
+#if USE_GROUNDS
+  // attach the original ground to the netlist
+  subnet->insertCircuit (gnd);
+#endif /* USE_GROUNDS */
 }
 
 /* This function inserts an ideal transformer before an AC power

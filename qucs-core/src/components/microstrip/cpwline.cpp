@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.2 2004-12-15 19:55:32 raimi Exp $
+ * $Id: cpwline.cpp,v 1.3 2004-12-20 18:41:18 raimi Exp $
  *
  */
 
@@ -123,12 +123,13 @@ void cpwline::initSP (void) {
     nr_double_t b = a + s;
     nr_double_t ac = (M_PI + log (m * a)) / a + (M_PI + log (m * b)) / b;
 
+    tand = subst->getPropertyDouble ("tand");
+    rho = subst->getPropertyDouble ("rho");
+
     ac_factor = ac / ((480 * M_PI) * kk1 * kpk1 * (1 - k1 * k1));
     ac_factor *= sqrt (M_PI * MU0 * rho); // Rs factor
 
     ad_factor =  (er / (er - 1)) * tand / (M_PI * C0);
-    tand = subst->getPropertyDouble ("tand");
-    rho = subst->getPropertyDouble ("rho");
   }
 
   beta_factor = 2 * M_PI / C0;

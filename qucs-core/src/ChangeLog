@@ -1,3 +1,14 @@
+2004-12-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Introduced two more speed/memory
+	optimizations: Usage of cross connectors and dedicated ground
+	circuits.  The cross connectors reduce the number of necessary
+	tees and the grounds reduce the ground network (consisting
+	of lots of tees and crosses).
+
+	* nodelist.cpp: Fixed sorting criteria functions for sorted
+	S-parameter nodelist.
+
 2004-12-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Added the CLIN

@@ -26,6 +26,9 @@ files.
 Version 0.0.5
 -------------
 
+ * speed and memory optimizations in S-parameter analysis
+ * implementation of coplanar lines
+ * breakdown current/voltage in diode model available
  * list and constant sweeps available
  * added convergence helpers for non-linear DC and transient analysis
  * allowing vector indices with multiply dependencies

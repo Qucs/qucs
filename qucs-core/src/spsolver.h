@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.h,v 1.10 2004-08-15 12:25:38 ela Exp $
+ * $Id: spsolver.h,v 1.11 2004-12-20 18:41:18 raimi Exp $
  *
  */
 
@@ -46,8 +46,11 @@ class spsolver : public analysis
   void solve (void);
   void insertConnections (void);
   void insertDifferentialPorts (void);
-  void insertTee (node *);
+  void insertTee (node **, char *);
+  void insertCross (node **, char *);
+  void insertConnectors (node *);
   void insertOpen (node *);
+  void insertGround (node *);
   circuit * interconnectJoin (node *, node *);
   circuit * connectedJoin (node *, node *);
   void noiseConnect (circuit *, node *, node *);
@@ -57,14 +60,18 @@ class spsolver : public analysis
   void saveVariable (char *, complex, vector *);
   char * createSP (int, int);
   void dropTee (circuit *);
+  void dropCross (circuit *);
   void dropOpen (circuit *);
+  void dropGround (circuit *);
   void dropDifferentialPort (circuit *);
   void dropConnections (void);
 
  private:
+  int tees, crosses, grounds, opens;
   int noise;
   sweep * swp;
   nodelist * nlist;
+  circuit * gnd;
 };
 
 #endif /* __SPSOLVER_H__ */

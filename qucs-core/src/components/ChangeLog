@@ -1,3 +1,7 @@
+2004-12-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwline.cpp: Fixed bug in loss computation.
+
 2004-12-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwline.cpp: Applied Vincent's preliminary
