@@ -53,6 +53,14 @@ Diode::Diode()
 		QObject::tr("ohmic series resistance")));
   Props.append(new Property("Tt", "0.0 ps", false,
 		QObject::tr("transit time")));
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("Kf", "0.0", false,
+                QObject::tr("flicker noise coefficient")));
+  Props.append(new Property("Af", "1.0", false,
+	        QObject::tr("flicker noise exponent")));
+  Props.append(new Property("Ffe", "1.0", false,
+	        QObject::tr("flicker noise frequency exponent")));
 }
 
 Diode::~Diode()
