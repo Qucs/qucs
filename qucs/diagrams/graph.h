@@ -57,8 +57,7 @@ public:
 
   QPtrList<DataX>  cPointsX;
   double *cPointsY;
-  QValueVector<int> Points; // data in screen coordinates
-  int     countY; // curves number
+  int    *Points, countY; // data in screen coordinates, countY = curves number
   QString Var;
   QColor  Color;
   int     Thick;

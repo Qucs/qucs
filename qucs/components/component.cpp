@@ -392,8 +392,11 @@ QString Component::NetList()
 
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
     s += " "+p1->Connection->Name;   // node names
-  if(Model.at(0) == '_') {
-    s += " gnd";    // add port (e.g. BJT without substrate)
+  if(Model.at(0) == '_') {    // add port ? (e.g. BJT without substrate)
+    if(Model == "_BJT")
+      s += " "+Ports.at(1)->Connection->Name;
+    else
+      s += " "+Ports.at(2)->Connection->Name;
     s.remove(0,1);  // remove leading '_'
   }
 

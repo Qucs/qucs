@@ -21,6 +21,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <stdlib.h>
 
 #include <qtextstream.h>
 #include <qmessagebox.h>
@@ -98,7 +99,7 @@ void Diagram::paint(QPainter *p)
       // draw y-label for all graphs
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         p->setPen(pg->Color);
-	if(!pg->Points.isEmpty()) {
+	if(pg->Points) {
 	  // get width of text
 	  r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var);
 	  p->drawText(-cy+((y2-r.width())>>1), cx-delta, pg->Var);
@@ -152,51 +153,54 @@ bool Diagram::calcDiagram()
 // ------------------------------------------------------------
 void Diagram::calcData(Graph *g, bool valid)
 {
-  if((Name[0] == 'T') || (!valid)) {   // no graph within tabulars
-    if(!g->Points.isEmpty()) {
-      g->Points.clear();  // memory is of no use in this diagram type
-    }
+  if(g->Points != 0) { free(g->Points);  g->Points = 0; }
+  if((Name[0] == 'T') || (!valid))   // no graph within tabulars
     return;
-  }
 
-  int xtmp, ytmp;
+    
+  if(g->countY == 0) return;
+  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 4;
+  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
+  int *p_end;
+  g->Points = p_end = p;
+  p_end += Size - 5;   // limit of buffer
+
+  int i, z;
   double *px;
   double *py = g->cPointsY;
-  g->Points.clear();
 
   double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->Style) {
     case 0:   // solid line
-      for(int i=g->countY; i>0; i--) {
-        px = g->cPointsX.getFirst()->Points;
-        for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
-          calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
-          g->Points.append(xtmp);
-          g->Points.append(ytmp);
-          px++;
-          py += 2;
-        }
-        g->Points.append(-10);
+      for(i=g->countY; i>0; i--) {
+	px = g->cPointsX.getFirst()->Points;
+	for(z=g->cPointsX.getFirst()->count; z>0; z--) {
+	  calcCoordinate(*px, *py, *(py+1), p, p+1);
+	  px++;
+	  py += 2;
+	  p  += 2;
+	}
+	*(p++) = -10;
       }
-      g->Points.append(-100);
+      *p = -100;
       return;
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
     case 2: Stroke =  2.0; Space =  4.0;  break;   // dot line
     case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
   }
 
-  int dx, dy;
+  int dx, dy, xtmp, ytmp, tmp;
   double alpha, dist;
   int Flag;    // current state: 1=stroke, 0=space
-  for(int i=g->countY; i>0; i--) {
+  for(i=g->countY; i>0; i--) {
     Flag = 1;
     dist = -Stroke;
     px = g->cPointsX.getFirst()->Points;
     calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
     px++;  py += 2;
-    g->Points.append(xtmp);
-    g->Points.append(ytmp);
-    for(int z=g->cPointsX.getFirst()->count-1; z>0; z--) {
+    *(p++) = xtmp;
+    *(p++) = ytmp;
+    for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
       calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
@@ -205,34 +209,49 @@ void Diagram::calcData(Graph *g, bool valid)
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
       if(Flag == 1) if(dist <= 0) {
-	g->Points.append(xtmp);    // if stroke then save points
-	g->Points.append(ytmp);
+	if(p >= p_end) {  // need to enlarge memory block ?
+	  Size += 256;
+	  tmp = p - g->Points;
+	  p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int));
+	  p += tmp;
+	  p_end += Size - 5;
+	}
+
+	*(p++) = xtmp;    // if stroke then save points
+	*(p++) = ytmp;
 	continue;
       }
       alpha   = atan2(dy, dx);   // slope for interpolation
       while(dist > 0) {   // stroke or space finished ?
-	// linearly interpolate
-        g->Points.append(xtmp - int(dist*cos(alpha) + 0.5));
-        g->Points.append(ytmp - int(dist*sin(alpha) + 0.5));
+	if(p >= p_end) {  // need to enlarge memory block ?
+	  Size += 256;
+	  tmp = p - g->Points;
+	  p = p_end = g->Points = (int*)realloc(g->Points, Size*sizeof(int));
+	  p += tmp;
+	  p_end += Size - 5;
+	}
+
+	*(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
+        *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
 
          if(Flag == 0) {
             dist -= Stroke;
             if(dist <= 0) {
-               g->Points.append(xtmp);  // don't forget point after ...
-               g->Points.append(ytmp);  // ... interpolated point
+               *(p++) = xtmp;  // don't forget point after ...
+               *(p++) = ytmp;  // ... interpolated point
             }
          }
          else {
             dist -= Space;
-            g->Points.append(-2);  // value for interrupt stroke
+            *(p++) = -2;  // value for interrupt stroke
          }
          Flag ^= 1; // toggle between stroke and space
       }
 
     } // of x loop
-    g->Points.append(-10);
+    *(p++) = -10;
   } // of y loop
-  g->Points.append(-100);
+  *p = -100;
 
 }
 
@@ -348,7 +367,6 @@ bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
   g->countY = 0;
-  if(!g->Points.isEmpty()) g->Points.clear();
   g->cPointsX.clear();
   if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Var.isEmpty()) return false;
@@ -452,10 +470,10 @@ bool Diagram::loadVarData(const QString& fileName)
     g->countY /= counting;
   }
 
-  counting *= g->countY;
 
   // *****************************************************************
   // get dependent variables *****************************************
+  counting  *= g->countY;
   p = new double[2*counting]; // memory for dependent variables
   g->cPointsY = p;
   double x, y;
@@ -479,13 +497,10 @@ bool Diagram::loadVarData(const QString& fileName)
     }
     if((!ok) || (!ok2)) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Too few dependent data \"")+
-		   Variable+"\"");
-//      g->Var += " (invalid)";
+		QObject::tr("Too few dependent data \"") + Variable+"\"");
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
       g->countY = 0;
-      g->Points.clear();
       return false;
     }
     *(p++) = x;

@@ -83,7 +83,8 @@ public slots:
     void slotFileSaveAll(); // save all open documents
     void slotFileClose();   // close the actual file
     void slotFileSettings();// open dialog to change file settings
-    void slotFilePrint();   // print the actual file
+    void slotFilePrint();   // print the current file
+    void slotFilePrintSelected();  // Print selected elements
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
@@ -118,6 +119,7 @@ public slots:
 //  private slots:
     void slotMenuOpenProject();
     void slotOpenProject(QListBoxItem*);
+    void slotMenuCloseProject();
     void slotSelectComponent(QIconViewItem*);
 //    void slotOpenContent(QListViewItem *item, const QPoint &, int column);  // Qt3.2
     void slotSelectSubcircuit(QListViewItem*);
@@ -146,9 +148,9 @@ public:
 
     QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs;
     QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
-    QAction *projNew, *projOpen, *projDel, *applSettings;
+    QAction *projNew, *projOpen, *projDel, *projClose, *applSettings;
     QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
-    QAction *magPlus, *magMinus, *distrHor, *distrVert;
+    QAction *magPlus, *magMinus, *distrHor, *distrVert, *filePrintSel;
     QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
     QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *helpIndex, *helpGetStart;
