@@ -207,12 +207,12 @@ void QucsApp::initActions()
   magOne->setWhatsThis(tr("View 1:1\n\nShows the page content without magnification"));
   connect(magOne, SIGNAL(activated()), this, SLOT(slotShowOne()));
 
-  magPlus = new QAction(tr("Zoom in"), QIconSet(QImage(BITMAPDIR "viewmag+.png")), tr("Zoom in"), QAccel::stringToKey(tr("Ctrl+P")), this);
+  magPlus = new QAction(tr("Zoom in"), QIconSet(QImage(BITMAPDIR "viewmag+.png")), tr("Zoom in"), QAccel::stringToKey(tr("+")), this);
   magPlus->setStatusTip(tr("Zooms into the current view"));
   magPlus->setWhatsThis(tr("Zoom in\n\nZooms the current view"));
   connect(magPlus, SIGNAL(activated()), this, SLOT(slotZoomIn()));
 
-  magMinus = new QAction(tr("Zoom out"), QIconSet(QImage(BITMAPDIR "viewmag-.png")), tr("Zoom out"), QAccel::stringToKey(tr("Ctrl+M")), this);
+  magMinus = new QAction(tr("Zoom out"), QIconSet(QImage(BITMAPDIR "viewmag-.png")), tr("Zoom out"), QAccel::stringToKey(tr("-")), this);
   magMinus->setStatusTip(tr("Zooms out the current view"));
   magMinus->setWhatsThis(tr("Reduce\n\nZooms out the current view"));
   connect(magMinus, SIGNAL(activated()), this, SLOT(slotZoomOut()));
@@ -246,9 +246,9 @@ void QucsApp::initActions()
   editMirrorY->setToggleAction(true);
   connect(editMirrorY, SIGNAL(toggled(bool)), this, SLOT(slotEditMirrorY(bool)));
 
-  intoH = new QAction(tr("Push into Hierarchy"), QIconSet(QImage(BITMAPDIR "bottom.png")), tr("Push into Hierarchy"), 0, this);
+  intoH = new QAction(tr("Go into Subcircuit"), QIconSet(QImage(BITMAPDIR "bottom.png")), tr("Go into Subcircuit"), 0, this);
   intoH->setStatusTip(tr("Goes inside subcircuit"));
-  intoH->setWhatsThis(tr("Push into Hierarchy\n\nGoes inside the selected subcircuit"));
+  intoH->setWhatsThis(tr("Go into Subcircuit\n\nGoes inside the selected subcircuit"));
   connect(intoH, SIGNAL(activated()), this, SLOT(slotIntoHierarchy()));
 //  intoH->setEnabled(false);
 
@@ -731,7 +731,10 @@ bool QucsApp::saveCurrentFile()
 
     Info.setFile(s);
     s = Info.fileName();  // remove path from file name
-    new QListViewItem(ConSchematics, s);    // insert new name in Content ListView
+    if(Info.extension(false) == "dpl")
+      new QListViewItem(ConDisplays, s);    // insert new name in Content ListView
+    else
+      new QListViewItem(ConSchematics, s);    // insert new name in Content ListView
   }
 
   view->Docs.current()->PosX = view->contentsX();
@@ -773,7 +776,10 @@ void QucsApp::slotFileSaveAs()
 
     Info.setFile(s);
     s = Info.fileName();  // remove path from file name
-    new QListViewItem(ConSchematics, s);    // insert new name in Content ListView
+    if(Info.extension(false) == "dpl")
+      new QListViewItem(ConDisplays, s);    // insert new name in Content ListView
+    else
+      new QListViewItem(ConSchematics, s);    // insert new name in Content ListView
 
     view->Docs.current()->PosX = view->contentsX();
     view->Docs.current()->PosY = view->contentsY();
@@ -993,7 +999,7 @@ void QucsApp::slotIntoHierarchy()
 {
   QucsDoc *Doc = view->Docs.current();
   Component *pc = view->Docs.current()->searchSelSubcircuit();
-  if(pc == 0)return;
+  if(pc == 0) return;
   QString s = pc->Props.getFirst()->Value;
   if(s.at(0) != '/') s = QDir::currentDirPath()+"/"+s;
   if(!gotoPage(s)) return;
@@ -1055,12 +1061,13 @@ void QucsApp::slotShowAll()
   view->Docs.current()->ViewX2 = x2;
   view->Docs.current()->ViewY2 = y2;
   view->resizeContents(int(xScale*double(x2-x1)), int(xScale*double(y2-y1)));
-//  view->scrollBy(int(xScale*double(view->xShift+x1-40)), int(xScale*double(view->yShift+y1-40)));
 
   view->viewport()->repaint();
   view->drawn = false;
 }
 
+// -----------------------------------------------------------
+// Sets the scale factor to 1.
 void QucsApp::slotShowOne()
 {
   view->Docs.current()->Scale = 1.0;
@@ -1148,6 +1155,11 @@ void QucsApp::slotAfterSimulation(int Status)
       view->Docs.current()->reloadGraphs();   // load recent simulation data into schematic
       view->viewport()->update();
     }
+
+    // put all dataset files into "Content"-ListView (update)
+/*    QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
+    for(it = Elements.begin(); it != Elements.end(); ++it)
+      new QListViewItem(ConDatasets, (*it).ascii());*/
   }
   else {
     sim.ProgText->insert(tr("\nErrors occured during simulation on ")+d.toString("ddd dd. MMM yyyy"));
@@ -1216,6 +1228,7 @@ void QucsApp::slotChangePage()
         QMessageBox::critical(this, tr("Error"), tr("Cannot create ")+Info.dirPath(true)+"/"+Name);
         return;
       }
+      else new QListViewItem(ConDisplays, Name);    // insert new name in Content ListView
     file.close();
 
     d = new QucsDoc(WorkView, Info.dirPath(true)+"/"+Name);

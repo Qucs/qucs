@@ -102,7 +102,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
 
   // ...........................................................
   QWidget *Tab2 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab2,6,3,5,5);
+  QGridLayout *gp = new QGridLayout(Tab2,6,2,5,5);
 
   QLabel *l1 = new QLabel("x-Axis Label:", Tab2);
   gp->addWidget(l1,0,0);
@@ -113,6 +113,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   gp->addWidget(l2,1,0);
   yLabel = new QLineEdit(Tab2);
   gp->addWidget(yLabel,1,1);
+
+  GridOn = new QCheckBox("show Grid", Tab2);
+  gp->addMultiCellWidget(GridOn,2,2,0,1);
 
   t->addTab(Tab2, "Properties");
 
@@ -165,6 +168,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   // transfer the diagram properties to the dialog
   xLabel->setText(Diag->xLabel);
   yLabel->setText(Diag->yLabel);
+  GridOn->setChecked(Diag->GridOn);
 }
 
 DiagramDialog::~DiagramDialog()
@@ -317,17 +321,20 @@ void DiagramDialog::slotOK()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotApply()
 {
-  Diag->loadGraphData(defaultDataSet);
-
   if(Diag->xLabel != xLabel->text()) {
     Diag->xLabel = xLabel->text();
     changed = true;
   }
-
   if(Diag->yLabel != yLabel->text()) {
     Diag->yLabel = yLabel->text();
     changed = true;
   }
+  if(Diag->GridOn != GridOn->isChecked()) {
+    Diag->GridOn = GridOn->isChecked();
+    changed = true;
+  }
+
+  Diag->loadGraphData(defaultDataSet);
 }
 
 // --------------------------------------------------------------------------

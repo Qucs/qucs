@@ -34,8 +34,7 @@ void Node::paint(QPainter *p)
               p->drawEllipse(x-4, y-4, 8, 8);
               break;
     case 2 :  if(Connections.first()->Type == isWire) if(Connections.last()->Type == isWire) break;
-              p->setPen(QPen(QPen::darkBlue,3));
-              p->drawRect(x-1, y-1, 2, 2);
+              p->fillRect(x-2, y-2, 4, 4, QBrush(Qt::darkBlue));
               break;
     default : p->setPen(QPen(QPen::darkBlue,4));  // more than 2 connections
               p->drawEllipse(x-2, y-2, 4, 4);

@@ -262,5 +262,11 @@ bool GraphicText::Dialog()
       changed = true;
     }
   
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",Size, QFont::Light));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);      // get width of text
+  x2 = r.width();
+  y2 = r.height();
   return changed;
 }

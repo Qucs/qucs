@@ -98,9 +98,11 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
   SimOpenDpl = true;
   
   Bar = b;
-  Bar->addTab(Tab);  // create tab in TabBar
-//  Bar->setCurrentTab(Tab);     // make it the current  ===>  Qt 3.1 CRASHES !!!???!!!
-  Bar->repaint();
+  if(Bar != 0) {
+    Bar->addTab(Tab);  // create tab in TabBar
+//    Bar->setCurrentTab(Tab);     // make it the current  ===>  Qt 3.1 CRASHES !!!???!!!
+    Bar->repaint();
+  }
 
   DocChanged = false;
 
@@ -113,7 +115,7 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
 
 QucsDoc::~QucsDoc()
 {
-  Bar->removeTab(Tab);    // delete tab in TabBar
+  if(Bar != 0) Bar->removeTab(Tab);    // delete tab in TabBar
 }
 
 // ---------------------------------------------------
@@ -137,13 +139,17 @@ void QucsDoc::setChanged(bool c)
 {
   if((!DocChanged) & c) {
     Tab->setIconSet(QPixmap(smallsave_xpm));
-    Bar->layoutTabs();
-    Bar->repaint();
+    if(Bar != 0) {
+      Bar->layoutTabs();
+      Bar->repaint();
+    }
   }
   else if(DocChanged & (!c)) {
     Tab->setIconSet(QIconSet(0));   // no icon in TabBar
-    Bar->layoutTabs();
-    Bar->repaint();
+    if(Bar != 0) {
+      Bar->layoutTabs();
+      Bar->repaint();
+    }
   }
   DocChanged = c;
 }
@@ -2122,17 +2128,10 @@ bool QucsDoc::load()
 }
 
 // ---------------------------------------------------
-// Creates the file "netlist.net" in the project directory. Returns "true"
-// if successful.
-bool QucsDoc::createNetlist(QFile *NetlistFile)
+// Follows the wire lines in order to determine the node names for
+// each component.
+bool QucsDoc::giveNodeNames(QTextStream *stream)
 {
-  if(!NetlistFile->open(IO_WriteOnly)) return false;
-
-  QTextStream stream(NetlistFile);
-  stream << "# Qucs " << VERSION << "  " << DocName << "\n";    // first line is docu
-
-
-  // ................................................
   Node *p1, *p2;
   Wire *pw;
   Element *pe;
@@ -2145,11 +2144,19 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
   for(pw = Wires.first(); pw != 0; pw = Wires.next())
     if(!pw->Name.isEmpty()) pw->Port1->Name = pw->Name;
 
-  // give the ground nodes the name "0"
+  // give the ground nodes the name "0", and insert subcircuits
   for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
     if(pc->Sign == "GND") pc->Ports.first()->Connection->Name = "gnd";
+    else if(pc->Sign.left(3) == "Sub") {
+           QucsDoc *d = new QucsDoc(0, pc->Props.getFirst()->Value);
+           if(!d->load()) {    // load document if possible
+             delete d;
+             return false;
+           }
+           d->createSubNetlist(stream);
+         }
 
-    
+
   QPtrList<Node> Cons;
   // work on named nodes first in order to preserve the user given names
   for(p1 = Nodes.first(); p1 != 0; p1 = Nodes.next()) {
@@ -2206,6 +2213,52 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
     Cons.clear();
   }
 
+  return true;
+}
+
+// ---------------------------------------------------
+// Write the netlist as subcircuit to the text stream 'NetlistFile'.
+bool QucsDoc::createSubNetlist(QTextStream *stream)
+{
+  if(!giveNodeNames(stream)) return false;
+
+  QStringList sl;
+  Component *pc;
+  for(pc = Comps.first(); pc != 0; pc = Comps.next())
+    if(pc->Sign == "Port")
+      sl.append(pc->Props.first()->Value + ":" + pc->Ports.getFirst()->Connection->Name);
+  sl.sort();
+  
+//  QTextStream stream(NetlistFile);
+  (*stream) << "\nsubcircuit " << DocName << "  " << sl.join(" ") << "\n";
+
+  
+  QString s;
+  // write all components with node names into the netlist file
+  for(pc = Comps.first(); pc != 0; pc = Comps.next()) {
+    s = pc->NetList();
+    if(!s.isEmpty()) (*stream) << "   " << s << "\n";
+  }
+
+  (*stream) << "end subcircuit\n\n";
+  return true;
+}
+
+// ---------------------------------------------------
+// Creates the file "netlist.net" in the project directory. Returns "true"
+// if successful.
+bool QucsDoc::createNetlist(QFile *NetlistFile)
+{
+  if(!NetlistFile->open(IO_WriteOnly)) return false;
+
+  QTextStream stream(NetlistFile);
+  stream << "# Qucs " << VERSION << "  " << DocName << "\n";    // first line is docu
+
+
+  if(!giveNodeNames(&stream)) {
+    NetlistFile->close();
+    return false;
+  }
 
   // .................................................
   QString s;

@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "arrow.h"
-#include "linedialog.h"
+#include "arrowdialog.h"
 
 #include <math.h>
 
@@ -290,12 +290,23 @@ bool Arrow::Dialog()
 {
   bool changed = false;
 
-  LineDialog *d = new LineDialog("Edit Arrow Properties");
+  ArrowDialog *d = new ArrowDialog();
+  d->HeadWidth->setText(QString::number(Width));
+  d->HeadLength->setText(QString::number(Height));
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
+  d->SetComboBox(Pen.style());
 
   if(d->exec() == QDialog::Rejected) return false;
 
+  if(Width  != d->HeadWidth->text().toDouble()) {
+    Width = d->HeadWidth->text().toDouble();
+    changed = true;
+  }
+  if(Height  != d->HeadLength->text().toDouble()) {
+    Height = d->HeadLength->text().toDouble();
+    changed = true;
+  }
   if(Pen.color() != d->ColorButt->paletteBackgroundColor()) {
     Pen.setColor(d->ColorButt->paletteBackgroundColor());
     changed = true;
@@ -304,6 +315,13 @@ bool Arrow::Dialog()
     Pen.setWidth(d->LineWidth->text().toUInt());
     changed = true;
   }
+  if(Pen.style()  != d->LineStyle) {
+    Pen.setStyle(d->LineStyle);
+    changed = true;
+  }
 
+  beta   = atan2(double(Width), double(Height));
+  Length = sqrt(Width*Width + Height*Height);
+  calcArrowHead();
   return changed;
 }

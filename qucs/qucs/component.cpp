@@ -436,7 +436,7 @@ SParamFile::SParamFile(int No)
   ty = y2+4;
   Sign  = QString("SPfile")+QString::number(No);
   Model = QString("SPfile")+QString::number(No);
-  Name  = QString("X");
+  Name  = "X";
 
   Props.append(new Property("File", "test.s2p", true, "name of the s parameter file"));
 }
@@ -486,7 +486,7 @@ Subcircuit::Subcircuit(int No)
   ty = y2+4;
   Sign  = QString("Sub")+QString::number(No);
   Model = QString("Sub")+QString::number(No);
-  Name  = QString("SUB");
+  Name  = "SUB";
 
   Props.append(new Property("File", "test.sch", true, "name of qucs schematic file"));
 }
@@ -516,9 +516,9 @@ SubCirPort::SubCirPort()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Port");
-  Model = QString("");
-  Name  = QString("P");
+  Sign  = "Port";
+  Model = "";
+  Name  = "P";
 
   Props.append(new Property("Num", "1", true));
 }
@@ -546,9 +546,9 @@ Equation::Equation()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Eqn");
-  Model = QString("Eqn");
-  Name  = QString("Eqn");
+  Sign  = "Eqn";
+  Model = "Eqn";
+  Name  = "Eqn";
 
   Props.append(new Property("y", "1", true));
 }
@@ -588,9 +588,9 @@ Resistor::Resistor()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("R");
-  Model = QString("R");
-  Name  = QString("R");
+  Sign  = "R";
+  Model = "R";
+  Name  = "R";
 
   Props.append(new Property("R", "50 Ohm", true, "ohmic resistance in Ohms"));
 //  Props.append(new Property("Noise", "yes", false));
@@ -628,9 +628,9 @@ ResistorUS::ResistorUS()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Rus");
-  Model = QString("R");
-  Name  = QString("R");
+  Sign  = "Rus";
+  Model = "R";
+  Name  = "R";
 
   Props.append(new Property("R", "50 Ohm", true, "ohmic resistance in Ohms"));
 //  Props.append(new Property("Noise", "yes", false, "thermal noise yes or no"));
@@ -663,9 +663,9 @@ Capacitor::Capacitor()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("C");
-  Model = QString("C");
-  Name  = QString("C");
+  Sign  = "C";
+  Model = "C";
+  Name  = "C";
 
   Props.append(new Property("C", "1 pF", true, "capacitance in Farad"));
 }
@@ -702,11 +702,9 @@ dcBlock::dcBlock()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("DCblock");
-  Model = QString("DCblock");
-  Name  = QString("C");
-
-//  Props.append(new Property("C", "1 pF", true, "capacitance in Farad"));
+  Sign  = "DCblock";
+  Model = "DCblock";
+  Name  = "C";
 }
 
 dcBlock::~dcBlock()
@@ -737,9 +735,9 @@ Inductor::Inductor()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("L");
-  Model = QString("L");
-  Name  = QString("L");
+  Sign  = "L";
+  Model = "L";
+  Name  = "L";
 
   Props.append(new Property("L", "1 nH", true, "inductance in Henry"));
 }
@@ -777,11 +775,9 @@ dcFeed::dcFeed()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("DCfeed");
-  Model = QString("dcfeed");
-  Name  = QString("L");
-
-//  Props.append(new Property("L", "1 nH", true, "inductance in Henry"));
+  Sign  = "DCfeed";
+  Model = "dcfeed";
+  Name  = "L";
 }
 
 dcFeed::~dcFeed()
@@ -825,11 +821,9 @@ BiasT::BiasT()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("BiasT");
-  Model = QString("BiasT");
-  Name  = QString("X");
-
-//  Props.append(new Property("L", "1 nH", true, "inductance in Henry"));
+  Sign  = "BiasT";
+  Model = "BiasT";
+  Name  = "X";
 }
 
 BiasT::~BiasT()
@@ -878,9 +872,9 @@ Transformer::Transformer()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Tr");
-  Model = QString("Tr");
-  Name  = QString("Tr");
+  Sign  = "Tr";
+  Model = "Tr";
+  Name  = "Tr";
 
   Props.append(new Property("K", "1", true, "voltage transformation ration"));
 }
@@ -940,9 +934,9 @@ symTrafo::symTrafo()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("sTr");
-  Model = QString("sTr");
-  Name  = QString("Tr");
+  Sign  = "sTr";
+  Model = "sTr";
+  Name  = "Tr";
 
   Props.append(new Property("n1", "1", true, "voltage transformation ration of coil 1"));
   Props.append(new Property("n2", "1", true, "voltage transformation ration of coil 2"));
@@ -974,9 +968,9 @@ Ground::Ground()
 
   tx = 0;
   ty = 0;
-  Sign  = QString("GND");
-  Model = QString("");
-  Name  = QString("");
+  Sign  = "GND";
+  Model = "";
+  Name  = "";
 }
 
 Ground::~Ground()
@@ -1016,9 +1010,9 @@ Attenuator::Attenuator()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Attenuator");
-  Model = QString("Attenuator");
-  Name  = QString("X");
+  Sign  = "Attenuator";
+  Model = "Attenuator";
+  Name  = "X";
 
   Props.append(new Property("A", "10 dB", true, "attenuation"));
 }
@@ -1057,9 +1051,9 @@ Isolator::Isolator()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Isolator");
-  Model = QString("Isolator");
-  Name  = QString("X");
+  Sign  = "Isolator";
+  Model = "Isolator";
+  Name  = "X";
 }
 
 Isolator::~Isolator()
@@ -1094,9 +1088,9 @@ Circulator::Circulator()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Circulator");
-  Model = QString("Circulator");
-  Name  = QString("X");
+  Sign  = "Circulator";
+  Model = "Circulator";
+  Name  = "X";
 }
 
 Circulator::~Circulator()

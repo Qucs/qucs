@@ -1,7 +1,7 @@
 /***************************************************************************
-                          linedialog.cpp  -  description
+                          arrowdialog.cpp  -  description
                              -------------------
-    begin                : Wed Nov 26 2003
+    begin                : Fri Nov 28 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "linedialog.h"
+#include "arrowdialog.h"
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -24,14 +24,33 @@
 #include <qcolordialog.h>
 
 
-LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *name)
+ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
                                   : QDialog(parent, name, Qt::WDestructiveClose)
 {
-  setCaption(_Caption);
+  setCaption("Edit Arrow Properties");
+  Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
+  QValidator *Validator = new QRegExpValidator(Expr, this);
 
   QVBoxLayout *v = new QVBoxLayout(this);
   v->setSpacing(5);
   v->setMargin(5);
+
+  QHBox *h0 = new QHBox(this);
+  h0->setSpacing(5);
+  v->addWidget(h0);
+
+  new QLabel("Head Length: ", h0);
+  HeadLength = new QLineEdit(h0);
+  HeadLength->setValidator(Validator);
+  HeadLength->setMaximumWidth(35);
+  HeadLength->setText("10");
+
+  new QLabel("      Head Width: ", h0);
+  HeadWidth = new QLineEdit(h0);
+  HeadWidth->setValidator(Validator);
+  HeadWidth->setMaximumWidth(35);
+  HeadWidth->setText("10");
+
 
   QHBox *h1 = new QHBox(this);
   h1->setSpacing(5);
@@ -43,8 +62,6 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 
   new QLabel("      Line Width: ", h1);
-  Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
-  QValidator *Validator = new QRegExpValidator(Expr, this);
   LineWidth = new QLineEdit(h1);
   LineWidth->setValidator(Validator);
   LineWidth->setMaximumWidth(35);
@@ -55,7 +72,7 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   h2->setSpacing(5);
   v->addWidget(h2);
 
-  new QLabel("Line Style: ", h2);
+  new QLabel("Line style: ", h2);
   StyleBox = new QComboBox(h2);
   StyleBox->insertItem("solid line");
   StyleBox->insertItem("dash line");
@@ -77,19 +94,19 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   ButtOK->setFocus();
 }
 
-LineDialog::~LineDialog()
+ArrowDialog::~ArrowDialog()
 {
 }
 
 // --------------------------------------------------------------------------
-void LineDialog::slotSetColor()
+void ArrowDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
   ColorButt->setPaletteBackgroundColor(c);
 }
 
 // --------------------------------------------------------------------------
-void LineDialog::slotSetStyle(int index)
+void ArrowDialog::slotSetStyle(int index)
 {
   switch(index) {
     case 0 : LineStyle = Qt::SolidLine;
@@ -102,11 +119,12 @@ void LineDialog::slotSetStyle(int index)
              break;
     case 4 : LineStyle = Qt::DashDotDotLine;
              break;
+    default: ;
   }
 }
 
 // --------------------------------------------------------------------------
-void LineDialog::SetComboBox(Qt::PenStyle _Style)
+void ArrowDialog::SetComboBox(Qt::PenStyle _Style)
 {
   LineStyle = _Style;
   switch(_Style) {
@@ -120,6 +138,6 @@ void LineDialog::SetComboBox(Qt::PenStyle _Style)
                               break;
     case Qt::DashDotDotLine : StyleBox->setCurrentItem(4);
                               break;
-    default:                ;
+    default: ;
   }
 }
