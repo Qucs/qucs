@@ -14,10 +14,8 @@
 %
 % Grammar environment based on Martin Grabmueller's original one
 %
-\newcommand\tok[1]{`{\bf #1}'}  % String-f"ormiges Token
-\newcommand\etok[1]{{\bf #1}}   % Token, das sp"ater erkl"art wird
-\newcommand\stok[1]{{\em #1}}   % Spezieller Wert
-\newcommand\ntok[1]{{\bf #1}}   % Token ohne Anf"uhrungszeichen
+\newcommand\tok[1]{`{\bf #1}'}  % Literal token
+\newcommand\ntok[1]{{\bf #1}}   % Composed token
 \newcommand\bsl[1]{\tok{$\backslash$#1}}
 \newenvironment{grammar}%
   {\newcommand\produces[2]{##1 \> $\rightarrow$ \> ##2 \\}
@@ -26,22 +24,20 @@
    \newcommand\rep[1]{\{ ##1 \}}
    \newcommand\alt[0]{$|$}
    \newcommand\group[1]{( ##1 )}
-   \newcommand\rutsch[0]{\\\> \>}
    \newcommand\emptyprod{{$\varepsilon$}}
    \newcommand\heading[1]{\rule{\linewidth}{1pt} \\{\bf ##1}\\[2ex]}
    \newcommand\separator{\rule{\linewidth}{1pt} \\}
    \begin{tabbing}
-   \qquad\qquad\qquad\qquad\qquad \= \qquad \= \kill}
+   \qquad\qquad\qquad\qquad \= \qquad \= \kill}
   {\end{tabbing}}
 
 %
 % How the grammar works
 %
-The grammer is presented using the Extended Backus-Naur Form (EBNF)
-which works as follows:
+The grammer is presented using a version of the Extended Backus-Naur
+Form (EBNF) which works as follows:
 
 \vskip0.5em
-\noindent
 \begin{tabular}{ll}
 $A \rightarrow B$&
 Nonterminal $A$ produces form $B$.\\
@@ -53,35 +49,97 @@ $\{ A \}$&
 Arbitrary repitition of form $A$. No repitition is allowed as well.\\
 
 [ $A$ ]&
-From $A$ is optional.\\
+Form $A$ is optional.\\
 
 $(A)$&
 Grouping, stands for $A$ itself.\\
 
-$\varepsilon$& The empty form.\\
+%Not needed (yet): $\varepsilon$& The empty form.\\
 \end{tabular}
 \vskip0.5em
 
-\noindent
-Nonterminals are set in normal font, terminals are in bold font.
+Nonterminal symbols are set in normal font, terminal symbols are in
+bold font. Terminal symbols in single quotes are literally found in
+the input while the other terminal symbols are compositions. See below
+for definition of composed terminal symbols.
+
 
 %
-% Syntax
+% Syntax: Beginning
 %
 \begin{grammar}
 \heading{Syntactic Structure}
 
 \produces{Input}{\rep{InputLine}}
 
-\produces{InputLine}{SubcircuitBody}
+\produces{InputLine}{DefinitionLine}
+\orproduces{SubcircuitBody}
 \orproduces{EquationLine}
 \orproduces{ActionLine}
-\orproduces{DefinitionLine}
+\end{grammar}
 
-\produces{ActionLine}{\tok{.} \ntok{Identifier} \tok{:} PairList \ntok{Eol}}
+A netlist is read in a line-based fashion. There are several types of
+lines.
+
+
+%
+% Definition
+\begin{grammar}
+\heading{Definition}
 
 \produces{DefinitionLine}{\ntok{Identifier} \tok{:} \ntok{Identifer}
          \rep{\ntok{Identifier}} PairList \ntok{Eol}}
+\end{grammar}
+
+Nodes of the circuit are defined by providing paramters for an
+identifier.
+
+%
+% Subcircuits
+\begin{grammar}
+\heading{Subcircuits}
+
+\produces{SubcircuitBody}{DefBegin \rep{DefBodyLine} DefEnd}
+
+\produces{DefBegin}{\tok{.} \tok{Def} \tok{:} \ntok{Identifier}
+   \rep{\ntok{Identifier}} \ntok{Eol}}
+
+\produces{DefBodyLine}{DefinitionLine}
+\orproduces{SubcircuitBody}
+\orproduces{\ntok{Eol}}
+
+\produces{DefEnd}{\tok{.} \tok{Def} \tok{:} \tok{End}}
+\end{grammar}
+
+Subcircuits are recursivly defined by blocks of definitions.
+
+%
+% Action
+\begin{grammar}
+\heading{Action}
+
+\produces{ActionLine}{\tok{.} \ntok{Identifier} \tok{:} PairList \ntok{Eol}}
+\end{grammar}
+
+Defines what to simulate with the circuit.
+
+%
+% Equation
+\begin{grammar}
+\heading{Equation}
+
+\produces{EquationLine}{\tok{Eqn} \tok{:}
+   \ntok{Identifier} Equation \rep{Equation}}
+\produces{Equation}{\ntok{Identifier} \tok{=} \tok{``} Expression \tok{``}}
+\end{grammar}
+
+Named equation definitions consist of a list of assignments with
+expressions on their right hand side.
+
+%
+% Parameter declarations
+\begin{grammar}
+\heading{Declarations}
 
 \produces{PairList}{\rep{\ntok{Identifier} \tok{=} Value}}
 
@@ -93,10 +151,14 @@ Nonterminals are set in normal font, terminals are in bold font.
 \orproduces{\tok{[} PropertyReal \opt{\rep{\tok{;} PropertyReal}} \tok{]}}
 
 \produces{PropertyReal}{\ntok{Real} \opt{\ntok{Scale} \opt{\ntok{Unit}}}}
+\end{grammar}
 
-\produces{EquationLine}{\tok{Eqn} \tok{:}
-   \ntok{Identifier} Equation \rep{Equation}}
-\produces{Equation}{\ntok{Identifier} \tok{=} \tok{``} Expression \tok{``}}
+The above constructs are used to define nodes and actions.
+
+%
+% Mathematical Expressions
+\begin{grammar}
+\heading{Mathematical Expressions}
 
 \produces{Expression}{Constant}
 \orproduces{Reference}
@@ -122,31 +184,66 @@ Nonterminals are set in normal font, terminals are in bold font.
    \group{\tok{+} \alt \tok{-} \alt \tok{*} \alt \tok{/} \alt
           \tok{\%} \alt \tok{\^{}}}
    Expression}
-
-\produces{SubcircuitBody}{DefBegin \rep{DefBodyLine} DefEnd}
-
-\produces{DefBegin}{\tok{.} \tok{Def} \tok{:} \ntok{Identifier}
-   \rep{\ntok{Identifier}} \ntok{Eol}}
-
-\produces{DefBodyLine}{DefinitionLine}
-\orproduces{SubcircuitBody}
-\orproduces{\ntok{Eol}}
-
-\produces{DefEnd}{\tok{.} \tok{Def} \tok{:} \tok{End}}
-
 \end{grammar}
 
+Operator precedence works as expected in common mathematical
+expressions.
+
+
 %
-% Lexical stuff
+% Lexical structure (scanner)
 %
+\def\REalpha{\tok{a} \alt~\dots~\alt \tok{z} \alt
+             \tok{A} \alt~\dots~\alt \tok{Z}}
+\def\REalnum{\REalpha \alt \tok{0}~\dots~\tok{9} \alt \tok{\_}}
+\def\REplusminus{\opt{\tok{+} \alt \tok{-}}}
 \begin{grammar}
 \heading{Lexical structure}
-\produces{Identifier}{TBI}
-\produces{Real}{TBI}
-\produces{Imag}{TBI}
-\produces{Character}{TBI}
-\produces{String}{TBI}
-\produces{Scale}{TBI}
-\produces{Unit}{TBI}
+
+%
+% Identifiers
+\produces{\ntok{Identifier}}{Alpha \rep{AlphaNum}
+         \rep{\tok{.} Alpha \rep{AlphaNum}}}
+\produces{Alpha}{\REalpha \alt \tok{\_}}
+\produces{AlphaNum}{\REalnum}
+%
+% Real
+\produces{\ntok{Real}}{\REplusminus \opt{Num} \tok{.}
+         Num \opt{\group{\tok{e} \alt \tok{E}} \REplusminus Num}}
+\produces{Num}{Digit \rep{Digit}}
+\produces{Digit}{\tok{0}~\dots~\tok{9}}
+%
+% Imaginary
+\produces{\ntok{Imag}}{\REplusminus \group{\tok{i} \alt \tok{j}}
+        \opt{Num} \tok{.}
+         Num \opt{\group{\tok{e} \alt \tok{E}} \REplusminus Num}}
+%
+% A single character
+\produces{\ntok{Character}}{\tok{'}
+         \group{\em Any character but newline and \tok{'}}
+         \tok{'}}
+%
+% String constant
+\produces{\ntok{String}}{\tok{'}
+        \rep{\group{\em Any character but newline and \tok{'}}}
+        \tok{'}}
+%
+% Scales
+\produces{\ntok{Scale}}{\group{
+        \tok{dBm}~\alt~\tok{dB}~\alt~\tok{T}~\alt~\tok{G}~\alt~\tok{M} \alt
+        \tok{k}~\alt~\tok{m}~\alt~\tok{u}~\alt~\tok{n}~\alt~\tok{p} \alt
+        \tok{f}~\alt~\tok{a}
+        }}
+%
+% Units
+\produces{\ntok{Unit}}{\group{
+        \tok{Ohm}~\alt~\tok{S}~\alt~\tok{s}~\alt~\tok{K}~\alt~\tok{H}~\alt~
+        \tok{F}~\alt~\tok{Hz}~\alt~\tok{V}~\alt~\tok{A}~\alt~\tok{W}~\alt~
+        \tok{m}
+        }}
+%
+% End of line
+\produces{\ntok{Eol}}{\opt{\bsl{r}} \bsl{n}}
 \end{grammar}
 
+This defines the composed terminal symbols.
