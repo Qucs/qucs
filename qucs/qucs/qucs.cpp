@@ -48,9 +48,10 @@
 #define  COMBO_Sources   1
 #define  COMBO_TLines    2
 #define  COMBO_nonlinear 3
-#define  COMBO_Sims      4
-#define  COMBO_Paints    5
-#define  COMBO_Diagrams  6
+#define  COMBO_File      4
+#define  COMBO_Sims      5
+#define  COMBO_Paints    6
+#define  COMBO_Diagrams  7
 
 
 QucsApp::QucsApp()
@@ -223,6 +224,12 @@ void QucsApp::initActions()
   editMirror->setToggleAction(true);
   connect(editMirror, SIGNAL(toggled(bool)), this, SLOT(slotEditMirrorX(bool)));
 
+  editMirrorY = new QAction(tr("Mirror about Y Axis"), QIconSet(QImage(BITMAPDIR "bitmaps/mirrory.png")), tr("Mirror about Y Axis"), 0, this);
+  editMirrorY->setStatusTip(tr("Mirrors the selected item about Y axis"));
+  editMirrorY->setWhatsThis(tr("Mirror about Y Axis\n\nMirrors the selected item about Y Axis"));
+  editMirrorY->setToggleAction(true);
+  connect(editMirrorY, SIGNAL(toggled(bool)), this, SLOT(slotEditMirrorY(bool)));
+
   intoH = new QAction(tr("Push into Hierarchy"), QIconSet(QImage(BITMAPDIR "bitmaps/bottom.png")), tr("Push into Hierarchy"), 0, this);
   intoH->setStatusTip(tr("Goes inside subcircuit"));
   intoH->setWhatsThis(tr("Push into Hierarchy\n\nGoes inside the selected subcircuit"));
@@ -244,8 +251,8 @@ void QucsApp::initActions()
   insEquation = new QAction(tr("Insert Equation"), QIconSet(QImage(BITMAPDIR "bitmaps/equation.png")), tr("Insert Equation"), 0, this);
   insEquation->setStatusTip(tr("Inserts equation"));
   insEquation->setWhatsThis(tr("Insert Equation\n\nInserts a user defined equation"));
-//  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
-  insEquation->setEnabled(false);
+  insEquation->setToggleAction(true);
+  connect(insEquation, SIGNAL(toggled(bool)), this, SLOT(slotInsertEquation(bool)));
 
   insGround = new QAction(tr("Insert Ground"), QIconSet(QImage(BITMAPDIR "bitmaps/ground.png")), tr("Insert Ground"), 0, this);
   insGround->setStatusTip(tr("Inserts ground"));
@@ -343,6 +350,7 @@ void QucsApp::initMenuBar()
   select->addTo(editMenu);
   editRotate->addTo(editMenu);
   editMirror->addTo(editMenu);
+  editMirrorY->addTo(editMenu);
   editActivate->addTo(editMenu);
 
   ///////////////////////////////////////////////////////////////////
@@ -422,6 +430,7 @@ void QucsApp::initToolBar()
   workToolbar = new QToolBar(this, "work operations");
   select->addTo(workToolbar);
   editMirror->addTo(workToolbar);
+  editMirrorY->addTo(workToolbar);
   editRotate->addTo(workToolbar);
   intoH->addTo(workToolbar);
   popH->addTo(workToolbar);
@@ -515,6 +524,7 @@ void QucsApp::initView()
   CompChoose->insertItem("sources");
   CompChoose->insertItem("transmission lines");
   CompChoose->insertItem("nonlinear components");
+  CompChoose->insertItem("file data");
   CompChoose->insertItem("simulations");
   CompChoose->insertItem("paintings");
   CompChoose->insertItem("diagrams");
@@ -570,10 +580,6 @@ bool QucsApp::closeAllFiles()
     if(ptr->DocChanged) {
       if(notForAll)
         Result = m->exec();
-/*        Result = QMessageBox::warning(this,"Closing Qucs document",
-          "This document contains unsaved changes!\nDo you want to save the changes before closing?",
-          "&Save", "Save all", "&Discard", "Discard all", "&Cancel", 0, 4);*/
-//QMessageBox::warning(this,"show",QString::number(Result));
       switch(Result) {
         case 1: slotFileSave();     // save button
                 break;
@@ -1102,13 +1108,15 @@ int QucsApp::testFile(const QString& DocName)
     Line = stream.readLine();
     if(Line == "<Components>") break;
   }
+
+  int z=0;
   while(!stream.atEnd()) {
     Line = stream.readLine();
-    if(Line == "</Components>") { file.close(); return 0; }   // no subcircuit
+    if(Line == "</Components>") { file.close(); return z; }   // return number of ports
 
     Line = Line.stripWhiteSpace();
     s    = Line.section(' ',0,0);    // component type
-    if(s == "<Port") { file.close(); return 2; }   // subcircuit !
+    if(s == "<Port") z++;
   }
   return -5;  // component field not closed
 }
@@ -1144,7 +1152,7 @@ void QucsApp::OpenProject(const QString& name)
   for(it = Elements.begin(); it != Elements.end(); ++it) {
     n = testFile((*it).ascii());
     if(n >= 0) {
-      if(n > 0) new QListViewItem(ConSchematics, (*it).ascii(), "subcircuit");
+      if(n > 0) new QListViewItem(ConSchematics, (*it).ascii(), QString::number(n)+"-port");
       else new QListViewItem(ConSchematics, (*it).ascii());
     }
   }
@@ -1226,6 +1234,14 @@ void QucsApp::slotSetCompView(int index)
           break;
     case COMBO_nonlinear:
           new QIconViewItem(CompComps, "Diode", QImage(BITMAPDIR "bitmaps/diode.xpm"));
+          break;
+    case COMBO_File:
+          new QIconViewItem(CompComps, "1-port S parameter file", QImage(BITMAPDIR "bitmaps/spfile1.xpm"));
+          new QIconViewItem(CompComps, "2-port S parameter file", QImage(BITMAPDIR "bitmaps/spfile2.xpm"));
+          new QIconViewItem(CompComps, "3-port S parameter file", QImage(BITMAPDIR "bitmaps/spfile3.xpm"));
+          new QIconViewItem(CompComps, "4-port S parameter file", QImage(BITMAPDIR "bitmaps/spfile4.xpm"));
+          new QIconViewItem(CompComps, "5-port S parameter file", QImage(BITMAPDIR "bitmaps/spfile5.xpm"));
+          new QIconViewItem(CompComps, "6-port S parameter file", QImage(BITMAPDIR "bitmaps/spfile6.xpm"));
           break;
     case COMBO_Sims:
           new QIconViewItem(CompComps, "dc simulation", QImage(BITMAPDIR "bitmaps/dc.xpm"));
@@ -1349,6 +1365,22 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
     case COMBO_nonlinear:
           switch(CompComps->index(item)) {
               case 0: view->selComp = new Diode();
+                      break;
+          }
+          break;
+    case COMBO_File:
+          switch(CompComps->index(item)) {
+              case 0: view->selComp = new SParamFile(1);
+                      break;
+              case 1: view->selComp = new SParamFile(2);
+                      break;
+              case 2: view->selComp = new SParamFile(3);
+                      break;
+              case 3: view->selComp = new SParamFile(4);
+                      break;
+              case 4: view->selComp = new SParamFile(5);
+                      break;
+              case 5: view->selComp = new SParamFile(6);
                       break;
           }
           break;
@@ -1557,6 +1589,38 @@ void QucsApp::slotEditDelete(bool on)
 }
 
 // #########################################################################################
+// Is called when the mouse is clicked upon the equation toolbar button.
+void QucsApp::slotInsertEquation(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    activeAction = 0;   // no action active
+    return;
+  }
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = insEquation;
+
+  if(view->selComp != 0)
+    delete view->selComp;  // delete previously selected component
+
+  view->selComp = new Equation();
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveComponent;
+  view->MousePressAction = &QucsView::MPressComponent;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
+
+// #########################################################################################
 // Is called when the mouse is clicked upon the ground toolbar button.
 void QucsApp::slotInsertGround(bool on)
 {
@@ -1647,7 +1711,7 @@ void QucsApp::slotEditRotate(bool on)
     activeAction = editRotate;
 
     view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MPressRotate;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
@@ -1682,7 +1746,42 @@ void QucsApp::slotEditMirrorX(bool on)
     activeAction = editMirror;
 
     view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MPressMirrorX;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  }
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #########################################################################################
+// Is called when the mirror toolbar button is pressed.
+void QucsApp::slotEditMirrorY(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    activeAction = 0;   // no action active
+    return;
+  }
+
+  if(view->Docs.current()->mirrorYComponents()) {
+    editMirrorY->blockSignals(true);
+    editMirrorY->setOn(false);  // release toolbar button
+    editMirrorY->blockSignals(false);
+  }
+  else {
+    if(activeAction) {
+      activeAction->blockSignals(true); // do not call toggle slot
+      activeAction->setOn(false);       // set last toolbar button off
+      activeAction->blockSignals(false);
+    }
+    activeAction = editMirrorY;
+
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MPressMirrorY;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }

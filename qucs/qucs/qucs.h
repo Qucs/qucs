@@ -90,6 +90,7 @@ class QucsApp : public QMainWindow
     void slotEditDelete(bool on);  // delete the selected components
     void slotEditRotate(bool on);  // rotate the selected components
     void slotEditMirrorX(bool on); // mirror the selected components about the X axis
+    void slotEditMirrorY(bool on); // mirror the selected components about the Y axis
     
     void slotViewToolBar(bool toggle);    // toggle the toolbar
     void slotViewStatusBar(bool toggle);  // toggle the statusbar
@@ -100,6 +101,7 @@ class QucsApp : public QMainWindow
 
     void slotZoomIn();  // Zoom in by 2
     void slotZoomOut(); // Zoom out by 2    
+    void slotInsertEquation(bool on);
     void slotInsertGround(bool on);
     void slotInsertPort(bool on);
     void slotSetWire(bool on);
@@ -148,7 +150,7 @@ class QucsApp : public QMainWindow
     QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
     QAction *projNew, *projOpen, *projDel;
     QAction *editCut, *editCopy, *editPaste, *undo, *redo, *magAll, *magPlus, *magMinus, *select;
-    QAction *editRotate, *editMirror, *intoH, *popH, *editActivate, *wire, *editDelete;
+    QAction *editRotate, *editMirror, *editMirrorY, *intoH, *popH, *editActivate, *wire, *editDelete;
     QAction *simulate, *dpl_sch;
     QAction *viewToolBar, *viewStatusBar;
     QAction *helpAboutApp, *helpAboutQt;

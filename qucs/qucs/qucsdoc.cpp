@@ -31,6 +31,8 @@
 #include <qimage.h>
 #include <qiconset.h>
 
+#include <limits.h>
+
 
 // icon for unsaved files (diskette)
 static const char *smallsave_xpm[] = {
@@ -139,8 +141,8 @@ void QucsDoc::setChanged(bool c)
 // ---------------------------------------------------
 void QucsDoc::paint(QPainter *p)
 {
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())
-    ptr1->paint(p);   // paint all components
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
+    pc->paint(p);   // paint all components
 
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next())
     ptr2->paint(p);   // paint all wires
@@ -231,7 +233,7 @@ void QucsDoc::insertComponent(Component *c)
 {
   Component *ptr2;
   Node *p;
-  // connect every node of component
+  // connect every node of the component
   for(Port *ptr = c->Ports.first(); ptr != 0; ptr = c->Ports.next()) {
     p = insertNode(ptr->x+c->cx, ptr->y+c->cy, c);
     ptr->Connection = p;  // connect component node to schematic node
@@ -251,16 +253,6 @@ void QucsDoc::insertComponent(Component *c)
     c->Name += QString::number(max);    // create component name with new number
   }
 
-/*  if(c->Props.first() != 0)
-    if(c->Props.first()->Name == "Num") { // a port has to be numbered
-    max=1;
-    // look for existing ports and count the numbers
-    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
-      if(ptr2->Props.first() != 0)
-        if(ptr2->Props.first()->Name == "Num") max++;
-
-    c->Props.first()->Value = QString::number(max); // create port number
-  }*/
 
   if(c->Sign == "Pac") { // power sources have to be numbered
     max=1;
@@ -286,162 +278,372 @@ void QucsDoc::insertComponent(Component *c)
 
 // ---------------------------------------------------
 // Inserts a port into the schematic and connects it to another node if the
-// coordinates are identical. The node is returned. If 0 is returned, no new
-// wire can be created.
-Node* QucsDoc::insertWireNode1(Wire *e)
+// coordinates are identical. If 0 is returned, no new wire is inserted.
+// If 2 is returned, the wire line ended.
+int QucsDoc::insertWireNode1(Wire *w)
 {
-  Node *ptr1;
-  Wire *nw;
-  // check if new node lies upon existing node
-  for(ptr1 = Nodes.first(); ptr1 != 0; ptr1 = Nodes.next()) {  // check every node
-    if((ptr1->x == e->x1) && (ptr1->y == e->y1)) break;
+  Node *pn;
+  // check if new node lies upon an existing node
+  for(pn = Nodes.first(); pn != 0; pn = Nodes.next())  // check every node
+    if(pn->x == w->x1) if(pn->y == w->y1) break;
+
+  if(pn != 0) {
+    pn->Connections.append(w);
+    w->Port1 = pn;
+    return 2;   // node is not new
   }
 
-  if(ptr1 != 0) {   // is node new ?
-/*    for(Element *pe = ptr1->Connections.first(); pe != 0; pe = ptr1->Connections.next())
-      if(pe->isWire) {
-        nw = (Wire*)pe;
-        if(e->isHorizontal() == nw->isHorizontal())
-          if(nw->Port1 == ptr1)
-            if((nw->x2 <= e->x2) && (nw->y2 <= e->y2)) {
-              e->x1 = nw->x2;   // new wire lengthens an existing one
-              e->y1 = nw->y2;
-              ptr1 = nw->Port2;
-            }
-            else return 0;   // new wire lies within an existing wire
-      }*/
-    
-    ptr1->Connections.append(e);
-    return ptr1;   // return, if node is not new
-  }
 
+  
+  Wire *pw;
   // check if the new node lies upon an existing wire
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {
-    if(ptr2->x1 == e->x1) {
-      if((ptr2->y1 > e->y1) || (ptr2->y2 < e->y1)) continue;
+    if(ptr2->x1 == w->x1) {
+      if(ptr2->y1 > w->y1) continue;
+      if(ptr2->y2 < w->y1) continue;
 
-/*      if(ptr2->isHorizontal() == e->isHorizontal())
-        if(ptr2->y2 >= e->y2) return 0;   // new wire lies within an existing wire
+      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is vertical)
+        if(ptr2->y2 >= w->y2) { delete w; return 0; }  // new wire lies within an existing wire
         else {  // one part of the wire lies within an existing wire the other part not
-          e->y1 = ptr2->y2;
-          ptr2->Port2->Connections.append(e);
-          return ptr2->Port2;
-        }*/
+          if(ptr2->Port2->Connections.count() == 1) {
+            w->y1 = ptr2->y1;
+            w->Port1 = ptr2->Port1;
+            ptr2->Port1->Connections.removeRef(ptr2);   // two wires -> one wire
+            ptr2->Port1->Connections.append(w);
+            Nodes.removeRef(ptr2->Port2);
+            Wires.removeRef(ptr2);
+            return 2;
+          }
+          else {
+            w->y1 = ptr2->y2;
+            w->Port1 = ptr2->Port2;
+            ptr2->Port2->Connections.append(w);   // shorten new wire
+            return 2;
+          }
+        }
     }
-    else if(ptr2->y1 == e->y1) {
-      if((ptr2->x1 > e->x1) || (ptr2->x2 < e->x1)) continue;
+    else if(ptr2->y1 == w->y1) {
+      if(ptr2->x1 > w->x1) continue;
+      if(ptr2->x2 < w->x1) continue;
 
-/*      if(ptr2->isHorizontal() == e->isHorizontal())
-        if(ptr2->x2 >= e->x2) return 0;   // new wire lies within an existing wire
+      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is horizontal)
+        if(ptr2->x2 >= w->x2) { delete w; return 0; }  // new wire lies within an existing wire
         else {  // one part of the wire lies within an existing wire the other part not
-          e->x1 = ptr2->x2;
-          ptr2->Port2->Connections.append(e);
-          return ptr2->Port2;
-        }*/
+          if(ptr2->Port2->Connections.count() == 1) {
+            w->x1 = ptr2->x1;
+            w->Port1 = ptr2->Port1;
+            ptr2->Port1->Connections.removeRef(ptr2);   // two wires -> one wire
+            ptr2->Port1->Connections.append(w);
+            Nodes.removeRef(ptr2->Port2);
+            Wires.removeRef(ptr2);
+            return 2;
+          }
+          else {
+            w->x1 = ptr2->x2;
+            w->Port1 = ptr2->Port2;
+            ptr2->Port2->Connections.append(w);   // shorten new wire
+            return 2;
+          }
+        }
     }
     else continue;
 
-    ptr1 = new Node(e->x1, e->y1);   // create new node
-    Nodes.append(ptr1);
-    ptr1->Connections.append(e);  // connect schematic node to component node
+    pn = new Node(w->x1, w->y1);   // create new node
+    Nodes.append(pn);
+    pn->Connections.append(w);  // connect schematic node to the new wire
+    w->Port1 = pn;
 
     // split the wire into two wires
-    nw = new Wire(e->x1, e->y1, ptr2->x2, ptr2->y2, ptr1, ptr2->Port2);
+    pw = new Wire(w->x1, w->y1, ptr2->x2, ptr2->y2, pn, ptr2->Port2);
 
-    ptr2->x2 = e->x1;
-    ptr2->y2 = e->y1;
-    ptr2->Port2 = ptr1;
+    ptr2->x2 = w->x1;
+    ptr2->y2 = w->y1;
+    ptr2->Port2 = pn;
 
-    nw->Port2->Connections.append(nw);
-    ptr1->Connections.append(ptr2);
-    ptr1->Connections.append(nw);
-    nw->Port2->Connections.removeRef(ptr2);
-    Wires.append(nw);
-    return ptr1;
+    pw->Port2->Connections.append(pw);
+    pn->Connections.append(ptr2);
+    pn->Connections.append(pw);
+    pw->Port2->Connections.removeRef(ptr2);
+    Wires.append(pw);
+    return 2;
   }
 
-  ptr1 = new Node(e->x1, e->y1);   // create new node
-  Nodes.append(ptr1);
-  ptr1->Connections.append(e);  // connect schematic node to component node
+  pn = new Node(w->x1, w->y1);   // create new node
+  Nodes.append(pn);
+  pn->Connections.append(w);  // connect schematic node to the new wire
+  w->Port1 = pn;
+  return 1;
+}
 
-  return ptr1;
+// ---------------------------------------------------
+// if possible, connect two horizontal wires to one
+bool QucsDoc::connectHWires1(Wire *w)
+{
+  Wire *pw;
+  Node *n = w->Port1;
+  
+  if(n->Connections.count() != 2) return true;
+  
+  pw = (Wire*)n->Connections.first();
+  if(pw->Type == isWire)
+    if(pw->isHorizontal())
+      if(pw->x1 < w->x1) {
+        w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
+                 w->delta = pw->delta;   // do not move node name label
+        w->x1 = pw->x1;
+        w->Port1 = pw->Port1;         // new wire lengthens an existing one
+        Nodes.removeRef(n);
+        w->Port1->Connections.removeRef(pw);
+        w->Port1->Connections.append(w);
+        Wires.removeRef(pw);
+      }
+      else {
+        if(pw->x2 >= w->x2) {  // new wire lies complete within an existing one ?
+          w->Port1->Connections.removeRef(w); // second node not yet made
+          delete w;
+          return false;
+        }
+        if(pw->Port2->Connections.count() < 2) {
+          pw->Port1->Connections.removeRef(pw); // existing wire lies within the new one
+          Nodes.removeRef(pw->Port2);
+          Wires.removeRef(pw);
+        }
+        else {
+          w->x1 = pw->x2;    // shorten new wire according to an existing one
+          w->Port1->Connections.removeRef(w);
+          w->Port1 = pw->Port2;
+          w->Port1->Connections.append(w);
+        }
+      }
+
+  return true;
+}
+
+// ---------------------------------------------------
+// if possible, connect two vertical wires to one
+bool QucsDoc::connectVWires1(Wire *w)
+{
+  Wire *pw;
+  Node *n = w->Port1;
+
+  if(n->Connections.count() != 2) return true;
+
+  pw = (Wire*)n->Connections.first();
+  if(pw->Type == isWire)
+    if(!pw->isHorizontal())
+      if(pw->y1 < w->y1) {
+        w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
+                 w->delta = pw->delta;   // do not move node name label
+        w->y1 = pw->y1;
+        w->Port1 = pw->Port1;         // new wire lengthens an existing one
+        Nodes.removeRef(n);
+        w->Port1->Connections.removeRef(pw);
+        w->Port1->Connections.append(w);
+        Wires.removeRef(pw);
+      }
+      else {
+        if(pw->y2 >= w->y2) {  // new wire lies complete within an existing one ?
+          w->Port1->Connections.removeRef(w); // second node not yet made
+          delete w;
+          return false;
+        }
+        if(pw->Port2->Connections.count() < 2) {
+          pw->Port1->Connections.removeRef(pw); // existing wire lies within the new one
+          Nodes.removeRef(pw->Port2);
+          Wires.removeRef(pw);
+        }
+        else {
+          w->y1 = pw->y2;    // shorten new wire according to an existing one
+          w->Port1->Connections.removeRef(w);
+          w->Port1 = pw->Port2;
+          w->Port1->Connections.append(w);
+        }
+      }
+
+  return true;
 }
 
 // ---------------------------------------------------
 // Inserts a port into the schematic and connects it to another node if the
-// coordinates are identical. The node is returned.
-Node* QucsDoc::insertWireNode2(Wire *e)
+// coordinates are identical. If 0 is returned, no new wire is inserted.
+// If 2 is returned, the wire line ended.
+int QucsDoc::insertWireNode2(Wire *w)
 {
-  Node *ptr1;
-  Wire *nw;
-  // check if new node lies upon existing node
-  for(ptr1 = Nodes.first(); ptr1 != 0; ptr1 = Nodes.next())  // check every node
-    if((ptr1->x == e->x2) && (ptr1->y == e->y2)) break;
+  Node *pn;
+  // check if new node lies upon an existing node
+  for(pn = Nodes.first(); pn != 0; pn = Nodes.next())  // check every node
+    if(pn->x == w->x2) if(pn->y == w->y2) break;
 
-  if(ptr1 != 0) {   // is node new ?
-/*    for(Element *pe = ptr1->Connections.first(); pe != 0; pe = ptr1->Connections.next())
-      if(pe->isWire) {
-        nw = (Wire*)pe;
-        if(e->isHorizontal() == nw->isHorizontal())
-          if(nw->Port2 == ptr1)
-            if((nw->x1 >= e->x1) && (nw->y1 >= e->y1)) {
-              e->x2 = nw->x1;   // new wire lengthens an existing one
-              e->y2 = nw->y1;
-              ptr1 = nw->Port1;
-            }
-            else return 0;   // new wire lies within an existing wire
-      }*/
-
-    ptr1->Connections.append(e);
-    return ptr1;   // return, if node is not new
+  if(pn != 0) {
+    pn->Connections.append(w);
+    w->Port2 = pn;
+    return 2;   // node is not new
   }
 
+
+
+  Wire *pw;
   // check if the new node lies upon an existing wire
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {
-    if(ptr2->x1 == e->x2) {
-      if((ptr2->y1 > e->y2) || (ptr2->y2 < e->y2)) continue;
+    if(ptr2->x1 == w->x2) {
+      if(ptr2->y1 > w->y2) continue;
+      if(ptr2->y2 < w->y2) continue;
 
-/*      if(ptr2->isHorizontal() == e->isHorizontal()) {
-        e->y2 = ptr2->y1;  // one part of the wire lies within an existing wire the other part not
-        ptr2->Port1->Connections.append(e);
-        return ptr2->Port1;
-      }*/
+      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is vertical)
+      // one part of the wire lies within an existing wire the other part not
+          if(ptr2->Port1->Connections.count() == 1) {
+            w->y2 = ptr2->y2;
+            w->Port2 = ptr2->Port2;
+            ptr2->Port2->Connections.removeRef(ptr2);   // two wires -> one wire
+            ptr2->Port2->Connections.append(w);
+            Nodes.removeRef(ptr2->Port1);
+            Wires.removeRef(ptr2);
+            return 2;
+          }
+          else {
+            w->y2 = ptr2->y1;
+            w->Port2 = ptr2->Port1;
+            ptr2->Port1->Connections.append(w);   // shorten new wire
+            return 2;
+          }
     }
-    else if(ptr2->y1 == e->y2) {
-      if((ptr2->x1 > e->x2) || (ptr2->x2 < e->x2)) continue;
+    else if(ptr2->y1 == w->y2) {
+      if(ptr2->x1 > w->x2) continue;
+      if(ptr2->x2 < w->x2) continue;
 
-/*      if(ptr2->isHorizontal() == e->isHorizontal()) {
-        e->x2 = ptr2->x1;  // one part of the wire lies within an existing wire the other part not
-        ptr2->Port1->Connections.append(e);
-        return ptr2->Port1;
-      }*/
+      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is horizontal)
+      // one part of the wire lies within an existing wire the other part not
+          if(ptr2->Port1->Connections.count() == 1) {
+            w->x2 = ptr2->x2;
+            w->Port2 = ptr2->Port2;
+            ptr2->Port2->Connections.removeRef(ptr2);   // two wires -> one wire
+            ptr2->Port2->Connections.append(w);
+            Nodes.removeRef(ptr2->Port1);
+            Wires.removeRef(ptr2);
+            return 2;
+          }
+          else {
+            w->x2 = ptr2->x1;
+            w->Port2 = ptr2->Port1;
+            ptr2->Port1->Connections.append(w);   // shorten new wire
+            return 2;
+          }
     }
     else continue;
 
-    ptr1 = new Node(e->x2, e->y2);   // create new node
-    Nodes.append(ptr1);
-    ptr1->Connections.append(e);  // connect schematic node to component node
+    pn = new Node(w->x2, w->y2);   // create new node
+    Nodes.append(pn);
+    pn->Connections.append(w);  // connect schematic node to the new wire
+    w->Port2 = pn;
 
     // split the wire into two wires
-    nw = new Wire(e->x2, e->y2, ptr2->x2, ptr2->y2, ptr1, ptr2->Port2);
+    pw = new Wire(w->x2, w->y2, ptr2->x2, ptr2->y2, pn, ptr2->Port2);
 
-    ptr2->x2 = e->x2;
-    ptr2->y2 = e->y2;
-    ptr2->Port2 = ptr1;
+    ptr2->x2 = w->x2;
+    ptr2->y2 = w->y2;
+    ptr2->Port2 = pn;
 
-    nw->Port2->Connections.append(nw);
-    ptr1->Connections.append(ptr2);
-    ptr1->Connections.append(nw);
-    nw->Port2->Connections.removeRef(ptr2);
-    Wires.append(nw);
-    return ptr1;
+    pw->Port2->Connections.append(pw);
+    pn->Connections.append(ptr2);
+    pn->Connections.append(pw);
+    pw->Port2->Connections.removeRef(ptr2);
+    Wires.append(pw);
+    return 2;
   }
 
-  ptr1 = new Node(e->x2, e->y2);   // create new node
-  Nodes.append(ptr1);
-  ptr1->Connections.append(e);  // connect schematic node to component node
+  pn = new Node(w->x2, w->y2);   // create new node
+  Nodes.append(pn);
+  pn->Connections.append(w);  // connect schematic node to the new wire
+  w->Port2 = pn;
+  return 1;
+}
 
-  return ptr1;
+// ---------------------------------------------------
+// if possible, connect two horizontal wires to one
+bool QucsDoc::connectHWires2(Wire *w)
+{
+  Wire *pw;
+  Node *n = w->Port2;
+
+  if(n->Connections.count() != 2) return true;
+
+  pw = (Wire*)n->Connections.first();
+  if(pw->Type == isWire)
+    if(pw->isHorizontal())
+      if(pw->x2 > w->x2) {
+        w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
+                 w->delta = pw->delta;   // do not move node name label
+        w->x2 = pw->x2;
+        w->Port2 = pw->Port2;         // new wire lengthens an existing one
+        Nodes.removeRef(n);
+        w->Port2->Connections.removeRef(pw);
+        w->Port2->Connections.append(w);
+        Wires.removeRef(pw);
+      }
+      else {
+//        if(pw->x2 >= w->x2) {  // new wire lies complete within an existing one ?
+//          w->Port1->Connections.removeRef(w); // second node not yet made
+//          delete w;
+//          return false;
+//        }
+        if(pw->Port1->Connections.count() < 2) {
+          pw->Port2->Connections.removeRef(pw); // existing wire lies within the new one
+          Nodes.removeRef(pw->Port1);
+          Wires.removeRef(pw);
+        }
+        else {
+          w->x2 = pw->x1;    // shorten new wire according to an existing one
+          w->Port2->Connections.removeRef(w);
+          w->Port2 = pw->Port1;
+          w->Port2->Connections.append(w);
+        }
+      }
+
+  return true;
+}
+
+// ---------------------------------------------------
+// if possible, connect two vertical wires to one
+bool QucsDoc::connectVWires2(Wire *w)
+{
+  Wire *pw;
+  Node *n = w->Port2;
+
+  if(n->Connections.count() != 2) return true;
+
+  pw = (Wire*)n->Connections.first();
+  if(pw->Type == isWire)
+    if(!pw->isHorizontal())
+      if(pw->y2 < w->y2) {
+        w->Name  = pw->Name; w->nx = pw->nx; w->ny = pw->ny;
+                 w->delta = pw->delta;   // do not move node name label
+        w->y2 = pw->y2;
+        w->Port2 = pw->Port2;         // new wire lengthens an existing one
+        Nodes.removeRef(n);
+        w->Port2->Connections.removeRef(pw);
+        w->Port2->Connections.append(w);
+        Wires.removeRef(pw);
+      }
+      else {
+//        if(pw->y2 >= w->y2) {  // new wire lies complete within an existing one ?
+//          w->Port1->Connections.removeRef(w); // second node not yet made
+//          delete w;
+//          return false;
+//        }
+        if(pw->Port1->Connections.count() < 2) {
+          pw->Port2->Connections.removeRef(pw); // existing wire lies within the new one
+          Nodes.removeRef(pw->Port1);
+          Wires.removeRef(pw);
+        }
+        else {
+          w->y2 = pw->y1;    // shorten new wire according to an existing one
+          w->Port2->Connections.removeRef(w);
+          w->Port2 = pw->Port1;
+          w->Port2->Connections.append(w);
+        }
+      }
+
+  return true;
 }
 
 // ---------------------------------------------------
@@ -449,8 +651,8 @@ Node* QucsDoc::insertWireNode2(Wire *e)
 // Returns whether the beginning and ending (the ports of the wire) are connected or not.
 int QucsDoc::insertWire(Wire *w)
 {
-  int con = 0;
-  int tmp;
+  int  tmp, con = 0;
+  bool ok;
 
   // change coordinates if necessary (port 1 coordinates must be less port 2 coordinates)
   if(w->x1 > w->x2) { tmp = w->x1; w->x1 = w->x2; w->x2 = tmp; }
@@ -458,126 +660,99 @@ int QucsDoc::insertWire(Wire *w)
   if(w->y1 > w->y2) { tmp = w->y1; w->y1 = w->y2; w->y2 = tmp; }
   else con = 0x100;
 
-  Node *ptr, *n;
-  ptr = insertWireNode1(w);
-  if(ptr == 0) return 3;
-  if(ptr->Connections.count() > 1) con |= 2; // insert node and remember if it remains open
-  w->Port1 = ptr;
 
-  Wire *e, *nw;
-  if(ptr->Connections.count() == 2) {   // if possible, connect two wires to one
-    e = (Wire*)ptr->Connections.first();
-    if(e->Type == isWire)
-      if(e->isHorizontal() == w->isHorizontal()) {
-        w->Name  = e->Name; w->nx = e->nx; w->ny = e->ny;
-                 w->delta = e->delta;   // do not move node name label
-        w->x1 = e->x1;
-        w->y1 = e->y1;
-        w->Port1 = e->Port1;
-        Nodes.removeRef(ptr);
-        w->Port1->Connections.removeRef(e);
-        w->Port1->Connections.append(w);
-        Wires.removeRef(e);
-      }
-  }
+  
+  tmp = insertWireNode1(w);
+  if(tmp == 0) return 3;  // no new wire and no open connection
+  if(tmp > 1) con |= 2;   // insert node and remember if it remains open
 
-  ptr = insertWireNode2(w);
-  if(ptr == 0) return 3;
-  if(ptr->Connections.count() > 1) con |= 1; // insert node and remember if it remains open
-  w->Port2 = ptr;
+  if(w->isHorizontal()) ok = connectHWires1(w);
+  else ok = connectVWires1(w);
+  if(!ok) return 3;
 
-  if(ptr->Connections.count() == 2) {   // if possible, connect two wires to one
-    e = (Wire*)ptr->Connections.first();
-    if(e->Type == isWire)
-      if(e->isHorizontal() == w->isHorizontal()) {
-        w->Name  = e->Name; w->nx = e->nx; w->ny = e->ny;
-                 w->delta = e->delta + w->x2-w->x1 + w->y2-w->y1;   // do not move node name label
-        w->x2 = e->x2;
-        w->y2 = e->y2;
-        w->Port2 = e->Port2;
-        Nodes.removeRef(ptr);
-        w->Port2->Connections.removeRef(e);
-        w->Port2->Connections.append(w);
-        Wires.removeRef(e);
-      }
-  }
 
+
+  
+  tmp = insertWireNode2(w);
+  if(tmp == 0) return 3;  // no new wire and no open connection
+  if(tmp > 1) con |= 1;   // insert node and remember if it remains open
+
+  if(w->isHorizontal()) ok = connectHWires2(w);
+  else ok = connectVWires2(w);
+  if(!ok) return 3;
+
+  
+
+  
   if(con > 255) con = ((con >> 1) & 1) | ((con << 1) & 2); // change node 1 and 2
 
-
   Wires.append(w);    // add wire to the schematic
+
+
+
   
-  n = Nodes.first();
+  int  n1, n2;
+  Wire *pw, *nw;
+  Node *pn, *pn2;
+  // ................................................................
   // check if the new line covers existing nodes
-  for(e = Wires.current(); e != 0; e = Wires.next())
-    for(ptr = n; ptr != 0; ptr = Nodes.next()) {  // check every node
-      if(ptr->x == e->x1) {
-        if(ptr->y > e->y1) if(ptr->y < e->y2) {
-
-/*          for(Element *pe = ptr->Connections.first(); pe != 0; pe = ptr->Connections.next())
-            if(pe->isWire) {
-              nw = (Wire*)pe;
-              if(e->isHorizontal() == nw->isHorizontal()) {   // delete the wire (lies within the new)
-                if(nw->Port1->Connections.count() == 1)
-                  Nodes.removeRef(nw->Port1);     // delete node 1 if open
-                else nw->Port1->Connections.removeRef(nw);   // remove connection
-
-                if(nw->Port2->Connections.count() == 1)
-                  Nodes.removeRef(nw->Port2);     // delete node 2 if open
-                else nw->Port2->Connections.removeRef(nw);   // remove connection
-
-                Wires.removeRef(nw);    // delete wire
-                Wires.findRef(e);       // set current wire
-              }
-            }*/
-
-          // split wire into two wires
-          nw = new Wire(e->x1, e->y1, ptr->x, ptr->y, e->Port1, ptr);
-          ptr->Connections.append(nw);
-          Wires.append(nw);
-          Wires.findRef(e);
-          e->Port1->Connections.removeRef(e);
-          e->Port1->Connections.append(nw);
-          e->x1 = ptr->x;
-          e->y1 = ptr->y;
-          e->Port1 = ptr;
-          ptr->Connections.append(e);
-          n = ptr;
-        }
+  for(pw = Wires.current(); pw != 0; pw = Wires.next()) // in order to also check new appearing wires
+    for(pn = Nodes.first(); pn != 0; ) {  // check every node
+      if(pn->x == pw->x1) {
+        if(pn->y <= pw->y1) { pn = Nodes.next(); continue; }
+        if(pn->y >= pw->y2) { pn = Nodes.next(); continue; }
       }
-      else if(ptr->y == e->y1)
-        if(ptr->x > e->x1) if(ptr->x < e->x2) {
+      else if(pn->y == pw->y1) {
+        if(pn->x <= pw->x1) { pn = Nodes.next(); continue; }
+        if(pn->x >= pw->x2) { pn = Nodes.next(); continue; }
+      }
+      else { pn = Nodes.next(); continue; }
 
-/*          for(Element *pe = ptr->Connections.first(); pe != 0; pe = ptr->Connections.next())
-            if(pe->isWire) {
-              nw = (Wire*)pe;
-              if(e->isHorizontal() == nw->isHorizontal()) {   // delete the wire (lies within the new)
-                if(nw->Port1->Connections.count() == 1)
-                  Nodes.removeRef(nw->Port1);     // delete node 1 if open
-                else nw->Port1->Connections.removeRef(nw);   // remove connection
+      n1 = 2; n2 = 3;
+      pn2 = pn;
+      // check all connections of the current node
+/*      for(Element *pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next()) {
+        if(pe->Type != isWire) continue;
+        nw = (Wire*)pe;
+        if(pw->isHorizontal() == nw->isHorizontal()) {  // wire lies within the new
+          pn  = nw->Port1;
+          pn2 = nw->Port2;
+          n1  = pn->Connections.count();
+          n2  = pn2->Connections.count();
+          if(n1 == 1) {
+            Nodes.removeRef(pn);     // delete node 1 if open
+            pn = pn2;
+            pn->Connections.removeRef(nw);   // remove connection
+          }
 
-                if(nw->Port2->Connections.count() == 1)
-                  Nodes.removeRef(nw->Port2);     // delete node 2 if open
-                else nw->Port2->Connections.removeRef(nw);   // remove connection
+          if(n2 == 1) {
+            pn->Connections.removeRef(nw);   // remove connection
+            Nodes.removeRef(pn2);     // delete node 2 if open
+            pn2 = pn;
+          }
 
-                Wires.removeRef(nw);    // delete wire
-                Wires.findRef(e);       // set current wire
-              }
-            }*/
-
-          // split wire into two wires
-          nw = new Wire(e->x1, e->y1, ptr->x, ptr->y, e->Port1, ptr);
-          ptr->Connections.append(nw);
-          Wires.append(nw);
-          Wires.findRef(e);
-          e->Port1->Connections.removeRef(e);
-          e->Port1->Connections.append(nw);
-          e->x1 = ptr->x;
-          e->y1 = ptr->y;
-          e->Port1 = ptr;
-          ptr->Connections.append(e);
-          n = ptr;
+          if(pn == pn2) {
+            Wires.removeRef(nw);    // delete wire
+            Wires.findRef(pw);      // set back to current wire
+          }
+          break;
         }
+      }*/
+      if(n1 == 1) if(n2 == 1) continue;
+
+      // split wire into two wires
+      nw = new Wire(pw->x1, pw->y1, pn->x, pn->y, pw->Port1, pn);
+      pn->Connections.append(nw);
+      Wires.append(nw);
+      Wires.findRef(pw);
+      pw->Port1->Connections.removeRef(pw);
+      pw->Port1->Connections.append(nw);
+      pw->x1 = pn2->x;
+      pw->y1 = pn2->y;
+      pw->Port1 = pn2;
+      pn2->Connections.append(pw);
+
+      pn = Nodes.next();
     }
 
 
@@ -590,9 +765,9 @@ Component* QucsDoc::selectedComponent(int x, int y)
 {
   int  x1, y1, x2, y2;
 
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {  // test all components
-    ptr1->Bounding(x1, y1, x2, y2);
-    if((x >= x1) & (x <= x2) & (y >= y1) & (y <= y2)) return ptr1;
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {  // test all components
+    pc->Bounding(x1, y1, x2, y2);
+    if((x >= x1) & (x <= x2) & (y >= y1) & (y <= y2)) return pc;
   }
 
   return 0;
@@ -623,6 +798,23 @@ Wire* QucsDoc::selectedWire(int x, int y)
 }
 
 // ---------------------------------------------------
+// Follows a wire line and selects it.
+void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
+{
+  while(pn->Connections.count() == 2) {
+    if(pn->Connections.first() == pe)  pe = pn->Connections.last();
+    else  pe = pn->Connections.first();
+
+    if(pe->Type != isWire) break;
+    if(ctrl) pe->isSelected ^= ctrl;
+    else pe->isSelected = true;
+    
+    if(((Wire*)pe)->Port1 == pn)  pn = ((Wire*)pe)->Port2;
+    else  pn = ((Wire*)pe)->Port1;
+  }
+}
+
+// ---------------------------------------------------
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
 // If 'flag' is true, the element can be deselected.
@@ -630,30 +822,30 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 {
   int  x1, y1, x2, y2;
   
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
-    ptr1->Bounding(x1, y1, x2, y2);
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {    // test all components
+    pc->Bounding(x1, y1, x2, y2);
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
-      if(flag) ptr1->isSelected ^= flag;
-      else ptr1->isSelected = true;
-      return ptr1;
+      if(flag) pc->isSelected ^= flag;
+      else pc->isSelected = true;
+      return pc;
     }
   }
 
   setOnGrid(x, y);
-  for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {    // test all wires
-    if(ptr2->x1 <= x) if(ptr2->x2 >= x) if(ptr2->y1 <= y) if(ptr2->y2 >= y) {
-      if(flag) ptr2->isSelected ^= flag;
-      else ptr2->isSelected = true;
-      return ptr2;
+  for(Wire *pw = Wires.first(); pw != 0; pw = Wires.next()) {    // test all wires
+    if(pw->x1 <= x) if(pw->x2 >= x) if(pw->y1 <= y) if(pw->y2 >= y) {
+      if(flag) pw->isSelected ^= flag;
+      else pw->isSelected = true;
+      return pw;
     }
   }
 
-  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next()) {    // test all diagrams
-    ptr3->Bounding(x1, y1, x2, y2);
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {    // test all diagrams
+    pd->Bounding(x1, y1, x2, y2);
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
-      if(flag) ptr3->isSelected ^= flag;
-      else ptr3->isSelected = true;
-      return ptr3;
+      if(flag) pd->isSelected ^= flag;
+      else pd->isSelected = true;
+      return pd;
     }
   }
 
@@ -664,14 +856,14 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 // Deselects all elements except 'e'.
 void QucsDoc::deselectElements(Element *e)
 {
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // test all components
-    if(e != ptr1)  ptr1->isSelected = false;
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())  // test all components
+    if(e != pc)  pc->isSelected = false;
 
-  for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next())       // test all wires
-    if(e != ptr2)  ptr2->isSelected = false;
+  for(Wire *pw = Wires.first(); pw != 0; pw = Wires.next())       // test all wires
+    if(e != pw)  pw->isSelected = false;
 
-  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())    // test all diagrams
-    if(e != ptr3)  ptr3->isSelected = false;
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next())    // test all diagrams
+    if(e != pd)  pd->isSelected = false;
 }
 
 // ---------------------------------------------------
@@ -685,7 +877,7 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
   if(pe == (Element*)1) return;   // return, if it was already treated this way
   pn->Connections.prepend((Element*)1);  // to avoid doubling
   
-  if(pn->Connections.count() == 2)  // 2, because of prepend (Element*)1
+  if(pn->Connections.count() == 2)    // 2, because of prepend (Element*)1
     if(pe->Type == isWire) {    // is it connected to exactly one wire ?
 
       // .................................................
@@ -771,7 +963,7 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 
   for(pc = Comps.first(); pc != 0; )  // test all components
     if(pc->isSelected) {
-      p->append(pc);  // component in
+      p->append(pc);
 
       for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
         pp->Connection->Connections.removeRef((Element*)pc);   // delete all port connections
@@ -827,8 +1019,14 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 
   // delete the unused nodes
   for(pn = Nodes.first(); pn!=0; ) {
-    if(pn->Connections.getFirst() == (Element*)1)
+    if(pn->Connections.getFirst() == (Element*)1) {
       pn->Connections.removeFirst();  // delete tag
+      if(pn->Connections.count() == 2)
+        if(oneTwoWires(pn)) {  // if possible, connect two wires to one
+          pn = Nodes.current();
+          continue;
+        }
+    }
 
     if(pn->Connections.count() == 0) {
       Nodes.remove();
@@ -929,90 +1127,224 @@ bool QucsDoc::activateComponents()
 }
 
 // ---------------------------------------------------
-// Rotates all selected components.
-bool QucsDoc::rotateComponents()
+// Sets the component ports.
+void QucsDoc::setCompPorts(Component *pc)
 {
-  int  x1, y1, x2, y2;
-  Component *ptr1;
-   
-  for(ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {  // find first selected component
-    if(ptr1->isSelected) {
-      x1 = ptr1->cx; x2 = x1;
-      y1 = ptr1->cy; y2 = y1;
-      break;
+  for(Port *pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
+    pp->Connection->Connections.removeRef((Element*)pc);   // delete all port connections
+    switch(pp->Connection->Connections.count()) {
+      case 0: Nodes.removeRef(pp->Connection);
+              break;
+      case 2: oneTwoWires(pp->Connection);   // if possible, connect two wires to one
+      default: ;
     }
+    // connect component node to schematic node
+    pp->Connection = insertNode(pp->x+pc->cx, pp->y+pc->cy, pc);
   }
-  if(ptr1 == 0) return false;   // no component selected, I leave
-  for(ptr1 = Comps.next(); ptr1 != 0; ptr1 = Comps.next()) {  // find bounds of all selected components
-    if(ptr1->isSelected) {
-      if(ptr1->cx < x1) x1 = ptr1->cx;
-      else if(ptr1->cx > x2) x2 = ptr1->cx;
-      if(ptr1->cy < y1) y1 = ptr1->cy;
-      else if(ptr1->cy > y2) y2 = ptr1->cy;
+}
+
+// ---------------------------------------------------
+bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
+{
+  x1=INT_MAX;
+  y1=INT_MAX;
+  x2=INT_MIN;
+  y2=INT_MIN;
+  Component *pc;
+  Wire *pw;
+
+  for(pc = Comps.first(); pc != 0; ) {   // find bounds of all selected components
+    if(pc->isSelected) if(pc->Ports.count() > 0) {  // do not rotate components without ports
+      if(pc->cx < x1) x1 = pc->cx;
+      if(pc->cx > x2) x2 = pc->cx;
+      if(pc->cy < y1) y1 = pc->cy;
+      if(pc->cy > y2) y2 = pc->cy;
+
+      ElementCache.append(pc);
+      deleteComp(pc);
+      pc = Comps.current();
+      continue;
     }
+    pc = Comps.next();
   }
 
-  x1 = (x1+x2) / 2;   // center for rotation
-  y1 = (y1+y2) / 2;
+  for(pw = Wires.first(); pw != 0; )  // find bounds of all selected wires
+    if(pw->isSelected) {
+      if(pw->x1 < x1) x1 = pw->x1;
+      if(pw->x2 > x2) x2 = pw->x2;
+      if(pw->y1 < y1) y1 = pw->y1;
+      if(pw->y2 > y2) y2 = pw->y2;
+
+      ElementCache.append(pw);
+      deleteWire(pw);
+      pw = Wires.current();
+    }
+    else pw = Wires.next();
+  if(y1 == INT_MAX) return false;   // no element selected
+  return true;
+}
+
+// ---------------------------------------------------
+// Rotates all selected components around their midpoint.
+bool QucsDoc::rotateComponents()
+{
+  Wires.setAutoDelete(false);
+  Comps.setAutoDelete(false);
+
+  int x1, y1, x2, y2;
+  if(!copyCompsWires(x1, y1, x2, y2)) return false;
+
+  x1 = (x1+x2) >> 1;   // center for rotation
+  y1 = (y1+y2) >> 1;
   setOnGrid(x1, y1);
 
   
-  for(ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
-    if(ptr1->isSelected) {
-      ptr1->rotate();   // rotate component !before! rotating its center
-      x2 = x1 - ptr1->cx;
-      ptr1->setCenter(ptr1->cy - y1 + x1, x2 + y1);
+  Component *pc;
+  Wire *pw;
+  // re-insert elements
+  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
+    switch(pe->Type) {
+      case isComponent: pc = (Component*)pe;
+                        pc->rotate();   // mirror component !before! mirroring its center
+                        x2 = x1 - pc->cx;
+                        pc->setCenter(pc->cy - y1 + x1, x2 + y1);
+                        insertRawComponent(pc);
+                        break;
+      case isWire:      pw = (Wire*)pe;
+                        x2 = pw->x1;
+                        pw->x1 = pw->y1 - y1 + x1;
+                        pw->y1 = x1 - x2 + y1;
+                        x2 = pw->x2;
+                        pw->x2 = pw->y2 - y1 + x1;
+                        pw->y2 = x1 - x2 + y1;
+                        insertWire(pw);
+                        break;
+      default:          ;
     }
-  }
+
+  Wires.setAutoDelete(true);
+  Comps.setAutoDelete(true);
+  ElementCache.clear();
 
   setChanged(true);
   return true;
 }
 
 // ---------------------------------------------------
-// Mirrors all selected components.
+// Mirrors all selected components. First copy them to 'ElementCache', then rotate and insert again.
 bool QucsDoc::mirrorXComponents()
 {
-  int  x1, y1, x2, y2;
-  Component *ptr1;
+  Wires.setAutoDelete(false);
+  Comps.setAutoDelete(false);
 
-  for(ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {  // find first selected component
-    if(ptr1->isSelected) {
-      x1 = ptr1->cx; x2 = x1;
-      y1 = ptr1->cy; y2 = y1;
-      break;
+  int x1, y1, x2, y2;
+  if(!copyCompsWires(x1, y1, x2, y2)) return false;
+
+  y1 = (y1+y2) >> 1;   // axis for mirroring
+  setOnGrid(y2, y1);
+
+
+  Wire *pw;
+  Component *pc;
+  // re-insert elements
+  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
+    switch(pe->Type) {
+      case isComponent: pc = (Component*)pe;
+                        pc->mirrorX();   // mirror component !before! mirroring its center
+                        pc->setCenter(pc->cx, (y1<<1) - pc->cy);
+                        insertRawComponent(pc);
+                        break;
+      case isWire:      pw = (Wire*)pe;
+                        pw->y1 = (y1<<1) - pw->y1;
+                        pw->y2 = (y1<<1) - pw->y2;
+                        insertWire(pw);
+                        break;
+      default:          ;
     }
-  }
-  if(ptr1 == 0) return false;   // no component selected, I leave
-  for(ptr1 = Comps.next(); ptr1 != 0; ptr1 = Comps.next()) {  // find bounds of all selected components
-    if(ptr1->isSelected) {
-      if(ptr1->cx < x1) x1 = ptr1->cx;
-      else if(ptr1->cx > x2) x2 = ptr1->cx;
-      if(ptr1->cy < y1) y1 = ptr1->cy;
-      else if(ptr1->cy > y2) y2 = ptr1->cy;
-    }
-  }
 
-  y1 = (y1+y2) / 2;   // axis for mirroring
-  setOnGrid(x1, y1);
-
-
-  for(ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
-    if(ptr1->isSelected) {
-      ptr1->mirrorX();   // mirror component !before! mirroring its center
-      ptr1->setCenter(ptr1->cx, y1 - ptr1->cy + y1);
-    }
-  }
+  Wires.setAutoDelete(true);
+  Comps.setAutoDelete(true);
+  ElementCache.clear();
 
   setChanged(true);
   return true;
+}
+
+// ---------------------------------------------------
+// Mirrors all selected components. First copy them to 'ElementCache', then rotate and insert again.
+bool QucsDoc::mirrorYComponents()
+{
+  Wires.setAutoDelete(false);
+  Comps.setAutoDelete(false);
+
+  int x1, y1, x2, y2;
+  if(!copyCompsWires(x1, y1, x2, y2)) return false;
+
+  x1 = (x1+x2) >> 1;   // axis for mirroring
+  setOnGrid(x1, x2);
+
+
+  Wire *pw;
+  Component *pc;
+  // re-insert elements
+  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
+    switch(pe->Type) {
+      case isComponent: pc = (Component*)pe;
+                        pc->mirrorY();   // mirror component !before! mirroring its center
+                        pc->setCenter((x1<<1) - pc->cx, pc->cy);
+                        insertRawComponent(pc);
+                        break;
+      case isWire:      pw = (Wire*)pe;
+                        pw->x1 = (x1<<1) - pw->x1;
+                        pw->x2 = (x1<<1) - pw->x2;
+                        insertWire(pw);
+                        break;
+      default:          ;
+    }
+
+  Wires.setAutoDelete(true);
+  Comps.setAutoDelete(true);
+  ElementCache.clear();
+
+  setChanged(true);
+  return true;
+}
+
+// ---------------------------------------------------
+// If possible, make one wire out of two wires.
+bool QucsDoc::oneTwoWires(Node *n)
+{
+  Wire *e3;
+  Wire *e1 = (Wire*)n->Connections.first();  // two wires -> one wire
+  Wire *e2 = (Wire*)n->Connections.last();
+
+  if(e1->Type == isWire) if(e2->Type == isWire)
+    if(e1->isHorizontal() == e2->isHorizontal()) {
+      if(e1->x1 == e2->x2) if(e1->y1 == e2->y2) {
+        e3 = e1; e1 = e2; e2 = e3;    // e1 must have lesser coordinates
+      }
+      if(!e2->Name.isEmpty()) {   // take over the node name label ?
+        e1->Name = e2->Name;
+        e1->nx = e2->nx;
+        e1->ny = e2->ny;
+        e1->delta = e2->delta + e1->x2-e1->x1 + e1->y2-e1->y1;
+      }
+      e1->x2 = e2->x2;
+      e1->y2 = e2->y2;
+      e1->Port2 = e2->Port2;
+      Nodes.removeRef(n);    // delete node (is auto delete)
+      e1->Port2->Connections.removeRef(e2);
+      e1->Port2->Connections.append(e1);
+      Wires.removeRef(e2);
+      return true;
+    }
+  return false;
 }
 
 // ---------------------------------------------------
 // Deletes the component 'c'.
 void QucsDoc::deleteComp(Component *c)
 {
-  Wire *e1, *e2, *e3;
   Port *pn;
 
   for(pn = c->Ports.first(); pn!=0; pn = c->Ports.next())   // delete all port connections
@@ -1021,27 +1353,7 @@ void QucsDoc::deleteComp(Component *c)
                 pn->Connection = 0;
                 break;
       case 3  : pn->Connection->Connections.removeRef(c);  // delete connection to component
-                e1 = (Wire*)pn->Connection->Connections.first();  // two wires -> one wire
-                e2 = (Wire*)pn->Connection->Connections.last();
-                if(e1->Type == isWire) if(e2->Type == isWire)
-                  if(e1->isHorizontal() == e2->isHorizontal()) {
-                    if(e1->x1 == e2->x2) if(e1->y1 == e2->y2) {
-                      e3 = e1; e1 = e2; e2 = e3;    // e1 must have lesser coordinates
-                    }
-                    if(!e2->Name.isEmpty()) {   // take over the node name label ?
-                      e1->Name = e2->Name;
-                      e1->nx = e2->nx;
-                      e1->ny = e2->ny;
-                      e1->delta = e2->delta + e1->x2-e1->x1 + e1->y2-e1->y1;
-                    }
-                    e1->x2 = e2->x2;
-                    e1->y2 = e2->y2;
-                    e1->Port2 = e2->Port2;
-                    Nodes.removeRef(pn->Connection);    // delete node (is auto delete)
-                    e1->Port2->Connections.removeRef(e2);
-                    e1->Port2->Connections.append(e1);
-                    Wires.removeRef(e2);
-                  }
+                oneTwoWires(pn->Connection);    // two wires -> one wire
                 break;
       default : pn->Connection->Connections.removeRef(c);   // remove connection
                 break;
@@ -1056,11 +1368,17 @@ void QucsDoc::deleteWire(Wire *w)
 {
   if(w->Port1->Connections.count() == 1)
     Nodes.removeRef(w->Port1);     // delete node 1 if open
-  else w->Port1->Connections.removeRef(w);   // remove connection
+  else {
+    w->Port1->Connections.removeRef(w);   // remove connection
+    if(w->Port1->Connections.count() == 2) oneTwoWires(w->Port1);  // two wires -> one wire
+  }
 
   if(w->Port2->Connections.count() == 1)
     Nodes.removeRef(w->Port2);     // delete node 2 if open
-  else w->Port2->Connections.removeRef(w);   // remove connection
+  else {
+    w->Port2->Connections.removeRef(w);   // remove connection
+    if(w->Port2->Connections.count() == 2) oneTwoWires(w->Port2);  // two wires -> one wire
+  }
 
   Wires.removeRef(w);
 }
@@ -1071,14 +1389,14 @@ bool QucsDoc::deleteElements()
 {
   bool sel = false;
   
-  Component *ptr1 = Comps.first();
-  while(ptr1 != 0) {    // all selected component
-    if(ptr1->isSelected) {
-      deleteComp(ptr1);
-      ptr1 = Comps.current();
+  Component *pc = Comps.first();
+  while(pc != 0) {    // all selected component
+    if(pc->isSelected) {
+      deleteComp(pc);
+      pc = Comps.current();
       sel = true;
     }
-    else ptr1 = Comps.next();
+    else pc = Comps.next();
   }
 
   Wire *ptr2 = Wires.first();
@@ -1212,8 +1530,8 @@ bool QucsDoc::save()
   stream << "</Properties>\n";
     
   stream << "<Components>\n";
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // save all components
-    stream << "   " << ptr1->save() << "\n";
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())  // save all components
+    stream << "   " << pc->save() << "\n";
   stream << "</Components>\n";
     
   stream << "<Wires>\n";
@@ -1304,6 +1622,7 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<VCVS") c = new VCVS();
     else if(cstr == "<CCVS") c = new CCVS();
     else if(cstr == "<Port") c = new SubCirPort();
+    else if(cstr.left(7) == "<SPfile") { c = new SParamFile(cstr.at(7).digitValue()); }
     else if(cstr == "<DCblock") c = new dcBlock();
     else if(cstr == "<DCfeed") c = new dcFeed();
     else if(cstr == "<BiasT") c = new BiasT();
@@ -1535,7 +1854,6 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
     Cons.append(p1);
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
       for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-//        if(pe->isWire) {
         if(pe->Type == isWire) {
           pw = (Wire*)pe;
           if(p2 != pw->Port1) {
@@ -1565,7 +1883,6 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
     Cons.append(p1);
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())   // create list with connections to the node
       for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-//        if(pe->isWire) {
         if(pe->Type == isWire) {
           pw = (Wire*)pe;
           if(p2 != pw->Port1) {
@@ -1590,8 +1907,8 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
   // .................................................
   QString s;
   // write all components with node names into the netlist file
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {
-    s = ptr1->NetList();
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {
+    s = pc->NetList();
     if(!s.isEmpty()) stream << s << "\n";
   }
   NetlistFile->close();
