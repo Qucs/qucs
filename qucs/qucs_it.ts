@@ -1999,6 +1999,15 @@ Wrong &apos;component&apos; line format!</source>
         <source>calculate noise parameters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit Arc Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format Error:
+Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3410,6 +3419,10 @@ Continuare ?</translation>
         <source>Any File</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Ellipse Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>
@@ -4528,6 +4541,20 @@ Prints selected elements of the current document</source>
     <message>
         <source>Romanian by Radu Circa
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -125,11 +125,14 @@ public:
   QTab    *Tab;
   QTabBar *Bar;
 
-  QPtrList<Wire>      Wires;
-  QPtrList<Node>      Nodes;
-  QPtrList<Diagram>   Diags;
-  QPtrList<Painting>  Paints;
-  QPtrList<Component> Comps;
+  QPtrList<Wire>      *Wires,  DocWires;
+  QPtrList<Node>      *Nodes,  DocNodes;
+  QPtrList<Diagram>   *Diags,  DocDiags;
+  QPtrList<Painting>  *Paints, DocPaints;
+  QPtrList<Component> *Comps,  DocComps;
+
+  QPtrList<Painting>  SymbolPaints;  // symbol definition for subcircuit
+  bool  symbolMode;  // true if in symbol painting mode
 
   bool    SimOpenDpl;  // open data display after simulation ?
   QString DataSet;     // name of the default dataset

@@ -28,7 +28,16 @@ public:
   Component* newOne();
 //  static Component* info(QString&, char* &, bool getNewOne=false);
   void recreate();
+
+private:
   void remakeSymbol(int No);
+  int  loadSymbol(const QString&);
+
+  void performModification();
+  int  analyseLine(const QString&);
+  bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
+		   int *i4=0, int *i5=0, int *i6=0);
+  bool Subcircuit::getPen(const QString&, QPen&, int);
 };
 
 #endif
