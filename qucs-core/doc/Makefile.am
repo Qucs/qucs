@@ -36,7 +36,7 @@ PS2EPS = ps2eps
 EPSTOPDF = epstopdf
 FIG2DEV = fig2dev
 
-FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig
+FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig nconnect.fig Sparam.fig
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
 

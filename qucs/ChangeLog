@@ -1,3 +1,9 @@
+2004-01-10  Michael Margraf
+
+  * diagrams can be resized
+  * tabular diagrams can show more than one variable
+  * a simple help system can now be started from help system
+
 2003-11-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Added a LANGUAGEDIR path for translations.  

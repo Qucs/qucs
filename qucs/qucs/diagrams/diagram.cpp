@@ -104,6 +104,11 @@ void Diagram::paint(QPainter *p)
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
     p->drawRoundRect(cx-5, cy-y2-5, x2+10, y2+10);
+    p->setPen(QPen(QPen::darkRed,2));
+    p->drawRect(cx, cy-y2, 10, 10);       // markers for changing the size
+    p->drawRect(cx, cy-10, 10, 10);
+    p->drawRect(cx+x2-10, cy-y2, 10, 10);
+    p->drawRect(cx+x2-10, cy-10, 10, 10);
   }
 }
 
@@ -132,6 +137,37 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
   _y2 = cy;
 }
 
+// ------------------------------------------------------------
+// Checks if the resize area was clicked. If so return "true" and sets x1/y1 and x2/y2
+// to the border coordinates to draw a rectangle.
+bool Diagram::ResizeTouched(int& MAx1, int& MAy1, int& MAx2, int& MAy2)
+{
+  int _x1, _y1, _x2, _y2;
+
+  if(MAx1 < cx+10) {
+    _x2 = -x2;
+    _x1 = cx-_x2;
+  }
+  else {
+    if(MAx1 <= cx+x2-10) return false;
+    _x2 = x2;
+    _x1 = cx;
+  }
+  if(MAy1 > cy-10) {
+    _y2 = y2;
+    _y1 = cy-_y2;
+  }
+  else {
+    if(MAy1 >= cy-y2+10) return false;
+    _y2 = -y2;
+    _y1 = cy;
+  }
+
+  MAx1 = _x1;  MAy1 = _y1;
+  MAx2 = _x2;  MAy2 = _y2;
+  return true;
+}
+
 // --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
@@ -140,9 +176,16 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);    // load data and determine max and min values
-//QMessageBox::critical(0, "Error", QString::number(xmin)+"  "+QString::number(xmax)+" * "+QString::number(ymin)+"  "+QString::number(ymax));
-//QMessageBox::critical(0, "Error", Name);
 
+  calcDiagram();
+
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    calcData(pg);   // calculate graph coordinates
+}
+
+// --------------------------------------------------------------------------
+void Diagram::updateGraphData()
+{
   calcDiagram();
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
