@@ -4105,6 +4105,11 @@ Przesuwa tekst właściwości elementu</translation>
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Japanese by Toyoyuki ISHIKAWA
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
