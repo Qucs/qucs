@@ -42,7 +42,7 @@ noinst_HEADERS = $(MOCHEADERS) newprojdialog.h wire.h qucsdoc.h element.h \
   node.h
 
 # rules for translations
-TRANSLATIONS = qucs_de.ts qucs_pl.ts qucs_fr.ts
+TRANSLATIONS = $(srcdir)/qucs_de.ts $(srcdir)/qucs_pl.ts $(srcdir)/qucs_fr.ts
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 %.ts: $(qucs_SOURCES)
