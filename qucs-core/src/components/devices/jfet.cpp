@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.3 2004-06-21 23:11:42 ela Exp $
+ * $Id: jfet.cpp,v 1.4 2004-06-24 12:49:16 margraf Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 #include "complex.h"
 #include "matrix.h"

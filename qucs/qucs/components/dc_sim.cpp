@@ -46,6 +46,19 @@ DC_Sim::DC_Sim()
   ty = y2+4;
   Model = ".DC";
   Name  = "DC";
+
+  Props.append(new Property("Temp", "26.85", false,
+		QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("reltol", "0.001", false,
+		QObject::tr("relative tolerance for convergence")));
+  Props.append(new Property("abstol", "1 pA", false,
+		QObject::tr("absolute tolerance for currents")));
+  Props.append(new Property("vntol", "1 uV", false,
+		QObject::tr("absolute tolerance for voltages")));
+  Props.append(new Property("showOPs", "no", false,
+		QObject::tr("put operating points into dataset (yes,no)")));
+  Props.append(new Property("MaxIter", "150", false,
+		QObject::tr("maximum number of iterations until error")));
 }
 
 DC_Sim::~DC_Sim()
