@@ -78,7 +78,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 QucsView::~QucsView()
 {
   delete ComponentMenu;
-  delete focusElement;
+  delete focusMEvent;
 }
 
 // -----------------------------------------------------------
