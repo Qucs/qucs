@@ -1529,16 +1529,16 @@ The new unknown variable $I_{out}$ must be considered by the four
 remaining simple equations.
 
 \begin{equation}
-I_{1} = -\frac{1}{G}\cdot I_{out} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = \frac{1}{G}\cdot I_{out}
+I_{1} = +\frac{1}{G}\cdot I_{out} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = -\frac{1}{G}\cdot I_{out}
 \end{equation}
 
 And in matrix representation this is:
 \begin{equation}
 \begin{pmatrix}
-.&.&.&.& -\frac{1}{G}\\
+.&.&.&.& \frac{1}{G}\\
 .&.&.&.& 1\\
 .&.&.&.& -1\\
-.&.&.&.& \frac{1}{G}\\
+.&.&.&.& -\frac{1}{G}\\
 1 & 0 & 0 & -1 & 0
 \end{pmatrix}
 \cdot
@@ -1589,17 +1589,17 @@ The new unknown variables $I_{out}$ and $I_{in}$ must be considered by
 the four remaining simple equations.
 
 \begin{equation}
-I_{1} = -I_{in} \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = I_{in}
+I_{1} = I_{in} \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = -I_{in}
 \end{equation}
 
 The matrix representation needs to be augmented by two more new rows
 (for the new unknown variables) and their corresponding columns.
 \begin{equation}
 \begin{pmatrix}
-.&.&.&.& -1 & 0\\
+.&.&.&.& 1 & 0\\
 .&.&.&.& 0 & -1\\
 .&.&.&.& 0 & 1\\
-.&.&.&.& 1 & 0\\
+.&.&.&.& -1 & 0\\
 0 & 1 & -1 & 0 & -G & 0\\
 1 & 0 & 0 & -1 & 0 & 0
 \end{pmatrix}
@@ -1626,7 +1626,7 @@ I_{4}\\
 \subsection*{Operational amplifier}
 \addcontentsline{toc}{subsection}{Operational amplifier}
 
-The ideal operational amplifier, as shown in fig.  \ref{fig:opamp}, is
+The ideal operational amplifier, as shown in fig. \ref{fig:opamp}, is
 determined by the following equation which introduces one more unknown
 in the MNA matrix.
 
@@ -1648,14 +1648,14 @@ The new unknown variable $I_{out}$ must be considered by the three
 remaining simple equations.
 
 \begin{equation}
-I_{1} = 0 \quad I_{2} = -I_{out} \quad I_{3} = 0
+I_{1} = 0 \quad I_{2} = I_{out} \quad I_{3} = 0
 \end{equation}
 
 And in matrix representation this is:
 \begin{equation}
 \begin{pmatrix}
 .&.&.& 0\\
-.&.&.& -1\\
+.&.&.& 1\\
 .&.&.& 0\\
 -1 & 0 & -1 & 0
 \end{pmatrix}

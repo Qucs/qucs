@@ -1,3 +1,7 @@
+2004-02-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* ccvs.cpp, cccs.cpp: Fixed MNA stamps for DC analysis.
+
 2004-02-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp: New parameter 'n' representing the ideality
