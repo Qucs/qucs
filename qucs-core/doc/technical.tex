@@ -461,6 +461,7 @@ tee.  Its S-parameters write as follows.
 
 \subsection{Differential S-parameter ports}
 %\addcontentsline{toc}{subsection}{Differential S-parameter ports}
+\label{sec:diffSParam}
 
 The implemented algorithm for the S-parameter analysis calculates
 S-parameters in terms of the ground node.  In order to allow
@@ -1796,7 +1797,8 @@ NF\,[\text{dB}]\, = 10\cdot\lg F
 
 \addvspace{12pt}
 
-Optimal source reflection coefficient:
+Optimal source reflection coefficient (normalized according to the input
+port impedance):
 \begin{equation}
 \Gamma_{opt} = \eta_2\cdot\left( 1-\sqrt{1-\frac{1}{|\eta_2|^2}} \right)
 \end{equation}
@@ -2070,7 +2072,11 @@ small.  To achieve a higher numerical precision, it is recommended to
 normalize the noise matrix with $k\cdot T_0$. After the simulation
 they do not have to be denormalized, because the noise parameters can
 be calculated by using equation \eqref{eqn:nparamF} to
-\eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
+\eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.\\
+The transformer concept to deal with different port impedances and
+with differential ports (as described in section \ref{sec:diffSParam})
+can also be applied to this noise analysis.
+
 
 \section{Noise Correlation Matrix Transformations}
 %\addcontentsline{toc}{section}{Noise Correlation Matrix Transformations}
