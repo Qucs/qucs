@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.23 2005-01-17 12:19:02 raimi Exp $
+ * $Id: mosfet.cpp,v 1.24 2005-02-03 20:40:19 raimi Exp $
  *
  */
 
@@ -106,6 +106,11 @@ matrix mosfet::calcMatrixY (nr_double_t frequency) {
 }
 
 void mosfet::calcNoiseSP (nr_double_t frequency) {
+  setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
+}
+
+matrix mosfet::calcMatrixCy (nr_double_t frequency) {
+  /* get operating points and noise properties */
   nr_double_t Kf  = getPropertyDouble ("Kf");
   nr_double_t Af  = getPropertyDouble ("Af");
   nr_double_t Ffe = getPropertyDouble ("Ffe");
@@ -120,12 +125,12 @@ void mosfet::calcNoiseSP (nr_double_t frequency) {
 
   /* build noise current correlation matrix and convert it to
      noise-wave correlation matrix */
-  matrix y = matrix (4);
-  y.set (NODE_D, NODE_D, +i);
-  y.set (NODE_S, NODE_S, +i);
-  y.set (NODE_D, NODE_S, -i);
-  y.set (NODE_S, NODE_D, -i);
-  setMatrixN (cytocs (y * z0, getMatrixS ()));
+  matrix cy = matrix (4);
+  cy.set (NODE_D, NODE_D, +i);
+  cy.set (NODE_S, NODE_S, +i);
+  cy.set (NODE_D, NODE_S, -i);
+  cy.set (NODE_S, NODE_D, -i);
+  return cy;
 }
 
 void mosfet::initDC (void) {
@@ -609,6 +614,10 @@ void mosfet::initAC (void) {
 
 void mosfet::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
+}
+
+void mosfet::calcNoiseAC (nr_double_t frequency) {
+  setMatrixN (calcMatrixCy (frequency));
 }
 
 void mosfet::initTR (void) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.15 2005-01-17 12:19:02 raimi Exp $
+ * $Id: spfile.cpp,v 1.16 2005-02-03 20:40:18 raimi Exp $
  *
  */
 
@@ -108,17 +108,20 @@ matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
 }
 
 void spfile::calcNoiseSP (nr_double_t frequency) {
-
   // nothing to do if the given file type had errors
   if (index == NULL || nfreq == NULL) return;
+  setMatrixN (calcMatrixCs (frequency));
+}
 
+matrix spfile::calcMatrixCs (nr_double_t frequency) {
   // set interpolated noise correlation matrix
   nr_double_t r = real (interpolate (nfreq, Rn, frequency));
   nr_double_t f = real (interpolate (nfreq, Fmin, frequency));
   complex g     = interpolate (nfreq, Sopt, frequency);
   matrix s = getInterpolMatrixS (frequency);
   matrix n = correlationMatrix (f, g, r, s);
-  setMatrixN (expandNoiseMatrix (n, expandSParaMatrix (s)));
+  matrix c = expandNoiseMatrix (n, expandSParaMatrix (s));
+  return c;
 }
 
 // Returns the specified matrix vector entry.
@@ -504,4 +507,10 @@ void spfile::calcAC (nr_double_t frequency) {
   calcSP (frequency);
   // convert S-parameters to Y-parameters
   setMatrixY (stoy (getMatrixS ()));
+}
+
+void spfile::calcNoiseAC (nr_double_t frequency) {
+  // nothing to do if the given file type had errors
+  if (index == NULL || nfreq == NULL) return;
+  setMatrixN (cstocy (calcMatrixCs (frequency), getMatrixY () * z0) / z0);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.h,v 1.9 2005-01-17 12:19:02 raimi Exp $
+ * $Id: spfile.h,v 1.10 2005-02-03 20:40:18 raimi Exp $
  *
  */
 
@@ -46,6 +46,7 @@ class spfile : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+  void calcNoiseAC (nr_double_t);
   void createIndex (void);
   complex interpolate (vector *, vector *, nr_double_t);
   complex interpolate_lin (vector *, vector *, nr_double_t, int);
@@ -62,6 +63,7 @@ class spfile : public circuit
   matrix expandSParaMatrix (matrix);
   matrix shrinkSParaMatrix (matrix);
   matrix getInterpolMatrixS (nr_double_t);
+  matrix calcMatrixCs (nr_double_t);
 
  private:
   dataset * data;

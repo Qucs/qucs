@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.h,v 1.3 2005-01-28 19:24:40 raimi Exp $
+ * $Id: cpwline.h,v 1.4 2005-02-03 20:40:20 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@ class cpwline : public circuit
   void calcSP (nr_double_t);
   void initSP (void);
   void initDC (void);
+  void initTR (void);
   void initAC (void);
   void calcAC (nr_double_t);
 
@@ -43,17 +44,14 @@ class cpwline : public circuit
   void calcAB (nr_double_t, nr_double_t&, nr_double_t&, nr_double_t&);
   void initPropagation (void);
 
-  nr_double_t fte;
   nr_double_t sr_er;
-  nr_double_t sr_er_0;
-  nr_double_t Z_factor;
+  nr_double_t sr_er0;
+  nr_double_t zl_factor;
   nr_double_t ac_factor;
   nr_double_t ad_factor;
-  nr_double_t beta_factor;
-  nr_double_t G;
-  nr_double_t l;
-  nr_double_t tand;
-  nr_double_t rho;
+  nr_double_t bt_factor;
+  nr_double_t fte, G;
+  nr_double_t len, tand, rho;
 };
 
 #endif /* __CPWLINE_H__ */

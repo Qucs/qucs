@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.39 2005-01-17 12:19:03 raimi Exp $
+ * $Id: msline.cpp,v 1.40 2005-02-03 20:40:20 raimi Exp $
  *
  */
 
@@ -480,4 +480,15 @@ void msline::calcAC (nr_double_t frequency) {
   complex y21 = -cosech (g * l) / zl;
   setY (1, 1, y11); setY (2, 2, y11);
   setY (1, 2, y21); setY (2, 1, y21);
+}
+
+void msline::calcNoiseAC (nr_double_t) {
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t l = exp (alpha * getPropertyDouble ("L"));
+  nr_double_t z = zl;
+  nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
+  setN (1, 1, +f * (l + 1));
+  setN (2, 2, +f * (l + 1));
+  setN (1, 2, -f * 2 * sqrt (l));
+  setN (2, 1, -f * 2 * sqrt (l));
 }

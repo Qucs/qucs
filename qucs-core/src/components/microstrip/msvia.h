@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.h,v 1.2 2005-01-17 12:19:03 raimi Exp $
+ * $Id: msvia.h,v 1.3 2005-02-03 20:40:20 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@ class msvia : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+  void calcNoiseAC (nr_double_t);
   nr_double_t calcResistance (void);
   complex calcImpedance (nr_double_t);
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.25 2005-01-17 12:19:02 raimi Exp $
+ * $Id: bjt.cpp,v 1.26 2005-02-03 20:40:19 raimi Exp $
  *
  */
 
@@ -98,11 +98,14 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   y.set (NODE_S, NODE_C, -Ycs);
   y.set (NODE_S, NODE_E, 0);
   y.set (NODE_S, NODE_S, Ycs);
-
   return y;
 }
 
 void bjt::calcNoiseSP (nr_double_t frequency) {
+  setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
+}
+
+matrix bjt::calcMatrixCy (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Ibe = getOperatingPoint ("Ibe");
@@ -124,15 +127,15 @@ void bjt::calcNoiseSP (nr_double_t frequency) {
 
   /* build noise current correlation matrix and convert it to
      noise-wave correlation matrix */
-  matrix y = matrix (4);
-  y.set (NODE_B, NODE_B, ib);
-  y.set (NODE_B, NODE_E, -ib);
-  y.set (NODE_C, NODE_C, ic);
-  y.set (NODE_C, NODE_E, -ic);
-  y.set (NODE_E, NODE_B, -ib);
-  y.set (NODE_E, NODE_C, -ic);
-  y.set (NODE_E, NODE_E, ic + ib);
-  setMatrixN (cytocs (y * z0, getMatrixS ()));
+  matrix cy = matrix (4);
+  cy.set (NODE_B, NODE_B, ib);
+  cy.set (NODE_B, NODE_E, -ib);
+  cy.set (NODE_C, NODE_C, ic);
+  cy.set (NODE_C, NODE_E, -ic);
+  cy.set (NODE_E, NODE_B, -ib);
+  cy.set (NODE_E, NODE_C, -ic);
+  cy.set (NODE_E, NODE_E, ic + ib);
+  return cy;
 }
 
 void bjt::initDC (void) {
@@ -471,6 +474,10 @@ void bjt::initAC (void) {
 
 void bjt::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
+}
+
+void bjt::calcNoiseAC (nr_double_t frequency) {
+  setMatrixN (calcMatrixCy (frequency));
 }
 
 #define qbeState 0 // base-emitter charge state

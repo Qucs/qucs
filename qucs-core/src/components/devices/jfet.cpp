@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.22 2005-01-17 12:19:02 raimi Exp $
+ * $Id: jfet.cpp,v 1.23 2005-02-03 20:40:19 raimi Exp $
  *
  */
 
@@ -81,11 +81,15 @@ matrix jfet::calcMatrixY (nr_double_t frequency) {
   y.set (NODE_S, NODE_G, -Ygs - gm);
   y.set (NODE_S, NODE_D, -Yds);
   y.set (NODE_S, NODE_S, Ygs + Yds + gm);
-
   return y;
 }
 
 void jfet::calcNoiseSP (nr_double_t frequency) {
+  setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
+}
+
+matrix jfet::calcMatrixCy (nr_double_t frequency) {
+  /* get operating points and noise properties */
   nr_double_t Kf  = getPropertyDouble ("Kf");
   nr_double_t Af  = getPropertyDouble ("Af");
   nr_double_t Ffe = getPropertyDouble ("Ffe");
@@ -100,12 +104,12 @@ void jfet::calcNoiseSP (nr_double_t frequency) {
 
   /* build noise current correlation matrix and convert it to
      noise-wave correlation matrix */
-  matrix y = matrix (3);
-  y.set (NODE_D, NODE_D, +i);
-  y.set (NODE_S, NODE_S, +i);
-  y.set (NODE_D, NODE_S, -i);
-  y.set (NODE_S, NODE_D, -i);
-  setMatrixN (cytocs (y * z0, getMatrixS ()));
+  matrix cy = matrix (3);
+  cy.set (NODE_D, NODE_D, +i);
+  cy.set (NODE_S, NODE_S, +i);
+  cy.set (NODE_D, NODE_S, -i);
+  cy.set (NODE_S, NODE_D, -i);
+  return cy;
 }
 
 void jfet::initDC (void) {
@@ -311,6 +315,10 @@ void jfet::initAC (void) {
 
 void jfet::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
+}
+
+void jfet::calcNoiseAC (nr_double_t frequency) {
+  setMatrixN (calcMatrixCy (frequency));
 }
 
 #define qgdState 0 // gate-drain charge state
