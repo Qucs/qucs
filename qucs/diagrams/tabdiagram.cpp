@@ -88,8 +88,10 @@ void TabDiagram::calcDiagram()
   }
   Texts.append(new Text( 4, y2-13, Str));   // write independent variable
 
-  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    Str = QString::number(cp->x);
+  double *px = g->cPointsX;
+  double *py = g->cPointsY;
+  for(int z=g->count; z>0; z--) {
+    Str = QString::number(*(px++));
     r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
@@ -100,7 +102,7 @@ void TabDiagram::calcDiagram()
         return;
       }
     }
-    
+
     Texts.append(new Text( x, y, Str));
     y -= 14;
     if(y < 0) break;
@@ -126,14 +128,17 @@ void TabDiagram::calcDiagram()
     }
     Texts.append(new Text(x, y2-13, Str));
 
-    for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-      if(fabs(cp->yi) > 1e-250) {
-        Str = QString::number(cp->yi);
+
+    py = g->cPointsY;
+    for(int z=g->count; z>0; z--) {
+      if(fabs(*(py+1)) > 1e-250) {
+        Str = QString::number(*(py+1));
         if(Str.at(0) == '-') { Str.at(0) = 'j'; Str = '-'+Str; }
         else Str = "+j"+Str;
-        Str = QString::number(cp->yr)+Str;
+        Str = QString::number(*py)+Str;
       }
-      else Str = QString::number(cp->yr);
+      else Str = QString::number(*py);
+      py += 2;
 
       r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
       if(r.width() > colWidth) {

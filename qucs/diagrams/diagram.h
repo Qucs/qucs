@@ -38,8 +38,8 @@ public:
   virtual Diagram* newOne();
   virtual void calcDiagram();
   virtual void calcData(Graph *g);
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  void    setCenter(int x, int y, bool relative=false);
+  void    paintScheme(QPainter *p);
   void    paint(QPainter *p);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   bool    getSelected(int x_, int y_);

@@ -41,7 +41,8 @@ void WireLabel::paintScheme(QPainter *p)
 {
   p->drawRect(x1, y1, x2, -y2);
 
-  if(cx < x1+(x2>>1)) {    // which corner of rectangle should be connected to line ?
+  // which corner of rectangle should be connected to line ?
+  if(cx < x1+(x2>>1)) {
     if(cy < y1-(y2>>1))
       p->drawLine(cx, cy, x1, y1-y2);
     else

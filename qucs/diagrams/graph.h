@@ -30,11 +30,11 @@
   *@author Michael Margraf
   */
 
-struct cPoint {
+/*struct cPoint {
   cPoint(double _x, double _yr, double _yi)
        : x(_x), yr(_yr), yi(_yi) {};
   double  x, yr, yi;
-};
+};*/
 
 
 class Graph : public Element {
@@ -48,7 +48,8 @@ public:
   int     getSelected(int x, int y);
 
   int  count, *Points;
-  QPtrList<cPoint> cPoints;
+//  QPtrList<cPoint> cPoints;
+  double *cPointsX, *cPointsY;
   QString Line, IndepVar;
   QColor  Color;
   int     Thick;

@@ -297,6 +297,25 @@
     </message>
 </context>
 <context>
+    <name>MarkerDialog</name>
+    <message>
+        <source>Edit Marker Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Precision: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>MessageBox</name>
     <message>
         <source>Save</source>
@@ -983,6 +1002,26 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>simulation to perform parameter sweep on</source>
         <translation>Simulation für den Parameterdurchlauf</translation>
+    </message>
+    <message>
+        <source>Cannot get size of independent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too few dependent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Independent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot; not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too few independent data&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2074,16 +2113,6 @@ Qt universal circuit simulator
 </translation>
     </message>
     <message>
-        <source>Copyright (C) 2003 by Michael Margraf
-Simulator by Stefan Jahn
-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Special thanks to Jens Flucke</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Starting new simulation on </source>
         <translation>Starte neue Simulation am </translation>
     </message>
@@ -2584,6 +2613,36 @@ Sets a marker on a diagram&apos;s graph</source>
         <translation>Markierung setzen
 
 Setzt eine Markierung auf einen Graphen im Diagramm</translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2003,2004 by Michael Margraf
+Simulator by Stefan Jahn
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>German by Stefan Jahn
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polish by Dariusz Pienkowski</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Eric Marzolf</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -47,10 +47,20 @@ void RectDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
 //  if(p == 0) return;
-  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = int((cp->x-xlow)/(xup-xlow)*x2);
-    if(fabs(cp->yi) < 1e-250) *(p++) = int((cp->yr-ylow)/(yup-ylow)*y2);
-    else *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ylow)/(yup-ylow)*y2);
+  double *px = g->cPointsX;
+  double *py = g->cPointsY;
+  for(int z=g->count; z>0; z--) {
+    *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2);
+    // preserve negative values if not complex number
+    if(fabs(*py) < 1e-250) {
+      *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2);
+      py++;   // do not use imaginary part
+    }
+    else {  // calculate magnitude of complex number
+      *(p++) = int((sqrt((*py)*(*py) +
+               (*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*y2);
+      py += 2;
+    }
   }
 }
 
@@ -68,8 +78,8 @@ void RectDiagram::calcDiagram()
   double numGrids = floor(double(x2)/60.0);   // minimal grid is 60 pixel
   double Base = (xmax-xmin)/numGrids;
   double Expo = floor(log10(Base));
-  Base = Base/pow(10.0,Expo);        // separate first significant digit
-  if(Base < 3.5) {            // use only 1, 2 and 5, which ever is best fitted
+  Base = Base/pow(10.0,Expo);         // separate first significant digit
+  if(Base < 3.5) {      // use only 1, 2 and 5, which ever is best fitted
     if(Base < 1.5) Base = 1.0;
     else Base = 2.0;
   }
@@ -77,7 +87,7 @@ void RectDiagram::calcDiagram()
     if(Base < 7.5) Base = 5.0;
     else { Base = 1.0; Expo++; }
   }
-  double GridStep = Base * pow(10.0,Expo);     // distance between grids in real coordinates
+  double GridStep = Base * pow(10.0,Expo);  // distance between grids in real coordinates
   double corr = floor((xmax-xmin)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
@@ -86,11 +96,11 @@ void RectDiagram::calcDiagram()
   double zD = GridStep-fmod(xmax, GridStep);
   if(zD/GridStep < 0.2)  xup = xmax+zD;   // expand grid to the right edge of diagram ?
 
-  zD = fmod(xmin, GridStep); // expand grid to the left edge of the diagram ?
+  zD = fmod(xmin, GridStep); // expand grid to the left edge of diagram ?
   if(zD/GridStep < 0.2) { xlow = xmin-zD;  zD = 0.0; }
   else zD = GridStep-zD;
 
-  double zDstep = GridStep/(xup-xlow)*double(x2);     // distance between grids in pixel
+  double zDstep = GridStep/(xup-xlow)*double(x2);  // distance between grids in pixel
   double GridNum  = xlow + zD;
   zD /= (xup-xlow)/double(x2);
 
