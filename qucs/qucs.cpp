@@ -115,6 +115,7 @@ QucsApp::~QucsApp()
 // #########################################################################
 void QucsApp::initView()
 {
+  setIcon (QPixmap(BITMAPDIR "big.qucs.xpm"));  // set application icon
   QVBox *all = new QVBox(this);   // only to fill the entire view area
   QSplitter *Hsplit = new QSplitter(QSplitter::Horizontal, all);
 
