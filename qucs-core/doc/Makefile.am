@@ -69,7 +69,7 @@ PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
 BIBFILE = $(srcdir)/literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   transient.tex devices.tex microstrip.tex coplanar.tex acnoise.tex    \
-  hbanalysis.tex grammar-qucs.tex
+  hbanalysis.tex grammar-common.tex grammar-qucs.tex grammar-data.tex
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 

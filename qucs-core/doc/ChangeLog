@@ -1,3 +1,8 @@
+2005-02-17  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
+
+	* grammar-data.tex: Added grammar for the dataset. Put all
+	grammars into one appendix, share the introduction.
+
 2005-02-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex: Added Raimund Jacob as author.
