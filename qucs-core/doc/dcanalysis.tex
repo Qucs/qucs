@@ -1044,6 +1044,7 @@ I_{1} = 0 \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = 0
 
 And in matrix representation this is:
 \begin{equation}
+\label{eq:vccsStamp}
 \begin{bmatrix}
 .&.&.&.& 0\\
 .&.&.&.& 1\\
@@ -1072,6 +1073,35 @@ I_{4}\\
 As you can see the last row which has been added by the VCCS
 represents the determining equation (\ref{eq:vccs}).  The additional
 right hand column in the matrix keeps the system consistent.
+
+\addvspace{12pt}
+
+When pivotising the above MNA stamp \eqref{eq:vccsStamp} the
+additional row and column can be saved ensuring $G$ keeps finite (the
+pivot element must be non-zero).  Both representations are equivalent.
+If $G$ is zero the below representation must be used.
+\begin{equation}
+\begin{bmatrix}
+0&0&0&0\\
+G&0&0&-G\\
+-G&0&0&G\\
+0&0&0&0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+\end{bmatrix}
+\end{equation}
 
 \subsection{Voltage controlled voltage source}
 %\addcontentsline{toc}{subsection}{Voltage controlled voltage source}
@@ -1555,6 +1585,7 @@ I_{1} = I_{in} \quad I_{2} = I_{out} \quad I_{3} = -I_{out} \quad I_{4} = -I_{in
 The matrix representation needs to be augmented by two more new rows
 (for the new unknown variables) and their corresponding columns.
 \begin{equation}
+\label{eq:gyratorStamp}
 \begin{bmatrix}
 .&.&.&.& 1 & 0\\
 .&.&.&.& 0 & 1\\
@@ -1580,6 +1611,32 @@ I_{3}\\
 I_{4}\\
 0\\
 0
+\end{bmatrix}
+\end{equation}
+
+The above gyrators MNA stamp \eqref{eq:gyratorStamp} can be pivotised
+with no further conditions and yields the following representation
+saving both augmentations.
+\begin{equation}
+\begin{bmatrix}
+0&\frac{1}{R}&-\frac{1}{R}&0\\
+-\frac{1}{R}&0&0&\frac{1}{R}\\
+\frac{1}{R}&0&0&-\frac{1}{R}\\
+0&-\frac{1}{R}&\frac{1}{R}&0
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}
 \end{bmatrix}
 \end{equation}
 
