@@ -1,3 +1,7 @@
+2004-08-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp: Including 'ieeefp.h' if necessary.
+
 2004-08-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* consts.h: New file.  Split 'constants.h' into 'constants.h'

@@ -70,7 +70,7 @@ AC_CHECK_LIB(m, sin)
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h])
+AC_CHECK_HEADERS([stddef.h stdlib.h string.h unistd.h ieeefp.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

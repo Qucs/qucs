@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.c,v 1.4 2004/08/21 13:29:07 ela Exp $
+ * $Id: logging.c,v 1.5 2004/08/22 11:01:19 ela Exp $
  *
  */
 
@@ -65,9 +65,18 @@ void logprogressbar (nr_double_t current, nr_double_t final, int points) {
       logprint (LOG_STATUS, "*");
     for (; i < points; i++) logprint (LOG_STATUS, " ");
     logprint (LOG_STATUS, "] %.4g%%      \r", current * 100.0 / final);
-    if (current >= final) logprint (LOG_STATUS, "\n");
   }
 }
 
 /* If non-zero then progress bars are painted... */
 int progressbar_enable = 0;
+
+/* Clears up the progress bar if requested. */
+void logprogressclear (int points) {
+  int i;
+  if (progressbar_enable) {
+    for (i = 0; i < points + 15; i++) logprint (LOG_STATUS, " ");
+    logprint (LOG_STATUS, "\r");
+  }
+}
+
