@@ -75,6 +75,9 @@ QString QucsFile::createClipboardFile()
   for(pw = Doc->Wires->first(); pw != 0; pw = Doc->Wires->next())
     if(pw->isSelected) {
       s += pw->save()+"\n";  z++; }
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+    if(pn->Label) if(pn->Label->isSelected) {
+      s += pn->Label->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
@@ -160,7 +163,7 @@ bool QucsFile::pasteFromClipboard(QTextStream *stream, QPtrList<Element> *pe)
       if(!loadComponents(stream, (QPtrList<Component>*)pe)) return false; }
     else
     if(Line == "<Wires>") {
-      if(!loadWires(stream, (QPtrList<Wire>*)pe)) return false; }
+      if(!loadWires(stream, pe)) return false; }
     else
     if(Line == "<Diagrams>") {
       if(!loadDiagrams(stream, (QPtrList<Diagram>*)pe)) return false; }
@@ -401,7 +404,7 @@ void QucsFile::simpleInsertWire(Wire *pw)
 }
 
 // -------------------------------------------------------------
-bool QucsFile::loadWires(QTextStream *stream, QPtrList<Wire> *List)
+bool QucsFile::loadWires(QTextStream *stream, QPtrList<Element> *List)
 {
   Wire *w;
   QString Line;
@@ -416,9 +419,18 @@ bool QucsFile::loadWires(QTextStream *stream, QPtrList<Wire> *List)
     if(!w->load(Line)) {
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nWrong 'wire' line format!"));
+      delete w;
       return false;
     }
-    if(List) List->append(w);
+    if(List) {
+      if(w->x1 == w->x2) if(w->y1 == w->y2) if(w->Label) {
+	w->Label->Type = isMovingLabel;
+	List->append(w->Label);
+	delete w;
+	continue;
+      }
+      List->append(w);
+    }
     else simpleInsertWire(w);
   }
 
