@@ -1,6 +1,6 @@
 /***************************************************************************
-                          graphictext.cpp  -  description
-                             -------------------
+                              graphictext.cpp
+                             -----------------
     begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de

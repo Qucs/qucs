@@ -21,15 +21,12 @@
 
 #include "marker.h"
 #include "element.h"
-#include "viewpainter.h"
 
 #include <qcolor.h>
-#include <qpainter.h>
 #include <qptrlist.h>
-#include <qtextstream.h>
-#include <qvaluevector.h>
 
 class Diagram;
+class ViewPainter;
 
 /**
   *@author Michael Margraf
@@ -51,6 +48,7 @@ public:
   ~Graph();
 
   void    paint(ViewPainter*, int, int);
+  void    paintLines(ViewPainter*, int, int);
   QString save();
   bool    load(const QString&);
   int     getSelected(int, int);
