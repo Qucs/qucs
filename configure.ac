@@ -233,6 +233,8 @@ AH_TOP([
 AC_CONFIG_FILES([Makefile 
 		 qucs-edit/Makefile
 		 qucs-help/Makefile
+		 qucs-transcalc/Makefile
+		 qucs-transcalc/bitmaps/Makefile
 		 qucs/Makefile
 		 qucs/bitmaps/Makefile
 		 qucs/components/Makefile
