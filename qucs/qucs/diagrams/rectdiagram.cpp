@@ -116,11 +116,11 @@ if(xlog) {
       Lines.append(new Line(z, y2, z, 0, GridPen));  // x grid
 
     if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {
-      if(fabs(Expo) < 3.0)  tmp = QString::number(zD);
-      else  tmp = QString::number(zD, 'e', 1);
+      if(fabs(Expo) < 3.0)  tmp = StringNum(zD);
+      else  tmp = StringNum(zD, 'e', 1);
 
-      if(set_log)  Texts.append(new Text(z-10, -17, '-'+tmp));
-      else  Texts.append(new Text(z-10, -17, tmp));
+      if(set_log)  Texts.append(new Text(z-10, -5, '-'+tmp));
+      else  Texts.append(new Text(z-10, -5, tmp));
 
       Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));  // x marks
     }
@@ -207,9 +207,9 @@ else {  // not logarithmical
   while(z <= x2) {    // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     if(fabs(Expo) < 3.0)
-      Texts.append(new Text(z-10, -17, QString::number(GridNum)));
+      Texts.append(new Text(z-10, -5, StringNum(GridNum)));
     else
-      Texts.append(new Text(z-10, -17, QString::number(GridNum, 'e', 1)));
+      Texts.append(new Text(z-10, -5, StringNum(GridNum, 'e', 1)));
     GridNum += GridStep;
 
     if(GridOn)  if(z < x2)  if(z > 0)
@@ -259,13 +259,13 @@ if(ylog) {
       Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
 
     if((zD < 1.5*zDstep) || (z == 0)) {
-      if(fabs(Expo) < 3.0)  tmp = QString::number(zD);
-      else  tmp = QString::number(zD, 'e',1);
+      if(fabs(Expo) < 3.0)  tmp = StringNum(zD);
+      else  tmp = StringNum(zD, 'e',1);
       if(set_log)  tmp = '-'+tmp;
 
       r = metrics.size(0, tmp);  // width of text
       if(maxWidth < r.width()) maxWidth = r.width();
-      Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
+      Texts.append(new Text(-r.width()-7, z+6, tmp));  // text aligned right
 
       Lines.append(new Line(-5, z, 5, z, QPen(QPen::black,0)));  // y marks
     }
@@ -350,12 +350,12 @@ else {  // not logarithmical
   z = int(zD);   //  "int(...)" implies "floor(...)"
   while(z <= y2) {    // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
-    if(fabs(Expo) < 3.0)  tmp = QString::number(GridNum);
-    else tmp = QString::number(GridNum, 'e',1);
+    if(fabs(Expo) < 3.0)  tmp = StringNum(GridNum);
+    else tmp = StringNum(GridNum, 'e',1);
     r = metrics.size(0, tmp);  // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
 
-    Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
+    Texts.append(new Text(-r.width()-7, z+6, tmp));  // text aligned right
     GridNum += GridStep;
 
     if(GridOn)  if(z < y2)  if(z > 0)

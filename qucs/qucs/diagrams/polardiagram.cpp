@@ -20,6 +20,7 @@
 #endif
 
 #include "polardiagram.h"
+#include "main.h"
 
 #include <math.h>
 
@@ -82,18 +83,6 @@ bool PolarDiagram::calcDiagram()
     double zD = double(x2) / numGrids;   // grid distance in pixel
 
 
-/*  ---------------------------------------------------------------------
-    ---- This algorithm is not bad but creates unpleasant grid steps ----
-    ---------------------------------------------------------------------
-    double numGrids = floor(double(x2)/80);      // minimal grid is 40 pixel
-    Expo = floor(log10(ymax/numGrids));
-    Base = floor(ymax/numGrids/pow(10,Expo)+0.5);   // separate first significant digit
-    double GridStep = Base * pow(10,Expo);     // distance between grids in real coordinates
-    numGrids -= floor((GridStep*numGrids-ymax) / GridStep);     // correct rounding faults
-    xup = yup = GridStep*numGrids;
-    double zD = double(x2) / numGrids;     // distance between grids in pixel
-    --------------------------------------------------------------------- */
-
     int z;
     double zDstep = zD;
     double GridNum  = 0.0;
@@ -101,11 +90,11 @@ bool PolarDiagram::calcDiagram()
       z = int(zD);
       GridNum += GridStep;
       if(fabs(Expo) < 3.0)
-        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12,
-			 QString::number(GridNum)));
+        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-2,
+			 StringNum(GridNum)));
       else
-        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12,
-			 QString::number(GridNum, 'e', 0)));
+        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-2,
+			 StringNum(GridNum, 'e', 0)));
 
       phi = 16.0*180.0/M_PI*atan(30.0/zD);  // 2*(text height+3) / radius
       Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, 0, 16*360-int(phi),
@@ -121,9 +110,9 @@ bool PolarDiagram::calcDiagram()
 
   // create outer circle
   if(fabs(Expo) < 3.0)
-    Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup)));
+    Texts.append(new Text(x2-10, (y2>>1)-2, StringNum(xup)));
   else
-    Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup, 'e', 0)));
+    Texts.append(new Text(x2-10, (y2>>1)-2, StringNum(xup, 'e', 0)));
   phi = 16.0*180.0/M_PI*atan(30.0/double(x2));  // (text height+3) / radius
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi),
 			QPen(QPen::black,0)));

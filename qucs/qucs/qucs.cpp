@@ -863,7 +863,9 @@ void QucsApp::slotFilePrint()
   {
     QPainter painter;
     painter.begin(&Printer);
-    view->Docs.current()->paint(&painter);
+    ViewPainter p;
+    p.init(&painter, 1.0, 0, 0);
+    view->Docs.current()->paint(&p);
     painter.end();
   };
 

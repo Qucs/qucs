@@ -19,6 +19,7 @@
 #define WIRELABEL_H
 
 #include "element.h"
+#include "viewpainter.h"
 
 #include <qpainter.h>
 #include <qstring.h>
@@ -47,7 +48,7 @@ public:
   Node    *pNode;
   QString Name;
 
-  void    paint(QPainter *p);
+  void    paint(ViewPainter*);
   void    rotate();
   QString save();
   bool    load(const QString& s);

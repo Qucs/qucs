@@ -21,6 +21,7 @@
 
 #include "marker.h"
 #include "element.h"
+#include "viewpainter.h"
 
 #include <qcolor.h>
 #include <qpainter.h>
@@ -49,7 +50,7 @@ public:
   Graph(const QString& _Line="");
   ~Graph();
 
-  void    paint(QPainter*, int, int);
+  void    paint(ViewPainter*, int, int);
   QString save();
   bool    load(const QString&);
   int     getSelected(int, int);

@@ -76,19 +76,11 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
   QucsDoc *d = Docs.current();
   d->paintGrid(p, contentsX(), contentsY(), visibleWidth(), visibleHeight());
 
-  // scale/translate must not be in QucsDoc because d->paint is
-  // also used by print:
-  p->scale(d->Scale, d->Scale);
-  p->translate(-d->ViewX1, -d->ViewY1);
+  Painter.init(p, d->Scale, -d->ViewX1, -d->ViewY1);
+  Painter.DX -= double(contentsX());
+  Painter.DY -= double(contentsY());
 
-  // The only possibility to get good looking fonts at any zoom factor,
-  // is the scale the font and disable the painter scaling when drawing
-  //text.
-  QFont qFont = p->font();
-  qFont.setPointSizeFloat( float(d->Scale * double(qFont.pointSize())) );
-  p->setFont(qFont);
-
-  d->paint(p);
+  d->paint(&Painter);
 //  drawn = false;
 }
 
@@ -1760,8 +1752,8 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
   // .....................................................................
   else if(Event->state() & Qt::ControlButton) {  // use mouse wheel to zoom ?
       double Scaling;
-      if(delta < 0) Scaling = double(-delta)/80;
-      else Scaling = 80/double(delta);
+      if(delta < 0) Scaling = double(-delta)/60.0/1.1;
+      else Scaling = 1.1*60.0/double(delta);
       Scaling = Zoom(Scaling);
       center(int(Event->x()*Scaling), int(Event->y()*Scaling));
       viewport()->repaint();

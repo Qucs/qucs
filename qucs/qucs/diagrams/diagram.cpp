@@ -41,6 +41,7 @@ using namespace std;
 # define finite(x) _finite(x)
 #endif
 
+QString INVALID_STR = QObject::tr(" <invalid>");
 
 Diagram::Diagram(int _cx, int _cy)
 {
@@ -64,113 +65,94 @@ Diagram::~Diagram()
 }
 
 // ------------------------------------------------------------
-void Diagram::paint(QPainter *p)
+void Diagram::paint(ViewPainter *p)
 {
   // paint all lines
   for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
-    p->setPen(pl->style);
+    p->Painter->setPen(pl->style);
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
 
   // paint all arcs
   for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
-    p->setPen(pa->style);
+    p->Painter->setPen(pa->style);
     p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
 
-  int x, y;
-  QWMatrix wm = p->worldMatrix();
+  QSize s;
+  Graph *pg;
+  int   x, y;
   if(Name[0] != 'T') {   // no graph within tabulars
-    Graph *pg;
-    QRect r;
-    int delta = int( double(y1) * wm.m22() );
+    // draw all graphs
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
+      pg->paint(p, cx, cy);
 
+    p->map(cx+(x2>>1), cy+y1, &x, &y);
     if(xLabel.isEmpty()) {
-      // draw all graphs
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
-	pg->paint(p, cx, cy);
-
       // write all x labels
-      p->setWorldXForm(false);
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-	// get width of text
 	DataX *pD = pg->cPointsX.getFirst();
 	if(!pD) continue;
-	p->setPen(pg->Color);
-	r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pD->Var);
-	x = int( double(r.width()) / wm.m11() );
-	wm.map( cx+((x2-x)>>1), cy, &x, &y);
-	p->drawText( x, y+delta, pD->Var);
-	delta += r.height();
+	p->Painter->setPen(pg->Color);
+	s = p->Painter->fontMetrics().size(0, pD->Var);
+	p->Painter->drawText(x-(s.width()>>1), y, pD->Var);
+	y += p->LineSpacing;
       }
-      p->setWorldXForm(true);
     }
     else {
-      // draw all graphs
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
-        pg->paint(p, cx, cy);
-
       // write x label text
-      p->setPen(Qt::black);
-      p->setWorldXForm(false);
-      r = p->boundingRect(0,0,0,0, Qt::AlignAuto, xLabel);
-      x = int( double(r.width()) / wm.m11() );
-      wm.map( cx+((x2-x)>>1), cy, &x, &y);
-      p->drawText( x, y+delta, xLabel);
-      p->setWorldXForm(true);
+      p->Painter->setPen(Qt::black);
+      s = p->Painter->fontMetrics().size(0, xLabel);
+      p->Painter->drawText(x-(s.width()>>1), y, xLabel);
     }
 
-    delta = int( double(x1) * wm.m11() );
-    p->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0,wm.dx(),wm.dy()));
+
+    QWMatrix wm = p->Painter->worldMatrix();
+    p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
+    p->map(cx-x1, cy-(y2>>1), &x, &y);
     if(yLabel.isEmpty()) {
       // draw y-label for all graphs
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-        p->setPen(pg->Color);
+        p->Painter->setPen(pg->Color);
 	if(pg->Points) {
-	  // get width of text
-	  r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var);
-	  y = int( double(r.width()) / wm.m11() );
-	  y = int( double(cy-((y2-y)>>1)) * wm.m11() );
-	  x = int( double(cx) * wm.m11() );
-	  p->drawText( -y, x-delta, pg->Var);
+	  s = p->Painter->fontMetrics().size(0, pg->Var);
+	  p->Painter->drawText(-y-(s.width()>>1), x, pg->Var);
 	}
-	else {  // if no data => <invalid>
-	  // get width of text
-	  r = p->boundingRect(0,0,0,0, Qt::AlignAuto, pg->Var+" <invalid>");
-	  y = int( double(r.width()) / wm.m11() );
-	  y = int( double(cy-((y2-y)>>1)) * wm.m11() );
-	  x = int( double(cx) * wm.m11() );
-	  p->drawText( -y, x-delta, pg->Var+" <invalid>");
+	else {     // if no data => <invalid>
+	  s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
+	  p->Painter->drawText(-y-(s.width()>>1), x, pg->Var+INVALID_STR);
 	}
-	delta += r.height();
+	x -= p->LineSpacing;
       }
     }
     else {
-        // get width of text
-        r = p->boundingRect(0,0,0,0, Qt::AlignAuto, yLabel);
-        p->setPen(Qt::black);
-        p->drawText(-cy+((y2-r.width())>>1), cx-delta, yLabel);
+	p->Painter->setPen(Qt::black);
+	s = p->Painter->fontMetrics().size(0, yLabel);
+	p->Painter->drawText(-y-(s.width()>>1), x, yLabel);
     }
-    p->setWorldMatrix(wm);
+    p->Painter->setWorldMatrix(wm);
+    p->Painter->setWorldXForm(false);
   }
 
-  p->setPen(QPen(QPen::black,1));
-  p->setWorldXForm(false);
+  p->Painter->setPen(QPen(QPen::black,1));
   // write whole text
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
-    wm.map( cx+pt->x, cy-pt->y, &x, &y);
-    p->drawText( x, y, pt->s);
-  }
-  p->setWorldXForm(true);
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
+    p->drawText(pt->s, cx+pt->x, cy-pt->y);
+
+  // draw markers last, so they are at the top of painting layers
+  for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
+      pm->paint(p, cx, cy);
+
 
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,3));
+    p->Painter->setPen(QPen(QPen::darkGray,3));
     p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
-    p->setPen(QPen(QPen::darkRed,2));
-    p->drawRect(cx-5, cy-y2-5, 10, 10);  // markers for changing the size
-    p->drawRect(cx-5, cy-5, 10, 10);
-    p->drawRect(cx+x2-5, cy-y2-5, 10, 10);
-    p->drawRect(cx+x2-5, cy-5, 10, 10);
+    p->Painter->setPen(QPen(QPen::darkRed,2));
+    p->drawResizeRect(cx, cy-y2);  // markers for changing the size
+    p->drawResizeRect(cx, cy);
+    p->drawResizeRect(cx+x2, cy-y2);
+    p->drawResizeRect(cx+x2, cy);
   }
 }
 

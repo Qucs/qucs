@@ -18,6 +18,7 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include "viewpainter.h"
 #include "element.h"
 #include "wirelabel.h"
 
@@ -30,12 +31,12 @@
 
 class Node : public Element {
 public:
-  Node(int _x, int _y);
+  Node(int, int);
   ~Node();
 
-  void  paint(QPainter *p);
-  bool  getSelected(int x_, int y_);
-  void  setName(const QString& Name_, int x_=0, int y_=0);
+  void  paint(ViewPainter*);
+  bool  getSelected(int, int);
+  void  setName(const QString&, int x_=0, int y_=0);
 
   QPtrList<Element> Connections;
 

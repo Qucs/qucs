@@ -34,22 +34,22 @@ EllipseArc::~EllipseArc()
 }
 
 // --------------------------------------------------------------------------
-void EllipseArc::paint(QPainter *p)
+void EllipseArc::paint(ViewPainter *p)
 {
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,Pen.width()+5));
+    p->Painter->setPen(QPen(QPen::darkGray,Pen.width()+5));
     p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
-    p->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
+    p->Painter->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
     p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 
-    p->setPen(QPen(QPen::darkRed,2));
-    p->drawRect(cx, cy+y2-10, 10, 10);  // markers for changing the size
-    p->drawRect(cx, cy, 10, 10);
-    p->drawRect(cx+x2-10, cy+y2-10, 10, 10);
-    p->drawRect(cx+x2-10, cy, 10, 10);
+    p->Painter->setPen(QPen(QPen::darkRed,2));
+    p->drawResizeRect(cx, cy+y2);  // markers for changing the size
+    p->drawResizeRect(cx, cy);
+    p->drawResizeRect(cx+x2, cy+y2);
+    p->drawResizeRect(cx+x2, cy);
     return;
   }
-  p->setPen(Pen);
+  p->Painter->setPen(Pen);
   p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 }
 

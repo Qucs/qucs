@@ -28,7 +28,7 @@
   */
 
 class Ellipse : public Painting  {
-public: 
+public:
   Ellipse(bool _filled=false);
   ~Ellipse();
 
@@ -39,7 +39,7 @@ public:
   Ellipse* newOne();
   bool load(const QString&);
   QString save();
-  void paint(QPainter*);
+  void paint(ViewPainter*);
   void MouseMoving(int, int, int, int, QPainter*, bool);
   bool MousePressing();
   bool getSelected(int, int);

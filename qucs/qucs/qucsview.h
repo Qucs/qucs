@@ -36,6 +36,7 @@
 #include "components/component.h"
 #include "wire.h"
 #include "qucsdoc.h"
+#include "viewpainter.h"
 #include "main.h"
 
 
@@ -161,6 +162,7 @@ private:
   bool isMoveEqual;
   Element *focusElement;
   Wire *labeledWire;     // remember the wire whose label is moving
+  ViewPainter Painter;
 };
 
 #endif
