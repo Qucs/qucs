@@ -480,10 +480,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Too few independent data&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>invalid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1010,17 +1006,13 @@ Wrong &apos;component&apos; line format!</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Too few independent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
-    <message>
-        <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Warning</source>
         <translation type="unfinished"></translation>
@@ -1674,16 +1666,24 @@ Go on ?</source>
         <source>Choose Project Directory for Deleting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nou</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nou</translation>
     </message>
     <message>
         <source>Creates a new document</source>

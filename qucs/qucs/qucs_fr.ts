@@ -975,10 +975,6 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Too few independent data&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>invalid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1008,6 +1004,10 @@ Wrong line start!</source>
     </message>
     <message>
         <source>rms substrate roughness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too few independent data &quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1659,19 +1659,19 @@ Go on ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Data Display (*.dpl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
