@@ -26,6 +26,7 @@
 #include <qtabwidget.h>
 #include <qlayout.h>
 #include <qvalidator.h>
+#include <qregexp.h>
 
 
 SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
@@ -64,7 +65,8 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   Check_GridOn = new QCheckBox(tr("show Grid"),Tab2);
   gp2->addMultiCellWidget(Check_GridOn,0,0,0,1);
 
-  QValidator *Validator = new QIntValidator(0,1000, this);
+  QValidator *Validator
+	= new QRegExpValidator(QRegExp("[1-9]\\d{0,2}"), this);
 
   QLabel *l3 = new QLabel(tr("horizontal Grid:"), Tab2);
   gp2->addWidget(l3,1,0);

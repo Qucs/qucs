@@ -1113,10 +1113,6 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>specific resistance of metal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1850,6 +1846,18 @@ Wrong line start!</source>
     </message>
     <message>
         <source>excess phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip dispersion model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open end model (Kirschning,Hammerstad)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
