@@ -19,6 +19,8 @@
 
 #include "id_dialog.h"
 
+#include <qlineedit.h>
+
 
 ID_Text::ID_Text(int cx_, int cy_)
 {
@@ -154,10 +156,11 @@ bool ID_Text::Dialog()
     return false;
   }
 
-  if(Prefix  != d->Prefix->text()) {
-    Prefix = d->Prefix->text();
-    changed = true;
-  }
+  if(!d->Prefix->text().isEmpty())
+    if(Prefix  != d->Prefix->text()) {
+      Prefix = d->Prefix->text();
+      changed = true;
+    }
 
   delete d;
   return changed;

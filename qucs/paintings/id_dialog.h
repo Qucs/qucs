@@ -19,8 +19,13 @@
 #define ID_DIALOG_H
 
 #include <qdialog.h>
-#include <qlineedit.h>
+#include <qregexp.h>
 
+
+class QLineEdit;
+class QVBoxLayout;
+class QRegExp;
+class QRegExpValidator;
 
 /**
   *@author Michael Margraf
@@ -33,7 +38,11 @@ public:
   ~ID_Dialog();
 
 public:
-  QLineEdit *Prefix;
+  QLineEdit   *Prefix;
+  QVBoxLayout *v;
+
+  QRegExp *rx;
+  QRegExpValidator *Validator;
 };
 
 #endif

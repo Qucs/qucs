@@ -35,9 +35,7 @@ public:
   void calcLimits();
   bool calcYAxis(Axis*, int);
   void calcData(Graph *g);
-  void calcCoordinate(double* &, double* &, int*, int*, Axis*);
-
-  double rotX, rotY, rotZ;  // rotation around x, y and z axis
+  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 
 private:
   void calcCoefficients();

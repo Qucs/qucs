@@ -421,7 +421,11 @@ void Diagram::calcData(Graph *g, int valid)
 
   int dx, dy, xtmp, ytmp, tmp, i, z, Counter=2;
   double *px;
-  double *py = g->cPointsY;
+  double *py = 0;
+  double *pz = g->cPointsY;
+
+  if(g->countY > 1)  if(Name == "Rect3D")  py = g->cPointsX.at(1)->Points;
+
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
@@ -434,7 +438,7 @@ void Diagram::calcData(Graph *g, int valid)
     case 0:      // ***** solid line **********************************
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->cPointsX.getFirst()->Points;
-	calcCoordinate(px, py, p, p+1, pa);
+	calcCoordinate(px, pz, py, p, p+1, pa);
 	p += 2;
 	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
 	  if(p >= p_end) {  // need to enlarge memory block ?
@@ -445,7 +449,7 @@ void Diagram::calcData(Graph *g, int valid)
 	    p += tmp;
 	    p_end += Size - 9;
 	  }
-	  calcCoordinate(px, py, p, p+1, pa);
+	  calcCoordinate(px, pz, py, p, p+1, pa);
 	  p += 2;
 	  if(Counter >= 2)   // clipping only if an axis is manual
 	    clip(p);
@@ -453,6 +457,10 @@ void Diagram::calcData(Graph *g, int valid)
 	if(*(p-3) == -2) if(*(p-1) > -2)
 	  p -= 2;  // no single point after "no stroke"
 	*(p++) = -10;
+
+//	if(py)  if(py - g->cPointsX.at(1)->Points) {
+	py++;   // because of Rect3D
+//	}
       }
       *p = -100;
       return;
@@ -464,7 +472,7 @@ void Diagram::calcData(Graph *g, int valid)
     default:
       if(g->Style == 4)  xtmp = -7;      // **** a star at each point ******
       else if(g->Style == 5)  xtmp = -6; // **** a circle at each point ****
-      else if(g->Style == 6)  xtmp = -5; // **** a arrow at each point *****
+      else if(g->Style == 6)  xtmp = -5; // **** an arrow at each point ****
 
       for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->cPointsX.getFirst()->Points;
@@ -477,7 +485,7 @@ void Diagram::calcData(Graph *g, int valid)
 	    p += tmp;
 	    p_end += Size - 9;
 	  }
-	  calcCoordinate(px, py, p, p+1, pa);
+	  calcCoordinate(px, pz, py, p, p+1, pa);
 	  if(insideDiagram(*p, *(p+1))) {    // within diagram ?
 	    *(p+2) = xtmp;
 	    p += 3;
@@ -498,14 +506,14 @@ for(int zz=0; zz<60; zz+=2)
     Flag = 1;
     dist = -Stroke;
     px = g->cPointsX.getFirst()->Points;
-    calcCoordinate(px, py, &xtmp, &ytmp, pa);
+    calcCoordinate(px, pz, py, &xtmp, &ytmp, pa);
     *(p++) = xtmp;
     *(p++) = ytmp;
     Counter = 1;
     for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
-      calcCoordinate(px, py, &xtmp, &ytmp, pa);
+      calcCoordinate(px, pz, py, &xtmp, &ytmp, pa);
       dx = xtmp - dx;
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
@@ -641,6 +649,10 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);  // load data, determine max/min values
 
+  if(xAxis.min > xAxis.max) {
+    xAxis.min = 0.0;
+    xAxis.max = 1.0;
+  }
   if(yAxis.min > yAxis.max) {
     yAxis.min = 0.0;
     yAxis.max = 1.0;
@@ -649,15 +661,14 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
     zAxis.min = 0.0;
     zAxis.max = 1.0;
   }
-  if(xAxis.min > xAxis.max) {
-    xAxis.min = 0.0;
-    xAxis.max = 1.0;
-  }
 /*  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
     if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
     if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
   }*/
 
+/*qDebug("x:  %g, %g", xAxis.min, xAxis.max);
+qDebug("y:  %g, %g", yAxis.min, yAxis.max);
+qDebug("z:  %g, %g", zAxis.min, zAxis.max);*/
   updateGraphData();
 }
 
@@ -739,7 +750,7 @@ bool Diagram::loadVarData(const QString& fileName)
   QFile file;
   QString Variable;
   int pos = g->Var.find(':');
-  if(pos < 0) {
+  if(pos <= 0) {
     file.setName(fileName);
     Variable = g->Var;
   }
@@ -794,6 +805,7 @@ bool Diagram::loadVarData(const QString& fileName)
 
   if(i <= 0)  return false;   // return if data name was not found
 
+  Axis *pa;
   // *****************************************************************
   // get independent variable ****************************************
   bool ok=true, ok2=true;
@@ -820,12 +832,18 @@ bool Diagram::loadVarData(const QString& fileName)
   else {  // ...................................
     // get independent variables from data file
     g->countY = 1;
+    DataX *bLast = 0;
+    if(Name == "Rect3D")  bLast = g->cPointsX.at(1);  // y axis for Rect3D
+
+    double min_tmp = xAxis.min, max_tmp = xAxis.max;
     for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
+      pa = &xAxis;
       if(pD == g->cPointsX.getFirst()) {
-	xAxis.min = DBL_MAX;    // only count the first independent variable
-	xAxis.max = -DBL_MAX;
+	xAxis.min = min_tmp;    // only count first independent variable
+	xAxis.max = max_tmp;
       }
-      counting = loadIndepVarData(pD->Var, FileString);
+      else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
+      counting = loadIndepVarData(pD->Var, FileString, pa);
       g->countY *= counting;
       if(counting <= 0) {     // failed to load independent variable ?
         g->cPointsX.clear();
@@ -841,7 +859,6 @@ bool Diagram::loadVarData(const QString& fileName)
   counting  *= g->countY;
   p = new double[2*counting]; // memory for dependent variables
   g->cPointsY = p;
-  Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
@@ -891,7 +908,8 @@ bool Diagram::loadVarData(const QString& fileName)
 
 // --------------------------------------------------------------------------
 // Reads the data of an independent variable. Returns the number of points.
-int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
+int Diagram::loadIndepVarData(const QString& var,
+			      const QString& FileString, Axis *pa)
 {
   QString Line, tmp;
 
@@ -943,8 +961,8 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
     }
     *(p++) = x;
     if(finite(x)) {
-      if(x > xAxis.max) xAxis.max = x;
-      if(x < xAxis.min) xAxis.min = x;
+      if(x > pa->max) pa->max = x;
+      if(x < pa->min) pa->min = x;
     }
 
     i = FileString.find(noWhiteSpace, j);
@@ -1008,8 +1026,12 @@ QString Diagram::save()
   else  s+= " 0 ";
   s += QString::number(zAxis.limit_min) + " ";
   s += QString::number(zAxis.step) + " ";
-  s += QString::number(zAxis.limit_max);
+  s += QString::number(zAxis.limit_max) + " ";
 
+  s += QString::number(rotX)+" "+QString::number(rotY)+" "+
+       QString::number(rotZ);
+
+  // labels can contain spaces -> must be last items in the line
   s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\">\n";
 
   for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
@@ -1067,52 +1089,64 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   zAxis.log = ((c - '0') & 2) == 2;
 
   n = s.section(' ',9,9);   // xAxis.autoScale
+  if(n == "1")  xAxis.autoScale = true;
+  else  xAxis.autoScale = false;
+
+  n = s.section(' ',10,10);    // xAxis.limit_min
+  xAxis.limit_min = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',11,11);  // xAxis.step
+  xAxis.step = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',12,12);  // xAxis.limit_max
+  xAxis.limit_max = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',13,13);    // yAxis.autoScale
+  if(n == "1")  yAxis.autoScale = true;
+  else  yAxis.autoScale = false;
+
+  n = s.section(' ',14,14);    // yAxis.limit_min
+  yAxis.limit_min = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',15,15);    // yAxis.step
+  yAxis.step = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',16,16);    // yAxis.limit_max
+  yAxis.limit_max = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',17,17);    // zAxis.autoScale
+  if(n == "1")  zAxis.autoScale = true;
+  else  zAxis.autoScale = false;
+
+  n = s.section(' ',18,18);    // zAxis.limit_min
+  zAxis.limit_min = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',19,19);    // zAxis.step
+  zAxis.step = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',20,20);    // zAxis.limit_max
+  zAxis.limit_max = n.toDouble(&ok);
+  if(!ok) return false;
+
+  n = s.section(' ',21,21); // rotX
   if(n.at(0) != '"') {      // backward compatible
-    if(n == "1")  xAxis.autoScale = true;
-    else  xAxis.autoScale = false;
-
-    n = s.section(' ',10,10);    // xAxis.limit_min
-    xAxis.limit_min = n.toDouble(&ok);
+    rotX = n.toInt(&ok);
     if(!ok) return false;
 
-    n = s.section(' ',11,11);  // xAxis.step
-    xAxis.step = n.toDouble(&ok);
+    n = s.section(' ',22,22); // rotY
+    rotY = n.toInt(&ok);
     if(!ok) return false;
 
-    n = s.section(' ',12,12);  // xAxis.limit_max
-    xAxis.limit_max = n.toDouble(&ok);
-    if(!ok) return false;
-
-    n = s.section(' ',13,13);    // yAxis.autoScale
-    if(n == "1")  yAxis.autoScale = true;
-    else  yAxis.autoScale = false;
-
-    n = s.section(' ',14,14);    // yAxis.limit_min
-    yAxis.limit_min = n.toDouble(&ok);
-    if(!ok) return false;
-
-    n = s.section(' ',15,15);    // yAxis.step
-    yAxis.step = n.toDouble(&ok);
-    if(!ok) return false;
-
-    n = s.section(' ',16,16);    // yAxis.limit_max
-    yAxis.limit_max = n.toDouble(&ok);
-    if(!ok) return false;
-
-    n = s.section(' ',17,17);    // zAxis.autoScale
-    if(n == "1")  zAxis.autoScale = true;
-    else  zAxis.autoScale = false;
-
-    n = s.section(' ',18,18);    // zAxis.limit_min
-    zAxis.limit_min = n.toDouble(&ok);
-    if(!ok) return false;
-
-    n = s.section(' ',19,19);    // zAxis.step
-    zAxis.step = n.toDouble(&ok);
-    if(!ok) return false;
-
-    n = s.section(' ',20,20);    // zAxis.limit_max
-    zAxis.limit_max = n.toDouble(&ok);
+    n = s.section(' ',23,23); // rotZ
+    rotZ = n.toInt(&ok);
     if(!ok) return false;
   }
 
