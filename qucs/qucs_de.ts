@@ -636,7 +636,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyrator (Impendanzinverter)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
@@ -680,7 +680,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>substrate</source>
@@ -724,7 +724,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenabsatz</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
@@ -736,27 +736,27 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>T-Verzweigung einer Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameterdurchlauf</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchlaufvariable</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Startwert des Durchlaufs</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopwert des Durchlaufs</translation>
     </message>
     <message>
         <source>step size for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Schritteweite für den Durchlauf</translation>
     </message>
     <message>
         <source>resistor (US symbol)</source>
@@ -936,15 +936,15 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungstransformationverhältnis der Spule 1</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungstransformationverhältnis der Spule 2</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannungstransformationverhältnis</translation>
     </message>
     <message>
         <source>saturation current</source>
@@ -2201,11 +2201,11 @@ Fehler:
     </message>
     <message>
         <source>dc Block</source>
-        <translation type="unfinished"></translation>
+        <translation>DC Sperre</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>DC Zuführung</translation>
     </message>
     <message>
         <source>Bias T</source>
@@ -2217,15 +2217,15 @@ Fehler:
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Isolator</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkulator</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyrator</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
@@ -2281,15 +2281,15 @@ Fehler:
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenabsatz</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifen T-Verzweigung</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
@@ -2349,7 +2349,7 @@ Fehler:
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameterdurchlauf</translation>
     </message>
     <message>
         <source>Line</source>
