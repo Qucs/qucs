@@ -1,3 +1,9 @@
+2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug after placing diagram dialog
+	* fixed bug in scaling smith chart graphes
+	* diagrams can show graph with multiple dimensions
+
 2004-05-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (TRANSLATIONS): Added romanian translation file.
@@ -11,9 +17,10 @@
 	* strongly improved save as function
 	* outsourced the initialization of QucsApp into QucsInit
 	* polar diagrams correctly fit negative values
-	* rectangle diagrams can show data containing of one point
+	* rectangle diagrams can show data containing only one point
 	* fixed bug in component dialog (add property)
 	* improved marker handling
+	* "graphictext" can be rotated
 
 2004-04-26  Stefan Jahn  <stefan@lkcc.org>
 
