@@ -52,22 +52,23 @@ its main diagonal and their correlation on the other positions.
 
 \addvspace{12pt}
 
-The basic concept of the AC noise analysis is as follows: We want the
-noise voltage at node $i$, so we calculate what voltage arises due to
-the noise source at node $j$.  We do that for every $n$ nodes and
-after that we add all the noise voltages (by paying attention to their
-correlation).  But that would mean to solve the MNA equation $n$
+The basic concept of the AC noise analysis is as follows: The
+noise voltage at node $i$ should be calculated, so the voltage arising
+due to the noise source at node $j$ is calculated first. This has to
+be done for every $n$ nodes and after that adding all the noise
+voltages (by paying attention to their correlation) leads to the
+overall voltage. But that would mean to solve the MNA equation $n$
 times.  Fortunately there is a more easy way.  One can perform the
 above-mentioned $n$ steps in one single step, if the reciprocal MNA
-matrix is used.  This matrix equals the MNA matrix itself, if the
+matrix is used. This matrix equals the MNA matrix itself, if the
 network is reciprocal.  A network that only contains resistors,
 capacitors, inductors, gyrators and transformers is reciprocal.
 
 \addvspace{12pt}
 
-The question that needs to be answered now is: How do we get the
+The question that needs to be answered now is: How to get the
 reciprocal MNA matrix for an arbitrary network? This is equivalent to
-the question: How do we get the MNA matrix of the adjoint network.
+the question: How to get the MNA matrix of the adjoint network.
 The answer is quite simple: Just transpose the MNA matrix!
 
 \addvspace{12pt}
@@ -106,14 +107,14 @@ Y^T = U^T \cdot L^T
 \end{equation}
 
 I.e. $U^T$ becomes the new $L$ matrix and $L^T$ becomes the new $U$
-matrix, and we do not need to solve the matrix equation again, because
+matrix, and the matrix equation do not need to be solved again, because
 only the right-hand side was changed.  So altogether this is a quickly
 done task.  (Note that in step 3, only the subvector $[v]$ of vector
 $[x]$ is used.  See section \ref{sec:xmatrix} for details on this.)
 
 \addvspace{12pt}
 
-If we want to know the noise voltage at another node, only the
+If the noise voltage at another node needs to be known, only the
 right-hand side of step 1 changes.  That is, a new LU decomposition is
 not needed.
 
@@ -179,7 +180,7 @@ backward substitution.
 \subsection{A Simple Example}
 %\addcontentsline{toc}{subsection}{A Simple Example}
 
-We have the network that is depicted in figure \ref{fig:mna_noise1}.
+The network that is depicted in figure \ref{fig:mna_noise1} is given.
 The MNA equation is (see chapter \ref{sec:MNA}):
 \begin{equation}
 [A]\cdot [x] =
@@ -209,9 +210,10 @@ V_2
 \FloatBarrier
 
 Because of the controlled current source, the circuit is not
-reciprocal.  We want to know the noise voltage at node 2.  Yes, this
-is very easy to calculate, because it is a simple example, but we want
-to use the algorithm described above.  We could solve the equations
+reciprocal.  The noise voltage at node 2 the one to search for.  Yes, this
+is very easy to calculate, because it is a simple example, but
+the algorithm described above should be used.  This can be achived
+by solving the equations
 \begin{equation}
 \begin{bmatrix}
 1/R_1 & 0\\
@@ -245,19 +247,19 @@ Z_{22}
 -1
 \end{bmatrix}
 \end{equation}
-So, we must solve the MNA matrix two times: First to get the
+So, the MNA matrix must be solved two times: First to get the
 transimpedance from node 1 to node 2 (i.e. $Z_{21}$) and second to get
 the transimpedance from node 2 to node 2 (i.e.  $Z_{22}$).  But why
-solving it two times, if we only want to know one voltage? With every
-step we get transimpedances that we do not need.  Is there no more
+solving it two times, if only one voltage should be calculated? With every
+step transimpedances are calculated that are not need.  Is there no more
 effective way?
 
 \addvspace{12pt}
 
-Fortunately, we remember Tellegen's Theorem: A network and its adjoint
-network are reciprocal to each other.  That is, we have to transpose
-the MNA matrix and the new matrix is the one of the reciprocal
-network.  Let's check it out:
+Fortunately, there is Tellegen's Theorem: A network and its adjoint
+network are reciprocal to each other.  That is, transposing
+the MNA matrix leads to the one of the reciprocal
+network.  To check it out:
 
 \begin{equation}
 [A]^T\cdot [x] =
@@ -287,7 +289,7 @@ V_2
 \FloatBarrier
 
 Compare the transposed matrix with the reciprocal network in figure
-\ref{fig:mna_noise2}.  It is true!  But now we have:
+\ref{fig:mna_noise2}.  It is true!  But now it is:
 \begin{equation}
 \begin{bmatrix}
 1/R_1 & G\\ 0 & 1/R_2
@@ -314,9 +316,9 @@ Z_{22}
 \end{bmatrix}
 \end{equation}
 
-Because $Z_{21}$ of our original network equals $Z_{12}$ of the
-reciprocal network, we get exactly what we need with one step.  So let
-us go on:
+Because $Z_{21}$ of the original network equals $Z_{12}$ of the
+reciprocal network, the one step delivers exactly what is needed.
+So the next step is:
 \begin{equation}
 ([A]^T)^{-1}\cdot
 \begin{bmatrix}
@@ -345,8 +347,9 @@ Z_{22}
 \end{bmatrix}
 \end{equation}
 
-Now, as we computed the transimpedances, we can compute the noise
-voltages at node 2. As there is no correlation, we get:
+Now, as the transimpedances are known, the noise voltage
+at node 2 can be computed. As there is no correlation, it writes
+as follows:
 \begin{eqnarray}
 <v_{node2}^2> & = & <v_{R1,node2}^2> + <v_{R2,node2}^2> \\
   & = & <i_{R1}^2>\cdot Z_{21}\cdot Z_{21}^* + <i_{R2}^2>\cdot Z_{22}\cdot Z_{22}^* \\
@@ -355,8 +358,8 @@ voltages at node 2. As there is no correlation, we get:
   & = & 4\cdot k\cdot T\cdot \Delta f\cdot \left( R_1\cdot (G\cdot R_2)^2 + R_2 \right)
 \end{eqnarray}
 
-That's it. Yes, you knew it before, but now you also understand
-the universal algorithm.
+That's it. Yes, this could have be computed more easily, but now
+the universal algorithm is also clear.
 
 \section{Noise Current Correlation Matrix}
 %\addcontentsline{toc}{section}{Noise Current Correlation Matrix}

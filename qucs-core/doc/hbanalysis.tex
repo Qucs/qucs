@@ -88,7 +88,7 @@ respectively.
 
 \addvspace{12pt}
 
-We have found a simulation result if the currents through the
+A simulation result is found if the currents through the
 interconnections are the same for the linear and the non-linear
 subcircuit. So, the non-linear equation system that needs to be
 solved writes:
@@ -108,8 +108,8 @@ be applied to the voltage vector $(\underline{V})$. Then the time domain
 voltages $v_1...v_N$ are put into $i(t) = f_g(v_1, ..., v_N)$
 and $q(t) = f_q(v_1, ..., v_N)$ again. Now, a Fourier transformation
 gives the vectors $(\underline{Q})$ and $(\underline{I}_G)$ for the
-next iteration step. After repeating this several times we hopefully
-have a simulation result.
+next iteration step. After repeating this several times, a simulation
+result has hopefully be found.
 
 \section{Going through each Step}
 
@@ -127,7 +127,7 @@ matrix.
 
 \addvspace{12pt}
 
-Now let us have a more detailed look on it: By use of the MNA matrix
+Now this should be decribed in more detail: By use of the MNA matrix
 $[A]$, the $n$-th column of the transimpedance matrix $[Z]$ should be
 calculated. The voltage source at port $n$ is connected to node $i$
 (positive terminal) and to port $j$ (negative terminal). This results
@@ -160,8 +160,13 @@ V_K\\
  \\
 \end{matrix}
 \end{equation}
+<<<<<<< hbanalysis.tex
+After having solved it, $Z_{1,n}$...$Z_{N+M,n}$ are obtained
+simply by substration of the node voltages:
+=======
 After having solved it, we got $Z_{1,n}$...$Z_{N+M,n}$
 simply by subtraction of the node voltages:
+>>>>>>> 1.3
 \begin{equation}
 Z_{m,n} = V_k - V_l
 \end{equation}
