@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.6 2004/03/28 11:24:44 ela Exp $
+ * $Id: equation.cpp,v 1.7 2004/04/19 18:42:21 ela Exp $
  *
  */
 
@@ -254,7 +254,8 @@ char * application::toString (void) {
   if (txt) free (txt);
   // binary operations
   if ((!strcmp (n, "+") || !strcmp (n, "-") || !strcmp (n, "*") ||
-       !strcmp (n, "/") || !strcmp (n, "^")) && nargs == 2) {
+       !strcmp (n, "/") || !strcmp (n, "^") || !strcmp (n, "%"))
+      && nargs == 2) {
     char * arg1 = args->toString ();
     char * arg2 = args->getNext()->toString ();
     txt = (char *) malloc (strlen (n) + strlen (arg1) + strlen (arg2) + 3);
@@ -327,7 +328,12 @@ constant * application::evaluate (void) {
     }
   }
   // then evaluate the application
-  setResult (eval (C(args)));
+  setResult (eval (C (args)));
+  // check the returned type once again
+  if (getResult()->getType () != getType ()) {
+    logprint (LOG_ERROR, "evaluate error, function `%s' returned invalid "
+	      "constant type\n", toString ());
+  }
   return getResult ();
 }
 
@@ -498,7 +504,7 @@ void checker::list (void) {
 
 /* This function checks whether the variable references could be
    resolved within the equations and returns zero if so. */
-int checker::findUndefined (void) {
+int checker::findUndefined (int noundefined) {
   int err = 0;
   strlist * idents = getVariables ();
 
@@ -507,9 +513,15 @@ int checker::findUndefined (void) {
     for (int i = 0; i < depends->length (); i++) {
       char * var = depends->get (i);
       if (idents->contains (var) <= 0) {
-	logprint (LOG_ERROR, "checker error, undefined variable `%s' in "
-		  "equation `%s'\n", var, eqn->result);
-	err++;
+	if (noundefined) {
+	  logprint (LOG_ERROR, "checker error, undefined variable `%s' in "
+		    "equation `%s'\n", var, eqn->result);
+	  err++;
+	}
+	else {
+	  logprint (LOG_STATUS, "checker notice, variable `%s' in "
+		    "equation `%s' no yet defined\n", var, eqn->result);
+	}
       }
     }
   }
@@ -690,10 +702,7 @@ int equation_checker (int noundefined) {
   eqn::checker * check = new eqn::checker ();
   check->setEquations (eqn::equations);
   check->collectDependencies ();
-  if (noundefined)
-    err += check->findUndefined ();
-  else
-    check->findUndefined ();
+  err += check->findUndefined (noundefined);
   err += check->findDuplicate ();
   err += check->detectCycles ();
   check->reorderEquations ();

@@ -1,7 +1,7 @@
 /*
  * complex.h - complex number class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.2 2004/04/18 18:37:16 margraf Exp $
+ * $Id: complex.h,v 1.3 2004/04/19 18:42:21 ela Exp $
  *
  */
 
@@ -48,19 +48,17 @@ class complex
   friend nr_double_t  norm (const complex);  // the square of the magnitude
   friend nr_double_t  arg  (const complex);  // the angle in the plane
 
-  friend nr_double_t dB (const complex);
-  friend complex sqrt   (const complex);
-  friend complex exp    (const complex);
-  friend complex ln     (const complex);
-  friend complex log10  (const complex);
-  friend complex floor  (const complex);
-  friend complex modulo (const complex, const complex);
-  friend complex pow (const complex, nr_double_t);
-  friend complex pow (nr_double_t, const complex);
-  friend complex pow (const complex, const complex);
-
   // overloaded math functions
-  friend nr_double_t  abs  (const complex);
+  friend nr_double_t  dB (const complex);
+  friend complex    sqrt (const complex);
+  friend complex     exp (const complex);
+  friend complex      ln (const complex);
+  friend complex   log10 (const complex);
+  friend complex   floor (const complex);
+  friend complex     pow (const complex, nr_double_t);
+  friend complex     pow (nr_double_t, const complex);
+  friend complex     pow (const complex, const complex);
+  friend nr_double_t abs (const complex);
 
   // operator functions
   friend complex operator + (const complex, const complex);
@@ -78,6 +76,8 @@ class complex
   friend complex operator / (const complex, const complex);
   friend complex operator / (const complex, const nr_double_t);
   friend complex operator / (const nr_double_t,  const complex);
+
+  friend complex operator % (const complex, const complex);
 
   // comparisons
   friend int     operator == (const complex, const complex);
