@@ -24,6 +24,8 @@
 
 # the component library rules
 
+SUBDIRS = microstrip
+
 noinst_LIBRARIES = libcomponent.a
 
 libcomponent_a_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
@@ -37,6 +39,8 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	trafo.h inductor.h tee.h ccvs.h isolator.h component.h itrafo.h      \
 	strafo.h vdc.h idc.h vac.h component_id.h phaseshifter.h gyrator.h   \
 	tline.h
+
+libcomponent_a_LIBADD = microstrip/libmicrostrip.a
 
 INCLUDES = -I$(top_srcdir)/src
 

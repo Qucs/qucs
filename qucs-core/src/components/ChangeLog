@@ -1,3 +1,11 @@
+2004-01-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.h (class msline): New class being a 
+	template for the microstrip library components.
+
+	* microstrip/substrate.h (class substrate): New class 
+	representing a microstrip substrate.
+
 2004-01-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* tline.cpp, gyrator.cpp, phaseshifter.cpp: New components.

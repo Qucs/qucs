@@ -104,7 +104,8 @@ AH_TOP([
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  src/Makefile
-                 src/components/Makefile])
+                 src/components/Makefile
+                 src/components/microstrip/Makefile])
 AC_OUTPUT
 
 # Print results.

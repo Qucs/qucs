@@ -1,7 +1,7 @@
 /*
  * circuit.cpp - circuit class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.3 2003/12/26 14:04:07 ela Exp $
+ * $Id: circuit.cpp,v 1.4 2004/01/24 17:34:17 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "node.h"
 #include "property.h"
 #include "circuit.h"
+#include "substrate.h"
 #include "component_id.h"
 
 // Constructor creates an unnamed instance of the circuit class.
@@ -45,6 +46,7 @@ circuit::circuit () : object () {
   nodes = NULL;
   port = 0;
   org = 1;
+  subst = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -56,6 +58,7 @@ circuit::circuit (int s) : object () {
   nodes = new node[s];
   port = 0;
   org = 1;
+  subst = NULL;
   type = CIR_UNKNOWN;
 }
 
@@ -66,6 +69,7 @@ circuit::circuit (const circuit & c) : object (c) {
   port = c.port;
   org = c.org;
   type = c.type;
+  subst = c.subst;
   nodes = new node[size];
   data = new complex[size * size];
 
@@ -147,3 +151,14 @@ void circuit::print (void) {
   }
 }
 #endif /* DEBUG */
+
+/* Returns the current substrate of the circuit object.  Used for
+   microstrip components only. */
+substrate * circuit::getSubstrate (void) { 
+  return subst;
+}
+
+// Sets the substrate of the circuit object.
+void circuit::setSubstrate (substrate * s) {
+  subst = s;
+}
