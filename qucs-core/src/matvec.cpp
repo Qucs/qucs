@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.10 2004/10/20 22:58:55 ela Exp $
+ * $Id: matvec.cpp,v 1.11 2004/10/23 18:47:09 ela Exp $
  *
  */
 
@@ -73,7 +73,7 @@ matvec::matvec (const matvec & m) {
   size = m.size;
   rows = m.rows;
   cols = m.cols;
-  name = m.name ? strdup (name) : NULL;
+  name = m.name ? strdup (m.name) : NULL;
   data = NULL;
 
   // copy matvec elements

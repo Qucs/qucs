@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.18 2004/10/21 17:10:30 ela Exp $
+ * $Id: mosfet.cpp,v 1.19 2004/10/23 18:47:10 ela Exp $
  *
  */
 
@@ -263,7 +263,7 @@ void mosfet::initModel (void) {
 
   // calculate threshold voltage
   nr_double_t Vt0 = getPropertyDouble ("Vt0");
-  if ((Vto = Vt0) < 0) {
+  if ((Vto = Vt0) == 0.0) {
     nr_double_t Tpg = getPropertyDouble ("Tpg");
     nr_double_t Nss = getPropertyDouble ("Nss");
     nr_double_t PhiMS, PhiG, Eg;
