@@ -2054,6 +2054,10 @@ Ungültiger Zeilenanfang!</translation>
         <source>bipolar junction transistor with substrate</source>
         <translation>Bipolartransistor mit Substratanschluß</translation>
     </message>
+    <message>
+        <source>excess phase in degrees</source>
+        <translation>Zusatzphase in Grad</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

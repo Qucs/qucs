@@ -1971,6 +1971,10 @@ Wrong &apos;component&apos; line format!</source>
         <source>bipolar junction transistor with substrate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>excess phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
