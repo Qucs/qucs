@@ -43,12 +43,15 @@
 #include <qtabwidget.h>
 #include <qdir.h>
 
+class QProcess;
+
 
 // application specific includes
 #include "qucsinit.h"
 #include "qucsactions.h"
-#include "qucsview.h"
-#include "dialogs/simmessage.h"
+
+class QucsView;
+class SimMessage;
 
 extern QDir QucsWorkDir;
 extern QDir QucsHomeDir;
@@ -70,6 +73,8 @@ public:
 
     bool closeAllFiles();
     static int testFile(const QString&);
+    void editFile(const QString&);
+    void showHTML(const QString&);
 
 
 protected:
@@ -107,7 +112,6 @@ public slots:
 
     void slotShowAll();
     void slotShowOne();
-    void slotZoomIn();  // Zoom in by 2
     void slotZoomOut(); // Zoom out by 2
 
     // for menu that appears by right click in content ListView
@@ -141,6 +145,8 @@ public slots:
     void slotSelectAll();
     void slotNextTab();
 
+    void slotDeleteProcess();   // deletes exited processes
+
 public:
     QucsView  *view; // the working area with schematics, data displays etc.
     QTabBar   *WorkView;
@@ -152,7 +158,7 @@ public:
     QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
     QAction *projNew, *projOpen, *projDel, *projClose, *applSettings;
     QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
-    QAction *magPlus, *magMinus, *distrHor, *distrVert, *filePrintSel;
+    QAction *magMinus, *distrHor, *distrVert, *filePrintSel;
     QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
     QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *helpIndex, *helpGetStart, *symEdit;
@@ -180,6 +186,7 @@ private:
 
     QString       QucsFileFilter;
 
+    QPtrList<QProcess> Programs;    // list of programs started by qucs
 
 // ********** Methods ***************************************************
     bool saveCurrentFile();
@@ -194,5 +201,5 @@ private:
     void switchEditMode(bool);
     void changeSchematicSymbolMode(QucsDoc*);
 };
-#endif 
+#endif
 

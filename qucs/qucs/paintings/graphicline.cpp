@@ -161,15 +161,19 @@ void GraphicLine::MouseResizeMoving(int x, int y, QPainter *p)
 }
 
 // --------------------------------------------------------------------------
-// x/y are the precise coordinates, gx/gy are the coordinates due to the grid.
-void GraphicLine::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
+// fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
+// x/y are coordinates without scaling.
+void GraphicLine::MouseMoving(
+	QPainter *paintScale, int, int, int gx, int gy,
+	QPainter *p, int x, int y, bool drawn)
 {
   if(State > 0) {
-    if(State > 1) p->drawLine(cx, cy, cx+x2, cy+y2);  // erase old painting
+    if(State > 1)
+      paintScale->drawLine(cx, cy, cx+x2, cy+y2);  // erase old painting
     State++;
     x2 = gx-cx;
     y2 = gy-cy;
-    p->drawLine(cx, cy, cx+x2, cy+y2);  // paint new painting
+    paintScale->drawLine(cx, cy, cx+x2, cy+y2);  // paint new painting
   }
   else { cx = gx; cy = gy; }
 

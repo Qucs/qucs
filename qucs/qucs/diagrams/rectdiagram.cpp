@@ -31,7 +31,7 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 160;
   Name = "Rect";
 
-  xlog = ylog = false;
+  xAxis.log = ylAxis.log = yrAxis.log = false;
   calcDiagram();
 }
 
@@ -43,17 +43,20 @@ RectDiagram::~RectDiagram()
 void RectDiagram::calcCoordinate(double x, double yr, double yi,
 				 int *px, int *py)
 {
-  if(xlog)  *px = int(log10(x / xlow)/log10(xup / xlow)*double(x2) + 0.5);
-  else  *px = int((x-xlow)/(xup-xlow)*double(x2) + 0.5);
+  if(xAxis.log)
+    *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
+		*double(x2) + 0.5);
+  else  *px = int((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
 
-  if(ylog)
-    *py = int(log10(sqrt(yr*yr + yi*yi)/fabs(ylow)) / log10(yup/ylow)
-		    *double(y2) + 0.5);
+  if(ylAxis.log)
+    *py = int(log10(sqrt(yr*yr + yi*yi)/fabs(ylAxis.low)) /
+		log10(ylAxis.up/ylAxis.low) * double(y2) + 0.5);
   else {
     if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
-      *py = int((yr-ylow)/(yup-ylow)*double(y2) + 0.5);
+      *py = int((yr-ylAxis.low)/(ylAxis.up-ylAxis.low)*double(y2) + 0.5);
     else   // calculate magnitude of complex number
-      *py = int((sqrt(yr*yr + yi*yi)-ylow)/(yup-ylow)*double(y2) + 0.5);
+      *py = int((sqrt(yr*yr + yi*yi)-ylAxis.low)/(ylAxis.up-ylAxis.low)
+		*double(y2) + 0.5);
   }
 }
 
@@ -64,12 +67,24 @@ bool RectDiagram::calcDiagram()
   if(!Texts.isEmpty()) Texts.clear();
   if(!Arcs.isEmpty()) Arcs.clear();
 
-  if(fabs(xmax-xmin) < 1e-200) { xmax += fabs(xmax); xmin -= fabs(xmin); }
-  if(fabs(ymax-ymin) < 1e-200) { ymax += fabs(ymax); ymin -= fabs(ymin); }
-  if(ymax == 0) if(ymin == 0) { ymax = 1; ymin = -1; }
-  if(xmax == 0) if(xmin == 0) { xmax = 1; xmin = -1; }
-  xlow = xmin;  xup = xmax;
-  ylow = ymin;  yup = ymax;
+  if(fabs(xAxis.max-xAxis.min) < 1e-200) {
+    xAxis.max += fabs(xAxis.max);
+    xAxis.min -= fabs(xAxis.min);
+  }
+  if(fabs(ylAxis.max-ylAxis.min) < 1e-200) {
+    ylAxis.max += fabs(ylAxis.max);
+    ylAxis.min -= fabs(ylAxis.min);
+  }
+  if(ylAxis.max == 0) if(ylAxis.min == 0) {
+    ylAxis.max = 1;
+    ylAxis.min = -1;
+  }
+  if(xAxis.max == 0) if(xAxis.min == 0) {
+    xAxis.max = 1;
+    xAxis.min = -1;
+  }
+  xAxis.low  = xAxis.min;  xAxis.up  = xAxis.max;
+  ylAxis.low = ylAxis.min; ylAxis.up = ylAxis.max;
 
 
   int z=0;
@@ -82,33 +97,33 @@ bool RectDiagram::calcDiagram()
   bool set_log = false;
 
   // ====  x grid  =======================================================
-if(xlog) {
-  if(xmax*xmin <= 0.0) goto Frame;  // invalid
-  if(xmax < 0.0) {
-    corr = xmin;
-    xmin = -xmax;
-    xmax = -corr;
-    corr = xlow;
-    xlow = -xup;
-    xup  = -corr;
+if(xAxis.log) {
+  if(xAxis.max*xAxis.min <= 0.0) goto Frame;  // invalid
+  if(xAxis.max < 0.0) {
+    corr = xAxis.min;
+    xAxis.min = -xAxis.max;
+    xAxis.max = -corr;
+    corr = xAxis.low;
+    xAxis.low = -xAxis.up;
+    xAxis.up  = -corr;
     set_log = true;
   }
 
-  Expo = floor(log10(xmax));
-  Base = xmax/pow(10.0,Expo);
-  if(Base > 3.0001) xup = pow(10.0,Expo+1.0);
-  else  if(Base < 1.0001) xup = pow(10.0,Expo);
-	else xup = 3.0 * pow(10.0,Expo);
+  Expo = floor(log10(xAxis.max));
+  Base = xAxis.max/pow(10.0,Expo);
+  if(Base > 3.0001) xAxis.up = pow(10.0,Expo+1.0);
+  else  if(Base < 1.0001) xAxis.up = pow(10.0,Expo);
+	else xAxis.up = 3.0 * pow(10.0,Expo);
 
-  Expo = floor(log10(xmin));
-  Base = xmin/pow(10.0,Expo);
-  if(Base < 2.999) xlow = pow(10.0,Expo);
-  else  if(Base > 9.999) xlow = pow(10.0,Expo+1.0);
-	else xlow = 3.0 * pow(10.0,Expo);
+  Expo = floor(log10(xAxis.min));
+  Base = xAxis.min/pow(10.0,Expo);
+  if(Base < 2.999) xAxis.low = pow(10.0,Expo);
+  else  if(Base > 9.999) xAxis.low = pow(10.0,Expo+1.0);
+	else xAxis.low = 3.0 * pow(10.0,Expo);
 
-  corr = double(x2) / log10(xup / xlow);
+  corr = double(x2) / log10(xAxis.up / xAxis.low);
 
-  zD = xlow;
+  zD = xAxis.low;
   zDstep = pow(10.0,Expo);
   if(set_log) z = x2;
   while((z <= x2) && (z >= 0)) {    // create all grid lines
@@ -127,22 +142,22 @@ if(xlog) {
 
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    z = int(corr*log10(zD / xlow) + 0.5); // "int(...)" implies "floor(...)"
+    z = int(corr*log10(zD / xAxis.low) + 0.5); // int(..) implies floor(..)
     if(set_log)  z = x2 - z;
   }
   if(set_log) {   // set back values ?
-    corr = xmin;
-    xmin = -xmax;
-    xmax = -corr;
-    corr = xlow;
-    xlow = -xup;
-    xup  = -corr;
+    corr = xAxis.min;
+    xAxis.min = -xAxis.max;
+    xAxis.max = -corr;
+    corr = xAxis.low;
+    xAxis.low = -xAxis.up;
+    xAxis.up  = -corr;
   }
 }
 else {  // not logarithmical
   numGrids = floor(double(x2)/60.0);   // minimal grid is 60 pixel
-  if(numGrids < 1.0) Base = xmax-xmin;
-  else Base = (xmax-xmin)/numGrids;
+  if(numGrids < 1.0) Base = xAxis.max-xAxis.min;
+  else Base = (xAxis.max-xAxis.min)/numGrids;
   Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);         // separate first significant digit
   if(Base < 3.5) {      // use only 1, 2 and 5, which ever is best fitted
@@ -154,34 +169,34 @@ else {  // not logarithmical
     else { Base = 1.0; Expo++; }
   }
   GridStep = Base * pow(10.0,Expo); // grid distance (real coordinates)
-  corr = floor((xmax-xmin)/GridStep - numGrids);
+  corr = floor((xAxis.max-xAxis.min)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
 
   // upper x boundery ...........................
-  zD = fabs(fmod(xmax, GridStep)); // expand grid to upper edge of diagram ?
+  zD = fabs(fmod(xAxis.max, GridStep)); // expand grid to upper diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
-  if(xmax <= 0.0) {
-    if(GridNum < 0.3) { xup += zD;  zD = 0.0; }
+  if(xAxis.max <= 0.0) {
+    if(GridNum < 0.3) { xAxis.up += zD;  zD = 0.0; }
   }
-  else  if(GridNum > 0.7)  xup += GridStep-zD;
+  else  if(GridNum > 0.7)  xAxis.up += GridStep-zD;
         else if(GridNum < 0.1)
 	       if(GridNum*double(x2) >= 1.0)// more than 1 pixel above ?
-		 xup += 0.3*GridStep;  // beauty correction
+		 xAxis.up += 0.3*GridStep;  // beauty correction
 
 
   // lower x boundery ...........................
-  zD = fabs(fmod(xmin, GridStep)); // expand grid to lower edge of diagram ?
+  zD = fabs(fmod(xAxis.min, GridStep)); // expand grid to lower diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(xmin <= 0.0) {
-    if(GridNum > 0.7) { xlow -= GridStep-zD;  zD = 0.0; }
+  if(xAxis.min <= 0.0) {
+    if(GridNum > 0.7) { xAxis.low -= GridStep-zD;  zD = 0.0; }
     else if(GridNum < 0.1)
 	   if(GridNum*double(x2) >= 1.0) { // more than 1 pixel above ?
-	     xlow -= 0.3*GridStep;    // beauty correction
-	     zD   += 0.3*GridStep;
+	     xAxis.low -= 0.3*GridStep;    // beauty correction
+	     zD += 0.3*GridStep;
 	   }
   }
   else {
@@ -189,18 +204,18 @@ else {  // not logarithmical
       zD = GridStep-zD;
       if(GridNum > 0.9) {
 	if((1.0-GridNum)*double(x2) >= 1.0) { // more than 1 pixel above ?
-	  xlow -= 0.3*GridStep;    // beauty correction
-	  zD   += 0.3*GridStep;
+	  xAxis.low -= 0.3*GridStep;    // beauty correction
+	  zD += 0.3*GridStep;
 	}
       }
     }
-    else { xlow -= zD;  zD = 0.0; }
+    else { xAxis.low -= zD;  zD = 0.0; }
   }
 
 
-  zDstep = GridStep/(xup-xlow)*double(x2);  // grid distance in pixel
-  GridNum  = xlow + zD;
-  zD /= (xup-xlow)/double(x2);
+  zDstep = GridStep/(xAxis.up-xAxis.low)*double(x2); // grid distance in pixel
+  GridNum  = xAxis.low + zD;
+  zD /= (xAxis.up-xAxis.low)/double(x2);
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
@@ -224,34 +239,34 @@ else {  // not logarithmical
 
   // ====  y grid  =======================================================
   set_log = false;
-if(ylog) {
-  if(ymax*ymin <= 0.0) goto Frame;  // invalid
-  if(ymax < 0.0) {
-    corr = ymin;
-    ymin = -ymax;
-    ymax = -corr;
-    corr = ylow;
-    ylow = -yup;
-    yup  = -corr;
+if(ylAxis.log) {
+  if(ylAxis.max*ylAxis.min <= 0.0) goto Frame;  // invalid
+  if(ylAxis.max < 0.0) {
+    corr = ylAxis.min;
+    ylAxis.min = -ylAxis.max;
+    ylAxis.max = -corr;
+    corr = ylAxis.low;
+    ylAxis.low = -ylAxis.up;
+    ylAxis.up  = -corr;
     set_log = true;
   }
 
-  Expo = floor(log10(ymax));
-  Base = ymax/pow(10.0,Expo);
-  if(Base > 3.0001) yup = pow(10.0,Expo+1.0);
-  else  if(Base < 1.0001) yup = pow(10.0,Expo);
-	else yup = 3.0 * pow(10.0,Expo);
+  Expo = floor(log10(ylAxis.max));
+  Base = ylAxis.max/pow(10.0,Expo);
+  if(Base > 3.0001) ylAxis.up = pow(10.0,Expo+1.0);
+  else  if(Base < 1.0001) ylAxis.up = pow(10.0,Expo);
+	else ylAxis.up = 3.0 * pow(10.0,Expo);
 
-  Expo = floor(log10(ymin));
-  Base = ymin/pow(10.0,Expo);
-  if(Base < 2.999) ylow = pow(10.0,Expo);
-  else  if(Base > 9.999) ylow = pow(10.0,Expo+1.0);
-	else ylow = 3.0 * pow(10.0,Expo);
+  Expo = floor(log10(ylAxis.min));
+  Base = ylAxis.min/pow(10.0,Expo);
+  if(Base < 2.999) ylAxis.low = pow(10.0,Expo);
+  else  if(Base > 9.999) ylAxis.low = pow(10.0,Expo+1.0);
+	else ylAxis.low = 3.0 * pow(10.0,Expo);
 
-  corr = double(y2) / log10(yup / ylow);
+  corr = double(y2) / log10(ylAxis.up / ylAxis.low);
 
   z = 0;
-  zD = ylow;
+  zD = ylAxis.low;
   zDstep = pow(10.0,Expo);
   if(set_log) z = y2;
   while((z <= y2) && (z >= 0)) {    // create all grid lines
@@ -272,22 +287,22 @@ if(ylog) {
 
     zD += zDstep;
     if(zD > 9.5*zDstep)  zDstep *= 10.0;
-    z = int(corr*log10(zD / ylow) + 0.5); // "int(...)" implies "floor(...)"
+    z = int(corr*log10(zD / ylAxis.low) + 0.5); // int(..) implies floor(..)
     if(set_log)  z = y2 - z;
   }
   if(set_log) {   // set back values ?
-    corr = ymin;
-    ymin = -ymax;
-    ymax = -corr;
-    corr = ylow;
-    ylow = -yup;
-    yup  = -corr;
+    corr = ylAxis.min;
+    ylAxis.min = -ylAxis.max;
+    ylAxis.max = -corr;
+    corr = ylAxis.low;
+    ylAxis.low = -ylAxis.up;
+    ylAxis.up  = -corr;
   }
 }
 else {  // not logarithmical
   numGrids = floor(double(y2)/60.0);   // minimal grid is 60 pixel
-  if(numGrids < 1.0) Base = ymax-ymin;
-  else Base = (ymax-ymin)/numGrids;
+  if(numGrids < 1.0) Base = ylAxis.max-ylAxis.min;
+  else Base = (ylAxis.max-ylAxis.min)/numGrids;
   Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);        // separate first significant digit
   if(Base < 3.5) {     // use only 1, 2 and 5, which ever is best fitted
@@ -299,34 +314,34 @@ else {  // not logarithmical
     else { Base = 1.0; Expo++; }
   }
   GridStep = Base * pow(10.0,Expo);   // grid distance in real coordinates
-  corr = floor((ymax-ymin)/GridStep - numGrids);
+  corr = floor((ylAxis.max-ylAxis.min)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
 
   // upper y boundery ...........................
-  zD = fabs(fmod(ymax, GridStep)); // expand grid to upper edge of diagram ?
+  zD = fabs(fmod(ylAxis.max, GridStep));// expand grid to upper diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
-  if(ymax <= 0.0) {
-    if(GridNum < 0.3) { yup += zD;  zD = 0.0; }
+  if(ylAxis.max <= 0.0) {
+    if(GridNum < 0.3) { ylAxis.up += zD;  zD = 0.0; }
   }
-  else  if(GridNum > 0.7)  yup += GridStep-zD;
+  else  if(GridNum > 0.7)  ylAxis.up += GridStep-zD;
         else if(GridNum < 0.1)
 	       if(GridNum*double(y2) >= 1.0)// more than 1 pixel above ?
-		 yup += 0.3*GridStep;  // beauty correction
+		 ylAxis.up += 0.3*GridStep;  // beauty correction
 
 
   // lower y boundery ...........................
-  zD = fabs(fmod(ymin, GridStep)); // expand grid to lower edge of diagram ?
+  zD = fabs(fmod(ylAxis.min, GridStep));// expand grid to lower diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(ymin <= 0.0) {
-    if(GridNum > 0.7) { ylow -= GridStep-zD;  zD = 0.0; }
+  if(ylAxis.min <= 0.0) {
+    if(GridNum > 0.7) { ylAxis.low -= GridStep-zD;  zD = 0.0; }
     else if(GridNum < 0.1)
 	   if(GridNum*double(y2) >= 1.0) { // more than 1 pixel above ?
-	     ylow -= 0.3*GridStep;    // beauty correction
-	     zD   += 0.3*GridStep;
+	     ylAxis.low -= 0.3*GridStep;   // beauty correction
+	     zD += 0.3*GridStep;
 	   }
   }
   else {
@@ -334,17 +349,17 @@ else {  // not logarithmical
       zD = GridStep-zD;
       if(GridNum > 0.9) {
 	if((1.0-GridNum)*double(y2) >= 1.0) { // more than 1 pixel above ?
-	  ylow -= 0.3*GridStep;    // beauty correction
-	  zD   += 0.3*GridStep;
+	  ylAxis.low -= 0.3*GridStep;    // beauty correction
+	  zD += 0.3*GridStep;
 	}
       }
     }
-    else { ylow -= zD;  zD = 0.0; }
+    else { ylAxis.low -= zD;  zD = 0.0; }
   }
 
-  zDstep = GridStep/(yup-ylow)*double(y2); // distance between grids in pixel
-  GridNum  = ylow + zD;
-  zD /= (yup-ylow)/double(y2);
+  zDstep = GridStep/(ylAxis.up-ylAxis.low)*double(y2); // grid in pixel
+  GridNum  = ylAxis.low + zD;
+  zD /= (ylAxis.up-ylAxis.low)/double(y2);
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"

@@ -39,7 +39,7 @@ Transformer::Transformer()
   Lines.append(new Line( -1,-20, -1, 20,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-20,  1, 20,QPen(QPen::darkBlue,1)));
 
-  Texts.append(new Text(-21, -8,"T"));
+  Texts.append(new Text(-21, -18,"T"));
   Arcs.append(new Arc(-21,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
 

@@ -26,7 +26,6 @@ public:
   Subcircuit();
   ~Subcircuit();
   Component* newOne();
-//  static Component* info(QString&, char* &, bool getNewOne=false);
   void recreate();
 
 private:
@@ -38,6 +37,7 @@ private:
   bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
 		   int *i4=0, int *i5=0, int *i6=0);
   bool Subcircuit::getPen(const QString&, QPen&, int);
+  bool Subcircuit::getBrush(const QString&, QBrush&, int);
 };
 
 #endif

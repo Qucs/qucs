@@ -39,7 +39,8 @@ public:
   virtual bool load(const QString&) { return true; };
   virtual QString save();
   virtual void paint(ViewPainter*) {};
-  virtual void MouseMoving(int, int, int, int, QPainter*, bool) {};
+  virtual void MouseMoving(QPainter*, int, int, int, int,
+			   QPainter*, int, int, bool) {};
   virtual bool MousePressing() { return false; };
   virtual void Bounding(int&, int&, int&, int&) {};
   virtual bool ResizeTouched(int, int) { return false; };

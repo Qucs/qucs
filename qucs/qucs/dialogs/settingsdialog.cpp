@@ -18,6 +18,8 @@
 #include "settingsdialog.h"
 
 #include "qucs.h"
+#include "qucsdoc.h"
+#include "qucsview.h"
 
 #include <qwidget.h>
 #include <qlabel.h>

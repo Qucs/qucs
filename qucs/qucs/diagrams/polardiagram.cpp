@@ -44,8 +44,8 @@ PolarDiagram::~PolarDiagram()
 void PolarDiagram::calcCoordinate(double, double yr, double yi,
 				  int *px, int *py)
 {
-  *px = (x2>>1)+int(yr/xup*double(x2>>1) + 0.5);
-  *py = (y2>>1)+int(yi/yup*double(y2>>1) + 0.5);
+  *px = (x2>>1)+int(yr/xAxis.up*double(x2>>1) + 0.5);
+  *py = (y2>>1)+int(yi/ylAxis.up*double(y2>>1) + 0.5);
 }
 
 // --------------------------------------------------------------
@@ -60,15 +60,16 @@ bool PolarDiagram::calcDiagram()
   Lines.append(new Line(0, y2>>1, x2, y2>>1, GridPen));
 
   double phi, Expo, Base;
-  xlow = ylow = 0.0;
-  if(fabs(ymin) > ymax)  ymax = fabs(ymin);  // also fit negative values
+  xAxis.low = ylAxis.low = 0.0;
+  if(fabs(ylAxis.min) > ylAxis.max)
+    ylAxis.max = fabs(ylAxis.min);  // also fit negative values
 
 
   if(GridOn) {
 
     double numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
-    Expo = floor(log10(ymax/numGrids));
-    Base = ymax/numGrids/pow(10.0,Expo); // separate first significant digit
+    Expo = floor(log10(ylAxis.max/numGrids));
+    Base = ylAxis.max/numGrids/pow(10.0,Expo); // get first significant digit
     if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
       if(Base < 1.5) Base = 1.0;
       else Base = 2.0;
@@ -78,8 +79,8 @@ bool PolarDiagram::calcDiagram()
       else { Base = 1.0; Expo++; }
     }
     double GridStep = Base * pow(10.0,Expo); // grid distance in real values
-    numGrids -= floor(numGrids - ymax/GridStep); // corrects rounding faults
-    xup = yup = GridStep*numGrids;
+    numGrids -= floor(numGrids - ylAxis.max/GridStep); // correct num errors
+    xAxis.up = ylAxis.up = GridStep*numGrids;
     double zD = double(x2) / numGrids;   // grid distance in pixel
 
 
@@ -103,16 +104,16 @@ bool PolarDiagram::calcDiagram()
     }
   }
   else {
-    Expo = floor(log10(ymax));
-    Base = ceil(ymax/pow(10.0,Expo) - 0.01);
-    xup  = yup  = Base * pow(10.0,Expo);  // separate into Base * 10^Expo
+    Expo = floor(log10(ylAxis.max));
+    Base = ceil(ylAxis.max/pow(10.0,Expo) - 0.01);
+    xAxis.up = ylAxis.up = Base * pow(10.0,Expo);  // separate Base * 10^Expo
   }
 
   // create outer circle
   if(fabs(Expo) < 3.0)
-    Texts.append(new Text(x2-10, (y2>>1)-2, StringNum(xup)));
+    Texts.append(new Text(x2-10, (y2>>1)-2, StringNum(xAxis.up)));
   else
-    Texts.append(new Text(x2-10, (y2>>1)-2, StringNum(xup, 'e', 0)));
+    Texts.append(new Text(x2-10, (y2>>1)-2, StringNum(xAxis.up, 'e', 0)));
   phi = 16.0*180.0/M_PI*atan(30.0/double(x2));  // (text height+3) / radius
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi),
 			QPen(QPen::black,0)));

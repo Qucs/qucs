@@ -30,6 +30,7 @@
 #include "dialogs/newprojdialog.h"
 #include "dialogs/settingsdialog.h"
 #include "dialogs/qucssettingsdialog.h"
+#include "dialogs/simmessage.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -91,8 +92,15 @@ QucsApp::QucsApp()
   Acts.select->setOn(true);  // switch on the 'select' action
   HierarchyHistory.setAutoDelete(true);
 
+  Programs.setAutoDelete(true);
+
   // creates a document called "untitled"
   view->Docs.append(new QucsDoc(this, ""));
+
+  // load documents given as command line arguments
+  for(int z=1; z<qApp->argc(); z++)
+    if(*(qApp->argv()[z]) != '-')
+      gotoPage(qApp->argv()[z]);
 }
 
 QucsApp::~QucsApp()
@@ -627,7 +635,7 @@ void QucsApp::slotFileOpen()
 
   QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(), QucsFileFilter,
 				      this, "", tr("Enter a Schematic Name"));
-  if(!s.isEmpty())  gotoPage(s); //openDocument(s);
+  if(!s.isEmpty())  gotoPage(s);
   else statusBar()->message(tr("Opening aborted"), 2000);
 
   statusBar()->message(tr("Ready."));
@@ -640,7 +648,7 @@ void QucsApp::updatePortNumber(int No)
   if(No<0) return;
   QString pathName = view->Docs.current()->DocName;
   QFileInfo Info(pathName);
-  QString File, Name = Info.fileName();
+  QString tmpStr, File, Name = Info.fileName();
 
   // enter new port number into ListView
   QListViewItem *p;
@@ -663,7 +671,9 @@ void QucsApp::updatePortNumber(int No)
 	if((File == pathName) || (File == Name)) {
 	  d->Comps->setAutoDelete(false);
 	  d->deleteComp(pc);
-	  ((Subcircuit*)pc)->recreate();//remakeSymbol(No);
+	  tmpStr = pc->Name;
+	  ((Subcircuit*)pc)->recreate();
+	  pc->Name = tmpStr;
 	  d->insertRawComponent(pc);
 	  d->Comps->setAutoDelete(true);
 	}
@@ -894,7 +904,11 @@ void QucsApp::slotFileQuit()
 				      tr("Do you really want to quit?"),
 				      tr("Yes"), tr("No"));
   if(exit == 0)
-    if(closeAllFiles())  qApp->quit();
+    if(closeAllFiles()) {
+      for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
+        pp->kill();   // terminate all running sub-programs
+      qApp->quit();
+    }
 
   statusBar()->message(tr("Ready."));
 }
@@ -904,7 +918,11 @@ void QucsApp::slotFileQuit()
 void QucsApp::closeEvent(QCloseEvent* Event)
 {
   Event->ignore();
-  if(closeAllFiles())  qApp->quit();
+  if(closeAllFiles()) {
+    for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
+      pp->kill();   // terminate all running sub-programs
+    qApp->quit();
+  }
 }
 
 // --------------------------------------------------------------------
@@ -938,21 +956,30 @@ void QucsApp::slotEditCopy()
 // ########################################################################
 void QucsApp::slotHelpIndex()
 {
-  QStringList com;
-  com << BINARYDIR "qucshelp" << "index.html";
-  QProcess QucsHelp(com);
-  if(!QucsHelp.start())
-    QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
+  showHTML("index.html");
 }
 
 // ########################################################################
 void QucsApp::slotGettingStarted()
 {
+  showHTML("start.html");
+}
+
+// ########################################################################
+void QucsApp::showHTML(const QString& Page)
+{
   QStringList com;
-  com << BINARYDIR "qucshelp" << "start.html";
-  QProcess QucsHelp(com);
-  if(!QucsHelp.start())
+  com << BINARYDIR "qucshelp" << Page;
+  QProcess *QucsHelp = new QProcess(com);
+  if(!QucsHelp->start()) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
+    delete QucsHelp;
+    return;
+  }
+
+  Programs.append(QucsHelp);
+  connect(QucsHelp, SIGNAL(processExited()),
+	  this, SLOT(slotDeleteProcess()));
 }
 
 // ########################################################################
@@ -1000,8 +1027,8 @@ void QucsApp::slotShowAll()
   x1 -= 40;  y1 -= 40;
   x2 += 40;  y2 += 40;
 
-  double xScale = double(view->visibleWidth()) / double(x2-x1);
-  double yScale = double(view->visibleHeight()) / double(y2-y1);
+  float xScale = float(view->visibleWidth()) / float(x2-x1);
+  float yScale = float(view->visibleHeight()) / float(y2-y1);
   if(xScale > yScale) xScale = yScale;
   if(xScale > 10.0) xScale = 10.0;
   if(xScale < 0.01) xScale = 0.01;
@@ -1011,7 +1038,7 @@ void QucsApp::slotShowAll()
   view->Docs.current()->ViewY1 = y1;
   view->Docs.current()->ViewX2 = x2;
   view->Docs.current()->ViewY2 = y2;
-  view->resizeContents(int(xScale*double(x2-x1)), int(xScale*double(y2-y1)));
+  view->resizeContents(int(xScale*float(x2-x1)), int(xScale*float(y2-y1)));
 
   view->viewport()->repaint();
   view->drawn = false;
@@ -1042,13 +1069,6 @@ void QucsApp::slotShowOne()
   view->drawn = false;
 }
 
-void QucsApp::slotZoomIn()
-{
-  view->Zoom(2.0);
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
 void QucsApp::slotZoomOut()
 {
   view->Zoom(0.5);
@@ -1070,6 +1090,8 @@ void QucsApp::slotSimulate()
 		SLOT(slotAfterSimulation(int, SimMessage*)));
   connect(sim, SIGNAL(displayDataPage(QString)),
 		this, SLOT(slotChangePage(QString)));
+
+  Programs.append(&(sim->SimProcess)); // process into list, but not on slot !
 
 //  sim.ProgText->clear();
 //  sim.ErrText->clear();
@@ -1150,6 +1172,12 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     file.close();
   }
 
+  for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
+    if(pp == &(sim->SimProcess)) {
+      Programs.take();
+      break;
+    }
+
   if(shouldClosed) sim->slotClose();  // close and delete simulation window
 }
 
@@ -1157,20 +1185,42 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  QString com = QucsSettings.Editor+" "+QucsHomeDir.filePath("log.txt");
-  QProcess QucsEditor(QStringList::split(" ", com));
-  if(!QucsEditor.start())
-    QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
+  editFile(QucsHomeDir.filePath("log.txt"));
 }
 
 // ------------------------------------------------------------------------
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  QString com = QucsSettings.Editor+" "+QucsHomeDir.filePath("netlist.txt");
-  QProcess QucsEditor(QStringList::split(" ", com));
-  if(!QucsEditor.start())
+  editFile(QucsHomeDir.filePath("netlist.txt"));
+}
+
+// ------------------------------------------------------------------------
+// Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
+// component edit dialog.
+void QucsApp::editFile(const QString& File)
+{
+  QString com = QucsSettings.Editor+" "+File;
+  QProcess *QucsEditor = new QProcess(QStringList::split(" ", com));
+  if(!QucsEditor->start()) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
+    delete QucsEditor;
+    return;
+  }
+
+  Programs.append(QucsEditor);
+  connect(QucsEditor, SIGNAL(processExited()), SLOT(slotDeleteProcess()));
+}
+
+// ------------------------------------------------------------------------
+// Is called when an external program exits and deltes the process object.
+void QucsApp::slotDeleteProcess()
+{
+  for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
+    if(!pp->isRunning()) {
+      Programs.remove();   // is auto-delete
+      break;
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -1258,7 +1308,12 @@ void QucsApp::slotOpenContent(QListViewItem *item)
     return;
   }
 
-  gotoPage(QucsWorkDir.filePath(item->text(0)));
+  QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
+  if(Info.extension(false) == "dat") {
+    editFile(Info.absFilePath());   // open datasets with text editor
+    return;
+  }
+  gotoPage(Info.absFilePath());
 
   if(item->text(1).isEmpty()) return;
   // switch on the 'select' action
@@ -1473,12 +1528,12 @@ pInfoFunc Simulations[7] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
    &HB_Sim::info, &Param_Sweep::info, 0};
 
-pInfoFunc lumpedComponents[18] =
+pInfoFunc lumpedComponents[20] =
   {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
    &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
    &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
-   &Isolator::info, &Circulator::info, &Gyrator::info, &Phaseshifter::info,
-   &iProbe::info, 0};
+   &Amplifier::info, &OpAmp::info, &Isolator::info, &Circulator::info,
+   &Gyrator::info, &Phaseshifter::info, &iProbe::info, 0};
 
 pInfoFunc Sources[16] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
@@ -1486,10 +1541,11 @@ pInfoFunc Sources[16] =
    &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
    &vRect::info, &iRect::info, 0};
 
-pInfoFunc TransmissionLines[13] =
+pInfoFunc TransmissionLines[14] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
    &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
-   &MScross::info, &MSopen::info, &MSgap::info, &Coplanar::info, 0};
+   &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
+   &Coplanar::info, 0};
 
 pInfoFunc nonlinearComps[] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
@@ -1510,13 +1566,6 @@ void QucsApp::slotSetCompView(int index)
   if((index+1) >= CompChoose->count()) {
     new QIconViewItem(CompComps, tr("Line"),
 		QImage(BITMAPDIR "line.xpm"));
-
-    if(CompChoose->count() == 1) {
-      new QIconViewItem(CompComps, tr("Elliptic Arc"),
-		QImage(BITMAPDIR "ellipsearc.xpm"));
-      return;
-    }
-
     new QIconViewItem(CompComps, tr("Arrow"),
 		QImage(BITMAPDIR "arrow.xpm"));
     new QIconViewItem(CompComps, tr("Text"),
@@ -1604,13 +1653,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 
 
   if((CompChoose->currentItem()+1) >= CompChoose->count()) {
-    if(CompChoose->count() == 1)
-      switch(CompComps->index(item)) { // in "edit symbol" mode
-	case 0: view->selPaint = new GraphicLine();   break;
-	case 1: view->selPaint = new EllipseArc();    break;
-      }
-    else
-      switch(CompComps->index(item)) { // in normal ("edit schematic") mode
+    switch(CompComps->index(item)) { // in normal ("edit schematic") mode
 	case 0: view->selPaint = new GraphicLine();   break;
 	case 1: view->selPaint = new Arrow();         break;
 	case 2: view->selPaint = new GraphicText();   break;
@@ -1619,7 +1662,8 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	case 5: view->selPaint = new Ellipse(true);   break;
 	case 6: view->selPaint = new Rectangle(true); break;
 	case 7: view->selPaint = new EllipseArc();    break;
-      }
+    }
+
     if(view->drawn) view->viewport()->repaint();
     view->drawn = false;
     view->MouseMoveAction = &QucsView::MMovePainting;

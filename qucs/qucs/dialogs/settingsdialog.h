@@ -18,12 +18,12 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "qucsdoc.h"
-
 #include <qdialog.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qregexp.h>
+
+class QucsDoc;
 
 /**
   *@author Michael Margraf
@@ -31,7 +31,7 @@
 
 class SettingsDialog : public QDialog  {
    Q_OBJECT
-public: 
+public:
 	SettingsDialog(QucsDoc *d, QWidget *parent=0, const char *name=0);
 	~SettingsDialog();
 

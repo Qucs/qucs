@@ -33,7 +33,7 @@ MSopen::MSopen()
   Ports.append(new Port(-30, 0));
 
   x1 = -30; y1 =-11;
-  x2 =  25; y2 = 11;
+  x2 =  16; y2 = 11;
 
   tx = x1+4;
   ty = y2+4;

@@ -61,7 +61,7 @@ MOSFET_sub::MOSFET_sub()
 	QObject::tr("zero-bias threshold voltage")));
 
   Props.append(new Property("Kp", "2e-5", true,
-	QObject::tr("transconductance coefficient in A/m^2")));
+	QObject::tr("transconductance coefficient in A/V^2")));
   Props.append(new Property("Gamma", "0.0", false,
 	QObject::tr("bulk threshold in sqrt(V)")));
   Props.append(new Property("Phi", "0.6 V", false,

@@ -32,7 +32,6 @@
 #include <qregexp.h>
 
 #include <limits.h>
-//#include <strings.h>
 
 
 // icon for unsaved files (diskette)
