@@ -42,7 +42,7 @@ FIG2DEV = fig2dev
 OCTAVE = octave
 
 MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
-  stabbashford.m
+  stabbashford.m stabgearex.m
 MATHHELPS = zpoly.m econst.m
 MPSFILES = $(MATHFILES:.m=.eps)
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: biastee.cpp,v 1.6 2004-09-16 10:15:10 ela Exp $
+ * $Id: biastee.cpp,v 1.7 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -61,4 +61,8 @@ void biastee::initAC (void) {
   clearC ();
   voltageSource (1, 2, 1);
   setVoltageSources (1);
+}
+
+void biastee::initTR (void) {
+  initDC ();
 }

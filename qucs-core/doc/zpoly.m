@@ -34,6 +34,9 @@ function area = zpoly (b, a, z)
     for i = 1:length(a)  % summarize numerator polynomial
       as = as + a(i) * z(k)^(-i);
     endfor
+    if (bs == 0)
+      bs = 1;
+    endif
     area(k) = - as / bs;
   endfor
 endfunction

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.cpp,v 1.7 2004-09-16 10:15:10 ela Exp $
+ * $Id: circulator.cpp,v 1.8 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -96,5 +96,9 @@ void circulator::initDC (void) {
 }
 
 void circulator::initAC (void) {
+  initDC ();
+}
+
+void circulator::initTR (void) {
   initDC ();
 }

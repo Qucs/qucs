@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tee.cpp,v 1.5 2004-09-26 13:31:36 ela Exp $
+ * $Id: tee.cpp,v 1.6 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -56,5 +56,9 @@ void tee::initDC (void) {
 }
 
 void tee::initAC (void) {
+  initDC ();
+}
+
+void tee::initTR (void) {
   initDC ();
 }

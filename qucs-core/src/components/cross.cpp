@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.cpp,v 1.3 2004-09-26 13:31:36 ela Exp $
+ * $Id: cross.cpp,v 1.4 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -64,5 +64,9 @@ void cross::initDC (void) {
 }
 
 void cross::initAC (void) {
+  initDC ();
+}
+
+void cross::initTR (void) {
   initDC ();
 }

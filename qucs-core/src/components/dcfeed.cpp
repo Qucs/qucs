@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcfeed.cpp,v 1.6 2004-09-16 10:15:10 ela Exp $
+ * $Id: dcfeed.cpp,v 1.7 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -51,4 +51,8 @@ void dcfeed::initDC (void) {
 
 void dcfeed::initAC (void) {
   setVoltageSources (0);
+}
+
+void dcfeed::initTR (void) {
+  initDC ();
 }

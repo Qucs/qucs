@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcblock.cpp,v 1.4 2004-09-16 10:15:10 ela Exp $
+ * $Id: dcblock.cpp,v 1.5 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -51,4 +51,8 @@ void dcblock::initDC (void) {
 void dcblock::initAC (void) {
   voltageSource (1, 1, 2);
   setVoltageSources (1);
+}
+
+void dcblock::initTR (void) {
+  initDC ();
 }

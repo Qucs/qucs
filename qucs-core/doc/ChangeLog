@@ -1,3 +1,14 @@
+2004-10-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcanalysis.tex (subsection{Symmetrical transformer}): Fixed
+	DC equations of the symmetrical transformer in documentation.
+
+	* transient.tex (subsection{Order and local truncation error}): 
+	Scribbled down the error constants for explicit Gear method.
+
+	* stabgearex.m: New file computing order, steps, error constants
+	and stability regions of explicit Gear formulae.
+
 2004-10-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Properties of numerical integration

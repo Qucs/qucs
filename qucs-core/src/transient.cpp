@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.9 2004-10-07 19:49:35 ela Exp $
+ * $Id: transient.cpp,v 1.10 2004-10-08 11:45:38 ela Exp $
  *
  */
 
@@ -46,7 +46,7 @@
 
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Gear (order 1-6),
-   Trapezoidal and Euler. */
+   Trapezoidal, forward Euler and Adams-Moulton (order 1-6). */
 void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 			 nr_double_t * delta, int& charges) {
 
@@ -91,25 +91,22 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 	coefficients[i] = - 1 / delta[0] / k * x.get (i + 1, 1);
       }
 #else /* !FIXEDCOEFF */
-      int i, c;
+      int c, r;
       // right hand side vector
-      for (i = 1; i <= order + 1; i++)
-	b.set (i, 1, (i == 2) ? -1 / delta[0] : 0);
-      for (i = 1; i <= order + 1; i++) {
-	A.set (i, 1, 0); // first column
-	A.set (1, i, 1); // first row
-      }
+      b.set (2, 1, -1 / delta[0]);
+      // first row
+      for (c = 1; c <= order + 1; c++) A.set (1, c, 1); 
       nr_double_t f, a;
-      for (f = 0, i = 1; i <= order; i++) {
-	f += delta[i - 1];
-	for (a = 1, c = 1; c <= order; c++) {
+      for (f = 0, c = 1; c <= order; c++) {
+	f += delta[c - 1];
+	for (a = 1, r = 1; r <= order; r++) {
 	  a *= f / delta[0];
-	  A.set (c + 1, i + 1, a);
+	  A.set (r + 1, c + 1, a);
 	}
       }
       e.passEquationSys (&A, &x, &b);
       e.solve ();
-      for (i = 0; i <= order; i++) coefficients[i] = x.get (i + 1, 1);
+      for (r = 0; r <= order; r++) coefficients[r] = x.get (r + 1, 1);
 #endif /* !FIXEDCOEFF */
       charges = order + 1;
     }
@@ -166,7 +163,7 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Adams-Bashford (order
-   1-6) and Euler. */
+   1-6), backward Euler and explicit Gear (order 1-6). */
 void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
 			 nr_double_t * delta) {
 
@@ -177,6 +174,26 @@ void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
   e.setAlgo (ALGO_LU_DECOMPOSITION);
 
   switch (Method) {
+  case INTEGRATOR_GEAR: // explicit GEAR order 1 to 6
+    {
+      int c, r;
+      // right hand side vector
+      b.set (1, 1, 1);
+      // first row
+      for (c = 1; c <= order + 1; c++) A.set (1, c, 1);
+      nr_double_t f, a;
+      for (f = 0, c = 1; c <= order + 1; c++) {
+	f += delta[c - 1];
+	for (a = 1, r = 1; r <= order; r++) {
+	  a *= f / delta[0];
+	  A.set (r + 1, c, a);
+	}
+      }
+      e.passEquationSys (&A, &x, &b);
+      e.solve ();
+      for (r = 0; r <= order; r++) coefficients[r] = x.get (r + 1, 1);      
+    }
+    break;
   case INTEGRATOR_ADAMSBASHFORD: // ADAMS-BASHFORD order 1 to 6
     {
       int i, r, c;
@@ -330,6 +347,9 @@ int predictorType (int corrMethod, int corrOrder, int& predOrder) {
   int predMethod = INTEGRATOR_UNKNOWN;
   switch (corrMethod) {
   case INTEGRATOR_GEAR:
+    predMethod = INTEGRATOR_GEAR;
+    predOrder = corrOrder;
+    break;
   case INTEGRATOR_ADAMSMOULTON:
     predMethod = INTEGRATOR_ADAMSBASHFORD;
     predOrder = corrOrder;
@@ -369,7 +389,7 @@ static struct integration_types_t integration_types[] = {
     { INTEGRATOR_GEAR, INTEGRATOR_GEAR, INTEGRATOR_GEAR,
       INTEGRATOR_GEAR, INTEGRATOR_GEAR, INTEGRATOR_GEAR },
     { -1.0/2, -2.0/9, -3.0/22, -12.0/125, -10.0/137, -20.0/343 },
-    { +1.0/2, +2.0/9, +3.0/22, +12.0/125, +10.0/137, +20.0/343 }
+    { +1.0, +1.0, +1.0, +1.0, +1.0, +1.0 }
   },
   { INTEGRATOR_ADAMSMOULTON,
     { INTEGRATOR_ADAMSMOULTON, INTEGRATOR_ADAMSMOULTON,

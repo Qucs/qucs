@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.8 2004-09-16 10:15:10 ela Exp $
+ * $Id: gyrator.cpp,v 1.9 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -69,5 +69,9 @@ void gyrator::initDC (void) {
 }
 
 void gyrator::initAC (void) {
+  initDC ();
+}
+
+void gyrator::initTR (void) {
   initDC ();
 }

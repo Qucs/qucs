@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.11 2004-09-25 21:09:46 ela Exp $
+ * $Id: attenuator.cpp,v 1.12 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -107,4 +107,8 @@ void attenuator::initAC (void) {
     z.set (1, 2, z21); z.set (2, 1, z21);
     setMatrixY (ztoy (z));
   }
+}
+
+void attenuator::initTR (void) {
+  initDC ();
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.13 2004-10-07 19:49:35 ela Exp $
+ * $Id: trsolver.cpp,v 1.14 2004-10-08 11:45:39 ela Exp $
  *
  */
 
@@ -41,6 +41,8 @@
 #include "nasolver.h"
 #include "trsolver.h"
 #include "transient.h"
+#include "exception.h"
+#include "exceptionstack.h"
 
 #define STEPDEBUG 0 // set to zero for release
 
@@ -105,6 +107,7 @@ void trsolver::solve (void) {
   int error = 0;
   runs++;
   current = 0;
+  statRejected = statSteps = statIterations = 0;
 
   // Create time sweep if necessary.
   initSteps ();
@@ -149,8 +152,41 @@ void trsolver::solve (void) {
 #endif
 
     do {
-      error += predictor ();  // Run predictor.
-      error += corrector ();  // Run corrector process.
+      rejected = 0;
+
+      // Run predictor.
+      error += predictor ();
+
+      // Run corrector process.
+      try_running () {
+	error += corrector ();
+      }
+      // Appropriate exception handling.
+      catch_exception () {
+      case EXCEPTION_NO_CONVERGENCE:
+	// Reduce step-size if failed to converge.
+	pop_exception ();
+	delta /= 2;
+	if (delta < deltaMin) delta = deltaMin;
+	updateCoefficients (delta);
+	setState (dState, delta);
+	rejected++;
+	statRejected++;
+	error = 0;
+#if STEPDEBUG
+	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
+		  current, delta);
+#endif
+	break;
+      default:
+	// Otherwise return.
+	estack.print ();
+	error++;
+	break;
+      }
+      if (error) return;
+      if (rejected) continue;
+      statIterations += iterations;
 
       // Now advance in time or not...
       if (running > 1) {
@@ -179,6 +215,9 @@ void trsolver::solve (void) {
   }
   solve_post ();
   logprogressclear (40);
+  logprint (LOG_STATUS, "NOTIFY: %s: average time-step %g, %d rejections, "
+	    "average NR-iterations %g\n", getName (), current / statSteps,
+	    statRejected, (double) statIterations / statSteps);
 }
 
 // Macro for the n-th state of the solution vector history.
@@ -189,10 +228,13 @@ void trsolver::solve (void) {
 int trsolver::predictor (void) {
   int error = 0;
   switch (PMethod) {
+  case INTEGRATOR_GEAR: // explicit GEAR
+    predictGear ();
+    break;
   case INTEGRATOR_ADAMSBASHFORD: // ADAMS-BASHFORD
     predictBashford ();
     break;
-  case INTEGRATOR_EULER: // explicit BACKWARD EULER
+  case INTEGRATOR_EULER: // BACKWARD EULER
     predictEuler ();
     break;
   default:
@@ -241,6 +283,24 @@ void trsolver::predictEuler (void) {
   }
 }
 
+/* The function predicts the successive solution vector using the
+   explicit Gear integration formula. */
+void trsolver::predictGear (void) {
+  int N = countNodes ();
+  int M = subnet->getVoltageSources ();
+  nr_double_t xn;
+
+  // go through each solution
+  for (int r = 1; r <= N + M; r++) {
+    xn = 0;
+    for (int o = 0; o <= predOrder; o++) {
+      // a0, a1, ... coefficients
+      xn += predCoeff[o] * SOL(o + 1)->get (r, 1);
+    }
+    x->set (r, 1, xn); // save prediction
+  }
+}
+
 /* The function iterates through the solutions of the integration
    process until a certain error tolerance has been reached. */
 int trsolver::corrector (void) {
@@ -256,6 +316,7 @@ void trsolver::nextStates (void) {
     c->nextState ();
   *SOL (0) = *x; // save current solution
   nextState ();
+  statSteps++;
 }
 
 /* This function stores the current state of each circuit into all
@@ -293,6 +354,7 @@ void trsolver::adjustDelta (void) {
     updateCoefficients (delta);
     setState (dState, delta);
     rejected++;
+    statRejected++;
 #if STEPDEBUG
     logprint (LOG_STATUS,
 	      "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
@@ -448,10 +510,10 @@ nr_double_t trsolver::checkDelta (void) {
     }
   }
 #if STEPDEBUG
-    logprint (LOG_STATUS, "DEBUG: delta according to local truncation "
-	      "error h = %.3e\n", n);
+  logprint (LOG_STATUS, "DEBUG: delta according to local truncation "
+	    "error h = %.3e\n", n);
 #endif
-  delta = MIN (2 * delta, n);
+  delta = MIN ((n > 1.9 * delta) ? 2 * delta : delta, n);
   return delta;
 }
 
