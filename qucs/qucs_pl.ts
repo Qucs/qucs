@@ -881,19 +881,12 @@ Unknown field!</source>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QObject::QObject</name>
     <message>
         <source>phase shifter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reference impedance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -910,10 +903,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>frequency in Hertz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

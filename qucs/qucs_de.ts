@@ -516,95 +516,95 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>equivalent current density in A/sqrt(Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>äquivalente Stromdichte in A/sqrt(Hz)</translation>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzexponent</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzexponent</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation>additiver Frequenzterm</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfungsglied</translation>
     </message>
     <message>
         <source>attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfung</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>Bias T</translation>
     </message>
     <message>
         <source>capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kondensator</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapazität in Farad</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>stromgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärtstransferfaktor</translation>
     </message>
     <message>
         <source>delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerungszeit</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>stromgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkulator</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz von Port 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz von Port 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz von Port 3</translation>
     </message>
     <message>
         <source>coplanar line</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplanarleitung</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Substratdefinition</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite</translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlitzbreite</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungslänge</translation>
     </message>
     <message>
         <source>dc simulation</source>
@@ -612,11 +612,11 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation type="unfinished"></translation>
+        <translation>DC Block</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation type="unfinished"></translation>
+        <translation>DC Feed</translation>
     </message>
     <message>
         <source>diode</source>
@@ -632,7 +632,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation type="unfinished"></translation>
+        <translation>Masse (Referenzpotential)</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
@@ -648,35 +648,35 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenz in Hertz</translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Harmonischen</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Spule</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivität in Henry</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Amperemeter</translation>
     </message>
     <message>
         <source>isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Isolator</translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz des Eingangstors</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz des Ausgangstors</translation>
     </message>
     <message>
         <source>microstrip corner</source>
@@ -684,27 +684,27 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat</translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 1</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 2</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>gekoppelte Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Abstand zwischen den Leitungen</translation>
     </message>
     <message>
         <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenmodell |Kirschning|Kobayashi|Yamashita</translation>
     </message>
     <message>
         <source>microstrip cross</source>
@@ -712,15 +712,15 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 3</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 4</translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
@@ -728,11 +728,11 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite der Leitung 1</translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite der Leitung 2</translation>
     </message>
     <message>
         <source>microstrip tee</source>
@@ -760,23 +760,23 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>resistor (US symbol)</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand (US-Symbol)</translation>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Parameter Simulation</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Parameter Datei</translation>
     </message>
     <message>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der S-Parameter Datei</translation>
     </message>
     <message>
         <source>subcircuit</source>
@@ -784,7 +784,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Qucs Schaltplandatei</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
@@ -796,27 +796,27 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Substratdefinition</translation>
     </message>
     <message>
         <source>permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Permeabilität</translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Höhe in Metern</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation type="unfinished"></translation>
+        <translation>Metallisierungsdicke</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlustwinkel</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>idealer symmetrischer Transformator</translation>
     </message>
     <message>
         <source>voltage transformation ration of coil 1</source>
@@ -832,31 +832,31 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>charakteristische Impedanz</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>elektrische Länge der Leitung</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Transientsimulation</translation>
     </message>
     <message>
         <source>start time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Startzeit in Sekunden</translation>
     </message>
     <message>
         <source>stop time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopzeit in Sekunden</translation>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitschritt in Sekunden</translation>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>idealer Transformator</translation>
     </message>
     <message>
         <source>voltage transformation ration</source>
@@ -864,19 +864,19 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>spannungsgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärtstranskonduktanz</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>spannungsgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale AC Spannungsquelle</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
@@ -884,54 +884,43 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale DC Spannungsquelle</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannung in Volt</translation>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschspannungsquelle</translation>
     </message>
     <message>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>äquivalente Spannungsdichte in V/sqrt(Hz)</translation>
     </message>
-</context>
-<context>
-    <name>QObject::QObject</name>
     <message>
         <source>phase shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>Phasenschieber</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Phasenverschiebung in Grad</translation>
     </message>
     <message>
         <source>ac power source</source>
-        <translation type="unfinished"></translation>
+        <translation>AC Signalquelle</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>Tornummer</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Torimpedanz</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>AC Leistung in Watt</translation>
     </message>
 </context>
 <context>
@@ -2264,15 +2253,15 @@ Fehler:
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
@@ -2328,11 +2317,11 @@ Fehler:
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Line</source>
@@ -2404,7 +2393,7 @@ Weiter ?</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation></translation>
+        <translation>Wählen Sie eine Projektverzeichnis zum Löschen</translation>
     </message>
     <message>
         <source>Help Index</source>
@@ -2448,15 +2437,15 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Amperemeter</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschspannungsquelle</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschstromquelle</translation>
     </message>
 </context>
 <context>
@@ -2498,7 +2487,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Apply</source>
