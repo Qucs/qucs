@@ -1,3 +1,8 @@
+2005-02-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* main.cpp (main): Made the Qucs application relocatable
+	using the environment variable QUCSDIR.
+
 2005-02-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_fr.ts: Applied french translation updates by Vincent.

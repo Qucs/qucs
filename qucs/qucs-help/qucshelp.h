@@ -21,7 +21,18 @@
 #include <qdialog.h>
 #include <qtextbrowser.h>
 #include <qdir.h>
+#include <qfont.h>
+#include <qstring.h>
 
+struct tQucsSettings {
+  int x, y, dx, dy;    // position and size of main window
+  QFont font;
+  QString BitmapDir;
+  QString LangDir;
+  QString DocDir;
+};
+
+extern tQucsSettings QucsSettings;
 extern QDir QucsHelpDir;
 
 /**

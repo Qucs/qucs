@@ -17,6 +17,7 @@
 
 #include "ellipsearc.h"
 #include "filldialog.h"
+#include "main.h"
 
 #include <qpushbutton.h>
 #include <qlineedit.h>

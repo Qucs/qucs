@@ -19,10 +19,8 @@
 # include <config.h>
 #endif
 
-#include "qucs.h"
-#include "qucsview.h"
-#include "main.h"
-#include "node.h"
+#include <stdlib.h>
+#include <math.h>
 
 #include <qapplication.h>
 #include <qstring.h>
@@ -33,15 +31,12 @@
 #include <qmessagebox.h>
 #include <qregexp.h>
 
-#include <math.h>
-#include <float.h>
+#include "qucs.h"
+#include "qucsview.h"
+#include "main.h"
+#include "node.h"
 
-
-struct tQucsSettings QucsSettings
-     = {0, 0, 600, 400,    // position and size
-	QFont("Helvetica", 12), 16.0,
-	QColor(255, 250, 225), 20,
-	BINARYDIR "qucsedit"};
+tQucsSettings QucsSettings;
 
 QFont savingFont;    // to remember which font to save in "qucsrc"
 
@@ -253,126 +248,158 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
 #include <qregexp.h>
 int main(int argc, char *argv[])
 {
-/*double zD = 1.0e5;
-qDebug(StringNum(zD, 'e', -1));
+#if 0
+  double zD = 1.0e5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.1e5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.1e5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.12e5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.12e5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.123e5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.123e5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.1234567e5;
-qDebug(StringNum(zD, 'e', -1));
-qDebug(" ");
+  zD = 1.1234567e5;
+  qDebug(StringNum(zD, 'e', -1));
+  qDebug(" ");
 
-zD = 1.0e5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.0e5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.1e5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.1e5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.12e5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.12e5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.123e5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.123e5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.1234567e5;
-qDebug(StringNum(zD, 'f', -1));
-qDebug(" ");
+  zD = 1.1234567e5;
+  qDebug(StringNum(zD, 'f', -1));
+  qDebug(" ");
 
-zD = 1.0e5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.0e5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.1e5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.1e5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.12e5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.12e5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.123e5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.123e5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.1234567e5;
-qDebug(StringNum(zD, 'g', -1));
-qDebug(" ");
+  zD = 1.1234567e5;
+  qDebug(StringNum(zD, 'g', -1));
+  qDebug(" ");
 
-// ------------------------------------
+  // ------------------------------------
 
-zD = 1.0e-5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.0e-5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.1e-5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.1e-5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.12e-5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.12e-5;
+  qDebug(StringNum(zD, 'e', -1));
 
-zD = 1.123e-5;
-qDebug(StringNum(zD, 'e', -1));
+  zD = 1.123e-5;
+  qDebug(StringNum(zD, 'e', -1));
+ 
+  zD = 1.1234567e-5;
+  qDebug(StringNum(zD, 'e', -1));
+  qDebug("\n");
 
-zD = 1.1234567e-5;
-qDebug(StringNum(zD, 'e', -1));
-qDebug("\n");
+  zD = 1.0e-5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.0e-5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.1e-5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.1e-5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.12e-5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.12e-5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.123e-5;
+  qDebug(StringNum(zD, 'f', -1));
 
-zD = 1.123e-5;
-qDebug(StringNum(zD, 'f', -1));
+  zD = 1.1234567e-5;
+  qDebug(StringNum(zD, 'f', -1));
+  qDebug(" ");
 
-zD = 1.1234567e-5;
-qDebug(StringNum(zD, 'f', -1));
-qDebug(" ");
+  zD = 1.0e-5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.0e-5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.1e-5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.1e-5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.12e-5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.12e-5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.123e-5;
+  qDebug(StringNum(zD, 'g', -1));
 
-zD = 1.123e-5;
-qDebug(StringNum(zD, 'g', -1));
+  zD = 1.1234567e-5;
+  qDebug(StringNum(zD, 'g', -1));
+  qDebug(" ");
 
-zD = 1.1234567e-5;
-qDebug(StringNum(zD, 'g', -1));
-qDebug(" ");
+  return 0;
+#endif
+#if 0
+  double d, Factor;
+  QString Unit, s("-2.9E+02eco");
+  str2num(s, d, Unit, Factor);
+  qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
+	 s.latin1(), d, Unit.latin1(), Factor);
 
-return 0;*/
-/*double d, Factor;
-QString Unit, s("-2.9E+02eco");
-str2num(s, d, Unit, Factor);
-qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
-       s.latin1(), d, Unit.latin1(), Factor);
+  s = "2.5eco";
+  str2num(s, d, Unit, Factor);
+  qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
+	 s.latin1(), d, Unit.latin1(), Factor);
+  return 0;
+#endif
 
-s = "2.5eco";
-str2num(s, d, Unit, Factor);
-qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
-       s.latin1(), d, Unit.latin1(), Factor);
-return 0;
-*/
-  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
-  QucsHomeDir.setPath(QDir::homeDirPath()+"/.qucs");
+  // apply default settings
+  QucsSettings.x = 0;
+  QucsSettings.y = 0;
+  QucsSettings.dx = 600;
+  QucsSettings.dy = 400;
+  QucsSettings.font = QFont("Helvetica", 12);
+  QucsSettings.largeFontSize = 16.0;
+  QucsSettings.BGColor = QColor(255, 250, 225);
+  QucsSettings.maxUndo = 20;
+
+  // is application relocated?
+  char * var = getenv ("QUCSDIR");
+  if (var != NULL) {
+    QDir QucsDir = QDir (var);
+    QString QucsDirStr = QucsDir.canonicalPath ();
+    QucsSettings.BinDir =
+      QDir::convertSeparators (QucsDirStr + "/bin/");
+    QucsSettings.BitmapDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/bitmaps/");
+    QucsSettings.LangDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/lang/");
+  } else {
+    QucsSettings.BinDir = BINARYDIR;
+    QucsSettings.BitmapDir = BITMAPDIR;
+    QucsSettings.LangDir = LANGUAGEDIR;
+  }
+  QucsSettings.Editor = QucsSettings.BinDir + "qucsedit";
+
+  QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
   loadSettings();
 
   QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
+  tor.load( QString("qucs_") + QTextCodec::locale(), QucsSettings.LangDir);
   a.installTranslator( &tor );
 
   QucsMain = new QucsApp();

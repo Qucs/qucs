@@ -28,6 +28,11 @@ class Node;
 class Diagram;
 class Component;
 
+// constants may be missing on windows systems
+#include <math.h>
+#ifndef M_PI
+#define M_PI     3.1415926535897932384626433832795029
+#endif
 
 struct tQucsSettings {
   int x, y, dx, dy;    // position and size of main window
@@ -37,6 +42,9 @@ struct tQucsSettings {
 
   unsigned int maxUndo;    // size of undo stack
   QString Editor;
+  QString BinDir;
+  QString BitmapDir;
+  QString LangDir;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
