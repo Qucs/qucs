@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- parameter for exporting equation result to dataset
 	- What about resistors with R=0?
 - Implement DC model for phaseshifter.
 	- Implement DC model for bias T.

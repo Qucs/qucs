@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.18 2004/06/21 23:11:41 ela Exp $
+ * $Id: circuit.cpp,v 1.19 2004/06/23 16:05:09 ela Exp $
  *
  */
 
@@ -339,12 +339,12 @@ void circuit::deleteOperatingPoints (void) {
 
 // Returns the S-parameter at the given matrix position.
 complex circuit::getS (int x, int y) { 
-  return MatrixS[x - 1 + (y - 1) * size];
+  return MatrixS[y - 1 + (x - 1) * size];
 }
 
 // Sets the S-parameter at the given matrix position.
 void circuit::setS (int x, int y, complex z) {
-  MatrixS[x - 1 + (y - 1) * size] = z;
+  MatrixS[y - 1 + (x - 1) * size] = z;
 }
 
 // Returns non-zero if the circuit is non-linear (DC dependent).
