@@ -65,6 +65,9 @@ public:
   bool loadVarData(const QString&);
   int  loadIndepVarData(const QString&, const QString&);
 
+  void createSmithChart(Axis*, int Mode=7);
+  void createPolarDiagram(Axis*, int Mode=3);
+
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
@@ -76,6 +79,10 @@ public:
   int x3, y3;
   Axis  xAxis, ylAxis, yrAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
+
+  int limit_x1, limit_x2, step_x;   // if not auto-scale
+  int limit_y1, limit_y2, step_y;
+  int limit_z1, limit_z2, step_z;
 };
 
 #endif

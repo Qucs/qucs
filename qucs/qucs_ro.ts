@@ -311,6 +311,14 @@
         <source>logarithmical right Y Axis Grid</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>smith Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polar Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -2795,6 +2803,18 @@ Editează această schemă</translation>
     <message>
         <source>permanently! Continue ?</source>
         <translation>definitiv! Continuaţi?</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

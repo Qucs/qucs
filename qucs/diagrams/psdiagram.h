@@ -35,8 +35,6 @@ public:
   PSDiagram* newOne();
   int   calcDiagram();
   void  calcCoordinate(double, double, double, int*, int*, Axis*);
-
-  bool polarUp;   // polar diagram upper half ?
 };
 
 #endif

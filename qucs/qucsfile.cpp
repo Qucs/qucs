@@ -467,6 +467,9 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
     else if(cstr == "<Polar") d = new PolarDiagram();
     else if(cstr == "<Tab") d = new TabDiagram();
     else if(cstr == "<Smith") d = new SmithDiagram();
+    else if(cstr == "<ySmith") d = new SmithDiagram(0,0,false);
+    else if(cstr == "<PS") d = new PSDiagram();
+    else if(cstr == "<SP") d = new PSDiagram(0,0,false);
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		   QObject::tr("Format Error:\nUnknown diagram!"));

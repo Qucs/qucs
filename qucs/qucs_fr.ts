@@ -122,11 +122,11 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="obsolete">Ne peut pas exécuter l&apos;éditeur !</translation>
+        <translation>Ne peut pas exécuter l&apos;éditeur !</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation type="obsolete">Nom des ordonnées :</translation>
+        <translation>Nom des ordonnées :</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -278,35 +278,7 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation type="obsolete">Ordonnées logarithmiques</translation>
-    </message>
-    <message>
-        <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>left Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>right Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordonnées logarithmiques</translation>
     </message>
 </context>
 <context>
@@ -385,7 +357,7 @@
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation>hachurés à l&apos;inverse</translation>
+        <translation>hachurés �  l&apos;inverse</translation>
     </message>
     <message>
         <source>hatched forwards</source>
@@ -660,7 +632,7 @@ Champ « painting » non refermé !</translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation type="obsolete">Type de fichier incompatible !</translation>
+        <translation>Type de fichier incompatible !</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -798,7 +770,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation>Arrivée continue</translation>
+        <translation>Court-circuit continu</translation>
     </message>
     <message>
         <source>dc simulation</source>
@@ -938,7 +910,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation>Paramètre à faire varier</translation>
+        <translation>Paramètre �  faire varier</translation>
     </message>
     <message>
         <source>start value for sweep</source>
@@ -1120,7 +1092,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation>simulation à laquelle appliquer la variation de paramètre</translation>
+        <translation>simulation �  laquelle appliquer la variation de paramètre</translation>
     </message>
     <message>
         <source>Create new project</source>
@@ -1168,7 +1140,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation>capacité de la jonction à polarisation nulle</translation>
+        <translation>capacité de la jonction �  polarisation nulle</translation>
     </message>
     <message>
         <source>grading coefficient</source>
@@ -1204,7 +1176,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
-        <translation>transistor à effet de champ</translation>
+        <translation>transistor �  effet de champ</translation>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
@@ -1272,7 +1244,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation>Polarisation</translation>
+        <translation>Court-circuit continu</translation>
     </message>
     <message>
         <source>Diode</source>
@@ -1292,7 +1264,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation>Sonde d&apos;intensité</translation>
+        <translation>Galvanomètre</translation>
     </message>
     <message>
         <source>Isolator</source>
@@ -1412,7 +1384,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
-        <translation>MOS à déplétion</translation>
+        <translation>MOS �  déplétion</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
@@ -1452,11 +1424,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation>capacité à vide de la jonction grille-source</translation>
+        <translation>capacité �  vide de la jonction grille-source</translation>
     </message>
     <message>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation>capacité à vide de la jonction grille-drain</translation>
+        <translation>capacité �  vide de la jonction grille-drain</translation>
     </message>
     <message>
         <source>gate-junction potential</source>
@@ -1508,7 +1480,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation>nombre de points à simuler</translation>
+        <translation>nombre de points �  simuler</translation>
     </message>
     <message>
         <source>microstrip gap</source>
@@ -1596,11 +1568,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation>résistance de base à vide (peut dépendre des forts courants)</translation>
+        <translation>résistance de base �  vide (peut dépendre des forts courants)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation>capacité de déplétion base-émetteur à vide</translation>
+        <translation>capacité de déplétion base-émetteur �  vide</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
@@ -1612,7 +1584,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation>capacité de déplétion base-collecteur à vide</translation>
+        <translation>capacité de déplétion base-collecteur �  vide</translation>
     </message>
     <message>
         <source>base-collector junction built-in potential</source>
@@ -1628,7 +1600,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation>capacité collecteur-substrat à vide</translation>
+        <translation>capacité collecteur-substrat �  vide</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
@@ -1648,11 +1620,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation>dépendance de Tf à la polarisation</translation>
+        <translation>dépendance de Tf �  la polarisation</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation>dépendance de Tf vis-à-vis de la tension base-collecteur</translation>
+        <translation>dépendance de Tf vis-� -vis de la tension base-collecteur</translation>
     </message>
     <message>
         <source>high-current effect on Tf</source>
@@ -1712,11 +1684,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation>tension de seuil à vide</translation>
+        <translation>tension de seuil �  vide</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/m^2</source>
-        <translation type="obsolete">paramètre de transconductance en A/m²</translation>
+        <translation>paramètre de transconductance en A/m²</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
@@ -1776,11 +1748,11 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation>capacité à vide de la jonction drain-semelle</translation>
+        <translation>capacité �  vide de la jonction drain-semelle</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation>capacité à vide de la jonction source-semelle</translation>
+        <translation>capacité �  vide de la jonction source-semelle</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
@@ -1836,7 +1808,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation>capacité surfacique inférieure à vide de la jonction de semelle en F/m²</translation>
+        <translation>capacité surfacique inférieure �  vide de la jonction de semelle en F/m²</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
@@ -2114,50 +2086,6 @@ Invocation :  qucsedit [-r] fichier
         <source>overestimation of local truncation error</source>
         <translation>borne supérieure de l&apos;erreur d&apos;arrondi</translation>
     </message>
-    <message>
-        <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Amplifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>microstrip via</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OpAmp</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2349,11 +2277,11 @@ Voulez-vous les sauvegarder avant de fermer ?</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Commence une nouvelle simulation de</translation>
+        <translation>Commence une nouvelle simulation le </translation>
     </message>
     <message>
         <source> at </source>
-        <translation>à</translation>
+        <translation> �  </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -2368,7 +2296,7 @@ Interruption.</translation>
     <message>
         <source>done.
 </source>
-        <translation>fait.
+        <translation>terminée.
 </translation>
     </message>
     <message>
@@ -2378,7 +2306,7 @@ Interruption.</translation>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>Simulation terminée le</translation>
+        <translation>Simulation terminée le </translation>
     </message>
     <message>
         <source>Ready.
@@ -2434,7 +2362,7 @@ Erreurs :
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation>Choisissez un répertoire de projet à ouvrir</translation>
+        <translation>Choisissez un répertoire de projet �  ouvrir</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
@@ -2546,7 +2474,7 @@ Erreurs :
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation>Choisissez le répertoire projet à effacer</translation>
+        <translation>Choisissez le répertoire projet �  effacer</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -2599,7 +2527,7 @@ Erreurs :
     <message>
         <source>&apos; already exists!
 </source>
-        <translation> » existe déjà !
+        <translation> » existe déj�  !
 </translation>
     </message>
     <message>
@@ -3043,7 +2971,7 @@ Copie la sélection dans le presse-papier</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>Colle le presse-papier à la position du curseur</translation>
+        <translation>Colle le presse-papier �  la position du curseur</translation>
     </message>
     <message>
         <source>Paste
@@ -3051,7 +2979,7 @@ Copie la sélection dans le presse-papier</translation>
 Pastes the clipboard contents to the cursor position</source>
         <translation>Colle
 
-Colle le presse-papier à la position du curseur</translation>
+Colle le presse-papier �  la position du curseur</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3195,7 +3123,7 @@ Affiche l&apos;intégralité de la page</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation>Affichage à échelle normale</translation>
+        <translation>Affichage �  échelle normale</translation>
     </message>
     <message>
         <source>View 1:1
@@ -3203,7 +3131,7 @@ Affiche l&apos;intégralité de la page</translation>
 Shows the page content without magnification</source>
         <translation>Échelle 1
 
-Affiche la page à sa taille normale</translation>
+Affiche la page �  sa taille normale</translation>
     </message>
     <message>
         <source>Zoom in</source>
@@ -3347,7 +3275,7 @@ Détaille le sous-circuit sélectionné</translation>
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
         <translation>Remonter
 
-Remonte d&apos;un niveau, c.à.d sort du sous-circuit</translation>
+Remonte d&apos;un niveau, c.� .d sort du sous-circuit</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
@@ -3725,7 +3653,7 @@ Simulateur universel sous Qt
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Remerciements à Jens Flucke
+        <translation>Remerciements �  Jens Flucke
 
 </translation>
     </message>
@@ -3754,7 +3682,7 @@ Simulateur universel sous Qt
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation type="obsolete">En français par Eric Marzolf
+        <translation>En français par Eric Marzolf
 </translation>
     </message>
     <message>
@@ -3819,7 +3747,7 @@ Aligne le coté bas des éléments sélectionnés</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>Aligne les éléments sélectionnés à gauche</translation>
+        <translation>Aligne les éléments sélectionnés �  gauche</translation>
     </message>
     <message>
         <source>Align left
@@ -3827,7 +3755,7 @@ Aligne le coté bas des éléments sélectionnés</translation>
 Align selected elements to their left edge</source>
         <translation>Alignement gauche
 
-Aligne les éléments sélectionnés à gauche</translation>
+Aligne les éléments sélectionnés �  gauche</translation>
     </message>
     <message>
         <source>Align right</source>
@@ -3835,7 +3763,7 @@ Aligne les éléments sélectionnés à gauche</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>Aligne les éléments sélectionnés à droite</translation>
+        <translation>Aligne les éléments sélectionnés �  droite</translation>
     </message>
     <message>
         <source>Align right
@@ -3843,7 +3771,7 @@ Aligne les éléments sélectionnés à gauche</translation>
 Align selected elements to their right edge</source>
         <translation>Alignement droit
 
-Aligne les éléments sélectionnés à droite</translation>
+Aligne les éléments sélectionnés �  droite</translation>
     </message>
     <message>
         <source>Align</source>
@@ -4119,7 +4047,7 @@ Déplace la légende du composant</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation>Aller à la page d&apos;affichage</translation>
+        <translation>Aller �  la page d&apos;affichage</translation>
     </message>
     <message>
         <source>Abort simulation</source>

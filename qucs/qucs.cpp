@@ -47,7 +47,6 @@
 #include <qdatetime.h>
 #include <qfont.h>
 
-
 #include <limits.h>
 
 
@@ -1613,6 +1612,12 @@ void QucsApp::slotSetCompView(int index)
 		QImage(BITMAPDIR "tabular.xpm"));
       new QIconViewItem(CompComps, tr("Smith Chart"),
 		QImage(BITMAPDIR "smith.xpm"));
+      new QIconViewItem(CompComps, tr("Admittance Smith"),
+		QImage(BITMAPDIR "ysmith.xpm"));
+      new QIconViewItem(CompComps, tr("Polar-Smith Combi"),
+		QImage(BITMAPDIR "polarsmith.xpm"));
+      new QIconViewItem(CompComps, tr("Smith-Polar Combi"),
+		QImage(BITMAPDIR "smithpolar.xpm"));
       return;
   }
 
@@ -1700,6 +1705,9 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
               case 1: view->selDiag = new PolarDiagram(); break;
               case 2: view->selDiag = new TabDiagram();   break;
               case 3: view->selDiag = new SmithDiagram(); break;
+              case 4: view->selDiag = new SmithDiagram(0,0,false); break;
+              case 5: view->selDiag = new PSDiagram();  break;
+              case 6: view->selDiag = new PSDiagram(0,0,false); break;
           }
 
           if(view->drawn) view->viewport()->repaint();
