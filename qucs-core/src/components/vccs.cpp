@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vccs.cpp,v 1.7 2004/05/23 15:27:26 ela Exp $
+ * $Id: vccs.cpp,v 1.8 2004/09/25 21:09:46 ela Exp $
  *
  */
 
@@ -70,9 +70,17 @@ void vccs::calcSP (nr_double_t frequency) {
   setS (4, 4, 1.0);
 }
 
-void vccs::calcDC (void) {
+void vccs::initDC (void) {
   setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
   setB (1, 1, +0.0); setB (2, 1, +1.0); setB (3, 1, -1.0); setB (4, 1, +0.0);
   setD (1, 1, -1.0 / getPropertyDouble ("G"));
   setE (1, +0.0);
+}
+
+void vccs::calcAC (nr_double_t frequency) {
+  initDC ();
+  nr_double_t g = getPropertyDouble ("G");
+  nr_double_t t = getPropertyDouble ("T");
+  complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
+  setD (1, 1, -r);
 }

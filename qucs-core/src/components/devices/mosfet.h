@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.h,v 1.3 2004/09/12 14:09:20 ela Exp $
+ * $Id: mosfet.h,v 1.4 2004/09/25 21:09:46 ela Exp $
  *
  */
 
@@ -35,6 +35,9 @@ class mosfet : public circuit
   void initDC (void);
   void initModel (void);
   void calcOperatingPoints (void);
+  void initAC (void);
+  void calcAC (nr_double_t);
+  matrix& calcMatrixY (nr_double_t);
 
  private:
   nr_double_t UbsPrev, UbdPrev, UgsPrev, UgdPrev, UdsPrev, Udsat, Uon;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.9 2004/09/16 10:15:10 ela Exp $
+ * $Id: vdc.cpp,v 1.10 2004/09/25 21:09:46 ela Exp $
  *
  */
 
@@ -45,11 +45,11 @@ vdc::vdc () : circuit (2) {
 }
 
 void vdc::initDC (void) {
-  voltageSource (1, 1, 2, getPropertyDouble ("U"));
   setVoltageSources (1);
+  voltageSource (1, 1, 2, getPropertyDouble ("U"));
 }
 
-void vdc::calcTR (nr_double_t) {
+void vdc::initTR (void) {
   initDC ();
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vcvs.cpp,v 1.7 2004/05/23 15:27:26 ela Exp $
+ * $Id: vcvs.cpp,v 1.8 2004/09/25 21:09:46 ela Exp $
  *
  */
 
@@ -70,10 +70,17 @@ void vcvs::calcSP (nr_double_t frequency) {
   setS (4, 4, 1.0);
 }
 
-void vcvs::calcDC (void) {
+void vcvs::initDC (void) {
   nr_double_t g = getPropertyDouble ("G");
   setC (1, 1, +g); setC (1, 2, -1.0); setC (1, 3, +1.0); setC (1, 4, -g);
   setB (1, 1, +0); setB (2, 1, -1.0); setB (3, 1, +1.0); setB (4, 1, +0);
   setD (1, 1, 0.0);
   setE (1, 0.0);
+}
+
+void vcvs::calcAC (nr_double_t frequency) {
+  initDC ();
+  nr_double_t t = getPropertyDouble ("T");
+  complex g = polar (getPropertyDouble ("G"), - 2.0 * M_PI * frequency * t);
+  setC (1, 1, +g); setC (1, 4, -g);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.7 2004/05/23 15:27:26 ela Exp $
+ * $Id: strafo.cpp,v 1.8 2004/09/25 21:09:46 ela Exp $
  *
  */
 
@@ -68,7 +68,7 @@ void strafo::calcSP (nr_double_t) {
   setS (6, 4, z6);     setS (6, 5, -z6);    setS (6, 6, z1);
 }
 
-void strafo::calcDC (void) {
+void strafo::initDC (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
 
@@ -85,4 +85,8 @@ void strafo::calcDC (void) {
   setD (1, 1, 0); setD (2, 2, 0); setD (1, 2, 0); setD (2, 1, 0);
   setE (1, 0.0);
   setE (2, 0.0);
+}
+
+void strafo::initAC (void) {
+  initDC ();
 }

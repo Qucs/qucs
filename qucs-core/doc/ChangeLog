@@ -3,6 +3,8 @@
 	* technical.tex (subsection{Depletion Capacitance}):
 	Documented handling of depletion and diffusion capacitances
 	during transient analysis.
+	(subsection{Transmission line}): Fixed Y-parameters of
+	lossless transmission line.
 
 2004-09-22  Stefan Jahn  <stefan@lkcc.org>
 

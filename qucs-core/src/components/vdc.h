@@ -1,7 +1,7 @@
 /*
  * vdc.h - DC voltage source class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.h,v 1.6 2004/09/16 10:15:10 ela Exp $
+ * $Id: vdc.h,v 1.7 2004/09/25 21:09:46 ela Exp $
  *
  */
 
@@ -31,7 +31,7 @@ class vdc : public circuit
   vdc ();
   void initDC (void);
   void initAC (void);
-  void calcTR (nr_double_t);
+  void initTR (void);
 };
 
 #endif /* __VDC_H__ */
