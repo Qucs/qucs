@@ -28,6 +28,7 @@
 #include <qmessagebox.h>
 #include <qdir.h>
 #include <qstringlist.h>
+#include <qregexp.h>
 
 
 extern QDir QucsWorkDir;
@@ -704,8 +705,9 @@ bool QucsFile::createSubNetlist(QTextStream *stream)
       sl.insert(sl.at(i), pc->Ports.getFirst()->Connection->Name);
     }
 
-  QFileInfo Info(Doc->DocName);
-  (*stream) << "\n.Def:" << Info.fileName() << " " << sl.join(" ") << "\n";
+  QString  Type = Doc->DocName;
+  Type.replace(QRegExp("\\W"), "_"); // replace all none [a-zA-Z0-9] with _
+  (*stream) << "\n.Def:_" << Type << " " << sl.join(" ") << "\n";
 
 
   QString s;

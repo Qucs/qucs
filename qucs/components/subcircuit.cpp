@@ -16,21 +16,25 @@
  ***************************************************************************/
 
 #include "subcircuit.h"
+#include "../qucs.h"
+
+#include <qdir.h>
+#include <qfileinfo.h>
+
+extern QDir QucsWorkDir;
 
 
-Subcircuit::Subcircuit(int No)
+Subcircuit::Subcircuit()
 {
   Description = QObject::tr("subcircuit");
 
   Model = "Sub";
   Name  = "SUB";
 
-  Props.append(new Property("Type", "test.sch", true,
+  Props.append(new Property("File", "", true,
 		QObject::tr("name of qucs schematic file")));
-  Props.append(new Property("Symbol", QString::number(No), false,
-		QObject::tr("number of ports")));
 
-  recreate();
+//  makeSymbol(No);
 }
 
 Subcircuit::~Subcircuit()
@@ -39,7 +43,9 @@ Subcircuit::~Subcircuit()
 
 Component* Subcircuit::newOne()
 {
-  return new Subcircuit(Props.getLast()->Value.toInt());
+  Subcircuit *p = new Subcircuit();
+  p->remakeSymbol(Ports.count());
+  return p;
 }
 
 /*Component* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -55,11 +61,21 @@ Component* Subcircuit::newOne()
 // of ports.
 void Subcircuit::recreate()
 {
+  int No;
+  QFileInfo Info(Props.getFirst()->Value);
+  if(Info.isRelative())
+    No = QucsApp::testFile(QucsWorkDir.filePath(Props.getFirst()->Value));
+  else  No = QucsApp::testFile(Props.getFirst()->Value);
+  if(No < 0) No = 0;
+
+  remakeSymbol(No);
+}
+
+void Subcircuit::remakeSymbol(int No)
+{
   Lines.clear();
   Texts.clear();
   Ports.clear();
-
-  int No = Props.getLast()->Value.toInt();
 
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));

@@ -18,7 +18,7 @@
 #include "componentdialog.h"
 
 #include "../qucsview.h"
-#include "../qucs.h"
+#include "../qucsdoc.h"
 
 #include <qlayout.h>
 #include <qhbox.h>
@@ -28,9 +28,8 @@
 #include <qprocess.h>
 
 
-ComponentDialog::ComponentDialog(Component *c, QPtrList<Component> *l,
-			QWidget *parent, const char *name )
-			: QDialog(parent, name, TRUE, Qt::WDestructiveClose)
+ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
+			: QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
 {
   resize(400, 250);
   setCaption(tr("Edit Component Properties"));
@@ -125,7 +124,7 @@ ComponentDialog::ComponentDialog(Component *c, QPtrList<Component> *l,
 
   // ------------------------------------------------------------
   Comp  = c;
-  cList = l;
+  Doc   = d;
   label1->setText(c->Description);
   CompNameEdit->setText(c->Name);
   changed = transfered = false;
@@ -331,7 +330,7 @@ void ComponentDialog::slotApplyInput()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
   else
   if(CompNameEdit->text() != Comp->Name) {
-    for(pc = cList->first(); pc!=0; pc = cList->next())
+    for(pc = Doc->Comps.first(); pc!=0; pc = Doc->Comps.next())
       if(pc->Name == CompNameEdit->text())
         break;  // found component with the same name ?
     if(pc)  CompNameEdit->setText(Comp->Name);
@@ -366,7 +365,11 @@ void ComponentDialog::slotApplyInput()
   transfered = true;     // applied changed to the component itself
 
   if(changed) {
+    Doc->Comps.setAutoDelete(false);
+    Doc->deleteComp(Comp);
     Comp->recreate();   // to apply changes to the schematic symbol
+    Doc->insertRawComponent(Comp);
+    Doc->Comps.setAutoDelete(true);
     ((QucsView*)parent())->viewport()->repaint();
   }
 }

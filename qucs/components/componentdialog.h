@@ -19,6 +19,7 @@
 #define COMPONENTDIALOG_H
 
 #include "component.h"
+#include "../qucsdoc.h"
 
 #include <qlabel.h>
 #include <qdialog.h>
@@ -35,11 +36,13 @@
   *@author Michael Margraf
   */
 
+extern QDir QucsWorkDir;
+
+
 class ComponentDialog : public QDialog {
    Q_OBJECT
-public: 
-  ComponentDialog(Component *c, QPtrList<Component> *l,
-		  QWidget *parent=0, const char *name=0);
+public:
+  ComponentDialog(Component*, QucsDoc*, QWidget *parent=0);
   ~ComponentDialog();
 
 private slots:
@@ -66,7 +69,7 @@ private:
   QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
   QCheckBox   *disp;
   Component   *Comp;
-  QPtrList<Component> *cList;
+  QucsDoc     *Doc;
   bool        changed, transfered;
 };
 
