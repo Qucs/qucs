@@ -61,7 +61,7 @@ AC_CHECK_PROG(UIC, uic, uic, :)
 # Check include path to Qt.
 QINCLUDES=""
 AC_MSG_CHECKING([for Qt headers])
-paths="$QTDIR/include /usr/local/qt/include /usr/include/qt /usr/include /usr/X11R6/include/X11/qt /usr/X11R6/include/X11/qt /usr/X11R6/include/qt /usr/X11R6/include/qt2"
+paths="$QTDIR/include /usr/local/qt/include /usr/include/qt /usr/include/qt3 /usr/include /usr/X11R6/include/X11/qt /usr/X11R6/include/X11/qt /usr/X11R6/include/qt /usr/X11R6/include/qt2"
 for path in $paths; do
   if test -f "$path/qapplication.h"; then
     QINCLUDES=$path
