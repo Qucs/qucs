@@ -4235,7 +4235,7 @@ Qt univerzális áramkör szimuláció
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation>Toyoyuki ISHIKAWA - Japán
+        <translation type="obsolete">Toyoyuki ISHIKAWA - Japán
 </translation>
     </message>
     <message>
@@ -4257,6 +4257,11 @@ Qt univerzális áramkör szimuláció
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation type="unfinished"></translation>
     </message>

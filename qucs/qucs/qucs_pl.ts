@@ -4360,11 +4360,6 @@ Przesuwa tekst właściwości elementu</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki ISHIKAWA
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Italian by Giorgio Luparia
 </source>
         <translation type="unfinished"></translation>
@@ -4382,6 +4377,11 @@ Przesuwa tekst właściwości elementu</translation>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation type="unfinished"></translation>
     </message>

@@ -1,3 +1,8 @@
+2005-02-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* THANKS: Corrected Toyoyuki Ishikawa's name at all locations
+	in the project.
+
 2005-02-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: LDFLAGS additions for FreeBSD users.
@@ -7,7 +12,7 @@
 	* configure.ac: Add another paths to look for Qt header/library in.
 	Required for FreeBSD. Use gmake there.
 
-2004-11-24    <raimi@lkcc.org>
+2004-11-24  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
 
 	* autogen.sh: Make aclocal and automake program be overridable
 	with environment variable. Need this so i can easily build on

@@ -4275,7 +4275,7 @@ Mueve la propiedad texto de los componentes</translation>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation>Japonés por Toyoyuki ISHIKAWA
+        <translation type="obsolete">Japonés por Toyoyuki ISHIKAWA
 </translation>
     </message>
     <message>
@@ -4297,6 +4297,11 @@ Mueve la propiedad texto de los componentes</translation>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation type="unfinished"></translation>
     </message>

@@ -5269,11 +5269,6 @@ Muove il testo del componente</translation>
         <translation></translation>
     </message>
     <message>
-        <source>Japanese by Toyoyuki ISHIKAWA
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Italian by Giorgio Luparia
 </source>
         <translation></translation>
@@ -5291,6 +5286,11 @@ Muove il testo del componente</translation>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation type="unfinished"></translation>
     </message>
