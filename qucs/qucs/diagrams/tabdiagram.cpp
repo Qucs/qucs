@@ -147,6 +147,7 @@ void TabDiagram::calcDiagram()
 
 
     py = g->cPointsY;
+    if (!g->cPointsX.getFirst()) return;
     for(int z=g->cPointsX.getFirst()->count * g->countY; z>0; z--) {
       if(y < 0) break;
       if(fabs(*(py+1)) > 1e-250) {

@@ -3377,10 +3377,15 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>French by Eric Marzolf</source>
-        <translation type="unfinished">Francese di Eric Marzolf</translation>
+        <translation type="obsolete">Francese di Eric Marzolf</translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French by Eric Marzolf
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
