@@ -79,7 +79,7 @@ void QucsEdit::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
     tr("Qucs Editor Version ")+PACKAGE_VERSION+
-    tr("\nvery simple text editor for Qucs\n")+
+    tr("\nVery simple text editor for Qucs\n")+
     tr("Copyright (C) 2004 by Michael Margraf\n"));
 }
 

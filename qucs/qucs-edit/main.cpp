@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -114,9 +114,10 @@ bool saveApplSettings(QucsEdit *qucs)
 void showOptions()
 {
   fprintf(stdout, QObject::tr("Qucs Editor Version ")+PACKAGE_VERSION+
-    QObject::tr("\nvery simple text editor for Qucs\n")+
+    QObject::tr("\nVery simple text editor for Qucs\n")+
     QObject::tr("Copyright (C) 2004 by Michael Margraf\n")+
-    QObject::tr("\nUsage:  qucsedit [-r] filename\n")+
+    QObject::tr("\nUsage:  qucsedit [-r] file\n")+
+    QObject::tr("    -h  display this help and exit\n")+
     QObject::tr("    -r  open file read-only\n"));
 }
 
@@ -133,6 +134,10 @@ int main(int argc, char *argv[])
 
   QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
+
+  QTranslator tor( 0 );
+  tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
+  a.installTranslator( &tor );
 
   bool readOnly = false;
   QString FileName, s;
@@ -162,10 +167,6 @@ int main(int argc, char *argv[])
 	    return -1;
 	  }
   }
-
-  QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
-  a.installTranslator( &tor );
 
   QucsEdit *qucs = new QucsEdit(FileName, readOnly);
   a.setMainWidget(qucs);
