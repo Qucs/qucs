@@ -37,7 +37,7 @@ if MAINTAINER_MODE
 generated_FILES = parse_spice.cpp scan_spice.cpp tokens_spice.h
 
 scan_spice.cpp: scan_spice.l
-	$(LEX) --nounistd -o$@ $<
+	$(LEX) -o$@ $<
 
 parse_spice.cpp: parse_spice.y
 	$(YACC) -v -o $@ --defines=tokens_spice.h $<

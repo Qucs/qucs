@@ -1,7 +1,7 @@
 /*
  * input.cpp - input netlist class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.42 2005/02/28 09:28:45 raimi Exp $
+ * $Id: input.cpp,v 1.43 2005/03/30 07:35:52 raimi Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "parasweep.h"
 #include "acsolver.h"
 #include "trsolver.h"
+#include "hbsolver.h"
 #include "variable.h"
 #include "environment.h"
 #include "nodeset.h"
@@ -402,6 +403,8 @@ analysis * input::createAnalysis (char * type) {
     return new acsolver ();
   else if (!strcmp (type, "TR"))
     return new trsolver ();
+  else if (!strcmp (type, "HB"))
+    return new hbsolver ();
 
   logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
   return NULL;

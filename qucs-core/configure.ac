@@ -15,11 +15,30 @@ AC_PREFIX_DEFAULT([/usr/local])
 test "x$prefix" = xNONE && prefix="/usr/local"
 
 # Checks for programs.
-AC_PROG_YACC
 AC_PROG_CXX
 AC_PROG_CC
-AC_PROG_LEX
 AC_PROG_RANLIB
+
+# Check for parser and lexer generators.
+AC_PROG_YACC
+AC_PROG_LEX
+
+if test "x$LEX" != "x:"; then
+  AC_MSG_CHECKING([whether $LEX accepts --nounistd])
+  cat <<EOF > lextest.l
+%%
+token     action;
+EOF
+  lexout="`$LEX --nounistd -olextest.c lextest.l 2>&1`"
+  rm -f lextest.l lextest.c
+  if test "x$lexout" != "x"; then
+    AC_MSG_RESULT([no])
+  else
+    AC_MSG_RESULT([yes])
+    LEX="$LEX --nounistd"
+  fi
+  unset lexout
+fi
 
 # Check for debugging.
 AC_ARG_ENABLE([debug],

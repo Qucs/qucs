@@ -1,7 +1,7 @@
 /*
  * vector.h - vector class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.12 2004/10/13 14:43:18 ela Exp $
+ * $Id: vector.h,v 1.13 2005/03/30 07:35:53 raimi Exp $
  *
  */
 
@@ -58,6 +58,8 @@ class vector : public object
   char * getOrigin (void);
   nr_double_t maximum (void);
   nr_double_t minimum (void);
+  int contains (complex, nr_double_t eps = 1e-12);
+  void sort (bool ascending = true);
 
   friend complex sum  (vector);
   friend complex prod (vector);
