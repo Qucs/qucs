@@ -524,6 +524,7 @@ With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
 
 \section{Matrix conversions}
 %\addcontentsline{toc}{section}{Matrix conversions}
+\label{sec:SparameterConversion}
 
 When dealing with S-parameter analyses it may be necessary or
 convenient to convert the resulting scattering parameter matrix into
@@ -1595,6 +1596,7 @@ and its $n\times n$ noise wave correlation matrix $(\underline{C})$.
   \underline{c}_{n1} & \underline{c}_{n2} & \ldots & \underline{c}_{nn}\\
 \end{pmatrix}
 \end{split}
+\label{eq:NoiseCs}
 \end{equation}
 
 Where $\overline{x}$ is the time average of $x$ and $\underline{x}^*$
@@ -1626,11 +1628,12 @@ $\underline{x}$.
 %\addcontentsline{toc}{section}{Noise Parameters}
 
 Having the noise wave correlation matrix, one can easily compute the
-noise parameters \cite{Wedge}.  The following equations calculate them with regard
-to port 1 (input) and port 2 (output). (If one uses an n-port and want to calculate
-the noise parameters regarding to other ports, one has to replace the index numbers
-of S- and c-parameters accordingly. I.e. replace "1" with the number of the input
-port and "2" with the number of the output port.)
+noise parameters \cite{Wedge}.  The following equations calculate them
+with regard to port 1 (input) and port 2 (output).  (If one uses an
+n-port and want to calculate the noise parameters regarding to other
+ports, one has to replace the index numbers of S- and c-parameters
+accordingly.  I.e. replace "1" with the number of the input port and
+"2" with the number of the output port.)
 
 \addvspace{12pt}
 
@@ -1920,6 +1923,143 @@ they do not have to be denormalized, because the noise parameters can
 be calculated by using equation \eqref{eqn:nparamF} to
 \eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
 
+\section{Noise Correlation Matrix Transformations}
+%\addcontentsline{toc}{section}{Noise Correlation Matrix Transformations}
+
+The noise wave correlation matrix of a passive linear circuit
+generating thermal noise only can be calculated using Bosma's theorem.
+The noise wave correlation matrices of active devices can be
+determined by forming the noise current correlation matrix and then
+transforming it to the equivalent noise wave correlation matrix.
+
+\addvspace{12pt}
+
+The noise current correlation matrix (also called the admittance
+representation) $\underline{C}_Y$ is an $n \times n$ matrix.
+\begin{equation}
+\underline{C}_Y =
+\begin{pmatrix}
+\overline{\underline{i}_{1}\cdot \underline{i}_{1}^*} &
+    \overline{\underline{i}_{1}\cdot \underline{i}_{2}^*} &
+    \ldots & \overline{\underline{i}_{1}\cdot \underline{i}_{n}^*}\\
+ \overline{\underline{i}_{2}\cdot \underline{i}_{1}^*} &
+    \overline{\underline{i}_{2}\cdot \underline{i}_{2}^*} & \ldots &
+    \overline{\underline{i}_{2}\cdot \underline{i}_{n}^*}\\
+ \vdots & \vdots & \ddots & \vdots\\
+ \overline{\underline{i}_{n}\cdot \underline{i}_{1}^*} &
+    \overline{\underline{i}_{n}\cdot \underline{i}_{2}^*} &
+    \ldots & \overline{\underline{i}_{n}\cdot \underline{i}_{n}^*}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+  \underline{c}_{11} & \underline{c}_{12} & \ldots & \underline{c}_{1n}\\
+  \underline{c}_{21} & \underline{c}_{22} & \ldots & \underline{c}_{2n}\\
+  \vdots & \vdots & \ddots & \vdots\\
+  \underline{c}_{n1} & \underline{c}_{n2} & \ldots & \underline{c}_{nn}\\
+\end{pmatrix}
+\end{equation}
+
+This definition is very likely the one made by eq. \eqref{eq:NoiseCs}.
+The matrix has the same properties as well.  Because in most
+transistor models the noise behaviour is expressed as the sum of
+effects of noise current sources it is easier to form this matrix
+representation.
+
+\subsection{Forming the noise current correlation matrix}
+%\addcontentsline{toc}{subsection}{Forming the noise current correlation matrix}
+
+Each element in the diagonal matrix is equal to the sum of the noise
+current of each element connected to the corresponding node.  So the
+first diagonal element is the sum of noise currents connected to node
+1, the second diagonal element is the sum of noise currents connected
+to node 2, and so on.
+
+\addvspace{12pt}
+
+The off diagonal elements are the negative noise current of the
+element connected to the pair of corresponding node.  Therefore a
+noise current source between nodes 1 and 2 goes into the matrix at
+location (1,2) and locations (2,1).
+
+\addvspace{12pt}
+
+If a noise current source is grounded, it will only have contribute to
+one entry in the noise correlation matrix -- at the appropriate
+location on the diagonal.  If it is ungrounded it will contribute to
+four entries in the matrix -- two diagonal entries (corresponding to
+the two nodes) and two off-diagonal entries.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[angle=-90,width=8cm]{CYexample}
+\end{center}
+\caption{example circuit applied to noise analysis}
+\label{fig:CYexample}
+\end{figure}
+\FloatBarrier
+
+Once having defined the spectral noise current densities of the noise
+currents within a transistor model the above rules for forming the
+$\underline{C}_Y$ matrix can be applied to the example circuit
+depicted in fig. \ref{fig:CYexample}.  The noise noise current
+correlation matrix is accordingly
+\begin{equation}
+\underline{C}_Y =
+\begin{bmatrix}
++\overline{i_1^2} & -\overline{i_1^2}\\
+-\overline{i_1^2} & \overline{i_1^2} + \overline{i_2^2}\\
+\end{bmatrix}
+\end{equation}
+
+\subsection{Transformations}
+%\addcontentsline{toc}{subsection}{Transformations}
+
+There are three usable noise correlation matrix representations for
+multiport circuits.
+
+\begin{itemize}
+\item admittance representation $\underline{C}_Y$ - based on noise currents
+\item impedance representation $\underline{C}_Z$ - based on noise voltages
+\item wave representation $\underline{C}_S$ - based on noise waves
+\end{itemize}
+
+According to Scott W. Wedge and David B. Rutledge \cite{Wedge} the
+transformations between these representations write as follows.
+
+\begin{center}
+\setlength{\fboxsep}{4pt}
+\begin{tabular}{|r|c|c|c|}
+\hline
+&
+\setlength{\fboxrule}{0pt}
+\fbox{$\underline{C}_Y$}  & $\underline{C}_Z$ & $\underline{C}_S$\\
+\hline
+$\underline{C}_Y$ & $\underline{C}_Y$ & $Y\cdot \underline{C}_Z\cdot Y^{+}$ &
+\setlength{\fboxrule}{0pt}
+\fbox{$\left(E + Y\right)\cdot \underline{C}_S\cdot \left(E + Y\right)^{+}$}\\
+\hline
+$\underline{C}_Z$ & $Z\cdot \underline{C}_Y\cdot Z^{+}$ & $\underline{C}_Z$ &
+\setlength{\fboxrule}{0pt}
+\fbox{$\left(E + Z\right)\cdot \underline{C}_S\cdot \left(E + Z\right)^{+}$}\\
+\hline
+$\underline{C}_S$ &
+\setlength{\fboxrule}{0pt}
+\fbox{$\dfrac{1}{4} \left(E + S\right)\cdot \underline{C}_Y\cdot \left(E + S\right)^{+}$} & $\dfrac{1}{4} \left(E - S\right)\cdot \underline{C}_Z\cdot \left(E - S\right)^{+}$ & $\underline{C}_S$\\
+\hline
+\end{tabular}
+\end{center}
+
+The signal as well as correlation matrices in impedance and admittance
+representations are assumed to be normalized in the above table.  $E$
+denotes the identity matrix and the $ ^{+}$ operator indicates the
+transposed conjugate matrix (also called adjoint or adjugate).
+
+\addvspace{12pt}
+
+Each noise correlation matrix transformation requires the appropriate
+signal matrix representation which can be obtained using the formulas
+given in section \ref{sec:SparameterConversion} on page
+\pageref{sec:SparameterConversion}.
 
 \section{Noise Wave Correlation Matrix of Components}
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
@@ -2064,9 +2204,9 @@ Lorentzian PSD (generation-recombination noise): & $a=1$, $b=1/f_c^2$, $c=2$ \\
 
 \subsection{Diode}
 
-An ideal diode (pn- or schottky-diode) generates shot noise. Both types of current
-(field and diffusion) contribute independently to it. The noise wave correlation
-matrix, therefore, writes as follows.
+An ideal diode (pn- or schottky-diode) generates shot noise.  Both
+types of current (field and diffusion) contribute independently to it.
+The noise wave correlation matrix, therefore, writes as follows.
 
 \begin{equation}
 \begin{split}

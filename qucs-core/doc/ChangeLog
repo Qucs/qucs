@@ -2,6 +2,8 @@
 
 	* technical.tex (subsection{Noise model}): Documented noise
 	model of junction FET.
+	(section{Noise Correlation Matrix Transformations}): How
+	noise correlation matrix conversions work.
 
 2004-07-21  Stefan Jahn  <stefan@lkcc.org>
 

@@ -25,9 +25,9 @@ unfixed) have a look at the file BUGS.
 
 - Check polarity of BJT (SPICE Gummel-Poon) device.
 - Implement temperature models of existing non-linear devices.
-- Implement DC model for transmission line.
+	- Implement DC model for transmission line.
 - Implement noise model for attenuator, diode and isolator.
-- Recalculate S-parameters in touchstone files for n+1 ports.
+	- Recalculate S-parameters in touchstone files for n+1 ports.
 - Implement excess phase and polarity of SGP BJT model.
 - Make Wheeler's quasi-static formulas for microstrip continual.
 	- Allow subcircuits in netlist and simulate them correctly.
