@@ -74,7 +74,13 @@ QString QucsFile::createClipboardFile()
   s += "<Wires>\n";
   for(pw = Doc->Wires->first(); pw != 0; pw = Doc->Wires->next())
     if(pw->isSelected) {
-      s += pw->save()+"\n";  z++; }
+      z++;
+      if(pw->Label) if(!pw->Label->isSelected) {
+	s += pw->save().section('"', 0, 0)+"\"\" 0 0 0>\n";
+	continue;
+      }
+      s += pw->save()+"\n";
+    }
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->Label) if(pn->Label->isSelected) {
       s += pn->Label->save()+"\n";  z++; }
@@ -430,6 +436,7 @@ bool QucsFile::loadWires(QTextStream *stream, QPtrList<Element> *List)
 	continue;
       }
       List->append(w);
+      if(w->Label)  List->append(w->Label);
     }
     else simpleInsertWire(w);
   }

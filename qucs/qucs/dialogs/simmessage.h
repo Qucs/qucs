@@ -23,6 +23,7 @@
 #include <qtextedit.h>
 #include <qprocess.h>
 #include <qpushbutton.h>
+#include <qprogressbar.h>
 
 
 /**
@@ -50,11 +51,13 @@ public slots:
   void slotDisplayButton();
 
 public:
-  QProcess    SimProcess;
-  QTextEdit   *ProgText, *ErrText;
-  bool        wasLF;   // linefeed for "ProgText"
-  QPushButton *Display, *Abort;
-  QString     DataDisplay;
+  QProcess     SimProcess;
+  QTextEdit    *ProgText, *ErrText;
+  bool         wasLF;   // linefeed for "ProgText"
+  QPushButton  *Display, *Abort;
+  QString      DataDisplay;
+  QProgressBar *SimProgress;
+  QString      ProgressText;
 };
 
 #endif

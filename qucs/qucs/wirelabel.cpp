@@ -139,8 +139,11 @@ void WireLabel::paint(QPainter *p)
     }
   }
 
+  p->setWorldXForm(false);
   p->setPen(QPen(QPen::black,1));
-  p->drawText(x1, y1, Name);
+  p->worldMatrix().map(x1, y1, &xpaint, &ypaint);
+  p->drawText(xpaint, ypaint, Name);
+  p->setWorldXForm(true);
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));

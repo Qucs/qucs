@@ -170,15 +170,17 @@ void Component::paint(QPainter *p)
     p->drawText(cx+pt->x, cy+pt->y, pt->s);
   p->setFont(f);
 
-  int Height = QFontMetrics(p->font()).height();
-  int y = cy+ty+Height;
-  p->drawText(cx+tx, cy+ty, 0, 0, Qt::DontClip, Name);
+  p->setWorldXForm(false);
+  int x, y, Height = p->font().pointSize();
+  p->worldMatrix().map(cx+tx, cy+ty, &x, &y);
+  p->drawText(x, y, 0, 0, Qt::DontClip, Name);
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
-      p->drawText(cx+tx, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
       y += Height;
+      p->drawText(x, y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
     }
+  p->setWorldXForm(true);
 
   if(!isActive) {
     p->setPen(QPen(QPen::red,0));
@@ -588,6 +590,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "noise") c = new Ampere_noise();
         else if(cstr == "solator") c = new Isolator();
         else if(cstr == "pulse") c = new iPulse();
+        else if(cstr == "rect") c = new iRect();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
         break;
@@ -597,6 +600,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "CVS") c = new VCVS();
         else if(cstr == "noise") c = new Volt_noise();
         else if(cstr == "pulse") c = new vPulse();
+        else if(cstr == "rect") c = new vRect();
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();

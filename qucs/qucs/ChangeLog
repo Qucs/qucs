@@ -19,6 +19,19 @@
 
 	* docs/Makefile.am (dist_man_MANS): Added simple man page.
 
+2004-09-26  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* placing component over wire, deletes wire
+	* wire labels move correctly with paste
+	* rotate and mirror wire labels correctly
+	* fixed bug that did not revert the edit mode status after
+	closing a project
+	* changed status line text for symbol edit mode
+	* fixed bug that remove node labels when rotating or
+	mirroring
+	* add components: vrect and irect
+	* add progress bar to the simulation window
+
 2004-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* paintings/painting.h: Made 'Name' a QString in order to
