@@ -6103,8 +6103,17 @@ matrix is known.
 \end{figure}
 \FloatBarrier
 
+The electrical parameters of microstrip lines which are required for
+circuit design are impedance, attenuation, wavelength and propagation
+constant.  These parameters are interrelated for all microstrips
+assuming that the propagation mode is a transverse electromagnetic
+mode, or it can be approximated by a transverse electromagnetic mode.
+
 \subsection{Quasi-static characteristic impedance}
 %\addcontentsline{toc}{subsection}{Quasi-static characteristic impedance}
+
+\subsubsection{Wheeler}
+%\addcontentsline{toc}{subsubsection}{Wheeler}
 
 Harold A. Wheeler \cite{Wheeler2} formulated his synthesis and
 analysis equations based upon a conformal mapping's approximation of
@@ -6135,10 +6144,33 @@ The formulae are applicable to alumina-type substrates ($8 \le
 \psfrag{normalised strip width W/h}{normalised strip width W/h}
 \includegraphics[width=0.95\linewidth]{mszl}
 \end{center}
-\caption{characteristic impedance as approximated by Wheeler for different $\varepsilon_{r}$ values}
+\caption{characteristic impedance as approximated by Hammerstad for $\varepsilon_{r}$ = $1.0$ (air), $3.78$ (quartz) and $9.5$ (alumina)}
 \label{fig:mszl}
 \end{figure}
 \FloatBarrier
+
+\subsubsection{Schneider}
+%\addcontentsline{toc}{subsubsection}{Schneider}
+
+The following formulas obtained by rational function approximation
+give accuracy of $\pm 0.25\%$ for $0 \le W/h \le 10$ which is the
+range of importance for most engineering applications.  M.V. Schneider
+\cite{Schneider} found these approximations for the complete elliptic
+integrals of the first kind as accurate as $\pm 1\%$ for $W/h > 10$.
+
+\begin{equation}
+Z_L = \dfrac{Z_{F0}}{\sqrt{\varepsilon_{r_{eff}}}}\cdot
+\begin{cases}
+\begin{array}{ll}
+\dfrac{1}{2\pi}\cdot \ln{\left(\dfrac{8\cdot h}{W} + \dfrac{W}{4\cdot h}\right)} & \textrm{ for } \dfrac{W}{h} \le 1\\
+&\\
+\dfrac{1}{\dfrac{W}{h} + 2.42 - 0.44\cdot\dfrac{h}{W} + \left(1 - \dfrac{h}{W}\right)^6} & \textrm{ for } \dfrac{W}{h} > 1\\
+\end{array}
+\end{cases}
+\end{equation}
+
+\subsubsection{Hammerstad and Jensen}
+%\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}
 
 The equations for the single microstrip line presented by
 E. Hammerstad and {\O}. Jensen \cite{Hammerstad} are based upon an
@@ -6181,6 +6213,9 @@ is approximately $0.1\ohm$.
 \subsection{Quasi-static effective dielectric constant}
 %\addcontentsline{toc}{subsection}{Quasi-static effective dielectric constant}
 
+\subsubsection{Wheeler}
+%\addcontentsline{toc}{subsubsection}{Wheeler}
+
 Harold A. Wheeler \cite{Wheeler} gives the following approximation for
 narrow strips ($W/h < 3$) based upon the characteristic impedance
 $Z_L$.  The estimated relative error is less than 1\%.
@@ -6207,6 +6242,20 @@ with
 D &= \dfrac{\varepsilon_r - 1}{2\pi \varepsilon_r}\cdot\left(\ln{\left(\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)\right)} - \dfrac{1}{\varepsilon_r} \ln{\dfrac{e\pi^{2}}{16}}\right)\\
 E &= \dfrac{1}{2}\cdot\dfrac{W}{h} + \dfrac{1}{\pi}\cdot \ln{\left(\pi e \dfrac{W}{h} + 16.0547\right)}
 \end{align}
+
+\subsubsection{Schneider}
+%\addcontentsline{toc}{subsubsection}{Schneider}
+
+The approximate function found by M.V. Schneider \cite{Schneider} is
+meant to have an accuracy of $\pm 2\%$ for $\varepsilon_{r_{eff}}$ and
+an accuracy of $\pm 1\%$ for $\sqrt{\varepsilon_{r_{eff}}}$.
+
+\begin{equation}
+\varepsilon_{r_{eff}} = \dfrac{\varepsilon_{r} + 1}{2} + \dfrac{\varepsilon_{r} - 1}{2}\cdot\dfrac{1}{\sqrt{1 + 10\dfrac{h}{W}}}
+\end{equation}
+
+\subsubsection{Hammerstad and Jensen}
+%\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}
 
 The accuracy of the E. Hammerstad and {\O}. Jensen \cite{Hammerstad} model
 is better than 0.2\% at least for $\varepsilon_r < 128$ and $0.01 \le
@@ -6249,6 +6298,26 @@ For the mixed media case with dielectric he obtains the approximation
 \begin{equation}
 \Delta W_r = \dfrac{1}{2} \Delta W_1 \left(1 + \dfrac{1}{\varepsilon_r}\right)
 \end{equation}
+
+\subsubsection{Schneider}
+%\addcontentsline{toc}{subsubsection}{Schneider}
+
+M.V. Schneider \cite{Schneider} derived the following approximate
+expressions.
+\begin{equation}
+\Delta W =
+\begin{cases}
+\begin{array}{ll}
+\dfrac{t}{\pi}\cdot\left(1 + \ln{\dfrac{4\cdot\pi\cdot W}{t}}\right) & \textrm{ for } \dfrac{W}{h} \le \dfrac{1}{2\pi}\\
+&\\
+\dfrac{t}{\pi}\cdot\left(1 + \ln{\dfrac{2\cdot h}{t}}\right) & \textrm{ for } \dfrac{W}{h} > \dfrac{1}{2\pi}\\
+\end{array}
+\end{cases}
+\end{equation}
+
+Additional restrictions for applying these expressions are $t \ll h$,
+$t < W/2$ and $t/\Delta W < 0.75$.  Notice also that the ratio $\Delta
+W / t$ is divergent for $t \rightarrow 0$.
 
 \subsubsection{Hammerstad and Jensen}
 %\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}
@@ -6522,7 +6591,7 @@ whence
 \begin{equation}
 W_e(f) = W + \dfrac{W_{eff} - W}{1 + \left(\dfrac{f}{f_T}\right)^2}
 \;\;\;\; \textrm{ and } \;\;\;\;
-W_{eff} = \dfrac{Z_{F0}\cdot h\cdot\sqrt{\varepsilon_{r_{eff}}}}{Z_L\cdot \varepsilon_r}
+W_{eff} = \dfrac{Z_{F0}\cdot h}{Z_L\cdot \sqrt{\varepsilon_{r_{eff}}}}
 \end{equation}
 
 \subsection{Transmission losses}

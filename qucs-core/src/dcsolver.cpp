@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.27 2004/09/06 06:40:07 ela Exp $
+ * $Id: dcsolver.cpp,v 1.28 2004/09/09 11:31:51 ela Exp $
  *
  */
 
@@ -64,7 +64,8 @@ dcsolver::dcsolver (dcsolver & o) : nasolver<nr_double_t> (o) {
    solves it then. */
 void dcsolver::solve (void) {
   // fetch simulation properties
-  saveOPs = !strcmp (getPropertyString ("saveOPs"), "yes") ? 1 : 0;
+  saveOPs |= !strcmp (getPropertyString ("saveOPs"), "yes") ? SAVE_OPS : 0;
+  saveOPs |= !strcmp (getPropertyString ("saveAll"), "yes") ? SAVE_ALL : 0;
 
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary

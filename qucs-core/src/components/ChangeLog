@@ -1,3 +1,10 @@
+2004-09-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Implemented Schneider formulae
+	correctly.
+
+	* tee.cpp: Implemented DC model of ideal tee junction.
+
 2004-09-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Moved dispersion formulas by
