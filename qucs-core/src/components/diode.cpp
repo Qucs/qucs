@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.2 2004/02/03 21:57:38 ela Exp $
+ * $Id: diode.cpp,v 1.3 2004/02/08 17:50:56 margraf Exp $
  *
  */
 
@@ -62,7 +62,7 @@ void diode::calcY (void) {
   //  Ud = Ucrit;
   //}
   gd = Is / Ut * exp (Ud / Ut);
-  Id = Is * exp (Ud / Ut - 1);
+  Id = Is * (exp (Ud / Ut) - 1);  //Id = Is * exp (Ud / Ut - 1);
   Ieq = Id - Ud * gd;
 
   setI (1, +Ieq);
