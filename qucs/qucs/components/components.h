@@ -66,7 +66,7 @@
 #include "bjtsub.h"
 #include "jfet.h"
 #include "mosfet.h"
-#include "mosfet_depl.h"
+#include "mosfet_sub.h"
 #include "dc_sim.h"
 #include "ac_sim.h"
 #include "tr_sim.h"

@@ -73,6 +73,23 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 }
 
 // -------------------------------------------------------
+// Size of component text.
+void Component::TextSize(int& _dx, int& _dy)
+{
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  int tmp;
+  _dx = metrics.width(Name);
+  _dy = metrics.height();    // for "Name"
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display) {
+      // get width of text
+      tmp = metrics.width(pp->Name+"="+pp->Value);
+      if(tmp > _dx)  _dx = tmp;
+      _dy += metrics.height();
+    }
+}
+
+// -------------------------------------------------------
 // Boundings including the component text.
 void Component::entireBounds(int& _x1, int& _y1, int& _x2, int& _y2)
 {
@@ -193,6 +210,13 @@ void Component::paintScheme(QPainter *p)
 }
 
 // -------------------------------------------------------
+// Set position of property text to not interfere with component
+// symbol.
+void Component::recreate()
+{
+}
+
+// -------------------------------------------------------
 // Rotates the component 90° counter-clockwise around its center
 void Component::rotate()
 {
@@ -252,7 +276,7 @@ void Component::rotate()
       if(tmp > dx) dx = tmp;
       dy += metrics.height();
     }
-  if(tx > x2) ty = y1-ty+y2;
+  if(tx > x2) ty = y1-ty+y2;    // rotate text position
   else if(ty < y1) ty -= dy;
   else if(tx < x1) { tx += dy-dx;  ty = y1-ty+y2; }
   else ty -= dx;
@@ -455,6 +479,7 @@ bool Component::load(const QString& _s)
   if(!ok) return false;
 
 if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+
   n  = s.section(' ',5,5);    // tx
   ttx = n.toInt(&ok);
   if(!ok) return false;
@@ -473,6 +498,7 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
   for(int z=0; z<tmp; z++) rotate();   // rotate component
 
   tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
+
 }
 
   int z=0;
@@ -579,7 +605,6 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "UBST") c = new Substrate();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
-	else if(cstr == "MOSFET") c = new MOSFET_depl();
 	else if(cstr == "CFeed") c = new dcFeed();
 	else if(cstr == "iode") c = new Diode();
 	break;
@@ -589,7 +614,7 @@ Component* getComponentFromName(QString& Line)
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
         break;
   case 'M' : if(cstr == "LIN") c = new MSline();
-	else if(cstr == "OSFET") c = new MOSFET();
+	else if(cstr == "OSFET") c = new MOSFET_sub();
 	else if(cstr == "STEP") c = new MSstep();
 	else if(cstr == "CORN") c = new MScorner();
 	else if(cstr == "TEE") c = new MStee();
@@ -609,6 +634,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "SW") c = new Param_Sweep();
         break;
   case '_' : if(cstr == "BJT") c = new BJT();
+	else if(cstr == "MOSFET") c = new MOSFET();
         break;
   }
   if(!c) {

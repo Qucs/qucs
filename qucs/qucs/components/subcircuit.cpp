@@ -28,6 +28,8 @@ Subcircuit::Subcircuit()
 {
   Description = QObject::tr("subcircuit");
 
+  Ports.append(new Port(0,  0));  // dummy port because of being device
+
   Model = "Sub";
   Name  = "SUB";
 
@@ -105,28 +107,12 @@ void Subcircuit::remakeSymbol(int No)
   tx = x1+4;
   ty = y2+4;
 
-
-  Line *p1;
   bool mmir = mirroredX;
-  int  tmp, ttx = tx, tty = ty, rrot = rotated;
-  if(mmir)  // mirror all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      p1->y1 = -p1->y1;
-      p1->y2 = -p1->y2;
-    }
-
-  for(int z=0; z<rrot; z++)    // rotate all lines
-    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
-      tmp = -p1->x1;
-      p1->x1 = p1->y1;
-      p1->y1 = tmp;
-      tmp = -p1->x2;
-      p1->x2 = p1->y2;
-      p1->y2 = tmp;
-    }
+  int  rrot = rotated;
+  if(mmir)  mirrorX();   // mirror
+  for(int z=0; z<rrot; z++)  rotate(); // rotate
 
 
-  tx = ttx; ty = tty;  // restore properties (were changed by rotate/mirror)
-  rotated = rrot;
+  rotated = rrot;   // restore properties (were changed by rotate/mirror)
   mirroredX = mmir;
 }
