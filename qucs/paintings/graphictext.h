@@ -1,5 +1,5 @@
 /***************************************************************************
-                          graphictext.h  -  description
+                                graphictext.h
                              -------------------
     begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -20,12 +20,13 @@
 
 #include "painting.h"
 
+
 /**
   *@author Michael Margraf
   */
 
 class GraphicText : public Painting  {
-public: 
+public:
   GraphicText();
   ~GraphicText();
 

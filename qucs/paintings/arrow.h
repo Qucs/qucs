@@ -28,7 +28,7 @@
   */
 
 class Arrow : public Painting  {
-public: 
+public:
   Arrow();
   ~Arrow();
 

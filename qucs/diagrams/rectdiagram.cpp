@@ -26,7 +26,7 @@
 RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;      // position of label text
-  y1 = y3 = 32;
+  y1 = y3 = 33;
   x2 = 240;     // initial size of diagram
   y2 = 160;
   x3 = 247;
@@ -374,8 +374,8 @@ if(xAxis.log) {
       if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
       else  tmp = StringNum(zD, 'e', 1);
 
-      if(set_log)  Texts.append(new Text(z-10, -5, '-'+tmp));
-      else  Texts.append(new Text(z-10, -5, tmp));
+      if(set_log)  Texts.append(new Text(z-10, -6, '-'+tmp));
+      else  Texts.append(new Text(z-10, -6, tmp));
 
       Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));  // x marks
     }
@@ -413,7 +413,7 @@ else {  // not logarithmical
     z = int(zD);
   }
 } // of "if(xlog) ... else ..."
-
+  y1 = QucsSettings.font.pointSize()+20;
 
 
   // ====  y grid  =======================================================

@@ -21,7 +21,7 @@
 #include "element.h"
 #include "viewpainter.h"
 
-#include <qpainter.h>
+class QPainter;
 
 /**
   *@author Michael Margraf

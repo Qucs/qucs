@@ -44,6 +44,8 @@ tQucsSettings QucsSettings
 
 QFont savingFont;    // to remember which font to save in "qucsrc"
 
+QucsApp *QucsMain;   // the Qucs application itself
+
 // just dummies for empty lists
 QPtrList<Wire>      SymbolWires;
 QPtrList<Node>      SymbolNodes;
@@ -204,10 +206,10 @@ int main(int argc, char *argv[])
   tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
   a.installTranslator( &tor );
 
-  QucsApp *qucs = new QucsApp();
-  a.setMainWidget(qucs);
-  qucs->show();
+  QucsMain = new QucsApp();
+  a.setMainWidget(QucsMain);
+  QucsMain->show();
   int result = a.exec();
-  saveApplSettings(qucs);
+  saveApplSettings(QucsMain);
   return result;
 }
