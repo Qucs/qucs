@@ -321,11 +321,31 @@
     </message>
     <message>
         <source>smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Smith-Achse</translation>
     </message>
     <message>
         <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>polare Achse</translation>
+    </message>
+    <message>
+        <source>x-Axis</source>
+        <translation>x-Achse</translation>
+    </message>
+    <message>
+        <source>manual</source>
+        <translation>benutzerdefiniert</translation>
+    </message>
+    <message>
+        <source>left y-Axis</source>
+        <translation>linke y-Achse</translation>
+    </message>
+    <message>
+        <source>right y-Axis</source>
+        <translation>rechte y-Achse</translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation>Begrenzungen</translation>
     </message>
 </context>
 <context>
@@ -4206,15 +4226,15 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Polar-Smith Kombi</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Smith-Polar Kombi</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>Smith-Diagramm (Admittanz)</translation>
     </message>
 </context>
 <context>
