@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.1 2004/09/06 06:40:07 ela Exp $
+ * $Id: nasolver.cpp,v 1.2 2004/09/06 12:46:23 ela Exp $
  *
  */
 
@@ -117,7 +117,7 @@ int nasolver<nr_type_t>::solve_once (void) {
   // appropriate exception handling
   catch_exception () {
   case EXCEPTION_PIVOT: case EXCEPTION_WRONG_VOLTAGE:
-    e = new qucs::exception (EXCEPTION_DC_FAILED);
+    e = new qucs::exception (EXCEPTION_NA_FAILED);
     d = top_exception()->getData (); pop_exception ();
     if (d > countNodes ()) {
       d -= countNodes ();

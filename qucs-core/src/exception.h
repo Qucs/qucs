@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: exception.h,v 1.2 2004/07/05 21:41:46 ela Exp $
+ * $Id: exception.h,v 1.3 2004/09/06 12:46:23 ela Exp $
  *
  */
 
@@ -31,7 +31,7 @@ namespace qucs {
 enum exception_type {
   EXCEPTION_UNKNOWN = -1,
   EXCEPTION_PIVOT,
-  EXCEPTION_DC_FAILED,
+  EXCEPTION_NA_FAILED,
   EXCEPTION_NO_CONVERGENCE,
   EXCEPTION_ZERO_DIVISION,
   EXCEPTION_WRONG_VOLTAGE,

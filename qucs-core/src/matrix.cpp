@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.13 2004/08/01 16:08:02 ela Exp $
+ * $Id: matrix.cpp,v 1.14 2004/09/06 12:46:23 ela Exp $
  *
  */
 
@@ -313,7 +313,7 @@ complex detGauss (matrix& a) {
 
 // Compute determinant of the given matrix.
 complex det (matrix& a) {
-#if 1
+#if 0
   return detLaplace (a);
 #else
   return detGauss (a);
@@ -383,7 +383,7 @@ matrix& inverseGaussJordan (matrix& a) {
 
 // Compute inverse matrix of the given matrix.
 matrix& inverse (matrix& a) {
-#if 1
+#if 0
   return inverseLaplace (a);
 #else
   return inverseGaussJordan (a);
