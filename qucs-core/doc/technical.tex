@@ -1123,6 +1123,15 @@ equations used in circuit analysis.
 \end{figure}
 \FloatBarrier
 
+\subsubsection*{Going through the MNA algorithm}
+\addcontentsline{toc}{subsubsection}{Going through the MNA algorithm}
+
+The G matrix is a 2$\times$2 matrix because there are 2 different
+nodes apart from ground which is the reference node.  On the diagonal
+you find the sum of the elements conductances connected to the nodes 1
+and 2.  The off-diagonal matrix entries contain the negative
+conductances of the elements connected between two nodes.
+
 \begin{equation}
 G =
 \begin{pmatrix}
@@ -1136,6 +1145,10 @@ G =
 \end{pmatrix}
 \end{equation}
 
+The B matrix (which is transposed to C) is a 1$\times$2 matrix because
+there is one voltage source and 2 nodes.  The positive terminal of the
+voltage source $V_{1}$ is connected to node 1.  That is why
+
 \begin{equation}
 B = C^{T} =
 \begin{pmatrix}
@@ -1144,12 +1157,19 @@ B = C^{T} =
 \end{pmatrix}
 \end{equation}
 
+and the D matrix is filled with zeros only because there are no dependent
+(active and controlled) devices in the example circuit.
+
 \begin{equation}
 D =
 \begin{pmatrix}
 0
 \end{pmatrix}
 \end{equation}
+
+The x matrix is a 1$\times$3 matrix.  The MNA equations deliver a
+solution for the unknown voltages at each node in a circuit except the
+reference node and the currents through each voltage source.
 
 \begin{equation}
 x =
@@ -1160,12 +1180,17 @@ i_{V_{1}}
 \end{pmatrix}
 \end{equation}
 
+The z matrix is according to the rules for building it a 1$\times$3
+matrix.  The upper two entries are the sums of the currents flowing
+into node 1 and node 2.  The lower entry is the voltage value of the
+voltage source $V_{1}$.
+
 \begin{equation}
 z =
 \begin{pmatrix}
 0\\
 I_{1}\\
-V_{1}
+U_{1}
 \end{pmatrix}
 =
 \begin{pmatrix}
@@ -1175,9 +1200,31 @@ V_{1}
 \end{pmatrix}
 \end{equation}
 
+According to the MNA algorithm the equation system is represented by
+
 \begin{equation}
 \left[A\right] \cdot \left[x\right] = \left[z\right]
 \end{equation}
+
+which is eqivalent to
+
+\begin{equation}
+\begin{pmatrix}
+G & B\\
+C & D
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+x
+\end{pmatrix}
+=
+\begin{pmatrix}
+z
+\end{pmatrix}
+\label{eq:MNAexample}
+\end{equation}
+
+In the example eq. (\ref{eq:MNAexample}) expands to:
 
 \begin{equation}
 \begin{pmatrix}
@@ -1195,17 +1242,97 @@ i_{V_{1}}
 \begin{pmatrix}
 0\\
 I_{1}\\
-V_{1}
+U_{1}
+\end{pmatrix}
+\label{eq:MNAfull}
+\end{equation}
+
+The equation systems to be solved is now defined by the following
+matrix representation.
+
+\begin{equation}
+\begin{pmatrix}
+0.2 & -0.2 & 1\\
+-0.2 & 0.3 & 0\\
+1 & 0 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+v_{1}\\
+v_{2}\\
+i_{V_{1}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+1\\
+1
 \end{pmatrix}
 \end{equation}
 
+Using matrix inversion the solution vector x writes as follows:
+
+\begin{equation}
+\left[x\right] = 
+\left[A\right]^{-1}\cdot \left[z\right] = 
+\begin{pmatrix}
+v_{1}\\
+v_{2}\\
+i_{V_{1}}
+\end{pmatrix}
+=
+\begin{pmatrix}
+1\\
+4\\
+0.6
+\end{pmatrix}
+\label{eq:MNAresult}
+\end{equation}
+
+The result in eq. (\ref{eq:MNAresult}) denotes the current through the
+voltage source $V_{1}$ is $0.6\ampere$, the voltage at node 1 is
+$1\volt$ and the voltage at node 2 is $4\volt$.
+
+\subsubsection*{How the algorithm relates to basic equations in circuit analysis}
+\addcontentsline{toc}{subsubsection}{How the algorithm relates to basic equations in circuit analysis}
+
+Expanding the matrix representation in eq. (\ref{eq:MNAfull}) to a set
+of equations denotes the follwing equation system consisting of 3 of
+them.
+
 \begin{align}
-\rm{I:}& \qquad 0 = \frac{1}{R_{1}}\cdot V_{1} - \frac{1}{R_{1}}\cdot V_{2} + i_{V_{1}}& \text{KCL at node 1}\\
-\rm{II:}& \qquad I_{1} = -\frac{1}{R_{1}}\cdot V_{1} + \left(\frac{1}{R_{1}} + \frac{1}{R_{2}}\right)\cdot V_{2}& \text{KCL at node 2}\\
-\rm{III:}& \qquad U_{1} = V_{1}& \text{constitutive equation}
+\rm{I:}& \qquad 0 = \frac{1}{R_{1}}\cdot v_{1} - \frac{1}{R_{1}}\cdot v_{2} + i_{V_{1}}& \text{KCL at node 1}\\
+\rm{II:}& \qquad I_{1} = -\frac{1}{R_{1}}\cdot v_{1} + \left(\frac{1}{R_{1}} + \frac{1}{R_{2}}\right)\cdot v_{2}& \text{KCL at node 2}\\
+\rm{III:}& \qquad U_{1} = v_{1}& \text{constitutive equation}
 \end{align}
 
+Apparently eq. I and eq. II conform to Kirchhoff's current law at the
+nodes 1 and 2.  The last equation is just the constitutive equation
+for the voltage source $V_{1}$.  There are three unknowns ($v_{1}$,
+$v_{2}$ and $i_{V_{1}}$) and three equations, thus the system should
+be solvable.
 
+\addvspace{12pt}
+
+Equation III indicates the voltage at node 1 is $1\volt$.  Applying
+this result to eq. II and transposing it to $v_{2}$ (the voltage at
+node 2) gives
+
+\begin{equation}
+v_{2} = \frac{I_{1} + \frac{1}{R_{1}}\cdot U_{1}}{\frac{1}{R_{1}} + \frac{1}{R_{2}}} = 4\volt
+\end{equation}
+
+The missing current through the voltage source $V_{1}$ can be computed
+using both the results $v_{2} = 4\volt$ and $v_{1} = 1\volt$ by
+transforming equation I.
+
+\begin{equation}
+i_{V_{1}} = \frac{1}{R_{1}}\cdot v_{2} - \frac{1}{R_{1}}\cdot v_{1} = 0.6\ampere
+\end{equation}
+
+The small example, shown in fig (\ref{fig:MNAexample}), and the
+excursus into artless math verifies that the MNA algorithm and classic
+electrical handiwork tend to produce the same results.
 
 \section*{Extensions to the MNA}
 \addcontentsline{toc}{section}{Extensions to the MNA}
