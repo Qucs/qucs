@@ -200,7 +200,7 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   ymax = xmax = -DBL_MAX;
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    loadVarData(defaultDataSet);    // load data and determine max and min values
+    loadVarData(defaultDataSet);  // load data, determine max/min values
 
   if((ymin > ymax) || (xmin > xmax)) {
     ymin = xmin = 0.0;
@@ -224,6 +224,7 @@ void Diagram::updateGraphData()
   for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next()) {
     pg = Graphs.at(pm->GraphNum);
     pp = pg->cPointsX;
+    if(pp == 0) continue;
     for(n=0; n<pg->count; n++) {
       if(pm->xpos <= *pp) break;
       pp++;
@@ -242,6 +243,7 @@ void Diagram::updateGraphData()
 bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
+  g->count = 0;
   if(g->Points != 0) { delete[] g->Points;  g->Points = 0; }
   if(g->cPointsX != 0) { delete[] g->cPointsX;  g->cPointsX = 0; }
   if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
@@ -291,7 +293,7 @@ bool Diagram::loadVarData(const QString& fileName)
 
   // *****************************************************************
   // get independent variable ****************************************
-  bool ok, ok2;
+  bool ok=true, ok2=true;
   double *p;
   int counting;
   if(g->IndepVar.isEmpty()) {    // create independent variable by myself ?
@@ -351,6 +353,9 @@ bool Diagram::loadVarData(const QString& fileName)
       QMessageBox::critical(0, QObject::tr("Error"),
                    QObject::tr("Too few dependent data \"")+
 		   g->Line+"\"");
+      if(g->cPointsX != 0) { delete[] g->cPointsX;  g->cPointsX = 0; }
+      if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
+      g->count = 0;
       return false;
     }
     *(p++) = x;

@@ -58,6 +58,7 @@ void TabDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
+  // outer frame
   Lines.append(new Line(0, y2, x2, y2, QPen(QPen::black,1)));
   Lines.append(new Line(0, y2-15, x2, y2-15, QPen(QPen::black,1)));
   Lines.append(new Line(0, y2, 0, 0, QPen(QPen::black,1)));
@@ -88,11 +89,10 @@ void TabDiagram::calcDiagram()
   }
   Texts.append(new Text( 4, y2-13, Str));   // write independent variable
 
-  double *px = g->cPointsX;
-  double *py = g->cPointsY;
+  double *py, *px = g->cPointsX;
   for(int z=g->count; z>0; z--) {
     Str = QString::number(*(px++));
-    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
+    r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);    // get width of text
     if(r.width() > colWidth) {
       colWidth = r.width();
       if((x+colWidth) >= x2) {    // enough space for text ?

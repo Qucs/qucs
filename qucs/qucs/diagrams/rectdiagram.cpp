@@ -52,7 +52,7 @@ void RectDiagram::calcData(Graph *g)
   for(int z=g->count; z>0; z--) {
     *(p++) = int(((*(px++))-xlow)/(xup-xlow)*x2);
     // preserve negative values if not complex number
-    if(fabs(*py) < 1e-250) {
+    if(fabs(*(py+1)) < 1e-250) {
       *(p++) = int(((*(py++))-ylow)/(yup-ylow)*y2);
       py++;   // do not use imaginary part
     }
