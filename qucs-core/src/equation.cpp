@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.23 2004-08-21 13:29:07 ela Exp $
+ * $Id: equation.cpp,v 1.24 2004-09-28 23:14:24 ela Exp $
  *
  */
 
@@ -103,16 +103,16 @@ char * constant::toString (void) {
     break;
   case TAG_VECTOR:
     {
-      int len = 3 + v->getSize () - 1;
+      int pos = 1, len = 3 + v->getSize () - 1;
       txt = (char *) malloc (len);
       strcpy (txt, "[");
       for (int i = 0; i < v->getSize (); i++) {
 	char * s = Cplx2String (v->get (i));
 	txt = (char *) realloc (txt, len += strlen (s));
-	strcat (txt, s);
-	if (i != v->getSize () - 1) strcat (txt, ";");
+	strcpy (&txt[pos], s); pos += strlen (s);
+	if (i != v->getSize () - 1) strcpy (&txt[pos++], ";");
       }
-      strcat (txt, "]");
+      strcpy (&txt[pos], "]");
     }
     break;
   case TAG_MATRIX:

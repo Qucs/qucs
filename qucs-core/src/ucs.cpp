@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: ucs.cpp,v 1.14 2004-09-18 09:46:34 margraf Exp $
+ * $Id: ucs.cpp,v 1.15 2004-09-28 23:14:24 ela Exp $
  *
  */
 
@@ -55,17 +55,17 @@ int main (int argc, char ** argv) {
   // check program arguments
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
-      logprint (LOG_STATUS,
-		"Qucsator " PACKAGE_VERSION "\n"
-		"Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>\n"
-		"\nThis is free software; see the source for copying "
-		"conditions.  There is NO\n"
-		"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
-		"PARTICULAR PURPOSE.\n");
+      fprintf (stdout,
+	"Qucsator " PACKAGE_VERSION "\n"
+	"Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>\n"
+	"\nThis is free software; see the source for copying "
+	"conditions.  There is NO\n"
+	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
+	"PARTICULAR PURPOSE.\n");
       return 0;
     }
     if (!strcmp (argv[i], "-h") || !strcmp (argv[i], "--help")) {
-      logprint (LOG_STATUS,
+      fprintf (stdout,
 	"Usage: %s [OPTION]...\n\n"
 	"  -h, --help     display this help and exit\n"
 	"  -v, --version  display version information and exit\n"
