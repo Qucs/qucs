@@ -14,6 +14,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Line color: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -43,14 +51,6 @@
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -85,11 +85,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>display in schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -106,18 +118,6 @@
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -226,15 +226,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text color: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text color: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -263,6 +263,14 @@
 </context>
 <context>
     <name>LineDialog</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Line color: </source>
         <translation type="unfinished"></translation>
@@ -293,14 +301,6 @@
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -391,16 +391,6 @@ Number expected in property field!</source>
     </message>
     <message>
         <source>Format Error:
-Unknown component!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Format Error:
-Wrong &apos;component&apos; line format!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -474,6 +464,30 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Cannot get size of independent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too few dependent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Independent data &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot; not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too few independent data&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ac simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -519,6 +533,10 @@ Unknown field!</source>
     </message>
     <message>
         <source>attenuator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power attenuation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -570,6 +588,21 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Format Error:
+Wrong line start!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format Error:
+Unknown component!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format Error:
+Wrong &apos;component&apos; line format!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>coplanar line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -590,6 +623,10 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>dc simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>dc block</source>
         <translation type="unfinished"></translation>
     </message>
@@ -598,15 +635,27 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>dc simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>diode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>saturation current</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zero-bias junction capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>grading coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>junction potential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -690,7 +739,7 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
+        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -707,6 +756,10 @@ Unknown field!</source>
     </message>
     <message>
         <source>microstrip line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -735,6 +788,10 @@ Unknown field!</source>
     </message>
     <message>
         <source>Parameter sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>simulation to perform parameter sweep on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -790,6 +847,10 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>S parameter simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>S parameter file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -799,10 +860,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S parameter simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -842,6 +899,14 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>specific resistance of metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rms substrate roughness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ideal symmetrical transformer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -866,14 +931,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -887,6 +944,14 @@ Unknown field!</source>
     </message>
     <message>
         <source>time step in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -926,19 +991,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Format Error:
-Wrong line start!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>power attenuation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create new project</source>
         <translation type="unfinished"></translation>
     </message>
@@ -958,79 +1010,35 @@ Wrong line start!</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cannot get size of independent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Too few dependent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Independent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&quot; not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Too few independent data&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>zero-bias junction capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>grading coefficient</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>junction potential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>specific resistance of metal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rms substrate roughness</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
+    <message>
+        <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot save settings !</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Save</source>
+        <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1110,7 +1118,47 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning</source>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter new name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot rename file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete an open file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete the file permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot delete schematic: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1128,6 +1176,10 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Creating new schematic...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1155,6 +1207,48 @@ Do you want to save the changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Data Display (*.dpl)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file &apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos; already exists!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving will overwrite the old one! Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>will appear in the content browser! Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot overwrite an open document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Saving file under new filename...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1167,11 +1261,20 @@ Do you want to save the changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Discard</source>
+        <source>The document contains unsaved changes!
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
+        <source>Do you want to save the changes before closing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Discard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1266,10 +1369,6 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No page set !</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1295,10 +1394,6 @@ Errors:
     </message>
     <message>
         <source> - Project: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1490,6 +1585,10 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ac simulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1573,105 +1672,6 @@ Go on ?</source>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot save settings !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rename file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter new name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will delete the file permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot rename file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete schematic: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete an open file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot rename an open file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Saving will overwrite the old one! Continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file &apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos; already exists!
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>will appear in the content browser! Continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot overwrite an open document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The document contains unsaved changes!
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Schematic (*.sch);; Data Display (*.dpl);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qucs Documents (*.sch *dpl);; Any File (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Data Display (*.dpl)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter a Document Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2518,19 +2518,19 @@ Qt universal circuit simulator
 <context>
     <name>QucsView</name>
     <message>
-        <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

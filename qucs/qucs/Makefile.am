@@ -43,7 +43,7 @@ noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h \
 
 # rules for translations
 TRANSLATIONS = $(srcdir)/qucs_de.ts $(srcdir)/qucs_pl.ts $(srcdir)/qucs_fr.ts \
-  $(srcdir)/qucs_it.ts
+  $(srcdir)/qucs_it.ts $(srcdir)/qucs_ro.ts
 TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 %.ts: $(qucs_SOURCES)
