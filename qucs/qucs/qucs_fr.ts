@@ -858,6 +858,10 @@ Wrong line start!</source>
         <source>power attenuation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>simulation to perform parameter sweep on</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

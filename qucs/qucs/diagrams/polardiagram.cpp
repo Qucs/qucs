@@ -37,6 +37,17 @@ PolarDiagram::~PolarDiagram()
 {
 }
 
+// ------------------------------------------------------------
+void PolarDiagram::calcData(Graph *g)
+{
+  int *p = g->Points;
+//  if(p == 0) return;
+  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
+    *(p++) = (x2>>1)+int(cp->yr/xup*double(x2>>1));
+    *(p++) = (y2>>1)+int(cp->yi/yup*double(y2>>1));
+  }
+}
+
 // --------------------------------------------------------------
 void PolarDiagram::calcDiagram()
 {
@@ -110,16 +121,6 @@ void PolarDiagram::calcDiagram()
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup, 'e', 0)));
   phi = 16.0*180.0/M_PI*atan(30.0/double(x2));    // (text height+3) / circle radius
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi), QPen(QPen::black,1)));
-}
-
-// ------------------------------------------------------------
-void PolarDiagram::calcData(Graph *g)
-{
-  int *p = g->Points;
-  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = (x2>>1)+int(cp->yr/xup*double(x2>>1));
-    *(p++) = (y2>>1)+int(cp->yi/yup*double(y2>>1));
-  }
 }
 
 // ------------------------------------------------------------
