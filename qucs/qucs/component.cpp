@@ -352,7 +352,7 @@ Resistor::Resistor()
   Name  = QString("R");
 
   Props.append(new Property("R", "50 Ohm", true));
-  Props.append(new Property("Noise", "yes", false));
+//  Props.append(new Property("Noise", "yes", false));
 }
 
 Resistor::~Resistor()
@@ -392,7 +392,7 @@ ResistorUS::ResistorUS()
   Name  = QString("R");
 
   Props.append(new Property("R", "50 Ohm", true, "ohmic resistance in Ohms"));
-  Props.append(new Property("Noise", "yes", false, "thermal noise yes or no"));
+//  Props.append(new Property("Noise", "yes", false, "thermal noise yes or no"));
 }
 
 ResistorUS::~ResistorUS()
@@ -1012,6 +1012,7 @@ Source_ac::Source_ac()
   Name  = QString("P");
 
   Props.append(new Property("Num", "1", true, "number of the port"));
+  Props.append(new Property("Z", "50 Ohm", true, "port impedance"));
   Props.append(new Property("P", "0 dBm", true, "ac power in Watts"));
   Props.append(new Property("f", "1 GHz", true, "frequency in Hertz"));
 }
