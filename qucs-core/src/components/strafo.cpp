@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.5 2004/02/17 15:30:58 ela Exp $
+ * $Id: strafo.cpp,v 1.6 2004/04/04 09:11:06 ela Exp $
  *
  */
 
@@ -82,8 +82,7 @@ void strafo::calcDC (void) {
   setC (2, 1, +0.0); setC (2, 2, - t2); setC (2, 3, + t2);
   setC (2, 4, -1.0); setC (2, 5, +1.0); setC (2, 6, +0.0);
 
-  setD (1, 0.0);
-  setD (2, 0.0);
+  setD (1, 1, 0); setD (2, 2, 0); setD (1, 2, 0); setD (2, 1, 0);
   setE (1, 0.0);
   setE (2, 0.0);
 }

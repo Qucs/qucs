@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.9 2004/02/18 17:45:11 ela Exp $
+ * $Id: dcsolver.cpp,v 1.10 2004/04/04 09:11:05 ela Exp $
  *
  */
 
@@ -263,14 +263,15 @@ void dcsolver::createCMatrix (void) {
 void dcsolver::createDMatrix (void) {
   int M = subnet->getVoltageSources ();
   int N = countNodes ();
-  circuit * vs;
+  circuit * vsr, * vsc;
   nr_double_t val;
   for (int r = 1; r <= M; r++) {
-    vs = findVoltageSource (r);
+    vsr = findVoltageSource (r);
     for (int c = 1; c <= M; c++) {
+      vsc = findVoltageSource (c);
       val = 0.0;
-      if (r == c) {
-	val = real (vs->getD (r));
+      if (vsr == vsc) {
+	val = real (vsr->getD (r, c));
       }
       A->set (r + N, c + N, val);
     }

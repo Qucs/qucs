@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.5 2004/02/17 15:30:58 ela Exp $
+ * $Id: trafo.cpp,v 1.6 2004/04/04 09:11:06 ela Exp $
  *
  */
 
@@ -71,6 +71,6 @@ void trafo::calcDC (void) {
   nr_double_t t = getPropertyDouble ("T");
   setB (1, 1, -1); setB (1, 2, +t); setB (1, 3, -t); setB (1, 4, +1);
   setC (1, 1, +1); setC (1, 2, -t); setC (1, 3, +t); setC (1, 4, -1);
-  setD (1, 0);
+  setD (1, 1, +0);
   setE (1, 0);
 }

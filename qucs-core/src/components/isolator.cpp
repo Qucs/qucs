@@ -1,7 +1,7 @@
 /*
  * isolator.cpp - isolator class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.4 2004/02/17 15:30:58 ela Exp $
+ * $Id: isolator.cpp,v 1.5 2004/04/04 09:11:06 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 isolator::isolator () : circuit (2) {
   setS (1, 2, 0.0);
   type = CIR_ISOLATOR;
+  setVoltageSources (2);
 }
 
 void isolator::calcSP (nr_double_t) {
@@ -50,4 +51,14 @@ void isolator::calcSP (nr_double_t) {
   setS (1, 1, s1);
   setS (2, 2, s2);
   setS (2, 1, sqrt (1 - s1 * s1) * sqrt (1 - s2 * s2));
+}
+
+void isolator::calcDC (void) {
+  nr_double_t z1 = getPropertyDouble ("Z1");
+  nr_double_t z2 = getPropertyDouble ("Z2");
+  nr_double_t z21 = 2 * sqrt (z1 * z2);
+  setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
+  setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0); 
+  setD (1, 1,  +z1); setD (2, 2,  +z2); setD (1, 2, +0.0); setD (2, 1, +z21);
+  setE (1, +0.0); setE (2, +0.0);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.9 2004/02/17 15:30:57 ela Exp $
+ * $Id: circuit.h,v 1.10 2004/04/04 09:11:05 ela Exp $
  *
  */
 
@@ -69,13 +69,13 @@ class circuit : public object
   void setSubstrate (substrate *);
   complex getB (int, int);
   complex getC (int, int);
-  complex getD (int);
+  complex getD (int, int);
   complex getE (int);
   complex getI (int);
   complex getV (int);
   void setB (int, int, complex);
   void setC (int, int, complex);
-  void setD (int, complex);
+  void setD (int, int, complex);
   void setE (int, complex);
   void setI (int, complex);
   void setV (int, complex);
@@ -100,7 +100,7 @@ class circuit : public object
   complex * MatrixY;
   complex MatrixB[2 * 6];
   complex MatrixC[2 * 6];
-  complex MatrixD[2];
+  complex MatrixD[2 * 2];
   complex MatrixE[2];
   complex MatrixI[6];
   complex MatrixV[6];

@@ -1,7 +1,7 @@
 /*
  * attenuator.h - attenuator class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.h,v 1.3 2004/02/17 15:30:57 ela Exp $
+ * $Id: attenuator.h,v 1.4 2004/04/04 09:11:06 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class attenuator : public circuit
  public:
   attenuator ();
   void calcSP (nr_double_t);
+  void calcDC (void);
 };
 
 #endif /* __ATTENUATOR_H__ */
