@@ -18,8 +18,14 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "wire.h"
+#include "node.h"
+#include "diagrams/diagram.h"
+#include "components/component.h"
+
 #include <qfont.h>
 #include <qcolor.h>
+#include <qptrlist.h>
 
 class QucsApp;
 
@@ -41,6 +47,12 @@ bool saveApplSettings(QucsApp*);
 QString complexRect (double, double, int Precision=3);
 QString complexDeg  (double, double, int Precision=3);
 QString complexRad  (double, double, int Precision=3);
+
+// just dummies for empty lists
+extern QPtrList<Wire>      SymbolWires;
+extern QPtrList<Node>      SymbolNodes;
+extern QPtrList<Diagram>   SymbolDiags;
+extern QPtrList<Component> SymbolComps;
 
 #endif
 

@@ -1922,6 +1922,15 @@ Fals format de linie a &apos;component&apos;!</translation>
         <source>interpolation type</source>
         <translation>tipul de interpolare</translation>
     </message>
+    <message>
+        <source>Edit Arc Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format Error:
+Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2450,6 +2459,10 @@ Erori:
     <message>
         <source>Any File</source>
         <translation>Orice Fişier</translation>
+    </message>
+    <message>
+        <source>Ellipse Arc</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3564,6 +3577,20 @@ Closes the current project</source>
 </source>
         <translation>Româneşte de Radu Circa
 </translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -370,7 +370,7 @@ void ComponentDialog::slotApplyInput()
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
   else
   if(CompNameEdit->text() != Comp->Name) {
-    for(pc = Doc->Comps.first(); pc!=0; pc = Doc->Comps.next())
+    for(pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next())
       if(pc->Name == CompNameEdit->text())
         break;  // found component with the same name ?
     if(pc)  CompNameEdit->setText(Comp->Name);
@@ -417,11 +417,11 @@ void ComponentDialog::slotApplyInput()
       ty_Dist = dy;
     }
 
-    Doc->Comps.setAutoDelete(false);
+    Doc->Comps->setAutoDelete(false);
     Doc->deleteComp(Comp);
     Comp->recreate();   // to apply changes to the schematic symbol
     Doc->insertRawComponent(Comp);
-    Doc->Comps.setAutoDelete(true);
+    Doc->Comps->setAutoDelete(true);
     ((QucsView*)parent())->viewport()->repaint();
   }
 }

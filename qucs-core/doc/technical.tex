@@ -2105,7 +2105,7 @@ These equations are also valid if $i$ equals $j$.
 The absolute values of the noise correlation coefficients are very
 small.  To achieve a higher numerical precision, it is recommended to
 normalize the noise matrix with $k\cdot T_0$. After the simulation
-they do not have to be renormalized, because the noise parameters can
+they do not have to be denormalized, because the noise parameters can
 be calculated by using equation \eqref{eqn:nparamF} to
 \eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
 
@@ -2194,8 +2194,8 @@ the two nodes) and two off-diagonal entries.
 Once having defined the spectral noise current densities of the noise
 currents within a transistor model the above rules for forming the
 $\underline{C}_Y$ matrix can be applied to the example circuit
-depicted in fig. \ref{fig:CYexample}.  The noise current correlation
-matrix is accordingly
+depicted in fig. \ref{fig:CYexample}.  The noise current
+correlation matrix is accordingly
 \begin{equation}
 \underline{C}_Y =
 \begin{bmatrix}
@@ -2282,6 +2282,14 @@ thermodynamic equilibrium).
 (\underline{C}) = k\cdot T\cdot \left( (\underline{E}) - (\underline{S})\cdot(\underline{S})^{*T} \right)
 \end{equation}
 with $(\underline{S})$ being the S parameter matrix and $(\underline{E})$ identity matrix.
+Of course, this theorem can also be written with impedance and admittance representation
+of the noise correlation matrix:
+\begin{equation}
+\underline{C}_Z = 2\cdot k\cdot T\cdot \text{Re}(\underline{Z})
+\end{equation}
+\begin{equation}
+\underline{C}_Y = 2\cdot k\cdot T\cdot \text{Re}(\underline{Y})
+\end{equation}
 
 
 \subsection{Resistor}
@@ -2455,8 +2463,8 @@ dependent.  Altogether it is:
 \label{eqn:diode_noise}
 \end{equation}
 
-Remark: Believing the diode equation $I_D = I_S\cdot (\exp(V/N\cdot
-V_T) - 1)$ is the whole truth, it is logical to define $K=1/N$,
+Remark: Believing the diode equation $I_D = I_S\cdot (\exp(V/(N\cdot
+V_T)) - 1)$ is the whole truth, it is logical to define $K=1/N$,
 because at $V=0$ the conductance $g_d$ of the diode must create
 thermal noise.
 

@@ -43,6 +43,12 @@ tQucsSettings QucsSettings
 
 QFont savingFont;    // to remember which font to save in "qucsrc"
 
+// just dummies for empty lists
+QPtrList<Wire>      SymbolWires;
+QPtrList<Node>      SymbolNodes;
+QPtrList<Diagram>   SymbolDiags;
+QPtrList<Component> SymbolComps;
+
 // #########################################################################
 // Loads the settings file and stores the settings.
 bool loadSettings()

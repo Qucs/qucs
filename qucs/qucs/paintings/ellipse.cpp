@@ -86,14 +86,9 @@ Ellipse* Ellipse::newOne()
 }
 
 // --------------------------------------------------------------------------
-bool Ellipse::load(const QString& _s)
+bool Ellipse::load(const QString& s)
 {
   bool ok;
-  QString s = _s;
-
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
-  s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
   n  = s.section(' ',1,1);    // cx
@@ -127,7 +122,6 @@ bool Ellipse::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',8,8);    // fill color
-  if(n.isEmpty()) return true;    // backward compatibel
   co.setNamedColor(n);
   Brush.setColor(co);
   if(!Brush.color().isValid()) return false;
@@ -137,7 +131,6 @@ bool Ellipse::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',10,10);    // filled
-  if(n.isEmpty()) { filled = true; return true; }  // backward compatibel
   if(n.toInt(&ok) == 0) filled = false;
   else filled = true;
   if(!ok) return false;
@@ -148,14 +141,14 @@ bool Ellipse::load(const QString& _s)
 // --------------------------------------------------------------------------
 QString Ellipse::save()
 {
-  QString s = "<Ellipse " +
+  QString s = "Ellipse " +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
 	Pen.color().name()  + " " + QString::number(Pen.width()) + " " +
 	QString::number(Pen.style()) + " " +
 	Brush.color().name() + " " + QString::number(Brush.style());
-  if(filled) s += " 1>";
-  else s += " 0>";
+  if(filled) s += " 1";
+  else s += " 0";
   return s;
 }
 
