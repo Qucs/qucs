@@ -3,616 +3,640 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeileigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Head Length: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeillänge: </translation>
     </message>
     <message>
         <source>      Head Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pfeilbreite: </translation>
     </message>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienfarbe: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienbreite: </translation>
     </message>
     <message>
         <source>Line style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienstil: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>durchgezogene Linie</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>gestrichelte Linie</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>gepunktete Linie</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Linie</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Punkt-Linie</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenteneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Wert</translation>
     </message>
     <message>
         <source>display</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchsuchen</translation>
     </message>
     <message>
         <source>display in schematic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>im Schaltplan anzeigen</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien (*.*)</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei auswählen</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>ja</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>nein</translation>
     </message>
 </context>
 <context>
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagrammeigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Graph Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurvendaten</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe:</translation>
     </message>
     <message>
         <source>       Thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dicke:</translation>
     </message>
     <message>
         <source>Dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Art</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe</translation>
     </message>
     <message>
         <source>Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurve</translation>
     </message>
     <message>
         <source>New Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>neue Kurve</translation>
     </message>
     <message>
         <source>Delete Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurve löschen</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten</translation>
     </message>
     <message>
         <source>x-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung der x-Achse:</translation>
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung der y-Achse:</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Gitternetz anzeigen</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaften</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Function Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfefunktion</translation>
     </message>
 </context>
 <context>
     <name>FileShowDialog</name>
     <message>
         <source>File: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei: </translation>
     </message>
     <message>
         <source>ERROR: Cannot read file: </source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Datei kann nicht gelesen werden: </translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Text color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Textfarbe: </translation>
     </message>
     <message>
         <source>          Text size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Textgröße: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
     <name>HelpDialog</name>
     <message>
         <source>Qucs Help System</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Hilfesystem</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfeindex</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
     <name>LineDialog</name>
     <message>
         <source>Line color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienfarbe:</translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienbreite:</translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienstil:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished"></translation>
+        <translation>durchgezogene Linie</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>gestrichelte Linie</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>gepunktete Linie</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Linie</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-Punkt-Punkt-Linie</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle speichern</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwerfen</translation>
     </message>
     <message>
         <source>DiscardAll</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle verwerfen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="obsolete">Neues Projekt erstellen</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="obsolete">Projektname:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="obsolete">neues Projekt öffnen</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="obsolete">Erstellen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <source>Create new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>open new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>unbenannt</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Wrong document version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Falsche Dokumentenversion: </translation>
     </message>
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler in der Zwischenablage:
+Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>Cannot save document!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokument kann nicht gespeichert werden!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Falscher Eigenschaftsfeldtrenner!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown property: </source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Unbekannte Eigenschaft: </translation>
     </message>
     <message>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Zahl im Eigenschaftsfeld erwartet!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+&apos;Property&apos; Feld wurde nicht geschlossen!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Unbekannte Komponente!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Falsches &apos;component&apos; Zeilenformat!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+&apos;Component&apos; Feld wurde nicht geschlossen!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Falsches &apos;wire&apos; Zeilenformat!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+&apos;Wire&apos; Feld wurde nicht geschlossen!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Unbekanntes Diagramm!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Falsches &apos;diagram&apos; Zeilenformat!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+&apos;Diagram&apos; Feld wurde nicht geschlossen!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown painting!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Unbekanntes Zeichnungselement!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Falsches &apos;painting&apos; Zeilenformat!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+&apos;Painting&apos; Feld ist nicht geschlossen!</translation>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dokument kann nicht geladen werden: </translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation type="unfinished"></translation>
+        <translation>Falscher Dokumenttyp!</translation>
     </message>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateiformatfehler:
+Unbekanntes Feld!</translation>
+    </message>
+    <message>
+        <source>resistor</source>
+        <translation>Widerstand</translation>
+    </message>
+    <message>
+        <source>ohmic resistance in Ohms</source>
+        <translation>Ohmscher Widerstand in Ohm</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellipseneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Linieneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteckeigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz kann nicht geladen werden: </translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>AC-Simulation</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Startfrequenz in Hertz</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopfrequenz in Hertz</translation>
     </message>
     <message>
         <source>frequency steps in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzschrittweite in Hertz</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale DC Stromquelle</translation>
     </message>
     <message>
         <source>current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>Strom in Ampere</translation>
     </message>
     <message>
         <source>noise current source</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschstromquelle</translation>
     </message>
     <message>
         <source>equivalent current density in A/sqrt(Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>äquivalente Stromdichte in A/sqrt(Hz)</translation>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzexponent</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenzkoeffizient</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation>additiver Frequenzterm</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfungsglied</translation>
     </message>
     <message>
         <source>attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfung</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>Bias T</translation>
     </message>
     <message>
         <source>capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kondensator</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapazität in Farad</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>stromgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärtstransferfaktor</translation>
     </message>
     <message>
         <source>delay time</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerungszeit</translation>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>stromgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkulator</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz von Port 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz von Port 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz von Port 3</translation>
     </message>
     <message>
         <source>coplanar line</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplanarleitung</translation>
     </message>
     <message>
         <source>name of substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Substratdefinition</translation>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite</translation>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Schlitzbreite</translation>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungslänge</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>DC-Simulation</translation>
+    </message>
+    <message>
+        <source>dc block</source>
+        <translation>DC Block</translation>
+    </message>
+    <message>
+        <source>dc feed</source>
+        <translation>DC Feed</translation>
     </message>
     <message>
         <source>diode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Diode</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation type="unfinished"></translation>
+        <translation>Masse (Referenzpotential)</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyrator (Impendanzinverter)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
@@ -624,175 +648,135 @@ Unknown field!</source>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenz in Hertz</translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Harmonischen</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Spule</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivität in Henry</translation>
     </message>
     <message>
         <source>current probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Amperemeter</translation>
     </message>
     <message>
         <source>isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Isolator</translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz des Eingangstors</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz des Ausgangstors</translation>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat</translation>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 1</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 2</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>gekoppelte Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>spacing between the lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Abstand zwischen den Leitungen</translation>
     </message>
     <message>
         <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenmodell |Kirschning|Kobayashi|Yamashita</translation>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenkreuzung</translation>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 3</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite 4</translation>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>microstrip open</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenabsatz</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite der Leitung 1</translation>
     </message>
     <message>
         <source>width 2 of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite der Leitung 2</translation>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>T-Verzweigung einer Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameterdurchlauf</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchlaufvariable</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Startwert des Durchlaufs</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopwert des Durchlaufs</translation>
     </message>
     <message>
         <source>step size for sweep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>phase shifter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>resistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ohmic resistance in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>Schritteweite für den Durchlauf</translation>
     </message>
     <message>
         <source>resistor (US symbol)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac power source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number of the port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>port impedance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand (US-Symbol)</translation>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Parameter Simulation</translation>
+    </message>
+    <message>
+        <source>S parameter file</source>
+        <translation>S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>file</source>
+        <translation>Datei</translation>
+    </message>
+    <message>
+        <source>name of the s parameter file</source>
+        <translation>Name der S-Parameter Datei</translation>
     </message>
     <message>
         <source>subcircuit</source>
@@ -800,7 +784,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Qucs Schaltplandatei</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
@@ -812,87 +796,75 @@ Unknown field!</source>
     </message>
     <message>
         <source>substrate definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Substratdefinition</translation>
     </message>
     <message>
-        <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
+        <source>permittivity</source>
+        <translation type="obsolete">Permeabilität</translation>
     </message>
     <message>
         <source>thickness in meters</source>
-        <translation type="unfinished"></translation>
+        <translation>Höhe in Metern</translation>
     </message>
     <message>
         <source>thickness of metalization</source>
-        <translation type="unfinished"></translation>
+        <translation>Metallisierungsdicke</translation>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlustwinkel</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>idealer symmetrischer Transformator</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale Leitung</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>charakteristische Impedanz</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>elektrische Länge der Leitung</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Transientsimulation</translation>
     </message>
     <message>
         <source>start time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Startzeit in Sekunden</translation>
     </message>
     <message>
         <source>stop time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopzeit in Sekunden</translation>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeitschritt in Sekunden</translation>
+    </message>
+    <message>
+        <source>ideal transformer</source>
+        <translation>idealer Transformator</translation>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>spannungsgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>forward transconductance</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorwärtstranskonduktanz</translation>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>spannungsgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale AC Spannungsquelle</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
@@ -900,1119 +872,1256 @@ Unknown field!</source>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale DC Spannungsquelle</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>Spannung in Volt</translation>
     </message>
     <message>
         <source>noise voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschspannungsquelle</translation>
     </message>
     <message>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
+        <translation>äquivalente Spannungsdichte in V/sqrt(Hz)</translation>
+    </message>
+    <message>
+        <source>phase shifter</source>
+        <translation>Phasenschieber</translation>
+    </message>
+    <message>
+        <source>phase shift in degree</source>
+        <translation>Phasenverschiebung in Grad</translation>
+    </message>
+    <message>
+        <source>ac power source</source>
+        <translation>AC Signalquelle</translation>
+    </message>
+    <message>
+        <source>number of the port</source>
+        <translation>Tornummer</translation>
+    </message>
+    <message>
+        <source>port impedance</source>
+        <translation>Torimpedanz</translation>
+    </message>
+    <message>
+        <source>ac power in Watts</source>
+        <translation>AC Leistung in Watt</translation>
+    </message>
+    <message>
+        <source>Create new project</source>
+        <translation>Neues Projekt erstellen</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation>Projektname:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation>neues Projekt öffnen</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>relative permittivity</source>
+        <translation>relative Permeabilität</translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 1</source>
+        <translation>Spannungstransformationverhältnis der Spule 1</translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 2</source>
+        <translation>Spannungstransformationverhältnis der Spule 2</translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio</source>
+        <translation>Spannungstransformationverhältnis</translation>
+    </message>
+    <message>
+        <source>saturation current</source>
+        <translation>Sättigungsstrom</translation>
+    </message>
+    <message>
+        <source>microstrip mitered bend</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideality coefficient</source>
+        <translation>Idealitätsfaktor</translation>
     </message>
 </context>
 <context>
     <name>QucsApp</name>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Neu</translation>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeugt ein neues Dokument</translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation>Öffne Datei</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished">Ö&amp;ffnen</translation>
+    </message>
+    <message>
+        <source>Opens an existing document</source>
+        <translation>Öffnet ein existierendes Dokument</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu
+
+Erzeugt einen neuen Schaltplan oder eine Datenvisualisierung</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Datei
+
+Öffnet ein existierendes Dokument</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Speichern</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichert das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern
+
+Speichert das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern unter</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Speichern &amp;unter</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichert das aktuelle Dokument unter einem neuen Dateinamen</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern unter
+
+Speichert das aktuelle Dokument unter einem neuen Dateinamen</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien speichern</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alles speichern</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichert alle offenen Dokumente</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Dateien speichern
+
+Speichert alle offenen Dokumente</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei schließen</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Sch&amp;ließen</translation>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließt das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei schließen
+
+Schließt das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen
+
+Setzt die Eigenschaften der Datei</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei drucken</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Drucken</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckt das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei drucken
+
+Druckt das aktuelle Dokument</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Beenden</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Beendet die Applikation</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden
+
+Beendet die Applikation</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausschneiden</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Aus&amp;schneiden</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneidet den ausgewählten Bereich aus und kopiert diesen in die Zwischenablage</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausschneiden
+
+Schneidet den ausgewählten Bereich aus und kopiert diesen in die Zwischenablage</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopieren</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren
+
+Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Einfügen</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt den Inhalt der Zwischenablage an der Cursorposition ein</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügen
+
+Fügt den Inhalt der Zwischenablage an der Cursorposition ein</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Löschen</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Löscht die ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen
+
+Löscht die ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückgängig</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rückgängig</translation>
     </message>
     <message>
         <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>Macht das letzte Kommando rückgängig</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückgängig
+
+Macht das letzte Kommando rückgängig</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederholen</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiederholen</translation>
     </message>
     <message>
         <source>Ctrl+Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederholt das letzte Kommando</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederholen
+
+Wiederholt das letzte Kommando nochmal</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Projekt</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Neues Projekt...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeugt ein neues Projekt</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Projekt
+
+Erzeugt ein neues Projekt</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt öffnen</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Projekt ö&amp;ffnen</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnet ein Projekt</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt öffnen
+
+Öffnet ein existierendes Projekt</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt löschen</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Projekt &amp;löschen</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished"></translation>
+        <translation>Löscht ein Projekt</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt löschen
+
+Löscht ein existierendes Projekt</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles anzeigen</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt die ganze Seite an</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles anzeigen
+
+Zeigt die ganze Seite an</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige 1:1</translation>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished"></translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige ohne Vergrößerung</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige 1:1
+
+Zeigt den Seiteninhalt ohne Vergrößerung an</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Näher</translation>
     </message>
     <message>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Vergrößert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Näher
+
+Vergrößert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <source>-</source>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Verkleinert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter
+
+Verkleinert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswählen</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswählmodus</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswählen
+
+Auswählmodus</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles auswählen</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählt alles aus</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles auswählen
+
+Wählt alle Elemente im Dokument aus</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Drehen</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>Dreht die ausgewählten Komponenten um 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Drehen
+
+Dreht die ausgewählten Komponenten um 90° nach links</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiegeln an der X-Achse</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiegelt die Auswahl an der X-Achse</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiegeln an der X-Achse
+
+Spiegelt die Auswahl an der X-Achse</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiegeln an der Y-Achse</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiegelt die Auswahl an der Y-Achse</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiegeln der Auswahl an der Y-Achse</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe in den Schaltkreis hinein</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Geht in den Schaltkreis hinein</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe in den Schaltkreis hinein
+
+Geht in den ausgewählten Schaltkreis hinein</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlasse den Schaltkreis</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verläßt den Schaltkreis</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlasse den Schaltkreis
+
+Verläßt den Schaltkreis in die nächsthöhere Hierachieebene</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktivieren/Aktivieren</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiviert/Aktiviert die Auswahl</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktivieren/Aktivieren
+
+Deaktiviert/Aktiviert die Auswahl</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung einfügen</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt eine Gleichung ein</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung einfügen
+
+Fügt eine benutzerdefinierte Gleichung ein</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Masse einfügen</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt das Massesymbol ein</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Masse einfügen
+
+Fügt das Massesymbol ein</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Anschluß einfügen</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt einen Anschluß ein</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Anschluß einfügen
+
+Fügt ein Anschlußsymbol ein</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draht einfügen</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draht</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt einen Draht ein</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Draht
+
+Fügt einen Draht ein</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungs-/Knoten-Bezeichnung einfügen</translation>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungs-Bezeichnung</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt eine Verbindungs- oder Knotenbezeichnung ein</translation>
     </message>
     <message>
         <source>Wire Label
 
 Inserts a wire or pin label</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungs-Bezeichnung
+
+Fügt eine Verbindungs- oder Knotenbezeichnung ein</translation>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulieren</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Simuliert den aktuellen Schaltplan</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulieren
+
+Simuliert den aktuellen Schaltplan</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Daten/Schaltplan an</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechselt zur Datenvisualisierung oder zum Schaltplan</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 Changes to data display or schematic page</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Daten/Schaltplan
+
+Wechselt zur Datenvisualisierung oder zum Schaltplan</translation>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Meldungen anzeigen</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Simulatormeldungen anzeigen</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Meldungen anzeigen
+
+Zeigt die Meldungen der letzten Simulation an</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Netzliste anzeigen</translation>
     </message>
     <message>
         <source>Shows last simulation netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt die zuletzt simulierte Netzliste an</translation>
     </message>
     <message>
         <source>Show Last Netlist
 
 Shows the netlist of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Netzliste anzeigen
+
+Zeigt die zuletzt simulierte Netzliste an</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeug&amp;leiste</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltet die Werkzeugleiste an/aus</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkzeugleiste
+
+Schaltet die Werkzeugleiste an/aus</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Statuszeile</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Statuszeile</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviert/Deaktiviert die Statuszeile</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Index of Qucs Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index
+        <translation>Statuszeile
 
-Index of intern Qucs help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started with Qucs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started
-
-Short introduction into Qucs</source>
-        <translation type="unfinished"></translation>
+Aktiviert/Deaktiviert die Statuszeile</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Über</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ü&amp;ber Qucs..</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Über die Applikation</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Über
+
+Über die Applikation</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Über Qt</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>Über &amp;Qt...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished"></translation>
+        <translation>Über Qt
+
+Über Qt von Trolltech</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Datei</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Einfügen</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Projekt</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Simulation</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ansicht</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hilfe</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <source>Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekte</translation>
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt des Projektverzeichnisses</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt von</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiz</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation type="unfinished"></translation>
+        <translation>Datensätze</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenvisualisierungen</translation>
     </message>
     <message>
         <source>Schematics</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltpläne</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt des geöffneten Projekts</translation>
     </message>
     <message>
         <source>Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenten</translation>
     </message>
     <message>
         <source>components and diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenten und Diagramme</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished"></translation>
+        <translation>diskrete Komponenten</translation>
     </message>
     <message>
         <source>sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Quellen</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungsstrecken</translation>
     </message>
     <message>
         <source>nonlinear components</source>
-        <translation type="unfinished"></translation>
+        <translation>nichtlineare Komponenten</translation>
     </message>
     <message>
         <source>file data</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateidaten</translation>
     </message>
     <message>
         <source>simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulationen</translation>
     </message>
     <message>
         <source>paintings</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnungen</translation>
     </message>
     <message>
         <source>diagrams</source>
-        <translation type="unfinished"></translation>
+        <translation>Diagramme</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitsverzeichnis kann nicht erstellt werden !</translation>
     </message>
     <message>
         <source>Closing Qucs document</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließe Qucs Dokument</translation>
     </message>
     <message>
         <source>This document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Dokument enthält ungespeicherte Änderungen!
+Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>Creating new schematic...</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeuge neuen Schaltplan...</translation>
     </message>
     <message>
         <source>Opening file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Datei...</translation>
     </message>
     <message>
         <source>Schematic (*.sch)</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan (*.sch)</translation>
     </message>
     <message>
         <source>Enter a Schematic Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie einen Schaltplannamen ein</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen abgebrochen</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation type="unfinished"></translation>
+        <translation>-Anschluß</translation>
     </message>
     <message>
         <source>Enter Name to Save Document</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie einen Namen für das zu speichernde Dokument ein</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere Datei...</translation>
     </message>
     <message>
         <source>Saving aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern abgebrochen</translation>
     </message>
     <message>
         <source>Saving file under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei unter neuem Namen speichern...</translation>
     </message>
     <message>
         <source>Saving all files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere alle Dateien...</translation>
     </message>
     <message>
         <source>Closing file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließe Datei...</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
 Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Dokument enthält ungespeicherte Änderungen!
+Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verwerfen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke...</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
+        <translation>Beende Applikation...</translation>
     </message>
     <message>
         <source>Quit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden...</translation>
     </message>
     <message>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie das Programm wirklich verlassen?</translation>
     </message>
     <message>
         <source>Cutting selection...</source>
-        <translation type="unfinished"></translation>
+        <translation>Schneide Auswahl aus...</translation>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiere Auswahl in die Zwischenablage...</translation>
     </message>
     <message>
         <source>Inserting clipboard contents...</source>
-        <translation type="unfinished"></translation>
+        <translation>Füge den Inhalt der Zwischenablage ein...</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsle die Werkzeugleiste...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsle die Statuszeile...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Über...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Version </translation>
     </message>
     <message>
         <source>
 Qt universal circuit simulator
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Qt universal circuit simulator
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2003 by Michael Margraf
 Simulator by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>Starte neue Simulation am </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished"></translation>
+        <translation> um </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeuge Netzliste... </translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Netzlistendatei kann nicht erzeugt werden!
+Abgebrochen.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>fertig.
+</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Simulator kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Simulation endete am </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig.
+</translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Fehler sind während der Simulation aufgetreten am </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Abgebrochen.
+</translation>
     </message>
     <message>
         <source>Output:
 ----------
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabe:
+----------
+
+</translation>
     </message>
     <message>
         <source>
@@ -2022,87 +2131,93 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+
+Fehler:
+--------
+
+</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>No page set !</source>
-        <translation type="unfinished"></translation>
+        <translation>Seite nicht gesetzt !</translation>
     </message>
     <message>
         <source>Cannot create </source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht erzeugen</translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie eine Projektverzeichnis zum Öffnen</translation>
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Auf das Projektverzeichnis kann nicht zugegriffen werden: </translation>
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt von &apos;</translation>
     </message>
     <message>
         <source>&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;</translation>
     </message>
     <message>
         <source> - Project: </source>
-        <translation type="unfinished"></translation>
+        <translation> - Projekt: </translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Cannot create project directory !</source>
-        <translation type="unfinished"></translation>
+        <translation>Projektverzeichnis kann nicht erzeugt werden !</translation>
     </message>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand US</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Kondensator</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>Spule</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished"></translation>
+        <translation>Masse</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreis-Anschluß</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformator</translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>symmetrischer Transformator</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation type="unfinished"></translation>
+        <translation>DC Sperre</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>DC Zuführung</translation>
     </message>
     <message>
         <source>Bias T</source>
@@ -2110,99 +2225,267 @@ Errors:
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Dämpfungsglied</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Isolator</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Zirkulator</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyrator</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>Phasenschieber</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>dc Spannungsquelle</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>dc Stromquelle</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ac Spannungsquelle</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Signalquelle</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>spannungsgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>stromgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>spannungsgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>stromgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Übertragungsstrecke</translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrat</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>gekoppelte Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenabsatz</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifen T-Verzweigung</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
+        <translation>Mikrostreifenkreuzung</translation>
+    </message>
+    <message>
+        <source>Coplanar Line</source>
+        <translation>Koplanarleitung</translation>
+    </message>
+    <message>
+        <source>Diode</source>
+        <translation>Diode</translation>
+    </message>
+    <message>
+        <source>1-port S parameter file</source>
+        <translation>1-Port S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>2-port S parameter file</source>
+        <translation>2-Port S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>3-port S parameter file</source>
+        <translation>3-Port S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>4-port S parameter file</source>
+        <translation>4-Port S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>5-port S parameter file</source>
+        <translation>5-Port S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>6-port S parameter file</source>
+        <translation>6-Port S-Parameter Datei</translation>
+    </message>
+    <message>
+        <source>dc simulation</source>
+        <translation>dc Simulation</translation>
+    </message>
+    <message>
+        <source>Transienten simulation</source>
+        <translation>Transientsimulation</translation>
+    </message>
+    <message>
+        <source>ac simulation</source>
+        <translation>ac Simulation</translation>
+    </message>
+    <message>
+        <source>S-parameter simulation</source>
+        <translation>S-Parameter Simulation</translation>
+    </message>
+    <message>
+        <source>Harmonic balance</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parameter sweep</source>
+        <translation>Parameterdurchlauf</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation>Linie</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation>Pfeil</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Text</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation>Ellipse</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation>Rechteck</translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation>Kartesisch</translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation>Polar</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation>Tabelle</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation>Smith-Diagramm</translation>
+    </message>
+    <message>
+        <source>No project is selected !</source>
+        <translation>Keine Projekte ausgewählt !</translation>
+    </message>
+    <message>
+        <source>Cannot delete an open project !</source>
+        <translation>Offenes Projekt kann nicht gelöscht werden !</translation>
+    </message>
+    <message>
+        <source>This will destroy all the project
+files permanently !
+Go on ?</source>
+        <translation>Dies zerstört alle Projekt-
+dateien für immer !
+Weiter ?</translation>
+    </message>
+    <message>
+        <source>&amp;Yes</source>
+        <translation>&amp;Ja</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation>&amp;Nein</translation>
+    </message>
+    <message>
+        <source>Cannot remove project file: </source>
+        <translation>Projektdatei kann nicht gelöscht werden: </translation>
+    </message>
+    <message>
+        <source>Cannot remove project directory !</source>
+        <translation>Projektverzeichnis kann nicht gelöscht werden !</translation>
+    </message>
+    <message>
+        <source>Choose Project Directory for Deleting</source>
+        <translation>Wählen Sie eine Projektverzeichnis zum Löschen</translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation>Hilfeindex</translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation>Hilfeindex...</translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation>Index der Qucs Hilfe</translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation>Hilfe Index
+
+Index der internen Qucs Hilfe</translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation>Starthilfe</translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation>Starthilfe...</translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation>Starthilfe für Qucs</translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation>Starthilfe
+
+Kurze Einführung in Qucs</translation>
+    </message>
+    <message>
+        <source>Current Probe</source>
+        <translation>Amperemeter</translation>
+    </message>
+    <message>
+        <source>Noise Voltage Source</source>
+        <translation>Rauschspannungsquelle</translation>
+    </message>
+    <message>
+        <source>Noise Current Source</source>
+        <translation>Rauschstromquelle</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
@@ -2212,220 +2495,94 @@ Errors:
         <source>Microstrip Open</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Coplanar Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Diode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>6-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transienten simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arrow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tabular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith Chart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No project is selected !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot delete an open project !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This will destroy all the project
-files permanently !
-Go on ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot remove project file: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot remove project directory !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose Project Directory for Deleting</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished"></translation>
+        <translation>Knotenbezeichnung eingeben</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung eingeben:</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
-        <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Data Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenvisualisierung:</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen der Datenvisualisierung nach Simulation</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Gitternetz anzeigen</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation type="unfinished"></translation>
+        <translation>horizontales Gitternetz:</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>vertikales Gitternetz:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Edit File Properties</source>
+        <translation>Dateieigenschaften bearbeiten</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation>Simulation</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation>Gitternetz</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Simulationsnachrichten</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortschritt:</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler und Warnungen:</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="unfinished"></translation>
+        <translation>Zur Anzeigeseite gehen</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation abbrechen</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster schließen</translation>
     </message>
 </context>
 </TS>
