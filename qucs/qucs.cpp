@@ -1281,13 +1281,14 @@ pInfoFunc Sources[12] =
    &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
    &CCCS::info, &VCVS::info, &CCVS::info, 0};
 
-pInfoFunc TransmissionLines[12] =
+pInfoFunc TransmissionLines[13] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
    &MSstep::info, &MScorner::info, &MStee::info, &MScross::info,
-   &MSmbend::info, &MSopen::info, &Coplanar::info, 0};
+   &MSmbend::info, &MSopen::info, &MSgap::info, &Coplanar::info, 0};
 
-pInfoFunc nonlinearComps[9] =
-  {&Diode::info, &BJT::info, &BJT::info_pnp, &JFET::info, &JFET::info_p,
+pInfoFunc nonlinearComps[11] =
+  {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
+   &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
    &MOSFET::info, &MOSFET::info_p, &MOSFET_depl::info, 0};
 
 // #######################################################################
