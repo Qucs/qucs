@@ -75,10 +75,14 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     else {
       editParam->setReadOnly(true);
       checkParam->setDisabled(true);
-      if(Comp->Model != ".TR")    // transient simulation
-        editParam->setText(tr("frequency"));
-      else
-        editParam->setText(tr("time"));
+      if(Comp->Model == ".TR")    // transient simulation ?
+        editParam->setText("time");
+      else {
+        if(Comp->Model == ".AC")    // AC simulation ?
+          editParam->setText("acfrequency");
+        else
+          editParam->setText("frequency");
+      }
     }
 
     gp->addWidget(new QLabel(tr("Sweep Parameter:"), Tab1), row,0);
@@ -743,9 +747,9 @@ void ComponentDialog::slotSimTypeChange(int Type)
     editNumber->setDisabled(false);
     checkNumber->setDisabled(false);
     if(Type == 1)   // logarithmic ?
-      textStep->setText("Points per decade:");
+      textStep->setText(tr("Points per decade:"));
     else
-      textStep->setText("Step:");
+      textStep->setText(tr("Step:"));
   }
   else {
     if(!editValues->isEnabled()) {   // was the other mode before ?
@@ -767,7 +771,7 @@ void ComponentDialog::slotSimTypeChange(int Type)
     textNumber->setDisabled(true);
     editNumber->setDisabled(true);
     checkNumber->setDisabled(true);
-    textStep->setText("Step");
+    textStep->setText(tr("Step:"));
   }
 }
 

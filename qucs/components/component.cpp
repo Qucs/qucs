@@ -765,6 +765,7 @@ Component* getComponentFromName(QString& Line)
 	       c = new SParamFile(cstr.mid(5).toInt()); }
         else if(cstr == "ub")   c = new Subcircuit();
         else if(cstr == "UBST") c = new Substrate();
+        else if(cstr == "PICE") c = new SpiceFile(2);
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
 	else if(cstr == "CFeed") c = new dcFeed();
