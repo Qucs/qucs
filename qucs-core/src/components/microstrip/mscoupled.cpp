@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.3 2004-08-22 11:01:20 ela Exp $
+ * $Id: mscoupled.cpp,v 1.4 2004-08-29 14:51:11 margraf Exp $
  *
  */
 
@@ -68,7 +68,8 @@ void mscoupled::calcSP (nr_double_t frequency) {
   nr_double_t u, g;
   nr_double_t Zle, ErEffe, Zlo, ErEffo;
   ErEffe = ErEffo = er;
-  Zle = Zlo = z0;
+//  Zle = Zlo = z0;
+  Zlo = 25.0; Zle = 100.0;   // more realistic values
 
   // normalized width and gap
   u = W / h;
@@ -151,15 +152,15 @@ void mscoupled::calcSP (nr_double_t frequency) {
   bo = sqrt (ErEffoFreq) * k0;
   ge = rect (ae, be);
   go = rect (ao, bo);
-
+  
   // compute abbreviations
   complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo;
   Ee = (sqr (ZleFreq) + sqr (z0)) * sinh (ge * l);
   Eo = (sqr (ZloFreq) + sqr (z0)) * sinh (go * l);
   De = 2 * ZleFreq * z0 * cosh (ge * l) + Ee;
   Do = 2 * ZloFreq * z0 * cosh (go * l) + Eo;
-  Xe = Ee / 2 / De;
-  Xo = Eo / 2 / Do;
+  Xe = (sqr (ZleFreq) - sqr (z0)) * sinh (ge * l) / 2 / De;
+  Xo = (sqr (ZloFreq) - sqr (z0)) * sinh (go * l) / 2 / Do;
   Ye = Zle * z0 / De;
   Yo = Zlo * z0 / Do;
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.24 2004-08-22 15:38:28 ela Exp $
+ * $Id: msline.cpp,v 1.25 2004-08-29 14:51:11 margraf Exp $
  *
  */
 
@@ -48,7 +48,7 @@ msline::msline () : circuit (2) {
 
 void msline::calcNoise (nr_double_t) {
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t l = exp (alpha / getPropertyDouble ("L"));
+  nr_double_t l = exp (alpha * getPropertyDouble ("L"));
   nr_double_t z = zref;
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
