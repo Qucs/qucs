@@ -5439,7 +5439,7 @@ Qt universal circuit simulator
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Besonderen Dank an Jens Flucke
+        <translation type="obsolete">Besonderen Dank an Jens Flucke
 
 </translation>
     </message>
@@ -5727,6 +5727,14 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
         <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation>Besonderen Dank an Jens Flucke und Raimund Jacob
+
 </translation>
     </message>
 </context>

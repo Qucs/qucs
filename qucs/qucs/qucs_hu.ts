@@ -4181,12 +4181,6 @@ Qt univerzális áramkör szimuláció
         <translation></translation>
     </message>
     <message>
-        <source>Special thanks to Jens Flucke
-
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Translations:
 </source>
         <translation>Fordítók:
@@ -4259,6 +4253,12 @@ Qt univerzális áramkör szimuláció
 </source>
         <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

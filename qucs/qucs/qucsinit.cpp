@@ -743,7 +743,7 @@ void QucsInit::slotHelpAbout()
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
     tr("Simulator by Stefan Jahn\n")+
-    tr("Special thanks to Jens Flucke\n\n")+
+    tr("Special thanks to Jens Flucke and Raimund Jacob\n\n")+
     tr("Translations:\n")+
     tr("German by Stefan Jahn\n")+
     tr("Polish by Dariusz Pienkowski\n")+
