@@ -202,6 +202,47 @@ void QucsDoc::paint(QPainter *p)
 }
 
 // ---------------------------------------------------
+void QucsDoc::paintSelected(QPainter *p)
+{
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
+    if(pc->isSelected) {
+      pc->isSelected = false;
+      pc->paint(p);   // paint all selected components
+      pc->isSelected = true;
+    }
+
+  for(Wire *pw = Wires.first(); pw != 0; pw = Wires.next())
+    if(pw->isSelected) {
+      pw->isSelected = false;
+      pw->paint(p);   // paint all selected wires
+      pw->isSelected = true;
+    }
+
+  Element *pe;
+  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next()) {
+    for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
+      if(pe->isSelected) {
+	pn->paint(p);   // paint all nodes with selected elements
+	break;
+      }
+  }
+
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next())
+    if(pd->isSelected) {
+      pd->isSelected = false;
+      pd->paint(p);   // paint all selected diagrams
+      pd->isSelected = true;
+    }
+
+  for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next())
+    if(pp->isSelected) {
+      pp->isSelected = false;
+      pp->paint(p);   // paint all selected paintings
+      pp->isSelected = true;
+    }
+}
+
+// ---------------------------------------------------
 // Sets an arbitrary coordinate onto the next grid coordinate.
 void QucsDoc::setOnGrid(int& x, int& y)
 {
@@ -647,7 +688,7 @@ int QucsDoc::insertWireNode2(Wire *w)
       if(ptr2->y2 < w->y2) continue;
 
     // (if new wire lies within an existing wire, was already check before)
-      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is vertical)
+      if(ptr2->isHorizontal() == w->isHorizontal()) // ptr2-wire is vertical
           // one part of the wire lies within an existing wire
           // the other part not
           if(ptr2->Port1->Connections.count() == 1) {
@@ -675,7 +716,7 @@ int QucsDoc::insertWireNode2(Wire *w)
       if(ptr2->x2 < w->x2) continue;
 
     // (if new wire lies within an existing wire, was already check before)
-      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is horizontal)
+      if(ptr2->isHorizontal() == w->isHorizontal()) // ptr2-wire is horizontal
           // one part of the wire lies within an existing wire
           // the other part not
           if(ptr2->Port1->Connections.count() == 1) {
@@ -1008,7 +1049,7 @@ Diagram* QucsDoc::selectedDiagram(int x, int y)
 // ---------------------------------------------------
 Node* QucsDoc::selectedNode(int x, int y)
 {
-  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next())    // test all nodes
+  for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next()) // test all nodes
     if(pn->getSelected(x, y))
       return pn;
 
@@ -1018,7 +1059,7 @@ Node* QucsDoc::selectedNode(int x, int y)
 // ---------------------------------------------------
 Wire* QucsDoc::selectedWire(int x, int y)
 {
-  for(Wire *pw = Wires.first(); pw != 0; pw = Wires.next())    // test all wires
+  for(Wire *pw = Wires.first(); pw != 0; pw = Wires.next()) // test all wires
     if(pw->getSelected(x, y))
       return pw;
 

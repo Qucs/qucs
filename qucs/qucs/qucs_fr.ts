@@ -133,7 +133,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Files</source>
+        <source>All Files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1817,39 +1817,47 @@ Wrong line start!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>sweep type</source>
+        <source>sweep type (lin,log)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>polarity</source>
+        <source>polarity (npn,pnp)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>put operating points into dataset</source>
+        <source>put operating points into dataset (yes,no)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>put result into dataset</source>
+        <source>put result into dataset (yes,no)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>quasi-static microstrip model</source>
+        <source>polarity (nfet,pfet)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>microstrip open end model</source>
+        <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>schematic symbol</source>
+        <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>calculate noise parameters</source>
+        <source>microstrip open end model (Kirschning,Hammerstad)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>interpolation type</source>
+        <source>schematic symbol (european,US)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type (rectangular,polar)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate noise parameters (yes,no)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3297,6 +3305,47 @@ Distribute vertically selected elements</source>
         <source>Set on Grid
 
 Sets selected elements on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rumanian by Radu Circa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Project
+
+Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Selected Elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Selection...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prints Selected Elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Selected Elements
+
+Prints selected elements of the current document</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

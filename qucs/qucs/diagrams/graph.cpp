@@ -18,6 +18,7 @@
 #include "graph.h"
 
 #include <math.h>
+#include <stdlib.h>
 
 
 Graph::Graph(const QString& _Line)
@@ -41,7 +42,7 @@ Graph::Graph(const QString& _Line)
 
 Graph::~Graph()
 {
-  Points.clear();
+  if(Points != 0) free(Points);
   if(cPointsY != 0) delete[] cPointsY;
 }
 

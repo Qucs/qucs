@@ -47,6 +47,7 @@ public:
 
   void paint(QPainter*);
   void paintGrid(QPainter*, int, int, int, int);
+  void paintSelected(QPainter*);
 
   int   insertWireNode1(Wire*);
   bool  connectHWires1(Wire*);
