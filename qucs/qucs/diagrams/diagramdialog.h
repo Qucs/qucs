@@ -29,6 +29,7 @@
 #include <qpoint.h>
 #include <qregexp.h>
 #include <qcheckbox.h>
+#include <qlabel.h>
 
 
 /**
@@ -55,14 +56,17 @@ public slots:
   void slotApply();
   void slotFuncHelp();
   void slotSetColor();
+  void slotSetGridColor();
   void slotResetToTake(const QString&);
   void slotSetProp2(const QString&);
   void slotSetNumMode(int);
+  void slotSetGridBox(int);
+  void slotSetGraphStyle(int);
 
 public:
   Diagram *Diag;
   QString defaultDataSet;
-    
+
   QComboBox *ChooseData;
   QListView *ChooseVars;
   QListBox  *GraphList;
@@ -70,8 +74,9 @@ public:
   QRegExp     Expr;
   QLineEdit   *GraphInput, *Property2, *xLabel, *yLabel;
   QCheckBox   *GridOn;
-  QComboBox   *NumberBox;
-  QPushButton *ColorButt;
+  QLabel      *GridLabel1, *GridLabel2;
+  QComboBox   *PropertyBox, *GridStyleBox;
+  QPushButton *ColorButt, *GridColorButt;
   bool changed, toTake;
 };
 

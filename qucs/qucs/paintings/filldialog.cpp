@@ -59,8 +59,6 @@ FillDialog::FillDialog(const QString& _Caption, bool show, QWidget *parent)
   StyleBox->insertItem(tr("dot line"));
   StyleBox->insertItem(tr("dash dot line"));
   StyleBox->insertItem(tr("dash dot dot line"));
-  connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
-  LineStyle = Qt::SolidLine;
   gp1->addWidget(StyleBox, 2,1);
 
 
@@ -101,8 +99,6 @@ if(show) {
   FillStyleBox->insertItem(tr("hatched backwards"));
   FillStyleBox->insertItem(tr("hatched forwards"));
   FillStyleBox->insertItem(tr("diagonal crossed"));
-  connect(FillStyleBox, SIGNAL(activated(int)), SLOT(slotSetFillStyle(int)));
-  FillStyle = Qt::SolidPattern;
   gp2->addWidget(FillStyleBox, 2,1);
 
 
@@ -141,78 +137,6 @@ void FillDialog::slotSetFillColor()
   QColor c =
     QColorDialog::getColor(FillColorButt->paletteBackgroundColor(), this);
   FillColorButt->setPaletteBackgroundColor(c);
-}
-
-// --------------------------------------------------------------------------
-void FillDialog::slotSetStyle(int index)
-{
-  switch(index) {
-    case 0 : LineStyle = Qt::SolidLine;      break;
-    case 1 : LineStyle = Qt::DashLine;       break;
-    case 2 : LineStyle = Qt::DotLine;        break;
-    case 3 : LineStyle = Qt::DashDotLine;    break;
-    case 4 : LineStyle = Qt::DashDotDotLine; break;
-  }
-}
-
-// --------------------------------------------------------------------------
-void FillDialog::SetComboBox(Qt::PenStyle _Style)
-{
-  LineStyle = _Style;
-  switch(_Style) {
-    case Qt::SolidLine      : StyleBox->setCurrentItem(0);  break;
-    case Qt::DashLine       : StyleBox->setCurrentItem(1);  break;
-    case Qt::DotLine        : StyleBox->setCurrentItem(2);  break;
-    case Qt::DashDotLine    : StyleBox->setCurrentItem(3);  break;
-    case Qt::DashDotDotLine : StyleBox->setCurrentItem(4);  break;
-    default:  ;
-  }
-}
-
-// --------------------------------------------------------------------------
-void FillDialog::slotSetFillStyle(int index)
-{
-  switch(index) {
-    case 0 :  FillStyle = Qt::NoBrush;          break;
-    case 1 :  FillStyle = Qt::SolidPattern;     break;
-    case 2 :  FillStyle = Qt::Dense1Pattern;    break;
-    case 3 :  FillStyle = Qt::Dense2Pattern;    break;
-    case 4 :  FillStyle = Qt::Dense3Pattern;    break;
-    case 5 :  FillStyle = Qt::Dense4Pattern;    break;
-    case 6 :  FillStyle = Qt::Dense5Pattern;    break;
-    case 7 :  FillStyle = Qt::Dense6Pattern;    break;
-    case 8 :  FillStyle = Qt::Dense7Pattern;    break;
-    case 9 :  FillStyle = Qt::HorPattern;       break;
-    case 10 : FillStyle = Qt::VerPattern;       break;
-    case 11 : FillStyle = Qt::CrossPattern;     break;
-    case 12 : FillStyle = Qt::BDiagPattern;     break;
-    case 13 : FillStyle = Qt::FDiagPattern;     break;
-    case 14 : FillStyle = Qt::DiagCrossPattern; break;
-  }
-}
-
-// --------------------------------------------------------------------------
-void FillDialog::SetFillComboBox(Qt::BrushStyle _Style)
-{
-  FillStyle = _Style;
-  switch(_Style) {
-    case Qt::NoBrush :          FillStyleBox->setCurrentItem(0);  break;
-    case Qt::SolidPattern :     FillStyleBox->setCurrentItem(1);  break;
-    case Qt::Dense1Pattern :    FillStyleBox->setCurrentItem(2);  break;
-    case Qt::Dense2Pattern :    FillStyleBox->setCurrentItem(3);  break;
-    case Qt::Dense3Pattern :    FillStyleBox->setCurrentItem(4);  break;
-    case Qt::Dense4Pattern :    FillStyleBox->setCurrentItem(5);  break;
-    case Qt::Dense5Pattern :    FillStyleBox->setCurrentItem(6);  break;
-    case Qt::Dense6Pattern :    FillStyleBox->setCurrentItem(7);  break;
-    case Qt::Dense7Pattern :    FillStyleBox->setCurrentItem(8);  break;
-    case Qt::HorPattern :       FillStyleBox->setCurrentItem(9);  break;
-    case Qt::VerPattern :       FillStyleBox->setCurrentItem(10); break;
-    case Qt::CrossPattern :     FillStyleBox->setCurrentItem(11); break;
-    case Qt::BDiagPattern :     FillStyleBox->setCurrentItem(12); break;
-    case Qt::FDiagPattern :     FillStyleBox->setCurrentItem(13); break;
-    case Qt::DiagCrossPattern : FillStyleBox->setCurrentItem(14); break;
-    default:  ;
-  }
 }
 
 // --------------------------------------------------------------------------

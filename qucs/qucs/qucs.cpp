@@ -79,7 +79,6 @@ QucsApp::QucsApp()
   Acts.init(this);
   initCursorMenu();
 
-
   // default settings of the printer
   Printer.setOrientation(QPrinter::Landscape);
   Printer.setColorMode(QPrinter::Color);
@@ -92,6 +91,9 @@ QucsApp::QucsApp()
   Acts.slotSelect(true);
 
   HierarchyHistory.setAutoDelete(true);
+
+  // creates a document called "untitled"
+  view->Docs.append(new QucsDoc(this, ""));
 }
 
 QucsApp::~QucsApp()
@@ -186,10 +188,6 @@ void QucsApp::initView()
 
   // ---------------------------------------------------------------------
   readProjects();   // reads all projects and inserts them into the ListBox
-
-  // creates a document called "untitled"
-  view->Docs.append(new QucsDoc(WorkView, ""));
-
 }
 
 // ----------------------------------------------------------
@@ -404,7 +402,7 @@ bool QucsApp::gotoPage(const QString& Name)
     return true;
   }
 
-  d = new QucsDoc(WorkView, Name);
+  d = new QucsDoc(this, Name);
   view->Docs.append(d);   // create new page
 
   if(!d->load()) {    // load document if possible
@@ -458,7 +456,7 @@ void QucsApp::slotFileNew()
 {
   statusBar()->message(tr("Creating new schematic..."));
 
-  view->Docs.append(new QucsDoc(WorkView, ""));
+  view->Docs.append(new QucsDoc(this, ""));
   // make new document the current
   WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));
 
@@ -668,7 +666,7 @@ void QucsApp::slotFileClose()
   WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));
 
   if(view->Docs.isEmpty())  // if no document left, create an untitled
-    view->Docs.append(new QucsDoc(WorkView, ""));
+    view->Docs.append(new QucsDoc(this, ""));
 
   QucsDoc *d = view->Docs.current();
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
@@ -1002,7 +1000,7 @@ void QucsApp::slotChangePage()
       else new QListViewItem(ConDisplays, Name);  // insert new name
     file.close();
 
-    d = new QucsDoc(WorkView, Info.dirPath(true)+"/"+Name);
+    d = new QucsDoc(this, Info.dirPath(true)+"/"+Name);
     view->Docs.append(d);   // create new page
 
     if(!d->load()) {
@@ -1140,7 +1138,7 @@ int QucsApp::testFile(const QString& DocName)
 void QucsApp::OpenProject(const QString& Path, const QString& Name)
 {
   if(!closeAllFiles()) return;   // close files and ask for saving them
-  view->Docs.append(new QucsDoc(WorkView, ""));   // create 'untitled' file
+  view->Docs.append(new QucsDoc(this, ""));   // create 'untitled' file
   view->viewport()->repaint();
   view->drawn = false;
 
@@ -1540,6 +1538,15 @@ void QucsApp::slotProjDelButt()
 void QucsApp::slotEditUndo()
 {
   view->Docs.current()->undo();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Undo"-Button is pressed.
+void QucsApp::slotEditRedo()
+{
+  view->Docs.current()->redo();
   view->viewport()->repaint();
   view->drawn = false;
 }

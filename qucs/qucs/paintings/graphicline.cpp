@@ -271,7 +271,7 @@ bool GraphicLine::Dialog()
   FillDialog *d = new FillDialog(QObject::tr("Edit Line Properties"), false);
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
-  d->SetComboBox(Pen.style());
+  d->StyleBox->setCurrentItem(Pen.style()-1);
 
   if(d->exec() == QDialog::Rejected) {
     delete d;
@@ -286,8 +286,8 @@ bool GraphicLine::Dialog()
     Pen.setWidth(d->LineWidth->text().toUInt());
     changed = true;
   }
-  if(Pen.style()  != d->LineStyle) {
-    Pen.setStyle(d->LineStyle);
+  if(Pen.style()  != (d->StyleBox->currentItem()+1)) {
+    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentItem()+1));
     changed = true;
   }
 

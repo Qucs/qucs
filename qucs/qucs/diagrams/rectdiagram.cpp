@@ -29,8 +29,6 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y1 = 32;
   x2 = 240;    // initial size of diagram
   y2 = 160;
-
-  GridOn = true;
   Name = "Rect";
 
   xLabel = "";
@@ -44,28 +42,15 @@ RectDiagram::~RectDiagram()
 }
 
 // ------------------------------------------------------------
-void RectDiagram::calcData(Graph *g)
+void RectDiagram::calcCoordinate(double x, double yr, double yi,
+				 int *px, int *py)
 {
-  int *p = g->Points;
-//  if(p == 0) return;
-  double *px;
-  double *py = g->cPointsY;
-  for(int i=g->countY; i>0; i--) {
-    px = g->cPointsX.getFirst()->Points;
-    for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
-      *(p++) = int(((*(px++))-xlow)/(xup-xlow)*double(x2) + 0.5);
-      // preserve negative values if not complex number
-      if(fabs(*(py+1)) < 1e-250) {
-	*(p++) = int(((*(py++))-ylow)/(yup-ylow)*double(y2) + 0.5);
-	py++;   // do not use imaginary part
-      }
-      else {  // calculate magnitude of complex number
-	*(p++) = int((sqrt((*py)*(*py) +
-		(*(py+1))*(*(py+1)))-ylow)/(yup-ylow)*double(y2) + 0.5);
-        py += 2;
-      }
-    }
-  }
+  *px = int((x-xlow)/(xup-xlow)*double(x2) + 0.5);
+
+  if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
+    *py = int((yr-ylow)/(yup-ylow)*double(y2) + 0.5);
+  else   // calculate magnitude of complex number
+    *py = int((sqrt(yr*yr + yi*yi)-ylow)/(yup-ylow)*double(y2) + 0.5);
 }
 
 // --------------------------------------------------------------
@@ -159,7 +144,7 @@ void RectDiagram::calcDiagram()
     GridNum += GridStep;
 
     if(GridOn)  if(z < x2)  if(z > 0)
-      Lines.append(new Line(z, y2, z, 0, QPen(QPen::lightGray,0))); // x grid
+      Lines.append(new Line(z, y2, z, 0, GridPen)); // x grid
     Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));   // x marks
     zD += zDstep;
     z = int(zD);
@@ -172,7 +157,7 @@ void RectDiagram::calcDiagram()
   else Base = (ymax-ymin)/numGrids;
   Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);        // separate first significant digit
-  if(Base < 3.5) {            // use only 1, 2 and 5, which ever is best fitted
+  if(Base < 3.5) {     // use only 1, 2 and 5, which ever is best fitted
     if(Base < 1.5) Base = 1.0;
     else Base = 2.0;
   }
@@ -228,7 +213,7 @@ void RectDiagram::calcDiagram()
   GridNum  = ylow + zD;
   zD /= (yup-ylow)/double(y2);
 
-  QRect r;
+  QSize r;
   QString tmp;
   QFontMetrics  metrics(QucsSettings.font);
 
@@ -239,14 +224,14 @@ void RectDiagram::calcDiagram()
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     if(fabs(Expo) < 3.0)  tmp = QString::number(GridNum);
     else tmp = QString::number(GridNum, 'e',1);
-    r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, tmp); // width of text
+    r = metrics.size(0, tmp);  // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
 
     Texts.append(new Text(-r.width()-7, z-5, tmp));  // text aligned right
     GridNum += GridStep;
 
     if(GridOn)  if(z < y2)  if(z > 0)
-      Lines.append(new Line(0, z, x2, z, QPen(QPen::lightGray,0))); // y grid
+      Lines.append(new Line(0, z, x2, z, GridPen));  // y grid
     Lines.append(new Line(-5, z, 5, z, QPen(QPen::black,0)));   // y marks
     zD += zDstep;
     z = int(zD);
