@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.31 2004-10-25 21:01:31 ela Exp $
+ * $Id: dcsolver.cpp,v 1.32 2004-11-24 19:15:45 raimi Exp $
  *
  */
 
@@ -74,18 +74,51 @@ void dcsolver::solve (void) {
 
   // start the iterative solver
   solve_pre ();
-  applyNodeset ();
-  int error = solve_nonlinear ();
+
+  // local variables for the fallback thingies
+  int retry = -1, error, fallback = 0;
+  int helpers[] = {
+    CONV_SteepestDescent, CONV_LineSearch, CONV_Attenuation, -1 };
+
+  do {
+    // Run the DC solver once.
+    try_running () {
+      applyNodeset ();
+      error = solve_nonlinear ();
 #if DEBUG
-  if (!error) {
-    logprint (LOG_STATUS,
-	      "NOTIFY: %s: convergence reached after %d iterations\n",
-	      getName (), iterations);
-  }
+      if (!error) {
+	logprint (LOG_STATUS,
+		  "NOTIFY: %s: convergence reached after %d iterations\n",
+		  getName (), iterations);
+      }
 #endif /* DEBUG */
+      if (!error) retry = -1;
+    }
+    // Appropriate exception handling.
+    catch_exception () {
+    case EXCEPTION_NO_CONVERGENCE:
+      pop_exception ();
+      convHelper = helpers[fallback++];
+      if (convHelper != -1) {
+	logprint (LOG_ERROR, "WARNING: %s: %s analysis failed, using fallback "
+		  "#%d\n", getName (), getDescription (), fallback);
+	retry++;
+      }
+      else {
+	retry = -1;
+      }
+      break;
+    default:
+      // Otherwise return.
+      estack.print ();
+      error++;
+      break;
+    }
+  } while (retry != -1);
 
   // save results and cleanup the solver
   saveResults ("V", "I", saveOPs);
+
   solve_post ();
 }
 

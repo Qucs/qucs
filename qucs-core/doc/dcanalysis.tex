@@ -1320,6 +1320,7 @@ characteristic of operational amplifiers.
 I_1 = 0 \qquad\qquad I_3 = 0
 \end{equation}
 \begin{equation}
+\label{eq:OPVout}
 V_2 = V_{max}\cdot\dfrac{2}{\pi}\arctan \left( \dfrac{\pi}{2\cdot V_{max}}\cdot G\cdot (V_1-V_3) \right)
 \end{equation}
 
@@ -1331,7 +1332,9 @@ g = \dfrac{\partial V_2}{\partial (V_1-V_3)}
   = \dfrac{G}{1+\left( \dfrac{\pi}{2\cdot V_{max}}\cdot G\cdot (V_1-V_3) \right)^2}
 \end{equation}
 
-This leads to the following matrix representation.
+This leads to the following matrix representation being a specialised
+three node voltage controlled voltage source (see section
+\ref{sec:vcvs} on page \pageref{sec:vcvs}).
 \begin{equation}
 \begin{bmatrix}
 .&.&.& 0\\
@@ -1355,7 +1358,18 @@ I_{3}\\
 \end{bmatrix}
 \end{equation}
 
-With this representation, building the S-parameters is easy.
+The above MNA matrix entries are also used during the non-linear DC
+analysis with the 0 in the right hand side vector replaced by an
+equivalent voltage
+\begin{equation}
+V_{eq} = V_{out} - g\cdot V_2
+\end{equation}
+with $V_{out}$ computed using eq. \eqref{eq:OPVout}.
+
+\addvspace{12pt}
+
+With the given small-signal matrix representation, building the
+S-parameters is easy.
 \begin{equation}
 (\underline{S}) =
 \begin{bmatrix}

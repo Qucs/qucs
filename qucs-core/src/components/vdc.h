@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.h,v 1.7 2004-09-25 21:09:46 ela Exp $
+ * $Id: vdc.h,v 1.8 2004-11-24 19:15:50 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class vdc : public circuit
 {
  public:
   vdc ();
+  void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);

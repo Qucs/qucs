@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.20 2004-10-25 21:01:33 ela Exp $
+ * $Id: mosfet.cpp,v 1.21 2004-11-24 19:15:52 raimi Exp $
  *
  */
 
@@ -130,6 +130,9 @@ void mosfet::calcNoise (nr_double_t frequency) {
 
 void mosfet::initDC (void) {
 
+  // allocate MNA matrices
+  allocMatrixMNA ();
+
   // initialize starting values
   UgdPrev = real (getV (NODE_G) - getV (NODE_D));
   UgsPrev = real (getV (NODE_G) - getV (NODE_S));
@@ -149,6 +152,7 @@ void mosfet::initDC (void) {
     rs = splitResistance (this, rs, getNet (), "Rs", "source", NODE_S);
     rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
+    rs->initDC ();
   }
   // no series resistance at source
   else {
@@ -162,6 +166,7 @@ void mosfet::initDC (void) {
     rg = splitResistance (this, rg, getNet (), "Rg", "gate", NODE_G);
     rg->setProperty ("Temp", T);
     rg->setProperty ("R", Rg);
+    rg->initDC ();
   }
   // no series resistance at source
   else {
@@ -174,6 +179,7 @@ void mosfet::initDC (void) {
     rd = splitResistance (this, rd, getNet (), "Rd", "drain", NODE_D);
     rd->setProperty ("Temp", T);
     rd->setProperty ("R", Rd);
+    rd->initDC ();
   }
   // no series resistance at drain
   else {
@@ -590,6 +596,7 @@ void mosfet::calcOperatingPoints (void) {
 }
 
 void mosfet::initAC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 

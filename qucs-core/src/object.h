@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.h,v 1.4 2004-07-08 06:38:43 ela Exp $
+ * $Id: object.h,v 1.5 2004-11-24 19:15:46 raimi Exp $
  *
  */
 
@@ -50,11 +50,11 @@ class object
   void setProperty (char *, variable *);
   char * getPropertyString (char *);
   nr_double_t getPropertyDouble (char *);
-  int getPropertyInteger (char *);
-  int hasProperty (char *);
+  int  getPropertyInteger (char *);
+  int  hasProperty (char *);
   void copyProperties (property *);
   void deleteProperties (void);
-  int countProperties (void);
+  int  countProperties (void);
   char * propertyList (void);
 
  private:

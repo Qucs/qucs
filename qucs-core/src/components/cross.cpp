@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.cpp,v 1.4 2004-10-08 11:45:39 ela Exp $
+ * $Id: cross.cpp,v 1.5 2004-11-24 19:15:47 raimi Exp $
  *
  */
 
@@ -37,6 +37,12 @@
 #include "cross.h"
 
 cross::cross () : circuit (4) {
+  type = CIR_CROSS;
+  setVoltageSources (3);
+}
+
+void cross::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, -1.0 / 2.0);
   setS (1, 2,  1.0 / 2.0);
   setS (1, 3,  1.0 / 2.0);
@@ -53,11 +59,10 @@ cross::cross () : circuit (4) {
   setS (4, 2,  1.0 / 2.0);
   setS (4, 3,  1.0 / 2.0);
   setS (4, 4, -1.0 / 2.0);
-  type = CIR_CROSS;
 }
 
 void cross::initDC (void) {
-  setVoltageSources (3);
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
   voltageSource (2, 1, 3);
   voltageSource (3, 1, 4);

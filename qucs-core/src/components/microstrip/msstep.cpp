@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msstep.cpp,v 1.6 2004-10-12 18:13:12 ela Exp $
+ * $Id: msstep.cpp,v 1.7 2004-11-24 19:15:54 raimi Exp $
  *
  */
 
@@ -106,14 +106,16 @@ matrix msstep::calcMatrixZ (nr_double_t frequency) {
 
 void msstep::initDC (void) {
   // a DC short (voltage source V = 0 volts)
-  clearY ();
-  voltageSource (1, 1, 2);
   setVoltageSources (1);
   setInternalVoltageSource (1);
+  allocMatrixMNA ();
+  clearY ();
+  voltageSource (1, 1, 2);
 }
 
 void msstep::initAC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
 }
 
 void msstep::calcAC (nr_double_t frequency) {

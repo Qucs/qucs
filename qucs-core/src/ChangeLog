@@ -1,3 +1,30 @@
+2004-11-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcsolver.cpp: Implemented fallback variants for the
+	non-linear DC analysis which fail initially.
+
+	* circuit.cpp: Made all of the MNA matrices of dynamic size.
+	Thus with a small overhead of code memory consumption is much
+	better.  Changed all callers/users (i.e. each component).
+
+	* ucs.cpp (main): New command line option --check which
+	can be used to verify an input netlist to be checked but
+	not evaluated (simulated).
+
+	* parse_netlist.y: Fixed bug in netlist parser caused by
+	empty lines in subcircuit definitions.
+	(YYMAXDEPTH): Increased maximum parser stack size.
+
+2004-11-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* input.cpp: The netlist factory now removes the definitions
+	its output was based upon immediately.  Thus it is possible to
+	handle even large netlists on systems with 'limited' memory.
+
+	* check_netlist.cpp: Implemented a new function which is
+	able to	unchain and destroy a definition from the list of
+	definitions.
+
 2004-11-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Made the OpAmp a

@@ -1,7 +1,7 @@
 /*
  * itrafo.cpp - ideal trafo class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: itrafo.cpp,v 1.3 2004-02-17 15:30:58 ela Exp $
+ * $Id: itrafo.cpp,v 1.4 2004-11-24 19:15:49 raimi Exp $
  *
  */
 
@@ -41,7 +41,8 @@ itrafo::itrafo () : circuit (3) {
   type = CIR_ITRAFO;
 }
 
-void itrafo::calcSP (nr_double_t) {
+void itrafo::initSP (void) {
+  allocMatrixS ();
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t n = 2 * z0 + z;
   setS (1, 1,  (2.0 * z0 - z) / n);

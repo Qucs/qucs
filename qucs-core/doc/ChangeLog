@@ -1,3 +1,13 @@
+2004-11-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsconv.1: Added --noaction (or -a) help text.
+
+	* qucsator.1: Added --check (or -c) help text.
+
+	* dcanalysis.tex (subsection{Operational amplifier}): Also
+	documented how non-linear DC analysis of the operational
+	amplifier works.
+
 2004-11-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.1: New man page for the netlist converter.

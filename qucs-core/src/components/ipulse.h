@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ipulse.h,v 1.1 2004-09-20 10:09:55 ela Exp $
+ * $Id: ipulse.h,v 1.2 2004-11-24 19:15:49 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class ipulse : public circuit
 {
  public:
   ipulse ();
+  void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);

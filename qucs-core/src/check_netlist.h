@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.16 2004-10-29 18:01:29 ela Exp $
+ * $Id: check_netlist.h,v 1.17 2004-11-24 19:15:44 raimi Exp $
  *
  */
 
@@ -45,6 +45,10 @@ int  netlist_parse (void);
 int  netlist_error (char *);
 int  netlist_lex (void);
 int  netlist_checker_variables (void);
+
+/* Some more functionality. */
+struct definition_t *
+netlist_unchain_definition (struct definition_t *, struct definition_t *);
 
 __END_DECLS
 

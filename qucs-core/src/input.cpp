@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.38 2004-11-10 20:26:37 ela Exp $
+ * $Id: input.cpp,v 1.39 2004-11-24 19:15:45 raimi Exp $
  *
  */
 
@@ -47,6 +47,9 @@
 #include "input.h"
 #include "check_netlist.h"
 #include "equation.h"
+
+// Global variables.
+int netlist_check = 0;
 
 // Constructor creates an unnamed instance of the input class.
 input::input () : object () {
@@ -116,7 +119,7 @@ int input::netlist (net * netlist) {
    netlist input.  It creates circuit components as necessary. */
 void input::factory (void) {
 
-  struct definition_t * def;
+  struct definition_t * def, * next;
   struct node_t * nodes;
   struct pair_t * pairs;
   circuit * c;
@@ -127,8 +130,8 @@ void input::factory (void) {
   int i;
 
   // go through the list of input definitions
-  for (def = definition_root; def != NULL; def = def->next) {
-
+  for (def = definition_root; def != NULL; def = next) {
+    next = def->next;
     // handle actions
     if (def->action) {
       if ((a = createAnalysis (def->type)) != NULL) {
@@ -154,12 +157,14 @@ void input::factory (void) {
 
 	subnet->insertAnalysis (a);
       }
+      // remove this definition from the list
+      definition_root = netlist_unchain_definition (definition_root, def);
     }
   }
 
   // go through the list of input definitions
-  for (def = definition_root; def != NULL; def = def->next) {
-
+  for (def = definition_root; def != NULL; def = next) {
+    next = def->next;
     // handle substrate definitions
     if (!def->action && def->substrate) {
       if ((s = createSubstrate (def->type)) != NULL) {
@@ -180,6 +185,8 @@ void input::factory (void) {
 	v->setSubstrate (s);
 	env->addVariable (v);
       }
+      // remove this definition from the list
+      definition_root = netlist_unchain_definition (definition_root, def);
     }
     // handle nodeset definitions
     else if (!def->action && def->nodeset) {
@@ -187,12 +194,14 @@ void input::factory (void) {
       n->setName (def->nodes->node);
       n->setValue (def->pairs->value->value);
       subnet->addNodeset (n);
+      // remove this definition from the list
+      definition_root = netlist_unchain_definition (definition_root, def);
     }
   }
 
   // go through the list of input definitions
-  for (def = definition_root; def != NULL; def = def->next) {
-
+  for (def = definition_root; def != NULL; def = next) {
+    next = def->next;
     // handle component definitions
     if (!def->action && !def->substrate && !def->nodeset) {
       c = createCircuit (def->type);
@@ -234,6 +243,9 @@ void input::factory (void) {
 
       // insert the circuit into the netlist object
       subnet->insertCircuit (c);
+
+      // remove this definition from the list
+      definition_root = netlist_unchain_definition (definition_root, def);
     }
   }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inoise.cpp,v 1.2 2004-07-26 06:30:29 ela Exp $
+ * $Id: inoise.cpp,v 1.3 2004-11-24 19:15:48 raimi Exp $
  *
  */
 
@@ -39,11 +39,15 @@
 #include "inoise.h"
 
 inoise::inoise () : circuit (2) {
+  type = CIR_INOISE;
+}
+
+void inoise::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, 1.0);
   setS (1, 2, 0.0);
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
-  type = CIR_INOISE;
 }
 
 void inoise::calcNoise (nr_double_t frequency) {

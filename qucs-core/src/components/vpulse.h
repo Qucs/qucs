@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vpulse.h,v 1.1 2004-09-20 10:09:55 ela Exp $
+ * $Id: vpulse.h,v 1.2 2004-11-24 19:15:50 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class vpulse : public circuit
 {
  public:
   vpulse ();
+  void initSP (void);
   void initDC (void);
   void initAC (void);
   void initTR (void);

@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.10 2004-10-12 18:13:12 ela Exp $
+ * $Id: mscorner.cpp,v 1.11 2004-11-24 19:15:52 raimi Exp $
  *
  */
 
@@ -49,6 +49,9 @@ mscorner::mscorner () : circuit (2) {
 
 void mscorner::initSP (void) {
 
+  // allocate S-parameter matrix
+  allocMatrixS ();
+
   // get properties of substrate and corner
   nr_double_t W = getPropertyDouble ("W");
   substrate * subst = getSubstrate ();
@@ -60,11 +63,11 @@ void mscorner::initSP (void) {
 
   // check validity
   if ((Wh < 0.2) || (Wh > 6.0)) {
-    logprint (LOG_STATUS, "WARNING: Model for microstrip corner defined for "
+    logprint (LOG_ERROR, "WARNING: Model for microstrip corner defined for "
 	      "0.2 <= W/h <= 6.0 (W/h = %g)\n", Wh);
   }
   if ((er < 2.36) || (er > 10.4)) {
-    logprint (LOG_STATUS, "WARNING: Model for microstrip corner defined for "
+    logprint (LOG_ERROR, "WARNING: Model for microstrip corner defined for "
 	      "2.36 <= er <= 10.4 (er = %g)\n", er);
   }
 
@@ -81,7 +84,7 @@ void mscorner::calcSP (nr_double_t frequency) {
 matrix mscorner::calcMatrixZ (nr_double_t frequency) {
   // check frequency validity
   if (frequency * h > 12e6) {
-    logprint (LOG_STATUS, "WARNING: Model for microstrip corner defined for "
+    logprint (LOG_ERROR, "WARNING: Model for microstrip corner defined for "
 	      "freq*h <= 12MHz (is %g)\n", frequency * h);
   }
 
@@ -98,14 +101,16 @@ matrix mscorner::calcMatrixZ (nr_double_t frequency) {
 
 void mscorner::initDC (void) {
   // a DC short (voltage source V = 0 volts)
-  clearY ();
-  voltageSource (1, 1, 2);
   setVoltageSources (1);
   setInternalVoltageSource (1);
+  allocMatrixMNA ();
+  clearY ();
+  voltageSource (1, 1, 2);
 }
 
 void mscorner::initAC (void) {
   setVoltageSources (0);
+  allocMatrixMNA ();
   initSP ();
 }
 

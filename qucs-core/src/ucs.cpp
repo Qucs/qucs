@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: ucs.cpp,v 1.15 2004-09-28 23:14:24 ela Exp $
+ * $Id: ucs.cpp,v 1.16 2004-11-24 19:15:46 raimi Exp $
  *
  */
 
@@ -38,6 +38,8 @@
 #include "equation.h"
 #include "environment.h"
 #include "exceptionstack.h"
+
+#include <unistd.h>
 
 using namespace qucs;
 
@@ -72,6 +74,7 @@ int main (int argc, char ** argv) {
 	"  -i FILENAME    use file as input netlist (default stdin)\n"
 	"  -o FILENAME    use file as output dataset (default stdout)\n"
 	"  -b, --bar      enable textual progress bar\n"
+	"  -c, --check    check the input netlist and exit\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -84,6 +87,9 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-b") || !strcmp (argv[i], "--bar")) {
       progressbar_enable = 1;
+    }
+    else if (!strcmp (argv[i], "-c") || !strcmp (argv[i], "--check")) {
+      netlist_check = 1;
     }
   }
 
@@ -99,8 +105,16 @@ int main (int argc, char ** argv) {
   in->setEnv (root);
   
   // get input netlist
-  if (in->netlist (subnet) != 0)
+  if (in->netlist (subnet) != 0) {
+    if (netlist_check) {
+      logprint (LOG_STATUS, "checker notice, netlist check FAILED\n");
+    }
     return -1;
+  }
+  if (netlist_check) {
+    logprint (LOG_STATUS, "checker notice, netlist OK\n");
+    return 0;
+  }
 
   // attach a ground to the netlist
   gnd = new ground ();

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ipulse.cpp,v 1.2 2004-10-03 10:30:51 ela Exp $
+ * $Id: ipulse.cpp,v 1.3 2004-11-24 19:15:49 raimi Exp $
  *
  */
 
@@ -37,20 +37,26 @@
 #include "ipulse.h"
 
 ipulse::ipulse () : circuit (2) {
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
   type = CIR_IPULSE;
   setISource (true);
 }
 
+void ipulse::initSP (void) {
+  allocMatrixS ();
+  setS (1, 1, 1.0);
+  setS (1, 2, 0.0);
+  setS (2, 1, 0.0);
+  setS (2, 2, 1.0);
+}
+
 void ipulse::initDC (void) {
   nr_double_t i = getPropertyDouble ("I1");
+  allocMatrixMNA ();
   setI (1, +i); setI (2, -i);
 }
 
 void ipulse::initAC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.h,v 1.2 2004-10-31 12:35:46 ela Exp $
+ * $Id: check_spice.h,v 1.3 2004-11-24 19:16:05 raimi Exp $
  *
  */
 
@@ -40,9 +40,9 @@ __BEGIN_DECLS
 /* Externalize variables used by the scanner and parser. */
 extern struct definition_t * definition_root;
 extern struct definition_t * subcircuit_root;
-extern struct value_t * value_root;
 extern int spice_lineno;
 extern FILE * spice_in;
+extern char * spice_title;
 
 /* Available functions of the checker. */
 int  spice_checker (void);
@@ -50,8 +50,12 @@ int  spice_parse (void);
 int  spice_error (char *);
 int  spice_lex (void);
 
+/* Local functionality. */
+void spice_add_last_hint (struct value_t *, int);
 void spice_set_last_hint (struct value_t *, int);
 struct value_t * netlist_append_values (struct value_t *, struct value_t *);
+struct definition_t * spice_checker_intern (struct definition_t *);
+extern int spice_errors;
 
 __END_DECLS
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.11 2004-10-03 10:30:51 ela Exp $
+ * $Id: vdc.cpp,v 1.12 2004-11-24 19:15:50 raimi Exp $
  *
  */
 
@@ -37,16 +37,21 @@
 #include "vdc.h"
 
 vdc::vdc () : circuit (2) {
+  type = CIR_VDC;
+  setVSource (true);
+  setVoltageSources (1);
+}
+
+void vdc::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, 0.0);
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
-  type = CIR_VDC;
-  setVSource (true);
 }
 
 void vdc::initDC (void) {
-  setVoltageSources (1);
+  allocMatrixMNA ();
   voltageSource (1, 1, 2, getPropertyDouble ("U"));
 }
 

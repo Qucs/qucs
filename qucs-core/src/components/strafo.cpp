@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.9 2004-10-04 17:17:45 ela Exp $
+ * $Id: strafo.cpp,v 1.10 2004-11-24 19:15:49 raimi Exp $
  *
  */
 
@@ -41,7 +41,7 @@ strafo::strafo () : circuit (6) {
   setVoltageSources (2);
 }
 
-void strafo::calcSP (nr_double_t) {
+void strafo::initSP (void) {
 
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
@@ -53,6 +53,8 @@ void strafo::calcSP (nr_double_t) {
   complex z4 = t1 * t2 * t2 / d;
   complex z5 = t1 * t1 * t2 / d;
   complex z6 = t1 * t2 / d;
+
+  allocMatrixS ();
 
   setS (1, 1,  z1);    setS (1, 2, z4);     setS (1, 3, -z4); 
   setS (1, 4, -z6);    setS (1, 5, z6);     setS (1, 6, 1 - z1);
@@ -71,6 +73,8 @@ void strafo::calcSP (nr_double_t) {
 void strafo::initDC (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
+
+  allocMatrixMNA ();
 
   setB (1, 1, -1.0); setB (2, 1, + t1); setB (3, 1, - t1);
   setB (4, 1, +0.0); setB (5, 1, +0.0); setB (6, 1, +1.0);

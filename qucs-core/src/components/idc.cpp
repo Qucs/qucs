@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.cpp,v 1.6 2004-10-03 10:30:51 ela Exp $
+ * $Id: idc.cpp,v 1.7 2004-11-24 19:15:48 raimi Exp $
  *
  */
 
@@ -37,20 +37,26 @@
 #include "idc.h"
 
 idc::idc () : circuit (2) {
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
   type = CIR_IDC;
   setISource (true);
 }
 
+void idc::initSP (void) {
+  allocMatrixS ();
+  setS (1, 1, 1.0);
+  setS (1, 2, 0.0);
+  setS (2, 1, 0.0);
+  setS (2, 2, 1.0);
+}
+
 void idc::initDC (void) {
   nr_double_t i = getPropertyDouble ("I");
+  allocMatrixMNA ();
   setI (1, +i); setI (2, -i);
 }
 
 void idc::initAC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 

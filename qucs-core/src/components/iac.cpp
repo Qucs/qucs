@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.7 2004-10-11 09:58:01 ela Exp $
+ * $Id: iac.cpp,v 1.8 2004-11-24 19:15:48 raimi Exp $
  *
  */
 
@@ -40,15 +40,20 @@
 #include "iac.h"
 
 iac::iac () : circuit (2) {
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
   type = CIR_IAC;
   setISource (true);
 }
 
+void iac::initSP (void) {
+  allocMatrixS ();
+  setS (1, 1, 1.0);
+  setS (1, 2, 0.0);
+  setS (2, 1, 0.0);
+  setS (2, 2, 1.0);
+}
+
 void iac::initDC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 
@@ -56,6 +61,7 @@ void iac::initAC (void) {
   nr_double_t a = getPropertyDouble ("I");
   nr_double_t p = getPropertyDouble ("Phase");
   complex i = polar (a, rad (p));
+  allocMatrixMNA ();
   setI (1, +i); setI (2, -i);
 }
 

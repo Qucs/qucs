@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.10 2004-10-29 18:01:29 ela Exp $
+ * $Id: parse_netlist.y,v 1.11 2004-11-24 19:15:46 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 
 #define YYERROR_VERBOSE 42
 #define YYDEBUG 1
+#define YYMAXDEPTH 1000000
 
 #include "check_netlist.h"
 #include "logging.h"
@@ -386,6 +387,9 @@ DefBody: /* nothing */ { $$ = NULL; }
     if ($1) {
       $1->next = $2;
       $$ = $1;
+    }
+    else {
+      $$ = $2;
     }
   }
 ;

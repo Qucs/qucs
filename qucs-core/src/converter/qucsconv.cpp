@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: qucsconv.cpp,v 1.2 2004-11-02 23:48:40 ela Exp $
+ * $Id: qucsconv.cpp,v 1.3 2004-11-24 19:16:05 raimi Exp $
  *
  */
 
@@ -67,12 +67,13 @@ int main (int argc, char ** argv) {
     if (!strcmp (argv[i], "-h") || !strcmp (argv[i], "--help")) {
       fprintf (stdout,
 	"Usage: %s [OPTION]...\n\n"
-	"  -h, --help     display this help and exit\n"
-	"  -v, --version  display version information and exit\n"
-	"  -i  FILENAME   use file as input file (default stdin)\n"
-	"  -o  FILENAME   use file as output file (default stdout)\n"
-	"  -if FORMAT     input data specification (e.g. spice)\n"
-	"  -of FORMAT     output data specification (e.g. qucs)\n"
+	"  -h, --help      display this help and exit\n"
+	"  -v, --version   display version information and exit\n"
+	"  -i  FILENAME    use file as input file (default stdin)\n"
+	"  -o  FILENAME    use file as output file (default stdout)\n"
+	"  -if FORMAT      input data specification (e.g. spice)\n"
+	"  -of FORMAT      output data specification (e.g. qucs)\n"
+	"  -a, --noaction  do not include netlist actions in the output\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -87,6 +88,9 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-of")) {
       output = argv[++i];
+    }
+    else if (!strcmp (argv[i], "-a") || !strcmp (argv[i], "--noaction")) {
+      qucs_actions = 0;
     }
   }
 

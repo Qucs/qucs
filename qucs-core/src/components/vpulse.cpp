@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vpulse.cpp,v 1.2 2004-10-03 10:30:51 ela Exp $
+ * $Id: vpulse.cpp,v 1.3 2004-11-24 19:15:50 raimi Exp $
  *
  */
 
@@ -38,16 +38,21 @@
 #include "vpulse.h"
 
 vpulse::vpulse () : circuit (2) {
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
   type = CIR_VPULSE;
   setVSource (true);
   setVoltageSources (1);
 }
 
+void vpulse::initSP (void) {
+  allocMatrixS ();
+  setS (1, 1, 0.0);
+  setS (1, 2, 1.0);
+  setS (2, 1, 1.0);
+  setS (2, 2, 0.0);
+}
+
 void vpulse::initDC (void) {
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
   setE (1, getPropertyDouble ("U1"));
 }

@@ -1,3 +1,19 @@
+2004-11-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Much more restrictive scanner (completely
+	rewritten).  Work a lot with flex's state mechanisms.
+
+	* qucsconv.cpp: New command line option --noaction can be
+	used to inhibit the output of simulations (actions) into
+	the resulting netlist.
+
+	* parse_spice.y: Almostly implemented all of the Spice
+	'grammar' in the netlist parser.
+
+	* check_spice.cpp: Implemented evaluation of the .OPTIONS
+	directive, subcircuits and the nodeset (initial conditions)
+	functionality.
+
 2004-11-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_spice.l: Added tokens for yet another number format and

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.36 2004-10-04 17:17:44 ela Exp $
+ * $Id: spsolver.cpp,v 1.37 2004-11-24 19:15:46 raimi Exp $
  *
  */
 
@@ -92,6 +92,9 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
   circuit * result = new circuit (s->getSize () - 2);
   complex p;
 
+  // allocate S-parameter and noise corellation matrices
+  result->initSP (); if (noise) result->initNoise ();
+
   // interconnected port numbers
   int k = n1->getPort (), l = n2->getPort ();
 
@@ -151,6 +154,9 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   circuit * t = n2->getCircuit ();
   circuit * result = new circuit (s->getSize () + t->getSize () - 2);
   complex p;
+
+  // allocate S-parameter and noise corellation matrices
+  result->initSP (); if (noise) result->initNoise ();
 
   // connected port numbers
   int k = n1->getPort (), l = n2->getPort ();
@@ -531,6 +537,7 @@ void spsolver::init (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isNonLinear ()) c->calcOperatingPoints ();
     c->initSP ();
+    if (noise) c->initNoise ();
   }
 }
 
@@ -652,6 +659,7 @@ void spsolver::insertTee (node * n) {
 	    subnet->insertCircuit (result);
 	    nodes[1] = result->getNode (1);
 	    count = 1;
+	    result->initSP (); if (noise) result->initNoise ();
 	  }
 	}
       }
@@ -686,6 +694,7 @@ void spsolver::insertOpen (node * n) {
     subnet->insertedCircuit (result);
     result->setNode (1, n->getName());
     subnet->insertCircuit (result);
+    result->initSP (); if (noise) result->initNoise ();
   }
 }
 
@@ -773,6 +782,9 @@ void spsolver::insertDifferentialPorts (void) {
 
       // put the trafo in the circuit list
       subnet->insertCircuit (result);
+
+      // allocate S-parameter and noise correlation matrices
+      result->initSP (); if (noise) result->initNoise ();
     }
   }
 }

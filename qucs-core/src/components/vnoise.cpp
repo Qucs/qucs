@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vnoise.cpp,v 1.3 2004-09-25 21:09:46 ela Exp $
+ * $Id: vnoise.cpp,v 1.4 2004-11-24 19:15:50 raimi Exp $
  *
  */
 
@@ -39,12 +39,16 @@
 #include "vnoise.h"
 
 vnoise::vnoise () : circuit (2) {
+  type = CIR_VNOISE;
+  setVoltageSources (1);
+}
+
+void vnoise::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, 0.0);
   setS (1, 2, 1.0);
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
-  type = CIR_VNOISE;
-  setVoltageSources (1);
 }
 
 void vnoise::calcNoise (nr_double_t frequency) {
@@ -58,6 +62,7 @@ void vnoise::calcNoise (nr_double_t frequency) {
 }
 
 void vnoise::initDC (void) {
+  allocMatrixMNA ();
   voltageSource (1, 1, 2);
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.23 2004-10-29 18:01:29 ela Exp $
+ * $Id: nasolver.cpp,v 1.24 2004-11-24 19:15:46 raimi Exp $
  *
  */
 
@@ -218,6 +218,10 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::applyNodeset (void) {
   if (x == NULL || nlist == NULL) return;
 
+  // set each solution to zero
+  for (int i = 1; i <= x->getSize (); i++) x->set (i, 0);
+
+  // then apply the nodeset itself
   for (nodeset * n = subnet->getNodeset (); n; n = n->getNext ()) {
     struct nodelist_t * nl = nlist->getNode (n->getName ());
     if (nl != NULL) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: irect.cpp,v 1.1 2004-10-03 10:30:51 ela Exp $
+ * $Id: irect.cpp,v 1.2 2004-11-24 19:15:49 raimi Exp $
  *
  */
 
@@ -38,22 +38,28 @@
 #include "irect.h"
 
 irect::irect () : circuit (2) {
+  type = CIR_IRECT;
+  setISource (true);
+}
+
+void irect::initSP (void) {
+  allocMatrixS ();
   setS (1, 1, 1.0);
   setS (1, 2, 0.0);
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
-  type = CIR_IRECT;
-  setISource (true);
 }
 
 void irect::initDC (void) {
   nr_double_t th = getPropertyDouble ("TH");
   nr_double_t tl = getPropertyDouble ("TL");
   nr_double_t i  = getPropertyDouble ("I") * th / (th + tl);
+  allocMatrixMNA ();
   setI (1, +i); setI (2, -i);
 }
 
 void irect::initAC (void) {
+  allocMatrixMNA ();
   clearI ();
 }
 
