@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.c,v 1.6 2004-02-09 18:26:08 ela Exp $
+ * $Id: check_netlist.c,v 1.7 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -102,6 +102,8 @@ struct definition definition_available[] =
     { "SP", 0, 1, { "Start", "Stop", "Step", NULL }, { NULL } },
     /* dc analysis */
     { "DC", 0, 1, { NULL }, { NULL } },
+    /* parameter sweep */
+    { "SW", 0, 1, { "Start", "Stop", "Step", "Param", NULL }, { NULL } },
 
     /* end of list */
     { NULL, 0, 0, { NULL }, { NULL } }
@@ -169,13 +171,46 @@ static int checker_count_definition (char * type, char * instance) {
   return count;
 }
 
+/* Returns the value for a given definition type, key and variable
+   identifier if it is in the list of definitions.  Otherwise the
+   function returns NULL. */
+static struct value_t * checker_find_variable (char * type, char * key, 
+					       char * ident) {
+  struct definition_t * def;
+  struct pair_t * pair;
+  for (def = definition_root; def != NULL; def = def->next) {
+    if (!strcmp (def->type, type)) {
+      for (pair = def->pairs; pair != NULL; pair = pair->next) {
+	if (!strcmp (pair->key, key))
+	  if (pair->value->ident != NULL && ident != NULL &&
+	      strcmp (pair->value->ident, ident) == 0)
+	    return pair->value;
+      }
+    }
+  }
+  return NULL;
+}
+
 /* Resolves the variable of a property value.  Returns non-zero on
    success, otherwise zero. */
 static int checker_resolve_variable (struct value_t * value) {
+  struct value_t * val;
   if (value->ident != NULL) {
-    logprint (LOG_ERROR, "checker error, no such variable `%s'\n", 
-	      value->ident);
-    return 0;
+    int found = 0;
+    /* find variable in parameter sweeps */
+    if ((val = checker_find_variable ("SW", "Param", value->ident)) != NULL) {
+      /* mark both the variable identifier and the parameter sweep
+	 variable to be actually variables */
+      val->var = 1;
+      value->var = 1;
+      found++;
+    }
+    /* TODO: find variable in equations */
+    if (!found) {
+      logprint (LOG_ERROR, "checker error, no such variable `%s'\n", 
+		value->ident);
+      return 0;
+    }
   }
   return 1;
 }

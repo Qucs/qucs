@@ -1,7 +1,7 @@
 /*
  * vector.cpp - vector class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: vector.cpp,v 1.2 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@ vector::vector () : object () {
   capacity = size = 0;
   data = NULL;
   dependencies = NULL;
+  origin = NULL;
 }
 
 // Constructor creates an named instance of the vector class.
@@ -48,6 +49,7 @@ vector::vector (char * n) : object (n) {
   capacity = size = 0;
   data = NULL;
   dependencies = NULL;
+  origin = NULL;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -58,14 +60,14 @@ vector::vector (const vector & v) : object (v) {
   data = (complex *) malloc (sizeof (complex) * capacity);
   memcpy (data, v.data, sizeof (complex) * size);
   dependencies = new strlist (*v.dependencies);
+  origin = v.origin ? strdup (origin) : NULL;
 }
 
 // Destructor deletes a vector object.
 vector::~vector () {
-  if (data)
-    free (data);
-  if (dependencies)
-    delete dependencies;
+  if (data) free (data);
+  if (dependencies) delete dependencies;
+  if (origin) free (origin);
 }
 
 /* The function appends a new complex data item to the end of the
@@ -231,4 +233,15 @@ void vector::reverse (void) {
   free (data);
   data = buffer;
   capacity = size;
+}
+
+// Sets the origin (the analysis) of the vector.
+void vector::setOrigin (char * n) {
+  if (origin) free (origin);
+  origin = n ? strdup (n) : NULL;
+}
+
+// Returns the origin (the analysis) of the vector.
+char * vector::getOrigin (void) {
+  return origin;
 }

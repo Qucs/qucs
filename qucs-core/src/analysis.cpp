@@ -1,7 +1,7 @@
 /*
  * analysis.cpp - analysis class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.cpp,v 1.1 2003-12-21 13:25:37 ela Exp $
+ * $Id: analysis.cpp,v 1.2 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -37,12 +37,18 @@
 analysis::analysis () : object () {
   data = NULL;
   subnet = NULL;
+  env = NULL;
+  actions = NULL;
+  type = ANALYSIS_UNKNOWN;
 }
 
 // Constructor creates a named instance of the analysis class.
 analysis::analysis (char * n) : object (n) {
   data = NULL;
   subnet = NULL;
+  env = NULL;
+  actions = NULL;
+  type = ANALYSIS_UNKNOWN;
 }
 
 // Destructor deletes the analysis class object.
@@ -51,7 +57,10 @@ analysis::~analysis () {
 
 /* The copy constructor creates a new instance of the analysis class
    based on the given analysis object. */
-analysis::analysis (analysis & n) : object (n) {
-  data = NULL;
-  subnet = NULL;
+analysis::analysis (analysis & a) : object (a) {
+  data = a.data;
+  subnet = a.subnet;
+  env = a.env;
+  actions = a.actions;
+  type = a.type;
 }

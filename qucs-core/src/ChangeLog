@@ -1,3 +1,43 @@
+2004-02-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: Vectors do have an arbitrary origin.  Used
+	to identify analysis results.
+
+	* variable.cpp: Added loads of operations regarding double
+	values.
+
+	* ucs.cpp (main): Creating root environment and passing
+	it down to analyses.
+
+	* property.cpp, object.cpp: Properties can now also be variables.
+
+	* net.cpp: Ordering analysis for additional parameter sweeps
+	implemented.
+
+	* input.cpp: Handling variables correctly.  Creating veriables
+	in a certain environment and using them later works somehow.
+
+	* dcsolver.cpp: Temporarily removed the frequency vector
+	from the DC dataset result (must be fixed).
+
+	* dataset.cpp: It's now possible to assign dependencies to
+	variable vectors in a dataset originated by some analysis (or
+	something else).
+
+	* check_netlist.c: The '.SW' definition is now accepted by
+	the netlist parser.  Variables can now be resolved by parameter
+	sweep definitions.
+
+	* analysis.cpp: Added type identifier, environment and
+	sub analysis.
+
+	* Makefile.am (qucsator_SOURCES): Added the new source files.
+
+	* parasweep.cpp, parasweep.h: Parameter sweep implementation.
+
+	* environment.cpp, environment.h: New class implementing
+	a variable name space.
+
 2004-02-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcsolver.cpp: Additionally saving the reference node voltage

@@ -39,13 +39,14 @@ qucsator_SOURCES = ucs.cpp logging.c strlist.cpp complex.cpp circuit.cpp    \
 	check_dataset.cpp parse_dataset.cpp scan_dataset.cpp property.cpp   \
 	vector.cpp object.cpp net.cpp input.cpp check_touchstone.cpp        \
 	parse_touchstone.cpp scan_touchstone.cpp matrix.cpp analysis.cpp    \
-	spsolver.cpp dcsolver.cpp nodelist.cpp variable.cpp
+	spsolver.cpp dcsolver.cpp nodelist.cpp variable.cpp environment.cpp \
+	parasweep.cpp
 
 noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h     \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h      \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h        \
-	nodelist.h variable.h
+	nodelist.h variable.h environment.h parasweep.h
 
 
 generated_FILES = scan_netlist.c parse_netlist.c scan_dataset.cpp \

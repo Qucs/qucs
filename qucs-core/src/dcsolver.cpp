@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.6 2004-02-09 18:26:08 ela Exp $
+ * $Id: dcsolver.cpp,v 1.7 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -53,6 +53,7 @@ dcsolver::dcsolver () : analysis () {
   nlist = NULL;
   A = z = x = NULL;
   xprev = zprev = NULL;
+  type = ANALYSIS_DC;
 }
 
 // Constructor creates a named instance of the dcsolver class.
@@ -60,6 +61,7 @@ dcsolver::dcsolver (char * n) : analysis (n) {
   nlist = NULL;
   A = z = x = NULL;
   xprev = zprev = NULL;
+  type = ANALYSIS_DC;
 }
 
 // Destructor deletes the dcsolver class object.
@@ -482,19 +484,20 @@ void dcsolver::saveResults (void) {
   char * n;
 
   // add current frequency to the dependencies of the output dataset
-  if ((f = data->findDependency ("frequency")) == NULL) {
+  /*  FIXME: if ((f = data->findDependency ("frequency")) == NULL) {
     f = new vector ("frequency");
     data->addDependency (f);
     f->add (0.0);
   }
-
+  */
   // add voltage variables
   for (int r = 1; r <= N; r++) {
     n = createV (r);
     if ((v = data->findVariable (n)) == NULL) {
       v = new vector (n);
-      v->setDependencies (new strlist ());
-      v->getDependencies()->add (f->getName ());
+      /* FIXME:     v->setDependencies (new strlist ());
+	      v->getDependencies()->add (f->getName ());*/
+      v->setOrigin (getName ());
       data->addVariable (v);
     }
     v->add (x->get (r, 1));
@@ -505,8 +508,9 @@ void dcsolver::saveResults (void) {
     n = createI (r);
     if ((i = data->findVariable (n)) == NULL) {
       i = new vector (n);
-      i->setDependencies (new strlist ());
-      i->getDependencies()->add (f->getName ());
+      /* FIXME:     i->setDependencies (new strlist ());
+	      i->getDependencies()->add (f->getName ());*/
+      i->setOrigin (getName ());
       data->addVariable (i);
     }
     i->add (x->get (r + N, 1));

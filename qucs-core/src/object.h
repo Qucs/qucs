@@ -1,7 +1,7 @@
 /*
  * object.h - generic object class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.h,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: object.h,v 1.2 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __OBJECT_H__
 
 class property;
+class variable;
 
 class object
 {
@@ -42,6 +43,7 @@ class object
   char * getName (void);
   void addProperty (char *, char *);
   void addProperty (char *, nr_double_t);
+  void addProperty (char * n, variable *);
   char * getPropertyString (char *);
   nr_double_t getPropertyDouble (char *);
   int getPropertyInteger (char *);

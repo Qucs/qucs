@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: spsolver.cpp,v 1.3 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -50,10 +50,12 @@ using namespace std;
 
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
+  type = ANALYSIS_SPARAMETER;
 }
 
 // Constructor creates a named instance of the spsolver class.
 spsolver::spsolver (char * n) : analysis (n) {
+  type = ANALYSIS_SPARAMETER;
 }
 
 // Destructor deletes the spsolver class object.
@@ -492,6 +494,7 @@ void spsolver::saveResults (nr_double_t freq) {
 	    s = new vector (n);
 	    s->setDependencies (new strlist ());
 	    s->getDependencies()->add (f->getName ());
+	    s->setOrigin (getName ());
 	    data->addVariable (s);
 	  }
 	  s->add (c->getS (i, j));

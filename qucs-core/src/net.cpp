@@ -1,7 +1,7 @@
 /*
  * net.cpp - net class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.5 2004-01-30 21:40:35 ela Exp $
+ * $Id: net.cpp,v 1.6 2004-02-13 20:31:45 ela Exp $
  *
  */
 
@@ -46,6 +46,7 @@ using namespace std;
 #include "open.h"
 #include "itrafo.h"
 #include "analysis.h"
+#include "environment.h"
 #include "component_id.h"
 
 // Constructor creates an unnamed instance of the net class.
@@ -54,6 +55,7 @@ net::net () : object () {
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
+  env = NULL;
 }
 
 // Constructor creates a named instance of the net class.
@@ -62,6 +64,7 @@ net::net (char * n) : object (n) {
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
+  env = NULL;
 }
 
 // Destructor deletes the net class object.
@@ -75,6 +78,7 @@ net::net (net & n) : object (n) {
   nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
+  env = n.env;
 }
 
 /* This function prepends the given circuit to the list of registered
@@ -149,20 +153,50 @@ void net::removeAnalysis (analysis * a) {
     if (a->getNext ()) a->getNext()->setPrev (a->getPrev ());
     a->getPrev()->setNext (a->getNext ());
   }
-  delete a;
 }
 
 /* This function runs all registered analyses applied to the current
    netlist. */
 dataset * net::runAnalysis (void) {
   dataset * out = new dataset ();
+
+  // apply some data to all analyses
   for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
-    // solve the analysis
+    a->setEnv (env);
     a->setNet (this);
     a->setData (out);
+  }
+  orderAnalysis ();
+  // solve the analyses
+  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
     a->solve ();
   }
   return out;
+}
+
+/* The function reorders (prioritizes) the registered analysis to the
+   netlist object.  In fact it chains the analyses to be extecuted in
+   a certain order. */
+void net::orderAnalysis (void) {
+  analysis * parent = NULL;
+
+  // find analysis with lowest order
+  for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+    if (a->getType () == ANALYSIS_SWEEP) {
+      parent = a;
+      break;
+    }
+  }
+  // apply sub-analysis to the parent analysis if any
+  if (parent != NULL) {
+    for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
+      if (a->getType () != ANALYSIS_SWEEP) {
+	parent->setAnalysis (a);
+	removeAnalysis (a);
+	break;
+      }
+    }
+  }
 }
 
 /* The function re-shifts all circuits in the drop list to the actual
