@@ -56,8 +56,8 @@
 #define  COMBO_nonlinear 3
 #define  COMBO_File      4
 #define  COMBO_Sims      5
-#define  COMBO_Paints    6
-#define  COMBO_Diagrams  7
+#define  COMBO_Diagrams  6
+#define  COMBO_Paints    7   // must be the last one
 
 QDir QucsWorkDir;
 QDir QucsHomeDir;
@@ -174,15 +174,7 @@ void QucsApp::initView()
   CompComps  = new QIconView(CompGroup);
   TabView->addTab(CompGroup,tr("Components"));
   TabView->setTabToolTip(TabView->page(2), tr("components and diagrams"));
-
-  CompChoose->insertItem(tr("lumped components"));
-  CompChoose->insertItem(tr("sources"));
-  CompChoose->insertItem(tr("transmission lines"));
-  CompChoose->insertItem(tr("nonlinear components"));
-  CompChoose->insertItem(tr("file data"));
-  CompChoose->insertItem(tr("simulations"));
-  CompChoose->insertItem(tr("paintings"));
-  CompChoose->insertItem(tr("diagrams"));
+  fillComboBox(true);
 
   slotSetCompView(0);
   connect(CompChoose, SIGNAL(activated(int)), SLOT(slotSetCompView(int)));
@@ -192,6 +184,22 @@ void QucsApp::initView()
 
   // ---------------------------------------------------------------------
   readProjects();   // reads all projects and inserts them into the ListBox
+}
+
+// ----------------------------------------------------------
+void QucsApp::fillComboBox(bool setAll)
+{
+  CompChoose->clear();
+  if(setAll) {
+    CompChoose->insertItem(tr("lumped components"));
+    CompChoose->insertItem(tr("sources"));
+    CompChoose->insertItem(tr("transmission lines"));
+    CompChoose->insertItem(tr("nonlinear components"));
+    CompChoose->insertItem(tr("file data"));
+    CompChoose->insertItem(tr("simulations"));
+    CompChoose->insertItem(tr("diagrams"));
+  }
+  CompChoose->insertItem(tr("paintings"));
 }
 
 // ----------------------------------------------------------
@@ -400,11 +408,16 @@ void QucsApp::slotChangeView(int id)
   QucsDoc *d = view->Docs.current();
   d->PosX = view->contentsX();    // save position for old document
   d->PosY = view->contentsY();
+  bool oldMode = d->symbolMode;
 
   d = view->Docs.at(WorkView->indexOf(id));   // new current document
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
+  if(d->symbolMode != oldMode) { // which mode: schematic or symbol editor ?
+    d->symbolMode = oldMode;
+    slotSymbolEdit();
+  }
 
   view->Docs.current()->reloadGraphs();  // load recent simulation data
   view->viewport()->repaint();
@@ -551,15 +564,15 @@ void QucsApp::updatePortNumber(int No)
   QucsDoc *d;
   int DocNo = view->Docs.at();
   for(d = view->Docs.first(); d!=0; d = view->Docs.next())
-    for(Component *pc=d->Comps.first(); pc!=0; pc=d->Comps.next())
+    for(Component *pc=d->Comps->first(); pc!=0; pc=d->Comps->next())
       if(pc->Model == "Sub") {
 	File = pc->Props.getFirst()->Value;
 	if((File == pathName) || (File == Name)) {
-	  d->Comps.setAutoDelete(false);
+	  d->Comps->setAutoDelete(false);
 	  d->deleteComp(pc);
-	  ((Subcircuit*)pc)->remakeSymbol(No);
+	  ((Subcircuit*)pc)->recreate();//remakeSymbol(No);
 	  d->insertRawComponent(pc);
-	  d->Comps.setAutoDelete(true);
+	  d->Comps->setAutoDelete(true);
 	}
       }
 
@@ -1377,15 +1390,35 @@ pInfoFunc nonlinearComps[] =
    &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl, 0};
 
 // #######################################################################
-// Whenever the Component Library ComboBox is changed, this slot fills the Component IconView
-// with the appropriat components.
+// Whenever the Component Library ComboBox is changed, this slot fills the
+// Component IconView with the appropriat components.
 void QucsApp::slotSetCompView(int index)
 {
-char *File;
-QString Name;
-pInfoFunc *Infos = 0;
+  char *File;
+  QString Name;
+  pInfoFunc *Infos = 0;
 
   CompComps->clear();   // clear the IconView
+  if((index+1) >= CompChoose->count()) {
+    new QIconViewItem(CompComps, tr("Line"),
+		QImage(BITMAPDIR "line.xpm"));
+    new QIconViewItem(CompComps, tr("Arrow"),
+		QImage(BITMAPDIR "arrow.xpm"));
+    new QIconViewItem(CompComps, tr("Text"),
+		QImage(BITMAPDIR "text.xpm"));
+    new QIconViewItem(CompComps, tr("Ellipse"),
+		QImage(BITMAPDIR "ellipse.xpm"));
+    new QIconViewItem(CompComps, tr("Rectangle"),
+		QImage(BITMAPDIR "rectangle.xpm"));
+    new QIconViewItem(CompComps, tr("filled Ellipse"),
+		QImage(BITMAPDIR "filledellipse.xpm"));
+    new QIconViewItem(CompComps, tr("filled Rectangle"),
+		QImage(BITMAPDIR "filledrect.xpm"));
+    new QIconViewItem(CompComps, tr("Ellipse Arc"),
+		QImage(BITMAPDIR "ellipsearc.xpm"));
+    return;
+  }
+
   switch(index) {
     case COMBO_passive:   Infos = &lumpedComponents[0];  break;
     case COMBO_Sources:   Infos = &Sources[0];           break;
@@ -1406,22 +1439,6 @@ pInfoFunc *Infos = 0;
 		QImage(BITMAPDIR "spfile6.xpm"));
       return;
     case COMBO_Sims:     Infos = &Simulations[0];  break;
-    case COMBO_Paints:
-      new QIconViewItem(CompComps, tr("Line"),
-		QImage(BITMAPDIR "line.xpm"));
-      new QIconViewItem(CompComps, tr("Arrow"),
-		QImage(BITMAPDIR "arrow.xpm"));
-      new QIconViewItem(CompComps, tr("Text"),
-		QImage(BITMAPDIR "text.xpm"));
-      new QIconViewItem(CompComps, tr("Ellipse"),
-		QImage(BITMAPDIR "ellipse.xpm"));
-      new QIconViewItem(CompComps, tr("Rectangle"),
-		QImage(BITMAPDIR "rectangle.xpm"));
-      new QIconViewItem(CompComps, tr("filled Ellipse"),
-		QImage(BITMAPDIR "filledellipse.xpm"));
-      new QIconViewItem(CompComps, tr("filled Rectangle"),
-		QImage(BITMAPDIR "filledrect.xpm"));
-      return;
     case COMBO_Diagrams:
       new QIconViewItem(CompComps, tr("Cartesian"),
 		QImage(BITMAPDIR "rect.xpm"));
@@ -1471,6 +1488,26 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   activeAction = 0;
 
 
+  if((CompChoose->currentItem()+1) >= CompChoose->count()) {
+    switch(CompComps->index(item)) {
+	case 0: view->selPaint = new GraphicLine();   break;
+	case 1: view->selPaint = new Arrow();         break;
+	case 2: view->selPaint = new GraphicText();   break;
+	case 3: view->selPaint = new Ellipse();       break;
+	case 4: view->selPaint = new Rectangle();     break;
+	case 5: view->selPaint = new Ellipse(true);   break;
+	case 6: view->selPaint = new Rectangle(true); break;
+	case 7: view->selPaint = new EllipseArc();    break;
+    }
+    if(view->drawn) view->viewport()->repaint();
+    view->drawn = false;
+    view->MouseMoveAction = &QucsView::MMovePainting;
+    view->MousePressAction = &QucsView::MPressPainting;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    return;
+  }
+
   pInfoFunc Infos = 0;
   switch(CompChoose->currentItem()) {
     case COMBO_passive:
@@ -1491,23 +1528,6 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
     case COMBO_Sims:
 	 Infos = Simulations[CompComps->index(item)];
 	 break;
-    case COMBO_Paints:
-	 switch(CompComps->index(item)) {
-		case 0: view->selPaint = new GraphicLine();   break;
-		case 1: view->selPaint = new Arrow();         break;
-		case 2: view->selPaint = new GraphicText();   break;
-		case 3: view->selPaint = new Ellipse();       break;
-		case 4: view->selPaint = new Rectangle();     break;
-		case 5: view->selPaint = new Ellipse(true);   break;
-		case 6: view->selPaint = new Rectangle(true); break;
-	  }
-	  if(view->drawn) view->viewport()->repaint();
-	  view->drawn = false;
-	  view->MouseMoveAction = &QucsView::MMovePainting;
-	  view->MousePressAction = &QucsView::MPressPainting;
-	  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-	  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-	  return;
     case COMBO_Diagrams:
           switch(CompComps->index(item)) {
               case 0: view->selDiag = new RectDiagram();  break;
@@ -1751,4 +1771,89 @@ void QucsApp::slotDistribVert()
   view->Docs.current()->distribVert();
   view->viewport()->repaint();
   view->drawn = false;
+}
+
+// #######################################################################
+void QucsApp::switchEditMode(bool SchematicMode)
+{
+  fillComboBox(SchematicMode);
+
+  Acts.editActivate->setEnabled(SchematicMode);
+  Acts.insEquation->setEnabled(SchematicMode);
+  Acts.insGround->setEnabled(SchematicMode);
+  Acts.insPort->setEnabled(SchematicMode);
+  Acts.insWire->setEnabled(SchematicMode);
+  Acts.insLabel->setEnabled(SchematicMode);
+  Acts.setMarker->setEnabled(SchematicMode);
+  simulate->setEnabled(SchematicMode);
+}
+
+// #######################################################################
+// Is called if the "symEdit" action is activated, i.e. if the user
+// switches between the two painting mode: Schematic and (subcircuit)
+// symbol.
+void QucsApp::slotSymbolEdit()
+{
+  QucsDoc *d = view->Docs.current();
+
+  if(d->symbolMode) {
+    d->symbolMode = false;
+    symEdit->setMenuText("Edit Circuit Symbol");
+    switchEditMode(true);
+
+    d->Comps  = &(d->DocComps);
+    d->Wires  = &(d->DocWires);
+    d->Nodes  = &(d->DocNodes);
+    d->Diags  = &(d->DocDiags);
+    d->Paints = &(d->DocPaints);
+  }
+  else {
+    d->symbolMode = true;
+    symEdit->setMenuText("Edit Schematic");
+    switchEditMode(false);
+
+    d->Comps  = &(SymbolComps);
+    d->Wires  = &(SymbolWires);
+    d->Nodes  = &(SymbolNodes);
+    d->Diags  = &(SymbolDiags);
+    d->Paints = &(d->SymbolPaints);
+
+    int countPort = 0;
+    for(Component *pc = d->DocComps.first(); pc!=0; pc = d->DocComps.next())
+      if(pc->Model == "Port")  countPort++;
+
+    // If a symbol does not yet exist, create one.
+    if(d->SymbolPaints.isEmpty()) {
+      int h = 30*((countPort-1)/2) + 10;
+      d->SymbolPaints.append(
+	new GraphicLine(-20, -h, 40,  0, QPen(QPen::darkBlue,2)));
+      d->SymbolPaints.append(
+	new GraphicLine( 20, -h,  0,2*h, QPen(QPen::darkBlue,2)));
+      d->SymbolPaints.append(
+	new GraphicLine(-20,  h, 40,  0, QPen(QPen::darkBlue,2)));
+      d->SymbolPaints.append(
+	new GraphicLine(-20, -h,  0,2*h, QPen(QPen::darkBlue,2)));
+//  Texts.append(new Text( -7,  0,"sub"));
+
+      int i=0, y = 10-h;
+      while(i<countPort) {
+	i++;
+	d->SymbolPaints.append(
+	  new GraphicLine(-30, y, 10, 0, QPen(QPen::darkBlue,2)));
+	d->SymbolPaints.append(new PortSymbol(-30,  y, i));
+//    Texts.append(new Text(-25,y-3,QString::number(i)));
+
+	if(i == countPort)  break;
+	i++;
+	d->SymbolPaints.append(
+	  new GraphicLine( 20, y, 10, 0, QPen(QPen::darkBlue,2)));
+	d->SymbolPaints.append(new PortSymbol( 30,  y, i));
+//    Texts.append(new Text( 20,y-3,QString::number(i)));
+	y += 60;
+      }
+    }
+  }
+
+  slotSetCompView(0);
+  view->viewport()->repaint();
 }

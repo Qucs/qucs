@@ -39,12 +39,12 @@ QucsFile::QucsFile(QucsDoc *p)
 {
   Doc = p;
 
-  Wires  = &(p->Wires);
-  Nodes  = &(p->Nodes);
-  Comps  = &(p->Comps);
-  Diags  = &(p->Diags);
-  Paints = &(p->Paints);
-
+  Wires  = &(p->DocWires);
+  Nodes  = &(p->DocNodes);
+  Comps  = &(p->DocComps);
+  Diags  = &(p->DocDiags);
+  Paints = &(p->DocPaints);
+  SymbolPaints = &(p->SymbolPaints);
 }
 
 QucsFile::~QucsFile()
@@ -86,7 +86,7 @@ QString QucsFile::createClipboardFile()
   s += "<Paintings>\n";
   for(pp = Paints->first(); pp != 0; pp = Paints->next())
     if(pp->isSelected) {
-      s += pp->save()+"\n";  z++; }
+      s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";
 
   if(z == 0) return "";   // return empty if no selection
@@ -162,6 +162,12 @@ int QucsFile::save()
   stream << "  <OpenDisplay=" << Doc->SimOpenDpl << ">\n";
   stream << "</Properties>\n";
 
+  Painting *pp;
+  stream << "<Symbol>\n";     // save all paintings for symbol
+  for(pp = SymbolPaints->first(); pp != 0; pp = SymbolPaints->next())
+    stream << "  <" << pp->save() << ">\n";
+  stream << "</Symbol>\n";
+
   int z=0;   // to count number of subcircuit ports
   stream << "<Components>\n";    // save all components
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
@@ -185,8 +191,8 @@ int QucsFile::save()
   stream << "</Diagrams>\n";
 
   stream << "<Paintings>\n";     // save all paintings
-  for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())
-    stream << "  " << pp->save() << "\n";
+  for(pp = Paints->first(); pp != 0; pp = Paints->next())
+    stream << "  <" << pp->save() << ">\n";
   stream << "</Paintings>\n";
 
   file.close();
@@ -417,17 +423,25 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line.at(0) == '<') if(Line.at(1) == '/') return true;
+
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
+    if( (Line.at(0) != '<') || (Line.at(Line.length()-1) != '>')) {
+      QMessageBox::critical(0, QObject::tr("Error"),
+	QObject::tr("Format Error:\nWrong 'painting' line delimiter!"));
+      return false;
+    }
+    Line = Line.mid(1, Line.length()-2);  // cut off start and end character
+
 
     cstr = Line.section(' ',0,0);    // painting type
-         if(cstr == "<Rectangle") p = new Rectangle();
-    else if(cstr == "<Text") p = new GraphicText();
-    else if(cstr == "<Line") p = new GraphicLine();
-    else if(cstr == "<Arrow") p = new Arrow();
-    else if(cstr == "<Ellipse") p = new Ellipse();
-    else if(cstr == "<FilledEllipse") p = new Ellipse(true);
-    else if(cstr == "<FilledRect") p = new Rectangle(true);
+         if(cstr == "Rectangle") p = new Rectangle();
+    else if(cstr == "Text") p = new GraphicText();
+    else if(cstr == "Line") p = new GraphicLine();
+    else if(cstr == "Arrow") p = new Arrow();
+    else if(cstr == "Ellipse") p = new Ellipse();
+    else if(cstr == "EArc") p = new EllipseArc();
+    else if(cstr == "PortSym") p = new PortSymbol();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 		QObject::tr("Format Error:\nUnknown painting!"));
@@ -495,6 +509,13 @@ bool QucsFile::load()
     Line = Line.stripWhiteSpace();
     if(Line.isEmpty()) continue;
 
+    if(Line == "<Symbol>") {
+      if(!loadPaintings(&stream, SymbolPaints)) {
+	file.close();
+	return false;
+      }
+    }
+    else
     if(Line == "<Properties>") {
       if(!loadProperties(&stream)) { file.close(); return false; } }
     else

@@ -2110,6 +2110,15 @@ Ungültiger Zeilenanfang!</translation>
         <source>interpolation type</source>
         <translation>Interpolationsraum</translation>
     </message>
+    <message>
+        <source>Edit Arc Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format Error:
+Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3836,6 +3845,10 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <source>Any File</source>
         <translation>Alle Dateien</translation>
     </message>
+    <message>
+        <source>Ellipse Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsInit</name>
@@ -4968,6 +4981,20 @@ Druckt ausgewählte Elemente des aktuellen Dokuments</translation>
 </source>
         <translation>Rumänisch von Radu Circa
 </translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Circuit Symbol
+
+Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

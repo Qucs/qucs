@@ -109,6 +109,13 @@ void QucsInit::initActions()
 	tr("Close File\n\nCloses the current document"));
   connect(App->fileClose, SIGNAL(activated()), App, SLOT(slotFileClose()));
 
+  App->symEdit = new QAction(tr("Edit Circuit Symbol"),
+				tr("Edit Circuit Symbol"), 0, App);
+  App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
+  App->symEdit->setWhatsThis(
+	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
+  connect(App->symEdit, SIGNAL(activated()), App, SLOT(slotSymbolEdit()));
+
   App->fileSettings = new QAction(tr("Document Settings"),
 				  tr("Document Settings..."), 0, App);
   App->fileSettings->setStatusTip(tr("Document Settings"));
@@ -541,6 +548,7 @@ void QucsInit::initMenuBar()
   App->filePrint->addTo(fileMenu);
   App->filePrintSel->addTo(fileMenu);
   App->fileSettings->addTo(fileMenu);
+  App->symEdit->addTo(fileMenu);
   fileMenu->insertSeparator();
   App->applSettings->addTo(fileMenu);
   fileMenu->insertSeparator();

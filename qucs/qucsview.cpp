@@ -317,10 +317,10 @@ void QucsView::endElementMoving()
 	d->insertWire((Wire*)pe);
 	break;
       case isDiagram:
-	d->Diags.append((Diagram*)pe);
+	d->Diags->append((Diagram*)pe);
 	break;
       case isPainting:
-	d->Paints.append((Painting*)pe);
+	d->Paints->append((Painting*)pe);
 	break;
       case isComponent:
 	d->insertRawComponent((Component*)pe);
@@ -900,7 +900,7 @@ void QucsView::contentsMousePressEvent(QMouseEvent *Event)
 void QucsView::MPressPainting(QMouseEvent *)
 {
   if(selPaint->MousePressing()) {
-    Docs.current()->Paints.append(selPaint);
+    Docs.current()->Paints->append(selPaint);
     selPaint = selPaint->newOne();
 
     drawn = false;
@@ -1162,7 +1162,7 @@ void QucsView::MPressRotate(QMouseEvent *Event)
                       break;
     case isWire:      pl = ((Wire*)e)->Label;
                       ((Wire*)e)->Label = 0;    // prevent label to be deleted
-                      d->Wires.setAutoDelete(false);
+                      d->Wires->setAutoDelete(false);
                       d->deleteWire((Wire*)e);
                       ((Wire*)e)->Label = pl;
                       ((Wire*)e)->rotate();
@@ -1170,8 +1170,8 @@ void QucsView::MPressRotate(QMouseEvent *Event)
                       d->setOnGrid(e->x2, e->y2);
                       if(pl) d->setOnGrid(pl->cx, pl->cy);
                       d->insertWire((Wire*)e);
-                      d->Wires.setAutoDelete(true);
-                      if (d->Wires.containsRef ((Wire*)e))
+                      d->Wires->setAutoDelete(true);
+                      if (d->Wires->containsRef ((Wire*)e))
 			enlargeView(e->x1, e->y1, e->x2, e->y2);
                       break;
     case isPainting:  ((Painting*)e)->rotate();
@@ -1235,7 +1235,7 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
 
   if(selDiag == 0) return;
   if(Event->button() != Qt::LeftButton) return;
-  
+
   // dialog is Qt::WDestructiveClose !!!
   DiagramDialog *dia = new DiagramDialog(selDiag, d->DataSet, this);
   if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
@@ -1244,7 +1244,7 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
     return;
   }
 
-  d->Diags.append(selDiag);
+  d->Diags->append(selDiag);
   enlargeView(selDiag->cx, selDiag->cy-selDiag->y2,
 	      selDiag->cx+selDiag->x2, selDiag->cy);
   d->setChanged(true, true);   // document has been changed
@@ -1587,17 +1587,17 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 	case isWire:
 	  if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
 	  d->insertWire((Wire*)pe);
-	  if (d->Wires.containsRef ((Wire*)pe))
+	  if (d->Wires->containsRef ((Wire*)pe))
 	    enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
 	  else pe = NULL;
 	  break;
 	case isDiagram:
-	  d->Diags.append((Diagram*)pe);
+	  d->Diags->append((Diagram*)pe);
 	  ((Diagram*)pe)->loadGraphData(d->DataSet);
 	  enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
 	case isPainting:
-	  d->Paints.append((Painting*)pe);
+	  d->Paints->append((Painting*)pe);
 	  ((Painting*)pe)->Bounding(x1,y1,x2,y2);
 	  enlargeView(x1, y1, x2, y2);
 	  break;
@@ -1697,10 +1697,10 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
          cd = new ComponentDialog(c, Docs.current(), this);
          if(cd->exec() == 1) {
            int x1, y1, x2, y2;
-           x2 = Docs.current()->Comps.findRef(c);
-           Docs.current()->Comps.take();
+           x2 = Docs.current()->Comps->findRef(c);
+           Docs.current()->Comps->take();
            Docs.current()->setComponentNumber(c); // for ports/power sources
-           Docs.current()->Comps.append(c);
+           Docs.current()->Comps->append(c);
 
            Docs.current()->setChanged(true, true);
            c->entireBounds(x1,y1,x2,y2);

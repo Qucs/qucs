@@ -1,8 +1,8 @@
 /***************************************************************************
-                          paintings.h  -  description
+                         ellipsearc.h  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Thu Sep 9 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,19 +15,45 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTINGS_H
-#define PAINTINGS_H
-
-// This header file includes the header files of all paintings.
+#ifndef ELLIPSEARC_H
+#define ELLIPSEARC_H
 
 #include "painting.h"
 
-#include "rectangle.h"
-#include "ellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
-#include "graphictext.h"
-#include "portsymbol.h"
-#include "ellipsearc.h"
+#include <qpen.h>
+
+
+/**
+  *@author Michael Margraf
+  */
+
+class EllipseArc : public Painting  {
+public:
+  EllipseArc();
+  ~EllipseArc();
+
+  void paintScheme(QPainter*);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
+
+  EllipseArc* newOne();
+  bool load(const QString&);
+  QString save();
+  void paint(QPainter*);
+  void MouseMoving(int, int, int, int, QPainter*, bool);
+  bool MousePressing();
+  bool getSelected(int, int);
+  void Bounding(int&, int&, int&, int&);
+  bool ResizeTouched(int, int);
+  void MouseResizeMoving(int, int, QPainter*);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
+
+  QPen  Pen;
+  int   Angle, ArcLen;   // start angle and arc length
+};
 
 #endif

@@ -82,6 +82,7 @@ public slots:
     void slotFileSaveAs();  // save a document under a different filename
     void slotFileSaveAll(); // save all open documents
     void slotFileClose();   // close the actual file
+    void slotSymbolEdit();   // edit the symbol for the schematic
     void slotFileSettings();// open dialog to change file settings
     void slotFilePrint();   // print the current file
     void slotFilePrintSelected();  // Print selected elements
@@ -153,7 +154,7 @@ public:
     QAction *magPlus, *magMinus, *distrHor, *distrVert, *filePrintSel;
     QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
     QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
-    QAction *helpIndex, *helpGetStart;
+    QAction *helpIndex, *helpGetStart, *symEdit;
 
     QAction *activeAction;    // pointer to the action selected by the user
     QucsActions  Acts;    // contains most of the toggle actions
@@ -188,6 +189,8 @@ private:
     void updatePortNumber(int);
     bool gotoPage(const QString&);
     void nextDocument(bool);
+    void fillComboBox(bool);
+    void switchEditMode(bool);
 };
 #endif 
 

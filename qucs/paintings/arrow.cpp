@@ -97,14 +97,9 @@ Arrow* Arrow::newOne()
 }
 
 // --------------------------------------------------------------------------
-bool Arrow::load(const QString& _s)
+bool Arrow::load(const QString& s)
 {
   bool ok;
-  QString s = _s;
-
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
-  s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
   n  = s.section(' ',1,1);    // cx
@@ -154,11 +149,11 @@ bool Arrow::load(const QString& _s)
 // --------------------------------------------------------------------------
 QString Arrow::save()
 {
-  QString s = "<Arrow "+QString::number(cx)+" "+QString::number(cy)+" ";
+  QString s = "Arrow "+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += QString::number(Height)+" "+QString::number(Width)+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
-  s += QString::number(Pen.style())+">";
+  s += QString::number(Pen.style());
   return s;
 }
 

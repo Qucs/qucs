@@ -139,8 +139,7 @@ bool Graph::load(const QString& _s)
   if(s.at(s.length()-1) != '>') return false;
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  if(s.at(0) == '"')  Var  = s.section('"',1,1);  // Var, the new style
-  else  Var  = s.section(' ',0,0);    // Var, the old style
+  Var = s.section('"',1,1);  // Var
 
   QString n;
   n  = s.section(' ',1,1);    // Color
@@ -152,7 +151,6 @@ bool Graph::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // Precision
-  if(n.isEmpty()) return true;  // backward compatible
   Precision = n.toInt(&ok);
   if(!ok) return false;
 
@@ -161,7 +159,6 @@ bool Graph::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // Style
-  if(n.isEmpty()) return true;  // backward compatible
   Style = n.toInt(&ok);
   if(!ok) return false;
 
