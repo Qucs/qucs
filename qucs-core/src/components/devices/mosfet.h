@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.h,v 1.1 2004-08-03 15:36:20 ela Exp $
+ * $Id: mosfet.h,v 1.2 2004-08-07 10:49:17 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@ class mosfet : public circuit
  private:
   nr_double_t UbsPrev, UbdPrev, UgsPrev, UgdPrev, UdsPrev, Udsat, Uon;
   nr_double_t gbs, gbd, gm, gds, gmb, Ids, DrainControl, SourceControl;
-  nr_double_t MOSpol, Leff, MOSdir, beta, Cox, Phi, Ga, Vto;
+  nr_double_t MOSpol, Leff, MOSdir, beta, Cox, Phi, Ga, Vto, Rs, Rd;
   circuit * rs;
   circuit * rd;
   circuit * rg;
