@@ -89,14 +89,14 @@ Documentation License".
 \setlength{\parindent}{0pt}
 \newpage
 
-\chapter*{Scattering parameters}
-\addcontentsline{toc}{chapter}{Scattering parameters}
+\chapter{Scattering parameters}
+%\addcontentsline{toc}{chapter}{Scattering parameters}
 
-\section*{Computing with S-parameters}
-\addcontentsline{toc}{section}{Computing with S-parameters}
+\section{Computing with S-parameters}
+%\addcontentsline{toc}{section}{Computing with S-parameters}
 
-\subsection*{Recalculating $\mathbf{50\ohm}$-S-parameters for arbitrary port impedances}
-\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
+\subsection{Recalculating $\mathbf{50\ohm}$-S-parameters for arbitrary port impedances}
+%\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
 
 During S-parameter simulation it is necessary to have all components
 in a circuit normalized to the same impedance.  In the field of high
@@ -155,8 +155,49 @@ $\underline{X}_{nm}$ & = &
 element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
 \end{tabular}
 
-\subsection*{Differential S-parameter ports}
-\addcontentsline{toc}{subsection}{Differential S-parameter ports}
+\subsection{S-parameters in CAE programs}
+%\addcontentsline{toc}{subsection}{S-parameters in CAE programs}
+
+Connecting port $k$ of circuit $(\underline{S})$ with port $l$ of circuit $(\underline{T})$,
+the new S-parameters are
+\begin{equation}
+\underline{S}'_{ij} = \underline{S}_{ij} +
+      \frac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}
+           {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
+\end{equation}
+with $i$ and $j$ being ports of $(\underline{S})$. Furthermore, it is
+\begin{equation}
+\underline{S}'_{mj} =
+      \frac{\underline{S}_{kj}\cdot \underline{T}_{ml}}
+           {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
+\end{equation}
+with $m$ being a port of $(\underline{T})$.
+If two ports of the same circuit $(\underline{S})$ are connected, the new S-parameters are
+\begin{equation}
+\underline{S}'_{ij} = \underline{S}_{ij} +
+      \frac{ \underline{S}_{kj}\cdot \underline{S}_{il}\cdot (1-\underline{S}_{lk})
+           + \underline{S}_{lj}\cdot \underline{S}_{ik}\cdot (1-\underline{S}_{kl})
+           + \underline{S}_{kj}\cdot \underline{S}_{ll}\cdot \underline{S}_{ik}
+           + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}
+           {(1-\underline{S}_{kl})\cdot (1-\underline{S}_{lk}) - \underline{S}_{kk}\cdot \underline{S}_{ll}}.
+\end{equation}
+If more than one port is connected at a node, one have to insert a tee. Its S-parameters writes as
+follows.
+\begin{equation}
+\begin{pmatrix}
+\underline{S}
+\end{pmatrix}
+= \dfrac{1}{3}\cdot
+\begin{pmatrix}
+1 & 2 & 2\\
+2 & 1 & 2\\
+2 & 2 & 1\\
+\end{pmatrix}
+\end{equation}
+
+
+\subsection{Differential S-parameter ports}
+%\addcontentsline{toc}{subsection}{Differential S-parameter ports}
 
 The implemented algorithm for the S-parameter analysis calculates
 S-parameters in terms of the ground node.  In order to allow
@@ -178,7 +219,7 @@ port device can be written as follows.
 
 \begin{equation}
 \begin{pmatrix}
-S
+\underline{S}
 \end{pmatrix}
 = \dfrac{1}{3}\cdot
 \begin{pmatrix}
@@ -206,7 +247,7 @@ the inserted ideal transformer now writes as follows.
 
 \begin{equation}
 \begin{pmatrix}
-S
+\underline{S}
 \end{pmatrix}
 = \dfrac{1}{2\cdot Z_0+Z}\cdot
 \begin{pmatrix}
@@ -218,11 +259,11 @@ S
 
 With $Z$ being the new S-parameter port impedance and $Z_0$ being $50\ohm$.
 
-\section*{Scattering parameters of components}
-\addcontentsline{toc}{section}{Scattering parameters of components}
+\section{Scattering parameters of components}
+%\addcontentsline{toc}{section}{Scattering parameters of components}
 
-\subsection*{Resistor}
-\addcontentsline{toc}{subsection}{Resistor}
+\subsection{Resistor}
+%\addcontentsline{toc}{subsection}{Resistor}
 
 The scattering parameters of an ideal, ohmic resistor with resistance
 $R$ writes as follows.
@@ -234,8 +275,8 @@ S_{11} = S_{22} = \frac{R}{2\cdot Z_0+R} \\
 S_{12} = S_{21} = 1-S_{11} = \frac{2\cdot Z_0}{2\cdot Z_0+R}
 \end{equation}
 
-\subsection*{Capacitor}
-\addcontentsline{toc}{subsection}{Capacitor}
+\subsection{Capacitor}
+%\addcontentsline{toc}{subsection}{Capacitor}
 
 The scattering parameters of an ideal capacitor with capacitance $C$
 writes as follows.
@@ -247,8 +288,8 @@ S_{11} = S_{22} = \frac{1}{2\cdot Z_0\cdot j\omega C+1} \\
 S_{12} = S_{21} = 1-S_{11}
 \end{equation}
 
-\subsection*{Inductor}
-\addcontentsline{toc}{subsection}{Inductor}
+\subsection{Inductor}
+%\addcontentsline{toc}{subsection}{Inductor}
 
 The scattering parameters of an ideal inductor with inductance $L$
 writes as follows.
@@ -260,8 +301,8 @@ S_{11} = S_{22} = \frac{j\omega L}{2\cdot Z_0 + j\omega L} \\
 S_{12} = S_{21} = 1-S_{11}
 \end{equation}
 
-\subsection*{DC Block}
-\addcontentsline{toc}{subsection}{DC Block}
+\subsection{DC Block}
+%\addcontentsline{toc}{subsection}{DC Block}
 
 A DC block is a capacitor with an infinite capacitance.  The
 scattering parameters, therefore, writes as follows.
@@ -277,8 +318,8 @@ S
 \end{pmatrix}
 \end{equation}
 
-\subsection*{DC Feed}
-\addcontentsline{toc}{subsection}{DC Feed}
+\subsection{DC Feed}
+%\addcontentsline{toc}{subsection}{DC Feed}
 
 A DC feed is an inductor with an infinite inductance.  The scattering
 parameters, therefore, writes as follows.
@@ -294,8 +335,8 @@ S
 \end{pmatrix}
 \end{equation}
 
-\subsection*{Bias T}
-\addcontentsline{toc}{subsection}{Bias T}
+\subsection{Bias T}
+%\addcontentsline{toc}{subsection}{Bias T}
 
 A bias T is a combination of a DC block and a DC feed
 (fig. \ref{fig:biast}).  The scattering parameters, therefore, writes
@@ -322,8 +363,8 @@ S
 \end{figure}
 \FloatBarrier
 
-\subsection*{Transformer}
-\addcontentsline{toc}{subsection}{Transformer}
+\subsection{Transformer}
+%\addcontentsline{toc}{subsection}{Transformer}
 
 Using the port numbers depicted in fig. \ref{fig:trafo}, the
 scattering parameters of an ideal transformer with voltage
@@ -348,8 +389,8 @@ S_{11} = S_{23} = S_{32} = S_{44} = T\cdot S_{12}
 \end{figure}
 \FloatBarrier
 
-\subsection*{Symmetrical transformer}
-\addcontentsline{toc}{subsection}{Symmetrical transformer}
+\subsection{Symmetrical transformer}
+%\addcontentsline{toc}{subsection}{Symmetrical transformer}
 
 Using the port numbers depicted in fig. \ref{fig:symtrafo}, the
 scattering parameters of an ideal, symmetrical transformer with
@@ -386,8 +427,8 @@ S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
 \end{figure}
 \FloatBarrier
 
-\subsection*{Attenuator}
-\addcontentsline{toc}{subsection}{Attenuator}
+\subsection{Attenuator}
+%\addcontentsline{toc}{subsection}{Attenuator}
 
 The scattering parameters of an ideal attenuator with attenuation $L$
 (loss) (or gain $G=1/L$) in reference to the impedance $Z_{ref}$ writes as follows.
@@ -402,8 +443,8 @@ S_{11} = S_{22} = \frac{r\cdot(1-L^2)}{L^2-r^2} = \frac{r\cdot(G^2-1)}{1-r^2\cdo
 S_{12} = S_{21} = \frac{L\cdot(1-r^2)}{L^2-r^2} = \frac{G\cdot(1-r^2)}{1-r^2\cdot G^2}
 \end{equation}
 
-\subsection*{Isolator}
-\addcontentsline{toc}{subsection}{Isolator}
+\subsection{Isolator}
+%\addcontentsline{toc}{subsection}{Isolator}
 
 An isolator is a one-way two-port, transporting incoming waves
 lossless from the input (port 1) to the output (port 2), but consuming
@@ -424,8 +465,8 @@ S_{22} = \frac{Z_2-Z_0}{Z_2+Z_0}
 S_{21} = \sqrt{1-(S_{11})^2}\cdot\sqrt{1-(S_{22})^2}
 \end{equation}
 
-\subsection*{Circulator}
-\addcontentsline{toc}{subsection}{Circulator}
+\subsection{Circulator}
+%\addcontentsline{toc}{subsection}{Circulator}
 
 A circulator is a 3-port device, transporting incoming waves lossless
 from port 1 to port 2, from port 2 to port 3 and from port 3 to port
@@ -462,8 +503,8 @@ S_{31} = \sqrt{\frac{Z_1}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_1+Z_0}\cdot\frac{r_2\cdot(1
 S_{32} = \sqrt{\frac{Z_2}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_2+Z_0}\cdot\frac{1-r_3^2}{denom}
 \end{equation}
 
-\subsection*{Phase shifter}
-\addcontentsline{toc}{subsection}{Phase shifter}
+\subsection{Phase shifter}
+%\addcontentsline{toc}{subsection}{Phase shifter}
 
 The scattering parameters of an ideal phase shifter with phase shift
 $\phi$ and reference impedance $Z_{ref}$ writes as follows.
@@ -479,8 +520,8 @@ S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp(j\cdot\phi)}{1-r^2\cdot\exp(j\cdot 2\ph
 \end{equation}
 
 
-\subsection*{Gyrator}
-\addcontentsline{toc}{subsection}{Gyrator}
+\subsection{Gyrator}
+%\addcontentsline{toc}{subsection}{Gyrator}
 
 A gyrator is an impedance inverter.  Thus, for example, it converts a
 capacitance into an inductance and vice versa.  The scattering matrix
@@ -499,16 +540,16 @@ S_{14} = S_{23} = S_{32} = S_{41} = 1-S_{11}
 S_{12} = -S_{13} = -S_{21} = S_{24} = S_{31} = -S_{34} = -S_{42} = S_{43} = \frac{2\cdot r}{r^2+4}
 \end{equation}
 
-\subsection*{Voltage and current sources}
-\addcontentsline{toc}{subsection}{Voltage and current sources}
+\subsection{Voltage and current sources}
+%\addcontentsline{toc}{subsection}{Voltage and current sources}
 
 All voltage sources (AC and DC) are short circuits and therefore their
 S-parameter matrix equals the one of the DC block.  All current
 sources are open circuits and therefore their S-parameter matrix
 equals the one of the DC feed.
 
-\subsection*{Controlled voltage and current sources}
-\addcontentsline{toc}{subsection}{Controlled voltage and current sources}
+\subsection{Controlled voltage and current sources}
+%\addcontentsline{toc}{subsection}{Controlled voltage and current sources}
 
 The scattering matrix of the voltage controlled current source
 depicted in fig. \ref{fig:xCCS} (left) writes as follows ($\tau$ is
@@ -596,8 +637,8 @@ S_{21} = S_{34} = \frac{G}{2}\cdot \exp(-j\omega\tau)
 S_{24} = S_{31} = \frac{G}{2}\cdot \exp(j\pi-j\omega\tau)
 \end{equation}
 
-\subsection*{Transmission Line}
-\addcontentsline{toc}{subsection}{Transmission Line}
+\subsection{Transmission Line}
+%\addcontentsline{toc}{subsection}{Transmission Line}
 
 The scattering matrix of an ideal, lossless transmission line with
 impedance $Z$ and electrical length $l$ writes as follows.
@@ -616,11 +657,11 @@ S_{12} = S_{21} = \frac{p\cdot(1-r^2)}{1-r^2\cdot p^2}
 With $c$ = 299 792 458 m/s being the vacuum light velocity.
 
 
-\chapter*{Noise Waves}
-\addcontentsline{toc}{chapter}{Noise Waves}
+\chapter{Noise Waves}
+%\addcontentsline{toc}{chapter}{Noise Waves}
 
-\section*{Definition}
-\addcontentsline{toc}{section}{Definition}
+\section{Definition}
+%\addcontentsline{toc}{section}{Definition}
 
 In microwave circuits described by scattering parameters, it is
 advantageous to regard noise as noise waves.  The noise
@@ -681,8 +722,8 @@ $\underline{x}$.
 \FloatBarrier
 
 
-\section*{Noise Parameters}
-\addcontentsline{toc}{section}{Noise Parameters}
+\section{Noise Parameters}
+%\addcontentsline{toc}{section}{Noise Parameters}
 
 Having the noise wave correlation matrix, one can easily compute the
 noise parameters.  The following equations calculate them with regard
@@ -742,8 +783,8 @@ With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
 \end{tabular}
 
 
-\section*{Noise Wave Correlation Matrix in CAE}
-\addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
+\section{Noise Wave Correlation Matrix in CAE}
+%\addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
 
 We have the noise wave correlation ( $(\underline{C})$,
 $(\underline{D})$ ) and the scattering matrix ( $(\underline{S})$,
@@ -782,15 +823,15 @@ operation:
 \FloatBarrier
 
 
-\section*{Noise Wave Correlation Matrix of Components}
-\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
+\section{Noise Wave Correlation Matrix of Components}
+%\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
 
 Many components do not produce any noise. Every element of their noise
 correlation matrix therefore equals exactly zero. Examples are
 capacitors, inductors, transformers, voltage and current sources.
 
-\subsection*{Resistor}
-\addcontentsline{toc}{subsection}{Resistor}
+\subsection{Resistor}
+%\addcontentsline{toc}{subsection}{Resistor}
 
 Being on temperature $T$, the noise wave correlation matrix of an
 ideal, ohmic resistor with resistance $R$ writes as follows.
@@ -803,8 +844,8 @@ ideal, ohmic resistor with resistance $R$ writes as follows.
 \end{pmatrix}
 \end{equation}
 
-\subsection*{Noise sources}
-\addcontentsline{toc}{subsection}{Noise sources}
+\subsection{Noise sources}
+%\addcontentsline{toc}{subsection}{Noise sources}
 
 The noise wave correlation matrix of a noise voltage source with
 voltage power spectral density $vPSD$ writes as follows.
@@ -845,6 +886,29 @@ white noise (thermal noise, shot noise):         & $a=0$, $b=1$, $c=0$ \\
 pink noise (flicker noise):                      & $a=0$, $b=1$, $c=1$ \\
 Lorentzian PSD (generation-recombination noise): & $a=1$, $b=1/f_c^2$, $c=2$ \\
 \end{tabular}
+
+
+\subsection{Diode}
+
+An ideal diode generates shot noise. Both types of current (field and diffusion) contribute
+independently to it. The noise wave correlation matrix, therefore, writes as follows.
+
+\begin{equation}
+\begin{split}
+(\underline{C})
+ = 2\cdot e\cdot I_S\cdot \left( \exp\left( \frac{U_{dc}}{n\cdot U_T} \right) +1 \right) \cdot Z_0\cdot\begin{pmatrix}
+   1 & -1\\
+  -1 &  1\\
+\end{pmatrix} \\
+ = 2\cdot e\cdot I_S\cdot (I_{dc}+2\cdot I_S)\cdot Z_0\cdot
+\begin{pmatrix}
+   1 & -1\\
+  -1 &  1\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+
+Where $e$ is charge of an electron, $U_T$ temperature voltage.
 
 
 \chapter*{DC Analysis}

@@ -18,7 +18,7 @@
 2004-02-07  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 
 	* technical.tex: Add noise correlation matrix for
-	noise sources.
+	noise sources and diode.
 
 2004-02-05  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
