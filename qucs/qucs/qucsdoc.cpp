@@ -940,7 +940,7 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
 
 // ---------------------------------------------------
 // Checks if pressed on a wire label.
-Wire* QucsDoc::selectWireLabel(int x, int y)
+/*Wire* QucsDoc::selectWireLabel(int x, int y)
 {
   for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev())    // test all wires
     if(pw->Label)
@@ -948,7 +948,7 @@ Wire* QucsDoc::selectWireLabel(int x, int y)
         return pw;
   return 0;
 }
-
+*/
 // ---------------------------------------------------
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
@@ -965,7 +965,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     }
 
   WireLabel *pl;
-  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev()) {    // test all wires
+  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev()) {    // test all wires and wire labels
     if(pw->getSelected(x, y)) {
       if(flag) { pw->isSelected ^= flag; return pw; }
       if(pe_sel != 0) { pe_sel->isSelected = false; pw->isSelected = true; return pw; }
@@ -993,6 +993,15 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 
   for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())    // test all diagrams
     if(pd->getSelected(x, y)) {
+
+      for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
+        if(pg->getSelected(x-pd->cx, pd->cy-y) > 0) {
+          if(flag) { pg->isSelected ^= flag; return pg; }
+          if(pe_sel != 0) { pe_sel->isSelected = false; pg->isSelected = true; return pg; }
+          if(pe_1st == 0) pe_1st = pg;   // give access to elements that lie beneath
+          if(pg->isSelected) pe_sel = pg;
+        }
+
       if(flag) { pd->isSelected ^= flag; return pd; }
       if(pe_sel != 0) { pe_sel->isSelected = false; pd->isSelected = true; return pd; }
       if(pe_1st == 0) pe_1st = pd;   // give access to elements that lie beneath
@@ -1026,8 +1035,12 @@ void QucsDoc::deselectElements(Element *e)
   for(Node *pn = Nodes.first(); pn != 0; pn = Nodes.next())       // test all node labels
     if(pn->Label) if(pn->Label != e)  pn->Label->isSelected = false;
 
-  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next())    // test all diagrams
+  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {   // test all diagrams
     if(e != pd)  pd->isSelected = false;
+
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
+      if(e != pg) pg->isSelected = false;
+  }
 
   for(Painting *pp = Paints.first(); pp != 0; pp = Paints.next()) // test all paintings
     if(e != pp)  pp->isSelected = false;
@@ -1043,7 +1056,7 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
   Element *pe = pn->Connections.getFirst();
   if(pe == (Element*)1) return;   // return, if it was already treated this way
   pn->Connections.prepend((Element*)1);  // to avoid doubling
-  
+
   if(pn->Connections.count() == 2)    // 2, because of prepend (Element*)1
     if(pe->Type == isWire) {    // is it connected to exactly one wire ?
 
@@ -1060,19 +1073,23 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
           if(pe2->Type == isWire)   // the connected wire is again connected to exactly one wire ?
             pw2  = (Wire*)pe2;
       }
-      
+
       // .................................................
       // reuse one wire
       p->append(pw);
       pw->Port1->Connections.removeRef(pw);   // remove connection 1
       pw->Port2->Connections.removeRef(pw);   // remove connection 2
+      if(pw->Port1->Connections.getFirst() !=  (Element*)1)
+        pw->Port1->Connections.prepend((Element*)1);  // to control node afterwards
+      if(pw->Port2->Connections.getFirst() !=  (Element*)1)
+        pw->Port2->Connections.prepend((Element*)1);  // to control node afterwards
       Wires.take(Wires.findRef(pw));
       int mask = 1;
       if(pw->isHorizontal()) mask = 2;
 
       if(pw->Port1 != pn) {
         pw->Port1 = (Node*)mask;
-        pw->Port2 = (Node*)3;
+        pw->Port2 = (Node*)3;    // move port 2 completely
       }
       else {
         pw->Port1 = (Node*)3;
@@ -1089,12 +1106,16 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
         return;
       }
 
-      
+
       // .................................................
       // reuse a second wire
       p->append(pw2);
       pw2->Port1->Connections.removeRef(pw2);   // remove connection 1
       pw2->Port2->Connections.removeRef(pw2);   // remove connection 2
+      if(pw2->Port1->Connections.getFirst() !=  (Element*)1)
+        pw2->Port1->Connections.prepend((Element*)1);  // to control node afterwards
+      if(pw2->Port2->Connections.getFirst() !=  (Element*)1)
+        pw2->Port2->Connections.prepend((Element*)1);  // to control node afterwards
       Wires.take(Wires.findRef(pw2));
 
       if(pw2->Port1 != pn2) {
@@ -1286,15 +1307,9 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 
 
   for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {    // test all diagrams
-    pd->Bounding(cx1, cy1, cx2, cy2);
-    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      pd->isSelected = true;  z++;
-      continue;
-    }
-    if(pd->isSelected &= flag) z++;
-  }
+    for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) // test graphs of diagram
+      if(pg->isSelected &= flag) z++;
 
-  for(Diagram *pd = Diags.first(); pd != 0; pd = Diags.next()) {    // test all diagrams
     pd->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
       pd->isSelected = true;  z++;
@@ -1551,9 +1566,10 @@ bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
   y1=INT_MAX;
   x2=INT_MIN;
   y2=INT_MIN;
-  Component *pc;
   Wire *pw;
   Painting *pp;
+  Component *pc;
+  WireLabel *pl;
 
   for(pc = Comps.first(); pc != 0; ) {   // find bounds of all selected components
     if(pc->isSelected) if(pc->Ports.count() > 0) {  // do not copy components without ports
@@ -1578,7 +1594,10 @@ bool QucsDoc::copyCompsWires(int& x1, int& y1, int& x2, int& y2)
       if(pw->y2 > y2) y2 = pw->y2;
 
       ElementCache.append(pw);
+      pl = pw->Label;
+      pw->Label = 0;
       deleteWire(pw);
+      pw->Label = pl;    // restore wire label
       pw = Wires.current();
     }
     else pw = Wires.next();
@@ -1638,6 +1657,13 @@ bool QucsDoc::rotateElements()
                         x2 = pw->x2;
                         pw->x2 = pw->y2 - y1 + x1;
                         pw->y2 = x1 - x2 + y1;
+                        if(pw->Label) {
+                          x2 = pw->Label->cx;
+                          pw->Label->cx = pw->Label->cy - y1 + x1;
+                          pw->Label->cy = x1 - x2 + y1;
+                          if(pw->Label->Type == isHWireLabel) pw->Label->Type = isVWireLabel;
+                          else pw->Label->Type = isHWireLabel;
+                        }
                         insertWire(pw);
                         break;
       case isPainting:  pp = (Painting*)pe;
@@ -1686,6 +1712,8 @@ bool QucsDoc::mirrorXComponents()
       case isWire:      pw = (Wire*)pe;
                         pw->y1 = (y1<<1) - pw->y1;
                         pw->y2 = (y1<<1) - pw->y2;
+                        if(pw->Label)
+                          pw->Label->cy = (y1<<1) - pw->Label->cy;
                         insertWire(pw);
                         break;
       case isPainting:  pp = (Painting*)pe;
@@ -1732,6 +1760,8 @@ bool QucsDoc::mirrorYComponents()
       case isWire:      pw = (Wire*)pe;
                         pw->x1 = (x1<<1) - pw->x1;
                         pw->x2 = (x1<<1) - pw->x2;
+                        if(pw->Label)
+                          pw->Label->cx = (x1<<1) - pw->Label->cx;
                         insertWire(pw);
                         break;
       case isPainting:  pp = (Painting*)pe;
@@ -1877,7 +1907,17 @@ bool QucsDoc::deleteElements()
       pd = Diags.current();
       sel = true;
     }
-    else pd = Diags.next();
+    else {
+      for(Graph *pg = pd->Graphs.first(); pg != 0; )   // all graphs of diagram
+        if(pg->isSelected) {
+          pd->Graphs.remove();
+          pg = pd->Graphs.current();
+          sel = true;
+        }
+        else  pg = pd->Graphs.next();
+
+      pd = Diags.next();
+    }
 
   Painting *pp = Paints.first();
   while(pp != 0)      // test all paintings

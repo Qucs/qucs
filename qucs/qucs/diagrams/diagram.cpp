@@ -27,10 +27,9 @@
 Diagram::Diagram(int _cx, int _cy)
 {
   cx = _cx;  cy = _cy;
-  x1 = 0;  y1 = 0;
 
-  ymin = xmin = DBL_MAX;
-  ymax = ymax = -DBL_MAX;
+  ymin = xmin = xlow = ylow = 0.0;
+  ymax = xmax = xup  = yup  = 1.0;
 
   Type = isDiagram;
   isSelected = false;
@@ -61,7 +60,7 @@ void Diagram::paint(QPainter *p)
   if(Name[0] != 'T') {   // no graph within tabulars
     Graph *pg;
     QRect r;
-    int delta=20;
+    int delta=y1;
 
     if(xLabel.isEmpty())
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {   // draw all graphs
@@ -78,7 +77,7 @@ void Diagram::paint(QPainter *p)
       p->drawText(cx+((x2-r.width())>>1), cy+delta, xLabel);
     }
 
-    delta = 10;
+    delta = x1;
     p->save();
     p->rotate(270);
     if(yLabel.isEmpty()) {
@@ -103,12 +102,12 @@ void Diagram::paint(QPainter *p)
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(cx-5, cy-y2-5, x2+10, y2+10);
+    p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
     p->setPen(QPen(QPen::darkRed,2));
-    p->drawRect(cx, cy-y2, 10, 10);       // markers for changing the size
-    p->drawRect(cx, cy-10, 10, 10);
-    p->drawRect(cx+x2-10, cy-y2, 10, 10);
-    p->drawRect(cx+x2-10, cy-10, 10, 10);
+    p->drawRect(cx-5, cy-y2-5, 10, 10);       // markers for changing the size
+    p->drawRect(cx-5, cy-5, 10, 10);
+    p->drawRect(cx+x2-5, cy-y2-5, 10, 10);
+    p->drawRect(cx+x2-5, cy-5, 10, 10);
   }
 }
 
@@ -131,16 +130,16 @@ void Diagram::calcData(Graph *)
 // -------------------------------------------------------
 void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx;
+  _x1 = cx-x1;
   _y1 = cy-y2;
   _x2 = cx+x2;
-  _y2 = cy;
+  _y2 = cy+y1;
 }
 
 // -------------------------------------------------------
 bool Diagram::getSelected(int x_, int y_)
 {
-  if(x_ >= cx) if(x_ <= cx+x2) if(y_ >= cy-y2) if(y_ <= cy)
+  if(x_ >= cx-x1) if(x_ <= cx+x2+5) if(y_ >= cy-y2-5) if(y_ <= cy+y1)
     return true;
 
   return false;
@@ -153,21 +152,21 @@ bool Diagram::ResizeTouched(int& MAx1, int& MAy1, int& MAx2, int& MAy2)
 {
   int _x1, _y1, _x2, _y2;
 
-  if(MAx1 < cx+10) {
+  if(MAx1 < cx+5) {
     _x2 = -x2;
     _x1 = cx-_x2;
   }
   else {
-    if(MAx1 <= cx+x2-10) return false;
+    if(MAx1 <= cx+x2-5) return false;
     _x2 = x2;
     _x1 = cx;
   }
-  if(MAy1 > cy-10) {
+  if(MAy1 > cy-5) {
     _y2 = y2;
     _y1 = cy-_y2;
   }
   else {
-    if(MAy1 >= cy-y2+10) return false;
+    if(MAy1 >= cy-y2+5) return false;
     _y2 = -y2;
     _y1 = cy;
   }
@@ -220,8 +219,16 @@ bool Diagram::loadVarData(const QString& fileName)
   while(!stream.atEnd()) {    // look for variable name in data file
     Line = stream.readLine();
     if(Line.left(4) == "<dep") {
-      tmp = Line.section(' ', 1, 1);
-      if(g->Line == tmp) break;
+      tmp = Line.section(' ', 1, 1).remove('>');
+      if(g->Line != tmp) continue;     // found variable with name sought for ?
+      tmp = Line.section(' ', 2, 2).remove('>');    // name of independent variable
+      break;
+    }
+    if(Line.left(6) == "<indep") {
+      tmp = Line.section(' ', 1, 1).remove('>');
+      if(g->Line != tmp) continue;     // found variable with name sought for ?
+      tmp = "";        // no independent variable
+      break;
     }
   }
 
@@ -230,16 +237,11 @@ bool Diagram::loadVarData(const QString& fileName)
     return false;   // return if data name was not found
   }
 
-  tmp = Line.section(' ', 2, 2);
-  tmp.remove('>');
-  g->IndepVar = tmp;
-/*  int n =*/ loadIndepVarData(tmp, fileName);    // get independent variable
+  g->IndepVar = tmp;    // name of independet variable (could be empty!)
 
-//  g->Line = var;
-//  int   *p = g->Points;
-  cPoint *p = g->cPoints.first();
+  g->cPoints.clear();
 
-  int i;
+  int i, counting = 0;
   bool ok;
   double x, y;
   Line = stream.readLine();
@@ -263,16 +265,31 @@ bool Diagram::loadVarData(const QString& fileName)
         tmp = tmp.left(i-1);  // real part
         x = tmp.toDouble(&ok);
       }
-      p->yr = x;
-      p->yi = y;
+      g->cPoints.append(new cPoint(0,x,y));
+      counting++;
       y = sqrt(x*x+y*y);
       if(y > ymax) ymax = y;
       if(y < ymin) ymin = y;
-      p = g->cPoints.next();
       i = Line.find(' ');
     }
     Line = stream.readLine();
   }
+
+  g->Points = new int[2*counting];    // create memory for points
+  g->count  = counting;
+
+  if(g->IndepVar.isEmpty()) {     // create independent variable by myself ?
+    g->IndepVar = "number";
+
+    cPoint *p = g->cPoints.first();
+    for(int z=1; z<=counting; z++) {
+      p->x = double(z);
+      p = g->cPoints.next();
+    }
+    xmin = 1.0;
+    xmax = double(counting);
+  }
+  else  loadIndepVarData(g->IndepVar, fileName);    // get independent variable
 
   file.close();
   return true;
@@ -304,18 +321,14 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
     return 0;   // return if data name was not found
   }
 
+  Graph *g = Graphs.current();
+
   bool ok;
   tmp = Line.section(' ', 2, 2);  // get number of points
   tmp.remove('>');
   int n = tmp.toInt(&ok);
-  
-  Graph *g = Graphs.current();
 
-//  if(g->Points != 0) delete[] g->Points;
-  int *p = new int[2*n];    // create memory for points
-  g->Points = p;
-  g->count  = n;
-  g->cPoints.clear();
+  cPoint *p = g->cPoints.first();
 
   int i;
   double x;
@@ -329,9 +342,14 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
       Line = Line.mid(i+1);
 
       x = tmp.toDouble(&ok);  // get number
-      g->cPoints.append(new cPoint(x,0,0));
+      p->x = x;
       if(x > xmax) xmax = x;
       if(x < xmin) xmin = x;
+      p = g->cPoints.next();
+      if(!p) {
+        file.close();
+        return n;
+      }
 
       i = Line.find(' ');
     }
@@ -366,7 +384,7 @@ QString Diagram::save()
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   if(GridOn) s+= "1 ";
   else s += "0 ";
-  s += QString::number(GridX)+" "+QString::number(GridY) + " \""+xLabel+"\" \""+yLabel+"\">\n";
+  s += "\""+xLabel+"\" \""+yLabel+"\">\n";
 
   for(Graph *p=Graphs.first(); p!=0; p=Graphs.next())
     s += p->save()+"\n";
@@ -405,14 +423,6 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   n  = s.section(' ',5,5);    // GridOn
   if(n.toInt(&ok) == 1) GridOn = true;
   else GridOn = false;
-  if(!ok) return false;
-
-  n  = s.section(' ',6,6);    // GridX
-  GridX = n.toInt(&ok);
-  if(!ok) return false;
-
-  n  = s.section(' ',7,7);    // GridY
-  GridY = n.toInt(&ok);
   if(!ok) return false;
 
   xLabel = s.section('"',1,1);    // xLabel

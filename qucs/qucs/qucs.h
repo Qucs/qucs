@@ -22,6 +22,7 @@
 #include <qapplication.h>
 #include <qmainwindow.h>
 #include <qaction.h>
+#include <qaccel.h>
 #include <qmenubar.h>
 #include <qpopupmenu.h>
 #include <qtoolbar.h>
@@ -173,7 +174,8 @@ class QucsApp : public QMainWindow
     QAction *helpAboutApp, *helpAboutQt, *helpIndex, *helpGetStart;
 
     QAction *activeAction;    // pointer to the action selected by the user
-    
+
+    QAccel *mainAccel;     // to set more than one key to one action
 // ********* Widgets on the main area **********************************
     QTabWidget    *TabView;
     QTabBar       *WorkView;

@@ -19,9 +19,10 @@
 #define GRAPH_H
 
 
+#include "../element.h"
+
 #include <qcolor.h>
 #include <qpainter.h>
-//#include <qpoint.h>
 #include <qptrlist.h>
 
 
@@ -36,19 +37,19 @@ struct cPoint {
 };
 
 
-class Graph {
-public: 
-	Graph(const QString& _Line="");
-	~Graph();
+class Graph : public Element {
+public:
+  Graph(const QString& _Line="");
+  ~Graph();
 
   void    paint(QPainter *p, int cx, int cy);
   QString save();
   bool    load(const QString& Line);
+  int     getSelected(int x, int y);
 
   int  count, *Points;
   QPtrList<cPoint> cPoints;
   QString Line, IndepVar;
-//  QRgb    Color;
   QColor  Color;
   int     Thick;
   
