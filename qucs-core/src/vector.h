@@ -18,12 +18,16 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.6 2004/04/30 17:27:41 margraf Exp $
+ * $Id: vector.h,v 1.7 2004/05/24 10:11:09 ela Exp $
  *
  */
 
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
+
+#ifdef log2
+#undef log2
+#endif
 
 class complex;
 class strlist;
