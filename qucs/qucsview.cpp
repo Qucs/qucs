@@ -1305,18 +1305,22 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
   MAx3  = focusElement->cx;
   MAy3  = focusElement->cy;
   if(MAx2 < 0) {    // resize diagram
+    if(MAx2 > -10) MAx2 = -10;   // not smaller than 10 pixels
     focusElement->x2 = -MAx2;
     focusElement->cx = MAx1+MAx2;
   }
   else {
+    if(MAx2 < 10) MAx2 = 10;
     focusElement->x2 = MAx2;
     focusElement->cx = MAx1;
   }
   if(MAy2 < 0) {
+    if(MAy2 > -10) MAy2 = -10;
     focusElement->y2 = -MAy2;
     focusElement->cy = MAy1;
   }
   else {
+    if(MAy2 < 10) MAy2 = 10;
     focusElement->y2 = MAy2;
     focusElement->cy = MAy1+MAy2;
   }

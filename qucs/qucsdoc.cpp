@@ -258,6 +258,13 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
     pn->Connections.append(nw);
     nw->Port2->Connections.removeRef(pw);
     Wires.append(nw);
+
+    if(pw->Label)
+      if((pw->Label->cx > x) || (pw->Label->cy > y)) {
+	nw->Label = pw->Label;   // label goes to the new wire
+	pw->Label = 0;
+	nw->Label->pWire = nw;
+      }
     return pn;
   }
 
@@ -1331,14 +1338,14 @@ int QucsDoc::selectElements(int x1, int y1, int x2, int y2, bool flag)
 }
 
 // ---------------------------------------------------
-// For moving elements: If the moving element is connected to a not moving element,
-// insert two wires. If the connected element is already a wire, use this wire.
-// Otherwise create new wire.
+// For moving elements: If the moving element is connected to a not
+// moving element, insert two wires. If the connected element is already
+// a wire, use this wire. Otherwise create new wire.
 void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
 {
   if(pn->Connections.count() < 1) return;   // return, if connected node is also moving
   Element *pe = pn->Connections.getFirst();
-  if(pe == (Element*)1) return;   // return, if it was already treated this way
+  if(pe == (Element*)1) return; // return, if it was already treated this way
   pn->Connections.prepend((Element*)1);  // to avoid doubling
 
   if(pn->Connections.count() == 2)    // 2, because of prepend (Element*)1

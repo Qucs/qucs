@@ -1,3 +1,9 @@
+2004-05-26  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug in label handling when wire is split into two
+	wires
+	* fixed endless loop when diagram is too small for a grid
+
 2004-05-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* improved detection of grounded wires and labeled wires
