@@ -1,0 +1,152 @@
+%
+% This document contains the qucs netlist grammar
+%
+% Copyright (C) 2005 Raimund Jacob <raimi@lkcc.org>
+%
+% Permission is granted to copy, distribute and/or modify this document
+% under the terms of the GNU Free Documentation License, Version 1.1
+% or any later version published by the Free Software Foundation.
+%
+
+\chapter{Qucs netlist grammar}
+\label{sec:qucsgrammar}
+
+%
+% Grammar environment based on Martin Grabmueller's original one
+%
+\newcommand\tok[1]{`{\bf #1}'}  % String-f"ormiges Token
+\newcommand\etok[1]{{\bf #1}}   % Token, das sp"ater erkl"art wird
+\newcommand\stok[1]{{\em #1}}   % Spezieller Wert
+\newcommand\ntok[1]{{\bf #1}}   % Token ohne Anf"uhrungszeichen
+\newcommand\bsl[1]{\tok{$\backslash$#1}}
+\newenvironment{grammar}%
+  {\newcommand\produces[2]{##1 \> $\rightarrow$ \> ##2 \\}
+   \newcommand\orproduces[1]{\> \> \makebox[0pt][r]{$|$ }##1 \\}
+   \newcommand\opt[1]{[ ##1 ]}
+   \newcommand\rep[1]{\{ ##1 \}}
+   \newcommand\alt[0]{$|$}
+   \newcommand\group[1]{( ##1 )}
+   \newcommand\rutsch[0]{\\\> \>}
+   \newcommand\emptyprod{{$\varepsilon$}}
+   \newcommand\heading[1]{\rule{\linewidth}{1pt} \\{\bf ##1}\\[2ex]}
+   \newcommand\separator{\rule{\linewidth}{1pt} \\}
+   \begin{tabbing}
+   \qquad\qquad\qquad\qquad\qquad \= \qquad \= \kill}
+  {\end{tabbing}}
+
+%
+% How the grammar works
+%
+The grammer is presented using the Extended Backus-Naur Form (EBNF)
+which works as follows:
+
+\vskip0.5em
+\noindent
+\begin{tabular}{ll}
+$A \rightarrow B$&
+Nonterminal $A$ produces form $B$.\\
+
+$B | C$&
+Produces $B$ or $C$.\\
+
+$\{ A \}$&
+Arbitrary repitition of form $A$. No repitition is allowed as well.\\
+
+[ $A$ ]&
+From $A$ is optional.\\
+
+$(A)$&
+Grouping, stands for $A$ itself.\\
+
+$\varepsilon$& The empty form.\\
+\end{tabular}
+\vskip0.5em
+
+\noindent
+Nonterminals are set in normal font, terminals are in bold font.
+
+%
+% Syntax
+%
+\begin{grammar}
+\heading{Syntactic Structure}
+
+\produces{Input}{\rep{InputLine}}
+
+\produces{InputLine}{SubcircuitBody}
+\orproduces{EquationLine}
+\orproduces{ActionLine}
+\orproduces{DefinitionLine}
+
+\produces{ActionLine}{\tok{.} \ntok{Identifier} \tok{:} PairList \ntok{Eol}}
+
+\produces{DefinitionLine}{\ntok{Identifier} \tok{:} \ntok{Identifer}
+         \rep{\ntok{Identifier}} PairList \ntok{Eol}}
+
+\produces{PairList}{\rep{\ntok{Identifier} \tok{=} Value}}
+
+\produces{Value}{PropertyValue}
+\orproduces{\tok{``} PropertyValue \tok{``}}
+
+\produces{PropertyValue}{\ntok{Identifier}}
+\orproduces{PropertyReal}
+\orproduces{\tok{[} PropertyReal \opt{\rep{\tok{;} PropertyReal}} \tok{]}}
+
+\produces{PropertyReal}{\ntok{Real} \opt{\ntok{Scale} \opt{\ntok{Unit}}}}
+
+\produces{EquationLine}{\tok{Eqn} \tok{:}
+   \ntok{Identifier} Equation \rep{Equation}}
+\produces{Equation}{\ntok{Identifier} \tok{=} \tok{``} Expression \tok{``}}
+
+\produces{Expression}{Constant}
+\orproduces{Reference}
+\orproduces{Application}
+\orproduces{\tok{(} Expression \tok{)}}
+
+\produces{Constant}{\ntok{Real}}
+\orproduces{\ntok{Imag}}
+\orproduces{\ntok{Character}}
+\orproduces{\ntok{String}}
+\orproduces{Range}
+
+\produces{Range}{\opt{\ntok{Real}} \tok{:} \opt{\ntok{Real}}}
+
+\produces{Reference}{\ntok{Identifier}}
+
+\produces{Application}{\ntok{Identifier}
+   \tok{(} \ntok{Expression} \opt{\rep{\tok{,} \ntok{Expression} }} \tok{)}}
+\orproduces{\ntok{Reference}
+   \tok{[} \ntok{Expression} \opt{\rep{\tok{,} \ntok{Expression} }} \tok{]}}
+\orproduces{\group{\tok{+} \alt{} \tok{-}} Expression}
+\orproduces{Expression
+   \group{\tok{+} \alt \tok{-} \alt \tok{*} \alt \tok{/} \alt
+          \tok{\%} \alt \tok{\^{}}}
+   Expression}
+
+\produces{SubcircuitBody}{DefBegin \rep{DefBodyLine} DefEnd}
+
+\produces{DefBegin}{\tok{.} \tok{Def} \tok{:} \ntok{Identifier}
+   \rep{\ntok{Identifier}} \ntok{Eol}}
+
+\produces{DefBodyLine}{DefinitionLine}
+\orproduces{SubcircuitBody}
+\orproduces{\ntok{Eol}}
+
+\produces{DefEnd}{\tok{.} \tok{Def} \tok{:} \tok{End}}
+
+\end{grammar}
+
+%
+% Lexical stuff
+%
+\begin{grammar}
+\heading{Lexical structure}
+\produces{Identifier}{TBI}
+\produces{Real}{TBI}
+\produces{Imag}{TBI}
+\produces{Character}{TBI}
+\produces{String}{TBI}
+\produces{Scale}{TBI}
+\produces{Unit}{TBI}
+\end{grammar}
+

@@ -1,3 +1,9 @@
+2005-02-12  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
+
+	* grammar-qucs.tex (chapter{Qucs netlist grammar}): Begin of some
+	documentation of the netlist file. Move this and the bibliography
+	into an appendix.
+
 2005-02-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex: Updated copyright dates.

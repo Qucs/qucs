@@ -69,7 +69,7 @@ PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
 BIBFILE = $(srcdir)/literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
   transient.tex devices.tex microstrip.tex coplanar.tex acnoise.tex    \
-  hbanalysis.tex
+  hbanalysis.tex grammar-qucs.tex
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
@@ -79,7 +79,7 @@ technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
-%.pdf: %.tex $(PDFFILES) $(PDFFIGURES)
+%.pdf: %.tex $(CHAPTERS) $(BIBFILE) $(PDFFILES) $(PDFFIGURES)
 	$(PDFLATEX) $<
 	$(BIBTEX) $*
 	$(PDFLATEX) $<
