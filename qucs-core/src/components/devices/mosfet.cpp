@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.1 2004/08/03 15:36:20 ela Exp $
+ * $Id: mosfet.cpp,v 1.2 2004/08/03 21:13:54 ela Exp $
  *
  */
 
@@ -279,6 +279,59 @@ void mosfet::initModel (void) {
 
   Cox = Cox * W * Leff;
 
+  // calculate drain and source resistance if necessary
+  nr_double_t Rsh = getPropertyDouble ("Rsh");
+  nr_double_t Nrd = getPropertyDouble ("Nrd");
+  nr_double_t Nrs = getPropertyDouble ("Nrs");
+  nr_double_t Rs, Rd;
+  if (Rsh > 0) {
+    if (Nrd > 0) {
+      Rd = Rsh * Nrd;
+      setProperty ("Rd", Rd);
+    }
+    if (Nrs > 0) {
+      Rs = Rsh * Nrs;
+      setProperty ("Rs", Rs);
+    }
+  }
+
+  // calculate zero-bias junction capacitance
+  nr_double_t Cj = getPropertyDouble ("Cj");
+  nr_double_t Pb = getPropertyDouble ("Pb");
+  if (Cj <= 0) {
+    if (Pb > 0 && Nsub > 0) {
+      Cj = sqrt (2 * ESi * E0 * Q * Nsub / 2 / Pb);
+    }
+    else {
+      logprint (LOG_STATUS, "WARNING: adjust Pb, Nsub or Cj to get a "
+		"valid square junction capacitance\n");
+      Cj = 0.0;
+    }
+    setProperty ("Cj", Cj);
+  }
+
+  // calculate junction capacitances
+  nr_double_t Cbd0 = getPropertyDouble ("Cbd");
+  nr_double_t Cbs0 = getPropertyDouble ("Cbs");
+  nr_double_t Ad   = getPropertyDouble ("Ad");
+  nr_double_t As   = getPropertyDouble ("As");
+  if (Cbd0 <= 0) {
+    Cbd0 = Cj * Ad;
+    setProperty ("Cbd", Cbd0);
+  }
+  if (Cbs0 <= 0) {
+    Cbs0 = Cj * As;
+    setProperty ("Cbs", Cbs0);
+  }
+
+  // calculate junction capacitances and saturation currents
+  nr_double_t Js  = getPropertyDouble ("Js");
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t Isd = (Ad > 0) ? Js * Ad : Is;
+  nr_double_t Iss = (As > 0) ? Js * As : Is;
+  setProperty ("Isd", Isd);
+  setProperty ("Iss", Iss);
+
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: Cox=%g, Beta=%g Ga=%g, Phi=%g, Vto=%g\n",
 	    Cox, beta, Ga, Phi, Vto);
@@ -288,10 +341,11 @@ void mosfet::initModel (void) {
 void mosfet::calcDC (void) {
 
   // fetch device model parameters
-  nr_double_t Is   = getPropertyDouble ("Is");
-  nr_double_t n    = getPropertyDouble ("N");
-  nr_double_t l    = getPropertyDouble ("Lambda");
-  nr_double_t T    = getPropertyDouble ("Temp");
+  nr_double_t Isd = getPropertyDouble ("Isd");
+  nr_double_t Iss = getPropertyDouble ("Iss");
+  nr_double_t n   = getPropertyDouble ("N");
+  nr_double_t l   = getPropertyDouble ("Lambda");
+  nr_double_t T   = getPropertyDouble ("Temp");
 
   nr_double_t Ugs, Ugd, Ut, IeqBS, IeqBD, IeqDS, UbsCrit, UbdCrit;
   nr_double_t Uds, Ibs, Ibd, gtiny, Ubs, Ubd;
@@ -305,8 +359,8 @@ void mosfet::calcDC (void) {
   Uds = Ugs - Ugd;
 
   // critical voltage necessary for bad start values
-  UbsCrit = pnCriticalVoltage (Is, Ut * n);
-  UbdCrit = pnCriticalVoltage (Is, Ut * n);
+  UbsCrit = pnCriticalVoltage (Iss, Ut * n);
+  UbdCrit = pnCriticalVoltage (Isd, Ut * n);
 
   // for better convergence
   if (Uds >= 0) {
@@ -332,14 +386,14 @@ void mosfet::calcDC (void) {
   UgsPrev = Ugs; UgdPrev = Ugd; UbsPrev = Ubs; UbdPrev = Ubd; UdsPrev = Uds; 
   
   // parasitic bulk-source diode
-  gtiny = Ubs < - 10 * Ut * n ? Is : 0;
-  gbs = pnConductance (Ubs, Is, Ut * n) + gtiny;
-  Ibs = pnCurrent (Ubs, Is, Ut * n) + gtiny * Ubs;
+  gtiny = Ubs < - 10 * Ut * n ? Iss : 0;
+  gbs = pnConductance (Ubs, Iss, Ut * n) + gtiny;
+  Ibs = pnCurrent (Ubs, Iss, Ut * n) + gtiny * Ubs;
 
   // parasitic bulk-drain diode
-  gtiny = Ubd < - 10 * Ut * n ? Is : 0;
-  gbd = pnConductance (Ubd, Is, Ut * n) + gtiny;
-  Ibd = pnCurrent (Ubd, Is, Ut * n) + gtiny * Ubd;
+  gtiny = Ubd < - 10 * Ut * n ? Isd : 0;
+  gbd = pnConductance (Ubd, Isd, Ut * n) + gtiny;
+  Ibd = pnCurrent (Ubd, Isd, Ut * n) + gtiny * Ubd;
 
   // calculate drain current
   MOSdir = (Uds >= 0) ? +1 : -1;

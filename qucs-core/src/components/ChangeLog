@@ -1,5 +1,8 @@
 2004-08-03  Stefan Jahn  <stefan@lkcc.org>
 
+	* devices/mosfet.cpp: Added and implementet some more
+	component properties.
+
 	* devices/mosfet.h (class mosfet): New device.  This mosfet
 	implementation is 'level 1'.  Added wherever necessary. To be
 	tested...
