@@ -236,7 +236,7 @@ void EllipseArc::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool dra
 		* atan2(double(x2*(cy+(y2>>1) - y)),
 			double(y2*(x - cx-(x2>>1)))));
       ArcLen -= Angle;
-      while(ArcLen < 0) ArcLen += 16*360;
+      while(ArcLen <= 32) ArcLen += 16*360;
       p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // paint new painting
       break;
   }
