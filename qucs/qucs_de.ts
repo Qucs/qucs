@@ -3250,7 +3250,7 @@ Simulation endete am </translation>
         <source>
 Errors occured during simulation on </source>
         <translation>
-Fehler sind während der Simulation aufgetreten am </translation>
+Während der Simulation sind Fehler aufgetreten am </translation>
     </message>
     <message>
         <source>Aborted.
@@ -3290,7 +3290,7 @@ Fehler:
     </message>
     <message>
         <source>No page set !</source>
-        <translation>Seite nicht gesetzt !</translation>
+        <translation>Seite ist nicht eingestellt !</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3538,7 +3538,7 @@ Fehler:
     </message>
     <message>
         <source>No project is selected !</source>
-        <translation>Keine Projekte ausgewählt !</translation>
+        <translation>Es sind keine Projekte ausgewählt !</translation>
     </message>
     <message>
         <source>Cannot delete an open project !</source>
@@ -3570,7 +3570,7 @@ Weiter ?</translation>
     </message>
     <message>
         <source>Choose Project Directory for Deleting</source>
-        <translation>Wählen Sie eine Projektverzeichnis zum Löschen</translation>
+        <translation>Wählen Sie ein Projektverzeichnis zum Löschen</translation>
     </message>
     <message>
         <source>Help Index</source>
@@ -4089,7 +4089,7 @@ Löscht die ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation>Macht das letzte Kommando rückgängig</translation>
+        <translation>Widerruft das letzte Kommando</translation>
     </message>
     <message>
         <source>Undo
@@ -4097,7 +4097,7 @@ Löscht die ausgewählten Komponenten</translation>
 Makes the last action undone</source>
         <translation>Rückgängig
 
-Macht das letzte Kommando rückgängig</translation>
+Widerruft das letzte Kommando</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -4193,7 +4193,7 @@ Löscht ein existierendes Projekt</translation>
 Shows the whole page content</source>
         <translation>Alles anzeigen
 
-Zeigt die ganze Seite an</translation>
+Zeigt den gesamten Seiteninhalt an</translation>
     </message>
     <message>
         <source>View 1:1</source>
@@ -4213,7 +4213,7 @@ Zeigt den Seiteninhalt ohne Vergrößerung an</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>Näher</translation>
+        <translation>Vergrößern</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
@@ -4223,13 +4223,13 @@ Zeigt den Seiteninhalt ohne Vergrößerung an</translation>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>Näher
+        <translation>Vergrößern
 
 Vergrößert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Weiter</translation>
+        <translation>Verkleinern</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
@@ -4239,7 +4239,7 @@ Vergrößert die aktuelle Ansicht</translation>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation>Weiter
+        <translation>Verkleinern
 
 Verkleinert die aktuelle Ansicht</translation>
     </message>
@@ -4265,7 +4265,7 @@ Auswählmodus</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>Wählt alles aus</translation>
+        <translation>Wählt alle Elemente aus</translation>
     </message>
     <message>
         <source>Select All
@@ -4319,7 +4319,9 @@ Spiegelt die Auswahl an der X-Achse</translation>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation>Spiegeln der Auswahl an der Y-Achse</translation>
+        <translation>Spiegeln an der Y-Achse
+
+Spiegelt die Auswahl an der Y-Achse</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
@@ -4485,7 +4487,9 @@ Simuliert den aktuellen Schaltplan</translation>
         <source>View Data Display/Schematic
 
 </source>
-        <translation></translation>
+        <translation>Zeige Daten/Schaltplan an
+
+</translation>
     </message>
     <message>
         <source>Set Marker</source>
@@ -4549,7 +4553,7 @@ Zeigt die zuletzt simulierte Netzliste an</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation>Schaltet die Werkzeugleiste an/aus</translation>
+        <translation>Schaltet die Werkzeugleiste ein/aus</translation>
     </message>
     <message>
         <source>Toolbar
@@ -4557,7 +4561,7 @@ Zeigt die zuletzt simulierte Netzliste an</translation>
 Enables/disables the toolbar</source>
         <translation>Werkzeugleiste
 
-Schaltet die Werkzeugleiste an/aus</translation>
+Schaltet die Werkzeugleiste ein/aus</translation>
     </message>
     <message>
         <source>Statusbar</source>
@@ -4569,7 +4573,7 @@ Schaltet die Werkzeugleiste an/aus</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>Aktiviert/Deaktiviert die Statuszeile</translation>
+        <translation>Aktiviert/deaktiviert die Statuszeile</translation>
     </message>
     <message>
         <source>Statusbar
@@ -4577,7 +4581,7 @@ Schaltet die Werkzeugleiste an/aus</translation>
 Enables/disables the statusbar</source>
         <translation>Statuszeile
 
-Aktiviert/Deaktiviert die Statuszeile</translation>
+Aktiviert/deaktiviert die Statuszeile</translation>
     </message>
     <message>
         <source>Help Index</source>
@@ -4689,11 +4693,11 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation>Wechsle die Werkzeugleiste...</translation>
+        <translation>Umschalten der Werkzeugleiste...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation>Wechsle die Statuszeile...</translation>
+        <translation>Umschalten der Statuszeile...</translation>
     </message>
     <message>
         <source>About...</source>

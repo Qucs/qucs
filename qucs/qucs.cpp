@@ -979,7 +979,7 @@ void QucsApp::slotSimulate()
 
   QStringList com;
   com << BINARYDIR "qucsator" << "-i" << QucsHomeDir.filePath("netlist.txt");
-  com << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
+  com << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet) << "-b";
   if(!sim->startProcess(com)) {
     sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
     sim->errorSimEnded();
