@@ -30,7 +30,9 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 libdialogs_a_SOURCES = fileshowdialog.cpp helpdialog.cpp messagebox.cpp \
      settingsdialog.cpp newprojdialog.cpp simmessage.cpp \
-     qucssettingsdialog.cpp $(MOCFILES)
+     qucssettingsdialog.cpp
+
+nodist_libdialogs_a_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = newprojdialog.h $(MOCHEADERS)
 
@@ -41,3 +43,4 @@ INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
+DISTCLEANFILES = *.moc.cpp
