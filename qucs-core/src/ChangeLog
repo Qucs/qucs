@@ -17,14 +17,14 @@
 	component with built-in voltage sources were shorted.
 
 	* trsolver.cpp: Collecting some statistical data for evaluating
-	various integration methos, i.e. rejected time-steps, average
+	various integration methods, i.e. rejected time-steps, average
 	time-step and average Newton-Raphson iterations per step.
 	Consider convergence failure for each taken step (reduce step
 	then).
 	Implemented explicit Gear predictor integration method.
 
 	* transient.cpp: Implemented variable-step explicit Gear
-	coeffcients.  Fixed error constants for explicit Gear method.
+	coefficients.  Fixed error constants for explicit Gear method.
 
 2004-10-07  Stefan Jahn  <stefan@lkcc.org>
 
@@ -54,7 +54,7 @@
 	within equations.
 
 	* evaluate.cpp: Implemented basic string operations like
-	indexing a ceratin character and concatenation.  Also
+	indexing a certain character and concatenation.  Also
 	added the twoport() functionality.
 
 	* equation.cpp: Allowing characters and strings to be equation
@@ -101,7 +101,7 @@
 	* trsolver.cpp: Just enabled the timestep algorithm... seems
 	to work now.
 	
-	* trsolver.cpp: Added predictor/corector functionality.  The
+	* trsolver.cpp: Added predictor/corrector functionality.  The
 	transient analysis works now for simple RCL networks with
 	constant timesteps.
 
@@ -152,7 +152,7 @@
 	for the transient analysis.  These are save-state variables and
 	the integration methods.
 
-	* transient.cpp: Implemented Gear, Euler and trapazoidal
+	* transient.cpp: Implemented Gear, Euler and trapezoidal
 	integration methods.
 
 	* transient.h (class transient): New class implementing some
@@ -313,7 +313,7 @@
 	occurred within the netlist.
 
 	* strlist.cpp (toString): The function takes an (optional)
-	argument which specifies the concatinating string.
+	argument which specifies the concatenating string.
 
 	* eqnsys.cpp: Finally got the iterative Jacobi's method
 	for solving linear equation systems working.
@@ -628,7 +628,7 @@
 	identifiers when scanning equations.
 
 	* dcsolver.cpp: Implemented usage of DC simulation options:
-	MaxIter (maximum iterartion), saveOPs (save operating points),
+	MaxIter (maximum iteration), saveOPs (save operating points),
 	reltol (relative tolerance for convergence), abstol (absolute
 	tolerance for current) and vntol (absolute tolerance for 
 	voltage).
@@ -657,7 +657,7 @@
 	* input.cpp: Assigning default values to component properties
 	which are optional and not given in the netlist.
 
-	* circuit.cpp: Cicuit contains a new property indicating
+	* circuit.cpp: Circuit contains a new property indicating
 	whether it is non-linear or not.
 	Added noise wave correlation matrix to circuit.
 
@@ -715,7 +715,7 @@
 	* dcsolver.cpp: When solving DC networks initDC() is now 
 	called before setting up the node list and the voltage source
 	list.
-	(assignVoltageSources): New function re-assigning the volttage
+	(assignVoltageSources): New function re-assigning the voltage
 	source numbers.
 	When saving node voltages and branch current into the dataset
 	it is checked whether these are internal or not.
@@ -741,7 +741,7 @@
 2004-05-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* circuit.cpp: Fixed assertion bug when s-parameter analysis
-	uses arbitratry circuits with more than maximum number of ports
+	uses arbitrary circuits with more than maximum number of ports
 	allowed during dc analysis.
 
 2004-05-23  Stefan Jahn  <stefan@lkcc.org>
@@ -850,7 +850,7 @@
 2004-04-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* input.cpp: Putting substrate definitions into an environment
-	and assiging these to the appropriate components.
+	and assigning these to the appropriate components.
 	(createSubstrate): New function creating substrate instances.
 
 	* check_netlist.cpp: Added substrate and microstrip line
@@ -879,7 +879,7 @@
 
 	* parse_netlist.y: Added '%' operator.
 
-	* evaluate.cpp: Fixed unary minus and sqrt funtions.
+	* evaluate.cpp: Fixed unary minus and sqrt functions.
 
 	* equation.cpp: Checking return type of evaluators.  Displaying
 	the '%' operator like '+' and alike operators.  Giving notice

@@ -1,3 +1,8 @@
+2004-10-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* vac.cpp: Considering 'Phase' parameter of Vac and Iac during
+	AC simulation.
+
 2004-10-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* cross.cpp, tee.cpp, gyrator.cpp, circulator.cpp,
@@ -114,7 +119,7 @@
 2004-09-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* capacitor.cpp, inductor.cpp: Fixed MNA entries for AC
-	anlysis.  Now also L=0 possible for the inductor.
+	analysis.  Now also L=0 possible for the inductor.
 
 2004-09-06  Stefan Jahn  <stefan@lkcc.org>
 
@@ -242,7 +247,7 @@
 
 2004-08-03  Stefan Jahn  <stefan@lkcc.org>
 
-	* devices/mosfet.cpp: Added and implementet some more
+	* devices/mosfet.cpp: Added and implemented some more
 	component properties.
 
 	* devices/mosfet.h (class mosfet): New device.  This mosfet
@@ -252,7 +257,7 @@
 	* devices/jfet.cpp: Fixed bug in gds computation in forward
 	saturation region.
 
-	* devices/device.cpp: Added some helper functionaly for FET
+	* devices/device.cpp: Added some helper functionality for FET
 	models.  This includes convergence helpers as well as Meyer's
 	capacitances formulas.
 
@@ -262,7 +267,7 @@
 
 2004-08-01  Stefan Jahn  <stefan@lkcc.org>
 
-	* devices/diode.cpp: Implemented 'Isr', 'Nr' and 'Fc' an d'Cp'
+	* devices/diode.cpp: Implemented 'Isr', 'Nr' and 'Fc' and 'Cp'
 	diode model parameters.
 
 	* spfile.cpp: Converting different kind of multi-port
@@ -396,7 +401,7 @@
 2004-07-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Started to implement the DC model of the
-	standard SGP (Spice Gummel Poon) model fo BJTs.
+	standard SGP (Spice Gummel Poon) model for BJTs.
 	Fixed the Rbb model of SGP.
 
 2004-07-04  Stefan Jahn  <stefan@lkcc.org>
@@ -409,7 +414,7 @@
 	* microstrip/msline.cpp: Using 'DispModel' and 'Model' 
 	properties correctly.
 
-2004-06-26  Michael Margraf  <michael.margraf@alumni.tu-berlin.de
+2004-06-26  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added DC model to phaseshifter.cpp/.h
 
@@ -455,7 +460,7 @@
 	* jfet.cpp: Corrections in the jfet Shichman-Hodges equations
 	and derivatives.
 
-	* diode.cpp: Fixed a bug in splitting and disabling resitances
+	* diode.cpp: Fixed a bug in splitting and disabling resistances
 	from devices.
 
 2004-06-05  Stefan Jahn  <stefan@lkcc.org>
@@ -500,7 +505,7 @@
 
 	* inductor.cpp: Implemented DC model (zero voltage source).
 
-2004-05-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de
+2004-05-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* add #include <string.h> in msline.cpp
 
@@ -512,7 +517,7 @@
 
 2004-05-07  Stefan Jahn  <stefan@lkcc.org>
 
-	* microstrip/msline.cpp: Added dispersion terms, dielectrical
+	* microstrip/msline.cpp: Added dispersion terms, dielectric
 	and conductor losses for the microstrip line.
 
 2004-05-06  Stefan Jahn  <stefan@lkcc.org>
@@ -635,10 +640,10 @@
 2003-12-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* strafo.cpp: New component.  Symmetrical 6-port 
-	transformator.
+	transformer.
 
 2003-12-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* itrafo.cpp, itrafo.h: New component.  The ideal 3-port 
-	transformator is for allowing differential s parameter ports 
+	transformer is for allowing differential s parameter ports 
 	only.
