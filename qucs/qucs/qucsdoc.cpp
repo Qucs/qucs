@@ -75,8 +75,7 @@ static const char *smallsave_xpm[] = {
 
 QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
 {
-  GridX  = 10;
-  GridY  = 10;
+  GridX  = GridY  = 10;
   GridOn = true;
   Scale  = 1.0;
   ViewX1=ViewY1=0;
