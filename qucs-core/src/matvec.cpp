@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.8 2004-08-21 13:29:07 ela Exp $
+ * $Id: matvec.cpp,v 1.9 2004-10-12 18:13:09 ela Exp $
  *
  */
 
@@ -96,7 +96,7 @@ char * matvec::getName (void) {
 
 /* This function saves the given vector to the matvec object with the
    appropriate matrix indices. */
-void matvec::set (vector & v, int r, int c) {
+void matvec::set (vector v, int r, int c) {
   assert (v.getSize () == size && 
 	  r >= 1 && r <= rows && c >= 1 && c <= cols);
   for (int i = 0; i < size; i++) data[i].set (r, c, v.get (i));
@@ -105,14 +105,14 @@ void matvec::set (vector & v, int r, int c) {
 /* The function returns the vector specified by the given matrix
    indices.  If the matrix vector has a valid name 'A' the returned
    vector gets the name 'A[r,c]'. */
-vector& matvec::get (int r, int c) {
+vector matvec::get (int r, int c) {
   assert (r >= 1 && r <= rows && c >= 1 && c <= cols);
-  vector * res = new vector ();
-  for (int i = 0; i < size; i++) res->add (data[i].get (r, c));
+  vector res;
+  for (int i = 0; i < size; i++) res.add (data[i].get (r, c));
   if (name != NULL) {
-    res->setName (createMatrixString (name, r, c));
+    res.setName (createMatrixString (name, r, c));
   }
-  return *res;
+  return res;
 }
 
 /* This function returns a static text representation with the
@@ -162,7 +162,7 @@ char * matvec::isMatrixVector (char * n, int& r, int& c) {
 
 /* This function saves the given matrix in the matrix vector at the
    specified position. */
-void matvec::set (matrix& m, int idx) {
+void matvec::set (matrix m, int idx) {
   assert (m.getRows () == rows && m.getCols () == cols &&
 	  idx >= 0 && idx < size);
   data[idx] = m;
@@ -170,23 +170,23 @@ void matvec::set (matrix& m, int idx) {
 
 /* The function returns the matrix stored within the matrix vector at
    the given position. */
-matrix& matvec::get (int idx) {
+matrix matvec::get (int idx) {
   assert (idx >= 0 && idx < size);
-  matrix * res = new matrix (data[idx]);
-  return *res;
+  matrix res (data[idx]);
+  return res;
 }
 
 // Matrix vector addition.
-matvec& operator + (matvec& a, matvec& b) {
+matvec operator + (matvec a, matvec b) {
   assert (a.getRows () == b.getRows () && a.getCols () == b.getCols () &&
 	  a.getSize () == b.getSize ());
-  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) + b.get (i), i);
-  return *res;
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) + b.get (i), i);
+  return res;
 }
 
 // Intrinsic matrix vector addition.
-matvec& matvec::operator += (matvec& a) {
+matvec matvec::operator += (matvec a) {
   assert (a.getRows () == rows && a.getCols () == cols &&
 	  a.getSize () == size);
   for (int i = 0; i < size; i++) data[i] += a.get (i);
@@ -194,16 +194,16 @@ matvec& matvec::operator += (matvec& a) {
 }
 
 // Matrix vector subtraction.
-matvec& operator - (matvec& a, matvec& b) {
+matvec operator - (matvec a, matvec b) {
   assert (a.getRows () == b.getRows () && a.getCols () == b.getCols () &&
 	  a.getSize () == b.getSize ());
-  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) - b.get (i), i);
-  return *res;
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) - b.get (i), i);
+  return res;
 }
 
 // Intrinsic matrix vector subtraction.
-matvec& matvec::operator -= (matvec& a) {
+matvec matvec::operator -= (matvec a) {
   assert (a.getRows () == rows && a.getCols () == cols &&
 	  a.getSize () == size);
   for (int i = 0; i < a.getSize (); i++) data[i] -= a.get (i);
@@ -211,101 +211,101 @@ matvec& matvec::operator -= (matvec& a) {
 }
 
 // Matrix vector scaling.
-matvec& operator * (matvec& a, complex z) {
-  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) * z, i);
-  return *res;
+matvec operator * (matvec a, complex z) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) * z, i);
+  return res;
 }
 
 // Matrix vector scaling in different order.
-matvec& operator * (complex z, matvec& a) {
+matvec operator * (complex z, matvec a) {
   return a * z;
 }
 
 // Matrix vector scaling.
-matvec& operator / (matvec& a, complex z) {
-  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) / z, i);
-  return *res;
+matvec operator / (matvec a, complex z) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) / z, i);
+  return res;
 }
 
 // Matrix vector multiplication.
-matvec& operator * (matvec& a, matvec& b) {
+matvec operator * (matvec a, matvec b) {
   assert (a.getCols () == b.getRows () && a.getSize () == b.getSize ());
-  matvec * res = new matvec (a.getSize (), a.getRows (), b.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) * b.get (i), i);
-  return *res;
+  matvec res (a.getSize (), a.getRows (), b.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (a.get (i) * b.get (i), i);
+  return res;
 }
 
 // Conjugate complex matrix vector.
-matvec& conj (matvec& a) {
-  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
-  for (int i = 0; i < a.getSize (); i++) res->set (conj (a.get (i)), i);
-  return *res;
+matvec conj (matvec a) {
+  matvec res (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res.set (conj (a.get (i)), i);
+  return res;
 }
 
 // Transpose the matrix vector.
-matvec& transpose (matvec& a) {
-  matvec * res = new matvec (a.getSize (), a.getCols (), a.getRows ());
-  for (int i = 0; i < a.getSize (); i++) res->set (transpose (a.get (i)), i);
-  return *res;
+matvec transpose (matvec a) {
+  matvec res (a.getSize (), a.getCols (), a.getRows ());
+  for (int i = 0; i < a.getSize (); i++) res.set (transpose (a.get (i)), i);
+  return res;
 }
 
 // Convert scattering parameters to admittance matrix vector.
-matvec& stoy (matvec& s, complex z0) {
+matvec stoy (matvec s, complex z0) {
   assert (s.getCols () == s.getRows ());
-  matvec * res = new matvec (s.getSize (), s.getCols (), s.getRows ());
-  for (int i = 0; i < s.getSize (); i++) res->set (stoy (s.get (i), z0), i);
-  return *res;  
+  matvec res (s.getSize (), s.getCols (), s.getRows ());
+  for (int i = 0; i < s.getSize (); i++) res.set (stoy (s.get (i), z0), i);
+  return res;  
 }
 
 // Convert admittance matrix to scattering parameter matrix vector.
-matvec& ytos (matvec& y, complex z0) {
+matvec ytos (matvec y, complex z0) {
   assert (y.getCols () == y.getRows ());
-  matvec * res = new matvec (y.getSize (), y.getCols (), y.getRows ());
-  for (int i = 0; i < y.getSize (); i++) res->set (ytos (y.get (i), z0), i);
-  return *res;  
+  matvec res (y.getSize (), y.getCols (), y.getRows ());
+  for (int i = 0; i < y.getSize (); i++) res.set (ytos (y.get (i), z0), i);
+  return res;  
 }
 
 // Convert scattering parameters to impedance matrix vector.
-matvec& stoz (matvec& s, complex z0) {
+matvec stoz (matvec s, complex z0) {
   assert (s.getCols () == s.getRows ());
-  matvec * res = new matvec (s.getSize (), s.getCols (), s.getRows ());
-  for (int i = 0; i < s.getSize (); i++) res->set (stoz (s.get (i), z0), i);
-  return *res;  
+  matvec res (s.getSize (), s.getCols (), s.getRows ());
+  for (int i = 0; i < s.getSize (); i++) res.set (stoz (s.get (i), z0), i);
+  return res;  
 }
 
 // Convert impedance matrix vector scattering parameter matrix vector.
-matvec& ztos (matvec& z, complex z0) {
+matvec ztos (matvec z, complex z0) {
   assert (z.getCols () == z.getRows ());
-  matvec * res = new matvec (z.getSize (), z.getCols (), z.getRows ());
-  for (int i = 0; i < z.getSize (); i++) res->set (ztos (z.get (i), z0), i);
-  return *res;  
+  matvec res (z.getSize (), z.getCols (), z.getRows ());
+  for (int i = 0; i < z.getSize (); i++) res.set (ztos (z.get (i), z0), i);
+  return res;  
 }
 
 // Convert impedance matrix vector to admittance matrix vector.
-matvec& ztoy (matvec& z) {
+matvec ztoy (matvec z) {
   assert (z.getCols () == z.getRows ());
-  matvec * res = new matvec (z.getSize (), z.getCols (), z.getRows ());
-  for (int i = 0; i < z.getSize (); i++) res->set (ztoy (z.get (i)), i);
-  return *res;  
+  matvec res (z.getSize (), z.getCols (), z.getRows ());
+  for (int i = 0; i < z.getSize (); i++) res.set (ztoy (z.get (i)), i);
+  return res;  
 }
 
 // Convert admittance matrix vector to impedance matrix vector.
-matvec& ytoz (matvec& y) {
+matvec ytoz (matvec y) {
   assert (y.getCols () == y.getRows ());
-  matvec * res = new matvec (y.getSize (), y.getCols (), y.getRows ());
-  for (int i = 0; i < y.getSize (); i++) res->set (ytoz (y.get (i)), i);
-  return *res;  
+  matvec res (y.getSize (), y.getCols (), y.getRows ());
+  for (int i = 0; i < y.getSize (); i++) res.set (ytoz (y.get (i)), i);
+  return res;  
 }
 
 /* This function converts 2x2 matrix vectors from any of the matrix
    forms Y, Z, H, G and A to any other.  Also converts S<->(A, T, H, Y
    and Z) matrix vectors. */
-matvec& twoport (matvec& m, char in, char out) {
+matvec twoport (matvec m, char in, char out) {
   assert (m.getCols () == 2 && m.getRows () == 2);
-  matvec * res = new matvec (m.getSize (), m.getCols (), m.getRows ());
+  matvec res (m.getSize (), m.getCols (), m.getRows ());
   for (int i = 0; i < m.getSize (); i++)
-    res->set (twoport (m.get (i), in, out), i);
-  return *res;  
+    res.set (twoport (m.get (i), in, out), i);
+  return res;  
 }

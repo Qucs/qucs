@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msgap.cpp,v 1.5 2004-09-26 09:58:52 ela Exp $
+ * $Id: msgap.cpp,v 1.6 2004-10-12 18:13:12 ela Exp $
  *
  */
 
@@ -52,7 +52,7 @@ void msgap::calcSP (nr_double_t frequency) {
   setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
-matrix& msgap::calcMatrixY (nr_double_t frequency) {
+matrix msgap::calcMatrixY (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W1 = getPropertyDouble ("W1");
@@ -109,12 +109,12 @@ matrix& msgap::calcMatrixY (nr_double_t frequency) {
   complex y21 = rect (0.0, -2.0 * M_PI * frequency * Cs);
   complex y11 = rect (0.0,  2.0 * M_PI * frequency * (C1 + Cs));
   complex y22 = rect (0.0,  2.0 * M_PI * frequency * (C2 + Cs));
-  matrix * y = new matrix (2);
-  y->set (1, 1, y11);
-  y->set (1, 2, y21);
-  y->set (2, 1, y21);
-  y->set (2, 2, y22);
-  return *y;
+  matrix y (2);
+  y.set (1, 1, y11);
+  y.set (1, 2, y21);
+  y.set (2, 1, y21);
+  y.set (2, 2, y22);
+  return y;
 }
 
 void msgap::initDC (void) {

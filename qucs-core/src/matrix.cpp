@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.14 2004-09-06 12:46:23 ela Exp $
+ * $Id: matrix.cpp,v 1.15 2004-10-12 18:13:08 ela Exp $
  *
  */
 
@@ -116,17 +116,17 @@ void matrix::print (void) {
 #endif /* DEBUG */
 
 // Matrix addition.
-matrix& operator + (matrix& a, matrix& b) {
+matrix operator + (matrix a, matrix b) {
   assert (a.getRows () == b.getRows () && a.getCols () == b.getCols ());
-  matrix * res = new matrix (a.getRows (), a.getCols ());
+  matrix res (a.getRows (), a.getCols ());
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, a.get (r, c) + b.get (r, c));
-  return *res;
+      res.set (r, c, a.get (r, c) + b.get (r, c));
+  return res;
 }
 
 // Intrinsic matrix addition.
-matrix& matrix::operator += (matrix& a) {
+matrix matrix::operator += (matrix a) {
   assert (a.getRows () == rows && a.getCols () == cols);
   int r, c, i;
   for (i = 0, r = 1; r <= a.getRows (); r++, i++)
@@ -136,17 +136,17 @@ matrix& matrix::operator += (matrix& a) {
 }
 
 // Matrix subtraction.
-matrix& operator - (matrix& a, matrix& b) {
+matrix operator - (matrix a, matrix b) {
   assert (a.getRows () == b.getRows () && a.getCols () == b.getCols ());
-  matrix * res = new matrix (a.getRows (), a.getCols ());
+  matrix res (a.getRows (), a.getCols ());
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, a.get (r, c) - b.get (r, c));
-  return *res;
+      res.set (r, c, a.get (r, c) - b.get (r, c));
+  return res;
 }
 
 // Intrinsic matrix subtraction.
-matrix& matrix::operator -= (matrix& a) {
+matrix matrix::operator -= (matrix a) {
   assert (a.getRows () == rows && a.getCols () == cols);
   int r, c, i;
   for (i = 0, r = 1; r <= a.getRows (); r++, i++)
@@ -156,85 +156,99 @@ matrix& matrix::operator -= (matrix& a) {
 }
 
 // Matrix scaling.
-matrix& operator * (matrix& a, complex z) {
-  matrix * res = new matrix (a.getRows (), a.getCols ());
+matrix operator * (matrix a, complex z) {
+  matrix res (a.getRows (), a.getCols ());
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, a.get (r, c) * z);
-  return *res;
+      res.set (r, c, a.get (r, c) * z);
+  return res;
 }
 
 // Matrix scaling.
-matrix& operator / (matrix& a, complex z) {
-  matrix * res = new matrix (a.getRows (), a.getCols ());
+matrix operator * (matrix a, nr_double_t d) {
+  matrix res (a.getRows (), a.getCols ());
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, a.get (r, c) / z);
-  return *res;
+      res.set (r, c, a.get (r, c) * d);
+  return res;
 }
 
 // Matrix scaling in different order.
-matrix& operator * (complex z, matrix& a) {
+matrix operator * (nr_double_t d, matrix a) {
+  return a * d;
+}
+
+// Matrix scaling.
+matrix operator / (matrix a, complex z) {
+  matrix res (a.getRows (), a.getCols ());
+  for (int r = 1; r <= a.getRows (); r++)
+    for (int c = 1; c <= a.getCols (); c++)
+      res.set (r, c, a.get (r, c) / z);
+  return res;
+}
+
+// Matrix scaling in different order.
+matrix operator * (complex z, matrix a) {
   return a * z;
 }
 
 // Matrix multiplication.
-matrix& operator * (matrix& a, matrix& b) {
+matrix operator * (matrix a, matrix b) {
   assert (a.getCols () == b.getRows ());
   int r, c, i, n = a.getCols ();
   complex z;
-  matrix * res = new matrix (a.getRows (), b.getCols ());
+  matrix res (a.getRows (), b.getCols ());
   for (r = 1; r <= a.getRows (); r++) {
     for (c = 1; c <= b.getCols (); c++) {
       for (i = 1, z = 0; i <= n; i++) z += a.get (r, i) * b.get (i, c);
-      res->set (r, c, z);
+      res.set (r, c, z);
     }
   }
-  return *res;
+  return res;
 }
 
 // Transpose the matrix.
-matrix& transpose (matrix& a) {
-  matrix * res = new matrix (a.getCols (), a.getRows ());
+matrix transpose (matrix a) {
+  matrix res (a.getCols (), a.getRows ());
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (c, r, a.get (r, c));
-  return *res;
+      res.set (c, r, a.get (r, c));
+  return res;
 }
 
 // Conjugate complex matrix.
-matrix& conj (matrix& a) {
-  matrix * res = new matrix (a.getRows (), a.getCols ());
+matrix conj (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, conj (a.get (r, c)));
-  return *res;
+      res.set (r, c, conj (a.get (r, c)));
+  return res;
 }
 
 /* The function returns the adjoint complex matrix.  This is also
    called the adjugate or transpose conjugate. */
-matrix& adjoint (matrix& a) {
+matrix adjoint (matrix a) {
   return transpose (conj (a));
 }
 
 // Create identity matrix with specified number of rows and columns.
-matrix& eye (int r, int c) {
-  matrix * res = new matrix (r, c);
-  for (int r = 1; r <= res->getRows (); r++)
-    for (int c = 1; c <= res->getCols (); c++)
-      if (r == c) res->set (r, c, 1);
-  return *res;
+matrix eye (int r, int c) {
+  matrix res (r, c);
+  for (int r = 1; r <= res.getRows (); r++)
+    for (int c = 1; c <= res.getCols (); c++)
+      if (r == c) res.set (r, c, 1);
+  return res;
 }
 
 // Create a square identity matrix.
-matrix& eye (int s) {
+matrix eye (int s) {
   return eye (s, s);
 }
 
 /* Computes the cofactor of the given determinant (in matrix
    representation) for the given row and column. */
-complex cofactor (matrix& a, int u, int v) {
-  matrix res = matrix (a.getRows () - 1, a.getCols () - 1);
+complex cofactor (matrix a, int u, int v) {
+  matrix res (a.getRows () - 1, a.getCols () - 1);
   int r, c, ra, ca;
   for (ra = r = 1; r <= res.getRows (); r++, ra++) {
     if (ra == u) ra++;
@@ -248,7 +262,7 @@ complex cofactor (matrix& a, int u, int v) {
 }
 
 // Compute determinant of the given matrix using Laplace expansion.
-complex detLaplace (matrix& a) {
+complex detLaplace (matrix a) {
   assert (a.getRows () == a.getCols ());
   int s = a.getRows ();
   complex res = 0;
@@ -270,11 +284,11 @@ complex detLaplace (matrix& a) {
 /* Compute determinant of the given matrix using the Gaussian
    algorithm.  This means to triangulate the matrix and multiply all
    the diagonal elements. */
-complex detGauss (matrix& a) {
+complex detGauss (matrix a) {
   assert (a.getRows () == a.getCols ());
   nr_double_t MaxPivot;
   complex f, res;
-  matrix * b;
+  matrix b;
   int i, c, r, pivot, n = a.getCols ();
 
   // return special matrix cases
@@ -282,37 +296,36 @@ complex detGauss (matrix& a) {
   if (n == 1) return a.get (1, 1);
 
   // make copy of original matrix
-  b = new matrix (a);
+  b = matrix (a);
 
   // triangulate the matrix
   for (res = 1, i = 1; i < n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
-      if (abs (b->get (r, i)) > MaxPivot) {
-	MaxPivot = abs (b->get (r, i));
+      if (abs (b.get (r, i)) > MaxPivot) {
+	MaxPivot = abs (b.get (r, i));
 	pivot = r;
       }
     }
     // exchange rows if necessary
     assert (MaxPivot != 0);
-    if (i != pivot) { b->exchangeRows (i, pivot); res = -res; }
+    if (i != pivot) { b.exchangeRows (i, pivot); res = -res; }
     // compute new rows and columns
     for (r = i + 1; r <= n; r++) {
-      f = b->get (r, i) / b->get (i, i);
+      f = b.get (r, i) / b.get (i, i);
       for (c = i + 1; c <= n; c++) {
-	b->set (r, c, b->get (r, c) - f * b->get (i, c));
+	b.set (r, c, b.get (r, c) - f * b.get (i, c));
       }
     }
   }
 
   // now compute determinant by multiplying diagonal
-  for (i = 1; i <= n; i++) res *= b->get (i, i);
-  delete b;
+  for (i = 1; i <= n; i++) res *= b.get (i, i);
   return res;
 }
 
 // Compute determinant of the given matrix.
-complex det (matrix& a) {
+complex det (matrix a) {
 #if 0
   return detLaplace (a);
 #else
@@ -321,68 +334,67 @@ complex det (matrix& a) {
 }
 
 // Compute inverse matrix of the given matrix using Laplace expansion.
-matrix& inverseLaplace (matrix& a) {
-  matrix * res = new matrix (a.getRows (), a.getCols ());
+matrix inverseLaplace (matrix a) {
+  matrix res (a.getRows (), a.getCols ());
   complex d = detLaplace (a);
   assert (abs (d) != 0); // singular matrix
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, cofactor (a, c, r) / d);
-  return *res;
+      res.set (r, c, cofactor (a, c, r) / d);
+  return res;
 }
 
 /* Compute inverse matrix of the given matrix by Gauss-Jordan
    elimination. */
-matrix& inverseGaussJordan (matrix& a) {
+matrix inverseGaussJordan (matrix a) {
   nr_double_t MaxPivot;
   complex f;
-  matrix * b, * e;
+  matrix b, e;
   int i, c, r, pivot, n = a.getCols ();
 
   // create temporary matrix and the result matrix
-  b = new matrix (a);
-  e = &eye (n);
+  b = matrix (a);
+  e = eye (n);
 
   // create the eye matrix in 'b' and the result in 'e'
   for (i = 1; i <= n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
-      if (abs (b->get (r, i)) > MaxPivot) {
-	MaxPivot = abs (b->get (r, i));
+      if (abs (b.get (r, i)) > MaxPivot) {
+	MaxPivot = abs (b.get (r, i));
 	pivot = r;
       }
     }
     // exchange rows if necessary
     assert (MaxPivot != 0); // singular matrix
     if (i != pivot) {
-      b->exchangeRows (i, pivot);
-      e->exchangeRows (i, pivot);
+      b.exchangeRows (i, pivot);
+      e.exchangeRows (i, pivot);
     }
 
     // compute current row
-    f = b->get (i, i);
+    f = b.get (i, i);
     for (c = 1; c <= n; c++) {
-      b->set (i, c, b->get (i, c) / f);
-      e->set (i, c, e->get (i, c) / f);
+      b.set (i, c, b.get (i, c) / f);
+      e.set (i, c, e.get (i, c) / f);
     }
 
     // compute new rows and columns
     for (r = 1; r <= n; r++) {
       if (r != i) {
-	f = b->get (r, i);
+	f = b.get (r, i);
 	for (c = 1; c <= n; c++) {
-	  b->set (r, c, b->get (r, c) - f * b->get (i, c));
-	  e->set (r, c, e->get (r, c) - f * e->get (i, c));
+	  b.set (r, c, b.get (r, c) - f * b.get (i, c));
+	  e.set (r, c, e.get (r, c) - f * e.get (i, c));
 	}
       }
     }
   }
-  delete b;
-  return *e;
+  return e;
 }
 
 // Compute inverse matrix of the given matrix.
-matrix& inverse (matrix& a) {
+matrix inverse (matrix a) {
 #if 0
   return inverseLaplace (a);
 #else
@@ -392,175 +404,166 @@ matrix& inverse (matrix& a) {
 
 /* Convert scattering parameters with the reference impedance 'zref'
    to scattering parameters with the reference impedance 'z0'. */
-matrix& stos (matrix& s, complex zref, complex z0) {
+matrix stos (matrix s, complex zref, complex z0) {
   assert (s.getRows () == s.getCols ());
   int d = s.getRows ();
-  matrix e, r, n, * res;
+  matrix e, r, n;
   e = eye (d);
   r = e * (z0 - zref) / (z0 + zref);
-  n = (s - r) * inverse (e - r * s);
-  res = new matrix (n);
-  return *res;
+  return (s - r) * inverse (e - r * s);
 }
 
 // Convert scattering parameters to impedance matrix.
-matrix& stoz (matrix& s, complex z0) {
+matrix stoz (matrix s, complex z0) {
   assert (s.getRows () == s.getCols ());
   int d = s.getRows ();
-  matrix e, zref, gref, z, * res;
+  matrix e, zref, gref;
   e = eye (d);
   zref = e * z0;
   gref = e / (2 * sqrt (fabs (real (z0))));
-  z = inverse (gref) * inverse (e - s) * (s * zref + conj (zref)) * gref;
-  res = new matrix (z);
-  return *res;
+  return inverse (gref) * inverse (e - s) * (s * zref + conj (zref)) * gref;
 }
 
 // Convert impedance matrix scattering parameters.
-matrix& ztos (matrix& z, complex z0) {
+matrix ztos (matrix z, complex z0) {
   assert (z.getRows () == z.getCols ());
   int d = z.getRows ();
-  matrix e, zref, gref, s, * res;
+  matrix e, zref, gref;
   e = eye (d);
   zref = e * z0;
   gref = e / (2 * sqrt (fabs (real (z0))));
-  s = gref * (z - conj (zref)) * inverse (z + zref) * inverse (gref);
-  res = new matrix (s);
-  return *res;
+  return gref * (z - conj (zref)) * inverse (z + zref) * inverse (gref);
 }
 
 // Convert impedance matrix to admittance matrix.
-matrix& ztoy (matrix& z) {
+matrix ztoy (matrix z) {
   assert (z.getRows () == z.getCols ());
   return inverse (z);
 }
 
 // Convert scattering parameters to admittance matrix.
-matrix& stoy (matrix& s, complex z0) {
+matrix stoy (matrix s, complex z0) {
   assert (s.getRows () == s.getCols ());
   int d = s.getRows ();
-  matrix e, zref, gref, y, * res;
+  matrix e, zref, gref;
   e = eye (d);
   zref = e * z0;
   gref = e / (2 * sqrt (fabs (real (z0))));
-  y = inverse (gref) * inverse (s * zref + conj (zref)) * (e - s) * gref;
-  res = new matrix (y);
-  return *res;
+  return inverse (gref) * inverse (s * zref + conj (zref)) * (e - s) * gref;
 }
 
 // Convert admittance matrix to scattering parameters.
-matrix& ytos (matrix& y, complex z0) {
+matrix ytos (matrix y, complex z0) {
   assert (y.getRows () == y.getCols ());
   int d = y.getRows ();
-  matrix e, zref, gref, s, * res;
+  matrix e, zref, gref, s;
   e = eye (d);
   zref = e * z0;
   gref = e / (2 * sqrt (fabs (real (z0))));
   s = gref * (e - conj (zref) * y) * inverse (e + zref * y) * inverse (gref);
-  res = new matrix (s);
-  return *res;
+  return s;
 }
 
 // Converts scattering parameters to chain matrix.
-matrix& stoa (matrix& s, complex z1) {
+matrix stoa (matrix s, complex z1) {
   assert (s.getRows () == 2 && s.getCols () == 2);
   complex z2 = z1;
   complex d = s.get (1, 1) * s.get (2, 2) - s.get (1, 2) * s.get (2, 1);
   complex n = 2.0 * s.get (2, 1) * sqrt (fabs (real (z1) * real (z2)));
-  matrix * a = new matrix (2);
-  a->set (1, 1, (conj (z1) + z1 * s.get (1, 1) - 
-		 conj (z1) * s.get (2, 2) - z1 * d) / n);
-  a->set (1, 2, (conj (z1) * conj (z2) + z1 * conj (z2) * s.get (1, 1) +
-		 conj (z1) * z2 * s.get (2, 2) + z1 * z2 * d) / n);
-  a->set (2, 1, (1.0 - s.get (1, 1) - s.get (2, 2) + d) / n);
-  a->set (2, 2, (conj (z2) - conj (z2) * s.get (1, 1) +
-		 z2 * s.get (2, 2) - z2 * d) / n);
-  return *a;
+  matrix a (2);
+  a.set (1, 1, (conj (z1) + z1 * s.get (1, 1) - 
+		conj (z1) * s.get (2, 2) - z1 * d) / n);
+  a.set (1, 2, (conj (z1) * conj (z2) + z1 * conj (z2) * s.get (1, 1) +
+		conj (z1) * z2 * s.get (2, 2) + z1 * z2 * d) / n);
+  a.set (2, 1, (1.0 - s.get (1, 1) - s.get (2, 2) + d) / n);
+  a.set (2, 2, (conj (z2) - conj (z2) * s.get (1, 1) +
+		z2 * s.get (2, 2) - z2 * d) / n);
+  return a;
 }
 
 // Converts chain matrix to scattering parameters.
-matrix& atos (matrix& a, complex z1) {
+matrix atos (matrix a, complex z1) {
   assert (a.getRows () == 2 && a.getCols () == 2);
   complex z2 = z1;
   complex d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
   complex n = a.get (1, 1) * z2 + a.get (1, 2) + 
     a.get (2, 1) * z1 * z2 + a.get (2, 2) * z1;
-  matrix * s = new matrix (2);
-  s->set (1, 1, (a.get (1, 1) * z2 + a.get (1, 2) - a.get (2, 1) * 
-		 conj (z1) * z2 - a.get (2, 2) * conj (z1)) / n);
-  s->set (1, 2, (a.get (1, 1) * a.get (2, 2) - 
-		 a.get (1, 2) * a.get (2, 1)) * d / n);
-  s->set (2, 1, d / n);
-  s->set (2, 2, (a.get (2, 2) * z1 - a.get (1, 1) * conj (z2) +
-		 a.get (1, 2) - a.get (2, 1) * z1 * conj (z2)) / n);
-  return *s;
+  matrix s (2);
+  s.set (1, 1, (a.get (1, 1) * z2 + a.get (1, 2) - a.get (2, 1) * 
+		conj (z1) * z2 - a.get (2, 2) * conj (z1)) / n);
+  s.set (1, 2, (a.get (1, 1) * a.get (2, 2) - 
+		a.get (1, 2) * a.get (2, 1)) * d / n);
+  s.set (2, 1, d / n);
+  s.set (2, 2, (a.get (2, 2) * z1 - a.get (1, 1) * conj (z2) +
+		a.get (1, 2) - a.get (2, 1) * z1 * conj (z2)) / n);
+  return s;
 }
 
 // Converts scattering parameters to hybrid matrix.
-matrix& stoh (matrix& s, complex z1) {
+matrix stoh (matrix s, complex z1) {
   assert (s.getRows () == 2 && s.getCols () == 2);
   complex z2 = z1;
   complex n = s.get (1, 2) * s.get (2, 1);
   complex d = (1.0 - s.get (1, 1)) * (1.0 + s.get (2, 2)) + n;
-  matrix * h = new matrix (2);
-  h->set (1, 1, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z1 / d);
-  h->set (1, 2, +2.0 * s.get (1, 2) / d);
-  h->set (2, 1, -2.0 * s.get (2, 1) / d);
-  h->set (2, 2, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z2 / d);
-  return *h;
+  matrix h (2);
+  h.set (1, 1, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z1 / d);
+  h.set (1, 2, +2.0 * s.get (1, 2) / d);
+  h.set (2, 1, -2.0 * s.get (2, 1) / d);
+  h.set (2, 2, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z2 / d);
+  return h;
 }
 
 // Converts hybrid matrix to scattering parameters.
-matrix& htos (matrix& h, complex z1) {
+matrix htos (matrix h, complex z1) {
   assert (h.getRows () == 2 && h.getCols () == 2);
   complex z2 = z1;
   complex n = h.get (1, 2) * h.get (2, 1);
   complex d = (1.0 + h.get (1, 1) / z1) * (1.0 + z2 * h.get (2, 2)) - n;
-  matrix * s = new matrix (2);
-  s->set (1, 1, ((h.get (1, 1) / z1 - 1) * (1 + z2 * h.get (2, 2)) - n) / d);
-  s->set (1, 2, +2.0 * h.get (1, 2) / d);
-  s->set (2, 1, -2.0 * h.get (2, 1) / d);
-  s->set (2, 2, ((1 + h.get (1, 1) / z1) * (1 - z2 * h.get (2, 2)) + n) / d);
-  return *s;
+  matrix s (2);
+  s.set (1, 1, ((h.get (1, 1) / z1 - 1) * (1 + z2 * h.get (2, 2)) - n) / d);
+  s.set (1, 2, +2.0 * h.get (1, 2) / d);
+  s.set (2, 1, -2.0 * h.get (2, 1) / d);
+  s.set (2, 2, ((1 + h.get (1, 1) / z1) * (1 - z2 * h.get (2, 2)) + n) / d);
+  return s;
 }
 
 // Converts scattering parameters to second hybrid matrix.
-matrix& stog (matrix& s, complex z1) {
+matrix stog (matrix s, complex z1) {
   assert (s.getRows () == 2 && s.getCols () == 2);
   complex z2 = z1;
   complex n = s.get (1, 2) * s.get (2, 1);
   complex d = (1.0 + s.get (1, 1)) * (1.0 - s.get (2, 2)) + n;
-  matrix * g = new matrix (2);
-  g->set (1, 1, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z1 / d);
-  g->set (1, 2, -2.0 * s.get (1, 2) / d);
-  g->set (2, 1, +2.0 * s.get (2, 1) / d);
-  g->set (2, 2, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z2 / d);
-  return *g;
+  matrix g (2);
+  g.set (1, 1, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z1 / d);
+  g.set (1, 2, -2.0 * s.get (1, 2) / d);
+  g.set (2, 1, +2.0 * s.get (2, 1) / d);
+  g.set (2, 2, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z2 / d);
+  return g;
 }
 
 // Converts second hybrid matrix to scattering parameters.
-matrix& gtos (matrix& g, complex z1) {
+matrix gtos (matrix g, complex z1) {
   assert (g.getRows () == 2 && g.getCols () == 2);
   complex z2 = z1;
   complex n = g.get (1, 2) * g.get (2, 1);
   complex d = (1.0 + g.get (1, 1) * z1) * (1.0 + g.get (2, 2) / z2) - n;
-  matrix * s = new matrix (2);
-  s->set (1, 1, ((1 - g.get (1, 1) * z1) * (1 + g.get (2, 2) / z2) + n) / d);
-  s->set (1, 2, -2.0 * g.get (1, 2) / d);
-  s->set (2, 1, +2.0 * g.get (2, 1) / d);
-  s->set (2, 2, ((g.get (1, 1) * z1 + 1) * (g.get (2, 2) / z2 - 1) - n) / d);
-  return *s;
+  matrix s (2);
+  s.set (1, 1, ((1 - g.get (1, 1) * z1) * (1 + g.get (2, 2) / z2) + n) / d);
+  s.set (1, 2, -2.0 * g.get (1, 2) / d);
+  s.set (2, 1, +2.0 * g.get (2, 1) / d);
+  s.set (2, 2, ((g.get (1, 1) * z1 + 1) * (g.get (2, 2) / z2 - 1) - n) / d);
+  return s;
 }
 
 // Convert admittance matrix to impedance matrix.
-matrix& ytoz (matrix& y) {
+matrix ytoz (matrix y) {
   assert (y.getRows () == y.getCols ());
   return inverse (y);
 }
 
 /* Converts admittance noise correlation matrix to S-parameter noise
    correlation matrix. */
-matrix& cytocs (matrix& cy, matrix& s) {
+matrix cytocs (matrix cy, matrix s) {
   assert (cy.getRows () == cy.getCols () && s.getRows () == s.getCols () &&
 	  cy.getRows () == s.getRows ());
   matrix e = eye (s.getRows ());
@@ -569,7 +572,7 @@ matrix& cytocs (matrix& cy, matrix& s) {
 
 /* Converts impedance noise correlation matrix to S-parameter noise
    correlation matrix. */
-matrix& cztocs (matrix& cz, matrix& s) {
+matrix cztocs (matrix cz, matrix s) {
   assert (cz.getRows () == cz.getCols () && s.getRows () == s.getCols () &&
 	  cz.getRows () == s.getRows ());
   matrix e = eye (s.getRows ());
@@ -578,7 +581,7 @@ matrix& cztocs (matrix& cz, matrix& s) {
 
 /* Converts impedance noise correlation matrix to admittance noise
    correlation matrix.  Both matrices are assumed to be normalized. */
-matrix& cztocy (matrix& cz, matrix& y) {
+matrix cztocy (matrix cz, matrix y) {
   assert (cz.getRows () == cz.getCols () && y.getRows () == y.getCols () &&
 	  cz.getRows () == y.getRows ());
   return y * cz * adjoint (y);
@@ -586,7 +589,7 @@ matrix& cztocy (matrix& cz, matrix& y) {
 
 /* Converts S-parameter noise correlation matrix to admittance noise
    correlation matrix.  Both matrices are assumed to be normalized. */
-matrix& cstocy (matrix& cs, matrix& y) {
+matrix cstocy (matrix cs, matrix y) {
   assert (cs.getRows () == cs.getCols () && y.getRows () == y.getCols () &&
 	  cs.getRows () == y.getRows ());
   matrix e = eye (y.getRows ());
@@ -595,7 +598,7 @@ matrix& cstocy (matrix& cs, matrix& y) {
 
 /* Converts admittance noise correlation matrix to impedance noise
    correlation matrix.  Both matrices are assumed to be normalized. */
-matrix& cytocz (matrix& cy, matrix& z) {
+matrix cytocz (matrix cy, matrix z) {
   assert (cy.getRows () == cy.getCols () && z.getRows () == z.getCols () &&
 	  cy.getRows () == z.getRows ());
   return z * cy * adjoint (z);
@@ -603,7 +606,7 @@ matrix& cytocz (matrix& cy, matrix& z) {
 
 /* Converts S-parameter noise correlation matrix to impedance noise
    correlation matrix.  Both matrices are assumed to be normalized. */
-matrix& cstocz (matrix& cs, matrix& z) {
+matrix cstocz (matrix cs, matrix z) {
   assert (cs.getRows () == cs.getCols () && z.getRows () == z.getCols () &&
 	  cs.getRows () == z.getRows ());
   matrix e = eye (z.getRows ());
@@ -637,47 +640,47 @@ void matrix::exchangeCols (int c1, int c2) {
 /* This function converts 2x2 matrices from any of the matrix forms Y,
    Z, H, G and A to any other.  Also converts S<->(A, T, H, Y and Z)
    matrices. */
-matrix& twoport (matrix& m, char in, char out) {
+matrix twoport (matrix m, char in, char out) {
   assert (m.getRows () == 2 && m.getCols () == 2);
   complex d;
-  matrix * res = new matrix (2);
+  matrix res (2);
 
   switch (in) {
   case 'Y':
     switch (out) {
     case 'Y': // Y to Y
-      *res = m;
+      res = m;
       break;
     case 'Z': // Y to Z
       d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
-      res->set (1, 1, m.get (2, 2) / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, m.get (1, 1) / d);
+      res.set (1, 1, m.get (2, 2) / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, m.get (1, 1) / d);
       break;
     case 'H': // Y to H
       d = m.get (1, 1);
-      res->set (1, 1, 1.0 / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, m.get (2, 1) / d);
-      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 1, 1.0 / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, m.get (2, 1) / d);
+      res.set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
       break;
     case 'G': // Y to G
       d = m.get (2, 2);
-      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
-      res->set (1, 2, m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, 1.0 / d);
+      res.set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 2, m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, 1.0 / d);
       break;
     case 'A': // Y to A
       d = m.get (2, 1);
-      res->set (1, 1, -m.get (2, 2) / d);
-      res->set (1, 2, -1.0 / d);
-      res->set (2, 1, m.get (1, 2) - m.get (2, 2) * m.get (1, 1) / d);
-      res->set (2, 2, -m.get (1, 1) / d);
+      res.set (1, 1, -m.get (2, 2) / d);
+      res.set (1, 2, -1.0 / d);
+      res.set (2, 1, m.get (1, 2) - m.get (2, 2) * m.get (1, 1) / d);
+      res.set (2, 2, -m.get (1, 1) / d);
       break;
     case 'S': // Y to S
-      *res = ytos (m);
+      res = ytos (m);
       break;
     }
     break;
@@ -685,37 +688,37 @@ matrix& twoport (matrix& m, char in, char out) {
     switch (out) {
     case 'Y': // Z to Y
       d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
-      res->set (1, 1, m.get (2, 2) / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, m.get (1, 1) / d);
+      res.set (1, 1, m.get (2, 2) / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, m.get (1, 1) / d);
       break;
     case 'Z': // Z to Z
-      *res = m;
+      res = m;
       break;
     case 'H': // Z to H
       d = m.get (2, 2);
-      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
-      res->set (1, 2, m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, 1.0 / d);
+      res.set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 2, m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, 1.0 / d);
       break;
     case 'G': // Z to G
       d = m.get (1, 1);
-      res->set (1, 1, 1.0 / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, m.get (2, 1) / d);
-      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 1, 1.0 / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, m.get (2, 1) / d);
+      res.set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
       break;
     case 'A': // Z to A
       d = m.get (2, 1);
-      res->set (1, 1, m.get (1, 1) / d);
-      res->set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
-      res->set (2, 1, 1.0 / d);
-      res->set (2, 2, m.get (2, 2) / d);
+      res.set (1, 1, m.get (1, 1) / d);
+      res.set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
+      res.set (2, 1, 1.0 / d);
+      res.set (2, 2, m.get (2, 2) / d);
       break;
     case 'S': // Z to S
-      *res = ztos (m);
+      res = ztos (m);
       break;
     }
     break;
@@ -723,37 +726,37 @@ matrix& twoport (matrix& m, char in, char out) {
     switch (out) {
     case 'Y': // H to Y
       d = m.get (1, 1);
-      res->set (1, 1, 1.0 / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, m.get (2, 1) / d);
-      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get(2, 1) / d);
+      res.set (1, 1, 1.0 / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, m.get (2, 1) / d);
+      res.set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get(2, 1) / d);
       break;
     case 'Z': // H to Z
       d = m.get (2, 2);
-      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
-      res->set (1, 2, m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, 1.0 / d);
+      res.set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 2, m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, 1.0 / d);
       break;
     case 'H': // H to H
-      *res = m;
+      res = m;
       break;
     case 'G': // H to G
       d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
-      res->set (1, 1, m.get (2, 2) / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, m.get (1, 1) / d);
+      res.set (1, 1, m.get (2, 2) / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, m.get (1, 1) / d);
       break;
     case 'A': // H to A
       d = m.get (2, 1);
-      res->set (1, 1, m.get (1, 2) - m.get (1, 1) * m.get (2, 2) / d);
-      res->set (1, 2, -m.get (1, 1) / d);
-      res->set (2, 1, -m.get (2, 2) / d);
-      res->set (2, 2, -1.0 / d);
+      res.set (1, 1, m.get (1, 2) - m.get (1, 1) * m.get (2, 2) / d);
+      res.set (1, 2, -m.get (1, 1) / d);
+      res.set (2, 1, -m.get (2, 2) / d);
+      res.set (2, 2, -1.0 / d);
       break;
     case 'S': // H to S
-      *res = htos (m);
+      res = htos (m);
       break;
     }
     break;
@@ -761,37 +764,37 @@ matrix& twoport (matrix& m, char in, char out) {
     switch (out) {
     case 'Y': // G to Y
       d = m.get (2, 2);
-      res->set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
-      res->set (1, 2, m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, 1.0 / d);
+      res.set (1, 1, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 2, m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, 1.0 / d);
       break;
     case 'Z': // G to Z
       d = m.get (1, 1);
-      res->set (1, 1, 1.0 / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, m.get (2, 1) / d);
-      res->set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (1, 1, 1.0 / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, m.get (2, 1) / d);
+      res.set (2, 2, m.get (2, 2) - m.get (1, 2) * m.get (2, 1) / d);
       break;
     case 'H': // G to H
       d = m.get (1, 1) * m.get (2, 2) - m.get (1, 2) * m.get (2, 1);
-      res->set (1, 1, m.get (2, 2) / d);
-      res->set (1, 2, -m.get (1, 2) / d);
-      res->set (2, 1, -m.get (2, 1) / d);
-      res->set (2, 2, m.get (1, 1) / d);
+      res.set (1, 1, m.get (2, 2) / d);
+      res.set (1, 2, -m.get (1, 2) / d);
+      res.set (2, 1, -m.get (2, 1) / d);
+      res.set (2, 2, m.get (1, 1) / d);
       break;
     case 'G': // G to G
-      *res = m;
+      res = m;
       break;
     case 'A': // G to A
       d = m.get (2, 1);
-      res->set (1, 1, 1.0 / d);
-      res->set (1, 2, m.get (2, 2) / d);
-      res->set (2, 1, m.get (1, 1) / d);
-      res->set (2, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
+      res.set (1, 1, 1.0 / d);
+      res.set (1, 2, m.get (2, 2) / d);
+      res.set (2, 1, m.get (1, 1) / d);
+      res.set (2, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
       break;
     case 'S': // G to S
-      *res = gtos (m);
+      res = gtos (m);
       break;
     }
     break;
@@ -799,66 +802,66 @@ matrix& twoport (matrix& m, char in, char out) {
     switch (out) {
     case 'Y': // A to Y
       d = m.get (1, 2);
-      res->set (1, 1, m.get (2, 2) / d);
-      res->set (1, 2, m.get (2, 1) - m.get (1, 1) * m.get (2, 2) / d);
-      res->set (2, 1, -1.0 / d);
-      res->set (2, 2, m.get (1, 1) / d);
+      res.set (1, 1, m.get (2, 2) / d);
+      res.set (1, 2, m.get (2, 1) - m.get (1, 1) * m.get (2, 2) / d);
+      res.set (2, 1, -1.0 / d);
+      res.set (2, 2, m.get (1, 1) / d);
       break;
     case 'Z': // A to Z
       d = m.get (2, 1);
-      res->set (1, 1, m.get (1, 1) / d);
-      res->set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
-      res->set (2, 1, 1.0 / d);
-      res->set (2, 2, m.get (2, 2) / d);
+      res.set (1, 1, m.get (1, 1) / d);
+      res.set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
+      res.set (2, 1, 1.0 / d);
+      res.set (2, 2, m.get (2, 2) / d);
       break;
     case 'H': // A to H
       d = m.get (2, 2);
-      res->set (1, 1, m.get (1, 2) / d);
-      res->set (1, 2, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
-      res->set (2, 1, -1.0 / d);
-      res->set (2, 2, m.get (2, 1) / d);
+      res.set (1, 1, m.get (1, 2) / d);
+      res.set (1, 2, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (2, 1, -1.0 / d);
+      res.set (2, 2, m.get (2, 1) / d);
       break;
     case 'G': // A to G
       d = m.get (1, 1);
-      res->set (1, 1, m.get (2, 1) / d);
-      res->set (1, 2, m.get (2, 1) * m.get (1, 2) / d - m.get (2, 2));
-      res->set (2, 1, 1.0 / d);
-      res->set (2, 2, m.get (1, 2) / d);
+      res.set (1, 1, m.get (2, 1) / d);
+      res.set (1, 2, m.get (2, 1) * m.get (1, 2) / d - m.get (2, 2));
+      res.set (2, 1, 1.0 / d);
+      res.set (2, 2, m.get (1, 2) / d);
       break;
     case 'A': // A to A
-      *res = m;
+      res = m;
       break;
     case 'S': // A to S
-      *res = atos (m);
+      res = atos (m);
       break;
     }
     break;
   case 'S':
     switch (out) {
     case 'S': // S to S
-      *res = m;
+      res = m;
       break;
     case 'T': // S to T
       d = m.get (2, 1);
-      res->set (1, 1, m.get (1, 2) - m.get (1, 1) * m.get (2, 2) / d);
-      res->set (1, 2, m.get (1, 1) / d);
-      res->set (2, 1, -m.get (2, 2) / d);
-      res->set (1, 2, 1.0 / d);
+      res.set (1, 1, m.get (1, 2) - m.get (1, 1) * m.get (2, 2) / d);
+      res.set (1, 2, m.get (1, 1) / d);
+      res.set (2, 1, -m.get (2, 2) / d);
+      res.set (1, 2, 1.0 / d);
       break;
     case 'A': // S to A
-      *res = stoa (m);
+      res = stoa (m);
       break;
     case 'H': // S to H
-      *res = stoh (m);
+      res = stoh (m);
       break;
     case 'G': // S to G
-      *res = stog (m);
+      res = stog (m);
       break;
     case 'Y': // S to Y
-      *res = stoy (m);
+      res = stoy (m);
       break;
     case 'Z': // S to Z
-      *res = stoz (m);
+      res = stoz (m);
       break;
     }
     break;
@@ -866,16 +869,16 @@ matrix& twoport (matrix& m, char in, char out) {
     switch (out) {
     case 'S': // T to S
       d = m.get (2, 2);
-      res->set (1, 1, m.get (1, 2) / d); 
-      res->set (1, 2, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
-      res->set (2, 1, 1.0 / d);
-      res->set (1, 2, -m.get (2, 1) / d);
+      res.set (1, 1, m.get (1, 2) / d); 
+      res.set (1, 2, m.get (1, 1) - m.get (1, 2) * m.get (2, 1) / d);
+      res.set (2, 1, 1.0 / d);
+      res.set (1, 2, -m.get (2, 1) / d);
       break;
     case 'T': // T to T
-      *res = m;
+      res = m;
       break;
     }
     break;
   }
-  return *res;
+  return res;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.5 2004-08-17 18:38:59 ela Exp $
+ * $Id: matvec.h,v 1.6 2004-10-12 18:13:09 ela Exp $
  *
  */
 
@@ -40,37 +40,37 @@ class matvec
   int getRows (void) { return rows; }
   void setName (char *);
   char * getName (void);
-  void set (vector&, int, int);
-  void set (matrix&, int);
-  vector& get (int, int);
-  matrix& get (int);
+  void set (vector, int, int);
+  void set (matrix, int);
+  vector get (int, int);
+  matrix get (int);
   static char * createMatrixString (char *, int, int);
   static char * createMatrixString (char, int, int);
   static char * isMatrixVector (char *, int&, int&);
 
   // operator functions
-  friend matvec& operator + (matvec&, matvec&);
-  friend matvec& operator - (matvec&, matvec&);
-  friend matvec& operator * (matvec&, complex);
-  friend matvec& operator / (matvec&, complex);
-  friend matvec& operator * (complex, matvec&);
-  friend matvec& operator * (matvec&, matvec&);
+  friend matvec operator + (matvec, matvec);
+  friend matvec operator - (matvec, matvec);
+  friend matvec operator * (matvec, complex);
+  friend matvec operator / (matvec, complex);
+  friend matvec operator * (complex, matvec);
+  friend matvec operator * (matvec, matvec);
 
   // intrinsic operator functions
-  matvec& operator += (matvec&);
-  matvec& operator -= (matvec&);
+  matvec operator += (matvec);
+  matvec operator -= (matvec);
 
   // other operations
-  friend matvec& transpose (matvec&);
-  friend matvec& conj (matvec&);
-  friend matvec& stoz (matvec&, complex z0 = 50.0);
-  friend matvec& ztos (matvec&, complex z0 = 50.0);
-  friend matvec& ztoy (matvec&);
-  friend matvec& stoy (matvec&, complex z0 = 50.0);
-  friend matvec& ytos (matvec&, complex z0 = 50.0);
-  friend matvec& ytoz (matvec&);
+  friend matvec transpose (matvec);
+  friend matvec conj (matvec);
+  friend matvec stoz (matvec, complex z0 = 50.0);
+  friend matvec ztos (matvec, complex z0 = 50.0);
+  friend matvec ztoy (matvec);
+  friend matvec stoy (matvec, complex z0 = 50.0);
+  friend matvec ytos (matvec, complex z0 = 50.0);
+  friend matvec ytoz (matvec);
 
-  friend matvec& twoport (matvec&, char, char);
+  friend matvec twoport (matvec, char, char);
 
  private:
   int size;

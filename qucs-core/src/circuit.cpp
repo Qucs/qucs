@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.31 2004-10-03 10:30:51 ela Exp $
+ * $Id: circuit.cpp,v 1.32 2004-10-12 18:13:08 ela Exp $
  *
  */
 
@@ -426,7 +426,7 @@ char * circuit::createInternal (char * prefix, char * obj) {
 
 /* This function copies the matrix elements inside the given matrix to
    the internal S-parameter matrix of the circuit. */
-void circuit::setMatrixS (matrix & s) {
+void circuit::setMatrixS (matrix s) {
   int r = s.getRows ();
   int c = s.getCols ();
   // copy matrix elements
@@ -437,15 +437,15 @@ void circuit::setMatrixS (matrix & s) {
 
 /* The function return a matrix containing the S-parameters of the
    circuit. */
-matrix& circuit::getMatrixS (void) {
-  matrix * res = new matrix (size);
-  memcpy (res->getData (), MatrixS, sizeof (complex) * size * size);
-  return *res;
+matrix circuit::getMatrixS (void) {
+  matrix res (size);
+  memcpy (res.getData (), MatrixS, sizeof (complex) * size * size);
+  return res;
 }
 
 /* This function copies the matrix elements inside the given matrix to
    the internal noise correlation matrix of the circuit. */
-void circuit::setMatrixN (matrix & n) {
+void circuit::setMatrixN (matrix n) {
   int r = n.getRows ();
   int c = n.getCols ();
   // copy matrix elements
@@ -456,15 +456,15 @@ void circuit::setMatrixN (matrix & n) {
 
 /* The function return a matrix containing the noise correlation
    matrix of the circuit. */
-matrix& circuit::getMatrixN (void) {
-  matrix * res = new matrix (size);
-  memcpy (res->getData (), MatrixN, sizeof (complex) * size * size);
-  return *res;
+matrix circuit::getMatrixN (void) {
+  matrix res (size);
+  memcpy (res.getData (), MatrixN, sizeof (complex) * size * size);
+  return res;
 }
 
 /* This function copies the matrix elements inside the given matrix to
    the internal G-MNA matrix of the circuit. */
-void circuit::setMatrixY (matrix & y) {
+void circuit::setMatrixY (matrix y) {
   int r = y.getRows ();
   int c = y.getCols ();
   // copy matrix elements
@@ -475,10 +475,10 @@ void circuit::setMatrixY (matrix & y) {
 
 /* The function return a matrix containing the G-MNA matrix of the
    circuit. */
-matrix& circuit::getMatrixY (void) {
-  matrix * res = new matrix (size);
-  memcpy (res->getData (), MatrixY, sizeof (complex) * size * size);
-  return *res;
+matrix circuit::getMatrixY (void) {
+  matrix res (size);
+  memcpy (res.getData (), MatrixY, sizeof (complex) * size * size);
+  return res;
 }
 
 // The function cleans up the B-MNA matrix entries.

@@ -1,5 +1,14 @@
 2004-10-12  Stefan Jahn  <stefan@lkcc.org>
 
+	* vector.cpp: Found out that class& return values create
+	memory leaks.  That is why classes changed: vector, matrix,
+	matvec, tmatrix and *all* the callers.
+
+	* tvector.h (class tvector): New class implementing a simple
+	vector template.  This change speeds up equation system
+	solvers and thereby DC, AC and transient simulation.  Changed
+	all callers.
+
 	* trsolver.cpp: Tried to optimize non-convergence handling.
 
 2004-10-10  Stefan Jahn  <stefan@lkcc.org>

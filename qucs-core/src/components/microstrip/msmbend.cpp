@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.9 2004-09-26 09:58:52 ela Exp $
+ * $Id: msmbend.cpp,v 1.10 2004-10-12 18:13:12 ela Exp $
  *
  */
 
@@ -51,7 +51,7 @@ void msmbend::calcSP (nr_double_t frequency) {
   setMatrixS (ztos (calcMatrixZ (frequency)));
 }
 
-matrix& msmbend::calcMatrixZ (nr_double_t frequency) {
+matrix msmbend::calcMatrixZ (nr_double_t frequency) {
 
   /* how to get properties of this component, e.g. W */
   nr_double_t W = getPropertyDouble ("W");
@@ -87,12 +87,12 @@ matrix& msmbend::calcMatrixZ (nr_double_t frequency) {
   // calculate Z-parameters
   z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
   z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
-  matrix * z = new matrix (2);
-  z->set (1, 1, z11);
-  z->set (1, 2, z21);
-  z->set (2, 1, z21);
-  z->set (2, 2, z11);
-  return *z;
+  matrix z (2);
+  z.set (1, 1, z11);
+  z.set (1, 2, z21);
+  z.set (2, 1, z21);
+  z.set (2, 2, z11);
+  return z;
 }
 
 void msmbend::initDC (void) {

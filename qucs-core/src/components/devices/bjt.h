@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.h,v 1.10 2004-09-27 18:26:21 ela Exp $
+ * $Id: bjt.h,v 1.11 2004-10-12 18:13:12 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@ class bjt : public circuit
   void calcOperatingPoints (void);
   void initAC (void);
   void calcAC (nr_double_t);
-  matrix& calcMatrixY (nr_double_t);
+  matrix calcMatrixY (nr_double_t);
   void initTR (void);
   void calcTR (nr_double_t);
 

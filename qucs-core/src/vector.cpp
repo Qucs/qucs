@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.14 2004-09-01 21:40:19 ela Exp $
+ * $Id: vector.cpp,v 1.15 2004-10-12 18:13:09 ela Exp $
  *
  */
 
@@ -161,7 +161,7 @@ int vector::getSize (void) {
   return size;
 }
 
-int vector::checkSizes (vector & v1, vector & v2) {
+int vector::checkSizes (vector v1, vector v2) {
   if (v1.getSize () != v2.getSize ()) {
     logprint (LOG_ERROR, "vector '%s' and '%s' have different sizes\n",
 	      v1.getName (), v2.getName ());
@@ -173,7 +173,7 @@ int vector::checkSizes (vector & v1, vector & v2) {
 // searches the maximum value of the vector elements.
 // complex numbers in the 1. and 4. quadrant are counted as "abs(c)".
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
-nr_double_t vector::maximum () {
+nr_double_t vector::maximum (void) {
   complex c;
   nr_double_t d, max_D = -DBL_MAX;
   for (int i = 0; i < getSize (); i++) {
@@ -187,7 +187,7 @@ nr_double_t vector::maximum () {
 // searches the minimum value of the vector elements.
 // complex numbers in the 1. and 4. quadrant are counted as "abs(c)".
 // complex numbers in the 2. and 3. quadrant are counted as "-abs(c)".
-nr_double_t vector::minimum () {
+nr_double_t vector::minimum (void) {
   complex c;
   nr_double_t d, min_D = DBL_MAX;
   for (int i = 0; i < getSize (); i++) {
@@ -198,231 +198,243 @@ nr_double_t vector::minimum () {
   return min_D;
 }
 
-complex sum (vector & v) {
+complex sum (vector v) {
   complex result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result;
 }
 
-complex prod (vector & v) {
+complex prod (vector v) {
   complex result (1.0);
   for (int i = 0; i < v.getSize (); i++) result *= v.get (i);
   return result;
 }
 
-complex avg (vector & v) {
+complex avg (vector v) {
   complex result (0.0);
   for (int i = 0; i < v.getSize (); i++) result += v.get (i);
   return result / v.getSize ();
 }
 
-vector& abs (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (abs (v.get (i)), i);
-  return *result;
+vector abs (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (abs (v.get (i)), i);
+  return result;
 }
 
-vector& norm (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (norm (v.get (i)), i);
-  return *result;
+vector norm (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (norm (v.get (i)), i);
+  return result;
 }
 
-vector& arg (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arg (v.get (i)), i);
-  return *result;
+vector arg (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arg (v.get (i)), i);
+  return result;
 }
 
-vector& real (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (real (v.get (i)), i);
-  return *result;
+vector real (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (real (v.get (i)), i);
+  return result;
 }
 
-vector& imag (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (imag (v.get (i)), i);
-  return *result;
+vector imag (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (imag (v.get (i)), i);
+  return result;
 }
 
-vector& conj (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (conj (v.get (i)), i);
-  return *result;
+vector conj (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (conj (v.get (i)), i);
+  return result;
 }
 
-vector& dB (vector & v) {
-  vector * result = new vector (v);
+vector dB (vector v) {
+  vector result (v);
   for (int i = 0; i < v.getSize (); i++)
-    result->set (10.0 * log10 (norm (v.get (i))), i);
-  return *result;
+    result.set (10.0 * log10 (norm (v.get (i))), i);
+  return result;
 }
 
-vector& sqrt (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (sqrt (v.get (i)), i);
-  return *result;
+vector sqrt (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sqrt (v.get (i)), i);
+  return result;
 }
 
-vector& exp (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (exp (v.get (i)), i);
-  return *result;
+vector exp (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (exp (v.get (i)), i);
+  return result;
 }
 
-vector& ln (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (ln (v.get (i)), i);
-  return *result;
+vector ln (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (ln (v.get (i)), i);
+  return result;
 }
 
-vector& log10 (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (log10 (v.get (i)), i);
-  return *result;
+vector log10 (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (log10 (v.get (i)), i);
+  return result;
 }
 
-vector& log2 (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (log2 (v.get (i)), i);
-  return *result;
+vector log2 (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (log2 (v.get (i)), i);
+  return result;
 }
 
-vector& pow (vector & v, const complex z) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (pow (v.get(i), z), i);
-  return *result;
+vector pow (vector v, const complex z) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (pow (v.get(i), z), i);
+  return result;
 }
 
-vector& pow (const complex z, vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (pow (z, v.get (i)), i);
-  return *result;
+vector pow (vector v, const nr_double_t d) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (pow (v.get(i), d), i);
+  return result;
 }
 
-vector& pow (vector & v1, vector & v2) {
+vector pow (const complex z, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (pow (z, v.get (i)), i);
+  return result;
+}
+
+vector pow (const nr_double_t d, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (pow (d, v.get (i)), i);
+  return result;
+}
+
+vector pow (vector v1, vector v2) {
   assert (v1.checkSizes (v1, v2));
-  vector * result = new vector (v1);
+  vector result (v1);
   for (int i = 0; i < v1.getSize (); i++)
-    result->set (pow (v1.get (i), v2.get (i)), i);
-  return *result;
+    result.set (pow (v1.get (i), v2.get (i)), i);
+  return result;
 }
 
-vector& sin (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (sin (v.get (i)), i);
-  return *result;
+vector sin (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sin (v.get (i)), i);
+  return result;
 }
 
-vector& arcsin (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arcsin (v.get (i)), i);
-  return *result;
+vector arcsin (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arcsin (v.get (i)), i);
+  return result;
 }
 
-vector& arccos (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arccos (v.get (i)), i);
-  return *result;
+vector arccos (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arccos (v.get (i)), i);
+  return result;
 }
 
-vector& cos (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (cos (v.get (i)), i);
-  return *result;
+vector cos (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (cos (v.get (i)), i);
+  return result;
 }
 
-vector& tan (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (tan (v.get (i)), i);
-  return *result;
+vector tan (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (tan (v.get (i)), i);
+  return result;
 }
 
-vector& arctan (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arctan (v.get (i)), i);
-  return *result;
+vector arctan (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arctan (v.get (i)), i);
+  return result;
 }
 
-vector& cot (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (cot (v.get (i)), i);
-  return *result;
+vector cot (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (cot (v.get (i)), i);
+  return result;
 }
 
-vector& arccot (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arccot (v.get (i)), i);
-  return *result;
+vector arccot (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arccot (v.get (i)), i);
+  return result;
 }
 
-vector& sinh (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (sinh (v.get (i)), i);
-  return *result;
+vector sinh (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (sinh (v.get (i)), i);
+  return result;
 }
 
-vector& arsinh (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arsinh (v.get (i)), i);
-  return *result;
+vector arsinh (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arsinh (v.get (i)), i);
+  return result;
 }
 
-vector& cosh (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (cosh (v.get (i)), i);
-  return *result;
+vector cosh (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (cosh (v.get (i)), i);
+  return result;
 }
 
-vector& arcosh (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arcosh (v.get (i)), i);
-  return *result;
+vector arcosh (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arcosh (v.get (i)), i);
+  return result;
 }
 
-vector& tanh (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (tanh (v.get (i)), i);
-  return *result;
+vector tanh (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (tanh (v.get (i)), i);
+  return result;
 }
 
-vector& artanh (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (artanh (v.get (i)), i);
-  return *result;
+vector artanh (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (artanh (v.get (i)), i);
+  return result;
 }
 
-vector& coth (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (coth (v.get (i)), i);
-  return *result;
+vector coth (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (coth (v.get (i)), i);
+  return result;
 }
 
-vector& arcoth (vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (arcoth (v.get (i)), i);
-  return *result;
+vector arcoth (vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (arcoth (v.get (i)), i);
+  return result;
 }
 
 // converts impedance to reflexion coefficient
-vector& ztor (vector & v, nr_double_t zref) {
-  vector * result = new vector (v);
+vector ztor (vector v, nr_double_t zref) {
+  vector result (v);
   for (int i = 0; i < v.getSize (); i++)
-    result->set (ztor (v.get (i), zref), i);
-  return *result;
+    result.set (ztor (v.get (i), zref), i);
+  return result;
 }
 
 // converts reflexion coefficient to impedance
-vector& rtoz (vector & v, nr_double_t zref) {
-  vector * result = new vector (v);
+vector rtoz (vector v, nr_double_t zref) {
+  vector result (v);
   for (int i = 0; i < v.getSize (); i++)
-    result->set (rtoz (v.get (i), zref), i);
-  return *result;
+    result.set (rtoz (v.get (i), zref), i);
+  return result;
 }
 
 // differentiates 'var' with respect to 'dep' exactly 'n' times
-vector& diff (vector & var, vector & dep, int n) {
+vector diff (vector var, vector dep, int n) {
   int k, xi, yi, exchange = 0;
   vector x, y;
   // exchange dependent and independent variable if necessary
@@ -436,7 +448,7 @@ vector& diff (vector & var, vector & dep, int n) {
     y = vector (var);
   }
   assert (y.getSize () % x.getSize () == 0 && x.getSize () >= 2);
-  vector * result = new vector (y);
+  vector result (y);
   complex c;
 
   for (k = 0; k < n; k++) {  // differentiate n times
@@ -452,164 +464,243 @@ vector& diff (vector & var, vector & dep, int n) {
 	  ((y.get (yi) - y.get (yi - 1)) / (x.get (xi) - x.get (xi - 1)) + 
 	   (y.get (yi + 1) - y.get (yi)) / (x.get (xi + 1) - x.get (xi))) / 2;
       }
-      result->set (exchange ? 1 / c : c, yi);
+      result.set (exchange ? 1 / c : c, yi);
     }
-    y = *result;
+    y = result;
   }
-  return *result;
+  return result;
 }
 
-vector& vector::operator=(const complex c) {
+vector vector::operator=(const complex c) {
   for (int i = 0; i < getSize (); i++) data[i] = c;
   return *this;
 }
 
-vector& vector::operator+=(vector & v) {
-  if (checkSizes (*this, v)) {
-    for (int i = 0; i < getSize (); i++) data[i] += v.get (i);
-  }
+vector vector::operator=(const nr_double_t d) {
+  for (int i = 0; i < getSize (); i++) data[i] = d;
   return *this;
 }
 
-vector& vector::operator+=(const complex c) {
+vector vector::operator+=(vector v) {
+  if (checkSizes (*this, v))
+    for (int i = 0; i < getSize (); i++) data[i] += v.get (i);
+  return *this;
+}
+
+vector vector::operator+=(const complex c) {
   for (int i = 0; i < getSize (); i++) data[i] += c;
   return *this;
 }
 
-vector& operator+(vector & v1, vector & v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector * result = new vector (v1);
-  *result += v2;
-  return *result;
-}
-
-vector& operator+(vector & v, const complex c) {
-  vector * result = new vector (v);
-  *result += c;
-  return *result;
-}
-
-vector& operator+(const complex c, vector & v) {
-  return v + c;
-}
-
-vector& vector::operator-() {
-  vector * result = new vector (*this);
-  for (int i = 0; i < getSize (); i++) result->set (-get (i), i);
-  return *result;
-}
-
-vector& vector::operator-=(vector & v) {
-  if (checkSizes (*this, v)) {
-    for (int i = 0; i < getSize (); i++) data[i] -= v.get (i);
-  }
+vector vector::operator+=(const nr_double_t d) {
+  for (int i = 0; i < getSize (); i++) data[i] += d;
   return *this;
 }
 
-vector& vector::operator-=(const complex c) {
+vector operator+(vector v1, vector v2) {
+  assert (v1.checkSizes (v1, v2));
+  vector result (v1);
+  result += v2;
+  return result;
+}
+
+vector operator+(vector v, const complex c) {
+  vector result (v);
+  result += c;
+  return result;
+}
+
+vector operator+(const complex c, vector v) {
+  return v + c;
+}
+
+vector operator+(vector v, const nr_double_t d) {
+  vector result (v);
+  result += d;
+  return result;
+}
+
+vector operator+(const nr_double_t d, vector v) {
+  return v + d;
+}
+
+vector vector::operator-() {
+  vector result (*this);
+  for (int i = 0; i < getSize (); i++) result.set (-get (i), i);
+  return result;
+}
+
+vector vector::operator-=(vector v) {
+  if (checkSizes (*this, v))
+    for (int i = 0; i < getSize (); i++) data[i] -= v.get (i);
+  return *this;
+}
+
+vector vector::operator-=(const complex c) {
   for (int i = 0; i < getSize (); i++) data[i] -= c;
   return *this;
 }
 
-vector& operator-(vector & v1, vector & v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector * result = new vector (v1);
-  *result -= v2;
-  return *result;
-}
-
-vector& operator-(vector & v, const complex c) {
-  vector * result = new vector (v);
-  *result -= c;
-  return *result;
-}
-
-vector& operator-(const complex c, vector & v) {
-  vector * result = new vector (v);
-  *result *= -1.0;
-  *result += c;
-  return *result;
-}
-
-vector& vector::operator*=(vector & v) {
-  if (checkSizes (*this, v)) {
-    for (int i = 0; i < getSize (); i++) data[i] *= v.get (i);
-  }
+vector vector::operator-=(const nr_double_t d) {
+  for (int i = 0; i < getSize (); i++) data[i] -= d;
   return *this;
 }
 
-vector& vector::operator*=(const complex c) {
+vector operator-(vector v1, vector v2) {
+  assert (v1.checkSizes (v1, v2));
+  vector result (v1);
+  result -= v2;
+  return result;
+}
+
+vector operator-(vector v, const complex c) {
+  vector result (v);
+  result -= c;
+  return result;
+}
+
+vector operator-(vector v, const nr_double_t d) {
+  vector result (v);
+  result -= d;
+  return result;
+}
+
+vector operator-(const complex c, vector v) {
+  vector result (v);
+  result *= -1.0;
+  result += c;
+  return result;
+}
+
+vector operator-(const nr_double_t d, vector v) {
+  vector result (v);
+  result *= -1.0;
+  result += d;
+  return result;
+}
+
+vector vector::operator*=(vector v) {
+  if (checkSizes (*this, v))
+    for (int i = 0; i < getSize (); i++) data[i] *= v.get (i);
+  return *this;
+}
+
+vector vector::operator*=(const complex c) {
   for (int i = 0; i < getSize (); i++) data[i] *= c;
   return *this;
 }
 
-vector& operator*(vector & v1, vector & v2) {
-  assert (v1.checkSizes (v1, v2));
-  vector * result = new vector (v1);
-  *result *= v2;
-  return *result;
-}
-
-vector& operator*(vector & v, const complex c) {
-  vector * result = new vector (v);
-  *result *= c;
-  return *result;
-}
-
-vector& operator*(const complex c, vector & v) {
-  return v * c;
-}
-
-vector& vector::operator/=(vector & v) {
-  if (checkSizes (*this, v)) {
-    for (int i = 0; i < getSize (); i++) data[i] /= v.get (i);
-  }
+vector vector::operator*=(const nr_double_t d) {
+  for (int i = 0; i < getSize (); i++) data[i] *= d;
   return *this;
 }
 
-vector& vector::operator/=(const complex c) {
+vector operator*(vector v1, vector v2) {
+  assert (v1.checkSizes (v1, v2));
+  vector result (v1);
+  result *= v2;
+  return result;
+}
+
+vector operator*(vector v, const complex c) {
+  vector result (v);
+  result *= c;
+  return result;
+}
+
+vector operator*(vector v, const nr_double_t d) {
+  vector result (v);
+  result *= d;
+  return result;
+}
+
+vector operator*(const complex c, vector v) {
+  return v * c;
+}
+
+vector operator*(const nr_double_t d, vector v) {
+  return v * d;
+}
+
+vector vector::operator/=(vector v) {
+  if (checkSizes (*this, v))
+    for (int i = 0; i < getSize (); i++) data[i] /= v.get (i);
+  return *this;
+}
+
+vector vector::operator/=(const complex c) {
   for (int i = 0; i < getSize (); i++) data[i] /= c;
   return *this;
 }
 
-vector& operator/(vector & v1, vector & v2) {
+vector vector::operator/=(const nr_double_t d) {
+  for (int i = 0; i < getSize (); i++) data[i] /= d;
+  return *this;
+}
+
+vector operator/(vector v1, vector v2) {
   assert (v1.checkSizes (v1, v2));
-  vector * result = new vector (v1);
-  *result /= v2;
-  return *result;
+  vector result (v1);
+  result /= v2;
+  return result;
 }
 
-vector& operator/(vector & v, const complex c) {
-  vector * result = new vector (v);
-  *result /= c;
-  return *result;
+vector operator/(vector v, const complex c) {
+  vector result (v);
+  result /= c;
+  return result;
 }
 
-vector& operator/(const complex c, vector & v) {
-  vector * result = new vector (v);
-  *result  = c;
-  *result /= v;
-  return *result;
+vector operator/(vector v, const nr_double_t d) {
+  vector result (v);
+  result /= d;
+  return result;
 }
 
-vector& operator%(vector & v, const complex z) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (v.get (i) % z, i);
-  return *result;
+vector operator/(const complex c, vector v) {
+  vector result (v);
+  result  = c;
+  result /= v;
+  return result;
 }
 
-vector& operator%(const complex z, vector & v) {
-  vector * result = new vector (v);
-  for (int i = 0; i < v.getSize (); i++) result->set (z % v.get (i), i);
-  return *result;
+vector operator/(const nr_double_t d, vector v) {
+  vector result (v);
+  result  = d;
+  result /= v;
+  return result;
 }
 
-vector& operator%(vector & v1, vector & v2) {
+vector operator%(vector v, const complex z) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (v.get (i) % z, i);
+  return result;
+}
+
+vector operator%(vector v, const nr_double_t d) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (v.get (i) % d, i);
+  return result;
+}
+
+vector operator%(const complex z, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (z % v.get (i), i);
+  return result;
+}
+
+vector operator%(const nr_double_t d, vector v) {
+  vector result (v);
+  for (int i = 0; i < v.getSize (); i++) result.set (d % v.get (i), i);
+  return result;
+}
+
+vector operator%(vector v1, vector v2) {
   assert (v1.checkSizes (v1, v2));
-  vector * result = new vector (v1);
+  vector result (v1);
   for (int i = 0; i < v1.getSize (); i++)
-    result->set (v1.get (i) % v2.get (i), i);
-  return *result;
+    result.set (v1.get (i) % v2.get (i), i);
+  return result;
 }
 
 /* This function reverses the order of the data list. */
