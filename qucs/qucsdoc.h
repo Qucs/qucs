@@ -47,15 +47,21 @@ public:
   Node*      insertWireNode2(Wire *e);
   int        insertWire(Wire *w);
   Component* selectedComponent(int x, int y);
+  Diagram*   selectedDiagram(int x, int y);
   Wire*      selectedWire(int x, int y);
-  bool  selectComponent(int x, int y, bool flag);
+  Element*   selectElement(int x, int y, bool flag);
+  void       deselectElements(Element *e);
+  void  copySelectedElements(QPtrList<Element> *p);
   void  selectComponents(int x1, int y1, int x2, int y2, bool flag);
   void  activateComponent(int x, int y);
   Node* insertNode(int x, int y, Element *e);
+  void  insertRawComponent(Component *c);
   void  insertComponent(Component *c);
   bool  rotateComponents();
   bool  mirrorXComponents();
-  bool  deleteComponents();
+  void  deleteComp(Component *c);
+  void  deleteWire(Wire *w);
+  bool  deleteElements();
   bool  createNetlist(QFile *NetlistFile);
 
   bool  save();
@@ -79,9 +85,11 @@ public:
   QPtrList<Diagram>   Diags;
 
   QString DataSet;  // name of the default dataset
+  QString DataDisplay; // name of the default data display
   int  GridX, GridY;
   bool GridOn;
 
 };
+
 
 #endif

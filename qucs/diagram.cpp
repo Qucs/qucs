@@ -23,9 +23,21 @@
 #include <qmessagebox.h>
 
 
-Diagram::Diagram(int _cx, int _cy) : cx(_cx), cy(_cy)
+Diagram::Diagram(int _cx, int _cy)
 {
+  cx = _cx;  cy = _cy;
+  x1 = 0;  y1 = 0;
+
+//  isWire = false;
+//  isDiag = true;
+  Type = isDiagram;
+  
+  isSelected = false;
+  
   Graphs.setAutoDelete(true);
+  Arcs.setAutoDelete(true);
+  Lines.setAutoDelete(true);
+  Texts.setAutoDelete(true);
 }
 
 Diagram::~Diagram()
@@ -33,19 +45,55 @@ Diagram::~Diagram()
 }
 
 // ------------------------------------------------------------
-void Diagram::paint(QPainter *)
+void Diagram::paint(QPainter *p)
 {
+  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {    // paint all lines
+    p->setPen(pl->style);
+    p->drawLine(pl->x1, pl->y1, pl->x2, pl->y2);
+  }
+
+  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {    // paint all arcs
+    p->setPen(pa->style);
+    p->drawArc(pa->x, pa->y, pa->w, pa->h, pa->angle, pa->arclen);
+  }
+
+  if(Name[0] != 'T')   // no graph within tabulars
+    for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
+      pg->paint(p);
+
+  p->setPen(QPen(QPen::black,1));
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())    // write whole text
+    p->drawText(pt->x, pt->y, pt->s);
+
+  if(isSelected) {
+    p->setPen(QPen(QPen::darkGray,3));
+    p->drawRoundRect(cx-5, cy-y2-5, x2+10, y2+10);
+  }
 }
 
 // ------------------------------------------------------------
 void Diagram::paintScheme(QPainter *p)
 {
-  p->drawRect(cx, cy-dy, dx, dy);
+  p->drawRect(cx, cy-y2, x2, y2);
+}
+
+// ------------------------------------------------------------
+void Diagram::calcDiagram()
+{
 }
 
 // ------------------------------------------------------------
 void Diagram::calcData(Graph *)
 {
+}
+
+// -------------------------------------------------------
+void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
+{
+  _x1 = cx;
+  _y1 = cy-y2;
+  _x2 = cx+x2;
+  _y2 = cy;
 }
 
 // --------------------------------------------------------------------------
@@ -124,7 +172,7 @@ bool Diagram::loadVarData(const QString& fileName)
     Line = stream.readLine();
   }
 
-  y1 = ymin; y2 = ymax;
+  yg1 = ymin; yg2 = ymax;
 //QMessageBox::critical(0, "Error", QString::number(ymin)+"  "+QString::number(ymax));
 
   file.close();
@@ -194,17 +242,21 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
     Line = stream.readLine();
   }
 
-  x1 = xmin; x2 = xmax;
+  xg1 = xmin; xg2 = xmax;
 
   file.close();
   return n;
 }
 
 // ------------------------------------------------------------
-void Diagram::setCenter(int _cx, int _cy)
+void Diagram::setCenter(int x, int y, bool relative)
 {
-  cx = _cx;
-  cy = _cy;
+  if(relative) {
+    cx += x;  cy += y;
+  }
+  else {
+    cx = x;  cy = y;
+  }
 }
 
 // ------------------------------------------------------------
@@ -217,7 +269,7 @@ Diagram* Diagram::newOne()
 QString Diagram::save()
 {
   QString s = "   <"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += QString::number(dx)+" "+QString::number(dy)+" ";
+  s += QString::number(x2)+" "+QString::number(y2)+" ";
   if(GridOn) s+= "1 ";
   else s += "0 ";
   s += QString::number(GridX)+" "+QString::number(GridY)+">\n";
@@ -248,12 +300,12 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   cy = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',3,3);    // dx
-  dx = n.toInt(&ok);
+  n  = s.section(' ',3,3);    // x2
+  x2 = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',4,4);    // dy
-  dy = n.toInt(&ok);
+  n  = s.section(' ',4,4);    // y2
+  y2 = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // GridOn
@@ -270,16 +322,17 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   if(!ok) return false;
 
   // .......................................................
+  // load graphs of the diagram
   while(!stream->atEnd()) {
     s = stream->readLine();
     s = s.stripWhiteSpace();
-    if(s == ("</"+Name+">")) return true;  // found end tag
+    if(s == ("</"+Name+">")) return true;  // found end tag ?
     Graph *g = new Graph();
     if(!g->load(s)) return false;
     Graphs.append(g);
     n = ((QFile*)stream->device())->name();
     n.replace(QString(".sch"),QString(".dat"));
-    loadVarData(n);
+    if(!loadVarData(n)) calcDiagram();
 //QMessageBox::critical(0, "Error", n);
   }
 

@@ -25,12 +25,14 @@ Graph::Graph(const QString& _Line)
   Points = 0;
   Thick  = 1;
   Color  = QColor(0,0,255);
-
+  
+  Points = 0;
   cPoints.setAutoDelete(true);
 }
 
 Graph::~Graph()
 {
+  if(Points != 0) delete[] Points;
 }
 
 // ---------------------------------------------------------------------

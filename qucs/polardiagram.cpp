@@ -20,14 +20,16 @@
 
 PolarDiagram::PolarDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  dx = 200;
-  dy = 200;
+  x2 = 200;
+  y2 = 200;
 
   GridOn = true;
   GridX = 40;
   GridY = 0;
 
   Name = "Polar";
+
+  calcDiagram();
 }
 
 PolarDiagram::~PolarDiagram()
@@ -35,29 +37,28 @@ PolarDiagram::~PolarDiagram()
 }
 
 // --------------------------------------------------------------
-void PolarDiagram::paint(QPainter *p)
+void PolarDiagram::calcDiagram()
 {
   int z;
 
-  p->setPen(QPen(Qt::black, 1, Qt::SolidLine));
-  p->drawArc(cx, cy-dy, dx, dy, 0, 16*360);
-  p->drawText(cx+(dx>>1), cy+15, QString::number(y2));
+  Lines.clear();
+  Texts.clear();
+  Arcs.clear();
 
-  p->setPen(QPen(Qt::lightGray, 1, Qt::SolidLine));
-  p->drawLine(cx+(dx>>1), cy-dy, cx+(dx>>1), cy);   // paint y line
-  p->drawLine(cx, cy-(dy>>1), cx+dx, cy-(dy>>1));   // paint x line
+  Arcs.append(new Arc(cx, cy-y2, x2, y2, 0, 16*360, QPen(QPen::black,1)));
+  Texts.append(new Text(cx+(x2>>1), cy+15, QString::number(yg2)));
+
+  Lines.append(new Line(cx+(x2>>1), cy-y2, cx+(x2>>1), cy, QPen(QPen::lightGray,1)));  // y line
+  Lines.append(new Line(cx, cy-(y2>>1), cx+x2, cy-(y2>>1), QPen(QPen::lightGray,1)));  // x line
 
   
   if(GridOn) {
     z=GridX;
-    while(z < (dx>>1)) {
-      p->drawArc(cx+z, cy-dy+z, dx-(z<<1), dy-(z<<1), 0, 16*360);
+    while(z < (x2>>1)) {
+      Arcs.append(new Arc(cx+z, cy-y2+z, x2-(z<<1), y2-(z<<1), 0, 16*360, QPen(QPen::lightGray,1)));
       z += GridX;
     }
   }
-
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-    pg->paint(p);
 }
 
 // ------------------------------------------------------------
@@ -65,9 +66,11 @@ void PolarDiagram::calcData(Graph *g)
 {
   int *p = g->Points;
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    *(p++) = cx+(dx>>1)+int(cp->yr/y2*double(dx>>1));
-    *(p++) = cy-(dy>>1)-int(cp->yi/y2*double(dy>>1));
+    *(p++) = cx+(x2>>1)+int(cp->yr/yg2*double(x2>>1));
+    *(p++) = cy-(y2>>1)-int(cp->yi/yg2*double(y2>>1));
   }
+
+  calcDiagram();
 }
 
 // ------------------------------------------------------------

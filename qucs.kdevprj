@@ -109,7 +109,7 @@ install_location=
 type=DATA
 
 [qucs/Makefile.am]
-files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/thing.cpp,qucs/thing.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h
+files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h,qucs/settingsdialog.cpp,qucs/settingsdialog.h,qucs/tabdiagram.cpp,qucs/tabdiagram.h,qucs/messagebox.cpp,qucs/messagebox.h
 sub_dirs=bitmaps,sim
 type=prog_main
 
@@ -648,6 +648,18 @@ install=false
 install_location=
 type=SOURCE
 
+[qucs/messagebox.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/messagebox.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
 [qucs/newprojdialog.cpp]
 dist=true
 install=false
@@ -732,6 +744,18 @@ install=false
 install_location=
 type=HEADER
 
+[qucs/settingsdialog.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/settingsdialog.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
 [qucs/sim/Makefile.am]
 files=qucs/sim/complex.cpp,qucs/sim/complex.h
 sharedlib_LDFLAGS=-version-info 0:0:0
@@ -775,13 +799,13 @@ install=false
 install_location=
 type=HEADER
 
-[qucs/thing.cpp]
+[qucs/tabdiagram.cpp]
 dist=true
 install=false
 install_location=
 type=SOURCE
 
-[qucs/thing.h]
+[qucs/tabdiagram.h]
 dist=true
 install=false
 install_location=

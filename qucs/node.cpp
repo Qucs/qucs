@@ -33,7 +33,7 @@ void Node::paint(QPainter *p)
     case 1 :  p->setPen(QPen(QPen::red,1));  // node is open
               p->drawEllipse(x-4, y-4, 8, 8);
               break;
-    case 2 :  if(Connections.first()->isWire) if(Connections.last()->isWire) break;
+    case 2 :  if(Connections.first()->Type == isWire) if(Connections.last()->Type == isWire) break;
               p->setPen(QPen(QPen::darkBlue,3));
               p->drawRect(x-1, y-1, 2, 2);
               break;

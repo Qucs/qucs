@@ -59,7 +59,7 @@ public:
   Diagram   *selDiag;   // diagram selected in IconView
 
   bool drawn;   // indicates whether the scheme component was drawn the last time
-  QDir ProjDir; // holds the project directory, if project open
+//  QDir ProjDir; // holds the project directory, if project open
   QString ProjName;
 
   // -------------------------------------------------------------------
@@ -82,6 +82,8 @@ public:
   void MMoveDiagram(QMouseEvent *Event);
   void MMoveWire1(QMouseEvent *Event);
   void MMoveWire2(QMouseEvent *Event);
+  void MMoveMoving(QMouseEvent *Event);
+  void MMoveMoving2(QMouseEvent *Event);
   void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to actual mouse move method
 
   void MPressSelect(QMouseEvent *Event);
@@ -99,6 +101,8 @@ public:
   void (QucsView::*MouseDoubleClickAction) (QMouseEvent*); // pointer to actual mouse double click method
   
   void MReleaseSelect(QMouseEvent *Event);
+  void MReleaseSelect2(QMouseEvent *Event);
+  void MReleaseMoving(QMouseEvent *Event);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to actual mouse release button method
 
 signals:
@@ -107,6 +111,8 @@ signals:
 
 private:
   int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
+  Element *focusElement;
+  QPtrList<Element> movingElements;
 };
 
 #endif

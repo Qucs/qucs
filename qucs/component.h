@@ -26,7 +26,6 @@
 #include <qpoint.h>
 #include <qwidget.h>
 
-class QPainter;
 class QString;
 
 /**
@@ -69,10 +68,10 @@ public:
 	virtual ~Component();
 
   virtual Component* newOne();
-	void    setCenter(int x, int y);
+  virtual void paintScheme(QPainter *p);
+  virtual void setCenter(int x, int y, bool relative=false);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
   void    paint(QPainter *p);
-  void    paintScheme(QPainter *p);
   void    rotate();
   void    mirrorX();  // mirror about X axis
   QString NetList();
@@ -90,7 +89,7 @@ public:
   QPtrList<Property> Props;
 
   bool     isActive; // should it be used in simulation or not ?
-  int      cx, cy;   // center of component schematic
+//  int      cx, cy;   // center of component schematic
   int      tx, ty;   // upper left corner of text (position)
   QString  Description;
   QString  Sign, Model, Name;

@@ -31,7 +31,7 @@ public:
 
   
   virtual RectDiagram* newOne();
-  virtual void paint(QPainter *p);
+  virtual void calcDiagram();
   virtual void calcData(Graph *g);
 
   QString xLabel, yLabel;
