@@ -1,3 +1,8 @@
+2004-06-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Displaying warning message if the 'moc' compiler
+	can not be found.  Checking for new platforms.
+
 2004-06-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.2 and bumped up to version
