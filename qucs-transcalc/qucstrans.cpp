@@ -342,83 +342,87 @@ QucsTranscalc::~QucsTranscalc()
    structures. */
 void QucsTranscalc::setupTranslations () {
   // calculated results
-  TransLineTypes[0].result[0].name = tr("er_eff");
-  TransLineTypes[0].result[1].name = tr("Conductor Losses");
-  TransLineTypes[0].result[2].name = tr("Dielectric Losses");
-  TransLineTypes[0].result[3].name = tr("Skin Depth");
+  TransLineTypes[0].result[0].name = new QString(tr("er_eff"));
+  TransLineTypes[0].result[1].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[0].result[2].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[0].result[3].name = new QString(tr("Skin Depth"));
 
-  TransLineTypes[1].result[0].name = tr("er_eff");
-  TransLineTypes[1].result[1].name = tr("Conductor Losses");
-  TransLineTypes[1].result[2].name = tr("Dielectric Losses");
-  TransLineTypes[1].result[3].name = tr("TE-Modes");
-  TransLineTypes[1].result[4].name = tr("TM-Modes");
+  TransLineTypes[1].result[0].name = new QString(tr("er_eff"));
+  TransLineTypes[1].result[1].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[1].result[2].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[1].result[3].name = new QString(tr("TE-Modes"));
+  TransLineTypes[1].result[4].name = new QString(tr("TM-Modes"));
 
-  TransLineTypes[2].result[0].name = tr("Conductor Losses");
-  TransLineTypes[2].result[1].name = tr("Dielectric Losses");
-  TransLineTypes[2].result[2].name = tr("TE-Modes");
-  TransLineTypes[2].result[3].name = tr("TM-Modes");
+  TransLineTypes[2].result[0].name = new QString(tr("Conductor Losses"));
+  TransLineTypes[2].result[1].name = new QString(tr("Dielectric Losses"));
+  TransLineTypes[2].result[2].name = new QString(tr("TE-Modes"));
+  TransLineTypes[2].result[3].name = new QString(tr("TM-Modes"));
 
-  TransLineTypes[3].result[0].name = tr("er_eff_e");
-  TransLineTypes[3].result[1].name = tr("er_eff_o");
-  TransLineTypes[3].result[2].name = tr("Conductor Losses Even");
-  TransLineTypes[3].result[3].name = tr("Conductor Losses Odd");
-  TransLineTypes[3].result[4].name = tr("Dielectric Losses Even");
-  TransLineTypes[3].result[5].name = tr("Dielectric Losses Odd");
-  TransLineTypes[3].result[6].name = tr("Skin Depth");
+  TransLineTypes[3].result[0].name = new QString(tr("er_eff_e"));
+  TransLineTypes[3].result[1].name = new QString(tr("er_eff_o"));
+  TransLineTypes[3].result[2].name = new QString(tr("Conductor Losses Even"));
+  TransLineTypes[3].result[3].name = new QString(tr("Conductor Losses Odd"));
+  TransLineTypes[3].result[4].name = new QString(tr("Dielectric Losses Even"));
+  TransLineTypes[3].result[5].name = new QString(tr("Dielectric Losses Odd"));
+  TransLineTypes[3].result[6].name = new QString(tr("Skin Depth"));
 
   // extra tool tips
-  TransLineTypes[0].array[0].item[0].tip = tr("Relative Permittivity");
-  TransLineTypes[0].array[0].item[1].tip = tr("Relative Permeability");
-  TransLineTypes[0].array[0].item[2].tip = tr("Height of Substrate");
-  TransLineTypes[0].array[0].item[3].tip = tr("Height of Box Top");
-  TransLineTypes[0].array[0].item[4].tip = tr("Strip Thickness");
-  TransLineTypes[0].array[0].item[5].tip = tr("Strip Conductivity");
-  TransLineTypes[0].array[0].item[6].tip = tr("Dielectric Loss Tangent");
-  TransLineTypes[0].array[0].item[7].tip = tr("Conductor Roughness");
-  TransLineTypes[0].array[1].item[0].tip = tr("Frequency");
-  TransLineTypes[0].array[2].item[0].tip = tr("Line Width");
-  TransLineTypes[0].array[2].item[1].tip = tr("Line Length");
-  TransLineTypes[0].array[3].item[0].tip = tr("Characteristic Impedance");
-  TransLineTypes[0].array[3].item[1].tip = tr("Electrical Length");
+  struct TransType * t = TransLineTypes;
+  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
+  t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
+  t->array[0].item[2].tip = new QString(tr("Height of Substrate"));
+  t->array[0].item[3].tip = new QString(tr("Height of Box Top"));
+  t->array[0].item[4].tip = new QString(tr("Strip Thickness"));
+  t->array[0].item[5].tip = new QString(tr("Strip Conductivity"));
+  t->array[0].item[6].tip = new QString(tr("Dielectric Loss Tangent"));
+  t->array[0].item[7].tip = new QString(tr("Conductor Roughness"));
+  t->array[1].item[0].tip = new QString(tr("Frequency"));
+  t->array[2].item[0].tip = new QString(tr("Line Width"));
+  t->array[2].item[1].tip = new QString(tr("Line Length"));
+  t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
+  t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  TransLineTypes[1].array[0].item[0].tip = tr("Relative Permittivity");
-  TransLineTypes[1].array[0].item[1].tip = tr("Relative Permeability");
-  TransLineTypes[1].array[0].item[2].tip = tr("Conductivity of Metal");
-  TransLineTypes[1].array[0].item[3].tip = tr("Dielectric Loss Tangent");
-  TransLineTypes[1].array[0].item[4].tip = tr("Magnetic Loss Tangent");
-  TransLineTypes[1].array[1].item[0].tip = tr("Frequency");
-  TransLineTypes[1].array[2].item[0].tip = tr("Width of Waveguide");
-  TransLineTypes[1].array[2].item[1].tip = tr("Height of Waveguide");
-  TransLineTypes[1].array[2].item[2].tip = tr("Waveguide Length");
-  TransLineTypes[1].array[3].item[0].tip = tr("Characteristic Impedance");
-  TransLineTypes[1].array[3].item[1].tip = tr("Electrical Length");
+  t++;
+  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
+  t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
+  t->array[0].item[2].tip = new QString(tr("Conductivity of Metal"));
+  t->array[0].item[3].tip = new QString(tr("Dielectric Loss Tangent"));
+  t->array[0].item[4].tip = new QString(tr("Magnetic Loss Tangent"));
+  t->array[1].item[0].tip = new QString(tr("Frequency"));
+  t->array[2].item[0].tip = new QString(tr("Width of Waveguide"));
+  t->array[2].item[1].tip = new QString(tr("Height of Waveguide"));
+  t->array[2].item[2].tip = new QString(tr("Waveguide Length"));
+  t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
+  t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  TransLineTypes[2].array[0].item[0].tip = tr("Relative Permittivity");
-  TransLineTypes[2].array[0].item[1].tip = tr("Relative Permeability");
-  TransLineTypes[2].array[0].item[2].tip = tr("Dielectric Loss Tangent");
-  TransLineTypes[2].array[0].item[3].tip = tr("Conductivity of Metal");
-  TransLineTypes[2].array[1].item[0].tip = tr("Frequency");
-  TransLineTypes[2].array[2].item[0].tip = tr("Inner Diameter");
-  TransLineTypes[2].array[2].item[1].tip = tr("Outer Diameter");
-  TransLineTypes[2].array[2].item[2].tip = tr("Length");
-  TransLineTypes[2].array[3].item[0].tip = tr("Characteristic Impedance");
-  TransLineTypes[2].array[3].item[1].tip = tr("Electrical Length");
+  t++;
+  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
+  t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
+  t->array[0].item[2].tip = new QString(tr("Dielectric Loss Tangent"));
+  t->array[0].item[3].tip = new QString(tr("Conductivity of Metal"));
+  t->array[1].item[0].tip = new QString(tr("Frequency"));
+  t->array[2].item[0].tip = new QString(tr("Inner Diameter"));
+  t->array[2].item[1].tip = new QString(tr("Outer Diameter"));
+  t->array[2].item[2].tip = new QString(tr("Length"));
+  t->array[3].item[0].tip = new QString(tr("Characteristic Impedance"));
+  t->array[3].item[1].tip = new QString(tr("Electrical Length"));
 
-  TransLineTypes[3].array[0].item[0].tip = tr("Relative Permittivity");
-  TransLineTypes[3].array[0].item[1].tip = tr("Relative Permeability");
-  TransLineTypes[3].array[0].item[2].tip = tr("Height of Substrate");
-  TransLineTypes[3].array[0].item[3].tip = tr("Height of Box Top");
-  TransLineTypes[3].array[0].item[4].tip = tr("Strip Thickness");
-  TransLineTypes[3].array[0].item[5].tip = tr("Strip Conductivity");
-  TransLineTypes[3].array[0].item[6].tip = tr("Dielectric Loss Tangent");
-  TransLineTypes[3].array[0].item[7].tip = tr("Conductor Roughness");
-  TransLineTypes[3].array[1].item[0].tip = tr("Frequency");
-  TransLineTypes[3].array[2].item[0].tip = tr("Line Width");
-  TransLineTypes[3].array[2].item[1].tip = tr("Gap Width");
-  TransLineTypes[3].array[2].item[2].tip = tr("Length");
-  TransLineTypes[3].array[3].item[0].tip = tr("Even-Mode Impedance");
-  TransLineTypes[3].array[3].item[1].tip = tr("Odd-Mode Impedance");
-  TransLineTypes[3].array[3].item[2].tip = tr("Electrical Length");
+  t++;
+  t->array[0].item[0].tip = new QString(tr("Relative Permittivity"));
+  t->array[0].item[1].tip = new QString(tr("Relative Permeability"));
+  t->array[0].item[2].tip = new QString(tr("Height of Substrate"));
+  t->array[0].item[3].tip = new QString(tr("Height of Box Top"));
+  t->array[0].item[4].tip = new QString(tr("Strip Thickness"));
+  t->array[0].item[5].tip = new QString(tr("Strip Conductivity"));
+  t->array[0].item[6].tip = new QString(tr("Dielectric Loss Tangent"));
+  t->array[0].item[7].tip = new QString(tr("Conductor Roughness"));
+  t->array[1].item[0].tip = new QString(tr("Frequency"));
+  t->array[2].item[0].tip = new QString(tr("Line Width"));
+  t->array[2].item[1].tip = new QString(tr("Gap Width"));
+  t->array[2].item[2].tip = new QString(tr("Length"));
+  t->array[3].item[0].tip = new QString(tr("Even-Mode Impedance"));
+  t->array[3].item[1].tip = new QString(tr("Odd-Mode Impedance"));
+  t->array[3].item[2].tip = new QString(tr("Electrical Length"));
 }
 
 /* Creates a scrollable container for a parameter category and returns
@@ -450,7 +454,7 @@ void QucsTranscalc::createPropItem (QVBox * parent, TransValue * val,
   // name label
   l = new QLabel (val->name, h);
   l->setAlignment (Qt::AlignRight);
-  QToolTip::add (l, val->tip);
+  if (val->tip) QToolTip::add (l, *(val->tip));
   val->label = l;
 
   // editable value text
@@ -496,7 +500,7 @@ void QucsTranscalc::updatePropItem (TransValue * val) {
   // update label text
   val->label->setText (val->name);
   QToolTip::remove (val->label);
-  QToolTip::add (val->label, val->tip);
+  if (val->tip) QToolTip::add (val->label, *(val->tip));
 
   // update editable value text
   val->lineedit->setText (QString::number (val->value));
@@ -536,7 +540,7 @@ void QucsTranscalc::setMode (int _mode) {
       if (last) {
 	val->name = NULL;
 	val->value = 0;
-	val->tip = QString();
+	val->tip = NULL;
 	val->units[0] = NULL;
       }
       updatePropItem (val);
@@ -583,7 +587,7 @@ void QucsTranscalc::createPropItems (QVBox * parent, int box) {
     if (last) {
       val->name = NULL;
       val->value = 0;
-      val->tip = QString();
+      val->tip = NULL;
       val->units[0] = NULL;
     }
     createPropItem (parent, val, box);
@@ -606,7 +610,7 @@ void QucsTranscalc::createPropItems (QVBox * parent, int box) {
 void QucsTranscalc::createResultItem (QVBox * parent, TransResult * res) {
   QHBox * h = new QHBox (parent);
   h->setSpacing (2);
-  QLabel * n = new QLabel (QString (res->name) + ":", h);
+  QLabel * n = new QLabel (res->name ? *(res->name) + ":" : QString(), h);
   n->setAlignment (Qt::AlignRight);
   res->label = n;
   QLabel * v = new QLabel (h);
@@ -621,7 +625,7 @@ void QucsTranscalc::createResultItem (QVBox * parent, TransResult * res) {
 /* Updates the given result item. */
 void QucsTranscalc::updateResultItem (TransResult * res) {
   if (res->name) {
-    res->label->setText (QString (res->name) + ":");
+    res->label->setText (*(res->name) + ":");
     res->label->show ();
     res->value->show ();
   } else {
@@ -735,7 +739,7 @@ bool QucsTranscalc::isSelected (QString prop) {
 void QucsTranscalc::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
-    tr("Qucs TransCalc")+" "+PACKAGE_VERSION+"\n"+
+    tr("Qucs Transcalc")+" "+PACKAGE_VERSION+"\n"+
     tr("Transmission Line Calculator for Qucs\n")+
     tr("Copyright (C) 2001 by Gopal Narayanan\n")+
     tr("Copyright (C) 2002 by Claudio Girardi\n")+

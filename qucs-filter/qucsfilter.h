@@ -31,6 +31,15 @@ class QDoubleValidator;
   *@author Michael Margraf
   */
 
+struct tQucsSettings {
+  int x, y;      // position of main window
+  QFont font;
+  QString LangDir;
+  QString BitmapDir;
+};
+
+extern struct tQucsSettings QucsSettings;
+
 class QucsFilter : public QDialog
 {
   Q_OBJECT

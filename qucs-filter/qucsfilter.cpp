@@ -44,7 +44,8 @@
 
 QucsFilter::QucsFilter()
 {
-  setIcon (QPixmap(BITMAPDIR "big.qucs.xpm"));  // set application icon
+  // set application icon
+  setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption("QucsFilter " PACKAGE_VERSION);
 
 

@@ -56,14 +56,14 @@ bool loadSettings() {
   }
   file.close();
 
-  file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/transrc"));
+  file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
   if(!file.open(IO_ReadOnly)) return true; // qucs settings not necessary
 
   while(!stream.atEnd()) {
     Line = stream.readLine();
     Setting = Line.section('=',0,0);
     Line    = Line.section('=',1,1);
-    if(Setting == "Font") {     // get font from "transrc"
+    if(Setting == "Font") {     // get font from "qucsrc"
 	QucsSettings.font.fromString(Line);
 	break;
     }
@@ -93,7 +93,7 @@ bool saveApplSettings(QucsTranscalc *qucs)
   QString Line;
   QTextStream stream(&file);
 
-  stream << "Settings file, Qucs TransCalc " PACKAGE_VERSION "\n"
+  stream << "Settings file, Qucs Transcalc " PACKAGE_VERSION "\n"
 	 << "TransWindow=" << qucs->x() << ',' << qucs->y() << ','
 	 << qucs->width() << ',' << qucs->height() << '\n';
 
