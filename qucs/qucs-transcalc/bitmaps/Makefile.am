@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# qucs-transcalc/bitmaps/Makefile.am
 #
 # Automake input file.
 #
-# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,17 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc
+XPMS = 
 
-# Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-help qucs-core
+PNGS = c_microstrip.png coax.png microstrip.png rectwaveguide.png
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
+ICONS = 
+
+EXTRA_DIST = $(XPMS) $(PNGS) $(ICONS)
+
+# installation of pictures
+picdatadir = ${prefix}/share/qucs/bitmaps
+picdata_DATA = $(EXTRA_DIST)
 
 CLEANFILES = *~
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+MAINTAINERCLEANFILES = Makefile.in

@@ -1,0 +1,6 @@
+2005-03-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucstrans.cpp: Initial attempt to create a 'transcalc' like
+	GUI for Qt.  Thus the program can be ported for use with Qucs.
+
+
