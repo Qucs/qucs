@@ -46,6 +46,8 @@ Volt_ac::Volt_ac()
 		QObject::tr("rms voltage in Volts")));
   Props.append(new Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
+  Props.append(new Property("Phase", "0", false,
+		QObject::tr("initial phase in degrees")));
 }
 
 Volt_ac::~Volt_ac()
