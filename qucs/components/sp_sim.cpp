@@ -55,6 +55,12 @@ SP_Sim::SP_Sim()
 			QObject::tr("stop frequency in Hertz")));
   Props.append(new Property("Step", "1 GHz", true,
 			QObject::tr("frequency steps in Hertz")));
+  Props.append(new Property("Noise", "no", false,
+			QObject::tr("calculate noise parameters (yes,no)")));
+  Props.append(new Property("NoiseIP", "1", true,
+			QObject::tr("input port for noise figure")));
+  Props.append(new Property("NoiseOP", "2", true,
+			QObject::tr("output port for noise figure")));
 }
 
 SP_Sim::~SP_Sim()
