@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = en es
+SUBDIRS = en es fr
 
 dist_man_MANS = qucs.1
 

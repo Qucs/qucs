@@ -19,6 +19,11 @@
 # include <config.h>
 #endif
 
+#include "qucs.h"
+#include "qucsview.h"
+#include "main.h"
+#include "node.h"
+
 #include <qapplication.h>
 #include <qstring.h>
 #include <qtextcodec.h>
@@ -28,10 +33,6 @@
 #include <qmessagebox.h>
 
 #include <math.h>
-
-#include "qucs.h"
-#include "qucsview.h"
-#include "main.h"
 
 
 

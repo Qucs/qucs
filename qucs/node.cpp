@@ -17,6 +17,9 @@
 
 #include "node.h"
 
+#include "viewpainter.h"
+#include "wirelabel.h"
+
 Node::Node(int _x, int _y)
 {
   Label = 0;

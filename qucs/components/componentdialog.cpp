@@ -33,11 +33,11 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   resize(400, 250);
   setCaption(tr("Edit Component Properties"));
 
-  QGridLayout *g = new QGridLayout(this,10,2,5,5);
+  mainWidget = new QGridLayout(this,10,2,5,5);
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
-  g->addMultiCellWidget(h2,9,9,0,1);
+  mainWidget->addMultiCellWidget(h2,9,9,0,1);
   connect(new QPushButton(tr("OK"),h2), SIGNAL(clicked()),
 	  SLOT(slotButtOK()));
   connect(new QPushButton(tr("Apply"),h2), SIGNAL(clicked()),
@@ -46,11 +46,11 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 	  SLOT(slotButtCancel()));
 
   QLabel *label1 = new QLabel(this);
-  g->addMultiCellWidget(label1,0,0,0,1);
+  mainWidget->addMultiCellWidget(label1,0,0,0,1);
 
   QHBox *h5 = new QHBox(this);
   h5->setSpacing(5);
-  g->addWidget(h5,1,0);
+  mainWidget->addWidget(h5,1,0);
   QLabel *label2 = new QLabel(h5);
   label2->setText(tr("Name:"));
   CompNameEdit = new QLineEdit(h5);
@@ -63,39 +63,39 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   prop->addColumn(tr("display"));
   prop->addColumn(tr("Description"));
   prop->setSorting(-1);   // no sorting
-  g->addMultiCellWidget(prop,2,8,0,0);
+  mainWidget->addMultiCellWidget(prop,2,8,0,0);
 
   Name = new QLabel(this);
-  g->addWidget(Name,2,1);
+  mainWidget->addWidget(Name,2,1);
 
   Expr.setPattern("[^\"=]+");  // valid expression for property input 'edit'
-  QValidator *Validator = new QRegExpValidator(Expr, this);
+  Validator = new QRegExpValidator(Expr, this);
 
   Description = new QLabel(this);
-  g->addWidget(Description,3,1);
+  mainWidget->addWidget(Description,3,1);
 
   // hide, because it only replaces 'Description' in some cases
   NameEdit = new QLineEdit(this);
   NameEdit->setShown(false);
   NameEdit->setValidator(Validator);
-  g->addWidget(NameEdit,3,1);
+  mainWidget->addWidget(NameEdit,3,1);
   connect(NameEdit, SIGNAL(returnPressed()), SLOT(slotApplyPropName()));
 
   edit = new QLineEdit(this);
   edit->setMinimumWidth(150);
-  g->addWidget(edit,4,1);
+  mainWidget->addWidget(edit,4,1);
   edit->setValidator(Validator);
   connect(edit, SIGNAL(returnPressed()), SLOT(slotApplyProperty()));
 
   // hide, because it only replaces 'edit' in some cases
   ComboEdit = new QComboBox(false,this);
   ComboEdit->setShown(false);
-  g->addWidget(ComboEdit,4,1);
+  mainWidget->addWidget(ComboEdit,4,1);
   connect(ComboEdit, SIGNAL(activated(const QString&)),
 	  SLOT(slotApplyChange(const QString&)));
 
   QHBox *h3 = new QHBox(this);
-  g->addWidget(h3,5,1);
+  mainWidget->addWidget(h3,5,1);
   h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
   EditButt = new QPushButton(tr("Edit"),h3);
   EditButt->setEnabled(false);
@@ -107,16 +107,16 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
 
   disp = new QCheckBox(tr("display in schematic"),this);
-  g->addWidget(disp,6,1);
+  mainWidget->addWidget(disp,6,1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
 
   QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
   v->addStretch(2);
-  g->addLayout(v,7,1);
+  mainWidget->addLayout(v,7,1);
 
   QHBox *h4 = new QHBox(this);
   h4->setSpacing(5);
-  g->addMultiCellWidget(h4,8,8,1,1);
+  mainWidget->addMultiCellWidget(h4,8,8,1,1);
   ButtAdd = new QPushButton(tr("Add"),h4);
   ButtRem = new QPushButton(tr("Remove"),h4);
   connect(ButtAdd, SIGNAL(clicked()), SLOT(slotButtAdd()));
@@ -158,6 +158,8 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
 ComponentDialog::~ComponentDialog()
 {
+  delete mainWidget;
+  delete Validator;
 }
 
 // -------------------------------------------------------------------------

@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>y-Axis Label:</source>
-        <translation>Etiqueta Eje y:</translation>
+        <translation type="obsolete">Etiqueta Eje y:</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -261,7 +261,7 @@
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation>Rejilla de eje y logarítmico</translation>
+        <translation type="obsolete">Rejilla de eje y logarítmico</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -278,6 +278,34 @@
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>left y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>right y-Axis Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical left Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical right Y Axis Grid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -633,7 +661,7 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation>¡Tipo de documento equivocado!</translation>
+        <translation type="obsolete">¡Tipo de documento equivocado!</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -2136,6 +2164,10 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong document type: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3941,7 +3973,7 @@ Simulador universal de circuitos Qt
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation>Francés por Eric Marzolf
+        <translation type="obsolete">Francés por Eric Marzolf
 </translation>
     </message>
     <message>
@@ -3971,6 +4003,11 @@ Moves the property text of components</source>
         <translation>Mover Texto del componente
 
 Mueve la propiedad texto de los componentes</translation>
+    </message>
+    <message>
+        <source>French by Vincent Habchi, F5RCS
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -32,8 +32,8 @@ public:
 
 
   PolarDiagram* newOne();
-  bool   calcDiagram();
-  void   calcCoordinate(double, double, double, int*, int*);
+  int   calcDiagram();
+  void  calcCoordinate(double, double, double, int*, int*, Axis*);
 };
 
 #endif
