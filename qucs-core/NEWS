@@ -26,6 +26,7 @@ files.
 Version 0.0.4
 -------------
 
+ * linear transient analysis for RCL networks available
  * AC analysis
 
 Version 0.0.3

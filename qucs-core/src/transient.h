@@ -18,12 +18,21 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.h,v 1.2 2004/09/12 14:09:19 ela Exp $
+ * $Id: transient.h,v 1.3 2004/09/19 10:31:44 ela Exp $
  *
  */
 
 #ifndef __TRANSIENT_H__
 #define __TRANSIENT_H__
+
+enum integrator_type {
+  INTEGRATOR_UNKNOWN       = -1,
+  INTEGRATOR_EULER         =  0,
+  INTEGRATOR_TRAPEZOIDAL   =  1,
+  INTEGRATOR_GEAR          =  2,
+  INTEGRATOR_ADAMSMOULTON  =  3,
+  INTEGRATOR_ADAMSBASHFORD =  4
+};
 
 class circuit;
 class integrator;
@@ -31,14 +40,19 @@ class integrator;
 class transient
 {
  public:
-  friend void calcCoefficients (char *, int, nr_double_t *, nr_double_t);
+  friend void calcCorrectorCoeff (int, int, nr_double_t *, nr_double_t, int&);
+  friend void calcPredictorCoeff (int, int, nr_double_t *, nr_double_t);
   friend void integrateEuler (integrator *, int, nr_double_t, nr_double_t&,
 			      nr_double_t&);
   friend void integrateBilinear (integrator *, int, nr_double_t, nr_double_t&,
 				 nr_double_t&);
   friend void integrateGear (integrator *, int, nr_double_t, nr_double_t&,
 			     nr_double_t&);
-  friend void setIntegrationMethod (circuit *, char *);
+  friend void integrateMoulton (integrator *, int, nr_double_t, nr_double_t&,
+				nr_double_t&);
+  friend void setIntegrationMethod (circuit *, int);
+  friend int  integratorType (char *, int&);
+  friend int  integratorType (int, int);
 };
 
 #endif /* __TRANSIENT_H__ */
