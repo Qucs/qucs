@@ -36,7 +36,7 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Rectangle* newOne();
+  Painting* newOne();
   bool load(const QString&);
   QString save();
   void paint(ViewPainter*);

@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation>Alle speichern</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Verwerfen</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation>Alle verwerfen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -788,15 +811,15 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Speichern</translation>
+        <translation type="obsolete">Speichern</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Alle speichern</translation>
+        <translation type="obsolete">Alle speichern</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Verwerfen</translation>
+        <translation type="obsolete">Verwerfen</translation>
     </message>
     <message>
         <source>DiscardAll</source>
@@ -804,11 +827,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Alle verwerfen</translation>
+        <translation type="obsolete">Alle verwerfen</translation>
     </message>
 </context>
 <context>
@@ -5741,6 +5764,12 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
         <source>Japanese by Toyoyuki Ishikawa
 </source>
         <translation>Japanisch von Toyoyuki Ishikawa
+</translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
+</source>
+        <translation>Hebräisch von Dotan Nahum
 </translation>
     </message>
 </context>

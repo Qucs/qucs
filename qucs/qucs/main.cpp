@@ -34,10 +34,10 @@
 #include <qregexp.h>
 
 #include <math.h>
+#include <float.h>
 
 
-
-tQucsSettings QucsSettings
+struct tQucsSettings QucsSettings
      = {0, 0, 600, 400,    // position and size
 	QFont("Helvetica", 12), 16.0,
 	QColor(255, 250, 225), 20,

@@ -493,7 +493,7 @@ Frame:
 }
 
 // ------------------------------------------------------------
-RectDiagram* RectDiagram::newOne()
+Diagram* RectDiagram::newOne()
 {
   return new RectDiagram();
 }

@@ -29,7 +29,7 @@ public:
   TabDiagram(int _cx=0, int _cy=0);
   ~TabDiagram();
 
-  TabDiagram* newOne();
+  Diagram* newOne();
   int  calcDiagram();
   bool scroll(int);
 

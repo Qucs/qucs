@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Salva</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">Salva tutto</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">Abbandona</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">Abbandona tutto</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -796,15 +819,15 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Salva</translation>
+        <translation type="obsolete">Salva</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Salva tutto</translation>
+        <translation type="obsolete">Salva tutto</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Abbandona</translation>
+        <translation type="obsolete">Abbandona</translation>
     </message>
     <message>
         <source>DiscardAll</source>
@@ -812,11 +835,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annulla</translation>
+        <translation type="obsolete">Annulla</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Abbandona tutto</translation>
+        <translation type="obsolete">Abbandona tutto</translation>
     </message>
 </context>
 <context>
@@ -5291,6 +5314,11 @@ Muove il testo del componente</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>

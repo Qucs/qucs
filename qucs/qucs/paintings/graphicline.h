@@ -35,7 +35,7 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  GraphicLine* newOne();
+  Painting* newOne();
   bool load(const QString&);
   QString save();
   void paint(ViewPainter*);

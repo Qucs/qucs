@@ -72,7 +72,7 @@ int PolarDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-PolarDiagram* PolarDiagram::newOne()
+Diagram* PolarDiagram::newOne()
 {
   return new PolarDiagram();
 }
