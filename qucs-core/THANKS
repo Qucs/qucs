@@ -1,5 +1,5 @@
 --
--- AUTHORS
+-- THANKS
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -17,9 +17,12 @@
 -- Boston, MA 02111-1307, USA.  
 --
 
-Maintainer:
-	Stefan Jahn <stefan@lkcc.org>
+Here are listed all the hackers who helped creating this package:
 
-Authors: (see THANKS file for details)
-	Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
-	Stefan Jahn <stefan@lkcc.org>
+Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE> for having the
+	initial idea of writing a free circuit simulator.  Thanks for
+	sharing his excellent microwave knowledge.  Also for partly
+	implementing the noise simulation.
+
+Jens Flucke <jens.flucke@gmx.de> for making up the first draft of the
+	homepage.  Also for motivating the project.

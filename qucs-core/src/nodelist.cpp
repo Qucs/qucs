@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.2 2004/06/04 16:01:47 ela Exp $
+ * $Id: nodelist.cpp,v 1.3 2004/07/03 10:56:40 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 // Constructor creates an instance of the nodelist class.
 nodelist::nodelist () {
   root = NULL;
+  txt = NULL;
 }
 
 /* This copy constructor creates a instance of the nodelist class
@@ -55,6 +56,7 @@ nodelist::nodelist (const nodelist & o) {
     last->nodes = (node **) malloc (sizeof (node *) * last->nNodes);
     memcpy (last->nodes, n->nodes, sizeof (node *) * last->nNodes);
   }
+  txt = o.txt ? strdup (o.txt) : NULL;
 }
 
 // Destructor deletes an instance of the nodelist class.
@@ -67,6 +69,7 @@ nodelist::~nodelist () {
     free (root);
     root = next;
   }
+  if (txt) free (txt);
 }
 
 // This function adds a node name to the list and saves the internal flag.
@@ -136,6 +139,28 @@ struct nodelist_t * nodelist::getNode (int nr) {
   for (struct nodelist_t * n = root; n != NULL; n = n->next)
     if (n->n == nr) return n;
   return NULL;
+}
+
+/* Returns a comma separated list of the circuits connected to the
+   node specified by the given number. */
+char * nodelist::getNodeString (int nr) {
+  if (txt) free (txt); txt = NULL;
+  // find the specified node
+  for (struct nodelist_t * n = root; n != NULL; n = n->next) {
+    if (n->n == nr) {
+      // append circuit names connected to the node
+      int len = (n->nNodes - 1) + 1;
+      txt = (char *) malloc (len); txt[0] = '\0';
+      for (int i = 0; i < n->nNodes; i++) {
+	char * str = n->nodes[i]->getCircuit()->getName ();
+	len += strlen (str);
+	txt = (char *) realloc (txt, len);
+	strcat (txt, str);
+	if (i != n->nNodes - 1) strcat (txt, ",");
+      }
+    }
+  }
+  return txt;
 }
 
 /* The function returns the nodelist structure at the end of the node

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.8 2004/07/01 14:18:27 ela Exp $
+ * $Id: matrix.cpp,v 1.9 2004/07/03 10:56:40 ela Exp $
  *
  */
 
@@ -480,7 +480,7 @@ matrix& htos (matrix& h, complex z1) {
   assert (h.getRows () == 2 && h.getCols () == 2);
   complex z2 = z1;
   complex n = h.get (1, 2) * h.get (2, 1);
-  complex d = (1.0 - h.get (1, 1) / z1) * (1.0 + z2 * h.get (2, 2)) - n;
+  complex d = (1.0 + h.get (1, 1) / z1) * (1.0 + z2 * h.get (2, 2)) - n;
   matrix * s = new matrix (2);
   s->set (1, 1, ((h.get (1, 1) / z1 - 1) * (1 + z2 * h.get (2, 2)) - n) / d);
   s->set (1, 2, 2.0 * h.get (1, 2) / d);

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.6 2004/06/27 15:11:48 ela Exp $
+ * $Id: scan_netlist.l,v 1.7 2004/07/03 10:56:40 ela Exp $
  *
  */
 
@@ -100,7 +100,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
   }
 <INITIAL,STR>{CIMAG} { /* identify (signed) imaginary float */
     if (netlist_text[0] == 'i' || netlist_text[0] == 'j')
-      netlist_text[0] = '0';
+      netlist_text[0] = (netlist_text[1] == '\0') ? '1' : '0';
     else
       netlist_text[1] = '0';
     netlist_lval.d = strtod (netlist_text, NULL);
@@ -176,7 +176,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
   }
 <EQN>{UCIMAG} { /* identify unsigned imaginary float */
     if (netlist_text[0] == 'i' || netlist_text[0] == 'j')
-      netlist_text[0] = '0';
+      netlist_text[0] = (netlist_text[1] == '\0') ? '1' : '0';
     else
       netlist_text[1] = '0';
     netlist_lval.d = strtod (netlist_text, NULL);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.12 2004/06/27 15:11:48 ela Exp $
+ * $Id: equation.cpp,v 1.13 2004/07/03 10:56:40 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #include "dataset.h"
 #include "strlist.h"
 #include "equation.h"
+#include "components/constants.h"
 
 using namespace eqn;
 
@@ -966,4 +967,37 @@ strlist * equation_variables (void) {
     idents->add (eqn->result);
   }
   return idents;
+}
+
+// Structure defining a predefined constant.
+struct pconstant {
+  char * ident;
+  nr_double_t value;
+};
+
+// List of global constant variables.
+static struct pconstant pconstants[] = {
+  { "pi", M_PI },
+  { "e",  M_E },
+  { "kB", kB },
+  { NULL, 0 }
+};
+
+/* The function should be called before parsing the netlist.  It
+   appends the predefined constants to the list of equations. */
+void equation_constants (void) {
+  for (int i = 0; pconstants[i].ident != NULL; i++) {
+    // create constant double value
+    constant * c = new constant (eqn::TAG_DOUBLE);
+    c->d = pconstants[i].value;
+    // create the appropriate assignment
+    assignment * a = new assignment ();
+    a->result = strdup (pconstants[i].ident);
+    a->body = c;
+    a->output = 0;
+    a->setInstance ("#predefined");
+    // append the assignment to equations
+    a->setNext (eqn::equations);
+    eqn::equations = a;
+  }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.16 2004/06/27 15:11:48 ela Exp $
+ * $Id: dcsolver.cpp,v 1.17 2004/07/03 10:56:40 ela Exp $
  *
  */
 
@@ -48,6 +48,8 @@ using namespace std;
 #include "eqnsys.h"
 #include "component_id.h"
 #include "operatingpoint.h"
+#include "exception.h"
+#include "exceptionstack.h"
 #include "dcsolver.h"
 
 // Constructor creates an unnamed instance of the dcsolver class.
@@ -97,7 +99,8 @@ dcsolver::dcsolver (dcsolver & o) : analysis (o) {
 /* This is the DC netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void dcsolver::solve (void) {
-  int convergence, run = 0, MaxIterations;
+  int convergence, run = 0, MaxIterations, error = 0, d;
+  exception * e;
 
   // fetch simulation properties
   saveOPs = !strcmp (getPropertyString ("saveOPs"), "yes") ? 1 : 0;
@@ -127,22 +130,58 @@ void dcsolver::solve (void) {
 
   // run solving loop until convergence is reached
   do {
-    createMatrix ();     // generate A matrix and z vector
-    runMNA ();           // solve equation system
-    saveNodeVoltages (); // save results into circuits
+    // generate A matrix and z vector
+    createMatrix ();
 
-    // convergence check
-    convergence = (run > 0) ? checkConvergence () : 0;
-    savePreviousIteration ();
-    run++;
+    // solve equation system
+    try_running () {
+      runMNA ();
+    }
+    // appropriate exception handling
+    catch_exception () {
+    case EXCEPTION_PIVOT: case EXCEPTION_WRONG_VOLTAGE:
+      e = new exception (EXCEPTION_DC_FAILED);
+      d = top_exception()->getData ();
+      if (d > countNodes ()) {
+	d -= countNodes ();
+	e->setText ("voltage source `%s' conflicts with some other voltage "
+		    "source", findVoltageSource(d)->getName ());
+      }
+      else {
+	e->setText ("circuit admittance matrix in DC solver is singular at "
+		    "node `%s' connected to [%s]", nlist->get (d),
+		    nlist->getNodeString (d));
+      }
+      throw_exception (e);
+      error++;
+      break;
+    default:
+      error++;
+      break;
+    }
+
+    if (!error) {
+      // save results into circuits
+      saveNodeVoltages ();
+
+      // convergence check
+      convergence = (run > 0) ? checkConvergence () : 0;
+      savePreviousIteration ();
+      run++;
+    }
+    else break;
   }
   while (!convergence && run < MaxIterations);
+
+  if (run >= MaxIterations) {
+    e = new exception (EXCEPTION_NO_CONVERGENCE);
+    e->setText ("no convergence in DC analysis after %d iterations", run);
+    throw_exception (e);
+  }
 #if DEBUG
-  if (run < MaxIterations) {
+  else {
     logprint (LOG_STATUS, "NOTIFY: convergence reached after %d iterations\n",
 	      run);
-  } else {
-    logprint (LOG_ERROR, "ERROR: no convergence after %d iterations\n", run);
   }
 #endif /* DEBUG */
   saveResults ();
