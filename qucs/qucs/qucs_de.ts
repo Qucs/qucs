@@ -279,31 +279,31 @@
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 1 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 2 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 2 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 3 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 3 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 4 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 4 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 5 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 5 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 6 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 6 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 7 (am durchlässigsten)</translation>
     </message>
     <message>
         <source>horizontal line</source>
@@ -1172,7 +1172,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation>effektive Oberflächenrautiefe</translation>
+        <translation>effektive Oberflächenrauhtiefe</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
@@ -1180,15 +1180,15 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
-        <translation type="unfinished"></translation>
+        <translation>ideale AC Stromquelle</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation type="unfinished">Einstellungen können nicht gespeichert werden !</translation>
+        <translation>Einstellungen können nicht gespeichert werden !</translation>
     </message>
 </context>
 <context>
@@ -2474,15 +2474,15 @@ Fehler:
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation>dc Spannungsquelle</translation>
+        <translation>DC Spannungsquelle</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation>dc Stromquelle</translation>
+        <translation>DC Stromquelle</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation>ac Spannungsquelle</translation>
+        <translation>AC Spannungsquelle</translation>
     </message>
     <message>
         <source>Power Source</source>
@@ -2890,7 +2890,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>AC Stromquelle</translation>
     </message>
 </context>
 <context>
@@ -3840,36 +3840,38 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Applikationseinstellungen</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Applikationseinstellungen...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Einstellungen
+
+Setzt die Einstellungen der Applikation</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenteneinstellungen</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumenteneinstellungen...</translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaften von Qucs bearbeiten</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundfarbe der Dokumente:</translation>
     </message>
     <message>
         <source>Simulation</source>
@@ -3877,27 +3879,27 @@ Sets properties of the application</source>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Übernehmen</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Voreinstellungen</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Schriftart (nach Neustart aktiviert):</translation>
     </message>
 </context>
 <context>
