@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.2 2004/01/31 13:54:53 ela Exp $
+ * $Id: gyrator.cpp,v 1.3 2004/02/01 13:10:38 margraf Exp $
  *
  */
 
@@ -45,7 +45,7 @@ gyrator::gyrator () : circuit (4) {
 void gyrator::calcS (nr_double_t frequency) {
   nr_double_t R = getPropertyDouble ("R");
   nr_double_t z = getPropertyDouble ("Zref");
-  nr_double_t r = R / z0;
+  nr_double_t r = R / z;
   nr_double_t s1 = r * r / (r * r + 4.0);
   nr_double_t s2 = 2.0 * r / (r * r + 4.0);
   setS (1, 1, s1); setS (2, 2, s1); setS (3, 3, s1); setS (4, 4, s1);

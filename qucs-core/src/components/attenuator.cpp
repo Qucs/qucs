@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.3 2004/01/13 23:23:01 ela Exp $
+ * $Id: attenuator.cpp,v 1.4 2004/02/01 13:10:28 margraf Exp $
  *
  */
 
@@ -42,7 +42,7 @@ attenuator::attenuator () : circuit (2) {
 }
 
 void attenuator::calcS (nr_double_t frequency) {
-  nr_double_t a = pow (10.0, - getPropertyDouble ("L") / 20.0);
+  nr_double_t a = sqrt(getPropertyDouble ("L"));  //pow (10.0, - getPropertyDouble ("L") / 20.0);   // change by M. Margraf
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z0 - z) / (z0 + z);
   nr_double_t s11 = r * (1 - a * a) / (a * a - r * r);
