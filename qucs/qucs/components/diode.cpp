@@ -41,7 +41,10 @@ Diode::Diode()
   Name  = "D";
 
   Props.append(new Property("Is", "1e-15 A", true, QObject::tr("saturation current")));
-  Props.append(new Property("n", "1", true, QObject::tr("ideality coefficient")));
+  Props.append(new Property("n", "1", true, QObject::tr("emission coefficient")));
+  Props.append(new Property("Cj0", "10 fF", true, QObject::tr("zero-bias junction capacitance")));
+  Props.append(new Property("z", "0.5", true, QObject::tr("grading coefficient")));
+  Props.append(new Property("Vd", "0.7", true, QObject::tr("junction potential")));
 }
 
 Diode::~Diode()
