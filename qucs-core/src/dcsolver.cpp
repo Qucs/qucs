@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.19 2004/07/07 13:52:19 ela Exp $
+ * $Id: dcsolver.cpp,v 1.20 2004/07/11 17:06:09 margraf Exp $
  *
  */
 
@@ -102,7 +102,7 @@ dcsolver::dcsolver (dcsolver & o) : analysis (o) {
    requested frequency and solves it then. */
 void dcsolver::solve (void) {
   int convergence, run = 0, MaxIterations, error = 0, d;
-  exception * e;
+  qucs::exception * e;
 
   // fetch simulation properties
   saveOPs = !strcmp (getPropertyString ("saveOPs"), "yes") ? 1 : 0;
@@ -142,7 +142,7 @@ void dcsolver::solve (void) {
     // appropriate exception handling
     catch_exception () {
     case EXCEPTION_PIVOT: case EXCEPTION_WRONG_VOLTAGE:
-      e = new exception (EXCEPTION_DC_FAILED);
+      e = new qucs::exception (EXCEPTION_DC_FAILED);
       d = top_exception()->getData ();
       if (d > countNodes ()) {
 	d -= countNodes ();
@@ -176,7 +176,7 @@ void dcsolver::solve (void) {
   while (!convergence && run < MaxIterations);
 
   if (run >= MaxIterations || error) {
-    e = new exception (EXCEPTION_NO_CONVERGENCE);
+    e = new qucs::exception (EXCEPTION_NO_CONVERGENCE);
     e->setText ("no convergence in DC analysis after %d iterations", run);
     throw_exception (e);
   }
