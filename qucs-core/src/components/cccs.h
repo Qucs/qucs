@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cccs.h,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: cccs.h,v 1.3 2004/01/28 18:19:07 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class cccs : public circuit
  public:
   cccs ();
   void calcS (nr_double_t);
+  void calcY (void);
 };
 
 #endif /* __CCCS_H__ */

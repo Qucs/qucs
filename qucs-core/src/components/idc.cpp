@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: idc.cpp,v 1.3 2004/01/28 18:19:07 ela Exp $
  *
  */
 
@@ -42,4 +42,9 @@ idc::idc () : circuit (2) {
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
   type = CIR_IDC;
+}
+
+void idc::calcY (void) {
+  nr_double_t i = getPropertyDouble ("I");
+  setI (1, +i); setI (2, -i);
 }
