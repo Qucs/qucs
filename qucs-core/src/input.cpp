@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.3 2003/12/26 14:04:07 ela Exp $
+ * $Id: input.cpp,v 1.4 2004/01/13 23:23:01 ela Exp $
  *
  */
 
@@ -189,6 +189,12 @@ circuit * input::createCircuit (char * type) {
     return new idc ();
   else if (!strcmp (type, "Vac"))
     return new vac ();
+  else if (!strcmp (type, "Gyrator"))
+    return new gyrator ();
+  else if (!strcmp (type, "PShift"))
+    return new phaseshifter ();
+  else if (!strcmp (type, "TLIN"))
+    return new tline ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

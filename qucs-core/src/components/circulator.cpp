@@ -1,7 +1,7 @@
 /*
  * circulator.cpp - circulator class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: circulator.cpp,v 1.3 2004/01/13 23:23:01 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
@@ -37,17 +38,24 @@
 #include "circulator.h"
 
 circulator::circulator () : circuit (3) {
-  setS (1, 1, 0.0);
-  setS (1, 2, 0.0);
-  setS (1, 3, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
-  setS (2, 3, 0.0);
-  setS (3, 1, 0.0);
-  setS (3, 2, 1.0);
-  setS (3, 3, 0.0);
   type = CIR_CIRCULATOR;
 }
 
 void circulator::calcS (nr_double_t frequency) {
+  nr_double_t z1 = getPropertyDouble ("Z1");
+  nr_double_t z2 = getPropertyDouble ("Z2");
+  nr_double_t z3 = getPropertyDouble ("Z3");
+  nr_double_t r1 = (z0 - z1) / (z0 + z1);
+  nr_double_t r2 = (z0 - z2) / (z0 + z2);
+  nr_double_t r3 = (z0 - z3) / (z0 + z3);
+  nr_double_t d  = 1 - r1 * r2 * r3;
+  setS (1, 1, (r2 * r3 - r1) / d);
+  setS (2, 2, (r1 * r3 - r2) / d);
+  setS (3, 3, (r1 * r2 - r3) / d);
+  setS (1, 2, sqrt (z2 / z1) * (z1 + z0) / (z2 + z0) * r3 * (1 - r1 * r1) / d);
+  setS (2, 3, sqrt (z3 / z2) * (z2 + z0) / (z3 + z0) * r1 * (1 - r2 * r2) / d);
+  setS (3, 1, sqrt (z1 / z3) * (z3 + z0) / (z1 + z0) * r2 * (1 - r3 * r3) / d);
+  setS (2, 1, sqrt (z1 / z2) * (z2 + z0) / (z1 + z0) * (1 - r2 * r2) / d);
+  setS (1, 3, sqrt (z3 / z1) * (z1 + z0) / (z3 + z0) * (1 - r1 * r1) / d);
+  setS (3, 2, sqrt (z2 / z3) * (z3 + z0) / (z2 + z0) * (1 - r3 * r3) / d);
 }

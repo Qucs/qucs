@@ -1,7 +1,7 @@
 /*
- * component.h - global component header file
+ * tline.cpp - ideal transmission line class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,43 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.3 2004/01/13 23:23:01 ela Exp $
+ * $Id: tline.cpp,v 1.1 2004/01/13 23:23:01 ela Exp $
  *
  */
 
-#ifndef __COMPONENT_H__
-#define __COMPONENT_H__
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.1415926535897932384626433832795
+#endif
+#define C 299792458.0
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "ground.h"
-#include "open.h"
-#include "tee.h"
-#include "cross.h"
-#include "itrafo.h"
-
-#include "resistor.h"
-#include "capacitor.h"
-#include "inductor.h"
-#include "vccs.h"
-#include "cccs.h"
-#include "ccvs.h"
-#include "vcvs.h"
-#include "dcblock.h"
-#include "dcfeed.h"
-#include "biastee.h"
-#include "pac.h"
-#include "attenuator.h"
-#include "circulator.h"
-#include "isolator.h"
-#include "trafo.h"
-#include "strafo.h"
-#include "vdc.h"
-#include "idc.h"
-#include "vac.h"
-#include "phaseshifter.h"
-#include "gyrator.h"
 #include "tline.h"
 
-#endif /* __COMPONENT_H__ */
+tline::tline () : circuit (2) {
+  type = CIR_TLINE;
+}
+
+void tline::calcS (nr_double_t frequency) {
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t z = getPropertyDouble ("Z");
+  nr_double_t r = (z - z0) / (z + z0);
+  complex p = polar (1, - 2.0 * M_PI * frequency * l / C);
+  complex s11 = r * (1 - p * p) / (1 - p * p - r * r);
+  complex s21 = p * (1 - r * r) / (1 - p * p - r * r);
+  setS (1, 1, s11);
+  setS (2, 2, s11);
+  setS (1, 2, s21);
+  setS (2, 1, s21);
+}

@@ -1,3 +1,9 @@
+2004-01-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* tline.cpp, gyrator.cpp, phaseshifter.cpp: New components.
+	Made appropriate changes in netlist input parser and 
+	Makefiles.
+
 2003-12-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* resistor.cpp: Implemented calcG() method for DC analysis.

@@ -4,7 +4,7 @@
 #
 # Automake input file for the component library.
 #
-# Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,12 +30,13 @@ libcomponent_a_SOURCES = attenuator.cpp dcblock.cpp open.cpp vccs.cpp        \
 	biastee.cpp circulator.cpp dcfeed.cpp pac.cpp vcvs.cpp capacitor.cpp \
 	ground.cpp resistor.cpp cccs.cpp cross.cpp trafo.cpp inductor.cpp    \
 	tee.cpp ccvs.cpp isolator.cpp itrafo.cpp strafo.cpp vdc.cpp idc.cpp  \
-	vac.cpp
+	vac.cpp phaseshifter.cpp gyrator.cpp tline.cpp
 
 noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
 	trafo.h inductor.h tee.h ccvs.h isolator.h component.h itrafo.h      \
-	strafo.h vdc.h idc.h vac.h component_id.h
+	strafo.h vdc.h idc.h vac.h component_id.h phaseshifter.h gyrator.h   \
+	tline.h
 
 INCLUDES = -I$(top_srcdir)/src
 
