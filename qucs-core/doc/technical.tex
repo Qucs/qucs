@@ -147,21 +147,24 @@ Now, characterizing an n-port is straight-forward:
 \subsection{Recalculating $\mathbf{50\ohm}$-S-parameters for arbitrary port impedances}
 %\addcontentsline{toc}{subsection}{Recalculating $50\ohm$-S-parameters for arbitrary port impedances}
 
-During S-parameter simulation it is necessary to have all components
-in a circuit normalized to the same impedance.  In the field of high
-frequency techniques this is usually $50\ohm$.  In order to allow port
-impedances other than $50\ohm$ in a simulation the following two step
-process must be applied to the resulting S-parameter analysis.
+During S-parameter usage it sometimes appears to have not all components
+in a circuit normalized to the same impedance. But calculations can only
+be performed with all ports being normalized to the same impedance. In
+the field of high
+frequency techniques this is usually $50\ohm$.  In order to transform
+to different port impedances, the following computation must be applied
+to the resulting S-parameter matrix.
 
 \begin{equation}
-\left[\underline{N}\right] =
+\left[\underline{N'}\right] =
 \left(\left[\underline{S}\right] - \left[\underline{R}\right]\right) \cdot
 \left(\left[\underline{E}\right] - \left[\underline{R}\right] \cdot \left[\underline{S}\right]\right)^{-1}
 \end{equation}
 
 \begin{equation}
-\underline{N}_{nm} = \underline{S}_{nm}\cdot \sqrt{\dfrac{Z^{m}}{Z^{n}}}\cdot
-\dfrac{Z^{n} + Z_{0}}{Z^{m} + Z_{0}}
+\underline{N}_{nm} = \underline{N'}_{nm}\cdot \sqrt{\dfrac{Z_m}{Z_n}\cdot
+\dfrac{Z_{n,before}}{Z_{m,before}}}\cdot
+\dfrac{Z_n + Z_{n,before}}{Z_m + Z_{m,before}}
 \end{equation}
 
 With
@@ -189,7 +192,7 @@ $\begin{pmatrix}
 \end{pmatrix}$
 reflection coefficient matrix\\& &\\
 $\underline{r}(Z_{n})$ & = &
-$\dfrac{Z_{n} - Z_{0}}{Z_{n} + Z_{0}}$
+$\dfrac{Z_{n} - Z_{n,before}}{Z_{n} + Z_{n,before}}$
 reflection coefficient of impedance at port n\\& &\\
 \end{tabular}
 
@@ -1271,6 +1274,17 @@ ideal, ohmic resistor with resistance $R$ writes as follows.
 \end{pmatrix}
 \end{equation}
 
+The noise wave correlation matrix of a parallel resistor with resistance $R$
+writes as follows.
+
+\begin{equation}
+(\underline{C}) = k\cdot T\cdot\frac{4\cdot R\cdot Z_0}{(2\cdot R+Z_0)^2}\cdot
+\begin{pmatrix}
+  1 & 1\\
+  1 & 1\\
+\end{pmatrix}
+\end{equation}
+
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
@@ -1352,8 +1366,9 @@ Lorentzian PSD (generation-recombination noise): & $a=1$, $b=1/f_c^2$, $c=2$ \\
 
 \subsection{Diode}
 
-An ideal diode generates shot noise. Both types of current (field and diffusion) contribute
-independently to it. The noise wave correlation matrix, therefore, writes as follows.
+An ideal diode (pn- or schottky-diode) generates shot noise. Both types of current
+(field and diffusion) contribute independently to it. The noise wave correlation
+matrix, therefore, writes as follows.
 
 \begin{equation}
 \begin{split}
@@ -1368,9 +1383,17 @@ independently to it. The noise wave correlation matrix, therefore, writes as fol
   -1 &  1\\
 \end{pmatrix}
 \end{split}
+\label{eqn:diode_noise}
 \end{equation}
 
 Where $e$ is charge of an electron, $U_T$ temperature voltage.
+To be very precise, the equation above only holds for diodes whose field and diffusion
+current dominate absolutely (diffusion limited diode), i.e. $n=1$. Many diodes also
+generate a generation/recombination current ($n\approx 2$). Furthermore some special
+diodes have additional curent or noise components (tunnel diodes, avalanche diodes
+etc.). All these mechanisms are not taken into account in equation
+\ref{eqn:diode_noise}.\\
+The parasitic ohmic resistance in a non-ideal diode, of course, creates thermal noise.
 
 
 \chapter{DC Analysis}

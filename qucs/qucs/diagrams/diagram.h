@@ -37,7 +37,8 @@ public:
 
   virtual Diagram* newOne();
   virtual void calcDiagram();
-  virtual void calcData(Graph*);
+  virtual void calcCoordinate(double, double, double, int*, int*) {};
+  void    calcData(Graph*);
   void    setCenter(int, int, bool relative=false);
   void    paintScheme(QPainter*);
   void    paint(QPainter*);
@@ -54,7 +55,9 @@ public:
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
+  QPen    GridPen;
   QString xLabel, yLabel;
+  bool    xlog, ylog;   // in "rectdiagram": x-/y-axis logarithmic or linear
 
   QPtrList<Graph>  Graphs;
   QPtrList<Marker> Markers;

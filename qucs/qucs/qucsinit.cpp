@@ -140,8 +140,8 @@ void QucsInit::initActions()
 	  App, SLOT(slotApplSettings()));
 
   App->editCut = new QAction(tr("Cut"),
-                        QIconSet(QImage(BITMAPDIR "editcut.png")),
-                        tr("Cu&t"), CTRL+Key_X, App);
+			QIconSet(QImage(BITMAPDIR "editcut.png")),
+			tr("Cu&t"), CTRL+Key_X, App);
   App->editCut->setStatusTip(
 	tr("Cuts the selected section and puts it to the clipboard"));
   App->editCut->setWhatsThis(
@@ -149,8 +149,8 @@ void QucsInit::initActions()
   connect(App->editCut, SIGNAL(activated()), App, SLOT(slotEditCut()));
 
   App->editCopy = new QAction(tr("Copy"),
-                         QIconSet(QImage(BITMAPDIR "editcopy.png")),
-                         tr("&Copy"), CTRL+Key_C, App);
+			QIconSet(QImage(BITMAPDIR "editcopy.png")),
+			tr("&Copy"), CTRL+Key_C, App);
   App->editCopy->setStatusTip(
 	tr("Copies the selected section to the clipboard"));
   App->editCopy->setWhatsThis(
@@ -158,8 +158,8 @@ void QucsInit::initActions()
   connect(App->editCopy, SIGNAL(activated()), App, SLOT(slotEditCopy()));
 
   Acts->editPaste = new QAction(tr("Paste"),
-                          QIconSet(QImage(BITMAPDIR "editpaste.png")),
-                          tr("&Paste"), CTRL+Key_V, App);
+			QIconSet(QImage(BITMAPDIR "editpaste.png")),
+			tr("&Paste"), CTRL+Key_V, App);
   Acts->editPaste->setStatusTip(
 	tr("Pastes the clipboard contents to the cursor position"));
   Acts->editPaste->setWhatsThis(
@@ -192,17 +192,16 @@ void QucsInit::initActions()
                          App->view, SLOT(slotMarkerDown()));
 
   App->undo = new QAction(tr("Undo"), QIconSet(QImage(BITMAPDIR "undo.png")),
-                     tr("&Undo"), CTRL+Key_Z, App);
+			  tr("&Undo"), CTRL+Key_Z, App);
   App->undo->setStatusTip(tr("Undoes the last command"));
   App->undo->setWhatsThis(tr("Undo\n\nMakes the last action undone"));
   connect(App->undo, SIGNAL(activated()), App, SLOT(slotEditUndo()));
 
   App->redo = new QAction(tr("Redo"), QIconSet(QImage(BITMAPDIR "redo.png")),
-                     tr("&Redo"), CTRL+Key_Y, App);
+			  tr("&Redo"), CTRL+Key_Y, App);
   App->redo->setStatusTip(tr("Redoes the last command"));
   App->redo->setWhatsThis(tr("Redo\n\nRepeats the last action once more"));
-//  connect(App->redo, SIGNAL(activated()), App, SLOT(slot()));
-  App->redo->setEnabled(false);
+  connect(App->redo, SIGNAL(activated()), App, SLOT(slotEditRedo()));
 
   App->projNew = new QAction(tr("New Project"), tr("&New Project..."),
 			     0, App);
@@ -365,7 +364,8 @@ void QucsInit::initActions()
   Acts->insWire->setStatusTip(tr("Inserts a wire"));
   Acts->insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
   Acts->insWire->setToggleAction(true);
-  connect(Acts->insWire, SIGNAL(toggled(bool)), Acts, SLOT(slotSetWire(bool)));
+  connect(Acts->insWire, SIGNAL(toggled(bool)), Acts,
+			 SLOT(slotSetWire(bool)));
 
   Acts->insLabel = new QAction(tr("Insert Wire/Pin Label"),
                          QIconSet(QImage(BITMAPDIR "nodename.png")),

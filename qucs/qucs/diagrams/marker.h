@@ -34,7 +34,7 @@ class Graph;
 
 class Marker : public Element {
 public:
-  Marker(Diagram *Diag_, Graph *pg_=0, int _nn=0);
+  Marker(Diagram *Diag_, Graph *pg_=0, int _nn=0, int cx_=0, int cy_=0);
   ~Marker();
 
   void    initText(int);

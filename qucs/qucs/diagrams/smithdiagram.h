@@ -32,8 +32,8 @@ public:
 
 
   SmithDiagram* newOne();
-  void   calcData(Graph *g);
   void   calcDiagram();
+  void   calcCoordinate(double, double, double, int*, int*);
 };
 
 #endif

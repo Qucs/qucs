@@ -31,6 +31,7 @@
 #include <qfile.h>
 #include <qtabbar.h>
 
+class QucsApp;
 
 /**
   *@author Michael Margraf
@@ -38,74 +39,75 @@
 
 class QucsDoc {
 public: 
-  QucsDoc(QTabBar *b, const QString& _Name);
+  QucsDoc(QucsApp*, const QString&);
   ~QucsDoc();
 
-  void setName(const QString& _Name);
-  void setChanged(bool c, bool fillStack=false);
+  void setName(const QString&);
+  void setChanged(bool, bool fillStack=false);
 
-  void paint(QPainter *p);
-  void paintGrid(QPainter *p, int StartX, int StartY, int Width, int Height);
+  void paint(QPainter*);
+  void paintGrid(QPainter*, int, int, int, int);
 
-  int   insertWireNode1(Wire *w);
-  bool  connectHWires1(Wire *w);
-  bool  connectVWires1(Wire *w);
-  int   insertWireNode2(Wire *w);
-  bool  connectHWires2(Wire *w);
-  bool  connectVWires2(Wire *w);
-  int   insertWire(Wire *w);
+  int   insertWireNode1(Wire*);
+  bool  connectHWires1(Wire*);
+  bool  connectVWires1(Wire*);
+  int   insertWireNode2(Wire*);
+  bool  connectHWires2(Wire*);
+  bool  connectVWires2(Wire*);
+  int   insertWire(Wire*);
 
-  Node* insertNode(int x, int y, Element *e);
-  void  insertRawComponent(Component *c, bool num=false);
-  void  insertComponent(Component *c);
-  void  insertNodeLabel(WireLabel *pl);
+  Node* insertNode(int, int, Element*);
+  void  insertRawComponent(Component*, bool num=false);
+  void  insertComponent(Component*);
+  void  insertNodeLabel(WireLabel*);
 
-  void       sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax);
-  Component* selectedComponent(int x, int y);
-  Diagram*   selectedDiagram(int x, int y);
-  Node*      selectedNode(int x, int y);
-  Wire*      selectedWire(int x, int y);
-  Painting*  selectedPainting(int x, int y);
-  void       selectWireLine(Element *pe, Node *pn, bool ctrl);
-//  Wire*      selectWireLabel(int x, int y);
-  Element*   selectElement(int x, int y, bool flag);
-  int        selectElements(int x1, int y1, int x2, int y2, bool flag);
-  void       deselectElements(Element *e);
-  bool  activateComponent(int x, int y);
-  bool  activateComponents();
-  void  activateComps(int x1, int y1, int x2, int y2);
   Component* searchSelSubcircuit();
-  void  NewMovingWires(QPtrList<Element> *p, Node *pn);
-  void  copySelectedElements(QPtrList<Element> *p);
+  void       sizeOfAll(int&, int&, int&, int&);
+  Component* selectedComponent(int, int);
+  Diagram*   selectedDiagram(int, int);
+  Node*      selectedNode(int, int);
+  Wire*      selectedWire(int, int);
+  Painting*  selectedPainting(int, int);
+  void       selectWireLine(Element*, Node*, bool);
+//  Wire*      selectWireLabel(int x, int y);
+  Element*   selectElement(int, int, bool);
+  int        selectElements(int, int, int, int, bool);
+  void       deselectElements(Element*);
+  bool  activateComponent(int, int);
+  bool  activateComponents();
+  void  activateComps(int, int, int, int);
+  void  NewMovingWires(QPtrList<Element>*, Node*);
+  void  copySelectedElements(QPtrList<Element>*);
 
-  void  setComponentNumber(Component *c);
-  void  oneLabel(Node *n1);
-  Element* getWireLabel(Node *pn);
-  void  setCompPorts(Component *pc);
-  bool  copyCompsWires(int& x1, int& y1, int& x2, int& y2);
+  void  setComponentNumber(Component*);
+  void  oneLabel(Node*);
+  Element* getWireLabel(Node*);
+  void  setCompPorts(Component*);
+  bool  copyCompsWires(int&, int&, int&, int&);
   bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
-  bool  oneTwoWires(Node *n);
-  void  deleteComp(Component *c);
-  void  deleteWire(Wire *w);
+  bool  oneTwoWires(Node*);
+  void  deleteComp(Component*);
+  void  deleteWire(Wire*);
   bool  deleteElements();
-  Marker*  setMarker(int x, int y);
+  Marker*  setMarker(int, int);
   bool  MarkerLeftRight(bool);
   bool  MarkerUpDown(bool);
 
-  bool  giveNodeNames(QTextStream *stream);
-  bool  createSubNetlist(QTextStream *stream);
-  bool  createNetlist(QFile *NetlistFile);
+  bool  giveNodeNames(QTextStream*);
+  bool  createSubNetlist(QTextStream*);
+  bool  createNetlist(QFile*);
 
-  QString copySelected(bool cut);
-  bool    paste(QTextStream *stream, QPtrList<Element> *pe);
+  QString copySelected(bool);
+  bool    paste(QTextStream*, QPtrList<Element>*);
   bool    load();
   int     save();
   bool    undo();
+  bool    redo();
 
   void    reloadGraphs();
-  void    setOnGrid(int& x, int& y);
+  void    setOnGrid(int&, int&);
 
 
   QucsFile  File;   // class to perform  load, save, copy, paste
@@ -113,6 +115,7 @@ public:
   QString DocName;
   bool    DocChanged;
 
+  QucsApp *App;
   QTab    *Tab;
   QTabBar *Bar;
 

@@ -30,7 +30,6 @@ public:
   ~TabDiagram();
 
   TabDiagram* newOne();
-  void   calcData(Graph *g);
   void   calcDiagram();
 };
 
