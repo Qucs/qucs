@@ -46,7 +46,75 @@ BJT::BJT()
 
   // this must be the first property in the list  !!!
   Props.append(new Property("Type", "npn", true,
-			QObject::tr("polarity (npn,pnp)")));
+	QObject::tr("polarity (npn,pnp)")));
+  Props.append(new Property("Is", "1e-16", true,
+	QObject::tr("saturation current")));
+  Props.append(new Property("Nf", "1", true,
+	QObject::tr("forward emission coefficient")));
+  Props.append(new Property("Nr", "1", false,
+	QObject::tr("reverse emission coefficient")));
+  Props.append(new Property("Ikf", "0", false,
+	QObject::tr("high current corner for forward beta")));
+  Props.append(new Property("Ikr", "0", false,
+	QObject::tr("high current corner for reverse beta")));
+  Props.append(new Property("Vaf", "0", true,
+	QObject::tr("forward early voltage")));
+  Props.append(new Property("Var", "0", false,
+	QObject::tr("reverse early voltage")));
+  Props.append(new Property("Ise", "0", false,
+	QObject::tr("base-emitter leakage saturation current")));
+  Props.append(new Property("Ne", "1.5", false,
+	QObject::tr("base-emitter leakage emission coefficient")));
+  Props.append(new Property("Isc", "0", false,
+	QObject::tr("base-collector leakage saturation current")));
+  Props.append(new Property("Nc", "2", false,
+	QObject::tr("base-collector leakage emission coefficient")));
+  Props.append(new Property("Bf", "100", true,
+	QObject::tr("forward beta")));
+  Props.append(new Property("Br", "1", false,
+	QObject::tr("reverse beta")));
+  Props.append(new Property("Rbm", "0", false,
+	QObject::tr("minimum base resistance for high currents")));
+  Props.append(new Property("Irb", "0", false,
+	QObject::tr("current for base resistance midpoint")));
+  Props.append(new Property("Rc", "0", false,
+	QObject::tr("collector ohmic resistance")));
+  Props.append(new Property("Re", "0", false,
+	QObject::tr("emitter ohmic resistance")));
+  Props.append(new Property("Rb", "0", false,
+	QObject::tr("zero-bias base resistance (may be high-current dependent)")));
+  Props.append(new Property("Cje", "0", false,
+	QObject::tr("base-emitter zero-bias depletion capacitance")));
+  Props.append(new Property("Vje", "0.75", false,
+	QObject::tr("base-emitter junction built-in potential")));
+  Props.append(new Property("Mje", "0.33", false,
+	QObject::tr("base-emitter junction exponential factor")));
+  Props.append(new Property("Cjc", "0", false,
+	QObject::tr("base-collector zero-bias depletion capacitance")));
+  Props.append(new Property("Vjc", "0.75", false,
+	QObject::tr("base-collector junction built-in potential")));
+  Props.append(new Property("Mjc", "0.33", false,
+	QObject::tr("base-collector junction exponential factor")));
+  Props.append(new Property("Xcjc", "1.0", false,
+	QObject::tr("fraction of Cjc that goes to internal base pin")));
+  Props.append(new Property("Cjs", "0", false,
+	QObject::tr("zero-bias collector-substrate capacitance")));
+  Props.append(new Property("Vjs", "0.75", false,
+	QObject::tr("substrate junction built-in potential")));
+  Props.append(new Property("Mjs", "0", false,
+	QObject::tr("substrate junction exponential factor")));
+  Props.append(new Property("Fc", "0.5", false,
+	QObject::tr("forward-bias depletion capacitance coefficient")));
+  Props.append(new Property("Tf", "0.0", false,
+	QObject::tr("ideal forward transit time")));
+  Props.append(new Property("Xtf", "0.0", false,
+	QObject::tr("coefficient of bias-dependence for Tf")));
+  Props.append(new Property("Vtf", "0.0", false,
+	QObject::tr("voltage dependence of Tf on base-collector voltage")));
+  Props.append(new Property("Itf", "0.0", false,
+	QObject::tr("high-current effect on Tf")));
+  Props.append(new Property("Tr", "0.0", false,
+	QObject::tr("ideal reverse transit time")));
 }
 
 BJT::~BJT()
