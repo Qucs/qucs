@@ -1,3 +1,16 @@
+2004-07-14  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
+
+	* paintings/filldialog.cpp (FillDialog): Fixed description
+	of dense levels.
+
+	* dialogs/settingsdialog.cpp (SettingsDialog): Fixed widget
+	layout error for the 'show Grid' option.
+
+	* qucs.cpp: Introduced QucsWorkDir as global variable used
+	to save the current directory instead of changing into
+	directories directly.  Changed file and directory references
+	appropriately.
+
 2004-06-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* added qucshelp and qucsedit as independent programs

@@ -18,6 +18,7 @@
 #include "componentdialog.h"
 
 #include "../qucsview.h"
+#include "../qucs.h"
 
 #include <qlayout.h>
 #include <qhbox.h>
@@ -343,9 +344,14 @@ void ComponentDialog::slotApplyInput()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotBrowseFile()
 {
-  QString s = QFileDialog::getOpenFileName("", tr("All Files (*.*)"),
+  QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(),
+					tr("All Files (*.*)"),
 					this, "", tr("Select a file"));
   if(!s.isEmpty()) {
+    // snip path if file in current directory
+    QFileInfo file(s);
+    if(QucsWorkDir.exists(file.fileName()) &&
+       QucsWorkDir.absPath() == file.dirPath(true)) s = file.fileName();
     edit->setText(s);
     changed = true;
   }
@@ -355,7 +361,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  QString com = QucsSettings.Editor + " " + edit->text();
+  QString com = QucsSettings.Editor + " " + QucsWorkDir.filePath(edit->text());
   QProcess QucsEditor(QStringList::split(" ", com));
   if(!QucsEditor.start())
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));

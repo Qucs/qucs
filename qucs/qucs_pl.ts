@@ -340,23 +340,23 @@
     </message>
     <message>
         <source>dense 2 (densest)</source>
-        <translation>gęstość 2</translation>
+        <translation type="obsolete">gęstość 2</translation>
     </message>
     <message>
         <source>dense 3 (densest)</source>
-        <translation>gęstość 3</translation>
+        <translation type="obsolete">gęstość 3</translation>
     </message>
     <message>
         <source>dense 4 (densest)</source>
-        <translation>gęstość 4</translation>
+        <translation type="obsolete">gęstość 4</translation>
     </message>
     <message>
         <source>dense 5 (densest)</source>
-        <translation>gęstość 5</translation>
+        <translation type="obsolete">gęstość 5</translation>
     </message>
     <message>
         <source>dense 6 (densest)</source>
-        <translation>gęstość 6</translation>
+        <translation type="obsolete">gęstość 6</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
@@ -401,6 +401,26 @@
     <message>
         <source>Filling Style</source>
         <translation>Rodzaj wypełniania</translation>
+    </message>
+    <message>
+        <source>dense 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 6</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1905,7 +1925,7 @@ Błędy:
         <source>This will destroy all the project
 files permanently !
 Go on ?</source>
-        <translation>Ta operacja usunie bezpowrotnie
+        <translation type="obsolete">Ta operacja usunie bezpowrotnie
 wszystkie pliki projektu !
 Czy chcesz kontynuować ?</translation>
     </message>
@@ -2038,6 +2058,10 @@ Czy chcesz kontynuować ?</translation>
     <message>
         <source>Cannot start text editor!</source>
         <translation>Nie mogę uruchomić edytora tekstu!</translation>
+    </message>
+    <message>
+        <source>This will destroy all the project files permanently ! Continue ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2,7 +2,7 @@
                           qucs.cpp  -  description
                              -------------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
-    copyright            : (C) 2003 by Michael Margraf
+    copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -59,6 +59,7 @@
 #define  COMBO_Paints    6
 #define  COMBO_Diagrams  7
 
+QDir QucsWorkDir;
 
 QucsApp::QucsApp()
 {
@@ -66,6 +67,7 @@ QucsApp::QucsApp()
 
   QucsFileFilter = tr("Schematic (*.sch);;Data Display (*.dpl);;")+
 		   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
+  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
 
   move  (QucsSettings.x,  QucsSettings.y);
   resize(QucsSettings.dx, QucsSettings.dy);
@@ -233,7 +235,7 @@ void QucsApp::slotCMenuRename()
   QucsDoc *dc = view->Docs.current();
   // search, if file is open
   for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {
-    if(d->DocName == QDir::current().path()+"/"+i->text(0)) {
+    if(d->DocName == QucsWorkDir.filePath(i->text(0))) {
       QMessageBox::critical(this, tr("Error"),
 				  tr("Cannot rename an open file!"));
       view->Docs.findRef(dc);
@@ -251,7 +253,7 @@ void QucsApp::slotCMenuRename()
   if(!ok) return;
   if(s.isEmpty()) return;
 
-  QDir file("");
+  QDir file(QucsWorkDir.path());
   if(!file.rename(Name, s+Suffix)) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot rename file: ")+Name);
     return;
@@ -269,7 +271,7 @@ void QucsApp::slotCMenuDelete()
   QucsDoc *dc = view->Docs.current();
   // search, if file is open
   for(QucsDoc *d = view->Docs.first(); d!=0; d = view->Docs.next()) {
-    if(d->DocName == QDir::current().path()+"/"+item->text(0)) {
+    if(d->DocName == QucsWorkDir.filePath(item->text(0))) {
       QMessageBox::critical(this, tr("Error"),
                    tr("Cannot delete an open file!"));
       view->Docs.findRef(dc);
@@ -283,10 +285,11 @@ void QucsApp::slotCMenuDelete()
                  tr("No"), tr("Yes"));
   if(n != 1) return;
 
-  if(!QFile::remove(item->text(0)))
+  if(!QFile::remove(QucsWorkDir.filePath(item->text(0)))) {
     QMessageBox::critical(this, tr("Error"),
 		tr("Cannot delete schematic: ")+item->text(0));
-
+    return;
+  }
   if(ConSchematics == item->parent())
     ConSchematics->takeItem(item);
   else if(ConDisplays == item->parent())
@@ -299,15 +302,14 @@ void QucsApp::slotCMenuDelete()
 // Checks situation and reads all existing Qucs projects
 void QucsApp::readProjects()
 {
-  QDir ProjDir;
-  if(!ProjDir.cd(QDir::homeDirPath()+"/.qucs")) // work directory exists ?
-    if(!ProjDir.mkdir(QDir::homeDirPath()+"/.qucs")) { // no, then create it
+  QDir ProjDir(QDir::homeDirPath());
+  if(!ProjDir.cd(".qucs")) // work directory exists ?
+    if(!ProjDir.mkdir(".qucs")) { // no, then create it
       QMessageBox::warning(this, tr("Warning"),
 			tr("Cannot create work directory !"));
       return;
     }
-  ProjDir.setPath(QDir::homeDirPath()+"/.qucs");
-  QDir::setCurrent(QDir::homeDirPath()+"/.qucs");
+  ProjDir.cd(".qucs");
 
   // get all directories
   QStringList PrDirs = ProjDir.entryList("*", QDir::Dirs, QDir::Name);
@@ -510,8 +512,8 @@ void QucsApp::slotFileOpen()
 {
   statusBar()->message(tr("Opening file..."));
 
-  QString s = QFileDialog::getOpenFileName(".", QucsFileFilter, this,
-					"", tr("Enter a Schematic Name"));
+  QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(), QucsFileFilter,
+				      this, "", tr("Enter a Schematic Name"));
   if(!s.isEmpty())  gotoPage(s); //openDocument(s);
   else statusBar()->message(tr("Opening aborted"), 2000);
 
@@ -576,10 +578,10 @@ bool QucsApp::saveAs()
     intoView = true;
     Info.setFile(view->Docs.current()->DocName);
     if(Info.extension() == "dpl")
-      s = QFileDialog::getSaveFileName("./"+Info.fileName(),
+      s = QFileDialog::getSaveFileName(QucsWorkDir.filePath(Info.fileName()),
 				tr("Data Display (*.dpl)"), this, "",
 				tr("Enter a Document Name"));
-    else  s = QFileDialog::getSaveFileName("./"+Info.fileName(),
+    else  s = QFileDialog::getSaveFileName(QucsWorkDir.filePath(Info.fileName()),
 				QucsFileFilter, this, "",
 				tr("Enter a Document Name"));
     if(s.isEmpty())  return false;
@@ -631,7 +633,7 @@ bool QucsApp::saveAs()
 
   if(intoView) {    // insert new name in Content ListView ?
     Info.setFile(s);
-    if(Info.dirPath(true) == QDir::currentDirPath())
+    if(Info.dirPath(true) == QucsWorkDir.absPath())
       if(!ProjName.isEmpty()) {
 	s = Info.fileName();  // remove path from file name
 	if(Info.extension(false) == "dpl")
@@ -807,8 +809,7 @@ void QucsApp::slotIntoHierarchy()
   QucsDoc *Doc = view->Docs.current();
   Component *pc = view->Docs.current()->searchSelSubcircuit();
   if(pc == 0) return;
-  QString s = pc->Props.getFirst()->Value;
-  if(s.at(0) != '/') s = QDir::currentDirPath()+"/"+s;
+  QString s = QucsWorkDir.filePath(pc->Props.getFirst()->Value);
   if(!gotoPage(s)) return;
 
   QString *ps = new QString(Doc->DocName);
@@ -921,7 +922,7 @@ void QucsApp::slotSimulate()
   sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n\n");
 
   sim->ProgText->insert(tr("creating netlist ...."));
-  QFile NetlistFile("netlist.txt");
+  QFile NetlistFile(QucsWorkDir.filePath("netlist.txt"));
   if(!view->Docs.current()->createNetlist(&NetlistFile)) {
     sim->ErrText->insert(tr("ERROR: Cannot create netlist file!\nAborted."));
     sim->errorSimEnded();
@@ -930,8 +931,8 @@ void QucsApp::slotSimulate()
   sim->ProgText->insert(tr("done.\n"));
 
   QStringList com;
-  com << BINARYDIR "qucsator" << "-i" << "netlist.txt";
-  com << "-o" << view->Docs.current()->DataSet;
+  com << BINARYDIR "qucsator" << "-i" << QucsWorkDir.filePath("netlist.txt");
+  com << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
   if(!sim->startProcess(com)) {
     sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
     sim->errorSimEnded();
@@ -976,7 +977,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   }
 
 
-  QFile file("log.txt");    // save simulator messages
+  QFile file(QucsWorkDir.filePath("log.txt"));    // save simulator messages
   if(file.open(IO_WriteOnly)) {
     int z;
     QTextStream stream(&file);
@@ -996,7 +997,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  QString com = QucsSettings.Editor + " log.txt";
+  QString com = QucsSettings.Editor + " " + QucsWorkDir.filePath("log.txt");
   QProcess QucsEditor(QStringList::split(" ", com));
   if(!QucsEditor.start())
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
@@ -1006,7 +1007,7 @@ void QucsApp::slotShowLastMsg()
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  QString com = QucsSettings.Editor + " netlist.txt";
+  QString com = QucsSettings.Editor + " " + QucsWorkDir.filePath("netlist.txt");
   QProcess QucsEditor(QStringList::split(" ", com));
   if(!QucsEditor.start())
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
@@ -1075,7 +1076,16 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   if(item == 0) return;   // no item was double clicked
   if(item->parent() == 0) return;  // no component, but item "schematic", ...
 
-  gotoPage(QDir::currentDirPath()+"/"+item->text(0));
+  
+  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
+  if(!QucsWorkDir.cd(ProjName+"_prj/")) {
+    QMessageBox::critical(this, tr("Error"),
+                          tr("Cannot access project directory: ")+
+			  QucsWorkDir.path());
+    return;
+  }
+
+  gotoPage(QucsWorkDir.filePath(item->text(0)));
 
   if(item->text(1).isEmpty()) return;
   // switch on the 'select' action
@@ -1089,7 +1099,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 // Is called when the open project menu is called.
 void QucsApp::slotMenuOpenProject()
 {
-  QFileDialog *d = new QFileDialog(QDir::homeDirPath());
+  QFileDialog *d = new QFileDialog(QDir::homeDirPath()+"/.qucs");
   d->setCaption(tr("Choose Project Directory for Opening"));
   d->setShowHiddenFiles(true);
   d->setMode(QFileDialog::DirectoryOnly);
@@ -1187,13 +1197,14 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   view->viewport()->repaint();
   view->drawn = false;
 
+  QDir ProjDir(QDir::cleanDirPath(Path));
+  if(!ProjDir.exists() || !ProjDir.isReadable()) {  // check the project directory
 
-  if(!QDir::setCurrent(Path)) {  // change to project directory
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+Path);
     return;
   }
-  QDir ProjDir(".");
+  QucsWorkDir.setPath(ProjDir.path());
 
   Content->setColumnText(0,tr("Content of '")+Name+tr("'"));  // column text
 //  Content->setColumnWidth(0, Content->width()-5);
@@ -1208,7 +1219,7 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   QStringList Elements = ProjDir.entryList("*.sch", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
-    n = testFile((*it).ascii());
+    n = testFile(ProjDir.filePath((*it).ascii()));
     if(n >= 0) {
       if(n > 0)
         new QListViewItem(ConSchematics, (*it).ascii(),
@@ -1241,9 +1252,8 @@ void QucsApp::slotProjNewButt()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
-  QDir *projDir = new QDir();
-  projDir->setPath(QDir::homeDirPath()+"/.qucs");
-  if(projDir->mkdir(d->ProjName->text()+"_prj")) {
+  QDir projDir(QDir::homeDirPath()+"/.qucs");
+  if(projDir.mkdir(d->ProjName->text()+"_prj")) {
     Projects->insertItem(d->ProjName->text(),0);  // at first position
     if(d->OpenProj->isChecked()) slotOpenProject(Projects->firstItem());
   }
@@ -1455,7 +1465,7 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   if(item->parent() == 0) return;
   if(item->parent()->text(0) != tr("Schematics"))
     return;   // return, if not clicked on schematic
-  int n = testFile(item->text(0));
+  int n = testFile(QucsWorkDir.filePath(item->text(0)));
   if(n<=0) return;    // return, if not a subcircuit
 
   // delete previously selected elements
@@ -1514,25 +1524,24 @@ bool QucsApp::DeleteProject(const QString& Path, const QString& Name)
 
   // first ask, if really delete project ?
   if(QMessageBox::warning(this, tr("Warning"),
-     tr("This will destroy all the project\nfiles permanently !\nGo on ?"),
+     tr("This will destroy all the project files permanently ! Continue ?"),
      tr("&Yes"), tr("&No"), 0,1,1))  return false;
 
-  QDir *projDir = new QDir();
-  projDir->setPath(Path);
-  QStringList ProjFiles = projDir->entryList("*", QDir::Files);  // all files
+  QDir projDir = QDir(Path);
+  QStringList ProjFiles = projDir.entryList("*", QDir::Files);  // all files
 
   // removes every file, remove("*") does not work
   QStringList::iterator it;
   for(it = ProjFiles.begin(); it != ProjFiles.end(); it++) {
-     if(!projDir->remove(*it)) {
+     if(!projDir.remove(*it)) {
        QMessageBox::information(this, tr("Info"),
 				tr("Cannot remove project file: ")+(*it));
        return false;
      }
   }
 
-  projDir->cdUp();  // leave project directory for deleting
-  if(!projDir->rmdir(Name+"_prj")) {
+  projDir.cdUp();  // leave project directory for deleting
+  if(!projDir.rmdir(Name+"_prj")) {
     QMessageBox::information(this, tr("Info"),
 			     tr("Cannot remove project directory !"));
     return false;
@@ -1545,7 +1554,7 @@ bool QucsApp::DeleteProject(const QString& Path, const QString& Name)
 // Is called, when "Delete Project"-menu is pressed.
 void QucsApp::slotMenuDelProject()
 {
-  QFileDialog *d = new QFileDialog(QDir::homeDirPath());
+  QFileDialog *d = new QFileDialog(QDir::homeDirPath()+"/.qucs");
   d->setCaption(tr("Choose Project Directory for Deleting"));
   d->setShowHiddenFiles(true);
   d->setMode(QFileDialog::DirectoryOnly);

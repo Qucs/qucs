@@ -18,6 +18,7 @@
 #include "diagramdialog.h"
 
 #include "../qucsview.h"
+#include "../qucs.h"
 
 #include <qvbox.h>
 #include <qlayout.h>
@@ -226,7 +227,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
   // ...........................................................
   // put all data files into ComboBox
-  QDir ProjDir(".");
+  QDir ProjDir(QucsWorkDir);
   QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
@@ -256,7 +257,7 @@ void DiagramDialog::slotReadVars(int)
 {
   QString DocName = ChooseData->currentText()+".dat";
 
-  QFile file(DocName);
+  QFile file(QucsWorkDir.filePath(DocName));
   if(!file.open(IO_ReadOnly)) {
     return;
   }
