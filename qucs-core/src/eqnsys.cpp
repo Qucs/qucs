@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.10 2004/08/12 13:59:53 ela Exp $
+ * $Id: eqnsys.cpp,v 1.11 2004/08/14 15:41:55 ela Exp $
  *
  */
 
@@ -101,6 +101,9 @@ void eqnsys::solve (void) {
     break;
   case ALGO_JACOBI: case ALGO_GAUSS_SEIDEL:
     solve_iterative ();
+    break;
+  case ALGO_SOR:
+    solve_sor ();
     break;
   }
 #if DEBUG && 0
@@ -385,17 +388,111 @@ void eqnsys::solve_iterative (void) {
 #endif
 }
 
+/* The function solves the linear equation system using a single-step
+   iterative algorithm.  It is a modification of the Gauss-Seidel
+   method and is called successive over relaxation.  The function uses
+   an adaptive scheme to adjust the relaxation parameter. */
+void eqnsys::solve_sor (void) {
+  complex f;
+  int error, conv, i, c, r, N = A->getCols ();
+  int MaxIter = N; // -> less than N^3 operations
+  nr_double_t reltol = 1e-4;
+  nr_double_t abstol = 1e-12;
+  nr_double_t diff, crit, l = 1, d, s;
+
+  // ensure that all diagonal values are non-zero
+  ensure_diagonal ();
+
+  // try to raise diagonal dominance
+  preconditioner ();
+
+  // decide here about possible convergence
+  if ((crit = convergence_criteria ()) >= 1) {
+#if DEBUG
+    logprint (LOG_STATUS, "NOTIFY: convergence criteria: %g >= 1 (%dx%d)\n",
+	      crit, N, N);
+#endif
+    //solve_lu ();
+    //return;
+  }
+
+  // normalize the equation system to have ones on its diagonal
+  for (r = 1; r <= N; r++) {
+    f = A->get (r, r);
+    assert (f != 0); // singular matrix
+    for (c = 1; c <= N; c++) A->set (r, c, A->get (r, c) / f);
+    B->set (r, 1, B->get (r, 1) / f);
+  }
+
+  // the current X vector is a good initial guess for the iteration
+  matrix * Xprev = new matrix (*X);
+
+  // start iterating here
+  i = 0; error = 0;
+  do {
+    // compute new solution vector
+    for (r = 1; r <= N; r++) {
+      for (f = 0, c = 1; c <= N; c++) {
+	if (c < r)      f += A->get (r, c) * X->get (c, 1);
+	else if (c > r) f += A->get (r, c) * Xprev->get (c, 1);
+      }
+      X->set (r, 1, (1 - l) * Xprev->get (r, 1) + l * (B->get (r, 1) - f));
+    }
+    // check for convergence
+    for (s = 0, d = 0, conv = 1, r = 1; r <= N; r++) {
+      diff = abs (X->get (r, 1) - Xprev->get (r, 1));
+      if (diff >= abstol + reltol * abs (X->get (r, 1))) {
+	conv = 0;
+	break;
+      }
+      d += diff; s += abs (X->get (r, 1));
+      if (!finite (diff)) { error++; break; }
+    }
+    if (!error) {
+      // adjust relaxation based on average errors
+      if ((s == 0 && d == 0) || d >= abstol * N + reltol * s) {
+	// values <= 1 -> non-convergence to convergence
+	if (l >= 0.6) l -= 0.1;
+	if (l >= 1.0) l = 1.0;
+      }
+      else {
+	// values >= 1 -> faster convergence
+	if (l < 1.5) l += 0.01;
+	if (l < 1.0) l = 1.0;
+      }
+    }
+    // save last values
+    *Xprev = *X;
+  }
+  while (++i < MaxIter && !conv);
+
+  delete Xprev;
+
+  if (!conv || error) {
+    logprint (LOG_ERROR,
+	      "WARNING: no convergence after %d sor iterations (l = %g)\n",
+	      i, l);
+    solve_lu ();
+  }
+#if DEBUG
+  else {
+    logprint (LOG_STATUS,
+	      "NOTIFY: sor convergence after %d iterations\n", i);
+  }
+#endif
+}
+
 /* The function computes the convergence criteria for iterative
    methods like Jacobi or Gauss-Seidel as defined by Schmidt and
    v.Mises. */
 nr_double_t eqnsys::convergence_criteria (void) {
-  complex f = 0;
+  nr_double_t f = 0;
   for (int r = 1; r <= A->getCols (); r++) {
     for (int c = 1; c <= A->getCols (); c++) {
-      if (r != c) f += sqr (A->get (r, c) / A->get (r, r));
+      if (r != c) f += norm (A->get (r, c) / A->get (r, r));
     }
   }
-  return abs (f);
+  return sqrt (f);
 }
 
 /* The function tries to ensure that there are non-zero diagonal

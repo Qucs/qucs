@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.8 2004/08/12 13:59:54 ela Exp $
+ * $Id: device.cpp,v 1.9 2004/08/14 15:41:56 ela Exp $
  *
  */
 
@@ -245,7 +245,7 @@ void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
 			  nr_double_t& Cgb) {
 
   nr_double_t Utst = Ugs - Uth;
-  if (Utst <= -Phi) {
+  if (Utst <= -Phi) { // cutoff regions
     Cgb = Cox;
     Cgs = 0;
     Cgd = 0;
@@ -255,15 +255,15 @@ void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
     Cgd = 0;
   } else if (Utst <= 0) {
     Cgb = -Utst * Cox / Phi;
-    Cgs = -Utst * Cox * 2 / 3 / Phi + 2 * Cox / 3;
+    Cgs = Utst * Cox * 4 / 3 / Phi + 2 * Cox / 3;
     Cgd = 0;
   } else  {
     nr_double_t Uds = Ugs - Ugd;
-    if (Udsat <= Uds) {
+    if (Udsat <= Uds) { // saturation region
       Cgs = 2 * Cox / 3;
       Cgd = 0;
       Cgb = 0;
-    } else {
+    } else { // linear region
       nr_double_t Sqr1 = sqr (Udsat - Uds);
       nr_double_t Sqr2 = sqr (2 * Udsat - Uds);
       Cgd = Cox * (1 - Udsat * Udsat / Sqr2) * 2 / 3;

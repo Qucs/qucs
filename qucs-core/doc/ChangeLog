@@ -1,3 +1,8 @@
+2004-08-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Noise model}): Documented
+	small signal and noise model of the MOSFET device.
+
 2004-08-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Gauss-Seidel method}): Documented

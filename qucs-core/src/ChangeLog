@@ -1,3 +1,10 @@
+2004-08-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp: Fixed Schmidt and v. Mises convergence
+	criteria.
+	Implemented 'successive over relaxation' for solving linear
+	equation systems.
+
 2004-08-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* object.cpp (propertyList): Avoid string buffer overflow.

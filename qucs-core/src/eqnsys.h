@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.5 2004/08/12 13:59:53 ela Exp $
+ * $Id: eqnsys.h,v 1.6 2004/08/14 15:41:55 ela Exp $
  *
  */
 
@@ -32,7 +32,8 @@ enum algo_type {
   ALGO_GAUSS_JORDAN,
   ALGO_LU_DECOMPOSITION,
   ALGO_JACOBI,
-  ALGO_GAUSS_SEIDEL
+  ALGO_GAUSS_SEIDEL,
+  ALGO_SOR
 };
 
 class matrix;
@@ -58,6 +59,7 @@ class eqnsys
   void solve_gauss_jordan (void);
   void solve_lu (void);
   void solve_iterative (void);
+  void solve_sor (void);
   nr_double_t convergence_criteria (void);
   void ensure_diagonal (void);
   void ensure_diagonal_MNA (void);
