@@ -354,7 +354,7 @@ void QucsApp::slotCMenuDelGroup()
   if(DAT_exists)  Str += s+".dat\n";
 
   int n = QMessageBox::warning(this, tr("Warning"),
-	  tr("This will delete the files\n"+Str+"permanently! Continue ?"),
+	  tr("This will delete the files\n")+Str+tr("permanently! Continue ?"),
 	  tr("No"), tr("Yes"));
   if(n != 1) return;
 
