@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# qucs-edit/Makefile.am
+# qucs/docs/es/Makefile.am
 #
 # Automake input file.
 #
@@ -22,25 +22,15 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-bin_PROGRAMS = qucsedit
+HTML = index.html short.html start.html mathfunc.html subcircuit.html \
+  programs.html
+PIC  = qucsmain.png paste.png wire.png select.png contab.png subcircuit.png
 
-dist_man_MANS = qucsedit.1
+EXTRA_DIST = $(HTML) $(PIC)
 
-MOCHEADERS = qucsedit.h
-MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
-
-qucsedit_SOURCES = main.cpp qucsedit.cpp
-
-nodist_qucsedit_SOURCES = $(MOCFILES)
-
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
-qucsedit_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-
-noinst_HEADERS = $(MOCHEADERS)
-
-%.moc.cpp: %.h
-	$(MOC) -o $@ $<
+# installation of documentation
+docdatadir = ${prefix}/share/qucs/docs/es
+docdata_DATA = $(EXTRA_DIST)
 
 CLEANFILES = *~
-MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
-DISTCLEANFILES = *.moc.cpp
+MAINTAINERCLEANFILES = Makefile.in
