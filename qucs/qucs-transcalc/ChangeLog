@@ -1,3 +1,24 @@
+2005-04-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* optionsdialog.h: Added configuration option dialog.
+
+	* helpdialog.h: Implemented help dialog.
+
+	* qucstrans.cpp: Applied reasonable default values for line
+	properties. Implemented status bar. Improved radio button
+	behaviour.  Implemented config file operations as well as loading
+	and saving of transmission line files.
+
+	* microstrip.cpp (synthesize): Computing length of microstrip
+	line based on electrical angle during synthesis.
+
+	* main.cpp: Saving and storing current property values in resource
+	file on application startup and exit.
+
+	* c_microstrip.cpp (er_eff_freq): Fixed P_9 formula.  Use '0.7913'
+	instead of '0.7193'.
+	(Z0_dispersion): Fixed Q_19 formula.  Use '4.9' instead of '4.19'.
+
 2005-03-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucstrans.cpp: Initial attempt to create a 'transcalc' like

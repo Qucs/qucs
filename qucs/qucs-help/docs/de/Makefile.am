@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# qucs/docs/de/Makefile.am
+# qucs-help/docs/de/Makefile.am
 #
 # Automake input file.
 #

@@ -26,10 +26,12 @@ bin_PROGRAMS = qucstrans
 
 SUBDIRS = bitmaps
 
-MOCHEADERS = qucstrans.h
+dist_man_MANS = qucstrans.1
+
+MOCHEADERS = qucstrans.h helpdialog.h optionsdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucstrans_SOURCES = main.cpp qucstrans.cpp
+qucstrans_SOURCES = main.cpp qucstrans.cpp helpdialog.cpp optionsdialog.cpp
 
 qucstrans_LDADD = libtranscalc.a
 

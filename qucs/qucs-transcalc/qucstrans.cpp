@@ -43,26 +43,28 @@
 #include <qtooltip.h>
 #include <qradiobutton.h>
 #include <qstatusbar.h>
+#include <qdir.h>
+#include <qbuttongroup.h>
+#include <qwidgetstack.h>
 
 #include "qucstrans.h"
+#include "helpdialog.h"
+#include "optionsdialog.h"
 #include "transline.h"
 #include "microstrip.h"
 #include "coax.h"
 #include "rectwaveguide.h"
 #include "c_microstrip.h"
 
+QDir QucsWorkDir;
+
 // Defines maximum number of entries in each property category.
 static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 1, 4, 3 };
 
 // Helper #defines for the below transmission line types.
 #define TRANS_RADIOS  { -1, -1, -1, -1 }
-#define TRANS_QOBJS   NULL, NULL, NULL, NULL
-#define TRANS_END     { NULL, 0, NULL, { NULL }, TRANS_QOBJS }
-#define TRANS_LENGTHS { "mil", "cm", "mm", "m", "um", "in", "ft", NULL }
-#define TRANS_NONES   { "NA", NULL }
-#define TRANS_FREQS   { "GHz", "Hz", "kHz", "MHz", NULL }
-#define TRANS_OHMS    { "Ohm", "kOhm", NULL }
-#define TRANS_ANGLES  { "Deg", "Rad", NULL }
+#define TRANS_QOBJS   NULL, NULL, NULL, NULL, NULL
+#define TRANS_END     { NULL, 0, NULL, { NULL }, 0, TRANS_QOBJS }
 #define TRANS_RESULT  { NULL, NULL, NULL }
 #define TRANS_RESULTS { TRANS_RESULT }
 
@@ -70,115 +72,122 @@ static const int TransMaxBox[MAX_TRANS_BOXES] = { 9, 1, 4, 3 };
 struct TransType TransLineTypes[] = {
   { ModeMicrostrip, "Microstrip", NULL,
     { { {
-      { "Er",    0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "Mur",   0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "H",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "H_t",   0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "T",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "Cond",  0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "Tand",  0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "Rough", 0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
+      { "Er",    2.94,  NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Mur",   1,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "H",     10,    NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "H_t",   1e20,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "T",     0.1,   NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "Cond",  4.1e7, NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Tand",  0,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Rough", 0,     NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Freq",  0, NULL, TRANS_FREQS, TRANS_QOBJS },
+      { "Freq",  1, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "W",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "L",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
+      { "W",     10,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     100, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Z0",    0, NULL, TRANS_OHMS,   TRANS_QOBJS },
-      { "Ang_l", 0, NULL, TRANS_ANGLES, TRANS_QOBJS },
+      { "Z0",    50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
       TRANS_END
     } } },
     4, TRANS_RESULTS, TRANS_RADIOS
   },
   { ModeRectangular, "Rectangular", NULL,
     { { {
-      { "Er",    0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "Mur",   0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "Cond",  0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "Tand",  0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "TanM",  0, NULL, TRANS_NONES, TRANS_QOBJS },
+      { "Er",    1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "Mur",   1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "Cond",  4.1e7, NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "Tand",  0,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "TanM",  0,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Freq",  0, NULL, TRANS_FREQS, TRANS_QOBJS },
+      { "Freq",  10, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "a",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "b",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "L",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
+      { "a",     1000, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "b",     500,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     4000, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Z0",    0, NULL, TRANS_OHMS,   TRANS_QOBJS },
-      { "Ang_l", 0, NULL, TRANS_ANGLES, TRANS_QOBJS },
+      { "Z0",    50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
       TRANS_END
     } } },
     3, TRANS_RESULTS, { 0, 1, -1, -1 }
   },
   { ModeCoaxial, "Coaxial", NULL,
     { { {
-      { "Er",    0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "Mur",   0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "Tand",  0, NULL, TRANS_NONES, TRANS_QOBJS },
-      { "Sigma", 0, NULL, TRANS_NONES, TRANS_QOBJS },
+      { "Er",    2.1,   NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "Mur",   1,     NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "Tand",  0.002, NULL, TRANS_NONES, 0, TRANS_QOBJS },
+      { "Sigma", 4.1e7, NULL, TRANS_NONES, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Freq",  0, NULL, TRANS_FREQS, TRANS_QOBJS },
+      { "Freq",  10, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "din",   0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "dout",  0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "L",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
+      { "din",   40,   NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "dout",  134,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     1000, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Z0",    0, NULL, TRANS_OHMS,   TRANS_QOBJS },
-      { "Ang_l", 0, NULL, TRANS_ANGLES, TRANS_QOBJS },
+      { "Z0",    50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
       TRANS_END
     } } },
     2, TRANS_RESULTS, { 0, 1, -1, -1 }
   },
   { ModeCoupledMicrostrip, "CoupledMicrostrip", NULL,
     { { {
-      { "Er",    0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "Mur",   0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "H",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "H_t",   0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "T",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "Cond",  0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "Tand",  0, NULL, TRANS_NONES,   TRANS_QOBJS },
-      { "Rough", 0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
+      { "Er",    4.3,   NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Mur",   1,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "H",     8.27,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "H_t",   1e20,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "T",     0.68,  NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "Cond",  4.1e7, NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Tand",  0,     NULL, TRANS_NONES,   0, TRANS_QOBJS },
+      { "Rough", 0,     NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Freq",  0, NULL, TRANS_FREQS, TRANS_QOBJS },
+      { "Freq",  10, NULL, TRANS_FREQS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "W",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "S",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
-      { "L",     0, NULL, TRANS_LENGTHS, TRANS_QOBJS },
+      { "W",     8.66, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "S",     5.31, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
+      { "L",     1000, NULL, TRANS_LENGTHS, 0, TRANS_QOBJS },
       TRANS_END
     } },
     { {
-      { "Z0e",   0, NULL, TRANS_OHMS,   TRANS_QOBJS },
-      { "Z0o",   0, NULL, TRANS_OHMS,   TRANS_QOBJS },
-      { "Ang_l", 0, NULL, TRANS_ANGLES, TRANS_QOBJS },
+      { "Z0e",   50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Z0o",   50, NULL, TRANS_OHMS,   0, TRANS_QOBJS },
+      { "Ang_l", 90, NULL, TRANS_ANGLES, 0, TRANS_QOBJS },
       TRANS_END
     } } },
     7, TRANS_RESULTS, TRANS_RADIOS
   },
   { ModeNone, NULL, NULL, { { { TRANS_END } } }, 0,
     TRANS_RESULTS, TRANS_RADIOS }
+};
+
+struct TransUnit TransUnits[] = {
+  { "Frequency",  TRANS_FREQS },
+  { "Length",     TRANS_LENGTHS },
+  { "Resistance", TRANS_OHMS },
+  { "Angle",      TRANS_ANGLES },
 };
 
 /* Constructor setups the GUI. */
@@ -194,13 +203,16 @@ QucsTranscalc::QucsTranscalc() {
   QAction * fileLoad =
     new QAction (tr("Load"), tr("&Load"), CTRL+Key_L, this);
   fileLoad->addTo (fileMenu);
+  connect(fileLoad, SIGNAL(activated()), SLOT(slotFileLoad()));
   QAction * fileSave =
     new QAction (tr("Save"), tr("&Save"), CTRL+Key_S, this);
   fileSave->addTo (fileMenu);
+  connect(fileSave, SIGNAL(activated()), SLOT(slotFileSave()));
   fileMenu->insertSeparator ();
   QAction * fileOption =
     new QAction (tr("Options"), tr("&Options"), CTRL+Key_O, this);
   fileOption->addTo (fileMenu);
+  connect(fileOption, SIGNAL(activated()), SLOT(slotOptions()));
   fileMenu->insertSeparator ();
   QAction * fileQuit =
     new QAction (tr("Quit"), tr("&Quit"), CTRL+Key_Q, this);
@@ -223,6 +235,7 @@ QucsTranscalc::QucsTranscalc() {
   QAction * helpHelp =
     new QAction (tr("Help"), tr("&Help"), Key_F1, this);
   helpHelp->addTo (helpMenu);
+  connect(helpHelp, SIGNAL(activated()), SLOT(slotHelpIntro()));
   QAction * helpAbout =
     new QAction (tr("About"), tr("About"), 0, helpMenu);
   helpAbout->addTo (helpMenu);
@@ -236,19 +249,22 @@ QucsTranscalc::QucsTranscalc() {
 
   // main box
   QVBoxLayout * v = new QVBoxLayout (this);
-  v->setSpacing (5);
-  v->setMargin (5);
+  v->setSpacing (0);
+  v->setMargin (0);
 
   // reserve space for menubar
   QWidget * Space = new QWidget (this);
-  Space->setFixedSize (5, menuBar->height ());
+  Space->setFixedHeight (menuBar->height () + 2);
   v->addWidget (Space);
 
   // main layout
   QHBox * h = new QHBox (this);
   h->setSpacing (5);
   v->addWidget (h);
-//  QVBox * vl = new QVBox (h);
+
+  // left margin
+  QWidget * sl = new QWidget (h);
+  sl->setFixedWidth (2);
 
   // transmission line type choice
   QVGroupBox * lineGroup = new QVGroupBox (tr("Transmission Line Type"), h);
@@ -267,6 +283,10 @@ QucsTranscalc::QucsTranscalc() {
   vm->setSpacing (3);
   QVBox * vr = new QVBox (h);
   vr->setSpacing (3);
+
+  // right margin
+  QWidget * sr = new QWidget (h);
+  sr->setFixedWidth (2);
 
   // init additional translations
   setupTranslations ();
@@ -302,11 +322,12 @@ QucsTranscalc::QucsTranscalc() {
   calculated = new QHGroupBox (tr("Calculated Results"), vr);
 
   // status line
-//  QVGroupBox * statGroup = new QVGroupBox (tr("Status"), this);
-//  v->addWidget (statGroup);
-  QLabel * statText = new QLabel ("Status:", this);
-  statText->setAlignment (Qt::AlignCenter);
-  v->addWidget (statText);
+  statBar = new QStatusBar (this);
+  QLabel * statText = new QLabel ("Ready.", statBar);
+  statBar->message (tr("Ready."));
+  statBar->setFixedHeight (statText->height ());
+  v->addWidget (statBar);
+  delete statText;
 
   // setup calculated result bix
   createResultItems (calculated);
@@ -422,7 +443,7 @@ void QucsTranscalc::setupTranslations () {
 /* Creates a property item 'val' in a parameter category specified by
    its 'box'. */
 void QucsTranscalc::createPropItem (QVBox ** parentRows, TransValue * val,
-				    int box) {
+				    int box, QButtonGroup * group) {
   QRadioButton * r = NULL;
   QLabel * l;
   QLineEdit * e;
@@ -438,6 +459,7 @@ void QucsTranscalc::createPropItem (QVBox ** parentRows, TransValue * val,
   e = new QLineEdit (parentRows[1]);
   e->setText (QString::number (val->value));
   e->setAlignment (Qt::AlignRight);
+  connect(e, SIGNAL(textChanged(const QString&)), SLOT(slotValueChanged()));
   if (!val->name) e->setDisabled (true);
   val->lineedit = e;
 
@@ -456,13 +478,21 @@ void QucsTranscalc::createPropItem (QVBox ** parentRows, TransValue * val,
     c->setDisabled (nounit != 0);
     c->setCurrentItem (0);
   }
+  connect(c, SIGNAL(activated(int)), SLOT(slotValueChanged()));
   val->combobox = c;
 
   // special synthesize-computation choice
   if (box == TRANS_PHYSICAL) {
-    r = new QRadioButton (parentRows[3]);
+    QWidgetStack * s = new QWidgetStack(parentRows[3]);
+    s->setFixedSize (val->lineedit->height()-10, val->lineedit->height()-10);
+    r = new QRadioButton (s);
+    QWidget * spacer = new QWidget (s);
+    s->addWidget (r, 1);
+    s->addWidget (spacer, 2);
     r->setDisabled (true);
     val->radio = r;
+    val->stack = s;
+    group->insert(r);
   }
 }
 
@@ -490,7 +520,7 @@ void QucsTranscalc::updatePropItem (TransValue * val) {
       val->combobox->insertItem (val->units[i]);
       if (!strcmp (val->units[i], "NA")) nounit++;
     }
-    val->combobox->setCurrentItem(0);
+    val->combobox->setCurrentItem(val->unit);
     val->combobox->setDisabled (nounit);
   }
 }
@@ -499,8 +529,22 @@ void QucsTranscalc::updatePropItem (TransValue * val) {
 void QucsTranscalc::setMode (int _mode) {
   // change necessary?
   if (mode == _mode) return;
+  storeValues ();
   mode = _mode;
+  setUpdatesEnabled(false);
+  updateMode ();
 
+  // update selection and results
+  updateSelection ();
+  updateResultItems ();
+
+  slotAnalyze();
+  setUpdatesEnabled(true);
+  repaint();
+}
+
+/* Updates the property items of the current mode. */
+void QucsTranscalc::updateMode (void) {
   // go through each type of parameter category
   for (int box = 0; box < MAX_TRANS_BOXES; box++) {
     int last = 0, idx = getTypeIndex();
@@ -519,9 +563,6 @@ void QucsTranscalc::setMode (int _mode) {
       val++;
     }
   }
-  // update selection and results
-  updateSelection ();
-  updateResultItems ();
 }
 
 /* Updates the current choice of physical property selection. */
@@ -530,11 +571,24 @@ void QucsTranscalc::updateSelection () {
   struct TransValue * val = TransLineTypes[idx].array[TRANS_PHYSICAL].item;
   for (int i = 0; i < TransMaxBox[TRANS_PHYSICAL]; i++) {
     if (TransLineTypes[idx].radio[i] != -1) {
-      val->radio->setDisabled (false);
-      if (TransLineTypes[idx].radio[i] == 1)
+      val->stack->raiseWidget (1);
+      if (TransLineTypes[idx].radio[i] == 1) {
 	val->radio->setDown (true);
+	val->radio->setChecked (true);
+	QToolTip::add (val->radio, tr("Selected for Calculation"));
+      }
+      else {
+	val->radio->setDown (false);
+	val->radio->setChecked (false);
+	QToolTip::add (val->radio, tr("Check item for Calculation"));
+      }
+      val->radio->setDisabled (false);
     }
     else {
+      QToolTip::remove (val->radio);
+      val->stack->raiseWidget (2);
+      val->radio->setDown (false);
+      val->radio->setChecked (false);
       val->radio->setDisabled (true);
     }
     val++;
@@ -549,6 +603,8 @@ void QucsTranscalc::createPropItems (QHGroupBox * parent, int box) {
   val = TransLineTypes[idx].array[box].item;
 
   QVBox *rows[4];
+  QButtonGroup * group = new QButtonGroup();
+  connect(group, SIGNAL(pressed(int)), SLOT(slotRadioChecked(int)));
   rows[0] = new QVBox (parent);
   rows[1] = new QVBox (parent);
   rows[2] = new QVBox (parent);
@@ -570,7 +626,7 @@ void QucsTranscalc::createPropItems (QHGroupBox * parent, int box) {
       val->tip = NULL;
       val->units[0] = NULL;
     }
-    createPropItem (rows, val, box);
+    createPropItem (rows, val, box, group);
     // publish the newly created widgets to the other transmission lines
     for (int _mode = 0; _mode < MAX_TRANS_TYPES; _mode++) {
       if (idx != _mode) {
@@ -579,6 +635,7 @@ void QucsTranscalc::createPropItems (QHGroupBox * parent, int box) {
 	dup->lineedit = val->lineedit;
 	dup->combobox = val->combobox;
 	dup->radio = val->radio;
+	dup->stack = val->stack;
       }
     }
     val++;
@@ -684,6 +741,7 @@ void QucsTranscalc::setProperty (QString prop, double value) {
   struct TransValue * val = findProperty (prop);
   if (val) {
     val->lineedit->setText (QString::number (value));
+    val->value = value;
   }
 }
 
@@ -698,14 +756,34 @@ double QucsTranscalc::getProperty (QString prop) {
   return 0;
 }
 
+/* Sets the given property unit. */
+void QucsTranscalc::setUnit (QString prop, const char * unit) {
+  struct TransValue * val = findProperty (prop);
+  if (val) {
+    if (!unit) {
+      val->combobox->setCurrentItem (0);
+      val->unit = 0;
+    }
+    else for (int i = 0; val->units[i]; i++) {
+      if (!strcmp (unit, val->units[i])) {
+	val->combobox->setCurrentItem (i);
+	val->unit = i;
+	break;
+      }
+    }
+  }
+}
+
 /* Returns the given property unit. */
 char * QucsTranscalc::getUnit (QString prop) {
   struct TransValue * val = findProperty (prop);
   if (val) {
     QString str = val->combobox->currentText ();
     for (int i = 0; val->units[i]; i++) {
-      if (str == val->units[i])
+      if (str == val->units[i]) {
+	val->unit = i;
 	return val->units[i];
+      }
     }
   }
   return NULL;
@@ -744,6 +822,7 @@ void QucsTranscalc::slotQuit()
   tmp = width();	// dialog !!!  Otherwise the frame of the window ...
   tmp = height();	// will not be recognized (a X11 problem).
 
+  storeValues ();
   accept();
 }
 
@@ -755,6 +834,7 @@ void QucsTranscalc::closeEvent(QCloseEvent *Event)
   tmp = width();	// dialog !!!  Otherwise the frame of the window ...
   tmp = height();	// will not be recognized (a X11 problem).
 
+  storeValues ();
   Event->accept();
 }
 
@@ -784,16 +864,252 @@ void QucsTranscalc::slotSelectType (int Type)
     break;
   }
   setMode (_mode);
+  statBar->message(tr("Ready."));
 }
 
 void QucsTranscalc::slotAnalyze()
 {
   if (TransLineTypes[getTypeIndex()].line)
     TransLineTypes[getTypeIndex()].line->analyze();
+  statBar->message(tr("Values are consistent."));
 }
 
 void QucsTranscalc::slotSynthesize()
 {
   if (TransLineTypes[getTypeIndex()].line)
     TransLineTypes[getTypeIndex()].line->synthesize();
+  statBar->message(tr("Values are consistent."));
+}
+
+void QucsTranscalc::slotValueChanged()
+{
+  statBar->message(tr("Values are inconsistent."));
+}
+
+// Load transmission line values from the given file.
+bool QucsTranscalc::loadFile(QString fname, int * _mode) {
+  QFile file(QDir::convertSeparators (fname));
+  if(!file.open(IO_ReadOnly)) return false; // file doesn't exist
+
+  QTextStream stream(&file);
+  QString Line, Name, Unit;
+  double Value;
+
+  int oldmode = mode;
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    for (int i = 0; i < MAX_TRANS_TYPES; i++) {
+      if (Line == "<" + QString(TransLineTypes[i].description) + ">") {
+	if (_mode) {
+	  *_mode = TransLineTypes[i].type;
+	  setMode (*_mode);
+	  updatePixmap (mode);
+	} else {
+	  mode = TransLineTypes[i].type;
+	}
+	while(!stream.atEnd()) {
+	  Line = stream.readLine();
+	  if (Line == "</" + QString(TransLineTypes[i].description) + ">")
+	    break;
+	  Line = Line.simplifyWhiteSpace();
+	  Name = Line.section(' ',0,0);
+	  Value = Line.section(' ',1,1).toDouble();
+	  Unit = Line.section(' ',2,2);
+	  setProperty (Name, Value);
+	  setUnit (Name, Unit);
+	}
+	break;
+      }
+    }
+  }
+  if (!_mode) mode = oldmode;
+  updateMode ();
+  file.close();
+  return true;
+}
+
+// Saves current transmission line values into the given file.
+bool QucsTranscalc::saveFile(QString fname) {
+  QFile file (QDir::convertSeparators (fname));
+  if(!file.open (IO_WriteOnly)) return false; // file not writable
+  QTextStream stream (&file);
+
+  // some lines of documentation
+  stream << "# Qucs Transcalc " << PACKAGE_VERSION << "  " << fname << "\n";
+  stream << "#   Generated on " << QDate::currentDate().toString()
+	 << " at " << QTime::currentTime().toString() << ".\n";
+  stream << "#   It is not suggested to edit the file, use Qucs Transcalc "
+	 << "instead.\n\n";
+
+  storeValues ();
+  saveMode (stream);
+  file.close ();
+  return true;
+}
+
+/* Writes the transmission line values for the current modes into the
+   given stream. */
+void QucsTranscalc::saveMode(QTextStream& stream) {
+  struct TransType * t = &TransLineTypes[getTypeIndex ()];
+  struct TransValue * val = NULL;
+  stream << "<" << t->description << ">\n";
+  for (int box = 0; box < MAX_TRANS_BOXES; box++) {
+    val = t->array[box].item;
+    while (val->name) {
+      stream << "  " << val->name << " " << val->value << " "
+	     << val->units[val->unit] << "\n";
+      val++;
+    }
+  }
+  stream << "</" << t->description << ">\n";
+}
+
+// Writes the transmission line values for all modes into the given stream.
+void QucsTranscalc::saveModes(QTextStream& stream) {
+  int oldmode = mode;
+  for (int i = 0; i < MAX_TRANS_TYPES; i++) {
+    mode = TransLineTypes[i].type;
+    saveMode (stream);
+  }
+  mode = oldmode;
+}
+
+// Saves the GUI values into internal data structures.
+void QucsTranscalc::storeValues (void) {
+  struct TransType * t = &TransLineTypes[getTypeIndex ()];
+  struct TransValue * val;
+  for (int box = 0; box < MAX_TRANS_BOXES; box++) {
+    val = t->array[box].item;
+    int i = 0;
+    while (val->name) {
+      getProperty (val->name);
+      getUnit (val->name);
+      if (box == TRANS_PHYSICAL) {
+	if (val->radio->isEnabled()) {
+	  if (val->radio->isChecked())
+	    t->radio[i] = 1;
+	  else
+	    t->radio[i] = 0;
+	}
+	else t->radio[i] = -1;
+      }
+      i++;
+      val++;
+    }
+  }
+}
+
+void QucsTranscalc::slotFileLoad()
+{
+  statBar->message(tr("Loading file..."));
+  int _mode = 0;
+  QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(),
+   tr("Transcalc File")+" (*.trc)", this, "", tr("Enter a Filename"));
+  if (!s.isEmpty())  {
+    QucsWorkDir.setPath(QDir::cleanDirPath(s));
+    if (!loadFile (s, &_mode)) {
+      QMessageBox::critical (this, tr("Error"),
+			     tr("Cannot load file:")+" '"+s+"'!");
+    }
+  }
+  else statBar->message(tr("Loading aborted."), 2000);
+
+  statBar->message(tr("Ready."));
+}
+
+void QucsTranscalc::slotFileSave()
+{
+  statBar->message(tr("Saving file..."));
+
+  QString s = QFileDialog::getSaveFileName(QucsWorkDir.path(),
+   tr("Transcalc File")+" (*.trc)", this, "", tr("Enter a Filename"));
+  if (!s.isEmpty())  {
+    QucsWorkDir.setPath(QDir::cleanDirPath(s));
+    if (!saveFile (s)) {
+      QMessageBox::critical (this, tr("Error"),
+			     tr("Cannot save file:")+" '"+s+"'!");
+    }
+  }
+  else statBar->message(tr("Saving aborted."), 2000);
+
+  statBar->message(tr("Ready."));
+}
+
+// Returns the current textual mode.
+QString QucsTranscalc::getMode (void) {
+  return TransLineTypes[getTypeIndex ()].description;
+}
+
+// Sets the mode according to the given textual mode.
+void QucsTranscalc::setMode (QString _mode) {
+  for (int i = 0; i < MAX_TRANS_TYPES; i++) {
+    if (TransLineTypes[i].description == _mode) {
+      setMode (TransLineTypes[i].type);
+      updatePixmap (mode);
+      break;
+    }
+  }
+}
+
+// Updates the combobox and pixmap for the current mode.
+void QucsTranscalc::updatePixmap (int _mode) {
+  int i = 0;
+  switch (_mode) {
+  case ModeMicrostrip:
+    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
+				     "microstrip.png")));
+    i = 0;
+    break;
+  case ModeRectangular:
+    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
+				     "rectwaveguide.png")));
+    i = 1;
+    break;
+  case ModeCoaxial:
+    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
+				     "coax.png")));
+    i = 2;
+    break;
+  case ModeCoupledMicrostrip:
+    pix->setPixmap (QPixmap (QImage (QucsSettings.BitmapDir +
+				     "c_microstrip.png")));
+    i = 3;
+    break;
+  }
+  tranType->setCurrentItem(i);
+}
+
+void QucsTranscalc::slotHelpIntro()
+{
+  HelpDialog *d = new HelpDialog(this);
+  d->show();
+}
+
+void QucsTranscalc::slotOptions()
+{
+  OptionsDialog *d = new OptionsDialog(this);
+  d->show();
+}
+
+// Translates a given textual unit into a array index.
+int QucsTranscalc::translateUnit(const char * unit, int type) {
+  for (int i = 0; TransUnits[type].units[i]; i++) {
+    if (unit && !strcmp (unit, TransUnits[type].units[i]))
+      return i;
+  }
+  return 0;
+}
+
+void QucsTranscalc::slotRadioChecked(int id)
+{
+  int idx = getTypeIndex ();
+  for (int i = 0; i < TransMaxBox[TRANS_PHYSICAL]; i++) {
+    if (TransLineTypes[idx].radio[i] != -1) {
+      TransLineTypes[idx].radio[i] = 0;
+      if (i == id) {
+	TransLineTypes[idx].radio[i] = 1;
+      }
+    }
+  }
+  updateSelection ();
 }
