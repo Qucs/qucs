@@ -173,7 +173,7 @@ void RectDiagram::calcDiagram()
   z = int(zD);
   while(z <= y2) {    // create all grid lines
     if(fabs(Expo) < 3.0)  tmp = QString::number(GridNum);
-    else QString::number(GridNum, 'e', 0);
+    else tmp = QString::number(GridNum, 'e', 0);
     r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, tmp); // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
 
