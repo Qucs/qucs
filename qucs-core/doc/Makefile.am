@@ -47,7 +47,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   newtondiode.fig dcdiode.fig diode.fig spdiode.fig spjfet.fig newtonbad.fig  \
   sconnectgraph.fig sconnectloop.fig sconnectpath.fig siconnectgraph.fig      \
   siconnectpath.fig siconnectloop.fig twoportiv.fig twoportab.fig             \
-  twoportss.fig twoportpp.fig twoportps.fig twoportsp.fig twoportch.fig
+  twoportss.fig twoportpp.fig twoportps.fig twoportsp.fig twoportch.fig       \
+  nconnect2.fig nconnect3.fig
 PSFILES = MNAexample.eps NLexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)

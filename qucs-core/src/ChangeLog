@@ -1,3 +1,7 @@
+2004-07-03  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed all bugs in s-parameter noise analysis
+
 2004-07-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Fixed bug when writing simply 'j' or 'i' with
