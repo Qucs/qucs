@@ -82,6 +82,7 @@ void RectDiagram::calcDiagram()
   xlow = xmin;  xup = xmax;
   ylow = ymin;  yup = ymax;
 
+
   int z;
   double numGrids, Base, Expo, GridStep, corr, zD, zDstep, GridNum;
   // ====  x grid  =======================================================
@@ -103,24 +104,56 @@ void RectDiagram::calcDiagram()
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
-  zD = GridStep-fmod(xmax, GridStep);
-  // expand grid to the right edge of diagram ?
-  if(zD/GridStep < 0.2)  xup = xmax+zD;
 
-  zD = fmod(xmin, GridStep); // expand grid to the left edge of diagram ?
-  if(zD/GridStep < 0.2) { xlow = xmin-zD;  zD = 0.0; }
-  else zD = GridStep-zD;
+  // upper x boundery ...........................
+  zD = fabs(fmod(xmax, GridStep)); // expand grid to upper edge of diagram ?
+  GridNum = zD/GridStep;
+  if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
+  if(xmax <= 0.0) {
+    if(GridNum < 0.3) { xup += zD;  zD = 0.0; }
+  }
+  else  if(GridNum > 0.7)  xup += GridStep-zD;
+        else if(GridNum < 0.1)
+	       if(GridNum*double(x2) >= 1.0)// more than 1 pixel above ?
+		 xup += 0.3*GridStep;  // beauty correction
+
+
+  // lower x boundery ...........................
+  zD = fabs(fmod(xmin, GridStep)); // expand grid to lower edge of diagram ?
+  GridNum = zD/GridStep;
+  if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
+  if(xmin <= 0.0) {
+    if(GridNum > 0.7) { xlow -= GridStep-zD;  zD = 0.0; }
+    else if(GridNum < 0.1)
+	   if(GridNum*double(x2) >= 1.0) { // more than 1 pixel above ?
+	     xlow -= 0.3*GridStep;    // beauty correction
+	     zD   += 0.3*GridStep;
+	   }
+  }
+  else {
+    if(GridNum > 0.3) zD = GridStep-zD;
+    else if(GridNum < 0.1) {
+	   if(GridNum*double(x2) >= 1.0) { // more than 1 pixel above ?
+	     xlow -= 0.3*GridStep;    // beauty correction
+	     zD   += 0.3*GridStep;
+	   }
+	 }
+         else { xlow -= zD;  zD = 0.0; }
+  }
+
 
   zDstep = GridStep/(xup-xlow)*double(x2);  // grid distance in pixel
   GridNum  = xlow + zD;
   zD /= (xup-xlow)/double(x2);
 
-  z = int(zD);
+  zD += 0.5;     // perform rounding
+  z = int(zD);   //  "int(...)" implies "floor(...)"
   while(z <= x2) {    // create all grid lines
+    if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     if(fabs(Expo) < 3.0)
       Texts.append(new Text(z-10, -17, QString::number(GridNum)));
     else
-      Texts.append(new Text(z-10, -17, QString::number(GridNum, 'e', 0)));
+      Texts.append(new Text(z-10, -17, QString::number(GridNum, 'e', 1)));
     GridNum += GridStep;
 
     if(GridOn)  if(z < x2)  if(z > 0)
@@ -151,15 +184,41 @@ void RectDiagram::calcDiagram()
   numGrids += corr;     // correct rounding faults
 
 
-  zD = GridStep-fmod(ymax, GridStep);
-  // expand grid to the upper edge of diagram ?
-  if(fabs(zD/GridStep) <= 0.2)  yup = ymax+zD;
-
-  zD = fmod(ymin, GridStep); // expand grid to the lower edge of the diagram ?
+  // upper y boundery ...........................
+  zD = fabs(fmod(ymax, GridStep)); // expand grid to upper edge of diagram ?
   GridNum = zD/GridStep;
-  if(GridNum > 0.2) zD = GridStep-zD;
-  else if(GridNum < -0.2) zD *= -1.0;
-       else { ylow = ymin-zD;  zD = 0.0; }
+  if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
+  if(ymax <= 0.0) {
+    if(GridNum < 0.3) { yup += zD;  zD = 0.0; }
+  }
+  else  if(GridNum > 0.7)  yup += GridStep-zD;
+        else if(GridNum < 0.1)
+	       if(GridNum*double(y2) >= 1.0)// more than 1 pixel above ?
+		 yup += 0.3*GridStep;  // beauty correction
+
+
+  // lower y boundery ...........................
+  zD = fabs(fmod(ymin, GridStep)); // expand grid to lower edge of diagram ?
+  GridNum = zD/GridStep;
+  if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
+  if(ymin <= 0.0) {
+    if(GridNum > 0.7) { ylow -= GridStep-zD;  zD = 0.0; }
+    else if(GridNum < 0.1)
+	   if(GridNum*double(y2) >= 1.0) { // more than 1 pixel above ?
+	     ylow -= 0.3*GridStep;    // beauty correction
+	     zD   += 0.3*GridStep;
+	   }
+  }
+  else {
+    if(GridNum > 0.3) zD = GridStep-zD;
+    else if(GridNum < 0.1) {
+	   if(GridNum*double(y2) >= 1.0) { // more than 1 pixel above ?
+	     ylow -= 0.3*GridStep;    // beauty correction
+	     zD   += 0.3*GridStep;
+	   }
+	 }
+         else { ylow -= zD;  zD = 0.0; }
+  }
 
   zDstep = GridStep/(yup-ylow)*double(y2); // distance between grids in pixel
   GridNum  = ylow + zD;
@@ -170,10 +229,12 @@ void RectDiagram::calcDiagram()
   QFontMetrics  metrics(QucsSettings.font);
 
   int maxWidth = 0;
-  z = int(zD);
+  zD += 0.5;     // perform rounding
+  z = int(zD);   //  "int(...)" implies "floor(...)"
   while(z <= y2) {    // create all grid lines
+    if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     if(fabs(Expo) < 3.0)  tmp = QString::number(GridNum);
-    else tmp = QString::number(GridNum, 'e', 0);
+    else tmp = QString::number(GridNum, 'e',1);
     r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, tmp); // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
 

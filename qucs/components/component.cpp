@@ -142,13 +142,14 @@ void Component::paint(QPainter *p)
     p->drawText(cx+pt->x, cy+pt->y, pt->s);
   p->setFont(f);
 
-  int y=12;
+  int Height = p->font().pointSize();
+  int y=Height;
   p->drawText(cx+tx, cy+ty, 0, 0, Qt::DontClip, Name);
   // write all properties
   for(Property *p4 = Props.first(); p4 != 0; p4 = Props.next())
     if(p4->display) {
       p->drawText(cx+tx, cy+ty+y, 0, 0, Qt::DontClip, p4->Name+"="+p4->Value);
-      y += 12;
+      y += Height;
     }
 
   if(!isActive) {
