@@ -70,6 +70,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   GraphThick->setValidator(Validator);
   GraphThick->setMaximumWidth(20);
   GraphThick->setText("1");
+  connect(GraphThick, SIGNAL(textChanged(const QString&)), SLOT(slotSetThick(const QString&)));
 
   QHBox *Box1 = new QHBox(Tab1);
   Box1->setSpacing(5);
@@ -95,8 +96,6 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
   QPushButton *DelButt = new QPushButton("Delete Graph", GraphGroup);
   connect(DelButt, SIGNAL(clicked()), SLOT(slotDeleteGraph()));
-  QPushButton *AppButt = new QPushButton("Apply Graph Input", GraphGroup);
-  connect(AppButt, SIGNAL(clicked()), SLOT(slotApplyGraphInput()));
 
   t->addTab(Tab1, "Data");
 
@@ -209,6 +208,7 @@ void DiagramDialog::slotReadVars(int)
 // If the Graph Input is empty, then the variable is also inserted as graph.
 void DiagramDialog::slotTakeVar(QListViewItem *Item)
 {
+ GraphInput->blockSignals(true);
   if(toTake) GraphInput->setText("");
   
   int     i = GraphInput->cursorPosition();
@@ -228,6 +228,8 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
     changed = true;
     toTake  = true;
   }
+  
+  GraphInput->blockSignals(false);
 }
 
 // --------------------------------------------------------------------------
@@ -240,42 +242,14 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
   }
 
   int index = GraphList->index(item);
+  GraphInput->blockSignals(true);
   GraphInput->setText(GraphList->text(index));
+  GraphInput->blockSignals(false);
   
   Graph *g = Diag->Graphs.at(index);
   GraphThick->setText(QString::number(g->Thick));
   ColorButt->setPaletteBackgroundColor(g->Color);
   toTake = false;
-}
-
-// --------------------------------------------------------------------------
-void DiagramDialog::slotApplyGraphInput()
-{
-  if(GraphInput->text().isEmpty()) return;
-
-  Graph *g;
-  if(GraphList->selectedItem() == 0) {   // is item selected ?
-    GraphList->insertItem(GraphInput->text());
-
-    g = new Graph(GraphInput->text());   // create a new graph
-    g->Color = ColorButt->paletteBackgroundColor();
-    g->Thick = GraphThick->text().toInt();
-    Diag->Graphs.append(g);
-  }
-  else {    // change the selected graph
-    int index = GraphList->index(GraphList->selectedItem());
-    g = Diag->Graphs.at(index);
-    g->Line = GraphInput->text();
-    g->Color = ColorButt->paletteBackgroundColor();
-    g->Thick = GraphThick->text().toInt();
-
-    GraphList->changeItem(GraphInput->text(), index);   // must done after the graph settings !!!
-  }
-
-  GraphInput->setText("");  // erase input line and back to default values
-  ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
-  GraphThick->setText("1");
-  changed = true;
 }
 
 // --------------------------------------------------------------------------
@@ -314,17 +288,21 @@ void DiagramDialog::slotNewGraph()
 void DiagramDialog::slotOK()
 {
   slotApply();
-  if(changed) done(1);
-  else done(0);
+  if(changed) done(QDialog::Accepted);
+  else done(QDialog::Rejected);
 }
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotApply()
 {
+  if(Diag->xLabel.isEmpty()) Diag->xLabel = "";   // A QString can be non-Null and empty !!!
+  if(xLabel->text().isEmpty()) xLabel->setText("");
   if(Diag->xLabel != xLabel->text()) {
     Diag->xLabel = xLabel->text();
     changed = true;
   }
+  if(Diag->yLabel.isEmpty()) Diag->yLabel = "";   // A QString can be non-Null and empty !!!
+  if(yLabel->text().isEmpty()) yLabel->setText("");
   if(Diag->yLabel != yLabel->text()) {
     Diag->yLabel = yLabel->text();
     changed = true;
@@ -346,11 +324,41 @@ void DiagramDialog::slotFuncHelp()
 void DiagramDialog::slotSetColor()
 {
   QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
+  if(!c.isValid()) return;
   ColorButt->setPaletteBackgroundColor(c);
+
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
+
+  Graph *g = Diag->Graphs.at(i);
+  g->Color = c;
+  changed = true;
+  toTake  = false;
 }
 
 // --------------------------------------------------------------------------
-void DiagramDialog::slotResetToTake(const QString&)
+// Is set if the graph input line changes.
+void DiagramDialog::slotResetToTake(const QString& s)
 {
-  toTake = false;
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
+
+  Graph *g = Diag->Graphs.at(i);
+  g->Line = s;
+  GraphList->changeItem(s, i);   // must done after the graph settings !!!
+  changed = true;
+  toTake  = false;
+}
+
+// --------------------------------------------------------------------------
+// Is called if the user changes the graph thickness.
+void DiagramDialog::slotSetThick(const QString& s)
+{
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
+
+  Graph *g = Diag->Graphs.at(i);
+  g->Thick = s.toInt();
+  changed = true;
+  toTake  = false;
 }

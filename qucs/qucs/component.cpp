@@ -876,7 +876,7 @@ Transformer::Transformer()
   Model = "Tr";
   Name  = "Tr";
 
-  Props.append(new Property("K", "1", true, "voltage transformation ration"));
+  Props.append(new Property("T", "1", true, "voltage transformation ration"));
 }
 
 Transformer::~Transformer()
@@ -893,44 +893,46 @@ symTrafo::symTrafo()
 {
   Description = "ideal symmetrical transformer";
 
+  Arcs.append(new Arc(-16,-58, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16,-46, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16,-34, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16,-22, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16, 46, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16, 34, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16, 22, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16, 10, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(  4,-18, 13, 13,  16*90, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(  4, -6, 13, 13,  16*90, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(  4,  5, 13, 13,  16*90, 16*180,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,-46,-10,-60,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,-60,-30,-60,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,-58,-10,-70,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,-70,-30,-70,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10,-18, 10,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10,-30, 30,-30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10, 46,-10, 60,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10, 60,-30, 60,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 58,-10, 70,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 70,-30, 70,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10, 17, 10, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10, 30, 30, 30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10, 10,-10,-10,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-10,  0,-30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -1,-45, -1, 45,QPen(QPen::darkBlue,1)));
-  Lines.append(new Line(  1,-45,  1, 45,QPen(QPen::darkBlue,1)));
+  Lines.append(new Line(-10,-10,-30,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10,-22,-10,-10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 10,-30, 10,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-10, 10,-10, 22,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -1,-57, -1, 57,QPen(QPen::darkBlue,1))); // core lines
+  Lines.append(new Line(  1,-57,  1, 57,QPen(QPen::darkBlue,1)));
 
-  Texts.append(new Text(-23,-37,"T1"));
-  Texts.append(new Text(-23, 19,"T2"));
+  Texts.append(new Text(-23,-47,"T1"));
+  Texts.append(new Text(-23, 32,"T2"));
   
-  Arcs.append(new Arc(-21,-54,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-21,  4,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-21,-64,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2))); // mark the turn direction
+  Arcs.append(new Arc(-21, 15,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-12, -2,  4,  4,  0, 16*360,QPen(QPen::darkBlue,2)));
       
-  Ports.append(new Port(-30,-60));
+  Ports.append(new Port(-30,-70));
   Ports.append(new Port( 30,-30));
   Ports.append(new Port( 30, 30));
-  Ports.append(new Port(-30, 60));
-  Ports.append(new Port(-30,  0));
+  Ports.append(new Port(-30, 70));
+  Ports.append(new Port(-30, 10));
+  Ports.append(new Port(-30,-10));
 
-  x1 = -33; y1 = -63;
-  x2 =  33; y2 =  63;
+  x1 = -33; y1 = -73;
+  x2 =  33; y2 =  73;
 
   tx = x1+4;
   ty = y2+4;
@@ -938,8 +940,8 @@ symTrafo::symTrafo()
   Model = "sTr";
   Name  = "Tr";
 
-  Props.append(new Property("n1", "1", true, "voltage transformation ration of coil 1"));
-  Props.append(new Property("n2", "1", true, "voltage transformation ration of coil 2"));
+  Props.append(new Property("T1", "1", true, "voltage transformation ration of coil 1"));
+  Props.append(new Property("T2", "1", true, "voltage transformation ration of coil 2"));
 }
 
 symTrafo::~symTrafo()
@@ -1014,7 +1016,7 @@ Attenuator::Attenuator()
   Model = "Attenuator";
   Name  = "X";
 
-  Props.append(new Property("A", "10 dB", true, "attenuation"));
+  Props.append(new Property("L", "10 dB", true, "attenuation"));
 }
 
 Attenuator::~Attenuator()
@@ -1123,9 +1125,9 @@ Volt_dc::Volt_dc()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("V");
-  Model = QString("V");
-  Name  = QString("V");
+  Sign  = "V";
+  Model = "V";
+  Name  = "V";
 
   Props.append(new Property("U", "1 V", true, "voltage in Volts"));
 }
@@ -1159,9 +1161,9 @@ Ampere_dc::Ampere_dc()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("I");
-  Model = QString("I");
-  Name  = QString("I");
+  Sign  = "I";
+  Model = "I";
+  Name  = "I";
 
   Props.append(new Property("I", "1 mA", true, "current in Ampere"));
 }
@@ -1197,9 +1199,9 @@ Volt_ac::Volt_ac()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Vac");
-  Model = QString("Vac");
-  Name  = QString("V");
+  Sign  = "Vac";
+  Model = "Vac";
+  Name  = "V";
 
   Props.append(new Property("U", "1 V", true, "rms voltage in Volts"));
   Props.append(new Property("f", "1 GHz", true, "frequency in Hertz"));
@@ -1248,9 +1250,9 @@ Source_ac::Source_ac()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Pac");
-  Model = QString("Pac");
-  Name  = QString("P");
+  Sign  = "Pac";
+  Model = "Pac";
+  Name  = "P";
 
   Props.append(new Property("Num", "1", true, "number of the port"));
   Props.append(new Property("Z", "50 Ohm", true, "port impedance"));
@@ -1306,9 +1308,9 @@ VCCS::VCCS()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("VCCS");
-  Model = QString("VCCS");
-  Name  = QString("SRC");
+  Sign  = "VCCS";
+  Model = "VCCS";
+  Name  = "SRC";
 
   Props.append(new Property("G", "1 S", true, "forward transconductance"));
   Props.append(new Property("T", "0", true, "delay time"));
@@ -1360,9 +1362,9 @@ CCCS::CCCS()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("CCCS");
-  Model = QString("CCCS");
-  Name  = QString("SRC");
+  Sign  = "CCCS";
+  Model = "CCCS";
+  Name  = "SRC";
 
   Props.append(new Property("G", "1", true, "forward transfer factor"));
   Props.append(new Property("T", "0", true, "delay time"));
@@ -1417,9 +1419,9 @@ VCVS::VCVS()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("VCVS");
-  Model = QString("VCVS");
-  Name  = QString("SRC");
+  Sign  = "VCVS";
+  Model = "VCVS";
+  Name  = "SRC";
 
   Props.append(new Property("G", "1", true, "forward transfer factor"));
   Props.append(new Property("T", "0", true, "delay time"));
@@ -1472,9 +1474,9 @@ CCVS::CCVS()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("CCVS");
-  Model = QString("CCVS");
-  Name  = QString("SRC");
+  Sign  = "CCVS";
+  Model = "CCVS";
+  Name  = "SRC";
 
   Props.append(new Property("G", "1 Ohm", true, "forward transfer factor"));
   Props.append(new Property("T", "0", true, "delay time"));
@@ -1516,9 +1518,9 @@ TLine::TLine()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("TLIN");
-  Model = QString("TLIN");
-  Name  = QString("Line");
+  Sign  = "TLIN";
+  Model = "TLIN";
+  Name  = "Line";
 
   Props.append(new Property("Z", "50 Ohm", true, "characteristic impedance"));
   Props.append(new Property("L", "1 mm", true, "electrical length of the line"));
@@ -1568,9 +1570,9 @@ Substrate::Substrate()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("SUBST");
-  Model = QString("SUBST");
-  Name  = QString("Subst");
+  Sign  = "SUBST";
+  Model = "SUBST";
+  Name  = "Subst";
 
   Props.append(new Property("er", "9.8", true, "permittivity"));
   Props.append(new Property("h", "1 mm", true, "thickness in meters"));
@@ -1609,9 +1611,9 @@ MSline::MSline()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("MLIN");
-  Model = QString("MLIN");
-  Name  = QString("MS");
+  Sign  = "MLIN";
+  Model = "MLIN";
+  Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
   Props.append(new Property("W", "1 mm", true, "width of the line"));
@@ -1663,9 +1665,9 @@ MScoupled::MScoupled()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("CMS");
-  Model = QString("CMS");
-  Name  = QString("MS");
+  Sign  = "CMS";
+  Model = "CMS";
+  Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
   Props.append(new Property("W", "1 mm", true, "width of the line"));
@@ -1709,9 +1711,9 @@ MSstep::MSstep()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("MSTEP");
-  Model = QString("MSTEP");
-  Name  = QString("MS");
+  Sign  = "MSTEP";
+  Model = "MSTEP";
+  Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true, "substrate"));
   Props.append(new Property("W1", "2 mm", true, "width 1 of the line"));
@@ -1751,9 +1753,9 @@ MScorner::MScorner()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("MCORN");
-  Model = QString("MCORN");
-  Name  = QString("MS");
+  Sign  = "MCORN";
+  Model = "MCORN";
+  Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true, "substrate"));
   Props.append(new Property("W1", "1 mm", true, "width of line 1"));
@@ -1797,9 +1799,9 @@ MStee::MStee()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("MTEE");
-  Model = QString("MTEE");
-  Name  = QString("MS");
+  Sign  = "MTEE";
+  Model = "MTEE";
+  Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true, "substrate"));
   Props.append(new Property("W1", "1 mm", true, "width of line 1"));
@@ -1854,9 +1856,9 @@ MScross::MScross()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("MCROSS");
-  Model = QString("MCROSS");
-  Name  = QString("MS");
+  Sign  = "MCROSS";
+  Model = "MCROSS";
+  Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true, "substrate"));
   Props.append(new Property("W1", "1 mm", true, "width of line 1"));
@@ -1911,9 +1913,9 @@ Coplanar::Coplanar()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("CLIN");
-  Model = QString("CLIN");
-  Name  = QString("CL");
+  Sign  = "CLIN";
+  Model = "CLIN";
+  Name  = "CL";
 
   Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
   Props.append(new Property("W", "1 mm", true, "width of the line"));
@@ -1955,12 +1957,9 @@ Diode::Diode()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString("Diode");
-  Model = QString("Diode");
-  Name  = QString("D");
-
-//  Props.append(new Property("Z", "50 Ohm", true, "characteristic impedance"));
-//  Props.append(new Property("L", "1 mm", true, "electrical length of the line"));
+  Sign  = "Diode";
+  Model = "Diode";
+  Name  = "D";
 }
 
 Diode::~Diode()
@@ -1999,9 +1998,9 @@ DC_Sim::DC_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString(".DC");
-  Model = QString(".DC");
-  Name  = QString("DC");
+  Sign  = ".DC";
+  Model = ".DC";
+  Name  = "DC";
 }
 
 DC_Sim::~DC_Sim()
@@ -2034,9 +2033,9 @@ AC_Sim::AC_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString(".AC");
-  Model = QString(".AC");
-  Name  = QString("AC");
+  Sign  = ".AC";
+  Model = ".AC";
+  Name  = "AC";
 
   Props.append(new Property("Start", "1 GHz", true, "start frequency in Hertz"));
   Props.append(new Property("Stop", "10 GHz", true, "stop frequency in Hertz"));
@@ -2073,9 +2072,9 @@ TR_Sim::TR_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString(".TR");
-  Model = QString(".TR");
-  Name  = QString("TR");
+  Sign  = ".TR";
+  Model = ".TR";
+  Name  = "TR";
 
   Props.append(new Property("Start", "0", true, "start time in seconds"));
   Props.append(new Property("Stop", "1 ms", true, "stop time in seconds"));
@@ -2112,9 +2111,9 @@ SP_Sim::SP_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString(".SP");
-  Model = QString(".SP");
-  Name  = QString("SP");
+  Sign  = ".SP";
+  Model = ".SP";
+  Name  = "SP";
 
   Props.append(new Property("Start", "1 GHz", true, "start frequency in Hertz"));
   Props.append(new Property("Stop", "10 GHz", true, "stop frequency in Hertz"));
@@ -2151,9 +2150,9 @@ HB_Sim::HB_Sim()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString(".HB");
-  Model = QString(".HB");
-  Name  = QString("HB");
+  Sign  = ".HB";
+  Model = ".HB";
+  Name  = "HB";
 
   Props.append(new Property("f", "1 GHz", true, "frequency in Hertz"));
   Props.append(new Property("n", "4", true, "number of harmonics"));
@@ -2189,9 +2188,9 @@ Param_Sweep::Param_Sweep()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = QString(".SW");
-  Model = QString(".SW");
-  Name  = QString("SW");
+  Sign  = ".SW";
+  Model = ".SW";
+  Name  = "SW";
 
   Props.append(new Property("Param", "R1", true, "parameter to sweep"));
   Props.append(new Property("Start", "5 Ohm", true, "start value for sweep"));
