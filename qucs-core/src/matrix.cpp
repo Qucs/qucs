@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.7 2004/06/30 15:04:15 ela Exp $
+ * $Id: matrix.cpp,v 1.8 2004/07/01 14:18:27 ela Exp $
  *
  */
 
@@ -523,7 +523,7 @@ void matrix::exchangeCols (int c1, int c2) {
 }
 
 /* This function converts 2x2 matrices from any of the matrix forms Y,
-   Z, H, G and A to any other.  Also converts S<->A, S<->T and S<->H
+   Z, H, G and A to any other.  Also converts S<->(A, T, H, Y and Z)
    matrices. */
 matrix& twoport (matrix& m, char in, char out) {
   assert (m.getRows () == 2 && m.getCols () == 2);
@@ -564,6 +564,9 @@ matrix& twoport (matrix& m, char in, char out) {
       res->set (2, 1, m.get (1, 2) - m.get (2, 2) * m.get (1, 1) / d);
       res->set (2, 2, -m.get (1, 1) / d);
       break;
+    case 'S': // Y to S
+      *res = ytos (m);
+      break;
     }
     break;
   case 'Z':
@@ -598,6 +601,9 @@ matrix& twoport (matrix& m, char in, char out) {
       res->set (1, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
       res->set (2, 1, 1.0 / d);
       res->set (2, 2, m.get (2, 2) / d);
+      break;
+    case 'S': // Z to S
+      *res = ztos (m);
       break;
     }
     break;
@@ -729,6 +735,12 @@ matrix& twoport (matrix& m, char in, char out) {
       break;
     case 'H': // S to H
       *res = stoh (m);
+      break;
+    case 'Y': // S to Y
+      *res = stoy (m);
+      break;
+    case 'Z': // S to Z
+      *res = stoz (m);
       break;
     }
     break;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.7 2004/06/27 15:11:48 ela Exp $
+ * $Id: check_netlist.h,v 1.8 2004/07/01 14:18:27 ela Exp $
  *
  */
 
@@ -65,6 +65,7 @@ struct definition_t {
 // Structure defining a key value pair.
 struct property_t {
   char * key;       // key name
+  int type;         // type of property
   struct {
     nr_double_t d;  // default value
     char * s;       // default string
@@ -92,7 +93,8 @@ struct define_t {
 #define PROP_NO_SUBSTRATE 0
 #define PROP_NONLINEAR    1
 #define PROP_LINEAR       0
-#define PROP_NO_PROP      { NULL, { PROP_NO_VAL, PROP_NO_STR }, PROP_NO_RANGE }
+#define PROP_NO_PROP      { NULL, PROP_REAL, { PROP_NO_VAL, PROP_NO_STR }, \
+                            PROP_NO_RANGE }
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
 #define PROP_NO_RANGE     { 0, 0 }
@@ -100,9 +102,13 @@ struct define_t {
 #define PROP_VAL_MIN      DBL_MIN
 #define PROP_POS_RANGE    { 0, +PROP_VAL_MAX }
 #define PROP_NEG_RANGE    { -PROP_VAL_MAX, 0 }
+#define PROP_INT          0
+#define PROP_REAL         1
+#define PROP_STR          2
 
 #define PROP_IS_PROP(prop)   ((prop).key != NULL)
-#define PROP_IS_VAL(prop)    ((prop).defaultval.s == PROP_NO_STR)
+#define PROP_IS_VAL(prop)    ((prop).type != PROP_STR)
+#define PROP_IS_INT(prop)    ((prop).type == PROP_INT)
 #define PROP_IS_STR(prop)    (!PROP_IS_VAL (prop))
 #define PROP_HAS_RANGE(prop) ((prop).range.l != 0 || (prop).range.h != 0)
 
