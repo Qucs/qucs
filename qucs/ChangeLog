@@ -1,3 +1,8 @@
+2004-02-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Substituting the variable PATHXFORM depending
+	on the build system.
+
 2004-01-31  Michael Margraf
 
 	* added tr(...) to all strings

@@ -41,6 +41,7 @@ Diode::Diode()
   Name  = "D";
 
   Props.append(new Property("Is", "1e-15 A", true, QObject::tr("saturation current")));
+  Props.append(new Property("n", "1", true, QObject::tr("ideality coefficient")));
 }
 
 Diode::~Diode()
