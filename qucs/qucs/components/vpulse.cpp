@@ -50,13 +50,13 @@ vPulse::vPulse()
 		QObject::tr("voltage before and after the pulse")));
   Props.append(new Property("U2", "1 V", true,
 		QObject::tr("voltage of the pulse")));
-  Props.append(new Property("t1", "0", true,
+  Props.append(new Property("T1", "0", true,
 		QObject::tr("start time of the pulse")));
-  Props.append(new Property("t2", "1 ms", true,
+  Props.append(new Property("T2", "1 ms", true,
 		QObject::tr("ending time of the pulse")));
-  Props.append(new Property("tr", "1 ns", false,
+  Props.append(new Property("Tr", "1 ns", false,
 		QObject::tr("rise time of the leading edge")));
-  Props.append(new Property("tf", "1 ns", false,
+  Props.append(new Property("Tf", "1 ns", false,
 		QObject::tr("fall time of the trailing edge")));
 }
 
