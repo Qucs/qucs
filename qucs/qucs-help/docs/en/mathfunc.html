@@ -96,7 +96,7 @@ Qucs equations.<br><br>
 <td>converts z-parameter matrix to y-parameter matrix</td></tr>
 <tr><td><tt>twoport(m,from,to)</tt></td>
 <td>converts the given 2-port matrix from one representation into another,
-possible values for <tt>from</tt> and <tt>to</tt> are 'Y', 'Z', 'H', 'G',
+possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 'A', 'S' and 'T'.</td></tr>
 <tr><td><tt>sign(x)</tt></td><td>computes the signum function</td></tr>
 <tr><td><tt>sinc(x)</tt></td><td>returns sin(x)/x and one at x=0</td></tr>
@@ -108,6 +108,10 @@ possible values for <tt>from</tt> and <tt>to</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>Rollet(x)</tt></td><td>Rollet stability factor of matrix x (twoport S-parameter matrix)</td></tr>
 <tr><td><tt>Mu(x)</tt></td><td>Mu stability factor of matrix x (twoport S-parameter matrix)</td></tr>
 <tr><td><tt>Mu2(x)</tt></td><td>Mu' stability factor of matrix x (twoport S-parameter matrix)</td></tr>
+<tr><td><tt>linspace(start,end,number)</tt></td><td>creates a vector with <tt>"number"</tt> values from <tt>"start"</tt> to <tt>"end"</tt> linearly contributed</td></tr>
+<tr><td><tt>StabCircleS(S,angles)</tt></td><td>source stability circle of twoport S-parameter matrix</td></tr>
+<tr><td><tt>StabCircleL(S,angles)</tt></td><td>load stability circle of twoport S-parameter matrix</td></tr>
+<tr><td><tt>NoiseCircle(Sopt,Fmin,Rn,NF,angels)</tt></td><td>noise circle</td></tr>
 </table>
 <br>
 

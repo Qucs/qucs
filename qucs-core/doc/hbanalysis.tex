@@ -47,6 +47,7 @@ concept. Let us define the following symbols:
 \item[] M = number of (independent) voltage sources
 \item[] N = number of connections between linear and non-linear subcircuit
 \item[] K = number of calculated harmonics
+\item[] L = number of nodes in linear subcircuit
 \end{description}
 
 \begin{figure}[ht]
@@ -70,7 +71,8 @@ interconnections between linear and non-linear subcircuit:
 \begin{equation}
 \label{eqn:HBlin}
 (\underline{I})
-  = (\underline{\tilde{Y}})\cdot (\underline{V}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
+  = (\underline{\tilde{Y}})_{N\times M}\cdot (\underline{V}_S) +
+    (\underline{\hat{Y}})_{N\times N}\cdot (\underline{V})
   = (\underline{I}_S) + (\underline{\hat{Y}})\cdot (\underline{V})
 \end{equation}
 Because $(\underline{V}_S)$ is known and constant, the first term
@@ -79,9 +81,9 @@ can already be computed to give $(\underline{I}_S)$.
 \addvspace{12pt}
 
 The non-linear circuit is modeled by its current function
-$i(t) = f_g(v_1, ..., v_N)$
+$i(t) = f_g(v_1, ..., v_P)$
 and by the charge of its capacitances
-$q(t) = f_q(v_1, ..., v_N)$.
+$q(t) = f_q(v_1, ..., v_Q)$.
 These functions must be Fourier-transformed to give the
 frequency-domain vectors $(\underline{Q})$ and $(\underline{I}_G)$,
 respectively.
@@ -110,11 +112,18 @@ is zero matrix.
 
 After each iteration step, the inverse Fourier transformation must
 be applied to the voltage vector $(\underline{V})$. Then the time domain
-voltages $v_1...v_N$ are put into $i(t) = f_g(v_1, ..., v_N)$
-and $q(t) = f_q(v_1, ..., v_N)$ again. Now, a Fourier transformation
+voltages $v_{0,1}...v_{K,N}$ are put into $i(t) = f_g(v_1, ..., v_P)$
+and $q(t) = f_q(v_1, ..., v_Q)$ again. Now, a Fourier transformation
 gives the vectors $(\underline{Q})$ and $(\underline{I}_G)$ for the
 next iteration step. After repeating this several times, a simulation
-result has hopefully be found.
+result has hopefully be found.\\
+Having found this result means having got the voltages $v_1...v_N$ at
+the interconnections of the two subcircuits. With these values the
+voltages at all nodes can be calculated: Forget about the non-linear
+subcircuit, put voltage sources at the former interconnections (using
+the calculated values) and perform a normal AC simulation. After that
+the simulation is complete.
+
 
 \section{Going through each Step}
 
@@ -123,27 +132,35 @@ result has hopefully be found.
 It needs several steps to get the transadmittance matrices $[\tilde{Y}]$
 and $[\hat{Y}]$ mentioned in equation \eqref{eqn:HBlin}. First the MNA
 matrix of the linear subcircuit (figure \ref{fig:hb_concept}) is created
-(chapter \ref{sec:MNA}). Then the transimpedance matrix is derived by
+(chapter \ref{sec:MNA}) without the voltage sources $S_1$...$S_M$. Then
+the transimpedance matrix is derived by
 exciting one by one the port nodes of the MNA matrix with unity current.
 After that the transadmittance matrix is calculated by inverting the
 transimpedance matrix. Finally the matrices $[\tilde{Y}]$ and $[\hat{Y}]$
 are filled with the corresponding elements of the overall transadmittance
-matrix.
+matrix.\\
+Note: The MNA matrix of the linear subcircuit has $L$ nodes.
+Every node, that is connected to the non-linear subcircuit or/and is
+connected to a voltage source, is called "port" in the following text.
+So, there are $M+N$ ports. The $N$ ports of the interconnections are
+all with reference to ground, whereas the other $M$ ports can be
+differential.
 
 \addvspace{12pt}
 
 Now this should be described in more detail: By use of the MNA matrix
 $[A]$, the $n$-th column of the transimpedance matrix $[Z]$ should be
 calculated. The voltage source at port $n$ is connected to node $i$
-(positive terminal) and to port $j$ (negative terminal). This results
-in the following equation:
+(positive terminal) and to node $j$ (negative terminal). This results
+in the following equation. (If port $n$ is referenced to ground, the
+-1 is simply omitted.)
 \begin{equation}
 \label{eqn:HBtrans}
 [A]\cdot
 \begin{bmatrix}
 V_1\\
 \vdots\\
-V_K\\
+V_L\\
 \end{bmatrix}
 =
 \begin{bmatrix}
@@ -189,6 +206,13 @@ circuit. The resulting MNA matrix cannot be solved. To avoid
 this problem, shunt each port with a $100\Omega$ resistor. The
 effect of these resistors can be easily removed by subtracting
 0.01S from the first main diagonal of the transadmittance matrix.
+
+
+\subsection{Starting Values}
+
+
+\subsection{Solution algorithm}
+
 
 
 \subsection{Termination Criteria}
@@ -509,3 +533,42 @@ Parameters:\\
 \texttt{>\quad \qquad nprev *= n;} \\
 \texttt{>\quad \}} \\
 
+
+\section{Large-Signal S-Parameter Simulation}
+
+Using harmonic balance techniques, it is also possible to perform
+an S-parameter simulation in the large-signal regime. This is called
+LSSP (large-signal s-parameter). Figure \ref{fig:lssp} shows the
+principle. The port $n$ excites the circuit with the simulation
+frequency $f_0$; meanwhile the power of all other ports is set to
+zero. Having voltage and current of the fundamental frequency $f_0$
+at the ports, the S-parameters can be calculated:
+
+\begin{equation}
+\label{eqn:ui2s}
+\underline{S}_{mn} = \frac{\underline{U}_m(f_0) - \underline{I}_m(f_0)\cdot Z_m}
+                          {\underline{U}_n(f_0) + \underline{I}_n(f_0)\cdot Z_n}
+		\cdot \sqrt{\frac{Z_n}{Z_m}}
+\end{equation}
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=7cm]{lssp}
+\end{center}
+\caption{S-parameter from AC voltages and currents}
+\label{fig:lssp}
+\end{figure}
+\FloatBarrier
+
+An algorithm in symbolic language should describe the whole LSSP:
+
+\addvspace{12pt}
+
+\texttt{>\quad for n=1 to $NumberOfPorts$ \{} \\
+\texttt{>\quad \qquad Set power of port $n$ to $P_n$.} \\
+\texttt{>\quad \qquad Set power of ports $\ne n$ to 0.} \\
+\texttt{>\quad \qquad Perform Harmonic Balance.} \\
+\texttt{>\quad \qquad } \\
+\texttt{>\quad \qquad for m=1 to $NumberOfPorts$} \\
+\texttt{>\quad \qquad \qquad Calculate $\underline{S}_{mn}$ according to equation \ref{eqn:ui2s}.} \\
+\texttt{>\quad }\} \\

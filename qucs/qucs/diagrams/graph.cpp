@@ -73,6 +73,7 @@ void Graph::paintLines(ViewPainter *p, int x0, int y0)
 {
   int x, y;
   int *pp = Points;
+
   if(*pp < 0)  pp++;
   for(int n1=countY; n1>0; n1--) {    // every branch of curves
     if(*pp >= 0)  p->drawPoint(x0+(*pp), y0-(*(pp+1)));

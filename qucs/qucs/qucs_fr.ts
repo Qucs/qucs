@@ -2429,6 +2429,10 @@ Invocation :  qucsedit [-r] fichier
         <translation>© Copyright 2003, 2004 par Michael Margraf
  {2004, 2005?}</translation>
     </message>
+    <message>
+        <source>Cannot find variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
