@@ -1,7 +1,7 @@
 /*
- * attenuator.cpp - attenuator class implementation
+ * gyrator.cpp - gyrator class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.3 2004-01-13 23:23:01 ela Exp $
+ * $Id: gyrator.cpp,v 1.1 2004-01-13 23:23:01 ela Exp $
  *
  */
 
@@ -35,20 +35,23 @@
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "attenuator.h"
+#include "gyrator.h"
 
-attenuator::attenuator () : circuit (2) {
-  type = CIR_ATTENUATOR;
+gyrator::gyrator () : circuit (4) {
+  type = CIR_GYRATOR;
 }
 
-void attenuator::calcS (nr_double_t frequency) {
-  nr_double_t a = pow (10.0, - getPropertyDouble ("L") / 20.0);
+void gyrator::calcS (nr_double_t frequency) {
+  nr_double_t R = getPropertyDouble ("R");
   nr_double_t z = getPropertyDouble ("Zref");
-  nr_double_t r = (z0 - z) / (z0 + z);
-  nr_double_t s11 = r * (1 - a * a) / (a * a - r * r);
-  nr_double_t s21 = a * (1 - r * r) / (a * a - r * r);
-  setS (1, 1, s11);
-  setS (2, 2, s11);
-  setS (1, 2, s21);
-  setS (2, 1, s21);
+  nr_double_t r = R / z0;
+  nr_double_t s1 = r * r / (r * r + 4.0);
+  nr_double_t s2 = 2.0 * r / (r * r + 4.0);
+  setS (1, 1, s1); setS (2, 2, s1); setS (3, 3, s1); setS (4, 4, s1);
+  setS (1, 4, 1.0 - s1);
+  setS (2, 3, 1.0 - s1);
+  setS (3, 2, 1.0 - s1);
+  setS (4, 1, 1.0 - s1);
+  setS (1, 2, +s2); setS (2, 4, +s2); setS (3, 1, +s2); setS (4, 3, +s2);
+  setS (1, 3, -s2); setS (2, 1, -s2); setS (3, 4, -s2); setS (4, 2, -s2);
 }

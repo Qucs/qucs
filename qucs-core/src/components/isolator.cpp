@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: isolator.cpp,v 1.3 2004-01-13 23:23:01 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
@@ -37,12 +38,16 @@
 #include "isolator.h"
 
 isolator::isolator () : circuit (2) {
-  setS (1, 1, 0.0);
-  setS (2, 2, 0.0);
   setS (1, 2, 0.0);
-  setS (2, 1, 1.0);
   type = CIR_ISOLATOR;
 }
 
 void isolator::calcS (nr_double_t frequency) {
+  nr_double_t z1 = getPropertyDouble ("Z1");
+  nr_double_t z2 = getPropertyDouble ("Z2");
+  nr_double_t s1 = (z1 - z0) / (z1 + z0);
+  nr_double_t s2 = (z2 - z0) / (z2 + z0);
+  setS (1, 1, s1);
+  setS (2, 2, s2);
+  setS (2, 1, sqrt (1 - s1 * s1) * sqrt (1 - s2 * s2));
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.c,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: check_netlist.c,v 1.3 2004-01-13 23:23:01 ela Exp $
  *
  */
 
@@ -65,11 +65,11 @@ struct definition definition_available[] =
     /* power source */
     { "Pac", 2, 0, { "f", "Z", "Num", NULL }, { "P", NULL } },
     /* circulator */
-    { "Circulator", 3, 0, { NULL }, { NULL } },
+    { "Circulator", 3, 0, { "Z1", "Z2", "Z3", NULL }, { NULL } },
     /* isolator */
-    { "Isolator", 2, 0, { NULL }, { NULL } },
+    { "Isolator", 2, 0, { "Z1", "Z2", NULL }, { NULL } },
     /* attenuator */
-    { "Attenuator", 2, 0, { "L", NULL }, { NULL } },
+    { "Attenuator", 2, 0, { "L", "Zref", NULL }, { NULL } },
     /* bias tee */
     { "BiasT", 3, 0, { NULL }, { NULL } },
     /* DC feed */
@@ -86,6 +86,12 @@ struct definition definition_available[] =
     { "Idc", 2, 0, { "I", NULL }, { NULL } },
     /* AC voltage source */
     { "Vac", 2, 0, { "U", "f", NULL }, { NULL } },
+    /* phase shifter */
+    { "PShift", 2, 0, { "phi", "Zref", NULL }, { NULL } },
+    /* gyrator */
+    { "Gyrator", 4, 0, { "R", "Zref", NULL }, { NULL } },
+    /* ideal transmission line */
+    { "TLIN", 2, 0, { "Z", "L", NULL }, { NULL } },
 
     /* s-parameter analysis */
     { "SP", 0, 1, { "Start", "Stop", "Step", NULL }, { NULL } },
