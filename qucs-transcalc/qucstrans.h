@@ -156,6 +156,7 @@ private slots:
   void slotHelpIntro();
   void slotOptions();
   void slotRadioChecked(int);
+  void slotCopyToClipBoard();
 
 private:
   void updateSelection ();
