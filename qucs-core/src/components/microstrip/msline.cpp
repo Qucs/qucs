@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.41 2005/02/14 19:56:45 raimi Exp $
+ * $Id: msline.cpp,v 1.42 2005/03/14 21:59:09 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 
 #include "logging.h"
 #include "complex.h"
+#include "matrix.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
@@ -47,15 +48,11 @@ msline::msline () : circuit (2) {
 }
 
 void msline::calcNoiseSP (nr_double_t) {
+  // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t l = exp (alpha * getPropertyDouble ("L"));
-  nr_double_t z = zl;
-  nr_double_t r = (z - z0) / (z + z0);
-  nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
-  setN (1, 1, -f * (r * r + l));
-  setN (2, 2, -f * (r * r + l));
-  setN (1, 2, +f * 2 * r * sqrt (l));
-  setN (2, 1, +f * 2 * r * sqrt (l));
+  matrix s = getMatrixS ();
+  matrix e = eye (getSize ());
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 void msline::calcPropagation (nr_double_t frequency) {
@@ -83,11 +80,11 @@ void msline::calcPropagation (nr_double_t frequency) {
   analyseQuasiStatic (W, h, t, er, SModel, ZlEff, ErEff, WEff);
 
   // analyse dispersion of Zl and Er (use WEff here?)
-  analyseDispersion (WEff, h, er, ZlEff, ErEff, frequency, DModel,
+  analyseDispersion (W, h, er, ZlEff, ErEff, frequency, DModel,
 		     ZlEffFreq, ErEffFreq);
 
   // analyse losses of line
-  analyseLoss (WEff, t, er, rho, D, tand, ZlEffFreq, ZlEffFreq, ErEffFreq,
+  analyseLoss (W, t, er, rho, D, tand, ZlEff, ZlEff, ErEff,
 	       frequency, "Hammerstad", ac, ad);
 
   // calculate propagation constants and reference impedance
@@ -202,8 +199,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
 
     // compute strip thickness effect
     if (t != 0) {
-      du1 = t / M_PI * log (1 + 4 * M_E / t / 
-			    sqr (coth (sqrt (6.517 * W / h))));
+      du1 = t / M_PI * log (1 + 4 * M_E / t / sqr (coth (sqrt (6.517 * u))));
     }
     else du1 = 0;
     du = du1 * (1 + sech (sqrt (er - 1))) / 2;
@@ -483,10 +479,7 @@ void msline::calcAC (nr_double_t frequency) {
 }
 
 void msline::calcNoiseAC (nr_double_t) {
+  // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t l = exp (alpha * getPropertyDouble ("L"));
-  nr_double_t z = zl;
-  nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
-  setN (1, 1, +f * (l + 1)); setN (1, 2, -f * 2 * sqrt (l));
-  setN (2, 2, +f * (l + 1)); setN (2, 1, -f * 2 * sqrt (l));
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }

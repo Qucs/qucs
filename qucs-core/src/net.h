@@ -1,7 +1,7 @@
 /*
  * net.h - net class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.13 2004/12/03 18:57:03 raimi Exp $
+ * $Id: net.h,v 1.14 2005/03/14 21:59:07 raimi Exp $
  *
  */
 
@@ -32,6 +32,7 @@ class nodeset;
 class analysis;
 class dataset;
 class environment;
+template <class type_t> class ptrlist;
 
 class net : public object
 {
@@ -70,6 +71,7 @@ class net : public object
   void orderAnalysis (void);
   analysis * findLastOrder (analysis *);
   void sortChildAnalyses (analysis *);
+  int  containsAnalysis (analysis *, int);
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
   int  countPorts (void);
@@ -85,7 +87,7 @@ class net : public object
   nodeset * nset;
   circuit * drop;
   circuit * root;
-  analysis * actions;
+  ptrlist<analysis> * actions;
   environment * env;
   int nPorts;
   int nSources;

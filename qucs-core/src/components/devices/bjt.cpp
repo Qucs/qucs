@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.26 2005/02/03 20:40:19 raimi Exp $
+ * $Id: bjt.cpp,v 1.27 2005/03/14 21:59:08 raimi Exp $
  *
  */
 
@@ -42,7 +42,7 @@
 #include "device.h"
 #include "bjt.h"
 
-#define NEWSGP 1
+#define NEWSGP 0
 
 #define NODE_B 1 /* base node       */
 #define NODE_C 2 /* collector node  */
@@ -66,8 +66,13 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   nr_double_t Cbci = getOperatingPoint ("Cbci");
   nr_double_t gbc  = getOperatingPoint ("gmu");
   nr_double_t Ccs  = getOperatingPoint ("Ccs");
+#if NEWSGP && 0
   nr_double_t gmfr = getOperatingPoint ("gmf");
   nr_double_t gmr  = getOperatingPoint ("gmr");
+#else
+  nr_double_t gmfr = getOperatingPoint ("gm");
+  nr_double_t go   = getOperatingPoint ("go");
+#endif
   nr_double_t Ptf  = getPropertyDouble ("Ptf");
   nr_double_t Tf   = getPropertyDouble ("Tf");
 
@@ -82,6 +87,8 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
 
   // build admittance matrix and convert it to S-parameter matrix
   matrix y (4);
+#if NEWSGP && 0
+  // for some reason this small signal equivalent can't be used
   y.set (NODE_B, NODE_B, Ybc + Ybe);
   y.set (NODE_B, NODE_C, -Ybc);
   y.set (NODE_B, NODE_E, -Ybe);
@@ -98,6 +105,24 @@ matrix bjt::calcMatrixY (nr_double_t frequency) {
   y.set (NODE_S, NODE_C, -Ycs);
   y.set (NODE_S, NODE_E, 0);
   y.set (NODE_S, NODE_S, Ycs);
+#else /* !NEWSGP */
+  y.set (NODE_B, NODE_B, Ybc + Ybe);
+  y.set (NODE_B, NODE_C, -Ybc);
+  y.set (NODE_B, NODE_E, -Ybe);
+  y.set (NODE_B, NODE_S, 0);
+  y.set (NODE_C, NODE_B, -Ybc + gmf);
+  y.set (NODE_C, NODE_C, Ybc + Ycs + go);
+  y.set (NODE_C, NODE_E, -gmf - go);
+  y.set (NODE_C, NODE_S, -Ycs);
+  y.set (NODE_E, NODE_B, -Ybe - gmf);
+  y.set (NODE_E, NODE_C, -go);
+  y.set (NODE_E, NODE_E, Ybe + gmf + go);
+  y.set (NODE_E, NODE_S, 0);
+  y.set (NODE_S, NODE_B, 0);
+  y.set (NODE_S, NODE_C, -Ycs);
+  y.set (NODE_S, NODE_E, 0);
+  y.set (NODE_S, NODE_S, Ycs);
+#endif /* !NEWSGP */
   return y;
 }
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.14 2005/02/14 19:56:43 raimi Exp $
+ * $Id: evaluate.h,v 1.15 2005/03/14 21:59:06 raimi Exp $
  *
  */
 
@@ -362,6 +362,12 @@ public:
   static constant * mu1_mv (constant *);
   static constant * mu2_m  (constant *);
   static constant * mu2_mv (constant *);
+
+  static constant * linspace (constant *);
+  static constant * noise_circle_d (constant *);
+  static constant * noise_circle_v (constant *);
+  static constant * stab_circle_l (constant *);
+  static constant * stab_circle_s (constant *);
 };
 
 // Type of application function.

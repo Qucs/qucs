@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.7 2005/02/28 09:28:48 raimi Exp $
+ * $Id: cpwline.cpp,v 1.8 2005/03/14 21:59:09 raimi Exp $
  *
  */
 
@@ -249,6 +249,14 @@ void cpwline::calcSP (nr_double_t frequency) {
   setS (1, 2, s21); setS (2, 1, s21);
 }
 
+void cpwline::calcNoiseSP (nr_double_t) {
+  // calculate noise using Bosma's theorem
+  nr_double_t T = getPropertyDouble ("Temp");
+  matrix s = getMatrixS ();
+  matrix e = eye (getSize ());
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
+}
+
 void cpwline::initDC (void) {
   // a DC short (voltage source V = 0 volts)
   setVoltageSources (1);
@@ -283,4 +291,10 @@ void cpwline::calcAC (nr_double_t frequency) {
 
   setY (1, 1, y11); setY (2, 2, y11);
   setY (1, 2, y21); setY (2, 1, y21);
+}
+
+void cpwline::calcNoiseAC (nr_double_t) {
+  // calculate noise using Bosma's theorem
+  nr_double_t T = getPropertyDouble ("Temp");
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }

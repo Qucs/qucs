@@ -1,7 +1,7 @@
 /*
  * pac.cpp - AC power source class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.8 2004/12/07 22:33:32 raimi Exp $
+ * $Id: pac.cpp,v 1.9 2005/03/14 21:59:08 raimi Exp $
  *
  */
 
@@ -37,6 +37,7 @@
 #include "component_id.h"
 #include "consts.h"
 #include "pac.h"
+#include "constants.h"
 
 pac::pac () : circuit (2) {
   type = CIR_PAC;
@@ -49,6 +50,14 @@ void pac::calcSP (nr_double_t) {
   setS (2, 2, z / (z + 2));
   setS (1, 2, 2 / (z + 2));
   setS (2, 1, 2 / (z + 2));
+}
+
+void pac::calcNoiseSP (nr_double_t) {
+  nr_double_t r = getPropertyDouble ("Z");
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
+  setN (1, 1, +f); setN (2, 2, +f);
+  setN (1, 2, -f); setN (2, 1, -f);
 }
 
 void pac::calcDC (void) {
@@ -64,6 +73,14 @@ void pac::calcAC (nr_double_t) {
   nr_double_t i = sqrt (8 * p / r);
   calcDC ();
   setI (1, +i); setI (2, -i);
+}
+
+void pac::calcNoiseAC (nr_double_t) {
+  nr_double_t r = getPropertyDouble ("Z");
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t f = kelvin (T) / T0 * 4.0 / r;
+  setN (1, 1, +f); setN (2, 2, +f);
+  setN (1, 2, -f); setN (2, 1, -f);
 }
 
 void pac::calcTR (nr_double_t t) {

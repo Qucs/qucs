@@ -1,7 +1,7 @@
 /*
  * mscoupled.cpp - parallel coupled microstrip lines class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.17 2004/11/24 19:15:53 raimi Exp $
+ * $Id: mscoupled.cpp,v 1.18 2005/03/14 21:59:09 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@
 
 #include "logging.h"
 #include "complex.h"
+#include "matrix.h"
 #include "object.h"
 #include "node.h"
 #include "matrix.h"
@@ -75,9 +76,9 @@ void mscoupled::calcPropagation (nr_double_t frequency) {
 
   // analyse losses of line
   nr_double_t ace, aco, ade, ado;
-  msline::analyseLoss (W, t, er, rho, D, tand, ZleFreq, ZloFreq, ErEffeFreq,
+  msline::analyseLoss (W, t, er, rho, D, tand, Zle, Zlo, ErEffe,
 		       frequency, "Hammerstad", ace, ade);
-  msline::analyseLoss (W, t, er, rho, D, tand, ZloFreq, ZleFreq, ErEffoFreq,
+  msline::analyseLoss (W, t, er, rho, D, tand, Zlo, Zle, ErEffo,
 		       frequency, "Hammerstad", aco, ado);
 
   // compute propagation constants for even and odd mode
@@ -122,6 +123,14 @@ void mscoupled::calcSP (nr_double_t frequency) {
   // isolated paths
   setS (1, 3, Ye - Yo); setS (3, 1, Ye - Yo);
   setS (2, 4, Ye - Yo); setS (4, 2, Ye - Yo);
+}
+
+void mscoupled::calcNoiseSP (nr_double_t) {
+  // calculate noise using Bosma's theorem
+  nr_double_t T = getPropertyDouble ("Temp");
+  matrix s = getMatrixS ();
+  matrix e = eye (getSize ());
+  setMatrixN (kelvin (T) / T0 * (e - s * transpose (conj (s))));
 }
 
 /* The function calculates the quasi-static dielectric constants and
@@ -204,11 +213,13 @@ void mscoupled::analysQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t s,
     nr_double_t uo = u;
     if (t != 0 && s > 10 * (2 * t)) {
       nr_double_t dW = 0;
-      if (u >= M_1_PI / 2 && M_1_PI / 2 > 2 * t)
+      // SCHNEIDER, referred by JANSEN
+      if (u >= M_1_PI / 2 && M_1_PI / 2 > 2 * t / h)
 	dW = t * (1 + log (2 * h / t)) / M_PI;
       else if (W > 2 * t)
 	dW = t * (1 + log (4 * M_PI * W / t)) / M_PI;
-      nr_double_t dt = t * h / s / er;
+      // JANSEN
+      nr_double_t dt = 2 * t * h / s / er;
       nr_double_t We = W + dW * (1 - 0.5 * exp (-0.69 * dW / dt));
       nr_double_t Wo = We + dt;
       ue = We / h;
@@ -323,7 +334,7 @@ void mscoupled::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t s,
 
     // dispersion of even characteristic impedance
     nr_double_t t, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21;
-    q11 = 0.893 * (1 - 0.3 / (1 + 0.7 * (er -1)));
+    q11 = 0.893 * (1 - 0.3 / (1 + 0.7 * (er - 1)));
     t = pow (fn / 20, 4.91);
     q12 = 2.121 * t / (1 + q11 * t) * exp (-2.87 * g) * pow (g, 0.902);
     q13 = 1 + 0.038 * pow (er / 8, 5.1);
@@ -440,4 +451,10 @@ void mscoupled::calcAC (nr_double_t frequency) {
   setY (1, 2, y2); setY (2, 1, y2); setY (3, 4, y2); setY (4, 3, y2);
   setY (1, 3, y3); setY (2, 4, y3); setY (3, 1, y3); setY (4, 2, y3);
   setY (1, 4, y4); setY (2, 3, y4); setY (3, 2, y4); setY (4, 1, y4);
+}
+
+void mscoupled::calcNoiseAC (nr_double_t) {
+  // calculate noise using Bosma's theorem
+  nr_double_t T = getPropertyDouble ("Temp");
+  setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));
 }
