@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.11 2004-09-08 18:25:19 ela Exp $
+ * $Id: ucs.cpp,v 1.12 2004-09-10 16:26:56 ela Exp $
  *
  */
 
@@ -37,7 +37,8 @@
 #include "equation.h"
 #include "environment.h"
 #include "exceptionstack.h"
-
+#include "analysis.h"
+#include "trsolver.h"
 using namespace qucs;
 
 int main (int argc, char ** argv) {
@@ -48,6 +49,10 @@ int main (int argc, char ** argv) {
   circuit * gnd;
   dataset * out;
   environment * root;
+
+  trsolver * t = new trsolver();
+  t->calcCoefficients();
+  return 0;
 
   loginit ();
 

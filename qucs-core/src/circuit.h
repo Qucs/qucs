@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.23 2004-09-07 12:53:11 ela Exp $
+ * $Id: circuit.h,v 1.24 2004-09-10 16:26:56 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@ class operatingpoint;
 class dcsolver;
 class spsolver;
 class acsolver;
+class trsolver;
 class matrix;
 
 class circuit : public object
@@ -54,6 +55,8 @@ class circuit : public object
   virtual void calcNoise (nr_double_t) { }
   virtual void initAC (acsolver *) { }
   virtual void calcAC (nr_double_t) { }
+  virtual void initTR (trsolver *) { }
+  virtual void calcTR (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
 
   // real basics

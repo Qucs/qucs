@@ -1,3 +1,9 @@
+2004-09-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Added wave guide impedance model
+	for dispersion of characteristic impedance of a single
+	microstrip line by M.V. Schneider.
+
 2004-09-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Implemented Schneider formulae
