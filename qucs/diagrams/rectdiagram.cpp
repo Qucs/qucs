@@ -74,8 +74,8 @@ void RectDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  if(fabs(xmax-xmin) < 1e-200) { xmax += xmax; xmin -= xmin; }
-  if(fabs(ymax-ymin) < 1e-200) { ymax += ymax; ymin -= ymin; }
+  if(fabs(xmax-xmin) < 1e-200) { xmax += fabs(xmax); xmin -= fabs(xmin); }
+  if(fabs(ymax-ymin) < 1e-200) { ymax += fabs(ymax); ymin -= fabs(ymin); }
   if(ymax == 0 && ymin == 0) { ymax = 1; ymin = -1; }
   if(xmax == 0 && xmin == 0) { xmax = 1; xmin = -1; }
   xlow = xmin;  xup = xmax;
