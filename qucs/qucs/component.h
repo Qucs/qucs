@@ -97,6 +97,11 @@ public:
 };
 
 // ####################################################################################
+// ##########                                                                ##########
+// ##########                         Lumped Components                      ##########
+// ##########                                                                ##########
+// ####################################################################################
+
 class Resistor : public Component  {
 public:
 	Resistor();
@@ -118,11 +123,32 @@ public:
   virtual Capacitor* newOne();
 };
 
+class dcBlock : public Component  {
+public:
+	dcBlock();
+	virtual ~dcBlock();
+  virtual dcBlock* newOne();
+};
+
 class Inductor : public Component  {
 public:
 	Inductor();
 	virtual ~Inductor();
   virtual Inductor* newOne();
+};
+
+class dcFeed : public Component  {
+public:
+	dcFeed();
+	virtual ~dcFeed();
+  virtual dcFeed* newOne();
+};
+
+class BiasT : public Component  {
+public:
+	BiasT();
+	virtual ~BiasT();
+  virtual BiasT* newOne();
 };
 
 class Transformer : public Component  {
@@ -145,6 +171,33 @@ public:
 	virtual ~Ground();
   virtual Ground* newOne();
 };
+
+class Attenuator : public Component  {
+public:
+	Attenuator();
+	virtual ~Attenuator();
+  virtual Attenuator* newOne();
+};
+
+class Isolator : public Component  {
+public:
+	Isolator();
+	virtual ~Isolator();
+  virtual Isolator* newOne();
+};
+
+class Circulator : public Component  {
+public:
+	Circulator();
+	virtual ~Circulator();
+  virtual Circulator* newOne();
+};
+
+// ####################################################################################
+// ##########                                                                ##########
+// ##########                              Sources                           ##########
+// ##########                                                                ##########
+// ####################################################################################
 
 class Volt_dc : public Component  {
 public:
@@ -174,6 +227,108 @@ public:
   virtual Source_ac* newOne();
 };
 
+class VCCS : public Component  {
+public:
+	VCCS();
+	virtual ~VCCS();
+  virtual VCCS* newOne();
+};
+
+class CCCS : public Component  {
+public:
+	CCCS();
+	virtual ~CCCS();
+  virtual CCCS* newOne();
+};
+
+class VCVS : public Component  {
+public:
+	VCVS();
+	virtual ~VCVS();
+  virtual VCVS* newOne();
+};
+
+class CCVS : public Component  {
+public:
+	CCVS();
+	virtual ~CCVS();
+  virtual CCVS* newOne();
+};
+
+// ####################################################################################
+// ##########                                                                ##########
+// ##########                       Transmission Lines                       ##########
+// ##########                                                                ##########
+// ####################################################################################
+
+class TLine : public Component  {
+public:
+	TLine();
+	virtual ~TLine();
+  virtual TLine* newOne();
+};
+
+class Substrate : public Component  {
+public:
+	Substrate();
+	virtual ~Substrate();
+  virtual Substrate* newOne();
+};
+
+class MSline : public Component  {
+public:
+	MSline();
+	virtual ~MSline();
+  virtual MSline* newOne();
+};
+
+class MSstep : public Component  {
+public:
+	MSstep();
+	virtual ~MSstep();
+  virtual MSstep* newOne();
+};
+
+class MScorner : public Component  {
+public:
+	MScorner();
+	virtual ~MScorner();
+  virtual MScorner* newOne();
+};
+
+class MStee : public Component  {
+public:
+	MStee();
+	virtual ~MStee();
+  virtual MStee* newOne();
+};
+
+class MScross : public Component  {
+public:
+	MScross();
+	virtual ~MScross();
+  virtual MScross* newOne();
+};
+
+
+// ####################################################################################
+// ##########                                                                ##########
+// ##########                      Nonlinear Components                      ##########
+// ##########                                                                ##########
+// ####################################################################################
+
+class Diode : public Component  {
+public:
+	Diode();
+	virtual ~Diode();
+  virtual Diode* newOne();
+};
+
+
+// ####################################################################################
+// ##########                                                                ##########
+// ##########                     Simulation Components                      ##########
+// ##########                                                                ##########
 // ####################################################################################
 
 class DC_Sim : public Component  {
