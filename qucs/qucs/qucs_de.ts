@@ -3787,6 +3787,7 @@ Qt universal circuit simulator
 
 </source>
         <translation>Besonderen Dank an Jens Flucke
+
 </translation>
     </message>
     <message>
