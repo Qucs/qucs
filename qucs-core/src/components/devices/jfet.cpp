@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.1 2004/06/19 07:34:55 ela Exp $
+ * $Id: jfet.cpp,v 1.2 2004/06/20 11:29:35 ela Exp $
  *
  */
 
@@ -53,6 +53,8 @@ jfet::jfet () : circuit (3) {
 }
 
 void jfet::calcSP (nr_double_t frequency) {
+
+  // fetch computed operating points
   nr_double_t Cgd = getOperatingPoint ("Cgd");
   nr_double_t Cgs = getOperatingPoint ("Cgs");
   nr_double_t ggs = getOperatingPoint ("ggs");
@@ -60,10 +62,12 @@ void jfet::calcSP (nr_double_t frequency) {
   nr_double_t gds = getOperatingPoint ("gds");
   nr_double_t gm  = getOperatingPoint ("gm");
 
+  // compute the models admittances
   complex Ygd = rect (ggd, 2.0 * M_PI * frequency * Cgd);
   complex Ygs = rect (ggs, 2.0 * M_PI * frequency * Cgs);
   complex Yds = gds;
 
+  // build admittance matrix and convert it to S-parameter matrix
   matrix y = matrix (3); 
   y.set (NODE_G, NODE_G, Ygd + Ygs);
   y.set (NODE_G, NODE_D, -Ygd);
@@ -74,17 +78,7 @@ void jfet::calcSP (nr_double_t frequency) {
   y.set (NODE_S, NODE_G, -Ygs - gm);
   y.set (NODE_S, NODE_D, -Yds);
   y.set (NODE_S, NODE_S, Ygs + Yds + gm);
-  matrix s = ytos (y);
-
-  setS (1, 1, s.get (1, 1));
-  setS (1, 2, s.get (1, 2));
-  setS (1, 3, s.get (1, 3));
-  setS (2, 1, s.get (2, 1));
-  setS (2, 2, s.get (2, 2));
-  setS (2, 3, s.get (2, 3));
-  setS (3, 1, s.get (3, 1));
-  setS (3, 2, s.get (3, 2));
-  setS (3, 3, s.get (3, 3));
+  copyMatrixS (ytos (y));
 }
 
 void jfet::initDC (dcsolver * solver) {
@@ -124,19 +118,26 @@ void jfet::initDC (dcsolver * solver) {
 }
 
 void jfet::calcDC (void) {
+
+  // fetch device model parameters
   nr_double_t Is   = getPropertyDouble ("Is");
   nr_double_t n    = getPropertyDouble ("N");
+  nr_double_t Isr  = getPropertyDouble ("Isr");
+  nr_double_t nr   = getPropertyDouble ("Nr");
   nr_double_t Vt0  = getPropertyDouble ("Vt0");
   nr_double_t l    = getPropertyDouble ("Lambda");
   nr_double_t beta = getPropertyDouble ("Beta");
 
   nr_double_t Ugs, Ugd, Ut, T, gm, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
-  nr_double_t Uds, ggs, Igs, ggd, Igd, Ids, gds, gtiny;
+  nr_double_t Uds, ggs, Igs, ggd, Igd, Ids, gds, gtiny, pol;
+
+  // apply polarity of JFET
+  pol = getPropertyDouble ("type") ? -1 : 1;
 
   T = -K + 26.5;
   Ut = T * kB / Q;
-  Ugd = real (getV (NODE_G) - getV (NODE_D));
-  Ugs = real (getV (NODE_G) - getV (NODE_S));
+  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
 
   // critical voltage necessary for bad start values
   UgsCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
@@ -146,16 +147,21 @@ void jfet::calcDC (void) {
 
   Uds = Ugs - Ugd;
 
-  // gate source diode
-  gtiny = Ugs < - 10 * Ut * n ? Is : 0;
-  ggs = Is / Ut / n * exp (Ugs / Ut / n) + gtiny;
-  Igs = Is * (exp (Ugs / Ut / n) - 1) + gtiny * Ugs;
+  // gate-source diode
+  gtiny = Ugs < - 10 * Ut * n ? (Is + Isr) : 0;
+  ggs = Is / Ut / n * exp (Ugs / Ut / n) + 
+    Isr / Ut / n * exp (Ugs / Ut / nr) + gtiny;
+  Igs = Is * (exp (Ugs / Ut / n) - 1) + 
+    Isr * (exp (Ugs / Ut / nr) - 1) + gtiny * Ugs;
 
-  // gate drain diode
-  gtiny = Ugd < - 10 * Ut * n ? Is : 0;
-  ggd = Is / Ut / n * exp (Ugd / Ut / n) + gtiny;
-  Igd = Is * (exp (Ugd / Ut / n) - 1) + gtiny * Ugd;
+  // gate-drain diode
+  gtiny = Ugd < - 10 * Ut * n ? (Is + Isr) : 0;
+  ggd = Is / Ut / n * exp (Ugd / Ut / n) + 
+    Isr / Ut / n * exp (Ugd / Ut / nr) + gtiny;
+  Igd = Is * (exp (Ugd / Ut / n) - 1) + 
+    Isr * (exp (Ugd / Ut / nr) - 1) + gtiny * Ugd;
 
+  // normal (forward) mode of operation
   if (Uds >= 0) {
     nr_double_t Ugst = Ugs - Vt0;
     // normal mode, cutoff region
@@ -180,6 +186,7 @@ void jfet::calcDC (void) {
       }
     }
   }
+  // inverse (backward) mode of operation
   else {
     nr_double_t Ugdt = Ugd - Vt0;
     // inverse mode, cutoff region
@@ -205,18 +212,20 @@ void jfet::calcDC (void) {
     }
   }
 
+  // save these operating points
   setOperatingPoint ("gm", gm);
   setOperatingPoint ("gds", gds);
   setOperatingPoint ("Id", Ids);
 
+  // compute autonomic current sources
   IeqG = Igs - ggs * Ugs;
   IeqD = Igd - ggd * Ugd;
   IeqS = Ids - gm * Ugs - gds * Uds;
+  setI (NODE_G, (-IeqG - IeqD) * pol);
+  setI (NODE_D, (+IeqD - IeqS) * pol);
+  setI (NODE_S, (+IeqG + IeqS) * pol);
 
-  setI (NODE_G, -IeqG - IeqD);
-  setI (NODE_D, +IeqD - IeqS);
-  setI (NODE_S, +IeqG + IeqS);
-
+  // apply admittance matrix elements
   setY (NODE_G, NODE_G, ggs + ggd);
   setY (NODE_G, NODE_D, -ggd);
   setY (NODE_G, NODE_S, -ggs);
@@ -229,40 +238,52 @@ void jfet::calcDC (void) {
 }
 
 void jfet::calcOperatingPoints (void) {
+
+  // fetch device model parameters
   nr_double_t Is   = getPropertyDouble ("Is");
   nr_double_t n    = getPropertyDouble ("N");
+  nr_double_t Isr  = getPropertyDouble ("Isr");
+  nr_double_t nr   = getPropertyDouble ("Nr");
   nr_double_t z    = getPropertyDouble ("M");
   nr_double_t Cgd0 = getPropertyDouble ("Cgd");
   nr_double_t Cgs0 = getPropertyDouble ("Cgs");
   nr_double_t Pb   = getPropertyDouble ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
   
-  nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd;
+  nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd, pol;
+
+  // apply polarity of JFET
+  pol = getPropertyDouble ("type") ? -1 : 1;
 
   T = -K + 26.5;
   Ut = kB * T / Q;
-  Ugd = real (getV (NODE_G) - getV (NODE_D));
-  Ugs = real (getV (NODE_G) - getV (NODE_S));
+  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
 
-  ggs = Is / Ut / n * exp (Ugs / Ut / n);
-  Igs = Is * (exp (Ugs / Ut / n) - 1);
-  ggd = Is / Ut / n * exp (Ugd / Ut / n);
-  Igd = Is * (exp (Ugd / Ut / n) - 1);
+  // calculate diode currents and its derivatives
+  ggs = Is / Ut / n * exp (Ugs / Ut / n) + Isr / Ut / n * exp (Ugs / Ut / nr);
+  Igs = Is * (exp (Ugs / Ut / n) - 1) + Isr * (exp (Ugs / Ut / nr) - 1);
+  ggd = Is / Ut / n * exp (Ugd / Ut / n) + Isr / Ut / n * exp (Ugd / Ut / nr);
+  Igd = Is * (exp (Ugd / Ut / n) - 1) + Isr * (exp (Ugd / Ut / nr) - 1);
 
+  // capacitance of gate-drain diode
   if (Ugd <= Fc * Pb)
     Cgd = Cgd0 * pow (1 - Ugd / Pb, -z);
   else
     Cgd = Cgd0 / pow (1 - Fc, z) * (1 + z * (Ugd - Fc * Pb) / Pb / (1 - Fc));
 
+  // capacitance of gate-source diode
   if (Ugs <= Fc * Pb)
     Cgs = Cgs0 * pow (1 - Ugs / Pb, -z);
   else
     Cgs = Cgs0 / pow (1 - Fc, z) * (1 + z * (Ugs - Fc * Pb) / Pb / (1 - Fc));
 
+  // save operating points
   setOperatingPoint ("ggs", ggs);
   setOperatingPoint ("ggd", ggd);
-  setOperatingPoint ("Ugs", Ugs);
-  setOperatingPoint ("Ugd", Ugd);
+  setOperatingPoint ("Vgs", Ugs);
+  setOperatingPoint ("Vgd", Ugd);
+  setOperatingPoint ("Vds", Ugs - Ugd);
   setOperatingPoint ("Cgd", Cgd);
   setOperatingPoint ("Cgs", Cgs);
 }

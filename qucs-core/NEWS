@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * N- and P-channel JFET implementation (Shichman and Hodges model)
  * resistors with R=0 possible in DC analysis
 
 Version 0.0.2

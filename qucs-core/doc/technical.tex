@@ -3311,15 +3311,6 @@ y = Z_{0}\cdot \left(g_{d} + j\omega C_{d}\right)
 \section{Junction FET}
 %\addcontentsline{toc}{section}{Junction FET}
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=0.5\linewidth]{jfet}
-\end{center}
-\caption{junction FET symbol and large signal model}
-\label{fig:jfet}
-\end{figure}
-\FloatBarrier
-
 The following table contains the model parameters for the JFET model.
 
 \addvspace{12pt}
@@ -3334,6 +3325,8 @@ Rd & $R_{D}$ & drain ohmic resistance & $\ohm$ & $0.0$\\
 Rs & $R_{S}$ & source ohmic resistance & $\ohm$ & $0.0$\\
 Is & $I_{S}$ & gate-junction saturation current & $\ampere$ & $10^{-14}$\\
 N & $N$ & gate P-N emission coefficient & & $1.0$\\
+Isr & $I_{SR}$ & gate-junction recombination current parameter & $\ampere$ & $0.0$\\
+Nr & $N_{R}$ & Isr emission coefficient & & $2.0$\\
 Cgs & $C_{gs}$ & zero-bias gate-source junction capacitance & $\farad$ & $0.0$\\
 Cgd & $C_{gd}$ & zero-bias gate-drain junction capacitance & $\farad$ & $0.0$\\
 Pb & $P_{b}$ & gate-junction potential & $\volt$ & $1.0$\\
@@ -3343,18 +3336,30 @@ M & $M$ & gate P-N grading coefficient & & $0.5$
 
 \addvspace{12pt}
 
+\subsection{Large signal model}
+%\addcontentsline{toc}{subsection}{Large signal model}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{jfet}
+\end{center}
+\caption{junction FET symbol and large signal model}
+\label{fig:jfet}
+\end{figure}
+\FloatBarrier
+
 The current equation of the gate source diode and its derivative
 writes as follows:
 \begin{align}
-I_{GS} &= I_{S}\cdot \left(e^{\frac{V_{GS}}{N\cdot V_{T}}} - 1\right)\\
-g_{gs} &= \dfrac{\partial I_{GS}}{\partial V_{GS}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{GS}}{N\cdot V_{T}}}
+I_{GS} &= I_{S}\cdot \left(e^{\frac{V_{GS}}{N\cdot V_{T}}} - 1\right) + I_{SR}\cdot \left(e^{\frac{V_{GS}}{N_{R}\cdot V_{T}}} - 1\right)\\
+g_{gs} &= \dfrac{\partial I_{GS}}{\partial V_{GS}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{GS}}{N\cdot V_{T}}} + \dfrac{I_{SR}}{N_{R}\cdot V_{T}}\cdot e^{\frac{V_{GS}}{N_{R}\cdot V_{T}}}
 \end{align}
 
 The current equation of the gate drain diode and its derivative writes
 as follows:
 \begin{align}
-I_{GD} &= I_{S}\cdot \left(e^{\frac{V_{GD}}{N\cdot V_{T}}} - 1\right)\\
-g_{gd} &= \dfrac{\partial I_{GD}}{\partial V_{GD}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{GD}}{N\cdot V_{T}}}
+I_{GD} &= I_{S}\cdot \left(e^{\frac{V_{GD}}{N\cdot V_{T}}} - 1\right) + I_{SR}\cdot \left(e^{\frac{V_{GD}}{N_{R}\cdot V_{T}}} - 1\right)\\
+g_{gd} &= \dfrac{\partial I_{GD}}{\partial V_{GD}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{GD}}{N\cdot V_{T}}} + \dfrac{I_{SR}}{N_{R}\cdot V_{T}}\cdot e^{\frac{V_{GD}}{N_{R}\cdot V_{T}}}
 \end{align}
 
 Both equations contain the gate-junction saturation current $I_{S}$,
@@ -3364,7 +3369,6 @@ $q$.  The operating temperature $T$ must be specified in Kelvin.
 \begin{equation}
 V_{T} = \dfrac{k_{B}\cdot T}{q}
 \end{equation}
-
 
 The controlled drain currents have been defined by Shichman and Hodges
 for different modes of operations.
@@ -3490,6 +3494,9 @@ I_{GS_{eq}} &= I_{GS} - g_{gs}\cdot V_{GS}\\
 I_{GD_{eq}} &= I_{GD} - g_{gd}\cdot V_{GD}\\
 I_{DS_{eq}} &= I_{d} - g_{m}\cdot V_{GS} - g_{ds}\cdot V_{DS}
 \end{align}
+
+\subsection{Small signal model}
+%\addcontentsline{toc}{subsection}{Small signal model}
 
 \begin{figure}[ht]
 \begin{center}

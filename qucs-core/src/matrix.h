@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.4 2004/05/20 18:06:33 ela Exp $
+ * $Id: matrix.h,v 1.5 2004/06/20 11:29:35 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@ class matrix
   void set (int, int, complex);
   int getCols (void) { return cols; }
   int getRows (void) { return rows; }
+  complex * getData (void) { return data; }
   void print (void);
   void exchangeRows (int, int);
   void exchangeCols (int, int);
