@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.8 2004-05-02 12:02:11 ela Exp $
+ * $Id: evaluate.cpp,v 1.9 2004-05-22 19:48:32 ela Exp $
  *
  */
 
@@ -649,7 +649,7 @@ constant * evaluate::phase_d (constant * args) {
 constant * evaluate::phase_c (constant * args) {
   complex *   c1 = C (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = arg (*c1) * 180.0 / M_PIl;
+  res->d = arg (*c1) * 180.0 / M_PI;
   return res;
 }
 
@@ -657,7 +657,7 @@ constant * evaluate::phase_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = arg (*v1);
-  *res->v *= 180.0 / M_PIl;
+  *res->v *= 180.0 / M_PI;
   return res;
 }
 
@@ -665,7 +665,7 @@ constant * evaluate::phase_v (constant * args) {
 constant * evaluate::arg_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = d1 >= 0.0 ? 0.0 : M_PIl;
+  res->d = d1 >= 0.0 ? 0.0 : M_PI;
   return res;
 }
 
@@ -759,7 +759,7 @@ constant * evaluate::ln_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_COMPLEX);
   if (d1 >= 0.0) res->c = new complex (log (d1));
-  else res->c = new complex (log (-d1), M_PIl);
+  else res->c = new complex (log (-d1), M_PI);
   return res;
 }
 
@@ -782,7 +782,7 @@ constant * evaluate::log10_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_COMPLEX);
   if (d1 >= 0.0) res->c = new complex (log10 (d1));
-  else res->c = new complex (log10 (-d1), M_PIl * M_LOG10El);
+  else res->c = new complex (log10 (-d1), M_PI * M_LOG10E);
   return res;
 }
 
@@ -805,7 +805,7 @@ constant * evaluate::log2_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_COMPLEX);
   if (d1 >= 0.0) res->c = new complex (log2 (d1));
-  else res->c = new complex (log2 (-d1), M_PIl * M_LOG2El);
+  else res->c = new complex (log2 (-d1), M_PI * M_LOG2E);
   return res;
 }
 
@@ -893,7 +893,7 @@ constant * evaluate::cos_v (constant * args) {
 constant * evaluate::arccos_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = M_PI_2l - atan (d1 / sqrt (1.0 - d1 * d1));
+  res->d = M_PI_2 - atan (d1 / sqrt (1.0 - d1 * d1));
   return res;
 }
 
@@ -981,7 +981,7 @@ constant * evaluate::cot_v (constant * args) {
 constant * evaluate::arccot_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = M_PI_2l - atan (d1);
+  res->d = M_PI_2 - atan (d1);
   return res;
 }
 
@@ -1253,7 +1253,7 @@ constant * evaluate::max_d (constant * args) {
 constant * evaluate::max_c (constant * args) {
   complex *   c1 = C (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  if (fabs (arg (*c1)) < M_PI_2l) res->c = new complex (abs (*c1));
+  if (fabs (arg (*c1)) < M_PI_2) res->c = new complex (abs (*c1));
   else  res->c = new complex (-abs (*c1));
   return res;
 }
@@ -1276,7 +1276,7 @@ constant * evaluate::min_d (constant * args) {
 constant * evaluate::min_c (constant * args) {
   complex *   c1 = C (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  if (fabs (arg (*c1)) < M_PI_2l) res->c = new complex (abs (*c1));
+  if (fabs (arg (*c1)) < M_PI_2) res->c = new complex (abs (*c1));
   else  res->c = new complex (-abs (*c1));
   return res;
 }

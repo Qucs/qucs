@@ -30,7 +30,7 @@ unfixed) have a look at the file BUGS.
 	- Use LU decomposition for matrix inversion and determinants.  Done
 	  by Gaussian methods.
 - Implement sec(), cosec(), sech(), cosech(), si() and sign() functions.
-- Fix dependency in dataset variables when e.g. using max().
+	- Fix dependency in dataset variables when e.g. using max().
 - Add constants like pi to the available symbols in equations.
 - Implement list and logarithmic sweeps and merge them with the
   existing linear parameter sweep.
@@ -44,7 +44,7 @@ unfixed) have a look at the file BUGS.
 - Implement class for vectors of matrices.
 	- Check for cyclic analysis definitions.
 	- Somehow merge the variable class and the equation base classes.
-- Fix dataset output of multiple variable sweeps.
+	- Fix dataset output of multiple variable sweeps.
 	- Implement correct analysis order.
 	- Optimize reduce by searching for a connection that will result 
 	  in the new subnetwork with the smallest number of s-parameter

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.9 2004-05-02 12:02:11 ela Exp $
+ * $Id: vector.cpp,v 1.10 2004-05-22 19:48:32 ela Exp $
  *
  */
 
@@ -135,7 +135,7 @@ nr_double_t vector::maximum () {
   nr_double_t d, max_D = -DBL_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < M_PI_2l ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
     if (d > max_D) max_D = d;
   }
   return max_D;
@@ -149,7 +149,7 @@ nr_double_t vector::minimum () {
   nr_double_t d, min_D = DBL_MAX;
   for (int i = 0; i < getSize (); i++) {
     c = data[i];
-    d = fabs (arg (c)) < M_PI_2l ? abs (c) : -abs (c);
+    d = fabs (arg (c)) < M_PI_2 ? abs (c) : -abs (c);
     if (d < min_D) min_D = d;
   }
   return min_D;

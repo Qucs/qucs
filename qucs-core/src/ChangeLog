@@ -1,5 +1,9 @@
 2004-05-22  Stefan Jahn  <stefan@lkcc.org>
 
+	* equation.cpp: Fixed a bug which occurred when a function
+	like max() or avg() is used to create a value from a dataset.
+	This kind of function produces now an independent dataset.
+
 	* circuit.h (MAX_CIR_VSRCS): Raised the maximum number of
 	builtin voltage sources (for circulator).
 
