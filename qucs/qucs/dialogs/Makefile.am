@@ -33,7 +33,7 @@ libdialogs_a_SOURCES = fileshowdialog.cpp helpdialog.cpp messagebox.cpp \
 
 noinst_HEADERS = newprojdialog.h $(MOCHEADERS)
 
-INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
