@@ -1,3 +1,7 @@
+2004-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* matvec.cpp: Fixed bug in copy constructor.
+
 2004-10-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* tmatrix.h (class tmatrix), tvector.h (class tvector): Fixed
