@@ -17,10 +17,13 @@ install_location=
 type=DATA
 
 [Config for BinMakefileAm]
+addcxxflags=
 bin_program=qucs
-cxxflags=-O0 -g3 -Wall
-ldadd=\s$(LIB_QPE) $(LIB_QT)
-ldflags=\s
+cflags=
+cppflags=
+cxxflags=\s-O0 -g3 -Wall
+ldadd=$(LIB_QPE) $(LIB_QT)
+ldflags=\s \s
 
 [General]
 AMChanged=false
@@ -29,12 +32,14 @@ configure_args=
 email=margraf@mwt.ee.tu-berlin.de
 kdevprj_version=1.3
 lfv_open_groups=
-make_options=-j1
+make_options=\s-j1
 makefiles=Makefile.am,qucs/Makefile.am,qucs/docs/Makefile.am,qucs/docs/en/Makefile.am,qucs/bitmaps/Makefile.am,qucs/sim/Makefile.am
+modifyMakefiles=true
 project_name=Qucs
 project_type=normal_qt2
+short_info=
 sub_dir=qucs/
-version=0.1
+version=0.0.1
 version_control=None
 workspace=1
 
@@ -104,7 +109,7 @@ install_location=
 type=DATA
 
 [qucs/Makefile.am]
-files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/thing.cpp,qucs/thing.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h
+files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/thing.cpp,qucs/thing.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h
 sub_dirs=bitmaps,sim
 type=prog_main
 
@@ -667,6 +672,18 @@ install=false
 install_location=
 type=HEADER
 
+[qucs/polardiagram.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/polardiagram.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
 [qucs/qucs.cpp]
 dist=true
 install=false
@@ -741,6 +758,18 @@ install_location=
 type=SOURCE
 
 [qucs/simmessage.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[qucs/smithdiagram.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/smithdiagram.h]
 dist=true
 install=false
 install_location=

@@ -29,15 +29,24 @@
   *@author Michael Margraf
   */
 
+struct cPoint {
+  cPoint(double _x, double _yr, double _yi)
+       : x(_x), yr(_yr), yi(_yi) {};
+  double  x, yr, yi;
+};
+
+
 class Graph {
 public: 
-	Graph();
+	Graph(const QString& _Line="");
 	~Graph();
 
-  void paint(QPainter *p);
+  void    paint(QPainter *p);
+  QString save();
+  bool    load(const QString& Line);
 
   int  count, *Points;
-//  QPtrList<QPoint> Points;
+  QPtrList<cPoint> cPoints;
   QString Line;
   QColor  Color;
   int     Thick;

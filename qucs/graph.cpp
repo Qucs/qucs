@@ -17,11 +17,16 @@
 
 #include "graph.h"
 
-Graph::Graph()
+Graph::Graph(const QString& _Line)
 {
-  count = 0;    // no points in graph
-  Thick = 1;
-  Color = QColor(0,0,255);
+  Line = _Line;
+
+  count  = 0;    // no points in graph
+  Points = 0;
+  Thick  = 1;
+  Color  = QColor(0,0,255);
+
+  cPoints.setAutoDelete(true);
 }
 
 Graph::~Graph()
@@ -35,6 +40,7 @@ void Graph::paint(QPainter *p)
 //  if(p1 == 0) return;
 
   int *pp = Points;
+  if(pp == 0) return;
   p->setPen(QPen(Color, Thick, Qt::SolidLine));
   p->drawPoint(*pp, *(pp+1));
 
@@ -46,4 +52,35 @@ void Graph::paint(QPainter *p)
     p->drawLine(*pp, *(pp+1), *(pp+2), *(pp+3));
     pp += 2;
   }
+}
+
+// ---------------------------------------------------------------------
+QString Graph::save()
+{
+  QString s = "      <"+Line+" "+Color.name()+" "+QString::number(Thick)+">";
+  return s;
+}
+
+// ---------------------------------------------------------------------
+bool Graph::load(const QString& _s)
+{
+  bool ok;
+  QString s = _s;
+
+  if(s.at(0) != '<') return false;
+  if(s.at(s.length()-1) != '>') return false;
+  s = s.mid(1, s.length()-2);   // cut off start and end character
+
+  Line  = s.section(' ',0,0);    // Line
+
+  QString n;
+  n  = s.section(' ',1,1);    // Color
+  Color.setNamedColor(n);
+  if(!Color.isValid()) return false;
+
+  n  = s.section(' ',2,2);    // Thick
+  Thick = n.toInt(&ok);
+  if(!ok) return false;
+
+  return true;
 }

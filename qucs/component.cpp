@@ -40,6 +40,11 @@ Component::Component()
 
   isSelected = false;
   isActive   = true;
+
+  Arcs.setAutoDelete(true);
+  Lines.setAutoDelete(true);
+  Ports.setAutoDelete(true);
+  Props.setAutoDelete(true);
 }
 
 Component::~Component()

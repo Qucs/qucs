@@ -169,7 +169,10 @@ void DiagramDialog::slotApplyGraphInput()
   if(GraphInput->text().isEmpty()) return;
   if(SelectedVars->currentItem() == -1) {   // is item selected ?
     SelectedVars->insertItem(GraphInput->text());
-    Diag->loadVarData(GraphInput->text(), ProjDir->absPath()+"/"+ChooseData->currentText()+".dat");
+
+    Graph *g = new Graph(GraphInput->text());   // create a new graph
+    Diag->Graphs.append(g);
+    Diag->loadVarData(ProjDir->absPath()+"/"+ChooseData->currentText()+".dat");
   }
   else {
 //    SelectedVars->
