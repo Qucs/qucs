@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
+ * $Id: matrix.cpp,v 1.3 2004-02-01 22:36:03 ela Exp $
  *
  */
 
@@ -241,8 +241,10 @@ complex det (matrix& a) {
     }
     return res;
   }
-  res = a.get (1, 1);
-  return res;
+  else if (s == 1) {
+    return a.get (1, 1);
+  }
+  return 1;
 }
 
 // Compute inverse matrix of the given matrix.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.6 2004-01-30 21:40:35 ela Exp $
+ * $Id: circuit.cpp,v 1.7 2004-02-01 22:36:03 ela Exp $
  *
  */
 
@@ -228,4 +228,14 @@ complex circuit::getI (int port) {
    the circuit depending on the port number. */
 void circuit::setI (int port, complex z) {
   MatrixI[port - 1] = z;
+}
+
+// Returns the circuits voltage value at the given port.
+complex circuit::getV (int port) {
+  return MatrixV[port - 1];
+}
+
+// Sets the circuits voltage value at the given port.
+void circuit::setV (int port, complex z) {
+  MatrixV[port - 1] = z;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.3 2004-01-24 17:35:00 ela Exp $
+ * $Id: component_id.h,v 1.4 2004-02-01 22:36:03 ela Exp $
  *
  */
 
@@ -28,6 +28,8 @@
 /* Enumerate component type identifiers. */
 enum circuit_type {
   CIR_UNKNOWN = -1,
+
+  // linear components
   CIR_GROUND,
   CIR_OPEN,
   CIR_TEE,
@@ -56,7 +58,11 @@ enum circuit_type {
   CIR_GYRATOR,
   CIR_TLINE,
 
-  CIR_MSLINE
+  // microstrip components
+  CIR_MSLINE,
+
+  // non-linear components
+  CIR_DIODE
 };
 
 #endif /* __COMPONENT_ID_H__ */
