@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.cpp,v 1.4 2004-05-02 16:59:31 ela Exp $
+ * $Id: analysis.cpp,v 1.5 2004-05-17 19:50:51 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@ analysis::analysis () : object () {
   env = NULL;
   actions = NULL;
   type = ANALYSIS_UNKNOWN;
+  runs = 0;
 }
 
 // Constructor creates a named instance of the analysis class.
@@ -49,6 +50,7 @@ analysis::analysis (char * n) : object (n) {
   env = NULL;
   actions = NULL;
   type = ANALYSIS_UNKNOWN;
+  runs = 0;
 }
 
 // Destructor deletes the analysis class object.
@@ -63,6 +65,7 @@ analysis::analysis (analysis & a) : object (a) {
   env = a.env;
   actions = a.actions;
   type = a.type;
+  runs = a.runs;
 }
 
 /* This function adds the given analysis to the actions being

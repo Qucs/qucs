@@ -23,11 +23,13 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Do not permit duplicate parameter names in parameter sweeps, but
-  allow them in same order sweeps.
+- Implement list and logarithmic sweeps and merge them with the
+  existing linear parameter sweep.
+	- Do not permit duplicate parameter names in parameter sweeps, but
+	  allow them in same order sweeps.
 	- Implement implicit dependencies of analysis types.
-- Check for duplicate definitions in equations and parameter sweep
-  variables.
+	- Check for duplicate definitions in equations and parameter sweep
+	  variables.
 - Add string constants to equation base class.
 - Allow equation variables in component properties.
 - Implement class for vectors of matrices.
@@ -38,7 +40,7 @@ unfixed) have a look at the file BUGS.
 	- Optimize reduce by searching for a connection that will result 
 	  in the new subnetwork with the smallest number of s-parameter
 	  to calculate.
-- Avoid both types of singularities.
+- Avoid both types of singularities of s-parameter analysis.
 	- Insert open node points if necessary.
 	- Make dedicated signal ports.
 	- Implement 4-port voltage controlled current source (VCCS).
@@ -64,4 +66,4 @@ unfixed) have a look at the file BUGS.
 - Implement matrix conversion routines for datasets.
 - Add noise parameters in touchstone file importer.
 	- Implement 6-port transformer.
-- Add microstrip elements to the list of available components.
+	- Add microstrip elements to the list of available components.

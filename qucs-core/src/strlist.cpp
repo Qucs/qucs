@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.cpp,v 1.3 2004-05-09 12:54:03 ela Exp $
+ * $Id: strlist.cpp,v 1.4 2004-05-17 19:50:51 ela Exp $
  *
  */
 
@@ -99,6 +99,17 @@ int strlist::contains (char * str) {
       res++;
   }
   return res;
+}
+
+/* The returns the position of the first occurrence of the specified
+   string in the list or -1 if it does not contains the string. */
+int strlist::index (char * str) {
+  int res = 0;
+  for (struct strlist_t * s = root; s != NULL; s = s->next, res++) {
+    if (s->str != NULL && str != NULL && !strcmp (s->str, str)) 
+      return res;
+  }
+  return -1;
 }
 
 /* This function returns the string positioned at the specified

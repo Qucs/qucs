@@ -1,7 +1,7 @@
 /*
  * dataset.h - dataset class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.h,v 1.4 2004-04-13 20:41:17 ela Exp $
+ * $Id: dataset.h,v 1.5 2004-05-17 19:50:51 ela Exp $
  *
  */
 
@@ -43,6 +43,8 @@ class dataset : public object
   void setFile (const char *);
   void print (void);
   void printData (vector *, FILE *);
+  void printDependency (vector *, FILE *);
+  void printVariable (vector *, FILE *);
   vector * findDependency (char *);
   vector * findVariable (char *);
   vector * getDependencies (void) { return dependencies; }
