@@ -46,10 +46,6 @@ bool TabDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  Graph *g = Graphs.first();
-  if(g == 0) return false;
-  if(g->cPointsX.isEmpty()) return false;
-
   QSize r;
   QFontMetrics  metrics(QucsSettings.font);
   int tHeight = metrics.height();
@@ -62,6 +58,10 @@ bool TabDiagram::calcDiagram()
   Lines.append(new Line(x2, y2, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
+
+  Graph *g = Graphs.first();
+  if(g == 0) return false;
+  if(g->cPointsX.isEmpty()) return false;
 
   // ................................................
   double *py, *px;

@@ -40,7 +40,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,3,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,4,2,5,5);
 
   QLabel *l1 = new QLabel(tr("Data Display:"), Tab1);
   gp->addWidget(l1,0,0);
@@ -60,7 +60,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab2 = new QWidget(t);
-  QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
+  QGridLayout *gp2 = new QGridLayout(Tab2,4,2,5,5);
   Check_GridOn = new QCheckBox(tr("show Grid"),Tab2);
   gp2->addMultiCellWidget(Check_GridOn,0,0,0,1);
 

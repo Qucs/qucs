@@ -560,6 +560,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "MBEND") c = new MSmbend();
 	else if(cstr == "OPEN") c = new MSopen();
 	else if(cstr == "GAP") c = new MSgap();
+	else if(cstr == "Sc") c = new MScoupled();
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
         break;

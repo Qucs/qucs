@@ -45,7 +45,7 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
 
   // ...........................................................
   QWidget *Tab1 = new QWidget(t);
-  QGridLayout *gp = new QGridLayout(Tab1,4,2,5,5);
+  QGridLayout *gp = new QGridLayout(Tab1,5,2,5,5);
 
   QLabel *l1 = new QLabel(tr("Font (set after reload):"), Tab1);
   gp->addWidget(l1,0,0);

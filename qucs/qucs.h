@@ -90,6 +90,10 @@ public slots:
     void slotEditUndo();    // makes the last operation undone
     void slotEditRedo();    // makes the last undo undone
     void slotApplSettings();// open dialog to change application settings
+    void slotAlignTop();    // align selected elements with respect to top
+    void slotAlignBottom(); // align selected elements with respect to bottom
+    void slotAlignLeft();   // align selected elements with respect to left
+    void slotAlignRight();  // align selected elements with respect to right
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
     void slotGettingStarted();  // shows a HTML docu: Getting started
@@ -142,7 +146,7 @@ public:
     QAction *projNew, *projOpen, *projDel, *applSettings;
     QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
     QAction *magPlus, *magMinus;
-    QAction *intoH, *popH;
+    QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
     QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
     QAction *helpIndex, *helpGetStart;
 

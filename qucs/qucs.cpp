@@ -1283,8 +1283,8 @@ pInfoFunc Sources[12] =
 
 pInfoFunc TransmissionLines[13] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
-   &MSstep::info, &MScorner::info, &MStee::info, &MScross::info,
-   &MSmbend::info, &MSopen::info, &MSgap::info, &Coplanar::info, 0};
+   &MSstep::info, &MScorner::info, &MSmbend::info, &MStee::info,
+   &MScross::info, &MSopen::info, &MSgap::info, &Coplanar::info, 0};
 
 pInfoFunc nonlinearComps[11] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
@@ -1602,6 +1602,42 @@ void QucsApp::slotEditUndo()
 void QucsApp::slotEditRedo()
 {
   view->Docs.current()->redo();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align top" action is activated.
+void QucsApp::slotAlignTop()
+{
+  view->Docs.current()->alignTop();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align bottom" action is activated.
+void QucsApp::slotAlignBottom()
+{
+  view->Docs.current()->alignBottom();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align left" action is activated.
+void QucsApp::slotAlignLeft()
+{
+  view->Docs.current()->alignLeft();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align right" action is activated.
+void QucsApp::slotAlignRight()
+{
+  view->Docs.current()->alignRight();
   view->viewport()->repaint();
   view->drawn = false;
 }

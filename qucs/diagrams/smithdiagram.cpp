@@ -58,7 +58,7 @@ bool SmithDiagram::calcDiagram()
   Arcs.clear();
 
   xlow = ylow = 0.0;
-  if(ymax > 1.01) xup = yup *= 1.05;
+  if(ymax > 1.01) xup = yup = 1.05*ymax;
   else xup = yup = 1.0;
 
 if(GridOn) {
