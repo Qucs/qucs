@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.15 2004/07/03 19:43:59 margraf Exp $
+ * $Id: spsolver.cpp,v 1.16 2004/07/04 11:16:16 ela Exp $
  *
  */
 
@@ -827,10 +827,8 @@ void spsolver::saveResults (nr_double_t freq) {
    correlation matrix and computes the noise parameters based upon
    these values.  Then it save the results into the dataset. */
 void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
-  complex s11 = s[0], c11 = c[0];
-  complex s12 = s[1], c12 = c[1];
-  complex s21 = s[2], c21 = c[2];
-  complex s22 = s[3], c22 = c[3];
+  complex c22 = c[3], c11 = c[0], c12 = c[1];
+  complex s11 = s[0], s21 = s[2];
   complex n1, n2, F, Ropt, Fmin, Rn;
 
   // linear noise figure
@@ -858,8 +856,6 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
 			c22 * sqr (abs ((1.0 + s11) / s21))) / 4.0);
 
   // add variable data items to dataset
-  saveVariable ("n1", n1, f);
-  saveVariable ("n2", n2, f);
   saveVariable ("F", 10*log10(abs(F)), f);
   saveVariable ("Gopt", Ropt, f);
   saveVariable ("Fmin", 10*log10(abs(Fmin)), f);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.10 2004/05/24 10:11:09 ela Exp $
+ * $Id: evaluate.cpp,v 1.11 2004/07/04 11:16:16 ela Exp $
  *
  */
 
@@ -42,10 +42,11 @@
 using namespace eqn;
 
 // Short macros in order to obtain the correct constant value.
-#define D(con) ((constant *) (con))->d
-#define C(con) ((constant *) (con))->c
-#define V(con) ((constant *) (con))->v
-#define M(con) ((constant *) (con))->m
+#define D(con)  ((constant *) (con))->d
+#define C(con)  ((constant *) (con))->c
+#define V(con)  ((constant *) (con))->v
+#define M(con)  ((constant *) (con))->m
+#define MV(con) ((constant *) (con))->mv
 
 // ******************** unary plus *************************
 constant * evaluate::plus_d (constant * args) {
@@ -139,6 +140,14 @@ constant * evaluate::plus_v_v (constant * args) {
   vector * v2 = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
   res->v = (*v1 + *v2);
+  return res;
+}
+
+constant * evaluate::plus_mv_mv (constant * args) {
+  matvec * v1 = MV (args->getResult (0));
+  matvec * v2 = MV (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*v1 + *v2);
   return res;
 }
 
@@ -1370,6 +1379,8 @@ struct application_t eqn::applications[] = {
   { "+", TAG_VECTOR,  evaluate::plus_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
   { "+", TAG_VECTOR,  evaluate::plus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "+", TAG_VECTOR,  evaluate::plus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC  } },
 
   { "-", TAG_DOUBLE,  evaluate::minus_d, 1, { TAG_DOUBLE  } },
   { "-", TAG_COMPLEX, evaluate::minus_c, 1, { TAG_COMPLEX } },

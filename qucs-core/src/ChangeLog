@@ -1,6 +1,20 @@
+2004-07-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Remove unnecessary local variables.
+
+	* evaluate.cpp: Implemented example matrix vector operation
+	for testing.
+
+	* equation.cpp: Added some functionality which is able to
+	detect matrix vectors in datasets.  These matrix vectors will
+	be available in the equations set.  Still something to do...
+
+	* matvec.h (class matvec): Added some basic operations on
+	matrix vectors.
+
 2004-07-03  Michael Margraf <michael.margraf@alumni.tu-berlin.de>
 
-	* fixed all bugs in s-parameter noise analysis
+	* fixed all bugs in s-parameter noise analysis.
 
 2004-07-03  Stefan Jahn  <stefan@lkcc.org>
 

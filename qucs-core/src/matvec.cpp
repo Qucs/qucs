@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.1 2004/07/03 10:56:40 ela Exp $
+ * $Id: matvec.cpp,v 1.2 2004/07/04 11:16:16 ela Exp $
  *
  */
 
@@ -43,6 +43,7 @@
 matvec::matvec () {
   size = 0;
   rows = cols = 0;
+  name = NULL;
   data = NULL;
 }
 
@@ -50,6 +51,9 @@ matvec::matvec () {
    certain number of empty matrices. */
 matvec::matvec (int length, int r, int c) {
   size = length;
+  rows = r;
+  cols = c;
+  name = NULL;
   data = (length > 0) ? new matrix[length] (r, c) : NULL;
 }
 
@@ -59,6 +63,7 @@ matvec::matvec (const matvec & m) {
   size = m.size;
   rows = m.rows;
   cols = m.cols;
+  name = m.name ? strdup (name) : NULL;
   data = NULL;
 
   // copy matvec elements
@@ -71,6 +76,17 @@ matvec::matvec (const matvec & m) {
 // Destructor deletes a matvec object.
 matvec::~matvec () {
   if (data) delete[] data;
+}
+
+// Sets the name of the matvec object.
+void matvec::setName (char * n) {
+  if (name) free (name);
+  name = n ? strdup (n) : NULL;
+}
+
+// Returns the name of the matvec object.
+char * matvec::getName (void) {
+  return name;
 }
 
 /* This function saves the given vector to the matvec object with the
@@ -92,16 +108,77 @@ vector * matvec::get (int r, int c) {
 
 /* This function saves the given matrix in the matrix vector at the
    specified position. */
-void matvec::set (matrix * m, int idx) {
-  assert (m->getRows () == rows && m->getCols () == cols &&
-	  idx > 0 && idx < size);
-  data[idx] = *m;
+void matvec::set (matrix& m, int idx) {
+  assert (m.getRows () == rows && m.getCols () == cols &&
+	  idx >= 0 && idx < size);
+  data[idx] = m;
 }
 
 /* The function returns the matrix stored within the matrix vector at
    the given position. */
-matrix * matvec::get (int idx) {
-  assert (idx > 0 && idx < size);
+matrix& matvec::get (int idx) {
+  assert (idx >= 0 && idx < size);
   matrix * res = new matrix (data[idx]);
-  return res;
+  return *res;
+}
+
+// Matrix vector addition.
+matvec& operator + (matvec& a, matvec& b) {
+  assert (a.getRows () == b.getRows () && a.getCols () == b.getCols () &&
+	  a.getSize () == b.getSize ());
+  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) + b.get (i), i);
+  return *res;
+}
+
+// Intrinsic matrix vector addition.
+matvec& matvec::operator += (matvec& a) {
+  assert (a.getRows () == rows && a.getCols () == cols &&
+	  a.getSize () == size);
+  for (int i = 0; i < size; i++) data[i] += a.get (i);
+  return *this;
+}
+
+// Matrix vector subtraction.
+matvec& operator - (matvec& a, matvec& b) {
+  assert (a.getRows () == b.getRows () && a.getCols () == b.getCols () &&
+	  a.getSize () == b.getSize ());
+  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) - b.get (i), i);
+  return *res;
+}
+
+// Intrinsic matrix vector subtraction.
+matvec& matvec::operator -= (matvec& a) {
+  assert (a.getRows () == rows && a.getCols () == cols &&
+	  a.getSize () == size);
+  for (int i = 0; i < a.getSize (); i++) data[i] -= a.get (i);
+  return *this;
+}
+
+// Matrix vector scaling.
+matvec& operator * (matvec& a, complex z) {
+  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) * z, i);
+  return *res;
+}
+
+// Matrix vector scaling in different order.
+matvec& operator * (complex z, matvec& a) {
+  return a * z;
+}
+
+// Matrix vector scaling.
+matvec& operator / (matvec& a, complex z) {
+  matvec * res = new matvec (a.getSize (), a.getRows (), a.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) / z, i);
+  return *res;
+}
+
+// Matrix vector multiplication.
+matvec& operator * (matvec& a, matvec& b) {
+  assert (a.getCols () == b.getRows () && a.getSize () == b.getSize ());
+  matvec * res = new matvec (a.getSize (), a.getRows (), b.getCols ());
+  for (int i = 0; i < a.getSize (); i++) res->set (a.get (i) * b.get (i), i);
+  return *res;
 }

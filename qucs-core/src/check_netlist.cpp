@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.21 2004/07/01 14:18:27 ela Exp $
+ * $Id: check_netlist.cpp,v 1.22 2004/07/04 11:16:16 ela Exp $
  *
  */
 
@@ -50,7 +50,8 @@ struct define_t definition_available[] =
   /* resistor */
   { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
     { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* inductor */
   { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
