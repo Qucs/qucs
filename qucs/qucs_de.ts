@@ -130,7 +130,7 @@
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Texteditor kann nicht gestartet werden!</translation>
+        <translation>Der Texteditor kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -3810,7 +3810,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Texteditor kann nicht gestartet werden!</translation>
+        <translation>Der Texteditor kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -5010,7 +5010,7 @@ Druckt ausgewählte Elemente des aktuellen Dokuments</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation>maximal Anzahl der Rückgängig-Operationen:</translation>
+        <translation>maximale Anzahl der Rückgängig-Operationen:</translation>
     </message>
     <message>
         <source>text editor:</source>

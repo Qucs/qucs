@@ -1,3 +1,8 @@
+2004-09-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html: Documented some new mathematical
+	operations for equations.
+
 2004-08-31  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
 	* dialogs/messagebox.cpp (MessageBox): Changed
