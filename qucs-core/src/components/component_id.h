@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.8 2004-07-07 13:52:34 ela Exp $
+ * $Id: component_id.h,v 1.9 2004-07-07 19:10:53 margraf Exp $
  *
  */
 
@@ -62,6 +62,7 @@ enum circuit_type {
 
   // microstrip components
   CIR_MSLINE,
+  CIR_MSCORNER,
 
   // non-linear components
   CIR_DIODE,
