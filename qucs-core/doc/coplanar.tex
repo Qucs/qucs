@@ -1,8 +1,8 @@
 %
 % This document contains the chapter about coplanar components.
 %
-% Copyright (C) 2004 Vincent Habchi, F5RCS <10.50@free.fr>
-% Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2004, 2005 Vincent Habchi, F5RCS <10.50@free.fr>
+% Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 %
 % Permission is granted to copy, distribute and/or modify this document
 % under the terms of the GNU Free Documentation License, Version 1.1
@@ -13,16 +13,18 @@
 %\addcontentsline{toc}{chapter}{Coplanar components}
 
 \section{Coplanar waveguides (CPW)}
+%\addcontentsline{toc}{section}{Coplanar waveguides (CPW)}
 
 \subsection{Definition}
+%\addcontentsline{toc}{subsection}{Definition}
 
 A \emph{coplanar line} is a structure in which all the conductors
 supporting wave propagation are located on the same plane,
-i.e. generally the top of a dielectric substrate. There exist two main
-type of coplanar lines: the first, called \emph{coplanar waveguide
-(CPW)}, that we will study here, is composed of a median metallic
-strip separated by two narrow slits from a infinite ground plane, as
-may be seen on the figure below.
+i.e. generally the top of a dielectric substrate.  There exist two
+main types of coplanar lines: the first, called \emph{coplanar
+waveguide (CPW)}, that we will study here, is composed of a median
+metallic strip separated by two narrow slits from a infinite ground
+plane, as may be seen on the figure below.
 
 \begin{figure}[ht]
 \begin{center}
@@ -34,8 +36,9 @@ may be seen on the figure below.
 \FloatBarrier
 
 The characteristic dimensions of a CPW are the central strip width $W$
-and the width of the slots $s$. The structure is obviously symmetrical
-along a vertical plane running in the middle of the central strip.
+and the width of the slots $s$.  The structure is obviously
+symmetrical along a vertical plane running in the middle of the
+central strip.
 
 \begin{figure}[ht]
 \begin{center}
@@ -50,18 +53,19 @@ complementary of that topology, consisting of two strips running side
 by side.
 
 \subsection{Quasi-static analysis by conformal mappings}
+%\addcontentsline{toc}{subsection}{Quasi-static analysis by conformal mappings}
 
-A CPW can be quasi-statically analysed through the use of
-\emph{conformal mappings}. Briefly speaking, it consists in
+A CPW can be quasi-statically analysed by the use of
+\emph{conformal mappings}.  Briefly speaking, it consists in
 transforming the geometry of the PCB into another conformation, whose
-properties make the computations straightforward. The interested
+properties make the computations straightforward.  The interested
 reader can consult the pp. 886~-~910 of \cite{Collin} which has a
-correct coverage of both the theoretical and applied methods. The
+correct coverage of both the theoretical and applied methods.  The
 French reader interested in the mathematical arcanes involved is
 referred to the second chapter of \cite{Mir} (which may be out of
 print nowadays), for an extensive review of all the theoretical
-framework. The following analysis is mainly borrowed from
-\cite{Gupta1}, pp.~375 \emph{et seq}. with addition from
+framework.  The following analysis is mainly borrowed from
+\cite{Gupta1}, pp.~375 \emph{et seq}. with additions from
 \cite{Collin}.
 
 \addvspace{12pt}
@@ -83,11 +87,11 @@ w = \int_{z_0}^{z} \dfrac{dz}{\sqrt{(z-W/2)(z-W/2-s)}}.
 \FloatBarrier
 
 To further simplify the analysis, the original dielectric boundary is
-assumed to constitute a magnetic wall, so that $BC$ and $AD$ becomes
+assumed to constitute a magnetic wall, so that $BC$ and $AD$ become
 magnetic walls too and there is no resulting fringing field in the
-resulting capacitor. With that assumption, the capacitance per unit
+resulting capacitor.  With that assumption, the capacitance per unit
 length is merely the sum of the top (air filled) and bottom
-(dielectric filled) partial capacitances. The latter is given by:
+(dielectric filled) partial capacitances.  The latter is given by:
 \begin{equation}
 C_d = 2\cdot \varepsilon_0\cdot \varepsilon_r\cdot \dfrac{K(k_1)}{K'(k_1)}
 \end{equation}
@@ -112,7 +116,7 @@ through the following formulae:
 \dfrac{K(k)}{K'(k)} =
 \dfrac{\ln\left(2\tfrac{1+\sqrt{k}}{1-\sqrt{k}}\right)}{\pi}
 \;\;\;\; \textrm{ for } \;\;\;\;
-\dfrac{1} {\sqrt{2}} \le k \le 1
+\dfrac{1}{\sqrt{2}} \le k \le 1
 \end{equation}
 
 with $k'$ being the complementary modulus: $k'=\sqrt{1-k^2}$.  While
@@ -145,10 +149,11 @@ Z=\dfrac{30\pi}{\sqrt{\varepsilon_{re}}}\cdot\dfrac{K'(k_1)}{K(k_1)}
 \end{figure}
 \FloatBarrier
 
-In practical cases, the substrate has a finite thickness $h$. To carry
-out the analysis of this conformation, a preliminary conformal mapping
-transforms the finite thickness dielectric into an infinite thickness
-one. Only the effective permittivity is altered; it becomes:
+In practical cases, the substrate has a finite thickness $h$.  To
+carry out the analysis of this conformation, a preliminary conformal
+mapping transforms the finite thickness dielectric into an infinite
+thickness one.  Only the effective permittivity is altered; it
+becomes:
 \begin{equation}
 \varepsilon_{re}=1+\dfrac{\varepsilon_r-1}{2}\cdot\dfrac{K(k_2)}{K'(k_2)}\cdot\dfrac{K'(k_1)}{K(k_1)}
 \end{equation}
@@ -159,11 +164,11 @@ k_2=\dfrac{\sinh\left(\dfrac{\pi W}{4h}\right)}{\sinh\left(\dfrac{\pi\cdot\left(
 \end{equation}
 
 Finally, let us consider a CPW over a finite thickness dielectric
-backed by an infinite ground plane. In this case, the quasi-TEM wave
-is an hybrid between microstrip and true CPW mode. The equations then
+backed by an infinite ground plane.  In this case, the quasi-TEM wave
+is an hybrid between microstrip and true CPW mode.  The equations then
 become:
 \begin{equation}
-\varepsilon_{re}=1+q\cdot\left(\varepsilon_r -1\right)
+\varepsilon_{re} =1 + q\cdot\left(\varepsilon_r - 1\right)
 \end{equation}
 
 where $q$, called \emph{filling factor} is given by:
@@ -182,10 +187,11 @@ Z=\dfrac{60\pi}{\sqrt{\varepsilon_{re}}}\cdot\dfrac{1}{\dfrac{K(k_1)}{K'(k_1)}+\
 \end{equation}
 
 \subsection{Effects of metalization thickness}
+%\addcontentsline{toc}{subsection}{Effects of metalization thickness}
 
 In most practical cases, the strips are very thin, yet their thickness
-cannot be entirely neglected. A first order correction to take into
-account the non-zero thickness of the conductor consists in
+cannot be entirely neglected.  A first order correction to take into
+account the non-zero thickness of the conductor is given by
 \cite{Gupta1}:
 \begin{equation}
 s_e = s - \Delta
@@ -214,10 +220,11 @@ and
 \end{equation}
 
 \subsection{Effects of dispersion}
+%\addcontentsline{toc}{subsection}{Effects of dispersion}
 
 The effects of dispersion in CPW are similar to those encountered in
 the microstrip lines, though the net effect on impedance is somewhat
-different. \cite{Gupta1} gives a closed form expression to compute
+different.  \cite{Gupta1} gives a closed form expression to compute
 $\varepsilon_{re}(f)$ from its quasi-static value:
 \begin{equation}
 \sqrt{\varepsilon_{re}(f)}=\sqrt{\varepsilon_{re}(0)} + \dfrac{\sqrt{\varepsilon_r} - \sqrt{\varepsilon_{re}(0)}}{1+G\cdot\left(\dfrac{f}{f_{TE}}\right)^{-1.8}}
@@ -241,8 +248,37 @@ $0.1 \le W/h \le 5$, $0.1 \le s/W
 \le 5$, $1.5 \le \varepsilon_r \le 50$ and $0 \le f/f_{TE} \le 10$.
 
 \subsection{Evaluation of losses}
+%\addcontentsline{toc}{subsection}{Evaluation of losses}
 
 As for microstrip lines, the losses in CPW results of at least two
 factors: a dielectric loss $\alpha_d$ and conductor losses
 $\alpha_c^{CW}$.  The dielectric loss $\alpha_d$ is identical to the
-microstrip case.
+microstrip case, see eq. \eqref{eq:alpha_d} on page
+\pageref{eq:alpha_d}.
+
+\addvspace{12pt}
+
+The $\alpha_c^{CW}$ part of the losses is more complex to evaluate.  As
+a general rule, it might be written:
+\begin{equation}
+\alpha_c^{CW} = 0.023\cdot \dfrac{R_s}{Z_{0cp}}\left[\dfrac{\partial Z^a_{0cp}}{\partial s} - \dfrac{\partial Z^a_{0cp}}{\partial W} - \dfrac{\partial Z^a_{0cp}}{\partial t}\right]
+\textrm{ in dB/unit length }
+\end{equation}
+
+where $Z^a_{0cp}$ stands for the impedance of the coplanar waveguide
+with air as dielectric and $R_s$ is the surface resistivity of the
+conductors (see eq. \eqref{eq:HandJRs} on page \pageref{eq:HandJRs}).
+
+\addvspace{12pt}
+
+Through a direct approach evaluating the losses by conformal mapping of
+the current density, one obtains \cite{Gupta1}:
+\begin{equation}
+\begin{split}
+\alpha_c^{CW} = &\; \dfrac{8.68\cdot R_s\cdot \sqrt{\varepsilon_{re}}}{480 \pi\cdot K(k_1)\cdot K'(k_1)\cdot \left(1 - k_1^2\right)} \cdot\\
+& \left(\dfrac{1}{a}\left[\pi + \ln \dfrac {8 \pi a\cdot \left(1-k_1\right)}{t\cdot\left(1+k_1\right)}\right]+\dfrac{1}{b}\left[\pi + \ln \dfrac {8 \pi b\cdot \left(1-k_1\right)}{t\cdot\left(1+k_1\right)}\right]\right)
+\end{split}
+\end{equation}
+
+In the formula above, $a = W/2, b = s + W/2$ and it is assumed that
+$t~>~3 \delta, t \ll W$ and $t \ll s$.
