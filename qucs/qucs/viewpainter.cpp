@@ -161,7 +161,7 @@ int ViewPainter::drawText(const QString& Text, int x1, int y1, int *Height)
 
 // -------------------------------------------------------------
 // Returns width of text (and height if pointer is not null).
-int ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
+void ViewPainter::drawArc(int x1, int y1, int w, int h, int Angle, int ArcLen)
 {
   float z;
   z = float(x1)*Scale + DX;
