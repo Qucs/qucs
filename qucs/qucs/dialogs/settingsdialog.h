@@ -19,11 +19,12 @@
 #define SETTINGSDIALOG_H
 
 #include <qdialog.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qregexp.h>
 
 class QucsDoc;
+class QLineEdit;
+class QCheckBox;
+class QVBoxLayout;
+class QRegExpValidator;
 
 /**
   *@author Michael Margraf
@@ -32,8 +33,8 @@ class QucsDoc;
 class SettingsDialog : public QDialog  {
    Q_OBJECT
 public:
-	SettingsDialog(QucsDoc *d, QWidget *parent=0, const char *name=0);
-	~SettingsDialog();
+  SettingsDialog(QucsDoc *d, QWidget *parent=0, const char *name=0);
+  ~SettingsDialog();
 
 private slots:
   void slotOK();
@@ -45,6 +46,9 @@ public:
   QLineEdit *Input_DataSet, *Input_DataDisplay;
   QLineEdit *Input_GridX, *Input_GridY;
   QCheckBox *Check_OpenDpl, *Check_GridOn;
+
+  QVBoxLayout *all;
+  QRegExpValidator *valExpr;
 };
 
 #endif

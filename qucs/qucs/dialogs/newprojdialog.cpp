@@ -23,12 +23,13 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 
+
 NewProjDialog::NewProjDialog(QWidget *parent, const char *name)
                              : QDialog(parent, name, true)
 {
   setCaption(QObject::tr("Create new project"));
 
-  QGridLayout *gbox = new QGridLayout(this,3,3,5,5);
+  gbox = new QGridLayout(this,3,3,5,5);
   QLabel *Label1 = new QLabel(QObject::tr("Project name:"),this);
   gbox->addWidget(Label1,0,0);
 
@@ -53,4 +54,5 @@ NewProjDialog::NewProjDialog(QWidget *parent, const char *name)
 
 NewProjDialog::~NewProjDialog()
 {
+  delete gbox;
 }

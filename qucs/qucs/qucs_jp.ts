@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>Add</source>
-        <translation>追加</translation>
+        <translation>追� </translation>
     </message>
     <message>
         <source>Remove</source>
@@ -335,6 +335,18 @@
         <source>Limits</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stop</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -432,7 +444,7 @@
     </message>
     <message>
         <source>crossed lines</source>
-        <translation>十字格子</translation>
+        <translation>十字� �子</translation>
     </message>
     <message>
         <source>hatched backwards</source>
@@ -444,7 +456,7 @@
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation>斜線格子</translation>
+        <translation>斜線� �子</translation>
     </message>
     <message>
         <source>Filling Style</source>
@@ -556,11 +568,11 @@
     </message>
     <message>
         <source>Discard</source>
-        <translation>破棄</translation>
+        <translation>� �棄</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>全て破棄</translation>
+        <translation>全て� �棄</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -811,7 +823,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished">周波数付加</translation>
+        <translation type="unfinished">周波数付� </translation>
     </message>
     <message>
         <source>Noise Current Source</source>
@@ -859,7 +871,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation>順放射係数</translation>
+        <translation>� �放射係数</translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
@@ -875,7 +887,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>forward early voltage</source>
-        <translation>順初期電圧</translation>
+        <translation>� �初期電圧</translation>
     </message>
     <message>
         <source>reverse early voltage</source>
@@ -1165,11 +1177,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>dc feed</source>
-        <translation>電圧付加</translation>
+        <translation>電圧付� </translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation>電圧付加</translation>
+        <translation>電圧付� </translation>
     </message>
     <message>
         <source>diode</source>
@@ -1753,7 +1765,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation>抵抗(オーム)</translation>
+        <translation>抵抗(オー� )</translation>
     </message>
     <message>
         <source>schematic symbol</source>
@@ -2418,7 +2430,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>情� �</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
@@ -2451,7 +2463,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>破棄(&amp;D)</translation>
+        <translation>� �棄(&amp;D)</translation>
     </message>
     <message>
         <source>Printing...</source>
@@ -2688,7 +2700,7 @@ Errors:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>少なくとも二つ以上の要素を選択してください!</translation>
+        <translation>少なくとも二つ以上の要� を選択してく� さい!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -2803,7 +2815,7 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>破棄(&amp;D)</translation>
+        <translation>� �棄(&amp;D)</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2814,7 +2826,7 @@ Very simple text editor for Qucs
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
-        <translation>Qucsヘルプシステム</translation>
+        <translation>Qucsヘルプシステ� </translation>
     </message>
     <message>
         <source>Help Index</source>
@@ -2997,7 +3009,7 @@ Prints the current document</source>
     </message>
     <message>
         <source>Print Selected Elements</source>
-        <translation>選択された要素を印刷</translation>
+        <translation>選択された要� を印刷</translation>
     </message>
     <message>
         <source>Print Selection...</source>
@@ -3005,15 +3017,15 @@ Prints the current document</source>
     </message>
     <message>
         <source>Prints Selected Elements</source>
-        <translation>選択された要素を印刷</translation>
+        <translation>選択された要� を印刷</translation>
     </message>
     <message>
         <source>Print Selected Elements
 
 Prints selected elements of the current document</source>
-        <translation>選択された要素を印刷
+        <translation>選択された要� を印刷
 
-現在のドキュメントの選択された要素を印刷</translation>
+現在のドキュメントの選択された要� を印刷</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -3055,13 +3067,13 @@ Sets properties of the application</source>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation>選択された要素を上部に整列</translation>
+        <translation>選択された要� を上部に整列</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation>選択された要素をそれらの上端に整列</translation>
+        <translation>選択された要� をそれらの上端に整列</translation>
     </message>
     <message>
         <source>Align bottom</source>
@@ -3069,13 +3081,13 @@ Align selected elements to their upper edge</source>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation>選択された要素を下に整列</translation>
+        <translation>選択された要� を下に整列</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation>選択された要素をそれらの下端に整列</translation>
+        <translation>選択された要� をそれらの下端に整列</translation>
     </message>
     <message>
         <source>Align left</source>
@@ -3083,13 +3095,13 @@ Align selected elements to their lower edge</source>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation>選択された要素を左に整列</translation>
+        <translation>選択された要� を左に整列</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation>選択された要素をそれらの左端に整列</translation>
+        <translation>選択された要� をそれらの左端に整列</translation>
     </message>
     <message>
         <source>Align right</source>
@@ -3097,13 +3109,13 @@ Align selected elements to their left edge</source>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation>選択された要素を右に整列</translation>
+        <translation>選択された要� を右に整列</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation>選択された要素をそれらの右端に整列</translation>
+        <translation>選択された要� をそれらの右端に整列</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
@@ -3119,7 +3131,7 @@ Align selected elements to their right edge</source>
 Distribute horizontally selected elements</source>
         <translation>水平に分割
 
-選択された要素を水平に配置</translation>
+選択された要� を水平に配置</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
@@ -3133,7 +3145,7 @@ Distribute horizontally selected elements</source>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation>選択された要素を垂直に配置</translation>
+        <translation>選択された要� を垂直に配置</translation>
     </message>
     <message>
         <source>Set on Grid</source>
@@ -3145,7 +3157,7 @@ Distribute vertically selected elements</source>
 Sets selected elements on grid</source>
         <translation>グリッドに合わせる
 
-選択された要素をグリッドに合わせる
+選択された要� をグリッドに合わせる
 </translation>
     </message>
     <message>
@@ -3392,7 +3404,7 @@ Shows the page content without magnification</source>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation>ズームイン</translation>
+        <translation>ズー� イン</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
@@ -3402,13 +3414,13 @@ Shows the page content without magnification</source>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation>ズームイン
+        <translation>ズー� イン
 
 現在のビューを拡大</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>ズームアウト</translation>
+        <translation>ズー� アウト</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
@@ -3444,7 +3456,7 @@ Select mode</source>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation>全ての要素を選択</translation>
+        <translation>全ての要� を選択</translation>
     </message>
     <message>
         <source>Select All
@@ -3452,7 +3464,7 @@ Select mode</source>
 Selects all elements of the document</source>
         <translation>全て選択
 
-ドキュメント全ての要素を選択</translation>
+ドキュメント全ての要� を選択</translation>
     </message>
     <message>
         <source>Rotate</source>
@@ -3476,7 +3488,7 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation>選択されたアイテムをX軸で反転</translation>
+        <translation>選択されたアイテ� をX軸で反転</translation>
     </message>
     <message>
         <source>Mirror about X Axis
@@ -3484,7 +3496,7 @@ Rotates the selected component by 90&#xb0; counter-clockwise</source>
 Mirrors the selected item about X Axis</source>
         <translation>X軸で反転
 
-選択されたアイテムをX軸で反転</translation>
+選択されたアイテ� をX軸で反転</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
@@ -3492,7 +3504,7 @@ Mirrors the selected item about X Axis</source>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation>選択されたアイテムをY軸で反転</translation>
+        <translation>選択されたアイテ� をY軸で反転</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
@@ -3500,7 +3512,7 @@ Mirrors the selected item about X Axis</source>
 Mirrors the selected item about Y Axis</source>
         <translation>Y軸で反転
 
-選択されたアイテムをY軸で反転</translation>
+選択されたアイテ� をY軸で反転</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
@@ -3540,7 +3552,7 @@ Goes up one hierarchy level, i.e. leaves subcircuit</source>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation>選択されたアイテムを無効/有効にする</translation>
+        <translation>選択されたアイテ� を無効/有効にする</translation>
     </message>
     <message>
         <source>Deactivate/Activate
@@ -3548,7 +3560,7 @@ Goes up one hierarchy level, i.e. leaves subcircuit</source>
 Deactivate/Activate the selected item</source>
         <translation>無効にする/有効にする
 
-選択されたアイテムを無効/有効にする</translation>
+選択されたアイテ� を無効/有効にする</translation>
     </message>
     <message>
         <source>Insert Equation</source>
@@ -4017,7 +4029,7 @@ Qt universal circuit simulator
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation>ノード名追加</translation>
+        <translation>ノード名追� </translation>
     </message>
     <message>
         <source>Enter the label:</source>
@@ -4025,7 +4037,7 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Info</source>
-        <translation>情報</translation>
+        <translation>情� �</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>

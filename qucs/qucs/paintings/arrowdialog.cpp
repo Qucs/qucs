@@ -22,48 +22,52 @@
 #include <qhbox.h>
 #include <qvalidator.h>
 #include <qcolordialog.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qcombobox.h>
 
 
 ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
                                   : QDialog(parent, name)
 {
   setCaption(tr("Edit Arrow Properties"));
-  QValidator *Validator = new QIntValidator(0, 100, this);
+  val100 = new QIntValidator(0, 100, this);
 
-  QVBoxLayout *v = new QVBoxLayout(this);
-  v->setSpacing(5);
-  v->setMargin(5);
+  vert = new QVBoxLayout(this);
+  vert->setSpacing(5);
+  vert->setMargin(5);
 
   QHBox *h0 = new QHBox(this);
   h0->setSpacing(5);
-  v->addWidget(h0);
+  vert->addWidget(h0);
 
   new QLabel(tr("Head Length: "), h0);
   HeadLength = new QLineEdit(h0);
-  HeadLength->setValidator(Validator);
+  HeadLength->setValidator(val100);
   HeadLength->setMaximumWidth(35);
   HeadLength->setText("10");
 
   new QLabel(tr("      Head Width: "), h0);
   HeadWidth = new QLineEdit(h0);
-  HeadWidth->setValidator(Validator);
+  HeadWidth->setValidator(val100);
   HeadWidth->setMaximumWidth(35);
   HeadWidth->setText("10");
 
 
   QHBox *h1 = new QHBox(this);
   h1->setSpacing(5);
-  v->addWidget(h1);
+  vert->addWidget(h1);
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
-  v->addWidget(h2);
+  vert->addWidget(h2);
 
   QHBox *h3 = new QHBox(this);
   h3->setSpacing(5);
-  v->addWidget(h3);
+  vert->addWidget(h3);
 
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);   // must be first button => press RETURN
+  // must be first button => press RETURN
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
   connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
   QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
@@ -76,7 +80,7 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
   new QLabel(tr("      Line Width: "), h1);
   LineWidth = new QLineEdit(h1);
-  LineWidth->setValidator(Validator);
+  LineWidth->setValidator(val100);
   LineWidth->setMaximumWidth(35);
   LineWidth->setText("0");
 
@@ -96,6 +100,8 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
 ArrowDialog::~ArrowDialog()
 {
+  delete vert;
+  delete val100;
 }
 
 // --------------------------------------------------------------------------

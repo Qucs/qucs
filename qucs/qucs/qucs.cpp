@@ -46,6 +46,8 @@
 #include <qclipboard.h>
 #include <qdatetime.h>
 #include <qfont.h>
+#include <qtextedit.h>
+#include <qcheckbox.h>
 
 #include <limits.h>
 
@@ -1524,24 +1526,24 @@ void QucsApp::slotProjNewButt()
 // The following arrays contains the components that appear in the
 // component listview.
 typedef Component*  (*pInfoFunc) (QString&, char* &, bool);
-pInfoFunc Simulations[7] =
+pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
    &HB_Sim::info, &Param_Sweep::info, 0};
 
-pInfoFunc lumpedComponents[20] =
+pInfoFunc lumpedComponents[] =
   {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
    &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
    &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
-   &Amplifier::info, &OpAmp::info, &Isolator::info, &Circulator::info,
+   &Amplifier::info, &Isolator::info, &Circulator::info,
    &Gyrator::info, &Phaseshifter::info, &iProbe::info, 0};
 
-pInfoFunc Sources[16] =
+pInfoFunc Sources[] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
    &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
    &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
    &vRect::info, &iRect::info, 0};
 
-pInfoFunc TransmissionLines[14] =
+pInfoFunc TransmissionLines[] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
    &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
    &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
@@ -1551,7 +1553,8 @@ pInfoFunc nonlinearComps[] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
    &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
    &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
-   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl, 0};
+   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
+   &OpAmp::info, 0};
 
 // #######################################################################
 // Whenever the Component Library ComboBox is changed, this slot fills the

@@ -18,6 +18,9 @@
 #include "arrow.h"
 #include "arrowdialog.h"
 
+#include <qlineedit.h>
+#include <qpushbutton.h>
+
 #include <math.h>
 
 

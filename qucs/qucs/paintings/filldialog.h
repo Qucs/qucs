@@ -19,12 +19,14 @@
 #define FILLDIALOG_H
 
 #include <qdialog.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
 
+class QVBoxLayout;
+class QLabel;
+class QIntValidator;
+class QCheckBox;
+class QComboBox;
+class QPushButton;
+class QLineEdit;
 
 /**
   *@author Michael Margraf
@@ -49,6 +51,9 @@ public:
   QLineEdit     *LineWidth;
   QPushButton   *ColorButt, *FillColorButt;
   QComboBox     *StyleBox, *FillStyleBox;
+
+  QVBoxLayout   *all;
+  QIntValidator *val100;
 };
 
 #endif

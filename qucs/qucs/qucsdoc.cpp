@@ -137,7 +137,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
 
 QucsDoc::~QucsDoc()
 {
-  if(Bar) Bar->removeTab(Tab);    // delete tab in TabBar
+  if(Bar) Bar->removeTab(Tab);    // delete tab in TabBar and from memory
 }
 
 // ---------------------------------------------------
@@ -352,6 +352,8 @@ void QucsDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
   int yEnd = y1 + Height;
   DX = float(GridX << 1) * Scale;   // every second grid a point
   DY = float(GridY << 1) * Scale;
+  while(DX <= 8.0)  DX *= 1.5;  // if too narrow, every third grid a point
+  while(DY <= 8.0)  DY *= 1.5;  // if too narrow, every third grid a point
 
   while(x1 < xEnd) {
     Y = Y0;

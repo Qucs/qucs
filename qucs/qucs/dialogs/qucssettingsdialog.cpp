@@ -31,16 +31,17 @@
 #include <qcolordialog.h>
 #include <qfontdialog.h>
 #include <qvalidator.h>
+#include <qpushbutton.h>
+#include <qlineedit.h>
 
 
-QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
-			  const char *name)
+QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent, const char *name)
 			: QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   App = parent;
   setCaption(tr("Edit Qucs Properties"));
 
-  QVBoxLayout *all = new QVBoxLayout(this); // to provide the neccessary size
+  all = new QVBoxLayout(this); // to provide the neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
 
@@ -60,10 +61,11 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
   connect(BGColorButton, SIGNAL(clicked()), SLOT(slotBGColorDialog()));
   gp->addWidget(BGColorButton,1,1);
 
+  val200 = new QIntValidator(0, 200, this);
   QLabel *l3 = new QLabel(tr("maximum undo operations:"), Tab1);
   gp->addWidget(l3,2,0);
   undoNumEdit = new QLineEdit(Tab1);
-  undoNumEdit->setValidator(new QIntValidator(0, 200, this));
+  undoNumEdit->setValidator(val200);
   gp->addWidget(undoNumEdit,2,1);
 
   QLabel *l4 = new QLabel(tr("text editor:"), Tab1);
@@ -122,6 +124,8 @@ QucsSettingsDialog::QucsSettingsDialog(QucsApp *parent,
 
 QucsSettingsDialog::~QucsSettingsDialog()
 {
+  delete all;
+  delete val200;
 }
 
 // -----------------------------------------------------------
