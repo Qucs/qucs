@@ -40,7 +40,7 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
-	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp
+	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp
@@ -53,7 +53,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h      \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
-	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h
+	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h
 
 noinst_LIBRARIES = libqucsator.a
 
@@ -69,13 +69,13 @@ generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
 	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp
 
 scan_netlist.cpp: scan_netlist.l
-	$(LEX) --nounistd -o$@ $<
+	$(LEX) -o$@ $<
 
 scan_dataset.cpp: scan_dataset.l
-	$(LEX) --nounistd -o$@ $<
+	$(LEX) -o$@ $<
 
 scan_touchstone.cpp: scan_touchstone.l
-	$(LEX) --nounistd -o$@ $<
+	$(LEX) -o$@ $<
 
 parse_netlist.cpp: parse_netlist.y
 	$(YACC) -v -o $@ --defines=tokens_netlist.h $<

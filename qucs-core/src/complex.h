@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.15 2005-01-24 19:36:59 raimi Exp $
+ * $Id: complex.h,v 1.16 2005-03-30 07:35:52 raimi Exp $
  *
  */
 
@@ -114,10 +114,12 @@ class complex
   friend complex operator % (const nr_double_t, const complex);
 
   // comparisons
-  friend int     operator == (const complex, const complex);
-  friend int     operator != (const complex, const complex);
-  friend int     operator >= (const complex, const complex);
-  friend int     operator <= (const complex, const complex);
+  friend bool    operator == (const complex, const complex);
+  friend bool    operator != (const complex, const complex);
+  friend bool    operator >= (const complex, const complex);
+  friend bool    operator <= (const complex, const complex);
+  friend bool    operator >  (const complex, const complex);
+  friend bool    operator <  (const complex, const complex);
 		
   // assignment operations
   complex&       operator  = (const complex);

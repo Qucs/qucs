@@ -1,3 +1,15 @@
+2005-03-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: New functions: contains() and sort().
+
+	* qucsdefs.h (qucs_definition_available): Added HB item.
+
+	* complex.cpp: Added < and > operators.
+
+	* hbsolver.h, hbsolver.cpp: Started to implement the
+	harmonic balance solver.  Not yet working at all, just
+	some preparations.
+
 2005-03-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am: Avoid re-generation of flex/bison files

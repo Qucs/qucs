@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.13 2005-03-14 21:59:07 raimi Exp $
+ * $Id: qucsdefs.h,v 1.14 2005-03-30 07:35:52 raimi Exp $
  *
  */
 
@@ -592,6 +592,12 @@ struct define_t qucs_definition_available[] =
       { "LTEfactor", PROP_REAL, { 1, PROP_NO_STR }, { 1, 16 } },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       PROP_NO_PROP }
+  },
+  /* harmonic balance analysis */
+  { "HB", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "n", PROP_INT, { 1, PROP_NO_STR }, { 1, PROP_VAL_MAX } },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
   },
   /* subcircuit definition */
   { "Def", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,

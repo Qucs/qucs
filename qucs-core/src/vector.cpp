@@ -1,7 +1,7 @@
 /*
  * vector.cpp - vector class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.16 2004-10-13 14:43:17 ela Exp $
+ * $Id: vector.cpp,v 1.17 2005-03-30 07:35:53 raimi Exp $
  *
  */
 
@@ -734,4 +734,28 @@ void vector::setOrigin (char * n) {
 // Returns the origin (the analysis) of the vector.
 char * vector::getOrigin (void) {
   return origin;
+}
+
+/* The function returns the number of entries with the given value
+   deviating no more than the given epsilon. */
+int vector::contains (complex val, nr_double_t eps) {
+  int count = 0;
+  for (int i = 0; i < size; i++) {
+    if (abs (data[i] - val) <= eps) count++;
+  }
+  return count;
+}
+
+// Sorts the vector either in ascending or descending order.
+void vector::sort (bool ascending) {
+  complex t;
+  for (int i = 0; i < size; i++) {
+    for (int n = 0; n < size - 1; n++) {
+      if (ascending ? data[n] > data[n+1] : data[n] < data[n+1]) {
+	t = data[n];
+	data[n] = data[n+1];
+	data[n+1] = t;
+      }
+    }
+  }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.17 2005-01-24 19:36:59 raimi Exp $
+ * $Id: complex.cpp,v 1.18 2005-03-30 07:35:52 raimi Exp $
  *
  */
 
@@ -338,20 +338,28 @@ complex operator*(const complex z1, const complex z2) {
   return complex (z1.r * z2.r - z1.i * z2.i, z1.i * z2.r + z1.r * z2.i);
 }
 
-int operator==(const complex z1, const complex z2) {
+bool operator==(const complex z1, const complex z2) {
   return (z1.r == z2.r) && (z1.i == z2.i);
 }
 
-int operator!=(const complex z1, const complex z2) {
+bool operator!=(const complex z1, const complex z2) {
   return (z1.r != z2.r) || (z1.i != z2.i);
 }
 
-int operator>=(const complex z1, const complex z2) {
+bool operator>=(const complex z1, const complex z2) {
   return norm (z1) >= norm (z2);
 }
 
-int operator<=(const complex z1, const complex z2) {
+bool operator<=(const complex z1, const complex z2) {
   return norm (z1) <= norm (z2);
+}
+
+bool operator>(const complex z1, const complex z2) {
+  return norm (z1) > norm (z2);
+}
+
+bool operator<(const complex z1, const complex z2) {
+  return norm (z1) < norm (z2);
 }
 
 complex operator/(const complex z1, const nr_double_t r2) {
