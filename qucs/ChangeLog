@@ -1,3 +1,8 @@
+2004-06-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.2 and bumped up to version
+	0.0.3.
+
 2004-05-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am: Added RELEASE file to CVS.  Updated maintainer
