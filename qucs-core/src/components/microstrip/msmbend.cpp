@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.1 2004-07-25 16:58:47 margraf Exp $
+ * $Id: msmbend.cpp,v 1.2 2004-07-27 16:43:59 ela Exp $
  *
  */
 
@@ -58,10 +58,10 @@ void msmbend::calcSP (nr_double_t frequency) {
 
   /* local variables */
   complex s11, s21;
-  nr_double_t L, C, wh = W/H;
+  nr_double_t L, C, Wh = W / h;
 
   // check validity
-  if ((wh < 0.2) || (wh > 6.0)) {
+  if ((Wh < 0.2) || (Wh > 6.0)) {
     logprint (LOG_STATUS,
 	"Model for microstrip mitered bend defined for 0.2 <= W/h <= 6.0\n");
   }
@@ -75,9 +75,9 @@ void msmbend::calcSP (nr_double_t frequency) {
   }
 
   // capacitance in pF
-  C = W * ( (3.93 * er + 0.62) * wh + (7.6 * er + 3.80) );
+  C = W * ( (3.93 * er + 0.62) * Wh + (7.6 * er + 3.80) );
   // inductance in nH
-  L = 440.0 * h * ( 1.0 - 1.062 * exp( -0.177 * pow(wh, 0.947) ) );
+  L = 440.0 * h * ( 1.0 - 1.062 * exp( -0.177 * pow(Wh, 0.947) ) );
 
   s21 = complex(0.0, 1e12 / 2*M_PI*frequency*C);
   s11 = complex(0.0, 2e-9*M_PI*frequency*L) + s21;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.12 2004-07-12 18:14:59 ela Exp $
+ * $Id: constants.h,v 1.13 2004-07-27 16:43:58 ela Exp $
  *
  */
 
@@ -67,6 +67,9 @@
 #define K    -273.15                  /* absolute 0 in centigrade  */
 #define Z0   376.73031346958504364963 /* wave resistance in vacuum */
 #define T0   290                      /* standard temperature      */
+
+#define kBoverQ 0.86173433260414314916e-4
+#define QoverkB 1.16045045690360379713e+4
 
 #define sqr(x)    ((x) * (x))
 #define cubic(x)  (exp (3 * log (x)))

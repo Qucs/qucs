@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.4 2004-07-26 06:30:29 ela Exp $
+ * $Id: diode.cpp,v 1.5 2004-07-27 16:43:58 ela Exp $
  *
  */
 
@@ -35,6 +35,7 @@
 #include "node.h"
 #include "circuit.h"
 #include "net.h"
+#include "matrix.h"
 #include "analysis.h"
 #include "dcsolver.h"
 #include "component_id.h"
@@ -51,21 +52,33 @@ diode::diode () : circuit (2) {
 }
 
 void diode::calcSP (nr_double_t frequency) {
-  complex y = getOperatingPoint ("gd");
-  y += rect (0, getOperatingPoint ("Cd") * 2.0 * M_PI * frequency);
-  y *= 2 * z0; 
+  nr_double_t gd = getOperatingPoint ("gd");
+  nr_double_t Cd = getOperatingPoint ("Cd");
+  complex y = 2 * z0 * rect (gd, Cd * 2.0 * M_PI * frequency);
   setS (NODE_C, NODE_C, 1.0 / (1.0 + y));
   setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
   setS (NODE_C, NODE_A, y / (1.0 + y));
   setS (NODE_A, NODE_C, y / (1.0 + y));
 }
 
-void diode::calcNoise (nr_double_t) {
+void diode::calcNoise (nr_double_t frequency) {
   nr_double_t Id = getOperatingPoint ("Id");
-  nr_double_t Is = getPropertyDouble ("Is");
-  nr_double_t f  = 2 * Q * Is * (Id + 2 * Is) * z0 / kB / T0;
+
+#if MICHAEL
+  nr_double_t gd = getOperatingPoint ("gd");
+  nr_double_t Cd = getOperatingPoint ("Cd");
+
+  complex y = rect (gd, Cd * 2.0 * M_PI * frequency);
+  complex f = 2 * 2 * z0 * Id / (2 * z0 * y + 1) * QoverkB / T0;
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
+#else
+  matrix y = matrix (2);
+  nr_double_t i = 2 * Id * QoverkB / T0;
+  y.set (NODE_C, NODE_C, +i); y.set (NODE_A, NODE_A, +i);
+  y.set (NODE_A, NODE_C, -i); y.set (NODE_C, NODE_A, -i);
+  setMatrixN (cytocs (y * z0, getMatrixS ()));
+#endif
 }
 
 void diode::initDC (dcsolver * solver) {
@@ -75,12 +88,15 @@ void diode::initDC (dcsolver * solver) {
   setV (NODE_A, 0.9);
   Uprev = real (getV (NODE_A) - getV (NODE_C));
 
+  // get device temperature
+  nr_double_t T = getPropertyDouble ("Temp");
+
   // possibly insert series resistance
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", NODE_A);
-    rs->setProperty ("Temp", 26.85);
+    rs->setProperty ("Temp", T);
     rs->setProperty ("R", Rs);
   }
   // no series resistance
@@ -92,10 +108,12 @@ void diode::initDC (dcsolver * solver) {
 void diode::calcDC (void) {
   nr_double_t Is = getPropertyDouble ("Is");
   nr_double_t n  = getPropertyDouble ("N");
-  nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit, gtiny;
+  nr_double_t T  = getPropertyDouble ("Temp");
 
-  T = kelvin (26.85);
-  Ut = T * kB / Q;
+  nr_double_t Ud, Ut, Ieq, Ucrit, gtiny;
+
+  T = kelvin (T);
+  Ut = T * kBoverQ;
   Ud = real (getV (NODE_A) - getV (NODE_C));
 
   // critical voltage necessary for bad start values
@@ -117,20 +135,14 @@ void diode::calcDC (void) {
 }
 
 void diode::calcOperatingPoints (void) {
-  nr_double_t Is  = getPropertyDouble ("Is");
-  nr_double_t n   = getPropertyDouble ("N");
   nr_double_t z   = getPropertyDouble ("M");
   nr_double_t cj0 = getPropertyDouble ("Cj0");
   nr_double_t vd  = getPropertyDouble ("Vj");
   nr_double_t Tt  = getPropertyDouble ("Tt");
   
-  nr_double_t Ud, Id, Ut, T, gd, Cd;
+  nr_double_t Ud, Cd;
 
-  T = kelvin (26.85);
-  Ut = kB * T / Q;
   Ud = real (getV (NODE_A) - getV (NODE_C));
-  gd = pnConductance (Ud, Is, Ut * n);
-  Id = pnCurrent (Ud, Is, Ut * n);
   Cd = pnCapacitance (Ud, cj0, vd, z) + Tt * gd;
 
   setOperatingPoint ("gd", gd);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.4 2004-07-26 22:07:29 ela Exp $
+ * $Id: spfile.cpp,v 1.5 2004-07-27 16:43:58 ela Exp $
  *
  */
 
@@ -371,7 +371,7 @@ nr_double_t spfile::noiseFigure (matrix& s, matrix& c, nr_double_t& Fmin,
   // optimal source reflection coefficient
   Gopt = 1 - norm (n2);
   if (real (Gopt) < 0.0)
-    Gopt = 1;  // avoid a negative radicant
+    Gopt = (1 + sqrt (Gopt)) / n2;  // avoid a negative radicant
   else
     Gopt = (1 - sqrt (Gopt)) / n2;
 

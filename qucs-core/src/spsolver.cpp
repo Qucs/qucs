@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.21 2004-07-26 06:30:28 ela Exp $
+ * $Id: spsolver.cpp,v 1.22 2004-07-27 16:43:58 ela Exp $
  *
  */
 
@@ -305,6 +305,13 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
   // denominator needs to be calculated only once
   complex t = 1.0 - c->getS (k, k) * d->getS (l, l);
 
+  // avoid singularity when two full reflective ports are connected
+  nr_double_t tiny1 = (t == 0) ? 1.0 - 1.235e-12 : 1.0;
+  nr_double_t tiny2 = tiny1 * tiny1;
+  nr_double_t tiny3 = tiny1 * tiny2;
+  nr_double_t tiny4 = tiny1 * tiny3;
+  t = 1.0 - c->getS (k, k) * d->getS (l, l) * tiny2;
+
   int j2; // column index for resulting matrix
   int i2; // row index for resulting matrix
   int j1; // column index for S matrix
@@ -325,10 +332,10 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
 
       // compute C'ij
       p = c->getN (i1, j1) +
-	c->getN (k, j1) * d->getS (l, l) * c->getS (i1, k) / t +
-	c->getN (i1, k) * conj (d->getS (l, l) * c->getS (j1, k) / t) +
+	c->getN (k, j1) * d->getS (l, l) * c->getS (i1, k) * tiny2 / t +
+	c->getN (i1, k) * conj (d->getS (l, l) * c->getS (j1, k) * tiny2 / t) +
 	(c->getN (k, k) * norm (d->getS (l, l)) + d->getN (l, l)) *
-	c->getS (i1, k) * conj (c->getS (j1, k)) / norm (t);
+	c->getS (i1, k) * conj (c->getS (j1, k)) * tiny4 / norm (t);
 
       result->setN (i2, j2, p);
       if (i2 >= j2) break; // the other half need not be computed
@@ -359,9 +366,9 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
       // compute C'ij
       p = (c->getN (k, k) * d->getS (l, l) +
 	   d->getN (l, l) * conj (c->getS (k, k))) *
-	c->getS (i1, k) * conj (d->getS (j1, l)) / norm (t) +
-	d->getN (l, j1) * c->getS (i1, k) / t +
-	c->getN (i1, k) * conj (d->getS (j1, l) / t);
+	c->getS (i1, k) * conj (d->getS (j1, l)) * tiny3 / norm (t) +
+	d->getN (l, j1) * c->getS (i1, k) * tiny1 / t +
+	c->getN (i1, k) * conj (d->getS (j1, l) * tiny1 / t);
       result->setN (i2, j2, p);
       result->setN (j2, i2, conj (p));
       i2++;
@@ -376,9 +383,9 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
       // compute C'ij
       p = d->getN (i1, j1) +
 	(d->getN (l, l) * norm (c->getS (k, k)) + c->getN (k, k)) *
-	d->getS (i1, l) * conj (d->getS (j1, l)) / norm (t) +
-	d->getN (i1, l) * conj (c->getS (k, k) * d->getS (j1, l) / t) +
-	d->getN (l, j1) * c->getS (k, k) * d->getS (i1, l) / t;
+	d->getS (i1, l) * conj (d->getS (j1, l)) * tiny4 / norm (t) +
+	d->getN (i1, l) * conj (c->getS (k, k) * d->getS (j1, l) * tiny2 / t) +
+	d->getN (l, j1) * c->getS (k, k) * d->getS (i1, l) * tiny2 / t;
       result->setN (i2, j2, p);
       if (i2 >= j2) break; // the other half need not be computed
       result->setN (j2, i2, conj (p));
@@ -816,7 +823,7 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
   // optimal source reflection coefficient
   Ropt = 1.0 - norm (n2);
   if (real (Ropt) < 0.0)
-    Ropt = 1.0;  // avoid a negative radicant
+    Ropt = (1.0 + sqrt (Ropt)) / n2;  // avoid a negative radicant
   else
     Ropt = (1.0 - sqrt (Ropt)) / n2;
 
