@@ -1,3 +1,11 @@
+2004-07-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Two-Port parameters
+	of passive devices}): New subsection about standard passive
+	circuit topologies and their matrix representations.
+	(subsection{Noise model}): Documented noise model of diode
+	and SGP model of BJT.
+
 2004-07-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Noise model}): Documented noise

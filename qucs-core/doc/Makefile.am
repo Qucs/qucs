@@ -49,7 +49,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   siconnectpath.fig siconnectloop.fig twoportiv.fig twoportab.fig dcsgp.fig   \
   twoportss.fig twoportpp.fig twoportps.fig twoportsp.fig twoportch.fig       \
   nconnect2.fig nconnect3.fig mscorner.fig sgp.fig dcsgp_spice.fig spsgp.fig  \
-  noisejfet.fig
+  noisejfet.fig noisediode.fig noisesgp.fig tcircuit.fig bridgecircuit.fig    \
+  xcircuit.fig picircuit.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)

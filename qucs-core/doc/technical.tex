@@ -1071,6 +1071,10 @@ G &
 \end{figure}
 \FloatBarrier
 
+There are two different matrix forms for the correlations between the
+quantities at the transmission twoport shown in
+fig. \ref{fig:twoportab}.
+
 \begin{itemize}
 
 \item S-parameters (also called scattering parameters)
@@ -1111,6 +1115,17 @@ G &
 
 \end{itemize}
 
+When connecting cascaded twoports it is possible to compute the
+resulting transfer scattering parameters by the following equation.
+\begin{equation}
+T = T_1 \cdot T_2
+\end{equation}
+
+According to Janusz A. Dobrowolski \cite{Dobrowolski} the following
+table contains the matrix transformation formulas.
+
+\addvspace{12pt}
+
 \begin{tabular}{|c|c|c|}
 \hline
 & S & T\\
@@ -1129,6 +1144,15 @@ $\begin{array}{cc}T_{11}&T_{12}\vspace{4pt}\\T_{21}&T_{22}\end{array}$\\
 
 \subsubsection{Mixed Two-Port matrix conversions}
 
+Sometimes it may be useful to have a twoport matrix representation
+based on signal waves in a representation based on voltage and current
+and the other way around.  There are two more parameters involved in
+this case: The reference impedance at port 1 (denoted as $Z_1$) and
+the reference impedance at port 2 (denoted as $Z_2$).
+
+\addvspace{12pt}
+
+Converting from scattering parameters to chain parameters results in
 \begin{align}
 A_{11} &= \dfrac{Z_{1}^{*} + Z_{1}\cdot S_{11} - Z_{1}^{*}\cdot S_{22} - Z_{1}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 A_{12} &= \dfrac{Z_{1}^{*}\cdot Z_{2}^{*} + Z_{1}\cdot Z_{2}^{*}\cdot S_{11} + Z_{1}^{*}\cdot Z_{2}\cdot S_{22} + Z_{1}\cdot Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
@@ -1136,6 +1160,7 @@ A_{21} &= \dfrac{1 - S_{11} - S_{22} + \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\lef
 A_{22} &= \dfrac{Z_{2}^{*} - Z_{2}^{*}\cdot S_{11} + Z_{2}\cdot S_{22} - Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
 %\end{align}
 \intertext{
+Converting from chain parameters to scattering parameters results in
 }
 %\begin{align}
 S_{11} &= \dfrac{A_{11}\cdot Z_{2} + A_{12} - A_{21}\cdot Z_{1}^{*}\cdot Z_{2} - A_{22}\cdot Z_{1}^{*}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
@@ -1144,6 +1169,7 @@ S_{21} &= \dfrac{2\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}{A
 S_{22} &= \dfrac{-A_{11}\cdot Z_{2}^{*} + A_{12} - A_{21}\cdot Z_{1}\cdot Z_{2}^{*} + A_{22}\cdot Z_{1}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}
 \end{align}
 
+Converting from scattering parameters to hybrid parameters results in
 \begin{align}
 H_{11} &= \dfrac{\left(\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}\right)\cdot Z_{1}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
 H_{12} &= \dfrac{2\cdot S_{12}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
@@ -1151,6 +1177,7 @@ H_{21} &= \dfrac{-2\cdot S_{21}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\r
 H_{22} &= \dfrac{\left(\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}\right) / Z_{2}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
 %\end{align}
 \intertext{
+Converting from hybrid parameters to scattering parameters results in
 }
 %\begin{align}
 S_{11} &= \dfrac{\left(H_{11} / Z_{1} - 1\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
@@ -1158,6 +1185,104 @@ S_{12} &= \dfrac{2\cdot H_{12}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z
 S_{21} &= \dfrac{-2\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
 S_{22} &= \dfrac{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 - Z_{2}\cdot H_{22}\right) + H_{12}\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}
 \end{align}
+
+\subsubsection{Two-Port parameters of passive devices}
+%\addcontentsline{toc}{subsubsection}{Two-Port parameters of passive devices}
+
+Basically the twoport parameters of passive twoports can be determined
+using Kirchhoff's voltage law and Kirchhoff's current law or by
+applying the definition equations of the twoport parameters.  This has
+been done \cite{Weissgerber} for some example circuits.
+
+\begin{itemize}
+\item T-topology
+
+\begin{figure}[ht]
+\begin{tabular}{cc}
+\begin{minipage}[t]{0.4\linewidth}
+\centering
+\includegraphics[width=4cm]{tcircuit}
+\end{minipage}
+&
+\begin{minipage}[t]{0.5\linewidth}
+$Z =
+\begin{bmatrix}
+Z_1 + Z_2 & Z_2\\
+Z_2 & Z_2 + Z_3\\
+\end{bmatrix}
+$
+\end{minipage}
+\end{tabular}
+\end{figure}
+\FloatBarrier
+
+\item $\pi$-topology
+
+\begin{figure}[ht]
+\begin{tabular}{cc}
+\begin{minipage}[t]{0.4\linewidth}
+\centering
+\includegraphics[width=4cm]{picircuit}
+\end{minipage}
+&
+\begin{minipage}[t]{0.5\linewidth}
+$
+Y =
+\begin{bmatrix}
+Y_1 + Y_2 & -Y_2\\
+-Y_2 & Y_2 + Y_3\\
+\end{bmatrix}
+$
+\end{minipage}
+\end{tabular}
+\end{figure}
+\FloatBarrier
+
+\item symmetric T-bridge
+
+\begin{figure}[ht]
+\begin{tabular}{cc}
+\begin{minipage}[t]{0.4\linewidth}
+\centering
+\includegraphics[width=4.5cm]{bridgecircuit}
+\end{minipage}
+&
+\begin{minipage}[t]{0.5\linewidth}
+$
+Z =
+\begin{bmatrix}
+\dfrac{Z_1^2 + Z_1\cdot Z_3}{2\cdot Z_1+ Z_3} + Z_2 & \dfrac{Z_1^2}{2\cdot Z_1+ Z_3} + Z_2\\
+\dfrac{Z_1^2}{2\cdot Z_1+ Z_3} + Z_2 & \dfrac{Z_1^2 + Z_1\cdot Z_3}{2\cdot Z_1+ Z_3} + Z_2\\
+\end{bmatrix}
+$
+\end{minipage}
+\end{tabular}
+\end{figure}
+\FloatBarrier
+
+\item symmetric X-topology
+
+\begin{figure}[ht]
+\begin{tabular}{cc}
+\begin{minipage}[t]{0.4\linewidth}
+\centering
+\includegraphics[width=4cm]{xcircuit}
+\end{minipage}
+&
+\begin{minipage}[t]{0.5\linewidth}
+$
+Z = \dfrac{1}{2}
+\begin{bmatrix}
+Z_1 + Z_2 & Z_1 - Z_2\\
+Z_1 - Z_2 & Z_1 + Z_2\\
+\end{bmatrix}
+$
+\end{minipage}
+\end{tabular}
+\end{figure}
+\FloatBarrier
+
+\end{itemize}
 
 \section{Scattering parameters of components}
 %\addcontentsline{toc}{section}{Scattering parameters of components}
@@ -2013,6 +2138,7 @@ correlation matrix is accordingly
 
 \subsection{Transformations}
 %\addcontentsline{toc}{subsection}{Transformations}
+\label{sec:noiseTrans}
 
 There are three usable noise correlation matrix representations for
 multiport circuits.
@@ -4104,7 +4230,11 @@ Rs & $R_{S}$ & ohmic resistance & $\ohm$ & $0.0$\\
 Cj0 & $C_{j0}$ & zero-bias junction capacitance & $\farad$ & $0.0$\\
 M & $M$ & grading coefficient & & $0.5$\\
 Vj & $V_{j}$ & junction potential & $\volt$ & $1.0$\\
-Tt & $\tau$ & transit time & $\second$ & $0.0$
+Tt & $\tau$ & transit time & $\second$ & $0.0$\\
+Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
+Af & $A_F$ & flicker noise exponent & & $1.0$\\
+Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
 \end{tabular}
 
 \addvspace{12pt}
@@ -4191,6 +4321,42 @@ S_{12} = S_{21} &= 1 - S_{11} = \dfrac{2\cdot y}{1 + 2\cdot y}
 with
 \begin{equation}
 y = Z_{0}\cdot \left(g_{d} + j\omega C_{d}\right)
+\end{equation}
+
+\subsection{Noise model}
+%\addcontentsline{toc}{subsection}{Noise model}
+
+The thermal noise generated by the series resistor is characterized by
+the following spectral density.
+\begin{equation}
+\dfrac{\overline{i_{R_S}^2}}{\Delta f} = \dfrac{4 k_B T}{R_S}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.28\linewidth]{noisediode}
+\end{center}
+\caption{noise model of intrinsic diode}
+\label{fig:noisediode}
+\end{figure}
+\FloatBarrier
+
+The shot noise and flicker noise generated by the DC current flow
+through the diode is characterized by the following spectral density.
+\begin{equation}
+\dfrac{\overline{i_{d}^2}}{\Delta f} = 2e I_d + K_F \dfrac{I_d^{A_F}}{f^{F_{FE}}}
+\end{equation}
+
+Thus the noise current correlation matrix can be formed.  This matrix
+can be easily converted to the noise wave correlation matrix
+representation using the formulas given in section
+\ref{sec:noiseTrans} on page \pageref{sec:noiseTrans}.
+\begin{equation}
+\underline{C}_Y = \Delta f
+\begin{bmatrix}
++\overline{i_{d}^2} & -\overline{i_{d}^2}\\
+-\overline{i_{d}^2} & +\overline{i_{d}^2}\\
+\end{bmatrix}
 \end{equation}
 
 \section{Junction FET}
@@ -4520,6 +4686,13 @@ Xtf & $X_{TF}$ & coefficient of bias-dependence for Tf & & $0.0$\\
 Vtf & $V_{TF}$ & voltage dependence of Tf on base-collector voltage & $\volt$ & $\infty$\\
 Itf & $I_{TF}$ & high-current effect on Tf & $\ampere$ & $0.0$\\
 Tr & $T_R$ & ideal reverse transit time & $\second$ & $0.0$\\
+Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
+Af & $A_F$ & flicker noise exponent & & $1.0$\\
+Ffe & $F_{FE}$ & flicker noise frequency exponent & & $1.0$\\
+Bf & $B_F$ & burst noise coefficient & & $0.0$\\
+Ab & $A_B$ & burst noise exponent & & $1.0$\\
+Fb & $F_B$ & burst noise corner frequency & $\hertz$ & $1.0$\\
+Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
 \end{tabular}
 
 \subsection{Large signal model}
@@ -4870,6 +5043,57 @@ Y_{CS} &= j\omega C_{CS_{dep}}
 The external capacitance $C_{BCX}$ connected between the internal
 collector node and the external base node is separately modeled if it
 is non-zero and if there is a non-zero base resistance.
+
+\subsection{Noise model}
+%\addcontentsline{toc}{subsection}{Noise model}
+
+The ohmic resistances $R_{BB'}$, $R_C$ and $R_E$ generate thermal
+noise characterized by the following spectral densities.
+\begin{equation}
+\dfrac{\overline{i_{R_{BB'}}^2}}{\Delta f} = \dfrac{4 k_B T}{R_{BB'}}
+\;\;\;\; \textrm{ and } \;\;\;\;
+\dfrac{\overline{i_{R_C}^2}}{\Delta f} = \dfrac{4 k_B T}{R_C}
+\;\;\;\; \textrm{ and } \;\;\;\;
+\dfrac{\overline{i_{R_E}^2}}{\Delta f} = \dfrac{4 k_B T}{R_E}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{noisesgp}
+\end{center}
+\caption{noise model of intrinsic BJT}
+\label{fig:noisesgp}
+\end{figure}
+\FloatBarrier
+
+Shot noise, flicker noise and burst noise generated by the DC base
+current is characterized by the spectral density
+\begin{equation}
+\dfrac{\overline{i_{b}^2}}{\Delta f} = 2e I_{BE} + K_F\dfrac{I_{BE}^{A_F}}{f^{F_{FE}}} + K_B\dfrac{I_{BE}^{A_B}}{1 + \left(\dfrac{f}{F_B}\right)^2}
+\end{equation}
+
+The shot noise generated by the DC collector to emitter current flow
+is characterized by the spectral density
+\begin{equation}
+\dfrac{\overline{i_{c}^2}}{\Delta f} = 2e I_{T}
+\end{equation}
+
+The noise current correlation matrix of the four port intrinsic
+bipolar transistor can then be written as
+\begin{equation}
+\underline{C}_Y = \Delta f
+\begin{bmatrix}
++\overline{i_{b}^2} & 0 & -\overline{i_{b}^2} & 0\\
+0 & +\overline{i_{c}^2} & -\overline{i_{c}^2} & 0\\
+-\overline{i_{b}^2} & -\overline{i_{c}^2} & +\overline{i_{c}^2} +\overline{i_{b}^2} & 0\\
+0 & 0 & 0 & 0\\
+\end{bmatrix}
+\end{equation}
+
+This matrix representation can be converted to the noise wave
+correlation matrix representation $\underline{C}_S$ using the formulas
+given in section \ref{sec:noiseTrans} on page
+\pageref{sec:noiseTrans}.
 
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
