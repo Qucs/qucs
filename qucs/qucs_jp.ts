@@ -4119,7 +4119,7 @@ Qt universal circuit simulator
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation>Special thanks to Jens Flucke
+        <translation type="obsolete">Special thanks to Jens Flucke
 
 </translation>
     </message>
@@ -4192,6 +4192,12 @@ Qt universal circuit simulator
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
         <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf</translation>
+    </message>
+    <message>
+        <source>Special thanks to Jens Flucke and Raimund Jacob
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
