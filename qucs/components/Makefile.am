@@ -36,7 +36,9 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   ampere_dc.cpp transformer.cpp symtrafo.cpp subcirport.cpp ground.cpp        \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp resistorus.cpp  \
   component.cpp resistor.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
-  msmbend.cpp msopen.cpp ampere_ac.cpp $(MOCFILES)
+  msmbend.cpp msopen.cpp ampere_ac.cpp
+
+nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
 noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   inductor.h biast.h dcblock.h dcfeed.h ground.h subcirport.h symtrafo.h      \
@@ -54,3 +56,4 @@ INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in *.moc.cpp
+DISTCLEANFILES = *.moc.cpp

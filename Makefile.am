@@ -24,12 +24,13 @@
 
 SUBDIRS = qucs
 
-# Release specific.
+# Release specific. Remove the above SUBDIRS line and uncomment this one.
 # SUBDIRS = qucs qucs-core
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS
+EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
         stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log *.gz
+DISTCLEANFILES = config.cache config.log *.gz aclocal.m4 config.h.in \
+	configure
