@@ -22,10 +22,13 @@
 #include "qucs.h"
 #include "qucsview.h"
 #include "newprojdialog.h"
+#include "settingsdialog.h"
 #include "wire.h"
 #include "rectdiagram.h"
 #include "polardiagram.h"
 #include "smithdiagram.h"
+#include "tabdiagram.h"
+#include "messagebox.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -39,6 +42,8 @@
 #include <qfiledialog.h>
 
 
+
+#define BITMAPDIR  "/home/knoppix/qucs/qucs/"
 
 QucsApp::QucsApp()
 {
@@ -56,6 +61,12 @@ QucsApp::QucsApp()
 
   viewToolBar->setOn(true);
   viewStatusBar->setOn(true);
+
+  // switch on the 'select' action
+  select->blockSignals(true);
+  select->setOn(true);
+  select->blockSignals(false);
+  slotSelect(true);
 }
 
 QucsApp::~QucsApp()
@@ -66,19 +77,19 @@ QucsApp::~QucsApp()
 // initializes all QActions of the application
 void QucsApp::initActions()
 {
-  activeAction = 0;
+  activeAction = 0;   // no active action
 
-  fileNew = new QAction(tr("New"), QIconSet(QImage("bitmaps/filenew.png")), tr("&New"), QAccel::stringToKey(tr("Ctrl+N")), this);
+  fileNew = new QAction(tr("New"), QIconSet(QImage(BITMAPDIR "bitmaps/filenew.png")), tr("&New"), QAccel::stringToKey(tr("Ctrl+N")), this);
   fileNew->setStatusTip(tr("Creates a new document"));
   fileNew->setWhatsThis(tr("New\n\nCreates a new schematic or data display document"));
   connect(fileNew, SIGNAL(activated()), this, SLOT(slotFileNew()));
 
-  fileOpen = new QAction(tr("Open File"), QIconSet(QImage("bitmaps/fileopen.png")), tr("&Open..."), 0, this);
+  fileOpen = new QAction(tr("Open File"), QIconSet(QImage(BITMAPDIR "bitmaps/fileopen.png")), tr("&Open..."), 0, this);
   fileOpen->setStatusTip(tr("Opens an existing document"));
   fileOpen->setWhatsThis(tr("Open File\n\nOpens an existing document"));
   connect(fileOpen, SIGNAL(activated()), this, SLOT(slotFileOpen()));
 
-  fileSave = new QAction(tr("Save File"), QIconSet(QImage("bitmaps/filesave.png")), tr("&Save"), QAccel::stringToKey(tr("Ctrl+S")), this);
+  fileSave = new QAction(tr("Save File"), QIconSet(QImage(BITMAPDIR "bitmaps/filesave.png")), tr("&Save"), QAccel::stringToKey(tr("Ctrl+S")), this);
   fileSave->setStatusTip(tr("Saves the actual document"));
   fileSave->setWhatsThis(tr("Save File\n\nSaves the actual document"));
   connect(fileSave, SIGNAL(activated()), this, SLOT(slotFileSave()));
@@ -88,63 +99,74 @@ void QucsApp::initActions()
   fileSaveAs->setWhatsThis(tr("Save As\n\nSaves the actual document under a new filename"));
   connect(fileSaveAs, SIGNAL(activated()), this, SLOT(slotFileSave()));
 
-  fileSaveAll = new QAction(tr("Save All Files"), QIconSet(QImage("bitmaps/filesaveall.png")), tr("Save &All"), QAccel::stringToKey(tr("Ctrl+A")), this);
+  fileSaveAll = new QAction(tr("Save All Files"), QIconSet(QImage(BITMAPDIR "bitmaps/filesaveall.png")), tr("Save &All"), QAccel::stringToKey(tr("Ctrl+A")), this);
   fileSaveAll->setStatusTip(tr("Saves all open documents"));
   fileSaveAll->setWhatsThis(tr("Save All Files\n\nSaves all open documents"));
   connect(fileSaveAll, SIGNAL(activated()), this, SLOT(slotFileSaveAll()));
 
-  fileClose = new QAction(tr("Close File"), QIconSet(QImage("bitmaps/fileclose.png")), tr("&Close"), QAccel::stringToKey(tr("Ctrl+W")), this);
+  fileClose = new QAction(tr("Close File"), QIconSet(QImage(BITMAPDIR "bitmaps/fileclose.png")), tr("&Close"), QAccel::stringToKey(tr("Ctrl+W")), this);
   fileClose->setStatusTip(tr("Closes the actual document"));
   fileClose->setWhatsThis(tr("Close File\n\nCloses the actual document"));
   connect(fileClose, SIGNAL(activated()), this, SLOT(slotFileClose()));
 
-  filePrint = new QAction(tr("Print File"), QIconSet(QImage("bitmaps/fileprint.png")), tr("&Print"), QAccel::stringToKey(tr("Ctrl+P")), this);
+  fileSettings = new QAction(tr("Settings"), tr("Settings..."), 0, this);
+  fileSettings->setStatusTip(tr("Settings"));
+  fileSettings->setWhatsThis(tr("Settings\n\nSets properties of the file"));
+  connect(fileSettings, SIGNAL(activated()), this, SLOT(slotFileSettings()));
+
+  filePrint = new QAction(tr("Print File"), QIconSet(QImage(BITMAPDIR "bitmaps/fileprint.png")), tr("&Print..."), QAccel::stringToKey(tr("Ctrl+P")), this);
   filePrint->setStatusTip(tr("Prints out the actual document"));
   filePrint->setWhatsThis(tr("Print File\n\nPrints out the actual document"));
   connect(filePrint, SIGNAL(activated()), this, SLOT(slotFilePrint()));
+  filePrint->setEnabled(false);
 
   fileQuit = new QAction(tr("Exit"), tr("E&xit"), QAccel::stringToKey(tr("Ctrl+Q")), this);
   fileQuit->setStatusTip(tr("Quits the application"));
   fileQuit->setWhatsThis(tr("Exit\n\nQuits the application"));
   connect(fileQuit, SIGNAL(activated()), this, SLOT(slotFileQuit()));
 
-  editCut = new QAction(tr("Cut"), QIconSet(QImage("bitmaps/editcut.png")), tr("Cu&t"), QAccel::stringToKey(tr("Ctrl+X")), this);
+  editCut = new QAction(tr("Cut"), QIconSet(QImage(BITMAPDIR "bitmaps/editcut.png")), tr("Cu&t"), QAccel::stringToKey(tr("Ctrl+X")), this);
   editCut->setStatusTip(tr("Cuts the selected section and puts it to the clipboard"));
   editCut->setWhatsThis(tr("Cut\n\nCuts the selected section and puts it to the clipboard"));
   connect(editCut, SIGNAL(activated()), this, SLOT(slotEditCut()));
+  editCut->setEnabled(false);
 
-  editCopy = new QAction(tr("Copy"), QIconSet(QImage("bitmaps/editcopy.png")), tr("&Copy"), QAccel::stringToKey(tr("Ctrl+C")), this);
+  editCopy = new QAction(tr("Copy"), QIconSet(QImage(BITMAPDIR "bitmaps/editcopy.png")), tr("&Copy"), QAccel::stringToKey(tr("Ctrl+C")), this);
   editCopy->setStatusTip(tr("Copies the selected section to the clipboard"));
   editCopy->setWhatsThis(tr("Copy\n\nCopies the selected section to the clipboard"));
   connect(editCopy, SIGNAL(activated()), this, SLOT(slotEditCopy()));
+  editCopy->setEnabled(false);
 
-  editPaste = new QAction(tr("Paste"), QIconSet(QImage("bitmaps/editpaste.png")), tr("&Paste"), QAccel::stringToKey(tr("Ctrl+V")), this);
+  editPaste = new QAction(tr("Paste"), QIconSet(QImage(BITMAPDIR "bitmaps/editpaste.png")), tr("&Paste"), QAccel::stringToKey(tr("Ctrl+V")), this);
   editPaste->setStatusTip(tr("Pastes the clipboard contents to actual position"));
   editPaste->setWhatsThis(tr("Paste\n\nPastes the clipboard contents to actual position"));
   connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  editPaste->setEnabled(false);
 
-  editDelete = new QAction(tr("Delete"), QIconSet(QImage("bitmaps/editdelete.png")), tr("&Delete"), QAccel::stringToKey(tr("Del")), this);
+  editDelete = new QAction(tr("Delete"), QIconSet(QImage(BITMAPDIR "bitmaps/editdelete.png")), tr("&Delete"), QAccel::stringToKey(tr("Del")), this);
   editDelete->setStatusTip(tr("Deletes the selected components"));
   editDelete->setWhatsThis(tr("Delete\n\nDeletes the selected components"));
   editDelete->setToggleAction(true);
   connect(editDelete, SIGNAL(toggled(bool)), this, SLOT(slotEditDelete(bool)));
 
-  undo = new QAction(tr("Undo"), QIconSet(QImage("bitmaps/undo.png")), tr("&Undo"), QAccel::stringToKey(tr("Ctrl+Z")), this);
+  undo = new QAction(tr("Undo"), QIconSet(QImage(BITMAPDIR "bitmaps/undo.png")), tr("&Undo"), QAccel::stringToKey(tr("Ctrl+Z")), this);
   undo->setStatusTip(tr("Undoes the last command"));
   undo->setWhatsThis(tr("Undo\n\nMakes the last action undone"));
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  undo->setEnabled(false);
 
-  redo = new QAction(tr("Redo"), QIconSet(QImage("bitmaps/redo.png")), tr("&Redo"), QAccel::stringToKey(tr("Ctrl+Y")), this);
+  redo = new QAction(tr("Redo"), QIconSet(QImage(BITMAPDIR "bitmaps/redo.png")), tr("&Redo"), QAccel::stringToKey(tr("Ctrl+Y")), this);
   redo->setStatusTip(tr("Redoes the last command"));
   redo->setWhatsThis(tr("Redo\n\nRepeats the last action once more"));
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  redo->setEnabled(false);
 
-  projNew = new QAction(tr("New Project"), tr("&New Project"), 0, this);
+  projNew = new QAction(tr("New Project"), tr("&New Project..."), 0, this);
   projNew->setStatusTip(tr("Creates a new project"));
   projNew->setWhatsThis(tr("New Project\n\nCreates a new project"));
 //  connect(fileNew, SIGNAL(activated()), this, SLOT(slotFileNew()));
 
-  projOpen = new QAction(tr("Open Project"), tr("&Open Project"), 0, this);
+  projOpen = new QAction(tr("Open Project"), tr("&Open Project..."), 0, this);
   projOpen->setStatusTip(tr("Opens a project"));
   projOpen->setWhatsThis(tr("Open Project\n\nOpens an existing project"));
 //  connect(fileNew, SIGNAL(activated()), this, SLOT(slotFileNew()));
@@ -154,93 +176,98 @@ void QucsApp::initActions()
   projDel->setWhatsThis(tr("Delete Project\n\nDeletes an existing project"));
 //  connect(fileNew, SIGNAL(activated()), this, SLOT(slotFileNew()));
 
-  magAll = new QAction(tr("View All"), QIconSet(QImage("bitmaps/viewmagfit.png")), tr("View All"), QAccel::stringToKey(tr("Ctrl+A")), this);
+  magAll = new QAction(tr("View All"), QIconSet(QImage(BITMAPDIR "bitmaps/viewmagfit.png")), tr("View All"), QAccel::stringToKey(tr("Ctrl+A")), this);
   magAll->setStatusTip(tr("Views the whole page"));
   magAll->setWhatsThis(tr("View All\n\nShows the whole page content"));
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  magAll->setEnabled(false);
 
-  magPlus = new QAction(tr("Zoom in"), QIconSet(QImage("bitmaps/viewmag+.png")), tr("Zoom in"), QAccel::stringToKey(tr("Ctrl+P")), this);
+  magPlus = new QAction(tr("Zoom in"), QIconSet(QImage(BITMAPDIR "bitmaps/viewmag+.png")), tr("Zoom in"), QAccel::stringToKey(tr("Ctrl+P")), this);
   magPlus->setStatusTip(tr("Zooms into the actual view"));
   magPlus->setWhatsThis(tr("Zoom in\n\nZooms the actual view"));
   connect(magPlus, SIGNAL(activated()), this, SLOT(slotZoomIn()));
 
-  magMinus = new QAction(tr("Zoom out"), QIconSet(QImage("bitmaps/viewmag-.png")), tr("Zoom out"), QAccel::stringToKey(tr("Ctrl+M")), this);
+  magMinus = new QAction(tr("Zoom out"), QIconSet(QImage(BITMAPDIR "bitmaps/viewmag-.png")), tr("Zoom out"), QAccel::stringToKey(tr("Ctrl+M")), this);
   magMinus->setStatusTip(tr("Zooms out the actual view"));
   magMinus->setWhatsThis(tr("Reduce\n\nZooms out the actual view"));
   connect(magMinus, SIGNAL(activated()), this, SLOT(slotZoomOut()));
 
-  select = new QAction(tr("Select"), QIconSet(QImage("bitmaps/pointer.png")), tr("Select"), 0, this);
+  select = new QAction(tr("Select"), QIconSet(QImage(BITMAPDIR "bitmaps/pointer.png")), tr("Select"), 0, this);
   select->setStatusTip(tr("Select mode"));
   select->setWhatsThis(tr("Select\n\nSelect mode"));
   select->setToggleAction(true);
   connect(select, SIGNAL(toggled(bool)), this, SLOT(slotSelect(bool)));
 
-  editRotate = new QAction(tr("Rotate"), QIconSet(QImage("bitmaps/rotate_ccw.png")), tr("Rotate"), 0, this);
+  editRotate = new QAction(tr("Rotate"), QIconSet(QImage(BITMAPDIR "bitmaps/rotate_ccw.png")), tr("Rotate"), 0, this);
   editRotate->setStatusTip(tr("Rotates the selected component by 90°"));
   editRotate->setWhatsThis(tr("Rotate\n\nRotates the selected component by 90° counter-clockwise"));
   editRotate->setToggleAction(true);
   connect(editRotate, SIGNAL(toggled(bool)), this, SLOT(slotEditRotate(bool)));
 
-  editMirror = new QAction(tr("Mirror about X Axis"), QIconSet(QImage("bitmaps/mirror.png")), tr("Mirror about X Axis"), 0, this);
+  editMirror = new QAction(tr("Mirror about X Axis"), QIconSet(QImage(BITMAPDIR "bitmaps/mirror.png")), tr("Mirror about X Axis"), 0, this);
   editMirror->setStatusTip(tr("Mirrors the selected item about X axis"));
   editMirror->setWhatsThis(tr("Mirror about X Axis\n\nMirrors the selected item about X Axis"));
   editMirror->setToggleAction(true);
   connect(editMirror, SIGNAL(toggled(bool)), this, SLOT(slotEditMirrorX(bool)));
 
-  intoH = new QAction(tr("Push into Hierarchy"), QIconSet(QImage("bitmaps/bottom.png")), tr("Push into Hierarchy"), 0, this);
+  intoH = new QAction(tr("Push into Hierarchy"), QIconSet(QImage(BITMAPDIR "bitmaps/bottom.png")), tr("Push into Hierarchy"), 0, this);
   intoH->setStatusTip(tr("Goes inside subcircuit"));
   intoH->setWhatsThis(tr("Push into Hierarchy\n\nGoes inside the selected subcircuit"));
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  intoH->setEnabled(false);
 
-  popH = new QAction(tr("Pop out"), QIconSet(QImage("bitmaps/top.png")), tr("Pop out"), 0, this);
+  popH = new QAction(tr("Pop out"), QIconSet(QImage(BITMAPDIR "bitmaps/top.png")), tr("Pop out"), 0, this);
   popH->setStatusTip(tr("Pop outside subcircuit"));
   popH->setWhatsThis(tr("Pop out\n\nGoes up one hierarchy level, i.e. leaves subcircuit"));
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  popH->setEnabled(false);
 
-  editActivate = new QAction(tr("Deactivate/Activate"), QIconSet(QImage("bitmaps/deactiv.png")), tr("Deactivate/Activate"), 0, this);
+  editActivate = new QAction(tr("Deactivate/Activate"), QIconSet(QImage(BITMAPDIR "bitmaps/deactiv.png")), tr("Deactivate/Activate"), 0, this);
   editActivate->setStatusTip(tr("Deactivate/Activate the selected item"));
   editActivate->setWhatsThis(tr("Deactivate/Activate\n\nDeactivate/Activate the selected item"));
   editActivate->setToggleAction(true);
   connect(editActivate, SIGNAL(toggled(bool)), this, SLOT(slotEditActivate(bool)));
 
-  insEquation = new QAction(tr("Insert Equation"), QIconSet(QImage("bitmaps/equation.png")), tr("Insert Equation"), 0, this);
+  insEquation = new QAction(tr("Insert Equation"), QIconSet(QImage(BITMAPDIR "bitmaps/equation.png")), tr("Insert Equation"), 0, this);
   insEquation->setStatusTip(tr("Inserts equation"));
   insEquation->setWhatsThis(tr("Insert Equation\n\nInserts a user defined equation"));
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  insEquation->setEnabled(false);
 
-  insGround = new QAction(tr("Insert Ground"), QIconSet(QImage("bitmaps/ground.png")), tr("Insert Ground"), 0, this);
+  insGround = new QAction(tr("Insert Ground"), QIconSet(QImage(BITMAPDIR "bitmaps/ground.png")), tr("Insert Ground"), 0, this);
   insGround->setStatusTip(tr("Inserts ground"));
   insGround->setWhatsThis(tr("Insert Ground\n\nInserts a ground symbol"));
   insGround->setToggleAction(true);
   connect(insGround, SIGNAL(toggled(bool)), this, SLOT(slotInsertGround(bool)));
 
-  insPort = new QAction(tr("Insert Port"), QIconSet(QImage("bitmaps/port.png")), tr("Insert Port"), 0, this);
+  insPort = new QAction(tr("Insert Port"), QIconSet(QImage(BITMAPDIR "bitmaps/port.png")), tr("Insert Port"), 0, this);
   insPort->setStatusTip(tr("Inserts port"));
   insPort->setWhatsThis(tr("Insert Port\n\nInserts a port symbol"));
   insPort->setToggleAction(true);
 //  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  insPort->setEnabled(false);
 
-  insWire = new QAction(tr("Insert Wire"), QIconSet(QImage("bitmaps/wire.png")), tr("Wire"), 0, this);
+  insWire = new QAction(tr("Insert Wire"), QIconSet(QImage(BITMAPDIR "bitmaps/wire.png")), tr("Wire"), 0, this);
   insWire->setStatusTip(tr("Inserts a wire"));
   insWire->setWhatsThis(tr("Wire\n\nInserts a wire"));
   insWire->setToggleAction(true);
   connect(insWire, SIGNAL(toggled(bool)), this, SLOT(slotSetWire(bool)));
 
-  insLabel = new QAction(tr("Insert Wire/Pin Label"), QIconSet(QImage("bitmaps/nodename.png")), tr("Wire Label"), 0, this);
+  insLabel = new QAction(tr("Insert Wire/Pin Label"), QIconSet(QImage(BITMAPDIR "bitmaps/nodename.png")), tr("Wire Label"), 0, this);
   insLabel->setStatusTip(tr("Inserts a wire or pin label"));
   insLabel->setWhatsThis(tr("Wire Label\n\nInserts a wire or pin label"));
   insLabel->setToggleAction(true);
   connect(insLabel, SIGNAL(toggled(bool)), this, SLOT(slotInsertLabel(bool)));
 
-  simulate = new QAction(tr("Simulate"), QIconSet(QImage("bitmaps/gear.png")), tr("Simulate"), 0, this);
+  simulate = new QAction(tr("Simulate"), QIconSet(QImage(BITMAPDIR "bitmaps/gear.png")), tr("Simulate"), 0, this);
   simulate->setStatusTip(tr("Simulates the actual schematic"));
   simulate->setWhatsThis(tr("Simulate\n\nSimulates the actual schematic"));
   connect(simulate, SIGNAL(activated()), this, SLOT(slotSimulate()));
 
-  dpl_sch = new QAction(tr("View Data Display/Schematic"), QIconSet(QImage("bitmaps/rebuild.png")), tr("View Data Display/Schematic"), 0, this);
+  dpl_sch = new QAction(tr("View Data Display/Schematic"), QIconSet(QImage(BITMAPDIR "bitmaps/rebuild.png")), tr("View Data Display/Schematic"), 0, this);
   dpl_sch->setStatusTip(tr("Changes to data display or schematic page"));
   dpl_sch->setWhatsThis(tr("View Data Display/Schematic\n\nChanges to data display or schematic page"));
-//  connect(editPaste, SIGNAL(activated()), this, SLOT(slotEditPaste()));
+  connect(dpl_sch, SIGNAL(activated()), this, SLOT(slotChangePage()));
 
   viewToolBar = new QAction(tr("Toolbar"), tr("Tool&bar"), 0, this, 0, true);
   viewToolBar->setStatusTip(tr("Enables/disables the toolbar"));
@@ -252,11 +279,15 @@ void QucsApp::initActions()
   viewStatusBar->setWhatsThis(tr("Statusbar\n\nEnables/disables the statusbar"));
   connect(viewStatusBar, SIGNAL(toggled(bool)), this, SLOT(slotViewStatusBar(bool)));
 
-  helpAboutApp = new QAction(tr("About"), tr("&About..."), 0, this);
+  helpAboutApp = new QAction(tr("About"), tr("&About Qucs..."), 0, this);
   helpAboutApp->setStatusTip(tr("About the application"));
   helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
   connect(helpAboutApp, SIGNAL(activated()), this, SLOT(slotHelpAbout()));
 
+  helpAboutQt = new QAction(tr("About Qt"), tr("&About Qt..."), 0, this);
+  helpAboutQt->setStatusTip(tr("About Qt"));
+  helpAboutQt->setWhatsThis(tr("About Qt\n\nAbout Qt by Trolltech"));
+  connect(helpAboutQt, SIGNAL(activated()), this, SLOT(slotHelpAboutQt()));
 }
 
 void QucsApp::initMenuBar()
@@ -274,6 +305,8 @@ void QucsApp::initMenuBar()
   fileSave->addTo(fileMenu);
   fileSaveAll->addTo(fileMenu);
   fileSaveAs->addTo(fileMenu);
+  fileMenu->insertSeparator();
+  fileSettings->addTo(fileMenu);
   fileMenu->insertSeparator();
   filePrint->addTo(fileMenu);
   fileMenu->insertSeparator();
@@ -327,6 +360,7 @@ void QucsApp::initMenuBar()
   // menuBar entry helpMenu
   helpMenu=new QPopupMenu();
   helpAboutApp->addTo(helpMenu);
+  helpAboutQt->addTo(helpMenu);
 
   ///////////////////////////////////////////////////////////////////
   // MENUBAR CONFIGURATION
@@ -387,10 +421,10 @@ void QucsApp::initToolBar()
 
 }
 
+// #########################################################################
+// Statusbar
 void QucsApp::initStatusBar()
 {
-  ///////////////////////////////////////////////////////////////////
-  //STATUSBAR
   statusBar()->message(tr("Ready."), 2000);
 }
 
@@ -474,12 +508,14 @@ void QucsApp::initView()
 
   // ----------------------------------------------------------
   // Checks situation and reads all existing Qucs projects
-  if(!view->ProjDir.cd(QDir::homeDirPath()+"/.qucs"))   // is work directory already existing ?
-    if(!view->ProjDir.mkdir(QDir::homeDirPath()+"/.qucs"))  // no, then create it
+  QDir ProjDir;
+  if(!ProjDir.cd(QDir::homeDirPath()+"/.qucs"))   // is work directory already existing ?
+    if(!ProjDir.mkdir(QDir::homeDirPath()+"/.qucs"))  // no, then create it
       QMessageBox::warning(this, "Warning", "Cannot create work directory !");
-  view->ProjDir.setPath(QDir::homeDirPath()+"/.qucs");
+  ProjDir.setPath(QDir::homeDirPath()+"/.qucs");
+  QDir::setCurrent(QDir::homeDirPath()+"/.qucs");
       
-  QStringList PrDirs = view->ProjDir.entryList("*", QDir::Dirs, QDir::Name);  // get all directories
+  QStringList PrDirs = ProjDir.entryList("*", QDir::Dirs, QDir::Name);  // get all directories
   PrDirs.pop_front(); // delete "." from list
   PrDirs.pop_front(); // delete ".." from list
 
@@ -498,22 +534,44 @@ void QucsApp::initView()
 
 
 // #########################################################################
-bool QucsApp::queryExit()
+bool QucsApp::closeAllFiles()
 {
-  int exit=QMessageBox::information(this, tr("Quit..."),
-                                    tr("Do your really want to quit?"),
-                                    QMessageBox::Ok, QMessageBox::Cancel);
+  int  Result;
+  bool notForAll = true;
+  MessageBox *m = new MessageBox("Closing Qucs document",
+     "This document contains unsaved changes!\nDo you want to save the changes before closing?",this);
+    
+  // close all files and ask to save changed ones
+  for(QucsDoc *ptr = view->Docs.first(); ptr != 0; ) {
+    WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make next document the current
+    view->viewport()->repaint();
+    view->drawn = false;
+    if(ptr->DocChanged) {
+      if(notForAll)
+        Result = m->exec();
+/*        Result = QMessageBox::warning(this,"Closing Qucs document",
+          "This document contains unsaved changes!\nDo you want to save the changes before closing?",
+          "&Save", "Save all", "&Discard", "Discard all", "&Cancel", 0, 4);*/
+//QMessageBox::warning(this,"show",QString::number(Result));
+      switch(Result) {
+        case 1: slotFileSave();     // save button
+                break;
+        case 2: Result = 1;         // save all button
+                notForAll = false;
+                slotFileSave();
+                break;
+        case 4: Result = 3;         // discard all button
+                notForAll = false;
+                break;
+        case 5: return false;       // cancel button
+      }
+    }
 
-  if (exit==1)
-  {
-
+    view->Docs.remove();
+    ptr = view->Docs.current();
   }
-  else
-  {
 
-  };
-
-  return (exit==1);
+  return true;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -521,6 +579,14 @@ bool QucsApp::queryExit()
 /////////////////////////////////////////////////////////////////////
 
 
+void QucsApp::slotFileSettings()
+{
+  SettingsDialog *d = new SettingsDialog(view->Docs.current(), this);
+  d->exec();
+  delete d;
+}
+
+// --------------------------------------------------------------
 void QucsApp::slotFileNew()
 {
   statusBar()->message(tr("Creating new schematic..."));
@@ -536,7 +602,7 @@ void QucsApp::slotFileOpen()
 {
   statusBar()->message(tr("Opening file..."));
 
-  QString s = QFileDialog::getOpenFileName(view->ProjDir.absPath(), "Schematic (*.sch)", this,
+  QString s = QFileDialog::getOpenFileName(".", "Schematic (*.sch)", this,
                                            "open file dialog", "Enter a Schematic Name");
   if(!s.isEmpty()) {
     QucsDoc *d = new QucsDoc(WorkView, s);
@@ -561,7 +627,7 @@ void QucsApp::slotFileSave()
   view->blockSignals(true);   // no user interaction during the time
 
   if(view->Docs.current()->DocName.isEmpty()) {
-    QString s = QFileDialog::getSaveFileName(view->ProjDir.absPath(), "Schematic (*.sch)", this,
+    QString s = QFileDialog::getSaveFileName(".", "Schematic (*.sch)", this,
                                              "save file dialog", "Enter a Schematic Name");
     if(s.isEmpty()) {
       statusBar()->message(tr("Saving aborted"), 2000);
@@ -586,7 +652,7 @@ void QucsApp::slotFileSaveAs()
   statusBar()->message(tr("Saving file under new filename..."));
   view->blockSignals(true);   // no user interaction during the time
   
-  QString s = QFileDialog::getSaveFileName(view->ProjDir.absPath(), "Schematic (*.sch)", this,
+  QString s = QFileDialog::getSaveFileName(".", "Schematic (*.sch)", this,
                                             "save file dialog", "Enter a Schematic Name");
   if(!s.isEmpty()) {
     view->Docs.current()->setName(s);
@@ -613,7 +679,7 @@ void QucsApp::slotFileSaveAll() {
   
   for(QucsDoc *ptr = view->Docs.first(); ptr != 0; ptr = view->Docs.next()) {
     if(ptr->DocName.isEmpty()) {
-      QString s = QFileDialog::getSaveFileName(view->ProjDir.absPath(), "Schematic (*.sch)", this,
+      QString s = QFileDialog::getSaveFileName(".", "Schematic (*.sch)", this,
                                              "save file dialog", "Enter a Schematic Name");
       if(s.isEmpty()) continue;
       ptr->setName(s);
@@ -647,7 +713,6 @@ void QucsApp::slotFileClose()
     }
   }
 
-//  WorkView->removeTab(WorkView->tab(WorkView->currentTab()));
   view->Docs.remove();
   WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make new document the current
 
@@ -660,6 +725,7 @@ void QucsApp::slotFileClose()
   statusBar()->message(tr("Ready."));
 }
 
+// ###################################################################################
 void QucsApp::slotFilePrint()
 {
   statusBar()->message(tr("Printing..."));
@@ -678,30 +744,30 @@ void QucsApp::slotFilePrint()
   statusBar()->message(tr("Ready."));
 }
 
+// --------------------------------------------------------------------
+// Exits the application.
 void QucsApp::slotFileQuit()
 {
   statusBar()->message(tr("Exiting application..."));
-  ///////////////////////////////////////////////////////////////////
-  // exits the Application
-  if(true) //doc->isModified())
-  {
-    if(queryExit())
-    {
-      qApp->quit();
-    }
-    else
-    {
 
-    };
-  }
-  else
-  {
-    qApp->quit();
-  };
+  int exit=QMessageBox::information(this, tr("Quit..."),
+                                    tr("Do your really want to quit?"),
+                                    QMessageBox::Ok, QMessageBox::Cancel);
+  if(exit == 1)
+    if(closeAllFiles())  qApp->quit();
 
   statusBar()->message(tr("Ready."));
 }
 
+//-----------------------------------------------------------------
+// To get all close events.
+void QucsApp::closeEvent(QCloseEvent* Event)
+{
+  Event->ignore();
+  if(closeAllFiles())  qApp->quit();
+}
+
+// --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
   statusBar()->message(tr("Cutting selection..."));
@@ -760,10 +826,17 @@ void QucsApp::slotViewStatusBar(bool toggle)
   statusBar()->message(tr("Ready."));
 }
 
+// ###################################################################################
 void QucsApp::slotHelpAbout()
 {
   QMessageBox::about(this,tr("About..."),
                       tr("Qucs\nVersion " VERSION "\n(c) 2003 by Michael Margraf") );
+}
+
+// ###################################################################################
+void QucsApp::slotHelpAboutQt()
+{
+  QMessageBox::aboutQt(this,tr("About Qt"));
 }
 
 // ###################################################################################
@@ -805,13 +878,64 @@ void QucsApp::slotSimulate()
   sim.ProgText->insert(" at "+t.toString("hh:mm:ss")+"\n\n");
   sim.ProgText->insert("creating netlist ....");
 
-  QFile NetlistFile(view->ProjDir.path()+"/netlist.net");
+  QFile NetlistFile("netlist.net");
   if(!view->Docs.current()->createNetlist(&NetlistFile)) {
     sim.ErrText->insert("ERROR: Cannot create netlist file!\nAborted.");
     return;
   }
 
+  QStringList com;
+  com << "ls" << "-a";
+  if(!sim.startProcess(com)) {
+    sim.ErrText->insert("ERROR: Cannot start simulator!");
+    return;
+  }
+  
   sim.ProgText->insert(" done.\n");
+}
+
+// -------------------------------------------------------------------------------
+// Changes to the corresponding data display page or vice versa.
+void QucsApp::slotChangePage()
+{
+  QucsDoc *Doc = view->Docs.current();
+  QString Name = Doc->DataDisplay;
+  if(Name.isEmpty()) {
+    QMessageBox::critical(this, "Error", "No page set !");
+    return;
+  }
+  
+  QFileInfo Info;
+  QucsDoc *d;
+  
+  for(d = view->Docs.first(); d!=0; d = view->Docs.next()) {  // search, if page is already loaded
+    Info.setFile(d->DocName);
+    if(Info.fileName() == Name) break;
+  }
+
+  if(d == 0) {   // no open page found ?
+    view->Docs.findRef(Doc);
+
+    Info.setFile(Doc->DocName);
+    QFile file(Info.dirPath(true)+"/"+Name);
+    if(!file.open(IO_ReadOnly)) {     // load page
+      if(!file.open(IO_ReadWrite)) {  // if it doesn't exist, create
+        QMessageBox::critical(this, "Error", "Cannot create "+Info.dirPath(true)+"/"+Name);
+        return;
+      }
+      file.close();
+    }
+
+    QucsDoc *d = new QucsDoc(WorkView, Info.dirPath(true)+"/"+Name);
+    view->Docs.append(d);   // create new page
+
+    if(!d->load()) {
+      view->Docs.remove();
+      return;
+    }
+  }
+  
+  WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make new document the current
 }
 
 // #########################################################################################
@@ -823,11 +947,15 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   if(item->parent() == 0) return;   // no component, but item "schematic", ...
 
 
-  QucsDoc *d = new QucsDoc(WorkView, view->ProjDir.absPath()+"/"+item->text(0));
+  QucsDoc *d = new QucsDoc(WorkView, QDir::currentDirPath()+"/"+item->text(0));
   view->Docs.append(d);
 
-  if(!d->load()) view->Docs.remove();
-  else WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make new document the current
+  if(!d->load()) {
+    view->Docs.remove();
+    return;
+  }
+
+  WorkView->setCurrentTab(WorkView->tabAt(view->Docs.at()));  // make new document the current
 }
 
 // #########################################################################################
@@ -841,8 +969,17 @@ void QucsApp::slotOpenProject(QListBoxItem *item)
 // Opens an existing project.
 void QucsApp::OpenProject(const QString& name)
 {
-//  QDir *projDir = new QDir();
-  view->ProjDir.setPath(QDir::homeDirPath()+"/.qucs/"+name+"_prj");  // define project directory
+  if(!closeAllFiles()) return;   // close files and ask for saving them
+  view->Docs.append(new QucsDoc(WorkView, ""));   // create 'untitled' file
+  view->viewport()->repaint();
+  view->drawn = false;
+
+
+  if(!QDir::setCurrent(QDir::homeDirPath()+"/.qucs/"+name+"_prj")) {  // change to project directory
+    QMessageBox::critical(this, "Error", "Cannot access project directory !");
+    return;
+  }
+  QDir ProjDir(".");
 
   Content->setColumnText(0,"Content of '"+name+"'");  // column text of Content ListView
 //  Content->setColumnWidth(0, Content->width()-5);
@@ -853,18 +990,18 @@ void QucsApp::OpenProject(const QString& name)
   ConSchematics = new QListViewItem(Content, "Schematics");
 
   // put all schematic files into "Content"-ListView
-  QStringList Elements = view->ProjDir.entryList("*.sch", QDir::Files, QDir::Name);
+  QStringList Elements = ProjDir.entryList("*.sch", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it)
      new QListViewItem(ConSchematics, (*it).ascii());
 
   // put all data display files into "Content"-ListView
-  Elements = view->ProjDir.entryList("*.dpl", QDir::Files, QDir::Name);
+  Elements = ProjDir.entryList("*.dpl", QDir::Files, QDir::Name);
   for(it = Elements.begin(); it != Elements.end(); ++it)
      new QListViewItem(ConDisplays, (*it).ascii());
 
   // put all dataset files into "Content"-ListView
-  Elements = view->ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
+  Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
   for(it = Elements.begin(); it != Elements.end(); ++it)
      new QListViewItem(ConDatasets, (*it).ascii());
 
@@ -898,56 +1035,56 @@ void QucsApp::slotSetCompView(int index)
 {
   CompComps->clear();   // clear the IconView
   switch(index) {
-    case 0 : new QIconViewItem(CompComps, "Resistor", QImage("bitmaps/resistor.xpm"));
-             new QIconViewItem(CompComps, "Resistor US", QImage("bitmaps/resistor_us.xpm"));
-             new QIconViewItem(CompComps, "Capacitor", QImage("bitmaps/capacitor.xpm"));
-             new QIconViewItem(CompComps, "Inductor", QImage("bitmaps/inductor.xpm"));
-             new QIconViewItem(CompComps, "Transformer", QImage("bitmaps/transformer.xpm"));
-             new QIconViewItem(CompComps, "symmetric Transformer", QImage("bitmaps/symtrans.xpm"));
-             new QIconViewItem(CompComps, "Ground", QImage("bitmaps/ground.xpm"));
-             new QIconViewItem(CompComps, "dc Block", QImage("bitmaps/dcblock.xpm"));
-             new QIconViewItem(CompComps, "dc Feed", QImage("bitmaps/dcfeed.xpm"));
-             new QIconViewItem(CompComps, "Bias T", QImage("bitmaps/biast.xpm"));
-             new QIconViewItem(CompComps, "Attenuator", QImage("bitmaps/attenuator.xpm"));
-             new QIconViewItem(CompComps, "Isolator", QImage("bitmaps/isolator.xpm"));
-             new QIconViewItem(CompComps, "Circulator", QImage("bitmaps/circulator.xpm"));
+    case 0 : new QIconViewItem(CompComps, "Resistor", QImage(BITMAPDIR "bitmaps/resistor.xpm"));
+             new QIconViewItem(CompComps, "Resistor US", QImage(BITMAPDIR "bitmaps/resistor_us.xpm"));
+             new QIconViewItem(CompComps, "Capacitor", QImage(BITMAPDIR "bitmaps/capacitor.xpm"));
+             new QIconViewItem(CompComps, "Inductor", QImage(BITMAPDIR "bitmaps/inductor.xpm"));
+             new QIconViewItem(CompComps, "Transformer", QImage(BITMAPDIR "bitmaps/transformer.xpm"));
+             new QIconViewItem(CompComps, "symmetric Transformer", QImage(BITMAPDIR "bitmaps/symtrans.xpm"));
+             new QIconViewItem(CompComps, "Ground", QImage(BITMAPDIR "bitmaps/ground.xpm"));
+             new QIconViewItem(CompComps, "dc Block", QImage(BITMAPDIR "bitmaps/dcblock.xpm"));
+             new QIconViewItem(CompComps, "dc Feed", QImage(BITMAPDIR "bitmaps/dcfeed.xpm"));
+             new QIconViewItem(CompComps, "Bias T", QImage(BITMAPDIR "bitmaps/biast.xpm"));
+             new QIconViewItem(CompComps, "Attenuator", QImage(BITMAPDIR "bitmaps/attenuator.xpm"));
+             new QIconViewItem(CompComps, "Isolator", QImage(BITMAPDIR "bitmaps/isolator.xpm"));
+             new QIconViewItem(CompComps, "Circulator", QImage(BITMAPDIR "bitmaps/circulator.xpm"));
              break;
-    case 1 : new QIconViewItem(CompComps, "dc Voltage Source", QImage("bitmaps/dc_voltage.xpm"));
-             new QIconViewItem(CompComps, "dc Current Source", QImage("bitmaps/dc_current.xpm"));
-             new QIconViewItem(CompComps, "ac Voltage Source", QImage("bitmaps/ac_voltage.xpm"));
-             new QIconViewItem(CompComps, "Power Source", QImage("bitmaps/source.xpm"));
-             new QIconViewItem(CompComps, "Voltage Controlled Current Source", QImage("bitmaps/vccs.xpm"));
-             new QIconViewItem(CompComps, "Current Controlled Current Source", QImage("bitmaps/cccs.xpm"));
-             new QIconViewItem(CompComps, "Voltage Controlled Voltage Source", QImage("bitmaps/vcvs.xpm"));
-             new QIconViewItem(CompComps, "Current Controlled Voltage Source", QImage("bitmaps/ccvs.xpm"));
+    case 1 : new QIconViewItem(CompComps, "dc Voltage Source", QImage(BITMAPDIR "bitmaps/dc_voltage.xpm"));
+             new QIconViewItem(CompComps, "dc Current Source", QImage(BITMAPDIR "bitmaps/dc_current.xpm"));
+             new QIconViewItem(CompComps, "ac Voltage Source", QImage(BITMAPDIR "bitmaps/ac_voltage.xpm"));
+             new QIconViewItem(CompComps, "Power Source", QImage(BITMAPDIR "bitmaps/source.xpm"));
+             new QIconViewItem(CompComps, "Voltage Controlled Current Source", QImage(BITMAPDIR "bitmaps/vccs.xpm"));
+             new QIconViewItem(CompComps, "Current Controlled Current Source", QImage(BITMAPDIR "bitmaps/cccs.xpm"));
+             new QIconViewItem(CompComps, "Voltage Controlled Voltage Source", QImage(BITMAPDIR "bitmaps/vcvs.xpm"));
+             new QIconViewItem(CompComps, "Current Controlled Voltage Source", QImage(BITMAPDIR "bitmaps/ccvs.xpm"));
              break;
-    case 2 : new QIconViewItem(CompComps, "Transmission Line", QImage("bitmaps/tline.xpm"));
-             new QIconViewItem(CompComps, "Substrate", QImage("bitmaps/substrate.xpm"));
-             new QIconViewItem(CompComps, "Microstrip Line", QImage("bitmaps/msline.xpm"));
-             new QIconViewItem(CompComps, "Microstrip Step", QImage("bitmaps/msstep.xpm"));
-             new QIconViewItem(CompComps, "Microstrip Corner", QImage("bitmaps/mscorner.xpm"));
-             new QIconViewItem(CompComps, "Microstrip Tee", QImage("bitmaps/mstee.xpm"));
-             new QIconViewItem(CompComps, "Microstrip Cross", QImage("bitmaps/mscross.xpm"));
+    case 2 : new QIconViewItem(CompComps, "Transmission Line", QImage(BITMAPDIR "bitmaps/tline.xpm"));
+             new QIconViewItem(CompComps, "Substrate", QImage(BITMAPDIR "bitmaps/substrate.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Line", QImage(BITMAPDIR "bitmaps/msline.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Step", QImage(BITMAPDIR "bitmaps/msstep.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Corner", QImage(BITMAPDIR "bitmaps/mscorner.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Tee", QImage(BITMAPDIR "bitmaps/mstee.xpm"));
+             new QIconViewItem(CompComps, "Microstrip Cross", QImage(BITMAPDIR "bitmaps/mscross.xpm"));
              break;
-    case 3 : new QIconViewItem(CompComps, "Diode", QImage("bitmaps/diode.xpm"));
+    case 3 : new QIconViewItem(CompComps, "Diode", QImage(BITMAPDIR "bitmaps/diode.xpm"));
              break;
-    case 4 : new QIconViewItem(CompComps, "dc simulation", QImage("bitmaps/dc.xpm"));
-             new QIconViewItem(CompComps, "Transienten simulation", QImage("bitmaps/tran.xpm"));
-             new QIconViewItem(CompComps, "ac simulation", QImage("bitmaps/ac.xpm"));
-             new QIconViewItem(CompComps, "S-parameter simulation", QImage("bitmaps/sparameter.xpm"));
-             new QIconViewItem(CompComps, "Harmonic balance", QImage("bitmaps/hb.xpm"));
-             new QIconViewItem(CompComps, "Parameter sweep", QImage("bitmaps/sweep.xpm"));
+    case 4 : new QIconViewItem(CompComps, "dc simulation", QImage(BITMAPDIR "bitmaps/dc.xpm"));
+             new QIconViewItem(CompComps, "Transienten simulation", QImage(BITMAPDIR "bitmaps/tran.xpm"));
+             new QIconViewItem(CompComps, "ac simulation", QImage(BITMAPDIR "bitmaps/ac.xpm"));
+             new QIconViewItem(CompComps, "S-parameter simulation", QImage(BITMAPDIR "bitmaps/sparameter.xpm"));
+             new QIconViewItem(CompComps, "Harmonic balance", QImage(BITMAPDIR "bitmaps/hb.xpm"));
+             new QIconViewItem(CompComps, "Parameter sweep", QImage(BITMAPDIR "bitmaps/sweep.xpm"));
              break;
-    case 5 : new QIconViewItem(CompComps, "Line", QImage("bitmaps/line.xpm"));
-             new QIconViewItem(CompComps, "Arrow", QImage("bitmaps/arrow.xpm"));
-             new QIconViewItem(CompComps, "Text", QImage("bitmaps/text.xpm"));
-             new QIconViewItem(CompComps, "Circle", QImage("bitmaps/circle.xpm"));
-             new QIconViewItem(CompComps, "Rectangle", QImage("bitmaps/rectangle.xpm"));
+    case 5 : new QIconViewItem(CompComps, "Line", QImage(BITMAPDIR "bitmaps/line.xpm"));
+             new QIconViewItem(CompComps, "Arrow", QImage(BITMAPDIR "bitmaps/arrow.xpm"));
+             new QIconViewItem(CompComps, "Text", QImage(BITMAPDIR "bitmaps/text.xpm"));
+             new QIconViewItem(CompComps, "Circle", QImage(BITMAPDIR "bitmaps/circle.xpm"));
+             new QIconViewItem(CompComps, "Rectangle", QImage(BITMAPDIR "bitmaps/rectangle.xpm"));
              break;
-    case 6 : new QIconViewItem(CompComps, "Cartesian", QImage("bitmaps/rect.xpm"));
-             new QIconViewItem(CompComps, "Polar", QImage("bitmaps/polar.xpm"));
-             new QIconViewItem(CompComps, "Tabular", QImage("bitmaps/tabular.xpm"));
-             new QIconViewItem(CompComps, "Smith Chart", QImage("bitmaps/smith.xpm"));
+    case 6 : new QIconViewItem(CompComps, "Cartesian", QImage(BITMAPDIR "bitmaps/rect.xpm"));
+             new QIconViewItem(CompComps, "Polar", QImage(BITMAPDIR "bitmaps/polar.xpm"));
+             new QIconViewItem(CompComps, "Tabular", QImage(BITMAPDIR "bitmaps/tabular.xpm"));
+             new QIconViewItem(CompComps, "Smith Chart", QImage(BITMAPDIR "bitmaps/smith.xpm"));
              break;
   }
 }
@@ -958,11 +1095,13 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 {
   if(view->selComp != 0)  delete view->selComp;  // delete previously selected component
   if(view->selDiag != 0)  delete view->selDiag;  // delete previously selected diagram
+  view->selComp = 0;   // no component selected
+  view->selDiag = 0;   // no diagram selected
 
   if(item == 0) {   // mouse button pressed not over an item ?
     CompComps->setSelected(CompComps->currentItem(), false);  // deselect component in ViewList
-    view->selComp = 0;   // no component selected
-    view->selDiag = 0;   // no diagram selected
+    if(view->drawn) view->viewport()->repaint();
+    view->drawn = false;
     return;
   }
 
@@ -1072,6 +1211,8 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 1: view->selDiag = new PolarDiagram();
                       break;
+              case 2: view->selDiag = new TabDiagram();
+                      break;
               case 3: view->selDiag = new SmithDiagram();
                       break;
             }
@@ -1142,7 +1283,7 @@ void QucsApp::slotSelect(bool on)
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MouseDoNothing;
   view->MousePressAction = &QucsView::MPressSelect;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseReleaseAction = &QucsView::MReleaseSelect;//MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
 }
 
@@ -1213,7 +1354,7 @@ void QucsApp::slotEditDelete(bool on)
     return;
   }
   
-  if(view->Docs.current()->deleteComponents()) {
+  if(view->Docs.current()->deleteElements()) {
     editDelete->blockSignals(true);
     editDelete->setOn(false);  // release toolbar button
     editDelete->blockSignals(false);

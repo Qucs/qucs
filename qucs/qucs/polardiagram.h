@@ -32,7 +32,7 @@ public:
 
 
   virtual PolarDiagram* newOne();
-  virtual void paint(QPainter *p);
+  virtual void calcDiagram();
   virtual void calcData(Graph *g);
 };
 

@@ -45,6 +45,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   Scale   = 1.0; // no scaling
   selComp = 0;  // no component is selected
   selDiag = 0;  // no diagram is selected
+//  focusElement = 0;
 
   Docs.setAutoDelete(true);
 }
@@ -216,6 +217,96 @@ void QucsView::MMoveSelect(QMouseEvent *Event)
   painter.drawRect(MAx1, MAy1, MAx2, MAy2); // paint new rectangle
 }
 
+// -----------------------------------------------------------
+// Moves components by keeping the mouse button pressed.
+void QucsView::MMoveMoving(QMouseEvent *Event)
+{
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(Scale, Scale);
+  painter.setPen(QPen(black, 0, Qt::DotLine));
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  MAx2 = Event->pos().x();
+  MAy2 = Event->pos().y();
+  
+  Docs.current()->setOnGrid(MAx2, MAy2);
+  MAx1 = MAx2 - MAx1;
+  MAy1 = MAy2 - MAy1;
+
+  Docs.current()->copySelectedElements(&movingElements);
+  viewport()->repaint();
+
+  Wire *pw;
+  // Changes the position of all moving elements by dx/dy
+  for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+    if(pe->Type == isWire) {
+      pw = (Wire*)pe;   // connecting wires are only moved with one node
+      pw->x2 += MAx1;
+      if(pw->Port2 != 0) {
+        pw->x1 += MAx1;
+        pw->y2 += MAy1;
+        if(pw->Port1 != 0) pw->y1 += MAy1;
+      }
+    }
+    else pe->setCenter(MAx1, MAy1, true);
+    
+    pe->paintScheme(&painter);
+  }
+
+  drawn = true;
+
+  MAx1 = MAx2;
+  MAy1 = MAy2;
+
+
+  MouseMoveAction = &QucsView::MMoveMoving2;
+  MouseReleaseAction = &QucsView::MReleaseMoving;
+
+}
+
+// -----------------------------------------------------------
+// Moves components by keeping the mouse button pressed.
+void QucsView::MMoveMoving2(QMouseEvent *Event)
+{
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(Scale, Scale);
+  painter.setPen(QPen(black, 0, Qt::DotLine));
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  MAx2 = Event->pos().x();
+  MAy2 = Event->pos().y();
+
+  if(drawn) // erase old scheme
+    for(Element *p1 = movingElements.first(); p1 != 0; p1 = movingElements.next())
+      p1->paintScheme(&painter);
+
+  drawn = true;
+  Docs.current()->setOnGrid(MAx2, MAy2);
+  MAx1 = MAx2 - MAx1;
+  MAy1 = MAy2 - MAy1;
+
+  Wire *pw;
+  for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
+    if(pe->Type == isWire) {
+      pw = (Wire*)pe;   // connecting wires are only moved with one node
+      pw->x2 += MAx1;
+      if(pw->Port2 != 0) {
+        pw->x1 += MAx1;
+        pw->y2 += MAy1;
+        if(pw->Port1 != 0) pw->y1 += MAy1;
+      }
+    }
+    else pe->setCenter(MAx1, MAy1, true);
+
+    pe->paintScheme(&painter);
+  }
+
+  MAx1 = MAx2;
+  MAy1 = MAy2;
+}
+
 // *************************************************************************************
 // **********                                                                 **********
 // **********          Functions for serving mouse button clicking            **********
@@ -253,13 +344,20 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   bool Ctrl;
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
-  if(!Docs.current()->selectComponent(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale), Ctrl)) {
-    MAx1 = Event->pos().x();  // if not clicking on a component => open a rectangle
-    MAy1 = Event->pos().y();
-    MAx2 = MAx1;
+
+  MAx1 = Event->pos().x();
+  MAy1 = Event->pos().y();
+  focusElement
+      = Docs.current()->selectElement(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale), Ctrl);
+  if(focusElement == 0) {
+    MAx2 = MAx1;  // if not clicking on a component => open a rectangle
     MAy2 = MAy1;
-    MouseReleaseAction = &QucsView::MReleaseSelect;
+    MouseReleaseAction = &QucsView::MReleaseSelect2;
     MouseMoveAction = &QucsView::MMoveSelect;
+  }
+  else {  // component could be moved
+    Docs.current()->setOnGrid(MAx1, MAy1);
+    MouseMoveAction = &QucsView::MMoveMoving;
   }
   viewport()->repaint();
 }
@@ -267,8 +365,11 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressDelete(QMouseEvent *Event)
 {
-  if(Docs.current()->selectComponent(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale), true)) {
-    Docs.current()->deleteComponents();
+  Element *e
+    = Docs.current()->selectElement(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale),false);
+  if(e != 0) {
+    e->isSelected = true;
+    Docs.current()->deleteElements();
     viewport()->repaint();
   }
 }
@@ -326,7 +427,7 @@ void QucsView::MPressDiagram(QMouseEvent *)
 
   Docs.current()->setChanged(true);   // document has been changed
 
-  DiagramDialog *d = new DiagramDialog(selDiag, &ProjDir);
+  DiagramDialog *d = new DiagramDialog(selDiag);
   d->exec();
   delete d;
 
@@ -371,7 +472,7 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 
   switch(Event->button()) {
   case Qt::LeftButton :
-    if(MAx1 == 0) {
+    if(MAx1 == 0) { // which wire direction first ?
       if(MAx2 != MAx3) {
         if(Docs.current()->insertWire(new Wire(int(MAx3/Scale), int(MAy2/Scale), int(MAx2/Scale), int(MAy2/Scale))) & 2) {
           MouseMoveAction = &QucsView::MMoveWire1;  // if last port connected, then start a new wire
@@ -435,8 +536,7 @@ void QucsView::MPressWire2(QMouseEvent *Event)
     }
     break;
 
-  default:    // avoids compiler warnings
-    break;
+  default: ;    // avoids compiler warnings
   }
 }
 
@@ -454,6 +554,16 @@ void QucsView::contentsMouseReleaseEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MReleaseSelect(QMouseEvent *Event)
 {
+  if(!(Event->state() & ControlButton))
+    Docs.current()->deselectElements(focusElement);
+
+  MouseMoveAction = &QucsView::MouseDoNothing;   // no element moving
+  viewport()->repaint();
+}
+
+// -----------------------------------------------------------
+void QucsView::MReleaseSelect2(QMouseEvent *Event)
+{
   QPainter painter(viewport());
   painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
   painter.setPen(QPen(black, 0, Qt::DotLine));
@@ -470,7 +580,37 @@ void QucsView::MReleaseSelect(QMouseEvent *Event)
   Docs.current()->selectComponents(MAx1, MAy1, MAx2, MAy2, Ctrl); // selects all components within
                                                                   // the rectangle
   MouseMoveAction = &QucsView::MouseDoNothing;
-  MouseReleaseAction = &QucsView::MouseDoNothing;
+  MouseReleaseAction = &QucsView::MReleaseSelect;//MouseDoNothing;
+  viewport()->repaint();
+}
+
+// -----------------------------------------------------------
+void QucsView::MReleaseMoving(QMouseEvent *)//Event)
+{
+  Wire *pw;
+
+  // insert all moved elements into document
+  for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next())
+    switch(pe->Type) {
+      case isWire:    pw = (Wire*)pe;
+                      if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) break;
+                      Docs.current()->insertWire(pw);
+                      break;
+      case isDiagram: Docs.current()->Diags.append((Diagram*)pe);
+                      break;
+      default:        Component *c = (Component*)pe;
+                      Docs.current()->insertRawComponent(c);
+                      break;
+    }
+  
+  movingElements.clear();
+
+  MouseMoveAction = &QucsView::MouseDoNothing;
+  MousePressAction = &QucsView::MPressSelect;
+  MouseReleaseAction = &QucsView::MReleaseSelect;
+  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+
+  drawn = false;
   viewport()->repaint();
 }
 
@@ -491,6 +631,14 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
   if(c != 0) if(!c->Model.isEmpty()) {
     ComponentDialog *d = new ComponentDialog(c, this);
     d->exec();
+    viewport()->repaint();
+    return;
+  }
+
+  Diagram *dia = Docs.current()->selectedDiagram(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale));
+  if(dia != 0) {
+    DiagramDialog *ddia = new DiagramDialog(dia, this);
+    ddia->exec();
     viewport()->repaint();
     return;
   }

@@ -18,7 +18,7 @@
 #ifndef SMITHDIAGRAM_H
 #define SMITHDIAGRAM_H
 
-#include <diagram.h>
+#include "diagram.h"
 
 
 /**
@@ -32,8 +32,10 @@ public:
 
 
   virtual SmithDiagram* newOne();
-  virtual void paint(QPainter *p);
   virtual void calcData(Graph *g);
+  virtual void calcDiagram();
+
+  double rMAX;
 };
 
 #endif

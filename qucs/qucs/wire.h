@@ -33,7 +33,10 @@
 class Wire : public Element {
 public: 
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	~Wire();
+	virtual ~Wire();
+
+  virtual void paintScheme(QPainter *p);
+  virtual void setCenter(int x, int y, bool relative=false);
 
   Node    *Port1, *Port2;
   QString Name;

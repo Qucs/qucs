@@ -20,6 +20,7 @@
 #include <qlayout.h>
 #include <qhbox.h>
 #include <qpushbutton.h>
+#include <qmessagebox.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name )
@@ -70,8 +71,10 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   for(Property *p = c->Props.first(); p != 0; p = c->Props.next())
     prop->insertItem(p->Name+"="+p->Value);
 
-  prop->setCurrentItem(0);
-  slotSelectProperty(0);
+  if(prop->count() > 0) {
+    prop->setCurrentItem(0);
+    slotSelectProperty(0);
+  }
 
   connect(prop, SIGNAL(highlighted(int)), SLOT(slotSelectProperty(int)));
 }                                           
@@ -102,15 +105,17 @@ void ComponentDialog::slotButtApply()
   slotApplyInput();
 }
 
-/*void ComponentDialog::slotButtCancel()
-{
-}*/
-
 void ComponentDialog::slotApplyInput()
 {
-  Property *p = Comp->Props.at(prop->currentItem());
-  p->Value   = edit->text();
-  p->display = disp->isChecked();
-  prop->changeItem(p->Name+"="+p->Value, prop->currentItem());  // new value into ListBox
+  int i = prop->currentItem();
+  if(i == -1) return;
+
+  Property *p = Comp->Props.at(i);
+  p->Value    = edit->text();
+  p->display  = disp->isChecked();
+
+  prop->insertItem("", -1); // workaround for QT 3.1: otherwise it crashes if there's only one item
+  prop->changeItem(p->Name+"="+p->Value, i);  // new value into ListBox
+  prop->removeItem(prop->count()-1);  // undo workaround
   prop->repaint();
 }

@@ -15,18 +15,56 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "qucsdoc.h"
 #include "component.h"
 #include "rectdiagram.h"
 #include "polardiagram.h"
 #include "smithdiagram.h"
+#include "tabdiagram.h"
 
 #include <qmessagebox.h>
 #include <qfileinfo.h>
 #include <qimage.h>
 #include <qiconset.h>
 
+
+// icon for unsaved files (diskette)
+static const char *smallsave_xpm[] = {
+"16 17 66 1", " 	c None",
+".	c #595963","+	c #E6E6F1","@	c #465460","#	c #FEFEFF","$	c #DEDEEE","%	c #43535F","&	c #D1D1E6",
+"*	c #5E5E66","=	c #FFFFFF","-	c #C5C5DF",";	c #FCF8F9",">	c #BDBDDA",",	c #BFBFDC","'	c #C4C4DF",
+")	c #FBF7F7","!	c #D6D6E9","~	c #CBCBE3","{	c #B5B5D6","]	c #BCBCDA","^	c #C6C6E0","/	c #CFCFE5",
+"(	c #CEC9DC","_	c #D8D8EA",":	c #DADAEB","<	c #313134","[	c #807FB3","}	c #AEAED1","|	c #B7B7D7",
+"1	c #E2E2EF","2	c #9393C0","3	c #E3E3F0","4	c #DDD5E1","5	c #E8E8F3","6	c #2F2F31","7	c #7B7BAF",
+"8	c #8383B5","9	c #151518","0	c #000000","a	c #C0C0DC","b	c #8E8FBD","c	c #8989BA","d	c #E7EEF6",
+"e	c #282829","f	c #6867A1","g	c #7373A9","h	c #A7A7CD","i	c #8080B3","j	c #7B7CB0","k	c #7070A8",
+"l	c #6D6DA5","m	c #6E6EA6","n	c #6969A2","o	c #7A79AF","p	c #DCDCEC","q	c #60609A","r	c #7777AC",
+"s	c #5D5D98","t	c #7676AB","u	c #484785","v	c #575793","w	c #50506A","x	c #8787B8","y	c #53536E",
+"z	c #07070E","A	c #666688",
+"        .       ",
+"       .+.      ",
+"      .+@#.     ",
+"     .$%###.    ",
+"    .&*####=.   ",
+"   .-.#;#####.  ",
+"  .>,'.#)!!!!~. ",
+" .{].'^./(!_:<[.",
+".}|.1./2.3456789",
+"0a.$11.bc.defg9 ",
+" 011h11.ij9kl9  ",
+"  0_1h1h.mno9   ",
+"   0p12h9qr9    ",
+"    0hh9st9     ",
+"     09uv9w     ",
+"      0x9y      ",
+"       zA       "};
+
+
+#define BITMAPDIR  "/home/knoppix/qucs/qucs/"
 
 QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
 {
@@ -40,6 +78,10 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
     QFileInfo Info(DocName);
     Tab = new QTab(Info.fileName());
     DataSet = Info.baseName()+".dat";   // name of the default dataset
+    if(Info.extension(false) == "sch")
+      DataDisplay = Info.baseName()+".dpl";   // name of the default data display
+    else
+      DataDisplay = Info.baseName()+".sch";   // name of the default data display
   }
 
   Bar = b;
@@ -48,6 +90,9 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
   Bar->repaint();
 
   DocChanged = false;
+
+//  focusWire = 0;  focusComp = 0;  focusDiag = 0;
+//focusElement = 0;
 
   Comps.setAutoDelete(true);
   Wires.setAutoDelete(true);
@@ -69,6 +114,10 @@ void QucsDoc::setName(const QString& _Name)
   Tab->setText(Info.fileName());  // remove path from file name and show it in TabBar
 
   DataSet = Info.baseName()+".dat";   // name of the default dataset
+  if(Info.extension(false) == "sch")
+    DataDisplay = Info.baseName()+".dpl";   // name of the default data display
+  else
+    DataDisplay = Info.baseName()+".sch";   // name of the default data display
 }
 
 // ---------------------------------------------------
@@ -76,7 +125,7 @@ void QucsDoc::setName(const QString& _Name)
 void QucsDoc::setChanged(bool c)
 {
   if((!DocChanged) & c) {
-    Tab->setIconSet(QIconSet(QImage("bitmaps/smallsave.png")));
+    Tab->setIconSet(QPixmap(smallsave_xpm));//QIconSet(QImage(BITMAPDIR "bitmaps/smallsave.png")));
     Bar->layoutTabs();
     Bar->repaint();
   }
@@ -136,10 +185,13 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
   Wire *nw;
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {
     if(ptr2->x1 == x) {
-      if((ptr2->y1 > y) || (ptr2->y2 < y)) continue;
+      if(ptr2->y1 > y) continue;
+      if(ptr2->y2 < y) continue;
+//      if((ptr2->cy > y) || (ptr2->y2 < y)) continue;
     }
     else if(ptr2->y1 == y) {
-      if((ptr2->x1 > x) || (ptr2->x2 < x)) continue;
+      if(ptr2->x1 > x) continue;
+      if(ptr2->x2 < x) continue;
     }
     else continue;
 
@@ -159,6 +211,20 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
   }
 
   return ptr1;
+}
+
+// ---------------------------------------------------
+void QucsDoc::insertRawComponent(Component *c)
+{
+  Node *p;
+  // connect every node of component
+  for(Port *ptr = c->Ports.first(); ptr != 0; ptr = c->Ports.next()) {
+    p = insertNode(ptr->x+c->cx, ptr->y+c->cy, c);
+    ptr->Connection = p;  // connect component node to schematic node
+  }
+
+  Comps.append(c);
+  setChanged(true);
 }
 
 // ---------------------------------------------------
@@ -196,7 +262,7 @@ void QucsDoc::insertComponent(Component *c)
 
     c->Props.first()->Value = QString::number(max); // create port number
   }
-  
+
   Comps.append(c);
   setChanged(true);
 }
@@ -384,7 +450,7 @@ int QucsDoc::insertWire(Wire *w)
   Wire *e, *nw;
   if(ptr->Connections.count() == 2) {   // if possible, connect two wires to one
     e = (Wire*)ptr->Connections.first();
-    if(e->isWire)
+    if(e->Type == isWire)
       if(e->isHorizontal() == w->isHorizontal()) {
         w->Name  = e->Name; w->nx = e->nx; w->ny = e->ny;
                  w->delta = e->delta;   // do not move node name label
@@ -405,7 +471,7 @@ int QucsDoc::insertWire(Wire *w)
 
   if(ptr->Connections.count() == 2) {   // if possible, connect two wires to one
     e = (Wire*)ptr->Connections.first();
-    if(e->isWire)
+    if(e->Type == isWire)
       if(e->isHorizontal() == w->isHorizontal()) {
         w->Name  = e->Name; w->nx = e->nx; w->ny = e->ny;
                  w->delta = e->delta + w->x2-w->x1 + w->y2-w->y1;   // do not move node name label
@@ -516,6 +582,19 @@ Component* QucsDoc::selectedComponent(int x, int y)
 }
 
 // ---------------------------------------------------
+Diagram* QucsDoc::selectedDiagram(int x, int y)
+{
+  int  x1, y1, x2, y2;
+
+  for(Diagram *ptr1 = Diags.first(); ptr1 != 0; ptr1 = Diags.next()) {  // test all diagrams
+    ptr1->Bounding(x1, y1, x2, y2);
+    if((x >= x1) & (x <= x2) & (y >= y1) & (y <= y2)) return ptr1;
+  }
+
+  return 0;
+}
+
+// ---------------------------------------------------
 Wire* QucsDoc::selectedWire(int x, int y)
 {
   setOnGrid(x, y);
@@ -527,35 +606,156 @@ Wire* QucsDoc::selectedWire(int x, int y)
 }
 
 // ---------------------------------------------------
-// Selects components that contains the coordinates x/y.
-// If "flag" is true, components that are selected stay selected.
-// Returns true, if at least one component has been selected.
-bool QucsDoc::selectComponent(int x, int y, bool flag)
+// Selects the element that contains the coordinates x/y.
+// Returns the pointer to the element.
+// If 'flag' is true, the element can be deselected.
+Element* QucsDoc::selectElement(int x, int y, bool flag)
 {
   int  x1, y1, x2, y2;
-  bool isSel = false;
   
   for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
     ptr1->Bounding(x1, y1, x2, y2);
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
-      ptr1->isSelected = true;
-      isSel = true;
-      continue;
+      if(flag) ptr1->isSelected ^= flag;
+      else ptr1->isSelected = true;
+      return ptr1;
     }
-    ptr1->isSelected &= flag;
   }
 
   setOnGrid(x, y);
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {    // test all wires
     if(ptr2->x1 <= x) if(ptr2->x2 >= x) if(ptr2->y1 <= y) if(ptr2->y2 >= y) {
-      ptr2->isSelected = true;
-      isSel = true;
-      continue;
+      if(flag) ptr2->isSelected ^= flag;
+      else ptr2->isSelected = true;
+      return ptr2;
     }
-    ptr2->isSelected &= flag;
   }
 
-  return isSel;
+  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next()) {    // test all diagrams
+    ptr3->Bounding(x1, y1, x2, y2);
+    if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
+      if(flag) ptr3->isSelected ^= flag;
+      else ptr3->isSelected = true;
+      return ptr3;
+    }
+  }
+
+  return 0;
+}
+
+// ---------------------------------------------------
+// Selects components that contains the coordinates x/y.
+// Returns true, if at least one component has been selected.
+void QucsDoc::deselectElements(Element *e)
+{
+  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // test all components
+    if(e != ptr1)  ptr1->isSelected = false;
+
+  for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next())       // test all wires
+    if(e != ptr2)  ptr2->isSelected = false;
+
+  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())    // test all diagrams
+    if(e != ptr3)  ptr3->isSelected = false;
+}
+
+// ---------------------------------------------------
+// For moving of elements: Copies all selected elements into the
+// list 'p' and deletes them from the document.
+void QucsDoc::copySelectedElements(QPtrList<Element> *p)
+{
+  Port      *pp;
+  Component *pc;
+  Wire      *pw;
+  Diagram   *pd;
+  Element   *pe;//, *pe1;
+  Node      *pn;
+
+  Comps.setAutoDelete(false);
+  Wires.setAutoDelete(false);
+  Diags.setAutoDelete(false);
+
+  for(pc = Comps.first(); pc != 0; )  // test all components
+    if(pc->isSelected) {
+      p->append(pc);  // component in
+
+      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+        pp->Connection->Connections.removeRef((Element*)pc);   // delete all port connections
+      Comps.removeRef(pc);   // delete component
+
+      pc = Comps.current();
+    }
+    else pc = Comps.next();
+
+  for(pw = Wires.first(); pw != 0; )       // test all wires
+    if(pw->isSelected) {
+      p->append(pw);
+
+      pw->Port1->Connections.removeRef(pw);   // remove connection 1
+      pw->Port2->Connections.removeRef(pw);   // remove connection 2
+      Wires.removeRef(pw);
+
+      pw = Wires.current();
+    }
+    else pw = Wires.next();
+
+  for(pd = Diags.first(); pd != 0; )    // test all diagrams
+    if(pd->isSelected) {
+      p->append(pd);
+      Diags.remove();
+      pd = Diags.current();
+    }
+    else pd = Diags.next();
+
+  Comps.setAutoDelete(true);
+  Wires.setAutoDelete(true);
+  Diags.setAutoDelete(true);
+
+  // ..............................................
+  // Inserts wires, if a connection to a not moving element is found.
+  for(pe = p->last(); pe!=0; pe = p->prev())  // go backwards in order not to test the new insertions
+    switch(pe->Type) {
+      case isComponent: pc = (Component*)pe;
+                        for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+                          if(pp->Connection->Connections.count() > 0)
+                            if(pp->Connection->Connections.getFirst() != (Element*)1) {
+                            p->append(new Wire(pp->Connection->x, pp->Connection->y,
+                                          pp->Connection->x, pp->Connection->y, (Node*)0, (Node*)1));
+                            p->append(new Wire(pp->Connection->x, pp->Connection->y,
+                                          pp->Connection->x, pp->Connection->y, (Node*)1, (Node*)0));
+                            p->findRef(pe);   // back to the real current pointer
+                            pp->Connection->Connections.prepend((Element*)1);  // to avoid doubling
+                          }
+                        break;
+      case isWire:      pw = (Wire*)pe;
+                        if(pw->Port1->Connections.count() > 0)
+                          if(pw->Port1->Connections.getFirst() != (Element*)1) {
+                          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)0, (Node*)1));
+                          p->append(new Wire(pw->x1, pw->y1, pw->x1, pw->y1, (Node*)1, (Node*)0));
+                          pw->Port1->Connections.prepend((Element*)1);  // to avoid doubling
+                        }
+                        if(pw->Port2->Connections.count() > 0)
+                          if(pw->Port2->Connections.getFirst() != (Element*)1) {
+                          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)0, (Node*)1));
+                          p->append(new Wire(pw->x2, pw->y2, pw->x2, pw->y2, (Node*)1, (Node*)0));
+                          pw->Port2->Connections.prepend((Element*)1);  // to avoid doubling
+                        }
+                        p->findRef(pe);   // back to the real current pointer
+                        break;
+      default:          ;  // avoid compiler warning
+    }
+
+  // delete the unused nodes
+  for(pn = Nodes.first(); pn!=0; )
+    if(pn->Connections.count() == 0) {
+      Nodes.remove();
+      pn = Nodes.current();
+    }
+    else {
+      if(pn->Connections.getFirst() == (Element*)1)
+        pn->Connections.removeFirst();  // delete tag
+
+      pn = Nodes.next();
+    }
 }
 
 // ---------------------------------------------------
@@ -583,6 +783,16 @@ void QucsDoc::selectComponents(int x1, int y1, int x2, int y2, bool flag)
       continue;
     }
     ptr2->isSelected &= flag;
+  }
+
+
+  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next()) {    // test all diagrams
+    ptr3->Bounding(cx1, cy1, cx2, cy2);
+    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
+      ptr3->isSelected = true;
+      continue;
+    }
+    ptr3->isSelected &= flag;
   }
 }
 
@@ -680,48 +890,72 @@ bool QucsDoc::mirrorXComponents()
 }
 
 // ---------------------------------------------------
-// Deletes all selected components.
-bool QucsDoc::deleteComponents()
+// Deletes the component 'c'.
+void QucsDoc::deleteComp(Component *c)
 {
-  bool sel = false;
   Wire *e1, *e2, *e3;
   Port *pn;
+
+  for(pn = c->Ports.first(); pn!=0; pn = c->Ports.next())   // delete all port connections
+    switch(pn->Connection->Connections.count()) {
+      case 1  : Nodes.removeRef(pn->Connection);     // delete all open nodes
+                pn->Connection = 0;
+                break;
+      case 3  : pn->Connection->Connections.removeRef(c);  // delete connection to component
+                e1 = (Wire*)pn->Connection->Connections.first();  // two wires -> one wire
+                e2 = (Wire*)pn->Connection->Connections.last();
+                if(e1->Type == isWire) if(e2->Type == isWire)
+                  if(e1->isHorizontal() == e2->isHorizontal()) {
+                    if(e1->x1 == e2->x2) if(e1->y1 == e2->y2) {
+                      e3 = e1; e1 = e2; e2 = e3;    // e1 must have lesser coordinates
+                    }
+                    if(!e2->Name.isEmpty()) {   // take over the node name label ?
+                      e1->Name = e2->Name;
+                      e1->nx = e2->nx;
+                      e1->ny = e2->ny;
+                      e1->delta = e2->delta + e1->x2-e1->x1 + e1->y2-e1->y1;
+                    }
+                    e1->x2 = e2->x2;
+                    e1->y2 = e2->y2;
+                    e1->Port2 = e2->Port2;
+                    Nodes.removeRef(pn->Connection);    // delete node (is auto delete)
+                    e1->Port2->Connections.removeRef(e2);
+                    e1->Port2->Connections.append(e1);
+                    Wires.removeRef(e2);
+                  }
+                break;
+      default : pn->Connection->Connections.removeRef(c);   // remove connection
+                break;
+    }
+
+  Comps.removeRef(c);   // delete component
+}
+
+// ---------------------------------------------------
+// Deletes the wire 'w'.
+void QucsDoc::deleteWire(Wire *w)
+{
+  if(w->Port1->Connections.count() == 1)
+    Nodes.removeRef(w->Port1);     // delete node 1 if open
+  else w->Port1->Connections.removeRef(w);   // remove connection
+
+  if(w->Port2->Connections.count() == 1)
+    Nodes.removeRef(w->Port2);     // delete node 2 if open
+  else w->Port2->Connections.removeRef(w);   // remove connection
+
+  Wires.removeRef(w);
+}
+
+// ---------------------------------------------------
+// Deletes all selected components.
+bool QucsDoc::deleteElements()
+{
+  bool sel = false;
   
   Component *ptr1 = Comps.first();
   while(ptr1 != 0) {    // all selected component
     if(ptr1->isSelected) {
-      for(pn = ptr1->Ports.first(); pn!=0; pn = ptr1->Ports.next())   // delete all port connections
-        switch(pn->Connection->Connections.count()) {
-          case 1  : Nodes.removeRef(pn->Connection);     // delete all open nodes
-                    break;
-          case 3  : pn->Connection->Connections.removeRef(ptr1);  // delete connection to component
-                    e1 = (Wire*)pn->Connection->Connections.first();  // two wires -> one wire
-                    e2 = (Wire*)pn->Connection->Connections.last();
-                    if(e1->isWire) if(e2->isWire)
-                      if(e1->isHorizontal() == e2->isHorizontal()) {
-                        if(e1->x1 == e2->x2) if(e1->y1 == e2->y2) {
-                          e3 = e1; e1 = e2; e2 = e3;    // e1 must have lesser coordinates
-                        }
-                        if(!e2->Name.isEmpty()) {   // take over the node name label ?
-                          e1->Name = e2->Name;
-                          e1->nx = e2->nx;
-                          e1->ny = e2->ny;
-                          e1->delta = e2->delta + e1->x2-e1->x1 + e1->y2-e1->y1;
-                        }
-                        e1->x2 = e2->x2;
-                        e1->y2 = e2->y2;
-                        e1->Port2 = e2->Port2;
-                        Nodes.removeRef(pn->Connection);    // delete node (is auto delete)
-                        e1->Port2->Connections.removeRef(e2);
-                        e1->Port2->Connections.append(e1);
-                        Wires.removeRef(e2);
-                      }
-                    break;
-          default : pn->Connection->Connections.removeRef(ptr1);   // remove connection
-                    break;
-        }
-
-      Comps.remove();   // delete component, if selected
+      deleteComp(ptr1);
       ptr1 = Comps.current();
       sel = true;
     }
@@ -731,20 +965,19 @@ bool QucsDoc::deleteComponents()
   Wire *ptr2 = Wires.first();
   while(ptr2 != 0) {    // all selected wires
     if(ptr2->isSelected) {
-      if(ptr2->Port1->Connections.count() == 1)
-        Nodes.removeRef(ptr2->Port1);     // delete node 1 if open
-      else ptr2->Port1->Connections.removeRef(ptr2);   // remove connection
-      
-      if(ptr2->Port2->Connections.count() == 1)
-        Nodes.removeRef(ptr2->Port2);     // delete node 2 if open
-      else ptr2->Port2->Connections.removeRef(ptr2);   // remove connection
-
-      Wires.remove();
+      deleteWire(ptr2);
       ptr2 = Wires.current();
       sel = true;
     }
     else ptr2 = Wires.next();
   }
+
+  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())    // test all diagrams
+    if(ptr3->isSelected) {
+      Diags.remove();
+      ptr3 = Diags.current();
+      sel = true;
+    }
 
   setChanged(sel);
   return sel;
@@ -768,6 +1001,7 @@ bool QucsDoc::save()
   stream << "   <GridY=" << GridY << ">\n";
   stream << "   <GridOn=" << GridOn << ">\n";
   stream << "   <DataSet=" << DataSet << ">\n";
+  stream << "   <DataDisplay=" << DataDisplay << ">\n";
   stream << "</Properties>\n";
     
   stream << "<Components>\n";
@@ -816,6 +1050,7 @@ bool QucsDoc::loadProperties(QTextStream *stream)
     else if(cstr == "GridY") GridY = nstr.toInt(&ok);
     else if(cstr == "GridOn") if(nstr.toInt(&ok) == 0) GridOn = false; else GridOn = true;
     else if(cstr == "DataSet") DataSet = nstr;
+    else if(cstr == "DataDisplay") DataDisplay = nstr;
     else {
       QMessageBox::critical(0, "Error", "File Format Error:\nUnknown property: "+cstr);
       return false;
@@ -927,6 +1162,7 @@ bool QucsDoc::loadDiagrams(QTextStream *stream)
     cstr = Line.section(' ',0,0);    // diagram type
          if(cstr == "<Rect") d = new RectDiagram();
     else if(cstr == "<Polar") d = new PolarDiagram();
+    else if(cstr == "<Tab") d = new TabDiagram();
     else if(cstr == "<Smith") d = new SmithDiagram();
     else {
       QMessageBox::critical(0, "Error", "File Format Error:\nUnknown diagram!");
@@ -959,8 +1195,9 @@ bool QucsDoc::load()
   // read header **************************
   if(stream.atEnd()) {
     file.close();
-    QMessageBox::critical(0, "Error", "Document is empty!");
-    return false;
+//    QMessageBox::critical(0, "Error", "Document is empty!");
+//    return false;
+    return true;
   }
   Line = stream.readLine();
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
@@ -1035,7 +1272,8 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
     Cons.append(p1);
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
       for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-        if(pe->isWire) {
+//        if(pe->isWire) {
+        if(pe->Type == isWire) {
           pw = (Wire*)pe;
           if(p2 != pw->Port1) {
             if(pw->Port1->Name.isEmpty()) {
@@ -1064,7 +1302,8 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
     Cons.append(p1);
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())   // create list with connections to the node
       for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
-        if(pe->isWire) {
+//        if(pe->isWire) {
+        if(pe->Type == isWire) {
           pw = (Wire*)pe;
           if(p2 != pw->Port1) {
             if(pw->Port1->Name.isEmpty()) {
