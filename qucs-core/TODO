@@ -77,8 +77,8 @@ unfixed) have a look at the file BUGS.
 	- Status and error message file descriptors.
 	- Autofy the package.
 	- Make 'nr_double_t' configurable.
-- Handle reference impedance for touchstone files correctly.
+	- Handle reference impedance for touchstone files correctly.
 	- Implement matrix conversion routines for datasets.
-- Add noise parameters in touchstone file importer.
+	- Add noise parameters in touchstone file importer.
 	- Implement 6-port transformer.
 	- Add microstrip elements to the list of available components.

@@ -1,3 +1,8 @@
+2004-07-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_touchstone.cpp: Support for noise parameters in
+	touchstone files.
+
 2004-07-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Running 'initSP()' on every circuit before
