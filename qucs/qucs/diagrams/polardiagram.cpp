@@ -48,7 +48,7 @@ void PolarDiagram::calcCoordinate(double, double yr, double yi,
 }
 
 // --------------------------------------------------------------
-void PolarDiagram::calcDiagram()
+bool PolarDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
@@ -127,6 +127,8 @@ void PolarDiagram::calcDiagram()
   phi = 16.0*180.0/M_PI*atan(30.0/double(x2));  // (text height+3) / radius
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi),
 			QPen(QPen::black,0)));
+
+  return true;
 }
 
 // ------------------------------------------------------------

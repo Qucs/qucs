@@ -22,6 +22,45 @@ Subcircuit::Subcircuit(int No)
 {
   Description = QObject::tr("subcircuit");
 
+  Model = "Sub";
+  Name  = "SUB";
+
+  Props.append(new Property("Type", "test.sch", true,
+		QObject::tr("name of qucs schematic file")));
+  Props.append(new Property("Symbol", QString::number(No), false,
+		QObject::tr("number of ports")));
+
+  recreate();
+}
+
+Subcircuit::~Subcircuit()
+{
+}
+
+Component* Subcircuit::newOne()
+{
+  return new Subcircuit(Props.getLast()->Value.toInt());
+}
+
+/*Component* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Subcircuit");
+  BitmapFile = "";  // has no bitmap
+
+  if(getNewOne)  return new Subcircuit(Props.getLast()->Value.toInt());
+  return 0;
+}*/
+
+// Makes the schematic symbol subcircuit with the correct number
+// of ports.
+void Subcircuit::recreate()
+{
+  Lines.clear();
+  Texts.clear();
+  Ports.clear();
+
+  int No = Props.getLast()->Value.toInt();
+
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
@@ -29,7 +68,6 @@ Subcircuit::Subcircuit(int No)
   Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
   Texts.append(new Text( -7,  0,"sub"));
 
-  
   int i=0, y = 15-h;
   while(i<No) {
     i++;
@@ -50,28 +88,29 @@ Subcircuit::Subcircuit(int No)
 
   tx = x1+4;
   ty = y2+4;
-  Model = QString("Sub")+QString::number(No);
-  Name  = "SUB";
 
-  Props.append(new Property("File", "test.sch", true,
-		QObject::tr("name of qucs schematic file")));
-}
 
-Subcircuit::~Subcircuit()
-{
-}
+  Line *p1;
+  bool mmir = mirroredX;
+  int  tmp, ttx = tx, tty = ty, rrot = rotated;
+  if(mmir)  // mirror all lines
+    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
+      p1->y1 = -p1->y1;
+      p1->y2 = -p1->y2;
+    }
 
-Component* Subcircuit::newOne()
-{
-  int z = Model.mid(3).toInt();
-  return new Subcircuit(z);
-}
+  for(int z=0; z<rrot; z++)    // rotate all lines
+    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
+      tmp = -p1->x1;
+      p1->x1 = p1->y1;
+      p1->y1 = tmp;
+      tmp = -p1->x2;
+      p1->x2 = p1->y2;
+      p1->y2 = tmp;
+    }
 
-Component* Subcircuit::info(QString& Name, char* &BitmapFile, bool getNewOne)
-{
-  Name = QObject::tr("Subcircuit");
-  BitmapFile = "";
 
-  if(getNewOne)  return new Subcircuit(1);
-  return 0;
+  tx = ttx; ty = tty;  // restore properties (were changed by rotate/mirror)
+  rotated = rrot;
+  mirroredX = mmir;
 }

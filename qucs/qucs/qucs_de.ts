@@ -1492,7 +1492,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation>Schaltkreis</translation>
+        <translation type="obsolete">Schaltkreis</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -1700,6 +1700,10 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of ports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -26,6 +26,12 @@
 #include "qucsdoc.h"
 
 #include <qmessagebox.h>
+#include <qdir.h>
+#include <qstringlist.h>
+
+
+extern QDir QucsWorkDir;
+QStringList StringList;
 
 
 QucsFile::QucsFile(QucsDoc *p)
@@ -570,5 +576,179 @@ bool QucsFile::rebuild(QString *s)
   if(!loadDiagrams(&stream, Diags))  return false;
   if(!loadPaintings(&stream, Paints)) return false;
 
+  return true;
+}
+
+
+// ***************************************************************
+// *****                                                     *****
+// *****             Functions to create netlist             *****
+// *****                                                     *****
+// ***************************************************************
+
+
+// ---------------------------------------------------
+// Follows the wire lines in order to determine the node names for
+// each component.
+bool QucsFile::giveNodeNames(QTextStream *stream)
+{
+  Node *p1, *p2;
+  Wire *pw;
+  Element *pe;
+
+  // delete the node names
+  for(p1 = Nodes->first(); p1 != 0; p1 = Nodes->next())
+    if(p1->Label) p1->Name = p1->Label->Name;
+    else p1->Name = "";
+
+  // set the wire names to the connected node
+  for(pw = Wires->first(); pw != 0; pw = Wires->next())
+    if(pw->Label != 0) pw->Port1->Name = pw->Label->Name;
+
+  QString s;
+  // give the ground nodes the name "gnd", and insert subcircuits
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
+    if(pc->isActive)
+      if(pc->Model == "GND") pc->Ports.getFirst()->Connection->Name = "gnd";
+      else if(pc->Model == "Sub") {
+	     s = pc->Props.getFirst()->Value;
+	     if(StringList.findIndex(s) >= 0)
+		continue;   // insert each subcircuit just one time
+
+	     StringList.append(s);
+             QucsDoc *d = new QucsDoc(0, QucsWorkDir.filePath(s));
+             if(!d->File.load()) {  // load document if possible
+               delete d;
+               return false;
+             }
+	     d->File.createSubNetlist(stream);
+	     delete d;
+           }
+
+
+  QPtrList<Node> Cons;
+  // work on named nodes first in order to preserve the user given names
+  for(p1 = Nodes->first(); p1 != 0; p1 = Nodes->next()) {
+    if(p1->Name.isEmpty()) continue;
+    Cons.append(p1);
+    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+      for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+        if(pe->Type == isWire) {
+          pw = (Wire*)pe;
+          if(p2 != pw->Port1) {
+            if(pw->Port1->Name.isEmpty()) {
+              pw->Port1->Name = p1->Name;
+              Cons.append(pw->Port1);
+              Cons.findRef(p2);
+            }
+          }
+          else {
+            if(pw->Port2->Name.isEmpty()) {
+              pw->Port2->Name = p1->Name;
+              Cons.append(pw->Port2);
+              Cons.findRef(p2);
+            }
+          }
+        }
+    Cons.clear();
+  }
+
+
+  int z=0;
+  // give names to the remaining (unnamed) nodes
+  for(p1 = Nodes->first(); p1!=0; p1 = Nodes->next()) { // work on all nodes
+    if(!p1->Name.isEmpty()) continue;    // already named ?
+    p1->Name = "_net" + QString::number(z++);   // create node name
+    Cons.append(p1);
+    // create list with connections to the node
+    for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
+      for(pe = p2->Connections.first(); pe != 0; pe = p2->Connections.next())
+        if(pe->Type == isWire) {
+          pw = (Wire*)pe;
+          if(p2 != pw->Port1) {
+            if(pw->Port1->Name.isEmpty()) {
+              pw->Port1->Name = p1->Name;
+              Cons.append(pw->Port1);
+              Cons.findRef(p2);   // back to current Connection
+            }
+          }
+          else {
+            if(pw->Port2->Name.isEmpty()) {
+              pw->Port2->Name = p1->Name;
+              Cons.append(pw->Port2);
+              Cons.findRef(p2);
+            }
+          }
+        }
+    Cons.clear();
+  }
+
+  return true;
+}
+
+// ---------------------------------------------------
+// Write the netlist as subcircuit to the text stream 'NetlistFile'.
+bool QucsFile::createSubNetlist(QTextStream *stream)
+{
+  if(!giveNodeNames(stream)) return false;
+
+  int i;
+  QStringList sl;
+  Component *pc;
+  // collect all subcircuit ports and sort their node names into "sl"
+  for(pc = Comps->first(); pc != 0; pc = Comps->next())
+    if(pc->Model == "Port") {
+      i  = pc->Props.first()->Value.toInt();
+      for(int z=sl.size(); z<i; z++)
+	sl.append(" ");
+      sl.insert(sl.at(i), pc->Ports.getFirst()->Connection->Name);
+    }
+
+  QFileInfo Info(Doc->DocName);
+  (*stream) << "\n.Def:" << Info.fileName() << " " << sl.join(" ") << "\n";
+
+
+  QString s;
+  // write all components with node names into the netlist file
+  for(pc = Comps->first(); pc != 0; pc = Comps->next()) {
+    if(pc->Model.at(0) == '.') continue;  // no simulations in subcircuits
+    if(pc->Model == "Eqn") continue;  // no equations in subcircuits
+    s = pc->NetList();
+    if(!s.isEmpty()) (*stream) << "   " << s << "\n";
+  }
+
+  (*stream) << ".Def:End\n\n";
+  return true;
+}
+
+// ---------------------------------------------------
+// Creates the file "netlist.net" in the project directory. Returns "true"
+// if successful.
+bool QucsFile::createNetlist(QFile *NetlistFile)
+{
+  if(!NetlistFile->open(IO_WriteOnly)) return false;
+
+  QTextStream stream(NetlistFile);
+  // first line is documentation
+  stream << "# Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
+
+
+  if(!giveNodeNames(&stream)) {
+    NetlistFile->close();
+    StringList.clear();
+    return false;
+  }
+
+  // .................................................
+  QString s;
+  // write all components with node names into the netlist file
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+    s = pc->NetList();
+    if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
+      stream << s << "\n";
+  }
+  NetlistFile->close();
+
+  StringList.clear();
   return true;
 }

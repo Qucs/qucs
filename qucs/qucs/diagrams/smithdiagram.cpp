@@ -51,7 +51,7 @@ void SmithDiagram::calcCoordinate(double, double yr, double yi,
 
 // ------------------------------------------------------------
 // calculate the circles and arcs of the smith chart
-void SmithDiagram::calcDiagram()
+bool SmithDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
@@ -165,6 +165,7 @@ if(GridOn) {
 
   // outer most circle
   Arcs.append(new Arc(0, x2, x2, x2, 0, 16*360, QPen(QPen::black,0)));
+  return true;
 }
 
 // ------------------------------------------------------------

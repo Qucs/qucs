@@ -58,7 +58,7 @@ void RectDiagram::calcCoordinate(double x, double yr, double yi,
 }
 
 // --------------------------------------------------------------
-void RectDiagram::calcDiagram()
+bool RectDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
@@ -74,8 +74,16 @@ void RectDiagram::calcDiagram()
 
   int z=0;
   double numGrids, Base, Expo, GridStep, corr, zD, zDstep, GridNum;
+
+  QSize r;
+  QString tmp;
+  QFontMetrics  metrics(QucsSettings.font);
+  int maxWidth = 0;
+  
   // ====  x grid  =======================================================
 if(xlog) {
+  if(xmax*xmin <= 0.0) goto Frame;  // invalid
+
   Expo = floor(log10(xmax));
   Base = xmax/pow(10.0,Expo);
   if(Base > 3.0001) xup = pow(10.0,Expo+1.0);
@@ -192,12 +200,11 @@ else {  // not logarithmical
 } // of "if(xlog)"
 
 
-  QSize r;
-  QString tmp;
-  QFontMetrics  metrics(QucsSettings.font);
-  int maxWidth = 0;
+
   // ====  y grid  =======================================================
 if(ylog) {
+  if(ymax*ymin <= 0.0) goto Frame;  // invalid
+
   Expo = floor(log10(ymax));
   Base = ymax/pow(10.0,Expo);
   if(Base > 3.0001) yup = pow(10.0,Expo+1.0);
@@ -323,6 +330,15 @@ else {  // not logarithmical
   Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,0)));
+  return true;
+
+Frame:
+  // outer frame
+  Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::red,0)));
+  Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::red,0)));
+  Lines.append(new Line(0,   0, x2,  0, QPen(QPen::red,0)));
+  Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::red,0)));
+  return false;
 }
 
 // ------------------------------------------------------------
