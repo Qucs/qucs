@@ -59,7 +59,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   noisemosfet.fig mscoupledphys.fig spfile.fig spnfile.fig transcap.fig       \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
-  mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig
+  mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
+  lssp.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps
 EPSFILES = $(FIGURES:.fig=.eps)
