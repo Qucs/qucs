@@ -23,15 +23,10 @@ This file lists user visible changes that were made between releases.  For
 more verbose descriptions of these and internal changes see the ChangeLog
 files.
 
-Version 0.0.1
--------------
-
- * first available version
-
 Version 0.0.2
 -------------
 
- * translations into german
+ * translations into german and italian
  * modified build system, no more kdevelop
  * a (very modest) help system
  * deleting and rename of documents
@@ -44,3 +39,8 @@ Version 0.0.2
  * diagrams more beautiful
  * diagrams can show independent and more-dimensional graphs
  * markers can be set on graphs
+
+Version 0.0.1
+-------------
+
+ * first available version
