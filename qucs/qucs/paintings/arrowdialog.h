@@ -19,11 +19,12 @@
 #define ARROWDIALOG_H
 
 #include <qdialog.h>
-#include <qregexp.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
 
+class QLineEdit;
+class QVBoxLayout;
+class QPushButton;
+class QComboBox;
+class QIntValidator;
 
 /**
   *@author Michael Margraf
@@ -31,7 +32,7 @@
 
 class ArrowDialog : public QDialog  {
 Q_OBJECT
-public: 
+public:
   ArrowDialog(QWidget *parent=0, const char *name=0);
   ~ArrowDialog();
 
@@ -46,6 +47,9 @@ public:
   QPushButton  *ColorButt;
   QComboBox    *StyleBox;
   Qt::PenStyle LineStyle;
+
+  QVBoxLayout *vert;
+  QIntValidator *val100;
 };
 
 #endif

@@ -22,6 +22,9 @@
 
 #include <qwidget.h>
 #include <qpainter.h>
+#include <qpushbutton.h>
+#include <qlineedit.h>
+#include <qtextedit.h>
 
 #include <math.h>
 

@@ -19,12 +19,12 @@
 #define SIMMESSAGE_H
 
 #include <qdialog.h>
-
-#include <qtextedit.h>
 #include <qprocess.h>
-#include <qpushbutton.h>
-#include <qprogressbar.h>
 
+class QTextEdit;
+class QVBoxLayout;
+class QPushButton;
+class QProgressBar;
 
 /**
   *@author Michael Margraf
@@ -61,6 +61,8 @@ public:
   QString      DataDisplay;
   QProgressBar *SimProgress;
   QString      ProgressText;
+
+  QVBoxLayout *all;
 };
 
 #endif

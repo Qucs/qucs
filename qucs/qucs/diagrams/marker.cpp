@@ -60,9 +60,9 @@ void Marker::initText(int n)
   }
 
   Axis *pa;
-  if(pGraph->yAxisNo == 0)  pa = &(Diag->ylAxis);
-  else  pa = &(Diag->yrAxis);
-  double num, *py = (pGraph->cPointsY) + 2*n;
+  if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
+  else  pa = &(Diag->zAxis);
+  double *num, *py = (pGraph->cPointsY) + 2*n;
   Text = "";
   nVarPos = 0;
   DataX *pD = pGraph->cPointsX.first();
@@ -70,8 +70,8 @@ void Marker::initText(int n)
   // find exact marker position
   int nn, x, y, d, dmin = INT_MAX;
   for(nn=n % pD->count; nn<pD->count; nn++) {
-    num = *(pD->Points + nn);
-    Diag->calcCoordinate(num, *py, *(py+1), &x, &y, pa);
+    num = pD->Points + nn;
+    Diag->calcCoordinate(num, py, &x, &y, pa);
     x -= cx;
     y -= cy;
     d = x*x + y*y;
@@ -87,26 +87,34 @@ void Marker::initText(int n)
   // independent variables
   nn = n;
   for(; pD!=0; pD = pGraph->cPointsX.next()) {
-    num = *(pD->Points + (nn % pD->count));
-    VarPos[nVarPos++] = num;
-    Text += pD->Var + ": " + QString::number(num,'g',Precision) + "\n";
+    num = pD->Points + (nn % pD->count);
+    VarPos[nVarPos++] = *num;
+    Text += pD->Var + ": " + QString::number(*num,'g',Precision) + "\n";
     nn /= pD->count;
   }
 
   // dependent variable
-  double yr = *((pGraph->cPointsY) + 2*n);
-  double yi = *((pGraph->cPointsY) + 2*n+1);
+  py = (pGraph->cPointsY) + 2*n;
   Text += pGraph->Var + ": ";
   switch(numMode) {
-    case 0: Text += complexRect(yr, yi, Precision);
+    case 0: Text += complexRect(*py, *(py+1), Precision);
 	    break;
-    case 1: Text += complexDeg(yr, yi, Precision);
+    case 1: Text += complexDeg(*py, *(py+1), Precision);
 	    break;
-    case 2: Text += complexRad(yr, yi, Precision);
+    case 2: Text += complexRad(*py, *(py+1), Precision);
 	    break;
   }
 
-  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy, pa);
+  num = &(VarPos[0]);
+  if(Diag->calcCoordinate(num, py, &cx, &cy, pa) != 0)
+    if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
+      cx = Diag->x2 >> 1;        // ... point to origin
+      cy = Diag->y2 >> 1;
+    }
+    else {
+      cx = 0;
+      cy = 0;
+    }
 
   getTextSize(QucsSettings.font);
 }
@@ -144,22 +152,30 @@ void Marker::createText()
   }
 
 
-  double yr = *((pGraph->cPointsY) + 2*n);
-  double yi = *((pGraph->cPointsY) + 2*n+1);
+  double *py = (pGraph->cPointsY) + 2*n;
   Text += pGraph->Var + ": ";
   switch(numMode) {
-    case 0: Text += complexRect(yr, yi, Precision);
+    case 0: Text += complexRect(*py, *(py+1), Precision);
 	    break;
-    case 1: Text += complexDeg(yr, yi, Precision);
+    case 1: Text += complexDeg(*py, *(py+1), Precision);
 	    break;
-    case 2: Text += complexRad(yr, yi, Precision);
+    case 2: Text += complexRad(*py, *(py+1), Precision);
 	    break;
   }
 
   Axis *pa;
-  if(pGraph->yAxisNo == 0)  pa = &(Diag->ylAxis);
-  else  pa = &(Diag->yrAxis);
-  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy, pa);
+  if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
+  else  pa = &(Diag->zAxis);
+  pp = &(VarPos[0]);
+  if(Diag->calcCoordinate(pp, py, &cx, &cy, pa) != 0)
+    if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
+      cx = Diag->x2 >> 1;        // ... point to origin
+      cy = Diag->y2 >> 1;
+    }
+    else {
+      cx = 0;
+      cy = 0;
+    }
 
   getTextSize(QucsSettings.font);
 }

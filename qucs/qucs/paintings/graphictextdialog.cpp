@@ -17,11 +17,16 @@
 
 #include "graphictextdialog.h"
 
+#include "qucs.h"
+
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qhbox.h>
 #include <qvalidator.h>
 #include <qcolordialog.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <qtextedit.h>
 
 
 GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
@@ -29,27 +34,27 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
 {
   setCaption(tr("Edit Text Properties"));
 
-  QVBoxLayout *v = new QVBoxLayout(this);
-  v->setSpacing(5);
+  vert = new QVBoxLayout(this);
+  vert->setSpacing(5);
 
   text = new QTextEdit(this);
   text->setTextFormat(Qt::PlainText);
   text->setWordWrap(QTextEdit::NoWrap);
   text->setMinimumSize(350,150);
-  v->addWidget(text);
+  vert->addWidget(text);
 
   QHBox *h1 = new QHBox(this);
   h1->setSpacing(5);
-  v->addWidget(h1);
+  vert->addWidget(h1);
 
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
-  v->addWidget(h2);
+  vert->addWidget(h2);
 
   QHBox *h3 = new QHBox(this);
   h2->setSpacing(5);
-  v->addWidget(h3);
+  vert->addWidget(h3);
 
   // first => activated by pressing RETURN
   QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
@@ -65,26 +70,36 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   QWidget *place1 = new QWidget(h1); // stretchable placeholder
   h1->setStretchFactor(place1,5);
 
+  val50 = new QIntValidator(1, 50, this);
   new QLabel(tr("Text size: "), h1);
   TextSize = new QLineEdit(h1);
-  TextSize->setValidator(new QIntValidator(1, 50, this));
+  TextSize->setValidator(val50);
   TextSize->setMaximumWidth(35);
   TextSize->setText("12");
 
   QWidget *place2 = new QWidget(h2); // stretchable placeholder
   h2->setStretchFactor(place2,5);
 
-  new QLabel(tr("Rotation angle: "), h2);
+  val360 = new QIntValidator(0, 359, this);
+  QLabel *l1 = new QLabel(tr("Rotation angle: "), h2);
   Angle = new QLineEdit(h2);
-  Angle->setValidator(new QIntValidator(0, 359, this));
+  Angle->setValidator(val360);
   Angle->setMaximumWidth(35);
   Angle->setText("0");
+
+//  if(((QucsApp*)pApp->mainWidget())->view->Docs.current()->symbolMode) {
+//    l1->setEnabled(false);
+//    Angle->setEnabled(false);
+//  }
 
   text->setFocus();
 }
 
 GraphicTextDialog::~GraphicTextDialog()
 {
+  delete vert;
+  delete val50;
+  delete val360;
 }
 
 // --------------------------------------------------------------------------

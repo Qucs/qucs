@@ -23,12 +23,14 @@
 #include <qlabel.h>
 
 
-MessageBox::MessageBox(const QString& Caption, const QString& Text, QWidget *parent, const char *name)
-                                  : QDialog(parent, name) // must not be "WDestructiveClose" !!!!!
+MessageBox::MessageBox(const QString& Caption, const QString& Text,
+		       QWidget *parent, const char *name)
+			: QDialog(parent, name)
+			// must not be "WDestructiveClose" !!!!!
 {
   setCaption(Caption);
 
-  QVBoxLayout *all = new QVBoxLayout(this);
+  all = new QVBoxLayout(this);
   all->setSpacing(5);
   QLabel *l   = new QLabel(Text, this);
   l->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
@@ -52,6 +54,7 @@ MessageBox::MessageBox(const QString& Caption, const QString& Text, QWidget *par
 
 MessageBox::~MessageBox()
 {
+  delete all;
 }
 
 void MessageBox::slotSave()

@@ -29,6 +29,8 @@
 #include <qlayout.h>
 #include <qvalidator.h>
 #include <qregexp.h>
+#include <qlineedit.h>
+#include <qcheckbox.h>
 
 
 SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
@@ -37,7 +39,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   Doc = d;
   setCaption(tr("Edit File Properties"));
 
-  QVBoxLayout *all = new QVBoxLayout(this); // to provide the neccessary size
+  all = new QVBoxLayout(this); // to provide the neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
 
@@ -67,20 +69,19 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   Check_GridOn = new QCheckBox(tr("show Grid"),Tab2);
   gp2->addMultiCellWidget(Check_GridOn,0,0,0,1);
 
-  QValidator *Validator
-	= new QRegExpValidator(QRegExp("[1-9]\\d{0,2}"), this);
+  valExpr = new QRegExpValidator(QRegExp("[1-9]\\d{0,2}"), this);
 
   QLabel *l3 = new QLabel(tr("horizontal Grid:"), Tab2);
   gp2->addWidget(l3,1,0);
   Input_GridX = new QLineEdit(Tab2);
-  Input_GridX->setValidator(Validator);
+  Input_GridX->setValidator(valExpr);
 //  Input_GridX->setInputMask("000");   // for Qt 3.2
   gp2->addWidget(Input_GridX,1,1);
 
   QLabel *l4 = new QLabel(tr("vertical Grid:"), Tab2);
   gp2->addWidget(l4,2,0);
   Input_GridY = new QLineEdit(Tab2);
-  Input_GridY->setValidator(Validator);
+  Input_GridY->setValidator(valExpr);
 //  Input_GridY->setInputMask("000");   // for Qt 3.2
   gp2->addWidget(Input_GridY,2,1);
 
@@ -115,6 +116,8 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
 SettingsDialog::~SettingsDialog()
 {
+  delete all;
+  delete valExpr;
 }
 
 // -----------------------------------------------------------

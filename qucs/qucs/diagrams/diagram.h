@@ -37,6 +37,9 @@ struct Axis {
   QString Label;
   int     numGraphs;  // counts number of graphs using this axis
   bool    GridOn;
+
+  bool   autoScale;    // manual limits or auto-scale ?
+  double limit_min, limit_max, step;   // if not auto-scale
 };
 
 
@@ -46,8 +49,8 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual int  calcDiagram();
-  virtual void calcCoordinate(double, double, double, int*, int*, Axis*) {};
+  virtual int calcDiagram();
+  virtual int calcCoordinate(double* &, double* &, int*, int*, Axis*);
   void    calcData(Graph*, int);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
@@ -68,6 +71,9 @@ public:
   void createSmithChart(Axis*, int Mode=7);
   void createPolarDiagram(Axis*, int Mode=3);
 
+  int  regionCode(int, int);
+  int  clip(int*, int);
+
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
@@ -77,12 +83,8 @@ public:
   QPtrList<Text>   Texts;
 
   int x3, y3;
-  Axis  xAxis, ylAxis, yrAxis;   // axes (x, y left, y right)
+  Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
-
-  int limit_x1, limit_x2, step_x;   // if not auto-scale
-  int limit_y1, limit_y2, step_y;
-  int limit_z1, limit_z2, step_z;
 };
 
 #endif

@@ -23,16 +23,17 @@
 #include <qlayout.h>
 #include <qhbuttongroup.h>
 #include <qvbuttongroup.h>
+#include <qhgroupbox.h>
 #include <qpushbutton.h>
 #include <qtabwidget.h>
 #include <qlabel.h>
 #include <qstringlist.h>
 #include <qmessagebox.h>
 #include <qptrlist.h>
-#include <qpoint.h>
 #include <qvalidator.h>
 #include <qcolordialog.h>
-#include <qvalidator.h>
+#include <qlineedit.h>
+#include <qcheckbox.h>
 
 
 // standard colors: blue, red, magenta, green, cyan, yellow, black
@@ -56,6 +57,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
 
+  ValDouble = new QDoubleValidator(-1e200, 1e200, 4, this);
+
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
@@ -75,7 +78,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   QHBox *Box2 = new QHBox(InputGroup);
   Box2->setSpacing(5);
   Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
-  QValidator *Validator = new QRegExpValidator(Expr, this);
+  Validator = new QRegExpValidator(Expr, this);
 
   if(Diag->Name == "Tab") {
     Label1 = new QLabel(tr("Number Notation: "), Box2);
@@ -220,8 +223,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     // ...........................................................
     // transfer the diagram properties to the dialog
     xLabel->setText(Diag->xAxis.Label);
-    ylLabel->setText(Diag->ylAxis.Label);
-    if(yrLabel)  yrLabel->setText(Diag->yrAxis.Label);
+    ylLabel->setText(Diag->yAxis.Label);
+    if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
     GridOn->setChecked(Diag->xAxis.GridOn);
     if(!Diag->xAxis.GridOn) slotSetGridBox(QButton::Off);
     GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
@@ -240,8 +243,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       // ...........................................................
       // transfer the diagram properties to the dialog
       GridLogX->setChecked(Diag->xAxis.log);
-      GridLogYl->setChecked(Diag->ylAxis.log);
-      GridLogYr->setChecked(Diag->yrAxis.log);
+      GridLogYl->setChecked(Diag->yAxis.log);
+      GridLogYr->setChecked(Diag->zAxis.log);
     }
 
     t->addTab(Tab2, tr("Properties"));
@@ -250,28 +253,121 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     QVBox *Tab3 = new QVBox(this);
     Tab1->setSpacing(5);
 
-    QHButtonGroup *axisX = new QHButtonGroup(tr("x-Axis"), Tab3);
-    manualX = new QCheckBox(tr("manual"), axisX);
+    QHGroupBox *axisX = new QHGroupBox(tr("x-Axis"), Tab3);
+
+    QVBox *VBox1 = new QVBox(axisX);
+    VBox1->setStretchFactor(new QWidget(VBox1),5); // stretchable placeholder
+    manualX = new QCheckBox(tr("manual"), VBox1);
     connect(manualX, SIGNAL(stateChanged(int)), SLOT(slotManualX(int)));
-    startX  = new QLineEdit(axisX);
-    stepX   = new QLineEdit(axisX);
-    stopX   = new QLineEdit(axisX);
 
-    QHButtonGroup *axisY = new QHButtonGroup(tr("left y-Axis"), Tab3);
-    manualY = new QCheckBox(tr("manual"), axisY);
+    QVBox *VBox2 = new QVBox(axisX);
+    new QLabel(tr("start"), VBox2);
+    startX = new QLineEdit(VBox2);
+    startX->setValidator(ValDouble);
+
+    QVBox *VBox3 = new QVBox(axisX);
+    new QLabel(tr("step"), VBox3);
+    stepX = new QLineEdit(VBox3);
+    stepX->setValidator(ValDouble);
+
+    QVBox *VBox4 = new QVBox(axisX);
+    new QLabel(tr("stop"), VBox4);
+    stopX = new QLineEdit(VBox4);
+    stopX->setValidator(ValDouble);
+
+
+    QHGroupBox *axisY;
+    if(Diag->Name == "PS")
+      axisY = new QHGroupBox(tr("Smith Axis"), Tab3);
+    else if(Diag->Name == "SP")
+      axisY = new QHGroupBox(tr("Polar Axis"), Tab3);
+    else
+      axisY = new QHGroupBox(tr("left y-Axis"), Tab3);
+
+    QVBox *VBox5 = new QVBox(axisY);
+    VBox5->setStretchFactor(new QWidget(VBox5),5); // stretchable placeholder
+    manualY = new QCheckBox(tr("manual"), VBox5);
     connect(manualY, SIGNAL(stateChanged(int)), SLOT(slotManualY(int)));
-    startY  = new QLineEdit(axisY);
-    stepY   = new QLineEdit(axisY);
-    stopY   = new QLineEdit(axisY);
 
-    QHButtonGroup *axisZ = new QHButtonGroup(tr("right y-Axis"), Tab3);
-    manualZ = new QCheckBox(tr("manual"), axisZ);
+    QVBox *VBox6 = new QVBox(axisY);
+    new QLabel(tr("start"), VBox6);
+    startY = new QLineEdit(VBox6);
+    startY->setValidator(ValDouble);
+
+    QVBox *VBox7 = new QVBox(axisY);
+    new QLabel(tr("step"), VBox7);
+    stepY = new QLineEdit(VBox7);
+    stepY->setValidator(ValDouble);
+
+    QVBox *VBox8 = new QVBox(axisY);
+    new QLabel(tr("stop"), VBox8);
+    stopY = new QLineEdit(VBox8);
+    stopY->setValidator(ValDouble);
+
+
+    QHGroupBox *axisZ;
+    if(Diag->Name == "PS")
+      axisZ = new QHGroupBox(tr("Polar Axis"), Tab3);
+    else if(Diag->Name == "SP")
+      axisZ = new QHGroupBox(tr("Smith Axis"), Tab3);
+    else
+      axisZ = new QHGroupBox(tr("right y-Axis"), Tab3);
+
+    QVBox *VBox9 = new QVBox(axisZ);
+    VBox9->setStretchFactor(new QWidget(VBox9),5); // stretchable placeholder
+    manualZ = new QCheckBox(tr("manual"), VBox9);
     connect(manualZ, SIGNAL(stateChanged(int)), SLOT(slotManualZ(int)));
-    startZ  = new QLineEdit(axisZ);
-    stepZ   = new QLineEdit(axisZ);
-    stopZ   = new QLineEdit(axisZ);
+
+    QVBox *VBox10 = new QVBox(axisZ);
+    new QLabel(tr("start"), VBox10);
+    startZ = new QLineEdit(VBox10);
+    startZ->setValidator(ValDouble);
+
+    QVBox *VBox11 = new QVBox(axisZ);
+    new QLabel(tr("step"), VBox11);
+    stepZ = new QLineEdit(VBox11);
+    stepZ->setValidator(ValDouble);
+
+    QVBox *VBox12 = new QVBox(axisZ);
+    new QLabel(tr("stop"), VBox12);
+    stopZ = new QLineEdit(VBox12);
+    stopZ->setValidator(ValDouble);
+
+
+    Tab3->setStretchFactor(new QWidget(Tab3),5); // stretchable placeholder
 
     t->addTab(Tab3, tr("Limits"));
+
+    // ...........................................................
+    // transfer the diagram properties to the dialog
+    if(Diag->xAxis.autoScale)  slotManualX(QButton::Off);
+    else  manualX->setChecked(true);
+    if(Diag->yAxis.autoScale)  slotManualY(QButton::Off);
+    else  manualY->setChecked(true);
+    if(Diag->zAxis.autoScale)  slotManualZ(QButton::Off);
+    else  manualZ->setChecked(true);
+
+    startX->setText(QString::number(Diag->xAxis.limit_min));
+    stepX->setText(QString::number(Diag->xAxis.step));
+    stopX->setText(QString::number(Diag->xAxis.limit_max));
+
+    startY->setText(QString::number(Diag->yAxis.limit_min));
+    stepY->setText(QString::number(Diag->yAxis.step));
+    stopY->setText(QString::number(Diag->yAxis.limit_max));
+
+    startZ->setText(QString::number(Diag->zAxis.limit_min));
+    stepZ->setText(QString::number(Diag->zAxis.step));
+    stopZ->setText(QString::number(Diag->zAxis.limit_max));
+
+    if((Diag->Name == "Smith") || (Diag->Name == "ySmith") ||
+       (Diag->Name == "Polar")) {
+       axisZ->setEnabled(false);
+    }
+    if(Diag->Name != "Rect") {
+      axisX->setEnabled(false);
+      startY->setEnabled(false);
+      startZ->setEnabled(false);
+    }
   }
 
   // ...........................................................
@@ -318,6 +414,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 DiagramDialog::~DiagramDialog()
 {
   delete all;   // delete all widgets from heap
+  delete Validator;
+  delete ValDouble;
 }
 
 // --------------------------------------------------------------------------
@@ -530,16 +628,16 @@ void DiagramDialog::slotApply()
       Diag->xAxis.Label = xLabel->text();
       changed = true;
     }
-    if(Diag->ylAxis.Label.isEmpty())
-      Diag->ylAxis.Label = ""; // can be not 0 and empty!
+    if(Diag->yAxis.Label.isEmpty())
+      Diag->yAxis.Label = ""; // can be not 0 and empty!
     if(ylLabel->text().isEmpty()) ylLabel->setText("");
-    if(Diag->ylAxis.Label != ylLabel->text()) {
-      Diag->ylAxis.Label = ylLabel->text();
+    if(Diag->yAxis.Label != ylLabel->text()) {
+      Diag->yAxis.Label = ylLabel->text();
       changed = true;
     }
     if(Diag->xAxis.GridOn != GridOn->isChecked()) {
       Diag->xAxis.GridOn = GridOn->isChecked();
-      Diag->ylAxis.GridOn = GridOn->isChecked();
+      Diag->yAxis.GridOn = GridOn->isChecked();
       changed = true;
     }
     if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
@@ -551,11 +649,11 @@ void DiagramDialog::slotApply()
       changed = true;
     }
     if(Diag->Name == "Rect") {
-      if(Diag->yrAxis.Label.isEmpty())
-        Diag->yrAxis.Label = ""; // can be not 0 and empty!
+      if(Diag->zAxis.Label.isEmpty())
+        Diag->zAxis.Label = ""; // can be not 0 and empty!
       if(yrLabel->text().isEmpty()) yrLabel->setText("");
-      if(Diag->yrAxis.Label != yrLabel->text()) {
-        Diag->yrAxis.Label = yrLabel->text();
+      if(Diag->zAxis.Label != yrLabel->text()) {
+        Diag->zAxis.Label = yrLabel->text();
         changed = true;
       }
 
@@ -563,14 +661,63 @@ void DiagramDialog::slotApply()
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
       }
-      if(Diag->ylAxis.log != GridLogYl->isChecked()) {
-        Diag->ylAxis.log = GridLogYl->isChecked();
+      if(Diag->yAxis.log != GridLogYl->isChecked()) {
+        Diag->yAxis.log = GridLogYl->isChecked();
         changed = true;
       }
-      if(Diag->yrAxis.log != GridLogYr->isChecked()) {
-        Diag->yrAxis.log = GridLogYr->isChecked();
+      if(Diag->zAxis.log != GridLogYr->isChecked()) {
+        Diag->zAxis.log = GridLogYr->isChecked();
         changed = true;
       }
+    }
+
+    if(Diag->xAxis.autoScale == manualX->isChecked()) {
+      Diag->xAxis.autoScale = !(manualX->isChecked());
+      changed = true;
+    }
+    if(Diag->xAxis.limit_min != startX->text().toDouble()) {
+      Diag->xAxis.limit_min = startX->text().toDouble();
+      changed = true;
+    }
+    if(Diag->xAxis.step != stepX->text().toDouble()) {
+      Diag->xAxis.step = stepX->text().toDouble();
+      changed = true;
+    }
+    if(Diag->xAxis.limit_max != stopX->text().toDouble()) {
+      Diag->xAxis.limit_max = stopX->text().toDouble();
+      changed = true;
+    }
+    if(Diag->yAxis.autoScale == manualY->isChecked()) {
+      Diag->yAxis.autoScale = !(manualY->isChecked());
+      changed = true;
+    }
+    if(Diag->yAxis.limit_min != startY->text().toDouble()) {
+      Diag->yAxis.limit_min = startY->text().toDouble();
+      changed = true;
+    }
+    if(Diag->yAxis.step != stepY->text().toDouble()) {
+      Diag->yAxis.step = stepY->text().toDouble();
+      changed = true;
+    }
+    if(Diag->yAxis.limit_max != stopY->text().toDouble()) {
+      Diag->yAxis.limit_max = stopY->text().toDouble();
+      changed = true;
+    }
+    if(Diag->zAxis.autoScale == manualZ->isChecked()) {
+      Diag->zAxis.autoScale = !(manualZ->isChecked());
+      changed = true;
+    }
+    if(Diag->zAxis.limit_min != startZ->text().toDouble()) {
+      Diag->zAxis.limit_min = startZ->text().toDouble();
+      changed = true;
+    }
+    if(Diag->zAxis.step != stepZ->text().toDouble()) {
+      Diag->zAxis.step = stepZ->text().toDouble();
+      changed = true;
+    }
+    if(Diag->zAxis.limit_max != stopZ->text().toDouble()) {
+      Diag->zAxis.limit_max = stopZ->text().toDouble();
+      changed = true;
     }
   }
   Diag->Graphs.clear();   // delete the graphs
@@ -712,4 +859,52 @@ void DiagramDialog::slotSetYAxis(int axis)
   g->yAxisNo = axis;
   changed = true;
   toTake  = false;
+}
+
+// --------------------------------------------------------------------------
+void DiagramDialog::slotManualX(int state)
+{
+  if(state == QButton::On) {
+    if(Diag->Name == "Rect")
+      startX->setEnabled(true);
+    stepX->setEnabled(true);
+    stopX->setEnabled(true);
+  }
+  else {
+    startX->setEnabled(false);
+    stepX->setEnabled(false);
+    stopX->setEnabled(false);
+  }
+}
+
+// --------------------------------------------------------------------------
+void DiagramDialog::slotManualY(int state)
+{
+  if(state == QButton::On) {
+    if(Diag->Name == "Rect")
+      startY->setEnabled(true);
+    stepY->setEnabled(true);
+    stopY->setEnabled(true);
+  }
+  else {
+    startY->setEnabled(false);
+    stepY->setEnabled(false);
+    stopY->setEnabled(false);
+  }
+}
+
+// --------------------------------------------------------------------------
+void DiagramDialog::slotManualZ(int state)
+{
+  if(state == QButton::On) {
+    if(Diag->Name == "Rect")
+      startZ->setEnabled(true);
+    stepZ->setEnabled(true);
+    stopZ->setEnabled(true);
+  }
+  else {
+    startZ->setEnabled(false);
+    stepZ->setEnabled(false);
+    stopZ->setEnabled(false);
+  }
 }

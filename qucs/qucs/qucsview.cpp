@@ -1797,16 +1797,13 @@ void QucsView::MReleaseZoomIn(QMouseEvent *Event)
   if(Event->button() != Qt::LeftButton) return;
 
   QucsDoc *d = Docs.current();
-//  QPainter painter(viewport());
-//  setPainter(&painter, d);
-
-//  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);  // erase old rectangle
-//  drawn = false;
-  float DX = float(MAx2);
-  float DY = float(MAy2);
+  MAx1 = Event->pos().x();
+  MAy1 = Event->pos().y();
+  float DX = float(abs(MAx2));
+  float DY = float(abs(MAy2));
   if((d->Scale * DX) < 6.0) {
-    MAx1  = (Event->pos().x()<<1) - (visibleWidth()>>1)  - contentsX();
-    MAy1  = (Event->pos().y()<<1) - (visibleHeight()>>1) - contentsY();
+    MAx1  = (MAx1<<1) - (visibleWidth()>>1)  - contentsX();
+    MAy1  = (MAy1<<1) - (visibleHeight()>>1) - contentsY();
     Zoom(2.0);    // a simple click zooms by factor 2
   }
   else {
@@ -1816,16 +1813,11 @@ void QucsView::MReleaseZoomIn(QMouseEvent *Event)
     if(xScale > 10.0) xScale = 10.0;
     if(xScale < 0.01) xScale = 0.01;
 
-/*    d->ViewX1 = MAx1;
-    d->ViewY1 = MAy1;
-    d->ViewX2 = MAx1+MAx2;
-    d->ViewY2 = MAy1+MAy2;*/
-//    MAx1  = int(float(MAx1 - d->ViewX1) * d->Scale) - contentsX();;
-//    MAy1  = int(float(MAy1 - d->ViewY1) * d->Scale) - contentsY();;
-    MAx1  = int(float(Event->pos().x())*xScale)
-		- visibleWidth()  - contentsX();
-    MAy1  = int(float(Event->pos().y())*xScale)
-		- visibleHeight() - contentsY();
+    if(MAx2 > 0)  MAx1 -= int(float(MAx2)*d->Scale);
+    if(MAy2 > 0)  MAy1 -= int(float(MAy2)*d->Scale);
+    MAx1 = int(float(MAx1) * xScale / d->Scale) - contentsX();
+    MAy1 = int(float(MAy1) * xScale / d->Scale) - contentsY();
+
     d->Scale = xScale;
     resizeContents(int(xScale*float(d->ViewX2 - d->ViewX1)),
 		   int(xScale*float(d->ViewY2 - d->ViewY1)));

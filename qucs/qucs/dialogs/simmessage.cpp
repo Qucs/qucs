@@ -23,7 +23,9 @@
 #include <qhgroupbox.h>
 #include <qhbox.h>
 #include <qtimer.h>
-//#include <qmessagebox.h>
+#include <qpushbutton.h>
+#include <qprogressbar.h>
+#include <qtextedit.h>
 
 
 SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
@@ -32,7 +34,7 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
   DataDisplay = DataDpl;
   setCaption(tr("Qucs Simulation Messages"));
 
-  QVBoxLayout *all = new QVBoxLayout(this);
+  all = new QVBoxLayout(this);
   all->setSpacing(5);
   all->setMargin(5);
   QVGroupBox *Group1 = new QVGroupBox(tr("Progress:"),this);
@@ -79,6 +81,7 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
 
 SimMessage::~SimMessage()
 {
+  delete all;
 }
 
 // ------------------------------------------------------------------------
