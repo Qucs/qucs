@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.3 2004-03-28 11:24:44 ela Exp $
+ * $Id: vector.cpp,v 1.4 2004-04-18 18:37:16 margraf Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
@@ -103,6 +104,10 @@ complex vector::get (int i) {
   return data[i];
 }
 
+void vector::set (const complex z, int i) {
+  data[i] = z;
+}
+
 // The function returns the current size of the vector.
 int vector::getSize (void) {
   return size;
@@ -115,6 +120,119 @@ int vector::checkSizes (vector & v1, vector & v2) {
     return 0;
   }
   return 1;
+}
+
+vector * abs (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(abs(v.get(i)), i);
+  return result;
+}
+
+vector * norm (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(norm(v.get(i)), i);
+  return result;
+}
+
+vector * arg (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(arg(v.get(i)), i);
+  return result;
+}
+
+vector * real (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(real(v.get(i)), i);
+  return result;
+}
+
+vector * imag (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(imag(v.get(i)), i);
+  return result;
+}
+
+vector * conj (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(conj(v.get(i)), i);
+  return result;
+}
+
+vector * dB (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(10.0*log10(norm(v.get(i))), i);
+  return result;
+}
+
+vector * sqrt (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(sqrt(v.get(i)), i);
+  return result;
+}
+
+vector * exp (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(exp(v.get(i)), i);
+  return result;
+}
+
+vector * ln (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(ln(v.get(i)), i);
+  return result;
+}
+
+vector * log10 (vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(log10(v.get(i)), i);
+  return result;
+}
+
+vector * modulo (vector & v, const complex z) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(modulo(v.get(i), z), i);
+  return result;
+}
+
+vector * modulo (const complex z, vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(modulo(z, v.get(i)), i);
+  return result;
+}
+
+vector * modulo (vector & v1, vector & v2) {
+  if (v1.checkSizes (v1, v2)) {
+    vector * result = new vector (v1);
+    for (int i = 0; i < v1.getSize(); i++) result->set(modulo(v1.get(i), v2.get(i)), i);
+    return result;
+  }
+  return &v1;
+}
+
+vector * pow (vector & v, const complex z) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(pow(v.get(i), z), i);
+  return result;
+}
+
+vector * pow (const complex z, vector & v) {
+  vector * result = new vector (v);
+  for (int i = 0; i < v.getSize(); i++) result->set(pow(z, v.get(i)), i);
+  return result;
+}
+
+vector * pow (vector & v1, vector & v2) {
+  if (v1.checkSizes (v1, v2)) {
+    vector * result = new vector (v1);
+    for (int i = 0; i < v1.getSize(); i++) result->set(pow(v1.get(i), v2.get(i)), i);
+    return result;
+  }
+  return &v1;
+}
+
+vector& vector::operator=(const complex c) {
+  for (int i = 0; i < getSize(); i++) data[i] = c;
+  return *this;
 }
 
 vector& vector::operator+=(vector & v) {
@@ -144,6 +262,11 @@ vector * operator+(vector & v, const complex c) {
   return result;
 }
 
+vector& vector::operator-() {
+  for (int i = 0; i < getSize (); i++) data[i] *= -1;
+  return *this;
+}
+
 vector& vector::operator-=(vector & v) {
   if (checkSizes (*this, v)) {
     for (int i = 0; i < getSize (); i++) data[i] -= v.get (i);
@@ -168,6 +291,13 @@ vector * operator-(vector & v1, vector & v2) {
 vector * operator-(vector & v, const complex c) {
   vector * result = new vector (v);
   *result -= c;
+  return result;
+}
+
+vector * operator-(const complex c, vector & v) {
+  vector * result = new vector (v);
+  *result *= -1.0;
+  *result += c;
   return result;
 }
 
@@ -222,6 +352,13 @@ vector * operator/(vector & v1, vector & v2) {
 vector * operator/(vector & v, const complex c) {
   vector * result = new vector (v);
   *result /= c;
+  return result;
+}
+
+vector * operator/(const complex c, vector & v) {
+  vector * result = new vector (v);
+  *result  = c;
+  *result /= v;
   return result;
 }
 

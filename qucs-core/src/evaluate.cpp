@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.2 2004-03-28 11:24:44 ela Exp $
+ * $Id: evaluate.cpp,v 1.3 2004-04-18 18:37:16 margraf Exp $
  *
  */
 
@@ -47,6 +47,29 @@ using namespace eqn;
 #define V(con) ((constant *) (con))->v
 #define M(con) ((constant *) (con))->m
 
+// ******************** unary plus *************************
+constant * evaluate::plus_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1;
+  return res;
+}
+
+constant * evaluate::plus_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (*c1);
+  return res;
+}
+
+constant * evaluate::plus_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (*v1);
+  return res;
+}
+
+// ****************** Addition *****************************
 constant * evaluate::plus_d_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   nr_double_t d2 = D (args->getResult (1));
@@ -95,13 +118,652 @@ constant * evaluate::plus_v_v (constant * args) {
   return res;
 }
 
+// ******************** unary minus ***************************
+constant * evaluate::minus_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = -d1;
+  return res;
+}
+
+constant * evaluate::minus_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (*c1);
+  - *(res->c);
+  return res;
+}
+
+constant * evaluate::minus_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (*v1);
+  - *(res->v);
+  return res;
+}
+
+// ****************** Subtraction *****************************
+constant * evaluate::minus_d_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1 - d2;
+  return res;
+}
+
+constant * evaluate::minus_c_d (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (*c1 - d2);
+  return res;
+}
+
+constant * evaluate::minus_d_c (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  complex *   c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (d1 - *c2);
+  return res;
+}
+
+constant * evaluate::minus_v_d (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (*v1 - d2);
+  return res;
+}
+
+constant * evaluate::minus_d_v (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  vector * v2    = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (d1 - *v2);
+  return res;
+}
+
+constant * evaluate::minus_v_v (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (*v1 - *v2);
+  return res;
+}
+
+// ****************** Multiplication *************************
+constant * evaluate::times_d_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1 * d2;
+  return res;
+}
+
+constant * evaluate::times_c_d (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex ((*c1) * d2);
+  return res;
+}
+
+constant * evaluate::times_d_c (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  complex *   c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (d1 * (*c2));
+  return res;
+}
+
+constant * evaluate::times_v_d (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = ((*v1) * d2);
+  return res;
+}
+
+constant * evaluate::times_d_v (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  vector * v2    = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = ((*v2) * d1);
+  return res;
+}
+
+constant * evaluate::times_v_v (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = ((*v1) * (*v2));
+  return res;
+}
+
+// ****************** Division *************************
+constant * evaluate::over_d_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1 / d2;
+  return res;
+}
+
+constant * evaluate::over_c_d (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex ((*c1) / d2);
+  return res;
+}
+
+constant * evaluate::over_d_c (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  complex *   c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  res->c = new complex (d1 / (*c2));
+  return res;
+}
+
+constant * evaluate::over_v_d (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = ((*v1) / d2);
+  return res;
+}
+
+constant * evaluate::over_d_v (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  vector * v2    = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = (d1 / (*v2));
+  return res;
+}
+
+constant * evaluate::over_v_v (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = ((*v1) / (*v2));
+  return res;
+}
+
+// ****************** modulo *************************
+constant * evaluate::modulo_d_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = fmod(d1, d2);
+  return res;
+}
+
+constant * evaluate::modulo_c_d (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = modulo(*c1, complex(d2));
+  return res;
+}
+
+constant * evaluate::modulo_d_c (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  complex *   c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = modulo(complex(d1), *c2);
+  return res;
+}
+
+constant * evaluate::modulo_v_d (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = modulo(*v1, complex(d2));
+  return res;
+}
+
+constant * evaluate::modulo_d_v (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  vector * v2    = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = modulo(complex(d1), *v2);
+  return res;
+}
+
+constant * evaluate::modulo_v_v (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = modulo(*v1, *v2);
+  return res;
+}
+
+// ****************** power *************************
+constant * evaluate::power_d_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = pow(d1, d2);
+  return res;
+}
+
+constant * evaluate::power_c_d (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = pow(*c1, complex(d2));
+  return res;
+}
+
+constant * evaluate::power_d_c (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  complex *   c2 = C (args->getResult (1));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = pow(complex(d1), *c2);
+  return res;
+}
+
+constant * evaluate::power_v_d (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d2 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = pow(*v1, complex(d2));
+  return res;
+}
+
+constant * evaluate::power_d_v (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  vector * v2    = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = pow(complex(d1), *v2);
+  return res;
+}
+
+constant * evaluate::power_v_v (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = pow(*v1, *v2);
+  return res;
+}
+
+// ************** real value **********************
+constant * evaluate::real_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1;
+  return res;
+}
+
+constant * evaluate::real_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = real(*c1);
+  return res;
+}
+
+constant * evaluate::real_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = real(*v1);
+  return res;
+}
+
+// ************** imaginary value **********************
+constant * evaluate::imag_d (constant * ) {
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 0.0;
+  return res;
+}
+
+constant * evaluate::imag_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = imag(*c1);
+  return res;
+}
+
+constant * evaluate::imag_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = imag(*v1);
+  return res;
+}
+
+// ************** absolute value **********************
+constant * evaluate::abs_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1;
+  return res;
+}
+
+constant * evaluate::abs_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = abs(*c1);
+  return res;
+}
+
+constant * evaluate::abs_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = abs(*v1);
+  return res;
+}
+
+// ************** conjugate complex **********************
+constant * evaluate::conj_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1;
+  return res;
+}
+
+constant * evaluate::conj_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = conj(*c1);
+  return res;
+}
+
+constant * evaluate::conj_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = conj(*v1);
+  return res;
+}
+
+// ********** square of absolute value *****************
+constant * evaluate::norm_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = d1*d1;
+  return res;
+}
+
+constant * evaluate::norm_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = norm(*c1);
+  return res;
+}
+
+constant * evaluate::norm_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = norm(*v1);
+  return res;
+}
+
+// ********** phase in degrees *****************
+constant * evaluate::phase_d (constant * ) {
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 0.0;
+  return res;
+}
+
+constant * evaluate::phase_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = arg(*c1) *180.0/M_PI;
+  return res;
+}
+
+constant * evaluate::phase_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = arg(*v1);
+  *res->v *= 180.0/M_PI;
+  return res;
+}
+
+// ********** phase in radians *****************
+constant * evaluate::arg_d (constant * ) {
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 0.0;
+  return res;
+}
+
+constant * evaluate::arg_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = arg(*c1);
+  return res;
+}
+
+constant * evaluate::arg_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = arg(*v1);
+  return res;
+}
+
+// ********** voltage decibel *****************
+constant * evaluate::dB_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = 20.0*log10(fabs(d1));
+  return res;
+}
+
+constant * evaluate::dB_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = dB(*c1);
+  return res;
+}
+
+constant * evaluate::dB_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = dB(*v1);
+  return res;
+}
+
+// ********** square root *****************
+constant * evaluate::sqrt_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  if(d1 < 0.0) {
+    constant * res = new constant (TAG_COMPLEX);
+    res->c = new complex (0.0, sqrt(-d1));
+    return res;
+  }
+  else {
+    constant * res = new constant (TAG_DOUBLE);
+    res->d = sqrt(d1);
+    return res;
+  }
+}
+
+constant * evaluate::sqrt_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  *(res->c) = sqrt(*c1);
+  return res;
+}
+
+constant * evaluate::sqrt_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = sqrt(*v1);
+  return res;
+}
+
+// ********** exponential function *****************
+constant * evaluate::exp_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = exp(d1);
+  return res;
+}
+
+constant * evaluate::exp_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = exp(*c1);
+  return res;
+}
+
+constant * evaluate::exp_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = exp(*v1);
+  return res;
+}
+
+// ********** natural logarithm *****************
+constant * evaluate::ln_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = log(d1);
+  return res;
+}
+
+constant * evaluate::ln_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = ln(*c1);
+  return res;
+}
+
+constant * evaluate::ln_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = ln(*v1);
+  return res;
+}
+
+// ********** decimal logarithm *****************
+constant * evaluate::log10_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = log10(d1);
+  return res;
+}
+
+constant * evaluate::log10_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_COMPLEX);
+  *res->c = log10(*c1);
+  return res;
+}
+
+constant * evaluate::log10_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = log10(*v1);
+  return res;
+}
+
+
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
+  { "+", TAG_DOUBLE,  evaluate::plus_d, 1, { TAG_DOUBLE  } },
+  { "+", TAG_COMPLEX, evaluate::plus_c, 1, { TAG_COMPLEX  } },
+  { "+", TAG_VECTOR,  evaluate::plus_v, 1, { TAG_VECTOR  } },
+
   { "+", TAG_DOUBLE,  evaluate::plus_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
   { "+", TAG_COMPLEX, evaluate::plus_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
   { "+", TAG_COMPLEX, evaluate::plus_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
   { "+", TAG_VECTOR,  evaluate::plus_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "+", TAG_VECTOR,  evaluate::plus_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
   { "+", TAG_VECTOR,  evaluate::plus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "-", TAG_DOUBLE,  evaluate::minus_d, 1, { TAG_DOUBLE  } },
+  { "-", TAG_COMPLEX, evaluate::minus_c, 1, { TAG_COMPLEX  } },
+  { "-", TAG_VECTOR,  evaluate::minus_v, 1, { TAG_VECTOR  } },
+
+  { "-", TAG_DOUBLE,  evaluate::minus_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "-", TAG_COMPLEX, evaluate::minus_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "-", TAG_COMPLEX, evaluate::minus_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "-", TAG_VECTOR,  evaluate::minus_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "-", TAG_VECTOR,  evaluate::minus_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "-", TAG_VECTOR,  evaluate::minus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "*", TAG_DOUBLE,  evaluate::times_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "*", TAG_COMPLEX, evaluate::times_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "*", TAG_COMPLEX, evaluate::times_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "*", TAG_VECTOR,  evaluate::times_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "*", TAG_VECTOR,  evaluate::times_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "*", TAG_VECTOR,  evaluate::times_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "/", TAG_DOUBLE,  evaluate::over_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "/", TAG_COMPLEX, evaluate::over_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "/", TAG_COMPLEX, evaluate::over_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "/", TAG_VECTOR,  evaluate::over_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "/", TAG_VECTOR,  evaluate::over_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "/", TAG_VECTOR,  evaluate::over_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "%", TAG_DOUBLE,  evaluate::modulo_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "%", TAG_COMPLEX, evaluate::modulo_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "%", TAG_COMPLEX, evaluate::modulo_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "%", TAG_VECTOR,  evaluate::modulo_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "%", TAG_VECTOR,  evaluate::modulo_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "%", TAG_VECTOR,  evaluate::modulo_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "^", TAG_DOUBLE,  evaluate::power_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
+  { "^", TAG_COMPLEX, evaluate::power_c_d, 2, { TAG_COMPLEX, TAG_DOUBLE  } },
+  { "^", TAG_COMPLEX, evaluate::power_d_c, 2, { TAG_DOUBLE,  TAG_COMPLEX } },
+  { "^", TAG_VECTOR,  evaluate::power_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
+  { "^", TAG_VECTOR,  evaluate::power_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
+  { "^", TAG_VECTOR,  evaluate::power_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
+
+  { "real", TAG_DOUBLE,  evaluate::real_d, 1, { TAG_DOUBLE  } },
+  { "real", TAG_COMPLEX, evaluate::real_c, 1, { TAG_COMPLEX  } },
+  { "real", TAG_VECTOR,  evaluate::real_v, 1, { TAG_VECTOR  } },
+
+  { "imag", TAG_DOUBLE,  evaluate::imag_d, 1, { TAG_DOUBLE  } },
+  { "imag", TAG_COMPLEX, evaluate::imag_c, 1, { TAG_COMPLEX  } },
+  { "imag", TAG_VECTOR,  evaluate::imag_v, 1, { TAG_VECTOR  } },
+
+  { "abs", TAG_DOUBLE,  evaluate::abs_d, 1, { TAG_DOUBLE  } },
+  { "abs", TAG_COMPLEX, evaluate::abs_c, 1, { TAG_COMPLEX  } },
+  { "abs", TAG_VECTOR,  evaluate::abs_v, 1, { TAG_VECTOR  } },
+
+  { "mag", TAG_DOUBLE,  evaluate::abs_d, 1, { TAG_DOUBLE  } },
+  { "mag", TAG_COMPLEX, evaluate::abs_c, 1, { TAG_COMPLEX  } },
+  { "mag", TAG_VECTOR,  evaluate::abs_v, 1, { TAG_VECTOR  } },
+
+  { "conj", TAG_DOUBLE,  evaluate::conj_d, 1, { TAG_DOUBLE  } },
+  { "conj", TAG_COMPLEX, evaluate::conj_c, 1, { TAG_COMPLEX  } },
+  { "conj", TAG_VECTOR,  evaluate::conj_v, 1, { TAG_VECTOR  } },
+
+  { "norm", TAG_DOUBLE,  evaluate::norm_d, 1, { TAG_DOUBLE  } },
+  { "norm", TAG_COMPLEX, evaluate::norm_c, 1, { TAG_COMPLEX  } },
+  { "norm", TAG_VECTOR,  evaluate::norm_v, 1, { TAG_VECTOR  } },
+
+  { "phase", TAG_DOUBLE,  evaluate::phase_d, 1, { TAG_DOUBLE  } },
+  { "phase", TAG_COMPLEX, evaluate::phase_c, 1, { TAG_COMPLEX  } },
+  { "phase", TAG_VECTOR,  evaluate::phase_v, 1, { TAG_VECTOR  } },
+
+  { "angle", TAG_DOUBLE,  evaluate::arg_d, 1, { TAG_DOUBLE  } },
+  { "angle", TAG_COMPLEX, evaluate::arg_c, 1, { TAG_COMPLEX  } },
+  { "angle", TAG_VECTOR,  evaluate::arg_v, 1, { TAG_VECTOR  } },
+
+  { "arg", TAG_DOUBLE,  evaluate::arg_d, 1, { TAG_DOUBLE  } },
+  { "arg", TAG_COMPLEX, evaluate::arg_c, 1, { TAG_COMPLEX  } },
+  { "arg", TAG_VECTOR,  evaluate::arg_v, 1, { TAG_VECTOR  } },
+
+  { "dB", TAG_DOUBLE,  evaluate::dB_d, 1, { TAG_DOUBLE  } },
+  { "dB", TAG_COMPLEX, evaluate::dB_c, 1, { TAG_COMPLEX  } },
+  { "dB", TAG_VECTOR,  evaluate::dB_v, 1, { TAG_VECTOR  } },
+
+  { "sqrt", TAG_DOUBLE,  evaluate::sqrt_d, 1, { TAG_DOUBLE  } },
+  { "sqrt", TAG_COMPLEX, evaluate::sqrt_c, 1, { TAG_COMPLEX  } },
+  { "sqrt", TAG_VECTOR,  evaluate::sqrt_v, 1, { TAG_VECTOR  } },
+
+  { "exp", TAG_DOUBLE,  evaluate::exp_d, 1, { TAG_DOUBLE  } },
+  { "exp", TAG_COMPLEX, evaluate::exp_c, 1, { TAG_COMPLEX  } },
+  { "exp", TAG_VECTOR,  evaluate::exp_v, 1, { TAG_VECTOR  } },
+
+  { "ln", TAG_DOUBLE,  evaluate::ln_d, 1, { TAG_DOUBLE  } },
+  { "ln", TAG_COMPLEX, evaluate::ln_c, 1, { TAG_COMPLEX  } },
+  { "ln", TAG_VECTOR,  evaluate::ln_v, 1, { TAG_VECTOR  } },
+
+  { "log10", TAG_DOUBLE,  evaluate::log10_d, 1, { TAG_DOUBLE  } },
+  { "log10", TAG_COMPLEX, evaluate::log10_c, 1, { TAG_COMPLEX  } },
+  { "log10", TAG_VECTOR,  evaluate::log10_v, 1, { TAG_VECTOR  } },
+
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };

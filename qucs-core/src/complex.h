@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: complex.h,v 1.2 2004-04-18 18:37:16 margraf Exp $
  *
  */
 
@@ -47,6 +47,17 @@ class complex
   friend complex      conj (const complex);  // the complex conjugate
   friend nr_double_t  norm (const complex);  // the square of the magnitude
   friend nr_double_t  arg  (const complex);  // the angle in the plane
+
+  friend nr_double_t dB (const complex);
+  friend complex sqrt   (const complex);
+  friend complex exp    (const complex);
+  friend complex ln     (const complex);
+  friend complex log10  (const complex);
+  friend complex floor  (const complex);
+  friend complex modulo (const complex, const complex);
+  friend complex pow (const complex, nr_double_t);
+  friend complex pow (nr_double_t, const complex);
+  friend complex pow (const complex, const complex);
 
   // overloaded math functions
   friend nr_double_t  abs  (const complex);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.2 2004-03-28 11:24:44 ela Exp $
+ * $Id: evaluate.h,v 1.3 2004-04-18 18:37:16 margraf Exp $
  *
  */
 
@@ -34,12 +34,104 @@ class constant;
 class evaluate
 {
 public:
+  static constant * plus_d (constant *);
+  static constant * plus_c (constant *);
+  static constant * plus_v (constant *);
+
   static constant * plus_d_d (constant *);
   static constant * plus_c_d (constant *);
   static constant * plus_d_c (constant *);
   static constant * plus_v_d (constant *);
   static constant * plus_d_v (constant *);
   static constant * plus_v_v (constant *);
+
+  static constant * minus_d (constant *);
+  static constant * minus_c (constant *);
+  static constant * minus_v (constant *);
+
+  static constant * minus_d_d (constant *);
+  static constant * minus_c_d (constant *);
+  static constant * minus_d_c (constant *);
+  static constant * minus_v_d (constant *);
+  static constant * minus_d_v (constant *);
+  static constant * minus_v_v (constant *);
+
+  static constant * times_d_d (constant *);
+  static constant * times_c_d (constant *);
+  static constant * times_d_c (constant *);
+  static constant * times_v_d (constant *);
+  static constant * times_d_v (constant *);
+  static constant * times_v_v (constant *);
+
+  static constant * over_d_d (constant *);
+  static constant * over_c_d (constant *);
+  static constant * over_d_c (constant *);
+  static constant * over_v_d (constant *);
+  static constant * over_d_v (constant *);
+  static constant * over_v_v (constant *);
+
+  static constant * modulo_d_d (constant *);
+  static constant * modulo_c_d (constant *);
+  static constant * modulo_d_c (constant *);
+  static constant * modulo_v_d (constant *);
+  static constant * modulo_d_v (constant *);
+  static constant * modulo_v_v (constant *);
+
+  static constant * power_d_d (constant *);
+  static constant * power_c_d (constant *);
+  static constant * power_d_c (constant *);
+  static constant * power_v_d (constant *);
+  static constant * power_d_v (constant *);
+  static constant * power_v_v (constant *);
+
+  static constant * real_d (constant *);
+  static constant * real_c (constant *);
+  static constant * real_v (constant *);
+
+  static constant * imag_d (constant *);
+  static constant * imag_c (constant *);
+  static constant * imag_v (constant *);
+
+  static constant * abs_d (constant *);
+  static constant * abs_c (constant *);
+  static constant * abs_v (constant *);
+
+  static constant * conj_d (constant *);
+  static constant * conj_c (constant *);
+  static constant * conj_v (constant *);
+
+  static constant * norm_d (constant *);
+  static constant * norm_c (constant *);
+  static constant * norm_v (constant *);
+
+  static constant * phase_d (constant *);
+  static constant * phase_c (constant *);
+  static constant * phase_v (constant *);
+
+  static constant * arg_d (constant *);
+  static constant * arg_c (constant *);
+  static constant * arg_v (constant *);
+
+  static constant * dB_d (constant *);
+  static constant * dB_c (constant *);
+  static constant * dB_v (constant *);
+
+  static constant * sqrt_d (constant *);
+  static constant * sqrt_c (constant *);
+  static constant * sqrt_v (constant *);
+
+  static constant * exp_d (constant *);
+  static constant * exp_c (constant *);
+  static constant * exp_v (constant *);
+
+  static constant * ln_d (constant *);
+  static constant * ln_c (constant *);
+  static constant * ln_v (constant *);
+
+  static constant * log10_d (constant *);
+  static constant * log10_c (constant *);
+  static constant * log10_v (constant *);
+
 };
 
 // Type of application function.

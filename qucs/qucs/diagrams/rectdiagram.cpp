@@ -49,7 +49,8 @@ void RectDiagram::calcData(Graph *g)
 //  if(p == 0) return;
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
     *(p++) = int((cp->x-xlow)/(xup-xlow)*x2);
-    *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ylow)/(yup-ylow)*y2);
+    if(fabs(cp->yi) < 1e-250) *(p++) = int((cp->yr-ylow)/(yup-ylow)*y2);
+    else *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ylow)/(yup-ylow)*y2);
   }
 }
 
@@ -129,11 +130,14 @@ void RectDiagram::calcDiagram()
 
 
   zD = GridStep-fmod(ymax, GridStep);
-  if(zD/GridStep < 0.2)  yup = ymax+zD;   // expand grid to the right edge of diagram ?
+  if(fabs(zD/GridStep) <= 0.2)  yup = ymax+zD; // expand grid to the upper edge of diagram ?
 
-  zD = fmod(ymin, GridStep); // expand grid to the left edge of the diagram ?
-  if(zD/GridStep < 0.2) { ylow = ymin-zD;  zD = 0.0; }
-  else zD = GridStep-zD;
+  zD = fmod(ymin, GridStep); // expand grid to the lower edge of the diagram ?
+  GridNum = zD/GridStep;
+  if(GridNum > 0.2) zD = GridStep-zD;
+  else if(GridNum < -0.2) zD *= -1.0;
+       else { ylow = ymin-zD;  zD = 0.0; }
+//qDebug("zD: %g", zD);
 
   zDstep = GridStep/(yup-ylow)*double(y2);     // distance between grids in pixel
   GridNum  = ylow + zD;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.2 2004-02-13 20:31:45 ela Exp $
+ * $Id: vector.h,v 1.3 2004-04-18 18:37:16 margraf Exp $
  *
  */
 
@@ -37,7 +37,8 @@ class vector : public object
   ~vector ();
   void add (complex);
   void add (vector *);
-  complex get (int);
+  complex  get (int);
+  void set (const complex, int);
   int getSize (void);
   int checkSizes (vector &, vector &);
   int getRequested (void) { return requested; }
@@ -48,21 +49,46 @@ class vector : public object
   void setOrigin (char *);
   char * getOrigin (void);
 
+  // vector manipulations
+  friend vector *  real (vector &);  // the real part
+  friend vector *  imag (vector &);  // the imaginary part
+  friend vector *  conj (vector &);  // the complex conjugate
+  friend vector *  norm (vector &);  // the square of the magnitude
+  friend vector *  arg  (vector &);  // the angle in the plane
+  friend vector *  dB    (vector &);
+  friend vector *  sqrt  (vector &);
+  friend vector *  exp   (vector &);
+  friend vector *  ln    (vector &);
+  friend vector *  log10 (vector &);
+  friend vector *  modulo (vector &, const complex);
+  friend vector *  modulo (const complex, vector &);
+  friend vector *  modulo (vector &, vector &);
+  friend vector *  pow (vector &, const complex);
+  friend vector *  pow (const complex, vector &);
+  friend vector *  pow (vector &, vector &);
+
+  // overloaded math functions
+  friend vector *  abs  (vector &);
+
   // operator functions
   friend vector * operator + (vector &, vector &);
   friend vector * operator + (vector &, const complex);
   friend vector * operator - (vector &, vector &);
   friend vector * operator - (vector &, const complex);
+  friend vector * operator - (const complex, vector &);
   friend vector * operator * (vector &, vector &);
   friend vector * operator * (vector &, const complex);
   friend vector * operator / (vector &, vector &);
   friend vector * operator / (vector &, const complex);
+  friend vector * operator / (const complex, vector &);
 
   // comparisons
   //  friend int      operator == (const vector *, const vector *);
   //  friend int      operator != (const vector *, const vector *);
 
   // assignment operations
+  vector& operator - ();
+  vector& operator  = (const complex);
   vector& operator += (vector &);
   vector& operator += (const complex);
   vector& operator -= (vector &);
