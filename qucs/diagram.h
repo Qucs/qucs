@@ -28,13 +28,6 @@
   *@author Michael Margraf
   */
 
-struct Text {
-  Text(int _x, int _y, const QString& _s)
-       : x(_x), y(_y), s(_s) {};
-  int   x, y;
-  QString s;
-};
-
 
 
 class Diagram : public Element {

@@ -43,6 +43,7 @@ public:
   int     nx, ny, delta;  // position of the nodename label
 
   void    paint(QPainter *p);
+  void    rotate();
   QString save();
   bool    load(const QString& s);
   bool    isHorizontal();
