@@ -1,3 +1,14 @@
+2004-09-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Put some more Hammerstad equations
+	into extra functions because used in single as well as coupled
+	microstrip models.
+
+	* microstrip/mscoupled.cpp: Implemented quasi-static model by
+	Kirschning and Jansen.  Also implemented dispersion models for
+	dielectric constants.  Dispersion for characteristic impedances
+	still missing...
+
 2004-08-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Fixed a bug in Hammerstad model.

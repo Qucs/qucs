@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.13 2004-08-21 13:29:07 ela Exp $
+ * $Id: vector.cpp,v 1.14 2004-09-01 21:40:19 ela Exp $
  *
  */
 
@@ -418,6 +418,44 @@ vector& rtoz (vector & v, nr_double_t zref) {
   vector * result = new vector (v);
   for (int i = 0; i < v.getSize (); i++)
     result->set (rtoz (v.get (i), zref), i);
+  return *result;
+}
+
+// differentiates 'var' with respect to 'dep' exactly 'n' times
+vector& diff (vector & var, vector & dep, int n) {
+  int k, xi, yi, exchange = 0;
+  vector x, y;
+  // exchange dependent and independent variable if necessary
+  if (var.getSize () < dep.getSize ()) {
+    x = vector (var);
+    y = vector (dep);
+    exchange++;
+  }
+  else {
+    x = vector (dep);
+    y = vector (var);
+  }
+  assert (y.getSize () % x.getSize () == 0 && x.getSize () >= 2);
+  vector * result = new vector (y);
+  complex c;
+
+  for (k = 0; k < n; k++) {  // differentiate n times
+    for (yi = xi = 0; yi < y.getSize (); yi++, xi++) {
+      if (xi == x.getSize ()) xi = 0; // roll through independent vector
+      if (xi == 0) {
+	c = (y.get (yi + 1) - y.get (yi)) / (x.get (xi + 1) - x.get (xi));
+      } else if (xi == x.getSize () - 1) {
+	c = (y.get (yi) - y.get (yi - 1)) / (x.get (xi) - x.get (xi - 1));
+      }
+      else {
+	c =
+	  ((y.get (yi) - y.get (yi - 1)) / (x.get (xi) - x.get (xi - 1)) + 
+	   (y.get (yi + 1) - y.get (yi)) / (x.get (xi + 1) - x.get (xi))) / 2;
+      }
+      result->set (exchange ? 1 / c : c, yi);
+    }
+    y = *result;
+  }
   return *result;
 }
 

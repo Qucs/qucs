@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.27 2004-08-31 20:36:25 ela Exp $
+ * $Id: msline.cpp,v 1.28 2004-09-01 21:40:20 ela Exp $
  *
  */
 
@@ -167,15 +167,14 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
-    nr_double_t c, d;
-    e = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 * h / W);
-    c = 6 + (2 * M_PI - 6) * exp (- pow (30.666 * h / W, 0.7528));
-    d = Z0 / 2 / M_PI * log (c * h / W + sqrt (1 + sqr (2 * h / W)));
+    nr_double_t d;
+    Hammerstad_er (W / h, er, 1, 0.5, e);
+    Hammerstad_zl (W / h, d);
     z = d / sqrt (e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
-    nr_double_t a, b, du1, du, u, ur, u1, cr, c1, zr, z1;
+    nr_double_t a, b, du1, du, u, ur, u1, zr, z1;
 
     u = W / h; // normalized width
     t = t / h; // normalized thickness
@@ -192,14 +191,12 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     WEff = ur * h;
 
     // compute impedances for homogeneous medium
-    cr = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / ur, 0.7528));
-    zr = Z0 / 2 / M_PI * log (cr / ur + sqrt (1 + sqr (2 / ur)));
-    c1 = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / u1, 0.7528));
-    z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + sqr (2 / u1)));
+    Hammerstad_zl (ur, zr);
+    Hammerstad_zl (u1, z1);
     
     // compute effective dielectric constant
     Hammerstad_ab (ur, er, a, b);
-    e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
+    Hammerstad_er (ur, er, a, b, e);
 
     // compute final characteristic impedance and dielectric constant
     // including strip thickness effects
@@ -325,6 +322,23 @@ void msline::Hammerstad_ab (nr_double_t u, nr_double_t er, nr_double_t& a,
   a = 1 + log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) / 49 + 
     log (1 + cubic (u / 18.1)) / 18.7;
   b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
+}
+
+/* The function computes the effective dielectric constant of a single
+   microstrip.  The equation is used in single and coupled microstrip
+   calculations. */
+void msline::Hammerstad_er (nr_double_t u, nr_double_t er, nr_double_t a,
+			    nr_double_t b, nr_double_t& e) {
+  e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / u, -a * b);
+}
+
+/* This function computes the characteristic impedance of single
+   microstrip line based upon the given width-height ratio.  The
+   equation is used in single and coupled microstrip calculations as
+   well. */
+void msline::Hammerstad_zl (nr_double_t u, nr_double_t& zl) {
+  nr_double_t fu = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / u, 0.7528));
+  zl = Z0 / 2 / M_PI * log (fu / u + sqrt (1 + sqr (2 / u)));
 }
 
 /* Calculates dispersion effects for effective dielectric constant and

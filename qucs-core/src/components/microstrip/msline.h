@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.11 2004-08-22 15:38:28 ela Exp $
+ * $Id: msline.h,v 1.12 2004-09-01 21:40:20 ela Exp $
  *
  */
 
@@ -43,6 +43,9 @@ class msline : public circuit
 				 nr_double_t&, nr_double_t&);
   static void Hammerstad_ab (nr_double_t, nr_double_t,
 			     nr_double_t&, nr_double_t&);
+  static void Hammerstad_er (nr_double_t, nr_double_t, nr_double_t,
+			     nr_double_t, nr_double_t&);
+  static void Hammerstad_zl (nr_double_t, nr_double_t&);
   static void Getsinger_disp (nr_double_t, nr_double_t, nr_double_t,
 			      nr_double_t, nr_double_t,
 			      nr_double_t&, nr_double_t&);
