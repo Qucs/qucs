@@ -926,7 +926,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilschaltung</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
@@ -934,11 +934,11 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilschaltungstor</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Tornummer in der Teilschaltung</translation>
     </message>
     <message>
         <source>substrate definition</source>
