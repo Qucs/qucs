@@ -6816,8 +6816,8 @@ The effective dielectric constants are
 
 with
 \begin{align}
-F_{e}\left(u,g,\varepsilon_r\right) &= \left(1+\dfrac{10}{\mu\left(u,g\right)}\right)^{-a(u)\cdot b\left(\varepsilon_r\right)}\\
-F_{o}\left(u,g,\varepsilon_r\right) &= f_o\left(u,g,\varepsilon_r\right)\cdot \left(1+\dfrac{10}{\mu\left(u,g\right)}\right)^{-a(u)\cdot b\left(\varepsilon_r\right)}
+F_{e}\left(u,g,\varepsilon_r\right) &= \left(1+\dfrac{10}{\mu\left(u,g\right)}\right)^{-a(\mu)\cdot b\left(\varepsilon_r\right)}\\
+F_{o}\left(u,g,\varepsilon_r\right) &= f_o\left(u,g,\varepsilon_r\right)\cdot \left(1+\dfrac{10}{u}\right)^{-a\left(u\right)\cdot b\left(\varepsilon_r\right)}
 \end{align}
 
 whence $a(u)$ and $b\left(\varepsilon_r\right)$ denote
@@ -6828,7 +6828,7 @@ line.  The modifying equations for the even mode are as follows
 \varphi(u) &= 0.8645\cdot u^{0.172}\\
 \Psi(g) &= 1 + \dfrac{g}{1.45} + \dfrac{g^{2.09}}{3.95}\\
 \alpha(g) &= 0.5\cdot e^{-g}\\
-m(g) &= 0.2175+\left(4.113+\left(20.36/g\right)^6\right)^{-0.251} +\dfrac{1}{123}\cdot\ln{\left(\dfrac{g^{10}}{1+\left(g/13.8\right)^{10}}\right)}
+m(g) &= 0.2175+\left(4.113+\left(20.36/g\right)^6\right)^{-0.251} +\dfrac{1}{323}\cdot\ln{\left(\dfrac{g^{10}}{1+\left(g/13.8\right)^{10}}\right)}
 \end{align}
 
 The modifying equations for the odd mode are as follows
@@ -6845,8 +6845,8 @@ Furthermore
 f_o\left(u,g,\varepsilon_r\right) &= f_{o1}\left(g,\varepsilon_r\right)\cdot \exp{\left(p(g)\cdot \ln{u} + q(g)\cdot \sin{\left(\pi\cdot\dfrac{\ln{u}}{\ln{10}}\right)}\right)}\\
 p(g) &= \dfrac{\exp{\left(-0.745\cdot g^{0.295}\right)}}{\cosh{\left(g^{0.68}\right)}}\\
 q(g) &= \exp{\left(-1.366-g\right)}\\
-f_{o1}\left(g,\varepsilon_r\right) &= 1 - \exp{\left(-0.179\cdot g^{0.15} - \ln{\left(\dfrac{0.328\cdot g^{r\left(g,\varepsilon_r\right)}}{\ln{\left(e + \left(g/7\right)^{2.8}\right)}}\right)}\right)}\\
-r\left(g,\varepsilon_r\right) &= 1+0.15\cdot\left(1 - \dfrac{\exp{\left(1+\left(\varepsilon_r - 1\right)^2/8.2\right)}}{1+g^{-6}}\right)\\
+f_{o1}\left(g,\varepsilon_r\right) &= 1 - \exp{\left(-0.179\cdot g^{0.15} - \dfrac{0.328\cdot g^{r\left(g,\varepsilon_r\right)}}{\ln{\left(e + \left(g/7\right)^{2.8}\right)}}\right)}\\
+r\left(g,\varepsilon_r\right) &= 1+0.15\cdot\left(1 - \dfrac{\exp{\left(1-\left(\varepsilon_r - 1\right)^2/8.2\right)}}{1+g^{-6}}\right)\\
 Z_{L1}(u) &= \dfrac{Z_{F0}}{u + 1.98\cdot u^{0.172}}
 \end{align}
 

@@ -1,3 +1,7 @@
+2004-08-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Fixed a bug in Hammerstad model.
+
 2004-08-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/mscorner.cpp, microstrip/msmbend.cpp: Fixed
