@@ -63,6 +63,9 @@ dnl Create path info.
 BITMAP_PATH="$prefix/share/"
 AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"], [Where the data files go.])
 unset BITMAP_PATH
+BIN_PATH="$prefix/bin/"
+AC_DEFINE_UNQUOTED([BINARYDIR], ["$BIN_PATH"], [Where the binary files go.])
+unset BIN_PATH
 
 dnl add here all your Makefiles. This are created by configure
 AC_CONFIG_FILES([ Makefile ])
