@@ -60,6 +60,7 @@
 #define  COMBO_Diagrams  7
 
 QDir QucsWorkDir;
+QDir QucsHomeDir;
 
 QucsApp::QucsApp()
 {
@@ -68,6 +69,7 @@ QucsApp::QucsApp()
   QucsFileFilter = tr("Schematic (*.sch);;Data Display (*.dpl);;")+
 		   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
   QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
+  QucsHomeDir.setPath(QDir::homeDirPath()+"/.qucs");
 
   move  (QucsSettings.x,  QucsSettings.y);
   resize(QucsSettings.dx, QucsSettings.dy);
@@ -922,7 +924,7 @@ void QucsApp::slotSimulate()
   sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n\n");
 
   sim->ProgText->insert(tr("creating netlist ...."));
-  QFile NetlistFile(QucsWorkDir.filePath("netlist.txt"));
+  QFile NetlistFile(QucsHomeDir.filePath("netlist.txt"));
   if(!view->Docs.current()->createNetlist(&NetlistFile)) {
     sim->ErrText->insert(tr("ERROR: Cannot create netlist file!\nAborted."));
     sim->errorSimEnded();
@@ -931,7 +933,7 @@ void QucsApp::slotSimulate()
   sim->ProgText->insert(tr("done.\n"));
 
   QStringList com;
-  com << BINARYDIR "qucsator" << "-i" << QucsWorkDir.filePath("netlist.txt");
+  com << BINARYDIR "qucsator" << "-i" << QucsHomeDir.filePath("netlist.txt");
   com << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
   if(!sim->startProcess(com)) {
     sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
@@ -976,8 +978,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     sim->ProgText->insert(tr("Aborted.\n"));
   }
 
-
-  QFile file(QucsWorkDir.filePath("log.txt"));    // save simulator messages
+  QFile file(QucsHomeDir.filePath("log.txt"));    // save simulator messages
   if(file.open(IO_WriteOnly)) {
     int z;
     QTextStream stream(&file);
@@ -997,7 +998,7 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  QString com = QucsSettings.Editor + " " + QucsWorkDir.filePath("log.txt");
+  QString com = QucsSettings.Editor+" "+QucsHomeDir.filePath("log.txt");
   QProcess QucsEditor(QStringList::split(" ", com));
   if(!QucsEditor.start())
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
@@ -1007,7 +1008,7 @@ void QucsApp::slotShowLastMsg()
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  QString com = QucsSettings.Editor + " " + QucsWorkDir.filePath("netlist.txt");
+  QString com = QucsSettings.Editor+" "+QucsHomeDir.filePath("netlist.txt");
   QProcess QucsEditor(QStringList::split(" ", com));
   if(!QucsEditor.start())
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
@@ -1077,7 +1078,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   if(item->parent() == 0) return;  // no component, but item "schematic", ...
 
   
-  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
+  QucsWorkDir.setPath(QucsHomeDir.path());
   if(!QucsWorkDir.cd(ProjName+"_prj/")) {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+
@@ -1099,7 +1100,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 // Is called when the open project menu is called.
 void QucsApp::slotMenuOpenProject()
 {
-  QFileDialog *d = new QFileDialog(QDir::homeDirPath()+"/.qucs");
+  QFileDialog *d = new QFileDialog(QucsHomeDir.path());
   d->setCaption(tr("Choose Project Directory for Opening"));
   d->setShowHiddenFiles(true);
   d->setMode(QFileDialog::DirectoryOnly);
@@ -1119,8 +1120,7 @@ void QucsApp::slotMenuOpenProject()
 // Is called when the open project button is pressed.
 void QucsApp::slotOpenProject(QListBoxItem *item)
 {
-  OpenProject(QDir::homeDirPath()+"/.qucs/"+item->text()+"_prj",
-	      item->text());
+  OpenProject(QucsHomeDir.filePath(item->text()+"_prj"), item->text());
 }
 
 // ########################################################################
@@ -1252,7 +1252,7 @@ void QucsApp::slotProjNewButt()
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
-  QDir projDir(QDir::homeDirPath()+"/.qucs");
+  QDir projDir(QucsHomeDir.path());
   if(projDir.mkdir(d->ProjName->text()+"_prj")) {
     Projects->insertItem(d->ProjName->text(),0);  // at first position
     if(d->OpenProj->isChecked()) slotOpenProject(Projects->firstItem());
@@ -1554,7 +1554,7 @@ bool QucsApp::DeleteProject(const QString& Path, const QString& Name)
 // Is called, when "Delete Project"-menu is pressed.
 void QucsApp::slotMenuDelProject()
 {
-  QFileDialog *d = new QFileDialog(QDir::homeDirPath()+"/.qucs");
+  QFileDialog *d = new QFileDialog(QucsHomeDir.path());
   d->setCaption(tr("Choose Project Directory for Deleting"));
   d->setShowHiddenFiles(true);
   d->setMode(QFileDialog::DirectoryOnly);
@@ -1582,7 +1582,7 @@ void QucsApp::slotProjDelButt()
     return;
   }
 
-  if(!DeleteProject(QDir::homeDirPath()+"/.qucs/"+item->text()+"_prj",
+  if(!DeleteProject(QucsHomeDir.filePath(item->text()+"_prj"),
 	item->text()))  return;
   Projects->removeItem(Projects->currentItem());  // remove from project list
 }

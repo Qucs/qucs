@@ -427,23 +427,23 @@
     </message>
     <message>
         <source>dense 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 2</translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 3</translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 4</translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 5</translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Dichte 6</translation>
     </message>
 </context>
 <context>
@@ -1676,7 +1676,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>sweep type (lin,log)</source>
-        <translation>Durchlauftype (lin,log)</translation>
+        <translation>Durchlauftyp (lin,log)</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
@@ -3226,7 +3226,7 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation>Dies löscht die Datei unwiederruflich! Weiter ?</translation>
+        <translation>Dies löscht die Datei unwiderruflich! Fortfahren ?</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
@@ -3386,7 +3386,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies löscht alle Projektdateien unwiderruflich ! Fortfahren ?</translation>
     </message>
 </context>
 <context>
