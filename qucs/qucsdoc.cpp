@@ -48,6 +48,7 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
   Comps.setAutoDelete(true);
   Wires.setAutoDelete(true);
   Nodes.setAutoDelete(true);
+  Diags.setAutoDelete(true);
 }
 
 QucsDoc::~QucsDoc()
@@ -92,6 +93,9 @@ void QucsDoc::paint(QPainter *p)
 
   for(Node *ptr3 = Nodes.first(); ptr3 != 0; ptr3 = Nodes.next())
     ptr3->paint(p);   // paint all nodes
+
+  for(Diagram *ptr4 = Diags.first(); ptr4 != 0; ptr4 = Diags.next())
+    ptr4->paint(p);   // paint all diagrams
 }
 
 // ---------------------------------------------------
@@ -154,6 +158,7 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
 // ---------------------------------------------------
 void QucsDoc::insertComponent(Component *c)
 {
+  Component *ptr2;
   Node *p;
   // connect every node of component
   for(Port *ptr = c->Ports.first(); ptr != 0; ptr = c->Ports.next()) {
@@ -166,13 +171,24 @@ void QucsDoc::insertComponent(Component *c)
   int  max=1, len = c->Name.length(), z;
   // determines the name by looking for names with the same prefix and increment the number
   if(!c->Name.isEmpty()) {
-    for(Component *ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
+    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
       if(ptr2->Name.left(len) == c->Name) {
         s = ptr2->Name.right(ptr2->Name.length()-len);
         z = s.toInt(&ok);
         if(ok) if(z >= max) max = z + 1;
       }
     c->Name += QString::number(max);    // create component name with new number
+  }
+
+  if(c->Props.first() != 0)
+    if(c->Props.first()->Name == "Num") { // a port has to be numbered
+    max=1;
+    // look for existing ports and count the numbers
+    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
+      if(ptr2->Props.first() != 0)
+        if(ptr2->Props.first()->Name == "Num") max++;
+
+    c->Props.first()->Value = QString::number(max); // create port number
   }
   
   Comps.append(c);
@@ -181,43 +197,58 @@ void QucsDoc::insertComponent(Component *c)
 
 // ---------------------------------------------------
 // Inserts a port into the schematic and connects it to another node if the
-// coordinates are identical. The node is returned.
+// coordinates are identical. The node is returned. If 0 is returned, no new
+// wire can be created.
 Node* QucsDoc::insertWireNode1(Wire *e)
 {
   Node *ptr1;
+  Wire *nw;
   // check if new node lies upon existing node
   for(ptr1 = Nodes.first(); ptr1 != 0; ptr1 = Nodes.next()) {  // check every node
-    if((ptr1->x == e->x1) && (ptr1->y == e->y1)) {
-      ptr1->Connections.append(e);
-      break;
-    }
+    if((ptr1->x == e->x1) && (ptr1->y == e->y1)) break;
   }
-  if(ptr1 != 0) return ptr1;   // return, if node is not new
+
+  if(ptr1 != 0) {   // is node new ?
+/*    for(Element *pe = ptr1->Connections.first(); pe != 0; pe = ptr1->Connections.next())
+      if(pe->isWire) {
+        nw = (Wire*)pe;
+        if(e->isHorizontal() == nw->isHorizontal())
+          if(nw->Port1 == ptr1)
+            if((nw->x2 <= e->x2) && (nw->y2 <= e->y2)) {
+              e->x1 = nw->x2;   // new wire lengthens an existing one
+              e->y1 = nw->y2;
+              ptr1 = nw->Port2;
+            }
+            else return 0;   // new wire lies within an existing wire
+      }*/
+    
+    ptr1->Connections.append(e);
+    return ptr1;   // return, if node is not new
+  }
 
   // check if the new node lies upon an existing wire
-  Wire *nw;
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {
     if(ptr2->x1 == e->x1) {
       if((ptr2->y1 > e->y1) || (ptr2->y2 < e->y1)) continue;
 
-      if(ptr2->isHorizontal() == e->isHorizontal())
+/*      if(ptr2->isHorizontal() == e->isHorizontal())
         if(ptr2->y2 >= e->y2) return 0;   // new wire lies within an existing wire
-        else {
+        else {  // one part of the wire lies within an existing wire the other part not
           e->y1 = ptr2->y2;
           ptr2->Port2->Connections.append(e);
           return ptr2->Port2;
-        }
+        }*/
     }
     else if(ptr2->y1 == e->y1) {
       if((ptr2->x1 > e->x1) || (ptr2->x2 < e->x1)) continue;
 
-      if(ptr2->isHorizontal() == e->isHorizontal())
+/*      if(ptr2->isHorizontal() == e->isHorizontal())
         if(ptr2->x2 >= e->x2) return 0;   // new wire lies within an existing wire
-        else {
+        else {  // one part of the wire lies within an existing wire the other part not
           e->x1 = ptr2->x2;
           ptr2->Port2->Connections.append(e);
           return ptr2->Port2;
-        }
+        }*/
     }
     else continue;
 
@@ -253,35 +284,48 @@ Node* QucsDoc::insertWireNode1(Wire *e)
 Node* QucsDoc::insertWireNode2(Wire *e)
 {
   Node *ptr1;
+  Wire *nw;
   // check if new node lies upon existing node
-  for(ptr1 = Nodes.first(); ptr1 != 0; ptr1 = Nodes.next()) {  // check every node
-    if((ptr1->x == e->x2) && (ptr1->y == e->y2)) {
-      ptr1->Connections.append(e);
-      break;
-    }
+  for(ptr1 = Nodes.first(); ptr1 != 0; ptr1 = Nodes.next())  // check every node
+    if((ptr1->x == e->x2) && (ptr1->y == e->y2)) break;
+
+  if(ptr1 != 0) {   // is node new ?
+/*    for(Element *pe = ptr1->Connections.first(); pe != 0; pe = ptr1->Connections.next())
+      if(pe->isWire) {
+        nw = (Wire*)pe;
+        if(e->isHorizontal() == nw->isHorizontal())
+          if(nw->Port2 == ptr1)
+            if((nw->x1 >= e->x1) && (nw->y1 >= e->y1)) {
+              e->x2 = nw->x1;   // new wire lengthens an existing one
+              e->y2 = nw->y1;
+              ptr1 = nw->Port1;
+            }
+            else return 0;   // new wire lies within an existing wire
+      }*/
+
+    ptr1->Connections.append(e);
+    return ptr1;   // return, if node is not new
   }
-  if(ptr1 != 0) return ptr1;   // return, if node is not new
 
   // check if the new node lies upon an existing wire
-  Wire *nw;
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {
     if(ptr2->x1 == e->x2) {
       if((ptr2->y1 > e->y2) || (ptr2->y2 < e->y2)) continue;
 
-      if(ptr2->isHorizontal() == e->isHorizontal()) {
-        e->y2 = ptr2->y1;
+/*      if(ptr2->isHorizontal() == e->isHorizontal()) {
+        e->y2 = ptr2->y1;  // one part of the wire lies within an existing wire the other part not
         ptr2->Port1->Connections.append(e);
         return ptr2->Port1;
-      }
+      }*/
     }
     else if(ptr2->y1 == e->y2) {
       if((ptr2->x1 > e->x2) || (ptr2->x2 < e->x2)) continue;
 
-      if(ptr2->isHorizontal() == e->isHorizontal()) {
-        e->x2 = ptr2->x1;
+/*      if(ptr2->isHorizontal() == e->isHorizontal()) {
+        e->x2 = ptr2->x1;  // one part of the wire lies within an existing wire the other part not
         ptr2->Port1->Connections.append(e);
         return ptr2->Port1;
-      }
+      }*/
     }
     else continue;
 
@@ -372,13 +416,33 @@ int QucsDoc::insertWire(Wire *w)
   if(con > 255) con = ((con >> 1) & 1) | ((con << 1) & 2); // change node 1 and 2
 
 
-  Wires.append(w);
+  Wires.append(w);    // add wire to the schematic
+  
   n = Nodes.first();
   // check if the new line covers existing nodes
   for(e = Wires.current(); e != 0; e = Wires.next())
     for(ptr = n; ptr != 0; ptr = Nodes.next()) {  // check every node
       if(ptr->x == e->x1) {
-        if((ptr->y > e->y1) && (ptr->y < e->y2)) {
+        if(ptr->y > e->y1) if(ptr->y < e->y2) {
+
+/*          for(Element *pe = ptr->Connections.first(); pe != 0; pe = ptr->Connections.next())
+            if(pe->isWire) {
+              nw = (Wire*)pe;
+              if(e->isHorizontal() == nw->isHorizontal()) {   // delete the wire (lies within the new)
+                if(nw->Port1->Connections.count() == 1)
+                  Nodes.removeRef(nw->Port1);     // delete node 1 if open
+                else nw->Port1->Connections.removeRef(nw);   // remove connection
+
+                if(nw->Port2->Connections.count() == 1)
+                  Nodes.removeRef(nw->Port2);     // delete node 2 if open
+                else nw->Port2->Connections.removeRef(nw);   // remove connection
+
+                Wires.removeRef(nw);    // delete wire
+                Wires.findRef(e);       // set current wire
+              }
+            }*/
+
+          // split wire into two wires
           nw = new Wire(e->x1, e->y1, ptr->x, ptr->y, e->Port1, ptr);
           ptr->Connections.append(nw);
           Wires.append(nw);
@@ -393,7 +457,26 @@ int QucsDoc::insertWire(Wire *w)
         }
       }
       else if(ptr->y == e->y1)
-        if((ptr->x > e->x1) && (ptr->x < e->x2)) {
+        if(ptr->x > e->x1) if(ptr->x < e->x2) {
+
+/*          for(Element *pe = ptr->Connections.first(); pe != 0; pe = ptr->Connections.next())
+            if(pe->isWire) {
+              nw = (Wire*)pe;
+              if(e->isHorizontal() == nw->isHorizontal()) {   // delete the wire (lies within the new)
+                if(nw->Port1->Connections.count() == 1)
+                  Nodes.removeRef(nw->Port1);     // delete node 1 if open
+                else nw->Port1->Connections.removeRef(nw);   // remove connection
+
+                if(nw->Port2->Connections.count() == 1)
+                  Nodes.removeRef(nw->Port2);     // delete node 2 if open
+                else nw->Port2->Connections.removeRef(nw);   // remove connection
+
+                Wires.removeRef(nw);    // delete wire
+                Wires.findRef(e);       // set current wire
+              }
+            }*/
+
+          // split wire into two wires
           nw = new Wire(e->x1, e->y1, ptr->x, ptr->y, e->Port1, ptr);
           ptr->Connections.append(nw);
           Wires.append(nw);
@@ -672,27 +755,26 @@ bool QucsDoc::save()
   
   QTextStream stream(&file);
 
-  stream << "<Content=Qucs Schematic>\n";
-  stream << "<Version=" << VERSION << ">\n";
+  stream << "<Qucs Schematic " << VERSION << ">\n";
 
   stream << "<Properties>\n";
   stream << "   <GridX=" << GridX << ">\n";
   stream << "   <GridY=" << GridY << ">\n";
   stream << "   <GridOn=" << GridOn << ">\n";
-  stream << "<\\Properties>\n";
+  stream << "</Properties>\n";
     
   stream << "<Components>\n";
   for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // save all components
     stream << "   " << ptr1->save() << "\n";
-  stream << "<\\Components>\n";
+  stream << "</Components>\n";
     
   stream << "<Wires>\n";
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next())  // save all wires
     stream << "   " << ptr2->save() << "\n";
-  stream << "<\\Wires>\n";
+  stream << "</Wires>\n";
     
   stream << "<Diagrams>\n";
-  stream << "<\\Diagrams>\n";
+  stream << "</Diagrams>\n";
 
   file.close();
   setChanged(false);
@@ -705,7 +787,7 @@ bool QucsDoc::loadProperties(QTextStream *stream)
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "<\\Properties>") return true;
+    if(Line == "</Properties>") return true;
   }
 
   QMessageBox::critical(0, "Error", "File Format Error:\n'Property' field is not closed!");
@@ -718,7 +800,7 @@ bool QucsDoc::loadComponents(QTextStream *stream)
   Component *c;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "<\\Components>") return true;
+    if(Line == "</Components>") return true;
 
     Line = Line.stripWhiteSpace();
     cstr = Line.section(' ',0,0);    // component type
@@ -730,7 +812,33 @@ bool QucsDoc::loadComponents(QTextStream *stream)
     else if(cstr == "<Tr") c = new Transformer();
     else if(cstr == "<sTr") c = new symTrafo();
     else if(cstr == "<V") c = new Volt_dc();
+    else if(cstr == "<Vac") c = new Volt_ac();
+    else if(cstr == "<Pac") c = new Source_ac();
     else if(cstr == "<I") c = new Ampere_dc();
+    else if(cstr == "<VCCS") c = new VCCS();
+    else if(cstr == "<CCCS") c = new CCCS();
+    else if(cstr == "<VCVS") c = new VCVS();
+    else if(cstr == "<CCVS") c = new CCVS();
+    else if(cstr == "<DCblock") c = new dcBlock();
+    else if(cstr == "<DCfeed") c = new dcFeed();
+    else if(cstr == "<BiasT") c = new BiasT();
+    else if(cstr == "<Attenuator") c = new Attenuator();
+    else if(cstr == "<Isolator") c = new Isolator();
+    else if(cstr == "<Circulator") c = new Circulator();
+    else if(cstr == "<TLIN") c = new TLine();
+    else if(cstr == "<SUBST") c = new Substrate();
+    else if(cstr == "<MLIN") c = new MSline();
+    else if(cstr == "<MSTEP") c = new MSstep();
+    else if(cstr == "<MCORN") c = new MScorner();
+    else if(cstr == "<MTEE") c = new MStee();
+    else if(cstr == "<MCROSS") c = new MScross();
+    else if(cstr == "<Diode") c = new Diode();
+    else if(cstr == "<.DC") c = new DC_Sim();
+    else if(cstr == "<.AC") c = new AC_Sim();
+    else if(cstr == "<.TR") c = new TR_Sim();
+    else if(cstr == "<.SP") c = new SP_Sim();
+    else if(cstr == "<.HB") c = new HB_Sim();
+    else if(cstr == "<.SW") c = new Param_Sweep();
     else {
       QMessageBox::critical(0, "Error", "File Format Error:\nUnknown component!");
       return false;
@@ -755,7 +863,7 @@ bool QucsDoc::loadWires(QTextStream *stream)
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "<\\Wires>") return true;
+    if(Line == "</Wires>") return true;
 
     Line = Line.stripWhiteSpace();
     w = new Wire();
@@ -777,7 +885,7 @@ bool QucsDoc::loadDiagrams(QTextStream *stream)
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
-    if(Line == "<\\Diagrams>") return true;
+    if(Line == "</Diagrams>") return true;
   }
 
   QMessageBox::critical(0, "Error", "File Format Error:\n'Diagram' field is not closed!");
@@ -802,22 +910,17 @@ bool QucsDoc::load()
     return false;
   }
   Line = stream.readLine();
-  if(Line != "<Content=Qucs Schematic>") {  // wrong file type ?
+  if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
     QMessageBox::critical(0, "Error", "Wrong document type!");
     return false;
   }
 
-  if(stream.atEnd()) {
+  QString s = VERSION;
+  Line = Line.mid(16, Line.length()-17);
+  if(Line != s) {  // wrong version number ?
     file.close();
-    QMessageBox::critical(0, "Error", "Wrong document type!");
-    return false;
-  }
-  QString s = "<Version=" VERSION ">";
-  Line = stream.readLine();
-  if(Line != s) {  // wrong file type
-    file.close();
-    QMessageBox::critical(0, "Error", "Wrong document version!");
+    QMessageBox::critical(0, "Error", "Wrong document version: "+Line);
     return false;
   }
 
@@ -851,7 +954,7 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
   if(!NetlistFile->open(IO_WriteOnly)) return false;
 
   QTextStream stream(NetlistFile);
-  stream << "% Qucs  " << DocName << "\n";    // first line docu
+  stream << "# Qucs " << VERSION << "  " << DocName << "\n";    // first line docu
 
 
   // ................................................
@@ -869,7 +972,7 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
 
   // give the ground nodes the name "0"
   for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())
-    if(pc->Sign == "GND") pc->Ports.first()->Connection->Name = "0";
+    if(pc->Sign == "GND") pc->Ports.first()->Connection->Name = "gnd";
 
     
   QPtrList<Node> Cons;

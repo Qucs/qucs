@@ -1,6 +1,0 @@
-2003-10-15  Stefan Jahn  <stefan@lkcc.org>
-
-	* configure.in: Deleted empty rule for output Makefile.
-
-	* stamp-h.in: Removed from repository.
-
