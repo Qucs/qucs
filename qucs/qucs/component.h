@@ -101,6 +101,13 @@ public:
 // ##########                                                                ##########
 // ####################################################################################
 
+class SubCirPort : public Component  {
+public:
+	SubCirPort();
+	virtual ~SubCirPort();
+  virtual SubCirPort* newOne();
+};
+
 class Resistor : public Component  {
 public:
 	Resistor();

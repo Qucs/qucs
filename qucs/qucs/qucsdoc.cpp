@@ -88,7 +88,7 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
   
   Bar = b;
   Bar->addTab(Tab);  // create tab in TabBar
-//  Bar->setCurrentTab(Tab);     // make it the current  ===>  CRASHES !!!???!!!
+//  Bar->setCurrentTab(Tab);     // make it the current  ===>  Qt 3.1 CRASHES !!!???!!!
   Bar->repaint();
 
   DocChanged = false;
@@ -251,13 +251,31 @@ void QucsDoc::insertComponent(Component *c)
     c->Name += QString::number(max);    // create component name with new number
   }
 
-  if(c->Props.first() != 0)
+/*  if(c->Props.first() != 0)
     if(c->Props.first()->Name == "Num") { // a port has to be numbered
     max=1;
     // look for existing ports and count the numbers
     for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
       if(ptr2->Props.first() != 0)
         if(ptr2->Props.first()->Name == "Num") max++;
+
+    c->Props.first()->Value = QString::number(max); // create port number
+  }*/
+
+  if(c->Sign == "Pac") { // power sources have to be numbered
+    max=1;
+    // look for existing ports and count the numbers
+    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
+      if(ptr2->Sign == "Pac") max++;
+
+    c->Props.first()->Value = QString::number(max); // create port number
+  }
+  else
+  if(c->Sign == "Port") { // subcircuit ports have to be numbered
+    max=1;
+    // look for existing ports and count the numbers
+    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
+      if(ptr2->Sign == "Port") max++;
 
     c->Props.first()->Value = QString::number(max); // create port number
   }
@@ -643,8 +661,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 }
 
 // ---------------------------------------------------
-// Selects components that contains the coordinates x/y.
-// Returns true, if at least one component has been selected.
+// Deselects all elements except 'e'.
 void QucsDoc::deselectElements(Element *e)
 {
   for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // test all components
@@ -825,8 +842,9 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 
 // ---------------------------------------------------
 // Selects components that lie within the rectangle x1/y1, x2/y2.
-void QucsDoc::selectComponents(int x1, int y1, int x2, int y2, bool flag)
+int QucsDoc::selectComponents(int x1, int y1, int x2, int y2, bool flag)
 {
+  int  z=0;   // counts selected elements
   int  cx1, cy1, cx2, cy2;
   if(x1 > x2) { cx1 = x1; x1  = x2; x2  = cx1; }
   if(y1 > y2) { cy1 = y1; y1  = y2; y2  = cy1; }
@@ -835,34 +853,52 @@ void QucsDoc::selectComponents(int x1, int y1, int x2, int y2, bool flag)
   for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
     ptr1->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      ptr1->isSelected = true;
+      ptr1->isSelected = true;  z++;
       continue;
     }
-    ptr1->isSelected &= flag;
+    if(ptr1->isSelected &= flag) z++;
   }
 
   
   for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next()) {    // test all wires
     if(ptr2->x1 >= x1) if(ptr2->x2 <= x2) if(ptr2->y1 >= y1) if(ptr2->y2 <= y2) {
-      ptr2->isSelected = true;
+      ptr2->isSelected = true;  z++;
       continue;
     }
-    ptr2->isSelected &= flag;
+    if(ptr2->isSelected &= flag) z++;
   }
 
 
   for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next()) {    // test all diagrams
     ptr3->Bounding(cx1, cy1, cx2, cy2);
     if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2) {
-      ptr3->isSelected = true;
+      ptr3->isSelected = true;  z++;
       continue;
     }
-    ptr3->isSelected &= flag;
+    if(ptr3->isSelected &= flag) z++;
+  }
+
+  return z;
+}
+
+// ---------------------------------------------------
+// Activates/deactivates components that lie within the rectangle x1/y1, x2/y2.
+void QucsDoc::activateComps(int x1, int y1, int x2, int y2)
+{
+  int  cx1, cy1, cx2, cy2;
+  if(x1 > x2) { cx1 = x1; x1  = x2; x2  = cx1; }
+  if(y1 > y2) { cy1 = y1; y1  = y2; y2  = cy1; }
+
+  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
+    ptr1->Bounding(cx1, cy1, cx2, cy2);
+    if(cx1 >= x1) if(cx2 <= x2) if(cy1 >= y1) if(cy2 <= y2)
+      ptr1->isActive ^= 1;    // change "active status"
   }
 }
 
 // ---------------------------------------------------
-void QucsDoc::activateComponent(int x, int y)
+// Activate/deactivate component, if x/y lies within its boundings.
+bool QucsDoc::activateComponent(int x, int y)
 {
   int  x1, y1, x2, y2;
   for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next()) {    // test all components
@@ -870,8 +906,26 @@ void QucsDoc::activateComponent(int x, int y)
     if(x >= x1) if(x <= x2) if(y >= y1) if(y <= y2) {
       ptr1->isActive ^= 1;    // change "active status"
       setChanged(true);
+      return true;
     }
   }
+  return false;
+}
+
+// ---------------------------------------------------
+// Activates/deactivates all selected elements.
+bool QucsDoc::activateComponents()
+{
+  bool sel = false;
+
+  for(Component *pc = Comps.first(); pc != 0; pc = Comps.next())    // all selected component
+    if(pc->isSelected) {
+      pc->isActive ^= 1;    // change "active status"
+      sel = true;
+    }
+
+  setChanged(sel);
+  return sel;
 }
 
 // ---------------------------------------------------
@@ -1058,24 +1112,30 @@ void QucsDoc::reloadGraphs()
 // ---------------------------------------------------
 QString QucsDoc::copySelected(bool cut)
 {
+  int z=0;  // counts selected elements
+  Component *pc;
+  Wire *pw;
+  Diagram *pd;
+  
   QString s("<Qucs Schematic " VERSION ">\n");
 
+  // Build element document.
   s += "<Components>\n";
-  for(Component *ptr1 = Comps.first(); ptr1 != 0; ptr1 = Comps.next())  // save all components
-    if(ptr1->isSelected)
-      s += "   "+ptr1->save()+"\n";
+  for(pc = Comps.first(); pc != 0; pc = Comps.next())
+    if(pc->isSelected) {
+      s += "   "+pc->save()+"\n";  z++; }
   s += "</Components>\n";
 
   s += "<Wires>\n";
-  for(Wire *ptr2 = Wires.first(); ptr2 != 0; ptr2 = Wires.next())  // save all wires
-    if(ptr2->isSelected)
-      s += "   "+ptr2->save()+"\n";
+  for(pw = Wires.first(); pw != 0; pw = Wires.next())
+    if(pw->isSelected) {
+      s += "   "+pw->save()+"\n";  z++; }
   s += "</Wires>\n";
 
   s += "<Diagrams>\n";
-  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())  // save all diagrams
-    if(ptr3->isSelected)
-      s += ptr3->save()+"\n";
+  for(pd = Diags.first(); pd != 0; pd = Diags.next())
+    if(pd->isSelected) {
+      s += pd->save()+"\n";  z++; }
   s += "</Diagrams>\n";
 
   s += "<Paintings>\n";
@@ -1083,19 +1143,23 @@ QString QucsDoc::copySelected(bool cut)
 //    stream << ptr3->save() << "\n";
   s += "</Paintings>\n";
 
+  if(z == 0) return "";   // return empty if no selection
+
   if(cut) deleteElements();   // delete selected elements if wanted
   return s;
 }
 
 // ---------------------------------------------------
 // Paste from clipboard.
-bool QucsDoc::paste(QTextStream *stream)
+bool QucsDoc::paste(QTextStream *stream, QPtrList<Element> *pe)
 {
   QString Line;
 
+  Cache = pe;
+  
   Line = stream->readLine();
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
-    QMessageBox::critical(0, "Error", "Clipboard content is not a Qucs schematic!");
+//    QMessageBox::critical(0, "Error", "Clipboard content is not a Qucs schematic!");
     return false;
   }
 
@@ -1111,11 +1175,11 @@ bool QucsDoc::paste(QTextStream *stream)
     Line = stream->readLine();
     if(Line == "<Components>") { if(!loadComponents(stream, false)) return false; }
     else
-    if(Line == "<Wires>") { if(!loadWires(stream)) return false; }
+    if(Line == "<Wires>") { if(!loadWires(stream, false)) return false; }
     else
-    if(Line == "<Diagrams>") { if(!loadDiagrams(stream)) return false; }
+    if(Line == "<Diagrams>") { if(!loadDiagrams(stream, false)) return false; }
     else
-    if(Line == "<Paintings>") { if(!loadPaintings(stream)) return false; }
+    if(Line == "<Paintings>") { if(!loadPaintings(stream, false)) return false; }
     else {
       QMessageBox::critical(0, "Error", "Clipboard Format Error:\nUnknown field!");
       return false;
@@ -1214,8 +1278,7 @@ bool QucsDoc::loadProperties(QTextStream *stream)
   return false;
 }
 
-// if 'raw' is true, the component name is kept
-bool QucsDoc::loadComponents(QTextStream *stream, bool raw)
+bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
 {
   QString Line, cstr;
   Component *c;
@@ -1240,6 +1303,7 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool raw)
     else if(cstr == "<CCCS") c = new CCCS();
     else if(cstr == "<VCVS") c = new VCVS();
     else if(cstr == "<CCVS") c = new CCVS();
+    else if(cstr == "<Port") c = new SubCirPort();
     else if(cstr == "<DCblock") c = new dcBlock();
     else if(cstr == "<DCfeed") c = new dcFeed();
     else if(cstr == "<BiasT") c = new BiasT();
@@ -1264,29 +1328,27 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool raw)
       QMessageBox::critical(0, "Error", "Format Error:\nUnknown component!");
       return false;
     }
-
     if(!c->load(Line)) {
       QMessageBox::critical(0, "Error", "Format Error:\nWrong 'component' line format!");
       delete c;
       return false;
     }
-    Line = c->Name;
-    if(raw) insertRawComponent(c);
+
+    if(insert) insertRawComponent(c);
     else {
       int z;
       for(z=c->Name.length()-1; z>=0; z--)  // cut off number of component name
         if(!c->Name.at(z).isDigit()) break;
       c->Name = c->Name.left(z+1);
-      insertComponent(c);
+      Cache->append((Element*)c);
     }
-//    c->Name = Line;   // do not overwrite the name
   }
 
   QMessageBox::critical(0, "Error", "Format Error:\n'Component' field is not closed!");
   return false;
 }
 
-bool QucsDoc::loadWires(QTextStream *stream)
+bool QucsDoc::loadWires(QTextStream *stream, bool insert)
 {
   Wire *w;
   QString Line;
@@ -1300,14 +1362,19 @@ bool QucsDoc::loadWires(QTextStream *stream)
       QMessageBox::critical(0, "Error", "Format Error:\nWrong 'wire' line format!");
       return false;
     }
-    insertWire(w);
+    if(insert) insertWire(w);
+    else {
+      w->Port1 = (Node*)4;    // move all ports (later on)
+      w->Port2 = (Node*)4;
+      Cache->append((Element*)w);
+    }
   }
 
   QMessageBox::critical(0, "Error", "Format Error:\n'Wire' field is not closed!");
   return false;
 }
 
-bool QucsDoc::loadDiagrams(QTextStream *stream)
+bool QucsDoc::loadDiagrams(QTextStream *stream, bool insert)
 {
   Diagram *d;
   QString Line, cstr;
@@ -1331,15 +1398,18 @@ bool QucsDoc::loadDiagrams(QTextStream *stream)
       delete d;
       return false;
     }
-    Diags.append(d);
-    d->loadGraphData(DataSet);  // load graphs from data files
+    if(insert) {
+      Diags.append(d);
+      d->loadGraphData(DataSet);  // load graphs from data files
+    }  
+    else Cache->append((Element*)d);
   }
 
   QMessageBox::critical(0, "Error", "Format Error:\n'Diagram' field is not closed!");
   return false;
 }
 
-bool QucsDoc::loadPaintings(QTextStream *stream)
+bool QucsDoc::loadPaintings(QTextStream *stream, bool insert)
 {
 //  Painting *p;
   QString Line;//, cstr;
@@ -1363,6 +1433,7 @@ bool QucsDoc::loadPaintings(QTextStream *stream)
 //      delete p;
       return false;
 //    }
+    if(insert) ;
 //    Diags.append(d);
   }
 

@@ -54,6 +54,7 @@ public:
   ~QucsView();
 
   double Zoom(double s);
+  bool pasteElements();
 
   Component *selComp;   // component selected in IconView
   Diagram   *selDiag;   // diagram selected in IconView
@@ -61,6 +62,8 @@ public:
   bool drawn;   // indicates whether the scheme component was drawn the last time
 //  QDir ProjDir; // holds the project directory, if project open
   QString ProjName;
+
+  QPtrList<Element> movingElements;
 
   // -------------------------------------------------------------------
   QPtrList<QucsDoc>  Docs;  // instances of the documents (schematics, data displays)
@@ -84,6 +87,7 @@ public:
   void MMoveWire2(QMouseEvent *Event);
   void MMoveMoving(QMouseEvent *Event);
   void MMoveMoving2(QMouseEvent *Event);
+  void MMovePaste(QMouseEvent *Event);
   void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to actual mouse move method
 
   void MPressSelect(QMouseEvent *Event);
@@ -102,17 +106,19 @@ public:
   
   void MReleaseSelect(QMouseEvent *Event);
   void MReleaseSelect2(QMouseEvent *Event);
+  void MReleaseActivate(QMouseEvent *Event);
   void MReleaseMoving(QMouseEvent *Event);
+  void MReleasePaste(QMouseEvent *);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to actual mouse release button method
 
 signals:
-  void AreaMouseMove(QMouseEvent *Event);
-  void AreaMousePress(QMouseEvent *Event);
+  void CompsSelected(bool);
+//  void AreaMouseMove(QMouseEvent *Event);
+//  void AreaMousePress(QMouseEvent *Event);
 
 private:
   int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   Element *focusElement;
-  QPtrList<Element> movingElements;
 };
 
 #endif

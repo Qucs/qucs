@@ -47,12 +47,16 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   ErrText->setReadOnly(true);
   ErrText->setMinimumSize(400,80);
 
-//  QHBox *Butts = new QHBox(this);
-//  all->addWidget(Butts);
-  Abort = new QPushButton("Abort simulation", this);//Butts);
-  all->addWidget(Abort);
+  QHBox *Butts = new QHBox(this);
+  all->addWidget(Butts);
+
+  Display = new QPushButton("Goto display page", Butts);
+  Display->setDisabled(true);
+  connect(Display,SIGNAL(clicked()),SLOT(slotDisplayButton()));
+
+  Abort = new QPushButton("Abort simulation", Butts);
   connect(Abort,SIGNAL(clicked()),SLOT(slotClose()));
-  
+
   // ........................................................
   connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
   connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
@@ -66,6 +70,9 @@ SimMessage::~SimMessage()
 // ------------------------------------------------------------------------
 bool SimMessage::startProcess(const QStringList& commands)
 {
+  Abort->setText("Abort simulation");
+  Display->setDisabled(true);
+
   SimProcess.blockSignals(false);
   if(SimProcess.isRunning()) return false;
 
@@ -93,7 +100,9 @@ void SimMessage::slotDisplayErr()
 void SimMessage::slotSimEnded()
 {
   Abort->setText("Close window");
-  emit SimulationEnded();
+  Display->setDisabled(false);
+
+  emit SimulationEnded(SimProcess.exitStatus());
 }
 
 // ------------------------------------------------------------------------
@@ -105,5 +114,12 @@ void SimMessage::slotClose()
     QTimer::singleShot(2000,&SimProcess,SLOT(kill()));
   }
 
+  close();
+}
+
+// ------------------------------------------------------------------------
+void SimMessage::slotDisplayButton()
+{
+  emit displayDataPage();
   close();
 }
