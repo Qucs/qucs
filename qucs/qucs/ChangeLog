@@ -1,5 +1,7 @@
 2004-11-11  Stefan Jahn  <stefan@lkcc.org>
 
+	* qucs.cpp (initView): Setting application icon on startup.
+
 	* bitmaps/tiny.qucs.xpm: Made tiny Qucs icon transparent.
 
 	* qucsinit.cpp (slotHelpAbout): Added Toyoyuki ISHIKAWA

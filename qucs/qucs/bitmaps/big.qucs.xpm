@@ -1,5 +1,5 @@
 /* XPM */
-static char * big_qucs_xpm[] = {
+static char *big_qucs_xpm[] = {
 "32 32 190 2",
 "  	c None",
 ". 	c #BCA2BC",
