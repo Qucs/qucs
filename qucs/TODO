@@ -1,1 +1,37 @@
+--
+-- TODO
+-- 
+-- This is free software; you can redistribute it and/or modify
+-- it under the terms of the GNU General Public License as published by
+-- the Free Software Foundation; either version 2, or (at your option)
+-- any later version.
+-- 
+-- This software is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU General Public License for more details.
+-- 
+-- You should have received a copy of the GNU General Public License
+-- along with this package; see the file COPYING.  If not, write to
+-- the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+-- Boston, MA 02111-1307, USA.  
+--
 
+This file lists all the things we would like to add in the future.
+Bugs are not listed here; for a list of all known bugs (fixed and
+unfixed) have a look at the file BUGS.
+
+(completed tasks are indented one tab)
+
+- microwave line calculation program
+- filter synthesis program
+- import filters for different data formats (ADS, touchstone, etc.)
+	- s-parameter simulator program
+- DC analysis
+	- internet representation
+- creation of documentation, introductions and help texts
+- paint logos and other drawings
+	- modify/create configure scripts
+	- load/save/print schematics
+- partial polar/smith chart
+- compatibility code and testing on other platforms as GNU/Linux
