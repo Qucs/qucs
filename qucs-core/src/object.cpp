@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.3 2004/02/17 15:30:57 ela Exp $
+ * $Id: object.cpp,v 1.4 2004/03/14 17:42:47 ela Exp $
  *
  */
 
@@ -65,7 +65,7 @@ object::object (const object & o) {
   copyProperties (o.prop);
 }
 
-/// Destructor deletes an instance of the object class.
+// Destructor deletes an instance of the object class.
 object::~object () {
   free (name);
   deleteProperties ();

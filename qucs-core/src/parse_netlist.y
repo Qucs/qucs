@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.3 2004/03/08 21:08:50 ela Exp $
+ * $Id: parse_netlist.y,v 1.4 2004/03/14 17:42:47 ela Exp $
  *
  */
 
@@ -77,6 +77,7 @@
   eqn::constant * con;
   eqn::reference * ref;
   eqn::application * app;
+  eqn::assignment * assign;
 }
 
 %type <ident> Identifier Assign
@@ -87,7 +88,8 @@
 %type <node> IdentifierList
 %type <pair> PairList
 %type <value> String
-%type <eqn> Equation EquationList Expression ExpressionList
+%type <eqn> EquationList Expression ExpressionList
+%type <assign> Equation
 %type <con> Constant
 %type <ref> Reference
 %type <app> Application
@@ -209,25 +211,21 @@ EquationList: /* nothing */ { }
 
 Equation:
   Assign '"' Expression '"' {
-    $$ = new eqn::node (eqn::ASSIGNMENT);
-    $$->assign = new eqn::assignment ();
-    $$->assign->result = strdup ($1);
-    $$->assign->body = $3;
+    $$ = new eqn::assignment ();
+    $$->result = strdup ($1);
+    $$->body = $3;
   }
 ;
 
 Expression:
     Constant {
-    $$ = new eqn::node (eqn::CONSTANT);
-    $$->con = $1;
+    $$ = $1;
   }
   | Reference {
-    $$ = new eqn::node (eqn::REFERENCE);
-    $$->ref = $1;
+    $$ = $1;
   }
   | Application {
-    $$ = new eqn::node (eqn::APPLICATION);
-    $$->app = $1;
+    $$ = $1;
   }
   | '(' Expression ')' {
     $$ = $2;
