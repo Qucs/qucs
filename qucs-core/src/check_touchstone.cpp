@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.5 2004/07/26 06:30:28 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.6 2004/08/01 16:08:02 ela Exp $
  *
  */
 
@@ -68,7 +68,7 @@ static void touchstone_join (void) {
     for (xroot = next; xroot != NULL; xroot = next) {
       next = (vector *) xroot->getNext ();
       /* append xroot vector to yroot vector (even no. of values) ? */
-      if (xroot->getSize () & 1 == 0) {
+      if ((xroot->getSize () & 1) == 0) {
 	/* yes, delete the xroot vector and adjust list */
 	yroot->add (xroot);
 	yroot->setNext (next);
@@ -307,7 +307,7 @@ static void touchstone_create (void) {
 	val = (val - r) / (1 - r * val);
       }
       v->add (val);
-      /* fill eqivalent noise resistance vector */
+      /* fill equivalent noise resistance vector */
       v = touchstone_result->findVariable ("Rn");
       val = real (root->get (4)) * touchstone_options.resistance;
       v->add (val);
@@ -489,6 +489,15 @@ int touchstone_check (void) {
     touchstone_create ();
     touchstone_normalize ();
   }
+
+#if DEBUG
+  /* emit little notify message on successful loading */
+  if (!errors) {
+    logprint (LOG_STATUS, "NOTIFY: touchstone %d-port %c-data%s loaded\n",
+	      touchstone_options.ports, touchstone_options.parameter,
+	      touchstone_options.noise ? " including noise" : "");
+  }
+#endif
 
   /* free temporary memory */
   touchstone_finalize ();

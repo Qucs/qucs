@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.11 2004/07/27 16:43:59 ela Exp $
+ * $Id: jfet.cpp,v 1.12 2004/08/01 16:08:03 ela Exp $
  *
  */
 
@@ -169,8 +169,8 @@ void jfet::calcDC (void) {
   Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
 
   // critical voltage necessary for bad start values
-  UgsCrit = pnCriticalVoltage (Ut * n, Is);
-  UgdCrit = pnCriticalVoltage (Ut * n, Is);
+  UgsCrit = pnCriticalVoltage (Is, Ut * n);
+  UgdCrit = pnCriticalVoltage (Is, Ut * n);
   UgsPrev = Ugs = pnVoltage (Ugs, UgsPrev, Ut * n, UgsCrit);
   UgdPrev = Ugd = pnVoltage (Ugd, UgdPrev, Ut * n, UgdCrit);
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.5 2004/07/27 16:43:58 ela Exp $
+ * $Id: spfile.cpp,v 1.6 2004/08/01 16:08:02 ela Exp $
  *
  */
 
@@ -81,12 +81,30 @@ void spfile::calcSP (nr_double_t frequency) {
    given frequency.  It uses interpolation for frequency points which
    are not part of the original touchstone file. */
 matrix& spfile::getInterpolMatrixS (nr_double_t frequency) {
+
+  // first interpolate the matrix values
   matrix * s = new matrix (getSize () - 1);
   for (int r = 1; r <= getSize () - 1; r++) {
     for (int c = 1; c <= getSize () - 1; c++) {
       int i = (r - 1) * getSize () + c - 1;
       s->set (r, c, interpolate (sfreq, index[i].v, frequency));
     }
+  }
+  
+  // then convert them to S-parameters if necessary
+  switch (paraType) {
+  case 'Y':
+    *s = ytos (*s);
+    break;
+  case 'Z':
+    *s = ztos (*s);
+    break;
+  case 'H':
+    *s = htos (*s);
+    break;
+  case 'G':
+    *s = gtos (*s);
+    break;
   }
   return *s;
 }
@@ -106,18 +124,18 @@ void spfile::calcNoise (nr_double_t frequency) {
 }
 
 // Returns the specified matrix vector entry.
-vector& spfile::fetchS (int r, int c) {
+vector& spfile::fetch (int r, int c) {
   return *(index[(r - 1) * getSize () + c - 1].v);
 }
 
 // Returns the matrix entry for the given frequency index.
-complex spfile::fetchS (int r, int c, int idx) {
+complex spfile::fetch (int r, int c, int idx) {
   vector * var = index[(r - 1) * getSize () + c - 1].v;
   return var->get (idx);
 }
 
 // Returns the matrix for the given frequency index.
-matrix& spfile::fetchS (int idx) {
+matrix& spfile::fetch (int idx) {
   matrix * res = new matrix (getSize () - 1);
   for (int r = 1; r <= getSize () - 1; r++) {
     for (int c = 1; c <= getSize () - 1; c++) {
@@ -129,7 +147,7 @@ matrix& spfile::fetchS (int idx) {
 }
 
 // Stores the matrix entry for the given frequency index.
-void spfile::storeS (int r, int c, complex z, int idx) {
+void spfile::store (int r, int c, complex z, int idx) {
   vector * var = index[(r - 1) * getSize () + c - 1].v;
   return var->set (z, idx);
 }
@@ -319,6 +337,7 @@ void spfile::createIndex (void) {
       index[i].r = r;
       index[i].c = c;
       index[i].v = v;
+      paraType = n[0];  // save type of touchstone data
       free (n);
     }
     if ((n = v->getName ()) != NULL) {
@@ -383,8 +402,10 @@ nr_double_t spfile::noiseFigure (matrix& s, matrix& c, nr_double_t& Fmin,
   Rn = real (z0 * (c.get (1, 1) -
 		   2 * real (c.get (1, 2) *
 			     conj ((1 + s.get (1, 1)) / s.get (2, 1))) +
-		   c.get (2, 2) * norm ((1 + s.get (1, 1)) / s.get (2, 1)))
-	     / 4);
+		   c.get (2, 2) *
+		   norm ((1 + s.get (1, 1)) / s.get (2, 1))) / 4);
+
+  // noise figure itself
   return real (1 + c.get (2, 2) / norm (s.get (2, 1)));
 }
 

@@ -1190,6 +1190,25 @@ S_{21} &= \dfrac{-2\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + 
 S_{22} &= \dfrac{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 - Z_{2}\cdot H_{22}\right) + H_{12}\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}
 \end{align}
 
+Converting from scattering parameters to the second type of hybrid
+parameters results in
+\begin{align}
+G_{11} &= \dfrac{\left(\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}\right) / Z_{1}}{\left(1 + S_{11}\right)\cdot \left(1 - S_{22}\right) + S_{12}\cdot S_{21}}\\
+G_{12} &= \dfrac{-2\cdot S_{12}}{\left(1 + S_{11}\right)\cdot \left(1 - S_{22}\right) + S_{12}\cdot S_{21}}\\
+G_{21} &= \dfrac{2\cdot S_{21}}{\left(1 + S_{11}\right)\cdot \left(1 - S_{22}\right) + S_{12}\cdot S_{21}}\\
+G_{22} &= \dfrac{\left(\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}\right)\cdot Z_{2}}{\left(1 + S_{11}\right)\cdot \left(1 - S_{22}\right) + S_{12}\cdot S_{21}}\\
+%\end{align}
+\intertext{
+Converting from the second type of hybrid parameters to scattering
+parameters results in
+}
+%\begin{align}
+S_{11} &= \dfrac{\left(1 - G_{11}\cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) + G_{12}\cdot G_{21}}{\left(1 + G_{11}\cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) - G_{12}\cdot G_{21}}\\
+S_{12} &= \dfrac{-2\cdot G_{12}}{\left(1 + G_{11} \cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) - G_{12}\cdot G_{21}}\\
+S_{21} &= \dfrac{2\cdot G_{21}}{\left(1 + G_{11} \cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) - G_{12}\cdot G_{21}}\\
+S_{22} &= \dfrac{\left(G_{11} \cdot Z_{1} + 1\right)\cdot \left(G_{22} / Z_{2} - 1\right) - G_{12}\cdot G_{21}}{\left(1 + G_{11} \cdot Z_{1}\right)\cdot \left(1 + G_{22} / Z_{2}\right) - G_{12}\cdot G_{21}}
+\end{align}
+
 \subsubsection{Two-Port parameters of passive devices}
 %\addcontentsline{toc}{subsubsection}{Two-Port parameters of passive devices}
 
@@ -4274,10 +4293,14 @@ Name & Symbol & Description & Unit & Default\\
 \hline
 Is & $I_{S}$ & saturation current & $\ampere$ & $10^{-14}$\\
 N & $N$ & emission coefficient & & $1.0$\\
+Isr & $I_{SR}$ & recombination current parameter & $\ampere$ & $0.0$\\
+Nr & $N_{R}$ & emission coefficient for Isr & & $2.0$\\
 Rs & $R_{S}$ & ohmic resistance & $\ohm$ & $0.0$\\
 Cj0 & $C_{j0}$ & zero-bias junction capacitance & $\farad$ & $0.0$\\
 M & $M$ & grading coefficient & & $0.5$\\
-Vj & $V_{j}$ & junction potential & $\volt$ & $1.0$\\
+Vj & $V_{j}$ & junction potential & $\volt$ & $0.7$\\
+Fc & $F_{c}$ & forward-bias depletion capacitance coefficient & & $0.5$\\
+Cp & $C_{p}$ & linear capacitance & $\farad$ & $0.0$\\
 Tt & $\tau$ & transit time & $\second$ & $0.0$\\
 Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
 Af & $A_F$ & flicker noise exponent & & $1.0$\\
@@ -4302,8 +4325,8 @@ Temp & $T$ & device temperature & $\degree \mathrm{C}$ & $26.85$
 The current equation of the diode and its derivative writes as
 follows:
 \begin{align}
-I_{d} &= I_{S}\cdot \left(e^{\frac{V_{d}}{N\cdot V_{T}}} - 1\right)\\
-g_{d} &= \dfrac{\partial I_{d}}{\partial V_{d}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{d}}{N\cdot V_{T}}}
+I_{d} &= I_{S}\cdot \left(e^{\frac{V_{d}}{N\cdot V_{T}}} - 1\right) + I_{SR}\cdot \left(e^{\frac{V_{d}}{N_R\cdot V_{T}}} - 1\right)\\
+g_{d} &= \dfrac{\partial I_{d}}{\partial V_{d}} = \dfrac{I_{S}}{N\cdot V_{T}}\cdot e^{\frac{V_{d}}{N\cdot V_{T}}} + \dfrac{I_{SR}}{N_R\cdot V_{T}}\cdot e^{\frac{V_{d}}{N_R\cdot V_{T}}}
 \end{align}
 
 \begin{figure}[ht]
@@ -4345,16 +4368,16 @@ V_{A}\\
 \end{figure}
 \FloatBarrier
 
-The voltage dependent capacitance consists of a diffusion capacitance
-and a junction capacitance which is usually modeled by the following
-equations.
+The voltage dependent capacitance consists of a diffusion capacitance,
+a junction capacitance and an additional linear capacitance which is
+usually modeled by the following equations.
 
 \begin{equation}
-C_{d} = \tau \cdot g_{d} +
+C_{d} = C_p + \tau \cdot g_{d} +
 \begin{cases}
 \begin{array}{ll}
-C_{j0}\cdot \left(1 - \dfrac{V_{d}}{V_{j}}\right)^{-M} & \text{ for } V_{d} < 0\\
-C_{j0}\cdot \left(1 + \dfrac{M\cdot V_{d}}{V_{j}}\right) & \text{ for } V_{d} \ge 0
+C_{j0}\cdot \left(1 - \dfrac{V_{d}}{V_{j}}\right)^{-M} & \textrm{ for } V_{d} \le F_c\cdot V_j\\
+\dfrac{C_{j0}}{\left(1 - F_c\right)^M}\cdot \left(1 + \dfrac{M\cdot \left(V_{d} - F_c\cdot V_j\right)}{V_{j}\cdot\left(1 - F_c\right)}\right) & \textrm{ for } V_{d} > F_c\cdot V_j
 \end{array}
 \end{cases}
 \end{equation}
@@ -5642,7 +5665,9 @@ The applicability of the described model is
 \begin{equation}
 0.1\le u\le 10 \qquad,\qquad 0.1\le g\le 10 \qquad,\qquad 1\le \epsilon_r\le 18
 \end{equation}
-The accuracies of the formulas holds for these ranges.\\ \\
+The accuracies of the formulas holds for these ranges.
+
+\addvspace{12pt}
 
 Static effective permittivity of even mode:
 \begin{equation}
@@ -5751,7 +5776,9 @@ P_{14} = 0.8928 + 0.1072\cdot \left( 1-\exp\left(-0.42\cdot\left(
 P_{15} = \text{abs}\left( 1 - 0.8928\cdot (1+P_{11}) \cdot \exp(-P_{13}\cdot g^{1.092})\cdot
          \frac{P_{12}}{P_{14}} \right)
 \end{equation}
-Up to $f_n=25$ the maximum error of these equations is 1.4\%.\\ \\
+Up to $f_n=25$ the maximum error of these equations is 1.4\%.
+
+\addvspace{12pt}
 
 The static characteristic impedance for the even mode writes as follows.
 \begin{equation}
@@ -5774,7 +5801,10 @@ Q_4 = \frac{Q_1}{Q_2}\cdot \frac{2}{ \exp(-g)\cdot u^{Q_3} + (2-\exp(-g))\cdot u
 \end{equation}
 with $Z_L(0)$ and $\epsilon_{eff}(0)$  being again quantities for
 a zero-thickness single microstrip of width $w$ (according to
-\cite{Hammerstad}).\\
+\cite{Hammerstad}).
+
+\addvspace{12pt}
+
 The static characteristic impedance for the odd mode writes as follows.
 \begin{equation}
 Z_{L,o}(0) = \sqrt{\frac{\epsilon_{eff}(0)}{\epsilon_{eff,e}(0)}} \cdot
@@ -5801,7 +5831,9 @@ Q_9 = \ln(Q_7)\cdot \left( Q_8 + \frac{1}{16.5} \right)
 Q_{10} = \frac{Q_2\cdot Q_4 - Q_5\cdot\exp\left( \ln(u)\cdot Q_6\cdot u^{-Q_9} \right)}{Q_2}
        = Q_4 - \frac{Q_5}{Q_2}\cdot u^{Q_6\cdot u^{-Q_9}}
 \end{equation}
-The accuracy of the static impedances is better than 0.6\%.\\ \\
+The accuracy of the static impedances is better than 0.6\%.
+
+\addvspace{12pt}
 
 Dispersion of characteristic impedance for the even mode can be
 modeled by the following equations.
@@ -5921,7 +5953,9 @@ Q_{29} = \frac{15.16}{1+0.196\cdot (\epsilon_r-1)^2}
 with $Z_L(f_n)$ being the frequency-dependent power-current characteristic
 impedance formulation of a single microstrip with width $w$ according to (z).
 Up to $f_n=20$, the numerical error of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is
-less than 2.5\%.\\ \\
+less than 2.5\%.
+
+\addvspace{12pt}
 
 After endless equations, the S parameters (according fig. \ref{fig:mscoupled})
 can now be defined \cite{Edwards}:\\
@@ -5989,15 +6023,16 @@ Q_4 = 1 + 0.0377\cdot \left( 6-5\cdot\exp(0.036\cdot(1-\epsilon_r))\cdot
 \begin{equation}
 Q_5 = 1 - 0.218\cdot \exp\left( -7.5\cdot\frac{w}{h} \right)
 \end{equation}
-The numerical error is $<2.5$\% for $0.01\le w/h \le 100$ and $1\le\epsilon_r\le 50$.\\ \\
+The numerical error is $<2.5$\% for $0.01\le w/h \le 100$ and $1\le\epsilon_r\le 50$.
+
+\addvspace{12pt}
 
 Another model was published by Hammerstad \cite{Hammerstad2}:
 \begin{equation}
 \frac{\Delta l}{h} = 0.102\cdot \frac{u+0.106}{u+0.264} \cdot
     \left( 1.166 + \frac{\epsilon_r+1}{\epsilon_r}\cdot \left(0.9+\ln(u+2.475) \right) \right)
 \end{equation}
-Here the numerical error is $<1.7$\% for $u = w/h < 20$.\\ \\
-
+Here the numerical error is $<1.7$\% for $u = w/h < 20$.
 
 \section{Microstrip gap}
 The model of a microstrip gap is shown in figure x. The values of the

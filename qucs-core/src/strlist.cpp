@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.cpp,v 1.4 2004/05/17 19:50:51 ela Exp $
+ * $Id: strlist.cpp,v 1.5 2004/08/01 16:08:02 ela Exp $
  *
  */
 
@@ -131,16 +131,16 @@ strlist * strlist::join (strlist * pre, strlist * post) {
 
 /* The function returns a space seperated string representation of the
    string list instance. */
-char * strlist::toString (void) {
+char * strlist::toString (char * concat) {
   if (txt) { free (txt); txt = NULL; }
   int size = 0;
   for (struct strlist_t * s = root; s != NULL; s = s->next) {
     char * t = s->str ? s->str : (char *) "(null)";
     int len = strlen (t);
-    size += len + 2;
+    size += len + strlen (concat) + 1;
     txt = (char *) (txt ? realloc (txt, size) : malloc (size));
     txt = (s == root) ? strcpy (txt, t) : strcat (txt, t);
-    txt = strcat (txt, " ");
+    txt = strcat (txt, concat);
   }
   if (txt) txt[strlen (txt) - 1] = '\0';
   return txt ? txt : (char *) "";

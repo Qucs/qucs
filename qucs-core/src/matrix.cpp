@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.12 2004/07/31 16:59:14 ela Exp $
+ * $Id: matrix.cpp,v 1.13 2004/08/01 16:08:02 ela Exp $
  *
  */
 
@@ -107,7 +107,7 @@ void matrix::set (int r, int c, complex z) {
 void matrix::print (void) {
   for (int r = 1; r <= rows; r++) {
     for (int c = 1; c <= cols; c++) {
-      fprintf (stderr, "%+.2e,%+.2e ", (double) real (get (r, c)), 
+      fprintf (stderr, "%+.2e,%+.2e ", (double) real (get (r, c)),
       	       (double) imag (get (r, c)));
     }
     fprintf (stderr, "\n");
@@ -504,7 +504,7 @@ matrix& stoh (matrix& s, complex z1) {
   complex d = (1.0 - s.get (1, 1)) * (1.0 + s.get (2, 2)) + n;
   matrix * h = new matrix (2);
   h->set (1, 1, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z1 / d);
-  h->set (1, 2, 2.0 * s.get (1, 2) / d);
+  h->set (1, 2, +2.0 * s.get (1, 2) / d);
   h->set (2, 1, -2.0 * s.get (2, 1) / d);
   h->set (2, 2, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z2 / d);
   return *h;
@@ -518,9 +518,37 @@ matrix& htos (matrix& h, complex z1) {
   complex d = (1.0 + h.get (1, 1) / z1) * (1.0 + z2 * h.get (2, 2)) - n;
   matrix * s = new matrix (2);
   s->set (1, 1, ((h.get (1, 1) / z1 - 1) * (1 + z2 * h.get (2, 2)) - n) / d);
-  s->set (1, 2, 2.0 * h.get (1, 2) / d);
+  s->set (1, 2, +2.0 * h.get (1, 2) / d);
   s->set (2, 1, -2.0 * h.get (2, 1) / d);
   s->set (2, 2, ((1 + h.get (1, 1) / z1) * (1 - z2 * h.get (2, 2)) + n) / d);
+  return *s;
+}
+
+// Converts scattering parameters to second hybrid matrix.
+matrix& stog (matrix& s, complex z1) {
+  assert (s.getRows () == 2 && s.getCols () == 2);
+  complex z2 = z1;
+  complex n = s.get (1, 2) * s.get (2, 1);
+  complex d = (1.0 + s.get (1, 1)) * (1.0 - s.get (2, 2)) + n;
+  matrix * g = new matrix (2);
+  g->set (1, 1, ((1.0 - s.get (1, 1)) * (1.0 - s.get (2, 2)) - n) / z1 / d);
+  g->set (1, 2, -2.0 * s.get (1, 2) / d);
+  g->set (2, 1, +2.0 * s.get (2, 1) / d);
+  g->set (2, 2, ((1.0 + s.get (1, 1)) * (1.0 + s.get (2, 2)) - n) * z2 / d);
+  return *g;
+}
+
+// Converts second hybrid matrix to scattering parameters.
+matrix& gtos (matrix& g, complex z1) {
+  assert (g.getRows () == 2 && g.getCols () == 2);
+  complex z2 = z1;
+  complex n = g.get (1, 2) * g.get (2, 1);
+  complex d = (1.0 + g.get (1, 1) * z1) * (1.0 + g.get (2, 2) / z2) - n;
+  matrix * s = new matrix (2);
+  s->set (1, 1, ((1 - g.get (1, 1) * z1) * (1 + g.get (2, 2) / z2) + n) / d);
+  s->set (1, 2, -2.0 * g.get (1, 2) / d);
+  s->set (2, 1, +2.0 * g.get (2, 1) / d);
+  s->set (2, 2, ((g.get (1, 1) * z1 + 1) * (g.get (2, 2) / z2 - 1) - n) / d);
   return *s;
 }
 
@@ -762,6 +790,9 @@ matrix& twoport (matrix& m, char in, char out) {
       res->set (2, 1, m.get (1, 1) / d);
       res->set (2, 2, m.get (1, 1) * m.get (2, 2) / d - m.get (1, 2));
       break;
+    case 'S': // G to S
+      *res = gtos (m);
+      break;
     }
     break;
   case 'A':
@@ -819,6 +850,9 @@ matrix& twoport (matrix& m, char in, char out) {
       break;
     case 'H': // S to H
       *res = stoh (m);
+      break;
+    case 'G': // S to G
+      *res = stog (m);
       break;
     case 'Y': // S to Y
       *res = stoy (m);

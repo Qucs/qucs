@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.7 2004/07/31 16:59:14 ela Exp $
+ * $Id: eqnsys.cpp,v 1.8 2004/08/01 16:08:02 ela Exp $
  *
  */
 
@@ -286,75 +286,54 @@ void eqnsys::solve_lu (void) {
 }
 
 /* The function solves the equation system using a full-step iterative
-   method (called Jacobi's method). */
+   method (called Jacobi's method).  If the current X vector (the
+   solution vector) is the solution within a Newton-Raphson iteration
+   it is a good initial guess and the method is very likely to
+   converge.  On divergence the method falls back to LU decomposition. */
 void eqnsys::solve_jacobi (void) {
-  nr_double_t MaxPivot;
   complex f;
-  int conv, k, i, c, r, rpivot, cpivot, N = A->getCols ();
-  int MaxIter = 350;
+  int conv, i, c, r, N = A->getCols ();
+  int MaxIter = 500;
   nr_double_t reltol = 1e-3;
   nr_double_t abstol = 1e-12;
-  int * change = new int[N];
+  nr_double_t crit;
 
-  // initialize pivot exchange table
-  for (i = 1; i <= N; i++) change[i - 1] = i;
-
-  // TODO: Find algorithm to ensure that!!!
   // ensure that all diagonal values are non-zero
-  for (i = 1; i <= N; i++) {
-    //fprintf (stderr, "not pivoted:\n");
-    //A->print ();
-    for (MaxPivot = 0, rpivot = cpivot = i, r = i; r <= N; r++) {
-      for (c = 1; c <= N; c++) {
-	if (abs (A->get (r, c)) > MaxPivot && abs (A->get (c, r)) > 0) {
-	  MaxPivot = abs (A->get (r, c));
-	  rpivot = r;
-	  cpivot = c;
-	}
-      }
-    }
-    if (MaxPivot <= 0) {
-      //A->print ();
-    }
-    assert (MaxPivot > 0);
-    if (cpivot != i) {
-      A->exchangeCols (i, cpivot);
-      k = change[i - 1];
-      change[i - 1] = change[cpivot - 1];
-      change[cpivot - 1] = k;
-      //fprintf (stderr, "exchanged c: %d-%d\n", i, cpivot);
-      //A->print ();
-    }
-    if (rpivot != i) {
-      A->exchangeRows (i, rpivot);
-      //fprintf (stderr, "exchanged r: %d-%d\n", i, rpivot);
-      //A->print ();
-    }
-  }
-
   for (f = 1, i = 1; i <= N; i++) f *= A->get (i, i);
-  //fprintf (stderr, "pivoted:\n");
-  //A->print ();
-  assert (f != 0);
-  if (criteria_schmidt_mises () >= 1) {
-    solve_lu ();
-    return;
+  if (f == 0) ensure_diagonal ();
+
+  // decide here about possible convergence
+  if ((crit = convergence_criteria ()) >= 1) {
+#if DEBUG
+    logprint (LOG_STATUS, "NOTIFY: jacoby criteria = %g\n", crit);
+#endif
+    //solve_lu ();
+    //return;
   }
 
+  // normalize the equation system to have ones on its diagonal
+  for (r = 1; r <= N; r++) {
+    f = A->get (r, r);
+    for (c = 1; c <= N; c++) {
+      A->set (r, c, A->get (r, c) / f);
+    }
+    B->set (r, 1, B->get (r, 1) / f);
+  }
+
+  // the current X vector is a good initial guess for the iteration
   matrix * Xprev = new matrix (*X);
-  for (r = 1; r <= N; r++) Xprev->set (r, 1, 0);
+
+  // start iterating here
   i = 0;
   do {
+    // compute new solution vector
     for (r = 1; r <= N; r++) {
       for (f = 0, c = 1; c <= N; c++) {
-	if (c != r) {
-	  f += A->get (r, c) * Xprev->get (c, 1);
-	}
+	if (c != r) f += A->get (r, c) * Xprev->get (c, 1);
       }
-      X->set (r, 1, (B->get (change[r - 1], 1) - f) / A->get (r, r));
+      X->set (r, 1, B->get (r, 1) - f);
     }
-    //fprintf (stderr, "NOTE: step %d\n", i);
-    //X->print ();
+    // check for convergence
     for (conv = 1, r = 1; r <= N; r++) {
       if (abs (X->get (r, 1) - Xprev->get (r, 1)) >= 
 	  abstol + reltol * abs (X->get (r, 1))) {
@@ -362,23 +341,30 @@ void eqnsys::solve_jacobi (void) {
 	break;
       }
     }
+    // save last values
     *Xprev = *X;
   }
-  while (i++ < MaxIter && !conv);
-#if DEBUG
-  if (!conv) {
-    fprintf (stderr, "ERROR: no convergence after %d iterations\n", i);
-  }
-  else {
-    fprintf (stderr, "NOTE: convergence after %d iterations\n", i);
-  }
-  //X->print ();
-#endif
-  delete change;
+  while (++i < MaxIter && !conv);
+
   delete Xprev;
+
+  if (!conv) {
+    logprint (LOG_ERROR,
+	      "WARNING: no jacobi convergence after %d iterations\n", i);
+    solve_lu ();
+  }
+#if DEBUG
+  else {
+    logprint (LOG_STATUS,
+	      "NOTIFY: jacobi convergence after %d iterations\n", i);
+  }
+#endif
 }
 
-nr_double_t eqnsys::criteria_schmidt_mises (void) {
+/* The function computes the convergence criteria for iterative
+   methods like Jacobi or Gauss-Seidel as defined by Schmidt and
+   v.Mises. */
+nr_double_t eqnsys::convergence_criteria (void) {
   complex f = 0;
   for (int r = 1; r <= A->getCols (); r++) {
     for (int c = 1; c <= A->getCols (); c++) {
@@ -386,4 +372,60 @@ nr_double_t eqnsys::criteria_schmidt_mises (void) {
     }
   }
   return abs (f);
+}
+
+/* The function tries to ensure that there are non-zero diagonal
+   elements in the equation system matrix A.  This is required for
+   iterative solution methods. */
+void eqnsys::ensure_diagonal (void) {
+  complex f;
+  int c, i, r, pivot, N = A->getCols ();
+
+  // TODO: find a better algorithm for that !!!
+  for (c = 1; c <= N; c++) {
+
+    for (i = 1; i <= N; i++) {
+      // substitute rows if really possible (for permutations)
+      if (abs (A->get (i, i)) > 0) {
+	for (pivot = i, r = N; r > i; r--) {
+	  if (abs (A->get (r, i)) > 0 && abs (A->get (i, r)) > 0) {
+	    pivot = r;
+	    break;
+	  }
+	}
+	if (pivot != i) {
+	  A->exchangeRows (i, pivot);
+	  B->exchangeRows (i, pivot);
+	}
+      }
+      // pivoting necessary
+      else {
+	for (pivot = i, r = 1; r <= N; r++) {
+	  if (r < i) {
+	    // substitute unconditionally to get a non-zero element on
+	    // the current row
+	    if (abs (A->get (r, i)) > 0) {
+	      pivot = r;
+	      break;
+	    }
+	  }
+	  else if (r > i) {
+	    // substitute only if really possible
+	    if (abs (A->get (r, i)) > 0 && abs (A->get (i, r)) > 0) {
+	      pivot = r;
+	      break;
+	    }
+	  }
+	}
+	if (pivot != i) {
+	  A->exchangeRows (i, pivot);
+	  B->exchangeRows (i, pivot);
+	}
+      }
+    }
+  }
+
+  // finally check non-zero diagonals
+  for (f = 1, i = 1; i <= N; i++) f *= A->get (i, i);
+  assert (f != 0);
 }

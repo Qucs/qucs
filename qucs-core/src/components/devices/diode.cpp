@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.6 2004/07/31 16:59:15 ela Exp $
+ * $Id: diode.cpp,v 1.7 2004/08/01 16:08:03 ela Exp $
  *
  */
 
@@ -111,9 +111,11 @@ void diode::initDC (dcsolver * solver) {
 }
 
 void diode::calcDC (void) {
-  nr_double_t Is = getPropertyDouble ("Is");
-  nr_double_t n  = getPropertyDouble ("N");
-  nr_double_t T  = getPropertyDouble ("Temp");
+  nr_double_t Is  = getPropertyDouble ("Is");
+  nr_double_t N   = getPropertyDouble ("N");
+  nr_double_t Isr = getPropertyDouble ("Isr");
+  nr_double_t Nr  = getPropertyDouble ("Nr");
+  nr_double_t T   = getPropertyDouble ("Temp");
 
   nr_double_t Ud, Ut, Ieq, Ucrit, gtiny;
 
@@ -122,14 +124,16 @@ void diode::calcDC (void) {
   Ud = real (getV (NODE_A) - getV (NODE_C));
 
   // critical voltage necessary for bad start values
-  Ucrit = pnCriticalVoltage (Is, n * Ut);
-  Uprev = Ud = pnVoltage (Ud, Uprev, Ut * n, Ucrit);
+  Ucrit = pnCriticalVoltage (Is, N * Ut);
+  Uprev = Ud = pnVoltage (Ud, Uprev, Ut * N, Ucrit);
 
   // tiny derivative for little junction voltage
-  gtiny = Ud < - 10 * Ut * n ? Is : 0;
+  gtiny = Ud < - 10 * Ut * N ? (Is + Isr) : 0;
 
-  gd = pnConductance (Ud, Is, Ut * n) + gtiny;
-  Id = pnCurrent (Ud, Is, Ut * n) + gtiny * Ud;
+  gd = pnConductance (Ud, Is, Ut * N) +
+    pnConductance (Ud, Isr, Ut * Nr) + gtiny;
+  Id = pnCurrent (Ud, Is, Ut * N) +
+    pnCurrent (Ud, Isr, Ut * Nr) + gtiny * Ud;
   Ieq = Id - Ud * gd;
 
   setI (NODE_C, +Ieq);
@@ -140,15 +144,17 @@ void diode::calcDC (void) {
 }
 
 void diode::calcOperatingPoints (void) {
-  nr_double_t z   = getPropertyDouble ("M");
-  nr_double_t cj0 = getPropertyDouble ("Cj0");
-  nr_double_t vd  = getPropertyDouble ("Vj");
+  nr_double_t M   = getPropertyDouble ("M");
+  nr_double_t Cj0 = getPropertyDouble ("Cj0");
+  nr_double_t Vj  = getPropertyDouble ("Vj");
+  nr_double_t Fc  = getPropertyDouble ("Fc");
+  nr_double_t Cp  = getPropertyDouble ("Cp");
   nr_double_t Tt  = getPropertyDouble ("Tt");
   
   nr_double_t Ud, Cd;
 
   Ud = real (getV (NODE_A) - getV (NODE_C));
-  Cd = pnCapacitance (Ud, cj0, vd, z) + Tt * gd;
+  Cd = pnCapacitance (Ud, Cj0, Vj, M, Fc) + Tt * gd + Cp;
 
   setOperatingPoint ("gd", gd);
   setOperatingPoint ("Id", Id);
