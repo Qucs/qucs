@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>Head Length: </source>
-        <translation>Lunghezza Freccia:</translation>
+        <translation>Lunghezza Freccia: </translation>
     </message>
     <message>
         <source>      Head Width: </source>
@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>Line color: </source>
-        <translation>Colore linea:</translation>
+        <translation>Colore linea: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Line style: </source>
-        <translation>Stile linea:</translation>
+        <translation>Stile linea: </translation>
     </message>
     <message>
         <source>solid line</source>
@@ -118,7 +118,7 @@
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Descrizione</translation>
     </message>
 </context>
 <context>
@@ -129,7 +129,7 @@
     </message>
     <message>
         <source>Graph Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Aiuto Funzione</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -201,14 +201,14 @@
     </message>
     <message>
         <source>Function Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aiuto Funzione</translation>
     </message>
 </context>
 <context>
     <name>FileShowDialog</name>
     <message>
         <source>File: </source>
-        <translation>File:</translation>
+        <translation>File: </translation>
     </message>
     <message>
         <source>OK</source>
@@ -216,102 +216,102 @@
     </message>
     <message>
         <source>ERROR: Cannot read file: </source>
-        <translation>ERRORE: Impossibile leggere file:</translation>
+        <translation>ERRORE: Impossibile leggere file: </translation>
     </message>
 </context>
 <context>
     <name>FillDialog</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancella</translation>
+        <translation>Cancella</translation>
     </message>
     <message>
         <source>Line Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Colore linea: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation type="unfinished">      Larghezza linea: </translation>
+        <translation>      Larghezza linea: </translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation type="unfinished">Stile linea:</translation>
+        <translation>Stile linea: </translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished">linea continua</translation>
+        <translation>linea continua</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished">linea tratteggiata</translation>
+        <translation>linea tratteggiata</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished">linea a punti</translation>
+        <translation>linea a punti</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished">linea tratteggio punto</translation>
+        <translation>linea tratteggio punto</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished">linea tratteggio punto punto</translation>
+        <translation>linea tratteggio punto punto</translation>
     </message>
     <message>
         <source>Fill Color: </source>
-        <translation type="unfinished"></translation>
+        <translation>Colore riempimento: </translation>
     </message>
     <message>
         <source>Fill Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Stile riempimento: </translation>
     </message>
     <message>
         <source>no filling</source>
-        <translation type="unfinished"></translation>
+        <translation>nessun riempimento</translation>
     </message>
     <message>
         <source>solid</source>
-        <translation type="unfinished"></translation>
+        <translation>tinta unita</translation>
     </message>
     <message>
         <source>dense 1 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 1 (più denso)</translation>
     </message>
     <message>
         <source>dense 2 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 2 (più denso)</translation>
     </message>
     <message>
         <source>dense 3 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 3 (più denso)</translation>
     </message>
     <message>
         <source>dense 4 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 4 (più denso)</translation>
     </message>
     <message>
         <source>dense 5 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 5 (più denso)</translation>
     </message>
     <message>
         <source>dense 6 (densest)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 6 (più denso)</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 7 (meno denso)</translation>
     </message>
     <message>
         <source>horizontal line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea orizzontale</translation>
     </message>
     <message>
         <source>vertical line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea verticale</translation>
     </message>
     <message>
         <source>crossed lines</source>
@@ -346,7 +346,7 @@
     </message>
     <message>
         <source>Text color: </source>
-        <translation>Colore testo:</translation>
+        <translation>Colore testo: </translation>
     </message>
     <message>
         <source>          Text size: </source>
@@ -354,11 +354,11 @@
     </message>
     <message>
         <source>Text size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione testo: </translation>
     </message>
     <message>
         <source>Rotation angle: </source>
-        <translation type="unfinished"></translation>
+        <translation>Angolo di rotazione: </translation>
     </message>
 </context>
 <context>
@@ -388,7 +388,7 @@
     </message>
     <message>
         <source>Line color: </source>
-        <translation>Colore linea:</translation>
+        <translation>Colore linea: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
@@ -396,7 +396,7 @@
     </message>
     <message>
         <source>Line Style: </source>
-        <translation>Stile linea:</translation>
+        <translation>Stile linea: </translation>
     </message>
     <message>
         <source>solid line</source>
@@ -427,7 +427,7 @@
     </message>
     <message>
         <source>Precision: </source>
-        <translation>Precisione:</translation>
+        <translation>Precisione: </translation>
     </message>
     <message>
         <source>OK</source>
@@ -473,12 +473,13 @@
     </message>
     <message>
         <source>Wrong document version: </source>
-        <translation>Versione documento errata:</translation>
+        <translation>Versione documento errata: </translation>
     </message>
     <message>
         <source>Clipboard Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di Formato degli Appunti:
+Campo sconosciuto!</translation>
     </message>
     <message>
         <source>Cannot save document!</source>
@@ -551,11 +552,11 @@ Wrong &apos;painting&apos; line format!</source>
     </message>
     <message>
         <source>Cannot load document: </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare documento: </translation>
     </message>
     <message>
         <source>Wrong document type!</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo documento errato!</translation>
     </message>
     <message>
         <source>File Format Error:
@@ -564,15 +565,15 @@ Unknown field!</source>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Proprietà Ellisse</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Proprietà Linea</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Proprietà Rettangolo</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
@@ -580,43 +581,43 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile ottenere dimensione della variabile indipendente &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Troppo poche variabili dipendenti &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Variabile indipendente &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot; non trovato/a</translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione ac</translation>
     </message>
     <message>
         <source>start frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>frequenza d&apos;inizio in Hertz</translation>
     </message>
     <message>
         <source>stop frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>frequenza di fine in Hertz</translation>
     </message>
     <message>
         <source>frequency steps in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>passo frequenza in Hertz</translation>
     </message>
     <message>
         <source>ideal dc current source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore ideale di corrente dc</translation>
     </message>
     <message>
         <source>current in Ampere</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente in Ampere</translation>
     </message>
     <message>
         <source>noise current source</source>
@@ -628,19 +629,19 @@ Unknown field!</source>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente frequenza</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente frequenza</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished"></translation>
+        <translation>termine additivo frequenza</translation>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>attenuatore</translation>
     </message>
     <message>
         <source>power attenuation</source>
@@ -656,15 +657,15 @@ Unknown field!</source>
     </message>
     <message>
         <source>capacitor</source>
-        <translation type="unfinished"></translation>
+        <translation>condensatore</translation>
     </message>
     <message>
         <source>capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità in Farad</translation>
     </message>
     <message>
         <source>current controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di corrente controllato in corrente</translation>
     </message>
     <message>
         <source>forward transfer factor</source>
@@ -676,23 +677,23 @@ Unknown field!</source>
     </message>
     <message>
         <source>current controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di tensione controllato in corrente</translation>
     </message>
     <message>
         <source>circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>circolatore</translation>
     </message>
     <message>
         <source>reference impedance of port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento della porta 1</translation>
     </message>
     <message>
         <source>reference impedance of port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento della porta 2</translation>
     </message>
     <message>
         <source>reference impedance of port 3</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento della porta 3</translation>
     </message>
     <message>
         <source>Format Error:
@@ -719,7 +720,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>width of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea</translation>
     </message>
     <message>
         <source>width of a gap</source>
@@ -727,11 +728,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>lunghezza della linea</translation>
     </message>
     <message>
         <source>dc simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione dc</translation>
     </message>
     <message>
         <source>dc block</source>
@@ -743,31 +744,31 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>diode</source>
-        <translation type="unfinished"></translation>
+        <translation>diodo</translation>
     </message>
     <message>
         <source>saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di saturazione</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>equazione</translation>
     </message>
     <message>
         <source>Equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Equazione</translation>
     </message>
     <message>
         <source>ground (reference potential)</source>
-        <translation type="unfinished"></translation>
+        <translation>terra (potenziale di riferimento)</translation>
     </message>
     <message>
         <source>gyrator (impedance inverter)</source>
-        <translation type="unfinished"></translation>
+        <translation>giratore (invertitore di impedenza)</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>valore giratore</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
@@ -775,19 +776,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>frequenza in Hertz</translation>
     </message>
     <message>
         <source>number of harmonics</source>
-        <translation type="unfinished"></translation>
+        <translation>numero di armoniche</translation>
     </message>
     <message>
         <source>inductor</source>
-        <translation type="unfinished"></translation>
+        <translation>induttore</translation>
     </message>
     <message>
         <source>inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>induttanza in Henry</translation>
     </message>
     <message>
         <source>current probe</source>
@@ -795,15 +796,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>isolatore</translation>
     </message>
     <message>
         <source>reference impedance of input port</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento della porta di input</translation>
     </message>
     <message>
         <source>reference impedance of output port</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento della porta di output</translation>
     </message>
     <message>
         <source>microstrip corner</source>
@@ -815,11 +816,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>width of line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea 1</translation>
     </message>
     <message>
         <source>width of line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea 2</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
@@ -839,11 +840,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>width of line 3</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea 3</translation>
     </message>
     <message>
         <source>width of line 4</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea 4</translation>
     </message>
     <message>
         <source>microstrip line</source>
@@ -907,31 +908,31 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>resistor</source>
-        <translation type="unfinished"></translation>
+        <translation>resistore</translation>
     </message>
     <message>
         <source>ohmic resistance in Ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica in Ohms</translation>
     </message>
     <message>
         <source>resistor (US symbol)</source>
-        <translation type="unfinished"></translation>
+        <translation>resistore (simbolo US)</translation>
     </message>
     <message>
         <source>ac power source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di potenza ac</translation>
     </message>
     <message>
         <source>number of the port</source>
-        <translation type="unfinished"></translation>
+        <translation>numero della porta</translation>
     </message>
     <message>
         <source>port impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza della porta</translation>
     </message>
     <message>
         <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
+        <translation>potenza ac in Watts</translation>
     </message>
     <message>
         <source>S parameter simulation</source>
@@ -951,19 +952,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>sottocircuito</translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
-        <translation type="unfinished"></translation>
+        <translation>nome del file schema di qucs</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>porta di un sottocircuito</translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>numero della porta nel sottocircuito</translation>
     </message>
     <message>
         <source>substrate definition</source>
@@ -971,7 +972,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>permittività relativa</translation>
     </message>
     <message>
         <source>thickness in meters</source>
@@ -987,7 +988,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>trasformatore simmetrico ideale</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
@@ -999,35 +1000,35 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ideal transmission line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea di trasmissione ideale</translation>
     </message>
     <message>
         <source>characteristic impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza caratteristica</translation>
     </message>
     <message>
         <source>electrical length of the line</source>
-        <translation type="unfinished"></translation>
+        <translation>lunghezza elettrica della linea</translation>
     </message>
     <message>
         <source>transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione del transiente</translation>
     </message>
     <message>
         <source>start time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di inizio in secondi</translation>
     </message>
     <message>
         <source>stop time in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di fine in secondi</translation>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>passo del tempo in secondi</translation>
     </message>
     <message>
         <source>ideal transformer</source>
-        <translation type="unfinished"></translation>
+        <translation>trasformatore ideale</translation>
     </message>
     <message>
         <source>voltage transformation ratio</source>
@@ -1035,7 +1036,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage controlled current source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di corrente controllato in tensione</translation>
     </message>
     <message>
         <source>forward transconductance</source>
@@ -1043,23 +1044,23 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage controlled voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore di tensione controllato in tensione</translation>
     </message>
     <message>
         <source>ideal ac voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore ideale di tensione ac</translation>
     </message>
     <message>
         <source>rms voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione rms in Volts</translation>
     </message>
     <message>
         <source>ideal dc voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>generatore ideale di tensione dc</translation>
     </message>
     <message>
         <source>voltage in Volts</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione in Volts</translation>
     </message>
     <message>
         <source>noise voltage source</source>
@@ -1071,31 +1072,31 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea nuovo progetto</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome progetto:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished"></translation>
+        <translation>apri nuovo progetto</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancella</translation>
+        <translation>Cancella</translation>
     </message>
     <message>
         <source>invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>non valido</translation>
     </message>
     <message>
         <source>emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione</translation>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
@@ -1107,7 +1108,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale giunzione</translation>
     </message>
     <message>
         <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
@@ -1123,18 +1124,18 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Troppo poche variabili indipendenti &quot;</translation>
     </message>
 </context>
 <context>
     <name>QucsActions</name>
     <message>
         <source>Inserting clipboard contents...</source>
-        <translation type="unfinished">Inserimento contenuto degli appunti...</translation>
+        <translation>Inserimento contenuto degli appunti...</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Pronto.</translation>
+        <translation>Pronto.</translation>
     </message>
 </context>
 <context>
@@ -1869,7 +1870,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota</translation>
     </message>
     <message>
         <source>Datasets</source>
@@ -1877,7 +1878,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>Data Displays</source>
-        <translation type="unfinished"></translation>
+        <translation>Viste Dati</translation>
     </message>
     <message>
         <source>Schematics</source>
@@ -1909,7 +1910,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>transmission lines</source>
-        <translation type="unfinished"></translation>
+        <translation>linee di trasmissione</translation>
     </message>
     <message>
         <source>nonlinear components</source>
@@ -1953,7 +1954,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation>Impossibile rinominare file:</translation>
+        <translation>Impossibile rinominare file: </translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
@@ -1973,7 +1974,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation>Impossibile cancellare schema:</translation>
+        <translation>Impossibile cancellare schema: </translation>
     </message>
     <message>
         <source>Cannot create work directory !</source>
@@ -2011,7 +2012,7 @@ Vuoi salvare i cambiamenti prima di chiudere?</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation type="unfinished"></translation>
+        <translation>-porta</translation>
     </message>
     <message>
         <source>Enter Name to Save Document</source>
@@ -2135,11 +2136,11 @@ Simulator by Stefan Jahn
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>Inizio nuova simulazione ore </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished"></translation>
+        <translation> a </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -2163,7 +2164,8 @@ Aborted.</source>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Simulazione conclusa ore </translation>
     </message>
     <message>
         <source>Ready.
@@ -2174,7 +2176,8 @@ Simulation ended on </source>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Errori durante la simulazione ora </translation>
     </message>
     <message>
         <source>Aborted.
@@ -2214,7 +2217,7 @@ Errori:
     </message>
     <message>
         <source>Cannot create </source>
-        <translation>Impossibile creare</translation>
+        <translation>Impossibile creare </translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
@@ -2222,7 +2225,7 @@ Errori:
     </message>
     <message>
         <source>Cannot access project directory: </source>
-        <translation>Impossibile accedere alla directory del progetto:</translation>
+        <translation>Impossibile accedere alla directory del progetto: </translation>
     </message>
     <message>
         <source>Content of &apos;</source>
@@ -2290,19 +2293,19 @@ Errori:
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished"></translation>
+        <translation>Attenuatore</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Isolatore</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Circolatore</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Giratore</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
@@ -2314,19 +2317,19 @@ Errori:
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di Tensione dc</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di Corrente dc</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di Tensione ac</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di Potenza</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
@@ -2354,7 +2357,7 @@ Errori:
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea di Trasmissione</translation>
     </message>
     <message>
         <source>Substrate</source>
@@ -2426,15 +2429,15 @@ Errori:
     </message>
     <message>
         <source>dc simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulazione dc</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulazione del transiente</translation>
     </message>
     <message>
         <source>ac simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulazione ac</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
@@ -2510,7 +2513,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Cannot remove project file: </source>
-        <translation>Impossibile rimuovere il file del progetto:</translation>
+        <translation>Impossibile rimuovere il file del progetto: </translation>
     </message>
     <message>
         <source>Cannot remove project directory !</source>
@@ -2522,681 +2525,688 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Data Display (*.dpl)</source>
-        <translation type="unfinished"></translation>
+        <translation>Viste Dati (*.dpl)</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserire un Nome Documento</translation>
     </message>
     <message>
         <source>The file &apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Il file &apos;</translation>
     </message>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>&apos; esiste già!
+</translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Il salvataggio sovrascriverà il vecchio file! Continuare?</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Solo le estensioni &apos;.sch&apos; e &apos;.dpl&apos;
+</translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>appariranno nel navigatore dei contenuti! Continuare?</translation>
     </message>
     <message>
         <source>Cannot overwrite an open document</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile sovrascrivere un documento aperto</translation>
     </message>
     <message>
         <source>The document contains unsaved changes!
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Il documento contiene modifiche non salvate!
+</translation>
     </message>
     <message>
         <source>Do you want to save the changes before closing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Si desidera salvare le modifiche prima di chiudere?</translation>
     </message>
     <message>
         <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema (*.sch);;Viste Dati (*.dpl);;</translation>
     </message>
     <message>
         <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Documenti Qucs (*.sch *.dpl);;Tutti i File (*)</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellisse riempita</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Rettangolo riempito</translation>
     </message>
 </context>
 <context>
     <name>QucsInit</name>
     <message>
         <source>New</source>
-        <translation type="unfinished">Nuovo</translation>
+        <translation>Nuovo</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Nuovo</translation>
+        <translation>&amp;Nuovo</translation>
     </message>
     <message>
         <source>Creates a new document</source>
-        <translation type="unfinished">Crea un nuovo documento</translation>
+        <translation>Crea un nuovo documento</translation>
     </message>
     <message>
         <source>New
 
 Creates a new schematic or data display document</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo
+
+Crea un nuovo documento schema o vista dati</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished">Apri File</translation>
+        <translation>Apri File</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Apri...</translation>
+        <translation>&amp;Apri...</translation>
     </message>
     <message>
         <source>Opens an existing document</source>
-        <translation type="unfinished">Apre un documento esistente</translation>
+        <translation>Apre un documento esistente</translation>
     </message>
     <message>
         <source>Open File
 
 Opens an existing document</source>
-        <translation type="unfinished">Apri File
+        <translation>Apri File
 
 Apre un documento esistente</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished">Salva File</translation>
+        <translation>Salva File</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Salva</translation>
+        <translation>&amp;Salva</translation>
     </message>
     <message>
         <source>Saves the current document</source>
-        <translation type="unfinished">Salva il documento corrente</translation>
+        <translation>Salva il documento corrente</translation>
     </message>
     <message>
         <source>Save File
 
 Saves the current document</source>
-        <translation type="unfinished">Salva File
+        <translation>Salva File
 
 Salva il documento corrente</translation>
     </message>
     <message>
         <source>Save File As</source>
-        <translation type="unfinished">Salva con Nome</translation>
+        <translation>Salva con Nome</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Salva con &amp;nome...</translation>
+        <translation>Salva con &amp;nome...</translation>
     </message>
     <message>
         <source>Saves the current document under a new filename</source>
-        <translation type="unfinished">Salva il documento corrente con un nuovo nome</translation>
+        <translation>Salva il documento corrente con un nuovo nome</translation>
     </message>
     <message>
         <source>Save As
 
 Saves the current document under a new filename</source>
-        <translation type="unfinished">Salva con Nome
+        <translation>Salva con Nome
 
 Salva il documento corrente con un nuovo nome</translation>
     </message>
     <message>
         <source>Save All Files</source>
-        <translation type="unfinished">Salva Tutti</translation>
+        <translation>Salva Tutti</translation>
     </message>
     <message>
         <source>Save &amp;All</source>
-        <translation type="unfinished">Salva &amp;Tutti</translation>
+        <translation>Salva &amp;Tutti</translation>
     </message>
     <message>
         <source>Saves all open documents</source>
-        <translation type="unfinished">Salva tutti i documenti aperti</translation>
+        <translation>Salva tutti i documenti aperti</translation>
     </message>
     <message>
         <source>Save All Files
 
 Saves all open documents</source>
-        <translation type="unfinished">Salva Tutti
+        <translation>Salva Tutti
 
 Salva tutti i documenti aperti</translation>
     </message>
     <message>
         <source>Close File</source>
-        <translation type="unfinished">Chiudi File</translation>
+        <translation>Chiudi File</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Chiudi</translation>
+        <translation>&amp;Chiudi</translation>
     </message>
     <message>
         <source>Closes the current document</source>
-        <translation type="unfinished">Chiude il documento corrente</translation>
+        <translation>Chiude il documento corrente</translation>
     </message>
     <message>
         <source>Close File
 
 Closes the current document</source>
-        <translation type="unfinished">Chiudi File
+        <translation>Chiudi File
 
 Chiude il documento corrente</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Impostazioni</translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>Settings...</source>
-        <translation type="unfinished">Impostazioni...</translation>
+        <translation>Impostazioni...</translation>
     </message>
     <message>
         <source>Settings
 
 Sets properties of the file</source>
-        <translation type="unfinished">Impostazioni
+        <translation>Impostazioni
 
 Imposta le proprietà del file</translation>
     </message>
     <message>
         <source>Print File</source>
-        <translation type="unfinished">Stampa File</translation>
+        <translation>Stampa File</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Stampa...</translation>
+        <translation>&amp;Stampa...</translation>
     </message>
     <message>
         <source>Prints the current document</source>
-        <translation type="unfinished">Stampa il documento corrente</translation>
+        <translation>Stampa il documento corrente</translation>
     </message>
     <message>
         <source>Print File
 
 Prints the current document</source>
-        <translation type="unfinished">Stampa File
+        <translation>Stampa File
 
 Stampa il documento corrente</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">Esci</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Esci</translation>
+        <translation>&amp;Esci</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="unfinished">Esce dall&apos;applicazione</translation>
+        <translation>Esce dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Exit
 
 Quits the application</source>
-        <translation type="unfinished">Esci
+        <translation>Esci
 
 Esce dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Taglia</translation>
+        <translation>Taglia</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">&amp;Taglia</translation>
+        <translation>&amp;Taglia</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Taglia la parte selezionata e la copia negli appunti</translation>
+        <translation>Taglia la parte selezionata e la copia negli appunti</translation>
     </message>
     <message>
         <source>Cut
 
 Cuts the selected section and puts it to the clipboard</source>
-        <translation type="unfinished">Taglia
+        <translation>Taglia
 
 Taglia la parte selezionata e la copia negli appunti</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copia</translation>
+        <translation>Copia</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Copia</translation>
+        <translation>&amp;Copia</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Copia la parte selezionata negli appunti</translation>
+        <translation>Copia la parte selezionata negli appunti</translation>
     </message>
     <message>
         <source>Copy
 
 Copies the selected section to the clipboard</source>
-        <translation type="unfinished">Copia
+        <translation>Copia
 
 Copia la parte selezionata negli appunti</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Incolla</translation>
+        <translation>Incolla</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Incolla</translation>
+        <translation>&amp;Incolla</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Incolla il contenuto degli appunti nella posizione del cursore</translation>
+        <translation>Incolla il contenuto degli appunti nella posizione del cursore</translation>
     </message>
     <message>
         <source>Paste
 
 Pastes the clipboard contents to the cursor position</source>
-        <translation type="unfinished">Incolla
+        <translation>Incolla
 
 Incolla il contenuto degli appunti nella posizione del cursore</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Cancella</translation>
+        <translation>Cancella</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Cancella</translation>
+        <translation>&amp;Cancella</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
-        <translation type="unfinished">Cancella i componenti selezionati</translation>
+        <translation>Cancella i componenti selezionati</translation>
     </message>
     <message>
         <source>Delete
 
 Deletes the selected components</source>
-        <translation type="unfinished">Cancella
+        <translation>Cancella
 
 Cancella i componenti selezionati</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Annulla</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Annulla</translation>
+        <translation>&amp;Annulla</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
-        <translation type="unfinished">Annulla l&apos;ultimo comando</translation>
+        <translation>Annulla l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>Undo
 
 Makes the last action undone</source>
-        <translation type="unfinished">Annulla
+        <translation>Annulla
 
 Annulla l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Ripeti</translation>
+        <translation>Ripeti</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Ripeti</translation>
+        <translation>&amp;Ripeti</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
-        <translation type="unfinished">Ripete l&apos;ultimo comando</translation>
+        <translation>Ripete l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>Redo
 
 Repeats the last action once more</source>
-        <translation type="unfinished">Ripeti
+        <translation>Ripeti
 
 Ripete l&apos;ultimo comando</translation>
     </message>
     <message>
         <source>New Project</source>
-        <translation type="unfinished">Nuovo Progetto</translation>
+        <translation>Nuovo Progetto</translation>
     </message>
     <message>
         <source>&amp;New Project...</source>
-        <translation type="unfinished">&amp;Nuovo Progetto...</translation>
+        <translation>&amp;Nuovo Progetto...</translation>
     </message>
     <message>
         <source>Creates a new project</source>
-        <translation type="unfinished">Crea un nuovo progetto</translation>
+        <translation>Crea un nuovo progetto</translation>
     </message>
     <message>
         <source>New Project
 
 Creates a new project</source>
-        <translation type="unfinished">Nuovo Progetto
+        <translation>Nuovo Progetto
 
 Crea un nuovo progetto</translation>
     </message>
     <message>
         <source>Open Project</source>
-        <translation type="unfinished">Apri Progetto</translation>
+        <translation>Apri Progetto</translation>
     </message>
     <message>
         <source>&amp;Open Project...</source>
-        <translation type="unfinished">&amp;Apri Progetto...</translation>
+        <translation>&amp;Apri Progetto...</translation>
     </message>
     <message>
         <source>Opens a project</source>
-        <translation type="unfinished">Apre un progetto</translation>
+        <translation>Apre un progetto</translation>
     </message>
     <message>
         <source>Open Project
 
 Opens an existing project</source>
-        <translation type="unfinished">Apri Progetto
+        <translation>Apri Progetto
 
 Apre un progetto esistente</translation>
     </message>
     <message>
         <source>Delete Project</source>
-        <translation type="unfinished">Cancella Progetto</translation>
+        <translation>Cancella Progetto</translation>
     </message>
     <message>
         <source>&amp;Delete Project...</source>
-        <translation type="unfinished">&amp;Cancella Progetto...</translation>
+        <translation>&amp;Cancella Progetto...</translation>
     </message>
     <message>
         <source>Deletes a project</source>
-        <translation type="unfinished">Cancella un progetto</translation>
+        <translation>Cancella un progetto</translation>
     </message>
     <message>
         <source>Delete Project
 
 Deletes an existing project</source>
-        <translation type="unfinished">Cancella Progetto
+        <translation>Cancella Progetto
 
 Cancella un progetto esistente</translation>
     </message>
     <message>
         <source>View All</source>
-        <translation type="unfinished">Vedi Tutto</translation>
+        <translation>Vedi Tutto</translation>
     </message>
     <message>
         <source>Views the whole page</source>
-        <translation type="unfinished">Visualizza tutta la pagina</translation>
+        <translation>Visualizza tutta la pagina</translation>
     </message>
     <message>
         <source>View All
 
 Shows the whole page content</source>
-        <translation type="unfinished">Vedi Tutto
+        <translation>Vedi Tutto
 
 Visualizza il contenuto di tutta la pagina</translation>
     </message>
     <message>
         <source>View 1:1</source>
-        <translation type="unfinished">Vedi 1:1</translation>
+        <translation>Vedi 1:1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
-        <translation type="unfinished">Visualizza in dimensioni reali</translation>
+        <translation>Visualizza in dimensioni reali</translation>
     </message>
     <message>
         <source>View 1:1
 
 Shows the page content without magnification</source>
-        <translation type="unfinished">Vedi 1:1
+        <translation>Vedi 1:1
 
 Visualizza il contenuto della pagina in dimensioni reali</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished">Aumenta zoom</translation>
+        <translation>Aumenta zoom</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
-        <translation type="unfinished">Ingrandisce la vista corrente</translation>
+        <translation>Ingrandisce la vista corrente</translation>
     </message>
     <message>
         <source>Zoom in
 
 Zooms the current view</source>
-        <translation type="unfinished">Aumenta zoom
+        <translation>Aumenta zoom
 
 Ingrandisce la vista corrente</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished">Riduci zoom</translation>
+        <translation>Riduci zoom</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
-        <translation type="unfinished">Rimpicciolisce la vista corrente</translation>
+        <translation>Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Reduce
 
 Zooms out the current view</source>
-        <translation type="unfinished">Riduci zoom
+        <translation>Riduci zoom
 
 Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Seleziona</translation>
+        <translation>Seleziona</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="unfinished">Modalità selezione</translation>
+        <translation>Modalità selezione</translation>
     </message>
     <message>
         <source>Select
 
 Select mode</source>
-        <translation type="unfinished">Seleziona
+        <translation>Seleziona
 
 Modalità selezione</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">Seleziona Tutto</translation>
+        <translation>Seleziona Tutto</translation>
     </message>
     <message>
         <source>Selects all elements</source>
-        <translation type="unfinished">Seleziona tutti gli elementi</translation>
+        <translation>Seleziona tutti gli elementi</translation>
     </message>
     <message>
         <source>Select All
 
 Selects all elements of the document</source>
-        <translation type="unfinished">Seleziona Tutto
+        <translation>Seleziona Tutto
 
 Seleziona tutti gli elementi</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished">Ruota</translation>
+        <translation>Ruota</translation>
     </message>
     <message>
         <source>Rotates the selected component by 90&#xb0;</source>
-        <translation type="unfinished">Ruota il componente selezionato di 90°</translation>
+        <translation>Ruota il componente selezionato di 90°</translation>
     </message>
     <message>
         <source>Rotate
 
 Rotates the selected component by 90&#xb0; counter-clockwise</source>
-        <translation type="unfinished">Ruota
+        <translation>Ruota
 
 Ruota il componente selezionato di 90° in senso antiorario</translation>
     </message>
     <message>
         <source>Mirror about X Axis</source>
-        <translation type="unfinished">Ribalta sull&apos;asse X</translation>
+        <translation>Ribalta sull&apos;asse X</translation>
     </message>
     <message>
         <source>Mirrors the selected item about X axis</source>
-        <translation type="unfinished">Ribalta l&apos;oggetto selezionato sull&apos;asse X</translation>
+        <translation>Ribalta l&apos;oggetto selezionato sull&apos;asse X</translation>
     </message>
     <message>
         <source>Mirror about X Axis
 
 Mirrors the selected item about X Axis</source>
-        <translation type="unfinished">Ribalta sull&apos;asse X
+        <translation>Ribalta sull&apos;asse X
 
 Ribalta l&apos;oggetto selezionato sull&apos;asse X</translation>
     </message>
     <message>
         <source>Mirror about Y Axis</source>
-        <translation type="unfinished">Ribalta sull&apos;asse Y</translation>
+        <translation>Ribalta sull&apos;asse Y</translation>
     </message>
     <message>
         <source>Mirrors the selected item about Y axis</source>
-        <translation type="unfinished">Ribalta l&apos;oggetto selezionato sull&apos;asse Y</translation>
+        <translation>Ribalta l&apos;oggetto selezionato sull&apos;asse Y</translation>
     </message>
     <message>
         <source>Mirror about Y Axis
 
 Mirrors the selected item about Y Axis</source>
-        <translation type="unfinished">Ribalta sull&apos;asse Y
+        <translation>Ribalta sull&apos;asse Y
 
 Ribalta l&apos;oggetto selezionato sull&apos;asse Y</translation>
     </message>
     <message>
         <source>Go into Subcircuit</source>
-        <translation type="unfinished">Vai nel Sottocircuito</translation>
+        <translation>Vai nel Sottocircuito</translation>
     </message>
     <message>
         <source>Goes inside subcircuit</source>
-        <translation type="unfinished">Va nel sottocircuito</translation>
+        <translation>Va nel sottocircuito</translation>
     </message>
     <message>
         <source>Go into Subcircuit
 
 Goes inside the selected subcircuit</source>
-        <translation type="unfinished">Vai nel sottocircuito
+        <translation>Vai nel sottocircuito
 
 Entra nel sottocircuito selezionato</translation>
     </message>
     <message>
         <source>Pop out</source>
-        <translation type="unfinished">Esci dal sottocircuito</translation>
+        <translation>Esci dal sottocircuito</translation>
     </message>
     <message>
         <source>Pop outside subcircuit</source>
-        <translation type="unfinished">Esce dal sottocircuito</translation>
+        <translation>Esce dal sottocircuito</translation>
     </message>
     <message>
         <source>Pop out
 
 Goes up one hierarchy level, i.e. leaves subcircuit</source>
-        <translation type="unfinished">Esci dal sottocircuito
+        <translation>Esci dal sottocircuito
 
 Risale di un livello, cioè esce dal sottocircuito</translation>
     </message>
     <message>
         <source>Deactivate/Activate</source>
-        <translation type="unfinished">Disattiva/Attiva</translation>
+        <translation>Disattiva/Attiva</translation>
     </message>
     <message>
         <source>Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Disattiva/Attiva l&apos;oggetto selezionato</translation>
+        <translation>Disattiva/Attiva l&apos;oggetto selezionato</translation>
     </message>
     <message>
         <source>Deactivate/Activate
 
 Deactivate/Activate the selected item</source>
-        <translation type="unfinished">Disattiva/Attiva
+        <translation>Disattiva/Attiva
 
 Disattiva/Attiva l&apos;oggetto selezionato</translation>
     </message>
     <message>
         <source>Insert Equation</source>
-        <translation type="unfinished">Inserisci Equazione</translation>
+        <translation>Inserisci Equazione</translation>
     </message>
     <message>
         <source>Inserts equation</source>
-        <translation type="unfinished">Inserisce un&apos;equazione</translation>
+        <translation>Inserisce un&apos;equazione</translation>
     </message>
     <message>
         <source>Insert Equation
 
 Inserts a user defined equation</source>
-        <translation type="unfinished">Inserisci Equazione
+        <translation>Inserisci Equazione
 
 Inserisce un&apos;equazione definita dall&apos;utente</translation>
     </message>
     <message>
         <source>Insert Ground</source>
-        <translation type="unfinished">Inserisci Terra</translation>
+        <translation>Inserisci Terra</translation>
     </message>
     <message>
         <source>Inserts ground</source>
-        <translation type="unfinished">Inserisce una terra</translation>
+        <translation>Inserisce una terra</translation>
     </message>
     <message>
         <source>Insert Ground
 
 Inserts a ground symbol</source>
-        <translation type="unfinished">Inserisci Terra
+        <translation>Inserisci Terra
 
 Inserisce un simbolo di terra</translation>
     </message>
     <message>
         <source>Insert Port</source>
-        <translation type="unfinished">Inserisci Porta</translation>
+        <translation>Inserisci Porta</translation>
     </message>
     <message>
         <source>Inserts port</source>
-        <translation type="unfinished">Inserisce una porta</translation>
+        <translation>Inserisce una porta</translation>
     </message>
     <message>
         <source>Insert Port
 
 Inserts a port symbol</source>
-        <translation type="unfinished">Inserisci Porta
+        <translation>Inserisci Porta
 
 Inserisce il simbolo di una porta</translation>
     </message>
     <message>
         <source>Insert Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci Cavo</translation>
     </message>
     <message>
         <source>Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Cavo</translation>
     </message>
     <message>
         <source>Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisce un cavo</translation>
     </message>
     <message>
         <source>Wire
 
 Inserts a wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Cavo
+
+Inserisce un cavo</translation>
     </message>
     <message>
         <source>Insert Wire/Pin Label</source>
@@ -3204,7 +3214,7 @@ Inserts a wire</source>
     </message>
     <message>
         <source>Wire Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Etichetta cavo</translation>
     </message>
     <message>
         <source>Inserts a wire or pin label</source>
@@ -3218,31 +3228,35 @@ Inserts a wire or pin label</source>
     </message>
     <message>
         <source>Simulate</source>
-        <translation type="unfinished"></translation>
+        <translation>Simula</translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Simula lo schema corrente</translation>
     </message>
     <message>
         <source>Simulate
 
 Simulates the current schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Simula
+
+Simula lo schema corrente</translation>
     </message>
     <message>
         <source>View Data Display/Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Vedi Vista Dati/Schema</translation>
     </message>
     <message>
         <source>Changes to data display or schematic page</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiamenti alla pagina vista dati o schema</translation>
     </message>
     <message>
         <source>View Data Display/Schematic
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Vedi Vista Dati/Schema
+
+</translation>
     </message>
     <message>
         <source>Set Marker</source>
@@ -3264,17 +3278,19 @@ Sets a marker on a diagram&apos;s graph</source>
     </message>
     <message>
         <source>Show Last Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualizza Ultimi Messaggi</translation>
     </message>
     <message>
         <source>Shows last simulation messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualizza i messaggi dell&apos;ultima simulazione</translation>
     </message>
     <message>
         <source>Show Last Messages
 
 Shows the messages of the last simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualizza Ultimi Messaggi
+
+Visualizza i messaggi dell&apos;ultima simulazione</translation>
     </message>
     <message>
         <source>Show Last Netlist</source>
@@ -3292,169 +3308,173 @@ Shows the netlist of the last simulation</source>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished">Barra Strumenti</translation>
+        <translation>Barra Strumenti</translation>
     </message>
     <message>
         <source>Tool&amp;bar</source>
-        <translation type="unfinished">&amp;Barra Strumenti</translation>
+        <translation>&amp;Barra Strumenti</translation>
     </message>
     <message>
         <source>Enables/disables the toolbar</source>
-        <translation type="unfinished">Attiva/disattiva la barra degli strumenti</translation>
+        <translation>Attiva/disattiva la barra degli strumenti</translation>
     </message>
     <message>
         <source>Toolbar
 
 Enables/disables the toolbar</source>
-        <translation type="unfinished">Barra Strumenti
+        <translation>Barra Strumenti
 
 Attiva/disattiva la barra degli strumenti</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">Barra di Stato</translation>
+        <translation>Barra di Stato</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">Barra di &amp;Stato</translation>
+        <translation>Barra di &amp;Stato</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="unfinished">Attiva/disattiva la barra di stato</translation>
+        <translation>Attiva/disattiva la barra di stato</translation>
     </message>
     <message>
         <source>Statusbar
 
 Enables/disables the statusbar</source>
-        <translation type="unfinished">Barra di Stato
+        <translation>Barra di Stato
 
 Attiva/Disattiva la barra di stato</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="unfinished">Indice dell&apos;Aiuto</translation>
+        <translation>Indice dell&apos;Aiuto</translation>
     </message>
     <message>
         <source>Help Index...</source>
-        <translation type="unfinished">Indice dell&apos;Aiuto...</translation>
+        <translation>Indice dell&apos;Aiuto...</translation>
     </message>
     <message>
         <source>Index of Qucs Help</source>
-        <translation type="unfinished">Indice dell&apos;Aiuto di Qucs</translation>
+        <translation>Indice dell&apos;Aiuto di Qucs</translation>
     </message>
     <message>
         <source>Help Index
 
 Index of intern Qucs help</source>
-        <translation type="unfinished">Indice dell&apos;Aiuto
+        <translation>Indice dell&apos;Aiuto
 
 Indice dell&apos;aiuto interno di Qucs</translation>
     </message>
     <message>
         <source>Getting Started</source>
-        <translation type="unfinished">Come Iniziare</translation>
+        <translation>Come Iniziare</translation>
     </message>
     <message>
         <source>Getting Started...</source>
-        <translation type="unfinished">Come Iniziare...</translation>
+        <translation>Come Iniziare...</translation>
     </message>
     <message>
         <source>Getting Started with Qucs</source>
-        <translation type="unfinished">Come Iniziare ad usare Qucs</translation>
+        <translation>Come Iniziare ad usare Qucs</translation>
     </message>
     <message>
         <source>Getting Started
 
 Short introduction into Qucs</source>
-        <translation type="unfinished">Come Iniziare
+        <translation>Come Iniziare
 
 Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <source>&amp;About Qucs...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Informazioni su Qucs...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni sull&apos;applicazione</translation>
     </message>
     <message>
         <source>About
 
 About the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni
+
+Informazioni sull&apos;applicazione</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni su Qt</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Informazioni su Qt...</translation>
     </message>
     <message>
         <source>About Qt
 
 About Qt by Trolltech</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni Qt
+
+Informazioni su Qt by Trolltech</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Modifica</translation>
+        <translation>&amp;Modifica</translation>
     </message>
     <message>
         <source>&amp;Insert</source>
-        <translation type="unfinished">&amp;Inserisci</translation>
+        <translation>&amp;Inserisci</translation>
     </message>
     <message>
         <source>&amp;Project</source>
-        <translation type="unfinished">&amp;Progetto</translation>
+        <translation>&amp;Progetto</translation>
     </message>
     <message>
         <source>&amp;Simulation</source>
-        <translation type="unfinished">&amp;Simulazione</translation>
+        <translation>&amp;Simulazione</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp;Visualizza</translation>
+        <translation>&amp;Visualizza</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Aiuto</translation>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Pronto.</translation>
+        <translation>Pronto.</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva/Disattiva barra strumenti...</translation>
     </message>
     <message>
         <source>Toggle statusbar...</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva/Disattiva barra di stato...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">A proposito...</translation>
+        <translation>Informazioni...</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation type="unfinished">Versione di Qucs</translation>
+        <translation>Versione di Qucs </translation>
     </message>
     <message>
         <source>
 Qt universal circuit simulator
 </source>
-        <translation type="unfinished">
+        <translation>
 Qt universal circuit simulator
 </translation>
     </message>
@@ -3466,32 +3486,33 @@ Qt universal circuit simulator
     <message>
         <source>Simulator by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Simulatore di Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke
 
 </source>
-        <translation type="unfinished">Special thanks to Jens Flucke
+        <translation>Un ringraziamento particolare a Jens Flucke
 
 </translation>
     </message>
     <message>
         <source>Translations:
 </source>
-        <translation type="unfinished">Traduzioni:
+        <translation>Traduzioni:
 </translation>
     </message>
     <message>
         <source>German by Stefan Jahn
 </source>
-        <translation type="unfinished">Tedesco di Stefan Jahn
+        <translation>Tedesca di Stefan Jahn
 </translation>
     </message>
     <message>
         <source>Polish by Dariusz Pienkowski
 </source>
-        <translation type="unfinished">Polacco di Dariusz Pienkowski
+        <translation>Polacca di Dariusz Pienkowski
 </translation>
     </message>
     <message>
@@ -3500,12 +3521,13 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation type="unfinished"></translation>
+        <translation>Italiana di Giorgio Luparia</translation>
     </message>
     <message>
         <source>French by Eric Marzolf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Francese di Eric Marzolf
+</translation>
     </message>
 </context>
 <context>
@@ -3535,7 +3557,7 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Data Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vista Dati:</translation>
     </message>
     <message>
         <source>Data Set:</source>
@@ -3543,7 +3565,7 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>apri vista dati dopo la simulazione</translation>
     </message>
     <message>
         <source>Simulation</source>
@@ -3594,7 +3616,7 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai alla pagina visualizzazione</translation>
     </message>
     <message>
         <source>Abort simulation</source>
