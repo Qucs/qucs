@@ -52,6 +52,12 @@ MSstep::MSstep()
 		QObject::tr("width 1 of the line")));
   Props.append(new Property("W2", "1 mm", true,
 		QObject::tr("width 2 of the line")));
+  Props.append(new Property("Model", "Hammerstad", false,
+		QObject::tr("quasi-static microstrip model"
+			    " (Hammerstad,Wheeler,Schneider)")));
+  Props.append(new Property("DispModel", "Kirschning", false,
+	QObject::tr("microstrip dispersion model (Kirschning,Kobayashi,"
+		    "Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)")));
 }
 
 MSstep::~MSstep()

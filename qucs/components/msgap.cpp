@@ -53,9 +53,14 @@ MSgap::MSgap()
 		QObject::tr("width of the line 1")));
   Props.append(new Property("W2", "1 mm", true,
 		QObject::tr("width of the line 2")));
+  Props.append(new Property("S", "1 mm", true,
+		QObject::tr("spacing between the microstrip ends")));
   Props.append(new Property("Model", "Hammerstad", false,
 		QObject::tr("quasi-static microstrip model"
 			    " (Hammerstad,Wheeler,Schneider)")));
+  Props.append(new Property("DispModel", "Kirschning", false,
+	QObject::tr("microstrip dispersion model (Kirschning,Kobayashi,"
+		    "Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)")));
 }
 
 MSgap::~MSgap()

@@ -1707,10 +1707,6 @@ Ungültiger Zeilenanfang!</translation>
         <translation>Mikrostreifenlücke</translation>
     </message>
     <message>
-        <source>number of ports</source>
-        <translation>Anzahl der Tore</translation>
-    </message>
-    <message>
         <source>width of line</source>
         <translation>Streifenbreite</translation>
     </message>
@@ -2041,6 +2037,22 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>source junction perimeter</source>
         <translation>Umfang der Source-Sperrschicht</translation>
+    </message>
+    <message>
+        <source>linear capacitance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recombination current parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emission coefficient for Isr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spacing between the microstrip ends</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
