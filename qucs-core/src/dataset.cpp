@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.4 2004-04-13 20:41:17 ela Exp $
+ * $Id: dataset.cpp,v 1.5 2004-04-30 22:27:03 ela Exp $
  *
  */
 
@@ -234,7 +234,7 @@ void dataset::print (void) {
   }
 
   // print header
-  fprintf (f, "<Qucs Dataset " VERSION ">\n");
+  fprintf (f, "<Qucs Dataset " PACKAGE_VERSION ">\n");
   
   // print dependencies
   for (vector * d = dependencies; d != NULL; d = (vector *) d->getNext ()) {

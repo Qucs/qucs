@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.3 2004-03-28 11:24:44 ela Exp $
+ * $Id: ucs.cpp,v 1.4 2004-04-30 22:27:03 ela Exp $
  *
  */
 
@@ -52,10 +52,10 @@ int main (int argc, char ** argv) {
 
   // check program arguments
   for (int i = 1; i < argc; i++) {
-    if (!strcmp (argv[i], "-v")) {
+    if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       logprint (LOG_STATUS,
-		"Qucsator " VERSION "\n"
-		"Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>\n"
+		"Qucsator " PACKAGE_VERSION "\n"
+		"Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>\n"
 		"\nThis is free software; see the source for copying "
 		"conditions.  There is NO\n"
 		"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
