@@ -1,7 +1,8 @@
 /*
- * msmbend.h - microstrip corner class definitions
+ * msmbend.h - microstrip mitered bend class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.h,v 1.1 2004-07-25 16:58:47 margraf Exp $
+ * $Id: msmbend.h,v 1.2 2004-08-17 18:39:02 ela Exp $
  *
  */
 

@@ -1,3 +1,14 @@
+2004-08-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* matvec.cpp: Added matrix conversion routines to matrix
+	vector class.
+
+	* evaluate.cpp: Added functionality converting S, Y, and Z
+	matrices and matrix vectors into each other.
+
+	* equation.cpp: Fixed bug when exporting matrix vectors into
+	the resulting dataset.
+
 2004-08-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: The SP solver can now use a sorted nodelist.

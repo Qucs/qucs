@@ -1,3 +1,17 @@
+2004-08-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msstep.cpp: Fixed apparent bug in microstrip
+	impedance step implementation (log10 instead of log).
+	Also  renamed 'Model' into 'MSModel' and 'DispModel' into
+	'MSDispModel'.
+
+	* microstrip/msline.cpp (analyseDispersion): Removed some
+	debug messages.
+
+	* microstrip/msgap.cpp: Revisited microstrip gap
+	implementation and renamed 'Model' into 'MSModel' and
+	'DispModel' into 'MSDispModel'.
+
 2004-08-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msopen.cpp: Fixed formulas for open end and

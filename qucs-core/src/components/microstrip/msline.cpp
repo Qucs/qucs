@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.19 2004-07-30 06:25:55 ela Exp $
+ * $Id: msline.cpp,v 1.20 2004-08-17 18:39:02 ela Exp $
  *
  */
 
@@ -226,7 +226,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     e = er - (er - ErEff) / (1 + g * sqr (f));
     d = (er - e) * (e - ErEff) / e / (er - ErEff);
     z = ZlEff * sqrt (e / ErEff) / (1 + d);  // group delay model
-    fprintf (stderr, "GETSINGER e = %g, z = %g\n", e, z);
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
@@ -234,7 +233,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     k = sqrt (ErEff / er);
     f = 4 * h * frequency / C0 * sqrt (er - 1);
     e = ErEff * sqr ((1 + sqr (f)) / (1 + k * sqr (f)));
-    fprintf (stderr, "SCHNEIDER e = %g\n", e);
   }
   // YAMASHITA
   else if (!strcmp (Model, "Yamashita")) {
@@ -243,7 +241,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     f = 4 * h * frequency / C0 * sqrt (er - 1) *
       (0.5 + sqr (1 + 2 * log10 (1 + W / h)));
     e = ErEff * sqr ((1 + k * pow (f, 1.5) / 4) / (1 + pow (f, 1.5) / 4));
-    fprintf (stderr, "YAMASHITA e = %g\n", e);
   }  
   // KOBAYASHI
   else if (!strcmp (Model, "Kobayashi")) {
@@ -259,7 +256,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     else nc = 1;
     n = no * nc < 2.32 ? no * nc : 2.32;
     e = er - (er - ErEff) / (1 + pow (frequency / fh, n));
-    fprintf (stderr, "KOBAYASHI e = %g\n", e);
   }
   // PRAMANICK and BHARTIA
   else if (!strcmp (Model, "Pramanick")) {
@@ -267,7 +263,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     k = ErEff / er;
     f = 2 * MU0 * h * frequency / ZlEff;
     e = ErEff * (1 + sqr (f)) / (1 + k * sqr (f));
-    fprintf (stderr, "PRAMANICK e = %g\n", e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
@@ -276,7 +271,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     f = 2 * MU0 * h * frequency / ZlEff;
     e = er - (er - ErEff) / (1 + g * sqr (f));
     z = ZlEff * sqrt (ErEff / e) * (e - 1) / (ErEff - 1);
-    fprintf (stderr, "HAMMERSTAD e = %g, z = %g\n", e, z);
   }
   // KIRSCHNING and JANSEN
   else if (!strcmp (Model, "Kirschning")) {
@@ -314,7 +308,6 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     r17 = r07 * (1 - 1.1241 * r12 / r16 * 
 		 exp (-0.026 * pow (fs, 1.15656) - r15));
     z = ZlEff * pow (r13 / r14, r17);
-    fprintf (stderr, "KIRSCHNING e = %g, z = %g\n", e, z);
   }
 
   ZlEffFreq = z;

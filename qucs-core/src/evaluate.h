@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.7 2004-07-05 21:41:46 ela Exp $
+ * $Id: evaluate.h,v 1.8 2004-08-17 18:38:59 ela Exp $
  *
  */
 
@@ -256,6 +256,19 @@ public:
   static constant * index_mv_1 (constant *);
   static constant * index_v_1 (constant *);
   static constant * index_m_2 (constant *);
+
+  static constant * stoy_m  (constant *);
+  static constant * stoy_mv (constant *);
+  static constant * stoz_m  (constant *);
+  static constant * stoz_mv (constant *);
+  static constant * ytos_m  (constant *);
+  static constant * ytos_mv (constant *);
+  static constant * ytoz_m  (constant *);
+  static constant * ytoz_mv (constant *);
+  static constant * ztos_m  (constant *);
+  static constant * ztos_mv (constant *);
+  static constant * ztoy_m  (constant *);
+  static constant * ztoy_mv (constant *);
 };
 
 // Type of application function.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.4 2004-07-26 06:30:28 ela Exp $
+ * $Id: matvec.h,v 1.5 2004-08-17 18:38:59 ela Exp $
  *
  */
 
@@ -63,6 +63,14 @@ class matvec
   // other operations
   friend matvec& transpose (matvec&);
   friend matvec& conj (matvec&);
+  friend matvec& stoz (matvec&, complex z0 = 50.0);
+  friend matvec& ztos (matvec&, complex z0 = 50.0);
+  friend matvec& ztoy (matvec&);
+  friend matvec& stoy (matvec&, complex z0 = 50.0);
+  friend matvec& ytos (matvec&, complex z0 = 50.0);
+  friend matvec& ytoz (matvec&);
+
+  friend matvec& twoport (matvec&, char, char);
 
  private:
   int size;
