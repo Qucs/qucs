@@ -1947,6 +1947,14 @@ Wrong &apos;painting&apos; line delimiter!</source>
         <source>order of integration method</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>initial step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimum step size in seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
