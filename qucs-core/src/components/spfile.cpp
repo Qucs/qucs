@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.8 2004-08-09 15:34:45 ela Exp $
+ * $Id: spfile.cpp,v 1.9 2004-08-12 13:59:54 ela Exp $
  *
  */
 
@@ -59,7 +59,7 @@ spfile::spfile () : circuit () {
 // Destructor deletes spfile object from memory.
 spfile::~spfile () {
   if (index) free (index);
-#if DEBUG
+#if DEBUG && 0
   if (data) {
     data->setFile ("spfile.dat");
     data->print ();

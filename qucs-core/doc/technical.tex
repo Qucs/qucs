@@ -3278,6 +3278,70 @@ The LU decomposition requires approximately $n^3/3 + n^2 - n/3$
 operations for solving a linear equation system.  For $M$ consecutive
 solutions the method requires $n^3/3 + Mn^2 - n/3$ operations.
 
+\subsection{Jacobi method}
+%\addcontentsline{toc}{subsection}{Jacobi method}
+
+This method quite simply involves rearranging each equation to make
+each variable a function of the other variables.  Then make an initial
+guess for each solution and iterate.  For this method it is necessary
+to ensure that all the diagonal matrix elements $a_{ii}$ are non-zero.
+This is given for the nodal analysis and almostly given for the
+modified nodal analysis.  If the linear equation system is solvable
+this can always be achieved by rows substitutions.
+
+\addvspace{12pt}
+
+The algorithm for performing the iteration step $k + 1$ writes as
+follows.
+\begin{equation}
+x_{i}^{(k+1)} = \dfrac{1}{a_{ii}}\left(z_i - \sum_{j=1}^{i-1} a_{ij}x_{j}^{(k)} - \sum_{j=i+1}^{n} a_{ij}x_{j}^{(k)}\right)
+\;\;\;\; \textrm{ for } i = 1, \ldots, n
+\end{equation}
+
+This has to repeated until the new solution vectors $x^{(k+1)}$
+deviation from the previous one $x^{(k)}$ is sufficiently small.
+
+\addvspace{12pt}
+
+The initial guess has no effect on whether the iterative method
+converges or not, but with a good initial guess (as possibly given in
+consecutive Newton-Raphson iterations) it converges faster (if it
+converges).  To ensure convergence the condition
+\begin{equation}
+\sum_{j = 1, j \ne i}^{n} \left|a_{ij}\right| \le \left|a_{ii}\right|
+\;\;\;\; \textrm{ for } i = 1, \ldots, n
+\end{equation}
+
+and at least one case
+\begin{equation}
+\sum_{i = 1, i \ne j}^{n} \left|a_{ij}\right| \le \left|a_{ii}\right|
+\end{equation}
+
+must apply.  If these conditions are not met, the iterative equations
+may still converge.  If these conditions are met the iterative
+equations will definitely converge.
+
+\subsection{Gauss-Seidel method}
+%\addcontentsline{toc}{subsection}{Gauss-Seidel method}
+
+The Gauss-Seidel algorithm is a modification of the Jacobi method.  It
+uses the previously computed values in the solution vector of the same
+iteration step.  That is why this iterative method is expected to
+converge faster than the Jacobi method.
+
+\addvspace{12pt}
+
+The slightly modified algorithm for performing the $k + 1$ iteration
+step writes as follows.
+\begin{equation}
+x_{i}^{(k+1)} = \dfrac{1}{a_{ii}}\left(z_i - \sum_{j=1}^{i-1} a_{ij}x_{j}^{(k+1)} - \sum_{j=i+1}^{n} a_{ij}x_{j}^{(k)}\right)
+\;\;\;\; \textrm{ for } i = 1, \ldots, n
+\end{equation}
+
+The remarks about the initial guess $x^{(0)}$ as well as the
+convergence criteria noted in the section about the Jacobi method
+apply to the Gauss-Seidel algorithm as well.
+
 \subsection{A comparison}
 %\addcontentsline{toc}{subsection}{A comparison}
 
@@ -3309,9 +3373,9 @@ should rather be solved with iterative methods.
 
 \\
 \hline
-\raggedright Jacobi & \raggedleft ? & \raggedleft ? & \raggedleft ? & \raggedleft ? & \parbox[t]{2.95cm}{\raggedleft }\\
+\raggedright Jacobi & \raggedleft very good & \raggedleft diagonally dominant systems & \raggedleft easy & \raggedleft $n^2$ in each iteration step & \parbox[t]{2.95cm}{\raggedleft possibly no convergence}\\
 \hline
-\raggedright Gauss-Seidel & \raggedleft very good & \raggedleft diagonally dominant systems & \raggedleft easy & & \parbox[t]{2.95cm}{\raggedleft possibly no convergence}\\
+\raggedright Gauss-Seidel & \raggedleft very good & \raggedleft diagonally dominant systems & \raggedleft easy & \raggedleft $n^2$ in each iteration step & \parbox[t]{2.95cm}{\raggedleft possibly no convergence}\\
 \hline
 \end{tabular}
 
@@ -4278,6 +4342,27 @@ the critical voltage results in
 \;\;\;\; \rightarrow \;\;\;\;
 V_{CRIT} = n V_{T}\cdot \ln{\left(\dfrac{n V_{T}}{I_{S} \sqrt{2}}\right)}
 \end{equation}
+
+In order to avoid numerical errors a minimum value of the
+pn-junction's derivative (i.e. the currents tangent in the operating
+point) $g_{min}$ is defined.  On the one hand this avoids very large
+deviations of the appropriate voltage in the next iteration step in
+the backward region of the pn-junction and on the other hand it avoids
+indefinite large voltages if $g_d$ itself suffers from numerical
+errors and approaches zero.
+
+\addvspace{12pt}
+
+The quadratic input I-V curve of field-effect transistors as well as
+the output characteristics of these devices can be handled in similar
+ways.  The limiting (and thereby improving the convergence behaviour)
+algorithm must somehow ensure that the current and/or voltage
+deviation from one iteration step to the next step is not too a large
+value.  Because of the wide range of existing variations how these
+curves are exactly modeled there is no standard strategy to achieve
+this.  Anyway, the threshold voltage $V_{Th}$ should play an important
+role as well as the direction which the current iteration step
+follows.
 
 \chapter{Non-linear devices}
 %\addcontentsline{toc}{chapter}{Non-linear devices}

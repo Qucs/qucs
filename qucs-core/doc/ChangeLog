@@ -1,3 +1,11 @@
+2004-08-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Gauss-Seidel method}): Documented
+	Gauss-Seidel and Jacobi methods for solving linear equation
+	systems (both iterative methods).
+	(subsection{Convergence}): Made some additional remarks about
+	convergence helpers.
+
 2004-08-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Physical model}): Completed the

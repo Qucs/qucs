@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.9 2004-08-01 23:08:20 ela Exp $
+ * $Id: eqnsys.cpp,v 1.10 2004-08-12 13:59:53 ela Exp $
  *
  */
 
@@ -99,8 +99,8 @@ void eqnsys::solve (void) {
   case ALGO_LU_DECOMPOSITION:
     solve_lu ();
     break;
-  case ALGO_JACOBI:
-    solve_jacobi ();
+  case ALGO_JACOBI: case ALGO_GAUSS_SEIDEL:
+    solve_iterative ();
     break;
   }
 #if DEBUG && 0
@@ -295,25 +295,31 @@ void eqnsys::solve_lu (void) {
 }
 
 /* The function solves the equation system using a full-step iterative
-   method (called Jacobi's method).  If the current X vector (the
-   solution vector) is the solution within a Newton-Raphson iteration
-   it is a good initial guess and the method is very likely to
-   converge.  On divergence the method falls back to LU decomposition. */
-void eqnsys::solve_jacobi (void) {
+   method (called Jacobi's method) or a single-step method (called
+   Gauss-Seidel) depending on the given algorithm.  If the current X
+   vector (the solution vector) is the solution within a
+   Newton-Raphson iteration it is a good initial guess and the method
+   is very likely to converge.  On divergence the method falls back to
+   LU decomposition. */
+void eqnsys::solve_iterative (void) {
   complex f;
   int error, conv, i, c, r, N = A->getCols ();
-  int MaxIter = 350;
-  nr_double_t reltol = 1e-3;
+  int MaxIter = N; // -> less than N^3 operations
+  nr_double_t reltol = 1e-4;
   nr_double_t abstol = 1e-12;
   nr_double_t diff, crit;
 
   // ensure that all diagonal values are non-zero
   ensure_diagonal ();
 
+  // try to raise diagonal dominance
+  preconditioner ();
+
   // decide here about possible convergence
   if ((crit = convergence_criteria ()) >= 1) {
 #if DEBUG
-    logprint (LOG_STATUS, "NOTIFY: jacoby criteria = %g\n", crit);
+    logprint (LOG_STATUS, "NOTIFY: convergence criteria: %g >= 1 (%dx%d)\n",
+	      crit, N, N);
 #endif
     //solve_lu ();
     //return;
@@ -322,9 +328,8 @@ void eqnsys::solve_jacobi (void) {
   // normalize the equation system to have ones on its diagonal
   for (r = 1; r <= N; r++) {
     f = A->get (r, r);
-    for (c = 1; c <= N; c++) {
-      A->set (r, c, A->get (r, c) / f);
-    }
+    assert (f != 0); // singular matrix
+    for (c = 1; c <= N; c++) A->set (r, c, A->get (r, c) / f);
     B->set (r, 1, B->get (r, 1) / f);
   }
 
@@ -337,7 +342,15 @@ void eqnsys::solve_jacobi (void) {
     // compute new solution vector
     for (r = 1; r <= N; r++) {
       for (f = 0, c = 1; c <= N; c++) {
-	if (c != r) f += A->get (r, c) * Xprev->get (c, 1);
+	if (algo == ALGO_GAUSS_SEIDEL) {
+	  // Gauss-Seidel
+	  if (c < r)      f += A->get (r, c) * X->get (c, 1);
+	  else if (c > r) f += A->get (r, c) * Xprev->get (c, 1);
+	}
+	else {
+	  // Jacobi
+	  if (c != r) f += A->get (r, c) * Xprev->get (c, 1);
+	}
       }
       X->set (r, 1, B->get (r, 1) - f);
     }
@@ -359,13 +372,15 @@ void eqnsys::solve_jacobi (void) {
 
   if (!conv || error) {
     logprint (LOG_ERROR,
-	      "WARNING: no jacobi convergence after %d iterations\n", i);
+	      "WARNING: no convergence after %d %s iterations\n",
+	      i, algo == ALGO_JACOBI ? "jacobi" : "gauss-seidel");
     solve_lu ();
   }
 #if DEBUG
   else {
     logprint (LOG_STATUS,
-	      "NOTIFY: jacobi convergence after %d iterations\n", i);
+	      "NOTIFY: %s convergence after %d iterations\n",
+	      algo == ALGO_JACOBI ? "jacobi" : "gauss-seidel", i);
   }
 #endif
 }
@@ -387,61 +402,89 @@ nr_double_t eqnsys::convergence_criteria (void) {
    elements in the equation system matrix A.  This is required for
    iterative solution methods. */
 void eqnsys::ensure_diagonal (void) {
-  complex f;
-  int k, c, i, r, pivot, N = A->getCols ();
+  ensure_diagonal_MNA ();
+}
 
-  // get number of zero diagonal elements
-  for (k = 0, i = 1; i <= N; i++) if (A->get (i, i) == 0) k++;
-  if (k <= 0) return;
-
-  // TODO: find a better algorithm for that !!!
-  for (c = 1; c <= N; c++) {
-
-    for (i = 1; i <= N; i++) {
-      // substitute rows if really possible (for permutations)
-      if (abs (A->get (i, i)) > 0) {
-	for (pivot = i, r = N; r > i; r--) {
-	  if (abs (A->get (r, i)) > 0 && abs (A->get (i, r)) > 0) {
-	    pivot = r;
-	    break;
-	  }
+/* The function ensures that there are non-zero diagonal elements in
+   the equation system matrix A.  It achieves this condition for
+   non-singular matrices which have been produced by the modified
+   nodal analysis.  It takes advantage of the fact that the zero
+   diagonal elements have pairs of 1 und -1 on the same column and
+   row. */
+void eqnsys::ensure_diagonal_MNA (void) {
+  int restart, exchanged, begin = 1, pairs;
+  int pivot1, pivot2, i, N = A->getCols ();
+  do {
+    restart = exchanged = 0;
+    /* search for zero diagonals with lone pairs */
+    for (i = begin; i <= N; i++) {
+      if (A->get (i, i) == 0) {
+	pairs = countPairs (i, pivot1, pivot2);
+	if (pairs == 1) { /* lone pair found, substitute rows */
+	  A->exchangeRows (i, pivot1);
+	  B->exchangeRows (i, pivot1);
+	  exchanged = 1;
 	}
-	if (pivot != i) {
-	  A->exchangeRows (i, pivot);
-	  B->exchangeRows (i, pivot);
+	else if ((pairs > 1) && !restart) {
+	  restart = 1;
+	  begin = i;
 	}
       }
-      // pivoting necessary
-      else {
-	for (pivot = i, r = 1; r <= N; r++) {
-	  if (r < i) {
-	    // substitute unconditionally to get a non-zero element on
-	    // the current row
-	    if (abs (A->get (r, i)) > 0) {
-	      if (abs (A->get (i, r)) > 0) k--;
-	      pivot = r;
-	      break;
-	    }
-	  }
-	  else if (r > i) {
-	    // substitute only if really possible
-	    if (abs (A->get (r, i)) > 0 && abs (A->get (i, r)) > 0) {
-	      pivot = r;
-	      break;
-	    }
-	  }
+    }
+
+    /* all lone pairs are gone, look for zero diagonals with multiple pairs */
+    if (restart) {
+      for (i = begin; !exchanged && i <= N; i++) {
+	if (A->get (i, i) == 0) {
+	  pairs = countPairs (i, pivot1, pivot2);
+	  A->exchangeRows (i, pivot1);
+	  B->exchangeRows (i, pivot1);
+	  exchanged = 1;
 	}
-	if (pivot != i) {
-	  A->exchangeRows (i, pivot);
-	  B->exchangeRows (i, pivot);
-	}
-	if (k <= 0) goto done;
       }
     }
   }
+  while (restart);
+}
 
- done:
-  // finally check non-zero diagonals
-  for (f = 1, i = 1; i <= N; i++) f *= A->get (i, i);
-  assert (f != 0);
+/* Helper function for the above ensure_diagonal_MNA() function.  It
+   looks for the pairs of 1 and -1 on the given row and column index. */
+int eqnsys::countPairs (int i, int& r1, int& r2) {
+  int pairs = 0, N = A->getCols ();
+  for (int r = 1; r <= N; r++) {
+    if (fabs (real (A->get (r, i))) == 1.0) {
+      r1 = r;
+      pairs++;
+      for (r++; r <= N; r++) {
+	if (fabs (real (A->get (r, i))) == 1.0) {
+	  r2 = r;
+	  if (++pairs >= 2) return pairs;
+	}
+      }
+    }
+  }
+  return pairs;
+}
+
+/* The function tries to raise the absulute value of diagonal elements
+   by swapping rows and thereby make the A matrix diagonally
+   dominant. */
+void eqnsys::preconditioner (void) {
+  int pivot, r, N = A->getCols ();
+  nr_double_t MaxPivot;
+  for (int i = 1; i <= N; i++) {
+    // find maximum column value for pivoting
+    for (MaxPivot = 0, pivot = i, r = 1; r <= N; r++) {
+      if (abs (A->get (r, i)) > MaxPivot && 
+	  abs (A->get (i, r)) >= abs (A->get (r, r))) {
+        MaxPivot = abs (A->get (r, i));
+        pivot = r;
+      }
+    }
+    // swap matrix rows if possible
+    if (i != pivot) {
+      A->exchangeRows (i, pivot);
+      B->exchangeRows (i, pivot);
+    }
+  }
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.6 2004-07-08 06:38:43 ela Exp $
+ * $Id: object.cpp,v 1.7 2004-08-12 13:59:53 ela Exp $
  *
  */
 
@@ -192,15 +192,18 @@ int object::countProperties (void) {
 // This function returns a text representation of the objects properties.
 char * object::propertyList (void) {
   if (ptxt) free (ptxt);
-  char text[256];
   int len = countProperties () + 1;
   ptxt = (char *) malloc (len); ptxt[0] = '\0';
   for (property * p = prop; p != NULL; p = p->getNext ()) {
-    sprintf (text, "%s=\"%s\"", p->getName (), p->toString ());
+    char * n = p->getName ();
+    char * val = p->toString ();
+    char * text = (char *) malloc (strlen (n) + strlen (val) + 4);
+    sprintf (text, "%s=\"%s\"", n, val);
     len += strlen (text);
     ptxt = (char *) realloc (ptxt, len);
     strcat (ptxt, text);
     if (p->getNext () != NULL) strcat (ptxt, " ");
+    free (text);
   }
   return ptxt;
 }

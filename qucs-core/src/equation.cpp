@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.20 2004-08-09 15:34:44 ela Exp $
+ * $Id: equation.cpp,v 1.21 2004-08-12 13:59:53 ela Exp $
  *
  */
 
@@ -77,7 +77,7 @@ void constant::print (void) {
 
 // Returns the string representation of a complex value.
 static char * Cplx2String (complex c) {
-  static char str[256];
+  static char str[256]; // enough for a real or complex number
   if (imag (c) == 0.0) {
     sprintf (str, "%g", (double) real (c));
   }
