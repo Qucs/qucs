@@ -5,6 +5,7 @@
 \usepackage{epsfig}
 \usepackage{array}
 \usepackage{amsmath}
+\usepackage{stmaryrd}
 \usepackage{SIunits}
 \usepackage{psfrag}
 \usepackage{relsize}
@@ -4695,6 +4696,9 @@ is non-zero and if there is a non-zero base resistance.
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
 
+\section{Single microstrip line}
+%\addcontentsline{toc}{section}{Single microstrip line}
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[width=12cm]{msline}
@@ -4704,8 +4708,8 @@ is non-zero and if there is a non-zero base resistance.
 \end{figure}
 \FloatBarrier
 
-\section{Quasi-static characteristic impedance}
-%\addcontentsline{toc}{section}{Quasi-static characteristic impedance}
+\subsection{Quasi-static characteristic impedance}
+%\addcontentsline{toc}{subsection}{Quasi-static characteristic impedance}
 
 Harold A. Wheeler \cite{Wheeler2} formulated his synthesis and
 analysis equations based upon a conformal mapping's approximation of
@@ -4776,8 +4780,8 @@ is approximately $0.1\ohm$.
 \end{figure}
 \FloatBarrier
 
-\section{Quasi-static effective dielectric constant}
-%\addcontentsline{toc}{section}{Quasi-static effective dielectric constant}
+\subsection{Quasi-static effective dielectric constant}
+%\addcontentsline{toc}{subsection}{Quasi-static effective dielectric constant}
 
 Harold A. Wheeler \cite{Wheeler} gives the following approximation for
 narrow strips ($W/h < 3$) based upon the characteristic impedance
@@ -4820,8 +4824,17 @@ b &= 0.564\cdot\left(\frac{\varepsilon_{r} - 0.9}{\varepsilon_{r} + 3}\right)^{0
 u &= \frac{W}{h}
 \end{align}
 
-\section{Dispersion}
-%\addcontentsline{toc}{section}{Dispersion}
+\subsection{Dispersion}
+%\addcontentsline{toc}{subsection}{Dispersion}
+
+Dispersion can be a strong effect in microstrip transmission lines due
+to their inhomogeneity.  Typically, as frequency is increased,
+$\varepsilon_{r_{eff}}$ increases in a non-linear manner, approaching
+an asymptotic value.  Dispersion affects characteristic impedance in a
+similar way.
+
+\subsubsection{Kirschning and Jansen}
+%\addcontentsline{toc}{subsubsection}{Kirschning and Jansen}
 
 The dispersion formulae given by Kirschning and Jansen
 \cite{Kirschning3} is meant to have an accuracy better than 0.6\% in
@@ -4841,6 +4854,9 @@ P_{4} &= 1 + 2.751 \cdot \left(1 - \exp\left(- \left(\frac{\varepsilon_{r}}{15.9
 f_{n} &= f \cdot h = \text{normalised frequency in } \left[\giga\hertz \cdot \milli\meter\right]
 \end{align}
 
+\subsubsection{Yamashita}
+%\addcontentsline{toc}{subsubsection}{Yamashita}
+
 The values obtained by the approximate dispersion formula as given by
 E. Yamashita \cite{Yamashita} deviate within 1\% in a wide frequency
 range compared to the integral equation method used to derive the
@@ -4859,6 +4875,9 @@ with
 k &= \sqrt{\frac{\varepsilon_{r}}{\varepsilon_{r_{eff}}}}\\
 F &= \frac{4\cdot h\cdot f\cdot \sqrt{\varepsilon_{r} - 1}}{c_{0}} \cdot \left(0.5 + \left(1 + 2 \cdot \log\left(1 + \frac{W}{h}\right)\right)^{2}\right)
 \end{align}
+
+\subsubsection{Kobayashi}
+%\addcontentsline{toc}{subsubsection}{Kobayashi}
 
 The dispersion formula presented by M. Kobayashi \cite{Kobayashi},
 derived by comparison to a numerical model, has a high degree of
@@ -4880,6 +4899,9 @@ m_{c} &=
 \end{array}
 \end{cases}
 \end{align}
+
+\subsubsection{Getsinger}
+%\addcontentsline{toc}{subsubsection}{Getsinger}
 
 Based upon measurements of dispersion curves for microstrip lines on
 alumina substrates 0.025 and 0.050 inch thick W. J. Getsinger
@@ -4916,6 +4938,9 @@ D(f) &= \frac{\left(\varepsilon_{r} - \varepsilon_{r}(f)\right)\cdot\left(\varep
 \end{align}
 \end{itemize}
 
+\subsubsection{Hammerstad and Jensen}
+%\addcontentsline{toc}{subsubsection}{Hammerstad and Jensen}
+
 The dispersion formulae of E. Hammerstad and O. Jensen
 \cite{Hammerstad} give good results for all types of substrates (not
 as limited as Getsinger's formulae).  The impedance dispersion model
@@ -4934,45 +4959,145 @@ G &= \frac{\pi^{2}}{12}\cdot\frac{\varepsilon_{r} - 1}{\varepsilon_{r_{eff}}}\cd
 Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}\cdot\frac{\varepsilon_{r}(f) - 1}{\varepsilon_{r_{eff}} - 1}
 \end{equation}
 
-\section{Transmission losses}
-%\addcontentsline{toc}{section}{Transmission losses}
+\subsection{Transmission losses}
+%\addcontentsline{toc}{subsection}{Transmission losses}
 
-\subsection{Dielectric losses}
-%\addcontentsline{toc}{subsection}{Dielectric losses}
+The attenuation of a microstrip line consists of conductor (ohmic)
+losses, dielectric (substrate) losses, losses due to radiation and
+propagation of surface waves and higher order modes.
 
-\subsection{Conductor losses}
-%\addcontentsline{toc}{subsection}{Conductor losses}
+\begin{equation}
+\alpha = \alpha_c + \alpha_d + \alpha_r + \alpha_s
+\end{equation}
+
+\subsubsection{Dielectric losses}
+%\addcontentsline{toc}{subsubsection}{Dielectric losses}
+
+Dielectric loss is due to the effects of finete loss tangent
+$\tan{\delta_d}$. Basically the losses rise proportional over the
+operating frequency.  For common microwave substrate materials like
+$Al_2O_3$ ceramics with a loss tangent $\delta_d$ less than $10^{-3}$
+the dielectric losses can be neglected compared to the conductor
+losses.
+
+\addvspace{12pt}
+
+For the inhomogeneous line, an effective dielectric filling fraction
+give that proportion of the transmission line's cross section not
+filled by air.  For microstrip lines, the result is
+
+\begin{equation}
+\alpha_d = \dfrac{\varepsilon_r}{\sqrt{\varepsilon_{r_{eff}}}}\cdot \dfrac{\varepsilon_{r_{eff}} - 1}{\varepsilon_r - 1}\cdot \dfrac{\pi}{\lambda_0}\cdot \tan{\delta_d}
+\end{equation}
+
+whereas
+
+\addvspace{12pt}
+
+\begin{tabular}{rl}
+$\delta_d$& dielectric loss tangent
+\end{tabular}
+
+\subsubsection{Conductor losses}
+%\addcontentsline{toc}{subsubsection}{Conductor losses}
+
+E. Hammerstad and O. Jensen \cite{Hammerstad} proposed the following
+equation for the conductor losses.  The surface roughness of the
+substrate is necessary to account for an asymptotic increase seen in
+the apparent surface resistance with decreasing skin depth.  This
+effect is considered by the correction factor $K_r$.  The current
+distribution factor $K_i$ is a very good approximation provided that
+the strip thickness exceeds three skin depths ($t > 3\delta$).
+\begin{equation}
+\alpha_c = \dfrac{R^{\boxempty}}{Z_L \cdot W}\cdot K_r \cdot K_i
+\end{equation}
+
+with
+\begin{align}
+R^{\boxempty} &= \dfrac{\rho}{\delta} = \sqrt{\rho\cdot\dfrac{\omega \cdot \mu}{2}} = \sqrt{\rho\cdot\pi\cdot f \cdot \mu}\\
+K_i &= \exp{\left(-1.2\left(\dfrac{Z_L}{Z_{F0}}\right)^{0.7}\right)}\\
+K_r &= 1 + \dfrac{2}{\pi}\arctan{\left(1.4\left(\dfrac{\Delta}{\delta}\right)^2\right)}
+\end{align}
+
+whereas
+
+\addvspace{12pt}
+
+\begin{tabular}{rl}
+$R^{\boxempty}$& sheet resistance of conductor material (skin resistance)\\
+$\rho$& specific resistance of conductor\\
+$\delta$& skin depth\\
+$K_i$& current distribution factor\\
+$K_r$& correction term due to surface roughness\\
+$\Delta$& effective (rms) surface roughness of substrate\\
+$Z_{F0}$& wave impedance in vacuum
+\end{tabular}
+
+\subsection{S-parameter of the single microstrip line}
+%\addcontentsline{toc}{subsection}{S-parameter of the single microstrip line}
+
+The calculation of the scattering parameters for the single microstrip
+line requires the physical length $l$ of the component, its impedance
+$Z_L$ and propagation constant $\gamma$.  The complex propagation
+constant $\gamma$ is given by
+\begin{equation}
+\gamma = \alpha + j\beta
+\end{equation}
+
+where $\alpha$ is the attenuation factor and $\beta$ is the (real)
+propagation constant given by
+\begin{equation}
+\beta = \sqrt{\varepsilon_{r_{eff}}(\omega)} \cdot k_0
+\end{equation}
+
+where $\varepsilon_{r_{eff}}(\omega)$ is the effective dielectric
+constant and $k_0$ is the TEM propagation constant $k_0$ for the
+equivalent transmission line with an air dielectric.
+\begin{equation}
+k_0 = \omega \sqrt{\varepsilon_0 \mu_0}
+\end{equation}
+
+The expressions used to calculate the scattering parameters are given
+by
+\begin{align}
+S_{11} = S_{22} &= \dfrac{\left(z - y\right) \sinh{\gamma l}}{2\cosh{\gamma l} + \left(z + y\right) \sinh{\gamma l}}\\
+S_{12} = S_{21} &= \dfrac{2}{2\cosh{\gamma l} + \left(z + y\right) \sinh{\gamma l}}
+\end{align}
+
+with $z$ being the normalized impedance and $y$ is the normalized
+admittance.
 
 \section{Microstrip corner}
 %\addcontentsline{toc}{section}{Microstrip corner}
 
 The equivalent circuit of a microstrip corner is shown in fig.
-\ref{fig:MScorner}. The
-values of the components are as follows \cite{Kirschning4}.
+\ref{fig:MScorner}. The values of the components are as follows
+\cite{Kirschning4}.
 
 \begin{equation}
-C [\text{pF}] = W \cdot \left( (10.35\cdot\epsilon_r + 2.5) \cdot \frac{W}{H} +
-			       (2.6\cdot\epsilon_r + 5.64) \right)
+C \text{ [pF]} = W \cdot \left( (10.35\cdot\varepsilon_r + 2.5) \cdot \frac{W}{h} +
+			       (2.6\cdot\varepsilon_r + 5.64) \right)
 \end{equation}
 \begin{equation}
-L [\text{nH}] = 220\cdot H \cdot \left( 1 - 1.35\cdot\exp\left( -0.18\cdot
-		   \left( \frac{W}{H} \right)^{1.39} \right) \right)
+L \text{ [nH]} = 220\cdot h \cdot \left( 1 - 1.35\cdot\exp\left( -0.18\cdot
+		   \left( \frac{W}{h} \right)^{1.39} \right) \right)
 \end{equation}
 
 The values for a 50\% mitered bend are \cite{Kirschning4}.
 
 \begin{equation}
-C [\text{pF}] = W \cdot \left( (3.93\cdot\epsilon_r + 0.62) \cdot \frac{W}{H} +
-			       (7.6\cdot\epsilon_r + 3.80) \right)
+C \text{ [pF]} = W \cdot \left( (3.93\cdot\varepsilon_r + 0.62) \cdot \frac{W}{h} +
+			       (7.6\cdot\varepsilon_r + 3.80) \right)
 \end{equation}
 \begin{equation}
-L [\text{nH}] = 440\cdot H \cdot \left( 1 - 1.062\cdot\exp\left( -0.177\cdot
-		   \left( \frac{W}{H} \right)^{0.947} \right) \right)
+L \text{ [nH]} = 440\cdot h \cdot \left( 1 - 1.062\cdot\exp\left( -0.177\cdot
+		   \left( \frac{W}{h} \right)^{0.947} \right) \right)
 \end{equation}
 
-With $W$ being width of the microstrip line and $H$ height of the substrate.
-These formulas are valid for $W/H = $0.2 to 6.0 and for $\epsilon_r = $2.36 to 10.4
-and up to 14 GHz. The precision is approximately 0.3\%.
+With $W$ being width of the microstrip line and $h$ height of the
+substrate.  These formulas are valid for $W/h = $ 0.2 to 6.0 and for
+$\varepsilon_r = $ 2.36 to 10.4 and up to 14 GHz. The precision is
+approximately 0.3\%.
 
 \begin{figure}[ht]
 \begin{center}
@@ -4983,6 +5108,17 @@ and up to 14 GHz. The precision is approximately 0.3\%.
 \end{figure}
 \FloatBarrier
 
+The Z-parameters for the given equivalent small signal circuit can be
+written as stated in eq. \eqref{eq:MScornerZ} and are easy to convert
+to scattering parameters.
+\begin{equation}
+Z =
+\begin{bmatrix}
+j\omega L + \dfrac{1}{j\omega C} & \dfrac{1}{j\omega C}\\
+\dfrac{1}{j\omega C} & j\omega L + \dfrac{1}{j\omega C}\\
+\end{bmatrix}
+\label{eq:MScornerZ}
+\end{equation}
 
 
 \nocite{*}
