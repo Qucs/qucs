@@ -5,8 +5,9 @@
 \usepackage{epsfig}
 \usepackage{array}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{stmaryrd}
-\usepackage{SIunits}
+\usepackage[amssymb]{SIunits}
 \usepackage{graphics}
 \usepackage{psfrag}
 \usepackage{relsize}
@@ -1824,7 +1825,7 @@ accordingly.  I.e. replace "1" with the number of the input port and
 Noise figure:
 \begin{equation}
 F = 1 + \frac{\underline{c}_{22}}{k\cdot T_0\cdot |\underline{S}_{21}|^2}
-\label{eqn:nparamF}
+\label{eq:nparamF}
 \end{equation}
 \begin{equation}
 NF\,[\text{dB}]\, = 10\cdot\lg F
@@ -1868,7 +1869,7 @@ R_n = \frac{Z_{port,in}}{4\cdot k\cdot T_0}\cdot
       \text{Re}\left( \underline{c}_{12}\cdot\left( \frac{1+\underline{S}_{11}}{\underline{S}_{21}} \right)^*
       \right)\, + \underline{c}_{22}\cdot
       \left| \frac{1+\underline{S}_{11}}{\underline{S}_{21}} \right|^2 \right)
-\label{eqn:nparamRn}
+\label{eq:nparamRn}
 \end{equation}
 \begin{tabular}{ll}
 With & \quad $Z_{port,in}$ internal impedance of input port\\
@@ -2106,8 +2107,8 @@ The absolute values of the noise correlation coefficients are very
 small.  To achieve a higher numerical precision, it is recommended to
 normalize the noise matrix with $k\cdot T_0$. After the simulation
 they do not have to be denormalized, because the noise parameters can
-be calculated by using equation \eqref{eqn:nparamF} to
-\eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
+be calculated by using equation \eqref{eq:nparamF} to
+\eqref{eq:nparamRn} and omitting all occurrences of $k\cdot T_0$.
 
 \addvspace{12pt}
 
@@ -2460,7 +2461,7 @@ dependent.  Altogether it is:
 \end{pmatrix}\\
 \text{with}\qquad\frac{1}{2}\le K \le 1
 \end{split}
-\label{eqn:diode_noise}
+\label{eq:diode_noise}
 \end{equation}
 
 Remark: Believing the diode equation $I_D = I_S\cdot (\exp(V/(N\cdot
@@ -2472,7 +2473,7 @@ thermal noise.
 
 Some special diodes have additional current or noise components
 (tunnel diodes, avalanche diodes etc.).  All these mechanisms are not
-taken into account in equation \eqref{eqn:diode_noise}.
+taken into account in equation \eqref{eq:diode_noise}.
 
 \addvspace{12pt}
 
@@ -4794,6 +4795,7 @@ trapezoidal
 For higher order multi-step integration methods the general purpose
 method of resolution for the equation $\dot{x} = f(x,t)$
 \begin{equation}
+\label{eq:GenPurposeInt}
 x^{n+1} = \sum^p_{i=0} a_i\cdot x^{n-i} + h \sum^p_{i=-1} b_i\cdot f(x^{n-i}, t^{n-i})
 \end{equation}
 
@@ -4988,46 +4990,133 @@ rule.
 \subsection{Stability considerations}
 %\addcontentsline{toc}{subsection}{Stability considerations}
 
+When evaluating the numerical formulations given for both implicit and
+explicit integration formulas once rounding errors are unavoidable.
+For small values of $h$ the evaluation must be repeated very often and
+thus the rounding error possibly accumulates.  With higher order
+algorithms it is possible to enlarge the step width and thereby reduce
+the error accumulation.
+
+\addvspace{12pt}
+
+On the other hand it is questionable whether the construction of
+implicit algorithms is really valuable because of the higher
+computation effort caused by the necessary iteration (indices
+$~^{n+1}$ on both sides of the equation).  In practice there is a class
+of differential equations which can be reasonably handled by implicit
+algorithms where explicit algorithms completely fail because of the
+impracticable reduction of the step width.  This class of differential
+equations are called stiff problems.  The effect of stiffness causes
+for small variations in the actual solution to be computed very large
+deviations in the solution which get damped.
+
+\addvspace{12pt}
+
+For the stability prediction of integration algorithms with regard to
+nonlinear differential equations and equation systems the simple and
+linear test differential equation
+\begin{equation}
+\dot{x} = \lambda x
+\;\;\;\; \textrm{ with } \;\;\;\;
+\lambda \in \mathbb{C}, \text{Re}\left\{\lambda\right\} < 0, x \ge 0
+\end{equation}
+
+is used.  The condition $\text{Re}\left\{\lambda\right\} < 0$ ensures
+the solution to be decreasing.  The general purpose method of
+resolution given in \eqref{eq:GenPurposeInt} can be solved by the
+polynomial method setting
+\begin{equation}
+x^k = z^k
+\;\;\;\; \textrm{ with } \;\;\;\;
+z \in \mathbb{C}
+\end{equation}
+
+Thus we get the characteristic polynom
+\begin{align}
+\label{eq:characteristicPolynom}
+\varphi\left(z\right) &= \varrho\left(z\right) + h\lambda \cdot \eta\left(z\right) = 0\\
+&= \sum^{n-1}_{i=-1} a_i\cdot z^{n-i} + h\lambda \sum^{n-1}_{i=-1} b_i\cdot z^{n-i}
+\end{align}
+
+Because of the conditions defined by \eqref{eq:MultiStepSys} the above
+eq. \eqref{eq:characteristicPolynom} can only be true for
+\begin{equation}
+\left|z\right| < 1
+\end{equation}
+
+which describes the inner unity circle on the complex plane.  In order
+to compute the boundary of the area of absolute stability it is
+necessary to calculate
+\begin{equation}
+\label{eq:StabArea}
+\mu\left(z\right) = h\lambda = -\dfrac{\varrho\left(z\right)}{\eta\left(z\right)}
+\;\;\;\; \textrm{ with } \;\;\;\;
+z = e^{j\vartheta}, 0 \le \vartheta \le 2\pi
+\end{equation}
+
+These equations describe closed loops. The inner of these loops
+describe the area of absolute stability.  Because $\lambda \le 0$ and
+$h \ge 0$ only the left half of the complex plane is of particular
+interest.  An integration algorithm is call zero-stable if the
+stability area encloses $\mu = 0$.  Given this condition the algorithm
+is as a matter of principle usable, otherwise not.  If an algorithms
+stability area encloses the whole left half plane it is called
+A-stable.  A-stable algorithms are stable for any $h$ and all $\lambda
+< 0$.  Any other kind of stability area introduces certain
+restrictions for $\mu$.
+
 \begin{figure}[ht]
 \begin{center}
-\psfrag{Re(lh)}{$\mathrm{Re (\lambda h)}$}
-\psfrag{Im(lh)}{$\mathrm{Im (\lambda h)}$}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
 \includegraphics[width=1\linewidth]{stabgear}
 \end{center}
-\caption{areas of absolute stability for order 1..6 Gear formulae}
+\caption{areas of absolute stability for order 1\ldots 6 Gear formulae}
+\label{fig:StabGear}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[ht]
 \begin{center}
-\psfrag{Re(lh)}{$\mathrm{Re (\lambda h)}$}
-\psfrag{Im(lh)}{$\mathrm{Im (\lambda h)}$}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
 \includegraphics[width=1\linewidth]{stabmoulton}
 \end{center}
-\caption{areas of absolute stability for order 1..6 Adams-Moulton formulae}
+\caption{areas of absolute stability for order 1\ldots 6 Adams-Moulton formulae}
+\label{fig:StabMoulton}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[ht]
 \begin{center}
-\psfrag{Re(lh)}{$\mathrm{Re (\lambda h)}$}
-\psfrag{Im(lh)}{$\mathrm{Im (\lambda h)}$}
+\psfrag{Re(lh)}{$\mathrm{Re \left\{h\lambda\right\}}$}
+\psfrag{Im(lh)}{$\mathrm{Im \left\{h\lambda\right\}}$}
 \includegraphics[width=1\linewidth]{stabbashford}
 \end{center}
-\caption{areas of absolute stability for order 1..6 Adams-Bashford formulae}
+\caption{areas of absolute stability for order 1\ldots 6 Adams-Bashford formulae}
+\label{fig:StabBashford}
 \end{figure}
 \FloatBarrier
 
-\subsection{Energy-storage components}
-%\addcontentsline{toc}{subsection}{Energy-storage components}
+The figures \ref{fig:StabGear}, \ref{fig:StabMoulton} and
+\ref{fig:StabBashford} visualize the evaluation of
+eq. \eqref{eq:StabArea} for the discussed integration methods.  All of
+the implicit formulae are zero-stable, thus principally usable.  The
+forward Euler, Gear order 2 and the trapezoidal integration methods
+are A-stable.  Fig. \ref{fig:StabGear} shows why the Gear formulae are
+of such great importance for the transient analysis of electrical
+networks.  With least restrictions for $\mu$ they can be stabilized.
+
+\section{Energy-storage components}
+%\addcontentsline{toc}{section}{Energy-storage components}
 
 As already mentioned it is essential for the transient analysis to
 consider the energy storing effects of components.  The following
 section describes how the modified nodal analysis can be used to take
 this into account.
 
-\subsubsection{Capacitor}
-%\addcontentsline{toc}{subsubsection}{Capacitor}
+\subsection{Capacitor}
+%\addcontentsline{toc}{subsection}{Capacitor}
 
 The relation between current and voltage in terms of a differential
 equation for an ideal capacitor is
@@ -5085,8 +5174,8 @@ V_2^{n+1}\\
 \end{bmatrix}
 \end{equation}
 
-\subsubsection{Inductor}
-%\addcontentsline{toc}{subsubsection}{Inductor}
+\subsection{Inductor}
+%\addcontentsline{toc}{subsection}{Inductor}
 
 The relation between current and voltage in terms of a differential
 equation for an ideal inductor can be written as
@@ -5151,7 +5240,7 @@ It also possible to model the ideal inductor as a current source with
 an internal resistance which would yield a similar equivalent circuit
 as for the capacitor.  But with the proposed model it is possible to
 use alike computation schemes for capacitors and inductors.  Charges
-become flues, capacitance become inductances and finally voltages
+become flues, capacitances become inductances and finally voltages
 become currents and the other way around.  Everything else (especially
 the coeffcients in the integration formulas) can be reused.
 
@@ -7824,7 +7913,7 @@ In order to simplify calculations, the equivalent additional line
 length $\Delta l$ can be transformed into an equivalent open end
 capacitance $C_{end}$:
 \begin{equation}
-\label{eqn:Cend}
+\label{eq:Cend}
 C_{end} = C'\cdot \Delta l = \dfrac{\sqrt{\varepsilon_{r,eff}}}{c_0\cdot Z_L} \Delta l
 \end{equation}
 
@@ -7873,7 +7962,7 @@ Q_5 &= \frac{1.23}{1 + 0.12\cdot \left( W_2 / W_1 - 1 \right)^{0.9}}
 \end{align}
 
 with $C_1$ and $C_2$ being the open end capacitances of a microstrip
-line (see eq. \eqref{eqn:Cend}).  The numerical error of the
+line (see eq. \eqref{eq:Cend}).  The numerical error of the
 capacitive admittances is less than $0.1$mS for
 \begin{equation*}
 \begin{split}

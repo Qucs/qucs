@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.2 2004/09/11 20:39:29 ela Exp $
+ * $Id: tmatrix.cpp,v 1.3 2004/09/22 16:47:57 ela Exp $
  *
  */
 
@@ -220,3 +220,16 @@ tmatrix<nr_type_t>& operator * (tmatrix<nr_type_t>& a, tmatrix<nr_type_t>& b) {
   }
   return *res;
 }
+
+#ifdef DEBUG
+// Debug function: Prints the matrix object.
+template <class nr_type_t>
+void tmatrix<nr_type_t>::print (void) {
+  for (int r = 1; r <= rows; r++) {
+    for (int c = 1; c <= cols; c++) {
+      fprintf (stderr, "%+.2e ", (double) real (get (r, c)));
+    }
+    fprintf (stderr, "\n");
+  }
+}
+#endif /* DEBUG */

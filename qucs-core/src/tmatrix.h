@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.1 2004/09/06 06:40:07 ela Exp $
+ * $Id: tmatrix.h,v 1.2 2004/09/22 16:47:57 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@ class tmatrix
   nr_type_t * getData (void) { return data; }
   void exchangeRows (int, int);
   void exchangeCols (int, int);
+  void print (void);
 
   // some basic matrix operations
   friend tmatrix& inverse<nr_type_t> (tmatrix &);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: states.h,v 1.3 2004/09/17 17:28:24 ela Exp $
+ * $Id: states.h,v 1.4 2004/09/22 16:47:57 ela Exp $
  *
  */
 
@@ -44,6 +44,7 @@ class states
   void nextState (void);
   void prevState (void);
   void fillState (int, state_type_t);
+  void saveState (int, state_type_t *);
 
  private:
   state_type_t * stateval;

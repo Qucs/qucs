@@ -1,3 +1,8 @@
+2004-09-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* states.cpp (saveState): New function saving a certain state
+	into given pointer location.
+
 2004-09-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.cpp: Implemented Adams-Moulton (corrector)
