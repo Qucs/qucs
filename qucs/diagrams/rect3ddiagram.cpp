@@ -24,7 +24,7 @@
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;      // position of label text
-  y1 = y3 = 5;
+  y1 = y3 = 7;
   x2 = 200;    // initial size of diagram
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
@@ -133,10 +133,11 @@ void Rect3DDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-bool Rect3DDiagram::calcYAxis(Axis *Axis, int x0, int Begin, int End)
+bool Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
+                                         int y, int yLen, bool Right)
 {
-  int z;
-  double GridStep, /*corr,*/ zD, zDstep, GridNum;
+//  int z;
+  double GridStep, /*corr,*/ xD, yD, stepD, GridNum;
 
   QSize r;
   QString tmp;
@@ -186,37 +187,55 @@ if(Axis->log) {
   }*/
 }
 else {  // not logarithmical
-  calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(End-Begin));
-
+//qDebug("******** %d-%d  %d-%d", x, xLen, y, yLen);
+  xD = sqrt(double(xLen*xLen + yLen*yLen));
+//qDebug("Length: %g", xD);
+  calcAxisScale(Axis, GridNum, yD, stepD, GridStep, xD);
+  int count = int((xD - yD) / stepD) + 1;  // number of grids
+//qDebug("count: %d", count);
+  
   double Expo;
   if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
   else  Expo = log10(fabs(Axis->up));
   if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
   else  { form = 'e';  Prec = 0; }
 
-  zD += 0.5 + double(Begin);
-  z = int(zD);
-//qDebug("******** %d -> %d", Begin, End);
-  while((z <= End) && (z >= Begin)) {  // create all grid lines
-//qDebug("%d, step: %g", z, zDstep);
+  double phi = atan2(double(yLen), double(xLen));
+  double xstepD = stepD * cos(phi);
+  double ystepD = stepD * sin(phi);
+
+  if(phi > 0.0)  phi -= M_PI/2.0;
+  else  phi += M_PI/2.0;
+  int gx = int(5.4 * cos(phi) + 0.5);  // short grid marker lines
+  int gy = int(5.4 * sin(phi) + 0.5);
+
+  xD = yD * sin(phi) + 0.5 + double(x);
+  yD = yD * cos(phi) + 0.5 + double(y);
+//qDebug("%d -> %g  (%g°)", x, xD, phi*180.0/M_PI);
+  for(; count>0; count--) {
+//qDebug("x/y: %d/%d", x, y);
+    x = int(xD);
+    y = int(yD);
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     tmp = StringNum(GridNum, form, Prec);
 
     r = metrics.size(0, tmp);  // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
-//    if(x0 > 0)
-      Texts.append(new Text(x0+8, z+6, tmp));  // text aligned left
-//    else
-//      Texts.append(new Text(-r.width()-7, z+6, tmp));  // text aligned right
+    if(Right)
+      Texts.append(new Text(x+3+gx, y+6+gy, tmp)); // place text right
+    else
+      Texts.append(new Text(x-r.width()-2-gx, y+6-gy, tmp)); // place left
     GridNum += GridStep;
 
-    Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0))); // y marks
-    zD += zDstep;
-    z = int(zD);
+    // short grid marks
+    Lines.append(new Line(x-gx, y-gy, x+gx, y+gy, QPen(QPen::black,0)));
+    xD += xstepD;
+    yD += ystepD;
   }
 } // of "if(ylog) ... else ..."
-  if(x0 == 0)  x1 = maxWidth+14;
-  else  x3 = x2+maxWidth+14;
+//  if(x0 == 0)  x1 = maxWidth+14;
+//  else
+  x3 = x2+maxWidth+15;
   return true;
 }
 
@@ -311,60 +330,69 @@ else {  // not logarithmical
     if(y2D < YMIN_2D)  YMIN_2D = y2D;
     if(y2D > YMAX_2D)  YMAX_2D = y2D;
   }
-//qDebug("min 2D: %g, %g", XMIN_2D, YMIN_2D);
-//qDebug("max 2D: %g, %g", XMAX_2D, YMAX_2D);
 
   scaleX = double(x2) / (XMAX_2D - XMIN_2D); // scaling 3D -> 2D transformation
   scaleY = double(y2) / (YMAX_2D - YMIN_2D);
   xorig  = -int(XMIN_2D * scaleX);   // position of origin
   yorig  = -int(YMIN_2D * scaleY);
-//qDebug("orig: %d, %d", xorig, yorig);
 
 
   // paint coordinate cross
-  int xi, yi, xtmp, ytmp;
+  int coord[12];
   double *px, *py, *pz, val[2];
   val[0] = zAxis.low;  val[1] = 0.0;
   px = &xAxis.up;
   py = &yAxis.low;
   pz = val;
-  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // x axis
-  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
-//qDebug("x axis: %d, %d", xi, yi);
+  calcCoordinate(px, pz, py, &coord[0], &coord[1], &zAxis);   // x axis
+  Lines.append(new Line(xorig, yorig, coord[0], coord[1], QPen(QPen::black,0)));
 
   px = &xAxis.up;
   py = &yAxis.up;
   pz = val;
-  calcCoordinate(px, pz, py, &xtmp, &ytmp, &zAxis);  // xy area
-  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+  calcCoordinate(px, pz, py, &coord[2], &coord[3], &zAxis);  // xy area
+  Lines.append(new Line(coord[0], coord[1], coord[2], coord[3], QPen(QPen::lightGray,0)));
 
   px = &xAxis.low;
   py = &yAxis.up;
   pz = val;
-  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // y axis
-  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
-//qDebug("y axis: %d, %d", xi, yi);
-  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+  calcCoordinate(px, pz, py, &coord[4], &coord[5], &zAxis);   // y axis
+  Lines.append(new Line(xorig, yorig, coord[4], coord[5], QPen(QPen::black,0)));
+  Lines.append(new Line(coord[4], coord[5], coord[2], coord[3], QPen(QPen::lightGray,0)));
 
   val[0] = zAxis.up;
   px = &xAxis.low;
   py = &yAxis.up;
   pz = val;
-  calcCoordinate(px, pz, py, &xtmp, &ytmp, &zAxis);  // yz area
-  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+  calcCoordinate(px, pz, py, &coord[6], &coord[7], &zAxis);  // yz area
+  Lines.append(new Line(coord[4], coord[5], coord[6], coord[7], QPen(QPen::lightGray,0)));
 
   px = &xAxis.low;
   py = &yAxis.low;
   pz = val;
-  calcCoordinate(px, pz, py, &xi, &yi, &zAxis);   // z axis
-  Lines.append(new Line(xorig, yorig, xi, yi, QPen(QPen::black,0)));
-//qDebug("z axis: %d, %d\n\n", xi, yi);
-  Lines.append(new Line(xi, yi, xtmp, ytmp, QPen(QPen::lightGray,0)));
+  calcCoordinate(px, pz, py, &coord[8], &coord[9], &zAxis);   // z axis
+  Lines.append(new Line(xorig, yorig, coord[8], coord[9], QPen(QPen::black,0)));
+  Lines.append(new Line(coord[8], coord[9], coord[6], coord[7], QPen(QPen::lightGray,0)));
 
+  val[0] = zAxis.up;
+  px = &xAxis.up;
+  py = &yAxis.low;
+  pz = val;
+  calcCoordinate(px, pz, py, &coord[10], &coord[11], &zAxis);  // xz area
+  Lines.append(new Line(coord[0], coord[1], coord[10], coord[11], QPen(QPen::lightGray,0)));
+  Lines.append(new Line(coord[8], coord[9], coord[10], coord[11], QPen(QPen::lightGray,0)));
 
   // -----------------------------------------
   // write axis numbering
-  if(calcYAxis(&zAxis, xtmp, ytmp-(yi-yorig), ytmp)) valid |= 1;
+//qDebug("x:");
+  if(calcAxis(&xAxis, coord[4], coord[2]-coord[4],
+                      coord[5], coord[3]-coord[5], true)) valid |= 1;
+//qDebug("y:");
+  if(calcAxis(&yAxis, coord[0], coord[2]-coord[0],
+                      coord[1], coord[3]-coord[1], false)) valid |= 1;
+//qDebug("z:");
+  if(calcAxis(&zAxis, coord[4], coord[6]-coord[4],
+                      coord[5], coord[7]-coord[5], true)) valid |= 1;
 }
 
   // ====  y grid  =======================================================

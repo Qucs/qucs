@@ -1179,7 +1179,7 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 	   d->setChanged(true, true, 'm'); // 'm' = only the first time
 	 viewport()->repaint();
 	 drawn = false;
-//	 focusElement = 0;  // avoid double-click on diagram
+//	 focusElement = 0;  // avoid double-click on diagram scrollbar
 	 return;
        }
 
@@ -1672,7 +1672,7 @@ void QucsView::MReleaseSelect(QMouseEvent *Event)
 
   if(!ctrl) Docs.current()->deselectElements(focusElement);
 
-  if(focusElement != 0)
+  if(focusElement)
     if(Event->button() == LeftButton)
       if(focusElement->Type == isWire) {
         Docs.current()->selectWireLine(focusElement,
@@ -1994,6 +1994,7 @@ void QucsView::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 void QucsView::editElement(QMouseEvent *Event)
 {
   if(focusElement == 0) return;
+  QucsDoc *d = Docs.current();
 
   Component *c;
   Diagram *dia;
@@ -2006,15 +2007,15 @@ void QucsView::editElement(QMouseEvent *Event)
          c = (Component*)focusElement;
          if(c->Model == "GND") return;
 	 // ComponentDialog is WDestructiveClose
-         cd = new ComponentDialog(c, Docs.current(), this);
+         cd = new ComponentDialog(c, d, this);
          if(cd->exec() == 1) {
            int x1, y1, x2, y2;
-           x2 = Docs.current()->Comps->findRef(c);
-           Docs.current()->Comps->take();
-           Docs.current()->setComponentNumber(c); // for ports/power sources
-           Docs.current()->Comps->append(c);
+           x2 = d->Comps->findRef(c);
+           d->Comps->take();
+           d->setComponentNumber(c); // for ports/power sources
+           d->Comps->append(c);
 
-           Docs.current()->setChanged(true, true);
+           d->setChanged(true, true);
            c->entireBounds(x1,y1,x2,y2);
            enlargeView(x1,y1,x2,y2);
          }
@@ -2022,9 +2023,17 @@ void QucsView::editElement(QMouseEvent *Event)
 
     case isDiagram :
          dia = (Diagram*)focusElement;
-         ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
+         if(dia->Name == "Tab") { // don't open dialog on scrollbar of tabular
+           int x_ = int(Event->pos().x()/d->Scale) + d->ViewX1;
+           if(dia->cx > x_) {
+	     if(((TabDiagram*)focusElement)->scroll(MAy1))
+	       d->setChanged(true, true, 'm'); // 'm' = only the first time
+	     break;
+           }
+	 }
+         ddia = new DiagramDialog(dia, d->DataSet, this);
          if(ddia->exec()  != QDialog::Rejected)   // is WDestructiveClose
-           Docs.current()->setChanged(true, true);
+           d->setChanged(true, true);
          break;
 
     case isWire:
@@ -2039,12 +2048,12 @@ void QucsView::editElement(QMouseEvent *Event)
 
     case isPainting:
          if( ((Painting*)focusElement)->Dialog() )
-           Docs.current()->setChanged(true, true);
+           d->setChanged(true, true);
          break;
 
     case isMarker:
          mdia = new MarkerDialog((Marker*)focusElement, this);
-         if(mdia->exec() > 1) Docs.current()->setChanged(true, true);
+         if(mdia->exec() > 1) d->setChanged(true, true);
          break;
     default:  ;
   }

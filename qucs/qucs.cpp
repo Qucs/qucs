@@ -646,14 +646,21 @@ void QucsApp::slotFileNew()
 // --------------------------------------------------------------
 void QucsApp::slotFileOpen()
 {
+  static QString lastDir;  // to remember last directory and file
+
   statusBar()->message(tr("Opening file..."));
 
-  QString s = QFileDialog::getOpenFileName(QucsWorkDir.path(), QucsFileFilter,
-				      this, "", tr("Enter a Schematic Name"));
-  if(!s.isEmpty())  gotoPage(s);
-  else statusBar()->message(tr("Opening aborted"), 2000);
+  QString s = QFileDialog::getOpenFileName(
+	lastDir.isEmpty() ? QDir::currentDirPath() : lastDir,
+	QucsFileFilter, this, "", tr("Enter a Schematic Name"));
 
-  statusBar()->message(tr("Ready."));
+  if(s.isEmpty())
+    statusBar()->message(tr("Opening aborted"), 2000);
+  else {
+    gotoPage(s);
+    lastDir = s;   // remember last directory and file
+    statusBar()->message(tr("Ready."));
+  }
 }
 
 
@@ -734,20 +741,28 @@ void QucsApp::slotFileSave()
 // #######################################################################
 bool QucsApp::saveAs()
 {
+  static QString lastDir;  // to remember last directory and file
+
   int n = -1;
   bool intoView = true;
   QString s, Filter;
   QFileInfo Info;
   while(true) {
     intoView = true;
-    Info.setFile(view->Docs.current()->DocName);
-    if(Info.extension() == "dpl")
-      s = QFileDialog::getSaveFileName(QucsWorkDir.filePath(Info.fileName()),
-				tr("Data Display")+" (*.dpl)", this, "",
-				tr("Enter a Document Name"), &Filter);
-    else  s = QFileDialog::getSaveFileName(
-		QucsWorkDir.filePath(Info.fileName()), QucsFileFilter,
-		this, "", tr("Enter a Document Name"), &Filter);
+    s = view->Docs.current()->DocName;
+    Info.setFile(s);
+    if(s.isEmpty()) {   // which is default directory ?
+      if(ProjName.isEmpty()) {
+        if(lastDir.isEmpty())  s = QDir::currentDirPath();
+        else  s = lastDir;
+      }
+      else s = QucsWorkDir.path();
+    }
+
+    s = QFileDialog::getSaveFileName(s,
+	Info.extension() == "dpl" ? tr("Data Display")+" (*.dpl)"
+				  : QucsFileFilter,
+	this, "", tr("Enter a Document Name"), &Filter);
     if(s.isEmpty())  return false;
     Info.setFile(s);                 // try to guess the best extension ...
     if(Info.extension(false).isEmpty())  // ... if no one was specified
@@ -790,9 +805,10 @@ bool QucsApp::saveAs()
     break;
   }
   view->Docs.current()->setName(s);
+  lastDir = Info.dirPath(true);  // remember last directory and file
 
   if(intoView) {    // insert new name in Content ListView ?
-    Info.setFile(s);
+//    Info.setFile(s);
     if(Info.dirPath(true) == QucsWorkDir.absPath())
       if(!ProjName.isEmpty()) {
 	s = Info.fileName();  // remove path from file name

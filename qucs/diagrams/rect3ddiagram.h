@@ -33,7 +33,7 @@ public:
   Diagram* newOne();
   int  calcDiagram();
   void calcLimits();
-  bool calcYAxis(Axis*, int, int, int);
+  bool calcAxis(Axis*, int, int, int, int, bool);
   void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 
