@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * constants like 'pi' can be used in equations without defining them
  * much more documentation
  * microstrip models diffentiate between quasi-static and dispersion
  * equation results can be selected for dataset export

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.3 2004-05-20 18:06:33 ela Exp $
+ * $Id: eqnsys.cpp,v 1.4 2004-07-03 10:56:40 ela Exp $
  *
  */
 
@@ -38,6 +38,8 @@ using namespace std;
 #include "complex.h"
 #include "matrix.h"
 #include "eqnsys.h"
+#include "exception.h"
+#include "exceptionstack.h"
 
 // Constructor creates an unnamed instance of the eqnsys class.
 eqnsys::eqnsys () {
@@ -232,9 +234,17 @@ void eqnsys::solve_lu (void) {
         pivot = r;
       }
     }
+    // check pivot element and throw appropriate exception
+    if (MaxPivot <= 0) {
+      exception * e = new exception (EXCEPTION_PIVOT);
+      e->setText ("no pivot != 0 found during LU decomposition");
+      e->setData (c);
+      throw_exception (e);
+      goto fail;
+    }
+
     // swap matrix rows if necessary and remember that step in the
     // exchange table
-    assert (MaxPivot != 0);
     if (i != pivot) {
       A->exchangeRows (i, pivot);
       k = change[i - 1];
@@ -264,6 +274,15 @@ void eqnsys::solve_lu (void) {
     for (c = 1; c <= i - 1; c++)
       f -= A->get (i, c) * Y->get (c, 1);
     f /= A->get (i, i);
+
+    // check for possible division by zero
+    if (A->get (i, i) == 0) {
+      exception * e = new exception (EXCEPTION_WRONG_VOLTAGE);
+      e->setText ("forward substitution failed in LU decomposition");
+      e->setData (i);
+      throw_exception (e);
+      goto fail;
+    }
     Y->set (i, 1, f);
   }
    
@@ -276,6 +295,7 @@ void eqnsys::solve_lu (void) {
     X->set (i, 1, f);
   }
 
+ fail:
   delete Y;
   delete change;
 }

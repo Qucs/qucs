@@ -1,3 +1,32 @@
+2004-07-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Fixed bug when writing simply 'j' or 'i' with
+	no trailing number.
+
+	* equation.cpp (equation_constants): New function which adds
+	some equation constants (e.g. pi) to the list of equations.
+
+	* matvec.h (class matvec): New class implementing a vector
+	of matrices.  Still a lot to do...
+
+	* nodelist.cpp: Additional function which returns a text
+	representation of the circuit names connected to the given
+	node number.
+
+	* matrix.cpp: Fixed a bug in H to S matrix transformation.
+
+	* eqnsys.cpp (solve_lu): Throwing exception if equation system
+	cannot be solved with LU decomposition.
+
+	* dcsolver.cpp: Using new exception stack code to throw and
+	catch possible error conditions.
+
+	* exception.h (class exception): New class implementing
+	an exception which can be put onto the exception stack.
+
+	* exceptionstack.h (class exceptionstack): New class 
+	implementing a simple exception stack.
+
 2004-07-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp (createSP): S-parameter solver outputs its

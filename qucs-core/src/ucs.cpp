@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.5 2004-06-22 19:32:56 ela Exp $
+ * $Id: ucs.cpp,v 1.6 2004-07-03 10:56:40 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@ using namespace std;
 #include "dataset.h"
 #include "equation.h"
 #include "environment.h"
+#include "exceptionstack.h"
 
 int main (int argc, char ** argv) {
 
@@ -109,6 +110,8 @@ int main (int argc, char ** argv) {
   equation_solver (out);
   out->setFile (outfile);
   out->print ();
+
+  estack.print ("uncaught");
 
   delete subnet;
   delete in;

@@ -1,3 +1,8 @@
+2004-07-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Mixed Two-Port matrix 
+	conversions}): Added S to H and its reverse transformation.
+
 2004-07-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Two-Port matrix 

@@ -1007,10 +1007,18 @@ S_{22} &= \dfrac{-A_{11}\cdot Z_{2}^{*} + A_{12} - A_{21}\cdot Z_{1}\cdot Z_{2}^
 \end{align}
 
 \begin{align}
-S_{11} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
-S_{12} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
-S_{21} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
-S_{22} &= \dfrac{}{\left(1 - \dfrac{H_{11}}{Z_{1}}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}
+H_{11} &= \dfrac{\left(\left(1 + S_{11}\right)\cdot \left(1 + S_{22}\right) - S_{12}\cdot S_{21}\right)\cdot Z_{1}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
+H_{12} &= \dfrac{2\cdot S_{12}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
+H_{21} &= \dfrac{-2\cdot S_{21}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}\\
+H_{22} &= \dfrac{\left(\left(1 - S_{11}\right)\cdot \left(1 - S_{22}\right) - S_{12}\cdot S_{21}\right) / Z_{2}}{\left(1 - S_{11}\right)\cdot \left(1 + S_{22}\right) + S_{12}\cdot S_{21}}
+%\end{align}
+\intertext{
+}
+%\begin{align}
+S_{11} &= \dfrac{\left(H_{11} / Z_{1} - 1\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
+S_{12} &= \dfrac{2\cdot H_{12}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
+S_{21} &= \dfrac{-2\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}\\
+S_{22} &= \dfrac{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 - Z_{2}\cdot H_{22}\right) + H_{12}\cdot H_{21}}{\left(1 + H_{11} / Z_{1}\right)\cdot \left(1 + Z_{2}\cdot H_{22}\right) - H_{12}\cdot H_{21}}
 \end{align}
 
 \section{Scattering parameters of components}
