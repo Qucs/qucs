@@ -446,6 +446,8 @@ void QucsView::MMovePainting(QMouseEvent *Event)
   int gy = fy;
   d->setOnGrid(gx, gy);
 
+  x -= contentsX();
+  y -= contentsY();
   selPaint->MouseMoving(&paintScale, fx, fy, gx, gy, &painter, x, y, drawn);
   drawn = true;
 }

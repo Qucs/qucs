@@ -2376,6 +2376,10 @@ Invocation :  qucsedit [-r] fichier
         <source>no data</source>
         <translation>aucune donnée</translation>
     </message>
+    <message>
+        <source>calculate noise voltages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

@@ -33,8 +33,8 @@ TLine::TLine()
   Ports.append(new Port(-30, 0));
   Ports.append(new Port( 30, 0));
 
-  x1 = -30; y1 =-10;
-  x2 =  30; y2 = 10;
+  x1 = -30; y1 =-12;
+  x2 =  30; y2 = 12;
 
   tx = x1+4;
   ty = y2+4;
