@@ -20,8 +20,10 @@
 Here are listed all the people who helped creating this package:
 
 Stefan Jahn <stefan@lkcc.org> for writing all of the scripts, setting
-	up the translation files, sending and fixing numberless bugs,
-	sharing his linux knowledge etc.
+	up and managing the translation files, making the german
+	translation, reporting and fixing numberless bugs,
+	sharing his linux knowledge and, of course, programming the
+	simulation engine in world record time.
 
 Jens Flucke <jens.flucke@gmx.de> for making up the first draft of the
 	homepage.  Also for motivating the project.

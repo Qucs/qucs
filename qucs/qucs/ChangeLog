@@ -1,3 +1,8 @@
+2004-10-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* id_text.cpp: text of subcircuit symbols can be
+	repositioned by the user
+
 2004-10-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug in paint routine of the markers

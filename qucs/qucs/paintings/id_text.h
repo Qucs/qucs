@@ -1,8 +1,8 @@
 /***************************************************************************
-                          paintings.h  -  description
+                          id_text.h  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Thu Oct 14 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,20 +15,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTINGS_H
-#define PAINTINGS_H
-
-// This header file includes the header files of all paintings.
+#ifndef ID_TEXT_H
+#define ID_TEXT_H
 
 #include "painting.h"
 
-#include "rectangle.h"
-#include "ellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
-#include "graphictext.h"
-#include "portsymbol.h"
-#include "ellipsearc.h"
-#include "id_text.h"
+
+/**
+  *@author Michael Margraf
+  */
+
+class ID_Text : public Painting  {
+public:
+  ID_Text(int cx_=0, int cy_=0);
+  ~ID_Text();
+
+  void paintScheme(QPainter*);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
+
+  bool load(const QString&);
+  QString save();
+  void paint(ViewPainter*);
+  bool getSelected(int, int);
+  void Bounding(int&, int&, int&, int&);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+
+  QString Prefix;
+};
 
 #endif
