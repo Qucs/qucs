@@ -73,7 +73,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   GraphThick = new QLineEdit(Box2);
   GraphThick->setValidator(Validator);
   GraphThick->setMaximumWidth(20);
-  GraphThick->setText("1");
+  GraphThick->setText("0");
   connect(GraphThick, SIGNAL(textChanged(const QString&)),
 		      SLOT(slotSetThick(const QString&)));
 
@@ -151,15 +151,17 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   for(it = Elements.begin(); it != Elements.end(); ++it) {
     ChooseData->insertItem((*it).left((*it).length()-4));
     if((*it) == defaultDataSet)
-      ChooseData->setCurrentItem(ChooseData->count()-1);  // default dataset should be the current
+      // default dataset should be the current
+      ChooseData->setCurrentItem(ChooseData->count()-1);
   }
   slotReadVars(0);  // put variables into the ListView
 
   // ...........................................................
   // put all graphs into the ListBox
-  for(Graph *ptr1 = Diag->Graphs.first(); ptr1 != 0; ptr1 = Diag->Graphs.next())
-    GraphList->insertItem(ptr1->Line);
-  ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+  for(Graph *pg = Diag->Graphs.first(); pg != 0; pg = Diag->Graphs.next())
+    GraphList->insertItem(pg->Var);
+  ColorButt->setPaletteBackgroundColor
+             (QColor(DefaultColors[GraphList->count()]));
 
   // ...........................................................
   // some differences between the different diagram types
@@ -277,7 +279,8 @@ void DiagramDialog::slotDeleteGraph()
   Diag->Graphs.remove(i);
 
   GraphInput->setText("");  // erase input line and back to default values
-  ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+  ColorButt->setPaletteBackgroundColor(
+		QColor(DefaultColors[GraphList->count()]));
   GraphThick->setText("1");
   changed = true;
   toTake  = false;
@@ -358,7 +361,7 @@ void DiagramDialog::slotResetToTake(const QString& s)
   if(i < 0) return;   // return, if no item selected
 
   Graph *g = Diag->Graphs.at(i);
-  g->Line = s;
+  g->Var = s;
   GraphList->changeItem(s, i);   // must done after the graph settings !!!
   changed = true;
   toTake  = false;

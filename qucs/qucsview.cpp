@@ -961,7 +961,6 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
     drawn = false;
     return;
   }
-  delete dia;
 
   d->Diags.append(selDiag);
   enlargeView(selDiag->cx, selDiag->cy-selDiag->y2,

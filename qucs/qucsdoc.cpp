@@ -1028,7 +1028,7 @@ bool QucsDoc::setMarker(int x, int y)
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
         n = pg->getSelected(x-pd->cx, pd->cy-y);
         if(n > 0) {
-          px = pg->cPointsX + n-1;
+          px = pg->cPointsX.getFirst()->Points + n-1;
           py = pg->cPointsY + 2*(n-1);
           p = pg->Points + 2*(n-1);
           Marker *pm = new Marker(pd, pg, *p, *(p+1), *px, *py, *(py+1));
@@ -1054,21 +1054,21 @@ bool QucsDoc::MarkerLeftRight(bool left)
     for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
       if(pm->isSelected) {
         Graph *pg = pm->pGraph;
-        px = pg->cPointsX;
+        px = pg->cPointsX.getFirst()->Points;
 	if(!px) continue;
-        for(n=0; n<pg->count; n++) {
+        for(n=0; n<pg->countX1; n++) {
           if(pm->xpos <= *px) break;
           px++;
         }
-        if(n == pg->count) px--;
+        if(n == pg->countX1) px--;
 
         if(left) {
-          if(px <= pg->cPointsX) continue;
+          if(px <= pg->cPointsX.getFirst()->Points) continue;
           px--;  // one position to the left
 	  n--;
         }
         else {
-          if(px >= (pg->cPointsX+pg->count)) continue;
+          if(px >= (pg->cPointsX.getFirst()->Points+pg->countX1)) continue;
           px++;  // one position to the right
 	  n++;
         }

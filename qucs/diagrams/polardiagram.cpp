@@ -47,7 +47,7 @@ void PolarDiagram::calcData(Graph *g)
   int *p = g->Points;
 //  if(p == 0) return;
   double *py = g->cPointsY;
-  for(int z=g->count; z>0; z--) {
+  for(int z = (g->countX1)*(g->countX2); z>0; z--) {
     *(p++) = (x2>>1)+int((*(py++))/xup*double(x2>>1));
     *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1));
   }
@@ -61,8 +61,8 @@ void PolarDiagram::calcDiagram()
   Arcs.clear();
 
   // x and y line
-  Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,1)));
-  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,1)));
+  Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,0)));
+  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,0)));
 
   double phi, Expo, Base;
   xlow = ylow = 0.0;
@@ -106,12 +106,15 @@ void PolarDiagram::calcDiagram()
       z = int(zD);
       GridNum += GridStep;
       if(fabs(Expo) < 3.0)
-        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12, QString::number(GridNum)));
+        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12,
+			 QString::number(GridNum)));
       else
-        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12, QString::number(GridNum, 'e', 0)));
+        Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12,
+			 QString::number(GridNum, 'e', 0)));
 
-      phi = 16.0*180.0/M_PIl*atan(30.0/zD);    // 2*(text height+3) / circle radius
-      Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, 0, 16*360-int(phi), QPen(QPen::lightGray,1)));
+      phi = 16.0*180.0/M_PIl*atan(30.0/zD);  // 2*(text height+3) / radius
+      Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, 0, 16*360-int(phi),
+			  QPen(QPen::lightGray,0)));
       zD += zDstep;
     }
   }
@@ -126,8 +129,9 @@ void PolarDiagram::calcDiagram()
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup)));
   else
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup, 'e', 0)));
-  phi = 16.0*180.0/M_PIl*atan(30.0/double(x2));    // (text height+3) / circle radius
-  Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi), QPen(QPen::black,1)));
+  phi = 16.0*180.0/M_PIl*atan(30.0/double(x2));  // (text height+3) / radius
+  Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi),
+			QPen(QPen::black,0)));
 }
 
 // ------------------------------------------------------------
