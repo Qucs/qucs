@@ -27,7 +27,7 @@ if test "x$prefix" = "xNONE"; then
 fi
 
 dnl generate the config header
-AM_CONFIG_HEADER(config.h) dnl at the distribution this done
+AC_CONFIG_HEADERS(config.h) dnl at the distribution this done
 
 dnl Checks for programs.
 AC_CHECK_COMPILERS
