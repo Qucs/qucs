@@ -1125,7 +1125,8 @@ bool QucsDoc::MarkerUpDown(bool up)
 // ---------------------------------------------------
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
-// If 'flag' is true, the element can be deselected.
+// If 'flag' is true, the element can be deselected and
+// already selected elements are not deselected.
 Element* QucsDoc::selectElement(int x, int y, bool flag)
 {
   Element *pe_1st=0, *pe_sel=0;
@@ -1133,9 +1134,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
   for(Component *pc = Comps.last(); pc != 0; pc = Comps.prev())
     if(pc->getSelected(x, y)) {
       if(flag) { pc->isSelected ^= flag; return pc; }
-      if(pe_sel != 0) {
+      if(pe_sel) {
 	pe_sel->isSelected = false;
-	pc->isSelected = true;
+//	pc->isSelected = true;
 	return pc;
       }
       if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
@@ -1147,9 +1148,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
   for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev()) {
     if(pw->getSelected(x, y)) {
       if(flag) { pw->isSelected ^= flag; return pw; }
-      if(pe_sel != 0) {
+      if(pe_sel) {
 	pe_sel->isSelected = false;
-	pw->isSelected = true;
+//	pw->isSelected = true;
 	return pw;
       }
       if(pe_1st == 0) pe_1st = pw;  // give access to elements lying beneath
@@ -1158,9 +1159,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     pl = pw->Label;
     if(pl) if(pl->getSelected(x, y)) {
       if(flag) { pl->isSelected ^= flag; return pl; }
-      if(pe_sel != 0) {
+      if(pe_sel) {
 	pe_sel->isSelected = false;
-	pl->isSelected = true;
+//	pl->isSelected = true;
 	return pl;
       }
       if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
@@ -1173,9 +1174,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     pl = pn->Label;
     if(pl) if(pl->getSelected(x, y)) {
       if(flag) { pl->isSelected ^= flag; return pl; }
-      if(pe_sel != 0) {
+      if(pe_sel) {
 	pe_sel->isSelected = false;
-	pl->isSelected = true;
+//	pl->isSelected = true;
 	return pl;
       }
       if(pe_1st == 0) pe_1st = pl;  // give access to elements lying beneath
@@ -1189,9 +1190,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next())
       if(pm->getSelected(x-pd->cx, pd->cy-y) > 0) {
         if(flag) { pm->isSelected ^= flag; return pm; }
-        if(pe_sel != 0) {
+        if(pe_sel) {
 	  pe_sel->isSelected = false;
-	  pm->isSelected = true;
+//	  pm->isSelected = true;
 	  return pm;
 	}
         if(pe_1st == 0) pe_1st = pm;  // give access to elements lying beneath
@@ -1211,9 +1212,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
         if(pg->getSelected(x-pd->cx, pd->cy-y) > 0) {
           if(flag) { pg->isSelected ^= flag; return pg; }
-          if(pe_sel != 0) {
+          if(pe_sel) {
 	    pe_sel->isSelected = false;
-	    pg->isSelected = true;
+//	    pg->isSelected = true;
 	    return pg;
 	  }
           if(pe_1st == 0) pe_1st = pg;  // access to elements lying beneath
@@ -1221,9 +1222,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
         }
 
       if(flag) { pd->isSelected ^= flag; return pd; }
-      if(pe_sel != 0) {
+      if(pe_sel) {
 	pe_sel->isSelected = false;
-	pd->isSelected = true;
+//	pd->isSelected = true;
 	return pd;
       }
       if(pe_1st == 0) pe_1st = pd;  // give access to elements lying beneath
@@ -1242,9 +1243,9 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 
     if(pp->getSelected(x, y)) {
       if(flag) { pp->isSelected ^= flag; return pp; }
-      if(pe_sel != 0) {
+      if(pe_sel) {
 	pe_sel->isSelected = false;
-	pp->isSelected = true;
+//	pp->isSelected = true;
 	return pp;
       }
       if(pe_1st == 0) pe_1st = pp;  // give access to elements lying beneath
@@ -1252,7 +1253,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
     }
   }
 
-  if(pe_1st) pe_1st->isSelected = true;
+//  if(pe_1st) pe_1st->isSelected = true;
   return pe_1st;
 }
 
@@ -1505,21 +1506,17 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
   Element   *pe;
   Node      *pn;
 
-  for(pc = Comps.first(); pc != 0; )  // test all components
+
+  // test all components *********************************
+  for(pc = Comps.first(); pc != 0; )
     if(pc->isSelected) {
       p->append(pc);
 
-      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next()) {
-        // delete all port connections
+      // delete all port connections
+      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
         pp->Connection->Connections.removeRef((Element*)pc);
-/*        if(pp->Connection->Connections.count() != 1) continue;
-        pe1 = pp->Connection->Connections.getfirst();
-        if(pe1->Type != isWire) continue;
-        if(pe1->isSelected) continue;   they are all gone
-        if(pe1->isSelected = true;*/
-      }
-      Comps.take();   // take component out of the document
 
+      Comps.take();   // take component out of the document
       pc = Comps.current();
     }
     else pc = Comps.next();
@@ -1535,7 +1532,6 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
       pw->Port1->Connections.removeRef(pw);   // remove connection 1
       pw->Port2->Connections.removeRef(pw);   // remove connection 2
       Wires.take();
-
       pw = Wires.current();
     }
     else pw = Wires.next();
@@ -1560,7 +1556,8 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
       pd = Diags.next();
     }
 
-  for(Painting *pp = Paints.first(); pp != 0; )   // test all paintings
+  // test all paintings **********************************
+  for(Painting *pp = Paints.first(); pp != 0; )
     if(pp->isSelected) {
       p->append(pp);
       Paints.take();

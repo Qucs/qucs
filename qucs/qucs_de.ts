@@ -1552,7 +1552,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>depletion MOS field-effect transistor</source>
-        <translation>MOS Feldeffekttransistor (Verarmungstyp)</translation>
+        <translation type="obsolete">MOS Feldeffekttransistor (Verarmungstyp)</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
@@ -1880,15 +1880,15 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation>konstante Parallelkapazität</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation>Rekombinationsstromparameter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation>Emissionskoeffizient für Isr</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
@@ -2037,18 +2037,6 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>source junction perimeter</source>
         <translation>Umfang der Source-Sperrschicht</translation>
-    </message>
-    <message>
-        <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>

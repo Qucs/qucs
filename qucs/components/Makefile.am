@@ -37,7 +37,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   dcfeed.cpp dcblock.cpp biast.cpp inductor.cpp capacitor.cpp                 \
   component.cpp resistor.cpp iprobe.cpp volt_noise.cpp ampere_noise.cpp       \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
-  mosfet_depl.cpp msgap.cpp bjtsub.cpp
+  msgap.cpp bjtsub.cpp mosfet_sub.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -49,7 +49,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h                \
   iprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
-  jfet.h mosfet.h mosfet_depl.h msgap.h bjtsub.h
+  jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

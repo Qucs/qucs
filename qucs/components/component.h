@@ -40,10 +40,11 @@ public:
   virtual ~Component();
 
   virtual Component* newOne();
-  virtual void recreate() {};
+  virtual void recreate();
   void    paintScheme(QPainter*);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
+  void    TextSize(int&, int&);
   void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&);
   bool    getSelected(int, int);
