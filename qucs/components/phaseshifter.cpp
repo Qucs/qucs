@@ -40,8 +40,8 @@ Phaseshifter::Phaseshifter()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "pshift";
-  Model = "pshift";
+  Sign  = "PShift";
+  Model = "PShift";
   Name  = "X";
 
   Props.append(new Property("phi", "90", true, "phase shift in degree"));

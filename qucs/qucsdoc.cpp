@@ -1940,6 +1940,8 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<Attenuator") c = new Attenuator();
     else if(cstr == "<Isolator") c = new Isolator();
     else if(cstr == "<Circulator") c = new Circulator();
+    else if(cstr == "<PShift") c = new Phaseshifter();
+    else if(cstr == "<Gyrator") c = new Gyrator();
     else if(cstr == "<TLIN") c = new TLine();
     else if(cstr == "<SUBST") c = new Substrate();
     else if(cstr == "<MLIN") c = new MSline();
