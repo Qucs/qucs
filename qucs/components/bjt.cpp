@@ -115,6 +115,20 @@ BJT::BJT()
 	QObject::tr("high-current effect on Tf")));
   Props.append(new Property("Tr", "0.0", false,
 	QObject::tr("ideal reverse transit time")));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature in degree Celsius")));
+  Props.append(new Property("Kf", "0.0", false,
+	QObject::tr("flicker noise coefficient")));
+  Props.append(new Property("Af", "1.0", false,
+	QObject::tr("flicker noise exponent")));
+  Props.append(new Property("Ffe", "1.0", false,
+	QObject::tr("flicker noise frequency exponent")));
+  Props.append(new Property("Kb", "0.0", false,
+	QObject::tr("burst noise coefficient")));
+  Props.append(new Property("Ab", "1.0", false,
+	QObject::tr("burst noise exponent")));
+  Props.append(new Property("Fb", "1.0", false,
+	QObject::tr("burst noise corner frequency in Hertz")));
 }
 
 BJT::~BJT()
