@@ -26,12 +26,12 @@
 
 class TabDiagram : public Diagram  {
 public: 
-	TabDiagram(int _cx=0, int _cy=0);
-	~TabDiagram();
+  TabDiagram(int _cx=0, int _cy=0);
+  ~TabDiagram();
 
-  virtual TabDiagram* newOne();
-  virtual void calcData(Graph *g);
-  virtual void calcDiagram();
+  TabDiagram* newOne();
+  void   calcData(Graph *g);
+  void   calcDiagram();
 };
 
 #endif

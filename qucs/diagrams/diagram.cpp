@@ -137,6 +137,15 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
   _y2 = cy;
 }
 
+// -------------------------------------------------------
+bool Diagram::getSelected(int x_, int y_)
+{
+  if(x_ >= cx) if(x_ <= cx+x2) if(y_ >= cy-y2) if(y_ <= cy)
+    return true;
+
+  return false;
+}
+
 // ------------------------------------------------------------
 // Checks if the resize area was clicked. If so return "true" and sets x1/y1 and x2/y2
 // to the border coordinates to draw a rectangle.

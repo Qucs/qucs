@@ -28,7 +28,6 @@
 #include <stdlib.h>
 
 
-//QucsView::QucsView(QWidget *parent, const char *name, WFlags f) : QScrollView(parent,name,f)
 QucsView::QucsView(QWidget *parent) : QScrollView(parent)
 {
   /** connect doc with the view*/
@@ -52,6 +51,11 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   isMoveEqual = false;  // mouse cursor move x and y the same way
 
   Docs.setAutoDelete(true);
+
+  connect(horizontalScrollBar(), SIGNAL(prevLine()), SLOT(slotScrollLeft()));
+  connect(horizontalScrollBar(), SIGNAL(nextLine()), SLOT(slotScrollRight()));
+  connect(verticalScrollBar(), SIGNAL(prevLine()), SLOT(slotScrollUp()));
+  connect(verticalScrollBar(), SIGNAL(nextLine()), SLOT(slotScrollDown()));
 
   // .......................................................................
   // to repair some strange  scrolling artefacts
@@ -133,6 +137,11 @@ void QucsView::enlargeView(int x1, int y1, int x2, int y2)
 {
   int dx=0, dy=0;
   QucsDoc *d = Docs.current();
+
+  if(x1 < d->UsedX1) d->UsedX1 = x1;
+  if(y1 < d->UsedY1) d->UsedY1 = y1;
+  if(x2 > d->UsedX2) d->UsedX2 = x2;
+  if(y2 > d->UsedY2) d->UsedY2 = y2;
 
   if(x1 < d->ViewX1) { dx = d->ViewX1-x1+40; d->ViewX1 = x1-40; }
   if(y1 < d->ViewY1) { dy = d->ViewY1-y1+40; d->ViewY1 = y1-40; }
@@ -322,22 +331,23 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
   // Changes the position of all moving elements by dx/dy
   for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     if(pe->Type == isWire) {
-      pw = (Wire*)pe;   // connecting wires are only moved with one node
+      pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(int(pw->Port1) > 3) { pw->x1 += MAx1; pw->y1 += MAy1;  pw->nx += MAx1;  pw->ny += MAy1; }
-      else {
-        if(int(pw->Port1) & 1) { pw->x1 += MAx1; pw->nx += MAx1; }
-        if(int(pw->Port1) & 2) { pw->y1 += MAy1; pw->ny += MAy1; }
+      if(int(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
+      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; }
+              if(int(pw->Port1) & 2) { pw->y1 += MAy1; } }
+
+      if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
+      else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
+              if(int(pw->Port2) & 2) pw->y2 += MAy1; }
+
+      if(pw->Label) {      // root of node label must lie on wire
+        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
+        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
+        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
+        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
       }
 
-      if(int(pw->Port2) > 3) { pw->x2 += MAx1; pw->y2 += MAy1; }
-      else {
-        if(int(pw->Port2) & 1) pw->x2 += MAx1;
-        if(int(pw->Port2) & 2) pw->y2 += MAy1;
-      }
-
-      int l = pw->x2-pw->x1+pw->y2-pw->y1;
-      if(pw->delta > l) pw->delta = l-4;      // root of node label must lie on wire
     }
     else pe->setCenter(MAx1, MAy1, true);
 
@@ -377,16 +387,21 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(int(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1;  pw->nx += MAx1;  pw->ny += MAy1; }
-      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; pw->nx += MAx1; }
-              if(int(pw->Port1) & 2) { pw->y1 += MAy1; pw->ny += MAy1; } }
+      if(int(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
+      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; }
+              if(int(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
       if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
       else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
               if(int(pw->Port2) & 2) pw->y2 += MAy1; }
 
-      int l = pw->x2-pw->x1+pw->y2-pw->y1;
-      if(pw->delta > l) pw->delta = l-4;      // root of node label must lie on wire
+      if(pw->Label) {      // root of node label must lie on wire
+        if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
+        if(pw->Label->cy < pw->y1) pw->Label->cy = pw->y1;
+        if(pw->Label->cx > pw->x2) pw->Label->cx = pw->x2;
+        if(pw->Label->cy > pw->y2) pw->Label->cy = pw->y2;
+      }
+
     }
     else pe->setCenter(MAx1, MAy1, true);
 
@@ -427,19 +442,15 @@ void QucsView::MMoveWireLabel(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  int dx=0, dy=0;
-  if(labeledWire->isHorizontal()) dx = labeledWire->delta;
-  else dy = labeledWire->delta;
-  if(drawn) {
-    painter.drawLine(labeledWire->x1+dx, labeledWire->y1+dy, MAx1, MAy1);   // erase old line
-    painter.drawRect(MAx1, MAy1, labeledWire->NameDX+3, -labeledWire->NameDY-3);   // erase old rectangle
-  }
+  if(drawn) labeledWire->Label->paintScheme(&painter);    // erase old
+
   MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
   MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
   d->setOnGrid(MAx1, MAy1);
+  labeledWire->Label->x1 = MAx1;
+  labeledWire->Label->y1 = MAy1;
 
-  painter.drawLine(labeledWire->x1+dx, labeledWire->y1+dy, MAx1, MAy1);   // paint new line
-  painter.drawRect(MAx1, MAy1, labeledWire->NameDX+3, -labeledWire->NameDY-3);   // paint new rectangle
+  labeledWire->Label->paintScheme(&painter);    // paint new
   drawn = true;
 }
 
@@ -471,12 +482,25 @@ void QucsView::MPressLabel(QMouseEvent *Event)
 {
   int x = int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1;
   int y = int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1;
-  Wire *pw = Docs.current()->selectedWire(x, y);
-  if(pw == 0) return;
+  Wire *pw = 0;
+  Node *pn = Docs.current()->selectedNode(x, y);
+  if(!pn) {
+    pw = Docs.current()->selectedWire(x, y);
+    if(pw == 0) return;
+  }
 
   QString Name("");
-  Wire *pw2 = Docs.current()->getWireLabel(pw);   // is wire line already labeled ?
-  if(pw2 != 0) Name = pw2->Name;
+  Element *pe=0;
+  if(pw) pe = Docs.current()->getWireLabel(pw->Port1);   // is wire line already labeled ?
+  else pe = Docs.current()->getWireLabel(pn);
+  if(pe) {
+    if(pe->Type == isComponent) {
+      QMessageBox::information(0, tr("Info"), tr("The ground potential cannot be labeled!"));
+      return;
+    }
+    if(pe->Type == isNode) Name = ((Node*)pe)->Label->Name;
+    else Name = ((Wire*)pe)->Label->Name;
+  }
 
   bool OK;
   Name = QInputDialog::getText(tr("Insert Nodename"), tr("Enter the label:"), QLineEdit::Normal,
@@ -487,20 +511,26 @@ void QucsView::MPressLabel(QMouseEvent *Event)
     while(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'
     if(Name.isEmpty()) return;
 
-    if(pw2 != 0) pw2->setName("");  // delete old name of wire line
-    if(pw->Name.isEmpty()) {
-      pw->delta = x-pw->x1 + y-pw->y1;
-      pw->nx = x + 30;
-      pw->ny = y - 30;
+    if(pe) {
+      if(pe->Type == isWire) ((Wire*)pe)->setName("");  // delete old name of wire line
+      else ((Node*)pe)->setName("");
     }
-    pw->setName(Name);
-    enlargeView(pw->nx, pw->ny, pw->nx+pw->NameDX+3, pw->ny-pw->NameDY-3);
+    WireLabel *pl=0;
+    if(pw) { pw->setName(Name, x-pw->x1 + y-pw->y1, x+30, y-30); pl = pw->Label; }
+    else { pn->setName(Name, x+30, y-30); pl = pn->Label; }
+    enlargeView(pl->x1, pl->y1, pl->x1+pl->x2, pl->y1-pl->y2);
     viewport()->repaint();
     Docs.current()->setChanged(true);
   }
   else {    // if no name was entered (empty string), delete name
-    if(pw2 != 0) pw2->setName("");  // delete old name of wire line
-    else pw->setName(Name);         // delete name of wire
+    if(pe) {
+      if(pe->Type == isWire) ((Wire*)pe)->setName("");  // delete old name of wire line
+      else ((Node*)pe)->setName("");
+    }
+    else {
+      if(pw) pw->setName("");           // delete name of wire
+      else pn->setName("");
+    }
     viewport()->repaint();
     Docs.current()->setChanged(true);
   }
@@ -540,7 +570,7 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 
     if(focusElement->Type == isDiagram)   // resize diagram ?
       if(((Diagram*)focusElement)->ResizeTouched(MAx1, MAy1, MAx2, MAy2)) {
-        if(((Diagram*)focusElement)->Name == "Polar") isMoveEqual = true;   // diagram must be square
+        if(((Diagram*)focusElement)->Name == "Polar") isMoveEqual = true; // diagram must be square
         else if(((Diagram*)focusElement)->Name == "Smith") isMoveEqual = true;
         
         Docs.current()->setOnGrid(MAx1, MAy1);
@@ -563,7 +593,7 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 {
   Element *e
     = Docs.current()->selectElement(int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
-                                    int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,false);
+                                    int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1, false);
   if(e != 0) {
     e->isSelected = true;
     Docs.current()->deleteElements();
@@ -642,6 +672,7 @@ void QucsView::MPressRotate(QMouseEvent *Event)
                                 int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,false);
   if(e == 0) return;
   
+  WireLabel *pl;
   int x1, y1, x2, y2;
   e->isSelected = false;
   switch(e->Type) {
@@ -653,11 +684,14 @@ void QucsView::MPressRotate(QMouseEvent *Event)
                       ((Component*)e)->entireBounds(x1,y1,x2,y2);
                       enlargeView(x1, y1, x2, y2);
                       break;
-    case isWire:      d->Wires.setAutoDelete(false);
+    case isWire:      pl = ((Wire*)e)->Label;
+                      ((Wire*)e)->Label = 0;    // prevent label to be deleted
+                      d->Wires.setAutoDelete(false);
                       d->deleteWire((Wire*)e);
                       ((Wire*)e)->rotate();
                       d->setOnGrid(e->x1, e->y1);
                       d->setOnGrid(e->x2, e->y2);
+                      ((Wire*)e)->Label = pl;
                       d->insertWire((Wire*)e);
                       d->Wires.setAutoDelete(true);
                       enlargeView(e->x1, e->y1, e->x2, e->y2);
@@ -882,12 +916,9 @@ void QucsView::MReleaseSelect2(QMouseEvent *Event)
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
   
-   // selects all components within the rectangle
-  d->selectComponents(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
-/*  if(d->selectComponents(MAx1, MAy1, MAx2, MAy2, Ctrl) > 0)
-    emit CompsSelected(true);
-  else emit CompsSelected(false);*/
-  
+   // selects all elements within the rectangle
+  d->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
+
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
@@ -968,26 +999,31 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
 void QucsView::endElementMoving()
 {  
   int x1, y1, x2, y2;
+  QucsDoc *d = Docs.current();
+
   // insert all moved elements into document and enlarge viewarea if component lies outside the view
   for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
     switch(pe->Type) {
-      case isWire:     if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
-                       Docs.current()->insertWire((Wire*)pe);
-                       enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
-                       break;
-      case isDiagram:  Docs.current()->Diags.append((Diagram*)pe);
-                       enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
-                       Docs.current()->setChanged(true);
-                       break;
-      case isPainting: Docs.current()->Paints.append((Painting*)pe);
-                       ((Painting*)pe)->Bounding(x1,y1,x2,y2);
-                       enlargeView(x1, y1, x2, y2);
-                       Docs.current()->setChanged(true);
-                       break;
-      default:         Docs.current()->insertRawComponent((Component*)pe);
-                       ((Component*)pe)->entireBounds(x1,y1,x2,y2);
-                       enlargeView(x1, y1, x2, y2);
-                       break;
+      case isWire:        if(pe->x1 == pe->x2) if(pe->y1 == pe->y2) break;
+                          d->insertWire((Wire*)pe);
+                          enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
+                          break;
+      case isDiagram:     d->Diags.append((Diagram*)pe);
+                          enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
+                          d->setChanged(true);
+                          break;
+      case isPainting:    d->Paints.append((Painting*)pe);
+                          ((Painting*)pe)->Bounding(x1,y1,x2,y2);
+                          enlargeView(x1, y1, x2, y2);
+                          d->setChanged(true);
+                          break;
+      case isComponent:   d->insertRawComponent((Component*)pe);
+                          ((Component*)pe)->entireBounds(x1,y1,x2,y2);
+                          enlargeView(x1, y1, x2, y2);
+                          break;
+      case isMovingLabel: d->insertNodeLabel((WireLabel*)pe);
+                          break;
+      default:          ;  // e.g. isHWireLabelLabel => nothing to do
     }
     pe->isSelected = false;
   }
@@ -1015,6 +1051,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
                          enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
                          break;
         case isDiagram:  Docs.current()->Diags.append((Diagram*)pe);
+                         ((Diagram*)pe)->loadGraphData(Docs.current()->DataSet);
                          enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
                          Docs.current()->setChanged(true);
                          break;
@@ -1088,8 +1125,8 @@ void QucsView::MReleaseWireLabel(QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  labeledWire->nx = MAx1;
-  labeledWire->ny = MAy1;    // set new position of wire label
+//  labeledWire->Label->x1 = MAx1;
+//  labeledWire->Label->y1 = MAy1;    // set new position of wire label
   drawn = false;
   viewport()->repaint();
 
@@ -1129,8 +1166,8 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
                          int x1, y1, x2, y2;
                          x2 = Docs.current()->Comps.findRef(c);
                          Docs.current()->Comps.take();
-                         x1 = Docs.current()->getComponentPos(c); // for ports and power sources
-                         Docs.current()->Comps.insert(x1, c);  // insert at appropriate position
+                         Docs.current()->setComponentNumber(c); // for ports and power sources
+                         Docs.current()->Comps.append(c);
 
                          Docs.current()->setChanged(true);
                          c->entireBounds(x1,y1,x2,y2);
@@ -1176,55 +1213,165 @@ void QucsView::MDoubleClickWire2(QMouseEvent *Event)
 // *************************************************************************************
 void QucsView::contentsWheelEvent(QWheelEvent *Event)
 {
-  int diff;
   int delta = Event->delta() >> 1;     // use smaller steps
-  QucsDoc *d = Docs.current();
 
   // ...............................................................................
-  if((Event->state() & Qt::ShiftButton) || (Event->orientation() == Horizontal)) {    // scroll horizontally ?
-      diff = contentsX() - delta;
-      if(diff < 0) {     // scroll outside the active area ?  (to the left)
-        resizeContents(contentsWidth()-diff, contentsHeight());
-        d->ViewX1 += diff;
-        scrollBy(diff, 0);
-        viewport()->repaint();
-      }
-      else {
-        diff = contentsWidth() - contentsX()-visibleWidth() + delta;
-        if(diff < 0) {     // scroll outside the active area ?  (to the right)
-          resizeContents(contentsWidth()-diff, contentsHeight());
-          d->ViewX2 -= diff;
-        }
-        scrollBy(-delta, 0);
-      }
+  if((Event->state() & Qt::ShiftButton) || (Event->orientation() == Horizontal)) { // scroll horizontally ?
+      if(delta > 0) { if(ScrollLeft(delta)) scrollBy(-delta, 0); }
+      else { if(ScrollRight(delta)) scrollBy(-delta, 0); }
+      viewport()->repaint();    // because QScrollView thinks nothing has changed
   }
   // ...............................................................................
   else if(Event->state() & Qt::ControlButton) {    // use mouse wheel to zoom ?
       double Scaling;
-      if(delta < 0) Scaling = 80/double(-delta);
-      else Scaling = double(delta)/80;
+      if(delta < 0) Scaling = double(-delta)/80;
+      else Scaling = 80/double(delta);
       Zoom(Scaling);
       center(int(Event->x()*Scaling), int(Event->y()*Scaling));
       viewport()->repaint();
   }
   // ...............................................................................
   else {     // scroll vertically !
-      diff = contentsY() - delta;
-      if(diff < 0) {     // scroll outside the active area ?  (upwards)
-        resizeContents(contentsWidth(), contentsHeight()-diff);
-        d->ViewY1 += diff;
-        scrollBy(0, diff);
-        viewport()->repaint();    // because QScrollView thinks nothing has changed
-      }
-      else {
-        diff = contentsHeight() - contentsY()-visibleHeight() + delta;
-        if(diff < 0) {     // scroll outside the active area ?  (downwards)
-          resizeContents(contentsWidth(), contentsHeight()-diff);
-          d->ViewY2 -= diff;
-        }
-        scrollBy(0, -delta);
-      }
+      if(delta > 0) { if(ScrollUp(delta)) scrollBy(0, -delta); }
+      else { if(ScrollDown(delta)) scrollBy(0, -delta); }
+      viewport()->repaint();    // because QScrollView thinks nothing has changed
   }
 
   Event->accept();   // QScrollView must not handle this event
+}
+
+// -----------------------------------------------------------
+// Scrolls the visible area upwards and enlarges or reduces the view area accordingly.
+bool QucsView::ScrollUp(int step)
+{
+  int diff;
+  QucsDoc *d = Docs.current();
+
+  diff = contentsY() - step;
+  if(diff < 0) {     // scroll outside the active area ?  (upwards)
+    resizeContents(contentsWidth(), contentsHeight()-diff);
+    d->ViewY1 += diff;
+    scrollBy(0, diff);
+    return false;
+  }
+
+  diff = d->ViewY2 - d->UsedY2 - 20;    // keep border of 20
+  if(diff > 0) {      // make active area smaller ?
+    if(step < diff) diff = step;
+    resizeContents(contentsWidth(), contentsHeight()-diff);
+    d->ViewY2 -= diff;
+  }
+
+  return true;
+}
+
+// -----------------------------------------------------------
+// Scrolls the visible area downwards and enlarges or reduces the view area accordingly.
+// ("step" must be negative!)
+bool QucsView::ScrollDown(int step)
+{
+  int diff;
+  QucsDoc *d = Docs.current();
+
+  diff = contentsHeight() - contentsY()-visibleHeight() + step;
+  if(diff < 0) {     // scroll outside the active area ?  (downwards)
+    resizeContents(contentsWidth(), contentsHeight()-diff);
+    d->ViewY2 -= diff;
+    scrollBy(0, -step);
+    return false;
+  }
+
+  diff = d->ViewY1 - d->UsedY1 + 20;    // keep border of 20
+  if(diff < 0) {      // make active area smaller ?
+    if(step > diff) diff = step;
+    resizeContents(contentsWidth(), contentsHeight()+diff);
+    d->ViewY1 -= diff;
+    return false;
+  }
+
+  return true;
+}
+
+// -----------------------------------------------------------
+// Scrolls the visible area to the left and enlarges or reduces the view area accordingly.
+bool QucsView::ScrollLeft(int step)
+{
+  int diff;
+  QucsDoc *d = Docs.current();
+
+  diff = contentsX() - step;
+  if(diff < 0) {     // scroll outside the active area ?  (to the left)
+    resizeContents(contentsWidth()-diff, contentsHeight());
+    d->ViewX1 += diff;
+    scrollBy(diff, 0);
+    return false;
+  }
+
+  diff = d->ViewX2 - d->UsedX2 - 20;    // keep border of 20
+  if(diff > 0) {      // make active area smaller ?
+    if(step < diff) diff = step;
+    resizeContents(contentsWidth()-diff, contentsHeight());
+    d->ViewX2 -= diff;
+  }
+
+  return true;
+}
+
+// -----------------------------------------------------------
+// Scrolls the visible area to the right and enlarges or reduces the view area accordingly.
+// ("step" must be negative!)
+bool QucsView::ScrollRight(int step)
+{
+  int diff;
+  QucsDoc *d = Docs.current();
+
+  diff = contentsWidth() - contentsX()-visibleWidth() + step;
+  if(diff < 0) {     // scroll outside the active area ?  (to the right)
+    resizeContents(contentsWidth()-diff, contentsHeight());
+    d->ViewX2 -= diff;
+    scrollBy(-step, 0);
+    return false;
+  }
+
+  diff = d->ViewX1 - d->UsedX1 + 20;    // keep border of 20
+  if(diff < 0) {      // make active area smaller ?
+    if(step > diff) diff = step;
+    resizeContents(contentsWidth()+diff, contentsHeight());
+    d->ViewX1 -= diff;
+    return false;
+  }
+
+  return true;
+}
+
+// -----------------------------------------------------------
+// Is called if the scroll arrow of the ScrollBar is pressed.
+void QucsView::slotScrollUp()
+{
+  ScrollUp(verticalScrollBar()->lineStep());
+  viewport()->repaint();    // because QScrollView thinks nothing has changed
+}
+
+// -----------------------------------------------------------
+// Is called if the scroll arrow of the ScrollBar is pressed.
+void QucsView::slotScrollDown()
+{
+  ScrollDown(-verticalScrollBar()->lineStep());
+  viewport()->repaint();    // because QScrollView thinks nothing has changed
+}
+
+// -----------------------------------------------------------
+// Is called if the scroll arrow of the ScrollBar is pressed.
+void QucsView::slotScrollLeft()
+{
+  ScrollLeft(horizontalScrollBar()->lineStep());
+  viewport()->repaint();    // because QScrollView thinks nothing has changed
+}
+
+// -----------------------------------------------------------
+// Is called if the scroll arrow of the ScrollBar is pressed.
+void QucsView::slotScrollRight()
+{
+  ScrollRight(-horizontalScrollBar()->lineStep());
+  viewport()->repaint();    // because QScrollView thinks nothing has changed
 }

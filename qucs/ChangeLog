@@ -1,3 +1,15 @@
+2004-03-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* placing a ground on a labeled wire line or node deletes
+	the label
+	* new: class "QucsFile" manages load, save, copy, paste
+
+2004-03-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* several simulations can be started
+	* ShowFileDialogs are modeless
+	* wire labels have been improved
+
 2004-02-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new property for "parameter sweep": Sim

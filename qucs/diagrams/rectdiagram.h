@@ -26,13 +26,13 @@
 
 class RectDiagram : public Diagram  {
 public: 
-	RectDiagram(int _cx=0, int _cy=0);
-	~RectDiagram();
+  RectDiagram(int _cx=0, int _cy=0);
+  ~RectDiagram();
 
-  
-  virtual RectDiagram* newOne();
-  virtual void calcDiagram();
-  virtual void calcData(Graph *g);
+
+  RectDiagram* newOne();
+  void   calcDiagram();
+  void   calcData(Graph *g);
 
   QString xLabel, yLabel;
 };

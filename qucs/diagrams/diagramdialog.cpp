@@ -37,7 +37,7 @@ static const QRgb DefaultColors[]
 
 
 DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent, const char *name )
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   Diag = d;
   defaultDataSet = _DataSet;

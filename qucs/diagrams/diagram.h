@@ -19,7 +19,7 @@
 #define DIAGRAM_H
 
 #include "graph.h"
-#include "../components/components.h"
+#include "../element.h"
 
 #include <qfile.h>
 
@@ -32,8 +32,8 @@
 
 class Diagram : public Element {
 public: 
-	Diagram(int _cx=0, int _cy=0);
-	virtual ~Diagram();
+  Diagram(int _cx=0, int _cy=0);
+  virtual ~Diagram();
 
   virtual Diagram* newOne();
   virtual void calcDiagram();
@@ -42,6 +42,7 @@ public:
   virtual void setCenter(int x, int y, bool relative=false);
   void    paint(QPainter *p);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
+  bool    getSelected(int x_, int y_);
   bool    ResizeTouched(int& MAx1, int& MAy1, int& MAx2, int& MAy2);
   QString save();
   bool    load(const QString& Line, QTextStream *stream);

@@ -18,7 +18,7 @@
 #include "wire.h"
 
 
-Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2, const QString& _Name)
+Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2)
 {
   cx = 0;
   cy = 0;
@@ -28,9 +28,7 @@ Wire::Wire(int _x1, int _y1, int _x2, int _y2, Node *n1, Node *n2, const QString
   y2 = _y2;
   Port1 = n1;
   Port2 = n2;
-  Name  = _Name;
-
-  nx=0; ny=0; delta=0;
+  Label  = 0;
 
   Type = isWire;
   isSelected = false;
@@ -67,13 +65,24 @@ void Wire::rotate()
 void Wire::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    x1 += x;  x2 += x;  nx += x;
-    y1 += y;  y2 += y;  ny += y;
+    x1 += x;  x2 += x;
+    y1 += y;  y2 += y;
+    if(!Label) Label->setCenter(x, y, true);
   }
   else {
     x1 = x;  x2 = x;
     y1 = y;  y2 = y;
   }
+}
+
+// ----------------------------------------------------------------
+// Lie x/y on wire ? 5 is the precision the coordinates have to fit.
+bool Wire::getSelected(int x_, int y_)
+{
+  if(x1-5 <= x_) if(x2+5 >= x_) if(y1-5 <= y_) if(y2+5 >= y_)
+    return true;
+
+  return false;
 }
 
 // ----------------------------------------------------------------
@@ -90,21 +99,7 @@ void Wire::paint(QPainter *p)
     p->drawLine(x1, y1, x2, y2);
   }
 
-  if(!Name.isEmpty()) {   // draw node name label
-    p->setPen(QPen(QPen::darkMagenta,1));
-    if(x1 == x2) {
-      p->drawLine(x1+4, y1+delta+4, nx, ny);
-      p->drawArc(x1-4, y1+delta, 8, 8, 16*140, 16*255);
-    }
-    else {
-      p->drawLine(x1+delta+4, y1-4, nx, ny);
-      p->drawArc(x1+delta, y1-4, 8, 8, 16*230, 16*255);
-    }
-    p->drawLine(nx, ny, nx, ny-10);
-    p->drawLine(nx, ny, nx+15, ny);
-    p->setPen(QPen(QPen::black,1));
-    p->drawText(nx+3, ny-3, Name);
-  }
+  if(Label) Label->paint(p);
 }
 
 // ----------------------------------------------------------------
@@ -114,16 +109,19 @@ bool Wire::isHorizontal()
 }
 
 // ----------------------------------------------------------------
-void Wire::setName(const QString& Name_)
+void Wire::setName(const QString& Name_, int delta_, int x_, int y_)
 {
-  Name = Name_;
+  if(Name_.isEmpty()) {
+    if(Label) delete Label;
+    Label = 0;
+    return;
+  }
 
-  QWidget w;
-  QPainter p(&w);
-  p.setFont(QFont("Helvetica",12, QFont::Light));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Name);      // get size of text on screen
-  NameDX = r.width();
-  NameDY = r.height();    // remember size of text
+  if(!Label) {
+    if(isHorizontal()) Label = new WireLabel(Name_, x1+delta_, y1, x_, y_, isHWireLabel);
+    else Label = new WireLabel(Name_, x1, y1+delta_, x_, y_, isVWireLabel);
+  }
+  else Label->setName(Name_);
 }
 
 // ----------------------------------------------------------------
@@ -133,9 +131,12 @@ QString Wire::save()
 {
   QString s  = "   <"+QString::number(x1)+" "+QString::number(y1);
           s += " "+QString::number(x2)+" "+QString::number(y2);
-          s += " \""+Name +"\" ";
-          s += QString::number(nx)+" "+QString::number(ny)+" ";
-          s += QString::number(delta)+">";
+  if(Label) {
+          s += " \""+Label->Name +"\" ";
+          s += QString::number(Label->x1)+" "+QString::number(Label->y1)+" ";
+          s += QString::number(Label->cx-x1 + Label->cy-y1)+">";
+  }
+  else { s += " \"\" 0 0 0>"; }
   return s;
 }
 
@@ -149,7 +150,7 @@ bool Wire::load(const QString& _s)
   if(s.at(0) != '<') return false;
   if(s.at(s.length()-1) != '>') return false;
   s = s.mid(1, s.length()-2);   // cut off start and end character
-  
+
   QString n;
   n  = s.section(' ',0,0);    // x1
   x1 = n.toInt(&ok);
@@ -167,19 +168,19 @@ bool Wire::load(const QString& _s)
   y2 = n.toInt(&ok);
   if(!ok) return false;
 
-  setName(s.section('"',1,1));  // Name
+  n = s.section('"',1,1);
+  if(!n.isEmpty()) {     // is wire labeled ?
+    int nx = s.section(' ',5,5).toInt(&ok);    // x coordinate
+    if(!ok) return false;
 
-  n  = s.section(' ',5,5);    // nx
-  nx = n.toInt(&ok);
-  if(!ok) return false;
+    int ny = s.section(' ',6,6).toInt(&ok);    // y coordinate
+    if(!ok) return false;
 
-  n  = s.section(' ',6,6);    // ny
-  ny = n.toInt(&ok);
-  if(!ok) return false;
+    int delta = s.section(' ',7,7).toInt(&ok);    // delta for x/y root coordinate
+    if(!ok) return false;
 
-  n  = s.section(' ',7,7);    // delta
-  delta = n.toInt(&ok);
-  if(!ok) return false;
+    setName(n, delta, nx, ny);  // Wire Label
+  }
 
   return true;
 }
