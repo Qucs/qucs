@@ -27,7 +27,7 @@ TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 0;    // no extension to select area
   y1 = 0;
-  x2 = 300;  // initial size of diagram
+  x2 = x3 = 300;  // initial size of diagram
   y2 = 200;
   Name = "Tab";
   xAxis.limit_min = 0.0;  // scroll bar position (needs to be saved in file)

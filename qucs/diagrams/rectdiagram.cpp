@@ -466,7 +466,7 @@ else {  // not logarithmical
     z = int(zD);
   }
 } // of "if(xlog) ... else ..."
-  y1 = QucsSettings.font.pointSize()+20;
+  y1 = QucsSettings.font.pointSize() + 6;
 
 
   // ====  y grid  =======================================================

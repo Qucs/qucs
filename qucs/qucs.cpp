@@ -584,7 +584,7 @@ bool QucsApp::gotoPage(const QString& Name)
   view->Docs.at(No);  // back to the last current
   // make new document the current (calls "slotChangeView()" indirectly)
   WorkView->setCurrentTab(WorkView->tabAt(cNo));
-  // must be done before the next step, in order to call the change slot !
+  // must be done here, in order to call the change slot !
 
   // if only an untitled document was open -> close it
   if(view->Docs.count() == 2)
@@ -592,6 +592,7 @@ bool QucsApp::gotoPage(const QString& Name)
       if(!view->Docs.getFirst()->DocChanged)
         view->Docs.removeRef(view->Docs.getFirst());
 
+  d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
   view->viewport()->repaint();
   view->drawn = false;
   return true;
@@ -1271,6 +1272,8 @@ void QucsApp::slotChangePage(QString Name)
     view->Docs.current()->reloadGraphs();       // ... changes, reload here !
   WorkView->setCurrentTab(WorkView->tabAt(cNo));  // make new doc the current
   // must be done before the next step, in order to call the change slot !
+
+  d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
 
   TabView->setCurrentPage(2);   // switch to "Component"-Tab
   if(Name.right(4) == ".dpl") {

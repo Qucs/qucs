@@ -25,7 +25,7 @@ PSDiagram::PSDiagram(int _cx, int _cy, bool _polarUp)
 			: Diagram(_cx, _cy)
 {
   x1 = 10;       // position of label text
-  y1 = y3 = 16;
+  y1 = y3 = 2;
   x2 = 200;      // initial size of diagram
   x3 = 207;
   y2 = 200;

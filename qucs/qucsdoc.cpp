@@ -2652,7 +2652,7 @@ bool QucsDoc::load()
   // The undo stack of the circuit symbol is initialized when first
   // entering its edit mode.
 
-  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
+//  sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);  x1 for diagrams not yet set
   return true;
 }
 
