@@ -1,3 +1,8 @@
+2004-07-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* componentdialog.cpp (ComponentDialog): Allowing ',' to be
+	typed into property dialogs (for equations).
+
 2004-06-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* resistor.cpp (Resistor): Fixed typo in 'european'.
