@@ -2823,6 +2823,185 @@ I_{3}\\
 \end{bmatrix}
 \end{equation}
 
+\section{Non-linear DC Analysis}
+%\addcontentsline{toc}{section}{Non-linear DC Analysis}
+
+Previous sections described using the modified nodal analysis solving
+linear networks including controlled sources.  It can also be used to
+solve networks with non-linear components like diodes and transistors.
+Most methods are based on iterative solutions of a linearised equation
+system.  The best known is the so called Newton-Raphson method.
+
+\subsection{Newton-Raphson method}
+%\addcontentsline{toc}{subsection}{Newton-Raphson method}
+
+The Newton-Raphson method is going to be introduced using the example
+circuit shown in fig. \ref{fig:NLexample} having a single unknown: the
+voltage at node 1.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[angle=-90,width=10cm]{NLexample}
+\end{center}
+\caption{example circuit for non-linear DC analysis}
+\label{fig:NLexample}
+\end{figure}
+\FloatBarrier
+
+The 1x1 MNA equation system to be solved can be written as
+\begin{equation}
+\begin{bmatrix}
+G
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{0}
+\end{bmatrix}
+\label{eq:NLmatrix}
+\end{equation}
+
+whereas the value for $G$ is now going to be explained.  The current
+through a diode is simply determined by Schockley's approximation
+\begin{equation}
+I_{d} = I_{S}\cdot \left(e^{\frac{V_{d}}{V_{T}}} - 1\right)
+\end{equation}
+
+Thus Kirchhoff's current law at node 1 can be expressed as
+\begin{equation}
+I_{0} = \dfrac{V}{R} + I_{S}\cdot \left(e^{\frac{V}{V_{T}}} - 1\right)
+\end{equation}
+
+By establishing eq. (\ref{eq:NLfunc}) it is possible to trace the
+problem back to finding the zero point of the function $f$.
+\begin{equation}
+f(V) = \dfrac{V}{R} + I_{S}\cdot \left(e^{\frac{V}{V_{T}}} - 1\right) - I_{0}
+\label{eq:NLfunc}
+\end{equation}
+
+Newton developed a method stating that the zero point of a functions
+derivative (i.e. the tangent) at a given point is nearer to the zero
+point of the function itself than the original point.  In mathematical
+terms this means to linearise the function $f$ at a starting value
+$V^{(0)}$.
+\begin{equation}
+f\left(V^{(0)} + \Delta V\right) \approx f\left(V^{(0)}\right) + \left.\dfrac{\partial f\left(V^{(0)}\right)}{\partial V}\right|_{V^{(0)}}\cdot \Delta V
+\;\;\;\; \text{ with } \;\;\;\;
+\Delta V = V^{(1)} - V^{(0)}
+\label{eq:NRapprox}
+\end{equation}
+
+Setting $f(V^{(1)}) = 0$ gives
+\begin{equation}
+V^{(1)} = V^{(0)} - \dfrac{f\left(V^{(0)}\right)}{\left.\dfrac{\partial f\left(V^{(0)}\right)}{\partial V}\right|_{V^{(0)}}}
+\end{equation}
+
+or in the general case with $m$ being the number of iteration
+\begin{equation}
+V^{(m + 1)} = V^{(m)} - \dfrac{f\left(V^{(m)}\right)}{\left.\dfrac{\partial f\left(V^{(m)}\right)}{\partial V}\right|_{V^{(m)}}}
+\label{eq:NRgeneral}
+\end{equation}
+
+This must be computed until $V^{(m+1)}$ and $V^{(m)}$ differ less than a
+certain barrier.
+\begin{equation}
+\left|V^{(m+1)} - V^{(m)}\right| < \varepsilon_{abs} + \varepsilon_{rel}\cdot \left|V^{(m)}\right|
+\label{eq:NLconvergence}
+\end{equation}
+
+With very small $\varepsilon_{abs}$ the iteration would break too
+early and for little $\varepsilon_{rel}$ values the iteration aims to
+a useless precision for large absolute values of $V$.
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{V0}{$\mathrm{V^{(0)}}$}
+\psfrag{V1}{$\mathrm{V^{(1)}}$}
+\psfrag{V2}{$\mathrm{V^{(2)}}$}
+\includegraphics[width=0.75\linewidth]{newton}
+\end{center}
+\caption{Newton-Raphson method for example circuit}
+\label{fig:NewtonRaphson}
+\end{figure}
+\FloatBarrier
+
+With this theoretical background it is now possible to step back to
+eq. (\ref{eq:NLfunc}) being the determining equation for the example
+circuit.  With
+\begin{equation}
+g_{d}^{(m)} = \left.\dfrac{\partial I_{d}}{\partial V}\right|_{V^{(m)}} = \dfrac{I_{S}}{V_{T}}\cdot e^{\frac{V^{(m)}}{V_{T}}}
+\end{equation}
+
+and
+\begin{equation}
+\left.\dfrac{\partial f\left(V\right)}{\partial V}\right|_{V^{(m)}} = \dfrac{1}{R} + g_{d}^{(m)}
+\end{equation}
+
+the eq. (\ref{eq:NRgeneral}) can be written as
+\begin{equation}
+\left(g_{d}^{(m)} + \dfrac{1}{R}\right)\cdot V^{(m+1)} = I_{0} - \left(I_{d}^{(m)} - g_{d}^{(m)}\cdot V^{(m)}\right)
+\label{eq:NRresult}
+\end{equation}
+
+when the expression
+\begin{equation}
+f\left(V^{(m)}\right) = \dfrac{1}{R}\cdot V^{(m)} + I_{d}^{(m)} - I_{0}
+\end{equation}
+
+based upon eq. (\ref{eq:NLfunc}) is taken into account.  Comparing the
+introductory MNA equation system in eq. (\ref{eq:NLmatrix}) with
+eq. (\ref{eq:NRresult}) proposes the following equivalent circuit for
+the diode model.
+
+\begin{figure}[ht]
+\begin{center}
+\psfrag{gd}{$\mathrm{g_{d}^{(m)}}$}
+\psfrag{Ieq}{$\mathrm{I_{d}^{(m)} - g_{d}^{(m)}\cdot V^{(m)}}$}
+\includegraphics[width=0.2\linewidth]{dcdiode}
+\end{center}
+\caption{accompanied equivalent circuit for intrinsic diode}
+\label{fig:AccompaniedModel}
+\end{figure}
+\FloatBarrier
+
+With
+\begin{equation}
+I_{eq} = I_{d}^{(m)} - g_{d}^{(m)}\cdot V^{(m)}
+\end{equation}
+
+the MNA matrix entries can finally be written as
+\begin{equation}
+\begin{bmatrix}
+g_{d} & -g_{d}\\
+-g_{d} & g_{d}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_{eq}\\
+I_{eq}
+\end{bmatrix}
+\end{equation}
+
+In analog ways all controlled current sources with non-linear
+current-voltage dependency built into diodes and transistors can be
+modeled.  The left hand side of the MNA matrix (the A matrix) is
+called Jacobian matrix which is going to be build in each iteration
+step.  For the solution vector $x$ possibly containing currents as
+well when voltage sources are in place a likely convergence criteria
+as defined in eq. (\ref{eq:NLconvergence}) must be defined for the
+currents.
+
+\subsection{Convergence}
+%\addcontentsline{toc}{subsection}{Convergence}
+
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
 
