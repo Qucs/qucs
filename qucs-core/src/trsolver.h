@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.1 2004/09/10 16:26:56 ela Exp $
+ * $Id: trsolver.h,v 1.2 2004/09/11 20:39:29 ela Exp $
  *
  */
 
@@ -39,11 +39,12 @@ class trsolver : public nasolver<nr_double_t>
   void solve (void);
   void calc (nr_double_t);
   void init (void);
-
-  void calcCoefficients (void);
+  void saveAllResults (nr_double_t);
 
  private:
   sweep * swp;
+  nr_double_t coefficients[8];
+  nr_double_t delta;
 };
 
 #endif /* __TRSOLVER_H__ */

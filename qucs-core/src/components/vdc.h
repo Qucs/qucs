@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.h,v 1.4 2004/02/17 15:30:58 ela Exp $
+ * $Id: vdc.h,v 1.5 2004/09/11 20:39:30 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@ class vdc : public circuit
  public:
   vdc ();
   void calcDC (void);
+  void calcTR (nr_double_t);
 };
 
 #endif /* __VDC_H__ */

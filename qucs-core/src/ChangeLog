@@ -1,3 +1,22 @@
+2004-09-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Started to implement the actual solver.  For
+	now only linear components are supported and no integration
+	step adaption is made.
+
+	* check_netlist.cpp (definition_available): Added the transient
+	analysis to the list of known netlist definitions.
+
+	* circuit.h (class circuit): Added the functionality necessary
+	for the transient analysis.  These are save-state variables and
+	the integration methods.
+
+	* transient.cpp: Implemented Gear, Euler and trapazoidal
+	integration methods.
+
+	* transient.h (class transient): New class implementing some
+	transient analysis helpers.
+
 2004-09-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.h, trsolver.cpp (class trsolver): New files.  Some

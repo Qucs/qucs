@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.7 2004/09/07 12:53:11 ela Exp $
+ * $Id: capacitor.cpp,v 1.8 2004/09/11 20:39:30 ela Exp $
  *
  */
 
@@ -53,6 +53,7 @@ void capacitor::calcSP (nr_double_t frequency) {
 }
 
 void capacitor::initDC (dcsolver *) {
+  clearI ();
   clearY ();
 }
 
@@ -61,4 +62,28 @@ void capacitor::calcAC (nr_double_t frequency) {
   complex y = rect (0, 2.0 * M_PI * frequency * c);
   setY (1, 1, +y); setY (2, 2, +y);
   setY (1, 2, -y); setY (2, 1, -y);
+}
+
+void capacitor::initAC (acsolver *) {
+  clearI ();
+}
+
+#define qState 0 // charge state
+#define cState 1 // current state
+
+void capacitor::initTR (trsolver *) {
+  setStates (2);
+}
+
+void capacitor::calcTR (nr_double_t) {
+  nr_double_t c = getPropertyDouble ("C");
+  nr_double_t g, i;
+  nr_double_t v = real (getV (1) - getV (2));
+
+  setState (qState, v * c);
+  integrate (qState, c, g, i);
+  setY (1, 1, +g); setY (2, 2, +g);
+  setY (1, 2, -g); setY (2, 1, -g);
+  setI (1 , -i);
+  setI (2 , +i);
 }

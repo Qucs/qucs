@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.1 2004/09/10 16:26:56 ela Exp $
+ * $Id: trsolver.cpp,v 1.2 2004/09/11 20:39:29 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@
 #include "analysis.h"
 #include "nasolver.h"
 #include "trsolver.h"
-#include "eqnsys.h"
+#include "transient.h"
 
 // Constructor creates an unnamed instance of the trsolver class.
 trsolver::trsolver () : nasolver<nr_double_t> () {
@@ -67,7 +67,7 @@ trsolver::trsolver (trsolver & o) : nasolver<nr_double_t> (o) {
 /* This is the transient netlist solver.  It prepares the circuit list
    for each requested time and solves it then. */
 void trsolver::solve (void) {
-  nr_double_t time;
+  nr_double_t time, current;
   runs++;
 
   // create time sweep if necessary
@@ -92,19 +92,27 @@ void trsolver::solve (void) {
   init ();
   solve_pre ();
 
+  current = 0;
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     time = swp->next ();
     logprogressbar (i, swp->getSize (), 40);
-    calc (time);
 
 #if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for t = %e\n",
 	      getName (), (double) time);
 #endif
+
+    do {
+      calc (current);
+      current += delta;
+      // start the linear solver
+      solve_linear ();
+    }
+    while (current < time);
     
-    // start the linear solver
-    solve_linear ();
+    // save results
+    saveAllResults (time);
   }
   solve_post ();
   logprogressclear (40);
@@ -115,6 +123,7 @@ void trsolver::solve (void) {
 void trsolver::calc (nr_double_t time) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->nextState ();
     c->calcTR (time);
   }
 }
@@ -122,43 +131,29 @@ void trsolver::calc (nr_double_t time) {
 /* Goes through the list of circuit objects and runs its initTR()
    function. */
 void trsolver::init (void) {
+  char * IModel = getPropertyString ("IntegrationMethod");
+  int order = getPropertyInteger ("Order");
+  delta = getPropertyDouble ("InitialStep");
+  calcCoefficients (IModel, order, coefficients, delta);
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->initTR (this);
+    c->initStates ();
+    c->setCoefficients (coefficients);
+    c->setOrder (order);
+    setIntegrationMethod (c, IModel);
   }
 }
 
-/* The function calculates the integration coefficient for numerical
-   integration methods.  Supported methods are: Gear (order 1-6). */
-void trsolver::calcCoefficients (void) {
-  char * IModel = getPropertyString ("IntegrationModel");
-  int order = getPropertyInteger ("Order");
-
-  if (!strcmp (IModel, "Gear")) {
-    int i, r, c;
-    tmatrix<nr_double_t> A (order + 1);
-    tmatrix<nr_double_t> x (order + 1, 1);
-    tmatrix<nr_double_t> b (order + 1, 1);
-
-    eqnsys<nr_double_t> e;
-    e.setAlgo (ALGO_LU_DECOMPOSITION);
-
-    // right hand side vector
-    for (i = 1; i <= order + 1; i++) b.set (i, 1, 1);
-    for (i = 2; i <= order + 1; i++) {
-      A.set (i, 1, i - 1); // first column
-      A.set (1, i, 1);     // first row
-    }
-    for (c = 1; c <= order - 1; c++) {
-      nr_double_t entry = -c;
-      for (r = 1; r <= order; r++) {
-	A.set (r + 1, c + 2, entry);
-	entry *= -c;
-      }
-    }
-    e.passEquationSys (&A, &x, &b);
-    e.solve ();
-
-    // vector x consists of b, a0, a1 ... a_n right here
+/* This function saves the results of a single solve() functionality
+   (for the given timestamp) into the output dataset. */
+void trsolver::saveAllResults (nr_double_t time) {
+  vector * t;
+  // add current frequency to the dependency of the output dataset
+  if ((t = data->findDependency ("time")) == NULL) {
+    t = new vector ("time");
+    data->addDependency (t);
   }
+  if (runs == 1) t->add (time);
+  saveResults ("Vt", "It", 0, t);
 }

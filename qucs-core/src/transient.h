@@ -1,5 +1,5 @@
 /*
- * iprobe.cpp - AC/DC current probe class implementation
+ * transient.h - transient helper class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,40 +18,24 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iprobe.cpp,v 1.3 2004/09/11 20:39:30 ela Exp $
+ * $Id: transient.h,v 1.1 2004/09/11 20:39:29 ela Exp $
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#ifndef __TRANSIENT_H__
+#define __TRANSIENT_H__
 
-#include <stdio.h>
-#include <stdlib.h>
+class circuit;
 
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "iprobe.h"
+class transient
+{
+ public:
+  friend void calcCoefficients (char *, int, nr_double_t *, nr_double_t);
+  friend void integrateEuler (circuit *, int, nr_double_t, nr_double_t&,
+			      nr_double_t&);
+  friend void integrateBilinear (circuit *, int, nr_double_t, nr_double_t&,
+				 nr_double_t&);
+  friend void setIntegrationMethod (circuit *, char *);
+};
 
-iprobe::iprobe () : circuit (2) {
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
-  type = CIR_IPROBE;
-  setVoltageSources (1);
-}
-
-void iprobe::initDC (dcsolver *) {
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
-}
-
-void iprobe::initAC (acsolver *) {
-  initDC (NULL);
-}
+#endif /* __TRANSIENT_H__ */

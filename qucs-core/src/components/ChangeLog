@@ -1,3 +1,8 @@
+2004-09-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* vdc.cpp, vac.cpp, resistor.cpp, iac.cpp, capacitor.cpp:
+	Implemented callbacks for the transient	analysis.
+
 2004-09-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Added wave guide impedance model

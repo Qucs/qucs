@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.1 2004/09/06 06:40:07 ela Exp $
+ * $Id: tmatrix.cpp,v 1.2 2004/09/11 20:39:29 ela Exp $
  *
  */
 
@@ -49,7 +49,11 @@ tmatrix<nr_type_t>::tmatrix () {
 template <class nr_type_t>
 tmatrix<nr_type_t>::tmatrix (int s)  {
   rows = cols = s;
-  data = (s > 0) ? new nr_type_t[s * s] : NULL;
+  if (s > 0) {
+    data = new nr_type_t[s * s];
+    memset (data, 0, sizeof (nr_type_t) * s * s);
+  }
+  else data = NULL;
 }
 
 /* Constructor creates an unnamed instance of the tmatrix class with a
@@ -58,7 +62,11 @@ template <class nr_type_t>
 tmatrix<nr_type_t>::tmatrix (int r, int c)  {
   rows = r;
   cols = c;
-  data = (r > 0 && c > 0) ? new nr_type_t[r * c] : NULL;
+  if (r > 0 && c > 0) {
+    data = new nr_type_t[r * c];
+    memset (data, 0, sizeof (nr_type_t) * r * c);
+  }
+  else data = NULL;
 }
 
 /* The copy constructor creates a new instance based on the given
