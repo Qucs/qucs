@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.4 2004/05/02 12:02:14 ela Exp $
+ * $Id: constants.h,v 1.5 2004/05/06 09:47:17 ela Exp $
  *
  */
 
@@ -38,6 +38,15 @@
 #endif
 #ifndef M_PI_2
 #define M_PI_2   1.5707963267948966192313216916397514
+#endif
+#ifndef M_PI_4
+#define M_PI_4   0.7853981633974483096156608458198757
+#endif
+#ifndef M_2_PI
+#define M_2_PI   0.6366197723675813430755350534900574
+#endif
+#ifndef M_1_PI
+#define M_1_PI   0.3183098861837906715377675267450287
 #endif
 #ifndef M_SQRT2
 #define M_SQRT2  1.4142135623730950488016887242096981
