@@ -18,6 +18,7 @@
 #include "qucsactions.h"
 
 #include "qucs.h"
+#include "qucsview.h"
 #include "components/ground.h"
 #include "components/subcirport.h"
 #include "components/equation.h"
@@ -412,6 +413,34 @@ void QucsActions::slotMoveText(bool on)
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMoveMoveTextB;
   view->MousePressAction = &QucsView::MPressMoveText;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
+
+// #######################################################################
+// Is called, when "Zoom in" action is activated.
+void QucsActions::slotZoomIn(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    App->activeAction = 0;   // no action active
+    if(view->drawn) view->viewport()->repaint();
+    return;
+  }
+  if(App->activeAction) {
+    App->activeAction->blockSignals(true); // do not call toggle slot
+    App->activeAction->setOn(false);       // set last toolbar button off
+    App->activeAction->blockSignals(false);
+  }
+  App->activeAction = magPlus;
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveZoomIn;
+  view->MousePressAction = &QucsView::MPressZoomIn;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }

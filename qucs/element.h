@@ -41,6 +41,15 @@ struct Arc {
   QPen  style;
 };
 
+struct Area {
+  Area(int _x, int _y, int _w, int _h, QPen _Pen,
+	QBrush _Brush = QBrush(Qt::NoBrush))
+	: x(_x), y(_y), w(_w), h(_h), Pen(_Pen), Brush(_Brush) {};
+  int    x, y, w, h;
+  QPen   Pen;
+  QBrush Brush;    // filling style/color
+};
+
 struct Port {
   Port() {};
   Port(int _x, int _y) : x(_x), y(_y) {};
@@ -49,9 +58,13 @@ struct Port {
 };
 
 struct Text {
-  Text(int _x, int _y, const QString& _s) : x(_x), y(_y), s(_s) {};
-  int   x, y;
+  Text(int _x, int _y, const QString& _s, QColor _Color = QColor(0,0,0),
+	float _Size = 10.0) : x(_x), y(_y), s(_s), Color(_Color),
+	Size(_Size) {};
+  int     x, y;
   QString s;
+  QColor  Color;
+  float   Size;
 };
 
 struct Property {

@@ -152,7 +152,7 @@ QString Arrow::save()
 {
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
   s += QString::number(x2)+" "+QString::number(y2)+" ";
-  s += QString::number(Height)+" "+QString::number(Width)+" ";
+  s += QString::number(int(Height))+" "+QString::number(int(Width))+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
   s += QString::number(Pen.style());
   return s;
@@ -193,29 +193,32 @@ void Arrow::calcArrowHead()
 {
   double phi  = atan2(double(y2), double(x2));
 
-  double w = beta+phi-M_PI;
-  xp1 = x2+int(Length*cos(w));
-  yp1 = y2+int(Length*sin(w));
+  double w = beta+phi;
+  xp1 = x2-int(Length*cos(w));
+  yp1 = y2-int(Length*sin(w));
 
-  w = M_PI-beta+phi;
-  xp2 = x2+int(Length*cos(w));
-  yp2 = y2+int(Length*sin(w));
+  w = phi-beta;
+  xp2 = x2-int(Length*cos(w));
+  yp2 = y2-int(Length*sin(w));
 }
 
 // --------------------------------------------------------------------------
-// x/y are the precise coordinates, gx/gy are the coordinates due to the grid.
-void Arrow::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
+// fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
+// x/y are coordinates without scaling.
+void Arrow::MouseMoving(
+	QPainter *paintScale, int, int, int gx, int gy,
+	QPainter *p, int x, int y, bool drawn)
 {
   if(State > 0) {
     if(State > 1) {
       calcArrowHead();
-      paintScheme(p);  // erase old painting
+      paintScheme(paintScale);  // erase old painting
     }
     State++;
     x2 = gx-cx;
     y2 = gy-cy;
     calcArrowHead();
-    paintScheme(p);  // paint new painting
+    paintScheme(paintScale);  // paint new painting
   }
   else { cx = gx; cy = gy; }
 

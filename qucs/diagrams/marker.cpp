@@ -153,7 +153,7 @@ void Marker::createText()
 	    break;
   }
 
-  Diag->calcCoordinate(VarPos[0], yr, -yi, &cx, &cy);
+  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
 
   getTextSize(QucsSettings.font);
 }

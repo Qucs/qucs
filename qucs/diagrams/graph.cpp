@@ -33,6 +33,7 @@ Graph::Graph(const QString& _Line)
   Style  = 0;    // solid line
   Precision  = 3;
   isSelected = false;
+  yAxisNo = 0;   // left y axis
 
   Points = 0;
   cPointsY = 0;
@@ -117,7 +118,8 @@ QString Graph::save()
 {
   QString s = "\t<\""+Var+"\" "+Color.name()+
 	      " "+QString::number(Thick)+" "+QString::number(Precision)+
-	      " "+QString::number(numMode)+" "+QString::number(Style)+">";
+	      " "+QString::number(numMode)+" "+QString::number(Style)+
+	      " "+QString::number(yAxisNo)+">";
 
   for(Marker *pm=Markers.first(); pm != 0; pm=Markers.next())
     s += "\n\t  "+pm->save();
@@ -156,6 +158,11 @@ bool Graph::load(const QString& _s)
 
   n  = s.section(' ',5,5);    // Style
   Style = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',6,6);    // yAxisNo
+  if(n.isEmpty()) return true;   // backward compatible
+  yAxisNo = n.toInt(&ok);
   if(!ok) return false;
 
   return true;

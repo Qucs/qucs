@@ -19,8 +19,9 @@
 # include <config.h>
 #endif
 
-#include "qucsinit.h"
 #include "qucs.h"
+#include "qucsview.h"
+#include "qucsinit.h"
 #include "qucsactions.h"
 
 #include <qaction.h>
@@ -323,12 +324,13 @@ void QucsInit::initActions()
 	tr("View 1:1\n\nShows the page content without magnification"));
   connect(App->magOne, SIGNAL(activated()), App, SLOT(slotShowOne()));
 
-  App->magPlus = new QAction(tr("Zoom in"),
+  Acts->magPlus = new QAction(tr("Zoom in"),
                         QIconSet(QImage(BITMAPDIR "viewmag+.png")),
                         tr("Zoom in"), Key_Plus, App);
-  App->magPlus->setStatusTip(tr("Zooms into the current view"));
-  App->magPlus->setWhatsThis(tr("Zoom in\n\nZooms the current view"));
-  connect(App->magPlus, SIGNAL(activated()), App, SLOT(slotZoomIn()));
+  Acts->magPlus->setStatusTip(tr("Zooms into the current view"));
+  Acts->magPlus->setWhatsThis(tr("Zoom in\n\nZooms the current view"));
+  Acts->magPlus->setToggleAction(true);
+  connect(Acts->magPlus, SIGNAL(toggled(bool)), Acts, SLOT(slotZoomIn(bool)));
 
   App->magMinus = new QAction(tr("Zoom out"),
                          QIconSet(QImage(BITMAPDIR "viewmag-.png")),
@@ -618,7 +620,7 @@ void QucsInit::initMenuBar()
   viewMenu = new QPopupMenu();  // menuBar entry viewMenu
   App->magAll->addTo(viewMenu);
   App->magOne->addTo(viewMenu);
-  App->magPlus->addTo(viewMenu);
+  Acts->magPlus->addTo(viewMenu);
   App->magMinus->addTo(viewMenu);
   viewMenu->insertSeparator();
   viewMenu->setCheckable(true);
@@ -665,7 +667,7 @@ void QucsInit::initToolBar()
   viewToolbar = new QToolBar(App);
   App->magAll->addTo(viewToolbar);
   App->magOne->addTo(viewToolbar);
-  App->magPlus->addTo(viewToolbar);
+  Acts->magPlus->addTo(viewToolbar);
   App->magMinus->addTo(viewToolbar);
 
   workToolbar = new QToolBar(App);

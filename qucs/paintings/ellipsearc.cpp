@@ -180,8 +180,11 @@ void EllipseArc::MouseResizeMoving(int x, int y, QPainter *p)
 }
 
 // --------------------------------------------------------------------------
-// x/y are the precise coordinates, gx/gy are the coordinates due to the grid.
-void EllipseArc::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
+// fx/fy are the precise coordinates, gx/gy are the coordinates set on grid.
+// x/y are coordinates without scaling.
+void EllipseArc::MouseMoving(
+	QPainter *paintScale, int fx, int fy, int gx, int gy,
+	QPainter *p, int x, int y, bool drawn)
 {
   switch(State) {
     case 0 :
@@ -192,52 +195,52 @@ void EllipseArc::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool dra
       State++;
       x2 = gx - cx;
       y2 = gy - cy;
-      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // paint new painting
+      paintScale->drawArc(cx, cy, x2, y2, 0, 16*360);  // paint new painting
       break;
     case 2 :
-      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // erase old painting
+      paintScale->drawArc(cx, cy, x2, y2, 0, 16*360);  // erase old painting
       x2 = gx - cx;
       y2 = gy - cy;
-      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // paint new painting
+      paintScale->drawArc(cx, cy, x2, y2, 0, 16*360);  // paint new painting
       break;
     case 3 :
       State++;
-      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // erase old painting
+      paintScale->drawArc(cx, cy, x2, y2, 0, 16*360);  // erase old painting
       if(x2 < 0) { cx += x2;  x2 *= -1; }
       if(y2 < 0) { cy += y2;  y2 *= -1; }
 
       Angle = int(16.0*180.0/M_PI
-		* atan2(double(x2*(cy+(y2>>1) - y)),
-			double(y2*(x - cx-(x2>>1)))));
+		* atan2(double(x2*(cy+(y2>>1) - fy)),
+			double(y2*(fx - cx-(x2>>1)))));
       if(Angle < 0) Angle += 16*360;
-      p->drawArc(cx, cy, x2, y2, Angle, 16*180); // paint new painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, 16*180); // new painting
       break;
     case 4 :
-      p->drawArc(cx, cy, x2, y2, Angle, 16*180); // erase old painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, 16*180);// erase old painting
       Angle = int(16.0*180.0/M_PI
-		* atan2(double(x2*(cy+(y2>>1) - y)),
-			double(y2*(x - cx-(x2>>1)))));
+		* atan2(double(x2*(cy+(y2>>1) - fy)),
+			double(y2*(fx - cx-(x2>>1)))));
       if(Angle < 0) Angle += 16*360;
-      p->drawArc(cx, cy, x2, y2, Angle, 16*180); // paint new painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, 16*180);// paint new painting
       break;
     case 5 :
       State++;
-      p->drawArc(cx, cy, x2, y2, Angle, 16*180);  // erase old painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, 16*180);// erase old painting
       ArcLen = int(16.0*180.0/M_PI
-		* atan2(double(x2*(cy+(y2>>1) - y)),
-			double(y2*(x - cx-(x2>>1)))));
+		* atan2(double(x2*(cy+(y2>>1) - fy)),
+			double(y2*(fx - cx-(x2>>1)))));
       ArcLen -= Angle;
       while(ArcLen < 0) ArcLen += 16*360;
-      p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // paint new painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, ArcLen);// paint new painting
       break;
     case 6 :
-      p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // erase old painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, ArcLen);// erase old painting
       ArcLen = int(16.0*180.0/M_PI
-		* atan2(double(x2*(cy+(y2>>1) - y)),
-			double(y2*(x - cx-(x2>>1)))));
+		* atan2(double(x2*(cy+(y2>>1) - fy)),
+			double(y2*(fx - cx-(x2>>1)))));
       ArcLen -= Angle;
       while(ArcLen <= 32) ArcLen += 16*360;
-      p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // paint new painting
+      paintScale->drawArc(cx, cy, x2, y2, Angle, ArcLen);// paint new painting
       break;
   }
 

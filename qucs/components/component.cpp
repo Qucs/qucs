@@ -49,6 +49,8 @@ Component::Component()
 
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
+  Rects.setAutoDelete(true);
+  Ellips.setAutoDelete(true);
   Ports.setAutoDelete(true);
   Texts.setAutoDelete(true);
   Props.setAutoDelete(true);
@@ -160,14 +162,14 @@ void Component::paint(ViewPainter *p)
     QRect r;
     for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
       p->Painter->drawText(x, y+b, 0, 0, Qt::DontClip, pt->s, -1, &r);
-      b +=r.height();
+      b += r.height();
       if(a < r.width())  a = r.width();
     }
     xb = a + int(12.0*p->Scale);
     yb = b + int(10.0*p->Scale);
     x2 = x1+25 + int(float(a) / p->Scale);
     y2 = y1+23 + int(float(b) / p->Scale);
-    ty = y2 + 1;
+    if(ty < y2+1) if(ty > y1-r.height())  ty = y2 + 1;
 
     p->map(cx-1, cy,   &x, &y);
     p->map(cx-6, cy-5, &a, &b);
@@ -192,15 +194,31 @@ void Component::paint(ViewPainter *p)
       p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
 
-    newFont.setPointSizeFloat(p->Scale * QucsSettings.smallFontSize);
+    // paint all rectangles
+    Area *pa;
+    for(pa = Rects.first(); pa != 0; pa = Rects.next()) {
+      p->Painter->setPen(pa->Pen);
+      p->Painter->setBrush(pa->Brush);
+      p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
+    }
+
+    // paint all ellipses
+    for(pa = Ellips.first(); pa != 0; pa = Ellips.next()) {
+      p->Painter->setPen(pa->Pen);
+      p->Painter->setBrush(pa->Brush);
+      p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
+    }
+    p->Painter->setBrush(QBrush::NoBrush);
+
     newFont.setWeight(QFont::Light);
     p->Painter->setFont(newFont);
 
     p->Painter->setPen(QPen(QPen::black,1));
     // write all text
     for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
-      p->map(cx+pt->x, cy+pt->y, &x, &y);
-      p->Painter->drawText(x, y, pt->s);
+      newFont.setPointSizeFloat(p->Scale * pt->Size);
+      p->Painter->setPen(pt->Color);
+      p->drawText(pt->s, cx+pt->x, cy+pt->y);
     }
   }
   p->Painter->setFont(f);
@@ -257,6 +275,13 @@ void Component::paintScheme(QPainter *p)
 
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next())   // paint all arcs
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+
+  Area *pa;
+  for(pa = Rects.first(); pa != 0; pa = Rects.next()) // paint all rectangles
+    p->drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
+
+  for(pa = Ellips.first(); pa != 0; pa = Ellips.next()) // paint all ellipses
+    p->drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
 }
 
 // -------------------------------------------------------
@@ -319,6 +344,27 @@ void Component::rotate()
     if(p3->angle >= 16*360) p3->angle -= 16*360;;
   }
 
+  Area *pa;
+  // rotate all rectangles
+  for(pa = Rects.first(); pa != 0; pa = Rects.next()) {
+    tmp = -pa->x;
+    pa->x = pa->y;
+    pa->y = tmp - pa->w;
+    tmp = pa->w;
+    pa->w = pa->h;
+    pa->h = tmp;
+  }
+
+  // rotate all ellipses
+  for(pa = Ellips.first(); pa != 0; pa = Ellips.next()) {
+    tmp = -pa->x;
+    pa->x = pa->y;
+    pa->y = tmp - pa->w;
+    tmp = pa->w;
+    pa->w = pa->h;
+    pa->h = tmp;
+  }
+
   // rotate all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
     tmp = -pt->x; // - r.width();
@@ -335,13 +381,13 @@ void Component::rotate()
   ty  = tmp;
   QFontMetrics  metrics(QucsSettings.font);   // get size of text
   dx = metrics.width(Name);
-  dy = metrics.height();
+  dy = metrics.lineSpacing();
   for(Property *pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display) {
       // get width of text
       tmp = metrics.width(pp->Name+"="+pp->Value);
       if(tmp > dx) dx = tmp;
-      dy += metrics.height();
+      dy += metrics.lineSpacing();
     }
   if(tx > x2) ty = y1-ty+y2;    // rotate text position
   else if(ty < y1) ty -= dy;
@@ -376,6 +422,15 @@ void Component::mirrorX()
     p3->angle -= p3->arclen;    // go back to end of arc
     if(p3->angle < 0) p3->angle += 16*360;  // angle has to be > 0
   }
+
+  Area *pa;
+  // mirror all rectangles
+  for(pa = Rects.first(); pa != 0; pa = Rects.next())
+    pa->y = -pa->y - pa->h;
+
+  // mirror all ellipses
+  for(pa = Ellips.first(); pa != 0; pa = Ellips.next())
+    pa->y = -pa->y - pa->h;
 
   // mirror all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
@@ -419,12 +474,21 @@ void Component::mirrorY()
     if(p3->angle < 0) p3->angle += 16*360;   // angle has to be > 0
   }
 
+  Area *pa;
+  // mirror all rectangles
+  for(pa = Rects.first(); pa != 0; pa = Rects.next())
+    pa->x = -pa->x - pa->w;
+
+  // mirror all ellipses
+  for(pa = Ellips.first(); pa != 0; pa = Ellips.next())
+    pa->x = -pa->x - pa->w;
+
   int tmp;
   QFont f = QucsSettings.font;
-  f.setPointSizeFloat(QucsSettings.smallFontSize);
-  QFontMetrics  smallMetrics(f);
   // mirror all text
   for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
+    f.setPointSizeFloat(pt->Size);
+    QFontMetrics  smallMetrics(f);
     tmp = smallMetrics.width(pt->s);   // width of text
     pt->x = -pt->x - tmp;
   }
@@ -534,8 +598,6 @@ bool Component::load(const QString& _s)
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
-//  Model = s.section(' ',0,0);    // Model
-
   Name = s.section(' ',1,1);    // Name
   if(Name == "*") Name = "";
 
@@ -552,8 +614,6 @@ bool Component::load(const QString& _s)
   cy = n.toInt(&ok);
   if(!ok) return false;
 
-if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
-
   n  = s.section(' ',5,5);    // tx
   ttx = n.toInt(&ok);
   if(!ok) return false;
@@ -561,6 +621,8 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
   n  = s.section(' ',6,6);    // ty
   tty = n.toInt(&ok);
   if(!ok) return false;
+
+if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
   n  = s.section(' ',7,7);    // mirroredX
   if(n.toInt(&ok) == 1) mirrorX();  // mirror component
@@ -571,9 +633,9 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
   if(!ok) return false;
   for(int z=0; z<tmp; z++) rotate();   // rotate component
 
-  tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
-
 }
+
+  tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
 
   int z=0;
   unsigned int counts = s.contains('"') >> 1;

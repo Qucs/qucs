@@ -48,8 +48,8 @@ symTrafo::symTrafo()
   Lines.append(new Line( -1,-57, -1, 57,QPen(QPen::darkBlue,1)));
   Lines.append(new Line(  1,-57,  1, 57,QPen(QPen::darkBlue,1)));
 
-  Texts.append(new Text(-23,-47,"T1"));
-  Texts.append(new Text(-23, 32,"T2"));
+  Texts.append(new Text(-23,-57,"T1"));
+  Texts.append(new Text(-23, 22,"T2"));
 
   // mark the turn direction
   Arcs.append(new Arc(-21,-64,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));

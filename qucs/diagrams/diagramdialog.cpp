@@ -185,8 +185,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
     // ...........................................................
     // transfer the diagram properties to the dialog
-    xLabel->setText(Diag->xLabel);
-    yLabel->setText(Diag->yLabel);
+    xLabel->setText(Diag->xAxis.Label);
+    yLabel->setText(Diag->ylAxis.Label);
     GridOn->setChecked(Diag->GridOn);
     if(!Diag->GridOn) slotSetGridBox(QButton::Off);
     GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
@@ -201,8 +201,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
       // ...........................................................
       // transfer the diagram properties to the dialog
-      GridLogX->setChecked(Diag->xlog);
-      GridLogY->setChecked(Diag->ylog);
+      GridLogX->setChecked(Diag->xAxis.log);
+      GridLogY->setChecked(Diag->ylAxis.log);
     }
   }
 
@@ -441,16 +441,18 @@ void DiagramDialog::slotOK()
 void DiagramDialog::slotApply()
 {
   if(Diag->Name != "Tab") {
-    if(Diag->xLabel.isEmpty()) Diag->xLabel = ""; // can be not 0 and empty!
+    if(Diag->xAxis.Label.isEmpty())
+      Diag->xAxis.Label = ""; // can be not 0 and empty!
     if(xLabel->text().isEmpty()) xLabel->setText("");
-    if(Diag->xLabel != xLabel->text()) {
-      Diag->xLabel = xLabel->text();
+    if(Diag->xAxis.Label != xLabel->text()) {
+      Diag->xAxis.Label = xLabel->text();
       changed = true;
     }
-    if(Diag->yLabel.isEmpty()) Diag->yLabel = ""; // can be not 0 and empty!
+    if(Diag->ylAxis.Label.isEmpty())
+      Diag->ylAxis.Label = ""; // can be not 0 and empty!
     if(yLabel->text().isEmpty()) yLabel->setText("");
-    if(Diag->yLabel != yLabel->text()) {
-      Diag->yLabel = yLabel->text();
+    if(Diag->ylAxis.Label != yLabel->text()) {
+      Diag->ylAxis.Label = yLabel->text();
       changed = true;
     }
     if(Diag->GridOn != GridOn->isChecked()) {
@@ -466,12 +468,12 @@ void DiagramDialog::slotApply()
       changed = true;
     }
     if(Diag->Name == "Rect") {
-      if(Diag->xlog != GridLogX->isChecked()) {
-        Diag->xlog = GridLogX->isChecked();
+      if(Diag->xAxis.log != GridLogX->isChecked()) {
+        Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
       }
-      if(Diag->ylog != GridLogY->isChecked()) {
-        Diag->ylog = GridLogY->isChecked();
+      if(Diag->ylAxis.log != GridLogY->isChecked()) {
+        Diag->ylAxis.log = GridLogY->isChecked();
         changed = true;
       }
     }

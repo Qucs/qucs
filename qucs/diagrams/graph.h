@@ -56,6 +56,7 @@ public:
   int     getSelected(int, int);
   Graph*  sameNewOne();
 
+  int     yAxisNo;   // which y axis is used
   QPtrList<DataX>  cPointsX;
   double *cPointsY;
   int    *Points, countY; // data in screen coordinates, countY = curves number
