@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.4 2004-04-19 18:42:22 ela Exp $
+ * $Id: scan_netlist.l,v 1.5 2004-06-01 17:07:21 ela Exp $
  *
  */
 
@@ -33,6 +33,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifdef __MINGW32__
+#include <io.h>
+#endif
 
 #include "logging.h"
 #include "equation.h"
