@@ -1,3 +1,12 @@
+2004-07-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msmbend.cpp: Fixed typo.
+
+	* devices/jfet.cpp: Using helper functionality from device
+	class where possible. 
+
+	* devices/diode.cpp: Tried to fix noise calculation.
+
 2004-07-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Considering polarity of BJT in device model

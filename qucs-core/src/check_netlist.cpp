@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.30 2004/07/26 22:07:28 ela Exp $
+ * $Id: check_netlist.cpp,v 1.31 2004/07/27 16:43:58 ela Exp $
  *
  */
 
@@ -223,7 +223,9 @@ struct define_t definition_available[] =
       { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
       PROP_NO_PROP },
     { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* jfet */
   { "JFET", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
@@ -234,7 +236,7 @@ struct define_t definition_available[] =
       { "Beta", PROP_REAL, { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
       { "M", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 } },
       { "Pb", PROP_REAL, { 1.0, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
-      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 10 } },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 - PROP_VAL_MIN } },
       { "Cgs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Cgd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
@@ -277,7 +279,7 @@ struct define_t definition_available[] =
       { "Cjs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Vjs", PROP_REAL, { 0.75, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
       { "Mjs", PROP_REAL, { 0, PROP_NO_STR }, { 0, 1 } },
-      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 10 } },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 - PROP_VAL_MIN } },
       { "Vtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Xtf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
@@ -806,9 +808,11 @@ static int checker_validate_strips (struct definition_t * root) {
 	    }
 	  }
 	  /* check validity of 'Model' property */
+#if DISABLE_FOR_NOW /* ThinkME!!! */
 	  if ((val = checker_validate_reference (def, "Model")) == NULL) {
 	    errors++;
 	  }
+#endif
 	}
       }
     }

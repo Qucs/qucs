@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.10 2004/07/27 08:45:04 ela Exp $
+ * $Id: jfet.cpp,v 1.11 2004/07/27 16:43:59 ela Exp $
  *
  */
 
@@ -95,6 +95,8 @@ void jfet::calcNoise (nr_double_t frequency) {
   nr_double_t i = 8 * kelvin (T) / T0 * gm / 3 +
     Kf * pow (Ids, Af) / pow (frequency, Ffe) / kB / T0;
 
+  /* build noise current correlation matrix and convert it to
+     noise-wave correlation matrix */
   matrix y = matrix (3);
   y.set (NODE_D, NODE_D, +i);
   y.set (NODE_S, NODE_S, +i);
@@ -154,8 +156,8 @@ void jfet::calcDC (void) {
   nr_double_t beta = getPropertyDouble ("Beta");
   nr_double_t T    = getPropertyDouble ("Temp");
 
-  nr_double_t Ugs, Ugd, Ut, gm, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
-  nr_double_t Uds, ggs, Igs, ggd, Igd, Ids, gds, gtiny;
+  nr_double_t Ugs, Ugd, Ut, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
+  nr_double_t Uds, Igs, Igd, gtiny;
 
   // apply polarity of JFET
   char * type = getPropertyString ("Type");
@@ -167,8 +169,8 @@ void jfet::calcDC (void) {
   Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
 
   // critical voltage necessary for bad start values
-  UgsCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
-  UgdCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
+  UgsCrit = pnCriticalVoltage (Ut * n, Is);
+  UgdCrit = pnCriticalVoltage (Ut * n, Is);
   UgsPrev = Ugs = pnVoltage (Ugs, UgsPrev, Ut * n, UgsCrit);
   UgdPrev = Ugd = pnVoltage (Ugd, UgdPrev, Ut * n, UgdCrit);
 
@@ -176,23 +178,23 @@ void jfet::calcDC (void) {
 
   // gate-source diode
   gtiny = Ugs < - 10 * Ut * n ? (Is + Isr) : 0;
-  ggs = Is / Ut / n * exp (Ugs / Ut / n) + 
-    Isr / Ut / n * exp (Ugs / Ut / nr) + gtiny;
-  Igs = Is * (exp (Ugs / Ut / n) - 1) + 
-    Isr * (exp (Ugs / Ut / nr) - 1) + gtiny * Ugs;
+  ggs = pnConductance (Ugs, Is, Ut * n) +
+    pnConductance (Ugs, Isr, Ut * nr) + gtiny;
+  Igs = pnCurrent (Ugs, Is, Ut * n) +
+    pnCurrent (Ugs, Isr, Ut * nr) + gtiny * Ugs;
 
   // gate-drain diode
   gtiny = Ugd < - 10 * Ut * n ? (Is + Isr) : 0;
-  ggd = Is / Ut / n * exp (Ugd / Ut / n) + 
-    Isr / Ut / n * exp (Ugd / Ut / nr) + gtiny;
-  Igd = Is * (exp (Ugd / Ut / n) - 1) + 
-    Isr * (exp (Ugd / Ut / nr) - 1) + gtiny * Ugd;
+  ggd = pnConductance (Ugd, Is, Ut * n) +
+    pnConductance (Ugd, Isr, Ut * nr) + gtiny;
+  Igd = pnCurrent (Ugd, Is, Ut * n) +
+    pnCurrent (Ugd, Isr, Ut * nr) + gtiny * Ugd;
 
   // normal (forward) mode of operation
   if (Uds >= 0) {
     nr_double_t Ugst = Ugs - Vt0;
     // normal mode, cutoff region
-    if (Ugst < 0) {
+    if (Ugst <= 0) {
       Ids = 0;
       gm = 0;
       gds = 0;
@@ -217,7 +219,7 @@ void jfet::calcDC (void) {
   else {
     nr_double_t Ugdt = Ugd - Vt0;
     // inverse mode, cutoff region
-    if (Ugdt < 0) {
+    if (Ugdt <= 0) {
       Ids = 0;
       gm  = 0;
       gds = 0;
@@ -238,11 +240,6 @@ void jfet::calcDC (void) {
       }
     }
   }
-
-  // save these operating points
-  setOperatingPoint ("gm", gm);
-  setOperatingPoint ("gds", gds);
-  setOperatingPoint ("Id", Ids);
 
   // compute autonomic current sources
   IeqG = Igs - ggs * Ugs;
@@ -267,18 +264,14 @@ void jfet::calcDC (void) {
 void jfet::calcOperatingPoints (void) {
 
   // fetch device model parameters
-  nr_double_t Is   = getPropertyDouble ("Is");
-  nr_double_t n    = getPropertyDouble ("N");
-  nr_double_t Isr  = getPropertyDouble ("Isr");
-  nr_double_t nr   = getPropertyDouble ("Nr");
   nr_double_t z    = getPropertyDouble ("M");
   nr_double_t Cgd0 = getPropertyDouble ("Cgd");
   nr_double_t Cgs0 = getPropertyDouble ("Cgs");
   nr_double_t Pb   = getPropertyDouble ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
   nr_double_t T    = getPropertyDouble ("Temp");
-
-  nr_double_t Ugs, Ugd, Ut, ggd, ggs, Cgs, Cgd, Igs, Igd;
+  
+  nr_double_t Ugs, Ugd, Ut, Cgs, Cgd;
 
   // apply polarity of JFET
   char * type = getPropertyString ("Type");
@@ -289,27 +282,18 @@ void jfet::calcOperatingPoints (void) {
   Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
   Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
 
-  // calculate diode currents and its derivatives
-  ggs = Is / Ut / n * exp (Ugs / Ut / n) + Isr / Ut / n * exp (Ugs / Ut / nr);
-  Igs = Is * (exp (Ugs / Ut / n) - 1) + Isr * (exp (Ugs / Ut / nr) - 1);
-  ggd = Is / Ut / n * exp (Ugd / Ut / n) + Isr / Ut / n * exp (Ugd / Ut / nr);
-  Igd = Is * (exp (Ugd / Ut / n) - 1) + Isr * (exp (Ugd / Ut / nr) - 1);
-
   // capacitance of gate-drain diode
-  if (Ugd <= Fc * Pb)
-    Cgd = Cgd0 * pow (1 - Ugd / Pb, -z);
-  else
-    Cgd = Cgd0 / pow (1 - Fc, z) * (1 + z * (Ugd - Fc * Pb) / Pb / (1 - Fc));
+  Cgd = pnCapacitance (Ugd, Cgd0, Pb, z, Fc);
 
   // capacitance of gate-source diode
-  if (Ugs <= Fc * Pb)
-    Cgs = Cgs0 * pow (1 - Ugs / Pb, -z);
-  else
-    Cgs = Cgs0 / pow (1 - Fc, z) * (1 + z * (Ugs - Fc * Pb) / Pb / (1 - Fc));
+  Cgs = pnCapacitance (Ugs, Cgs0, Pb, z, Fc);
 
   // save operating points
   setOperatingPoint ("ggs", ggs);
   setOperatingPoint ("ggd", ggd);
+  setOperatingPoint ("gds", gds);
+  setOperatingPoint ("gm", gm);
+  setOperatingPoint ("Id", Ids);
   setOperatingPoint ("Vgs", Ugs);
   setOperatingPoint ("Vgd", Ugd);
   setOperatingPoint ("Vds", Ugs - Ugd);
