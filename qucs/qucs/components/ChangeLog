@@ -1,3 +1,9 @@
+2004-11-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* ac_sim.cpp (AC_Sim), dc_sim.cpp (DC_Sim): Incorporate linebreak
+	in the component text if necessary (french translation used
+	really loooong words).
+
 2004-10-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* param_sweep.cpp (Param_Sweep), sp_sim.cpp (SP_Sim),
