@@ -18,10 +18,10 @@
 #ifndef QUCSDOC_H
 #define QUCSDOC_H
 
-#include "component.h"
+#include "components/components.h"
 #include "wire.h"
-#include "diagram.h"
-#include "painting.h"
+#include "diagrams/diagram.h"
+#include "paintings/painting.h"
 
 #include <qstring.h>
 #include <qpainter.h>

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          subcirport.cpp  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,35 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
-
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
-
-/**
-  *@author Michael Margraf
-  */
+#include "subcirport.h"
 
 
-class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+SubCirPort::SubCirPort()
+{
+  Description = "port of a subcircuit";
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  Arcs.append(new Arc(-25, -6, 13, 13,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-14,  0,  0,  0,QPen(QPen::darkBlue,2)));
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
+  Ports.append(new Port(  0,  0));
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
-};
+  x1 = -27; y1 = -8;
+  x2 =   0; y2 =  8;
 
-#endif
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = "Port";
+  Model = "";
+  Name  = "P";
+
+  Props.append(new Property("Num", "1", true));
+}
+
+SubCirPort::~SubCirPort()
+{
+}
+
+SubCirPort* SubCirPort::newOne()
+{
+  return new SubCirPort();
+}
