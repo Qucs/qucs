@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.6 2004-11-04 14:34:39 ela Exp $
+ * $Id: scan_spice.l,v 1.7 2004-11-10 20:26:38 ela Exp $
  *
  */
 
@@ -58,12 +58,13 @@ EXPONENT [Ee][+-]?{DIGIT}+
 INT      [+-]?{DIGIT}+
 FLOAT1   [+-]?{DIGIT}+{EXPONENT}
 FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
-NUMBER   ({INT}|{FLOAT1}|{FLOAT2}){SFX}?[A-Za-z]*
+FLOAT3   [+-]?{DIGIT}+"."
+NUMBER   ({INT}|{FLOAT1}|{FLOAT2}|{FLOAT3}){SFX}?[A-Za-z]*
 SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     {DIGIT}+
 EOL      \r?\n
 FUN1     ([dD][eE][cC]|[lL][iI][nN]|[oO][cC][tT])
-FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE]|[vV]|[aA][cC][cC][tT])
+FUN2     ([sS][iI][nN]|[pP][uU][lL][sS][eE]|[aA][cC][cC][tT]|[pP][wW][lL])
 FUNCTION ({FUN1}|{FUN2})
 
 %x COMMENT
@@ -82,6 +83,14 @@ FUNCTION ({FUN1}|{FUN2})
 <INITIAL>^{TITLE}+ {
     spice_lval.str = strdup (spice_text);
     return TitleLines;
+}
+
+<INITIAL>^"."[sS][uU][bB][cC][kK][tT] {
+    return StartSub;
+}
+
+<INITIAL>^"."[eE][nN][dD][sS] {
+    return StopSub;
 }
 
 <INITIAL>"."[Ee][Nn][Dd]{EOL}* { /* identify end of netlist */

@@ -1,3 +1,8 @@
+2004-11-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Added tokens for yet another number format and
+	start and end of subcircuits.
+
 2004-11-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Added transformations for current

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.4 2004-11-02 23:48:40 ela Exp $
+ * $Id: qucsdefs.h,v 1.5 2004-11-10 20:26:37 ela Exp $
  *
  */
 
@@ -225,7 +225,7 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP }
   },
   /* operational amplifier */
-  { "OpAmp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+  { "OpAmp", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
     { { "G", PROP_REAL, { 1e6, PROP_NO_STR }, { 1, PROP_VAL_MAX } },
       PROP_NO_PROP },
     { { "Umax", PROP_REAL, { 15, PROP_NO_STR }, PROP_POS_RANGE },
@@ -494,7 +494,7 @@ struct define_t qucs_definition_available[] =
   },
   /* microstrip via hole */
   { "MVIA", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "d", PROP_REAL, { 100e-6, PROP_NO_STR }, PROP_POS_RANGE },
+    { { "D", PROP_REAL, { 100e-6, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },

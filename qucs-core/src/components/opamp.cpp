@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: opamp.cpp,v 1.1 2004-11-01 10:56:17 ela Exp $
+ * $Id: opamp.cpp,v 1.2 2004-11-10 20:26:37 ela Exp $
  *
  */
 
@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
@@ -42,24 +43,44 @@ opamp::opamp () : circuit (3) {
   setVoltageSources (1);
 }
 
-void opamp::initSP (void) {
+void opamp::calcSP (nr_double_t) {
+  setS (1, 1, 1); setS (1, 2, 0); setS (1, 3, 0);
+  setS (3, 1, 0); setS (3, 2, 0); setS (3, 3, 1);
+  setS (2, 1, +4 * gv);
+  setS (2, 2, -1);
+  setS (2, 3, -4 * gv);
 }
 
 void opamp::initDC (void) {
-#if 0
+  setB (1, 1, 0);  setB (2, 1, 1); setB (3, 1, 0);
+  setC (1, 2, -1); setD (1, 1, 0); setE (1, 0);
+}
+
+void opamp::calcDC (void) {
   nr_double_t g    = getPropertyDouble ("G");
   nr_double_t uMax = getPropertyDouble ("Umax");
-#endif
-  setB (1, 1, 0); setB (2, 1, 1); setB (3, 1,  0);
-  setC (1, 1, 1); setC (1, 2, 0); setC (1, 3, -1);
-  setD (1, 1, 0);
-  setE (1, 0);
+  nr_double_t Uin  = real (getV (1) - getV (3));
+  nr_double_t Uout, Gv, Geq;
+  gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin));
+  Uout = uMax / M_2_PI * atan (M_PI_2 / uMax * g * Uin);
+  setC (1, 1, +gv); setC (1, 3, -gv); setC (1, 2, -1 + 1 / gv);
+  setY (2, 2,  1 / gv);
+  setI (2, getV (2) - Uout / gv);
+  //fprintf (stderr, "Uout=%g, gv=%g, Uin=%g, Umax=%g\n", Uout, gv, Uin, uMax);
+  setE (1, Uin - Uout / gv);
+  //setD (1, 1, getV (2) - Uin * gv);
+  //setI (2, Uout - Uin * gv);
 }
 
 void opamp::initAC (void) {
   initDC ();
+  setC (1, 1, +gv); setC (3, 1, -gv);
 }
 
 void opamp::initTR (void) {
   initDC ();
+}
+
+void opamp::calcTR (nr_double_t) {
+  calcDC ();
 }

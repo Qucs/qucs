@@ -1,3 +1,11 @@
+2004-11-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msvia.cpp: Changed diameter parameter from 'd'
+	to 'D'.
+
+	* opamp.cpp: Implemented AC and S-parameter model of the
+	operational amplifier.
+
 2004-11-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* opamp.h (class opamp): New component.  Not yet implemented.

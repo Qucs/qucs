@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.1 2004-10-25 07:55:47 ela Exp $
+ * $Id: msvia.cpp,v 1.2 2004-11-10 20:26:37 ela Exp $
  *
  */
 
@@ -77,7 +77,7 @@ complex msvia::calcImpedance (nr_double_t frequency) {
   nr_double_t h   = subst->getPropertyDouble ("h");
   nr_double_t t   = subst->getPropertyDouble ("t");
   nr_double_t rho = subst->getPropertyDouble ("rho");
-  nr_double_t r   = getPropertyDouble ("d") / 2;
+  nr_double_t r   = getPropertyDouble ("D") / 2;
 
   // check frequency validity
   if (frequency * h >= 0.03 * C0) {
@@ -99,7 +99,7 @@ nr_double_t msvia::calcResistance (void) {
   nr_double_t h   = subst->getPropertyDouble ("h");
   nr_double_t t   = subst->getPropertyDouble ("t");
   nr_double_t rho = subst->getPropertyDouble ("rho");
-  nr_double_t r   = getPropertyDouble ("d") / 2;
+  nr_double_t r   = getPropertyDouble ("D") / 2;
   nr_double_t v   = M_PI * (sqr (r) - sqr (r - t)) * h;
   return R = rho * v;
 }
