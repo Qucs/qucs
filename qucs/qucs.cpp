@@ -321,13 +321,14 @@ void QucsApp::initActions()
   connect(editMirrorY, SIGNAL(toggled(bool)), this, SLOT(slotEditMirrorY(bool)));
 
   intoH = new QAction(tr("Go into Subcircuit"), QIconSet(QImage(BITMAPDIR "bottom.png")),
-                      tr("Go into Subcircuit"), 0, this);
+                      tr("Go into Subcircuit"), CTRL+Key_I, this);
   intoH->setStatusTip(tr("Goes inside subcircuit"));
   intoH->setWhatsThis(tr("Go into Subcircuit\n\nGoes inside the selected subcircuit"));
   connect(intoH, SIGNAL(activated()), this, SLOT(slotIntoHierarchy()));
 //  intoH->setEnabled(false);
 
-  popH = new QAction(tr("Pop out"), QIconSet(QImage(BITMAPDIR "top.png")), tr("Pop out"), 0, this);
+  popH = new QAction(tr("Pop out"), QIconSet(QImage(BITMAPDIR "top.png")), tr("Pop out"),
+                     CTRL+Key_H, this);
   popH->setStatusTip(tr("Pop outside subcircuit"));
   popH->setWhatsThis(tr("Pop out\n\nGoes up one hierarchy level, i.e. leaves subcircuit"));
   connect(popH, SIGNAL(activated()), this, SLOT(slotPopHierarchy()));
@@ -348,7 +349,7 @@ void QucsApp::initActions()
   connect(insEquation, SIGNAL(toggled(bool)), this, SLOT(slotInsertEquation(bool)));
 
   insGround = new QAction(tr("Insert Ground"), QIconSet(QImage(BITMAPDIR "ground.png")),
-                          tr("Insert Ground"), 0, this);
+                          tr("Insert Ground"), CTRL+Key_G, this);
   insGround->setStatusTip(tr("Inserts ground"));
   insGround->setWhatsThis(tr("Insert Ground\n\nInserts a ground symbol"));
   insGround->setToggleAction(true);
@@ -369,7 +370,7 @@ void QucsApp::initActions()
   connect(insWire, SIGNAL(toggled(bool)), this, SLOT(slotSetWire(bool)));
 
   insLabel = new QAction(tr("Insert Wire/Pin Label"), QIconSet(QImage(BITMAPDIR "nodename.png")),
-                         tr("Wire Label"), 0, this);
+                         tr("Wire Label"), CTRL+Key_L, this);
   insLabel->setStatusTip(tr("Inserts a wire or pin label"));
   insLabel->setWhatsThis(tr("Wire Label\n\nInserts a wire or pin label"));
   insLabel->setToggleAction(true);
@@ -386,6 +387,13 @@ void QucsApp::initActions()
   dpl_sch->setStatusTip(tr("Changes to data display or schematic page"));
   dpl_sch->setWhatsThis(tr("View Data Display/Schematic\n\nChanges to data display or schematic page"));
   connect(dpl_sch, SIGNAL(activated()), this, SLOT(slotChangePage()));
+
+  setMarker = new QAction(tr("Set Marker"), QIconSet(QImage(BITMAPDIR "marker.png")),
+                        tr("Set Marker on Graph"), CTRL+Key_B, this);
+  setMarker->setStatusTip(tr("Sets a marker on a diagram's graph"));
+  setMarker->setWhatsThis(tr("Set Marker\n\nSets a marker on a diagram's graph"));
+  setMarker->setToggleAction(true);
+  connect(setMarker, SIGNAL(toggled(bool)), this, SLOT(slotSetMarker(bool)));
 
   showMsg = new QAction(tr("Show Last Messages"), tr("Show Last Messages"), 0, this);
   showMsg->setStatusTip(tr("Shows last simulation messages"));
@@ -471,6 +479,7 @@ void QucsApp::initMenuBar()
   insEquation->addTo(insMenu);
   insGround->addTo(insMenu);
   insPort->addTo(insMenu);
+  setMarker->addTo(insMenu);
 
   projMenu=new QPopupMenu();  // menuBar entry projMenu
   projNew->addTo(projMenu);
@@ -550,6 +559,7 @@ void QucsApp::initToolBar()
   insPort->addTo(workToolbar);
   simulate->addTo(workToolbar);
   dpl_sch->addTo(workToolbar);
+  setMarker->addTo(workToolbar);
   workToolbar->addSeparator();    // <<<=======================
   QWhatsThis::whatsThisButton(workToolbar);
 
@@ -870,8 +880,6 @@ void QucsApp::slotFileSettings()
 // --------------------------------------------------------------
 void QucsApp::slotFileNew()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Creating new schematic..."));
 
   view->Docs.append(new QucsDoc(WorkView, ""));
@@ -883,8 +891,6 @@ void QucsApp::slotFileNew()
 // --------------------------------------------------------------
 void QucsApp::slotFileOpen()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(".", tr("Schematic (*.sch)"), this,
@@ -942,8 +948,6 @@ bool QucsApp::saveCurrentFile()
 // ###################################################################################
 void QucsApp::slotFileSave()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Saving file..."));
   view->blockSignals(true);   // no user interaction during that time
 
@@ -960,11 +964,9 @@ void QucsApp::slotFileSave()
 // ###################################################################################
 void QucsApp::slotFileSaveAs()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Saving file under new filename..."));
   view->blockSignals(true);   // no user interaction during the time
-  
+
   QString s = QFileDialog::getSaveFileName(".", tr("Schematic (*.sch)"), this,
                                             "", tr("Enter a Schematic Name"));
   if(!s.isEmpty()) {
@@ -995,8 +997,6 @@ void QucsApp::slotFileSaveAs()
 // ###################################################################################
 void QucsApp::slotFileSaveAll()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Saving all files..."));
 
   QucsDoc *tmp = view->Docs.current();  // remember the current
@@ -1018,8 +1018,6 @@ void QucsApp::slotFileSaveAll()
 // ###################################################################################
 void QucsApp::slotFileClose()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Closing file..."));
 
   if(view->Docs.current()->DocChanged) {
@@ -1051,8 +1049,6 @@ void QucsApp::slotFileClose()
 // ###################################################################################
 void QucsApp::slotFilePrint()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Printing..."));
   
   if (Printer.setup(this))  // print dialog
@@ -1070,8 +1066,6 @@ void QucsApp::slotFilePrint()
 // Exits the application.
 void QucsApp::slotFileQuit()
 {
-  if(!view->movingElements.isEmpty())
-    if(activeAction != editPaste) return;   // elements are moving ?
   statusBar()->message(tr("Exiting application..."));
 
   int exit=QMessageBox::information(this, tr("Quit..."),
@@ -1108,7 +1102,6 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 // --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Cutting selection..."));
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
@@ -1124,7 +1117,6 @@ void QucsApp::slotEditCut()
 // ###################################################################################
 void QucsApp::slotEditCopy()
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Copying selection to clipboard..."));
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
@@ -1138,7 +1130,6 @@ void QucsApp::slotEditCopy()
 // ###################################################################################
 void QucsApp::slotEditPaste(bool on)
 {
-  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -1994,7 +1985,7 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
-  
+
 // -------------------------------------------------------------------------------
 void QucsApp::slotInsertLabel(bool on)
 {
@@ -2015,8 +2006,34 @@ void QucsApp::slotInsertLabel(bool on)
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
-  view->MouseMoveAction = &QucsView::MouseDoNothing;
+  view->MouseMoveAction = &QucsView::MMoveLabel;
   view->MousePressAction = &QucsView::MPressLabel;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
+
+// -------------------------------------------------------------------------------
+void QucsApp::slotSetMarker(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    activeAction = 0;   // no action active
+    return;
+  }
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = setMarker;
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveMarker;
+  view->MousePressAction = &QucsView::MPressMarker;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
@@ -2026,14 +2043,12 @@ void QucsApp::slotInsertLabel(bool on)
 void QucsApp::slotSelect(bool on)
 {
   if(!on) {
-    if(!view->movingElements.isEmpty())   // elements are moving ?
-      view->endElementMoving();           // place them
-    else if(view->MouseMoveAction == &QucsView::MMoveSelect) {   // do not disturb diagram resize
-           activeAction->blockSignals(true); // do not call toggle slot
-           activeAction->setOn(true);        // set back select on
-           activeAction->blockSignals(false);
-           return;
-         }
+    if(view->MouseMoveAction == &QucsView::MMoveSelect) {   // do not disturb diagram resize
+      activeAction->blockSignals(true); // do not call toggle slot
+      activeAction->setOn(true);        // set back select on
+      activeAction->blockSignals(false);
+      return;
+    }
 
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -2056,7 +2071,6 @@ void QucsApp::slotSelect(bool on)
   view->MousePressAction = &QucsView::MPressSelect;
   view->MouseReleaseAction = &QucsView::MReleaseSelect;
   view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
-  view->movingElements.clear();   // delete moving elements
 }
 
 // -------------------------------------------------------------------------------
@@ -2094,7 +2108,7 @@ void QucsApp::slotEditActivate(bool on)
     }
     activeAction = editActivate;
 
-    view->MouseMoveAction = &QucsView::MouseDoNothing;  // if no component is selected, activate
+    view->MouseMoveAction = &QucsView::MMoveActivate;   // if no component is selected, activate
     view->MousePressAction = &QucsView::MPressActivate; //  the one that will be clicked
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
@@ -2136,15 +2150,6 @@ void QucsApp::slotSetWire(bool on)
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
 {
-  if(!view->movingElements.isEmpty()) {   // elements are moving ?
-    if(activeAction != editPaste) {
-      editDelete->blockSignals(true);
-      editDelete->setOn(false);  // release toolbar button
-      editDelete->blockSignals(false);
-      return;
-    }
-//    view->movingElements.clear();   // delete elements, if not paste
-  }
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -2153,7 +2158,7 @@ void QucsApp::slotEditDelete(bool on)
     activeAction = 0;   // no action active
     return;
   }
-  
+
   if(view->Docs.current()->deleteElements()) {
     editDelete->blockSignals(true);
     editDelete->setOn(false);  // release toolbar button
@@ -2164,11 +2169,10 @@ void QucsApp::slotEditDelete(bool on)
       activeAction->blockSignals(true); // do not call toggle slot
       activeAction->setOn(false);       // set last toolbar button off
       activeAction->blockSignals(false);
-      view->movingElements.clear();   // delete elements
     }
     activeAction = editDelete;
 
-    view->MouseMoveAction = &QucsView::MouseDoNothing;  // if no component is selected, delete the one
+    view->MouseMoveAction = &QucsView::MMoveDelete;  // if no component is selected, delete the one
     view->MousePressAction = &QucsView::MPressDelete;   // that will be clicked
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
@@ -2299,7 +2303,7 @@ void QucsApp::slotEditRotate(bool on)
     }
     activeAction = editRotate;
 
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = &QucsView::MMoveRotate;
     view->MousePressAction = &QucsView::MPressRotate;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
@@ -2334,7 +2338,7 @@ void QucsApp::slotEditMirrorX(bool on)
     }
     activeAction = editMirror;
 
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = &QucsView::MMoveMirrorX;
     view->MousePressAction = &QucsView::MPressMirrorX;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
@@ -2369,7 +2373,7 @@ void QucsApp::slotEditMirrorY(bool on)
     }
     activeAction = editMirrorY;
 
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = &QucsView::MMoveMirrorY;
     view->MousePressAction = &QucsView::MPressMirrorY;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;

@@ -37,6 +37,7 @@ Diagram::Diagram(int _cx, int _cy)
   isSelected = false;
   
   Graphs.setAutoDelete(true);
+  Markers.setAutoDelete(true);
   Arcs.setAutoDelete(true);
   Lines.setAutoDelete(true);
   Texts.setAutoDelete(true);
@@ -96,6 +97,9 @@ void Diagram::paint(QPainter *p)
         p->drawText(-cy+((y2-r.width())>>1), cx-delta, yLabel);
     }
     p->restore();
+
+    for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())   // draw markers
+      pm->paint(p, cx, cy);
   }
 
   p->setPen(QPen(QPen::black,1));

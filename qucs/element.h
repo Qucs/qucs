@@ -64,7 +64,7 @@ struct Property {
 
 
 enum ElementType {isDummy, isComponent, isWire, isHWireLabel, isVWireLabel, isNodeLabel, isMovingLabel,
-                  isDiagram, isGraph, isPainting, isNode};
+                  isDiagram, isGraph, isPainting, isNode, isMarker};
 
 
 class Element {
