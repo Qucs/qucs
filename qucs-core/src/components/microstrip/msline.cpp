@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.33 2004/09/09 11:31:51 ela Exp $
+ * $Id: msline.cpp,v 1.34 2004/09/10 16:26:56 ela Exp $
  *
  */
 
@@ -247,7 +247,9 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     nr_double_t k, f;
     k = sqrt (ErEff / er);
     f = 4 * h * frequency / C0 * sqrt (er - 1);
-    e = ErEff * sqr ((1 + sqr (f)) / (1 + k * sqr (f)));
+    f = sqr (f);
+    e = ErEff * sqr ((1 + f) / (1 + k * f));
+    z = ZlEff * sqrt (ErEff / e);
   }
   // YAMASHITA
   else if (!strcmp (Model, "Yamashita")) {

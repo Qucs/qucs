@@ -6594,6 +6594,30 @@ W_e(f) = W + \dfrac{W_{eff} - W}{1 + \left(\dfrac{f}{f_T}\right)^2}
 W_{eff} = \dfrac{Z_{F0}\cdot h}{Z_L\cdot \sqrt{\varepsilon_{r_{eff}}}}
 \end{equation}
 
+\subsubsection{Schneider}
+%\addcontentsline{toc}{subsubsection}{Schneider}
+
+Martin V. Schneider \cite{Schneider1} proposed the following equation
+for the dispersion of the effective dielectric constant of a single
+microstrip line.  The estimated error is less than 3\%.
+\begin{equation}
+\varepsilon_r(f) = \varepsilon_{r_{eff}}\cdot \left(\dfrac{1 + f_n^2}{1 + k\cdot f_n^2}\right)^2
+\end{equation}
+
+with
+\begin{equation}
+f_n = \dfrac{4 h \cdot f \cdot \sqrt{\varepsilon_r - 1}}{c_0}
+\;\;\;\; \textrm{ and } \;\;\;\;
+k = \sqrt{\dfrac{\varepsilon_{r_{eff}}}{\varepsilon_r}}
+\end{equation}
+
+For the dispersion of the characteristic impedance he uses the same
+wave guide impedance model as Getsinger in his first approach to the
+problem.
+\begin{equation}
+Z_L(f) = Z_L\cdot \sqrt{\dfrac{\varepsilon_{r_{eff}}}{\varepsilon_r(f)}}
+\end{equation}
+
 \subsection{Transmission losses}
 %\addcontentsline{toc}{subsection}{Transmission losses}
 

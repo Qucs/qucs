@@ -39,7 +39,8 @@ qucsator_LDADD = libqucsator.a \
 qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
-	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp
+	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
+	trsolver.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp
 
@@ -50,7 +51,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	nodelist.h variable.h environment.h parasweep.h eqnsys.h sweep.h      \
 	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h      \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
-	circuit.h acsolver.h
+	circuit.h acsolver.h trsolver.h
 
 noinst_LIBRARIES = libqucsator.a
 
