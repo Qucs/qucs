@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.29 2004/09/02 08:02:15 ela Exp $
+ * $Id: msline.cpp,v 1.30 2004/09/04 06:50:59 ela Exp $
  *
  */
 
@@ -259,10 +259,12 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   }
   // PRAMANICK and BHARTIA
   else if (!strcmp (Model, "Pramanick")) {
-    nr_double_t k, f;
-    k = ErEff / er;
-    f = 2 * MU0 * h * frequency / ZlEff;
-    e = ErEff * (1 + sqr (f)) / (1 + k * sqr (f));
+    nr_double_t Weff, We, f;
+    f = 2 * MU0 * h * frequency * sqrt (ErEff / er) / ZlEff;
+    e = er - (er - ErEff) / (1 + sqr (f));
+    Weff = Z0 * h / ZlEff / sqrt (ErEff);
+    We = W + (Weff - W) / (1 + sqr (f));
+    z = Z0 * h / We / sqrt (e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {

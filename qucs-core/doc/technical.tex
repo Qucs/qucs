@@ -6368,16 +6368,33 @@ parameters.
 \subsubsection{Pramanick and Bhartia}
 %\addcontentsline{toc}{subsubsection}{Pramanick and Bhartia}
 
-P. Bhartia and P. Pramanick \cite{Pramanick} ... and (another reference !!!)
+P. Bhartia and P. Pramanick \cite{Pramanick1} developed dispersion
+equations without any empirical quantity.  Their work expresses
+dispersion of the dielectric constant and characteristic impedance in
+terms of a single inflection frequency.
+
+\addvspace{12pt}
+
+For the frequency-dependent relative dielectric constant they propose
 \begin{equation}
-\varepsilon_{r}(f) = \varepsilon_{r} - \dfrac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + K\cdot\left(\dfrac{f}{f_p}\right)^2}
+\varepsilon_{r}(f) = \varepsilon_{r} - \dfrac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + \left(\dfrac{f}{f_T}\right)^2}
 \end{equation}
 
 where
 \begin{equation}
-K = \dfrac{\varepsilon_{r_{eff}}}{\varepsilon_{r}}
+f_T = \sqrt{\dfrac{\varepsilon_{r}}{\varepsilon_{r_{eff}}}}\cdot \dfrac{Z_L}{2\mu_0 h}
+\end{equation}
+
+Dispersion of the characteristic impedance is accounted by
+\begin{equation}
+Z_L(f) = \dfrac{Z_{F0}\cdot h}{W_e(f)\cdot \sqrt{\varepsilon_r(f)}}
+\end{equation}
+
+whence
+\begin{equation}
+W_e(f) = W + \dfrac{W_{eff} - W}{1 + \left(\dfrac{f}{f_T}\right)^2}
 \;\;\;\; \textrm{ and } \;\;\;\;
-f_p = \dfrac{Z_L}{2\mu_0 h}
+W_{eff} = \dfrac{Z_{F0}\cdot h\cdot\sqrt{\varepsilon_{r_{eff}}}}{Z_L\cdot \varepsilon_r}
 \end{equation}
 
 \subsection{Transmission losses}
@@ -6847,7 +6864,7 @@ n(g) &= \left(\dfrac{1}{17.7} + \exp{\left(-6.424 - 0.76\cdot \ln{g} - \left(g/0
 Furthermore
 \begin{align}
 \mu\left(u,g\right) &= g\cdot e^{-g}+ u\cdot \dfrac{20+g^2}{10+g^2}\\
-f_o\left(u,g,\varepsilon_r\right) &= f_{o1}\left(g,\varepsilon_r\right)\cdot \exp{\left(p(g)\cdot \ln{u} + q(g)\cdot \sin{\left(\pi\cdot\dfrac{\ln{u}}{\ln{10}}\right)}\right)}\\
+f_o\left(u,g,\varepsilon_r\right) &= f_{o1}\left(g,\varepsilon_r\right)\cdot \exp{\left(p(g)\cdot \ln{u} + q(g)\cdot \sin{\left(\pi\cdot\log{u}\right)}\right)}\\
 p(g) &= \dfrac{\exp{\left(-0.745\cdot g^{0.295}\right)}}{\cosh{\left(g^{0.68}\right)}}\\
 q(g) &= \exp{\left(-1.366-g\right)}\\
 f_{o1}\left(g,\varepsilon_r\right) &= 1 - \exp{\left(-0.179\cdot g^{0.15} - \dfrac{0.328\cdot g^{r\left(g,\varepsilon_r\right)}}{\ln{\left(e + \left(g/7\right)^{2.8}\right)}}\right)}\\
