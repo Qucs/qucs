@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "sparamfile.h"
-#include "../main.h"
+#include "main.h"
 
 
 SParamFile::SParamFile(int No)

@@ -19,7 +19,7 @@
 #define COMPONENTDIALOG_H
 
 #include "component.h"
-#include "../qucsdoc.h"
+#include "qucsdoc.h"
 
 #include <qlabel.h>
 #include <qdialog.h>

@@ -20,7 +20,7 @@
 
 #include "graph.h"
 #include "marker.h"
-#include "../element.h"
+#include "element.h"
 
 #include <qfile.h>
 
