@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.12 2004/09/25 21:09:46 ela Exp $
+ * $Id: spfile.cpp,v 1.13 2004/10/12 18:13:11 ela Exp $
  *
  */
 
@@ -78,33 +78,33 @@ void spfile::calcSP (nr_double_t frequency) {
 /* This function returns the S-parameter matrix of the circuit for the
    given frequency.  It uses interpolation for frequency points which
    are not part of the original touchstone file. */
-matrix& spfile::getInterpolMatrixS (nr_double_t frequency) {
+matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
 
   // first interpolate the matrix values
-  matrix * s = new matrix (getSize () - 1);
+  matrix s (getSize () - 1);
   for (int r = 1; r <= getSize () - 1; r++) {
     for (int c = 1; c <= getSize () - 1; c++) {
       int i = (r - 1) * getSize () + c - 1;
-      s->set (r, c, interpolate (sfreq, index[i].v, frequency));
+      s.set (r, c, interpolate (sfreq, index[i].v, frequency));
     }
   }
   
   // then convert them to S-parameters if necessary
   switch (paraType) {
   case 'Y':
-    *s = ytos (*s);
+    s = ytos (s);
     break;
   case 'Z':
-    *s = ztos (*s);
+    s = ztos (s);
     break;
   case 'H':
-    *s = htos (*s);
+    s = htos (s);
     break;
   case 'G':
-    *s = gtos (*s);
+    s = gtos (s);
     break;
   }
-  return *s;
+  return s;
 }
 
 void spfile::calcNoise (nr_double_t frequency) {
@@ -122,7 +122,7 @@ void spfile::calcNoise (nr_double_t frequency) {
 }
 
 // Returns the specified matrix vector entry.
-vector& spfile::fetch (int r, int c) {
+vector spfile::fetch (int r, int c) {
   return *(index[(r - 1) * getSize () + c - 1].v);
 }
 
@@ -133,15 +133,15 @@ complex spfile::fetch (int r, int c, int idx) {
 }
 
 // Returns the matrix for the given frequency index.
-matrix& spfile::fetch (int idx) {
-  matrix * res = new matrix (getSize () - 1);
+matrix spfile::fetch (int idx) {
+  matrix res (getSize () - 1);
   for (int r = 1; r <= getSize () - 1; r++) {
     for (int c = 1; c <= getSize () - 1; c++) {
       vector * v = index[(r - 1) * getSize () + c - 1].v;
-      res->set (r, c, v->get (idx));
+      res.set (r, c, v->get (idx));
     }
   }
-  return *res;
+  return res;
 }
 
 // Stores the matrix entry for the given frequency index.
@@ -153,60 +153,60 @@ void spfile::store (int r, int c, complex z, int idx) {
 /* This function expands the actual S-parameter file data stored
    within the touchstone file to have an additional reference one-port
    whose S-parameter is -1 (i.e. ground). */
-matrix& spfile::expandSParaMatrix (matrix& s) {
+matrix spfile::expandSParaMatrix (matrix s) {
   assert (s.getCols () == s.getRows ());
   int r, c, ports = s.getCols () + 1;
   nr_double_t g = -1;
   complex fr, ss, sr, sc, sa;
-  matrix * res = new matrix (ports);
+  matrix res (ports);
 
   // compute S'mm
   for (sa = 0, r = 1; r <= ports - 1; r++)
     for (c = 1; c <= ports - 1; c++) sa += s.get (r, c);
   ss = (2 - g - ports + sa) / (1 - ports * g - sa);
-  res->set (ports, ports, ss);
+  res.set (ports, ports, ss);
   fr = (1 - g * ss) / (1 - g);
     
   // compute S'im
   for (r = 1; r <= ports - 1; r++) {
     for (sc = 0, c = 1; c <= ports - 1; c++) sc += s.get (r, c);
-    res->set (r, ports, fr * (1 - sc));
+    res.set (r, ports, fr * (1 - sc));
   }
 
   // compute S'mj
   for (c = 1; c <= ports - 1; c++) {
     for (sr = 0, r = 1; r <= ports - 1; r++) sr += s.get (r, c);
-    res->set (ports, c, fr * (1 - sr));
+    res.set (ports, c, fr * (1 - sr));
   }
 
   // compute S'ij
   for (r = 1; r <= ports - 1; r++) {
     for (c = 1; c <= ports - 1; c++) {
-      fr = g * res->get (r, ports) * res->get (ports, c) / (1 - g * ss);
-      res->set (r, c, s.get (r, c) - fr);
+      fr = g * res.get (r, ports) * res.get (ports, c) / (1 - g * ss);
+      res.set (r, c, s.get (r, c) - fr);
     }
   }
 
-  return *res;
+  return res;
 }
 
 /* The function is the counterpart of the above expandSParaMatrix()
    function.  It shrinks the S-parameter matrix by removing the
    reference port. */
-matrix& spfile::shrinkSParaMatrix (matrix& s) {
+matrix spfile::shrinkSParaMatrix (matrix s) {
   assert (s.getCols () == s.getRows () && s.getCols () > 0);
   int r, c, ports = s.getCols ();
   nr_double_t g = -1;
-  matrix * res = new matrix (ports - 1);
+  matrix res (ports - 1);
 
   // compute S'ij
   for (r = 1; r <= ports - 1; r++) {
     for (c = 1; c <= ports - 1; c++) {
-      res->set (r, c, s.get (r, c) + g * s.get (r, ports)  *
-		s.get (ports, c) / (1 - g * s.get (ports, ports)));
+      res.set (r, c, s.get (r, c) + g * s.get (r, ports)  *
+	       s.get (ports, c) / (1 - g * s.get (ports, ports)));
     }
   }
-  return *res;
+  return res;
 }
 
 /* This function expands the actual noise correlation matrix to have an
@@ -214,7 +214,7 @@ matrix& spfile::shrinkSParaMatrix (matrix& s) {
    (i.e. ground).  The given S-parameter matrix is required to perform
    this transformation and is obtained using the expandSParaMatrix()
    function. */
-matrix& spfile::expandNoiseMatrix (matrix& n, matrix& s) {
+matrix spfile::expandNoiseMatrix (matrix n, matrix s) {
   assert (s.getCols () == s.getRows () && n.getCols () == n.getRows () &&
 	  n.getCols () == s.getCols () - 1);
   nr_double_t T = getPropertyDouble ("Temp");
@@ -240,10 +240,10 @@ matrix& spfile::expandNoiseMatrix (matrix& n, matrix& s) {
   d.set (ports, 1, s.get (ports, ports) - 1);
 
   // expand noise correlation matrix
-  matrix * res = new matrix (ports);
-  *res = (k * n * adjoint (k) - kelvin (T) / T0 * fabs (1 - norm (g)) *
-	  d * adjoint (d)) * norm (1 / (1 - g));
-  return *res;
+  matrix res (ports);
+  res = (k * n * adjoint (k) - kelvin (T) / T0 * fabs (1 - norm (g)) *
+	 d * adjoint (d)) * norm (1 / (1 - g));
+  return res;
 }
 
 /* The function is the counterpart of the above expandNoiseMatrix()
@@ -251,7 +251,7 @@ matrix& spfile::expandNoiseMatrix (matrix& n, matrix& s) {
    reference port.  The given S-parameter matrix is required to perform
    this transformation and is obtained using the expandSParaMatrix()
    function. */
-matrix& spfile::shrinkNoiseMatrix (matrix& n, matrix& s) {
+matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
   assert (s.getCols () == s.getRows () && n.getCols () == n.getRows () &&
 	  n.getCols () == s.getCols () && n.getCols () > 0);
   int r, ports = n.getCols ();
@@ -269,10 +269,10 @@ matrix& spfile::shrinkNoiseMatrix (matrix& n, matrix& s) {
   for (r = 1; r <= ports - 1; r++) d.set (r, 1, s.get (r, ports));
   
   // shrink noise correlation matrix
-  matrix * res = new matrix (ports - 1);
-  *res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1 - norm (g)) /
+  matrix res (ports - 1);
+  res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1 - norm (g)) /
     norm (1 - g * s.get (ports, ports)) * d * adjoint (d);
-  return *res;
+  return res;
 }
 
 void spfile::initSP (void) {
@@ -358,23 +358,23 @@ void spfile::createIndex (void) {
 /* This function computes the noise correlation matrix of a twoport
    based upon the noise parameters and the given S-parameter
    matrix. */
-matrix& spfile::correlationMatrix (nr_double_t Fmin, complex Sopt,
-				   nr_double_t Rn, matrix& s) {
+matrix spfile::correlationMatrix (nr_double_t Fmin, complex Sopt,
+				  nr_double_t Rn, matrix s) {
   assert (s.getCols () == s.getRows () && s.getCols () == 2);
-  matrix * c = new matrix (2);
+  matrix c (2);
   complex Kx = 4 * Rn / z0 / norm (1 + Sopt);
-  c->set (1, 1, (Fmin - 1) * (norm (s.get (1, 1)) - 1) +
-	  Kx * norm (1 - s.get (1, 1) * Sopt));
-  c->set (2, 2, norm (s.get (2, 1)) * ((Fmin - 1) + Kx * norm (Sopt)));
-  c->set (1, 2, s.get (1, 1) / s.get (2, 1) * c->get (2, 2) -
-	  conj (s.get (2, 1)) * conj (Sopt) * Kx);
-  c->set (2, 1, conj (c->get (1, 2)));
-  return *c;
+  c.set (1, 1, (Fmin - 1) * (norm (s.get (1, 1)) - 1) +
+	 Kx * norm (1 - s.get (1, 1) * Sopt));
+  c.set (2, 2, norm (s.get (2, 1)) * ((Fmin - 1) + Kx * norm (Sopt)));
+  c.set (1, 2, s.get (1, 1) / s.get (2, 1) * c.get (2, 2) -
+	 conj (s.get (2, 1)) * conj (Sopt) * Kx);
+  c.set (2, 1, conj (c.get (1, 2)));
+  return c;
 }
 
 /* The function computes the noise figure and noise parameters for the
    given S-parameter and noise correlation matrices of a twoport. */
-nr_double_t spfile::noiseFigure (matrix& s, matrix& c, nr_double_t& Fmin,
+nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
 				 complex& Sopt, nr_double_t& Rn) {
   assert (s.getCols () == s.getRows () && c.getCols () == c.getRows () &&
 	  s.getCols () == 2 && c.getCols () == 2);

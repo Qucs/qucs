@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.7 2004/09/06 06:40:07 ela Exp $
+ * $Id: eqnsys.h,v 1.8 2004/10/12 18:13:08 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@ enum algo_type {
   ALGO_SOR
 };
 
+#include "tvector.h"
 #include "tmatrix.h"
 
 template <class nr_type_t>
@@ -46,16 +47,16 @@ class eqnsys
   eqnsys (eqnsys &);
   ~eqnsys ();
   void setAlgo (int a) { algo = a; }
-  int getAlgo (void) { return algo; }
-  void passEquationSys (tmatrix<nr_type_t> *, tmatrix<nr_type_t> *,
-			tmatrix<nr_type_t> *);
+  int  getAlgo (void) { return algo; }
+  void passEquationSys (tmatrix<nr_type_t> *, tvector<nr_type_t> *,
+			tvector<nr_type_t> *);
   void solve (void);
 
  private:
   int algo;
   tmatrix<nr_type_t> * A;
-  tmatrix<nr_type_t> * B;
-  tmatrix<nr_type_t> * X;
+  tvector<nr_type_t> * B;
+  tvector<nr_type_t> * X;
   void solve_inverse (void);
   void solve_gauss (void);
   void solve_gauss_jordan (void);

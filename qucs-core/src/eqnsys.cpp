@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.17 2004/10/09 19:59:42 ela Exp $
+ * $Id: eqnsys.cpp,v 1.18 2004/10/12 18:13:08 ela Exp $
  *
  */
 
@@ -53,7 +53,8 @@ using namespace qucs;
 // Constructor creates an unnamed instance of the eqnsys class.
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
-  A = B = X = NULL;
+  A = NULL;
+  B = X = NULL;
 }
 
 // Destructor deletes the eqnsys class object.
@@ -68,7 +69,7 @@ eqnsys<nr_type_t>::~eqnsys () {
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   if (e.A != NULL) A = new tmatrix<nr_type_t> (*(e.A));
-  if (e.B != NULL) B = new tmatrix<nr_type_t> (*(e.B));
+  if (e.B != NULL) B = new tvector<nr_type_t> (*(e.B));
   X = e.X;
 }
 
@@ -80,12 +81,12 @@ eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
    copied. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
-					 tmatrix<nr_type_t> * refX,
-					 tmatrix<nr_type_t> * nB) {
+					 tvector<nr_type_t> * refX,
+					 tvector<nr_type_t> * nB) {
   if (A != NULL) delete A;
   if (B != NULL) delete B;
   A = new tmatrix<nr_type_t> (*nA);
-  B = new tmatrix<nr_type_t> (*nB);
+  B = new tvector<nr_type_t> (*nB);
   X = refX;
 }
 
@@ -158,18 +159,18 @@ void eqnsys<nr_type_t>::solve_gauss (void) {
       for (c = i + 1; c <= N; c++) {
 	A->set (r, c, A->get (r, c) - f * A->get (i, c));
       }
-      B->set (r, 1, B->get (r, 1) - f * B->get (i, 1));
+      B->set (r, B->get (r) - f * B->get (i));
     }
   }
 
   // backward substitution
   for (i = N; i > 0; i--) {
-    f = B->get (i, 1);
+    f = B->get (i);
     for (c = i + 1; c <= N; c++) {
-      f -= A->get (i, c) * X->get (c, 1);
+      f -= A->get (i, c) * X->get (c);
     }
     f /= A->get (i, i);
-    X->set (i, 1, f);
+    X->set (i, f);
   }
 }
 
@@ -203,7 +204,7 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
     for (c = i + 1; c <= N; c++) {
       A->set (i, c, A->get (i, c) / f);
     }
-    B->set (i, 1, B->get (i, 1) / f);
+    B->set (i, B->get (i) / f);
 
     // compute new rows and columns
     for (r = 1; r <= N; r++) {
@@ -212,7 +213,7 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
         for (c = i + 1; c <= N; c++) {
           A->set (r, c, A->get (r, c) - f * A->get (i, c));
         }
-        B->set (r, 1, B->get (r, 1) - f * B->get (i, 1));
+        B->set (r, B->get (r) - f * B->get (i));
       }
     }
   }
@@ -231,7 +232,7 @@ void eqnsys<nr_type_t>::solve_lu (void) {
   nr_double_t MaxPivot;
   nr_type_t f;
   int k, i, c, r, pivot, N = A->getCols ();
-  tmatrix<nr_type_t> * Y = new tmatrix<nr_type_t> (N, 1);
+  tvector<nr_type_t> Y (N);
   int * change = new int[N];
 
   // initialize pivot exchange table
@@ -290,9 +291,9 @@ void eqnsys<nr_type_t>::solve_lu (void) {
 
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
-    f = B->get (change[i - 1], 1);
+    f = B->get (change[i - 1]);
     for (c = 1; c <= i - 1; c++)
-      f -= A->get (i, c) * Y->get (c, 1);
+      f -= A->get (i, c) * Y.get (c);
     f /= A->get (i, i);
 
     // check for possible division by zero
@@ -303,20 +304,19 @@ void eqnsys<nr_type_t>::solve_lu (void) {
       throw_exception (e);
       goto fail;
     }
-    Y->set (i, 1, f);
+    Y.set (i, f);
   }
    
   // backward substitution in order to solve UX = Y
   for (i = N; i > 0; i--) {
-    f = Y->get (i, 1);
+    f = Y.get (i);
     for (c = i + 1; c <= N; c++)
-      f -= A->get (i, c) * X->get (c, 1);
+      f -= A->get (i, c) * X->get (c);
     // remember that the Uii diagonal are ones only
-    X->set (i, 1, f);
+    X->set (i, f);
   }
 
  fail:
-  delete Y;
   delete change;
 }
 
@@ -357,11 +357,11 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
     f = A->get (r, r);
     assert (f != 0); // singular matrix
     for (c = 1; c <= N; c++) A->set (r, c, A->get (r, c) / f);
-    B->set (r, 1, B->get (r, 1) / f);
+    B->set (r, B->get (r) / f);
   }
 
   // the current X vector is a good initial guess for the iteration
-  tmatrix<nr_type_t> * Xprev = new tmatrix<nr_type_t> (*X);
+  tvector<nr_type_t> * Xprev = new tvector<nr_type_t> (*X);
 
   // start iterating here
   i = 0; error = 0;
@@ -371,20 +371,20 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
       for (f = 0, c = 1; c <= N; c++) {
 	if (algo == ALGO_GAUSS_SEIDEL) {
 	  // Gauss-Seidel
-	  if (c < r)      f += A->get (r, c) * X->get (c, 1);
-	  else if (c > r) f += A->get (r, c) * Xprev->get (c, 1);
+	  if (c < r)      f += A->get (r, c) * X->get (c);
+	  else if (c > r) f += A->get (r, c) * Xprev->get (c);
 	}
 	else {
 	  // Jacobi
-	  if (c != r) f += A->get (r, c) * Xprev->get (c, 1);
+	  if (c != r) f += A->get (r, c) * Xprev->get (c);
 	}
       }
-      X->set (r, 1, B->get (r, 1) - f);
+      X->set (r, B->get (r) - f);
     }
     // check for convergence
     for (conv = 1, r = 1; r <= N; r++) {
-      diff = abs (X->get (r, 1) - Xprev->get (r, 1));
-      if (diff >= abstol + reltol * abs (X->get (r, 1))) {
+      diff = abs (X->get (r) - Xprev->get (r));
+      if (diff >= abstol + reltol * abs (X->get (r))) {
 	conv = 0;
 	break;
       }
@@ -446,11 +446,11 @@ void eqnsys<nr_type_t>::solve_sor (void) {
     f = A->get (r, r);
     assert (f != 0); // singular matrix
     for (c = 1; c <= N; c++) A->set (r, c, A->get (r, c) / f);
-    B->set (r, 1, B->get (r, 1) / f);
+    B->set (r, B->get (r) / f);
   }
 
   // the current X vector is a good initial guess for the iteration
-  tmatrix<nr_type_t> * Xprev = new tmatrix<nr_type_t> (*X);
+  tvector<nr_type_t> * Xprev = new tvector<nr_type_t> (*X);
 
   // start iterating here
   i = 0; error = 0;
@@ -458,19 +458,19 @@ void eqnsys<nr_type_t>::solve_sor (void) {
     // compute new solution vector
     for (r = 1; r <= N; r++) {
       for (f = 0, c = 1; c <= N; c++) {
-	if (c < r)      f += A->get (r, c) * X->get (c, 1);
-	else if (c > r) f += A->get (r, c) * Xprev->get (c, 1);
+	if (c < r)      f += A->get (r, c) * X->get (c);
+	else if (c > r) f += A->get (r, c) * Xprev->get (c);
       }
-      X->set (r, 1, (1 - l) * Xprev->get (r, 1) + l * (B->get (r, 1) - f));
+      X->set (r, (1 - l) * Xprev->get (r) + l * (B->get (r) - f));
     }
     // check for convergence
     for (s = 0, d = 0, conv = 1, r = 1; r <= N; r++) {
-      diff = abs (X->get (r, 1) - Xprev->get (r, 1));
-      if (diff >= abstol + reltol * abs (X->get (r, 1))) {
+      diff = abs (X->get (r) - Xprev->get (r));
+      if (diff >= abstol + reltol * abs (X->get (r))) {
 	conv = 0;
 	break;
       }
-      d += diff; s += abs (X->get (r, 1));
+      d += diff; s += abs (X->get (r));
       if (!finite (diff)) { error++; break; }
     }
     if (!error) {

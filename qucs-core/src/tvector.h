@@ -1,5 +1,5 @@
 /*
- * tmatrix.h - simple matrix template class definitions
+ * tvector.h - simple vector template class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,46 +18,42 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.3 2004/10/12 18:13:09 ela Exp $
+ * $Id: tvector.h,v 1.1 2004/10/12 18:13:09 ela Exp $
  *
  */
 
-#ifndef __TMATRIX_H__
-#define __TMATRIX_H__
+#ifndef __TVECTOR_H__
+#define __TVECTOR_H__
 
 template <class nr_type_t>
-class tmatrix
+class tvector
 {
  public:
-  tmatrix ();
-  tmatrix (int);
-  tmatrix (int, int);
-  tmatrix (const tmatrix &);
-  const tmatrix& operator = (const tmatrix &);
-  ~tmatrix ();
-  nr_type_t get (int, int);
-  void set (int, int, nr_type_t);
-  int getCols (void) { return cols; }
-  int getRows (void) { return rows; }
+  tvector ();
+  tvector (int);
+  tvector (const tvector &);
+  const tvector& operator = (const tvector &);
+  ~tvector ();
+  nr_type_t get (int);
+  void set (int, nr_type_t);
+  int getSize (void) { return size; }
   nr_type_t * getData (void) { return data; }
   void exchangeRows (int, int);
-  void exchangeCols (int, int);
   void print (void);
 
-  // some basic matrix operations
-  friend tmatrix inverse<nr_type_t> (tmatrix);
-  static tmatrix eye (int);
-  friend tmatrix<nr_type_t> operator *<nr_type_t> (tmatrix<nr_type_t>,
-						   tmatrix<nr_type_t>);
-  friend tvector<nr_type_t> operator *<nr_type_t> (tmatrix<nr_type_t>,
-						   tvector<nr_type_t>);
+  // some basic vector operations
+  friend tvector operator +<nr_type_t> (tvector, tvector);
+  friend tvector operator -<nr_type_t> (tvector, tvector);
+  friend tvector operator *<nr_type_t> (tvector, nr_double_t);
+  friend tvector operator *<nr_type_t> (nr_double_t, tvector);
+
+  friend nr_double_t norm<nr_type_t> (tvector);
 
  private:
-  int cols;
-  int rows;
+  int size;
   nr_type_t * data;
 };
 
-#include "tmatrix.cpp"
+#include "tvector.cpp"
 
-#endif /* __TMATRIX_H__ */
+#endif /* __TVECTOR_H__ */

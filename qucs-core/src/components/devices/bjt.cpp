@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.15 2004/10/04 20:54:23 ela Exp $
+ * $Id: bjt.cpp,v 1.16 2004/10/12 18:13:11 ela Exp $
  *
  */
 
@@ -58,7 +58,7 @@ void bjt::calcSP (nr_double_t frequency) {
   setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
-matrix& bjt::calcMatrixY (nr_double_t frequency) {
+matrix bjt::calcMatrixY (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Cbe  = getOperatingPoint ("Cbe");
@@ -86,25 +86,25 @@ matrix& bjt::calcMatrixY (nr_double_t frequency) {
   complex gmf = polar (gmfr, -phase);
 
   // build admittance matrix and convert it to S-parameter matrix
-  matrix * y = new matrix (4);
-  y->set (NODE_B, NODE_B, Ybc + Ybe);
-  y->set (NODE_B, NODE_C, -Ybc);
-  y->set (NODE_B, NODE_E, -Ybe);
-  y->set (NODE_B, NODE_S, 0);
-  y->set (NODE_C, NODE_B, -Ybc + gmf - gmr);
-  y->set (NODE_C, NODE_C, Ybc + gmr + Ycs);
-  y->set (NODE_C, NODE_E, -gmf);
-  y->set (NODE_C, NODE_S, -Ycs);
-  y->set (NODE_E, NODE_B, -Ybe - gmf + gmr);
-  y->set (NODE_E, NODE_C, -gmr);
-  y->set (NODE_E, NODE_E, Ybe + gmf);
-  y->set (NODE_E, NODE_S, 0);
-  y->set (NODE_S, NODE_B, 0);
-  y->set (NODE_S, NODE_C, -Ycs);
-  y->set (NODE_S, NODE_E, 0);
-  y->set (NODE_S, NODE_S, Ycs);
+  matrix y (4);
+  y.set (NODE_B, NODE_B, Ybc + Ybe);
+  y.set (NODE_B, NODE_C, -Ybc);
+  y.set (NODE_B, NODE_E, -Ybe);
+  y.set (NODE_B, NODE_S, 0);
+  y.set (NODE_C, NODE_B, -Ybc + gmf - gmr);
+  y.set (NODE_C, NODE_C, Ybc + gmr + Ycs);
+  y.set (NODE_C, NODE_E, -gmf);
+  y.set (NODE_C, NODE_S, -Ycs);
+  y.set (NODE_E, NODE_B, -Ybe - gmf + gmr);
+  y.set (NODE_E, NODE_C, -gmr);
+  y.set (NODE_E, NODE_E, Ybe + gmf);
+  y.set (NODE_E, NODE_S, 0);
+  y.set (NODE_S, NODE_B, 0);
+  y.set (NODE_S, NODE_C, -Ycs);
+  y.set (NODE_S, NODE_E, 0);
+  y.set (NODE_S, NODE_S, Ycs);
 
-  return *y;
+  return y;
 }
 
 void bjt::calcNoise (nr_double_t frequency) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.16 2004/10/12 07:00:28 ela Exp $
+ * $Id: nasolver.cpp,v 1.17 2004/10/12 18:13:09 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 #include "analysis.h"
 #include "nodelist.h"
 #include "strlist.h"
+#include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
 #include "constants.h"
@@ -55,8 +56,8 @@ using namespace qucs;
 template <class nr_type_t>
 nasolver<nr_type_t>::nasolver () : analysis () {
   nlist = NULL;
-  A = z = x = NULL;
-  xprev = zprev = NULL;
+  A = NULL;
+  z = x = xprev = zprev = NULL;
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
@@ -68,8 +69,8 @@ nasolver<nr_type_t>::nasolver () : analysis () {
 template <class nr_type_t>
 nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   nlist = NULL;
-  A = z = x = NULL;
-  xprev = zprev = NULL;
+  A = NULL;
+  z = x = xprev = zprev = NULL;
   reltol = abstol = vntol = 0;
   desc = NULL;
   calculate_func = NULL;
@@ -95,8 +96,8 @@ template <class nr_type_t>
 nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   nlist = o.nlist ? new nodelist (*(o.nlist)) : NULL;
   A = o.A ? new tmatrix<nr_type_t> (*(o.A)) : NULL;
-  z = o.z ? new tmatrix<nr_type_t> (*(o.z)) : NULL;
-  x = o.x ? new tmatrix<nr_type_t> (*(o.x)) : NULL;
+  z = o.z ? new tvector<nr_type_t> (*(o.z)) : NULL;
+  x = o.x ? new tvector<nr_type_t> (*(o.x)) : NULL;
   xprev = zprev = NULL;
   reltol = o.reltol;
   abstol = o.abstol;
@@ -263,12 +264,12 @@ void nasolver<nr_type_t>::createMatrix (void) {
 			      +- -+.
      Each of these minor matrices is going to be generated here. */
   if (z != NULL) delete z;
-  z = new tmatrix<nr_type_t> (N + M, 1);
+  z = new tvector<nr_type_t> (N + M);
   createIMatrix ();
   createEMatrix ();
 
   // Create empty solution vector.
-  if (x == NULL) x = new tmatrix<nr_type_t> (N + M, 1);
+  if (x == NULL) x = new tvector<nr_type_t> (N + M);
 }
 
 /* This MatVal() functionality is just helper to get the correct
@@ -452,8 +453,8 @@ void nasolver<nr_type_t>::createIMatrix (void) {
 	val += MatVal (is->getI (n->nodes[i]->getPort ()));
       }
     }
-    // put value into i matrix
-    z->set (r, 1, val);
+    // put value into i vector
+    z->set (r, val);
   }  
 }
 
@@ -470,8 +471,8 @@ void nasolver<nr_type_t>::createEMatrix (void) {
   for (int r = 1; r <= M; r++) {
     vs = findVoltageSource (r);
     val = MatVal (vs->getE (r));
-    // put value into e matrix
-    z->set (r + N, 1, val);
+    // put value into e vector
+    z->set (r + N, val);
   }  
 }
 
@@ -538,13 +539,13 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::applyAttenuation (void) {
   nr_double_t d, alpha = 1.0, dxMax = 0.0;
   nr_type_t delta;
-  int len = x->getRows ();
+  int len = x->getSize ();
 
   // create solution difference vector and find maximum deviation
-  tmatrix<nr_type_t> * dx = new tmatrix<nr_type_t> (len, 1);
+  tvector<nr_type_t> * dx = new tvector<nr_type_t> (len);
   for (int r = 1; r <= len; r++) {
-    delta = x->get (r, 1) - xprev->get (r, 1);
-    dx->set (r, 1, delta);
+    delta = x->get (r) - xprev->get (r);
+    dx->set (r, delta);
     d = norm (delta);
     if (d > dxMax) dxMax = d;
   }
@@ -558,7 +559,7 @@ void nasolver<nr_type_t>::applyAttenuation (void) {
 
   // apply damped solution vector
   for (int r = 1; r <= len; r++) {
-    x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
+    x->set (r, xprev->get (r) + alpha * dx->get (r));
   }
   delete dx;
 }
@@ -572,30 +573,22 @@ void nasolver<nr_type_t>::applyAttenuation (void) {
 template <class nr_type_t>
 void nasolver<nr_type_t>::lineSearch (void) {
   nr_double_t alpha = 0.5, n, nMin, aprev = 1.0, astep = 0.5, adiff;
-  int dir = -1, r, len = x->getRows ();
+  int dir = -1;
 
-  tmatrix<nr_type_t> * dx = new tmatrix<nr_type_t> (len, 1);
-
-  // compute solution deciation vector
-  for (nMin = 0, r = 1; r <= len; r++) {
-    nMin += norm (z->get (r, 1) - zprev->get (r, 1));
-    dx->set (r, 1, x->get (r, 1) - xprev->get (r, 1));
-  }
+  // compute solution deviation vector
+  tvector<nr_type_t> dx = *x - *xprev;
+  nMin = norm (dx);
 
   do {
     // apply current damping factor and see what happens
-    for (r = 1; r <= len; r++) {
-      x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
-    }
+    *x = *xprev + alpha * dx;
     saveSolution ();
     calculate ();
     createIMatrix ();
     createEMatrix ();
 
     // calculate norm of right hand side vector
-    for (n = 0, r = 1; r <= len; r++) {
-      n += norm (z->get (r, 1) - zprev->get (r, 1));
-    }
+    n = norm (*z - *zprev);
 
     // TODO: this is not perfect, but usable
     astep /= 2;
@@ -609,15 +602,13 @@ void nasolver<nr_type_t>::lineSearch (void) {
 	dir = -dir;
 	alpha += 2 * astep * dir;
       }
+      if (alpha > 1.0) alpha = 1;
     }
   }
   while (adiff > 0.01);
 
   // apply final damping factor
-  for (r = 1; r <= len; r++) {
-    x->set (r, 1, xprev->get (r, 1) + alpha * dx->get (r, 1));
-  }
-  delete dx;
+  *x = *xprev + alpha * dx;
 }
 
 /* The function checks whether the iterative algorithm for linearizing
@@ -630,22 +621,22 @@ int nasolver<nr_type_t>::checkConvergence (void) {
   nr_double_t v_abs, v_rel, i_abs, i_rel;
 
   for (int r = 1; r <= N; r++) {
-    v_abs = abs (x->get (r, 1) - xprev->get (r, 1));
-    v_rel = abs (x->get (r, 1));
+    v_abs = abs (x->get (r) - xprev->get (r));
+    v_rel = abs (x->get (r));
     if (v_abs >= vntol + reltol * v_rel) return 0;
     if (!linesearch) {
-      i_abs = abs (z->get (r, 1) - zprev->get (r, 1));
-      i_rel = abs (z->get (r, 1));
+      i_abs = abs (z->get (r) - zprev->get (r));
+      i_rel = abs (z->get (r));
       if (i_abs >= abstol + reltol * i_rel) return 0;
     }
   }
   for (int r = 1; r <= M; r++) {
-    i_abs = abs (x->get (r + N, 1) - xprev->get (r + N, 1));
-    i_rel = abs (x->get (r + N, 1));
+    i_abs = abs (x->get (r + N) - xprev->get (r + N));
+    i_rel = abs (x->get (r + N));
     if (i_abs >= abstol + reltol * i_rel) return 0;
     if (!linesearch) {
-      v_abs = abs (z->get (r + N, 1) - zprev->get (r + N, 1));
-      v_rel = abs (z->get (r + N, 1));
+      v_abs = abs (z->get (r + N) - zprev->get (r + N));
+      v_rel = abs (z->get (r + N));
       if (v_abs >= vntol + reltol * v_rel) return 0;
     }
   }
@@ -657,9 +648,9 @@ int nasolver<nr_type_t>::checkConvergence (void) {
 template <class nr_type_t>
 void nasolver<nr_type_t>::savePreviousIteration (void) {
   if (xprev != NULL) delete xprev;
-  xprev = new tmatrix<nr_type_t> (*x);
+  xprev = new tvector<nr_type_t> (*x);
   if (zprev != NULL) delete zprev;
-  zprev = new tmatrix<nr_type_t> (*z);
+  zprev = new tvector<nr_type_t> (*z);
 }
 
 /* This function goes through solution (the x vector) and saves the
@@ -673,7 +664,7 @@ void nasolver<nr_type_t>::saveNodeVoltages (void) {
   for (int r = 1; r <= N; r++) {
     n = nlist->getNode (r);
     for (int i = 0; i < n->nNodes; i++) {
-      n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), x->get (r, 1));
+      n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), x->get (r));
     }
   }
   // save reference node
@@ -694,7 +685,7 @@ void nasolver<nr_type_t>::saveBranchCurrents (void) {
   // save all branch currents of voltage sources
   for (int r = 1; r <= M; r++) {
     vs = findVoltageSource (r);
-    vs->setJ (r, x->get (r + N, 1));
+    vs->setJ (r, x->get (r + N));
   }
 }
 
@@ -717,7 +708,7 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
   // add node voltage variables
   for (int r = 1; r <= N; r++) {
     if ((n = createV (r, volts, saveOPs)) != NULL) {
-      saveVariable (n, x->get (r, 1), f);
+      saveVariable (n, x->get (r), f);
       free (n);
     }
   }
@@ -725,7 +716,7 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
   // add branch current variables
   for (int r = 1; r <= M; r++) {
     if ((n = createI (r, amps, saveOPs)) != NULL) {
-      saveVariable (n, x->get (r + N, 1), f);
+      saveVariable (n, x->get (r + N), f);
       free (n);
     }
   }

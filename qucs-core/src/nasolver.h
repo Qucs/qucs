@@ -18,13 +18,14 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.8 2004/10/09 19:59:42 ela Exp $
+ * $Id: nasolver.h,v 1.9 2004/10/12 18:13:09 ela Exp $
  *
  */
 
 #ifndef __NASOLVER_H__
 #define __NASOLVER_H__
 
+#include "tvector.h"
 #include "tmatrix.h"
 #include "eqnsys.h"
 
@@ -86,10 +87,10 @@ class nasolver : public analysis
   nr_type_t MatValX (complex, nr_double_t *);
 
  protected:
-  tmatrix<nr_type_t> * z;
-  tmatrix<nr_type_t> * x;
-  tmatrix<nr_type_t> * xprev;
-  tmatrix<nr_type_t> * zprev;
+  tvector<nr_type_t> * z;
+  tvector<nr_type_t> * x;
+  tvector<nr_type_t> * xprev;
+  tvector<nr_type_t> * zprev;
   int iterations;
   int attenuation;
   int linesearch;

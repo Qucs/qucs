@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.29 2004/10/03 10:30:51 ela Exp $
+ * $Id: circuit.h,v 1.30 2004/10/12 18:13:08 ela Exp $
  *
  */
 
@@ -165,12 +165,12 @@ class circuit : public object, public integrator
   static char * createInternal (char *, char *);
 
   // matrix operations
-  void    setMatrixS (matrix &);
-  matrix& getMatrixS (void);
-  void    setMatrixN (matrix &);
-  matrix& getMatrixN (void);
-  void    setMatrixY (matrix &);
-  matrix& getMatrixY (void);
+  void   setMatrixS (matrix);
+  matrix getMatrixS (void);
+  void   setMatrixN (matrix);
+  matrix getMatrixN (void);
+  void   setMatrixY (matrix);
+  matrix getMatrixY (void);
 
   static const nr_double_t z0 = 50.0;
 

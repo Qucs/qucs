@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.19 2004/10/12 07:00:28 ela Exp $
+ * $Id: trsolver.cpp,v 1.20 2004/10/12 18:13:09 ela Exp $
  *
  */
 
@@ -274,14 +274,14 @@ void trsolver::predictBashford (void) {
 
   // go through each solution
   for (int r = 1; r <= N + M; r++) {
-    xn = predCoeff[0] * SOL(1)->get (r, 1); // a0 coefficient
+    xn = predCoeff[0] * SOL(1)->get (r); // a0 coefficient
     for (int o = 1; o <= predOrder; o++) {
-      hn = getState (dState, o);            // previous time-step
+      hn = getState (dState, o);         // previous time-step
       // divided differences
-      dd = (SOL(o)->get (r, 1) - SOL(o + 1)->get (r, 1)) / hn;
-      xn += predCoeff[o] * dd;              // b0, b1, ... coefficients
+      dd = (SOL(o)->get (r) - SOL(o + 1)->get (r)) / hn;
+      xn += predCoeff[o] * dd;           // b0, b1, ... coefficients
     }
-    x->set (r, 1, xn);                      // save prediction
+    x->set (r, xn);                      // save prediction
   }
 }
 
@@ -294,11 +294,11 @@ void trsolver::predictEuler (void) {
   nr_double_t xn, dd, hn;
 
   for (int r = 1; r <= N + M; r++) {
-    xn = predCoeff[0] * SOL(1)->get (r, 1);
+    xn = predCoeff[0] * SOL(1)->get (r);
     hn = getState (dState, 1);
-    dd = (SOL(1)->get (r, 1) - SOL(2)->get (r, 1)) / hn;
+    dd = (SOL(1)->get (r) - SOL(2)->get (r)) / hn;
     xn += predCoeff[1] * dd;
-    x->set (r, 1, xn);
+    x->set (r, xn);
   }
 }
 
@@ -314,9 +314,9 @@ void trsolver::predictGear (void) {
     xn = 0;
     for (int o = 0; o <= predOrder; o++) {
       // a0, a1, ... coefficients
-      xn += predCoeff[o] * SOL(o + 1)->get (r, 1);
+      xn += predCoeff[o] * SOL(o + 1)->get (r);
     }
-    x->set (r, 1, xn); // save prediction
+    x->set (r, xn); // save prediction
   }
 }
 
@@ -460,7 +460,7 @@ void trsolver::initTR (void) {
 
   // initialize history of solution vectors (solutions)
   for (int i = 0; i < 8; i++) {
-    solution[i] = new tmatrix<nr_double_t> (*x);
+    solution[i] = new tvector<nr_double_t> (*x);
     setState (sState, (nr_double_t) i, i);
   }
 
@@ -512,10 +512,10 @@ nr_double_t trsolver::checkDelta (void) {
 	continue;
     }
 
-    dif = x->get (r, 1) - SOL(0)->get (r, 1);
+    dif = x->get (r) - SOL(0)->get (r);
     if (dif != 0) {
       // use Milne' estimate for the local truncation error
-      rel = MAX (abs (x->get (r, 1)), abs (SOL(0)->get (r, 1)));
+      rel = MAX (abs (x->get (r)), abs (SOL(0)->get (r)));
       tol = LTEreltol * rel + LTEabstol;
       lte = LTEfactor * (cec / (pec - cec)) * dif;
       q =  delta * exp (log (fabs (tol / lte)) / (corrOrder + 1));

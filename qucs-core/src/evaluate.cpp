@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.17 2004/10/06 14:40:05 ela Exp $
+ * $Id: evaluate.cpp,v 1.18 2004/10/12 18:13:08 ela Exp $
  *
  */
 
@@ -1429,7 +1429,7 @@ constant * evaluate::index_mv_1 (constant * args) {
   matvec * mv = MV (args->getResult (0));
   int i = INT (args->getResult (1));
   constant * res = new constant (TAG_MATRIX);
-  res->m = & (mv->get (i));
+  res->m = new matrix (mv->get (i));
   return res;
 }
 

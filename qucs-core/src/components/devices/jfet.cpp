@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.17 2004/10/04 20:54:23 ela Exp $
+ * $Id: jfet.cpp,v 1.18 2004/10/12 18:13:12 ela Exp $
  *
  */
 
@@ -55,7 +55,7 @@ void jfet::calcSP (nr_double_t frequency) {
   setMatrixS (ytos (calcMatrixY (frequency)));
 }
 
-matrix& jfet::calcMatrixY (nr_double_t frequency) {
+matrix jfet::calcMatrixY (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Cgd = getOperatingPoint ("Cgd");
@@ -71,18 +71,18 @@ matrix& jfet::calcMatrixY (nr_double_t frequency) {
   complex Yds = gds;
 
   // build admittance matrix and convert it to S-parameter matrix
-  matrix * y = new matrix (3);
-  y->set (NODE_G, NODE_G, Ygd + Ygs);
-  y->set (NODE_G, NODE_D, -Ygd);
-  y->set (NODE_G, NODE_S, -Ygs);
-  y->set (NODE_D, NODE_G, gm - Ygd);
-  y->set (NODE_D, NODE_D, Ygd + Yds);
-  y->set (NODE_D, NODE_S, -Yds - gm);
-  y->set (NODE_S, NODE_G, -Ygs - gm);
-  y->set (NODE_S, NODE_D, -Yds);
-  y->set (NODE_S, NODE_S, Ygs + Yds + gm);
+  matrix y (3);
+  y.set (NODE_G, NODE_G, Ygd + Ygs);
+  y.set (NODE_G, NODE_D, -Ygd);
+  y.set (NODE_G, NODE_S, -Ygs);
+  y.set (NODE_D, NODE_G, gm - Ygd);
+  y.set (NODE_D, NODE_D, Ygd + Yds);
+  y.set (NODE_D, NODE_S, -Yds - gm);
+  y.set (NODE_S, NODE_G, -Ygs - gm);
+  y.set (NODE_S, NODE_D, -Yds);
+  y.set (NODE_S, NODE_S, Ygs + Yds + gm);
 
-  return *y;
+  return y;
 }
 
 void jfet::calcNoise (nr_double_t frequency) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.h,v 1.7 2004/09/25 21:09:46 ela Exp $
+ * $Id: spfile.h,v 1.8 2004/10/12 18:13:11 ela Exp $
  *
  */
 
@@ -50,18 +50,18 @@ class spfile : public circuit
   complex interpolate (vector *, vector *, nr_double_t);
   complex interpolate_lin (vector *, vector *, nr_double_t, int);
   complex fetch (int, int, int);
-  vector& fetch (int, int);
-  matrix& fetch (int);
+  vector fetch (int, int);
+  matrix fetch (int);
   void store (int, int, complex, int);
   void createVector (int, int);
-  matrix& correlationMatrix (nr_double_t, complex, nr_double_t, matrix&);
-  nr_double_t noiseFigure (matrix&, matrix&, nr_double_t&, complex&,
+  matrix correlationMatrix (nr_double_t, complex, nr_double_t, matrix);
+  nr_double_t noiseFigure (matrix, matrix, nr_double_t&, complex&,
 			   nr_double_t&);
-  matrix& expandNoiseMatrix (matrix&, matrix&);
-  matrix& shrinkNoiseMatrix (matrix&, matrix&);
-  matrix& expandSParaMatrix (matrix&);
-  matrix& shrinkSParaMatrix (matrix&);
-  matrix& getInterpolMatrixS (nr_double_t);
+  matrix expandNoiseMatrix (matrix, matrix);
+  matrix shrinkNoiseMatrix (matrix, matrix);
+  matrix expandSParaMatrix (matrix);
+  matrix shrinkSParaMatrix (matrix);
+  matrix getInterpolMatrixS (nr_double_t);
 
  private:
   dataset * data;

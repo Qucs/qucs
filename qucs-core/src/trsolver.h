@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.h,v 1.12 2004/10/09 19:59:42 ela Exp $
+ * $Id: trsolver.h,v 1.13 2004/10/12 18:13:09 ela Exp $
  *
  */
 
@@ -70,7 +70,7 @@ class trsolver : public nasolver<nr_double_t>, public states<nr_double_t>
   int corrOrder;
   int predOrder;
   int rejected;
-  tmatrix<nr_double_t> * solution[8];
+  tvector<nr_double_t> * solution[8];
   nr_double_t current;
   int statSteps;
   int statRejected;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.9 2004/08/01 16:08:02 ela Exp $
+ * $Id: matrix.h,v 1.10 2004/10/12 18:13:09 ela Exp $
  *
  */
 
@@ -44,51 +44,53 @@ class matrix
   void exchangeCols (int, int);
 
   // operator functions
-  friend matrix& operator + (matrix&, matrix&);
-  friend matrix& operator - (matrix&, matrix&);
-  friend matrix& operator * (matrix&, complex);
-  friend matrix& operator / (matrix&, complex);
-  friend matrix& operator * (complex, matrix&);
-  friend matrix& operator * (matrix&, matrix&);
+  friend matrix operator + (matrix, matrix);
+  friend matrix operator - (matrix, matrix);
+  friend matrix operator / (matrix, complex);
+  friend matrix operator * (complex, matrix);
+  friend matrix operator * (matrix, complex);
+  friend matrix operator * (nr_double_t, matrix);
+  friend matrix operator * (matrix, nr_double_t);
+  friend matrix operator * (matrix, matrix);
 
   // intrinsic operator functions
-  matrix& operator += (matrix&);
-  matrix& operator -= (matrix&);
+  matrix operator += (matrix);
+  matrix operator -= (matrix);
 
   // other operations
-  friend matrix& transpose (matrix&);
-  friend matrix& conj (matrix&);
-  friend matrix& adjoint (matrix&);
-  friend matrix& eye (int, int);
-  friend matrix& eye (int);
-  friend complex cofactor (matrix&, int, int);
-  friend complex detLaplace (matrix&);
-  friend complex detGauss (matrix&);
-  friend complex det (matrix&);
-  friend matrix& inverseLaplace (matrix&);
-  friend matrix& inverseGaussJordan (matrix&);
-  friend matrix& inverse (matrix&);
-  friend matrix& stos (matrix&, complex, complex z0 = 50.0);
-  friend matrix& stoz (matrix&, complex z0 = 50.0);
-  friend matrix& ztos (matrix&, complex z0 = 50.0);
-  friend matrix& ztoy (matrix&);
-  friend matrix& stoy (matrix&, complex z0 = 50.0);
-  friend matrix& ytos (matrix&, complex z0 = 50.0);
-  friend matrix& ytoz (matrix&);
-  friend matrix& stoa (matrix&, complex z0 = 50.0);
-  friend matrix& atos (matrix&, complex z0 = 50.0);
-  friend matrix& stoh (matrix&, complex z0 = 50.0);
-  friend matrix& htos (matrix&, complex z0 = 50.0);
-  friend matrix& stog (matrix&, complex z0 = 50.0);
-  friend matrix& gtos (matrix&, complex z0 = 50.0);
-  friend matrix& cytocs (matrix&, matrix&);
-  friend matrix& cztocs (matrix&, matrix&);
-  friend matrix& cztocy (matrix&, matrix&);
-  friend matrix& cstocy (matrix&, matrix&);
-  friend matrix& cytocz (matrix&, matrix&);
-  friend matrix& cstocz (matrix&, matrix&);
+  friend matrix transpose (matrix);
+  friend matrix conj (matrix);
+  friend matrix adjoint (matrix);
+  friend matrix eye (int, int);
+  friend matrix eye (int);
+  friend complex cofactor (matrix, int, int);
+  friend complex detLaplace (matrix);
+  friend complex detGauss (matrix);
+  friend complex det (matrix);
+  friend matrix inverseLaplace (matrix);
+  friend matrix inverseGaussJordan (matrix);
+  friend matrix inverse (matrix);
+  friend matrix stos (matrix, complex, complex z0 = 50.0);
+  friend matrix stoz (matrix, complex z0 = 50.0);
+  friend matrix ztos (matrix, complex z0 = 50.0);
+  friend matrix ztoy (matrix);
+  friend matrix stoy (matrix, complex z0 = 50.0);
+  friend matrix ytos (matrix, complex z0 = 50.0);
+  friend matrix ytoz (matrix);
+  friend matrix stoa (matrix, complex z0 = 50.0);
+  friend matrix atos (matrix, complex z0 = 50.0);
+  friend matrix stoh (matrix, complex z0 = 50.0);
+  friend matrix htos (matrix, complex z0 = 50.0);
+  friend matrix stog (matrix, complex z0 = 50.0);
+  friend matrix gtos (matrix, complex z0 = 50.0);
+  friend matrix cytocs (matrix, matrix);
+  friend matrix cztocs (matrix, matrix);
+  friend matrix cztocy (matrix, matrix);
+  friend matrix cstocy (matrix, matrix);
+  friend matrix cytocz (matrix, matrix);
+  friend matrix cstocz (matrix, matrix);
 
-  friend matrix& twoport (matrix&, char, char);
+  friend matrix twoport (matrix, char, char);
 
  private:
   int cols;

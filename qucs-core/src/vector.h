@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.10 2004/09/01 21:40:19 ela Exp $
+ * $Id: vector.h,v 1.11 2004/10/12 18:13:09 ela Exp $
  *
  */
 
@@ -48,7 +48,7 @@ class vector : public object
   void set (nr_double_t, int);
   void set (const complex, int);
   int getSize (void);
-  int checkSizes (vector &, vector &);
+  int checkSizes (vector, vector);
   int getRequested (void) { return requested; }
   void setRequested (int n) { requested = n; }
   void reverse (void);
@@ -56,83 +56,100 @@ class vector : public object
   void setDependencies (strlist * s) { dependencies = s; }
   void setOrigin (char *);
   char * getOrigin (void);
-  nr_double_t maximum ();
-  nr_double_t minimum ();
+  nr_double_t maximum (void);
+  nr_double_t minimum (void);
 
-  friend complex sum  (vector &);
-  friend complex prod (vector &);
-  friend complex avg  (vector &);
+  friend complex sum  (vector);
+  friend complex prod (vector);
+  friend complex avg  (vector);
 
   // vector manipulations
-  friend vector& real  (vector &);  // the real part
-  friend vector& imag  (vector &);  // the imaginary part
-  friend vector& conj  (vector &);  // the complex conjugate
-  friend vector& norm  (vector &);  // the square of the magnitude
-  friend vector& arg   (vector &);  // the angle in the plane
-  friend vector& dB    (vector &);
-  friend vector& ln    (vector &);
-  friend vector& log2  (vector &);
-  friend vector& pow   (vector &, const complex);
-  friend vector& pow   (const complex, vector &);
-  friend vector& pow   (vector &, vector &);
-  friend vector& ztor  (vector &, nr_double_t zref = 50.0);
-  friend vector& rtoz  (vector &, nr_double_t zref = 50.0);
-  friend vector& diff  (vector &, vector &, int n = 1);
+  friend vector real  (vector);  // the real part
+  friend vector imag  (vector);  // the imaginary part
+  friend vector conj  (vector);  // the complex conjugate
+  friend vector norm  (vector);  // the square of the magnitude
+  friend vector arg   (vector);  // the angle in the plane
+  friend vector dB    (vector);
+  friend vector ln    (vector);
+  friend vector log2  (vector);
+  friend vector pow   (vector, const complex);
+  friend vector pow   (vector, const nr_double_t);
+  friend vector pow   (const complex, vector);
+  friend vector pow   (const nr_double_t, vector);
+  friend vector pow   (vector, vector);
+  friend vector ztor  (vector, nr_double_t zref = 50.0);
+  friend vector rtoz  (vector, nr_double_t zref = 50.0);
+  friend vector diff  (vector, vector, int n = 1);
 
   // overloaded math functions
-  friend vector& abs    (vector &);
-  friend vector& log10  (vector &);
-  friend vector& exp    (vector &);
-  friend vector& sqrt   (vector &);
-  friend vector& sin    (vector &);
-  friend vector& arcsin (vector &);
-  friend vector& cos    (vector &);
-  friend vector& arccos (vector &);
-  friend vector& tan    (vector &);
-  friend vector& arctan (vector &);
-  friend vector& cot    (vector &);
-  friend vector& arccot (vector &);
-  friend vector& sinh   (vector &);
-  friend vector& arsinh (vector &);
-  friend vector& cosh   (vector &);
-  friend vector& arcosh (vector &);
-  friend vector& tanh   (vector &);
-  friend vector& artanh (vector &);
-  friend vector& coth   (vector &);
-  friend vector& arcoth (vector &);
+  friend vector abs    (vector);
+  friend vector log10  (vector);
+  friend vector exp    (vector);
+  friend vector sqrt   (vector);
+  friend vector sin    (vector);
+  friend vector arcsin (vector);
+  friend vector cos    (vector);
+  friend vector arccos (vector);
+  friend vector tan    (vector);
+  friend vector arctan (vector);
+  friend vector cot    (vector);
+  friend vector arccot (vector);
+  friend vector sinh   (vector);
+  friend vector arsinh (vector);
+  friend vector cosh   (vector);
+  friend vector arcosh (vector);
+  friend vector tanh   (vector);
+  friend vector artanh (vector);
+  friend vector coth   (vector);
+  friend vector arcoth (vector);
 
   // operator functions
-  friend vector& operator + (vector &, vector &);
-  friend vector& operator + (vector &, const complex);
-  friend vector& operator + (const complex, vector &);
-  friend vector& operator - (vector &, vector &);
-  friend vector& operator - (vector &, const complex);
-  friend vector& operator - (const complex, vector &);
-  friend vector& operator * (vector &, vector &);
-  friend vector& operator * (vector &, const complex);
-  friend vector& operator * (const complex, vector &);
-  friend vector& operator / (vector &, vector &);
-  friend vector& operator / (vector &, const complex);
-  friend vector& operator / (const complex, vector &);
-  friend vector& operator % (vector &, const complex);
-  friend vector& operator % (const complex, vector &);
-  friend vector& operator % (vector &, vector &);
+  friend vector operator + (vector, vector);
+  friend vector operator + (vector, const complex);
+  friend vector operator + (vector, const nr_double_t);
+  friend vector operator + (const complex, vector);
+  friend vector operator + (const nr_double_t, vector);
+  friend vector operator - (vector, vector);
+  friend vector operator - (vector, const complex);
+  friend vector operator - (vector, const nr_double_t);
+  friend vector operator - (const complex, vector);
+  friend vector operator - (const nr_double_t, vector);
+  friend vector operator * (vector, vector);
+  friend vector operator * (vector, const complex);
+  friend vector operator * (vector, const nr_double_t);
+  friend vector operator * (const complex, vector);
+  friend vector operator * (const nr_double_t, vector);
+  friend vector operator / (vector, vector);
+  friend vector operator / (vector, const complex);
+  friend vector operator / (vector, const nr_double_t);
+  friend vector operator / (const complex, vector);
+  friend vector operator / (const nr_double_t, vector);
+  friend vector operator % (vector, vector);
+  friend vector operator % (vector, const complex);
+  friend vector operator % (vector, const nr_double_t);
+  friend vector operator % (const complex, vector);
+  friend vector operator % (const nr_double_t, vector);
 
   // comparisons
   //  friend int      operator == (const vector *, const vector *);
   //  friend int      operator != (const vector *, const vector *);
 
   // assignment operations
-  vector& operator  - ();
-  vector& operator  = (const complex);
-  vector& operator += (vector &);
-  vector& operator += (const complex);
-  vector& operator -= (vector &);
-  vector& operator -= (const complex);
-  vector& operator *= (vector &);
-  vector& operator *= (const complex);
-  vector& operator /= (vector &);
-  vector& operator /= (const complex);
+  vector operator  - ();
+  vector operator  = (const complex);
+  vector operator  = (const nr_double_t);
+  vector operator += (vector);
+  vector operator += (const complex);
+  vector operator += (const nr_double_t);
+  vector operator -= (vector);
+  vector operator -= (const complex);
+  vector operator -= (const nr_double_t);
+  vector operator *= (vector);
+  vector operator *= (const complex);
+  vector operator *= (const nr_double_t);
+  vector operator /= (vector);
+  vector operator /= (const complex);
+  vector operator /= (const nr_double_t);
 
  private:
   int requested;

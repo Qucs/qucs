@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.3 2004/09/22 16:47:57 ela Exp $
+ * $Id: tmatrix.cpp,v 1.4 2004/10/12 18:13:09 ela Exp $
  *
  */
 
@@ -147,78 +147,91 @@ void tmatrix<nr_type_t>::exchangeCols (int c1, int c2) {
 
 // Compute inverse matrix of the given matrix by Gauss-Jordan elimination.
 template <class nr_type_t>
-tmatrix<nr_type_t>& inverse (tmatrix<nr_type_t>& a) {
+tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
   nr_double_t MaxPivot;
   nr_type_t f;
-  tmatrix<nr_type_t> * b;
-  tmatrix<nr_type_t> * e;
+  tmatrix<nr_type_t> b;
+  tmatrix<nr_type_t> e;
   int i, c, r, pivot, n = a.getCols ();
 
   // create temporary matrix and the result matrix
-  b = new tmatrix<nr_type_t> (a);
-  e = & tmatrix<nr_type_t>::eye (n);
+  b = tmatrix<nr_type_t> (a);
+  e = tmatrix<nr_type_t>::eye (n);
 
   // create the eye matrix in 'b' and the result in 'e'
   for (i = 1; i <= n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
-      if (abs (b->get (r, i)) > MaxPivot) {
-	MaxPivot = abs (b->get (r, i));
+      if (abs (b.get (r, i)) > MaxPivot) {
+	MaxPivot = abs (b.get (r, i));
 	pivot = r;
       }
     }
     // exchange rows if necessary
     assert (MaxPivot != 0); // singular matrix
     if (i != pivot) {
-      b->exchangeRows (i, pivot);
-      e->exchangeRows (i, pivot);
+      b.exchangeRows (i, pivot);
+      e.exchangeRows (i, pivot);
     }
 
     // compute current row
-    f = b->get (i, i);
+    f = b.get (i, i);
     for (c = 1; c <= n; c++) {
-      b->set (i, c, b->get (i, c) / f);
-      e->set (i, c, e->get (i, c) / f);
+      b.set (i, c, b.get (i, c) / f);
+      e.set (i, c, e.get (i, c) / f);
     }
 
     // compute new rows and columns
     for (r = 1; r <= n; r++) {
       if (r != i) {
-	f = b->get (r, i);
+	f = b.get (r, i);
 	for (c = 1; c <= n; c++) {
-	  b->set (r, c, b->get (r, c) - f * b->get (i, c));
-	  e->set (r, c, e->get (r, c) - f * e->get (i, c));
+	  b.set (r, c, b.get (r, c) - f * b.get (i, c));
+	  e.set (r, c, e.get (r, c) - f * e.get (i, c));
 	}
       }
     }
   }
-  delete b;
-  return *e;
+  return e;
 }
 
 // Create identity matrix with specified number of rows and columns.
 template <class nr_type_t>
-tmatrix<nr_type_t>& tmatrix<nr_type_t>::eye (int n) {
-  tmatrix<nr_type_t> * res = new tmatrix<nr_type_t> (n);
-  for (int r = 1; r <= n; r++) res->set (r, r, 1);
-  return *res;
+tmatrix<nr_type_t> tmatrix<nr_type_t>::eye (int n) {
+  tmatrix<nr_type_t> res (n);
+  for (int r = 1; r <= n; r++) res.set (r, r, 1);
+  return res;
 }
 
 // Matrix multiplication.
 template <class nr_type_t>
-tmatrix<nr_type_t>& operator * (tmatrix<nr_type_t>& a, tmatrix<nr_type_t>& b) {
+tmatrix<nr_type_t> operator * (tmatrix<nr_type_t> a, tmatrix<nr_type_t> b) {
   assert (a.getCols () == b.getRows ());
   int r, c, i, n = a.getCols ();
   nr_type_t z;
-  tmatrix<nr_type_t> * res = new tmatrix<nr_type_t> (a.getRows (),
-						     b.getCols ());
+  tmatrix<nr_type_t> res (a.getRows (), b.getCols ());
   for (r = 1; r <= a.getRows (); r++) {
     for (c = 1; c <= b.getCols (); c++) {
       for (i = 1, z = 0; i <= n; i++) z += a.get (r, i) * b.get (i, c);
-      res->set (r, c, z);
+      res.set (r, c, z);
     }
   }
-  return *res;
+  return res;
+}
+
+// Multiplication of matrix and vector.
+template <class nr_type_t>
+tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
+  assert (a.getCols () == b.getSize ());
+  int r, c, n = a.getCols ();
+  nr_type_t z;
+  tvector<nr_type_t> res (n);
+
+  for (r = 1; r <= n; r++) {
+    for (c = 1, z = 0; c <= n; c++) z += a.get (r, c) * b.get (c);
+    res.set (r, z);
+  }
+  return res;
 }
 
 #ifdef DEBUG
