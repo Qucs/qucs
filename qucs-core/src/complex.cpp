@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.7 2004-04-26 18:36:37 ela Exp $
+ * $Id: complex.cpp,v 1.8 2004-04-30 17:27:41 margraf Exp $
  *
  */
 
@@ -76,7 +76,6 @@ nr_double_t dB (const complex z) {
 // returns the first result of square root z
 complex sqrt (const complex z) {
   nr_double_t phi = arg (z);
-  if (phi < 0.0) phi += 2.0 * M_PI;
   return polar (sqrt (abs (z)), phi / 2.0);
 }
 
@@ -88,15 +87,19 @@ complex exp (const complex z) {
 // returns the first result of natural logarithm z
 complex ln (const complex z) {
   nr_double_t phi = arg (z);
-  if (phi < 0.0) phi += 2.0 * M_PI;
   return complex (log (abs (z)), phi);
 }
 
 // returns the first result of decimal logarithm z
 complex log10 (const complex z) {
   nr_double_t phi = arg (z);
-  if (phi < 0.0) phi += 2.0 * M_PI;
-  return complex (log10 (abs (z)), phi * log10 (exp (1)));
+  return complex (log10 (abs (z)), phi * M_LOG10El);
+}
+
+// returns the first result of binary logarithm z
+complex log2 (const complex z) {
+  nr_double_t phi = arg (z);
+  return complex (log (abs (z)) * M_LOG2El, phi * M_LOG2El);
 }
 
 complex pow (const complex z, nr_double_t d) {
@@ -114,19 +117,88 @@ complex pow (const complex z1, const complex z2) {
 complex sin (const complex z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return (polar (exp (-i), r) + polar (exp (i), -r)) / 2.0;
+  return (polar (exp (-i), r - M_PI_2l) -
+          polar (exp (i), -r - M_PI_2l)) / 2.0;
+}
+
+complex arcsin (const complex z) {
+  nr_double_t re = real (z);
+  nr_double_t im = imag (z);
+  return complex (0.0, -1.0) * ln (complex (-im, re) + sqrt(1.0 - z*z));
 }
 
 complex cos (const complex z) {
   nr_double_t r = real (z);
   nr_double_t i = imag (z);
-  return (polar (exp (-i), r) - polar (exp (i), -r)) / 2.0;
+  return (polar (exp (-i), r) + polar (exp (i), -r)) / 2.0;
+}
+
+complex arccos (const complex z) {
+  return complex (0.0, 1.0) * ln (z + sqrt (z*z - 1.0));
 }
 
 complex tan (const complex z) {
   nr_double_t r = 2.0 * real (z);
   nr_double_t i = 2.0 * imag (z);
-  return 1.0 + 2.0 / (polar (exp (-i), r) + 1.0);
+  return complex (0.0, -1.0) +
+         complex (0.0, 2.0) / (polar (exp (-i), r) + 1.0);
+}
+
+complex arctan (const complex z) {
+  return complex (0.0, -0.5) *
+         ln ( complex(0.0, 2.0) / (z + complex(0.0, 1.0)) - 1.0);
+}
+
+complex cot (const complex z) {
+  nr_double_t r = 2.0 * real (z);
+  nr_double_t i = 2.0 * imag (z);
+  return complex (0.0, 1.0) +
+         complex (0.0, 2.0) / (polar (exp (-i), r) - 1.0);
+}
+
+complex arccot (const complex z) {
+  return complex (0.0, -0.5) *
+         ln ( complex(0.0, 2.0) / (z - complex(0.0, 1.0)) + 1.0);
+}
+
+complex sinh (const complex z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return (polar (exp (r), i) - polar (exp (-r), -i)) / 2.0;
+}
+
+complex arsinh (const complex z) {
+  return ln (z + sqrt (z*z + 1));
+}
+
+complex cosh (const complex z) {
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return (polar (exp (r), i) + polar (exp (-r), -i)) / 2.0;
+}
+
+complex arcosh (const complex z) {
+  return ln (z + sqrt (z*z - 1));
+}
+
+complex tanh (const complex z) {
+  nr_double_t r = 2.0 * real (z);
+  nr_double_t i = 2.0 * imag (z);
+  return 1.0 - 2.0 / (polar (exp (r), i) + 1.0);
+}
+
+complex artanh (const complex z) {
+  return 0.5 * ln ( 2.0 / (1.0 - z) - 1.0);
+}
+
+complex coth (const complex z) {
+  nr_double_t r = 2.0 * real (z);
+  nr_double_t i = 2.0 * imag (z);
+  return 1.0 + 2.0 / (polar (exp (r), i) - 1.0);
+}
+
+complex arcoth (const complex z) {
+  return 0.5 * ln ( 2.0 / (z - 1.0) + 1.0);
 }
 
 // converts impedance to reflexion coefficient
@@ -225,7 +297,7 @@ complex operator*(const nr_double_t r1, const complex z2) {
   return complex (z2.r * r1, z2.i * r1);
 }
 
-complex operator*(const complex z1, const complex z2) { 
+complex operator*(const complex z1, const complex z2) {
   return complex (z1.r * z2.r - z1.i * z2.i, z1.i * z2.r + z1.r * z2.i);
 }
 
@@ -249,7 +321,7 @@ complex operator/(const complex z1, const complex z2) {
 
 complex& complex::operator/=(const complex z) {
   nr_double_t n1, n2;
-  n1 = norm (z);                 
+  n1 = norm (z);
   n2 = (r * z.r + i * z.i) / n1;
   i  = (i * z.r - r * z.i) / n1;
   r  = n2;
@@ -273,12 +345,12 @@ complex operator%(const nr_double_t r1, const complex z2) {
   return r1 - z2 * floor (r1 / z2);
 }
 
-complex& complex::operator%=(const complex z) { 
+complex& complex::operator%=(const complex z) {
   *this = *this % z;
   return *this;
 }
 
-complex& complex::operator%=(const nr_double_t r) { 
+complex& complex::operator%=(const nr_double_t r) {
   *this = *this % r;
   return *this;
 }
@@ -295,7 +367,7 @@ complex& complex::operator=(const nr_double_t x) {
   return *this;
 }
 
-complex& complex::operator*=(const complex z) { 
+complex& complex::operator*=(const complex z) {
   nr_double_t n;
   n = r * z.r - i * z.i;
   i = i * z.r + r * z.i;

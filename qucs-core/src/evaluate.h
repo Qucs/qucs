@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.4 2004-04-25 16:26:04 margraf Exp $
+ * $Id: evaluate.h,v 1.5 2004-04-30 17:27:41 margraf Exp $
  *
  */
 
@@ -150,17 +150,73 @@ public:
   static constant * log10_c (constant *);
   static constant * log10_v (constant *);
 
+  static constant * log2_d (constant *);
+  static constant * log2_c (constant *);
+  static constant * log2_v (constant *);
+
   static constant * sin_d (constant *);
   static constant * sin_c (constant *);
   static constant * sin_v (constant *);
+
+  static constant * arcsin_d (constant *);
+  static constant * arcsin_c (constant *);
+  static constant * arcsin_v (constant *);
 
   static constant * cos_d (constant *);
   static constant * cos_c (constant *);
   static constant * cos_v (constant *);
 
+  static constant * arccos_d (constant *);
+  static constant * arccos_c (constant *);
+  static constant * arccos_v (constant *);
+
   static constant * tan_d (constant *);
   static constant * tan_c (constant *);
   static constant * tan_v (constant *);
+
+  static constant * arctan_d (constant *);
+  static constant * arctan_c (constant *);
+  static constant * arctan_v (constant *);
+
+  static constant * cot_d (constant *);
+  static constant * cot_c (constant *);
+  static constant * cot_v (constant *);
+
+  static constant * arccot_d (constant *);
+  static constant * arccot_c (constant *);
+  static constant * arccot_v (constant *);
+
+  static constant * sinh_d (constant *);
+  static constant * sinh_c (constant *);
+  static constant * sinh_v (constant *);
+
+  static constant * arsinh_d (constant *);
+  static constant * arsinh_c (constant *);
+  static constant * arsinh_v (constant *);
+
+  static constant * cosh_d (constant *);
+  static constant * cosh_c (constant *);
+  static constant * cosh_v (constant *);
+
+  static constant * arcosh_d (constant *);
+  static constant * arcosh_c (constant *);
+  static constant * arcosh_v (constant *);
+
+  static constant * tanh_d (constant *);
+  static constant * tanh_c (constant *);
+  static constant * tanh_v (constant *);
+
+  static constant * artanh_d (constant *);
+  static constant * artanh_c (constant *);
+  static constant * artanh_v (constant *);
+
+  static constant * arcoth_d (constant *);
+  static constant * arcoth_c (constant *);
+  static constant * arcoth_v (constant *);
+
+  static constant * coth_d (constant *);
+  static constant * coth_c (constant *);
+  static constant * coth_v (constant *);
 
   static constant * ztor_d (constant *);
   static constant * ztor_c (constant *);
@@ -169,6 +225,30 @@ public:
   static constant * rtoz_d (constant *);
   static constant * rtoz_c (constant *);
   static constant * rtoz_v (constant *);
+
+  static constant * rtoswr_d (constant *);
+  static constant * rtoswr_c (constant *);
+  static constant * rtoswr_v (constant *);
+
+  static constant * max_d (constant *);
+  static constant * max_c (constant *);
+  static constant * max_v (constant *);
+
+  static constant * min_d (constant *);
+  static constant * min_c (constant *);
+  static constant * min_v (constant *);
+
+  static constant * sum_d (constant *);
+  static constant * sum_c (constant *);
+  static constant * sum_v (constant *);
+
+  static constant * prod_d (constant *);
+  static constant * prod_c (constant *);
+  static constant * prod_v (constant *);
+
+  static constant * avg_d (constant *);
+  static constant * avg_c (constant *);
+  static constant * avg_v (constant *);
 
 };
 
