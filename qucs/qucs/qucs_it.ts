@@ -1522,6 +1522,18 @@ Wrong &apos;component&apos; line format!</source>
         <source>schematic symbol (european,US)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>polarity (nfet,pfet)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gate-junction recombination current parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isr emission coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
