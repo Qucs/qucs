@@ -2368,7 +2368,7 @@ types of current (field and diffusion) contribute independently to it.
 That is, even though the two currents flow in different directions
 ("minus" in dc current equation), they have to be added in the noise
 equation (current is proportional to noise power spectral density).
-Taking into account the dynamic conductance $g_D$ in parallel to the
+Taking into account the dynamic conductance $g_d$ in parallel to the
 noise current source, the noise wave correlation matrix writes as
 follows.
 
@@ -2399,12 +2399,12 @@ To be very precise, the equation above only holds for diodes whose
 field and diffusion current dominate absolutely (diffusion limited
 diode), i.e. $N=1$.  Many diodes also generate a
 generation/recombination current ($N\approx 2$), which produces shot
-noise, too. But depending on where and how the charge carriers
+noise, too.  But depending on where and how the charge carriers
 generate or recombinate, their effective charge is somewhat smaller
-than $e$. To take this into account, one needs a further factor $K$.
-Several opinions exists according the value of $K$. Some say 1 and
-2/3 are common values, others say $K=1/N$ with $K$ and $N$ being
-bias dependend. Altogether it is:
+than $e$.  To take this into account, one needs a further factor $K$.
+Several opinions exist according the value of $K$.  Some say 1 and 2/3
+are common values, others say $K=1/N$ with $K$ and $N$ being bias
+dependent.  Altogether it is:
 \begin{equation}
 \begin{split}
 (\underline{C})
@@ -2419,9 +2419,10 @@ bias dependend. Altogether it is:
 \label{eqn:diode_noise}
 \end{equation}
 
-Remark: Believing the diode equation $I_D = I_S\cdot (\exp(U/N\cdot U_T) - 1)$
-is the whole truth, it is logical to define K=1/N, because at $U=0$ the
-conductance $g_D$ of the diode must create thermal noise.
+Remark: Believing the diode equation $I_D = I_S\cdot (\exp(V/N\cdot
+V_T) - 1)$ is the whole truth, it is logical to define $K=1/N$,
+because at $V=0$ the conductance $g_d$ of the diode must create
+thermal noise.
 
 \addvspace{12pt}
 
