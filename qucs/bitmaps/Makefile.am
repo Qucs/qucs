@@ -44,7 +44,9 @@ PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png     \
   viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png  \
   viewmag1.png marker.png
 
-EXTRA_DIST = $(XPMS) $(PNGS)
+ICONS = big.button.qucs.xpm big.qucs.xpm tiny.button.qucs.xpm tiny.qucs.xpm
+
+EXTRA_DIST = $(XPMS) $(PNGS) $(ICONS)
 
 # installation of pictures
 picdatadir = ${prefix}/share/qucs/bitmaps
