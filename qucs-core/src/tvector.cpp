@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.1 2004-10-12 18:13:09 ela Exp $
+ * $Id: tvector.cpp,v 1.2 2004-10-13 14:43:17 ela Exp $
  *
  */
 
@@ -153,6 +153,17 @@ nr_double_t norm (tvector<nr_type_t> a) {
   nr_double_t n = 0;
   for (int i = 1; i <= a.getSize (); i++) n += norm (a.get (i));
   return n;
+}
+
+// Maximum norm.
+template <class nr_type_t>
+nr_double_t maxnorm (tvector<nr_type_t> a) {
+  nr_double_t nMax = 0, n;
+  for (int i = 1; i <= a.getSize (); i++) {
+    n = norm (a.get (i));
+    if (n > nMax) nMax = n;
+  }
+  return nMax;
 }
 
 #ifdef DEBUG

@@ -1,3 +1,15 @@
+2004-10-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.cpp: New function maxnorm() implemented.
+
+	* nasolver.cpp (applyAttenuation): Using new tvector abilities.
+	Fixed lineSearch algorithm.
+
+	* evaluate.cpp: New sign() and sinc() functions.  Also
+	simplified some function definitions using a macro.
+
+	* vector.cpp, complex.cpp: Added sign() and sinc() functions.
+
 2004-10-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Added sec(), cosec(), sech() an cosech()

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.19 2004-10-12 20:33:58 ela Exp $
+ * $Id: evaluate.cpp,v 1.20 2004-10-13 14:43:17 ela Exp $
  *
  */
 
@@ -52,6 +52,49 @@ using namespace eqn;
 #define STR(con) ((constant *) (con))->s
 #define CHR(con) ((constant *) (con))->chr
 #define INT(con) ((int) D (con))
+
+/* The QUCS_CONCAT macros create a new concatenated symbol for the
+   compiler in a portable way.  It is essential to use these macros
+   like QUCS_CONCAT (a,b) and *not* like QUCS_CONCAT (a, b) or its
+   variants. */
+#if defined (__STDC__) || defined (__cplusplus)
+# define QUCS_CONCAT2(a, b) a##b
+# define QUCS_CONCAT3(a, b, c) a##b##c
+#else
+# define QUCS_CONCAT2(a, b) a/* */b
+# define QUCS_CONCAT3(a, b, c) a/* */b/* */c
+#endif
+
+// The following macro is meant to be used for some simple functions.
+#define MAKE_FUNC_DEFINITION(cfunc) \
+constant * QUCS_CONCAT3 (evaluate::,cfunc,_d) (constant * args) { \
+  nr_double_t d = D (args->getResult (0));			  \
+  constant * res = new constant (TAG_DOUBLE);			  \
+  res->d = cfunc (d); return res;				  \
+}								  \
+constant * QUCS_CONCAT3 (evaluate::,cfunc,_c) (constant * args) { \
+  complex * c = C (args->getResult (0));			  \
+  constant * res = new constant (TAG_COMPLEX);			  \
+  res->c = new complex (cfunc (*c)); return res;		  \
+}								  \
+constant * QUCS_CONCAT3 (evaluate::,cfunc,_v) (constant * args) { \
+  vector * v = V (args->getResult (0));				  \
+  constant * res = new constant (TAG_VECTOR);			  \
+  res->v = new vector (cfunc (*v)); return res;			  \
+}
+
+MAKE_FUNC_DEFINITION (exp);    // exponential function
+MAKE_FUNC_DEFINITION (sin);    // sine
+MAKE_FUNC_DEFINITION (cos);    // cosine
+MAKE_FUNC_DEFINITION (tan);    // tangent
+MAKE_FUNC_DEFINITION (sinh);   // sine hyperbolicus
+MAKE_FUNC_DEFINITION (cosh);   // cosine hyperbolicus
+MAKE_FUNC_DEFINITION (tanh);   // tangent hyperbolicus
+MAKE_FUNC_DEFINITION (coth);   // cotangent hyperbolicus
+MAKE_FUNC_DEFINITION (sech);   // secans hyperbolicus
+MAKE_FUNC_DEFINITION (cosech); // cosecans hyperbolicus
+MAKE_FUNC_DEFINITION (sign);   // signum function
+MAKE_FUNC_DEFINITION (sinc);   // sin(x)/x aka sinc function
 
 // ******************** unary plus *************************
 constant * evaluate::plus_d (constant * args) {
@@ -620,7 +663,7 @@ constant * evaluate::imag_v (constant * args) {
 constant * evaluate::abs_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  res->d = d1;
+  res->d = fabs (d1);
   return res;
 }
 
@@ -775,28 +818,6 @@ constant * evaluate::sqrt_v (constant * args) {
   return res;
 }
 
-// ********** exponential function *****************
-constant * evaluate::exp_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = exp (d1);
-  return res;
-}
-
-constant * evaluate::exp_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (exp (*c1));
-  return res;
-}
-
-constant * evaluate::exp_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (exp (*v1));
-  return res;
-}
-
 // ********** natural logarithm *****************
 constant * evaluate::ln_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -866,28 +887,6 @@ constant * evaluate::log2_v (constant * args) {
   return res;
 }
 
-// **************** sine ***********************
-constant * evaluate::sin_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = sin (d1);
-  return res;
-}
-
-constant * evaluate::sin_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (sin (*c1));
-  return res;
-}
-
-constant * evaluate::sin_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (sin (*v1));
-  return res;
-}
-
 // ************* arcus sine *********************
 constant * evaluate::arcsin_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -910,28 +909,6 @@ constant * evaluate::arcsin_v (constant * args) {
   return res;
 }
 
-// **************** cosine *********************
-constant * evaluate::cos_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = cos (d1);
-  return res;
-}
-
-constant * evaluate::cos_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (cos (*c1));
-  return res;
-}
-
-constant * evaluate::cos_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (cos (*v1));
-  return res;
-}
-
 // ************* arcus cosine ******************
 constant * evaluate::arccos_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -951,28 +928,6 @@ constant * evaluate::arccos_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (arccos (*v1));
-  return res;
-}
-
-// **************** tangent *********************
-constant * evaluate::tan_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = tan (d1);
-  return res;
-}
-
-constant * evaluate::tan_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (tan (*c1));
-  return res;
-}
-
-constant * evaluate::tan_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (tan (*v1));
   return res;
 }
 
@@ -1086,28 +1041,6 @@ constant * evaluate::cosec_v (constant * args) {
   return res;
 }
 
-// *********** sine hyperbolicus *******************
-constant * evaluate::sinh_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = sinh (d1);
-  return res;
-}
-
-constant * evaluate::sinh_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (sinh (*c1));
-  return res;
-}
-
-constant * evaluate::sinh_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (sinh (*v1));
-  return res;
-}
-
 // ********** area sine hyperbolicus **************
 constant * evaluate::arsinh_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -1127,28 +1060,6 @@ constant * evaluate::arsinh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (arsinh (*v1));
-  return res;
-}
-
-// *********** cosine hyperbolicus ***************
-constant * evaluate::cosh_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = cosh (d1);
-  return res;
-}
-
-constant * evaluate::cosh_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (cosh (*c1));
-  return res;
-}
-
-constant * evaluate::cosh_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (cosh (*v1));
   return res;
 }
 
@@ -1174,28 +1085,6 @@ constant * evaluate::arcosh_v (constant * args) {
   return res;
 }
 
-// ********** tangent hyperbolicus **************
-constant * evaluate::tanh_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = tanh (d1);
-  return res;
-}
-
-constant * evaluate::tanh_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (tanh (*c1));
-  return res;
-}
-
-constant * evaluate::tanh_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (tanh (*v1));
-  return res;
-}
-
 // ******* area tangent hyperbolicus **********
 constant * evaluate::artanh_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -1215,72 +1104,6 @@ constant * evaluate::artanh_v (constant * args) {
   vector *    v1 = V (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (artanh (*v1));
-  return res;
-}
-
-// ********* cotangent hyperbolicus ************
-constant * evaluate::coth_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = 1.0 / tanh (d1);
-  return res;
-}
-
-constant * evaluate::coth_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (coth (*c1));
-  return res;
-}
-
-constant * evaluate::coth_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (coth (*v1));
-  return res;
-}
-
-// ************** secans hyperbolicus *************
-constant * evaluate::sech_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = sech (d1);
-  return res;
-}
-
-constant * evaluate::sech_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (sech (*c1));
-  return res;
-}
-
-constant * evaluate::sech_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (sech (*v1));
-  return res;
-}
-
-// ************** cosecans hyperbolicus *************
-constant * evaluate::cosech_d (constant * args) {
-  nr_double_t d1 = D (args->getResult (0));
-  constant * res = new constant (TAG_DOUBLE);
-  res->d = cosech (d1);
-  return res;
-}
-
-constant * evaluate::cosech_c (constant * args) {
-  complex *   c1 = C (args->getResult (0));
-  constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (cosech (*c1));
-  return res;
-}
-
-constant * evaluate::cosech_v (constant * args) {
-  vector *    v1 = V (args->getResult (0));
-  constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (cosech (*v1));
   return res;
 }
 
@@ -1928,6 +1751,14 @@ struct application_t eqn::applications[] = {
     { TAG_MATRIX, TAG_CHAR, TAG_CHAR } },
   { "twoport", TAG_MATVEC, evaluate::twoport_mv, 3,
     { TAG_MATVEC, TAG_CHAR, TAG_CHAR } },
+
+  { "sign", TAG_DOUBLE,  evaluate::sign_d, 1, { TAG_DOUBLE  } },
+  { "sign", TAG_COMPLEX, evaluate::sign_c, 1, { TAG_COMPLEX } },
+  { "sign", TAG_VECTOR,  evaluate::sign_v, 1, { TAG_VECTOR  } },
+
+  { "sinc", TAG_DOUBLE,  evaluate::sinc_d, 1, { TAG_DOUBLE  } },
+  { "sinc", TAG_COMPLEX, evaluate::sinc_c, 1, { TAG_COMPLEX } },
+  { "sinc", TAG_VECTOR,  evaluate::sinc_v, 1, { TAG_VECTOR  } },
 
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };
