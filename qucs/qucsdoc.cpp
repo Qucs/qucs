@@ -223,11 +223,15 @@ void QucsDoc::paint(ViewPainter *p)
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
     pc->paint(p);   // paint all components
 
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
+  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
     pw->paint(p);   // paint all wires
+    if(pw->Label)  pw->Label->paint(p);  // separate because of paintSelected
+  }
 
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
     pn->paint(p);   // paint all nodes
+    if(pn->Label)  pn->Label->paint(p);  // separate because of paintSelected
+  }
 
   for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
     pd->paint(p);   // paint all diagrams
@@ -237,46 +241,66 @@ void QucsDoc::paint(ViewPainter *p)
 }
 
 // ---------------------------------------------------
-void QucsDoc::paintSelected(QPainter *p_)
+void QucsDoc::print(QPainter *p_, bool printAll)
 {
+  bool selected;
   ViewPainter p;
-  p.init(p_, 1.0, 0, 0);
+  p.init(p_, 1.0, 0, 0, UsedX1, UsedY1);
 
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
-    if(pc->isSelected) {
+    if(pc->isSelected || printAll) {
+      selected = pc->isSelected;
       pc->isSelected = false;
-      pc->paint(&p);   // paint all selected components
-      pc->isSelected = true;
+      pc->print(&p);   // paint all selected components
+      pc->isSelected = selected;
     }
 
-  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next())
-    if(pw->isSelected) {
+  for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
+    if(pw->isSelected || printAll) {
+      selected = pw->isSelected;
       pw->isSelected = false;
       pw->paint(&p);   // paint all selected wires
-      pw->isSelected = true;
+      pw->isSelected = selected;
     }
+    if(pw->Label)
+      if(pw->Label->isSelected || printAll) {
+        selected = pw->Label->isSelected;
+        pw->Label->isSelected = false;
+        pw->Label->paint(&p);
+        pw->Label->isSelected = selected;
+      }
+  }
 
   Element *pe;
   for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
     for(pe = pn->Connections.first(); pe != 0; pe = pn->Connections.next())
-      if(pe->isSelected) {
+      if(pe->isSelected || printAll) {
 	pn->paint(&p);   // paint all nodes with selected elements
 	break;
+      }
+    if(pn->Label)
+      if(pn->Label->isSelected || printAll) {
+        selected = pn->Label->isSelected;
+        pn->Label->isSelected = false;
+        pn->Label->paint(&p);
+        pn->Label->isSelected = selected;
       }
   }
 
   for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
-    if(pd->isSelected) {
+    if(pd->isSelected || printAll) {
+      selected = pd->isSelected;
       pd->isSelected = false;
       pd->paint(&p);   // paint all selected diagrams
-      pd->isSelected = true;
+      pd->isSelected = selected;
     }
 
   for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())
-    if(pp->isSelected) {
+    if(pp->isSelected || printAll) {
+      selected = pp->isSelected;
       pp->isSelected = false;
       pp->paint(&p);   // paint all selected paintings
-      pp->isSelected = true;
+      pp->isSelected = selected;
     }
 }
 
@@ -299,14 +323,14 @@ void QucsDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
   if(!GridOn) return;
 
   p->Painter->setPen(QPen(QPen::black,1));
-  int dx = -int(Scale*double(ViewX1)) - cX;
-  int dy = -int(Scale*double(ViewY1)) - cY;
+  int dx = -int(Scale*float(ViewX1)) - cX;
+  int dy = -int(Scale*float(ViewY1)) - cY;
   p->Painter->drawLine(-3+dx, dy, 4+dx, dy); // small cross at origin
   p->Painter->drawLine( dx,-3+dy, dx, 4+dy);
 
 
-  int x1  = int(cX/Scale) + ViewX1;
-  int y1  = int(cY/Scale) + ViewY1;
+  int x1  = int(float(cX)/Scale) + ViewX1;
+  int y1  = int(float(cY)/Scale) + ViewY1;
 
   // setOnGrid(x1, y1) for 2*Grid
   if(x1<0) x1 -= GridX - 1;
@@ -317,17 +341,17 @@ void QucsDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
   else y1 += GridY;
   y1 -= y1 % (GridY << 1);
 
-  double X, Y, Y0;
-  X = double(x1)*Scale + p->DX;
-  Y = Y0 = double(y1)*Scale + p->DY;
+  float X, Y, Y0, DX, DY;
+  X = float(x1)*Scale + p->DX;
+  Y = Y0 = float(y1)*Scale + p->DY;
   x1 = X > 0.0 ? int(X + 0.5) : int(X - 0.5);
   y1 = Y > 0.0 ? int(Y + 0.5) : int(Y - 0.5);
 
 
   int xEnd = x1 + Width;
   int yEnd = y1 + Height;
-  double DX = double(GridX << 1) * Scale;   // every second grid a point
-  double DY = double(GridY << 1) * Scale;
+  DX = float(GridX << 1) * Scale;   // every second grid a point
+  DY = float(GridY << 1) * Scale;
 
   while(x1 < xEnd) {
     Y = Y0;
@@ -1113,17 +1137,6 @@ Component* QucsDoc::searchSelSubcircuit()
 }
 
 // ---------------------------------------------------
-/*Element* QucsDoc::selectedElement(int x, int y, QPtrList<Element> *pe)
-{
-  // test all elements
-  for(Element *p = pe->first(); p != 0; p = pe->next())
-    if(p->getSelected(x, y))
-      return p;
-
-  return 0;
-}*/
-
-// ---------------------------------------------------
 Component* QucsDoc::selectedComponent(int x, int y)
 {
   // test all components
@@ -1133,18 +1146,7 @@ Component* QucsDoc::selectedComponent(int x, int y)
 
   return 0;
 }
-/*
-// ---------------------------------------------------
-Diagram* QucsDoc::selectedDiagram(int x, int y)
-{
-  // test all diagrams
-  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
-    if(pd->getSelected(x, y))
-      return pd;
 
-  return 0;
-}
-*/
 // ---------------------------------------------------
 Node* QucsDoc::selectedNode(int x, int y)
 {
@@ -1194,17 +1196,6 @@ void QucsDoc::selectWireLine(Element *pe, Node *pn, bool ctrl)
     if(pn == pn_1st) break;  // avoid endless loop in wire loops
   }
 }
-
-// ---------------------------------------------------
-// Checks if pressed on a wire label.
-/*Wire* QucsDoc::selectWireLabel(int x, int y)
-{
-  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev())    // test all wires
-    if(pw->Label)
-      if(pw->Label->getSelected(x, y))
-        return pw;
-  return 0;
-}*/
 
 // ---------------------------------------------------
 Marker* QucsDoc::setMarker(int x, int y)
@@ -3167,7 +3158,7 @@ int QucsDoc::elementsOnGrid()
 void QucsDoc::switchPaintMode()
 {
   int tmp;
-  double temp;
+  float temp;
   temp = Scale; Scale  = tmpScale;  tmpScale  = temp;
   tmp = PosX;   PosX   = tmpPosX;   tmpPosX   = tmp;
   tmp = PosY;   PosY   = tmpPosY;   tmpPosY   = tmp;
@@ -3179,4 +3170,27 @@ void QucsDoc::switchPaintMode()
   tmp = UsedY1; UsedY1 = tmpUsedY1; tmpUsedY1 = tmp;
   tmp = UsedX2; UsedX2 = tmpUsedX2; tmpUsedX2 = tmp;
   tmp = UsedY2; UsedY2 = tmpUsedY2; tmpUsedY2 = tmp;
+}
+
+// ---------------------------------------------------
+// Returns a pointer of the component on whose text x/y points.
+Component* QucsDoc::selectCompText(int x_, int y_, int& w, int& h)
+{
+  int a, b, dx, dy;
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+    a = pc->cx + pc->tx;
+    if(x_ < a)  continue;
+    b = pc->cy + pc->ty;
+    if(y_ < b)  continue;
+
+    pc->TextSize(dx, dy);
+    if(x_ > a+dx)  continue;
+    if(y_ > b+dy)  continue;
+
+    w = dx;
+    h = dy;
+    return pc;
+  }
+
+  return 0;
 }

@@ -50,13 +50,13 @@ GraphicText::~GraphicText()
 void GraphicText::paint(ViewPainter *p)
 {
   QWMatrix wm = p->Painter->worldMatrix();
-  QWMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + double(cx) * p->Scale,
-				   p->DY + double(cy) * p->Scale);
+  QWMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
+				   p->DY + float(cy) * p->Scale);
   p->Painter->setWorldMatrix(Mat);
   p->Painter->rotate(-Angle);   // automatically enables transformation
 
   int Size = Font.pointSize();
-  Font.setPointSizeFloat( float(p->Scale) * float(Size) );
+  Font.setPointSizeFloat( p->Scale * float(Size) );
 
   p->Painter->setPen(Color);
   p->Painter->setFont(Font);
@@ -75,8 +75,8 @@ void GraphicText::paint(ViewPainter *p)
   Font.setPointSize(Size);   // restore real font size
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldXForm(false);
-  x2 = int(double(r.width())  / p->Scale);
-  y2 = int(double(r.height()) / p->Scale);
+  x2 = int(float(r.width())  / p->Scale);
+  y2 = int(float(r.height()) / p->Scale);
 }
 
 // -----------------------------------------------------------------------

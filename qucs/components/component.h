@@ -44,6 +44,7 @@ public:
   virtual void recreate();
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
+  void    print(ViewPainter*);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    TextSize(int&, int&);

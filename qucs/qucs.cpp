@@ -84,8 +84,9 @@ QucsApp::QucsApp()
   initCursorMenu();
 
   // default settings of the printer
-  Printer.setOrientation(QPrinter::Landscape);
-  Printer.setColorMode(QPrinter::Color);
+  Printer = new QPrinter(QPrinter::PrinterResolution);
+  Printer->setOrientation(QPrinter::Landscape);
+  Printer->setColorMode(QPrinter::Color);
 
   Acts.select->setOn(true);  // switch on the 'select' action
   HierarchyHistory.setAutoDelete(true);
@@ -860,13 +861,11 @@ void QucsApp::slotFilePrint()
 {
   statusBar()->message(tr("Printing..."));
 
-  if (Printer.setup(this))  // print dialog
+  if (Printer->setup(this))  // print dialog
   {
     QPainter painter;
-    painter.begin(&Printer);
-    ViewPainter p;
-    p.init(&painter, 1.0, 0, 0);
-    view->Docs.current()->paint(&p);
+    painter.begin(Printer);
+    view->Docs.current()->print(&painter, true);
     painter.end();
   };
 
@@ -878,11 +877,11 @@ void QucsApp::slotFilePrintSelected()
 {
   statusBar()->message(tr("Printing..."));
 
-  if (Printer.setup(this))  // print dialog
+  if (Printer->setup(this))  // print dialog
   {
     QPainter painter;
-    painter.begin(&Printer);
-    view->Docs.current()->paintSelected(&painter);
+    painter.begin(Printer);
+    view->Docs.current()->print(&painter, false);
     painter.end();
   };
 
