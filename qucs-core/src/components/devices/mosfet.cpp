@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.15 2004-10-18 16:21:21 ela Exp $
+ * $Id: mosfet.cpp,v 1.16 2004-10-20 22:58:56 ela Exp $
  *
  */
 
@@ -52,6 +52,7 @@
 #define Egap(T) (1.16 - (7.02e-4 * sqr (T)) / ((T) + 1108))
 
 mosfet::mosfet () : circuit (4) {
+  transientMode = 0;
   rg = rs = rd = NULL;
   type = CIR_MOSFET;
 }
@@ -366,7 +367,6 @@ void mosfet::calcDC (void) {
   Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
   Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
   Uds = Ugs - Ugd;
-  Ugb = Ugs - Ubs;
 
   // critical voltage necessary for bad start values
   UbsCrit = pnCriticalVoltage (Iss, Ut * n);
@@ -393,7 +393,7 @@ void mosfet::calcDC (void) {
     Ubd = pnVoltage (Ubd, UbdPrev, Ut * n, UbdCrit);
     Ubs = Ubd + Uds;
   }
-  UgsPrev = Ugs; UgdPrev = Ugd; UgbPrev = Ugb;
+  UgsPrev = Ugs; UgdPrev = Ugd; UgbPrev = Ugb = Ugs - Ubs;
   UbdPrev = Ubd; UdsPrev = Uds; UbsPrev = Ubs;
 
   // parasitic bulk-source diode
@@ -493,6 +493,28 @@ void mosfet::calcDC (void) {
   setY (NODE_B, NODE_B, gbs + gbd);
 }
 
+/* Usual state definitions. */
+
+#define qgdState 0 // gate-drain charge state
+#define igdState 1 // gate-drain current state
+#define qgsState 2 // gate-source charge state
+#define igsState 3 // gate-source current state
+#define qbdState 4 // bulk-drain charge state
+#define ibdState 5 // bulk-drain current state
+#define qbsState 6 // bulk-source charge state
+#define ibsState 7 // bulk-source current state
+#define qgbState 8 // gate-bulk charge state
+#define igbState 9 // gate-bulk current state
+
+/* Additional state definitions. */
+
+#define cgdState 10 // gate-drain capacitance state
+#define ugdState 11 // gate-drain voltage state
+#define cgsState 12 // gate-source capacitance state
+#define ugsState 13 // gate-source voltage state
+#define cgbState 14 // gate-bulk capacitance state
+#define ugbState 15 // gate-bulk voltage state
+
 void mosfet::calcOperatingPoints (void) {
 
   // fetch device model parameters
@@ -510,7 +532,7 @@ void mosfet::calcOperatingPoints (void) {
   nr_double_t Tt   = getPropertyDouble ("Tt");
   nr_double_t W    = getPropertyDouble ("W");
   
-  nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds;
+  nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds, Ugb;
   nr_double_t Cgd, Cgb, Cgs;
 
   Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
@@ -518,6 +540,7 @@ void mosfet::calcOperatingPoints (void) {
   Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
   Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
   Uds = Ugs - Ugd;
+  Ugb = Ugs - Ubs;
 
   // capacitance of bulk-drain diode
   Cbd = gbd * Tt + pnCapacitance (Ubd, Cbd0, Pb, M, Fc) +
@@ -537,9 +560,28 @@ void mosfet::calcOperatingPoints (void) {
   } else {
     fetCapacitanceMeyer (Ugd, Ugs, Uon, Udsat, Phi, Cox, Cgd, Cgs, Cgb);
   }
-  Cgs += Cgso * W;
-  Cgd += Cgdo * W;
-  Cgb += Cgbo * Leff;
+
+  // approximate charges by trapezoidal rule
+  if (transientMode) {
+    // gate-source charge
+    Cgs = Cgs / 2 + getState (cgsState, 1) + Cgso * W;
+    setState (ugsState, Ugs); setState (cgsState, Cgs);
+    Qgs = Cgs * (Ugs - getState (ugsState, 1)) + getState (qgsState, 1);
+    // gate-drain charge
+    Cgd = Cgd / 2 + getState (cgdState, 1) + Cgdo * W;
+    setState (ugdState, Ugd); setState (cgdState, Cgd);
+    Qgd = Cgd * (Ugd - getState (ugdState, 1)) + getState (qgdState, 1);
+    // gate-bulk charge
+    Cgb = Cgb / 2 + getState (cgbState, 1) + Cgbo * Leff;
+    setState (ugbState, Ugb); setState (cgbState, Cgb);
+    Qgb = Cgb * (Ugb - getState (ugbState, 1)) + getState (qgbState, 1);
+  }
+  // usual operating point
+  else {
+    Cgs += Cgso * W;
+    Cgd += Cgdo * W;
+    Cgb += Cgbo * Leff;
+  }
 
   // save operating points
   setOperatingPoint ("Id", Ids);
@@ -570,25 +612,16 @@ void mosfet::calcAC (nr_double_t frequency) {
   setMatrixY (calcMatrixY (frequency));
 }
 
-#define qgdState 0 // gate-drain charge state
-#define cgdState 1 // gate-drain current state
-#define qgsState 2 // gate-source charge state
-#define cgsState 3 // gate-source current state
-#define qbdState 4 // bulk-drain charge state
-#define cbdState 5 // bulk-drain current state
-#define qbsState 6 // bulk-source charge state
-#define cbsState 7 // bulk-source current state
-#define qgbState 8 // gate-bulk charge state
-#define cgbState 9 // gate-bulk current state
-
 void mosfet::initTR (void) {
-  setStates (10);
+  setStates (16);
   initDC ();
 }
 
 void mosfet::calcTR (nr_double_t) {
   calcDC ();
+  transientMode = 1;
   calcOperatingPoints ();
+  transientMode = 0;
 
   nr_double_t Cgd = getOperatingPoint ("Cgd");
   nr_double_t Cgs = getOperatingPoint ("Cgs");
@@ -604,16 +637,7 @@ void mosfet::calcTR (nr_double_t) {
   transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd, Qbd);
   transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs, Qbs);
 
-#if 0
-  // TODO: approximate charges by trapezoidal rule
-  Qgd = Cgd * (Ugd - UgdPrev) + getState (qgdState, 1);
-  Qgs = Cgs * (Ugs - UgsPrev) + getState (qgsState, 1);
-  Qgb = Cgb * (Ugb - UgbPrev) + getState (qgbState, 1);
-#endif
   // handle Meyer charges and capacitances
-  Qgd = Cgd * Ugd;
-  Qgs = Cgs * Ugs;
-  Qgb = Cgb * Ugb;
   transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd, Qgd);
   transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs, Qgs);
   transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb, Qgb);

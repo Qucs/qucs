@@ -36,6 +36,7 @@ Distribution process:
      + GNU Bison 1.875d
      + a LaTeX installation
      + GNU Octave
+     + epsTk 2.0.1 (at least)
   - Get latest `config.guess' and `config.sub' from GNU servers or run the
     command `automake -a -f -c' with latest automake version installed.
   - Run `make distclean', `sh autogen.sh' and `make all'.

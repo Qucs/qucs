@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.h,v 1.8 2004-10-17 09:44:30 ela Exp $
+ * $Id: mosfet.h,v 1.9 2004-10-20 22:58:56 ela Exp $
  *
  */
 
@@ -46,6 +46,7 @@ class mosfet : public circuit
   nr_double_t gbs, gbd, gm, gds, gmb, Ids, DrainControl, SourceControl;
   nr_double_t Leff, MOSdir, beta, Cox, Phi, Ga, Vto, Rs, Rd;
   nr_double_t Qgd, Qgs, Qbd, Qbs, Qgb, Ibs, Ibd;
+  int transientMode;
   circuit * rs;
   circuit * rd;
   circuit * rg;
