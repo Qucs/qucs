@@ -2,6 +2,8 @@
 
 	* technical.tex (section{Junction FET}): Documented modelling
 	the junction capacitances of JFET diodes.
+	(subsection{Convergence}): Documented a convergence problem 
+	solution.
 
 2004-06-10  Stefan Jahn  <stefan@lkcc.org>
 
