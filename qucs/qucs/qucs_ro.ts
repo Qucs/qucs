@@ -1955,6 +1955,50 @@ Wrong &apos;painting&apos; line delimiter!</source>
         <source>minimum step size in seconds</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] filename
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    -r  open file read-only
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too long command line argument!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong command line argument!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only one filename allowed!
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2486,6 +2530,97 @@ Erori:
     </message>
     <message>
         <source>Ellipse Arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsEdit</name>
+    <message>
+        <source>File: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Despre</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">Despre...</translation>
+    </message>
+    <message>
+        <source>Qucs Editor Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2004 by Michael Margraf
+</source>
+        <translation type="unfinished">Copyright (C) 2004 de Michael Margraf
+</translation>
+    </message>
+    <message>
+        <source>Enter a Filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Eroare</translation>
+    </message>
+    <message>
+        <source>Cannot write file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot read file: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The text contains unsaved changes!
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to save the changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Discard</source>
+        <translation type="unfinished">&amp;Renunţare</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Revocare</translation>
+    </message>
+</context>
+<context>
+    <name>QucsHelp</name>
+    <message>
+        <source>Qucs Help System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index</source>
+        <translation type="unfinished">Ajutor Index</translation>
+    </message>
+    <message>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3614,6 +3749,11 @@ Closes the current project</source>
         <source>Edit Circuit Symbol
 
 Edits the symbol for this schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Portuguese by Luciano Franca
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -733,6 +733,7 @@ void QucsInit::slotHelpAbout()
     tr("Polish by Dariusz Pienkowski\n")+
     tr("Romanian by Radu Circa\n")+
     tr("French by Eric Marzolf\n")+
+    tr("Portuguese by Luciano Franca\n")+
     tr("Italian by Giorgio Luparia"));
 }
 
