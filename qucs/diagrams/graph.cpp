@@ -45,7 +45,10 @@ Graph::~Graph()
 void Graph::paint(QPainter *p, int x0, int y0)
 {
   int *pp = Points;
-  if(pp == 0) return;
+  if(pp == 0) {
+    p->setPen(QPen(QColor(Color)));   // set color for xlabel text
+    return;
+  }
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Thick+4));
@@ -64,7 +67,7 @@ void Graph::paint(QPainter *p, int x0, int y0)
       p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
       pp += 2;
     }
-    p->setPen(QPen(QColor(Color)));
+    p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
 

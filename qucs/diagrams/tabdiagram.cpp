@@ -19,6 +19,8 @@
 
 #include <qwidget.h>
 
+#include <math.h>
+
 
 TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -38,8 +40,12 @@ TabDiagram::~TabDiagram()
 
 // ------------------------------------------------------------
 // No data has to be calculated.
-void TabDiagram::calcData(Graph *)
+void TabDiagram::calcData(Graph *g)
 {
+  if(g->Points != 0) {
+    delete[] g->Points;    // memory is of no use in this diagram type
+    g->Points = 0;
+  }
 //  calcDiagram();
 }
 
@@ -121,7 +127,14 @@ void TabDiagram::calcDiagram()
     Texts.append(new Text(x, y2-13, Str));
 
     for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-      Str = QString::number(cp->yr)+"/"+QString::number(cp->yi);
+      if(fabs(cp->yi) > 1e-250) {
+        Str = QString::number(cp->yi);
+        if(Str.at(0) == '-') { Str.at(0) = 'j'; Str = '-'+Str; }
+        else Str = "+j"+Str;
+        Str = QString::number(cp->yr)+Str;
+      }
+      else Str = QString::number(cp->yr);
+
       r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Str);      // get width of text
       if(r.width() > colWidth) {
         colWidth = r.width();
