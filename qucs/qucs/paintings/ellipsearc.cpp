@@ -23,6 +23,7 @@
 
 EllipseArc::EllipseArc()
 {
+  Name = "EArc ";
   isSelected = false;
   Pen = QPen(QColor());
   cx = cy = x1 = x2 = y1 = y2 = Angle = ArcLen = 0;
@@ -129,7 +130,7 @@ bool EllipseArc::load(const QString& s)
 // --------------------------------------------------------------------------
 QString EllipseArc::save()
 {
-  QString s = "EArc " +
+  QString s = Name +
 	QString::number(cx) + " " + QString::number(cy) + " " +
 	QString::number(x2) + " " + QString::number(y2) + " " +
 	QString::number(Angle) + " " + QString::number(ArcLen) + " " +
@@ -189,34 +190,65 @@ void EllipseArc::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool dra
        break;
     case 1 :
       State++;
-      gx -= x1;
-      gy -= y1;
-      x2 = int(sqrt(double(gx*gx + gy*gy)));
-      Angle  = x1 + (gx-x2) >> 2;
-      ArcLen = y1 + (gy-x2) >> 2;
-      p->drawArc(Angle, ArcLen, x2, x2, 0, 16*360);  // paint new painting
+      x2 = gx - cx;
+      y2 = gy - cy;
+      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // paint new painting
       break;
     case 2 :
-      p->drawArc(Angle, ArcLen, x2, x2, 0, 16*360);  // erase old painting
-      gx -= x1;
-      gy -= y1;
-      x2 = int(sqrt(double(gx*gx + gy*gy)));
-      Angle  = x1 + (gx-x2) >> 2;
-      ArcLen = y1 + (gy-x2) >> 2;
-      p->drawArc(Angle, ArcLen, x2, x2, 0, 16*360);  // paint new painting
+      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // erase old painting
+      x2 = gx - cx;
+      y2 = gy - cy;
+      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // paint new painting
       break;
     case 3 :
+      State++;
+      p->drawArc(cx, cy, x2, y2, 0, 16*360);  // erase old painting
+      if(x2 < 0) { cx += x2;  x2 *= -1; }
+      if(y2 < 0) { cy += y2;  y2 *= -1; }
+
+      Angle = int(16.0*180.0/M_PI
+		* atan2(double(x2*(cy+(y2>>1) - y)),
+			double(y2*(x - cx-(x2>>1)))));
+      if(Angle < 0) Angle += 16*360;
+      p->drawArc(cx, cy, x2, y2, Angle, 16*180); // paint new painting
+      break;
+    case 4 :
+      p->drawArc(cx, cy, x2, y2, Angle, 16*180); // erase old painting
+      Angle = int(16.0*180.0/M_PI
+		* atan2(double(x2*(cy+(y2>>1) - y)),
+			double(y2*(x - cx-(x2>>1)))));
+      if(Angle < 0) Angle += 16*360;
+      p->drawArc(cx, cy, x2, y2, Angle, 16*180); // paint new painting
+      break;
+    case 5 :
+      State++;
+      p->drawArc(cx, cy, x2, y2, Angle, 16*180);  // erase old painting
+      ArcLen = int(16.0*180.0/M_PI
+		* atan2(double(x2*(cy+(y2>>1) - y)),
+			double(y2*(x - cx-(x2>>1)))));
+      ArcLen -= Angle;
+      while(ArcLen < 0) ArcLen += 16*360;
+      p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // paint new painting
+      break;
+    case 6 :
+      p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // erase old painting
+      ArcLen = int(16.0*180.0/M_PI
+		* atan2(double(x2*(cy+(y2>>1) - y)),
+			double(y2*(x - cx-(x2>>1)))));
+      ArcLen -= Angle;
+      while(ArcLen < 0) ArcLen += 16*360;
+      p->drawArc(cx, cy, x2, y2, Angle, ArcLen); // paint new painting
       break;
   }
 
 
   p->setPen(Qt::SolidLine);
   if(drawn)
-    p->drawArc(cx+13, cy, 18, 12, 16*45, 16*200); // erase old cursor symbol
+    p->drawArc(x1+13, y1, 18, 12, 16*45, 16*200); // erase old cursor symbol
 
-  cx = x;
-  cy = y;
-  p->drawArc(cx+13, cy, 18, 12, 16*45, 16*200);  // paint new cursor symbol
+  x1 = x;
+  y1 = y;
+  p->drawArc(x1+13, y1, 18, 12, 16*45, 16*200);  // paint new cursor symbol
 }
 
 // --------------------------------------------------------------------------
@@ -225,12 +257,11 @@ bool EllipseArc::MousePressing()
   State++;
   switch(State) {
     case 1 :
-//	Angle  = 0;
-//	ArcLen = 16*360;
-	x1 = x2;
-	y1 = y2;    // first corner is determined
+	cx = x2;
+	cy = y2;    // first corner is determined
+	x2 = y2 = Angle = ArcLen = 0;
 	break;
-    case 3 :
+    case 7 :
 	State = 0;
 	return true;    // painting is ready
   }
@@ -241,6 +272,13 @@ bool EllipseArc::MousePressing()
 // Checks if the coordinates x/y point to the painting.
 bool EllipseArc::getSelected(int x, int y)
 {
+  int Phase = int(16.0*180.0/M_PI
+		* atan2(double(x2*(cy+(y2>>1) - y)),
+			double(y2*(x - cx-(x2>>1)))));
+  Phase -= Angle;
+  while(Phase < 0) Phase += 16*360;
+  if(Phase > ArcLen) return false;
+
   x  = (x-cx-(x2>>1));  x *= x;
   y  = (y-cy-(y2>>1));  y *= y;
 
@@ -254,6 +292,7 @@ bool EllipseArc::getSelected(int x, int y)
 
   if((x_double/double(a1) + y_double/double(b1)) < 1.0) return false;
   if((x_double/double(a2) + y_double/double(b2)) > 1.0) return false;
+
   return true;
 }
 
@@ -273,20 +312,30 @@ void EllipseArc::rotate()
   int tmp = x2;
   x2 = y2;
   y2 = tmp;
+
+  Angle += 16*90;
+  if(Angle >= 16*360)  Angle -= 16*360;
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
 void EllipseArc::mirrorX()
 {
-  // nothing to do
+  Angle += ArcLen;
+  if(Angle >= 16*360) Angle -= 16*360;
+
+  if(Angle != 0)  Angle = 16*360 - Angle;
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
 void EllipseArc::mirrorY()
 {
-  // nothing to do
+  Angle += ArcLen;
+  if(Angle >= 16*360) Angle -= 16*360;
+
+  if(Angle <= 16*180)  Angle = 16*180 - Angle;
+  else  Angle = 16*540 - Angle;
 }
 
 // --------------------------------------------------------------------------

@@ -104,6 +104,7 @@ public:
   bool  distribHoriz();
   bool  distribVert();
   int   elementsOnGrid();
+  void  switchPaintMode();
 
   QString copySelected(bool);
   bool    paste(QTextStream*, QPtrList<Element>*);
@@ -139,10 +140,18 @@ public:
   QString DataDisplay; // name of the default data display
   int     GridX, GridY;
   bool    GridOn;
+
   double  Scale;
   int PosX, PosY; // upper left corner of visible area (only for remembering during seeing another document)
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
   int UsedX1, UsedY1, UsedX2, UsedY2;  // document area used by elements
+
+  // Two of those data sets are needed for Schematic and for symbol.
+  // Which one is in "tmp..." depends on "symbolMode".
+  double  tmpScale;
+  int tmpPosX, tmpPosY;
+  int tmpViewX1, tmpViewY1, tmpViewX2, tmpViewY2;
+  int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
 
   QPtrList<Element> ElementCache;
   QPtrList<QString> UndoStack;

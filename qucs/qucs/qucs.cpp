@@ -415,8 +415,8 @@ void QucsApp::slotChangeView(int id)
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
   if(d->symbolMode != oldMode) { // which mode: schematic or symbol editor ?
-    d->symbolMode = oldMode;
-    slotSymbolEdit();
+    d->symbolMode = oldMode;  // because it's changed by following function
+    changeSchematicSymbolMode(d);
   }
 
   view->Docs.current()->reloadGraphs();  // load recent simulation data
@@ -1402,6 +1402,13 @@ void QucsApp::slotSetCompView(int index)
   if((index+1) >= CompChoose->count()) {
     new QIconViewItem(CompComps, tr("Line"),
 		QImage(BITMAPDIR "line.xpm"));
+
+    if(CompChoose->count() == 1) {
+      new QIconViewItem(CompComps, tr("Elliptic Arc"),
+		QImage(BITMAPDIR "ellipsearc.xpm"));
+      return;
+    }
+
     new QIconViewItem(CompComps, tr("Arrow"),
 		QImage(BITMAPDIR "arrow.xpm"));
     new QIconViewItem(CompComps, tr("Text"),
@@ -1414,7 +1421,7 @@ void QucsApp::slotSetCompView(int index)
 		QImage(BITMAPDIR "filledellipse.xpm"));
     new QIconViewItem(CompComps, tr("filled Rectangle"),
 		QImage(BITMAPDIR "filledrect.xpm"));
-    new QIconViewItem(CompComps, tr("Ellipse Arc"),
+    new QIconViewItem(CompComps, tr("Elliptic Arc"),
 		QImage(BITMAPDIR "ellipsearc.xpm"));
     return;
   }
@@ -1489,7 +1496,13 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 
 
   if((CompChoose->currentItem()+1) >= CompChoose->count()) {
-    switch(CompComps->index(item)) {
+    if(CompChoose->count() == 1)
+      switch(CompComps->index(item)) { // in "edit symbol" mode
+	case 0: view->selPaint = new GraphicLine();   break;
+	case 1: view->selPaint = new EllipseArc();    break;
+      }
+    else
+      switch(CompComps->index(item)) { // in normal ("edit schematic") mode
 	case 0: view->selPaint = new GraphicLine();   break;
 	case 1: view->selPaint = new Arrow();         break;
 	case 2: view->selPaint = new GraphicText();   break;
@@ -1498,7 +1511,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	case 5: view->selPaint = new Ellipse(true);   break;
 	case 6: view->selPaint = new Rectangle(true); break;
 	case 7: view->selPaint = new EllipseArc();    break;
-    }
+      }
     if(view->drawn) view->viewport()->repaint();
     view->drawn = false;
     view->MouseMoveAction = &QucsView::MMovePainting;
@@ -1789,13 +1802,8 @@ void QucsApp::switchEditMode(bool SchematicMode)
 }
 
 // #######################################################################
-// Is called if the "symEdit" action is activated, i.e. if the user
-// switches between the two painting mode: Schematic and (subcircuit)
-// symbol.
-void QucsApp::slotSymbolEdit()
+void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 {
-  QucsDoc *d = view->Docs.current();
-
   if(d->symbolMode) {
     d->symbolMode = false;
     symEdit->setMenuText("Edit Circuit Symbol");
@@ -1853,7 +1861,22 @@ void QucsApp::slotSymbolEdit()
       }
     }
   }
-
   slotSetCompView(0);
+}
+
+// #######################################################################
+// Is called if the "symEdit" action is activated, i.e. if the user
+// switches between the two painting mode: Schematic and (subcircuit)
+// symbol.
+void QucsApp::slotSymbolEdit()
+{
+  QucsDoc *d = view->Docs.current();
+  changeSchematicSymbolMode(d);
+
+  d->switchPaintMode();   // twist the view coordinates
+  view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
+                       int(d->Scale*double(d->ViewY2-d->ViewY1)));
+  view->setContentsPos(d->PosX, d->PosY);
   view->viewport()->repaint();
+  view->drawn = false;
 }
