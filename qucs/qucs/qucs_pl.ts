@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Zapisz</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">Zapisz wszystko</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">Zrezygnuj</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">Zrezygnuj ze wszystkich</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Porzuć</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -703,15 +726,15 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Zapisz</translation>
+        <translation type="obsolete">Zapisz</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Zapisz wszystko</translation>
+        <translation type="obsolete">Zapisz wszystko</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Zrezygnuj</translation>
+        <translation type="obsolete">Zrezygnuj</translation>
     </message>
     <message>
         <source>DiscardAll</source>
@@ -719,11 +742,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Porzuć</translation>
+        <translation type="obsolete">Porzuć</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Zrezygnuj ze wszystkich</translation>
+        <translation type="obsolete">Zrezygnuj ze wszystkich</translation>
     </message>
 </context>
 <context>
@@ -4382,6 +4405,11 @@ Przesuwa tekst właściwości elementu</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>

@@ -86,7 +86,7 @@ void Ellipse::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Ellipse* Ellipse::newOne()
+Painting* Ellipse::newOne()
 {
   return new Ellipse();
 }

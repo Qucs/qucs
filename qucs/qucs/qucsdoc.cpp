@@ -1696,13 +1696,13 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
     }
 
   // test all paintings **********************************
-  for(Painting *pp = Paints->first(); pp != 0; )
-    if(pp->isSelected) {
-      p->append(pp);
+  for(Painting *ppa = Paints->first(); ppa != 0; )
+    if(ppa->isSelected) {
+      p->append(ppa);
       Paints->take();
-      pp = Paints->current();
+      ppa = Paints->current();
     }
-    else pp = Paints->next();
+    else ppa = Paints->next();
 
   // ..............................................
   // Inserts wires, if a connection to a not moving element is found.
@@ -1758,7 +1758,7 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
 
   // test all node labels
   // do this last to avoid double copying
-  for(Node *pn = Nodes->first(); pn != 0; pn = Nodes->next())
+  for(pn = Nodes->first(); pn != 0; pn = Nodes->next())
     if(pn->Label) if(pn->Label->isSelected)
       p->append(pn->Label);
 

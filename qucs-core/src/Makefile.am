@@ -68,33 +68,12 @@ generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
 
 scan_netlist.cpp: scan_netlist.l
 	$(LEX) -o$@ $<
-	@tmpfile="tmp.cpp"; sedfile="tmp.sed"; \
-	echo "/^#include <unistd\.h>/ c\\" > $$sedfile; \
-	echo "#if HAVE_UNISTD_H\\" >> $$sedfile; \
-	echo "#include <unistd.h>\\" >> $$sedfile; \
-	echo "#endif" >> $$sedfile; \
-	cat $@ | sed -f $$sedfile > $$tmpfile; \
-	mv -f $$tmpfile $@; rm -f $$tmpfile $$sedfile
 
 scan_dataset.cpp: scan_dataset.l
 	$(LEX) -o$@ $<
-	@tmpfile="tmp.cpp"; sedfile="tmp.sed"; \
-	echo "/^#include <unistd\.h>/ c\\" > $$sedfile; \
-	echo "#if HAVE_UNISTD_H\\" >> $$sedfile; \
-	echo "#include <unistd.h>\\" >> $$sedfile; \
-	echo "#endif" >> $$sedfile; \
-	cat $@ | sed -f $$sedfile > $$tmpfile; \
-	mv -f $$tmpfile $@; rm -f $$tmpfile $$sedfile
 
 scan_touchstone.cpp: scan_touchstone.l
 	$(LEX) -o$@ $<
-	@tmpfile="tmp.cpp"; sedfile="tmp.sed"; \
-	echo "/^#include <unistd\.h>/ c\\" > $$sedfile; \
-	echo "#if HAVE_UNISTD_H\\" >> $$sedfile; \
-	echo "#include <unistd.h>\\" >> $$sedfile; \
-	echo "#endif" >> $$sedfile; \
-	cat $@ | sed -f $$sedfile > $$tmpfile; \
-	mv -f $$tmpfile $@; rm -f $$tmpfile $$sedfile
 
 parse_netlist.cpp: parse_netlist.y
 	$(YACC) -v -o $@ --defines=tokens_netlist.h $<

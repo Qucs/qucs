@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Salvar</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">Salvar Todos</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">Descartar</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">Descartar Todos</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -675,23 +698,23 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>Salvar</translation>
+        <translation type="obsolete">Salvar</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>Salvar Todos</translation>
+        <translation type="obsolete">Salvar Todos</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>Descartar</translation>
+        <translation type="obsolete">Descartar</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>Descartar Todos</translation>
+        <translation type="obsolete">Descartar Todos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -4233,6 +4256,11 @@ Moves the property text of components</source>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>

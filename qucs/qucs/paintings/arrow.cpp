@@ -91,7 +91,7 @@ void Arrow::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-Arrow* Arrow::newOne()
+Painting* Arrow::newOne()
 {
   return new Arrow();
 }

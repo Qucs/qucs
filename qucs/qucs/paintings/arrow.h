@@ -37,7 +37,7 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
-  Arrow* newOne();
+  Painting* newOne();
   bool load(const QString&);
   QString save();
   void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);

@@ -81,7 +81,7 @@ void GraphicLine::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-GraphicLine* GraphicLine::newOne()
+Painting* GraphicLine::newOne()
 {
   return new GraphicLine();
 }

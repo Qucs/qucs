@@ -23,7 +23,7 @@
 #include <qlabel.h>
 
 
-MessageBox::MessageBox(const QString& Caption, const QString& Text,
+CloseMessageBox::CloseMessageBox(const QString& Caption, const QString& Text,
 		       QWidget *parent, const char *name)
 			: QDialog(parent, name)
 			// must not be "WDestructiveClose" !!!!!
@@ -52,32 +52,32 @@ MessageBox::MessageBox(const QString& Caption, const QString& Text,
   connect(Cancel, SIGNAL(clicked()), SLOT(slotCancel()));
 }
 
-MessageBox::~MessageBox()
+CloseMessageBox::~CloseMessageBox()
 {
   delete all;
 }
 
-void MessageBox::slotSave()
+void CloseMessageBox::slotSave()
 {
   done(1);
 }
 
-void MessageBox::slotSaveAll()
+void CloseMessageBox::slotSaveAll()
 {
   done(2);
 }
 
-void MessageBox::slotDiscard()
+void CloseMessageBox::slotDiscard()
 {
   done(3);
 }
 
-void MessageBox::slotDiscardAll()
+void CloseMessageBox::slotDiscardAll()
 {
   done(4);
 }
 
-void MessageBox::slotCancel()
+void CloseMessageBox::slotCancel()
 {
   done(5);
 }

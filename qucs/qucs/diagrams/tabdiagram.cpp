@@ -254,7 +254,7 @@ bool TabDiagram::scroll(int clickPos)
 }
 
 // ------------------------------------------------------------
-TabDiagram* TabDiagram::newOne()
+Diagram* TabDiagram::newOne()
 {
   return new TabDiagram();
 }
