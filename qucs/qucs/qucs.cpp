@@ -991,6 +991,7 @@ void QucsApp::showHTML(const QString& Page)
   QStringList com;
   com << QucsSettings.BinDir + "qucshelp" << Page;
   QProcess *QucsHelp = new QProcess(com);
+  QucsHelp->setCommunication(0);
   if(!QucsHelp->start()) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
     delete QucsHelp;
@@ -1215,6 +1216,7 @@ void QucsApp::editFile(const QString& File)
 {
   QString com = QucsSettings.Editor+" "+File;
   QProcess *QucsEditor = new QProcess(QStringList::split(" ", com));
+  QucsEditor->setCommunication(0);
   if(!QucsEditor->start()) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
     delete QucsEditor;

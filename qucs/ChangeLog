@@ -1,3 +1,8 @@
+2005-03-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.5 and bumped up to version
+	0.0.6.
+
 2005-02-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs-help/main.cpp, qucs-edit/main.cpp (main): Made the

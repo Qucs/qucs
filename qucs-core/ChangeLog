@@ -1,3 +1,8 @@
+2005-03-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.5 and bumped up to version
+        0.0.6.
+
 2004-11-24  Raimund Jacob  <raimi@lkcc.org>
 
 	* autogen.sh: Make aclocal and automake program be overridable
