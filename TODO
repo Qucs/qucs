@@ -23,10 +23,11 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- topology check (open ports) for schematics
 	- implement user-defined subcircuit paintings
 	- make tabdiagram 'scrollable' (for long value lists)
 - allow tabdiagram to display variables with different dependencies
-- shutdown external programs on application exit
+	- shutdown external programs on application exit
 	- implement list parameter sweeps
 - allow components to be painted in a certain order (implement drawing
   width)
