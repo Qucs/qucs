@@ -1,7 +1,7 @@
 /*
  * evaluate.cpp - the Qucs equation evaluator implementations
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.23 2004-12-07 22:33:31 raimi Exp $
+ * $Id: evaluate.cpp,v 1.24 2005-02-14 19:56:43 raimi Exp $
  *
  */
 
@@ -1877,6 +1877,71 @@ constant * evaluate::adjoint_mv (constant * args) {
   return res;
 }
 
+// ***************** s-parameter applications *****************
+constant * evaluate::rollet_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  nr_double_t k;
+  k = (1 - norm (m->get (1, 1)) - norm (m->get (2, 2)) + norm (det (*m))) /
+    2 / abs (m->get (1, 2) * m->get (2, 1));
+  res->d = k;
+  return res;
+}
+
+constant * evaluate::rollet_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  vector k;
+  k = (1 - norm (mv->get (1, 1)) - norm (mv->get (2, 2)) + norm (det (*mv))) /
+    2 / abs (mv->get (1, 2) * mv->get (2, 1));
+  res->v = new vector (k);
+  return res;
+}
+
+constant * evaluate::mu1_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  nr_double_t k;
+  k = (1 - norm (m->get (1, 1))) /
+    (abs (m->get (2, 2) - conj (m->get (1, 1)) * det (*m)) +
+     abs (m->get (1, 2) * m->get (2, 1)));
+  res->d = k;
+  return res;
+}
+
+constant * evaluate::mu1_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  vector k;
+  k = (1 - norm (mv->get (1, 1))) /
+    (abs (mv->get (2, 2) - conj (mv->get (1, 1)) * det (*mv)) +
+     abs (mv->get (1, 2) * mv->get (2, 1)));
+  res->v = new vector (k);
+  return res;
+}
+
+constant * evaluate::mu2_m (constant * args) {
+  matrix * m = M (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  nr_double_t k;
+  k = (1 - norm (m->get (2, 2))) /
+    (abs (m->get (1, 1) - conj (m->get (2, 2)) * det (*m)) +
+     abs (m->get (1, 2) * m->get (2, 1)));
+  res->d = k;
+  return res;
+}
+
+constant * evaluate::mu2_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  vector k;
+  k = (1 - norm (mv->get (2, 2))) /
+    (abs (mv->get (1, 1) - conj (mv->get (2, 2)) * det (*mv)) +
+     abs (mv->get (1, 2) * mv->get (2, 1)));
+  res->v = new vector (k);
+  return res;
+}
+
 // Array containing all kinds of applications.
 struct application_t eqn::applications[] = {
   { "+", TAG_DOUBLE,  evaluate::plus_d, 1, { TAG_DOUBLE  } },
@@ -2218,6 +2283,13 @@ struct application_t eqn::applications[] = {
   { "sinc", TAG_DOUBLE,  evaluate::sinc_d, 1, { TAG_DOUBLE  } },
   { "sinc", TAG_COMPLEX, evaluate::sinc_c, 1, { TAG_COMPLEX } },
   { "sinc", TAG_VECTOR,  evaluate::sinc_v, 1, { TAG_VECTOR  } },
+
+  { "Rollet", TAG_DOUBLE,  evaluate::rollet_m,  1, { TAG_MATRIX } },
+  { "Rollet", TAG_VECTOR,  evaluate::rollet_mv, 1, { TAG_MATVEC } },
+  { "Mu",     TAG_DOUBLE,  evaluate::mu1_m,     1, { TAG_MATRIX } },
+  { "Mu",     TAG_VECTOR,  evaluate::mu1_mv,    1, { TAG_MATVEC } },
+  { "Mu2",    TAG_DOUBLE,  evaluate::mu2_m,     1, { TAG_MATRIX } },
+  { "Mu2",    TAG_VECTOR,  evaluate::mu2_mv,    1, { TAG_MATVEC } },
 
   { NULL, 0, NULL, 0, { } /* end of list */ }
 };

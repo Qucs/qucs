@@ -26,6 +26,7 @@ files.
 Version 0.0.5
 -------------
 
+ * stability factors available in equation solver
  * implementation of microstrip t-junction
  * additional AC noise analysis
  * speed and memory optimizations in S-parameter analysis

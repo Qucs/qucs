@@ -29,7 +29,7 @@ unfixed) have a look at the file BUGS.
 - Implement a sparse matrix template class.
 - Non-ideal transient models of bias-t, dc-block and dc-feed.
 	- Implement optional gmin-stepping algorithm.
-- More S-parameter computation formulas, e.g. stability factors.
+	- More S-parameter computation formulas, e.g. stability factors.
 - Implementation of noise and stability circle formulas.
 	- Implement some more matrix operations, e.g. det(), conj(),
 	  transpose() and inverse(), to be available in equations.
@@ -52,7 +52,7 @@ unfixed) have a look at the file BUGS.
 	  resistor.
 - Subcircuit definitions with properties.
 	- Node-set functionality for DC and transient analysis.
-- Coplanar line implementation.
+	- Coplanar line implementation.
 	- Microstrip via hole implementation.
 	- Microstrip t-junction.
 - Microstrip cross.

@@ -1,3 +1,10 @@
+2005-02-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* vnoise.cpp: Implemented AC noise callback.
+
+	* microstrip/mstee.cpp: Fixed small bug causing the
+	S-parameter results to get NaN values.
+
 2005-02-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* spfile.cpp: Fixed return value of void function.

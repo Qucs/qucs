@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vnoise.cpp,v 1.5 2005-01-17 12:19:02 raimi Exp $
+ * $Id: vnoise.cpp,v 1.6 2005-02-14 19:56:45 raimi Exp $
  *
  */
 
@@ -72,4 +72,13 @@ void vnoise::initTR (void) {
 
 void vnoise::initAC (void) {
   initDC ();
+}
+
+void vnoise::calcNoiseAC (nr_double_t frequency) {
+  nr_double_t u = getPropertyDouble ("u");
+  nr_double_t e = getPropertyDouble ("e");
+  nr_double_t c = getPropertyDouble ("c");
+  nr_double_t a = getPropertyDouble ("a");
+  nr_double_t ipsd = u / (a + c * pow (frequency, e)) / kB / T0;
+  setN (3, 3, +ipsd);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.5 2005-02-08 23:08:39 raimi Exp $
+ * $Id: mstee.cpp,v 1.6 2005-02-14 19:56:45 raimi Exp $
  *
  */
 
@@ -167,6 +167,8 @@ void mstee::calcPropagation (nr_double_t f) {
         (sqr (Zla / Zl2) / 12 + sqr (0.5 - d2 / Da));
   Tb2 = 1 - M_PI * sqr (f / fpb) *
         (sqr (Zlb / Zl2) / 12 + sqr (0.5 - d2 / Db));
+  Ta2 = MAX (Ta2, 1e-12);
+  Tb2 = MAX (Tb2, 1e-12);
 
   // shunt susceptance
   Bt = 5.5 * sqrt (Da * Db / lda / ldb) * (er + 2) / er /
