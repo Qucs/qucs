@@ -1914,6 +1914,10 @@ Błędny początek linii!</translation>
         <source>bipolar junction transistor with substrate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>excess phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
