@@ -65,8 +65,7 @@ public slots:
   void slotZoomIn(bool);
 
 private:
-  void QucsActions::performToggleAction(bool, QAction*, pToggleFunc,
-					pMouseFunc, pMouseFunc);
+  bool performToggleAction(bool, QAction*, pToggleFunc,	pMouseFunc, pMouseFunc);
 
   // copies of variables in QucsApps
   QucsApp  *App;

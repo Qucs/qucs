@@ -138,7 +138,12 @@ bool QucsView::pasteElements()
 
   // moving with mouse cursor in the midpoint
   for(pe = movingElements.first(); pe != 0; pe = movingElements.next())
-    pe->setCenter(xmin, ymin, true);
+    if(pe->Type & isLabel) {
+      pe->cx += xmin;  pe->x1 += xmin;
+      pe->cy += ymin;  pe->y1 += ymin;
+    }
+    else
+      pe->setCenter(xmin, ymin, true);
 
   return true;
 }
@@ -670,7 +675,12 @@ void QucsView::MMovePaste(QMouseEvent *Event)
   d->setOnGrid(MAx1, MAy1);
 
   for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
-    pe->setCenter(MAx1, MAy1, true);
+    if(pe->Type & isLabel) {
+      pe->cx += MAx1;  pe->x1 += MAx1;
+      pe->cy += MAy1;  pe->y1 += MAy1;
+    }
+    else
+      pe->setCenter(MAx1, MAy1, true);
     pe->paintScheme(&painter);
   }
 

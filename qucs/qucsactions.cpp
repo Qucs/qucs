@@ -32,16 +32,16 @@ QucsActions::~QucsActions()
 {
 }
 
-// ########################################################################
+// -----------------------------------------------------------------------
 void QucsActions::init(QucsApp *p_)
 {
   App  = p_;
   view = App->view;
 }
 
-// ########################################################################
+// -----------------------------------------------------------------------
 // This function is called from all toggle actions.
-void QucsActions::performToggleAction(bool on, QAction *Action,
+bool QucsActions::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc MousePress)
 {
   if(!on) {
@@ -50,15 +50,17 @@ void QucsActions::performToggleAction(bool on, QAction *Action,
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
     App->activeAction = 0;   // no action active
-    return;
+    return false;
   }
 
-  if((view->Docs.current()->*Function)()) {
-    Action->blockSignals(true);
-    Action->setOn(false);  // release toolbar button
-    Action->blockSignals(false);
-  }
-  else {
+  do {
+    if(Function) if((view->Docs.current()->*Function)()) {
+      Action->blockSignals(true);
+      Action->setOn(false);  // release toolbar button
+      Action->blockSignals(false);
+      break;
+    }
+
     if(App->activeAction) {
       App->activeAction->blockSignals(true); // do not call toggle slot
       App->activeAction->setOn(false);       // set last toolbar button off
@@ -70,12 +72,23 @@ void QucsActions::performToggleAction(bool on, QAction *Action,
     view->MousePressAction = MousePress;
     view->MouseReleaseAction = &QucsView::MouseDoNothing;
     view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-  }
+
+  } while(false);   // to perform "break"
+
   view->viewport()->repaint();
   view->drawn = false;
+  return true;
 }
 
-// ########################################################################
+// -----------------------------------------------------------------------
+// Is called, when "set on grid" action is activated.
+void QucsActions::slotOnGrid(bool on)
+{
+  performToggleAction(on, onGrid, &QucsDoc::elementsOnGrid,
+		&QucsView::MMoveOnGrid, &QucsView::MPressOnGrid);
+}
+
+// -----------------------------------------------------------------------
 // Is called when the rotate toolbar button is pressed.
 void QucsActions::slotEditRotate(bool on)
 {
@@ -83,7 +96,7 @@ void QucsActions::slotEditRotate(bool on)
 		&QucsView::MMoveRotate, &QucsView::MPressRotate);
 }
 
-// ######################################################################
+// -----------------------------------------------------------------------
 // Is called when the mirror toolbar button is pressed.
 void QucsActions::slotEditMirrorX(bool on)
 {
@@ -91,7 +104,7 @@ void QucsActions::slotEditMirrorX(bool on)
 		&QucsView::MMoveMirrorX, &QucsView::MPressMirrorX);
 }
 
-// ######################################################################
+// -----------------------------------------------------------------------
 // Is called when the mirror toolbar button is pressed.
 void QucsActions::slotEditMirrorY(bool on)
 {
@@ -119,6 +132,54 @@ void QucsActions::slotEditDelete(bool on)
 // Is called if "Wire"-Button is pressed.
 void QucsActions::slotSetWire(bool on)
 {
+  performToggleAction(on, insWire, 0,
+		&QucsView::MMoveWire1, &QucsView::MPressWire1);
+}
+
+// -----------------------------------------------------------------------
+void QucsActions::slotInsertLabel(bool on)
+{
+  performToggleAction(on, insLabel, 0,
+		&QucsView::MMoveLabel, &QucsView::MPressLabel);
+}
+
+// -----------------------------------------------------------------------
+void QucsActions::slotSetMarker(bool on)
+{
+  performToggleAction(on, setMarker, 0,
+		&QucsView::MMoveMarker, &QucsView::MPressMarker);
+}
+
+// -----------------------------------------------------------------------
+// Is called, when "move component text" action is activated.
+void QucsActions::slotMoveText(bool on)
+{
+  performToggleAction(on, moveText, 0,
+		&QucsView::MMoveMoveTextB, &QucsView::MPressMoveText);
+}
+
+// -----------------------------------------------------------------------
+// Is called, when "Zoom in" action is activated.
+void QucsActions::slotZoomIn(bool on)
+{
+  performToggleAction(on, magPlus, 0,
+		&QucsView::MMoveZoomIn, &QucsView::MPressZoomIn);
+}
+
+// -----------------------------------------------------------------------
+// Is called when the select toolbar button is pressed.
+void QucsActions::slotSelect(bool on)
+{
+  if(performToggleAction(on, select, 0,
+		&QucsView::MouseDoNothing, &QucsView::MPressSelect)) {
+    view->MouseReleaseAction = &QucsView::MReleaseSelect;
+    view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+  }
+}
+
+// -----------------------------------------------------------------------
+void QucsActions::slotEditPaste(bool on)
+{
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -128,102 +189,29 @@ void QucsActions::slotSetWire(bool on)
     if(view->drawn) view->viewport()->repaint();
     return;
   }
+
+  if(!view->pasteElements()) {
+    editPaste->blockSignals(true); // do not call toggle slot
+    editPaste->setOn(false);       // set toolbar button off
+    editPaste->blockSignals(false);
+    return;   // if clipboard empty
+  }
+
   if(App->activeAction) {
     App->activeAction->blockSignals(true); // do not call toggle slot
     App->activeAction->setOn(false);       // set last toolbar button off
     App->activeAction->blockSignals(false);
   }
-  App->activeAction = insWire;
+  App->activeAction = editPaste;
 
-  if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveWire1;
-  view->MousePressAction = &QucsView::MPressWire1;
+  view->MouseMoveAction = &QucsView::MMovePaste;
+  view->MousePressAction = &QucsView::MouseDoNothing;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
 
 // -----------------------------------------------------------------------
-void QucsActions::slotInsertLabel(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = insLabel;
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveLabel;
-  view->MousePressAction = &QucsView::MPressLabel;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// -----------------------------------------------------------------------
-void QucsActions::slotSetMarker(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = setMarker;
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveMarker;
-  view->MousePressAction = &QucsView::MPressMarker;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// -----------------------------------------------------------------------
-// Is called when the select toolbar button is pressed.
-void QucsActions::slotSelect(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-
-    return;
-  }
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = select;
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MouseDoNothing;
-  view->MousePressAction = &QucsView::MPressSelect;
-  view->MouseReleaseAction = &QucsView::MReleaseSelect;
-  view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
-}
-
-// ########################################################################
 // Is called when the mouse is clicked upon the equation toolbar button.
 void QucsActions::slotInsertEquation(bool on)
 {
@@ -255,7 +243,7 @@ void QucsActions::slotInsertEquation(bool on)
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
 
-// #######################################################################
+// -----------------------------------------------------------------------
 // Is called when the mouse is clicked upon the ground toolbar button.
 void QucsActions::slotInsertGround(bool on)
 {
@@ -287,7 +275,7 @@ void QucsActions::slotInsertGround(bool on)
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
 
-// #######################################################################
+// -----------------------------------------------------------------------
 // Is called when the mouse is clicked upon the port toolbar button.
 void QucsActions::slotInsertPort(bool on)
 {
@@ -315,132 +303,6 @@ void QucsActions::slotInsertPort(bool on)
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMoveComponent;
   view->MousePressAction = &QucsView::MPressComponent;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// ######################################################################
-void QucsActions::slotEditPaste(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-
-  if(!view->pasteElements()) {
-    editPaste->blockSignals(true); // do not call toggle slot
-    editPaste->setOn(false);       // set toolbar button off
-    editPaste->blockSignals(false);
-    return;   // if clipboard empty
-  }
-
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = editPaste;
-
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMovePaste;
-  view->MousePressAction = &QucsView::MouseDoNothing;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// #######################################################################
-// Is called, when "set on grid" action is activated.
-void QucsActions::slotOnGrid(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    return;
-  }
-
-  if(view->Docs.current()->elementsOnGrid() > 0) {
-    view->viewport()->repaint();
-    view->drawn = false;
-    onGrid->blockSignals(true); // do not call toggle slot
-    onGrid->setOn(false);       // set toolbar button off
-    onGrid->blockSignals(false);
-    return;   // if no element was selected
-  }
-
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = onGrid;
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveOnGrid;
-  view->MousePressAction = &QucsView::MPressOnGrid;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// #######################################################################
-// Is called, when "move component text" action is activated.
-void QucsActions::slotMoveText(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    if(view->drawn) view->viewport()->repaint();
-    return;
-  }
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = moveText;
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveMoveTextB;
-  view->MousePressAction = &QucsView::MPressMoveText;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// #######################################################################
-// Is called, when "Zoom in" action is activated.
-void QucsActions::slotZoomIn(bool on)
-{
-  if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    App->activeAction = 0;   // no action active
-    if(view->drawn) view->viewport()->repaint();
-    return;
-  }
-  if(App->activeAction) {
-    App->activeAction->blockSignals(true); // do not call toggle slot
-    App->activeAction->setOn(false);       // set last toolbar button off
-    App->activeAction->blockSignals(false);
-  }
-  App->activeAction = magPlus;
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveZoomIn;
-  view->MousePressAction = &QucsView::MPressZoomIn;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }

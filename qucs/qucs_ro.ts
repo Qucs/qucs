@@ -2419,6 +2419,14 @@ Folosire:  qucsedit [-r] file
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>no variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -4037,7 +4045,7 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation>Italiană de Giorgio Luparia</translation>
+        <translation type="obsolete">Italiană de Giorgio Luparia</translation>
     </message>
     <message>
         <source>French by Eric Marzolf
@@ -4275,6 +4283,15 @@ Mută proprietatea text al componentelor</translation>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Bus Jozsef</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
