@@ -242,7 +242,7 @@ void QucsView::MMoveWire1(QMouseEvent *Event)
   MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
   MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
   d->setOnGrid(MAx3, MAy3);
-  
+
   MAx1  = contentsX()+d->ViewX1;
   MAy1  = contentsY()+d->ViewY1;
   MAx2  = MAx1 + visibleWidth();
@@ -324,6 +324,7 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
   MAy1 = MAy2 - MAy1;
 
   movingElements.clear();
+  this->grabKeyboard();      // hinders keyboard inputs during moving
   d->copySelectedElements(&movingElements);
   viewport()->repaint();
 
@@ -432,6 +433,208 @@ void QucsView::MMovePaste(QMouseEvent *Event)
   drawn = true;
   MouseMoveAction = &QucsView::MMoveMoving2;
   MouseReleaseAction = &QucsView::MReleasePaste;
+}
+
+// -----------------------------------------------------------
+// Paints a cross under the mouse cursor to show the delete modus.
+void QucsView::MMoveDelete(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3-15, MAy3-15, MAx3+15, MAy3+15); // erase old
+    painter.drawLine(MAx3-15, MAy3+15, MAx3+15, MAy3-15);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3-15, MAy3-15, MAx3+15, MAy3+15); // paint
+  painter.drawLine(MAx3-15, MAy3+15, MAx3+15, MAy3-15);
+}
+
+// -----------------------------------------------------------
+// Paints a label above the mouse cursor to show the set wire label modus.
+void QucsView::MMoveLabel(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3, MAy3, MAx3+10, MAy3-10); // erase old
+    painter.drawLine(MAx3+10, MAy3-10, MAx3+20, MAy3-10);
+    painter.drawLine(MAx3+10, MAy3-10, MAx3+10, MAy3-17);
+
+    painter.drawLine(MAx3+12, MAy3-12, MAx3+15, MAy3-23);   // "A"
+    painter.drawLine(MAx3+14, MAy3-17, MAx3+17, MAy3-17);
+    painter.drawLine(MAx3+19, MAy3-12, MAx3+16, MAy3-23);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3, MAy3, MAx3+10, MAy3-10); // paint new
+  painter.drawLine(MAx3+10, MAy3-10, MAx3+20, MAy3-10);
+  painter.drawLine(MAx3+10, MAy3-10, MAx3+10, MAy3-17);
+
+  painter.drawLine(MAx3+12, MAy3-12, MAx3+15, MAy3-23);   // "A"
+  painter.drawLine(MAx3+14, MAy3-17, MAx3+17, MAy3-17);
+  painter.drawLine(MAx3+19, MAy3-12, MAx3+16, MAy3-23);
+}
+
+// -----------------------------------------------------------
+// Paints a little triangle above the mouse cursor to show the set marker modus.
+void QucsView::MMoveMarker(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3, MAy3-2, MAx3-8, MAy3-10); // erase old
+    painter.drawLine(MAx3+1, MAy3-3, MAx3+8, MAy3-10);
+    painter.drawLine(MAx3-7, MAy3-10, MAx3+7, MAy3-10);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3, MAy3-2, MAx3-8, MAy3-10); // paint new
+  painter.drawLine(MAx3+1, MAy3-3, MAx3+8, MAy3-10);
+  painter.drawLine(MAx3-7, MAy3-10, MAx3+7, MAy3-10);
+}
+
+// -----------------------------------------------------------
+// Paints rounded arrows above the mouse cursor to show the "mirror about y axis" modus.
+void QucsView::MMoveMirrorY(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3-11, MAy3-4, MAx3-9, MAy3-9); // erase old
+    painter.drawLine(MAx3-11, MAy3-3, MAx3-6, MAy3-3);
+    painter.drawLine(MAx3+11, MAy3-4, MAx3+9, MAy3-9);
+    painter.drawLine(MAx3+11, MAy3-3, MAx3+6, MAy3-3);
+    painter.drawArc(MAx3-10, MAy3-8, 21, 10, 16*20, 16*140);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3-11, MAy3-4, MAx3-9, MAy3-9); // paint new
+  painter.drawLine(MAx3-11, MAy3-3, MAx3-6, MAy3-3);
+  painter.drawLine(MAx3+11, MAy3-4, MAx3+9, MAy3-9);
+  painter.drawLine(MAx3+11, MAy3-3, MAx3+6, MAy3-3);
+  painter.drawArc(MAx3-10, MAy3-8, 21, 10, 16*20, 16*140);
+}
+
+// -----------------------------------------------------------
+// Paints rounded arrows beside the mouse cursor to show the "mirror about x axis" modus.
+void QucsView::MMoveMirrorX(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3-4, MAy3-11, MAx3-9, MAy3-9); // erase old
+    painter.drawLine(MAx3-3, MAy3-11, MAx3-3, MAy3-6);
+    painter.drawLine(MAx3-4, MAy3+11, MAx3-9, MAy3+9);
+    painter.drawLine(MAx3-3, MAy3+11, MAx3-3, MAy3+6);
+    painter.drawArc(MAx3-8, MAy3-10, 10, 21, 16*110, 16*140);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3-4, MAy3-11, MAx3-9, MAy3-9); // paint new
+  painter.drawLine(MAx3-3, MAy3-11, MAx3-3, MAy3-6);
+  painter.drawLine(MAx3-4, MAy3+11, MAx3-9, MAy3+9);
+  painter.drawLine(MAx3-3, MAy3+11, MAx3-3, MAy3+6);
+  painter.drawArc(MAx3-8, MAy3-10, 10, 21, 16*110, 16*140);
+}
+
+// -----------------------------------------------------------
+// Paints a rounded arrow above the mouse cursor to show the "rotate" modus.
+void QucsView::MMoveRotate(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3-6, MAy3+8, MAx3-6, MAy3+1); // erase old
+    painter.drawLine(MAx3-7, MAy3+8, MAx3-12, MAy3+8);
+    painter.drawArc(MAx3-10, MAy3-10, 21, 21, -16*20, 16*240);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  painter.drawLine(MAx3-6, MAy3+8, MAx3-6, MAy3+1); // paint new
+  painter.drawLine(MAx3-7, MAy3+8, MAx3-12, MAy3+8);
+  painter.drawArc(MAx3-10, MAy3-10, 21, 21, -16*20, 16*240);
+}
+
+// -----------------------------------------------------------
+// Paints a a rectangle beside the mouse cursor to show the "activate" modus.
+void QucsView::MMoveActivate(QMouseEvent *Event)
+{
+  QucsDoc *d = Docs.current();
+  QPainter painter(viewport());
+  painter.translate(-contentsX(), -contentsY());  // contents to viewport transformation
+  painter.scale(d->Scale, d->Scale);
+  painter.translate(-d->ViewX1, -d->ViewY1);
+  painter.setRasterOp(Qt::NotROP);  // background should not be erased
+
+  if(drawn) {
+    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3-9); // erase old
+    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3);
+    painter.drawLine(MAx3, MAy3-9, MAx3, MAy3);
+    painter.drawLine(MAx3+13, MAy3-9, MAx3+13, MAy3);
+    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3);
+    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
+  }
+  drawn = true;
+
+  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3-9); // erase old
+    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3);
+    painter.drawLine(MAx3, MAy3-9, MAx3, MAy3);
+    painter.drawLine(MAx3+13, MAy3-9, MAx3+13, MAy3);
+    painter.drawLine(MAx3, MAy3-9, MAx3+13, MAy3);
+    painter.drawLine(MAx3, MAy3, MAx3+13, MAy3-9);
 }
 
 // *************************************************************************************
@@ -569,6 +772,7 @@ void QucsView::MPressDelete(QMouseEvent *Event)
     e->isSelected = true;
     Docs.current()->deleteElements();
     viewport()->repaint();
+    drawn = false;
   }
 }
 
@@ -586,6 +790,7 @@ void QucsView::MPressActivate(QMouseEvent *Event)
     MouseMoveAction = &QucsView::MMoveSelect;
   }
   viewport()->repaint();
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -608,6 +813,7 @@ void QucsView::MPressMirrorX(QMouseEvent *Event)
   }
 
   viewport()->repaint();
+  drawn = false;
   Docs.current()->setChanged(true);
 }
 
@@ -631,6 +837,7 @@ void QucsView::MPressMirrorY(QMouseEvent *Event)
   }
 
   viewport()->repaint();
+  drawn = false;
   Docs.current()->setChanged(true);
 }
 
@@ -642,7 +849,7 @@ void QucsView::MPressRotate(QMouseEvent *Event)
   Element *e = d->selectElement(int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
                                 int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,false);
   if(e == 0) return;
-  
+
   WireLabel *pl;
   int x1, y1, x2, y2;
   e->isSelected = false;
@@ -676,6 +883,7 @@ void QucsView::MPressRotate(QMouseEvent *Event)
     default:          return;
   }
   viewport()->repaint();
+  drawn = false;
   Docs.current()->setChanged(true);
 }
 
@@ -685,7 +893,7 @@ void QucsView::MPressComponent(QMouseEvent *Event)
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
   setPainter(&painter, d);
-    
+
   int x1, y1, x2, y2;
   switch(Event->button()) { // left mouse button inserts the component into the schematic
   case Qt::LeftButton :
@@ -745,7 +953,7 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
 void QucsView::MPressWire1(QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
-  
+
   QPainter painter(viewport());
   setPainter(&painter, Docs.current());
 
@@ -840,6 +1048,18 @@ void QucsView::MPressWire2(QMouseEvent *Event)
   }
 }
 
+// -----------------------------------------------------------
+// Is called for setting a marker on a diagram's graph
+void QucsView::MPressMarker(QMouseEvent *Event)
+{
+  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)+Docs.current()->ViewX1;
+  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)+Docs.current()->ViewY1;
+  Docs.current()->setMarker(MAx1, MAy1);
+
+  viewport()->repaint();
+  drawn = false;
+}
+
 
 // *************************************************************************************
 // **********                                                                 **********
@@ -872,6 +1092,7 @@ void QucsView::MReleaseSelect(QMouseEvent *Event)
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
   MouseMoveAction = &QucsView::MouseDoNothing;   // no element moving
   viewport()->repaint();
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -914,7 +1135,7 @@ void QucsView::MReleaseActivate(QMouseEvent *Event)
    // activates all components within the rectangle
   d->activateComps(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
 
-  MouseMoveAction = &QucsView::MouseDoNothing;
+  MouseMoveAction = &QucsView::MMoveActivate;
   MousePressAction = &QucsView::MPressActivate;
   MouseReleaseAction = &QucsView::MouseDoNothing;
   MouseDoubleClickAction = &QucsView::MouseDoNothing;
@@ -926,6 +1147,7 @@ void QucsView::MReleaseMoving(QMouseEvent *Event)
 {
   if(Event->button() != Qt::LeftButton) return;
   endElementMoving();
+  this->releaseKeyboard();      // allow keyboard inputs again
 
   MouseMoveAction = &QucsView::MouseDoNothing;
   MousePressAction = &QucsView::MPressSelect;
@@ -1145,6 +1367,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
   }
 
   viewport()->repaint();
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1172,6 +1395,7 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
       if(delta > 0) { if(ScrollLeft(delta)) scrollBy(-delta, 0); }
       else { if(ScrollRight(delta)) scrollBy(-delta, 0); }
       viewport()->repaint();    // because QScrollView thinks nothing has changed
+      drawn = false;
   }
   // ...............................................................................
   else if(Event->state() & Qt::ControlButton) {    // use mouse wheel to zoom ?
@@ -1181,12 +1405,14 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
       Zoom(Scaling);
       center(int(Event->x()*Scaling), int(Event->y()*Scaling));
       viewport()->repaint();
+      drawn = false;
   }
   // ...............................................................................
   else {     // scroll vertically !
       if(delta > 0) { if(ScrollUp(delta)) scrollBy(0, -delta); }
       else { if(ScrollDown(delta)) scrollBy(0, -delta); }
       viewport()->repaint();    // because QScrollView thinks nothing has changed
+      drawn = false;
   }
 
   Event->accept();   // QScrollView must not handle this event
@@ -1302,6 +1528,7 @@ void QucsView::slotScrollUp()
 {
   ScrollUp(verticalScrollBar()->lineStep());
   viewport()->repaint();    // because QScrollView thinks nothing has changed
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1310,6 +1537,7 @@ void QucsView::slotScrollDown()
 {
   ScrollDown(-verticalScrollBar()->lineStep());
   viewport()->repaint();    // because QScrollView thinks nothing has changed
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1318,6 +1546,7 @@ void QucsView::slotScrollLeft()
 {
   ScrollLeft(horizontalScrollBar()->lineStep());
   viewport()->repaint();    // because QScrollView thinks nothing has changed
+  drawn = false;
 }
 
 // -----------------------------------------------------------
@@ -1326,4 +1555,5 @@ void QucsView::slotScrollRight()
 {
   ScrollRight(-horizontalScrollBar()->lineStep());
   viewport()->repaint();    // because QScrollView thinks nothing has changed
+  drawn = false;
 }

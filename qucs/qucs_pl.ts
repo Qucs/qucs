@@ -224,9 +224,6 @@
     </message>
 </context>
 <context>
-    <name>HelpDialog</name>
-</context>
-<context>
     <name>LineDialog</name>
     <message>
         <source>Line color: </source>
@@ -268,9 +265,6 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>MessageBox</name>
 </context>
 <context>
     <name>QObject</name>
@@ -445,10 +439,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>attenuator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>attenuation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -862,6 +852,10 @@ Unknown field!</source>
     <message>
         <source>Format Error:
 Wrong line start!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>power attenuation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2268,6 +2262,24 @@ Go on ?</source>
         <source>Transient simulation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker on Graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Marker
+
+Sets a marker on a diagram&apos;s graph</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsView</name>
@@ -2287,11 +2299,5 @@ Go on ?</source>
         <source>The ground potential cannot be labeled!</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>SettingsDialog</name>
-</context>
-<context>
-    <name>SimMessage</name>
 </context>
 </TS>

@@ -42,26 +42,26 @@ Graph::~Graph()
 }
 
 // ---------------------------------------------------------------------
-void Graph::paint(QPainter *p, int cx, int cy)
+void Graph::paint(QPainter *p, int x0, int y0)
 {
   int *pp = Points;
   if(pp == 0) return;
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Thick+4));
-    p->drawPoint(cx+(*pp), cy-(*(pp+1)));
+    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
 
     for(int n=count-1; n>0; n--) {
-      p->drawLine(cx+(*pp), cy-(*(pp+1)), cx+(*(pp+2)), cy-(*(pp+3)));
+      p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
       pp += 2;
     }
 
     pp = Points;
     p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
-    p->drawPoint(cx+(*pp), cy-(*(pp+1)));
+    p->drawPoint(x0+(*pp), y0-(*(pp+1)));
 
     for(int n=count-1; n>0; n--) {
-      p->drawLine(cx+(*pp), cy-(*(pp+1)), cx+(*(pp+2)), cy-(*(pp+3)));
+      p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
       pp += 2;
     }
     p->setPen(QPen(QColor(Color)));
@@ -70,10 +70,10 @@ void Graph::paint(QPainter *p, int cx, int cy)
 
   pp = Points;
   p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
-  p->drawPoint(cx+(*pp), cy-(*(pp+1)));
+  p->drawPoint(x0+(*pp), y0-(*(pp+1)));
 
   for(int n=count-1; n>0; n--) {
-    p->drawLine(cx+(*pp), cy-(*(pp+1)), cx+(*(pp+2)), cy-(*(pp+3)));
+    p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
     pp += 2;
   }
 }
