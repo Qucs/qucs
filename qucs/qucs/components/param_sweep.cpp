@@ -22,19 +22,28 @@ Param_Sweep::Param_Sweep()
 {
   Description = QObject::tr("Parameter sweep");
 
-  Lines.append(new Line(-46,-22, 46,-22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-46, 22, 46, 22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-46,-22,-46, 22,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 46,-22, 46, 22,QPen(QPen::darkBlue,2)));
+  QWidget  w;
+  QPainter p(&w);
+  QString  s = Description;
+  s.replace(" ","\n");
+  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  int xb = (r.width()  >> 1) + 6;
+  int yb = (r.height() >> 1) + 4;
 
-  Lines.append(new Line(-42, 27, 50, 27,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-46, 22,-42, 27,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 46, 22, 50, 27,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 50,-17, 50, 27,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 46,-22, 50,-17,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb, xb,-yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb, yb, xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,-yb,-xb, yb,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,-yb, xb, yb,QPen(QPen::darkBlue,2)));
 
-  x1 = -50; y1 = -26;
-  x2 =  54; y2 =  31;
+  Lines.append(new Line(-xb+5, yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-xb,   yb,  -xb+5, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,   yb,   xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb+4,-yb+5, xb+4, yb+5,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( xb,  -yb,   xb+4,-yb+5,QPen(QPen::darkBlue,2)));
+
+  x1 = -xb-4; y1 = -yb-4;
+  x2 =  xb+8; y2 =  yb+9;
 
   tx = x1+4;
   ty = y2+4;
@@ -42,6 +51,7 @@ Param_Sweep::Param_Sweep()
   Model = ".SW";
   Name  = "SW";
 
+  Props.append(new Property("Sim", "", true, QObject::tr("simulation to perform parameter sweep on")));
   Props.append(new Property("Param", "R1", true, QObject::tr("parameter to sweep")));
   Props.append(new Property("Start", "5 Ohm", true, QObject::tr("start value for sweep")));
   Props.append(new Property("Stop", "50 Ohm", true, QObject::tr("stop value for sweep")));

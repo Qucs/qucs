@@ -42,7 +42,7 @@ public:
   Node    *Port1, *Port2;
   QString Name;
   int     NameDX, NameDY;  // size of Name string on screen
-  int     nx, ny, delta;  // position of the nodename label
+  int     nx, ny, delta;   // position of the nodename label
 
   void    paint(QPainter *p);
   void    rotate();
