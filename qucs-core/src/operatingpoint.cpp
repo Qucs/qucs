@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: operatingpoint.cpp,v 1.1 2004-02-17 15:30:57 ela Exp $
+ * $Id: operatingpoint.cpp,v 1.2 2004-06-20 11:29:35 ela Exp $
  *
  */
 
@@ -90,9 +90,7 @@ char * operatingpoint::getName (void) {
    NULL. */
 operatingpoint * operatingpoint::findOperatingPoint (char * n) {
   for (operatingpoint * p = this; p != NULL; p = p->getNext ()) {
-    if (!strcmp (p->getName (), n)) {
-      return p;
-    }
+    if (!strcmp (p->getName (), n)) return p;
   }
   return NULL;
 }

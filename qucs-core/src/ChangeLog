@@ -1,3 +1,8 @@
+2004-06-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* circuit.cpp (copyMatrixS): New function copying S-parameter
+	matrix elements to the circuit.
+
 2004-06-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* check_netlist.cpp: Added parameter "Symbol" to "Resistor".

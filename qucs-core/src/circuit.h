@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.13 2004-06-04 16:01:47 ela Exp $
+ * $Id: circuit.h,v 1.14 2004-06-20 11:29:34 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@ class property;
 class substrate;
 class operatingpoint;
 class dcsolver;
+class matrix;
 
 class circuit : public object
 {
@@ -93,6 +94,7 @@ class circuit : public object
   void deleteOperatingPoints (void);
   int isNonLinear (void);
   static char * createInternal (char *, char *);
+  void copyMatrixS (matrix &);
 
  protected:
   static const nr_double_t z0 = 50.0;

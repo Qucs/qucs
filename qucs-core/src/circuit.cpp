@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.16 2004-06-19 07:34:55 ela Exp $
+ * $Id: circuit.cpp,v 1.17 2004-06-20 11:29:34 ela Exp $
  *
  */
 
@@ -34,6 +34,7 @@
 #include "logging.h"
 #include "complex.h"
 #include "object.h"
+#include "matrix.h"
 #include "node.h"
 #include "property.h"
 #include "circuit.h"
@@ -367,4 +368,15 @@ char * circuit::createInternal (char * prefix, char * obj) {
   static char n[128];
   sprintf (n, "_%s#%s", prefix, obj);
   return n;
+}
+
+/* This function copies the matrix elements inside the given matrix to
+   the internal S-parameter matrix of the circuit. */
+void circuit::copyMatrixS (matrix & s) {
+  int r = s.getRows ();
+  int c = s.getCols ();
+  // copy matrix elements
+  if (r > 0 && c > 0 && r * c == size * size) {
+    memcpy (MatrixS, s.getData (), sizeof (complex) * r * c);
+  }
 }
