@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.22 2004-11-24 19:15:51 raimi Exp $
+ * $Id: bjt.cpp,v 1.23 2004-12-09 20:30:07 raimi Exp $
  *
  */
 
@@ -399,10 +399,15 @@ void bjt::calcOperatingPoints (void) {
   // diffusion capacitance of base-emitter diode
   nr_double_t e, Tff, dTffdUbe;
   e = 2 * exp (Ubc * Vtf);
-  Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
-  dTffdUbe = Tf * Xtf * 2 * gif * If * Itf / cubic (If + Itf) * e;
-  Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
-  Qbe += If * Tff / Qb;
+  if (If != 0) {
+    Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
+    dTffdUbe = Tf * Xtf * 2 * gif * If * Itf / cubic (If + Itf) * e;
+    Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
+    Qbe += If * Tff / Qb;
+  }
+  else {
+    Cbe += Tf * gif / Qb;
+  }
 
   // depletion and diffusion capacitance of base-collector diode
   nr_double_t Qbc;

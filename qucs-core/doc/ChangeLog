@@ -1,3 +1,14 @@
+2004-12-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* coplanar.tex (chapter{Coplanar components}): New file
+	containing documentation about coplanar components.  Thanks
+	to Vincent.
+
+	* technical.tex: Added copyright for Vincent.
+
+	* transient.tex (subsection{MOS Gate Capacitances}): Added
+	section about integration of the Meyer MOS capacitances.
+
 2004-11-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsconv.1: Added --noaction (or -a) help text.

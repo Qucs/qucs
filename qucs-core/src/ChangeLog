@@ -1,3 +1,8 @@
+2004-12-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Added new device
+	parameter for the MOSFET: capModel.
+
 2004-12-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdefs.h (qucs_definition_available): Permitted zero

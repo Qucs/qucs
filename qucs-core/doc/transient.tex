@@ -1095,6 +1095,51 @@ Q &= \tau_D\cdot I_D\\
 C = \dfrac{d Q}{d V_C} &= \tau_D\cdot g_D
 \end{align}
 
+\subsection{MOS Gate Capacitances}
+%\addcontentsline{toc}{subsection}{MOS Gate Capacitances}
+
+The MOS gate capacitances are not constant values with respect to
+voltages (see section \ref{sec:SmallSignalMOS} on page
+\pageref{sec:SmallSignalMOS}). The capacitance values can best be
+described by the incremental capacitance:
+\begin{equation}
+C(V) = \dfrac{d Q(V)}{d V}
+\end{equation}
+
+where $Q(V)$ is the charge on the capacitor and $V$ is the voltage
+across the capacitor.
+
+\addvspace{12pt}
+
+The formula for calculating the differential is difficult to derive
+(because not given in the Meyer capacitance model).  Furthermore, the
+voltage is required as the accumulated capacitance over time.  The
+timewise charge formula is:
+\begin{equation}
+Q(V) = \int^{V}_{0} C(V)\cdot dV
+\end{equation}
+
+And for small intervalls:
+\begin{equation}
+Q(V) = \int^{V^{n+1}}_{V^{n}} C(V)\cdot dV
+\end{equation}
+
+The integral has been approximated in SPICE by:
+\begin{equation}
+Q^{n+1} = \left(V^{n+1} - V^{n}\right)\cdot \dfrac{C(V^{n+1}) + C(V^{n})}{2}
+\end{equation}
+
+This last formula is the trapezoidal rule for integration over two
+points.  The charge is approximated as the average capacitance times
+the change in voltage.  If the capacitance is nonlinear, this
+approximation can be in error.  To estimate the charge accurately, use
+Simpson's numerical integration rule.  This method provides charge
+conservation control.
+
+\begin{equation}
+Q^{n+1} = \left(V^{n+1} - V^{n}\right)\cdot \dfrac{C(V^{n+1}) + 4 C(V^{n}) + C(V^{n-1})}{6}
+\end{equation}
+
 \section{Convergence}
 %\addcontentsline{toc}{section}{Convergence}
 

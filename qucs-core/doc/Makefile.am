@@ -58,7 +58,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   mostypes.fig mosfet.fig mosband.fig dcmosfet.fig spmosfet.fig msgapphys.fig \
   noisemosfet.fig mscoupledphys.fig spfile.fig spnfile.fig transcap.fig       \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
-  convprob2.fig convprob3.fig msvia.fig
+  convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
@@ -66,7 +66,7 @@ PDFFILES = $(FIGURES:.fig=.pdf)
 PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
 BIBFILE = $(srcdir)/literature.bib
 CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
-  transient.tex devices.tex microstrip.tex
+  transient.tex devices.tex microstrip.tex coplanar.tex
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
