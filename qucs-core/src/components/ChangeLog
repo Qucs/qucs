@@ -10,6 +10,10 @@
 
 	* inductor.cpp: Implemented DC model (zero voltage source).
 
+2004-05-16  Michael Margraf  <michael.margraf@alumni.tu-berlin.de
+
+	* add #include <string.h> in msline.cpp
+
 2004-05-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Implemented influence of finite strip

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.12 2004/05/16 13:48:40 ela Exp $
+ * $Id: msline.cpp,v 1.13 2004/05/20 17:27:47 margraf Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 #include "logging.h"
 #include "complex.h"

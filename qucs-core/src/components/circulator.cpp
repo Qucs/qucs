@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.cpp,v 1.5 2004/04/26 13:50:03 ela Exp $
+ * $Id: circulator.cpp,v 1.6 2004/05/20 17:27:46 margraf Exp $
  *
  */
 
@@ -84,13 +84,13 @@ void circulator::calcDC (void) {
   setB (2, 1, +0.0); setB (2, 2, +1.0); setB (2, 3, +0.0);
   setB (3, 1, +0.0); setB (3, 2, +0.0); setB (3, 3, +1.0);
 
-  setC (1, 1, s11 - 1); setC (1, 2, s12); setC (1, 3, s13);
-  setC (2, 1, s21); setC (2, 2, s22 - 1); setC (2, 3, s23);
-  setC (3, 1, s31); setC (3, 2, s32); setC (3, 3, s33 - 1);
+  setC (1, 1, s11 - 1.0); setC (1, 2, s12); setC (1, 3, s13);
+  setC (2, 1, s21); setC (2, 2, s22 - 1.0); setC (2, 3, s23);
+  setC (3, 1, s31); setC (3, 2, s32); setC (3, 3, s33 - 1.0);
 
-  setD (1, 1, z0 * (s11 + 1)); setD (1, 2, z0 * s12); setD (1, 3, z0 * s13);
-  setD (2, 1, z0 * s21); setD (2, 2, z0 * (s22 + 1)); setD (2, 3, z0 * s23);
-  setD (3, 1, z0 * s31); setD (3, 2, z0 * s32); setD (3, 3, z0 * (s33 + 1));
+  setD (1, 1, z0 * (s11 + 1.0)); setD (1, 2, z0 * s12); setD (1, 3, z0 * s13);
+  setD (2, 1, z0 * s21); setD (2, 2, z0 * (s22 + 1.0)); setD (2, 3, z0 * s23);
+  setD (3, 1, z0 * s31); setD (3, 2, z0 * s32); setD (3, 3, z0 * (s33 + 1.0));
 
   setE (1, +0.0); setE (2, +0.0); setE (3, +0.0);
 }
