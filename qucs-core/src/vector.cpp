@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.12 2004/07/26 06:30:28 ela Exp $
+ * $Id: vector.cpp,v 1.13 2004/08/21 13:29:07 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@
 #include "logging.h"
 #include "strlist.h"
 #include "vector.h"
+#include "consts.h"
 
 // Constructor creates an unnamed instance of the vector class.
 vector::vector () : object () {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.46 2004/08/19 19:44:23 ela Exp $
+ * $Id: check_netlist.cpp,v 1.47 2004/08/21 13:29:07 ela Exp $
  *
  */
 
@@ -37,7 +37,7 @@
 #include "strlist.h"
 #include "equation.h"
 #include "check_netlist.h"
-#include "components/constants.h"
+#include "constants.h"
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;

@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.10 2004/07/21 16:25:09 ela Exp $
+ * $Id: scan_netlist.l,v 1.11 2004/08/21 13:29:07 ela Exp $
  *
  */
 
@@ -42,6 +42,11 @@
 #include "equation.h"
 #include "check_netlist.h"
 #include "tokens_netlist.h"
+
+#if !HAVE_STRCHR
+# define strchr  index
+# define strrchr rindex
+#endif
 
 %}
 
@@ -103,7 +108,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return Identifier;
   }
 <INITIAL,STR>{FILE} { /* identify file reference */
-    char * p = rindex (netlist_text, '}'); *p = '\0';
+    char * p = strrchr (netlist_text, '}'); *p = '\0';
     netlist_lval.ident = strdup (&netlist_text[1]);
     return Identifier;
   }

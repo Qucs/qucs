@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.22 2004/08/17 18:38:59 ela Exp $
+ * $Id: equation.cpp,v 1.23 2004/08/21 13:29:07 ela Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 #include "dataset.h"
 #include "strlist.h"
 #include "equation.h"
-#include "components/constants.h"
+#include "constants.h"
 
 using namespace eqn;
 

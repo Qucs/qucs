@@ -7,5 +7,6 @@ i686-pc-linux-gnu		gcc 2.95.4	0.0.2	ok
 i586-pc-linux-gnu		gcc 2.95.3	0.0.2	ok
 i686-pc-cygwin			gcc 2.95.3-10	0.0.2	ok
 i386-pc-mingw32			gcc 2.95.3-10	0.0.2	ok, using -mno-cygwin
+i386-pc-mingw32			gcc 2.95.3-6	0.0.3	ok, cross compiled
 sparc-sun-solaris2.9		gcc 2.95.3	0.0.2	ok
 powerpc-apple-darwin7.4.0	gcc 3.3		0.0.2	ok

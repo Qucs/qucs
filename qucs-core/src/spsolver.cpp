@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.29 2004/08/19 19:44:23 ela Exp $
+ * $Id: spsolver.cpp,v 1.30 2004/08/21 13:29:07 ela Exp $
  *
  */
 
@@ -50,7 +50,7 @@ using namespace std;
 #include "sweep.h"
 #include "nodelist.h"
 #include "spsolver.h"
-#include "components/constants.h"
+#include "constants.h"
 #include "components/component_id.h"
 
 #define SORTED_LIST 1   // use sorted node list?
@@ -587,6 +587,7 @@ void spsolver::solve (void) {
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     freq = swp->next ();
+    logprogressbar (i, swp->getSize (), 40);
 
     root = subnet->getRoot ();
     ports = root->countNodes ();
