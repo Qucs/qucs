@@ -1,3 +1,14 @@
+2004-01-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* helpdialog.cpp (HelpDialog): Added a FIXME.  Possible use
+	of translated documentation.
+
+	* docs/Makefile.am, docs/en/Makefile.am: Corrected these.
+	Made documentation installable.
+
+	* Makefile.am (SUBDIRS): Added docs sub directory and fixed
+	Michael's additions.
+
 2004-01-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsdoc.cpp (loadComponents): Added gyrator and phaseshifter

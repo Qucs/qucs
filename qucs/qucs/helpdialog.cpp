@@ -24,7 +24,7 @@
 #include <qpushbutton.h>
 #include <qlayout.h>
 #include <qhbox.h>
-
+/* FIXME: #include <qtextcodec.h> */
 
 HelpDialog::HelpDialog(const QString& page, QWidget *parent, const char *name )
                                   : QDialog(parent, name, Qt::WDestructiveClose)
@@ -38,7 +38,7 @@ HelpDialog::HelpDialog(const QString& page, QWidget *parent, const char *name )
   text->setMinimumSize(600,300);
   v->addWidget(text);
   text->setSource(DOCDIR +page);
-  
+  /* FIXME: text->setSource(QString(DOCDIR) + QTextCodec::locale() + page); */
   QHBox *h = new QHBox(this);
   h->setSpacing(5);
   v->addWidget(h);
