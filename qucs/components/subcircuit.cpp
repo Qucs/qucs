@@ -266,7 +266,7 @@ int Subcircuit::analyseLine(const QString& Row)
   else if(s == "EArc") {
     if(!getIntegers(Row, &i1, &i2, &i3, &i4, &i5, &i6))  return -1;
     if(!getPen(Row, Pen, 7))  return -1;
-    Arcs.append(new Arc(i1, i2, i3, i4, i5, i6, Pen));
+    Arcs.append(new struct Arc(i1, i2, i3, i4, i5, i6, Pen));
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1+i3 > x2)  x2 = i1+i3;

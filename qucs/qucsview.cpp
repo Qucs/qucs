@@ -50,6 +50,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   selDiag  = 0;  // no diagram is selected
   selPaint = 0;  // no painting is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
+  focusElement = 0;
 
   Docs.setAutoDelete(true);
 
@@ -86,6 +87,7 @@ QucsView::~QucsView()
 void QucsView::drawContents(QPainter *p, int, int, int, int)
 {
   QucsDoc *d = Docs.current();
+  if (!d) return;
 
   Painter.init(p, d->Scale, -d->ViewX1, -d->ViewY1, contentsX(), contentsY());
 

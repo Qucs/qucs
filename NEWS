@@ -26,6 +26,7 @@ files.
 Version 0.0.5
 -------------
 
+ * internal help system now also in German available
  * translations into Hebrew, French, Japanese and Hungarian
  * some new components and diagrams
  * some new graph styles (stars, circles, ...)
