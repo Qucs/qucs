@@ -59,7 +59,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
 
-  ValDouble = new QDoubleValidator(-1e200, 1e200, 4, this);
+  ValDouble = new QDoubleValidator(-1e200, 1e200, 6, this);
 
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget(this);

@@ -2647,7 +2647,7 @@ bool QucsDoc::load()
   setChanged(false, true); // "not changed" state, but put on undo stack
   UndoStack.current()->at(1) = 'i';  // state of being unchanged
 
-  // The unso stack of the circuit symbol is initialized when first
+  // The undo stack of the circuit symbol is initialized when first
   // entering its edit mode.
 
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
