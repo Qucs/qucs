@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.11 2004-05-13 09:20:34 ela Exp $
+ * $Id: msline.cpp,v 1.12 2004-05-16 13:48:40 ela Exp $
  *
  */
 
@@ -44,6 +44,10 @@
 #define CUBIC(x) ((x) * (x) * (x))
 #define QUAD(x)  ((x) * (x) * (x) * (x))
 
+#define coth(x)   (1 / tanh (x))
+#define sech(x)   (1 / cosh (x))
+#define cosech(x) (1 / sinh (x))
+
 msline::msline () : circuit (2) {
   type = CIR_MSLINE;
 }
@@ -68,11 +72,9 @@ void msline::calcSP (nr_double_t frequency) {
   complex s11, s21, n, g;
   nr_double_t z, y, a, b, k0, ds, Kr, Rs, Ki, ac, ad, l0;
 
-  // quasi-static effective dielectric constant of substrate + line
-  ErEff = analyseEr (W, h, er);
-
-  // quasi-static impedance of line
-  ZlEff = analyseZl (W, h, er);
+  // quasi-static effective dielectric constant of substrate + line and
+  // the impedance of the microstrip line
+  analyseQuasiStatic (W, h, t, er, "Hammerstad");
 
   // TODO: influence of t
 
@@ -110,115 +112,102 @@ void msline::calcSP (nr_double_t frequency) {
   setS (2, 1, s21);
 }
 
-/* This function returns the quasi-static impedance of a microstrip
-   line based on the given line width, substrate height and the
-   substrate's relative dielectrical constant. */
-nr_double_t msline::analyseZl (nr_double_t W, nr_double_t h, nr_double_t er) {
+/* This function calculates the quasi-static impedance of a microstrip
+   line and the value of the effective dielectric constant for the
+   given microstrip line and substrate properties. */
+void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
+				 nr_double_t er, char * Model) {
 
-  nr_double_t x, d, c, z, e, a, b, f;
+  nr_double_t z, e;
 
-  // often used in CAE
-  c = 6 + (2 * M_PI - 6) * exp (- pow (30.666 * h / W, 0.7528));
-  e = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 * h / W);
-  d = Z0 / 2 / M_PI * log (c * h / W + sqrt (1 + SQR (2 * h / W)));
-  z = d / sqrt (e);
-  fprintf (stderr, "CAE z = %g\n", z);
-
-  // SCHNEIDER
-  a = 1 +
-    1 / 49 *  log ((QUAD (W / h) + SQR (W / h / 52)) / 
-		   (QUAD (W / h) + 0.432)) + 
-    1 / 18.7 * log (1 + CUBIC (W / 18.1 / h));
-  b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
-  e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 * h / W, -a * b);
-  z = d / sqrt (e);
-  fprintf (stderr, "SCHNEIDER z = %g\n", z);
-
-  // HAMMERSTAD and JENSEN
-  a = 1 +
-    1 / 49 *  log ((QUAD (W / h) + SQR (W / h / 52)) / 
-		   (QUAD (W / h) + 0.432)) + 
-    1 / 18.7 * log (1 + CUBIC (W / 18.1 / h));
-  b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
-  e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 * h / W, -a * b);
-  f = 6 + (2 * M_PI - 6) * exp (- pow (30.666 * h / W, 0.7528));
-  d = Z0 / 2 / M_PI * log (f * h / W + sqrt (1 + SQR (2 * h / W)));
-  z = d / sqrt (e);
-  fprintf (stderr, "HAMMERSTAD z = %g\n", z);
+  e = er;
+  z = z0;
 
   // WHEELER
-  if (W / h < 3.3) {
-    c = log (4 * h / W + sqrt (SQR (4 * h / W) + 2));
-    z = c - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (2 * M_2_PI) / er);
-    z = z * Z0 / M_PI / sqrt (2 * (er + 1));
+  if (!strcmp (Model, "Wheeler")) {
+    nr_double_t a, b, c, d, x, dW1, dWr, Wr;
+
+    dW1 = t / M_PI * log (4 * M_E / sqrt (SQR (t / h) + 
+					  SQR (M_1_PI / (W / t + 1.10))));
+    dWr = (1 + 1 / er) / 2 * dW1;
+    Wr  = W + dWr;
+
+    if (W / h < 3.3) {
+      c = log (4 * h / Wr + sqrt (SQR (4 * h / Wr) + 2));
+      b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
+      z = (c - b) * Z0 / M_PI / sqrt (2 * (er + 1));
+    }
+    else {
+      c = 1 + log (M_PI_2) + log (Wr / h / 2 + 0.94);
+      d = M_1_PI / 2 * (1 + log (SQR (M_PI) / 16)) * (er - 1) / SQR (er);
+      x = 2 * M_LN2 / M_PI + Wr / h / 2 + (er + 1) / 2 / M_PI / er * c + d;
+      z = Z0 / 2 / x / sqrt (er);
+    }
+
+    if (W / h < 1.3) {
+      a = log (8 * h / Wr) + SQR (Wr / h) / 32;
+      b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
+      e = (er + 1) / 2 * SQR (a / (a - b));
+    }
+    else {
+      a = (er - 1) / 2 / M_PI / er * (log (2.1349 * Wr / h + 4.0137) - 
+				      0.5169 / er);
+      b = Wr / h / 2 + M_1_PI * log (8.5397 * Wr / h + 16.0547);
+      e = er * SQR ((b - a) / b);
+    }
+
+    fprintf (stderr, "WHEELER e = %g, z = %g\n", e, z);
   }
-  else {
-    c = 1.4516 + log (W / h / 2 + 0.94);
-    d = 0.0823 * (er - 1) / SQR (er);
-    x = 0.4413 + W / h / 2 + (er + 1) / 2 / M_PI / er * c + d;
-    z = Z0 / 2 /* 188.5 */ / x / sqrt (er);
-  }
-  fprintf (stderr, "WHEELER z = %g\n", z);
-  return z;
-}
-
-/* This function calculates the quasi-static value of the effective
-   dielectric constant for the given microstrip line properties. */
-nr_double_t msline::analyseEr (nr_double_t W, nr_double_t h, nr_double_t er) {
-
-  nr_double_t ereff, a, b, d, e;
-
-  /* these are valid for 0.05 < W/h < 10, 1 < er < 40 */
-
-  // often used in CAE
-  ereff = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 * h / W);
-  fprintf (stderr, "CAE er = %g\n", ereff);  
-
   // SCHNEIDER
-  a = 1 +
-    1 / 49 *  log ((QUAD (W / h) + SQR (W / h / 52)) / 
-		   (QUAD (W / h) + 0.432)) + 
-    1 / 18.7 * log (1 + CUBIC (W / 18.1 / h));
-  b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
-  ereff = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 * h / W, -a * b);
-  fprintf (stderr, "SCHNEIDER er = %g\n", ereff);
-
+  else if (!strcmp (Model, "Schneider")) {
+    nr_double_t c, d;
+    e = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 * h / W);
+    c = 6 + (2 * M_PI - 6) * exp (- pow (30.666 * h / W, 0.7528));
+    d = Z0 / 2 / M_PI * log (c * h / W + sqrt (1 + SQR (2 * h / W)));
+    z = d / sqrt (e);
+    fprintf (stderr, "SCHNEIDER e = %g, z = %g\n", e, z);
+  }
   // HAMMERSTAD and JENSEN
-  a = 1 +
-    1 / 49 *  log ((QUAD (W / h) + SQR (W / h / 52)) / 
-		   (QUAD (W / h) + 0.432)) + 
-    1 / 18.7 * log (1 + CUBIC (W / 18.1 / h));
-  b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
-  ereff = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 * h / W, -a * b);
-  fprintf (stderr, "HAMMERSTAD er = %g\n", ereff);
+  else if (!strcmp (Model, "Hammerstad")) {
+    nr_double_t a, b, du1, du, u, ur, u1, cr, c1, zr, z1;
 
-  // WHEELER
-  if (W / h < 1.3) {
-    a = log (7 * h / W) + 1 / 32 * SQR (W / h);
-    b = (er - 1) / (er + 1) / 2 * (0.4516 + 0.2416 / er);
-    ereff = (1 + er) / 2 * SQR (a / (a - b));
+    u = W / h;
+    du1 = t / M_PI * log (1 + 4 * M_E / t / SQR (coth (sqrt (6.517 * W / h))));
+    du = du1 * (1 + sech (sqrt (er - 1))) / 2;
+    u1 = u + du1;
+    ur = u + du;
+
+    cr = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / ur, 0.7528));
+    zr = Z0 / 2 / M_PI * log (cr / ur + sqrt (1 + SQR (2 / ur)));
+    c1 = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / u1, 0.7528));
+    z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + SQR (2 / u1)));
+    
+    a = 1 +
+      1 / 49 * log ((QUAD (ur) + SQR (ur / 52)) / (QUAD (ur) + 0.432)) + 
+      1 / 18.7 * log (1 + CUBIC (ur / 18.1));
+    b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
+    e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
+
+    z = zr / sqrt (e);
+    e = e * SQR (z1 / zr);
+
+    fprintf (stderr, "HAMMERSTAD e = %g, z = %g\n", e, z);
   }
-  else {
-    d = (er - 1) / 2 / M_PI / er * (log (2.1349 * W / h + 4.0137) - 0.5169/er);
-    e = W / h / 2 + M_1_PI * log (8.5397 * W / h + 16.0547);
-    ereff = er * SQR ((e - d) / e);
-  }
-  fprintf (stderr, "WHEELER er = %g\n", ereff);
-  
-  return ereff;
+
+  ZlEff = z;
+  ErEff = e;
 }
 
 /* This function calculates the frequency dependent value of the
-   effective dielectric constant and the line impedance for the given
-   frequency. */
-nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
-				       nr_double_t er, nr_double_t frequency,
-				       char * Model) {
+   effective dielectric constant and the microstrip line impedance for
+   the given frequency. */
+void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
+				nr_double_t frequency, char * Model) {
 
-  nr_double_t e, f, g, z, k;
+  nr_double_t e, z;
 
-  ZlEffFreq = ZlEff;
-  ErEffFreq = ErEff;
+  z = ZlEffFreq = ZlEff;
+  e = ErEffFreq = ErEff;
 
   // GETSINGER
   if (!strcmp (Model, "Getsinger")) {
@@ -232,8 +221,9 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
+    nr_double_t k, f;
     k = sqrt (ErEff / er);
-    f = f * h * frequency / C0 * sqrt (er - 1);
+    f = 4 * h * frequency / C0 * sqrt (er - 1);
     e = ErEff * SQR ((1 + SQR (f)) / (1 + k * SQR (f)));
     fprintf (stderr, "SCHNEIDER e = %g\n", e);
   }
@@ -264,6 +254,7 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
   }
   // PRAMANICK and BHARTIA
   else if (!strcmp (Model, "Pramanick")) {
+    nr_double_t k, f;
     k = ErEff / er;
     f = 2 * MU0 * h * frequency / ZlEff;
     e = ErEff * (1 + SQR (f)) / (1 + k * SQR (f));
@@ -271,6 +262,7 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
+    nr_double_t f, g;
     g = SQR (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / Z0);
     f = 2 * MU0 * h * frequency / ZlEff;
     e = er - (er - ErEff) / (1 + g * SQR (f));
@@ -318,5 +310,4 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
 
   ZlEffFreq = z;
   ErEffFreq = e;
-  return e;
 }

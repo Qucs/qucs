@@ -2541,25 +2541,43 @@ I_{3}\\
 \section{Quasi-static characteristic impedance}
 %\addcontentsline{toc}{section}{Quasi-static characteristic impedance}
 
-Harold A. Wheeler \cite{Wheeler2} formulated his analysis equations
-based upon a conformal mapping of the dielectric boundary with
-parallel conductor strips separated by a dielectric sheet.
+Harold A. Wheeler \cite{Wheeler2} formulated his synthesis and
+analysis equations based upon a conformal mapping's approximation of
+the dielectric boundary with parallel conductor strips separated by a
+dielectric sheet.
 
 \addvspace{12pt}
 
-For wide strips he obtains the approximation
+For wide strips ($W/h > 3.3$) he obtains the approximation
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
 \frac{Z_{F0}}{2\sqrt{\varepsilon_{r}}}\cdot\frac{1}{\dfrac{W}{2h} + \dfrac{1}{\pi}\ln{4} + \dfrac{\varepsilon_{r} + 1}{2\pi \varepsilon_{r}} \ln{\dfrac{\pi e}{2}\left(\dfrac{W}{2h} + 0.94\right)} + \dfrac{\varepsilon_{r} - 1}{2\pi \varepsilon_{r}^{2}}\cdot \ln{\dfrac{e\pi^{2}}{16}}}
 \end{equation}
 
-For narrow strips he obtains the approximation
+For narrow strips ($W/h < 3.3$) he obtains the approximation
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
-\frac{Z_{F0}}{\pi \sqrt{2 \left(\varepsilon_{r} + 1\right)}} \cdot \left(\ln{\frac{8h}{W}} + \frac{1}{8}\left(\frac{W}{2h}\right)^{2} - \frac{1}{2}\cdot \frac{\varepsilon_{r} - 1}{\varepsilon_{r} + 1}\left(\ln{\frac{\pi}{2}} + \frac{1}{\varepsilon_{r}} \ln{\frac{4}{\pi}}\right)\right)
+\frac{Z_{F0}}{\pi \sqrt{2 \left(\varepsilon_{r} + 1\right)}} \cdot \left(\ln{\left(\frac{4h}{W} + \sqrt{\left(\frac{4h}{W}\right)^{2} + 2}\right)} - \frac{1}{2}\cdot \frac{\varepsilon_{r} - 1}{\varepsilon_{r} + 1}\left(\ln{\frac{\pi}{2}} + \frac{1}{\varepsilon_{r}} \ln{\frac{4}{\pi}}\right)\right)
 \end{equation}
 
-Hammerstad and Jensen \cite{Hammerstad}:
+\begin{figure}[ht]
+\begin{center}
+\psfrag{impedance ZL in Ohm}{$\mathrm{\text{impedance }Z_{L}\text{ in }[\ohm]}$}
+\psfrag{normalised strip width W/h}{normalised strip width W/h}
+\includegraphics[width=0.95\linewidth]{mszl}
+\end{center}
+\caption{characteristic impedance as approximated by Wheeler for different $\varepsilon_{r}$ values}
+\label{fig:mszl}
+\end{figure}
+\FloatBarrier
+
+The equations for the single microstrip line presented by
+E. Hammerstad and O. Jensen \cite{Hammerstad} are based upon an
+equation for the impedance of microstrip in an homogeneous medium and
+an equation for the microstrip effective dielectric constant.  The
+obtained accuracy gives errors at least less than those caused by
+physical tolerances and is better than $0.01\%$ for $W/h \le 1$ and
+$0.03\%$ for $W/h \le 1000$.
 
 \begin{equation}
 Z_{L}\left(W, h, \varepsilon_{r}\right) =
@@ -2573,20 +2591,12 @@ f_{u} &= 6 + \left(2\pi - 6\right)\cdot\exp{\left(-\left(30.666\cdot\frac{h}{W}\
 
 \begin{figure}[ht]
 \begin{center}
-\begin{minipage}[t]{0.49\linewidth}
-\psfrag{___impedance ZL in Ohm}{$\mathrm{\text{impedance }Z_{L}\text{ in }[\ohm]}$}
-\psfrag{_____normalised strip width W/h}{normalised strip width W/h}
-\includegraphics[width=\linewidth]{mszl}
-\caption{characteristic impedance}
-\end{minipage}
-\begin{minipage}[t]{0.49\linewidth}
-\psfrag{___impedance ZL in Ohm}{$\mathrm{\text{impedance }Z_{L}\text{ in }[\ohm]}$}
-\psfrag{_____normalised strip width W/h}{normalised strip width W/h}
-\includegraphics[width=\linewidth]{mscomparezl}
-\caption{characteristic impedance}
-\end{minipage}
+\psfrag{deviation of impedance ZL in \%}{$\mathrm{\text{deviation of impedance }Z_{L}\text{ in }[\%]}$}
+\psfrag{normalised strip width W/h}{normalised strip width W/h}
+\includegraphics[width=0.95\linewidth]{mscomparezl}
 \end{center}
-\label{fig:mszl}
+\caption{characteristic impedance in comparison for $\varepsilon_{r} = 9.8$}
+\label{fig:mscomparezl}
 \end{figure}
 \FloatBarrier
 

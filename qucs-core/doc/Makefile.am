@@ -4,7 +4,7 @@
 #
 # Automake input file.
 #
-# Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,10 @@
 #
 
 EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
-  $(PSFILES)
+  $(PSFILES) $(MATHFILES)
 
-CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi
+CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
+  $(MPSFILES)
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps
 
@@ -36,7 +37,10 @@ DVIPS = dvips
 PS2EPS = ps2eps
 EPSTOPDF = epstopdf
 FIG2DEV = fig2dev
+OCTAVE = octave
 
+MATHFILES = mszl.m mscomparezl.m
+MPSFILES = $(MATHFILES:.m=.eps)
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
   actrafo.fig opamp.fig gyrator.fig msline.fig
@@ -45,7 +49,7 @@ EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
 BIBFILE = $(srcdir)/literature.bib
 
-technical.dvi: $(EPSFILES) $(PSFILES)
+technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
 %.dvi: %.tex $(BIBFILE)
 	$(LATEX) $<
@@ -64,6 +68,9 @@ technical.dvi: $(EPSFILES) $(PSFILES)
 
 %.pdf: %.fig
 	$(FIG2DEV) -L pdf $< > $@
+
+%.eps: %.m
+	$(OCTAVE) $<
 
 %.ps: %.dvi
 	$(DVIPS) $< -o $@

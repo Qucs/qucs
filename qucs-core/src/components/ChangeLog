@@ -1,3 +1,9 @@
+2004-05-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Implemented influence of finite strip
+	thickness 't' on quasi-static impedance and effective relative
+	dielectric constant for Wheeler and Hammerstad equations.
+
 2004-05-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp: Added dispersion terms, dielectrical
