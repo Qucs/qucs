@@ -531,10 +531,10 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "ort") c = new SubCirPort();
         else if(cstr == "Shift") c = new Phaseshifter();
         break;
-  case 'S' : if(cstr.left(7) == "Pfile") {
-	       c = new SParamFile(cstr.mid(7).toInt()); }
-        else if(cstr.left(4) == "ub") {
-	       c = new Subcircuit(cstr.mid(4).toInt()); }
+  case 'S' : if(cstr.left(5) == "Pfile") {
+	       c = new SParamFile(cstr.mid(5).toInt()); }
+        else if(cstr.left(2) == "ub") {
+	       c = new Subcircuit(cstr.mid(2).toInt()); }
         else if(cstr == "UBST") c = new Substrate();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
