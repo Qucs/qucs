@@ -78,6 +78,8 @@
 #include "ampere_noise.h"
 #include "vpulse.h"
 #include "ipulse.h"
+#include "vrect.h"
+#include "irect.h"
 
 
 #endif

@@ -43,6 +43,13 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
   ProgText->setMinimumSize(400,80);
   wasLF = false;
 
+  QHBox *HGroup = new QHBox(this);
+  HGroup->setMargin(5);
+  HGroup->setSpacing(5);
+  all->addWidget(HGroup);
+  new QLabel(tr("Progress:"), HGroup);
+  SimProgress = new QProgressBar(HGroup);
+
   QVGroupBox *Group2 = new QVGroupBox(tr("Errors and Warnings:"),this);
   all->addWidget(Group2);
 
@@ -93,26 +100,34 @@ void SimMessage::slotDisplayMsg()
 {
   int i, Para;
   QString s = QString(SimProcess.readStdout());
-
+//qDebug(s);
   while((i = s.find('\r')) >= 0) {
+    Para = ProgText->paragraphs()-1;
     if(wasLF) {
-      Para = ProgText->paragraphs()-1;
-      ProgText->setSelection(Para, 0, Para, ProgText->paragraphLength(Para));
-      ProgText->removeSelectedText();
+      ProgressText += s.left(i-1);
     }
-    ProgText->insert(s.left(i-1));
+    else {
+      ProgressText = ProgText->text(Para) + s.left(i-1);
+      ProgText->removeParagraph(Para);  // remove last text line
+    }
     s = s.mid(i+1);
+    Para = ProgressText.length()-11;
+    Para = 10*int(ProgressText.at(Para).latin1()-'0') +
+	      int(ProgressText.at(Para+1).latin1()-'0');
+    if(Para < 0)  Para += 160;
+    SimProgress->setProgress(Para, 100);
+    ProgressText = "";
     wasLF = true;
   }
   if(s.length() < 1)  return;
 
   if(wasLF) {
-    Para = ProgText->paragraphs()-1;
-    ProgText->setSelection(Para, 0, Para, ProgText->paragraphLength(Para));
-    ProgText->removeSelectedText();
+    if(ProgressText.find('\n') >= 0) {
+      ProgText->insert(ProgressText);
+      wasLF = false;
     }
-  ProgText->insert(s);
-  wasLF = false;
+  }
+  else  ProgText->insert(s);
 }
 
 // ------------------------------------------------------------------------
