@@ -1,0 +1,8 @@
+Makefile
+Makefile.in
+.deps
+*.output
+scan_spice.cpp
+tokens_spice.h
+parse_spice.cpp
+qucsconv

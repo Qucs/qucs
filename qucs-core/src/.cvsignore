@@ -1,0 +1,14 @@
+Makefile
+Makefile.in
+.deps
+qucsator
+*.output
+scan_dataset.cpp
+parse_dataset.cpp
+scan_netlist.cpp
+parse_netlist.cpp
+scan_touchstone.cpp
+parse_touchstone.cpp
+tokens_dataset.h
+tokens_netlist.h
+tokens_touchstone.h
