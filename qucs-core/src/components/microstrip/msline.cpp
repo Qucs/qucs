@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.6 2004-05-07 18:34:22 ela Exp $
+ * $Id: msline.cpp,v 1.7 2004-05-08 09:10:56 ela Exp $
  *
  */
 
@@ -209,6 +209,12 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
   e = ErEff * (1 + k * SQR (f)) / (1 + g * SQR (f));
   fprintf (stderr, "GETSINGER2 e = %g\n", e);
 
+  // SCHNEIDER
+  k = sqrt (ErEff / er);
+  f = f * h * frequency / C0 * sqrt (er - 1);
+  e = ErEff * SQR ((1 + SQR (f)) / (1 + k * SQR (f)));
+  fprintf (stderr, "SCHNEIDER e = %g\n", e);
+
   // YAMASHITA
   k = sqrt (er / ErEff);
   f = pow (4, 1.0 / 3.0) * h * frequency / C0 * sqrt (er - 1) *
@@ -222,6 +228,12 @@ nr_double_t msline::analyseDispersion (nr_double_t W, nr_double_t h,
   f = 2 * M_PI * h * frequency / C0 * (1 + W / h) * sqrt (er - ErEff) / d;
   e = ErEff * SQR ((1 + SQR (f)) / (1 + k * SQR (f)));
   fprintf (stderr, "KOBAYASHI e = %g\n", e);
+
+  // PRAMANICK and BHARTIA
+  k = ErEff / er;
+  f = 2 * MU0 * h * frequency / ZlEff;
+  e = ErEff * (1 + SQR (f)) / (1 + k * SQR (f));
+  fprintf (stderr, "PRAMANICK e = %g\n", e);
 
   // HAMMERSTAD and JENSEN
   g = SQR (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / MU0);
