@@ -215,6 +215,7 @@ bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
   if(g->Points != 0) { delete[] g->Points;  g->Points = 0; }
+  g->cPoints.clear();
   if(g->Line.isEmpty()) return false;
 
   QFile file(fileName);
@@ -253,7 +254,6 @@ bool Diagram::loadVarData(const QString& fileName)
 
   if(i <= 0)  return false;   // return if data name was not found
   g->IndepVar = tmp;    // name of independet variable (could be empty!)
-  g->cPoints.clear();
 
   int counting = 0;
   bool ok;
@@ -287,9 +287,6 @@ bool Diagram::loadVarData(const QString& fileName)
     Line = FileString.mid(i, j-i);
   }
 
-  g->Points = new int[2*counting];    // create memory for points
-  g->count  = counting;
-
   if(g->IndepVar.isEmpty()) {     // create independent variable by myself ?
     g->IndepVar = "number";
 
@@ -302,11 +299,12 @@ bool Diagram::loadVarData(const QString& fileName)
     xmax = double(counting);
   }
   else  if(loadIndepVarData(g->IndepVar, FileString) <= 0) {  // get independent variable
-          delete[] g->Points;
-          g->Points = 0;
-          g->cPoints.clear();
+          g->cPoints.clear();        // failed to load independent variable
           return false;
         }
+
+  g->Points = new int[2*counting];    // create memory for points
+  g->count  = counting;
 
   return true;
 }
