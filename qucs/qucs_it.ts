@@ -1963,6 +1963,14 @@ Wrong &apos;component&apos; line format!</source>
         <source>channel-length modulation parameter in 1/V</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>bipolar junction transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bipolar junction transistor with substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
