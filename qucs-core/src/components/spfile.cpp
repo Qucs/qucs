@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.11 2004-09-12 14:09:19 ela Exp $
+ * $Id: spfile.cpp,v 1.12 2004-09-25 21:09:46 ela Exp $
  *
  */
 
@@ -482,4 +482,21 @@ complex spfile::interpolate_lin (vector * dep, vector * var, nr_double_t x,
     return polar (f1, f2);
   }
   return 0;
+}
+
+void spfile::initDC (void) {
+  clearY ();
+}
+
+void spfile::initAC (void) {
+  initSP ();
+}
+
+void spfile::calcAC (nr_double_t frequency) {
+  // nothing to do if the given file type had errors
+  if (index == NULL || sfreq == NULL) return;
+  // calculate interpolated S-parameters
+  calcSP (frequency);
+  // convert S-parameters to Y-parameters
+  setMatrixY (stoy (getMatrixS ()));
 }

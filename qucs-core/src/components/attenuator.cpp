@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.10 2004-09-16 10:15:10 ela Exp $
+ * $Id: attenuator.cpp,v 1.11 2004-09-25 21:09:46 ela Exp $
  *
  */
 
@@ -68,19 +68,23 @@ void attenuator::calcNoise (nr_double_t) {
 }
 
 void attenuator::initDC (void) {
-  clearY ();
-  setVoltageSources (2);
-}
-
-void attenuator::calcDC (void) {
   nr_double_t a = getPropertyDouble ("L");
-  nr_double_t z = getPropertyDouble ("Zref");
-  nr_double_t z11 = z * (a + 1) / (a - 1);
-  nr_double_t z21 = z * (sqrt (a) * 2) / (a - 1);
-  setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
-  setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0); 
-  setD (1, 1, +z11); setD (2, 2, +z11); setD (1, 2, +z21); setD (2, 1, +z21);
-  setE (1, +0.0); setE (2, +0.0);
+  clearY ();
+
+  if (a == 1.0) { // no attenuation
+    voltageSource (1, 1, 2);
+    setVoltageSources (1);
+  }
+  else { // compute Z-parameters
+    setVoltageSources (2);
+    nr_double_t zref = getPropertyDouble ("Zref");
+    nr_double_t z11 = zref * (a + 1) / (a - 1);
+    nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);
+    setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
+    setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0);
+    setD (1, 1, +z11); setD (2, 2, +z11); setD (1, 2, +z21); setD (2, 1, +z21);
+    setE (1, +0.0); setE (2, +0.0);
+  }
 }
 
 void attenuator::initAC (void) {
@@ -91,8 +95,8 @@ void attenuator::initAC (void) {
     voltageSource (1, 1, 2);
     setVoltageSources (1);
   }
-  else {
-    // compute Z-parameters
+  else { // compute Z-parameters
+    setVoltageSources (0);
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
     nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);

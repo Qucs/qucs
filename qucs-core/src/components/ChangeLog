@@ -1,5 +1,16 @@
 2004-09-25  Stefan Jahn  <stefan@lkcc.org>
 
+	* vnoise.cpp: Implemented AC and transient analysis
+	functionality.
+
+	* phaseshifter.cpp: Allow zero phase shift during AC
+	analysis.
+
+	* devices/mosfet.cpp, vcvs.cpp, vccs.cpp, trafo.cpp, strafo.cpp,
+	spfile.cpp, ccvs.cpp, cccs.cpp: Implemented AC functionality.
+
+	* attenuator.cpp: Allow no attenuation during DC analysis.
+
 	* devices/jfet.cpp, devices/diode.cpp: Implemented AC and
 	transient analysis functionality.
 

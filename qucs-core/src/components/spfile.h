@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.h,v 1.6 2004-09-12 14:09:19 ela Exp $
+ * $Id: spfile.h,v 1.7 2004-09-25 21:09:46 ela Exp $
  *
  */
 
@@ -43,6 +43,9 @@ class spfile : public circuit
   void initSP (void);
   void calcSP (nr_double_t);
   void calcNoise (nr_double_t);
+  void initDC (void);
+  void initAC (void);
+  void calcAC (nr_double_t);
   void createIndex (void);
   complex interpolate (vector *, vector *, nr_double_t);
   complex interpolate_lin (vector *, vector *, nr_double_t, int);

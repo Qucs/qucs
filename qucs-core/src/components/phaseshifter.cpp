@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.5 2004-09-20 10:09:55 ela Exp $
+ * $Id: phaseshifter.cpp,v 1.6 2004-09-25 21:09:46 ela Exp $
  *
  */
 
@@ -62,11 +62,17 @@ void phaseshifter::initDC (void) {
 }
 
 void phaseshifter::initAC (void) {
-  setVoltageSources (0);
   nr_double_t p = rad (getPropertyDouble ("phi"));
-  nr_double_t z = getPropertyDouble ("Zref");
-  nr_double_t y11 = -1 / z / tan (p);
-  nr_double_t y21 = -1 / z / sin (p);
-  setY (1, 1, rect (0, y11)); setY (2, 2, rect (0, y11));
-  setY (1, 2, rect (0, y21)); setY (2, 1, rect (0, y21));
+
+  if (p == 0.0) { // no phase shift, thus a short
+    initDC ();
+  }
+  else { // compute Y-parameters directly
+    setVoltageSources (0);
+    nr_double_t z = getPropertyDouble ("Zref");
+    nr_double_t y11 = -1 / z / tan (p);
+    nr_double_t y21 = -1 / z / sin (p);
+    setY (1, 1, rect (0, y11)); setY (2, 2, rect (0, y11));
+    setY (1, 2, rect (0, y21)); setY (2, 1, rect (0, y21));
+  }
 }

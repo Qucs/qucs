@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.8 2004-09-12 14:09:20 ela Exp $
+ * $Id: mosfet.cpp,v 1.9 2004-09-25 21:09:46 ela Exp $
  *
  */
 
@@ -57,6 +57,10 @@ mosfet::mosfet () : circuit (4) {
 }
 
 void mosfet::calcSP (nr_double_t frequency) {
+  setMatrixS (ytos (calcMatrixY (frequency)));
+}
+
+matrix& mosfet::calcMatrixY (nr_double_t frequency) {
 
   // fetch computed operating points
   nr_double_t Cgd = getOperatingPoint ("Cgd");
@@ -79,25 +83,25 @@ void mosfet::calcSP (nr_double_t frequency) {
   complex Ygb = rect (0.0, 2.0 * M_PI * frequency * Cgb);
 
   // build admittance matrix and convert it to S-parameter matrix
-  matrix y = matrix (4);
-  y.set (NODE_G, NODE_G, Ygd + Ygs + Ygb);
-  y.set (NODE_G, NODE_D, -Ygd);
-  y.set (NODE_G, NODE_S, -Ygs);
-  y.set (NODE_G, NODE_B, -Ygb);
-  y.set (NODE_D, NODE_G, gm - Ygd);
-  y.set (NODE_D, NODE_D, Ygd + Yds + Ybd - DrainControl);
-  y.set (NODE_D, NODE_S, -Yds - SourceControl);
-  y.set (NODE_D, NODE_B, -Ybd + gmb);
-  y.set (NODE_S, NODE_G, -Ygs - gm);
-  y.set (NODE_S, NODE_D, -Yds + DrainControl);
-  y.set (NODE_S, NODE_S, Ygs + Yds + Ybs + SourceControl);
-  y.set (NODE_S, NODE_B, -Ybs - gmb);
-  y.set (NODE_B, NODE_G, -Ygb);
-  y.set (NODE_B, NODE_D, -Ybd);
-  y.set (NODE_B, NODE_S, -Ybs);
-  y.set (NODE_B, NODE_B, Ybd + Ybs + Ygb);
+  matrix * y = new matrix (4);
+  y->set (NODE_G, NODE_G, Ygd + Ygs + Ygb);
+  y->set (NODE_G, NODE_D, -Ygd);
+  y->set (NODE_G, NODE_S, -Ygs);
+  y->set (NODE_G, NODE_B, -Ygb);
+  y->set (NODE_D, NODE_G, gm - Ygd);
+  y->set (NODE_D, NODE_D, Ygd + Yds + Ybd - DrainControl);
+  y->set (NODE_D, NODE_S, -Yds - SourceControl);
+  y->set (NODE_D, NODE_B, -Ybd + gmb);
+  y->set (NODE_S, NODE_G, -Ygs - gm);
+  y->set (NODE_S, NODE_D, -Yds + DrainControl);
+  y->set (NODE_S, NODE_S, Ygs + Yds + Ybs + SourceControl);
+  y->set (NODE_S, NODE_B, -Ybs - gmb);
+  y->set (NODE_B, NODE_G, -Ygb);
+  y->set (NODE_B, NODE_D, -Ybd);
+  y->set (NODE_B, NODE_S, -Ybs);
+  y->set (NODE_B, NODE_B, Ybd + Ybs + Ygb);
 
-  setMatrixS (ytos (y));
+  return *y;
 }
 
 void mosfet::calcNoise (nr_double_t frequency) {
@@ -549,4 +553,12 @@ void mosfet::calcOperatingPoints (void) {
   setOperatingPoint ("Cgs", Cgs);
   setOperatingPoint ("Cgd", Cgd);
   setOperatingPoint ("Cgb", Cgb);
+}
+
+void mosfet::initAC (void) {
+  initSP ();
+}
+
+void mosfet::calcAC (nr_double_t frequency) {
+  setMatrixY (calcMatrixY (frequency));
 }

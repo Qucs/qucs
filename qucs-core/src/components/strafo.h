@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.h,v 1.4 2004-02-17 15:30:58 ela Exp $
+ * $Id: strafo.h,v 1.5 2004-09-25 21:09:46 ela Exp $
  *
  */
 
@@ -30,7 +30,8 @@ class strafo : public circuit
  public:
   strafo ();
   void calcSP (nr_double_t);
-  void calcDC (void);
+  void initDC (void);
+  void initAC (void);
 };
 
 #endif /* __STRAFO_H__ */
