@@ -24,8 +24,6 @@
 
 noinst_LIBRARIES = libdiagrams.a
 
-INCLUDES = $(QINCLUDES)
-
 MOCHEADERS = diagramdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
@@ -34,6 +32,8 @@ libdiagrams_a_SOURCES = tabdiagram.cpp smithdiagram.cpp rectdiagram.cpp       \
 
 noinst_HEADERS = $(MOCHEADERS) diagram.h graph.h polardiagram.h rectdiagram.h \
   smithdiagram.h tabdiagram.h diagrams.h 
+
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<

@@ -1,3 +1,9 @@
+2004-01-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* paintings/Makefile.am, diagrams/Makefile.am,
+	components/Makefile.am (INCLUDES): Fixed include path for
+	X headers and Qt headers.
+
 2004-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* fileshowdialog.cpp, settingsdialog.cpp: Added translatable 

@@ -34,7 +34,7 @@ libpaintings_a_SOURCES = rectangle.cpp painting.cpp linedialog.cpp arrow.cpp  \
 noinst_HEADERS = $(MOCHEADERS) arrow.h ellipse.h graphicline.h graphictext.h  \
   painting.h paintings.h rectangle.h 
 
-INCLUDES = $(QINCLUDES)
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
