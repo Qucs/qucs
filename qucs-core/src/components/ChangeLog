@@ -1,3 +1,16 @@
+2004-07-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/device.cpp: Made all public functions 'friend'.
+	Added pnCurrent(), pnConductance() and pnCapacitance()
+	functionality because this is used very often in non-linear
+	devices.  Changed all callers of new 'friend' functions.
+
+	* devices/bjt.cpp: Corrected DC model of SGP BJT device.  
+	Approved that the implemented model is equivalent to the
+	Spice model.  Interpreting zero as infinity for those
+	model parameters having an infinity default.  Setting up
+	operating points for S-parameter analysis.
+
 2004-07-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/bjt.cpp: Implemented some of the operating points

@@ -4346,9 +4346,28 @@ Tr & $T_R$ & ideal reverse transit time & $\second$ & $0.0$\\
 \subsection{Large signal model}
 %\addcontentsline{toc}{subsection}{Large signal model}
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=1\linewidth]{sgp}
+\end{center}
+\caption{bipolar transistor symbol and large signal model for vertical device}
+\label{fig:bjt}
+\end{figure}
+\FloatBarrier
+
+The SGP model is basically a transport model, i.e. the voltage
+dependent ideal transfer currents (forward $I_F$ and backward $I_R$)
+are reference currents in the model.  The ideal base current parts are
+defined dependent on the ideal transfer currents.  The ideal forward
+transfer current starts flowing when applying a positive control
+voltage at the base-emitter junction.  It is defined by:
 \begin{equation}
 I_F = I_S\cdot \left(e^{\frac{V_{BE}}{N_F\cdot V_T}} -1\right)
 \end{equation}
+
+The ideal base current components are defined by the ideal transfer
+currents.  The non-ideal components are independently defined by
+dedicated saturation currents and emission coefficients.
 
 \begin{align}
 I_{BEI} &= \frac{I_F}{B_F} &
@@ -4359,12 +4378,21 @@ g_{BEN} &= \frac{\partial I_{BEN}}{\partial V_{BE}} = \frac{I_{SE}}{N_E\cdot V_T
 
 \begin{align}
 I_{BE} &= I_{BEI} + I_{BEN}\\
-g_{\mu} &= g_{BEI} + g_{BEN}
+g_{\pi} = g_{BE} &= g_{BEI} + g_{BEN}
 \end{align}
+
+The ideal backward transfer current arises when applying a positive
+control voltage at the base-collector junction (e.g. in the active
+inverse mode).  It is defined by:
 
 \begin{equation}
 I_R = I_S\cdot \left(e^{\frac{V_{BC}}{N_R\cdot V_T}} -1\right)
 \end{equation}
+
+Again, the ideal base current component through the base-collector
+junction is defined in reference to the ideal backward transfer
+current and the non-ideal component is defined by a dedicated
+saturation current and emission coefficient.
 
 \begin{align}
 I_{BCI} &= \frac{I_R}{B_R} &
@@ -4375,51 +4403,129 @@ g_{BCN} &= \frac{\partial I_{BCN}}{\partial V_{BC}} = \frac{I_{SC}}{N_C\cdot V_T
 
 \begin{align}
 I_{BC} &= I_{BCI} + I_{BCN}\\
-g_{\pi} &= g_{BCI} + g_{BCN}
+g_{\mu} = g_{BC} &= g_{BCI} + g_{BCN}
 \end{align}
 
+With these definitions it is possible to calculate the overall base
+current flowing into the device using all the base current components.
+\begin{equation}
+I_B = I_{BE} + I_{BC} = I_{BEI} + I_{BEN} + I_{BCI} + I_{BCN}
+\end{equation}
+
+The overall transfer current $I_T$ can be calculated using the
+normalized base charge $Q_B$ and the ideal forward and backward
+transfer currents.
+\begin{equation}
+I_T = I_{TF} - I_{TR} = \dfrac{I_F - I_R}{Q_B}
+\end{equation}
+
+The normalized base charge $Q_B$ has no dimension and has the value
+$1$ for $V_{BE} = V_{BC} = 0$.  It is used to model two effects: the
+influence of the base width modulation on the transfer current (Early
+effect) and the ideal transfer currents deviation at high currents,
+i.e. the decreasing current gain at high currents.
+\begin{equation}
+Q_B = \frac{Q_1}{2} \cdot \left(1 + \sqrt{1 + 4\cdot Q_2}\right)
+\end{equation}
+
+The $Q_1$ term is used to describe the Early effect and $Q_2$ is
+responsible for the high current effects.
 \begin{equation}
 Q_1 = \frac{1}{1 - \dfrac{V_{BC}}{V_{AF}} - \dfrac{V_{BE}}{V_{AR}}}
 \;\;\;\; \text{ and } \;\;\;\;
 Q_2 = \frac{I_F}{I_{KF}} + \frac{I_R}{I_{KR}}
 \end{equation}
 
+The forward transconductance $g_{mf}$ of the forward transfer current
+$I_{TF}$ is obtained by derivating $I_{TF}$ from $V_{BE}$.  The
+reverse transconductance $g_{mr}$ can be calculated by derivating
+$I_{TR}$ from $V_{BC}$.
+\begin{align}
+\label{eq:SGPgmf}
+g_{mf} &= \frac{\partial I_{TF}}{\partial V_{BE}} = \frac{1}{Q_B}\cdot\left(g_{IF} - \frac{I_F}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BE}}\right)\\
+\label{eq:SGPgmr}
+g_{mr} &= \frac{\partial I_{TR}}{\partial V_{BC}} = \frac{1}{Q_B}\cdot\left(g_{IR} - \frac{I_R}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BC}}\right)
+\end{align}
+
+With $g_{IF}$ being the forward transconductance of the ideal forward
+transfer current and $g_{IR}$ being the reverse transconductance of
+the ideal backward transfer current.
+\begin{align}
+g_{IF} &= \frac{\partial I_F}{\partial V_{BE}} = g_{BEI}\cdot B_F\\
+g_{IR} &= \frac{\partial I_R}{\partial V_{BC}} = g_{BCI}\cdot B_R
+\end{align}
+
+Furthermore the SGP model defines the output conductance $g_0$ and the
+transconductance value $g_m$.  Thus the SPICE simulator is able to
+compute the BJT circuit using a single voltage controlled current
+source.  These definitions are given here.
 \begin{equation}
-Q_B = \frac{Q_1}{2} \cdot \left(1 + \sqrt{1 + 4\cdot Q_2}\right)
+\begin{split}
+g_0 &= - \dfrac{\partial I_{T}}{\partial V_{BC}} = \dfrac{\partial I_{TR}}{\partial V_{BC}} - \dfrac{\partial I_{TF}}{\partial V_{BC}} = g_{mr} + \dfrac{1}{Q_B}\cdot\left(\dfrac{I_F}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)\\
+&= \dfrac{1}{Q_B}\cdot\left(g_{IR} + \dfrac{\left(I_F - I_R\right)}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right) = \dfrac{1}{Q_B}\cdot\left(g_{IR} + I_{T}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)
+\end{split}
+\label{eq:SGPg0}
 \end{equation}
 
+\begin{equation}
+\begin{split}
+g_m &= \dfrac{\partial I_{T}}{\partial V_{BE}} + \dfrac{\partial I_{T}}{\partial V_{BC}} = \dfrac{\partial I_{TF}}{\partial V_{BE}} - \dfrac{\partial I_{TR}}{\partial V_{BE}} - g_0 = g_{mf} + \dfrac{1}{Q_B}\cdot\left(\dfrac{I_R}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0\\
+&= g_{mf} - g_{mr} + \dfrac{1}{Q_B}\cdot\left(\dfrac{I_R}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - \dfrac{1}{Q_B}\cdot\left(\dfrac{I_F}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BC}}\right)\\
+&= \dfrac{1}{Q_B}\cdot\left(g_{IF} - \dfrac{\left(I_F - I_R\right)}{Q_B}\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0 = \dfrac{1}{Q_B}\cdot\left(g_{IF} - I_T\cdot\dfrac{\partial Q_B}{\partial V_{BE}}\right) - g_0
+\end{split}
+\label{eq:SGPgm}
+\end{equation}
+
+The remaining derivatives in eq. \eqref{eq:SGPgmf}, \eqref{eq:SGPgmr},
+\eqref{eq:SGPg0} and \eqref{eq:SGPgm} can be written as
 \begin{align}
 \frac{\partial Q_B}{\partial V_{BE}} &= Q_1\cdot \left(\frac{Q_B}{V_{AR}} + \frac{g_{IF}}{I_{KF}\cdot \sqrt{1 + 4\cdot Q_2}}\right)\\
 \frac{\partial Q_B}{\partial V_{BC}} &= Q_1\cdot \left(\frac{Q_B}{V_{AF}} + \frac{g_{IR}}{I_{KR}\cdot \sqrt{1 + 4\cdot Q_2}}\right)
 \end{align}
 
-\begin{align}
-g_{mf} &= \frac{1}{Q_B}\cdot\left(g_{IF} - \frac{I_F}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BE}}\right)\\
-g_o = g_{mr} &= \frac{1}{Q_B}\cdot\left(g_{IR} - \frac{I_R}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BC}}\right)\\
-g_m &= g_{mf} - g_{mr}
-\end{align}
-
+For the calculation of the bias dependent base resistance $R_{BB'}$
+there are two different ways within the SGP model.  If the model
+parameter $I_{RB}$ is not given it is determined by the normalized
+base charge $Q_B$.  Otherwise $I_{RB}$ specifies the base current at
+which the base resistance drops half way to the minimum (i.e. the
+constant component) base resistance $R_{Bm}$.
 \begin{equation}
+R_{BB'} =
 \begin{cases}
 \begin{array}{ll}
-R_{BB'} = R_{Bm} + \dfrac{R_B - R_{Bm}}{Q_B} & \text{ for } I_{RB} = \infty\\
-R_{BB'} = R_{Bm} + 3\cdot \left(R_B - R_{Bm}\right)\cdot \dfrac{\tan{z} - z}{z\cdot \tan^2{z}} & \text{ for } I_{RB} \neq \infty\\
+R_{Bm} + \dfrac{R_B - R_{Bm}}{Q_B} & \text{ for } I_{RB} = \infty\\
+R_{Bm} + 3\cdot \left(R_B - R_{Bm}\right)\cdot \dfrac{\tan{z} - z}{z\cdot \tan^2{z}} & \text{ for } I_{RB} \neq \infty\\
 \end{array}
 \end{cases}
 \end{equation}
-
 \begin{equation}
-I_B = I_{BE} + I_{BC} = I_{BEI} + I_{BEN} + I_{BCI} + I_{BCN}
-\end{equation}
-\begin{equation}
+\text{ with } \;\;\;\;
 z = \frac{\sqrt{1 + \dfrac{144}{\pi^2}\cdot\dfrac{I_B}{I_{RB}}} -1}{\dfrac{24}{\pi^2}\cdot\sqrt{\dfrac{I_B}{I_{RB}}}}
 \end{equation}
 
+As already mentioned there are two possible ways to compute the MNA
+matrix of the SGP model.  One using a single voltage controlled
+current source with an accompanied output conductance and the other
+using two independent voltage controlled current sources.  Both
+possibilities are equivalent.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{dcsgp_spice}
+\end{center}
+\caption{accompanied DC model of intrinsic BJT in SPICE}
+\label{fig:dcsgp_spice}
+\end{figure}
+\FloatBarrier
+
+With the accompanied DC model shown in fig. \ref{fig:dcsgp_spice} it
+is possible to build the complete MNA matrix of the intrinsic BJT and
+the current vector.
 \begin{equation}
 \begin{bmatrix}
-g_{\mu} + g_{\pi} & -g_{\pi} & -g_{\mu} & 0\\
--g_{\pi} + g_{m} & g_{o} + g_{\pi} & -g_{o} - g_{m} & 0\\
--g_{\mu} - g_{m} & -g_{o} & g_{\mu} + g_{o} + g_{m} & 0\\
+g_{\mu} + g_{\pi} & -g_{\mu} & -g_{\pi} & 0\\
+-g_{\mu} + g_{m} & g_{0} + g_{\mu} & -g_{0} - g_{m} & 0\\
+-g_{\pi} - g_{m} & -g_{0} & g_{\pi} + g_{0} + g_{m} & 0\\
 0 & 0 & 0 & 0\\
 \end{bmatrix}
 \cdot
@@ -4439,13 +4545,57 @@ V_{S}\\
 \end{equation}
 
 \begin{align}
-I_{BE_{eq}} &= I_{BE} - g_{\mu} \cdot V_{BE}\\
-I_{BC_{eq}} &= I_{BC} - g_{\pi} \cdot V_{BC}\\
-I_{CE_{eq}} &= I_{CE} - g_{m} \cdot V_{BE} - g_{o} \cdot V_{CE}
+I_{BE_{eq}} &= I_{BE} - g_{\pi} \cdot V_{BE}\\
+I_{BC_{eq}} &= I_{BC} - g_{\mu} \cdot V_{BC}\\
+I_{CE_{eq}} &= I_{T} - g_{m} \cdot V_{BE} - g_{0} \cdot V_{CE}
 \end{align}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.5\linewidth]{dcsgp}
+\end{center}
+\caption{accompanied DC model of intrinsic BJT}
+\label{fig:dcsgp}
+\end{figure}
+\FloatBarrier
+
+With the accompanied DC model shown in fig. \ref{fig:dcsgp} the MNA
+matrix entries as well as the current vector entries differ.
+\begin{equation}
+\begin{bmatrix}
+g_{\mu} + g_{\pi} & -g_{\mu} & -g_{\pi} & 0\\
+-g_{\mu} + g_{mf} -g_{mr} & g_{\mu} +g_{mr} & -g_{mf} & 0\\
+-g_{\pi} - g_{mf} +g_{mr} & -g_{mr} & g_{\pi} + g_{mf} & 0\\
+0 & 0 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{B}\\
+V_{C}\\
+V_{E}\\
+V_{S}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_{BE_{eq}} - I_{BC_{eq}}\\
++I_{BC_{eq}} - I_{CE_{eq}}\\
++I_{BE_{eq}} + I_{CE_{eq}}\\
+0\\
+\end{bmatrix}
+\end{equation}
+
+\begin{align}
+I_{BE_{eq}} &= I_{BE} - g_{\pi} \cdot V_{BE}\\
+I_{BC_{eq}} &= I_{BC} - g_{\mu} \cdot V_{BC}\\
+I_{CE_{eq}} &= I_{T} - g_{mf} \cdot V_{BE} + g_{mr} \cdot V_{BC}
+\end{align}
+
 
 \subsection{Small signal model}
 %\addcontentsline{toc}{subsection}{Small signal model}
+
+Equations for the real conductances in both equivalent circuits for
+the intrinsic BJT have already been given.
 
 \begin{equation}
 T_{FF} = T_F \cdot\left(1 + X_{TF} \cdot \left(\dfrac{I_F}{I_F + I_{TF}}\right)^2 \cdot \exp{\left(\dfrac{V_{BC}}{1.44\cdot V_{TF}}\right)}\right)

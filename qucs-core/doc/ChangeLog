@@ -1,3 +1,8 @@
+2004-07-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Large signal model}): Documented
+	the SGP large signal model properly.
+
 2004-07-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{Noise Wave Correlation Matrix in 

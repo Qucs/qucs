@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.5 2004-06-25 22:09:23 ela Exp $
+ * $Id: jfet.cpp,v 1.6 2004-07-10 14:45:27 ela Exp $
  *
  */
 
@@ -95,26 +95,24 @@ void jfet::initDC (dcsolver * solver) {
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
-    rs = device::splitResistance (this, rs, solver->getNet (),
-				  "Rs", "source", NODE_S);
-    device::applyResistance (rs, Rs);
+    rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
+    applyResistance (rs, Rs);
   }
   // no series resistance at source
   else {
-    device::disableResistance (this, rs, solver->getNet (), NODE_S);
+    disableResistance (this, rs, solver->getNet (), NODE_S);
   }
 
   // possibly insert series resistance at drain
   nr_double_t Rd = getPropertyDouble ("Rd");
   if (Rd != 0) {
     // create additional circuit if necessary and reassign nodes
-    rd = device::splitResistance (this, rd, solver->getNet (),
-				  "Rd", "drain", NODE_D);
-    device::applyResistance (rd, Rd);
+    rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
+    applyResistance (rd, Rd);
   }
   // no series resistance at drain
   else {
-    device::disableResistance (this, rd, solver->getNet (), NODE_D);
+    disableResistance (this, rd, solver->getNet (), NODE_D);
   }
 }
 
@@ -144,8 +142,8 @@ void jfet::calcDC (void) {
   // critical voltage necessary for bad start values
   UgsCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
   UgdCrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
-  UgsPrev = Ugs = device::pnVoltage (Ugs, UgsPrev, Ut * n, UgsCrit);
-  UgdPrev = Ugd = device::pnVoltage (Ugd, UgdPrev, Ut * n, UgdCrit);
+  UgsPrev = Ugs = pnVoltage (Ugs, UgsPrev, Ut * n, UgsCrit);
+  UgdPrev = Ugd = pnVoltage (Ugd, UgdPrev, Ut * n, UgdCrit);
 
   Uds = Ugs - Ugd;
 

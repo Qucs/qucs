@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.1 2004-06-19 07:34:55 ela Exp $
+ * $Id: diode.cpp,v 1.2 2004-07-10 14:45:27 ela Exp $
  *
  */
 
@@ -71,13 +71,12 @@ void diode::initDC (dcsolver * solver) {
   nr_double_t Rs = getPropertyDouble ("Rs");
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
-    rs = device::splitResistance (this, rs, solver->getNet (),
-				  "Rs", "anode", NODE_A);
-    device::applyResistance (rs, Rs);
+    rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", NODE_A);
+    applyResistance (rs, Rs);
   }
   // no series resistance
   else {
-    device::disableResistance (this, rs, solver->getNet (), NODE_A);
+    disableResistance (this, rs, solver->getNet (), NODE_A);
   }
 }
 
@@ -92,7 +91,7 @@ void diode::calcDC (void) {
 
   // critical voltage necessary for bad start values
   Ucrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
-  Uprev = Ud = device::pnVoltage (Ud, Uprev, Ut * n, Ucrit);
+  Uprev = Ud = pnVoltage (Ud, Uprev, Ut * n, Ucrit);
 
   // tiny derivative for little junction voltage
   gtiny = Ud < - 10 * Ut * n ? Is : 0;

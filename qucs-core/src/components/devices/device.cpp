@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.2 2004-06-25 22:09:23 ela Exp $
+ * $Id: device.cpp,v 1.3 2004-07-10 14:45:27 ela Exp $
  *
  */
 
@@ -40,7 +40,7 @@
 
 /* The function fills in the necessary values for all types of
    analyses into the given arbitrary resistor circuit. */
-void device::applyResistance (circuit * res, nr_double_t Rs) {
+void applyResistance (circuit * res, nr_double_t Rs) {
   // apply constant MNA entries
   nr_double_t g = 1.0 / Rs;
   res->setY (1, 1, +g); res->setY (2, 2, +g);
@@ -62,8 +62,8 @@ void device::applyResistance (circuit * res, nr_double_t Rs) {
    c:        name of the additional circuit
    n:        name of the inserted (internal) node
    internal: number of new internal node (the orignal external node) */
-circuit * device::splitResistance (circuit * base, circuit * res, net * subnet,
-				   char * c, char * n, int internal) {
+circuit * splitResistance (circuit * base, circuit * res, net * subnet,
+			   char * c, char * n, int internal) {
   if (res == NULL) {
     res = new circuit (2);
     res->setName (circuit::createInternal (c, base->getName ()));
@@ -78,8 +78,8 @@ circuit * device::splitResistance (circuit * base, circuit * res, net * subnet,
 /* This function is the counterpart of the above routine.  It removes
    the resistance circuit from the netlist and re-assigns the original
    node. */
-void device::disableResistance (circuit * base, circuit * res, net * subnet,
-			       int internal) {
+void disableResistance (circuit * base, circuit * res, net * subnet,
+			int internal) {
   if (res != NULL) {
     subnet->removeCircuit (res);
     base->setNode (internal, res->getNode(1)->getName (), 0);
@@ -89,8 +89,8 @@ void device::disableResistance (circuit * base, circuit * res, net * subnet,
 /* The function limits the forward pn-voltage for each DC iteration in
    order to avoid numerical overflows and thereby improve the
    convergence. */
-nr_double_t device::pnVoltage (nr_double_t Ud, nr_double_t Uold,
-			       nr_double_t Ut, nr_double_t Ucrit) {
+nr_double_t pnVoltage (nr_double_t Ud, nr_double_t Uold,
+		       nr_double_t Ut, nr_double_t Ucrit) {
   nr_double_t arg;
   if (Ud > Ucrit && fabs (Ud - Uold) > 2 * Ut) {
     if (Uold > 0) {
@@ -100,4 +100,38 @@ nr_double_t device::pnVoltage (nr_double_t Ud, nr_double_t Uold,
     else Ud = Ut * log (Ud / Ut);
   }
   return Ud;
+}
+
+// The function computes the exponential pn-junction current.
+nr_double_t pnCurrent (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
+  return Iss * (exp (Upn / Ute) - 1);
+}
+
+// The function computes the exponential pn-junction current's derivative.
+nr_double_t pnConductance (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
+  return Iss * exp (Upn / Ute) / Ute;
+}
+
+// Computes pn-junction depletion capacitance.
+nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
+			   nr_double_t Mj, nr_double_t Fc) {
+  nr_double_t C;
+  if (Uj <= Fc * Vj)
+    C = Cj * exp (-Mj * log (1 - Uj / Vj));
+  else
+    C = Cj * exp (-Mj * log (1 - Fc)) * 
+      (1 + Mj * (Uj - Fc * Vj) / Vj / (1 - Fc));
+  return C;
+}
+
+/* This function computes the pn-junction depletion capacitance with
+   no linearization factor given. */
+nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
+			   nr_double_t Mj) {
+  nr_double_t C;
+  if (Uj <= 0)
+    C = Cj * exp (-Mj * log (1 - Uj / Vj));
+  else
+    C = Cj * (1 + Mj * Uj / Vj);
+  return C;
 }
