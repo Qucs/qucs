@@ -1088,7 +1088,7 @@ Fals format de linie a &apos;component&apos;!</translation>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation>pasul de timp în secunde</translation>
+        <translation type="obsolete">pasul de timp în secunde</translation>
     </message>
     <message>
         <source>ideal transformer</source>
@@ -1929,6 +1929,22 @@ Fals format de linie a &apos;component&apos;!</translation>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save subcircuit nodes into dataset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of simulation time steps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>integration method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>order of integration method</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
