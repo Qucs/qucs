@@ -20,6 +20,7 @@
 
 #include "component.h"
 #include "wire.h"
+#include "diagram.h"
 
 #include <qstring.h>
 #include <qpainter.h>
@@ -72,11 +73,11 @@ public:
   QTab    *Tab;
   QTabBar *Bar;
 
-  QPtrList<Wire> Wires;
-  QPtrList<Node> Nodes;
-  QPtrList<Component>  Comps;
+  QPtrList<Wire>      Wires;
+  QPtrList<Node>      Nodes;
+  QPtrList<Component> Comps;
+  QPtrList<Diagram>   Diags;
 
-//  int  nodeNo;   // number of next node name (e.g. _net123)
   int  GridX, GridY;
   bool GridOn;
 

@@ -55,8 +55,9 @@ public:
 
   double Zoom(double s);
 
-  Component *selComp;   // selected Component
-//  Wire *selWire;
+  Component *selComp;   // component selected in IconView
+  Diagram   *selDiag;   // diagram selected in IconView
+
   bool drawn;   // indicates whether the scheme component was drawn the last time
   QDir ProjDir; // holds the project directory, if project open
   QString ProjName;
@@ -78,6 +79,7 @@ public:
   void MouseDoNothing(QMouseEvent *Event);
   void MMoveSelect(QMouseEvent *Event);
   void MMoveComponent(QMouseEvent *Event);
+  void MMoveDiagram(QMouseEvent *Event);
   void MMoveWire1(QMouseEvent *Event);
   void MMoveWire2(QMouseEvent *Event);
   void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to actual mouse move method
@@ -86,6 +88,7 @@ public:
   void MPressDelete(QMouseEvent *Event);
   void MPressActivate(QMouseEvent *Event);
   void MPressComponent(QMouseEvent *Event);
+  void MPressDiagram(QMouseEvent *Event);
   void MPressLabel(QMouseEvent *Event);
   void MPressWire1(QMouseEvent *Event);
   void MPressWire2(QMouseEvent *Event);
