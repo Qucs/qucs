@@ -20,7 +20,7 @@
 
 AC_Sim::AC_Sim()
 {
-  Description = "ac simulation";
+  Description = QObject::tr("ac simulation");
 
   Lines.append(new Line(-56,-12, 56,-12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-56, 12, 56, 12,QPen(QPen::darkBlue,2)));
@@ -42,9 +42,9 @@ AC_Sim::AC_Sim()
   Model = ".AC";
   Name  = "AC";
 
-  Props.append(new Property("Start", "1 GHz", true, "start frequency in Hertz"));
-  Props.append(new Property("Stop", "10 GHz", true, "stop frequency in Hertz"));
-  Props.append(new Property("Step", "1 GHz", true, "frequency steps in Hertz"));
+  Props.append(new Property("Start", "1 GHz", true, QObject::tr("start frequency in Hertz")));
+  Props.append(new Property("Stop", "10 GHz", true, QObject::tr("stop frequency in Hertz")));
+  Props.append(new Property("Step", "1 GHz", true, QObject::tr("frequency steps in Hertz")));
 }
 
 AC_Sim::~AC_Sim()

@@ -20,7 +20,7 @@
 
 Inductor::Inductor()
 {
-  Description = "inductor";
+  Description = QObject::tr("inductor");
 
   Arcs.append(new Arc(-17, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( -6, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));
@@ -40,7 +40,7 @@ Inductor::Inductor()
   Model = "L";
   Name  = "L";
 
-  Props.append(new Property("L", "1 nH", true, "inductance in Henry"));
+  Props.append(new Property("L", "1 nH", true, QObject::tr("inductance in Henry")));
 }
 
 Inductor::~Inductor()

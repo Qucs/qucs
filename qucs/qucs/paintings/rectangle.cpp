@@ -221,7 +221,7 @@ bool Rectangle::Dialog()
 {
   bool changed = false;
 
-  LineDialog *d = new LineDialog("Edit Rectangle Properties");
+  LineDialog *d = new LineDialog(QObject::tr("Edit Rectangle Properties"));
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());

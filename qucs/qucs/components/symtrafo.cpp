@@ -20,7 +20,7 @@
 
 symTrafo::symTrafo()
 {
-  Description = "ideal symmetrical transformer";
+  Description = QObject::tr("ideal symmetrical transformer");
 
   Arcs.append(new Arc(-16,-58, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16,-46, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
@@ -48,11 +48,11 @@ symTrafo::symTrafo()
 
   Texts.append(new Text(-23,-47,"T1"));
   Texts.append(new Text(-23, 32,"T2"));
-  
+
   Arcs.append(new Arc(-21,-64,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2))); // mark the turn direction
   Arcs.append(new Arc(-21, 15,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-      
+
   Ports.append(new Port(-30,-70));
   Ports.append(new Port( 30,-30));
   Ports.append(new Port( 30, 30));
@@ -69,8 +69,8 @@ symTrafo::symTrafo()
   Model = "sTr";
   Name  = "Tr";
 
-  Props.append(new Property("T1", "1", true, "voltage transformation ration of coil 1"));
-  Props.append(new Property("T2", "1", true, "voltage transformation ration of coil 2"));
+  Props.append(new Property("T1", "1", true, QObject::tr("voltage transformation ration of coil 1")));
+  Props.append(new Property("T2", "1", true, QObject::tr("voltage transformation ration of coil 2")));
 }
 
 symTrafo::~symTrafo()

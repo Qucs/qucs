@@ -20,7 +20,7 @@
 
 Diode::Diode()
 {
-  Description = "diode";
+  Description = QObject::tr("diode");
 
   Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( -6, -9, -6,  9,QPen(QPen::darkBlue,2)));

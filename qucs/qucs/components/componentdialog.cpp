@@ -52,7 +52,7 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
 
   Name = new QLabel(this);
   g->addWidget(Name,1,1);
-  
+
   Description = new QLabel(this);
   g->addWidget(Description,2,1);
 
@@ -82,23 +82,23 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   disp = new QCheckBox(tr("display in schematic"),this);
   g->addWidget(disp,5,1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
-  
+
   QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
   v->addStretch(2);
   g->addLayout(v,6,1);
-  
+
   // ------------------------------------------------------------
   Comp = c;
   label1->setText(c->Description);
   changed = false;
 
 //  prop->clear();
-  
+
   QString s;
   // insert all properties into the ListBox
   for(Property *p = c->Props.last(); p != 0; p = c->Props.prev()) {
-    if(p->display) s = "yes";
-    else s = "no";
+    if(p->display) s = tr("yes");
+    else s = tr("no");
     prop->insertItem(new QListViewItem(prop,p->Name,p->Value,s));
   }
 
@@ -108,7 +108,7 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   }
 
   connect(prop, SIGNAL(clicked(QListViewItem*)), SLOT(slotSelectProperty(QListViewItem*)));
-}                                           
+}
 
 ComponentDialog::~ComponentDialog()
 {
@@ -121,7 +121,7 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
   Name->setText(item->text(0));
   edit->setText(item->text(1));
 
-  if(item->text(2) == "yes") disp->setChecked(true);
+  if(item->text(2) == tr("yes")) disp->setChecked(true);
   else disp->setChecked(false);
 
   Property *pp;
@@ -175,8 +175,8 @@ void ComponentDialog::slotApplyProperty()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotApplyState(int State)
 {
-  if(State == QButton::On) prop->currentItem()->setText(2, "yes");
-  else prop->currentItem()->setText(2, "no");
+  if(State == QButton::On) prop->currentItem()->setText(2, tr("yes"));
+  else prop->currentItem()->setText(2, tr("no"));
 }
 
 // -------------------------------------------------------------------------
@@ -204,7 +204,7 @@ void ComponentDialog::slotApplyInput()
       changed = true;
     }
 
-    display = (item->text(2) == "yes");
+    display = (item->text(2) == tr("yes"));
     if(pp->display != display) {
       pp->display = display;
       changed = true;

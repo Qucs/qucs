@@ -27,7 +27,7 @@
 ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
                                   : QDialog(parent, name, Qt::WDestructiveClose)
 {
-  setCaption("Edit Arrow Properties");
+  setCaption(tr("Edit Arrow Properties"));
   Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
   QValidator *Validator = new QRegExpValidator(Expr, this);
 
@@ -39,13 +39,13 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   h0->setSpacing(5);
   v->addWidget(h0);
 
-  new QLabel("Head Length: ", h0);
+  new QLabel(tr("Head Length: "), h0);
   HeadLength = new QLineEdit(h0);
   HeadLength->setValidator(Validator);
   HeadLength->setMaximumWidth(35);
   HeadLength->setText("10");
 
-  new QLabel("      Head Width: ", h0);
+  new QLabel(tr("      Head Width: "), h0);
   HeadWidth = new QLineEdit(h0);
   HeadWidth->setValidator(Validator);
   HeadWidth->setMaximumWidth(35);
@@ -56,12 +56,12 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   h1->setSpacing(5);
   v->addWidget(h1);
 
-  new QLabel("Line color: ", h1);
+  new QLabel(tr("Line color: "), h1);
   ColorButt = new QPushButton("        ",h1);
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 
-  new QLabel("      Line Width: ", h1);
+  new QLabel(tr("      Line Width: "), h1);
   LineWidth = new QLineEdit(h1);
   LineWidth->setValidator(Validator);
   LineWidth->setMaximumWidth(35);
@@ -72,13 +72,13 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   h2->setSpacing(5);
   v->addWidget(h2);
 
-  new QLabel("Line style: ", h2);
+  new QLabel(tr("Line style: "), h2);
   StyleBox = new QComboBox(h2);
-  StyleBox->insertItem("solid line");
-  StyleBox->insertItem("dash line");
-  StyleBox->insertItem("dot line");
-  StyleBox->insertItem("dash dot line");
-  StyleBox->insertItem("dash dot dot line");
+  StyleBox->insertItem(tr("solid line"));
+  StyleBox->insertItem(tr("dash line"));
+  StyleBox->insertItem(tr("dot line"));
+  StyleBox->insertItem(tr("dash dot line"));
+  StyleBox->insertItem(tr("dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
 
@@ -86,9 +86,9 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   h3->setSpacing(5);
   v->addWidget(h3);
 
-  QPushButton *ButtOK = new QPushButton("OK",h3);
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
   connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton("Cancel",h3);
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   ButtOK->setFocus();

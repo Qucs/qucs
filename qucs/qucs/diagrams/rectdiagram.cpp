@@ -33,8 +33,8 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 
   Name = "Rect";
 
-  xLabel = "x-Achse";
-  yLabel = "y-Achse";
+  xLabel = "";
+  yLabel = "";
 
   calcDiagram();
 }

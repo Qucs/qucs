@@ -20,7 +20,7 @@
 
 dcFeed::dcFeed()
 {
-  Description = "dc feed";
+  Description = QObject::tr("dc feed");
 
   Arcs.append(new Arc(-17, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( -6, -6, 13, 13,  0, 16*180,QPen(QPen::darkBlue,2)));

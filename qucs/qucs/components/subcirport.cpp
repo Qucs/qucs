@@ -20,7 +20,7 @@
 
 SubCirPort::SubCirPort()
 {
-  Description = "port of a subcircuit";
+  Description = QObject::tr("port of a subcircuit");
 
   Arcs.append(new Arc(-25, -6, 13, 13,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-14,  0,  0,  0,QPen(QPen::darkBlue,2)));
@@ -36,7 +36,7 @@ SubCirPort::SubCirPort()
   Model = "";
   Name  = "P";
 
-  Props.append(new Property("Num", "1", true));
+  Props.append(new Property("Num", "1", true, QObject::tr("number of the port within the subcircuit")));
 }
 
 SubCirPort::~SubCirPort()

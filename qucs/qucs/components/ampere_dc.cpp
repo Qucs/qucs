@@ -20,7 +20,7 @@
 
 Ampere_dc::Ampere_dc()
 {
-  Description = "ideal dc current source";
+  Description = QObject::tr("ideal dc current source");
 
   Arcs.append(new Arc(-12,-12, 25, 25,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,  0,-12,  0,QPen(QPen::darkBlue,2)));
@@ -41,7 +41,7 @@ Ampere_dc::Ampere_dc()
   Model = "Idc";
   Name  = "I";
 
-  Props.append(new Property("I", "1 mA", true, "current in Ampere"));
+  Props.append(new Property("I", "1 mA", true, QObject::tr("current in Ampere")));
 }
 
 Ampere_dc::~Ampere_dc()

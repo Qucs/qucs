@@ -20,7 +20,7 @@
 
 MScoupled::MScoupled()
 {
-  Description = "coupled microstrip line";
+  Description = QObject::tr("coupled microstrip line");
 
   Lines.append(new Line(-30,-12,-16,-12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-30,-30,-30,-12,QPen(QPen::darkBlue,2)));
@@ -56,11 +56,11 @@ MScoupled::MScoupled()
   Model = "CMS";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
-  Props.append(new Property("W", "1 mm", true, "width of the line"));
-  Props.append(new Property("L", "10 mm", true, "length of the line"));
-  Props.append(new Property("S", "1 mm", true, "spacing between the lines"));
-  Props.append(new Property("Model", "Kirschning", false, "microstrip model |Kirschning|Kobayashi|Yamashita"));
+  Props.append(new Property("Subst", "Subst1", true, QObject::tr("name of substrate definition")));
+  Props.append(new Property("W", "1 mm", true, QObject::tr("width of the line")));
+  Props.append(new Property("L", "10 mm", true, QObject::tr("length of the line")));
+  Props.append(new Property("S", "1 mm", true, QObject::tr("spacing between the lines")));
+  Props.append(new Property("Model", "Kirschning", false, QObject::tr("microstrip model |Kirschning|Kobayashi|Yamashita")));
 }
 
 MScoupled::~MScoupled()

@@ -20,7 +20,7 @@
 
 VCVS::VCVS()
 {
-  Description = "voltage controlled voltage source";
+  Description = QObject::tr("voltage controlled voltage source");
 
   Arcs.append(new Arc(0,-11, 23, 23,  0, 16*360,QPen(QPen::darkBlue,2)));
 
@@ -61,8 +61,8 @@ VCVS::VCVS()
   Model = "VCVS";
   Name  = "SRC";
 
-  Props.append(new Property("G", "1", true, "forward transfer factor"));
-  Props.append(new Property("T", "0", true, "delay time"));
+  Props.append(new Property("G", "1", true, QObject::tr("forward transfer factor")));
+  Props.append(new Property("T", "0", true, QObject::tr("delay time")));
 }
 
 VCVS::~VCVS()

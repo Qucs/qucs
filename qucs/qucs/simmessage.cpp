@@ -28,7 +28,7 @@
 SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
 {
   setCaption(tr("Qucs Simulation Messages"));
-  
+
   QVBoxLayout *all = new QVBoxLayout(this);
   all->setSpacing(5);
   QVGroupBox *Group1 = new QVGroupBox(tr("Progress:"),this);
@@ -40,7 +40,7 @@ SimMessage::SimMessage(QWidget *parent) : QDialog(parent)
   ProgText->setWordWrap(QTextEdit::NoWrap);
   ProgText->setMinimumSize(400,80);
 
-  
+
   QVGroupBox *Group2 = new QVGroupBox(tr("Errors and Warnings:"),this);
   all->addWidget(Group2);
 
@@ -81,7 +81,7 @@ bool SimMessage::startProcess(const QStringList& commands)
 
   SimProcess.setArguments(commands);
   if(!SimProcess.start()) return false;
-  
+
   return true;
 }
 
