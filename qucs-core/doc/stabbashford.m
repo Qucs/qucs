@@ -63,6 +63,11 @@ eXAxisSouthScale=[-2.75 0.5 2.3];
 p = linspace (0, 2*pi, 200);
 z = exp (i * p);
 
+x = [-8 8]; y = [0 0];
+eplot (x, y,"",0,[0 0 0],1);
+y = [-5 5]; x = [0 0];
+eplot (x, y,"",0,[0 0 0],1);
+
 Bashford1 = [0 1; -1 1] ./ 1;
 area = zpoly (Bashford1(1,:), Bashford1(2,:), z);
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
@@ -86,11 +91,6 @@ eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 Bashford6 = [0 4277 -7923 9982 -7298 2877 -475; -1440 1440 0 0 0 0 0] ./ 1440;
 area = zpoly (Bashford6(1,:), Bashford6(2,:), z);
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
-
-x = [-8 8]; y = [0 0];
-eplot (x, y,"",0,[0 0 0],1);
-y = [-5 5]; x = [0 0];
-eplot (x, y,"",0,[0 0 0],1);
 
 eclose (1,0);
 %eview;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.7 2004-09-20 19:10:28 ela Exp $
+ * $Id: transient.cpp,v 1.8 2004-09-22 16:47:57 ela Exp $
  *
  */
 
@@ -47,7 +47,7 @@
    integration methods.  Supported methods are: Gear (order 1-6),
    Trapezoidal and Euler. */
 void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
-			 nr_double_t delta, int& charges) {
+			 nr_double_t * delta, int& charges) {
 
   tmatrix<nr_double_t> A (order + 1);
   tmatrix<nr_double_t> x (order + 1, 1);
@@ -84,21 +84,21 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
       logprint (LOG_STATUS, "\n");
 #endif
       nr_double_t k = x.get (1, 1);
-      coefficients[COEFF_G] = 1 / delta / k;
+      coefficients[COEFF_G] = 1 / delta[0] / k;
       for (i = 1; i <= order; i++) {
-	coefficients[i] = - 1 / delta / k * x.get (i + 1, 1);
+	coefficients[i] = - 1 / delta[0] / k * x.get (i + 1, 1);
       }
       charges = order + 1;
     }
     break;
   case INTEGRATOR_EULER: // FORWARD EULER
-    coefficients[COEFF_G] = 1 / delta;
-    coefficients[1] = - 1 / delta;
+    coefficients[COEFF_G] = 1 / delta[0];
+    coefficients[1] = - 1 / delta[0];
     charges = 2;
     break;
   case INTEGRATOR_TRAPEZOIDAL: // TRAPEZOIDAL (bilinear)
-    coefficients[COEFF_G] = 2 / delta;
-    coefficients[1] = - 2 / delta;
+    coefficients[COEFF_G] = 2 / delta[0];
+    coefficients[1] = - 2 / delta[0];
     charges = 2;
     break;
   case INTEGRATOR_ADAMSMOULTON: // ADAMS-MOULTON order 1 to 6
@@ -130,8 +130,8 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
       logprint (LOG_STATUS, "\n");
 #endif
       nr_double_t k = x.get (2, 1);
-      coefficients[COEFF_G] = 1 / delta / k;
-      coefficients[1] = -x.get (1, 1) / delta / k;
+      coefficients[COEFF_G] = 1 / delta[0] / k;
+      coefficients[1] = -x.get (1, 1) / delta[0] / k;
       for (i = 2; i <= order; i++) {
 	coefficients[i] = -x.get (i + 1, 1) / k;
       }
@@ -145,7 +145,7 @@ void calcCorrectorCoeff (int IMethod, int order, nr_double_t * coefficients,
    integration methods.  Supported methods are: Adams-Bashford (order
    1-6) and Euler. */
 void calcPredictorCoeff (int IMethod, int order, nr_double_t * coefficients,
-			 nr_double_t delta) {
+			 nr_double_t * delta) {
 
   tmatrix<nr_double_t> A (order + 1);
   tmatrix<nr_double_t> x (order + 1, 1);
@@ -181,13 +181,13 @@ void calcPredictorCoeff (int IMethod, int order, nr_double_t * coefficients,
 #endif
       coefficients[COEFF_G] = x.get (1, 1);
       for (i = 1; i <= order; i++) {
-	coefficients[i] = x.get (i + 1, 1) * delta;
+	coefficients[i] = x.get (i + 1, 1) * delta[0];
       }
     }
     break;
   case INTEGRATOR_EULER: // BACKWARD EULER
     coefficients[COEFF_G] = 1;
-    coefficients[1] = delta;
+    coefficients[1] = delta[0];
     break;
   }
 }

@@ -63,13 +63,10 @@ eXAxisSouthScale=[-8 1 8];
 p = linspace (0, 2*pi, 100);
 z = exp (i * p);
 
-%Euler = [1 0; 0 1];
-%area = 1 .+ zpoly (Euler(1,:), Euler(2,:), z);
-%plot (real (area), imag (area));
-
-%Trapez = [0.5 0.5; 0 1];
-%area = 1 .+ zpoly (Trapez(1,:), Trapez(2,:), z);
-%plot (real (area), imag (area));
+x = [-8 8]; y = [0 0];
+eplot (x, y,"",0,[0 0 0],1);
+y = [-5 5]; x = [0 0];
+eplot (x, y,"",0,[0 0 0],1);
 
 Gear1 = [1 0; -1 1] ./ 1;
 area = zpoly (Gear1(1,:), Gear1(2,:), z);
@@ -94,11 +91,6 @@ eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 Gear6 = [60 0 0 0 0 0 0; -147 360 -450 400 -225 72 -10] ./ 147;
 area = zpoly (Gear6(1,:), Gear6(2,:), z);
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
-
-x = [-8 8]; y = [0 0];
-eplot (x, y,"",0,[0 0 0],1);
-y = [-5 5]; x = [0 0];
-eplot (x, y,"",0,[0 0 0],1);
 
 eclose (1,0);
 %eview;

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.10 2004-09-20 19:10:28 ela Exp $
+ * $Id: trsolver.cpp,v 1.11 2004-09-22 16:47:57 ela Exp $
  *
  */
 
@@ -271,7 +271,9 @@ void trsolver::adjustOrder (int& currentOrder, int stepChanged) {
       c->setOrder (order);
       setIntegrationMethod (c, type);
     }
-    calcCorrectorCoeff (type, currentOrder, coefficients, delta, chargeCoeffs);
+    saveState (dState, deltas);
+    calcCorrectorCoeff (type, currentOrder, coefficients,
+			deltas, chargeCoeffs);
   }
 }
 
@@ -321,12 +323,13 @@ void trsolver::initTR (void) {
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
 
-  calcCorrectorCoeff (IMethod, order, coefficients, delta, chargeCoeffs);
-
   // initialize step history
   setStates (2);
   initStates ();
   fillState (dState, delta);
+
+  saveState (dState, deltas);
+  calcCorrectorCoeff (IMethod, order, coefficients, deltas, chargeCoeffs);
 
   // initialize history of right hand side vectors (solutions)
   for (int i = 0; i < 8; i++) {

@@ -63,6 +63,11 @@ eXAxisSouthScale=[-5.5 1 4.6];
 p = linspace (0, 2*pi, 100);
 z = exp (i * p);
 
+x = [-8 8]; y = [0 0];
+eplot (x, y,"",0,[0 0 0],1);
+y = [-5 5]; x = [0 0];
+eplot (x, y,"",0,[0 0 0],1);
+
 Moulton1 = [1 0; -1 1] ./ 1;
 area = zpoly (Moulton1(1,:), Moulton1(2,:), z);
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
@@ -86,11 +91,6 @@ eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 Moulton6 = [475 1427 -798 482 -173 27; -1440 1440 0 0 0 0] ./ 1440;
 area = zpoly (Moulton6(1,:), Moulton6(2,:), z);
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
-
-x = [-8 8]; y = [0 0];
-eplot (x, y,"",0,[0 0 0],1);
-y = [-5 5]; x = [0 0];
-eplot (x, y,"",0,[0 0 0],1);
 
 eclose (1,0);
 %eview;
