@@ -18,12 +18,24 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.28 2004-09-25 13:45:49 ela Exp $
+ * $Id: circuit.h,v 1.29 2004-10-03 10:30:51 ela Exp $
  *
  */
 
 #ifndef __CIRCUIT_H__
 #define __CIRCUIT_H__
+
+enum circuit_flag {
+  CIRCUIT_ENABLED     = 1,
+  CIRCUIT_LINEAR      = 2,
+  CIRCUIT_ORIGINAL    = 4,
+  CIRCUIT_VSOURCE     = 8,
+  CIRCUIT_ISOURCE     = 16,
+  CIRCUIT_INTVSOURCE  = 32,
+};
+
+#define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
+#define RETFLAG(bit)     (flag & (bit))
 
 #define MAX_CIR_PORTS 6
 #define MAX_CIR_VSRCS 3
@@ -66,8 +78,8 @@ class circuit : public object, public integrator
   int    getType (void) { return type; }
   int    getSize (void) { return size; }
   void   setSize (int);
-  int    isEnabled (void) { return enabled; }
-  void   setEnabled (int e) { enabled = e; }
+  bool   isEnabled (void) { return RETFLAG (CIRCUIT_ENABLED); }
+  void   setEnabled (bool e) { MODFLAG (e, CIRCUIT_ENABLED); }
   void   setNet (net * n) { subnet = n; }
   net *  getNet (void) { return subnet; }
 
@@ -76,22 +88,26 @@ class circuit : public object, public integrator
   void   setSubcircuit (char *);
 
   // nodal analyses helpers
-  void setInternalVoltageSource (int i) { internal = i; }
-  int  isInternalVoltageSource (void) { return internal; }
+  void setInternalVoltageSource (bool i) { MODFLAG (i, CIRCUIT_INTVSOURCE); }
+  bool isInternalVoltageSource (void) { return RETFLAG (CIRCUIT_INTVSOURCE); }
   void setVoltageSource (int s) { vsource = s; }
-  int  isVoltageSource (void) { return vsource; }
+  int  getVoltageSource (void) { return vsource; }
   int  getVoltageSources (void);
   void setVoltageSources (int);
   void voltageSource (int, int, int, nr_double_t value = 0.0);
   void transientCapacitance (int, int, int, nr_double_t, nr_double_t);
+  bool isVSource (void) { return RETFLAG (CIRCUIT_VSOURCE); }
+  void setVSource (bool v) { MODFLAG (v, CIRCUIT_VSOURCE); }
+  bool isISource (void) { return RETFLAG (CIRCUIT_ISOURCE); }
+  void setISource (bool i) { MODFLAG (i, CIRCUIT_ISOURCE); }
 
   // s-parameter helpers
-  int  isPort (void) { return pacport; }
+  int  getPort (void) { return pacport; }
   void setPort (int p) { pacport = p; }
-  int  isOriginal (void) { return original; }
-  void setOriginal (int o) { original = o; }
   int  getInserted (void) { return inserted; }
   void setInserted (int i) { inserted = i; }
+  bool isOriginal (void) { return RETFLAG (CIRCUIT_ORIGINAL); }
+  void setOriginal (bool o) { MODFLAG (o, CIRCUIT_ORIGINAL); }
 
   // microstrip helpers
   substrate * getSubstrate (void);
@@ -141,8 +157,8 @@ class circuit : public object, public integrator
   operatingpoint * getOperatingPoints (void) { return oper; }
 
   // differentiate between linear and non-linear circuits
-  void setNonLinear (int n) { linear = !n; }
-  int  isNonLinear (void) { return !linear; }
+  void setNonLinear (bool l) { MODFLAG (!l, CIRCUIT_LINEAR); }
+  bool isNonLinear (void) { return !RETFLAG (CIRCUIT_LINEAR); }
 
   // miscellaneous functionality
   void print (void);
@@ -166,11 +182,8 @@ class circuit : public object, public integrator
   int pacport;
   int vsource;
   int vsources;
-  int original;
-  int internal;
   int inserted;
-  int linear;
-  int enabled;
+  int flag;
   complex * MatrixS;
   complex * MatrixN;
   complex * MatrixY;

@@ -29,7 +29,7 @@ Version 0.0.4
  * ideal AC, DC and S-parameter models for microstrip t-junctions and
    cross-junctions
  * implementation of transient analysis for non-linear devices
- * support for current and voltage pulse sources
+ * support for current and voltage pulse sources (single and rectangular)
  * linear transient analysis for RCL networks available
  * AC analysis including all available devices
 

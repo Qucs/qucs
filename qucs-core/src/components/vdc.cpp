@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.10 2004-09-25 21:09:46 ela Exp $
+ * $Id: vdc.cpp,v 1.11 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@ vdc::vdc () : circuit (2) {
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
   type = CIR_VDC;
+  setVSource (true);
 }
 
 void vdc::initDC (void) {

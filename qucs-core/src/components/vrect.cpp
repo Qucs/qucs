@@ -1,5 +1,5 @@
 /*
- * iac.cpp - AC current source class implementation
+ * vrect.cpp - rectangular pulse voltage source class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.5 2004-10-03 10:30:51 ela Exp $
+ * $Id: vrect.cpp,v 1.1 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -36,28 +36,44 @@
 #include "circuit.h"
 #include "component_id.h"
 #include "consts.h"
-#include "iac.h"
+#include "vrect.h"
 
-iac::iac () : circuit (2) {
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
-  type = CIR_IAC;
-  setISource (true);
+vrect::vrect () : circuit (2) {
+  setS (1, 1, 0.0);
+  setS (1, 2, 1.0);
+  setS (2, 1, 1.0);
+  setS (2, 2, 0.0);
+  type = CIR_VRECT;
+  setVSource (true);
+  setVoltageSources (1);
 }
 
-void iac::initDC (void) {
-  clearI ();
+void vrect::initDC (void) {
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t u  = getPropertyDouble ("U") * th / (th + tl);
+  voltageSource (1, 1, 2);
+  setE (1, u);
 }
 
-void iac::initAC (void) {
-  nr_double_t i = getPropertyDouble ("I");
-  setI (1, +i); setI (2, -i);
+void vrect::initAC (void) {
+  initDC ();
+  setE (1, 0);
 }
 
-void iac::calcTR (nr_double_t t) {
-  nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = getPropertyDouble ("I") * sin (2 * M_PI * f * t);
-  setI (1, +i); setI (2, -i);
+void vrect::initTR (void) {
+  initDC ();
+}
+
+void vrect::calcTR (nr_double_t t) {
+  nr_double_t u  = getPropertyDouble ("U");
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t ut = 0;
+
+  t = t - (th + tl) * floor (t / (th + tl));
+  if (t < th) { // high pulse
+    ut = u;
+  }
+  setE (1, ut);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.9 2004-09-13 21:05:35 ela Exp $
+ * $Id: inductor.cpp,v 1.10 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 
 inductor::inductor () : circuit (2) {
   type = CIR_INDUCTOR;
+  setISource (true);
 }
 
 void inductor::calcSP (nr_double_t frequency) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.21 2004-09-12 14:09:19 ela Exp $
+ * $Id: net.cpp,v 1.22 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -106,11 +106,11 @@ void net::insertCircuit (circuit * c) {
      a subcircuit */
   if (c->getType () == CIR_PAC && c->getSubcircuit () == NULL) {
     nPorts++;
-    if (!c->isPort ()) c->setPort (c->getPropertyInteger ("Num"));
+    if (!c->getPort ()) c->setPort (c->getPropertyInteger ("Num"));
   }
   // handle DC voltage sources
   if (c->getVoltageSources () > 0) {
-    if (!c->isVoltageSource ()) c->setVoltageSource (nSources + 1);
+    if (!c->getVoltageSource ()) c->setVoltageSource (nSources + 1);
     nSources += c->getVoltageSources ();
   }
 }
@@ -134,8 +134,8 @@ void net::removeCircuit (circuit * c, int dropping) {
   nCircuits--;
   c->setEnabled (0);
   c->setNet (NULL);
-  if (c->isPort ()) nPorts--;
-  if (c->isVoltageSource ()) nSources -= c->getVoltageSources ();
+  if (c->getPort ()) nPorts--;
+  if (c->getVoltageSource ()) nSources -= c->getVoltageSources ();
 
   // shift the circuit object to the drop list
   if (c->isOriginal ()) {
@@ -359,7 +359,7 @@ node * net::findConnectedCircuitNode (node * n) {
   // through the list of circuit objects
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     // skip signal circuits
-    if (c->isPort ()) continue;
+    if (c->getPort ()) continue;
     // through the list of nodes in a circuit
     for (int i = 1; i <= c->getSize (); i++) {
       _node = c->getNode (i);
@@ -445,7 +445,7 @@ int net::checkCircuitChain (void) {
 int net::countPorts (void) {
   int count = 0;
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (c->isPort ()) count++;
+    if (c->getPort ()) count++;
   }
   return count;
 }
@@ -455,7 +455,7 @@ int net::countPorts (void) {
 int net::countNodes (void) {
   int count = 0;
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    if (!c->isPort ()) count += c->getSize ();
+    if (!c->getPort ()) count += c->getSize ();
   }
   return count;
 }

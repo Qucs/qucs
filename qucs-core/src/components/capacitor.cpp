@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.11 2004-09-17 11:48:52 ela Exp $
+ * $Id: capacitor.cpp,v 1.12 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -41,6 +41,7 @@
 
 capacitor::capacitor () : circuit (2) {
   type = CIR_CAPACITOR;
+  setISource (true);
 }
 
 void capacitor::calcSP (nr_double_t frequency) {

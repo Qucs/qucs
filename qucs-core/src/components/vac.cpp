@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.8 2004-09-12 14:09:19 ela Exp $
+ * $Id: vac.cpp,v 1.9 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -44,6 +44,7 @@ vac::vac () : circuit (2) {
   setS (2, 1, 1.0);
   setS (2, 2, 0.0);
   type = CIR_VAC;
+  setVSource (true);
   setVoltageSources (1);
 }
 

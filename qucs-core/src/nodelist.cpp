@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.5 2004-08-19 19:44:23 ela Exp $
+ * $Id: nodelist.cpp,v 1.6 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -312,7 +312,7 @@ void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
 static int sortfunc (struct nodelist_t * n) {
   int i, p;
   for (p = 0, i = 0; i < n->nNodes; i++) {
-    if (n->nodes[i]->getCircuit()->isPort ()) return -1;
+    if (n->nodes[i]->getCircuit()->getPort ()) return -1;
     p += n->nodes[i]->getCircuit()->getSize ();
   }
   return p;
@@ -397,7 +397,7 @@ void nodelist::insert (circuit * c) {
       nl = create (n->getName (), n->getInternal ());
       addCircuitNode (nl, n);
       if (sorting) {
-	if (c->isPort ())
+	if (c->getPort ())
 	  append (nl);
 	else
 	  insert (nl);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.57 2004-09-26 13:31:36 ela Exp $
+ * $Id: check_netlist.cpp,v 1.58 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -187,6 +187,22 @@ struct define_t definition_available[] =
     { { "Tr", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tf", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
+  },
+  /* rectangular pulse voltage source */
+  { "Vrect", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
+      { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* rectangular pulse current source */
+  { "Irect", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      { "TH", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "TL", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
   },
   /* phase shifter */
   { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,

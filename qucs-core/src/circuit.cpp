@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.30 2004-09-25 13:45:49 ela Exp $
+ * $Id: circuit.cpp,v 1.31 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -48,14 +48,12 @@ circuit::circuit () : object (), integrator () {
   MatrixN = MatrixS = MatrixY = NULL;
   nodes = NULL;
   pacport = 0;
-  original = 1;
+  flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
   subst = NULL;
   vsource = 0;
   vsources = 0;
   oper = NULL;
   inserted = -1;
-  linear = 1;
-  enabled = 0;
   subcircuit = NULL;
   subnet = NULL;
   type = CIR_UNKNOWN;
@@ -73,14 +71,12 @@ circuit::circuit (int s) : object (), integrator () {
     nodes = new node[s];
   }
   pacport = 0;
-  original = 1;
+  flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
   subst = NULL;
   vsource = 0;
   vsources = 0;
   oper = NULL;
   inserted = -1;
-  linear = 1;
-  enabled = 0;
   subcircuit = NULL;
   subnet = NULL;
   type = CIR_UNKNOWN;
@@ -91,14 +87,12 @@ circuit::circuit (int s) : object (), integrator () {
 circuit::circuit (const circuit & c) : object (c), integrator (c) {
   size = c.size;
   pacport = c.pacport;
-  original = c.original;
+  flag = c.flag;
   type = c.type;
   subst = c.subst;
   vsource = c.vsource;
   vsources = c.vsources;
   inserted = c.inserted;
-  linear = c.linear;
-  enabled = 0;
   subnet = c.subnet;
   subcircuit = c.subcircuit ? strdup (c.subcircuit) : NULL;
 

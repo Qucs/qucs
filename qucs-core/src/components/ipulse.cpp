@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ipulse.cpp,v 1.1 2004-09-20 10:09:55 ela Exp $
+ * $Id: ipulse.cpp,v 1.2 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -42,6 +42,7 @@ ipulse::ipulse () : circuit (2) {
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
   type = CIR_IPULSE;
+  setISource (true);
 }
 
 void ipulse::initDC (void) {

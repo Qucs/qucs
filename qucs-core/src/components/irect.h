@@ -1,5 +1,5 @@
 /*
- * iprobe.cpp - AC/DC and transient current probe class implementation
+ * irect.h - rectangular pulse current source class definitions
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,42 +18,21 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iprobe.cpp,v 1.5 2004-10-03 10:30:51 ela Exp $
+ * $Id: irect.h,v 1.1 2004-10-03 10:30:51 ela Exp $
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#ifndef __IRECT_H__
+#define __IRECT_H__
 
-#include <stdio.h>
-#include <stdlib.h>
+class irect : public circuit
+{
+ public:
+  irect ();
+  void initDC (void);
+  void initAC (void);
+  void initTR (void);
+  void calcTR (nr_double_t);
+};
 
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "component_id.h"
-#include "iprobe.h"
-
-iprobe::iprobe () : circuit (2) {
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
-  type = CIR_IPROBE;
-  setVSource (true);
-  setVoltageSources (1);
-}
-
-void iprobe::initDC (void) {
-  voltageSource (1, 1, 2);
-}
-
-void iprobe::initAC (void) {
-  initDC ();
-}
-
-void iprobe::initTR (void) {
-  initDC ();
-}
+#endif /* __IRECT_H__ */

@@ -1,5 +1,5 @@
 /*
- * iac.cpp - AC current source class implementation
+ * irect.cpp - rectangular pulse current source class implementation
  *
  * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.5 2004-10-03 10:30:51 ela Exp $
+ * $Id: irect.cpp,v 1.1 2004-10-03 10:30:51 ela Exp $
  *
  */
 
@@ -35,29 +35,41 @@
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "consts.h"
-#include "iac.h"
+#include "irect.h"
 
-iac::iac () : circuit (2) {
+irect::irect () : circuit (2) {
   setS (1, 1, 1.0);
   setS (1, 2, 0.0);
   setS (2, 1, 0.0);
   setS (2, 2, 1.0);
-  type = CIR_IAC;
+  type = CIR_IRECT;
   setISource (true);
 }
 
-void iac::initDC (void) {
+void irect::initDC (void) {
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t i  = getPropertyDouble ("I") * th / (th + tl);
+  setI (1, +i); setI (2, -i);
+}
+
+void irect::initAC (void) {
   clearI ();
 }
 
-void iac::initAC (void) {
-  nr_double_t i = getPropertyDouble ("I");
-  setI (1, +i); setI (2, -i);
+void irect::initTR (void) {
+  initDC ();
 }
 
-void iac::calcTR (nr_double_t t) {
-  nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = getPropertyDouble ("I") * sin (2 * M_PI * f * t);
-  setI (1, +i); setI (2, -i);
+void irect::calcTR (nr_double_t t) {
+  nr_double_t i  = getPropertyDouble ("I");
+  nr_double_t th = getPropertyDouble ("TH");
+  nr_double_t tl = getPropertyDouble ("TL");
+  nr_double_t it = 0;
+
+  t = t - (th + tl) * floor (t / (th + tl));
+  if (t < th) { // high pulse
+    it = i;
+  }
+  setI (1, +it); setI (2, -it);
 }
