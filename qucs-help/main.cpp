@@ -64,6 +64,7 @@ bool loadSettings()
 	QucsSettings.dy = Line.section(",",3,3).toInt();
 	break; }
   }
+  file.close();
 
   file.setName(QDir::homeDirPath()+"/.qucs/qucsrc");
   if(!file.open(IO_ReadOnly)) return true; // qucs settings not necessary
