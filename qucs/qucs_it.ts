@@ -122,19 +122,19 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile eseguire l&apos;editor di testo!</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome:</translation>
     </message>
 </context>
 <context>
@@ -157,7 +157,7 @@
     </message>
     <message>
         <source>Dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Dataset</translation>
     </message>
     <message>
         <source>Name</source>
@@ -221,71 +221,71 @@
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>Notazione numerica:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>reale/immaginario</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>magnitudo/angolo (gradi)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>magnitudo/angolo (radianti)</translation>
     </message>
     <message>
         <source>Precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Precisione:</translation>
     </message>
     <message>
         <source>Thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>Spessore:</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished">linea continua</translation>
+        <translation>linea continua</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished">linea tratteggiata</translation>
+        <translation>linea tratteggiata</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished">linea a punti</translation>
+        <translation>linea a punti</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Colore Griglia:</translation>
     </message>
     <message>
         <source>Grid Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Stile Griglia:</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished">linea tratteggio punto</translation>
+        <translation>linea tratteggio punto</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished">linea tratteggio punto punto</translation>
+        <translation>linea tratteggio punto punto</translation>
     </message>
     <message>
         <source>long dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea a tratti lunghi</translation>
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Griglia logaritmica dell&apos;asse X</translation>
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Griglia logaritmica dell&apos;asse Y</translation>
     </message>
 </context>
 <context>
@@ -399,7 +399,7 @@
     </message>
     <message>
         <source>crossed lines</source>
-        <translation type="unfinished"></translation>
+        <translation>linee incrociate</translation>
     </message>
     <message>
         <source>hatched backwards</source>
@@ -415,39 +415,39 @@
     </message>
     <message>
         <source>Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza linea:</translation>
     </message>
     <message>
         <source>Line Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile linea</translation>
     </message>
     <message>
         <source>enable filling</source>
-        <translation type="unfinished"></translation>
+        <translation>abilita riempimento</translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile riempimento</translation>
     </message>
     <message>
         <source>dense 2</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 2</translation>
     </message>
     <message>
         <source>dense 3</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 3</translation>
     </message>
     <message>
         <source>dense 4</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 4</translation>
     </message>
     <message>
         <source>dense 5</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 5</translation>
     </message>
     <message>
         <source>dense 6</source>
-        <translation type="unfinished"></translation>
+        <translation>denso 6</translation>
     </message>
 </context>
 <context>
@@ -559,19 +559,19 @@
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>Notazione numerica:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>reale/immaginario</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>magnitudo/angolo (gradi)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>magnitudo/angolo (radianti)</translation>
     </message>
 </context>
 <context>
@@ -697,7 +697,8 @@ Wrong &apos;painting&apos; line format!</source>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nel formato del file:
+Campo sconosciuto!</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
@@ -713,7 +714,7 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare dataset:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
@@ -777,11 +778,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>power attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>attenuazione di potenza</translation>
     </message>
     <message>
         <source>reference impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>impedenza di riferimento</translation>
     </message>
     <message>
         <source>bias t</source>
@@ -1072,7 +1073,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>file</translation>
     </message>
     <message>
         <source>name of the s parameter file</source>
@@ -1252,19 +1253,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Attenzione</translation>
+        <translation>Attenzione</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation type="unfinished">Impossibile salvare impostazioni !</translation>
+        <translation>Impossibile salvare impostazioni !</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>transistor a giunzione bipolare npn</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation type="unfinished"></translation>
+        <translation>polarità (npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1284,15 +1285,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation type="unfinished">Simulazione del transiente</translation>
+        <translation>Simulazione del transiente</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di Corrente ac</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished">Generatore di Corrente dc</translation>
+        <translation>Generatore di Corrente dc</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
@@ -1300,7 +1301,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished">Attenuatore</translation>
+        <translation>Attenuatore</translation>
     </message>
     <message>
         <source>Bias T</source>
@@ -1308,23 +1309,23 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>npn transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>transistor npn</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished">Condensatore</translation>
+        <translation>Condensatore</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation type="unfinished">Generatore di Corrente Controllato in Corrente</translation>
+        <translation>Generatore di Corrente Controllato in Corrente</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished">Generatore di Tensione Controllato in Corrente</translation>
+        <translation>Generatore di Tensione Controllato in Corrente</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished">Circolatore</translation>
+        <translation>Circolatore</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
@@ -1340,19 +1341,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Diode</source>
-        <translation type="unfinished">Diodo</translation>
+        <translation>Diodo</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished">Terra</translation>
+        <translation>Terra</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished">Giratore</translation>
+        <translation>Giratore</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished">Induttore</translation>
+        <translation>Induttore</translation>
     </message>
     <message>
         <source>Current Probe</source>
@@ -1360,15 +1361,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished">Isolatore</translation>
+        <translation>Isolatore</translation>
     </message>
     <message>
         <source>n-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-JFET</translation>
     </message>
     <message>
         <source>n-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>n-MOSFET</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
@@ -1408,15 +1409,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished">Resistore</translation>
+        <translation>Resistore</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation type="unfinished">Resistore US</translation>
+        <translation>Resistore US</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished">Generatore di Potenza</translation>
+        <translation>Generatore di Potenza</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -1432,31 +1433,31 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation type="unfinished">Trasformatore simmetrico</translation>
+        <translation>Trasformatore simmetrico</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished">Linea di Trasmissione</translation>
+        <translation>Linea di Trasmissione</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished">Trasformatore</translation>
+        <translation>Trasformatore</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished">Generatore di Corrente Controllato in Tensione</translation>
+        <translation>Generatore di Corrente Controllato in Tensione</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished">Generatore di Tensione Controllato in Tensione</translation>
+        <translation>Generatore di Tensione Controllato in Tensione</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished">Generatore di Tensione ac</translation>
+        <translation>Generatore di Tensione ac</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished">Generatore di Tensione dc</translation>
+        <translation>Generatore di Tensione dc</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
@@ -1464,15 +1465,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>pnp transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>transistor pnp</translation>
     </message>
     <message>
         <source>p-JFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-JFET</translation>
     </message>
     <message>
         <source>p-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>p-MOSFET</translation>
     </message>
     <message>
         <source>depletion MOS field-effect transistor</source>
@@ -1496,7 +1497,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro transconduttanza</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
@@ -1544,7 +1545,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation type="unfinished"></translation>
+        <translation>polarità (nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
@@ -1572,15 +1573,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>put operating points into dataset (yes,no)</source>
-        <translation type="unfinished"></translation>
+        <translation>metti punti di lavoro nel dataset (sì,no)</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation type="unfinished"></translation>
+        <translation>massimo numero di iterazioni</translation>
     </message>
     <message>
         <source>put result into dataset (yes,no)</source>
-        <translation type="unfinished"></translation>
+        <translation>metti risultati nel dataset (sì,no)</translation>
     </message>
     <message>
         <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
@@ -1608,7 +1609,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation type="unfinished"></translation>
+        <translation>numero di passi della simulazione</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor with substrate</source>
@@ -2670,7 +2671,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>Datasets</source>
-        <translation type="unfinished"></translation>
+        <translation>Dataset</translation>
     </message>
     <message>
         <source>Data Displays</source>
@@ -3201,7 +3202,7 @@ Errori:
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafico Smith</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -3303,19 +3304,19 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile lanciare qucshelp!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile eseguire editor di testo!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo distruggerà tutti i file del progetto permanentemente! Continuare?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
+        <translation>Almeno due elementi devono essere selezionati!</translation>
     </message>
 </context>
 <context>
@@ -4213,7 +4214,8 @@ Qt universal circuit simulator
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2003,2004 by Michael Margraf
+</translation>
     </message>
     <message>
         <source>Simulator by Stefan Jahn
@@ -4263,113 +4265,127 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Application Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni Applicazione</translation>
     </message>
     <message>
         <source>Application Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni Applicazione...</translation>
     </message>
     <message>
         <source>Qucs Settings
 
 Sets properties of the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni Qucs
+
+Imposta le proprietà dell&apos;applicazione</translation>
     </message>
     <message>
         <source>Document Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni Documento</translation>
     </message>
     <message>
         <source>Document Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni Documento...</translation>
     </message>
     <message>
         <source>Align top</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea in alto</translation>
     </message>
     <message>
         <source>Align top selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea in alto gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align top
 
 Align selected elements to their upper edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea in alto
+
+Allinea in alto gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea in basso</translation>
     </message>
     <message>
         <source>Align bottom selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea in basso gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align bottom
 
 Align selected elements to their lower edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea in basso
+
+Allinea in basso gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align left</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea a sinistra</translation>
     </message>
     <message>
         <source>Align left selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea a sinistra gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align left
 
 Align selected elements to their left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea a sinistra
+
+Allinea a sinistra gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align right</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea a destra</translation>
     </message>
     <message>
         <source>Align right selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea a destra gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align right
 
 Align selected elements to their right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea a destra
+
+Allinea a destra gli elementi selezionati</translation>
     </message>
     <message>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Allinea</translation>
     </message>
     <message>
         <source>Distribute horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuisci orizzontalmente</translation>
     </message>
     <message>
         <source>Distribute equally horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Distrubuisce uniformemente in orizzontale</translation>
     </message>
     <message>
         <source>Distribute horizontally
 
 Distribute horizontally selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Distribuisci orizzontalmente
+
+Distribuisce uniformemente in orizzontale</translation>
     </message>
     <message>
         <source>Distribute vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Distrubuisci verticalmente</translation>
     </message>
     <message>
         <source>Distribute equally vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Distrubuisce uniformemente in verticale</translation>
     </message>
     <message>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Distrubuisci verticalmente
+
+Distrubuisce uniformemente in verticale</translation>
     </message>
     <message>
         <source>Set on Grid</source>
@@ -4386,11 +4402,11 @@ Sets selected elements on grid</source>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica proprietà di Qucs</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Colore di sfondo del documento:</translation>
     </message>
     <message>
         <source>Simulation</source>
@@ -4398,35 +4414,35 @@ Sets selected elements on grid</source>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Applica</translation>
+        <translation>Applica</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancella</translation>
+        <translation>Cancella</translation>
     </message>
     <message>
         <source>Default Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Valori predefiniti</translation>
     </message>
     <message>
         <source>Font (set after reload):</source>
-        <translation type="unfinished"></translation>
+        <translation>Font (impostato dopo il reload):</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation type="unfinished"></translation>
+        <translation>massimo numero di undo:</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>editor di testo:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Impostazioni</translation>
+        <translation>Impostazioni</translation>
     </message>
 </context>
 <context>
