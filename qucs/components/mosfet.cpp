@@ -58,7 +58,7 @@ MOSFET::MOSFET()
   Props.append(new Property("Kp", "2e-5", true,
 	QObject::tr("transconductance coefficient in A/m^2")));
   Props.append(new Property("Gamma", "0.0", false,
-	QObject::tr("bulk threshold")));
+	QObject::tr("bulk threshold in sqrt(V)")));
   Props.append(new Property("Phi", "0.6 V", false,
 	QObject::tr("surface potential")));
   Props.append(new Property("Lambda", "0.0", true,
@@ -101,6 +101,11 @@ MOSFET::MOSFET()
   Props.append(new Property("Fc", "0.5", false,
 	QObject::tr("bulk junction forward-bias depletion capacitance "
 		    "coefficient")));
+  Props.append(new Property("Cjsw", "0.0", false,
+	QObject::tr("zero-bias bulk junction periphery capacitance per meter "
+		    "of junction perimeter in F/m")));
+  Props.append(new Property("Mjsw", "0.33", false,
+	QObject::tr("bulk junction periphery grading coefficient")));
   Props.append(new Property("Tt", "0.0 ps", false,
 	QObject::tr("bulk transit time")));
   Props.append(new Property("Nsub", "0.0", false,
@@ -116,9 +121,9 @@ MOSFET::MOSFET()
 	QObject::tr("drain and source diffusion sheet resistance in "
 		    "Ohms/square")));
   Props.append(new Property("Nrd", "1", false,
-	QObject::tr("drain squares")));
+	QObject::tr("number of equivalent drain squares")));
   Props.append(new Property("Nrs", "1", false,
-	QObject::tr("source squares")));
+	QObject::tr("number of equivalent source squares")));
   Props.append(new Property("Cj", "0.0", false,
 	QObject::tr("zero-bias bulk junction bottom capacitance per square "
 		    "meter of junction area in F/m^2")));
@@ -129,6 +134,10 @@ MOSFET::MOSFET()
 	QObject::tr("drain diffusion area in m^2")));
   Props.append(new Property("As", "0.0", false,
 	QObject::tr("source diffusion area in m^2")));
+  Props.append(new Property("Pd", "0.0 m", false,
+	QObject::tr("drain junction perimeter")));
+  Props.append(new Property("Ps", "0.0 m", false,
+	QObject::tr("source junction perimeter")));
   Props.append(new Property("Kf", "0.0", false,
 	QObject::tr("flicker noise coefficient")));
   Props.append(new Property("Af", "1.0", false,
