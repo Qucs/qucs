@@ -39,6 +39,8 @@
 #include "attenuator.h"
 #include "isolator.h"
 #include "circulator.h"
+#include "gyrator.h"
+#include "phaseshifter.h"
 #include "volt_dc.h"
 #include "ampere_dc.h"
 #include "volt_ac.h"

@@ -45,6 +45,9 @@ Isolator::Isolator()
   Sign  = "Isolator";
   Model = "Isolator";
   Name  = "X";
+
+  Props.append(new Property("Z1", "50 Ohm", false, "reference impedance of input port"));
+  Props.append(new Property("Z2", "50 Ohm", false, "reference impedance of output port"));
 }
 
 Isolator::~Isolator()
