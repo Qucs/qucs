@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.9 2004-08-12 13:59:54 ela Exp $
+ * $Id: spfile.cpp,v 1.10 2004-08-15 16:24:36 margraf Exp $
  *
  */
 
@@ -228,13 +228,13 @@ matrix& spfile::expandNoiseMatrix (matrix& n, matrix& s) {
   for (r = 1; r <= ports - 1; r++) {
     for (c = 1; c <= ports - 1; c++) {
       if (r == c)
-	k.set (r, c, 1 + g * (s.get (r, ports) - 1));
+	k.set (r, c, 1.0 + g * (s.get (r, ports) - 1));
       else
 	k.set (r, c, g * s.get (r, ports));
     }
   }
   for (c = 1; c <= ports - 1; c++)
-    k.set (ports, c, 1 - g * s.get (ports, ports));
+    k.set (ports, c, g * s.get (ports, ports) - 1.0);
 
   // create D vector
   matrix d (ports, 1);

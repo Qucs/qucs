@@ -286,9 +286,13 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);  // load data, determine max/min values
 
-  if((ymin > ymax) || (xmin > xmax)) {
-    ymin = xmin = 0.0;
-    ymax = xmax = 1.0;
+  if(ymin > ymax) {
+    ymin = 0.0;
+    ymax = 1.0;
+  }
+  if(xmin > xmax) {
+    xmin = 0.0;
+    xmax = 1.0;
   }
 
   updateGraphData();

@@ -2365,7 +2365,12 @@ Lorentzian PSD (generation-recombination noise): & $a=1$, $b=1/f_c^2$, $c=2$ \\
 
 An ideal diode (pn- or schottky-diode) generates shot noise.  Both
 types of current (field and diffusion) contribute independently to it.
-The noise wave correlation matrix, therefore, writes as follows.
+That is, even though the two currents flow in different directions
+("minus" in dc current equation), they have to be added in the noise
+equation (current is proportional to noise power spectral density).
+Taking into account the dynamic conductance $g_D$ in parallel to the
+noise current source, the noise wave correlation matrix writes as
+follows.
 
 \begin{equation}
 \begin{split}
@@ -2382,7 +2387,6 @@ The noise wave correlation matrix, therefore, writes as follows.
   -1 &  1\\
 \end{pmatrix}
 \end{split}
-\label{eqn:diode_noise}
 \end{equation}
 
 Where $e$ is charge of an electron, $V_T$ the temperature voltage,
@@ -2394,7 +2398,34 @@ capacitance.
 To be very precise, the equation above only holds for diodes whose
 field and diffusion current dominate absolutely (diffusion limited
 diode), i.e. $N=1$.  Many diodes also generate a
-generation/recombination current ($N\approx 2$).  Furthermore some
+generation/recombination current ($N\approx 2$), which produces shot
+noise, too. But depending on where and how the charge carriers
+generate or recombinate, their effective charge is somewhat smaller
+than $e$. To take this into account, one needs a further factor $K$.
+Several opinions exists according the value of $K$. Some say 1 and
+2/3 are common values, others say $K=1/N$ with $K$ and $N$ being
+bias dependend. Altogether it is:
+\begin{equation}
+\begin{split}
+(\underline{C})
+ = 2\cdot e\cdot Z_0\cdot K\cdot \left(I_{d} + 2\cdot I_{S}\right)\cdot
+    \left| \frac{1}{2\cdot Z_0\cdot (g_d+j\omega C_d) + 1}\right|^2 \cdot
+\begin{pmatrix}
+   1 & -1\\
+  -1 &  1\\
+\end{pmatrix}\\
+\text{with}\qquad\frac{1}{2}\le K \le 1
+\end{split}
+\label{eqn:diode_noise}
+\end{equation}
+
+Remark: Believing the diode equation $I_D = I_S\cdot (\exp(U/N\cdot U_T) - 1)$
+is the whole truth, it is logical to define K=1/N, because at $U=0$ the
+conductance $g_D$ of the diode must create thermal noise.
+
+\addvspace{12pt}
+
+Some
 special diodes have additional current or noise components (tunnel
 diodes, avalanche diodes etc.).  All these mechanisms are not taken
 into account in equation \eqref{eqn:diode_noise}.
