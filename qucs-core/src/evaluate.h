@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.3 2004-04-18 18:37:16 margraf Exp $
+ * $Id: evaluate.h,v 1.4 2004-04-25 16:26:04 margraf Exp $
  *
  */
 
@@ -39,10 +39,13 @@ public:
   static constant * plus_v (constant *);
 
   static constant * plus_d_d (constant *);
+  static constant * plus_c_c (constant *);
   static constant * plus_c_d (constant *);
   static constant * plus_d_c (constant *);
   static constant * plus_v_d (constant *);
   static constant * plus_d_v (constant *);
+  static constant * plus_v_c (constant *);
+  static constant * plus_c_v (constant *);
   static constant * plus_v_v (constant *);
 
   static constant * minus_d (constant *);
@@ -50,38 +53,53 @@ public:
   static constant * minus_v (constant *);
 
   static constant * minus_d_d (constant *);
+  static constant * minus_c_c (constant *);
   static constant * minus_c_d (constant *);
   static constant * minus_d_c (constant *);
   static constant * minus_v_d (constant *);
   static constant * minus_d_v (constant *);
+  static constant * minus_v_c (constant *);
+  static constant * minus_c_v (constant *);
   static constant * minus_v_v (constant *);
 
   static constant * times_d_d (constant *);
+  static constant * times_c_c (constant *);
   static constant * times_c_d (constant *);
   static constant * times_d_c (constant *);
   static constant * times_v_d (constant *);
   static constant * times_d_v (constant *);
+  static constant * times_v_c (constant *);
+  static constant * times_c_v (constant *);
   static constant * times_v_v (constant *);
 
   static constant * over_d_d (constant *);
+  static constant * over_c_c (constant *);
   static constant * over_c_d (constant *);
   static constant * over_d_c (constant *);
   static constant * over_v_d (constant *);
   static constant * over_d_v (constant *);
+  static constant * over_v_c (constant *);
+  static constant * over_c_v (constant *);
   static constant * over_v_v (constant *);
 
   static constant * modulo_d_d (constant *);
+  static constant * modulo_c_c (constant *);
   static constant * modulo_c_d (constant *);
   static constant * modulo_d_c (constant *);
   static constant * modulo_v_d (constant *);
   static constant * modulo_d_v (constant *);
+  static constant * modulo_v_c (constant *);
+  static constant * modulo_c_v (constant *);
   static constant * modulo_v_v (constant *);
 
   static constant * power_d_d (constant *);
+  static constant * power_c_c (constant *);
   static constant * power_c_d (constant *);
   static constant * power_d_c (constant *);
   static constant * power_v_d (constant *);
   static constant * power_d_v (constant *);
+  static constant * power_v_c (constant *);
+  static constant * power_c_v (constant *);
   static constant * power_v_v (constant *);
 
   static constant * real_d (constant *);
@@ -131,6 +149,26 @@ public:
   static constant * log10_d (constant *);
   static constant * log10_c (constant *);
   static constant * log10_v (constant *);
+
+  static constant * sin_d (constant *);
+  static constant * sin_c (constant *);
+  static constant * sin_v (constant *);
+
+  static constant * cos_d (constant *);
+  static constant * cos_c (constant *);
+  static constant * cos_v (constant *);
+
+  static constant * tan_d (constant *);
+  static constant * tan_c (constant *);
+  static constant * tan_v (constant *);
+
+  static constant * ztor_d (constant *);
+  static constant * ztor_c (constant *);
+  static constant * ztor_v (constant *);
+
+  static constant * rtoz_d (constant *);
+  static constant * rtoz_c (constant *);
+  static constant * rtoz_v (constant *);
 
 };
 

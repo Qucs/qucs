@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.4 2004-04-19 18:42:21 ela Exp $
+ * $Id: complex.cpp,v 1.5 2004-04-25 16:25:51 margraf Exp $
  *
  */
 
@@ -109,6 +109,34 @@ complex pow (nr_double_t d, const complex z) {
 
 complex pow (const complex z1, const complex z2) {
   return exp (z2 * ln (z1));
+}
+
+complex sin (const complex z) {
+  nr_double_t re = real (z);
+  nr_double_t im = imag (z);
+  return (polar (exp (-im), re) + polar (exp (im), -re)) / 2.0;
+}
+
+complex cos (const complex z) {
+  nr_double_t re = real (z);
+  nr_double_t im = imag (z);
+  return (polar (exp (-im), re) - polar (exp (im), -re)) / 2.0;
+}
+
+complex tan (const complex z) {
+  nr_double_t re = 2.0 * real (z);
+  nr_double_t im = 2.0 * imag (z);
+  return 1.0 + 2.0 / (polar (exp (-im), re) + 1.0);
+}
+
+// converts impedance to reflexion coefficient
+complex ztor (const complex z, nr_double_t zref) {
+  return (z - zref) / (z + zref);
+}
+
+// converts reflexion coefficient to impedance
+complex rtoz (const complex r, nr_double_t zref) {
+  return zref * (1 + r) / (1 - r);
 }
 
 complex floor (const complex z) {

@@ -2409,11 +2409,12 @@ Simulator by Stefan Jahn
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Polish by Dariusz Pienkowski</source>
+        <source>French by Eric Marzolf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>French by Eric Marzolf</source>
+        <source>Polish by Dariusz Pienkowski
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
