@@ -36,18 +36,19 @@ public:
   Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
   ~Wire();
 
-  void paintScheme(QPainter *p);
-  void setCenter(int x, int y, bool relative=false);
-  bool getSelected(int x_, int y_);
-  void setName(const QString& Name_, int delta_=0, int x_=0, int y_=0);
+  void paintScheme(QPainter*);
+  void setCenter(int, int, bool relative=false);
+  void getCenter(int&, int&);
+  bool getSelected(int, int);
+  void setName(const QString&, int delta_=0, int x_=0, int y_=0);
 
   Node      *Port1, *Port2;
   WireLabel *Label;
 
-  void    paint(QPainter *p);
+  void    paint(QPainter*);
   void    rotate();
   QString save();
-  bool    load(const QString& s);
+  bool    load(const QString&);
   bool    isHorizontal();
 };
 

@@ -44,22 +44,23 @@ public:
 
   QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
   QAction *editRotate, *editMirror, *editMirrorY, *editPaste, *select;
-  QAction *editActivate, *wire, *editDelete, *setMarker;
+  QAction *editActivate, *wire, *editDelete, *setMarker, *onGrid;
 
 public slots:
-  void slotEditRotate(bool on);  // rotate the selected items
-  void slotEditMirrorX(bool on); // mirror the selected items about X axis
-  void slotEditMirrorY(bool on); // mirror the selected items about Y axis
-  void slotEditPaste(bool on);   // paste the clipboard into the document
-  void slotEditDelete(bool on);  // delete the selected items
-  void slotInsertEquation(bool on);
-  void slotInsertGround(bool on);
-  void slotInsertPort(bool on);
-  void slotSetWire(bool on);
-  void slotSelect(bool on);
-  void slotEditActivate(bool on);
-  void slotInsertLabel(bool on);
-  void slotSetMarker(bool on);
+  void slotEditRotate(bool);  // rotate the selected items
+  void slotEditMirrorX(bool); // mirror the selected items about X axis
+  void slotEditMirrorY(bool); // mirror the selected items about Y axis
+  void slotEditPaste(bool);   // paste the clipboard into the document
+  void slotEditDelete(bool);  // delete the selected items
+  void slotInsertEquation(bool);
+  void slotInsertGround(bool);
+  void slotInsertPort(bool);
+  void slotSetWire(bool);
+  void slotSelect(bool);
+  void slotEditActivate(bool);
+  void slotInsertLabel(bool);
+  void slotSetMarker(bool);
+  void slotOnGrid(bool);      // set selected elements on grid
 
 private:
   void QucsActions::performToggleAction(bool, QAction*, pToggleFunc,

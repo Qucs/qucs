@@ -2522,19 +2522,6 @@ bool QucsDoc::aligning(int Mode)
   ElementCache.clear();
   if(count < 2) return false;
 
-  // align all selected diagrams
-/*  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
-    if(pd->isSelected) {
-      pd->Bounding(bx1, by1, bx2, by2);
-      pd->setCenter(x1-(*bx), y1-(*by), true);
-    }
-  // align all selected paintings
-  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
-    if(pp->isSelected) {
-      pp->Bounding(bx1, by1, bx2, by2);
-      pp->setCenter(x1-(*bx), y1-(*by), true);
-    }
-*/
   setChanged(true, true);
   return true;
 }
@@ -2543,24 +2530,35 @@ bool QucsDoc::aligning(int Mode)
 bool QucsDoc::distribHoriz()
 {
   int x1, y1, x2, y2;
-//  int bx1, by1, bx2, by2, *bx=0, *by=0;
+  int bx1, by1, bx2, by2;
   int count = copyElements(x1, y1, x2, y2);
   if(count < 1) return false;
 
-/*  for(int i=0; i<ElementCache.count(); i++) {
-    ElementCache.first();
-    for(int j=0; j<ElementCache.count()-i; j++) {
-      ElementCache
-      if()
+  // using bubble sort to get elements x ordered
+  Element *pe;
+if(count > 1)
+  for(int i = count-1; i>0; i--) {
+    pe = ElementCache.first();
+    for(int j=0; j<i; j++) {
+      pe->getCenter(bx1, by1);
+      pe=ElementCache.next();
+      pe->getCenter(bx2, by2);
+      if(bx1 > bx2) {  // change two elements ?
+	ElementCache.replace(j+1, ElementCache.prev());
+	ElementCache.replace(j, pe);
+	pe = ElementCache.at(j+1);
+      }
     }
   }
-*/
 
+  ElementCache.getLast()->getCenter(x2, y2);
+  ElementCache.getFirst()->getCenter(x1, y1);
+  // re-insert elements and put them at right position
   Wire *pw;
   int x  = x1;
-  int dx = (x2-x1)/count;
-  // re-insert elements
-  for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next()) {
+  int dx=0;
+  if(count > 1) dx = (x2-x1)/(count-1);
+  for(pe = ElementCache.first(); pe!=0; pe = ElementCache.next()) {
     switch(pe->Type) {
       case isComponent:
 	((Component*)pe)->cx = x;
@@ -2575,7 +2573,6 @@ bool QucsDoc::distribHoriz()
 	  pw->x2 = pe->x1 + x1;
 	}
 	else  pw->x1 = pw->x2 = x;
-//	pw->;
 //	if(pw->Label) {	}
 	insertWire(pw);
 	break;
@@ -2585,7 +2582,8 @@ bool QucsDoc::distribHoriz()
 	break;
 
       case isPainting:
-//	((Painting*)pe)->Bounding(bx1, by1, bx2, by2);
+	pe->getCenter(bx1, by1);
+	pe->setCenter(x, by1, false);
       default: ;
     }
     x += dx;
@@ -2601,5 +2599,146 @@ bool QucsDoc::distribHoriz()
 // ---------------------------------------------------
 bool QucsDoc::distribVert()
 {
+  int x1, y1, x2, y2;
+  int bx1, by1, bx2, by2;
+  int count = copyElements(x1, y1, x2, y2);
+  if(count < 1) return false;
+
+  // using bubble sort to get elements x ordered
+  Element *pe;
+if(count > 1)
+  for(int i = count-1; i>0; i--) {
+    pe = ElementCache.first();
+    for(int j=0; j<i; j++) {
+      pe->getCenter(bx1, by1);
+      pe=ElementCache.next();
+      pe->getCenter(bx2, by2);
+      if(by1 > by2) {  // change two elements ?
+	ElementCache.replace(j+1, ElementCache.prev());
+	ElementCache.replace(j, pe);
+	pe = ElementCache.at(j+1);
+      }
+    }
+  }
+
+  ElementCache.getLast()->getCenter(x2, y2);
+  ElementCache.getFirst()->getCenter(x1, y1);
+  // re-insert elements and put them at right position
+  Wire *pw;
+  int y  = y1;
+  int dy=0;
+  if(count > 1) dy = (y2-y1)/(count-1);
+  for(pe = ElementCache.first(); pe!=0; pe = ElementCache.next()) {
+    switch(pe->Type) {
+      case isComponent:
+	pe->cy = y;
+	insertRawComponent((Component*)pe);
+	break;
+
+      case isWire:
+	pw = (Wire*)pe;
+	if(pw->isHorizontal())  pw->y1 = pw->y2 = y;
+	else {
+	  y1 = pw->y2 - pw->y1;
+	  pw->y1 = y - (y1 >> 1);
+	  pw->y2 = pe->y1 + y1;
+	}
+//	if(pw->Label) {	}
+	insertWire(pw);
+	break;
+
+      case isDiagram:
+	pe->cy = y + (pe->y2 >> 1);
+	break;
+
+      case isPainting:
+	pe->getCenter(bx1, by1);
+	pe->setCenter(bx1, y, false);
+      default: ;
+    }
+    y += dy;
+  }
+
+  ElementCache.clear();
+  if(count < 2) return false;
+
+  setChanged(true, true);
   return true;
+}
+
+// ---------------------------------------------------
+// Sets selected elements on grid and count their number.
+int QucsDoc::elementsOnGrid()
+{
+  int x, y, count = 0;
+  // test all components
+  Comps.setAutoDelete(false);
+  for(Component *pc = Comps.last(); pc != 0; pc = Comps.prev())
+    if(pc->isSelected) {
+      x = Comps.at();
+      deleteComp(pc);
+      setOnGrid(pc->cx, pc->cy);
+      insertRawComponent(pc);
+      Comps.at(x);   // restore current list position
+      pc->isSelected = false;
+      count++;
+    }
+  Comps.setAutoDelete(true);
+
+  WireLabel *pl;
+  Wires.setAutoDelete(false);
+  // test all wires and wire labels
+  for(Wire *pw = Wires.last(); pw != 0; pw = Wires.prev()) {
+    if(pw->isSelected) {
+      x = Wires.at();
+      deleteWire(pw);
+      setOnGrid(pw->x1, pw->y1);
+      setOnGrid(pw->x2, pw->y2);
+      insertWire(pw);
+      Wires.at(x);   // restore current list position
+      pw->isSelected = false;
+      count++;
+    }
+
+    pl = pw->Label;
+    if(pl)
+      if(pl->isSelected) {
+	setOnGrid(pl->x1, pl->y1);
+	pl->isSelected = false;
+	count++;
+      }
+  }
+  Wires.setAutoDelete(true);
+
+  // test all diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev()) {
+    if(pd->isSelected) {
+      setOnGrid(pd->cx, pd->cy);
+      pd->isSelected = false;
+      count++;
+    }
+
+    // test markers of diagram
+    for(Marker *pm = pd->Markers.first(); pm != 0; pm = pd->Markers.next())
+      if(pm->isSelected) {
+	x = pm->x1 + pd->cx;
+	y = pm->y1 + pd->cy;
+	setOnGrid(x, y);
+	pm->x1 = x - pd->cx;
+	pm->y1 = y - pd->cy;
+	pm->isSelected = false;
+	count++;
+      }
+  }
+
+  // test all paintings
+  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
+    if(pp->isSelected) {
+      setOnGrid(pp->cx, pp->cy);
+      pp->isSelected = false;
+      count++;
+    }
+
+  setChanged(true, true);
+  return count;
 }

@@ -1696,14 +1696,14 @@ impedance $Z$ and electrical length $l$ writes as follows.
 r = \frac{Z-Z_0}{Z+Z_0}
 \end{equation}
 \begin{equation}
-p = \exp(-j\omega\frac{l}{c})
+p = \exp(-j\omega\frac{l}{c_0})
 \end{equation}
 \begin{equation}
 S_{11} = S_{22} = \frac{r\cdot(1-p^2)}{1-r^2\cdot p^2} \qquad,\qquad
 S_{12} = S_{21} = \frac{p\cdot(1-r^2)}{1-r^2\cdot p^2}
 \end{equation}
 
-With $c$ = 299 792 458 m/s being the vacuum light velocity.
+With $c_0$ = 299 792 458 m/s being the vacuum light velocity.
 
 
 \chapter{Noise Waves}
@@ -5368,6 +5368,7 @@ the range $0.1 \le W/h \le 100$, $1\le \varepsilon_r \le 20$ and $0
 \le h/\lambda_0 \le 0.13$, i.e. up to about $60\giga\hertz$ for
 $25\milli\meter$ substrates.
 \begin{equation}
+\label{eq:KandJErEff_disp}
 \varepsilon_{r}(f) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + P(f)}
 \end{equation}
 with
@@ -5706,7 +5707,7 @@ c_o = b_o(\epsilon_r) - (b_o(\epsilon_r)-0.207)\cdot\exp(-0.414\cdot u)
 d_o = 0.593+0.694\cdot\exp(-0.562\cdot u)
 \end{equation}
 with $\epsilon_{eff}(0)$ refers to zero-thickness single microstrip of width
-$w$ according to \cite{Hammerstad}.
+$w$ according to \cite{Hammerstad} (equation \ref{eq:HandJErEff}).
 
 \addvspace{12pt}
 
@@ -5800,8 +5801,8 @@ Q_3 = 0.1975 + \left( 16.6 + \left( \frac{8.4}{g} \right) ^6 \right) ^{-0.387}
 Q_4 = \frac{Q_1}{Q_2}\cdot \frac{2}{ \exp(-g)\cdot u^{Q_3} + (2-\exp(-g))\cdot u^{-Q_3} }
 \end{equation}
 with $Z_L(0)$ and $\epsilon_{eff}(0)$  being again quantities for
-a zero-thickness single microstrip of width $w$ (according to
-\cite{Hammerstad}).
+a zero-thickness single microstrip of width $w$ according to
+\cite{Hammerstad} (equation \ref{eq:HandJErEff} and \ref{eq:HandJZL0}).\\
 
 \addvspace{12pt}
 
@@ -5906,7 +5907,8 @@ Q_{21} = \text{abs}\left( 1-42.54\cdot g^{0.133}\cdot \exp(-0.812\cdot g)
                    \cdot\frac{u^{2.5}}{1+0.033\cdot u^{2.5}} \right)
 \end{equation}
 With $\epsilon_{eff}(f_n)$ being the single microstrip effective
-dielectric constant according to (x) and $Q_0$ single microstrip
+dielectric constant according to \cite{Kirschning3} (equation
+\ref{eq:KandJErEff_disp}) and $Q_0$ single microstrip
 impedance dispersion according to (y).
 
 \addvspace{12pt}
@@ -6032,18 +6034,107 @@ Another model was published by Hammerstad \cite{Hammerstad2}:
 \frac{\Delta l}{h} = 0.102\cdot \frac{u+0.106}{u+0.264} \cdot
     \left( 1.166 + \frac{\epsilon_r+1}{\epsilon_r}\cdot \left(0.9+\ln(u+2.475) \right) \right)
 \end{equation}
-Here the numerical error is $<1.7$\% for $u = w/h < 20$.
+Here the numerical error is $<1.7$\% for $u = w/h < 20$.\\ \\
+
+In order to simplify calculations,
+the equivalent additional line length $\Delta l$ can be transformed
+into an equivalent open end capacitance $C_{end}$:
+\begin{equation}
+\label{eqn:Cend}
+C_{end} = C'\cdot \Delta l = \frac{\sqrt{\epsilon_{r,eff}}}{c_0\cdot Z_L} \Delta l
+\end{equation}
+With $C'$ being the capacitance per length and $c_0$ = 299 792 458 m/s
+being the vacuum light velocity.
+
+
 
 \section{Microstrip gap}
-The model of a microstrip gap is shown in figure x. The values of the
-components are z.
+The model of a microstrip gap is shown in figure \ref{fig:MSgap}. The
+values of the components are \cite{Kirschning8}.
 \begin{equation}
-C_s[\text{pF}] = 500\cdot h\cdot\exp
+C_s[\text{pF}] = 500\cdot h\cdot\exp\left( -1.86\frac{s}{h} \right)\cdot Q_1\cdot
+       \left( 1 + 4.19\left( 1 - \exp\left( -0.785\cdot\sqrt{\frac{h}{w_1}}\cdot
+       \frac{w_2}{w_1} \right) \right) \right)
 \end{equation}
+\begin{equation}
+C_{P1} = C_1\cdot \frac{Q_2+Q_3}{Q_2+1}
+\end{equation}
+\begin{equation}
+C_{P2} = C_2\cdot \frac{Q_2+Q_4}{Q_2+1}
+\end{equation}
+with
+\begin{equation}
+Q_1 = 0.04598\cdot \left( 0.03 + \left(\frac{w_1}{h}\right)^{Q_5} \right)\cdot
+      (0.272 + 0.07\cdot\epsilon_r)
+\end{equation}
+\begin{equation}
+Q_2 = 0.107\cdot\left( \frac{w_1}{h}+9 \right) \cdot \left( \frac{s}{h} \right)^{3.23}
+    + 2.09 \cdot \left( \frac{s}{h} \right)^{1.05}\cdot
+    \frac{1.5+0.3\cdot\frac{w_1}{h}}{1+0.6\cdot\frac{w_1}{h}}
+\end{equation}
+\begin{equation}
+Q_3 = \exp\left( -0.5978\cdot \left( \frac{w_2}{w_1} \right)^{1.35} \right) - 0.55
+\end{equation}
+\begin{equation}
+Q_4 = \exp\left( -0.5978\cdot \left( \frac{w_1}{w_2} \right)^{1.35} \right) - 0.55
+\end{equation}
+\begin{equation}
+Q_5 = \frac{1.23}{1 + 0.12\cdot \left( \frac{w_2}{w_1} - 1 \right)^{0.9}}
+\end{equation}
+with $C_1$ and $C_2$ being the open end capacitances of a microstrip line
+(equation \ref{eqn:Cend}).
+The numerical error of the capacitive admittances is $\le0.1$mS for
+\begin{equation*}
+\begin{split}
+0.1\le w_1/h \le 3 \\
+0.1\le w_2/h \le 3 \\
+1\le w_2/w_1 \le 3 \\
+6\le \epsilon_r \le 13 \\
+0.2\le s/h \le \infty \\
+0.2\text{GHz} \le f \le 18\text{GHz}
+\end{split}
+\end{equation*}
 
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{msgap}
+\end{center}
+\caption{microstrip gap and its equivalent circuit}
+\label{fig:MSgap}
+\end{figure}
+\FloatBarrier
 
 
 \section{Microstrip impedance step}
+
+The euqivalent circuit of a microstrip impedance step is the same
+as for the microstrip corner (figure \ref{fig:MScorner}). The
+values are \cite{Gupta}:
+\begin{equation}
+C_s [\text{pF}] = \sqrt{W_1\cdot W_2}\cdot\left( (10.1\cdot\log\epsilon_r + 2.33)\cdot
+     \frac{W_1}{W_2} - 12.6\cdot\log\epsilon_r - 3.17 \right)
+\end{equation}
+for $\epsilon_r\le 10$ and $1.5\le W_1/W_2\le 3.5$ the error is
+$<10$\%.
+\begin{equation}
+L_1 = \frac{L_{w1}}{L_{w1}+L_{w2}}\cdot L_s
+\end{equation}
+\begin{equation}
+L_2 = \frac{L_{w2}}{L_{w1}+L_{w2}}\cdot L_s
+\end{equation}
+with
+\begin{equation}
+L_{w1,2} = \frac{Z_{L,1,2}\cdot\sqrt{\epsilon_{r,eff,1,2}}}{c_0}
+\end{equation}
+\begin{equation}
+\frac{L_s}{h} [\text{nH/m}] = 40.5\cdot\left( \frac{W_1}{W_2}-1 \right)
+      - 75\cdot\log\frac{W_1}{W_2} + 0.2\cdot \left( \frac{W_1}{W_2}-1 \right)^2
+\end{equation}
+With $c_0$ = 299 792 458 m/s being the vacuum light velocity.
+The error is less than 5\% for $W_1/W_2\le 5$ and $W_2/h = 1$.
+
+
 \section{Microstrip Tee}
 
 

@@ -682,7 +682,7 @@ Nieznane pole!</translation>
     </message>
     <message>
         <source>equivalent current density in A/sqrt(Hz)</source>
-        <translation>ekwiwalentna gęstość prądu w A/sqrt(Hz)</translation>
+        <translation type="obsolete">ekwiwalentna gęstość prądu w A/sqrt(Hz)</translation>
     </message>
     <message>
         <source>frequency exponent</source>
@@ -1090,7 +1090,7 @@ Nieznane pole!</translation>
     </message>
     <message>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
-        <translation>ekwiwalentna gęstość napięcia w V/sqrt(Hz)</translation>
+        <translation type="obsolete">ekwiwalentna gęstość napięcia w V/sqrt(Hz)</translation>
     </message>
     <message>
         <source>Format Error:
@@ -1732,6 +1732,18 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current power spectral density in A^2/Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>interpolation type (rectangular,polar)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage power spectral density in V^2/Hz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3303,6 +3315,16 @@ Distribute horizontally selected elements</source>
         <source>Distribute vertically
 
 Distribute vertically selected elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set on Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set on Grid
+
+Sets selected elements on grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

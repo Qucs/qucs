@@ -84,6 +84,13 @@ void Wire::setCenter(int x, int y, bool relative)
 }
 
 // ----------------------------------------------------------------
+void Wire::getCenter(int& x, int& y)
+{
+  x = (x1+x2) >> 1;
+  y = (y1+y2) >> 1;
+}
+
+// ----------------------------------------------------------------
 // Lie x/y on wire ? 5 is the precision the coordinates have to fit.
 bool Wire::getSelected(int x_, int y_)
 {

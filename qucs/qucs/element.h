@@ -76,8 +76,9 @@ public:
   Element();
   virtual ~Element();
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  virtual void paintScheme(QPainter*);
+  virtual void setCenter(int, int, bool relative=false);
+  virtual void getCenter(int&, int&);
 
   bool isSelected;
 
