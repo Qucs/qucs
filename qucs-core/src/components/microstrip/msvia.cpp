@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.4 2005/01/17 12:19:03 raimi Exp $
+ * $Id: msvia.cpp,v 1.5 2005/02/03 20:40:20 raimi Exp $
  *
  */
 
@@ -136,4 +136,13 @@ void msvia::calcAC (nr_double_t frequency) {
   complex y = 1 / calcImpedance (frequency);
   setY (1, 1, +y); setY (2, 2, +y);
   setY (1, 2, -y); setY (2, 1, -y);
+}
+
+void msvia::calcNoiseAC (nr_double_t) {
+  // calculate noise current correlation matrix
+  nr_double_t r = real (Z);
+  nr_double_t T = getPropertyDouble ("Temp");
+  nr_double_t f = kelvin (T) / T0 * 4.0 / r;
+  setN (1, 1, +f); setN (2, 2, +f);
+  setN (1, 2, -f); setN (2, 1, -f);
 }

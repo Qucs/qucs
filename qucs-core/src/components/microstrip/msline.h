@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.16 2005/01/17 12:19:03 raimi Exp $
+ * $Id: msline.h,v 1.17 2005/02/03 20:40:20 raimi Exp $
  *
  */
 
@@ -35,6 +35,7 @@ class msline : public circuit
   void calcPropagation (nr_double_t);
   void initAC (void);
   void calcAC (nr_double_t);
+  void calcNoiseAC (nr_double_t);
 
   static void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
 				  nr_double_t, char *,

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.19 2005/01/24 19:37:18 raimi Exp $
+ * $Id: diode.cpp,v 1.20 2005/02/03 20:40:19 raimi Exp $
  *
  */
 
@@ -61,13 +61,13 @@ void diode::calcSP (nr_double_t frequency) {
 }
 
 void diode::calcNoiseSP (nr_double_t frequency) {
+#if MICHAEL /* shot noise only */
   nr_double_t Id = getOperatingPoint ("Id");
   nr_double_t Is = getPropertyDouble ("Is") + getPropertyDouble ("Isr");
 
   // adjust shot noise current if necessary
   if (Id < -Is) Id = -Is;
 
-#if MICHAEL /* shot noise only */
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
@@ -76,20 +76,12 @@ void diode::calcNoiseSP (nr_double_t frequency) {
   setN (NODE_C, NODE_C, +f); setN (NODE_A, NODE_A, +f);
   setN (NODE_C, NODE_A, -f); setN (NODE_A, NODE_C, -f);
 #else
-  nr_double_t Kf  = getPropertyDouble ("Kf");
-  nr_double_t Af  = getPropertyDouble ("Af");
-  nr_double_t Ffe = getPropertyDouble ("Ffe");
-
-  matrix yc = matrix (2);
-  nr_double_t i = 2 * (Id + 2 * Is) * QoverkB / T0 +    // shot noise
-    Kf * pow (Id, Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
-  yc.set (NODE_C, NODE_C, +i); yc.set (NODE_A, NODE_A, +i);
-  yc.set (NODE_A, NODE_C, -i); yc.set (NODE_C, NODE_A, -i);
-  setMatrixN (cytocs (yc * z0, getMatrixS ()));
+  setMatrixN (cytocs (calcMatrixCy (frequency) * z0, getMatrixS ()));
 #endif
 }
 
-void diode::calcNoiseAC (nr_double_t frequency) {
+matrix diode::calcMatrixCy (nr_double_t frequency) {
+  // fetch computed operating points
   nr_double_t Id = getOperatingPoint ("Id");
   nr_double_t Is = getPropertyDouble ("Is") + getPropertyDouble ("Isr");
 
@@ -100,10 +92,13 @@ void diode::calcNoiseAC (nr_double_t frequency) {
   nr_double_t Af  = getPropertyDouble ("Af");
   nr_double_t Ffe = getPropertyDouble ("Ffe");
 
+  // build noise current correlation matrix
+  matrix cy = matrix (2);
   nr_double_t i = 2 * (Id + 2 * Is) * QoverkB / T0 +    // shot noise
     Kf * pow (Id, Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
-  setN (NODE_C, NODE_C, +i); setN (NODE_A, NODE_A, +i);
-  setN (NODE_A, NODE_C, -i); setN (NODE_C, NODE_A, -i);
+  cy.set (NODE_C, NODE_C, +i); cy.set (NODE_A, NODE_A, +i);
+  cy.set (NODE_A, NODE_C, -i); cy.set (NODE_C, NODE_A, -i);
+  return cy;
 }
 
 void diode::initDC (void) {
@@ -252,6 +247,10 @@ void diode::calcAC (nr_double_t frequency) {
   complex y = 2 * z0 * rect (gd, Cd * 2.0 * M_PI * frequency);
   setY (NODE_C, NODE_C, +y); setY (NODE_A, NODE_A, +y);
   setY (NODE_C, NODE_A, -y); setY (NODE_A, NODE_C, -y);
+}
+
+void diode::calcNoiseAC (nr_double_t frequency) {
+  setMatrixN (calcMatrixCy (frequency));
 }
 
 #define qState 0 // charge state

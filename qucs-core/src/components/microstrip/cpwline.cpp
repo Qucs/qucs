@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.4 2005/01/28 19:24:40 raimi Exp $
+ * $Id: cpwline.cpp,v 1.5 2005/02/03 20:40:19 raimi Exp $
  *
  */
 
@@ -123,20 +123,20 @@ void cpwline::initSP (void) {
 
 void cpwline::initPropagation (void) {
   // get properties of substrate and coplanar line
-  nr_double_t W =     getPropertyDouble ("W");
-  nr_double_t s =     getPropertyDouble ("S");
+  nr_double_t W =  getPropertyDouble ("W");
+  nr_double_t s =  getPropertyDouble ("S");
   substrate * subst = getSubstrate ();
-  nr_double_t er =    subst->getPropertyDouble ("er");
-  nr_double_t h =     subst->getPropertyDouble ("h");
-  nr_double_t t =     subst->getPropertyDouble ("t");
-  char * back   =     getPropertyString ("Backside");
+  nr_double_t er = subst->getPropertyDouble ("er");
+  nr_double_t h  = subst->getPropertyDouble ("h");
+  nr_double_t t  = subst->getPropertyDouble ("t");
+  char * back    = getPropertyString ("Backside");
 
   tand = subst->getPropertyDouble ("tand");
   rho  = subst->getPropertyDouble ("rho");
-  l    = getPropertyDouble ("L");
+  len  = getPropertyDouble ("L");
 
   // other local variables (quasi-static constants)
-  nr_double_t k1, kk1, kpk1, k3, k2, q1, q3, q2, qz, er_0 = 0;
+  nr_double_t k1, kk1, kpk1, k2, q1, q2, er0 = 0;
   
   // compute the necessary quasi-static approx. (K1, K3, er(0) and Z(0))
   k1   = W / (W + s + s);
@@ -144,21 +144,24 @@ void cpwline::initPropagation (void) {
   kpk1 = ellipk (sqrt (1 - k1 * k1));
   q1   = kk1 / kpk1;
 
+  // backside is metal
   if (!strcmp (back, "Metal")) {
-    k3   = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
-    q3   = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
-    qz   = 1 / (q1 + q3);
-    er_0 = 1 + q3 * qz * (er - 1);
-    Z_factor = (60 * M_PI) * qz;
+    nr_double_t k3, q3, qz;
+    k3  = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
+    q3  = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+    qz  = 1 / (q1 + q3);
+    er0 = 1 + q3 * qz * (er - 1);
+    zl_factor = (60 * M_PI) * qz;
   }
+  // backside is air
   else if (!strcmp (back, "Air")) {
-    k2   = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
-    q2   = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
-    er_0 = 1 + (er - 1) / 2 * q2 * q1;
-    Z_factor = (30 * M_PI) * q1;
+    k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
+    q2  = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+    er0 = 1 + (er - 1) / 2 * q2 * q1;
+    zl_factor = (30 * M_PI) * q1;
   }
 
-  if (t != 0) {
+  if (t > 0) {
     // adds effect of strip thickness
     nr_double_t d;
     d = (t * 1.25 / M_PI) * (1 + log (4 * M_PI * W / t));
@@ -168,16 +171,15 @@ void cpwline::initPropagation (void) {
     // modifies k1 accordingly (k1 = ke)
     k1 = W / (W + s + s);
 
-    // uncertain formula, q3 addition maybe suspicious
-    // er_0 = er_0 - (0.7 * (er_0 - 1) * t / s) / (q1 + q3 + (0.7 * t / s));
-    er_0 = er_0 - (0.7 * (er_0 - 1) * t / s) / (q1 + (0.7 * t / s));
+    // modifies er0 as well
+    er0 = er0 - (0.7 * (er0 - 1) * t / s) / (q1 + (0.7 * t / s));
   }
 
   // pre-compute square roots
   sr_er = sqrt (er);
-  sr_er_0 = sqrt (er_0);
+  sr_er0 = sqrt (er0);
 
-  // cutoff frequency of the TE0 mode
+  // cut-off frequency of the TE0 mode
   fte = (C0 / 4) / (h * sqrt (er - 1));
 
   // dispersion factor G
@@ -187,32 +189,32 @@ void cpwline::initPropagation (void) {
   G = exp (u * log (W / s) + v);
 
   // loss constant factors (computed only once for efficency sake)
-  nr_double_t m  = (1 - k1) * 8 * M_PI / (t * (1 + k1)); 
+  nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1)); 
   nr_double_t a  = W / 2;
   nr_double_t b  = a + s;
-  nr_double_t ac = (M_PI + log (m * a)) / a + (M_PI + log (m * b)) / b;
+  nr_double_t ac = (M_PI + log (n * a)) / a + (M_PI + log (n * b)) / b;
 
   ac_factor  = ac / (480 * M_PI * kk1 * kpk1 * (1 - k1 * k1));
   ac_factor *= sqrt (M_PI * MU0 * rho); // Rs factor
   ad_factor  = (er / (er - 1)) * tand * M_PI / C0;
 
-  beta_factor = 2 * M_PI / C0;
+  bt_factor  = 2 * M_PI / C0;
 }
 
-void cpwline::calcAB (nr_double_t f, nr_double_t& Z, nr_double_t& al,
+void cpwline::calcAB (nr_double_t f, nr_double_t& zl, nr_double_t& al,
 		      nr_double_t& bt) {
-  nr_double_t sr_er_f = sr_er_0;
+  nr_double_t sr_er_f = sr_er0;
   nr_double_t ac = ac_factor;
   nr_double_t ad = ad_factor;
 
   // by initializing as much as possible outside this function, the
   // overhead is minimal
 
-  // add the dispersive effects to er_0
-  sr_er_f += (sr_er - sr_er_0) / (1 + G * pow (f / fte, -1.8));
+  // add the dispersive effects to er0
+  sr_er_f += (sr_er - sr_er0) / (1 + G * pow (f / fte, -1.8));
 
   // computes impedance
-  Z /= sr_er_f;
+  zl /= sr_er_f;
 
   // for now, the loss are limited to strip losses (no radiation
   // losses yet) losses in neper/length
@@ -225,18 +227,18 @@ void cpwline::calcAB (nr_double_t f, nr_double_t& Z, nr_double_t& al,
 
 void cpwline::calcSP (nr_double_t frequency) {
 
-  nr_double_t Z = Z_factor;
+  nr_double_t zl = zl_factor;
+  nr_double_t beta = bt_factor;
   nr_double_t alpha;
-  nr_double_t beta = beta_factor;
 
-  calcAB (frequency, Z, alpha, beta);
+  calcAB (frequency, zl, alpha, beta);
 
-  // calculate S-parameters
-  nr_double_t z = Z / z0;
+  // calculate and set S-parameters
+  nr_double_t z = zl / z0;
   nr_double_t y = 1 / z;
   complex g = rect (alpha, beta);
-  complex n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
-  complex s11 = (z - y) * sinh (g * l) / n;
+  complex n = 2 * cosh (g * len) + (z + y) * sinh (g * len);
+  complex s11 = (z - y) * sinh (g * len) / n;
   complex s21 = 2 / n;
 
   setS (1, 1, s11); setS (2, 2, s11);
@@ -252,6 +254,10 @@ void cpwline::initDC (void) {
   voltageSource (1, 1, 2);
 }
 
+void cpwline::initTR (void) {
+  initDC ();
+}
+
 void cpwline::initAC (void) {
   setVoltageSources (0);
   allocMatrixMNA ();
@@ -260,16 +266,16 @@ void cpwline::initAC (void) {
 
 void cpwline::calcAC (nr_double_t frequency) {
 
-  nr_double_t Z = Z_factor;
+  nr_double_t zl = zl_factor;
+  nr_double_t beta = bt_factor;
   nr_double_t alpha;
-  nr_double_t beta = beta_factor;
 
-  calcAB (frequency, Z, alpha, beta);
+  calcAB (frequency, zl, alpha, beta);
 
-  // calculate Y-parameters
+  // calculate and set Y-parameters
   complex g = rect (alpha, beta);
-  complex y11 = coth (g * l) / Z;
-  complex y21 = -cosech (g * l) / Z;
+  complex y11 = coth (g * len) / zl;
+  complex y21 = -cosech (g * len) / zl;
 
   setY (1, 1, y11); setY (2, 2, y11);
   setY (1, 2, y21); setY (2, 1, y21);

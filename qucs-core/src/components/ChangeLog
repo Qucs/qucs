@@ -1,3 +1,12 @@
+2005-02-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp, microstrip/msvia.cpp, spfile.cpp,
+	devices/jfet.cpp, devices/bjt.cpp, devices/mosfet.cpp:
+	Implemented AC noise calculations.
+
+	* microstrip/cpwline.cpp: Added simple transient analysis
+	callback.
+
 2005-01-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/mstee.cpp: Implemented AC and SP model of the
