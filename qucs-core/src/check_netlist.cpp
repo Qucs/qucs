@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.35 2004-08-01 16:08:02 ela Exp $
+ * $Id: check_netlist.cpp,v 1.36 2004-08-01 23:08:19 ela Exp $
  *
  */
 
@@ -1093,8 +1093,7 @@ checker_copy_subcircuit (struct definition_t * sub) {
    'xlate' field of each node of the subcircuit element 'sub'. */
 static void checker_xlat_subcircuit_nodes (struct definition_t * type,
 					   struct definition_t * inst,
-					   struct definition_t * sub,
-					   char * instances) {
+					   struct definition_t * sub) {
   struct node_t * n, * ninst, * ntype;
   // go through nodes of the subcircuit 'type' and 'inst'
   for (ntype = type->nodes, ninst = inst->nodes; ntype != NULL;
@@ -1122,6 +1121,21 @@ static struct node_t * checker_reverse_nodes (struct node_t * nodes) {
   return root;
 }
 
+/* The function creates a subcircuit node name consisting of the given
+   arguments.  If the given 'instances' is NULL it is left out.  The
+   caller is responsible to free() the returned string. */
+static char * checker_subcircuit_node (char * type, char * instances,
+				       char * instance, char * node) {
+  char * txt = (char *)
+    calloc (1, strlen (type) + strlen (instance) + strlen (node) +
+	    (instances ? strlen (instances) : 0) + 4);
+  if (instances)
+    sprintf (txt, "%s.%s.%s.%s", type, instances, instance, node);
+  else
+    sprintf (txt, "%s.%s.%s", type, instance, node);
+  return txt;
+}
+
 /* This function assigns new node names to the subcircuit element
    'copy' based upon the previous node translation between the
    subcircuit 'type' and the instance 'inst' of this type.  The global
@@ -1140,20 +1154,18 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
     // create new node based upon the node translation
     ncopy = (struct node_t *) calloc (sizeof (struct node_t), 1);
     if (n->xlate) { // translated node
-      ncopy->node = n->xlate;
-      n->xlate = NULL;
+      if (instances == NULL)
+	ncopy->node = strdup (n->xlate);
+      else
+	ncopy->node = NULL; // leave it blank yet, indicates translation
+      free (n->xlate); n->xlate = NULL;
     }
     else if (!strcmp (n->node, "gnd")) { // ground node
       ncopy->node = strdup (n->node);
     }
     else { // internal subcircuit element node
-      char txt[256];
-      if (instances && strlen (instances) > 0)
-	sprintf (txt, "%s.%s.%s.%s", type->instance, instances,
-		 inst->instance, n->node);
-      else
-	sprintf (txt, "%s.%s.%s", type->instance, inst->instance, n->node);
-      ncopy->node = strdup (txt);
+      ncopy->node = checker_subcircuit_node (type->instance, instances,
+					     inst->instance, n->node);
     }
 
     // chain the new node list
@@ -1166,6 +1178,44 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
   copy->nodes = checker_reverse_nodes (root);
 }
 
+/* The function is used to assign the nodes of the 'copy' subcircuit
+   element which were left blank intentionally by the element copy in
+   order to indicate that it is an external node.  Again, if the
+   current node translation indicates an external node it is blanked
+   again, otherwise the node gets a unique internal name.  If the
+   'instances' list is NULL, then this indicates the root circuit list
+   and node translations are done though they are 'external'. */
+static void
+checker_copy_circuit_nodes (struct definition_t * type,
+			    struct definition_t * inst,
+			    struct definition_t * sub,
+			    struct definition_t * copy,
+			    char * instances) {
+  struct node_t * n = sub->nodes, * ncopy;
+
+  // go through the list of the subcircuit element's 'copy' nodes
+  for (ncopy = copy->nodes; ncopy != NULL; ncopy = ncopy->next, n = n->next) {
+    // these NULL nodes have intentionally been blanked
+    if (ncopy->node == NULL) {
+      if (n->xlate) { // translated node
+	if (instances == NULL)
+	   // external node indicated by no instances given
+	  ncopy->node = strdup (n->xlate);
+	else
+	  ncopy->node = NULL; // keep blank
+	free (n->xlate); n->xlate = NULL;
+      }
+      else if (!strcmp (n->node, "gnd")) { // global ground node
+	ncopy->node = strdup (n->node);
+      }
+      else { // internal subcircuit element node
+	ncopy->node = checker_subcircuit_node (type->instance, instances,
+					       inst->instance, n->node);
+      }
+    }
+  }
+}
+
 /* This function returns the last entry of the given list of
    definitions or NULL if there is no such element. */
 static struct definition_t *
@@ -1173,6 +1223,29 @@ checker_find_last_definition (struct definition_t * root) {
   for (struct definition_t * def = root; def != NULL; def = def->next)
     if (def->next == NULL) return def;
   return NULL;
+}
+
+/* Based upon the the given subcircuit instance identifier list the
+   function returns a "." - concatenated string or NULL. */
+static char * checker_subcircuit_instance_list (strlist * instances) {
+  if (instances && instances->length () > 0)
+    return instances->toString (".");
+  return NULL;    
+}
+
+/* The function creates a subcircuit instance name consisting of the
+   given arguments.  If the given 'instances' is NULL it is left out.
+   The caller is responsible to free() the returned string. */
+static char * checker_subcircuit_instance (char * type, char * instances,
+					   char * instance, char * base) {
+  char * txt = (char *)
+    calloc (1, strlen (type) + strlen (instance) + strlen (base) +
+	    (instances ? strlen (instances) : 0) + 4);
+  if (instances)
+    sprintf (txt, "%s.%s.%s.%s", type, instances, instance, base);
+  else
+    sprintf (txt, "%s.%s.%s", type, instance, base);
+  return txt;
 }
 
 /* This function produces a copy of the given subcircuit 'type'
@@ -1186,20 +1259,31 @@ checker_copy_subcircuits (struct definition_t * type,
   struct definition_t * def, * copy;
   struct definition_t * root = NULL;
   strlist * instcopy;
-  char txt[256], * list;
+  char * list;
 
   // go through element list of subcircuit
   for (def = type->sub; def != NULL; def = def->next) {
+
+    // translate the node list
+    checker_xlat_subcircuit_nodes (type, inst, def);
+
+    // allow recursive subcircuits
     if (!strcmp (def->type, "Sub")) {
-      // allow recursive subcircuits
+      // get subcircuit template definition
       struct definition_t * sub = checker_get_subcircuit (def);
+      // create a copy of the current subcircuit instance list
       if ((*instances) == NULL) (*instances) = new strlist ();
-      instcopy = new strlist (* (*instances));
+      instcopy = new strlist (*(*instances));
       // append instance name to recursive instance list
       (*instances)->append (inst->instance);
       copy = checker_copy_subcircuits (sub, def, instances);
       // put the expanded definitions into the sublist
       if (copy) {
+	list = checker_subcircuit_instance_list (instcopy);
+	// assign blanked node names to each subcircuit
+	for (struct definition_t * c = copy; c != NULL; c = c->next)
+	  checker_copy_circuit_nodes (type, inst, def, c, list);
+	// append the copies to the subcircuit list
 	struct definition_t * last = checker_find_last_definition (copy);
 	last->next = root;
 	root = copy;
@@ -1212,20 +1296,12 @@ checker_copy_subcircuits (struct definition_t * type,
       // element copy
       copy = checker_copy_subcircuit (def);
       // assign new instance name to the element
-      if (*instances && (*instances)->length () > 0) {
-	list = (*instances)->toString (".");
-	sprintf (txt, "%s.%s.%s.%s", type->instance, list, inst->instance,
-		 def->instance);
-      }
-      else {
-	list = NULL;
-	sprintf (txt, "%s.%s.%s", type->instance, inst->instance,
-		 def->instance);
-      }
-      copy->instance = strdup (txt);
+      list = checker_subcircuit_instance_list (*instances);
+      copy->instance =
+	checker_subcircuit_instance (type->instance, list,
+				     inst->instance, def->instance);
       copy->subcircuit = strdup (type->instance);
-      // translate and assign node list
-      checker_xlat_subcircuit_nodes (type, inst, def, list);
+      // assign node list
       checker_copy_subcircuit_nodes (type, inst, def, copy, list);
       // chain definition (circuit) list
       copy->next = root;
@@ -1389,9 +1465,7 @@ checker_expand_subcircuits (struct definition_t * root) {
       // get the subcircuit type definition and make a copy of it
       sub = checker_get_subcircuit (def);
       copy = checker_copy_subcircuits (sub, def, &instances);
-      if (instances) {
-	delete instances; instances = NULL;
-      }
+      if (instances) { delete instances; instances = NULL; }
       // remove the subcircuit instance from the original list
       if (prev) {
 	prev->next = next;
