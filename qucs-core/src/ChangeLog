@@ -1,3 +1,8 @@
+2005-02-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp (THROW_MATH_EXCEPTION): Made this macro
+	compatible with non-ISOC99 compilers.
+
 2005-02-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* acsolver.cpp (solve_noise): Hopefully fixed AC noise

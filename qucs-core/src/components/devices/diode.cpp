@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.20 2005/02/03 20:40:19 raimi Exp $
+ * $Id: diode.cpp,v 1.21 2005/02/28 09:28:48 raimi Exp $
  *
  */
 
@@ -244,7 +244,7 @@ void diode::initAC (void) {
 void diode::calcAC (nr_double_t frequency) {
   nr_double_t gd = getOperatingPoint ("gd");
   nr_double_t Cd = getOperatingPoint ("Cd");
-  complex y = 2 * z0 * rect (gd, Cd * 2.0 * M_PI * frequency);
+  complex y = rect (gd, Cd * 2.0 * M_PI * frequency);
   setY (NODE_C, NODE_C, +y); setY (NODE_A, NODE_A, +y);
   setY (NODE_C, NODE_A, -y); setY (NODE_A, NODE_C, -y);
 }

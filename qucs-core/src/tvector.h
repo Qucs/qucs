@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.10 2005/02/14 19:56:44 raimi Exp $
+ * $Id: tvector.h,v 1.11 2005/02/28 09:28:45 raimi Exp $
  *
  */
 
@@ -94,11 +94,13 @@ class tvector
 #endif
 
   // other operations
+#ifndef _MSC_VER
   friend nr_double_t norm<> (tvector);
   friend nr_double_t maxnorm<> (tvector);
   friend nr_type_t   sum<> (tvector);
   friend nr_type_t   scalar<> (tvector, tvector);
   friend tvector     conj<> (tvector);
+#endif
 
   // comparisons
 #ifndef _MSC_VER
