@@ -1,0 +1,139 @@
+/* -*-c-*- */
+
+%{
+/*
+ * scan_spice.l - scanner for a Spice netlist
+ *
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.  
+ *
+ * $Id: scan_spice.l,v 1.1 2004-10-29 18:01:29 ela Exp $
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#ifdef __MINGW32__
+#include <io.h>
+#endif
+
+#include "check_spice.h"
+#include "tokens_spice.h"
+
+#if !HAVE_STRCHR
+# define strchr  index
+# define strrchr rindex
+#endif
+
+%}
+
+WS       [ \t\n\r]
+TITLE    [A-Za-z][A-Za-z\- \t]*\r?\n
+SPACE    [ \t]
+DELIM    {SPACE}*[()=,]{SPACE}*
+NAME     [A-Z][A-Z0-9]*
+IDENT    [A-Za-z][A-Za-z0-9]*
+DIGIT    [0-9]
+EXPONENT [Ee][+-]?{DIGIT}+
+INT      [+-]?{DIGIT}+
+FLOAT1   [+-]?{DIGIT}+{EXPONENT}
+FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
+NUMBER   ({INT}|{FLOAT1}|{FLOAT2}){SFX}?[A-Za-z]*
+SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
+NODE     {DIGIT}+
+EOL      \r?\n
+
+%x COMMENT
+%option yylineno noyywrap nounput prefix="spice_"
+
+%%
+
+<INITIAL>^{TITLE}+ {
+    spice_lval.str = strdup (spice_text);
+    return TitleLines;
+}
+
+<INITIAL>"."[Ee][Nn][Dd]{EOL}* { /* identify end of netlist */
+    return End;
+}
+
+<INITIAL>{NODE} {
+    spice_lval.ident = strdup (spice_text);
+    return Node;
+}
+
+<INITIAL>{NUMBER} { /* identify float */
+    spice_lval.str = strdup (spice_text);
+    return Float;
+  }
+
+<INITIAL>{NAME} {
+    spice_lval.ident = strdup (spice_text);
+    return Capitals;
+}
+
+<INITIAL>"."{IDENT} {
+    spice_lval.ident = strdup (spice_text);
+    return Action;
+}
+
+<INITIAL>{IDENT} {
+    spice_lval.ident = strdup (spice_text);
+    return Identifier;
+}
+
+<INITIAL>{IDENT}{SPACE}*"("{SPACE}* {
+    spice_lval.ident = strdup (spice_text);
+    return ModelStart;
+}
+
+<INITIAL>{SPACE}*")"{SPACE}* {
+    return ModelEnd;
+}
+
+<INITIAL>{DELIM} {
+    spice_lval.str = strdup (spice_text);
+    return Spacer;
+}
+
+<INITIAL>":"   { /* pass the ':' to the parser */ return ':'; }
+<INITIAL>\r?\n { /* detect end of line */ return Eol; }
+
+<INITIAL>{SPACE}|\r?\n\+ /* skip spaces and the leading '+' */
+
+<INITIAL>"*" { /* leave these characters */
+    BEGIN(COMMENT);
+  }
+
+<INITIAL>. { /* any other character in invalid */
+    fprintf (stderr, 
+	     "line %d: syntax error, unrecognized character: `%s'\n", 
+	     spice_lineno, spice_text);
+    return InvalidCharacter;
+  }
+
+<COMMENT>. { /* skip any character in here */ }
+<COMMENT>\r?\n { BEGIN(INITIAL); /* skipping ends here */ }
+
+%%

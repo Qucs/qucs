@@ -1,3 +1,8 @@
+2004-10-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* netdefs.h, qucsdefs.h: Two new files generalizing netlist
+	handling (for new converter program).
+
 2004-10-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* nasolver.cpp: New 'steepest descent' convergence helper

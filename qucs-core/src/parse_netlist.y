@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.9 2004-10-06 14:40:05 ela Exp $
+ * $Id: parse_netlist.y,v 1.10 2004-10-29 18:01:29 ela Exp $
  *
  */
 
@@ -123,7 +123,7 @@ InputLine:
     $1->next = definition_root;
     definition_root = $1;
   }
-| Eol            { }
+  | Eol            { }
 ;
 
 ActionLine:

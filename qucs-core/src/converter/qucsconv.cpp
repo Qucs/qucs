@@ -1,0 +1,113 @@
+/*
+ * qucsconv.cpp - main converter program implementation
+ *
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ * $Id: qucsconv.cpp,v 1.1 2004-10-29 18:01:29 ela Exp $
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
+#include <errno.h>
+
+#include "check_spice.h"
+#include "qucs_producer.h"
+
+FILE * open_file (char * file, char * flag) {
+  FILE * fd = NULL;
+  if (file) {
+    if ((fd = fopen (file, flag)) == NULL) {
+      fprintf (stderr, "cannot open file `%s': %s\n", file, strerror (errno));
+      fd = flag[0] == 'r' ? stdin : stdout;
+    }
+  }
+  else {
+    fd = flag[0] == 'r' ? stdin : stdout;
+  }
+  return fd;
+}
+
+int main (int argc, char ** argv) {
+
+  char * infile = NULL, * outfile = NULL, * input = NULL, * output = NULL;
+
+  // check program arguments
+  for (int i = 1; i < argc; i++) {
+    if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
+      fprintf (stdout,
+	"Qucs-Converter " PACKAGE_VERSION "\n"
+	"Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>\n"
+	"\nThis is free software; see the source for copying "
+	"conditions.  There is NO\n"
+	"warranty; not even for MERCHANTABILITY or FITNESS FOR A "
+	"PARTICULAR PURPOSE.\n");
+      return 0;
+    }
+    if (!strcmp (argv[i], "-h") || !strcmp (argv[i], "--help")) {
+      fprintf (stdout,
+	"Usage: %s [OPTION]...\n\n"
+	"  -h, --help     display this help and exit\n"
+	"  -v, --version  display version information and exit\n"
+	"  -i  FILENAME   use file as input file (default stdin)\n"
+	"  -o  FILENAME   use file as output file (default stdout)\n"
+	"  -if FORMAT     input data specification\n"
+	"  -of FORMAT     output data specification\n"
+	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
+      return 0;
+    }
+    else if (!strcmp (argv[i], "-i")) {
+      infile = argv[++i];
+    }
+    else if (!strcmp (argv[i], "-o")) {
+      outfile = argv[++i];
+    }
+    else if (!strcmp (argv[i], "-if")) {
+      input = argv[++i];
+    }
+    else if (!strcmp (argv[i], "-of")) {
+      output = argv[++i];
+    }
+  }
+
+  if (input && !strcmp (input, "spice")) {
+    if ((spice_in = open_file (infile, "r")) == NULL)
+      return -1;
+    if (spice_parse () != 0)
+      return -1;
+    if (spice_checker () != 0)
+      return -1;
+  }
+  else {
+    fprintf (stderr, "invalid input data specification `%s'\n",
+	     input ? input : "not given");
+    return -1;
+  }
+
+  if (output && !strcmp (output, "qucs")) {
+    if ((qucs_out = open_file (outfile, "w")) == NULL)
+      return -1;
+    qucs_producer ();
+  }
+  return 0;
+}

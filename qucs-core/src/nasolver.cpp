@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.22 2004-10-27 18:45:19 ela Exp $
+ * $Id: nasolver.cpp,v 1.23 2004-10-29 18:01:29 ela Exp $
  *
  */
 
@@ -659,12 +659,12 @@ void nasolver<nr_type_t>::lineSearch (void) {
    iterations into local minimums) it converges painfully slow. */
 template <class nr_type_t>
 void nasolver<nr_type_t>::steepestDescent (void) {
-  nr_double_t alpha = 1.0, slope;
+  nr_double_t alpha = 1.0, sl, n;
 
   // compute solution deviation vector
   tvector<nr_type_t> dx = *x - *xprev;
   tvector<nr_type_t> dz = *z - *zprev;
-  slope = real (sum (dz * -dz));
+  n = norm (*zprev);
 
   do {
     // apply current damping factor and see what happens
@@ -675,11 +675,10 @@ void nasolver<nr_type_t>::steepestDescent (void) {
     calculate ();
     createZVector ();
 
-    // check gradient criteria
+    // check gradient criteria, ThinkME: Is this correct?
     dz = *z - *zprev;
-    slope = real (sum (dz * -dz));
-    if (norm (*z) < norm (*zprev) + alpha * slope)
-      break;
+    sl = real (sum (dz * -dz));
+    if (norm (*z) < n + alpha * sl) break;
     alpha *= 0.7;
   }
   while (alpha > 0.001);
