@@ -127,6 +127,10 @@ AC_ARG_ENABLE([mt],
    fi])
 if test "$enable_mt" = yes; then
   QT_LIB="-lqt-mt"
+  case $host_os in
+    *freebsd4* ) QT_LIB="$QT_LIB -pthread" ;;
+    *freebsd5* ) QT_LIB="$QT_LIB -lpthread" ;;
+  esac
   QT_INC="$QT_DEF -DQT_THREAD_SUPPORT -D_REENTRANT"
   QT_MTS="multi-threaded"
 else
