@@ -1607,11 +1607,11 @@ and its $n\times n$ noise wave correlation matrix $(\underline{C})$.
 \end{equation}
 
 Where $\overline{x}$ is the time average of $x$ and $\underline{x}^*$
-is the conjugate complex of $\underline{x}$.  As can be seen, the
-following equations hold:
+is the conjugate complex of $\underline{x}$.  Noise correlation
+matrices are hermitian matrices because the following equations hold.
 
 \begin{equation}
-\text{Im}(\underline{c}_{nn}) = \text{Im}(\overline{|b_{noise,n}|^2}) = 0
+\text{Im}\left(\underline{c}_{nn}\right) = \text{Im}\left(\overline{\left|b_{noise,n}\right|^2}\right) = 0
 \end{equation}
 \begin{equation}
 \underline{c}_{nm} = \underline{c}_{mn}^*
@@ -1661,7 +1661,7 @@ Optimal source reflection coefficient:
 With
 \begin{equation}
 \eta_1 = \underline{c}_{11}\cdot |\underline{S}_{21}|^2
-       - 2\cdot \text{Re}(\underline{c}_{12}\cdot\underline{S}_{21}\cdot\underline{S}_{11}^*)
+       - 2\cdot \text{Re}\left(\underline{c}_{12}\cdot\underline{S}_{21}\cdot\underline{S}_{11}^*\right)
        + \underline{c}_{22}\cdot|\underline{S}_{11}|^2
 \end{equation}
 \begin{equation}
@@ -1698,8 +1698,8 @@ With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
 
 \addvspace{12pt}
 
-Calculating the noise wave correlation coefficients from the noise parameters
-also is straightforward:
+Calculating the noise wave correlation coefficients from the noise
+parameters is straightforward as well.
 \begin{equation}
 \underline{c}_{11} = k\cdot T_{min}\cdot (|S_{11}|^2-1) + K_x\cdot |1-S_{11}\cdot\Gamma_{opt}|^2
 \end{equation}
@@ -1738,7 +1738,7 @@ noise temperature.  Note that $G_n$ does not equal $1/R_n$.
 
 All curves with constant noise figures are circles (in all planes,
 i.e. impedance, admittance and reflexion coefficient).  A circle in
-the reflexion coefficient plane owns the following parameters.
+the reflexion coefficient plane has the following parameters.
 
 \addvspace{12pt}
 
@@ -1760,17 +1760,16 @@ N = \frac{Z_0}{4\cdot R_n}\cdot (F-F_{min})\cdot |1+\Gamma_{opt}|^2
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
 
 Due to the similiar concept of S parameters and noise correlation
-coefficients, the CAE noise analysis can be performed quite alike
-the S parameter analysis (section \ref{sec:SparameterCAE}). As each
-step uses the S parameters to calculate the noise correlation matrix,
-the noise analysis is best done step by step in parallel with the
-S parameter analysis. Performing each step is as follows:
-We have the noise wave correlation matrices ( $(\underline{C})$,
-$(\underline{D})$ ) and the S parameter matrices ( $(\underline{S})$,
-$(\underline{T})$ ) of two arbitrary circuits and want to know the
-correlation matrix of the special circuit, that results from
-connecting two circuits at one port.\\
-
+coefficients, the CAE noise analysis can be performed quite alike the
+S parameter analysis (section \ref{sec:SparameterCAE}). As each step
+uses the S parameters to calculate the noise correlation matrix, the
+noise analysis is best done step by step in parallel with the S
+parameter analysis.  Performing each step is as follows: We have the
+noise wave correlation matrices ( $(\underline{C})$, $(\underline{D})$
+) and the S parameter matrices ( $(\underline{S})$, $(\underline{T})$
+) of two arbitrary circuits and want to know the correlation matrix of
+the special circuit resulting from connecting two circuits at one
+port.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1781,10 +1780,10 @@ connecting two circuits at one port.\\
 \end{figure}
 \FloatBarrier
 
-An example is shown in fig. \ref{fig:nconnect}. What we have to do is
+An example is shown in fig. \ref{fig:nconnect}.  What we have to do is
 to transform the inner noise waves $\underline{b}_{noise,k}$ and
-$\underline{b}_{noise,l}$ to the open ports. Let us look upon an example.
-According to the signal flow graph the resulting noise wave
+$\underline{b}_{noise,l}$ to the open ports.  Let us look upon the
+example.  According to the signal flow graph the resulting noise wave
 $\underline{b}_{noise,i}'$ writes as follows:
 \begin{equation}
 \underline{b}_{noise,i}' = \underline{b}_{noise,i} +
@@ -1792,6 +1791,7 @@ $\underline{b}_{noise,i}'$ writes as follows:
             \frac{\underline{T}_{ll}\cdot \underline{S}_{ik}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}} +
     \underline{b}_{noise,l}\cdot
             \frac{\underline{S}_{ik}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
+\label{eq:bnoiseI}
 \end{equation}
 The noise wave $\underline{b}_{noise,j}$ does not contribute to
 $\underline{b}_{noise,i}'$, because no path leads to port $i$.
@@ -1802,15 +1802,18 @@ Calculating $\underline{b}_{noise,j}'$ is quite alike:
             \frac{\underline{T}_{jl}\cdot \underline{S}_{kk}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}} +
     \underline{b}_{noise,k}\cdot
             \frac{\underline{T}_{jl}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
+\label{eq:bnoiseJ}
 \end{equation}
-Now we can derive the first element of the new noise correlation matrix:
+
+Now we can derive the first element of the new noise correlation
+matrix by multiplying eq. \eqref{eq:bnoiseI} with eq. \eqref{eq:bnoiseJ}.
 \begin{equation}
 \begin{split}
 \underline{c}_{ij}' = & \quad \overline{\underline{b}_{noise,i}'\cdot\underline{b}_{noise,j}'^*} \\
  = & \quad\; \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,j}^*} \\
  & + \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,l}^*}\cdot
        \left( \frac{\underline{T}_{jl}\cdot \underline{S}_{kk}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
-                \right) ^*
+                \right)^* +
        \overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,k}^*}\cdot
        \left( \frac{\underline{T}_{jl}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}} \right) ^* \\
  & + \overline{\underline{b}_{noise,k}\cdot\underline{b}_{noise,j}^*}\cdot
@@ -1832,9 +1835,9 @@ Now we can derive the first element of the new noise correlation matrix:
 \end{split}
 \end{equation}
 The noise waves of different circuits are uncorrelated and therefore
-their time average product equals zero. (e.g.
-$\overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,j}^*} = 0$)
-Thus, the final result is:
+their time average product equals zero (e.g.
+$\overline{\underline{b}_{noise,i}\cdot\underline{b}_{noise,j}^*} =
+0$).  Thus, the final result is:
 \begin{equation}
 \begin{split}
 \underline{c}_{ij}' = (\underline{c}_{ji}')^* =
@@ -1848,10 +1851,13 @@ Thus, the final result is:
 \end{equation}
 
 
-All other cases of connecting circuits can be calculated the
-same way. The results are listed below.\\
-If index $i$ and $j$ are from the same circuit, it results in
-fig. \ref{fig:nconnect2}. The following formula holds:
+All other cases of connecting circuits can be calculated the same way
+using the signal flow graph.  The results are listed below.
+
+\addvspace{12pt}
+
+If index $i$ and $j$ are within the same circuit, it results in
+fig. \ref{fig:nconnect2}.  The following formula holds:
 
 \begin{equation}
 \begin{split}
@@ -1862,10 +1868,10 @@ fig. \ref{fig:nconnect2}. The following formula holds:
      \left(\frac{\underline{T}_{ll}\cdot\underline{S}_{jk}}
                 {1-\underline{S}_{kk}\cdot\underline{T}_{ll}}\right)^*
    + \underline{c}_{kj}\cdot
-     \frac{\underline{T}_{ll}\cdot\underline{S}_{jk}^*}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
+     \frac{\underline{T}_{ll}\cdot\underline{S}_{ik}}{1-\underline{S}_{kk}\cdot\underline{T}_{ll}}
 \end{split}
 \end{equation}
-This equation is also valid, if $i$ equals $j$.\\ \\
+This equation is also valid, if $i$ equals $j$.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1878,7 +1884,9 @@ This equation is also valid, if $i$ equals $j$.\\ \\
 
 
 If the connected ports $k$ and $l$ are from the same circuit, the
-following equations have to be used (fig. \ref{fig:nconnect2}):
+following equations must be applied (see also
+fig. \ref{fig:nconnect3}) to obtain the new correlation matrix
+coefficients.
 
 \begin{equation}
 M = (1-\underline{S}_{kl})\cdot(1-\underline{S}_{lk}) - \underline{S}_{kk}\cdot\underline{S}_{ll}
@@ -1895,12 +1903,15 @@ K_3 = \frac{\underline{S}_{jl}\cdot(1-\underline{S}_{lk}) + \underline{S}_{ll}\c
 \begin{equation}
 K_4 = \frac{\underline{S}_{jk}\cdot(1-\underline{S}_{kl}) + \underline{S}_{kk}\cdot\underline{S}_{jl}} {M}
 \end{equation}
+
 \begin{equation}
-\underline{c}_{ij}' = \underline{c}_{ij} + \underline{c}_{kj}\cdot K_1 + \underline{c}_{lj}\cdot K_2
-   + K_3^*\cdot(\underline{c}_{ik} + \underline{c}_{kk}\cdot K_1 + \underline{c}_{lk}\cdot K_2)
-   + K_4^*\cdot(\underline{c}_{il} + \underline{c}_{kl}\cdot K_1 + \underline{c}_{ll}\cdot K_2)
+\begin{split}
+\underline{c}_{ij}' = \underline{c}_{ij} &+ \underline{c}_{kj}\cdot K_1 + \underline{c}_{lj}\cdot K_2
+   + K_3^*\cdot(\underline{c}_{ik} + \underline{c}_{kk}\cdot K_1 + \underline{c}_{lk}\cdot K_2) + \\
+    &K_4^*\cdot(\underline{c}_{il} + \underline{c}_{kl}\cdot K_1 + \underline{c}_{ll}\cdot K_2)
+\end{split}
 \end{equation}
-This equation is also valid, if $i$ equals $j$.
+These equations are also valid if $i$ equals $j$.
 
 \begin{figure}[ht]
 \begin{center}
@@ -1911,36 +1922,36 @@ This equation is also valid, if $i$ equals $j$.
 \end{figure}
 \FloatBarrier
 
-The absolute values of the noise correlation coefficients are very small.
-To achieve a higher numerical precision, it is recommended to normalize
-the noise matrix with $k\cdot T_0$. After the simulation they don't have
-to be denormalized, because the noise parameters can be calculated by using
-equation \ref{eqn:nparamF} to \ref{eqn:nparamRn} and omitting all
-occurances of $k\cdot T_0$.
+The absolute values of the noise correlation coefficients are very
+small.  To achieve a higher numerical precision, it is recommended to
+normalize the noise matrix with $k\cdot T_0$. After the simulation
+they do not have to be denormalized, because the noise parameters can
+be calculated by using equation \eqref{eqn:nparamF} to
+\eqref{eqn:nparamRn} and omitting all occurrences of $k\cdot T_0$.
 
 
 \section{Noise Wave Correlation Matrix of Components}
 %\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
 
-Many components do not produce any noise. Every element of their noise
-correlation matrix therefore equals exactly zero. Examples are
+Many components do not produce any noise.  Every element of their
+noise correlation matrix therefore equals exactly zero.  Examples are
 lossless, passive components, i.e. capacitors, inductors,
-transformers, circulators, phase shifters. Furthermore ideal voltage
+transformers, circulators, phase shifters.  Furthermore ideal voltage
 and current sources (without internal resistance) as well as gyrators
-also don't produce any noise.
+also do not produce any noise.
 
 \addvspace{12pt}
 
 If one wants to calculate the noise wave correlation matrix of a
 component, the most universal method is to take noise voltages and
 noise currents and then derive the noise waves by the use of equation
-\ref{equ:waves}. However, this can be very difficulty.
+\eqref{equ:waves}.  However, this can be very difficult.
 
 \addvspace{12pt}
 
-A passive, linear circuit produces only thermal noise and thus, its
+A passive, linear circuit produces only thermal noise and thus its
 noise waves can be calculated with Bosma's theorem (assuming
-thermodynamic equilibrium):
+thermodynamic equilibrium).
 
 \begin{equation}
 (\underline{C}) = k\cdot T\cdot \left( (\underline{E}) - (\underline{S})\cdot(\underline{S})^{*T} \right)

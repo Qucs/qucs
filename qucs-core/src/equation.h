@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.13 2004-07-05 21:41:46 ela Exp $
+ * $Id: equation.h,v 1.14 2004-07-06 22:05:47 ela Exp $
  *
  */
 
@@ -240,6 +240,7 @@ public:
   void findMatrixVectors (vector *);
   char * isMatrixVector (char *, int&, int&);
   int findEquationResult (node *);
+  static char * createMatrixString (char *, int, int);
 
 public:
   node * equations;

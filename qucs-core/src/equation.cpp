@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.16 2004-07-05 21:41:46 ela Exp $
+ * $Id: equation.cpp,v 1.17 2004-07-06 22:05:47 ela Exp $
  *
  */
 
@@ -873,23 +873,23 @@ node * solver::addEquationData (vector * v) {
 }
 
 /* Depending on the type of equation result the function converts the
-   given equation node to a valid dataset vector. */
+   given equation node to one or more valid dataset vector(s). */
 vector * solver::dataVector (node * eqn) {
   vector * v = NULL;
   switch (eqn->getType ()) {
-  case TAG_VECTOR:
+  case TAG_VECTOR: // simple vector
     v = new vector (* (eqn->getResult()->v));
     v->setNext (NULL); v->setPrev (NULL);
     break;
-  case TAG_DOUBLE:
+  case TAG_DOUBLE: // double value
     v = new vector ();
     v->add (eqn->getResult()->d);
     break;
-  case TAG_COMPLEX:
+  case TAG_COMPLEX: // complex value
     v = new vector ();
     v->add (* (eqn->getResult()->c));
     break;
-  case TAG_MATVEC:
+  case TAG_MATVEC: // matrix vector
     {
       // convert matrix vector to a list of vectors
       matvec * mv = eqn->getResult()->mv;
@@ -898,6 +898,21 @@ vector * solver::dataVector (node * eqn) {
 	for (int c = 1; c <= mv->getCols (); c++) {
 	  // name gets automatically assigned
 	  vector * t = mv->get (r, c);
+	  // chain the vectors appropriately
+	  t->setNext (v); v = t;
+	}
+      }
+    }
+    return v;
+  case TAG_MATRIX: // single matrix
+    {
+      // convert matrix to a list of vectors
+      matrix * m = eqn->getResult()->m;
+      for (int r = 1; r <= m->getRows (); r++) {
+	for (int c = 1; c <= m->getCols (); c++) {
+	  vector * t = new vector ();
+	  t->setName (createMatrixString (A(eqn)->result, r, c));
+	  t->add (m->get (r, c));
 	  // chain the vectors appropriately
 	  t->setNext (v); v = t;
 	}
@@ -1128,10 +1143,9 @@ int solver::findEquationResult (node * eqn) {
   // check each vector of a given matrix vector
   if (eqn->getType () == TAG_MATVEC) {
     matvec * mv = eqn->getResult()->mv;
-    char str[256];
     for (int r = 1; r <= mv->getRows (); r++) {
       for (int c = 1; c <= mv->getCols (); c++) {
-	sprintf (str, "%s[%d,%d]", A(eqn)->result, r, c);
+	char * str = createMatrixString (A(eqn)->result, r, c);
 	if (data->findDependency (str) || data->findVariable (str))
 	  return 1;
       }
@@ -1146,6 +1160,13 @@ int solver::findEquationResult (node * eqn) {
   return 0;
 }
 
+/* This function returns a static text representation with the
+   'n[r,c]' scheme indicating a matrix (vector) entry. */
+char * solver::createMatrixString (char * n, int r, int c) {
+  static char str[256];
+  sprintf (str, "%s[%d,%d]", n, r, c);
+  return str;
+}
 
 /* This function is called in order to run the equation checker and
    the solver.  The optional dataset passed to the function receives

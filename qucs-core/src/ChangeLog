@@ -1,3 +1,10 @@
+2004-07-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Removed some of the noise debug messages and
+	optimized 'sqr (abs (x))' to be 'norm (x)'.
+
+	* equation.cpp: Exporting simple matrices as well.
+
 2004-07-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Changed the scanner appropriately for the
