@@ -59,7 +59,7 @@ class QucsApp : public QMainWindow
 {
   Q_OBJECT
 public:
-    QucsApp(tQucsSettings *ps);
+    QucsApp();
     ~QucsApp();
 
     void initView();       // setup the mainview
@@ -84,7 +84,7 @@ public slots:
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
-    void slotQucsSettings();// open dialog to change application settings
+    void slotApplSettings();// open dialog to change application settings
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
     void slotGettingStarted();  // shows a HTML docu: Getting started
@@ -125,12 +125,14 @@ public slots:
     void slotSelectAll();
 
 public:
-    tQucsSettings  *globalSettings;
     QucsView     *view; // the working area with schematics, data displays etc.
+
+    // menu appearing by right mouse button click on content listview
+    QPopupMenu *ContentMenu;
 
     QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs;
     QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
-    QAction *projNew, *projOpen, *projDel, *QucsSettings;
+    QAction *projNew, *projOpen, *projDel, *applSettings;
     QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
     QAction *magPlus, *magMinus;
     QAction *intoH, *popH;
@@ -143,9 +145,6 @@ public:
 private:
     QPrinter    Printer; // printer is global (to remember the user settings)
     QucsInit    Init;    // initializes toolbars, menubar, actions ...
-
-    // menu appearing by right mouse button click on content listview
-    QPopupMenu *ContentMenu;
 
 // ********* Widgets on the main area **********************************
     QTabWidget    *TabView;

@@ -33,7 +33,10 @@
 
 
 tQucsSettings QucsSettings
-    = {0, 0, 600, 400, QFont("helvetica", 12), QColor(255, 250, 225)};
+     = {0, 0, 600, 400,    // position and size
+	QFont("Helvetica", 12), QFont("Helvetica", 16, QFont::DemiBold),
+	QFont("Helvetica", 10, QFont::Light),
+	QColor(255, 250, 225)};
 
 // #########################################################################
 // Loads the settings file and stores the settings.
@@ -57,7 +60,17 @@ bool loadSettings()
 	QucsSettings.dx = Line.section(",",0,0).toInt(&ok);
 	QucsSettings.dy = Line.section(",",1,1).toInt(&ok); }
     else if(Setting == "Font") {
-	QucsSettings.font.fromString(Line); }
+	QucsSettings.font.fromString(Line);
+
+	QucsSettings.largeFont = QucsSettings.font;
+	int i = QucsSettings.font.pointSize();  i += i/3;
+	QucsSettings.largeFont.setPointSize(i);   // large font greater
+	QucsSettings.largeFont.setWeight(QFont::DemiBold);
+
+	QucsSettings.smallFont = QucsSettings.font;
+	QucsSettings.smallFont.setPointSize(10);   // small font 10pt
+	QucsSettings.smallFont.setWeight(QFont::Light);
+	}
     else if(Setting == "BGColor") {
 	QucsSettings.BGColor.setNamedColor(Line);
 	if(!QucsSettings.BGColor.isValid())
@@ -70,7 +83,7 @@ bool loadSettings()
 
 // #########################################################################
 // Saves the settings in the settings file.
-bool saveSettings(QucsApp *qucs)
+bool saveApplSettings(QucsApp *qucs)
 {
   QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
   if(!file.open(IO_WriteOnly)) {    // settings file cannot be created
@@ -89,6 +102,7 @@ bool saveSettings(QucsApp *qucs)
     << "BGColor=" << qucs->view->viewport()->paletteBackgroundColor().name()
     << "\n";
   file.close();
+
   return true;
 }
 
@@ -109,11 +123,8 @@ int main(int argc, char *argv[])
   tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
   a.installTranslator( &tor );
 
-  QucsApp *qucs = new QucsApp(&QucsSettings);
+  QucsApp *qucs = new QucsApp();
   a.setMainWidget(qucs);
   qucs->show();
-  int result = a.exec();
-
-  saveSettings(qucs);
-  return result;
+  return a.exec();
 }

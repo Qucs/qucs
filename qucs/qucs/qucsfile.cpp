@@ -192,44 +192,48 @@ bool QucsFile::loadProperties(QTextStream *stream)
     Line = stream->readLine();
     if(Line == "</Properties>") return true;
     Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
 
     if(Line.at(0) != '<') {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nWrong property field limiter!"));
+		QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
     if(Line.at(Line.length()-1) != '>') {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nWrong property field limiter!"));
+		QObject::tr("Format Error:\nWrong property field limiter!"));
       return false;
     }
     Line = Line.mid(1, Line.length()-2);   // cut off start and end character
 
     cstr = Line.section('=',0,0);    // property type
     nstr = Line.section('=',1,1);    // property value
-         if(cstr == "View") { Doc->ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
-                              Doc->ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
-                              Doc->ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
-                              Doc->ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
-                              Doc->Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
-                              Doc->PosX   = nstr.section(',',5,5).toInt(&ok); if(ok) {
-                              Doc->PosY   = nstr.section(',',6,6).toInt(&ok); }}}}}} }
-    else if(cstr == "Grid") { Doc->GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
-                              Doc->GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
-                              if(nstr.section(',',2,2).toInt(&ok) == 0) Doc->GridOn = false;
-                              else Doc->GridOn = true; }} }
+         if(cstr == "View") {
+		Doc->ViewX1 = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		Doc->ViewY1 = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		Doc->ViewX2 = nstr.section(',',2,2).toInt(&ok); if(ok) {
+		Doc->ViewY2 = nstr.section(',',3,3).toInt(&ok); if(ok) {
+		Doc->Scale  = nstr.section(',',4,4).toDouble(&ok); if(ok) {
+		Doc->PosX   = nstr.section(',',5,5).toInt(&ok); if(ok) {
+		Doc->PosY   = nstr.section(',',6,6).toInt(&ok); }}}}}} }
+    else if(cstr == "Grid") {
+		Doc->GridX = nstr.section(',',0,0).toInt(&ok); if(ok) {
+		Doc->GridY = nstr.section(',',1,1).toInt(&ok); if(ok) {
+		if(nstr.section(',',2,2).toInt(&ok) == 0) Doc->GridOn = false;
+		else Doc->GridOn = true; }} }
     else if(cstr == "DataSet") Doc->DataSet = nstr;
     else if(cstr == "DataDisplay") Doc->DataDisplay = nstr;
-    else if(cstr == "OpenDisplay") if(nstr.toInt(&ok) == 0) Doc->SimOpenDpl = false;
-                                   else Doc->SimOpenDpl = true;
+    else if(cstr == "OpenDisplay")
+		if(nstr.toInt(&ok) == 0) Doc->SimOpenDpl = false;
+		else Doc->SimOpenDpl = true;
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nUnknown property: ")+cstr);
+	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
       return false;
     }
     if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Format Error:\nNumber expected in property field!"));
+	   QObject::tr("Format Error:\nNumber expected in property field!"));
       return false;
     }
   }
@@ -254,7 +258,7 @@ void QucsFile::simpleInsertComponent(Component *c)
     for(pn = Nodes->first(); pn != 0; pn = Nodes->next())  // check every node
       if(pn->cx == x) if(pn->cy == y)  break;
 
-    if(pn == 0) {   // create new node, if no existing one lies at this position
+    if(pn == 0) { // create new node, if no existing one lies at this position
       pn = new Node(x, y);
       Nodes->append(pn);
     }
@@ -273,6 +277,8 @@ bool QucsFile::loadComponents(QTextStream *stream, QPtrList<Component> *List)
   Component *c;
   while(!stream->atEnd()) {
     Line = stream->readLine();
+    Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
     if(Line == "</Components>") return true;
 
     c = getComponentFromName(Line);
@@ -280,7 +286,7 @@ bool QucsFile::loadComponents(QTextStream *stream, QPtrList<Component> *List)
 
     if(List) {
       int z;
-      for(z=c->Name.length()-1; z>=0; z--)  // cut off number of component name
+      for(z=c->Name.length()-1; z>=0; z--) // cut off number of component name
         if(!c->Name.at(z).isDigit()) break;
       c->Name = c->Name.left(z+1);
       List->append(c);
@@ -289,7 +295,7 @@ bool QucsFile::loadComponents(QTextStream *stream, QPtrList<Component> *List)
   }
 
   QMessageBox::critical(0, QObject::tr("Error"),
-               QObject::tr("Format Error:\n'Component' field is not closed!"));
+	   QObject::tr("Format Error:\n'Component' field is not closed!"));
   return false;
 }
 
@@ -307,8 +313,8 @@ void QucsFile::simpleInsertWire(Wire *pw)
     Nodes->append(pn);
   }
 
-  if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {   // wire with length zero are just node labels
-    pn->Label = pw->Label;
+  if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
+    pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) pn->Label->Type = isNodeLabel;
     delete pw;           // delete wire because this is not a wire
     return;
@@ -338,8 +344,9 @@ bool QucsFile::loadWires(QTextStream *stream, QPtrList<Wire> *List)
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line == "</Wires>") return true;
-
     Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
+
     w = new Wire(0,0,0,0, (Node*)4,(Node*)4);  // (Node*)4 =  move all ports (later on)
     if(!w->load(Line)) {
       QMessageBox::critical(0, QObject::tr("Error"),
@@ -364,6 +371,7 @@ bool QucsFile::loadDiagrams(QTextStream *stream, QPtrList<Diagram> *List)
     Line = stream->readLine();
     if(Line == "</Diagrams>") return true;
     Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
 
     cstr = Line.section(' ',0,0);    // diagram type
          if(cstr == "<Rect") d = new RectDiagram();
@@ -399,6 +407,7 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     Line = stream->readLine();
     if(Line == "</Paintings>") return true;
     Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
 
     cstr = Line.section(' ',0,0);    // painting type
          if(cstr == "<Rectangle") p = new Rectangle();
@@ -442,16 +451,19 @@ bool QucsFile::load()
   QTextStream stream(&file);
 
   // read header **************************
-  if(stream.atEnd()) {
-    file.close();
-//    QMessageBox::critical(0, "Error", "Document is empty!");
-//    return false;
-    return true;
-  }
-  Line = stream.readLine();
+  do {
+    if(stream.atEnd()) {
+      file.close();
+      return true;
+    }
+
+    Line = stream.readLine();
+  } while(Line.isEmpty());
+
   if(Line.left(16) != "<Qucs Schematic ") {  // wrong file type ?
     file.close();
-    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Wrong document type!"));
+    QMessageBox::critical(0, QObject::tr("Error"),
+ 		 QObject::tr("Wrong document type!"));
     return false;
   }
 
@@ -461,24 +473,34 @@ bool QucsFile::load()
   Line.remove('.');
   if(Line > s) {  // wrong version number ? (only backward compatible)
     file.close();
-    QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("Wrong document version: ")+Line);
+    QMessageBox::critical(0, QObject::tr("Error"),
+		 QObject::tr("Wrong document version: ")+Line);
     return false;
   }
 
   // read content *************************
   while(!stream.atEnd()) {
     Line = stream.readLine();
-    if(Line == "<Properties>") { if(!loadProperties(&stream)) { file.close(); return false; } }
+    Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
+
+    if(Line == "<Properties>") {
+      if(!loadProperties(&stream)) { file.close(); return false; } }
     else
-    if(Line == "<Components>") { if(!loadComponents(&stream)) { file.close(); return false; } }
+    if(Line == "<Components>") {
+      if(!loadComponents(&stream)) { file.close(); return false; } }
     else
-    if(Line == "<Wires>") { if(!loadWires(&stream)) { file.close(); return false; } }
+    if(Line == "<Wires>") {
+      if(!loadWires(&stream)) { file.close(); return false; } }
     else
-    if(Line == "<Diagrams>") { if(!loadDiagrams(&stream, Diags)) { file.close(); return false; } }
+    if(Line == "<Diagrams>") {
+      if(!loadDiagrams(&stream, Diags)) { file.close(); return false; } }
     else
-    if(Line == "<Paintings>") { if(!loadPaintings(&stream, Paints)) { file.close(); return false; } }
+    if(Line == "<Paintings>") {
+      if(!loadPaintings(&stream, Paints)) { file.close(); return false; } }
     else {
-      QMessageBox::critical(0, QObject::tr("Error"), QObject::tr("File Format Error:\nUnknown field!"));
+      QMessageBox::critical(0, QObject::tr("Error"),
+		   QObject::tr("File Format Error:\nUnknown field!"));
       file.close();
       return false;
     }

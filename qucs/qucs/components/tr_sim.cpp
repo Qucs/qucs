@@ -16,18 +16,17 @@
  ***************************************************************************/
 
 #include "tr_sim.h"
+#include "../main.h"
 
 
 TR_Sim::TR_Sim()
 {
   Description = QObject::tr("transient simulation");
 
-  QWidget  w;
-  QPainter p(&w);
   QString  s = Description;
   s.replace(" ","\n");
-  p.setFont(QFont("Helvetica",16, QFont::DemiBold));
-  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,s);      // get size of text
+  QFontMetrics  metrics(QucsSettings.largeFont);
+  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -51,9 +50,12 @@ TR_Sim::TR_Sim()
   Model = ".TR";
   Name  = "TR";
 
-  Props.append(new Property("Start", "0", true, QObject::tr("start time in seconds")));
-  Props.append(new Property("Stop", "1 ms", true, QObject::tr("stop time in seconds")));
-  Props.append(new Property("Step", "10 us", true, QObject::tr("time step in seconds")));
+  Props.append(new Property("Start", "0", true,
+			QObject::tr("start time in seconds")));
+  Props.append(new Property("Stop", "1 ms", true,
+			QObject::tr("stop time in seconds")));
+  Props.append(new Property("Step", "10 us", true,
+			QObject::tr("time step in seconds")));
 }
 
 TR_Sim::~TR_Sim()
