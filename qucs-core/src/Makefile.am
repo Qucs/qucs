@@ -67,13 +67,13 @@ generated_FILES = scan_netlist.cpp parse_netlist.cpp scan_dataset.cpp \
 	parse_touchstone.cpp tokens_touchstone.h scan_touchstone.cpp
 
 scan_netlist.cpp: scan_netlist.l
-	$(LEX) -o$@ $<
+	$(LEX) --nounistd -o$@ $<
 
 scan_dataset.cpp: scan_dataset.l
-	$(LEX) -o$@ $<
+	$(LEX) --nounistd -o$@ $<
 
 scan_touchstone.cpp: scan_touchstone.l
-	$(LEX) -o$@ $<
+	$(LEX) --nounistd -o$@ $<
 
 parse_netlist.cpp: parse_netlist.y
 	$(YACC) -v -o $@ --defines=tokens_netlist.h $<
