@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.1 2004/03/07 08:33:01 ela Exp $
+ * $Id: check_netlist.cpp,v 1.2 2004/04/13 20:41:17 ela Exp $
  *
  */
 
@@ -105,7 +105,8 @@ struct definition definition_available[] =
     /* dc analysis */
     { "DC", 0, 1, { NULL }, { NULL } },
     /* parameter sweep */
-    { "SW", 0, 1, { "Start", "Stop", "Step", "Param", NULL }, { NULL } },
+    { "SW", 0, 1, { "Start", "Stop", "Step", "Param", "Sim", NULL }, 
+      { NULL } },
 
     /* end of list */
     { NULL, 0, 0, { NULL }, { NULL } }
@@ -199,12 +200,16 @@ static int checker_resolve_variable (struct value_t * value) {
   struct value_t * val;
   if (value->ident != NULL) {
     int found = 0;
-    /* find variable in parameter sweeps */
+    /* 1. find variable in parameter sweeps */
     if ((val = checker_find_variable ("SW", "Param", value->ident)) != NULL) {
       /* mark both the variable identifier and the parameter sweep
 	 variable to be actually variables */
       val->var = 1;
       value->var = 1;
+      found++;
+    }
+    /* 2. find variable in parameter sweeps */
+    if ((val = checker_find_variable ("SW", "Sim", value->ident)) != NULL) {
       found++;
     }
     /* TODO: find variable in equations */

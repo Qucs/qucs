@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.h,v 1.3 2004/02/13 20:31:45 ela Exp $
+ * $Id: analysis.h,v 1.4 2004/04/13 20:41:17 ela Exp $
  *
  */
 
@@ -56,6 +56,7 @@ class analysis : public object
   void setEnv (environment * e) { env = e; }
   analysis * getAnalysis (void) { return actions; }
   void setAnalysis (analysis * a) { actions = a; }
+  void addAnalysis (analysis *);
   int getType (void) { return type; }
   void setType (int t) { type = t; }
 

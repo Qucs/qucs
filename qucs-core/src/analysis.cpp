@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.cpp,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: analysis.cpp,v 1.3 2004/04/13 20:41:17 ela Exp $
  *
  */
 
@@ -63,4 +63,12 @@ analysis::analysis (analysis & a) : object (a) {
   env = a.env;
   actions = a.actions;
   type = a.type;
+}
+
+/* This function adds the given analysis to the actions being
+   associated with the current analysis object. */
+void analysis::addAnalysis (analysis * a) {
+  a->setPrev (NULL);
+  a->setNext (actions);
+  actions = a;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.10 2004/04/04 09:11:05 ela Exp $
+ * $Id: dcsolver.cpp,v 1.11 2004/04/13 20:41:17 ela Exp $
  *
  */
 
@@ -496,23 +496,14 @@ void dcsolver::init (void) {
 void dcsolver::saveResults (void) {
   int N = countNodes ();
   int M = subnet->getVoltageSources ();
-  vector * f, * v, * i;
+  vector * v, * i;
   char * n;
 
-  // add current frequency to the dependencies of the output dataset
-  /*  FIXME: if ((f = data->findDependency ("frequency")) == NULL) {
-    f = new vector ("frequency");
-    data->addDependency (f);
-    f->add (0.0);
-  }
-  */
   // add voltage variables
   for (int r = 1; r <= N; r++) {
     n = createV (r);
     if ((v = data->findVariable (n)) == NULL) {
       v = new vector (n);
-      /* FIXME:     v->setDependencies (new strlist ());
-	      v->getDependencies()->add (f->getName ());*/
       v->setOrigin (getName ());
       data->addVariable (v);
     }
@@ -524,8 +515,6 @@ void dcsolver::saveResults (void) {
     n = createI (r);
     if ((i = data->findVariable (n)) == NULL) {
       i = new vector (n);
-      /* FIXME:     i->setDependencies (new strlist ());
-	      i->getDependencies()->add (f->getName ());*/
       i->setOrigin (getName ());
       data->addVariable (i);
     }

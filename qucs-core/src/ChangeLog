@@ -1,3 +1,23 @@
+2004-04-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Adding (independent) frequency vector only once
+	to output dataset.
+
+	* parasweep.cpp: Fixed variable dependency assignments.
+
+	* net.cpp: Reordering analysis runtime correctly.
+
+	* dcsolver.cpp: Removed unnecessary frequency vector in output
+	dataset.
+
+	* dataset.cpp: New helper functions.
+
+	* check_netlist.cpp: New required parameter for variable sweep
+	definitions "Sim".
+
+	* analysis.cpp (addAnalysis): New function.  Adds a sub analysis
+	to the analysis object.
+
 2004-04-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* logging.c: Check whether logging is possible.
