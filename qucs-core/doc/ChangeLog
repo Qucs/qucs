@@ -1,3 +1,8 @@
+2004-08-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Jacobi method}): Documented
+	Schmidt and v.Mises convergence criteria.
+
 2004-08-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Noise model}): Documented

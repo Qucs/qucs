@@ -23,12 +23,12 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Implement sorted node list for S-parameter analysis in order to
-  increase speed.
+	- Implement sorted node list for S-parameter analysis in order
+	  to increase speed.
 - What about a damped Newton-Raphson or source-stepping?
 	- Find an efficient algorithm to ensure non-zero diagonal matrix
 	  elements for iterative methods.
-- Clarify pn-junction noise issue.
+	- Clarify pn-junction noise issue.
 	- Check polarity of BJT (SPICE Gummel-Poon) device.
 - Implement temperature models of existing non-linear devices.
 	- Implement DC model for transmission line.

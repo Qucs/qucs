@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.h,v 1.3 2004-07-03 10:56:40 ela Exp $
+ * $Id: nodelist.h,v 1.4 2004-08-15 12:25:38 ela Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __NODELIST_H__
 
 class node;
+class net;
 
 struct nodelist_t {
   int n;
@@ -40,6 +41,7 @@ class nodelist
 {
  public:
   nodelist ();
+  nodelist (net *);
   nodelist (const nodelist &);
   ~nodelist ();
   void add (char *, int intern = 0);
@@ -55,10 +57,26 @@ class nodelist
   struct nodelist_t * getNode (int);
   struct nodelist_t * getLastNode (void);
   char * getNodeString (int);
+  void sort (void);
+  struct nodelist_t * copy (struct nodelist_t *);
+  void add (struct nodelist_t *);
+  void append (struct nodelist_t *);
+  void release (struct nodelist_t *);
+  void remove (char *);
+  void remove (struct nodelist_t *, int keep = 0);
+  void remove (circuit *);
+  struct nodelist_t * create (char *, int);
+  void insert (struct nodelist_t *);
+  void insert (circuit *);
+  void delCircuitNode (struct nodelist_t *, node *);
+  void sortedNodes (node **, node **);
+  struct nodelist_t * getNode (char *);
 
  private:
   struct nodelist_t * root;
+  struct nodelist_t * last;
   char * txt;
+  int sorting;
 };
 
 #endif /* __NODELIST_H__ */

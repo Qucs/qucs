@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.17 2004-08-12 13:59:53 ela Exp $
+ * $Id: net.cpp,v 1.18 2004-08-15 12:25:38 ela Exp $
  *
  */
 
@@ -47,6 +47,7 @@ using namespace std;
 #include "open.h"
 #include "itrafo.h"
 #include "analysis.h"
+#include "nodelist.h"
 #include "environment.h"
 #include "component_id.h"
 
@@ -91,7 +92,9 @@ net::net (net & n) : object (n) {
 /* This function prepends the given circuit to the list of registered
    circuits. */
 void net::insertCircuit (circuit * c) {
+#if 0
   assert (!containsCircuit (c));
+#endif
 
   // chain circuit appropriately
   if (root) root->setPrev (c);
@@ -117,7 +120,9 @@ void net::insertCircuit (circuit * c) {
 /* The function removes the given circuit from the list of registered
    circuits. */
 void net::removeCircuit (circuit * c, int dropping) {
+#if 0
   assert (containsCircuit (c));
+#endif
 
   // adjust the circuit chain appropriately
   if (c == root) {
@@ -321,10 +326,11 @@ analysis * net::findLastOrder (analysis * a) {
 
 /* The function re-shifts all circuits in the drop list to the actual
    list of circuit objects. */
-void net::getDroppedCircuits (void) {
+void net::getDroppedCircuits (nodelist * nodes) {
   circuit * n;
   for (circuit * c = drop; c != NULL; c = n) {
     n = (circuit *) c->getNext ();
+    if (nodes) nodes->insert (c);
     insertCircuit (c);
   }
   drop = NULL;
@@ -332,11 +338,14 @@ void net::getDroppedCircuits (void) {
 
 /* This function deletes all unnecessary circuits in the list of
    registered circuit objects. */
-void net::deleteUnusedCircuits (void) {
+void net::deleteUnusedCircuits (nodelist * nodes) {
   circuit * n;
   for (circuit * c = root; c != NULL; c = n) {
     n = (circuit *) c->getNext ();
-    if (!c->isOriginal ()) removeCircuit (c);
+    if (!c->isOriginal ()) {
+      if (nodes) nodes->remove (c);
+      removeCircuit (c);
+    }
   }
 }
 

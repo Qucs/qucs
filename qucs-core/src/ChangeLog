@@ -1,3 +1,18 @@
+2004-08-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: The SP solver can now use a sorted nodelist.
+	This save at least N^2 circuit list traversion.
+
+	* nodelist.cpp: Made a big effort to implement a sorted
+	nodelist which can be used by the SP solver in order to
+	increase speed while looking for possible connections.
+
+	* dcsolver.cpp: Moved nodelist creation from the DC solver
+	class into the nodelist class itself.
+
+	* check_netlist.cpp: New function printing the content of the
+	current netlist in short form.
+
 2004-08-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp: Fixed Schmidt and v. Mises convergence

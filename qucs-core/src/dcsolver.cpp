@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.22 2004-08-12 13:59:53 ela Exp $
+ * $Id: dcsolver.cpp,v 1.23 2004-08-15 12:25:38 ela Exp $
  *
  */
 
@@ -120,7 +120,7 @@ void dcsolver::solve (void) {
   logprint (LOG_STATUS, "NOTIFY: %s: creating node list for DC analysis\n",
 	    getName ());
 #endif
-  createNodeList ();
+  nlist = new nodelist (subnet);
   nlist->assignNodes ();
   assignVoltageSources ();
 #if DEBUG && 0
@@ -189,35 +189,6 @@ void dcsolver::solve (void) {
 #endif /* DEBUG */
   saveResults ();
   delete nlist; nlist = NULL;
-}
-
-/* The function creates a nodelist for the DC analysis.  The nodelist
-   consists is based on the circuit list and consists of unique nodes
-   inside the circuit list only.  Each node in the list has references
-   to their actual circuit nodes and thereby to the circuits it is
-   connected to. */
-void dcsolver::createNodeList (void) {
-  circuit * root = subnet->getRoot ();
-  nlist = new nodelist ();
-  // go through circuit list and find unique nodes
-  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    for (int i = 1; i <= c->getSize (); i++) {
-      node * n = c->getNode (i);
-      if (nlist->contains (n->getName ()) == 0) {
-	nlist->add (n->getName (), n->getInternal ());
-      }
-    }
-  }
-  // add circuit nodes to each unique node in the list
-  for (struct nodelist_t * n = nlist->getRoot (); n != NULL; n = n->next) {
-    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-      for (int i = 1; i <= c->getSize (); i++) {
-	if (!strcmp (n->name, c->getNode(i)->getName ())) {
-	  nlist->addCircuitNode (n, c->getNode (i));
-	}
-      }
-    }
-  }
 }
 
 /* Applying the MNA (Modified Nodal Analysis) to a circuit with

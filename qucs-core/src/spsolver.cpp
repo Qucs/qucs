@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.26 2004-08-09 15:34:44 ela Exp $
+ * $Id: spsolver.cpp,v 1.27 2004-08-15 12:25:38 ela Exp $
  *
  */
 
@@ -48,9 +48,12 @@ using namespace std;
 #include "itrafo.h"
 #include "analysis.h"
 #include "sweep.h"
+#include "nodelist.h"
 #include "spsolver.h"
 #include "components/constants.h"
 #include "components/component_id.h"
+
+#define SORTED_LIST 1   // use sorted node list?
 
 #define TINYS 1.235e-12 // 'tiny' value for singularities
 
@@ -59,6 +62,7 @@ spsolver::spsolver () : analysis () {
   type = ANALYSIS_SPARAMETER;
   swp = NULL;
   noise = 0;
+  nlist = NULL;
 }
 
 // Constructor creates a named instance of the spsolver class.
@@ -66,11 +70,13 @@ spsolver::spsolver (char * n) : analysis (n) {
   type = ANALYSIS_SPARAMETER;
   swp = NULL;
   noise = 0;
+  nlist = NULL;
 }
 
 // Destructor deletes the spsolver class object.
 spsolver::~spsolver () {
   if (swp) delete swp;
+  if (nlist) delete nlist;
 }
 
 /* The copy constructor creates a new instance of the spsolver class
@@ -78,6 +84,7 @@ spsolver::~spsolver () {
 spsolver::spsolver (spsolver & n) : analysis (n) {
   noise = n.noise;
   if (n.swp) swp = new sweep (*n.swp);
+  if (n.nlist) nlist = new nodelist (*n.nlist);
 }
 
 /* This function joins two nodes of a single circuit (interconnected
@@ -428,6 +435,14 @@ void spsolver::calc (nr_double_t freq) {
    number of s-parameters to calculate. */
 void spsolver::reduce (void) {
 
+#if SORTED_LIST
+  node * n1, * n2;
+  circuit * result, * cand1, * cand2;
+
+  nlist->sortedNodes (&n1, &n2);
+  cand1 = n1->getCircuit ();
+  cand2 = n2->getCircuit ();
+#else /* !SORTED_LIST */
   node * n1, * n2, * cand;
   circuit * result, * c1, * c2, * cand1, * cand2;
   int ports;
@@ -469,6 +484,7 @@ void spsolver::reduce (void) {
       }
     }
   }
+#endif /* !SORTED_LIST */
 
   // found a connection ?
   if (cand1 != NULL && cand2 != NULL) {
@@ -481,6 +497,11 @@ void spsolver::reduce (void) {
       result = connectedJoin (n1, n2);
       if (noise) noiseConnect (result, n1, n2);
       subnet->reducedCircuit (result);
+#if SORTED_LIST
+      nlist->remove (cand1);
+      nlist->remove (cand2);
+      nlist->insert (result);
+#endif /* SORTED_LIST */
       subnet->removeCircuit (cand1);
       subnet->removeCircuit (cand2);
       subnet->insertCircuit (result);
@@ -495,6 +516,10 @@ void spsolver::reduce (void) {
       result = interconnectJoin (n1, n2);
       if (noise) noiseInterconnect (result, n1, n2);
       subnet->reducedCircuit (result);
+#if SORTED_LIST
+      nlist->remove (cand1);
+      nlist->insert (result);
+#endif /* SORTED_LIST */
       subnet->removeCircuit (cand1);
       subnet->insertCircuit (result);
       result->setOriginal (0);
@@ -547,8 +572,16 @@ void spsolver::solve (void) {
   insertConnections ();
 
 #if DEBUG
-    logprint (LOG_STATUS, "NOTIFY: %s: solving SP netlist\n", getName ());
+  logprint (LOG_STATUS, "NOTIFY: %s: solving SP netlist\n", getName ());
 #endif
+  
+#if SORTED_LIST
+#if DEBUG
+  logprint (LOG_STATUS, "NOTIFY: %s: creating sorted nodelist\n", getName ());
+#endif
+  nlist = new nodelist (subnet);
+  nlist->sort ();
+#endif /* SORTED_LIST */
 
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
@@ -570,8 +603,8 @@ void spsolver::solve (void) {
     }
 
     saveResults (freq);
-    subnet->getDroppedCircuits ();
-    subnet->deleteUnusedCircuits ();
+    subnet->getDroppedCircuits (nlist);
+    subnet->deleteUnusedCircuits (nlist);
   }
   dropConnections ();
 }
