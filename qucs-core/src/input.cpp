@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.17 2004/06/05 12:20:35 ela Exp $
+ * $Id: input.cpp,v 1.18 2004/06/25 00:17:23 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@ using namespace std;
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <assert.h>
 #include <iostream>
 
 #include "logging.h"
@@ -128,6 +129,8 @@ void input::factory (void) {
     // handle actions
     if (def->action) {
       if ((a = createAnalysis (def->type)) != NULL) {
+	a->setName (def->instance);
+
 	// add the properties to analysis
 	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	  if (pairs->value->ident) {
@@ -142,7 +145,9 @@ void input::factory (void) {
 	  } else {
 	    a->addProperty (pairs->key, pairs->value->value);
 	  }
-	a->setName (def->instance);
+	// additionally add missing optional properties
+	assignDefaultProperties (a, def->define);
+
 	subnet->insertAnalysis (a);
       }
     }
@@ -163,6 +168,9 @@ void input::factory (void) {
 	  } else {
 	    s->addProperty (pairs->key, pairs->value->value);
 	  }
+	// additionally add missing optional properties
+	assignDefaultProperties (s, def->define);
+
 	// put new substrate definition into environment
 	variable * v = new variable (def->instance);
 	v->setSubstrate (s);
@@ -177,15 +185,17 @@ void input::factory (void) {
     // handle component definitions
     if (!def->action && !def->substrate) {
       c = createCircuit (def->type);
+      assert (c != NULL);
       o = (object *) c;
       c->setName (def->instance);
+      c->setNonLinear (def->nonlinear);
 
       // add appropriate nodes to circuit
       for (i = 1, nodes = def->nodes; nodes; nodes = nodes->next, i++)
 	if (i <= c->getSize ())
 	  c->setNode (i, nodes->node);
 
-      // add the properties to circuit/substrate
+      // add the properties to circuit
       for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	if (pairs->value->ident) {
 	  if (pairs->value->var) {
@@ -203,9 +213,30 @@ void input::factory (void) {
 	} else {
 	  o->addProperty (pairs->key, pairs->value->value);
 	}
+      // additionally add missing optional properties
+      assignDefaultProperties (c, def->define);
 
       // insert the circuit into the netlist object
       subnet->insertCircuit (c);
+    }
+  }
+}
+
+/* This static function applies the optional missing properties's
+   default values to the given object. */
+void input::assignDefaultProperties (object * obj, struct define_t * def) {
+  // go through optional properties
+  for (int i = 0; PROP_IS_PROP (def->optional[i]); i++) {
+    // is the property already assigned ?
+    if (!obj->hasProperty (def->optional[i].key)) {
+      if (PROP_IS_VAL (def->optional[i])) {
+	// add double property
+	obj->addProperty (def->optional[i].key, def->optional[i].defaultval.d);
+      }
+      else {
+	// add string property
+	obj->addProperty (def->optional[i].key, def->optional[i].defaultval.s);
+      }
     }
   }
 }

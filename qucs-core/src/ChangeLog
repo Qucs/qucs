@@ -1,3 +1,19 @@
+2004-06-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Additionally computing noise wave correlation
+	matrices.  To be verified and tested...
+
+	* input.cpp: Assigning default values to component properties
+	which are optional and not given in the netlist.
+
+	* circuit.cpp: Cicuit contains a new property indicating
+	whether it is non-linear or not.
+	Added noise wave correlation matrix to circuit.
+
+	* check_netlist.cpp (definition_available): Component
+	definitions now also include allowed ranges and default values.
+	Property values are checked for their value range.
+
 2004-06-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* sweep.cpp: Implemented list, constant, linear and logarithmic

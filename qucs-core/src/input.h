@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.4 2004/04/25 17:08:50 ela Exp $
+ * $Id: input.h,v 1.5 2004/06/25 00:17:23 ela Exp $
  *
  */
 
@@ -45,6 +45,7 @@ class input : public object
   substrate * createSubstrate (char *);
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
+  static void assignDefaultProperties (object *, struct define_t *);
 
  private:
   FILE * fd;
