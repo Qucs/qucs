@@ -1,7 +1,7 @@
 /***************************************************************************
-                          thing.h  -  description
+                          tabdiagram.h  -  description
                              -------------------
-    begin                : Sun Sep 28 2003
+    begin                : Fri Oct 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,24 +15,23 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef THING_H
-#define THING_H
+#ifndef TABDIAGRAM_H
+#define TABDIAGRAM_H
 
-#include <qpainter.h>
+#include <diagram.h>
 
 /**
   *@author Michael Margraf
   */
 
-class Thing {
+class TabDiagram : public Diagram  {
 public: 
-	Thing();
-	virtual ~Thing();
+	TabDiagram(int _cx=0, int _cy=0);
+	~TabDiagram();
 
-  virtual void paint(QPainter *p);
-  virtual bool containPoint(int x, int y);
-
-  bool selected;
+  virtual TabDiagram* newOne();
+  virtual void calcData(Graph *g);
+  virtual void calcDiagram();
 };
 
 #endif
