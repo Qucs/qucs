@@ -490,16 +490,16 @@ void QucsApp::initView()
   // "Project Tab" of the left QTabWidget
   QVBox *ProjGroup = new QVBox(this);
   QHBox *ProjButts = new QHBox(ProjGroup);
-  QPushButton *ProjNew   = new QPushButton("New",ProjButts);
+  QPushButton *ProjNew   = new QPushButton(tr("New"),ProjButts);
   connect(ProjNew, SIGNAL(clicked()), SLOT(slotProjNewButt()));
-  QPushButton *ProjOpen  = new QPushButton("Open",ProjButts);
+  QPushButton *ProjOpen  = new QPushButton(tr("Open"),ProjButts);
   connect(ProjOpen, SIGNAL(clicked()), SLOT(slotProjOpenButt()));
-  QPushButton *ProjDel   = new QPushButton("Delete",ProjButts);
+  QPushButton *ProjDel   = new QPushButton(tr("Delete"),ProjButts);
   connect(ProjDel, SIGNAL(clicked()), SLOT(slotProjDelButt()));
 
   Projects = new QListBox(ProjGroup);
-  TabView->addTab(ProjGroup, "Projects");
-  TabView->setTabToolTip(TabView->page(0), "content of the project directory");
+  TabView->addTab(ProjGroup, tr("Projects"));
+  TabView->setTabToolTip(TabView->page(0), tr("content of the project directory"));
 
   connect(Projects, SIGNAL(doubleClicked(QListBoxItem*)), SLOT(slotOpenProject(QListBoxItem*)));
 
@@ -508,8 +508,8 @@ void QucsApp::initView()
   Content = new QListView(this);
   Content->setRootIsDecorated(true);  // root items should have open/close decoration to their left
   Content->setSorting(-1);    // no sorting
-  Content->addColumn("Content of");
-  Content->addColumn("Note");
+  Content->addColumn(tr("Content of"));
+  Content->addColumn(tr("Note"));
   Content->setColumnWidthMode(0,QListView::Manual);
   Content->setColumnWidth(0, 150);
 

@@ -13,6 +13,7 @@ AC_CANONICAL_SYSTEM
 
 dnl Automake doc recommends to do this only here. (Janos)
 AM_INIT_AUTOMAKE(qucs,0.0.1)
+AM_MAINTAINER_MODE
 
 dnl Release specific.
 dnl AC_CONFIG_SUBDIRS(qucs-sp)

@@ -78,7 +78,7 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
   PosX=PosY=0;
 
   DocName = _Name;
-  if(_Name.isEmpty()) Tab = new QTab("untitled");
+  if(_Name.isEmpty()) Tab = new QTab(QObject::tr("untitled"));
   else {
     QFileInfo Info(DocName);
     Tab = new QTab(Info.fileName());
