@@ -16,9 +16,8 @@
  ***************************************************************************/
 
 #include "componentdialog.h"
-
-#include "../qucsview.h"
-#include "../qucsdoc.h"
+#include "qucsview.h"
+#include "qucsdoc.h"
 
 #include <qlayout.h>
 #include <qhbox.h>

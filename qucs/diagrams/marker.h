@@ -19,7 +19,7 @@
 #define MARKER_H
 
 
-#include "../element.h"
+#include "element.h"
 
 #include <qpainter.h>
 #include <qvaluelist.h>

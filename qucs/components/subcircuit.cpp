@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "subcircuit.h"
-#include "../qucs.h"
+#include "qucs.h"
 
 #include <qdir.h>
 #include <qfileinfo.h>

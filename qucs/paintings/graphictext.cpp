@@ -21,7 +21,7 @@
 
 #include "graphictext.h"
 #include "graphictextdialog.h"
-#include "../main.h"
+#include "main.h"
 
 #include <qwidget.h>
 #include <qpainter.h>

@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "param_sweep.h"
-#include "../main.h"
+#include "main.h"
 
 
 Param_Sweep::Param_Sweep()

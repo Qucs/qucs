@@ -18,7 +18,7 @@
 #ifndef PAINTING_H
 #define PAINTING_H
 
-#include "../element.h"
+#include "element.h"
 
 #include <qpainter.h>
 
