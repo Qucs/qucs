@@ -58,7 +58,8 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   mostypes.fig mosfet.fig mosband.fig dcmosfet.fig spmosfet.fig msgapphys.fig \
   noisemosfet.fig mscoupledphys.fig spfile.fig spnfile.fig transcap.fig       \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
-  convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig
+  convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
+  msvia.fig mstee.fig mstee2.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
 PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
