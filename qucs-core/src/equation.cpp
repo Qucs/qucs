@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.4 2004/03/21 09:57:10 ela Exp $
+ * $Id: equation.cpp,v 1.5 2004/03/21 18:55:48 ela Exp $
  *
  */
 
@@ -46,14 +46,19 @@ using namespace eqn;
 node * eqn::equations = NULL;
 node * eqn::expressions = NULL;
 
+#define A(a) ((assignment *) (a))
+#define N(n) ((node *) (n))
+
 // Constructor creates an untyped instance of the constant class.
 constant::constant () : node (CONSTANT) {
   type = TAG_UNKNOWN;
+  setType (type);
 }
 
 // This constructor creates an typed instance of the constant class.
 constant::constant (int tag) : node (CONSTANT) {
   type = tag;
+  setType (type);
 }
 
 // Destructor deletes an instance of the constant class.
@@ -62,7 +67,7 @@ constant::~constant () {
 
 /* Depending on the type of constant the function prints the textual
    representation of the object. */
-void constant::print () {
+void constant::print (void) {
   switch (type) {
   case TAG_DOUBLE:
     logprint (LOG_STATUS, "%g", d);
@@ -72,6 +77,11 @@ void constant::print () {
 	      real (*c), imag (*c) >= 0 ? '+' : '-', imag (*c));
     break;
   }
+}
+
+// Returns the type of constant.
+int constant::evalType (void) {
+  return getType ();
 }
 
 // Constructor creates an instance of the reference class.
@@ -94,6 +104,18 @@ void reference::addDependencies (strlist * depends) {
   depends->add (n);
 }
 
+// Returns the type of reference.
+int reference::evalType (void) {
+  setType (TAG_UNKNOWN);
+  for (node * eqn = eqn::equations; eqn != NULL; eqn = eqn->getNext ()) {
+    if (!strcmp (n, A(eqn)->result)) {
+      setType (A(eqn)->body->evalType ());
+      break;
+    }
+  }
+  return getType ();
+}
+
 // Constructor creates an instance of the assignment class.
 assignment::assignment () : node (ASSIGNMENT) {
   body = NULL;
@@ -112,9 +134,15 @@ void assignment::print (void) {
   body->print ();
 }
 
-// Adds the right hand side of the assigment to the list of dependencies.
+// Adds the right hand side of the assignment to the list of dependencies.
 void assignment::addDependencies (strlist * depends) {
   body->addDependencies (depends);
+}
+
+// Returns the type of assignment.
+int assignment::evalType (void) {
+  setType (body->evalType ());
+  return getType ();
 }
 
 // Constructor creates an instance of the application class.
@@ -122,6 +150,7 @@ application::application () : node (APPLICATION) {
   n = NULL;
   nargs = 0;
   args = NULL;
+  eval = NULL;
 }
 
 // Destructor deletes an instance of the application class.
@@ -151,6 +180,40 @@ void application::addDependencies (strlist * depends) {
   }  
 }
 
+/* Returns the type of application and applies the appropriate
+   evaluation function if any. */
+int application::evalType (void) {
+  setType (TAG_UNKNOWN);
+  // Go through the list of available applications.
+  for (int i = 0; applications[i].application != NULL; i++) {
+    application_t * app = &applications[i];
+    // The correct application?
+    if (!strcmp (n, app->application)) {
+      int nr = 0;
+      // The correct number of arguments?
+      if (nargs != app->nargs) continue;
+      // The correct types of arguments?
+      for (node * arg = args; arg != NULL; arg = arg->getNext (), nr++) {
+	if (arg->evalType () != app->args[nr]) { nr = -1; break; }
+      }
+      if (nr == -1) continue;
+      // A valid application function?
+      if (app->eval == NULL) continue;
+      // Everything just fine here.
+      eval = app->eval;
+      setType (app->retval);
+      break;
+    }
+  }
+  // Emit error message if necessary.
+  if (getType () == TAG_UNKNOWN) {
+    logprint (LOG_ERROR, "checker error, no appropriate function for `");
+    print ();
+    logprint (LOG_ERROR, "' found\n");
+  }
+  return getType ();
+}
+
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
@@ -175,8 +238,7 @@ node::~node () {
 // Counts the number of equations node attached to the node.
 int node::count (void) {
   int c = 0;
-  for (node * n = this; n != NULL; n = n->getNext ())
-    c++;
+  for (node * n = this; n != NULL; n = n->getNext ()) c++;
   return c;
 }
 
@@ -186,6 +248,13 @@ void node::append (node * last) {
   for (n = this; n->getNext () != NULL; n = n->getNext ());
   last->setNext (NULL);
   n->setNext (last);
+}
+
+// Returns the equation node at the given argument position.
+node * node::get (int pos) {
+  node * n = this;
+  for (int i = 0; i < pos && n != NULL; n = n->getNext ());
+  return n;
 }
 
 // Assigns the dependency list to the equation node object.
@@ -198,9 +267,6 @@ void node::setDependencies (strlist * depends) {
 strlist * node::getDependencies (void) {
   return dependencies;
 }
-
-#define A(a) ((assignment *) (a))
-#define N(n) ((node *) (n))
 
 /* This function recursively finds the variable dependencies for each
    equation initially passed to the equation checker and returns the
@@ -281,6 +347,12 @@ void checker::collectDependencies (void) {
 void checker::list (void) {
   for (node * eqn = equations; eqn != NULL; eqn = eqn->getNext ()) {
     logprint (LOG_STATUS, "%s", eqn->evalPossible ? "!" : "?");
+    logprint (LOG_STATUS, "%s", eqn->evalPossible ? 
+	      (eqn->getType () == TAG_UNKNOWN ? "U!" :
+	       eqn->getType () == TAG_DOUBLE  ? "D!" :
+	       eqn->getType () == TAG_COMPLEX ? "C!" :
+	       eqn->getType () == TAG_VECTOR  ? "V!" :
+	       eqn->getType () == TAG_MATRIX  ? "M!" : "?!") : "");
     eqn->print ();
     logprint (LOG_STATUS, "\n");
   }
@@ -330,7 +402,7 @@ int checker::findDuplicate (void) {
   strlist * idents = getVariables ();
   strlist * dups = new strlist ();
 
-  // Collect duplicate enries.
+  // Collect duplicate entries.
   foreach_equation (eqn) {
     if (!eqn->duplicate && dups->contains (eqn->result) == 0) {
       eqn->duplicate = idents->contains (eqn->result);
@@ -459,4 +531,40 @@ void checker::reorderEquations (void) {
   last = lastEquation (root);
   last->setNext (equations);
   equations = root;
+}
+
+/* The function evaluates the types for each equation and recursively
+   checks the availability of the appropriate function. */
+int checker::applyTypes (void) {
+  int err = 0;
+  foreach_equation (eqn) {
+    if (eqn->evalPossible) {
+      if (eqn->evalType () == TAG_UNKNOWN)
+	err++;
+    }
+    else break;
+  }
+  return err;
+}
+
+/* This function is the checker routine for a parsed equations.  It
+   returns zero on success or non-zero if the parsed equations
+   contained errors. */
+int equation_checker (void) {
+  int err = 0;
+  eqn::checker * check = new eqn::checker ();
+  check->setEquations (eqn::equations);
+  check->collectDependencies ();
+  check->findUndefined ();
+  err += check->findDuplicate ();
+  err += check->detectCycles ();
+  check->reorderEquations ();
+  err += check->applyTypes ();
+#if DEBUG
+  check->list ();
+#endif /* DEBUG */
+  eqn::equations = check->getEquations ();
+  check->setEquations (NULL);
+  delete check;
+  return err;
 }

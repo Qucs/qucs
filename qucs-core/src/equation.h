@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.4 2004/03/21 09:57:10 ela Exp $
+ * $Id: equation.h,v 1.5 2004/03/21 18:55:48 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include "complex.h"
 #include "vector.h"
 #include "matrix.h"
+#include "evaluate.h"
 
 class strlist;
 
@@ -64,10 +65,14 @@ public:
   void setDependencies (strlist *);
   strlist * getDependencies (void);
   strlist * recurseDependencies (checker *, strlist *);
+  node * get (int);
+  int getType (void) { return type; }
+  void setType (int tag) { type = tag; }
 
   /* These functions should be overloaded by derivative classes. */
   virtual void print (void) { }
   virtual void addDependencies (strlist *) { }
+  virtual int evalType (void) { return type; }
   
 public:
   int duplicate;
@@ -75,6 +80,7 @@ public:
   int evalPossible;
 
 private:
+  int type;
   int tag;
   node * next;
   strlist * dependencies;
@@ -96,8 +102,9 @@ public:
   constant (int);
   ~constant ();
   void print (void);
+  int evalType (void);
 
- public:
+public:
   int type;
   union {
     nr_double_t d;
@@ -115,6 +122,7 @@ public:
   ~reference ();
   void print (void);
   void addDependencies (strlist *);
+  int evalType (void);
 
 public:
   char * n;
@@ -129,6 +137,7 @@ public:
   ~assignment ();
   void print (void);
   void addDependencies (strlist *);
+  int evalType (void);
   
 public:
   char * result;
@@ -144,12 +153,13 @@ public:
   ~application ();
   void print (void);
   void addDependencies (strlist *);
+  int evalType (void);
 
 public:
   char * n;
   int nargs;
   node * args;
-  /* todo: function pointer */
+  evaluator_t eval;
 };
 
 /* This class implements the actual functionality regarding a set of
@@ -173,6 +183,7 @@ public:
   void dropEquation (node *);
   void reorderEquations (void);
   node * lastEquation (node *);
+  int applyTypes (void);
 
 public:
   node * equations;
@@ -183,5 +194,12 @@ extern node * equations;
 extern node * expressions;
 
 } /* namespace */
+
+__BEGIN_DECLS
+
+/* Available functions of the equation checker. */
+int equation_checker (void);
+
+__END_DECLS
 
 #endif /* __EQUATION_H__ */

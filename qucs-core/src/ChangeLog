@@ -1,8 +1,13 @@
 2004-03-21  Stefan Jahn  <stefan@lkcc.org>
 
+	* evaluate.h (class evaluate): New class implementing the
+	actual evaluation function (applications) for the equations
+	in Qucs.
+
 	* equation.cpp (reorderEquations): The function reorders 
 	equations and determines whether they can be evaluated or not
 	in this new order.
+	(applyTypes): Type checking function implemented.
 
 2004-03-20  Stefan Jahn  <stefan@lkcc.org>
 

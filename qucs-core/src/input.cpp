@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.12 2004/03/21 09:57:10 ela Exp $
+ * $Id: input.cpp,v 1.13 2004/03/21 18:55:48 ela Exp $
  *
  */
 
@@ -92,16 +92,9 @@ int input::netlist (net * netlist) {
     return -1;
 
   // check the equations
-  eqn::checker * check = new eqn::checker ();
-  check->setEquations (eqn::equations);
-  check->collectDependencies ();
-  check->findUndefined ();
-  check->findDuplicate ();
-  check->detectCycles ();
-  check->reorderEquations ();
-#if DEBUG
-  check->list ();
-#endif /* DEBUG */
+  logprint (LOG_STATUS, "checking equations...\n");
+  if (equation_checker () != 0)
+    return -1;
 
 #if DEBUG
   netlist_list ();
