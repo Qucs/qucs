@@ -34,7 +34,7 @@ Distribution process:
      + GNU automake 1.7.0 (at least)
      + flex 2.5.31
      + GNU Bison 1.875d
-     + a LaTeX installation
+     + a LaTeX installation (including IEEEtran bibstyle)
      + GNU Octave
      + epsTk 2.0.1 (at least)
   - Get latest `config.guess' and `config.sub' from GNU servers or run the

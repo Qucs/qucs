@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.1 2004/10/29 18:01:29 ela Exp $
+ * $Id: scan_spice.l,v 1.2 2004/10/31 12:35:46 ela Exp $
  *
  */
 
@@ -51,7 +51,6 @@
 WS       [ \t\n\r]
 TITLE    [A-Za-z][A-Za-z\- \t]*\r?\n
 SPACE    [ \t]
-DELIM    {SPACE}*[()=,]{SPACE}*
 NAME     [A-Z][A-Z0-9]*
 IDENT    [A-Za-z][A-Za-z0-9]*
 DIGIT    [0-9]
@@ -63,11 +62,20 @@ NUMBER   ({INT}|{FLOAT1}|{FLOAT2}){SFX}?[A-Za-z]*
 SFX      ("T"|"G"|"M"|"K"|"m"|"u"|"n"|"p"|"f"|"mil"|"g"|"k")
 NODE     {DIGIT}+
 EOL      \r?\n
+FUNCTION ([sS][iI][nN])
 
 %x COMMENT
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
+
+<INITIAL>^{SPACE}+ { /* Spice3 ignores any lines starting spaces */
+    BEGIN(COMMENT);
+  }
+
+<INITIAL>^"*" { /* ignored region begines here */
+    BEGIN(COMMENT);
+  }
 
 <INITIAL>^{TITLE}+ {
     spice_lval.str = strdup (spice_text);
@@ -78,24 +86,24 @@ EOL      \r?\n
     return End;
 }
 
-<INITIAL>{NODE} {
+<INITIAL>{NODE} { /* identify node */
     spice_lval.ident = strdup (spice_text);
     return Node;
 }
 
 <INITIAL>{NUMBER} { /* identify float */
-    spice_lval.str = strdup (spice_text);
+    spice_lval.ident = strdup (spice_text);
     return Float;
   }
-
-<INITIAL>{NAME} {
-    spice_lval.ident = strdup (spice_text);
-    return Capitals;
-}
 
 <INITIAL>"."{IDENT} {
     spice_lval.ident = strdup (spice_text);
     return Action;
+}
+
+<INITIAL>{FUNCTION} {
+    spice_lval.ident = strdup (spice_text);
+    return Function;
 }
 
 <INITIAL>{IDENT} {
@@ -103,30 +111,13 @@ EOL      \r?\n
     return Identifier;
 }
 
-<INITIAL>{IDENT}{SPACE}*"("{SPACE}* {
-    spice_lval.ident = strdup (spice_text);
-    return ModelStart;
-}
-
-<INITIAL>{SPACE}*")"{SPACE}* {
-    return ModelEnd;
-}
-
-<INITIAL>{DELIM} {
-    spice_lval.str = strdup (spice_text);
-    return Spacer;
-}
-
-<INITIAL>":"   { /* pass the ':' to the parser */ return ':'; }
 <INITIAL>\r?\n { /* detect end of line */ return Eol; }
 
-<INITIAL>{SPACE}|\r?\n\+ /* skip spaces and the leading '+' */
-
-<INITIAL>"*" { /* leave these characters */
-    BEGIN(COMMENT);
+<INITIAL>{SPACE}|\r?\n\+|[()=,] {
+    /* skip spaces, '=', '(', ')', ',' and the leading '+' */
   }
 
-<INITIAL>. { /* any other character in invalid */
+<INITIAL>. { /* any other character is invalid */
     fprintf (stderr, 
 	     "line %d: syntax error, unrecognized character: `%s'\n", 
 	     spice_lineno, spice_text);

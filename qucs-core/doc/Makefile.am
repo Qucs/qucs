@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
+EXTRA_DIST = technical.tex $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) PLATFORMS $(MATHHELPS) $(CHAPTERS)
 
 dist_man_MANS = qucsator.1
