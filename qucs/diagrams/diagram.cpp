@@ -15,11 +15,9 @@
  *                                                                         *
  ***************************************************************************/
 
-using namespace std;
-
-#include "diagram.h"
-#include "qucs.h"
-#include "main.h"
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <stdlib.h>
 #include <math.h>
@@ -34,11 +32,17 @@ using namespace std;
 #include <qregexp.h>
 #include <qdatetime.h>
 
+#include "diagram.h"
+#include "qucs.h"
+#include "main.h"
+
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
 #endif
 
 #define INVALID_STR QObject::tr(" <invalid>")
+
+using namespace std;
 
 Diagram::Diagram(int _cx, int _cy)
 {
