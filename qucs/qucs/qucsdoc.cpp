@@ -182,7 +182,7 @@ void QucsDoc::setOnGrid(int& x, int& y)
 void QucsDoc::paintGrid(QPainter *p, int cX, int cY, int Width, int Height)
 {
   if(!GridOn) return;
-  
+
   int x1 = int(cX/Scale)+ViewX1;
   if(x1<0) x1 -= GridX - 1;
   else x1 += GridX;
@@ -1921,6 +1921,7 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<C") c = new Capacitor();
     else if(cstr == "<L") c = new Inductor();
     else if(cstr == "<GND") c = new Ground();
+//    else if(cstr == "<IProbe") c = new iProbe();
     else if(cstr == "<Tr") c = new Transformer();
     else if(cstr == "<sTr") c = new symTrafo();
     else if(cstr == "<Vdc") c = new Volt_dc();
@@ -1931,6 +1932,8 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<CCCS") c = new CCCS();
     else if(cstr == "<VCVS") c = new VCVS();
     else if(cstr == "<CCVS") c = new CCVS();
+//    else if(cstr == "<Vnoise") c = new Volt_noise();
+//    else if(cstr == "<Inoise") c = new Ampere_noise();
     else if(cstr == "<Port") c = new SubCirPort();
     else if(cstr.left(7) == "<SPfile") { c = new SParamFile(cstr.mid(7).toInt()); }
     else if(cstr.left(4) == "<Sub") { c = new Subcircuit(cstr.mid(4).toInt()); }
@@ -1950,6 +1953,7 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
     else if(cstr == "<MTEE") c = new MStee();
     else if(cstr == "<MCROSS") c = new MScross();
     else if(cstr == "<Diode") c = new Diode();
+    else if(cstr == "<Eqn") c = new Equation();
     else if(cstr == "<.DC") c = new DC_Sim();
     else if(cstr == "<.AC") c = new AC_Sim();
     else if(cstr == "<.TR") c = new TR_Sim();

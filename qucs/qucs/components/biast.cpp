@@ -20,7 +20,7 @@
 
 BiasT::BiasT()
 {
-  Description = "bias t";
+  Description = QObject::tr("bias t");
 
   Arcs.append(new Arc( -3,  2, 7, 7, 16*270, 16*180,QPen(QPen::darkBlue,1)));
   Arcs.append(new Arc( -3,  8, 7, 7, 16*270, 16*180,QPen(QPen::darkBlue,1)));

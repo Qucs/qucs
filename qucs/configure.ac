@@ -186,7 +186,6 @@ AH_TOP([
 AC_CONFIG_FILES([Makefile 
 		 qucs/Makefile
 		 qucs/bitmaps/Makefile
-		 qucs/sim/Makefile
 		 qucs/components/Makefile
 		 qucs/diagrams/Makefile
 		 qucs/paintings/Makefile

@@ -20,7 +20,7 @@
 
 Volt_ac::Volt_ac()
 {
-  Description = "ideal ac voltage source";
+  Description = QObject::tr("ideal ac voltage source");
 
   Arcs.append(new Arc(-12,-12, 25, 25,     0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( -3, -7,  8,  8,16*270, 16*180,QPen(QPen::darkBlue,1)));
@@ -43,8 +43,8 @@ Volt_ac::Volt_ac()
   Model = "Vac";
   Name  = "V";
 
-  Props.append(new Property("U", "1 V", true, "rms voltage in Volts"));
-  Props.append(new Property("f", "1 GHz", true, "frequency in Hertz"));
+  Props.append(new Property("U", "1 V", true, QObject::tr("rms voltage in Volts")));
+  Props.append(new Property("f", "1 GHz", true, QObject::tr("frequency in Hertz")));
 }
 
 Volt_ac::~Volt_ac()

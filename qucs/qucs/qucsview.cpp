@@ -458,7 +458,10 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   Name = QInputDialog::getText(tr("Insert Nodename"), tr("Enter the label:"), QLineEdit::Normal,
                                        Name, &OK, this);
   if(OK && !Name.isEmpty()) {
-    if(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'
+    Name.replace(' ', '_');	// label must not contain spaces
+    while(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'
+    if(Name.isEmpty()) return;
+
     if(pw2 != 0) pw2->Name = "";  // delete old name
     pw->Name = Name;
     pw->delta = x-pw->x1 + y-pw->y1;

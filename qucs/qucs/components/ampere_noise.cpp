@@ -1,5 +1,5 @@
 /***************************************************************************
-                          volt_dc.cpp  -  description
+                          ampere_noise.cpp  -  description
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,20 +15,19 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "volt_dc.h"
+#include "ampere_noise.h"
 
 
-Volt_dc::Volt_dc()
+Ampere_noise::Ampere_noise()
 {
-  Description = QObject::tr("ideal dc voltage source");
+  Description = QObject::tr("noise current source");
 
-  Lines.append(new Line(  4,-13,  4, 13,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -4, -6, -4,  6,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line( 30,  0,  4,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -4,  0,-30,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 10,  5, 10, 11,QPen(QPen::red,1)));
-  Lines.append(new Line( 13,  8,  7,  8,QPen(QPen::red,1)));
-  Lines.append(new Line( -9,  5, -9, 11,QPen(QPen::black,1)));
+  Arcs.append(new Arc(-12,-12, 25, 25,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-12,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 12,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -7,  0,  7,  0,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(  6,  0,  0, -4,QPen(QPen::darkBlue,3)));
+  Lines.append(new Line(  6,  0,  0,  4,QPen(QPen::darkBlue,3)));
 
   Ports.append(new Port( 30,  0));
   Ports.append(new Port(-30,  0));
@@ -38,18 +37,21 @@ Volt_dc::Volt_dc()
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "Vdc";
-  Model = "Vdc";
-  Name  = "V";
+  Sign  = "Inoise";
+  Model = "Inoise";
+  Name  = "I";
 
-  Props.append(new Property("U", "1 V", true, QObject::tr("voltage in Volts")));
+  Props.append(new Property("i", "1e-6", true, QObject::tr("equivalent current density in A/sqrt(Hz)")));
+  Props.append(new Property("e", "0", true, QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", true, QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", true, QObject::tr("additive frequency term")));
 }
 
-Volt_dc::~Volt_dc()
+Ampere_noise::~Ampere_noise()
 {
 }
 
-Volt_dc* Volt_dc::newOne()
+Ampere_noise* Ampere_noise::newOne()
 {
-  return new Volt_dc();
+  return new Ampere_noise();
 }

@@ -1484,12 +1484,15 @@ void QucsApp::slotSetCompView(int index)
           new QIconViewItem(CompComps, tr("Circulator"), QImage(BITMAPDIR "circulator.xpm"));
           new QIconViewItem(CompComps, tr("Gyrator"), QImage(BITMAPDIR "gyrator.xpm"));
           new QIconViewItem(CompComps, tr("Phase Shifter"), QImage(BITMAPDIR "pshifter.xpm"));
+          new QIconViewItem(CompComps, tr("Current Probe"), QImage(BITMAPDIR "iprobe.xpm"));
           break;
     case COMBO_Sources:
           new QIconViewItem(CompComps, tr("dc Voltage Source"), QImage(BITMAPDIR "dc_voltage.xpm"));
           new QIconViewItem(CompComps, tr("dc Current Source"), QImage(BITMAPDIR "dc_current.xpm"));
           new QIconViewItem(CompComps, tr("ac Voltage Source"), QImage(BITMAPDIR "ac_voltage.xpm"));
           new QIconViewItem(CompComps, tr("Power Source"), QImage(BITMAPDIR "source.xpm"));
+          new QIconViewItem(CompComps, tr("Noise Voltage Source"), QImage(BITMAPDIR "noise_volt.xpm"));
+          new QIconViewItem(CompComps, tr("Noise Current Source"), QImage(BITMAPDIR "noise_current.xpm"));
           new QIconViewItem(CompComps, tr("Voltage Controlled Current Source"), QImage(BITMAPDIR "vccs.xpm"));
           new QIconViewItem(CompComps, tr("Current Controlled Current Source"), QImage(BITMAPDIR "cccs.xpm"));
           new QIconViewItem(CompComps, tr("Voltage Controlled Voltage Source"), QImage(BITMAPDIR "vcvs.xpm"));
@@ -1603,6 +1606,8 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                        break;
               case 15: view->selComp = new Phaseshifter();
                        break;
+//              case 16: view->selComp = new iProbe();
+//                       break;
           }
           break;
     case COMBO_Sources:
@@ -1615,13 +1620,17 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 3: view->selComp = new Source_ac();
                       break;
-              case 4: view->selComp = new VCCS();
+//              case 4: view->selComp = new Volt_noise();
+//                      break;
+//              case 5: view->selComp = new Ampere_noise();
+//                      break;
+              case 6: view->selComp = new VCCS();
                       break;
-              case 5: view->selComp = new CCCS();
+              case 7: view->selComp = new CCCS();
                       break;
-              case 6: view->selComp = new VCVS();
+              case 8: view->selComp = new VCVS();
                       break;
-              case 7: view->selComp = new CCVS();
+              case 9: view->selComp = new CCVS();
                       break;
           }
           break;

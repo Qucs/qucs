@@ -20,7 +20,7 @@
 
 Coplanar::Coplanar()
 {
-  Description = "coplanar line";
+  Description = QObject::tr("coplanar line");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
@@ -57,10 +57,10 @@ Coplanar::Coplanar()
   Model = "CLIN";
   Name  = "CL";
 
-  Props.append(new Property("Subst", "Subst1", true, "name of substrate definition"));
-  Props.append(new Property("W", "1 mm", true, "width of the line"));
-  Props.append(new Property("S", "1 mm", true, "width of a gap"));
-  Props.append(new Property("L", "10 mm", true, "length of the line"));
+  Props.append(new Property("Subst", "Subst1", true, QObject::tr("name of substrate definition")));
+  Props.append(new Property("W", "1 mm", true, QObject::tr("width of the line")));
+  Props.append(new Property("S", "1 mm", true, QObject::tr("width of a gap")));
+  Props.append(new Property("L", "10 mm", true, QObject::tr("length of the line")));
 //  Props.append(new Property("Model", "Kirschning", false, "microstrip model |Kirschning|Kobayashi|Yamashita"));
 }
 

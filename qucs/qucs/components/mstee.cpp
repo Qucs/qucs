@@ -20,7 +20,7 @@
 
 MStee::MStee()
 {
-  Description = "microstrip tee";
+  Description = QObject::tr("microstrip tee");
 
   Lines.append(new Line(-30,  0,-18,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 18,  0, 30,  0,QPen(QPen::darkBlue,2)));
@@ -49,10 +49,10 @@ MStee::MStee()
   Model = "MTEE";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, "substrate"));
-  Props.append(new Property("W1", "1 mm", true, "width of line 1"));
-  Props.append(new Property("W2", "1 mm", true, "width of line 2"));
-  Props.append(new Property("W3", "2 mm", true, "width of line 3"));
+  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
+  Props.append(new Property("W1", "1 mm", true, QObject::tr("width of line 1")));
+  Props.append(new Property("W2", "1 mm", true, QObject::tr("width of line 2")));
+  Props.append(new Property("W3", "2 mm", true, QObject::tr("width of line 3")));
 }
 
 MStee::~MStee()

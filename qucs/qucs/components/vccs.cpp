@@ -20,7 +20,7 @@
 
 VCCS::VCCS()
 {
-  Description = "voltage controlled current source";
+  Description = QObject::tr("voltage controlled current source");
 
   Arcs.append(new Arc(0,-11, 23, 23,  0, 16*360,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 11, -7, 11,  7,QPen(QPen::darkBlue,3)));
@@ -60,8 +60,8 @@ VCCS::VCCS()
   Model = "VCCS";
   Name  = "SRC";
 
-  Props.append(new Property("G", "1 S", true, "forward transconductance"));
-  Props.append(new Property("T", "0", true, "delay time"));
+  Props.append(new Property("G", "1 S", true, QObject::tr("forward transconductance")));
+  Props.append(new Property("T", "0", true, QObject::tr("delay time")));
 }
 
 VCCS::~VCCS()

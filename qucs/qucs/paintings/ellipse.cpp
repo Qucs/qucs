@@ -226,7 +226,7 @@ bool Ellipse::Dialog()
 {
   bool changed = false;
 
-  LineDialog *d = new LineDialog("Edit Ellipse Properties");
+  LineDialog *d = new LineDialog(QObject::tr("Edit Ellipse Properties"));
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());

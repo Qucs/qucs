@@ -52,7 +52,7 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
   Check_OpenDpl = new QCheckBox(tr("open data display after simulation"),Tab1);
   gp->addMultiCellWidget(Check_OpenDpl,2,2,0,1);
-  
+
   t->addTab(Tab1, tr("Simulation"));
 
   // ...........................................................

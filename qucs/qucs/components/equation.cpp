@@ -20,11 +20,11 @@
 
 Equation::Equation()
 {
-  Description = "equation";
+  Description = QObject::tr("equation");
 
   Lines.append(new Line(-24, -6,-24,  6,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-24,  6, 24,  6,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text(-20,  2,"Equation"));
+  Texts.append(new Text(-20,  2,QObject::tr("Equation")));
 
   x1 = -27; y1 = -9;
   x2 =  27; y2 =  9;

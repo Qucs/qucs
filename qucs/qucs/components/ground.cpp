@@ -20,7 +20,7 @@
 
 Ground::Ground()
 {
-  Description = "ground (reference potential)";
+  Description = QObject::tr("ground (reference potential)");
 
   Lines.append(new Line(  0,  0,  0, 10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-11, 10, 11, 10,QPen(QPen::darkBlue,3)));

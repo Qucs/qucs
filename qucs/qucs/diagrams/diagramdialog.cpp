@@ -41,7 +41,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
 {
   Diag = d;
   defaultDataSet = _DataSet;
-  setCaption("Edit Diagram Properties");
+  setCaption(tr("Edit Diagram Properties"));
   changed = false;
   toTake = false;   // should double-clicked variable be inserted immediately into the graph list ?
 //  setFixedSize(QSize(400, 400));
@@ -55,15 +55,15 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   QVBox *Tab1 = new QVBox(this);
   Tab1->setSpacing(5);
 
-  QVButtonGroup *InputGroup = new QVButtonGroup("Graph Input", Tab1);
+  QVButtonGroup *InputGroup = new QVButtonGroup(tr("Graph Input"), Tab1);
   GraphInput = new QLineEdit(InputGroup);
   connect(GraphInput, SIGNAL(textChanged(const QString&)), SLOT(slotResetToTake(const QString&)));
   QHBox *Box2 = new QHBox(InputGroup);
   Box2->setSpacing(5);
-  QLabel *l3 = new QLabel("Color:",Box2);
+  QLabel *l3 = new QLabel(tr("Color:"),Box2);
   ColorButt = new QPushButton("        ",Box2);
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
-  QLabel *l4 = new QLabel("       Thickness:",Box2);
+  QLabel *l4 = new QLabel(tr("       Thickness:"),Box2);
   Expr.setPattern("[0-9]{1}");  // valid expression for property input
   QValidator *Validator = new QRegExpValidator(Expr, this);
   GraphThick = new QLineEdit(Box2);
@@ -75,48 +75,48 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   QHBox *Box1 = new QHBox(Tab1);
   Box1->setSpacing(5);
 
-  QVButtonGroup *DataGroup = new QVButtonGroup("Dataset", Box1);
+  QVButtonGroup *DataGroup = new QVButtonGroup(tr("Dataset"), Box1);
   ChooseData = new QComboBox(false, DataGroup);
   ChooseData->setMinimumWidth(200);
   connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
   ChooseVars = new QListView(DataGroup);
-  ChooseVars->addColumn("Name");
-  ChooseVars->addColumn("Status");
-  ChooseVars->addColumn("Size");
+  ChooseVars->addColumn(tr("Name"));
+  ChooseVars->addColumn(tr("Status"));
+  ChooseVars->addColumn(tr("Size"));
 // QT 3.2
 //  connect(Content, SIGNAL(doubleClicked(QListViewItem*, const QPoint &,int)),
 //                   SLOT(slotTakeVar(QListViewItem*, const QPoint &,int)));
   connect(ChooseVars, SIGNAL(doubleClicked(QListViewItem*)), SLOT(slotTakeVar(QListViewItem*)));
 
 
-  QVButtonGroup *GraphGroup = new QVButtonGroup("Graph", Box1);
+  QVButtonGroup *GraphGroup = new QVButtonGroup(tr("Graph"), Box1);
   GraphList = new QListBox(GraphGroup);
   connect(GraphList, SIGNAL(clicked(QListBoxItem*)), SLOT(slotSelectGraph(QListBoxItem*)));
-  QPushButton *NewButt = new QPushButton("New Graph", GraphGroup);
+  QPushButton *NewButt = new QPushButton(tr("New Graph"), GraphGroup);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
-  QPushButton *DelButt = new QPushButton("Delete Graph", GraphGroup);
+  QPushButton *DelButt = new QPushButton(tr("Delete Graph"), GraphGroup);
   connect(DelButt, SIGNAL(clicked()), SLOT(slotDeleteGraph()));
 
-  t->addTab(Tab1, "Data");
+  t->addTab(Tab1, tr("Data"));
 
   // ...........................................................
   QWidget *Tab2 = new QWidget(t);
   QGridLayout *gp = new QGridLayout(Tab2,6,2,5,5);
 
-  QLabel *l1 = new QLabel("x-Axis Label:", Tab2);
+  QLabel *l1 = new QLabel(tr("x-Axis Label:"), Tab2);
   gp->addWidget(l1,0,0);
   xLabel = new QLineEdit(Tab2);
   gp->addWidget(xLabel,0,1);
 
-  QLabel *l2 = new QLabel("y-Axis Label:", Tab2);
+  QLabel *l2 = new QLabel(tr("y-Axis Label:"), Tab2);
   gp->addWidget(l2,1,0);
   yLabel = new QLineEdit(Tab2);
   gp->addWidget(yLabel,1,1);
 
-  GridOn = new QCheckBox("show Grid", Tab2);
+  GridOn = new QCheckBox(tr("show Grid"), Tab2);
   gp->addMultiCellWidget(GridOn,2,2,0,1);
 
-  t->addTab(Tab2, "Properties");
+  t->addTab(Tab2, tr("Properties"));
 
   // ...........................................................
   QHBox *Butts = new QHBox(this);
@@ -124,13 +124,13 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   Butts->setMargin(5);
   all->addWidget(Butts);
 
-  QPushButton *OkButt = new QPushButton("OK", Butts);
+  QPushButton *OkButt = new QPushButton(tr("OK"), Butts);
   connect(OkButt, SIGNAL(clicked()), SLOT(slotOK()));
-  QPushButton *ApplyButt = new QPushButton("Apply", Butts);
+  QPushButton *ApplyButt = new QPushButton(tr("Apply"), Butts);
   connect(ApplyButt, SIGNAL(clicked()), SLOT(slotApply()));
-  QPushButton *CancelButt = new QPushButton("Cancel", Butts);
+  QPushButton *CancelButt = new QPushButton(tr("Cancel"), Butts);
   connect(CancelButt, SIGNAL(clicked()), SLOT(reject()));
-  QPushButton *HelpButt = new QPushButton("Function Help", Butts);
+  QPushButton *HelpButt = new QPushButton(tr("Function Help"), Butts);
   connect(HelpButt, SIGNAL(clicked()), SLOT(slotFuncHelp()));
 
   OkButt->setDefault(true);
@@ -178,7 +178,7 @@ DiagramDialog::~DiagramDialog()
 void DiagramDialog::slotReadVars(int)
 {
   QString DocName = ChooseData->currentText()+".dat";
-  
+
   QFile file(DocName);
   if(!file.open(IO_ReadOnly)) {
     return;
@@ -199,7 +199,7 @@ void DiagramDialog::slotReadVars(int)
       new QListViewItem(ChooseVars, Line.section(' ', 1, 1), "indep", tmp.remove('>'));
     }
   }
-  
+
   file.close();
 }
 
@@ -210,7 +210,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
 {
  GraphInput->blockSignals(true);
   if(toTake) GraphInput->setText("");
-  
+
   int     i = GraphInput->cursorPosition();
   QString s = GraphInput->text();
   GraphInput->setText(s.left(i)+Item->text(0)+s.right(s.length()-i));
@@ -228,7 +228,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
     changed = true;
     toTake  = true;
   }
-  
+
   GraphInput->blockSignals(false);
 }
 
@@ -245,7 +245,7 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
   GraphInput->blockSignals(true);
   GraphInput->setText(GraphList->text(index));
   GraphInput->blockSignals(false);
-  
+
   Graph *g = Diag->Graphs.at(index);
   GraphThick->setText(QString::number(g->Thick));
   ColorButt->setPaletteBackgroundColor(g->Color);

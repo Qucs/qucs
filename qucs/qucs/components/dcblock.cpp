@@ -19,7 +19,7 @@
 
 dcBlock::dcBlock()
 {
-  Description = "dc block";
+  Description = QObject::tr("dc block");
 
   Lines.append(new Line(- 4,-11, -4, 11,QPen(QPen::darkBlue,4)));
   Lines.append(new Line(  4,-11,  4, 11,QPen(QPen::darkBlue,4)));

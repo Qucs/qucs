@@ -20,7 +20,7 @@
 
 Subcircuit::Subcircuit(int No)
 {
-  Description = "subcircuit";
+  Description = QObject::tr("subcircuit");
 
   int h = 30*((No-1)/2) + 15;
   Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
@@ -54,7 +54,7 @@ Subcircuit::Subcircuit(int No)
   Model = QString("Sub")+QString::number(No);
   Name  = "SUB";
 
-  Props.append(new Property("File", "test.sch", true, "name of qucs schematic file"));
+  Props.append(new Property("File", "test.sch", true, QObject::tr("name of qucs schematic file")));
 }
 
 Subcircuit::~Subcircuit()

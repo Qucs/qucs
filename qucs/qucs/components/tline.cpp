@@ -20,7 +20,7 @@
 
 TLine::TLine()
 {
-  Description = "ideal transmission line";
+  Description = QObject::tr("ideal transmission line");
 
   Arcs.append(new Arc(-20, -9, 9, 19,     0, 16*360,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc( 11, -9, 9, 19,16*270, 16*180,QPen(QPen::darkBlue,2)));
@@ -42,8 +42,8 @@ TLine::TLine()
   Model = "TLIN";
   Name  = "Line";
 
-  Props.append(new Property("Z", "50 Ohm", true, "characteristic impedance"));
-  Props.append(new Property("L", "1 mm", true, "electrical length of the line"));
+  Props.append(new Property("Z", "50 Ohm", true, QObject::tr("characteristic impedance")));
+  Props.append(new Property("L", "1 mm", true, QObject::tr("electrical length of the line")));
 }
 
 TLine::~TLine()
