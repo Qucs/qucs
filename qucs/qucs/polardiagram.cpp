@@ -17,6 +17,8 @@
 
 #include "polardiagram.h"
 
+#include <math.h>
+
 
 PolarDiagram::PolarDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -39,20 +41,23 @@ PolarDiagram::~PolarDiagram()
 // --------------------------------------------------------------
 void PolarDiagram::calcDiagram()
 {
-  int z;
-
   Lines.clear();
   Texts.clear();
   Arcs.clear();
 
-  Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360, QPen(QPen::black,1)));
-  Texts.append(new Text(x2>>1, -15, QString::number(ymax)));
+  double Expo = floor(log10(ymax));
+  double Base = ceil(ymax/pow(10,Expo) - 0.05);
+  ymax = Base * pow(10,Expo);
+  if(fabs(Expo) < 3) Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(ymax)));
+  else Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(ymax, 'e', 0)));
+  Arcs.append(new Arc(0, y2, x2, y2, 0, 16*352, QPen(QPen::black,1)));
 
   Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,1)));  // y line
   Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,1)));  // x line
 
   
   if(GridOn) {
+    int z;
     z=GridX;
     while(z < (x2>>1)) {
       Arcs.append(new Arc(z, y2-z, x2-(z<<1), y2-(z<<1), 0, 16*360, QPen(QPen::lightGray,1)));
@@ -69,8 +74,6 @@ void PolarDiagram::calcData(Graph *g)
     *(p++) = (x2>>1)+int(cp->yr/ymax*double(x2>>1));
     *(p++) = (y2>>1)+int(cp->yi/ymax*double(y2>>1));
   }
-
-//  calcDiagram();
 }
 
 // ------------------------------------------------------------

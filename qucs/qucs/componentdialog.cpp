@@ -19,9 +19,9 @@
 
 #include <qlayout.h>
 #include <qhbox.h>
-#include <qpushbutton.h>
 #include <qmessagebox.h>
 #include <qvalidator.h>
+#include <qfiledialog.h>
 
 
 ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name )
@@ -29,7 +29,7 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
 {
   setCaption("Edit Component Properties");
 
-  QGridLayout *g = new QGridLayout(this,7,2,5,5);
+  QGridLayout *g = new QGridLayout(this,8,2,5,5);
 
   QLabel *label1 = new QLabel(this);
   g->addMultiCellWidget(label1,0,0,0,1);
@@ -41,7 +41,7 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   prop->addColumn("Value");
   prop->addColumn("display");
   prop->setSorting(-1);   // no sorting
-  g->addMultiCellWidget(prop,1,5,0,0);
+  g->addMultiCellWidget(prop,1,6,0,0);
 
   Name = new QLabel(this);
   g->addWidget(Name,1,1);
@@ -58,17 +58,31 @@ ComponentDialog::ComponentDialog(Component *c, QWidget *parent, const char *name
   edit->setValidator(Validator);
   connect(edit, SIGNAL(textChanged(const QString&)), SLOT(slotApplyChange(const QString&)));
 
+  ComboEdit = new QComboBox(false,this);
+  ComboEdit->setShown(false);   // hide, because it only replaces 'edit' in some cases
+  g->addWidget(ComboEdit,3,1);
+  connect(ComboEdit, SIGNAL(activated(const QString&)), SLOT(slotApplyChange(const QString&)));
+
+  QHBox *h3 = new QHBox(this);
+  g->addWidget(h3,4,1);
+  QWidget *h = new QWidget(h3); // stretchable placeholder
+  h3->setStretchFactor(h,5);
+  BrowseButt = new QPushButton("Browse",h3);
+  BrowseButt->setEnabled(false);
+  BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  connect(BrowseButt, SIGNAL(clicked()), SLOT(slotBrowseFile()));
+
   disp = new QCheckBox("display in schematic",this);
-  g->addWidget(disp,4,1);
+  g->addWidget(disp,5,1);
   connect(disp, SIGNAL(stateChanged(int)), SLOT(slotApplyState(int)));
   
   QVBoxLayout *v = new QVBoxLayout(); // stretchable placeholder
-  v->addStretch(1);
-  g->addLayout(v,5,1);
+  v->addStretch(2);
+  g->addLayout(v,6,1);
 
   QHBox *h2 = new QHBox(this);
   h2->setSpacing(5);
-  g->addMultiCellWidget(h2,6,6,0,1);
+  g->addMultiCellWidget(h2,7,7,0,1);
 
   connect(new QPushButton("OK",h2), SIGNAL(clicked()), SLOT(slotButtOK()));
   connect(new QPushButton("Apply",h2), SIGNAL(clicked()), SLOT(slotApplyInput()));
@@ -104,16 +118,33 @@ ComponentDialog::~ComponentDialog()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotSelectProperty(QListViewItem *item)
 {
+  if(item == 0) return;
   Name->setText(item->text(0));
   edit->setText(item->text(1));
-  
+
   if(item->text(2) == "yes") disp->setChecked(true);
   else disp->setChecked(false);
 
   Property *pp;
   for(pp = Comp->Props.first(); pp!=0; pp = Comp->Props.next())
     if(pp->Name == item->text(0)) break;
-  Description->setText(pp->Description);
+
+  if(pp->Name == "File") BrowseButt->setEnabled(true);
+  else BrowseButt->setEnabled(false);
+
+  QStringList List = List.split('|',pp->Description);
+  Description->setText(List.first());
+  if(List.count() > 1) {    // should property values been choosen or been entered ?
+    List.remove(List.begin());
+    ComboEdit->clear();
+    ComboEdit->insertStringList(List);
+    edit->setShown(false);
+    ComboEdit->setShown(true);
+  }
+  else {
+    edit->setShown(true);
+    ComboEdit->setShown(false);
+  }
 }
 
 // -------------------------------------------------------------------------
@@ -160,4 +191,12 @@ void ComponentDialog::slotApplyInput()
     
     item = item->itemBelow();   // next item
   }
+}
+
+// -------------------------------------------------------------------------
+void ComponentDialog::slotBrowseFile()
+{
+  QString s = QFileDialog::getOpenFileName("","All Files (*.*)",this,"","Select a file");
+  if(!s.isEmpty()) edit->setText(s);
+  prop->currentItem()->setText(1, s);
 }

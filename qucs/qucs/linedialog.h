@@ -1,7 +1,7 @@
 /***************************************************************************
-                          smithdiagram.h  -  description
+                          linedialog.h  -  description
                              -------------------
-    begin                : Sat Oct 18 2003
+    begin                : Wed Nov 26 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,25 +15,33 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SMITHDIAGRAM_H
-#define SMITHDIAGRAM_H
+#ifndef LINEDIALOG_H
+#define LINEDIALOG_H
 
-#include "diagram.h"
+#include <qdialog.h>
+
+#include <qregexp.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
 
 
 /**
   *@author Michael Margraf
   */
 
-class SmithDiagram : public Diagram  {
+class LineDialog : public QDialog  {
+Q_OBJECT
 public: 
-	SmithDiagram(int _cx=0, int _cy=0);
-	~SmithDiagram();
+	LineDialog(const QString& _Caption, QWidget *parent=0, const char *name=0);
+	~LineDialog();
 
+private slots:
+  void slotSetColor();
 
-  virtual SmithDiagram* newOne();
-  virtual void calcData(Graph *g);
-  virtual void calcDiagram();
+public:
+  QRegExp     Expr;
+  QLineEdit   *LineWidth;
+  QPushButton *ColorButt;
 };
 
 #endif

@@ -87,12 +87,6 @@ void RectDiagram::calcDiagram()
 
   Texts.append(new Text(-20, y2, QString::number(ymax)));
   Texts.append(new Text(-20, 0,    QString::number(ymin)));
-
-/*  p->drawText(0, -40, xLabel);
-  p->save();
-  p->rotate(270);
-  p->drawText(-cy, cx-30, yLabel);
-  p->restore();*/
 }
 
 // ------------------------------------------------------------
@@ -103,9 +97,6 @@ void RectDiagram::calcData(Graph *g)
     *(p++) = int((cp->x-xmin)/(xmax-xmin)*x2);
     *(p++) = int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-ymin)/(ymax-ymin)*y2);
   }
-
-//QMessageBox::critical(0, "Error", QString::number(xmin)+"  "+QString::number(xmax));
-//  calcDiagram();
 }
 
 // ------------------------------------------------------------

@@ -21,6 +21,7 @@
 #include "component.h"
 #include "wire.h"
 #include "diagram.h"
+#include "painting.h"
 
 #include <qstring.h>
 #include <qpainter.h>
@@ -56,6 +57,7 @@ public:
   Component* selectedComponent(int x, int y);
   Diagram*   selectedDiagram(int x, int y);
   Wire*      selectedWire(int x, int y);
+  Painting*  selectedPainting(int x, int y);
   void       selectWireLine(Element *pe, Node *pn, bool ctrl);
   Element*   selectElement(int x, int y, bool flag);
   int        selectComponents(int x1, int y1, int x2, int y2, bool flag);
@@ -73,7 +75,7 @@ public:
   Wire* getWireLabel(Wire *w);
   void  setCompPorts(Component *pc);
   bool  copyCompsWires(int& x1, int& y1, int& x2, int& y2);
-  bool  rotateComponents();
+  bool  rotateElements();
   bool  mirrorXComponents();
   bool  mirrorYComponents();
   bool  oneTwoWires(Node *n);
@@ -106,6 +108,7 @@ public:
   QPtrList<Node>      Nodes;
   QPtrList<Component> Comps;
   QPtrList<Diagram>   Diags;
+  QPtrList<Painting>  Paints;
 
   bool SimOpenDpl;  // open data display after simulation ?
   QString DataSet;  // name of the default dataset

@@ -112,7 +112,7 @@ public:
 
 class Subcircuit : public Component  {
 public:
-	Subcircuit(int No);
+ 	Subcircuit(int No);
 	virtual ~Subcircuit();
   virtual Subcircuit* newOne();
 };
@@ -317,6 +317,13 @@ public:
   virtual MSline* newOne();
 };
 
+class MScoupled : public Component  {
+public:
+	MScoupled();
+	virtual ~MScoupled();
+  virtual MScoupled* newOne();
+};
+
 class MSstep : public Component  {
 public:
 	MSstep();
@@ -343,6 +350,13 @@ public:
 	MScross();
 	virtual ~MScross();
   virtual MScross* newOne();
+};
+
+class Coplanar : public Component  {
+public:
+	Coplanar();
+	virtual ~Coplanar();
+  virtual Coplanar* newOne();
 };
 
 
