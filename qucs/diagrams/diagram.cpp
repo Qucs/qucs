@@ -110,7 +110,7 @@ void Diagram::paint(ViewPainter *p)
       // write x label text -----------------------------------------
       p->Painter->setPen(Qt::black);
       s = p->Painter->fontMetrics().size(0, xAxis.Label);
-      p->Painter->drawText(x-(s.width()>>1), y, xAxis.Label);
+      p->Painter->drawText(x-(s.width()>>1), y+p->LineSpacing, xAxis.Label);
     }
 
 

@@ -173,7 +173,13 @@ int Graph::getSelected(int x, int y)
   int dy, dy2, y1;
 
   int countX = cPointsX.getFirst()->count;
-  if(*pp < 0)  pp++;
+  if(*pp < 0) {
+    pp++;
+    if(*pp < -9) {
+      pp++;
+      if(*pp < -10)  return -1;   // not even one point ?
+    }
+  }
   for(int z=0; z<countY; z++) {  // check every branch of curves
     zi = 0;
     do {

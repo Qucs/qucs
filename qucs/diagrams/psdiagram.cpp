@@ -83,6 +83,7 @@ int PSDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
+  x3 = x2 + 7;
   if(Name == "PS") {   // if polar not in upper half -> mirror
     createSmithChart(&yAxis, 5);
     createPolarDiagram(&zAxis, 1);
