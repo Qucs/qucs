@@ -23,6 +23,7 @@
 #include <qpushbutton.h>
 #include <qtabwidget.h>
 #include <qlayout.h>
+#include <qvalidator.h>
 
 
 SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
@@ -56,7 +57,25 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
 
   // ...........................................................
   QWidget *Tab2 = new QWidget(t);
-//  QGridLayout *gp = new QGridLayout(Tab2,6,3,5,5);
+  QGridLayout *gp2 = new QGridLayout(Tab2,3,2,5,5);
+  Check_GridOn = new QCheckBox("show Grid",Tab2);
+
+  Expr.setPattern("[0-9]{1,3}");  // valid expression for property input
+  QValidator *Validator = new QRegExpValidator(Expr, this);
+
+  QLabel *l3 = new QLabel("horizontal Grid:", Tab2);
+  gp2->addWidget(l3,1,0);
+  Input_GridX = new QLineEdit(Tab2);
+  Input_GridX->setValidator(Validator);
+//  Input_GridX->setInputMask("000");   // for Qt 3.2
+  gp2->addWidget(Input_GridX,1,1);
+
+  QLabel *l4 = new QLabel("vertical Grid:", Tab2);
+  gp2->addWidget(l4,2,0);
+  Input_GridY = new QLineEdit(Tab2);
+  Input_GridY->setValidator(Validator);
+//  Input_GridY->setInputMask("000");   // for Qt 3.2
+  gp2->addWidget(Input_GridY,2,1);
 
   t->addTab(Tab2, "Grid");
 
@@ -82,6 +101,9 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   Input_DataSet->setText(Doc->DataSet);
   Input_DataDisplay->setText(Doc->DataDisplay);
   Check_OpenDpl->setChecked(Doc->SimOpenDpl);
+  Check_GridOn->setChecked(Doc->GridOn);
+  Input_GridX->setText(QString::number(Doc->GridX));
+  Input_GridY->setText(QString::number(Doc->GridY));
 }
 
 SettingsDialog::~SettingsDialog()
@@ -112,6 +134,21 @@ void SettingsDialog::slotApply()
 
   if(Doc->SimOpenDpl != Check_OpenDpl->isChecked()) {
     Doc->SimOpenDpl = Check_OpenDpl->isChecked();
+    changed = true;
+  }
+
+  if(Doc->GridOn != Check_GridOn->isChecked()) {
+    Doc->GridOn = Check_GridOn->isChecked();
+    changed = true;
+  }
+
+  if(Doc->GridX != Input_GridX->text()) {
+    Doc->GridX = Input_GridX->text().toInt();
+    changed = true;
+  }
+
+  if(Doc->GridY != Input_GridY->text()) {
+    Doc->GridY = Input_GridY->text().toInt();
     changed = true;
   }
 

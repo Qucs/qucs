@@ -54,7 +54,7 @@ void SmithDiagram::calcData(Graph *g)
     *(p++) = (y2>>1)+int(cp->yi/rMAX*double(y2>>1));
   }
 
-  calcDiagram();
+//  calcDiagram();
 }
 
 
@@ -113,7 +113,6 @@ if(GridOn) {
         theta  = int(16*180*atan2(n_sin-1/im,n_cos-1)/M_PI);
         if(theta<0) theta += 16*360;
         theta = theta - beta;   // arc length
-//  QMessageBox::critical(0, "Error", QString::number(beta/16)+"  "+QString::number(theta/16));
         if(theta < 0) theta = 16*360+theta;
       }
     }

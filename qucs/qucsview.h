@@ -55,14 +55,14 @@ public:
 
   double Zoom(double s);
   bool   pasteElements();
+  void   enlargeView(int x1, int y1, int x2, int y2);
+  void   setPainter(QPainter *p, QucsDoc *d);
 
   Component *selComp;   // component selected in IconView
   Diagram   *selDiag;   // diagram selected in IconView
 
   bool    drawn;   // indicates whether the scheme component was drawn the last time
   QString ProjName;
-  double  Scale;    // zoom of the viewport
-  int     xShift, yShift;    // shift of the viewcontent because of negative coordinates
 
   QPtrList<Element> movingElements;
 
