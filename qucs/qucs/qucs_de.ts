@@ -971,10 +971,6 @@ Unbekanntes Feld!</translation>
         <translation>Idealitätsfaktor</translation>
     </message>
     <message>
-        <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Format Error:
 Wrong line start!</source>
         <translation type="unfinished"></translation>
@@ -992,7 +988,7 @@ Wrong line start!</source>
     </message>
     <message>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation type="obsolete">Ctrl+N</translation>
     </message>
     <message>
         <source>Creates a new document</source>
@@ -1020,7 +1016,7 @@ Erzeugt einen neuen Schaltplan oder eine Datenvisualisierung</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation type="obsolete">Ctrl+O</translation>
     </message>
     <message>
         <source>Open File
@@ -1040,7 +1036,7 @@ Opens an existing document</source>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
         <source>Saves the current document</source>
@@ -1104,7 +1100,7 @@ Speichert alle offenen Dokumente</translation>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="obsolete">Ctrl+W</translation>
     </message>
     <message>
         <source>Closes the current document</source>
@@ -1144,7 +1140,7 @@ Setzt die Eigenschaften der Datei</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation type="obsolete">Ctrl+P</translation>
     </message>
     <message>
         <source>Prints the current document</source>
@@ -1192,7 +1188,7 @@ Beendet die Applikation</translation>
     </message>
     <message>
         <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
+        <translation type="obsolete">Ctrl+X</translation>
     </message>
     <message>
         <source>Cuts the selected section and puts it to the clipboard</source>
@@ -1216,7 +1212,7 @@ Schneidet den ausgewählten Bereich aus und kopiert diesen in die Zwischenablage
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="obsolete">Ctrl+C</translation>
     </message>
     <message>
         <source>Copies the selected section to the clipboard</source>
@@ -1240,7 +1236,7 @@ Kopiert den ausgewählten Bereich in die Zwischenablage</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
+        <translation type="obsolete">Ctrl+V</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
@@ -1264,7 +1260,7 @@ Fügt den Inhalt der Zwischenablage an der Cursorposition ein</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation>Del</translation>
+        <translation type="obsolete">Del</translation>
     </message>
     <message>
         <source>Deletes the selected components</source>
@@ -1288,7 +1284,7 @@ Löscht die ausgewählten Komponenten</translation>
     </message>
     <message>
         <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
+        <translation type="obsolete">Ctrl+Z</translation>
     </message>
     <message>
         <source>Undoes the last command</source>
@@ -1312,7 +1308,7 @@ Macht das letzte Kommando rückgängig</translation>
     </message>
     <message>
         <source>Ctrl+Y</source>
-        <translation>Ctrl+Y</translation>
+        <translation type="obsolete">Ctrl+Y</translation>
     </message>
     <message>
         <source>Redoes the last command</source>
@@ -1408,7 +1404,7 @@ Zeigt die ganze Seite an</translation>
     </message>
     <message>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
         <source>Views without magnification</source>
@@ -1428,7 +1424,7 @@ Zeigt den Seiteninhalt ohne Vergrößerung an</translation>
     </message>
     <message>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="obsolete">+</translation>
     </message>
     <message>
         <source>Zooms into the current view</source>
@@ -1448,7 +1444,7 @@ Vergrößert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="obsolete">-</translation>
     </message>
     <message>
         <source>Zooms out the current view</source>
@@ -1468,7 +1464,7 @@ Verkleinert die aktuelle Ansicht</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Select mode</source>
@@ -1488,7 +1484,7 @@ Auswählmodus</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <source>Selects all elements</source>
@@ -1585,10 +1581,6 @@ Verläßt den Schaltkreis in die nächsthöhere Hierachieebene</translation>
         <translation>Deaktivieren/Aktivieren</translation>
     </message>
     <message>
-        <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Deactivate/Activate the selected item</source>
         <translation>Deaktiviert/Aktiviert die Auswahl</translation>
     </message>
@@ -1657,10 +1649,6 @@ Fügt ein Anschlußsymbol ein</translation>
         <translation>Draht</translation>
     </message>
     <message>
-        <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Inserts a wire</source>
         <translation>Fügt einen Draht ein</translation>
     </message>
@@ -1695,10 +1683,6 @@ Fügt eine Verbindungs- oder Knotenbezeichnung ein</translation>
     <message>
         <source>Simulate</source>
         <translation>Simulieren</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Simulates the current schematic</source>

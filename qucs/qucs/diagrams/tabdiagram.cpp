@@ -22,7 +22,9 @@
 
 TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
-  x2 = 300;
+  x1 = 10;     // position of label text
+  y1 = 20;
+  x2 = 300;    // initial size of diagram
   y2 = 200;
 
   Name = "Tab";

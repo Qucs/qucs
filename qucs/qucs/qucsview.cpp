@@ -434,26 +434,6 @@ void QucsView::MMovePaste(QMouseEvent *Event)
   MouseReleaseAction = &QucsView::MReleasePaste;
 }
 
-// -----------------------------------------------------------
-// Moves the label of a wire.
-void QucsView::MMoveWireLabel(QMouseEvent *Event)
-{
-  QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
-
-  if(drawn) labeledWire->Label->paintScheme(&painter);    // erase old
-
-  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
-  d->setOnGrid(MAx1, MAy1);
-  labeledWire->Label->x1 = MAx1;
-  labeledWire->Label->y1 = MAy1;
-
-  labeledWire->Label->paintScheme(&painter);    // paint new
-  drawn = true;
-}
-
 // *************************************************************************************
 // **********                                                                 **********
 // **********          Functions for serving mouse button clicking            **********
@@ -549,16 +529,6 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   viewport()->repaint();
   if(Event->button() != Qt::LeftButton) return;
   if(focusElement == 0) {
-    Wire* pw = Docs.current()->selectWireLabel(MAx1, MAy1);    // pressed on a wire label ?
-    if(pw != 0) {
-      labeledWire = pw;
-      MouseReleaseAction = &QucsView::MReleaseWireLabel;
-      MouseMoveAction = &QucsView::MMoveWireLabel;
-      MousePressAction = &QucsView::MouseDoNothing;
-      MouseDoubleClickAction = &QucsView::MouseDoNothing;
-      return;
-    }
-
     MAx2 = 0;  // if not clicking on an element => open a rectangle
     MAy2 = 0;
     MouseReleaseAction = &QucsView::MReleaseSelect2;
@@ -593,7 +563,8 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 {
   Element *e
     = Docs.current()->selectElement(int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
-                                    int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1, false);
+                                    int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,
+                                    false);
   if(e != 0) {
     e->isSelected = true;
     Docs.current()->deleteElements();
@@ -688,10 +659,11 @@ void QucsView::MPressRotate(QMouseEvent *Event)
                       ((Wire*)e)->Label = 0;    // prevent label to be deleted
                       d->Wires.setAutoDelete(false);
                       d->deleteWire((Wire*)e);
+                      ((Wire*)e)->Label = pl;
                       ((Wire*)e)->rotate();
                       d->setOnGrid(e->x1, e->y1);
                       d->setOnGrid(e->x2, e->y2);
-                      ((Wire*)e)->Label = pl;
+                      if(pl) d->setOnGrid(pl->cx, pl->cy);
                       d->insertWire((Wire*)e);
                       d->Wires.setAutoDelete(true);
                       enlargeView(e->x1, e->y1, e->x2, e->y2);
@@ -1120,24 +1092,6 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
   }
 }
 
-// -----------------------------------------------------------
-void QucsView::MReleaseWireLabel(QMouseEvent *Event)
-{
-  if(Event->button() != Qt::LeftButton) return;
-
-//  labeledWire->Label->x1 = MAx1;
-//  labeledWire->Label->y1 = MAy1;    // set new position of wire label
-  drawn = false;
-  viewport()->repaint();
-
-  MouseMoveAction = &QucsView::MouseDoNothing;
-  MousePressAction = &QucsView::MPressSelect;
-  MouseReleaseAction = &QucsView::MReleaseSelect;
-  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
-
-  Docs.current()->setChanged(true);
-}
-
 // *************************************************************************************
 // **********                                                                 **********
 // **********       Functions for serving mouse button double clicking        **********
@@ -1161,7 +1115,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
   switch(focusElement->Type) {
     case isComponent:  c = (Component*)focusElement;
                        if(c->Sign == "GND") return;
-                       d = new ComponentDialog(c, this);
+                       d = new ComponentDialog(c, this);    // is WDestructiveClose
                        if(d->exec() == 1) {
                          int x1, y1, x2, y2;
                          x2 = Docs.current()->Comps.findRef(c);
@@ -1173,14 +1127,12 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
                          c->entireBounds(x1,y1,x2,y2);
                          enlargeView(x1,y1,x2,y2);
                        }
-                       delete d;
                        break;
 
     case isDiagram :   dia = (Diagram*)focusElement;
                        ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
-                       if(ddia->exec()  != QDialog::Rejected)
+                       if(ddia->exec()  != QDialog::Rejected)    // is WDestructiveClose
                          Docs.current()->setChanged(true);
-                       delete ddia;
                        break;
 
     case isWire:       MPressLabel(Event);
