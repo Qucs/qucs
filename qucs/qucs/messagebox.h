@@ -1,7 +1,7 @@
 /***************************************************************************
-                          thing.cpp  -  description
+                          messagebox.h  -  description
                              -------------------
-    begin                : Sun Sep 28 2003
+    begin                : Sat Oct 25 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,21 +15,27 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "thing.h"
+#ifndef MESSAGEBOX_H
+#define MESSAGEBOX_H
 
-Thing::Thing()
-{
-}
+#include <qdialog.h>
 
-Thing::~Thing()
-{
-}
+/**
+  *@author Michael Margraf
+  */
 
-void Thing::paint(QPainter *)
-{
-}
+class MessageBox : public QDialog  {
+Q_OBJECT
+public: 
+	MessageBox(const QString& Caption, const QString& Text, QWidget *parent=0, const char *name=0);
+	~MessageBox();
 
-bool Thing::containPoint(int, int)
-{
-  return false;
-}
+private slots:
+  void slotSave();
+  void slotSaveAll();
+  void slotDiscard();
+  void slotDiscardAll();
+  void slotCancel();
+};
+
+#endif
