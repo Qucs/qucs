@@ -121,7 +121,7 @@ public:
   int  GridX, GridY;
   bool GridOn;
   double Scale;
-  int PosX, PosY;    // upper left corner of the visible area
+  int PosX, PosY;    // upper left corner of the visible area (only for remember ing during seeing another open document)
   int ViewX1, ViewY1, ViewX2, ViewY2;  // size of the document area
 
   QPtrList<Element> *Cache;

@@ -429,7 +429,7 @@ void QucsView::MMoveWireLabel(QMouseEvent *Event)
 
   int dx=0, dy=0;
   if(labeledWire->isHorizontal()) dx = labeledWire->delta;
-  else dx = labeledWire->delta;
+  else dy = labeledWire->delta;
   if(drawn) {
     painter.drawLine(labeledWire->x1+dx, labeledWire->y1+dy, MAx1, MAy1);   // erase old line
     painter.drawRect(MAx1, MAy1, labeledWire->NameDX+3, -labeledWire->NameDY-3);   // erase old rectangle
@@ -481,7 +481,8 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   bool OK;
   Name = QInputDialog::getText(tr("Insert Nodename"), tr("Enter the label:"), QLineEdit::Normal,
                                        Name, &OK, this);
-  if(OK && !Name.isEmpty()) {
+  if(OK)
+  if(!Name.isEmpty()) {
     Name.replace(' ', '_');	// label must not contain spaces
     while(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'
     if(Name.isEmpty()) return;
@@ -494,6 +495,12 @@ void QucsView::MPressLabel(QMouseEvent *Event)
     }
     pw->setName(Name);
     enlargeView(pw->nx, pw->ny, pw->nx+pw->NameDX+3, pw->ny-pw->NameDY-3);
+    viewport()->repaint();
+    Docs.current()->setChanged(true);
+  }
+  else {    // if no name was entered (empty string), delete name
+    if(pw2 != 0) pw2->setName("");  // delete old name of wire line
+    else pw->setName(Name);         // delete name of wire
     viewport()->repaint();
     Docs.current()->setChanged(true);
   }
@@ -1160,4 +1167,64 @@ void QucsView::MDoubleClickWire2(QMouseEvent *Event)
   MousePressAction = &QucsView::MPressWire1;
 //  MouseReleaseAction = &QucsView::MouseDoNothing;
   MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
+
+// *************************************************************************************
+// **********                                                                 **********
+// **********            Function for serving mouse wheel moving              **********
+// **********                                                                 **********
+// *************************************************************************************
+void QucsView::contentsWheelEvent(QWheelEvent *Event)
+{
+  int diff;
+  int delta = Event->delta() >> 1;     // use smaller steps
+  QucsDoc *d = Docs.current();
+
+  // ...............................................................................
+  if((Event->state() & Qt::ShiftButton) || (Event->orientation() == Horizontal)) {    // scroll horizontally ?
+      diff = contentsX() - delta;
+      if(diff < 0) {     // scroll outside the active area ?  (to the left)
+        resizeContents(contentsWidth()-diff, contentsHeight());
+        d->ViewX1 += diff;
+        scrollBy(diff, 0);
+        viewport()->repaint();
+      }
+      else {
+        diff = contentsWidth() - contentsX()-visibleWidth() + delta;
+        if(diff < 0) {     // scroll outside the active area ?  (to the right)
+          resizeContents(contentsWidth()-diff, contentsHeight());
+          d->ViewX2 -= diff;
+        }
+        scrollBy(-delta, 0);
+      }
+  }
+  // ...............................................................................
+  else if(Event->state() & Qt::ControlButton) {    // use mouse wheel to zoom ?
+      double Scaling;
+      if(delta < 0) Scaling = 80/double(-delta);
+      else Scaling = double(delta)/80;
+      Zoom(Scaling);
+      center(int(Event->x()*Scaling), int(Event->y()*Scaling));
+      viewport()->repaint();
+  }
+  // ...............................................................................
+  else {     // scroll vertically !
+      diff = contentsY() - delta;
+      if(diff < 0) {     // scroll outside the active area ?  (upwards)
+        resizeContents(contentsWidth(), contentsHeight()-diff);
+        d->ViewY1 += diff;
+        scrollBy(0, diff);
+        viewport()->repaint();    // because QScrollView thinks nothing has changed
+      }
+      else {
+        diff = contentsHeight() - contentsY()-visibleHeight() + delta;
+        if(diff < 0) {     // scroll outside the active area ?  (downwards)
+          resizeContents(contentsWidth(), contentsHeight()-diff);
+          d->ViewY2 -= diff;
+        }
+        scrollBy(0, -delta);
+      }
+  }
+
+  Event->accept();   // QScrollView must not handle this event
 }

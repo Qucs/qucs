@@ -1,3 +1,15 @@
+2004-02-28  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new property for "parameter sweep": Sim
+	* file "qucs.ini" renamed to "qucsrc"
+	* command "View all" also heeds the wire labels
+	* wire labels are removed if an empty wire name is entered
+	* by scrolling with the mouse wheel, one can enlarges the
+	schematic area, shift + mouse wheel scrolls and enlarges
+	horizontally, ctrl + mouse wheel zooms
+	* component drawings of the simulations uses now font metrics
+	for painting the frame
+
 2004-02-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* Ctrl+E (electric) for "Wire" mode, Ctrl+R (run) for
@@ -28,7 +40,7 @@
 
 2004-02-03  Stefan Jahn  <stefan@lkcc.org>
 
-	* newprojdialog.cpp (NewProjDialog): For some reason tr() 
+	* newprojdialog.cpp (NewProjDialog): For some reason tr()
 	strings were not really translatable, thus I changed them into
 	QObject::tr() strings.  These are now translatable.
 
