@@ -54,11 +54,13 @@ SParamFile::SParamFile(int No)
 
   tx = x1+4;
   ty = y2+4;
-  Model = QString("SPfile")+QString::number(No);
+  Model = "#SPfile";
   Name  = "X";
 
   Props.append(new Property("File", "test.s2p", true,
 		QObject::tr("name of the s parameter file")));
+  Props.append(new Property("Data", "rectangular", true,
+		QObject::tr("interpolation type (rectangular,polar)")));
 }
 
 SParamFile::~SParamFile()
@@ -67,8 +69,7 @@ SParamFile::~SParamFile()
 
 Component* SParamFile::newOne()
 {
-  int z = Model.mid(6).toInt();
-  return new SParamFile(z);
+  return new SParamFile(Ports.count()-1);
 }
 
 Component* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)

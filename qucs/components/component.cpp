@@ -23,8 +23,11 @@
 #include <qstring.h>
 #include <qpen.h>
 #include <qmessagebox.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 
 
+extern QDir QucsWorkDir;
 
 // ***********************************************************************
 // **********                                                   **********
@@ -353,13 +356,24 @@ QString Component::NetList()
   if(Model == "Port") return QString("");  // do not mention subcircuit ports
 
   QString s = Model+":"+Name;
+  if(s.at(0) == '#')  s.remove(0,1);
 
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
-    s += " "+p1->Connection->Name;    // node names
+    s += " "+p1->Connection->Name;   // node names
+  if(Model.at(0) == '_') {
+    s += " gnd";    // add port (e.g. BJT without substrate)
+    s.remove(0,1);  // remove leading '_'
+  }
 
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
     if(p2->Name != "Symbol")
-      s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties
+      if(p2->Name == "File") {
+        QFileInfo info(p2->Value);
+	if(info.isRelative())  info.setFile(QucsWorkDir, p2->Value);
+	s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";    // properties
+      }
+      else
+	s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties
 
   return s;
 }
@@ -367,7 +381,11 @@ QString Component::NetList()
 // -------------------------------------------------------
 QString Component::save()
 {
-  QString s = "<"+Model;
+  QString s = "<";
+  if(Model.at(0) == '#')
+    s  += Model.mid(1) + QString::number(Ports.count()-1);
+  else s += Model;
+
   if(Name.isEmpty()) s += " *";
   else s += " "+Name;
 
@@ -403,7 +421,7 @@ bool Component::load(const QString& _s)
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
-  Model = s.section(' ',0,0);    // Model
+//  Model = s.section(' ',0,0);    // Model
 
   Name = s.section(' ',1,1);    // Name
   if(Name == "*") Name = "";
@@ -551,8 +569,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "iode") c = new Diode();
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
-	else if(cstr == "JT") c = new BJT();
-	else if(cstr == "JTsub") c = new BJTsub();
+	else if(cstr == "JT") c = new BJTsub();
 	break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
         break;
@@ -575,6 +592,8 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "SP") c = new SP_Sim();
         else if(cstr == "HB") c = new HB_Sim();
         else if(cstr == "SW") c = new Param_Sweep();
+        break;
+  case '_' : if(cstr == "BJT") c = new BJT();
         break;
   }
   if(!c) {
