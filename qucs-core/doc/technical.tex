@@ -4296,6 +4296,173 @@ C_{gs}\cdot \left(1 - \dfrac{V_{GS}}{P_{b}}\right)^{-M} & \text{ for } V_{GS} \l
 \end{cases}
 \end{align}
 
+\section{Bipolar Transistor}
+%\addcontentsline{toc}{section}{Bipolar Transistor}
+
+The following table contains the model parameters for the BJT (Spice
+Gummel-Poon) model.
+
+\addvspace{12pt}
+
+\begin{tabular}{rllll}
+Name & Symbol & Description & Unit & Default\\
+\hline
+Is & $I_{S}$ & saturation current & $\ampere$ & $10^{-16}$\\
+Nf & $N_F$ & forward emission coefficient & & $1.0$\\
+Nr & $N_R$ & reverse emission coefficient & & $1.0$\\
+Ikf & $I_{KF}$ & high current corner for forward beta & $\ampere$ & $\infty$\\
+Ikr & $I_{KR}$ & high current corner for reverse beta & $\ampere$ & $\infty$\\
+Vaf & $V_{AF}$ & forward early voltage & $\volt$ & $\infty$\\
+Var & $V_{AR}$ & reverse early voltage & $\volt$ & $\infty$\\
+Ise & $I_{SE}$ & base-emitter leakage saturation current & $\ampere$ & $0$\\
+Ne & $N_E$ & base-emitter leakage emission coefficient & & $1.5$\\
+Isc & $I_{SC}$ & base-collector leakage saturation current & $\ampere$ & $0$\\
+Nc & $N_C$ & base-collector leakage emission coefficient & & $2.0$\\
+Bf & $B_F$ & forward beta & & $100$\\
+Br & $B_R$ & reverse beta & & $1$\\
+Rbm & $R_{Bm}$ & minimum base resistance for high currents & $\ohm$ & $0.0$\\
+Irb & $I_{RB}$ & current for base resistance midpoint & $\ampere$ & $\infty$\\
+Rc & $R_{C}$ & collector ohmic resistance & $\ohm$ & $0.0$\\
+Re & $R_{E}$ & emitter ohmic resistance & $\ohm$ & $0.0$\\
+Rb & $R_{B}$ & zero-bias base resistance (may be high-current dependent) & $\ohm$ & $0.0$\\
+Cje & $C_{JE}$ & base-emitter zero-bias depletion capacitance & $\farad$ & $0.0$\\
+Vje & $V_{JE}$ & base-emitter junction built-in potential & $\volt$ & $0.75$\\
+Mje & $M_{JE}$ & base-emitter junction exponential factor & & $0.33$\\
+Cjc & $C_{JC}$ & base-collector zero-bias depletion capacitance & $\farad$ & $0.0$\\
+Vjc & $V_{JC}$ & base-collector junction built-in potential & $\volt$ & $0.75$\\
+Mjc & $M_{JC}$ & base-collector junction exponential factor & & $0.33$\\
+Xcjc & $X_{CJC}$ & fraction of Cjc that goes to internal base pin & & $1.0$\\
+Cjs & $C_{JS}$ & zero-bias collector-substrate capacitance & $\farad$ & $0.0$\\
+Vjs & $V_{JS}$ & substrate junction built-in potential & $\volt$ & $0.75$\\
+Mjs & $M_{JS}$ & substrate junction exponential factor & & $0.0$\\
+Fc & $F_C$ & forward-bias depletion capacitance coefficient & & $0.5$\\
+Tf & $T_F$ & ideal forward transit time & $\second$ & $0.0$\\
+Xtf & $X_{TF}$ & coefficient of bias-dependence for Tf & & $0.0$\\
+Vtf & $V_{TF}$ & voltage dependence of Tf on base-collector voltage & $\volt$ & $\infty$\\
+Itf & $I_{TF}$ & high-current effect on Tf & $\ampere$ & $0.0$\\
+Tr & $T_R$ & ideal reverse transit time & $\second$ & $0.0$\\
+\end{tabular}
+
+\subsection{Large signal model}
+%\addcontentsline{toc}{subsection}{Large signal model}
+
+\begin{equation}
+I_F = I_S\cdot \left(e^{\frac{V_{BE}}{N_F\cdot V_T}} -1\right)
+\end{equation}
+
+\begin{align}
+I_{BEI} &= \frac{I_F}{B_F} &
+g_{BEI} &= \frac{\partial I_{BEI}}{\partial V_{BE}} = \frac{I_S}{N_F\cdot V_T \cdot B_F}\cdot e^{\frac{V_{BE}}{N_F\cdot V_T}}\\
+I_{BEN} &= I_{SE}\cdot \left(e^{\frac{V_{BE}}{N_E\cdot V_T}} -1\right) &
+g_{BEN} &= \frac{\partial I_{BEN}}{\partial V_{BE}} = \frac{I_{SE}}{N_E\cdot V_T}\cdot e^{\frac{V_{BE}}{N_E\cdot V_T}}
+\end{align}
+
+\begin{align}
+I_{BE} &= I_{BEI} + I_{BEN}\\
+g_{\mu} &= g_{BEI} + g_{BEN}
+\end{align}
+
+\begin{equation}
+I_R = I_S\cdot \left(e^{\frac{V_{BC}}{N_R\cdot V_T}} -1\right)
+\end{equation}
+
+\begin{align}
+I_{BCI} &= \frac{I_R}{B_R} &
+g_{BCI} &= \frac{\partial I_{BCI}}{\partial V_{BC}} = \frac{I_S}{N_R\cdot V_T \cdot B_R}\cdot e^{\frac{V_{BC}}{N_R\cdot V_T}}\\
+I_{BCN} &= I_{SC}\cdot \left(e^{\frac{V_{BC}}{N_C\cdot V_T}} -1\right) &
+g_{BCN} &= \frac{\partial I_{BCN}}{\partial V_{BC}} = \frac{I_{SC}}{N_C\cdot V_T}\cdot e^{\frac{V_{BC}}{N_C\cdot V_T}}
+\end{align}
+
+\begin{align}
+I_{BC} &= I_{BCI} + I_{BCN}\\
+g_{\pi} &= g_{BCI} + g_{BCN}
+\end{align}
+
+\begin{equation}
+Q_1 = \frac{1}{1 - \dfrac{V_{BC}}{V_{AF}} - \dfrac{V_{BE}}{V_{AR}}}
+\;\;\;\; \text{ and } \;\;\;\;
+Q_2 = \frac{I_F}{I_{KF}} + \frac{I_R}{I_{KR}}
+\end{equation}
+
+\begin{equation}
+Q_B = \frac{Q_1}{2} \cdot \left(1 + \sqrt{1 + 4\cdot Q_2}\right)
+\end{equation}
+
+\begin{align}
+\frac{\partial Q_B}{\partial V_{BE}} &= Q_1\cdot \left(\frac{Q_B}{V_{AR}} + \frac{g_{IF}}{I_{KF}\cdot \sqrt{1 + 4\cdot Q_2}}\right)\\
+\frac{\partial Q_B}{\partial V_{BC}} &= Q_1\cdot \left(\frac{Q_B}{V_{AF}} + \frac{g_{IR}}{I_{KR}\cdot \sqrt{1 + 4\cdot Q_2}}\right)
+\end{align}
+
+\begin{align}
+g_{mf} &= \frac{1}{Q_B}\cdot\left(g_{IF} - \frac{I_F}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BE}}\right)\\
+g_o = g_{mr} &= \frac{1}{Q_B}\cdot\left(g_{IR} - \frac{I_R}{Q_B}\cdot \frac{\partial Q_B}{\partial V_{BC}}\right)\\
+g_m &= g_{mf} - g_{mr}
+\end{align}
+
+\begin{equation}
+\begin{cases}
+\begin{array}{ll}
+R_{BB'} = R_{Bm} + \dfrac{R_B - R_{Bm}}{Q_B} & \text{ for } I_{RB} = \infty\\
+R_{BB'} = R_{Bm} + 3\cdot \left(R_B - R_{Bm}\right)\cdot \dfrac{\tan{z} - z}{z\cdot \tan^2{z}} & \text{ for } I_{RB} \neq \infty\\
+\end{array}
+\end{cases}
+\end{equation}
+
+\begin{equation}
+I_B = I_{BE} + I_{BC} = I_{BEI} + I_{BEN} + I_{BCI} + I_{BCN}
+\end{equation}
+\begin{equation}
+z = \frac{\sqrt{1 + \dfrac{144}{\pi^2}\cdot\dfrac{I_B}{I_{RB}}} -1}{\dfrac{24}{\pi^2}\cdot\sqrt{\dfrac{I_B}{I_{RB}}}}
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+g_{\mu} + g_{\pi} & -g_{\pi} & -g_{\mu} & 0\\
+-g_{\pi} + g_{m} & g_{o} + g_{\pi} & -g_{o} - g_{m} & 0\\
+-g_{\mu} - g_{m} & -g_{o} & g_{\mu} + g_{o} + g_{m} & 0\\
+0 & 0 & 0 & 0\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{B}\\
+V_{C}\\
+V_{E}\\
+V_{S}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_{BE_{eq}} - I_{BC_{eq}}\\
++I_{BC_{eq}} - I_{CE_{eq}}\\
++I_{BE_{eq}} + I_{CE_{eq}}\\
+0\\
+\end{bmatrix}
+\end{equation}
+
+\begin{align}
+I_{BE_{eq}} &= I_{BE} - g_{\mu} \cdot V_{BE}\\
+I_{BC_{eq}} &= I_{BC} - g_{\pi} \cdot V_{BC}\\
+I_{CE_{eq}} &= I_{CE} - g_{m} \cdot V_{BE} - g_{o} \cdot V_{CE}
+\end{align}
+
+\subsection{Small signal model}
+%\addcontentsline{toc}{subsection}{Small signal model}
+
+\begin{equation}
+T_{FF} = T_F \cdot\left(1 + X_{TF} \cdot \left(\dfrac{I_F}{I_F + I_{TF}}\right)^2 \cdot \exp{\left(\dfrac{V_{BC}}{1.44\cdot V_{TF}}\right)}\right)
+\end{equation}
+
+\begin{equation}
+\frac{\partial T_{FF}}{\partial V_{BE}} = \dfrac{T_F\cdot X_{TF}\cdot 2\cdot g_{IF}\cdot I_F\cdot I_{TF}}{\left(I_F + I_{TF}\right)^3}\cdot \exp{\left(\dfrac{V_{BC}}{1.44\cdot V_{TF}}\right)}
+\end{equation}
+
+\begin{equation}
+Q_{BE} = \dfrac{I_F}{Q_B}\cdot T_{FF}
+\end{equation}
+
+\begin{equation}
+C_{BE_{diff}} = \dfrac{\partial Q_{BE}}{\partial V_{BE}} = \dfrac{1}{Q_B}\cdot \left(I_F\cdot \dfrac{\partial T_{FF}}{\partial V_{BE}} + T_{FF}\cdot\left(g_{IF} - \dfrac{I_F}{Q_B}\cdot \dfrac{\partial Q_B}{\partial V_{BE}}\right)\right)
+\end{equation}
+
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
 
