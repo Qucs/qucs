@@ -33,8 +33,8 @@ qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp \
   element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp          \
   qucsview.cpp qucs.cpp main.cpp helpdialog.cpp $(MOCFILES)
 
-INCLUDES = $(QINCLUDES)
-qucs_LDFLAGS = $(QLDFLAGS)
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
+qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 qucs_LDADD = sim/libsim.a components/libcomponents.a diagrams/libdiagrams.a \
 	paintings/libpaintings.a
 

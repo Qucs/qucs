@@ -1,3 +1,9 @@
+2004-01-24  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Additionally checking for X headers and 
+	libraries.  Checking for multi-threaded and non-threaded Qt 
+	library.
+
 2004-01-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Added qucs/doc/Makefile for output.
