@@ -63,7 +63,7 @@ private:
   QPtrList<Node>      *Nodes;
   QPtrList<Component> *Comps;
   QPtrList<Diagram>   *Diags;
-  QPtrList<Painting>  *Paints;
+  QPtrList<Painting>  *Paints, *SymbolPaints;
 
 };
 

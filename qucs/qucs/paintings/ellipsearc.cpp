@@ -1,8 +1,8 @@
 /***************************************************************************
-                          graphicline.cpp  -  description
+                         ellipsearc.cpp  -  description
                              -------------------
-    begin                : Mon Nov 24 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Thu Sep 9 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,53 +15,51 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "graphicline.h"
+#include "ellipsearc.h"
 #include "filldialog.h"
 
 #include <math.h>
 
 
-GraphicLine::GraphicLine(int cx_, int cy_, int x2_, int y2_, QPen Pen_)
+EllipseArc::EllipseArc()
 {
   isSelected = false;
-  Pen = Pen_;
-  cx = cx_;
-  cy = cy_;
-  x1 = y1 = 0;
-  x2 = x2_;
-  y2 = y2_;
+  Pen = QPen(QColor());
+  cx = cy = x1 = x2 = y1 = y2 = Angle = ArcLen = 0;
 }
 
-GraphicLine::~GraphicLine()
+EllipseArc::~EllipseArc()
 {
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::paint(QPainter *p)
+void EllipseArc::paint(QPainter *p)
 {
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Pen.width()+5));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
+    p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
     p->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
+    p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 
     p->setPen(QPen(QPen::darkRed,2));
-    p->drawRect(cx-5, cy-5, 10, 10);  // markers for changing the size
-    p->drawRect(cx+x2-5, cy+y2-5, 10, 10);
+    p->drawRect(cx, cy+y2-10, 10, 10);  // markers for changing the size
+    p->drawRect(cx, cy, 10, 10);
+    p->drawRect(cx+x2-10, cy+y2-10, 10, 10);
+    p->drawRect(cx+x2-10, cy, 10, 10);
     return;
   }
   p->setPen(Pen);
-  p->drawLine(cx, cy, cx+x2, cy+y2);
+  p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::paintScheme(QPainter *p)
+void EllipseArc::paintScheme(QPainter *p)
 {
-  p->drawLine(cx, cy, cx+x2, cy+y2);
+  p->drawArc(cx, cy, x2, y2, Angle, ArcLen);
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::getCenter(int& x, int &y)
+void EllipseArc::getCenter(int& x, int &y)
 {
   x = cx+(x2>>1);
   y = cy+(y2>>1);
@@ -69,24 +67,24 @@ void GraphicLine::getCenter(int& x, int &y)
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
-void GraphicLine::setCenter(int x, int y, bool relative)
+void EllipseArc::setCenter(int x, int y, bool relative)
 {
   if(relative) { cx += x;  cy += y; }
   else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
 
 // --------------------------------------------------------------------------
-GraphicLine* GraphicLine::newOne()
+EllipseArc* EllipseArc::newOne()
 {
-  return new GraphicLine();
+  return new EllipseArc();
 }
 
 // --------------------------------------------------------------------------
-bool GraphicLine::load(const QString& s)
+bool EllipseArc::load(const QString& s)
 {
   bool ok;
-
   QString n;
+  
   n  = s.section(' ',1,1);    // cx
   cx = n.toInt(&ok);
   if(!ok) return false;
@@ -103,17 +101,25 @@ bool GraphicLine::load(const QString& s)
   y2 = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',5,5);    // color
+  n  = s.section(' ',5,5);    // start angle
+  Angle = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',6,6);    // arc length
+  ArcLen = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',7,7);    // color
   QColor co;
   co.setNamedColor(n);
   Pen.setColor(co);
   if(!Pen.color().isValid()) return false;
 
-  n  = s.section(' ',6,6);    // thickness
+  n  = s.section(' ',8,8);    // thickness
   Pen.setWidth(n.toInt(&ok));
   if(!ok) return false;
 
-  n  = s.section(' ',7,7);    // line style
+  n  = s.section(' ',9,9);    // line style
   Pen.setStyle((Qt::PenStyle)n.toInt(&ok));
   if(!ok) return false;
 
@@ -121,151 +127,176 @@ bool GraphicLine::load(const QString& s)
 }
 
 // --------------------------------------------------------------------------
-QString GraphicLine::save()
+QString EllipseArc::save()
 {
-  QString s = "Line "+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += QString::number(x2)+" "+QString::number(y2)+" ";
-  s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
-  s += QString::number(Pen.style());
+  QString s = "EArc " +
+	QString::number(cx) + " " + QString::number(cy) + " " +
+	QString::number(x2) + " " + QString::number(y2) + " " +
+	QString::number(Angle) + " " + QString::number(ArcLen) + " " +
+	Pen.color().name()  + " " + QString::number(Pen.width()) + " " +
+	QString::number(Pen.style());
   return s;
 }
 
 // --------------------------------------------------------------------------
 // Checks if the resize area was clicked.
-bool GraphicLine::ResizeTouched(int x, int y)
+bool EllipseArc::ResizeTouched(int x, int y)
 {
-  if(x < cx+5) if(x > cx-5) if(y < cy+5) if(y > cy-5) {
-    State = 1;
-    return true;
-  }
-
-  if(x < cx+x2+5) if(x > cx+x2-5) if(y < cy+y2+5) if(y > cy+y2-5) {
-    State = 2;
-    return true;
-  }
+  State = -1;
+  if(x < cx) return false;
+  if(y < cy) return false;
+  if(x > cx+x2) return false;
+  if(y > cy+y2) return false;
 
   State = 0;
-  return false;
+  if(x < cx+10) State = 1;
+  else if(x <= cx+x2-10) { State = -1; return false; }
+  if(y < cy+10)  State |= 2;
+  else if(y <= cy+y2-10) { State = -1; return false; }
+
+  return true;
 }
 
 // --------------------------------------------------------------------------
 // Mouse move action during resize.
-void GraphicLine::MouseResizeMoving(int x, int y, QPainter *p)
+void EllipseArc::MouseResizeMoving(int x, int y, QPainter *p)
 {
   paintScheme(p);  // erase old painting
-  if(State == 1) { x2 += cx-x; y2 += cy-y; cx = x; cy = y; } // move beginning
-  else { x2 = x-cx;  y2 = y-cy; }  // move ending
+  switch(State) {
+    case 0: x2 = x-cx; y2 = y-cy; // lower right corner
+	    break;
+    case 1: x2 -= x-cx; cx = x; y2 = y-cy; // lower left corner
+	    break;
+    case 2: x2 = x-cx; y2 -= y-cy; cy = y; // upper right corner
+	    break;
+    case 3: x2 -= x-cx; cx = x; y2 -= y-cy; cy = y; // upper left corner
+	    break;
+  }
+  if(x2 < 0) { State ^= 1; x2 *= -1; cx -= x2; }
+  if(y2 < 0) { State ^= 2; y2 *= -1; cy -= y2; }
 
   paintScheme(p);  // paint new painting
 }
 
 // --------------------------------------------------------------------------
 // x/y are the precise coordinates, gx/gy are the coordinates due to the grid.
-void GraphicLine::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
+void EllipseArc::MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn)
 {
-  if(State > 0) {
-    if(State > 1) p->drawLine(cx, cy, cx+x2, cy+y2);  // erase old painting
-    State++;
-    x2 = gx-cx;
-    y2 = gy-cy;
-    p->drawLine(cx, cy, cx+x2, cy+y2);  // paint new painting
+  switch(State) {
+    case 0 :
+       x2 = gx;
+       y2 = gy;
+       break;
+    case 1 :
+      State++;
+      gx -= x1;
+      gy -= y1;
+      x2 = int(sqrt(double(gx*gx + gy*gy)));
+      Angle  = x1 + (gx-x2) >> 2;
+      ArcLen = y1 + (gy-x2) >> 2;
+      p->drawArc(Angle, ArcLen, x2, x2, 0, 16*360);  // paint new painting
+      break;
+    case 2 :
+      p->drawArc(Angle, ArcLen, x2, x2, 0, 16*360);  // erase old painting
+      gx -= x1;
+      gy -= y1;
+      x2 = int(sqrt(double(gx*gx + gy*gy)));
+      Angle  = x1 + (gx-x2) >> 2;
+      ArcLen = y1 + (gy-x2) >> 2;
+      p->drawArc(Angle, ArcLen, x2, x2, 0, 16*360);  // paint new painting
+      break;
+    case 3 :
+      break;
   }
-  else { cx = gx; cy = gy; }
 
 
   p->setPen(Qt::SolidLine);
-  if(drawn) {
-    p->drawLine(x1+27, y1, x1+15, y1+12);  // erase old cursor symbol
-    p->drawLine(x1+25, y1-2, x1+29, y1+2);
-    p->drawLine(x1+13, y1+10, x1+17, y1+14);
-  }
-  x1 = x;
-  y1 = y;
-  p->drawLine(x1+27, y1, x1+15, y1+12);  // paint new cursor symbol
-  p->drawLine(x1+25, y1-2, x1+29, y1+2);
-  p->drawLine(x1+13, y1+10, x1+17, y1+14);
+  if(drawn)
+    p->drawArc(cx+13, cy, 18, 12, 16*45, 16*200); // erase old cursor symbol
+
+  cx = x;
+  cy = y;
+  p->drawArc(cx+13, cy, 18, 12, 16*45, 16*200);  // paint new cursor symbol
 }
 
 // --------------------------------------------------------------------------
-bool GraphicLine::MousePressing()
+bool EllipseArc::MousePressing()
 {
   State++;
-  if(State > 2) {
-    x1 = y1 = 0;
-    State = 0;
-    return true;    // painting is ready
+  switch(State) {
+    case 1 :
+//	Angle  = 0;
+//	ArcLen = 16*360;
+	x1 = x2;
+	y1 = y2;    // first corner is determined
+	break;
+    case 3 :
+	State = 0;
+	return true;    // painting is ready
   }
   return false;
 }
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
-// 5 is the precision the user must point onto the painting.
-bool GraphicLine::getSelected(int x, int y)
+bool EllipseArc::getSelected(int x, int y)
 {
-  x  -= cx;
-  if(x < -5) { if(x < x2-5) return false; } // is between x coordinates ?
-  else { if(x > 5) if(x > x2+5) return false; }
+  x  = (x-cx-(x2>>1));  x *= x;
+  y  = (y-cy-(y2>>1));  y *= y;
 
-  y  -= cy;
-  if(y < -5) { if(y < y2-5) return false; } // is between y coordinates ?
-  else { if(y > 5) if(y > y2+5) return false; }
+  int a1 = (x2-5)>>1;  a1 *= a1;
+  int a2 = (x2+5)>>1;  a2 *= a2;
+  int b1 = (y2-5)>>1;  b1 *= b1;
+  int b2 = (y2+5)>>1;  b2 *= b2;
 
-  int A  = x2*y - x*y2;     // calculate the rectangle area spanned
-  A *= A;                   // avoid the need for square root
-  A -= 25*(x2*x2 + y2*y2);  // substract selectable area
+  double x_double = double(x);
+  double y_double = double(y);
 
-  if(A <= 0)  return true;     // lies x/y onto the graph line ?
-
-  return false;
+  if((x_double/double(a1) + y_double/double(b1)) < 1.0) return false;
+  if((x_double/double(a2) + y_double/double(b2)) > 1.0) return false;
+  return true;
 }
 
 // --------------------------------------------------------------------------
-void GraphicLine::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
+void EllipseArc::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  if(x2 < 0) { _x1 = cx+x2; _x2 = cx; }
-  else { _x1 = cx; _x2 = cx+x2; }
-
-  if(y2 < 0) { _y1 = cy+y2; _y2 = cy; }
-  else { _y1 = cy; _y2 = cy+y2; }
+  _x1 = cx;     _y1 = cy;
+  _x2 = cx+x2;  _y2 = cy+y2;
 }
 
 // --------------------------------------------------------------------------
 // Rotates around the center.
-void GraphicLine::rotate()
+void EllipseArc::rotate()
 {
-  cx += (x2>>1) - (y2>>1);
-  cy += (x2>>1) + (y2>>1);
-
+  cy += (y2-x2) >> 1;
+  cx += (x2-y2) >> 1;
   int tmp = x2;
-  x2  =  y2;
-  y2  = -tmp;
+  x2 = y2;
+  y2 = tmp;
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
-void GraphicLine::mirrorX()
+void EllipseArc::mirrorX()
 {
-  cy +=  y2;
-  y2  = -y2;
+  // nothing to do
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
-void GraphicLine::mirrorY()
+void EllipseArc::mirrorY()
 {
-  cx +=  x2;
-  x2  = -x2;
+  // nothing to do
 }
 
 // --------------------------------------------------------------------------
 // Calls the property dialog for the painting and changes them accordingly.
 // If there were changes, it returns 'true'.
-bool GraphicLine::Dialog()
+bool EllipseArc::Dialog()
 {
   bool changed = false;
 
-  FillDialog *d = new FillDialog(QObject::tr("Edit Line Properties"), false);
+  FillDialog *d = new FillDialog(QObject::tr("Edit Arc Properties"), false);
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->StyleBox->setCurrentItem(Pen.style()-1);
@@ -283,7 +314,7 @@ bool GraphicLine::Dialog()
     Pen.setWidth(d->LineWidth->text().toUInt());
     changed = true;
   }
-  if(Pen.style()  != (d->StyleBox->currentItem()+1)) {
+  if(Pen.style()  != (Qt::PenStyle)(d->StyleBox->currentItem()+1)) {
     Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentItem()+1));
     changed = true;
   }

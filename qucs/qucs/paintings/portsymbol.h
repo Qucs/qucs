@@ -1,8 +1,8 @@
 /***************************************************************************
-                          paintings.h  -  description
+                        portsymbol.h  -  description
                              -------------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Sun Sep 5 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,19 +15,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef PAINTINGS_H
-#define PAINTINGS_H
-
-// This header file includes the header files of all paintings.
+#ifndef PORTSYMBOL_H
+#define PORTSYMBOL_H
 
 #include "painting.h"
 
-#include "rectangle.h"
-#include "ellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
-#include "graphictext.h"
-#include "portsymbol.h"
-#include "ellipsearc.h"
+
+/**
+  *@author Michael Margraf
+  */
+
+class PortSymbol : public Painting  {
+public:
+  PortSymbol(int cx_=0, int cy_=0, int number_=1);
+  ~PortSymbol();
+
+  void paintScheme(QPainter*);
+  void getCenter(int&, int&);
+  void setCenter(int, int, bool relative=false);
+
+  bool load(const QString&);
+  QString save();
+  void paint(QPainter*);
+  bool getSelected(int, int);
+  void Bounding(int&, int&, int&, int&);
+
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+
+  QString numberStr;
+};
 
 #endif

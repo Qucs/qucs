@@ -101,14 +101,9 @@ GraphicText* GraphicText::newOne()
 }
 
 // -----------------------------------------------------------------------
-bool GraphicText::load(const QString& _s)
+bool GraphicText::load(const QString& s)
 {
   bool ok;
-  QString s = _s;
-
-  if(s.at(0) != '<') return false;
-  if(s.at(s.length()-1) != '>') return false;
-  s = s.mid(1, s.length()-2);   // cut off start and end character
 
   QString n;
   n  = s.section(' ',1,1);    // cx
@@ -128,11 +123,8 @@ bool GraphicText::load(const QString& _s)
   if(!Color.isValid()) return false;
 
   n  = s.section(' ',5,5);    // Angle
-  if(n.at(0) != '"') {        // backward compatible
-    Angle = n.toInt(&ok);
-    if(!ok) return false;
-  }
-  else Angle = 0;
+  Angle = n.toInt(&ok);
+  if(!ok) return false;
 
   setCenter(cx, cy);
 
@@ -158,9 +150,9 @@ QString GraphicText::save()
   t.replace('\n', "\\n");
 
   // the 'Text' property has to be the last within the line !
-  QString s = "<Text "+QString::number(cx)+" "+QString::number(cy)+" "
+  QString s = "Text "+QString::number(cx)+" "+QString::number(cy)+" "
 		+ QString::number(Font.pointSize())+" "+Color.name()+" "
-		+ QString::number(Angle) + " \""+t+"\">";
+		+ QString::number(Angle) + " \""+t+"\"";
   return s;
 }
 
