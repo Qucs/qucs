@@ -1,3 +1,8 @@
+2004-01-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdoc.cpp (loadComponents): Added gyrator and phaseshifter
+	to the list of loadable components.
+
 2003-11-29  Stefan Jahn  <stefan@lkcc.org>
 
 	* bitmaps/Makefile.am (picdatadir): Adjusted installation path
