@@ -1,3 +1,15 @@
+2004-11-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new pictures for smith and polar diagrams
+	* some small improvments
+	* manual limits for diagrams
+
+2004-11-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* avoid to narrow grids
+	* fixed bugs in "zoom in" and equation bounding
+	* some cleaning up
+
 2004-11-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs.cpp (initView): Setting application icon on startup.

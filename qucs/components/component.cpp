@@ -213,12 +213,11 @@ void Component::paint(ViewPainter *p)
     p->Painter->setBrush(QBrush::NoBrush);
 
     newFont.setWeight(QFont::Light);
-    p->Painter->setFont(newFont);
-
     p->Painter->setPen(QPen(QPen::black,1));
     // write all text
     for(pt = Texts.first(); pt != 0; pt = Texts.next()) {
       newFont.setPointSizeFloat(p->Scale * pt->Size);
+      p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
       p->drawText(pt->s, cx+pt->x, cy+pt->y);
     }

@@ -21,9 +21,12 @@
 #include "qucs.h"
 
 #include <qdialog.h>
-#include <qpushbutton.h>
 #include <qfont.h>
-#include <qlineedit.h>
+
+class QLineEdit;
+class QVBoxLayout;
+class QPushButton;
+class QIntValidator;
 
 /**
   *@author Michael Margraf
@@ -48,6 +51,9 @@ public:
   QFont    Font;
   QPushButton *FontButton, *BGColorButton;
   QLineEdit   *undoNumEdit, *editorEdit;
+
+  QVBoxLayout   *all;
+  QIntValidator *val200;
 };
 
 #endif

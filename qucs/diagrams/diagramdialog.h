@@ -21,17 +21,19 @@
 #include "diagram.h"
 
 #include <qdialog.h>
-#include <qcombobox.h>
-#include <qlistbox.h>
-#include <qlistview.h>
-#include <qlineedit.h>
-#include <qdir.h>
-#include <qpoint.h>
 #include <qregexp.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
 
+class QLabel;
+class QListBox;
+class QLineEdit;
+class QCheckBox;
+class QListView;
+class QListViewItem;
+class QComboBox;
+class QListBoxItem;
 class QVBoxLayout;
+class QDoubleValidator;
+class QRegExpValidator;
 
 /**
   *@author Michael Margraf
@@ -39,7 +41,7 @@ class QVBoxLayout;
 
 class DiagramDialog : public QDialog  {
 Q_OBJECT
-public: 
+public:
   DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent=0,
 		const char *name=0);
   ~DiagramDialog();
@@ -65,10 +67,16 @@ public slots:
   void slotSetGridBox(int);
   void slotSetGraphStyle(int);
   void slotSetYAxis(int);
+  void slotManualX(int);
+  void slotManualY(int);
+  void slotManualZ(int);
 
 public:
   Diagram *Diag;
   QString defaultDataSet;
+
+  QDoubleValidator *ValDouble;
+  QRegExpValidator *Validator;
 
   QComboBox *ChooseData;
   QListView *ChooseVars;

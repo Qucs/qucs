@@ -44,13 +44,18 @@ Diagram::Diagram(int _cx, int _cy)
 {
   cx = _cx;  cy = _cy;
 
-  xAxis.numGraphs = ylAxis.numGraphs = yrAxis.numGraphs = 0;
+  xAxis.numGraphs = yAxis.numGraphs = zAxis.numGraphs = 0;
   xAxis.min = xAxis.low =
-  ylAxis.min = ylAxis.low = yrAxis.min = yrAxis.low = 0.0;
+  yAxis.min = yAxis.low = zAxis.min = zAxis.low = 0.0;
   xAxis.max = xAxis.up =
-  ylAxis.max = ylAxis.up = yrAxis.max = yrAxis.up = 1.0;
-  xAxis.GridOn = ylAxis.GridOn = true;
-  yrAxis.GridOn = false;
+  yAxis.max = yAxis.up = zAxis.max = zAxis.up = 1.0;
+  xAxis.GridOn = yAxis.GridOn = true;
+  zAxis.GridOn = false;
+
+  xAxis.limit_min = yAxis.limit_min = zAxis.limit_min = 0.0;
+  xAxis.limit_max = yAxis.limit_max = zAxis.limit_max = 1.0;
+  xAxis.step = yAxis.step = zAxis.step = 1.0;
+  xAxis.autoScale = yAxis.autoScale = zAxis.autoScale = true;
 
   Type = isDiagram;
   isSelected = false;
@@ -111,7 +116,7 @@ void Diagram::paint(ViewPainter *p)
     QWMatrix wm = p->Painter->worldMatrix();
     p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
     p->map(cx-x1, cy-(y2>>1), &x, &y);
-    if(ylAxis.Label.isEmpty()) {
+    if(yAxis.Label.isEmpty()) {
       // draw left y-label for all graphs ------------------------------
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         if(pg->yAxisNo != 0)  continue;
@@ -129,13 +134,13 @@ void Diagram::paint(ViewPainter *p)
     }
     else {
 	p->Painter->setPen(Qt::black);
-	s = p->Painter->fontMetrics().size(0, ylAxis.Label);
-	p->Painter->drawText(-y-(s.width()>>1), x, ylAxis.Label);
+	s = p->Painter->fontMetrics().size(0, yAxis.Label);
+	p->Painter->drawText(-y-(s.width()>>1), x, yAxis.Label);
     }
 
     p->Painter->setWorldMatrix(QWMatrix(0.0,1.0,-1.0,0.0, 0, 0));
     p->map(cx+x3, cy-(y2>>1), &x, &y);
-    if(yrAxis.Label.isEmpty()) {
+    if(zAxis.Label.isEmpty()) {
       // draw right y-label for all graphs ------------------------------
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
         if(pg->yAxisNo != 1)  continue;
@@ -153,8 +158,8 @@ void Diagram::paint(ViewPainter *p)
     }
     else {
 	p->Painter->setPen(Qt::black);
-	s = p->Painter->fontMetrics().size(0, yrAxis.Label);
-	p->Painter->drawText(y-(s.width()>>1), -x, yrAxis.Label);
+	s = p->Painter->fontMetrics().size(0, zAxis.Label);
+	p->Painter->drawText(y-(s.width()>>1), -x, zAxis.Label);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
@@ -195,6 +200,97 @@ int Diagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
+int Diagram::calcCoordinate(double* &, double* &, int*, int*, Axis*)
+{
+  return 15;
+}
+
+// ------------------------------------------------------------
+int Diagram::regionCode(int x, int y)
+{
+  int code=0;   // code for clipping
+  if(x < 0)  code |= 1;
+  else if(x > x2)  code |= 2;
+  if(y < 0)  code |= 4;
+  else if(y > y2)  code |= 8;
+  return code;
+}
+
+// ------------------------------------------------------------
+// Cohen-Sutherland clipping algorithm
+// Returns number of bytes writen in point memory.
+int Diagram::clip(int *p, int code2)
+{
+  int x, y, dx, dy, code;
+  int x_1 = *p,     y_1 = *(p+1);
+  int x_2 = *(p+2), y_2 = *(p+3);
+
+  int code1 = regionCode(x_1, y_1);
+  if((code1 | code2) == 0)  return 2;  // line completly inside ?
+
+  int z=0;
+  if(code1 != 0) if(*(p-1) != -2) { // is there already a line end flag ?
+    *(p++) = -2;
+    z++;
+  }
+  if(code1 & code2) {  // line not visible at all ?
+    *p = x_2;
+    *(p+1) = y_2;
+    return z;
+  }
+  if(code2 != 0) {
+    *(p+4) = -2;
+    *(p+5) = x_2;
+    *(p+6) = y_2;
+    z += 3;
+  }
+  z += 2;
+
+  for(;;) {
+    if((code1 | code2) == 0) break;  // line completly inside ?
+
+    if(code1)  code = code1;
+    else  code = code2;
+
+    dx = x_2 - x_1;
+    dy = y_2 - y_1;
+    if(code & 1) {
+      y = y_1 - dy * x_1 / dx;
+      x = 0;
+    }
+    else if(code & 2) {
+      y = y_1 + dy * (x2-x_1) / dx;
+      x = x2;
+    }
+    else if(code & 4) {
+      x = x_1 - dx * y_1 / dy;
+      y = 0;
+    }
+    else if(code & 8) {
+      x = x_1 + dx * (y2-y_1) / dy;
+      y = y2;
+    }
+
+    if(code == code1) {
+      x_1 = x;
+      y_1 = y;
+      code1 = regionCode(x, y);
+    }
+    else {
+      x_2 = x;
+      y_2 = y;
+      code2 = regionCode(x, y);
+    }
+  }
+
+  *p = x_1;
+  *(p+1) = y_1;
+  *(p+2) = x_2;
+  *(p+3) = y_2;
+  return z;
+}
+
+// ------------------------------------------------------------
 void Diagram::calcData(Graph *g, int valid)
 {
   if(g->Points != 0) { free(g->Points);  g->Points = 0; }
@@ -209,24 +305,32 @@ void Diagram::calcData(Graph *g, int valid)
   g->Points = p_end = p;
   p_end += Size - 5;   // limit of buffer
 
-  int i, z;
+  int dx, dy, xtmp, ytmp, tmp, i, z;
   double *px;
   double *py = g->cPointsY;
   Axis *pa;
-  if(g->yAxisNo == 0)  pa = &ylAxis;
-  else  pa = &yrAxis;
+  if(g->yAxisNo == 0)  pa = &yAxis;
+  else  pa = &zAxis;
 
   double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->Style) {
-    case 0:   // solid line
-      for(i=g->countY; i>0; i--) {
+    case 0:      // *** solid line***
+      for(i=g->countY; i>0; i--) {  // every branch of curves
 	px = g->cPointsX.getFirst()->Points;
-	for(z=g->cPointsX.getFirst()->count; z>0; z--) {
-	  calcCoordinate(*px, *py, *(py+1), p, p+1, pa);
-	  px++;
-	  py += 2;
-	  p  += 2;
+	calcCoordinate(px, py, p, p+1, pa);
+	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
+	  if(p >= p_end) {  // need to enlarge memory block ?
+	    Size += 256;
+	    tmp = p - g->Points;
+	    p = p_end = g->Points
+	      = (int*)realloc(g->Points, Size*sizeof(int));
+	    p += tmp;
+	    p_end += Size - 5;
+	  }
+	  tmp = calcCoordinate(px, py, p+2, p+3, pa);
+	  p += clip(p, tmp);  // clipping
 	}
+	if(tmp == 0)  p += 2;
 	*(p++) = -10;
       }
       *p = -100;
@@ -236,22 +340,19 @@ void Diagram::calcData(Graph *g, int valid)
     case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
   }
 
-  int dx, dy, xtmp, ytmp, tmp;
   double alpha, dist;
   int Flag;    // current state: 1=stroke, 0=space
-  for(i=g->countY; i>0; i--) {
+  for(i=g->countY; i>0; i--) {  // every branch of curves
     Flag = 1;
     dist = -Stroke;
     px = g->cPointsX.getFirst()->Points;
-    calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp, pa);
-    px++;  py += 2;
+    calcCoordinate(px, py, &xtmp, &ytmp, pa);
     *(p++) = xtmp;
     *(p++) = ytmp;
     for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {
       dx = xtmp;
       dy = ytmp;
-      calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp, pa);
-      px++;  py += 2;
+      calcCoordinate(px, py, &xtmp, &ytmp, pa);
       dx = xtmp - dx;
       dy = ytmp - dy;
       dist += sqrt(double(dx*dx + dy*dy)); // distance between points
@@ -342,28 +443,28 @@ bool Diagram::ResizeTouched(int x, int y)
 // --------------------------------------------------------------------------
 void Diagram::loadGraphData(const QString& defaultDataSet)
 {
-  ylAxis.numGraphs = yrAxis.numGraphs = 0;
-  ylAxis.min = yrAxis.min = xAxis.min =  DBL_MAX;
-  ylAxis.max = yrAxis.max = xAxis.max = -DBL_MAX;
+  yAxis.numGraphs = zAxis.numGraphs = 0;
+  yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
+  yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);  // load data, determine max/min values
 
-  if(ylAxis.min > ylAxis.max) {
-    ylAxis.min = 0.0;
-    ylAxis.max = 1.0;
+  if(yAxis.min > yAxis.max) {
+    yAxis.min = 0.0;
+    yAxis.max = 1.0;
   }
-  if(yrAxis.min > yrAxis.max) {
-    yrAxis.min = 0.0;
-    yrAxis.max = 1.0;
+  if(zAxis.min > zAxis.max) {
+    zAxis.min = 0.0;
+    zAxis.max = 1.0;
   }
   if(xAxis.min > xAxis.max) {
     xAxis.min = 0.0;
     xAxis.max = 1.0;
   }
 /*  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
-    if(ylAxis.min > yrAxis.min)  ylAxis.min = yrAxis.min;
-    if(ylAxis.max < yrAxis.max)  ylAxis.max = yrAxis.max;
+    if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
+    if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
   }*/
 
   updateGraphData();
@@ -373,8 +474,8 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
 // Calculate diagram again without reading dataset from file.
 void Diagram::recalcGraphData()
 {
-  ylAxis.min = yrAxis.min = xAxis.min =  DBL_MAX;
-  ylAxis.max = yrAxis.max = xAxis.max = -DBL_MAX;
+  yAxis.min = zAxis.min = xAxis.min =  DBL_MAX;
+  yAxis.max = zAxis.max = xAxis.max = -DBL_MAX;
 
   int z;
   double x, y, *p;
@@ -390,8 +491,8 @@ void Diagram::recalcGraphData()
     }
 
     Axis *pa;
-    if(pg->yAxisNo == 0)  pa = &ylAxis;
-    else  pa = &yrAxis;
+    if(pg->yAxisNo == 0)  pa = &yAxis;
+    else  pa = &zAxis;
     p = pg->cPointsY;
     for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
       x = *(p++);
@@ -406,17 +507,17 @@ void Diagram::recalcGraphData()
     xAxis.min = 0.0;
     xAxis.max = 1.0;
   }
-  if(ylAxis.min > ylAxis.max) {
-    ylAxis.min = 0.0;
-    ylAxis.max = 1.0;
+  if(yAxis.min > yAxis.max) {
+    yAxis.min = 0.0;
+    yAxis.max = 1.0;
   }
-  if(yrAxis.min > yrAxis.max) {
-    yrAxis.min = 0.0;
-    yrAxis.max = 1.0;
+  if(zAxis.min > zAxis.max) {
+    zAxis.min = 0.0;
+    zAxis.max = 1.0;
   }
   if((Name == "Polar") || (Name == "Smith")) {  // one axis only
-    if(ylAxis.min > yrAxis.min)  ylAxis.min = yrAxis.min;
-    if(ylAxis.max < yrAxis.max)  ylAxis.max = yrAxis.max;
+    if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
+    if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
   }
 
   updateGraphData();
@@ -550,8 +651,8 @@ bool Diagram::loadVarData(const QString& fileName)
   p = new double[2*counting]; // memory for dependent variables
   g->cPointsY = p;
   Axis *pa;
-  if(g->yAxisNo == 0)  pa = &ylAxis;   // for which axis
-  else  pa = &yrAxis;
+  if(g->yAxisNo == 0)  pa = &yAxis;   // for which axis
+  else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
 
   double x, y;
@@ -696,12 +797,29 @@ QString Diagram::save()
   else s += "0 ";
   s += GridPen.color().name() + " " + QString::number(GridPen.style());
   if(xAxis.log) s+= " 1";  else s += " 0";
-//  if(ylAxis.log) s+= "1";   else s += "0";
+//  if(yAxis.log) s+= "1";   else s += "0";
   char c = '0';
-  if(ylAxis.log)  c |= 1;
-  if(yrAxis.log)  c |= 2;
+  if(yAxis.log)  c |= 1;
+  if(zAxis.log)  c |= 2;
   s += c;
-  s += " \""+xAxis.Label+"\" \""+ylAxis.Label+"\" \""+yrAxis.Label+"\">\n";
+
+  if(xAxis.autoScale)  s+= " 1 ";
+  else  s+= " 0 ";
+  s += QString::number(xAxis.limit_min) + " ";
+  s += QString::number(xAxis.step) + " ";
+  s += QString::number(xAxis.limit_max);
+  if(yAxis.autoScale)  s+= " 1 ";
+  else  s+= " 0 ";
+  s += QString::number(yAxis.limit_min) + " ";
+  s += QString::number(yAxis.step) + " ";
+  s += QString::number(yAxis.limit_max);
+  if(zAxis.autoScale)  s+= " 1 ";
+  else  s+= " 0 ";
+  s += QString::number(zAxis.limit_min) + " ";
+  s += QString::number(zAxis.step) + " ";
+  s += QString::number(zAxis.limit_max);
+
+  s += " \""+xAxis.Label+"\" \""+yAxis.Label+"\" \""+zAxis.Label+"\">\n";
 
   for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
     s += pg->save()+"\n";
@@ -737,29 +855,79 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   y2 = n.toInt(&ok);
   if(!ok) return false;
 
-  n  = s.section(' ',5,5);    // GridOn
-  xAxis.GridOn = ylAxis.GridOn = n.at(0) != '0';
+  n = s.section(' ',5,5);    // GridOn
+  xAxis.GridOn = yAxis.GridOn = n.at(0) != '0';
 
-  n  = s.section(' ',6,6);    // color for GridPen
+  n = s.section(' ',6,6);    // color for GridPen
   QColor co;
   co.setNamedColor(n);
   GridPen.setColor(co);
   if(!GridPen.color().isValid()) return false;
 
-  n  = s.section(' ',7,7);    // line style
+  n = s.section(' ',7,7);    // line style
   GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
   if(!ok) return false;
 
   char c;
-  n  = s.section(' ',8,8);    // xlog, ylog
+  n = s.section(' ',8,8);    // xlog, ylog
   xAxis.log = n.at(0) != '0';
   c = n.at(1).latin1();
-  ylAxis.log = ((c - '0') & 1) == 1;
-  yrAxis.log = ((c - '0') & 2) == 2;
+  yAxis.log = ((c - '0') & 1) == 1;
+  zAxis.log = ((c - '0') & 2) == 2;
 
-  xAxis.Label = s.section('"',1,1);    // xLabel
-  ylAxis.Label = s.section('"',3,3);   // yLabel left
-  yrAxis.Label = s.section('"',5,5);   // yLabel right
+  n = s.section(' ',9,9);   // xAxis.autoScale
+  if(n.at(0) != '"') {      // backward compatible
+    if(n == "1")  xAxis.autoScale = true;
+    else  xAxis.autoScale = false;
+
+    n = s.section(' ',10,10);    // xAxis.limit_min
+    xAxis.limit_min = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',11,11);  // xAxis.step
+    xAxis.step = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',12,12);  // xAxis.limit_max
+    xAxis.limit_max = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',13,13);    // yAxis.autoScale
+    if(n == "1")  yAxis.autoScale = true;
+    else  yAxis.autoScale = false;
+
+    n = s.section(' ',14,14);    // yAxis.limit_min
+    yAxis.limit_min = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',15,15);    // yAxis.step
+    yAxis.step = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',16,16);    // yAxis.limit_max
+    yAxis.limit_max = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',17,17);    // zAxis.autoScale
+    if(n == "1")  zAxis.autoScale = true;
+    else  zAxis.autoScale = false;
+
+    n = s.section(' ',18,18);    // zAxis.limit_min
+    zAxis.limit_min = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',19,19);    // zAxis.step
+    zAxis.step = n.toDouble(&ok);
+    if(!ok) return false;
+
+    n = s.section(' ',20,20);    // zAxis.limit_max
+    zAxis.limit_max = n.toDouble(&ok);
+    if(!ok) return false;
+  }
+
+  xAxis.Label = s.section('"',1,1);   // xLabel
+  yAxis.Label = s.section('"',3,3);   // yLabel left
+  zAxis.Label = s.section('"',5,5);   // yLabel right
 
   Graph *pg;
   // .......................................................
@@ -797,14 +965,19 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
 }
 
 // ------------------------------------------------------------
-void Diagram::createSmithChart(Axis *yAxis, int Mode)
+void Diagram::createSmithChart(Axis *Axis, int Mode)
 {
   xAxis.low = xAxis.min;
   xAxis.up  = xAxis.max;
 
-  yAxis->low = 0.0;
-  if(yAxis->max > 1.01)  yAxis->up = 1.05*yAxis->max;
-  else  yAxis->up = 1.0;
+  Axis->low = 0.0;
+  if(fabs(Axis->min) > Axis->max)
+    Axis->max = fabs(Axis->min);  // also fit negative values
+  if(Axis->autoScale) {
+    if(Axis->max > 1.01)  Axis->up = 1.05*Axis->max;
+    else  Axis->up = 1.0;
+  }
+  else  Axis->up = Axis->limit_max;
 
   if(!xAxis.GridOn)  return;
 
@@ -818,7 +991,7 @@ void Diagram::createSmithChart(Axis *yAxis, int Mode)
   int GridY = 4;    // number of arcs with im(z)=const
 
   double im, n_cos, n_sin, real, real1, real2, root;
-  double rMAXq = yAxis->up*yAxis->up;
+  double rMAXq = Axis->up*Axis->up;
   int    theta, beta, phi, len, m, x, y;
 
   // ....................................................
@@ -828,11 +1001,11 @@ void Diagram::createSmithChart(Axis *yAxis, int Mode)
     n_sin = M_PI*double(m)/double(GridY);
     n_cos = cos(n_sin);
     n_sin = sin(n_sin);
-    im = (1-n_cos)/n_sin * pow(yAxis->up,0.7); // up^0.7 is beauty correction
-    x  = int((1-im)/yAxis->up*dx2);
-    y  = int(im/yAxis->up*x2);
+    im = (1-n_cos)/n_sin * pow(Axis->up,0.7); // up^0.7 is beauty correction
+    x  = int((1-im)/Axis->up*dx2);
+    y  = int(im/Axis->up*x2);
 
-    if(yAxis->up <= 1.0) {       // Smith chart with |r|=1
+    if(Axis->up <= 1.0) {       // Smith chart with |r|=1
       beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PI);
       if(beta<0) beta += 16*360;
       theta = 16*270-beta;
@@ -888,16 +1061,16 @@ void Diagram::createSmithChart(Axis *yAxis, int Mode)
   if(Below)  theta += 16*180;
 
   for(m=1; m<GridX; m++) {
-    im = m*(yAxis->up+1.0)/GridX - yAxis->up;
-    x  = int(im/yAxis->up*double(dx2));
-    y  = int((1.0-im)/yAxis->up*double(dx2));    // diameter
+    im = m*(Axis->up+1.0)/GridX - Axis->up;
+    x  = int(im/Axis->up*double(dx2));
+    y  = int((1.0-im)/Axis->up*double(dx2));    // diameter
 
     if(Zplane)  x += dx2;
     else  x = 0;
     if(fabs(fabs(im)-1.0) > 0.4)   // if too near to |r|=1, it looks ugly
       Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
 
-    if(yAxis->up > 1.0) {  // draw arcs on the rigth-handed side ?
+    if(Axis->up > 1.0) {  // draw arcs on the rigth-handed side ?
       im = 1.0-im;
       im = (rMAXq-1.0)/(im*(im/2.0+1.0)) - 1.0;
       if(Zplane)  x += y;
@@ -906,7 +1079,9 @@ void Diagram::createSmithChart(Axis *yAxis, int Mode)
 	Arcs.append(new Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
       else {
 	phi = int(16.0*180.0/M_PI*acos(im));
-	len = 2*(16*180-phi);
+	len = 16*180-phi;
+	if(Above && Below)  len += len;
+	else if(Below)  phi = 16*180;
 	if(!Zplane)  phi += 16*180;
 	Arcs.append(new Arc(x, dx2+(y>>1), y, y, phi, len, GridPen));
       }
@@ -915,14 +1090,14 @@ void Diagram::createSmithChart(Axis *yAxis, int Mode)
 
 
   // ....................................................
-  if(yAxis->up > 1.0) {  // draw circle with |r|=1 ?
-    x = int(x2/yAxis->up);
+  if(Axis->up > 1.0) {  // draw circle with |r|=1 ?
+    x = int(x2/Axis->up);
     Arcs.append(new Arc(dx2-(x>>1), dx2+(x>>1), x, x, beta, theta,
 			QPen(QPen::black,0)));
 
     // vertical line Re(r)=1 (visible only if |r|>1)
-    x = int(x2/yAxis->up)>>1;
-    y = int(sqrt(rMAXq-1)/yAxis->up*dx2);
+    x = int(x2/Axis->up)>>1;
+    y = int(sqrt(rMAXq-1)/Axis->up*dx2);
     if(Zplane)  x += dx2;
     else  x = dx2 - x;
     if(Above)  m = y;
@@ -931,23 +1106,23 @@ void Diagram::createSmithChart(Axis *yAxis, int Mode)
     Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
 
     if(!Below)
-      Texts.append(new Text(0, y2-4, StringNum(yAxis->up)));
+      Texts.append(new Text(0, y2-4, StringNum(Axis->up)));
     else
       Texts.append(
-	new Text(0, QucsSettings.font.pointSize()+4, StringNum(yAxis->up)));
+	new Text(0, QucsSettings.font.pointSize()+4, StringNum(Axis->up)));
   }
 
 }
 
 
 // ------------------------------------------------------------
-void Diagram::createPolarDiagram(Axis *yAxis, int Mode)
+void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 {
   xAxis.low  = xAxis.min;
   xAxis.up   = xAxis.max;
-  yAxis->low = 0.0;
-  if(fabs(yAxis->min) > yAxis->max)
-    yAxis->max = fabs(yAxis->min);  // also fit negative values
+  Axis->low = 0.0;
+  if(fabs(Axis->min) > Axis->max)
+    Axis->max = fabs(Axis->min);  // also fit negative values
 
 
   bool Above  = ((Mode & 1) == 1);  // paint upper half ?
@@ -969,24 +1144,35 @@ void Diagram::createPolarDiagram(Axis *yAxis, int Mode)
   if(!Below)  tPos = (y2>>1) + tHeight - 3;
   else  tPos = (y2>>1) - 2;
 
-  double Expo, Base;
+  int Prec;
+  char form;
+  double Expo, Base, numGrids, GridStep, zD;
   if(xAxis.GridOn) {
 
-    double numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
-    Expo = floor(log10(yAxis->max/numGrids));
-    Base = yAxis->max/numGrids/pow(10.0,Expo); // get first significant digit
-    if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
-      if(Base < 1.5) Base = 1.0;
-      else Base = 2.0;
+    if(Axis->autoScale) {  // auto-scale or user defined limits ?
+      numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
+      Expo = floor(log10(Axis->max/numGrids));
+      Base = Axis->max/numGrids/pow(10.0,Expo);// get first significant digit
+      if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
+        if(Base < 1.5) Base = 1.0;
+        else Base = 2.0;
+      }
+      else {
+        if(Base < 7.5) Base = 5.0;
+        else { Base = 1.0; Expo++; }
+      }
+      GridStep = Base * pow(10.0,Expo); // grid distance in real values
+      numGrids -= floor(numGrids - Axis->max/GridStep); // correct num errors
+      Axis->up = GridStep*numGrids;
     }
-    else {
-      if(Base < 7.5) Base = 5.0;
-      else { Base = 1.0; Expo++; }
+    else {   // no auto-scale
+      Axis->up = Axis->limit_max;
+      GridStep  = Axis->step;
+      numGrids  = Axis->limit_max / Axis->step;
     }
-    double GridStep = Base * pow(10.0,Expo); // grid distance in real values
-    numGrids -= floor(numGrids - yAxis->max/GridStep); // correct num errors
-    yAxis->up = GridStep*numGrids;
-    double zD = double(x2) / numGrids;   // grid distance in pixel
+    zD = double(x2) / numGrids;   // grid distance in pixel
+    if(fabs(log10(Axis->up)) < 3.0)  { form = 'g';  Prec = 3; }
+    else  { form = 'e';  Prec = 0; }
 
 
     double zDstep = zD;
@@ -994,11 +1180,8 @@ void Diagram::createPolarDiagram(Axis *yAxis, int Mode)
     for(i=int(numGrids); i>1; i--) {    // create all grid circles
       z = int(zD);
       GridNum += GridStep;
-      if(fabs(Expo) < 3.0)
-        Texts.append(new Text(((x2+z)>>1)-10, tPos, StringNum(GridNum)));
-      else
-        Texts.append(new Text(((x2+z)>>1)-10, tPos,
-			 StringNum(GridNum, 'e', 0)));
+      Texts.append(new Text(((x2+z)>>1)-10, tPos,
+			    StringNum(GridNum, form, Prec)));
 
       phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/zD));
       if(!Below)  tmp = beta + phi;
@@ -1008,19 +1191,24 @@ void Diagram::createPolarDiagram(Axis *yAxis, int Mode)
       zD += zDstep;
     }
   }
-  else {
-    Expo = floor(log10(yAxis->max));
-    Base = ceil(yAxis->max/pow(10.0,Expo) - 0.01);
-    yAxis->up = Base * pow(10.0,Expo);  // separate Base * 10^Expo
+  else {  // of  "if(GridOn)"
+    Expo = floor(log10(Axis->max));
+    Base = ceil(Axis->max/pow(10.0,Expo) - 0.01);
+    Axis->up = Base * pow(10.0,Expo);  // separate Base * 10^Expo
   }
 
   // create outer circle
-  if(fabs(Expo) < 3.0)
-    Texts.append(new Text(x2-8, tPos, StringNum(yAxis->up)));
+  if(fabs(log10(Axis->up)) < 3.0)
+    Texts.append(new Text(x2-8, tPos, StringNum(Axis->up)));
   else
-    Texts.append(new Text(x2-8, tPos, StringNum(yAxis->up, 'e', 0)));
+    Texts.append(new Text(x2-8, tPos, StringNum(Axis->up, 'e', 0)));
   phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/double(x2)));
   if(!Below)  tmp = phi;
   else  tmp = 0;
   Arcs.append(new Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(QPen::black,0)));
+
+  QFontMetrics  metrics(QucsSettings.font);
+  QSize r = metrics.size(0, Texts.current()->s);  // width of text
+  len = x2+r.width()-4;   // more space at the right
+  if(len > x3)  x3 = len;
 }

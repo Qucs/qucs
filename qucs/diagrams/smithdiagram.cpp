@@ -23,10 +23,12 @@
 
 SmithDiagram::SmithDiagram(int _cx, int _cy, bool ImpMode) : Diagram(_cx, _cy)
 {
-  x1 = 10;     // position of label text
+  x1 = 10;        // position of label text
   y1 = 16;
-  x2 = 200;    // initial size of diagram
+  x2 = 200;  // initial size of diagram
   y2 = 200;
+  x3 = 207;
+  y3 = 0;
   if(ImpMode)  Name = "Smith";  // with impedance circles
   else  Name = "ySmith";        // with admittance circles
 
@@ -39,11 +41,15 @@ SmithDiagram::~SmithDiagram()
 
 // ------------------------------------------------------------
 // calculate the screen coordinates for the graph data
-void SmithDiagram::calcCoordinate(double, double yr, double yi,
-				 int *px, int *py, Axis*)
+int SmithDiagram::calcCoordinate(double* &, double* &yD,
+				  int *px, int *py, Axis*)
 {
-  *px = (x2>>1)+int(yr/ylAxis.up*double(x2>>1) + 0.5);
-  *py = (y2>>1)+int(yi/ylAxis.up*double(y2>>1) + 0.5);
+  double yr = *(yD++);
+  double yi = *(yD++);
+  *px = (x2>>1)+int(yr/yAxis.up*double(x2>>1) + 0.5);
+  *py = (y2>>1)+int(yi/yAxis.up*double(y2>>1) + 0.5);
+
+  return regionCode(*px, *py);
 }
 
 
@@ -55,8 +61,8 @@ int SmithDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  if(Name.at(0) == 'y')  createSmithChart(&ylAxis, 6);
-  else  createSmithChart(&ylAxis);
+  if(Name.at(0) == 'y')  createSmithChart(&yAxis, 6);
+  else  createSmithChart(&yAxis);
 
   // outer most circle
   Arcs.append(new Arc(0, x2, x2, x2, 0, 16*360, QPen(QPen::black,0)));

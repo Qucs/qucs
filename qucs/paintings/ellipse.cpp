@@ -18,6 +18,11 @@
 #include "ellipse.h"
 #include "filldialog.h"
 
+#include <qpushbutton.h>
+#include <qlineedit.h>
+#include <qcombobox.h>
+#include <qcheckbox.h>
+
 
 Ellipse::Ellipse(bool _filled)
 {

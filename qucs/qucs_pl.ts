@@ -343,6 +343,18 @@
         <source>Limits</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stop</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>

@@ -20,13 +20,15 @@
 
 #include <qdialog.h>
 
+class QVBoxLayout;
+
 /**
   *@author Michael Margraf
   */
 
 class MessageBox : public QDialog  {
 Q_OBJECT
-public: 
+public:
 	MessageBox(const QString& Caption, const QString& Text, QWidget *parent=0, const char *name=0);
 	~MessageBox();
 
@@ -36,6 +38,9 @@ private slots:
   void slotDiscard();
   void slotDiscardAll();
   void slotCancel();
+
+private:
+  QVBoxLayout *all;
 };
 
 #endif

@@ -40,11 +40,15 @@ PSDiagram::~PSDiagram()
 }
 
 // ------------------------------------------------------------
-void PSDiagram::calcCoordinate(double, double yr, double yi,
-				  int *px, int *py, Axis* pa)
+int PSDiagram::calcCoordinate(double* &, double* &yD,
+			       int *px, int *py, Axis *pa)
 {
+  double yr = *(yD++);
+  double yi = *(yD++);
   *px = (x2>>1)+int(yr/pa->up*double(x2>>1) + 0.5);
   *py = (y2>>1)+int(yi/pa->up*double(y2>>1) + 0.5);
+
+  return regionCode(*px, *py);
 }
 
 // --------------------------------------------------------------
@@ -55,18 +59,16 @@ int PSDiagram::calcDiagram()
   Arcs.clear();
 
   if(Name == "PS") {   // if polar not in upper half -> mirror
-    createSmithChart(&ylAxis, 5);
-    createPolarDiagram(&yrAxis, 1);
+    createSmithChart(&yAxis, 5);
+    createPolarDiagram(&zAxis, 1);
   }
   else {
-    createSmithChart(&yrAxis, 3);
-    createPolarDiagram(&ylAxis, 2);
+    createSmithChart(&zAxis, 3);
+    createPolarDiagram(&yAxis, 2);
   }
 
   // x line
   Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::black,0)));
-  x3 = x2+7;
-
   return 1;
 }
 

@@ -18,6 +18,10 @@
 #include "rectangle.h"
 #include "filldialog.h"
 
+#include <qpushbutton.h>
+#include <qlineedit.h>
+#include <qcombobox.h>
+#include <qcheckbox.h>
 
 Rectangle::Rectangle(bool _filled)
 {

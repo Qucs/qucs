@@ -37,11 +37,15 @@ PolarDiagram::~PolarDiagram()
 }
 
 // ------------------------------------------------------------
-void PolarDiagram::calcCoordinate(double, double yr, double yi,
+int PolarDiagram::calcCoordinate(double* &, double* &yD,
 				  int *px, int *py, Axis*)
 {
-  *px = (x2>>1)+int(yr/ylAxis.up*double(x2>>1) + 0.5);
-  *py = (y2>>1)+int(yi/ylAxis.up*double(y2>>1) + 0.5);
+  double yr = *(yD++);
+  double yi = *(yD++);
+  *px = (x2>>1)+int(yr/yAxis.up*double(x2>>1) + 0.5);
+  *py = (y2>>1)+int(yi/yAxis.up*double(y2>>1) + 0.5);
+
+  return regionCode(*px, *py);
 }
 
 // --------------------------------------------------------------
@@ -54,7 +58,7 @@ int PolarDiagram::calcDiagram()
   // x line
   Lines.append(new Line(0, y2>>1, x2, y2>>1, GridPen));
 
-  createPolarDiagram(&ylAxis);
+  createPolarDiagram(&yAxis);
   return 1;
 }
 
