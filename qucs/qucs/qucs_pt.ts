@@ -3766,6 +3766,11 @@ Qt universal circuit simulator
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Spanish by Jose L. Redrejo Rodriguez
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>

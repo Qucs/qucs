@@ -1,3 +1,13 @@
+2004-09-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-edit/qucsedit.1: Added simple man page for qucsedit.
+
+	* qucs-help/qucshelp.1: Added simple man page for qucshelp.
+
+	* qucs-help/main.cpp (main): Trying to obtain the correct
+	language help directory by splitting e.g. 'es_MX' to use the
+	'es' directory.
+
 2004-09-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs-help/main.cpp (main): Using locale() string to check
