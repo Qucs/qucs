@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.cpp,v 1.4 2004-02-17 15:30:58 ela Exp $
+ * $Id: tline.cpp,v 1.5 2004-05-07 18:34:22 ela Exp $
  *
  */
 
@@ -45,7 +45,7 @@ void tline::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t r = (z - z0) / (z + z0);
-  complex p = polar (1, - 2.0 * M_PI * frequency * l / C);
+  complex p = polar (1, - 2.0 * M_PI * frequency * l / C0);
   complex s11 = r * (1 - p * p) / (1 - p * p * r * r);
   complex s21 = p * (1 - r * r) / (1 - p * p * r * r);
   setS (1, 1, s11);

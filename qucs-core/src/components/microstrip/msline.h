@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.3 2004-05-06 20:41:17 ela Exp $
+ * $Id: msline.h,v 1.4 2004-05-07 18:34:22 ela Exp $
  *
  */
 
@@ -30,7 +30,16 @@ class msline : public circuit
  public:
   msline ();
   void calcSP (nr_double_t);
-  nr_double_t analyseZ0 (nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t analyseZl (nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t analyseEr (nr_double_t, nr_double_t, nr_double_t);
+  nr_double_t analyseDispersion (nr_double_t, nr_double_t, nr_double_t,
+				 nr_double_t);
+
+ private:
+  nr_double_t ErEff;
+  nr_double_t ZlEff;
+  nr_double_t ErEffFreq;
+  nr_double_t ZlEffFreq;
 };
 
 #endif /* __MSLINE_H__ */
