@@ -24,5 +24,7 @@
 
 SUBDIRS = en 
 
+dist_man_MANS = qucs.1
+
 CLEANFILES = *~
 MAINTAINERCLEANFILES = Makefile.in
