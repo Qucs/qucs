@@ -52,7 +52,7 @@ MScoupled::MScoupled()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "CMS";
+  Model = "MSc";
   Name  = "MS";
 
   Props.append(new Property("Subst", "Subst1", true,

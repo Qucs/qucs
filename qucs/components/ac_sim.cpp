@@ -53,7 +53,7 @@ AC_Sim::AC_Sim()
 			QObject::tr("start frequency in Hertz")));
   Props.append(new Property("Stop", "10 GHz", true,
 			QObject::tr("stop frequency in Hertz")));
-  Props.append(new Property("Points", "20", true,
+  Props.append(new Property("Points", "19", true,
 			QObject::tr("number of simulation steps")));
 }
 

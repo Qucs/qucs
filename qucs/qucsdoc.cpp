@@ -2376,6 +2376,7 @@ bool QucsDoc::undo()
   else  App->undo->setEnabled(false);
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
+  setChanged(true, false);
 
   return true;
 }
@@ -2393,6 +2394,89 @@ bool QucsDoc::redo()
   else  App->undo->setEnabled(false);
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
+  setChanged(true, false);
 
   return true;
+}
+
+// ---------------------------------------------------
+void QucsDoc::alignTop()
+{
+  int x1, y1, x2, y2;
+  int ymin = INT_MAX;
+
+  // find upper most selected diagram
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected) {
+      if(pd->cy-pd->y2 < ymin)  ymin = pd->cy - pd->y2;
+    }
+  // find upper most selected painting
+/*  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
+    if(pp->isSelected) {
+      pp->Bounding(x1, y1, x2, y2);
+      if(y1 < ymin)  ymin = y1;
+    }*/
+
+
+  // align all selected diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected)
+      pd->cy = ymin + pd->y2;
+  // align all selected paintings
+/*  for(Painting *pp = Paints.last(); pp != 0; pp = Paints.prev())
+    if(pp->isSelected) {
+      pp->Bounding(x1, y1, x2, y2);
+//      pp->setCenter(ymin-y1, true);
+    }*/
+}
+
+// ---------------------------------------------------
+void QucsDoc::alignBottom()
+{
+  int ymax = INT_MIN;
+
+  // find lower most selected diagram
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected) {
+      if(pd->cy > ymax)  ymax = pd->cy;
+    }
+
+  // align all selected diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected)
+      pd->cy = ymax;
+}
+
+// ---------------------------------------------------
+void QucsDoc::alignLeft()
+{
+  int xmin = INT_MAX;
+
+  // find left most selected diagram
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected) {
+      if(pd->cx < xmin)  xmin = pd->cx;
+    }
+
+  // align all selected diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected)
+      pd->cx = xmin;
+}
+
+// ---------------------------------------------------
+void QucsDoc::alignRight()
+{
+  int xmax = INT_MIN;
+
+  // find right most selected diagram
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected) {
+      if(pd->cx+pd->x2 > xmax)  xmax = pd->cx + pd->x2;
+    }
+
+  // align all selected diagrams
+  for(Diagram *pd = Diags.last(); pd != 0; pd = Diags.prev())
+    if(pd->isSelected)
+      pd->cx = xmax - pd->x2;
 }

@@ -78,6 +78,8 @@ void Marker::initText(int n)
     }
     py += 2;
   }
+  if(dmin == INT_MAX)
+    n = (n - n % pD->count) + nn - 1; // take last position
 
   // independent variables
   nn = n;
@@ -123,16 +125,20 @@ void Marker::createText()
     VarPos[nVarPos++] = 0.0;   // fill up VarPos
 
   // independent variables
-  int n = 0, m = 1;
+  int n = 0, m = 1, i;
   DataX *pD;
   nVarPos = 0;
   for(pD = pGraph->cPointsX.first(); pD!=0; pD = pGraph->cPointsX.next()) {
     pp = pD->Points;
     v  = VarPos[nVarPos];
-    for(int i=pD->count; i>0; i--) {  // find appropiate marker position
+    for(i=pD->count; i>0; i--) {  // find appropiate marker position
       if(*pp >= v) break;
       pp++;
       n += m;
+    }
+    if(i == 0) {	// takelast point ?
+      pp--;
+      n -= m;
     }
 
     m *= pD->count;
