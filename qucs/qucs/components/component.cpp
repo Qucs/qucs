@@ -438,6 +438,7 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 }
 
   int z=0;
+  unsigned int counts = s.contains('"') >> 1;
   // load all properties
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
     z++;
@@ -448,16 +449,19 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
         Props.remove();    // remove if allocated in vain
       return true;
     }
+
+    z++;
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1,1);
       // allocate memory for a new property (e.g. for equations)
-      Props.append(new Property("y", "1", true));
-      Props.prev();
+      if(Props.count() < counts) {
+	Props.insert(z >> 1, new Property("y", "1", true));
+	Props.prev();
+      }
     }
     p1->Value = n;
 
-    z++;
     n  = s.section('"',z,z);    // display
     if(n.toInt(&ok) == 1) p1->display = true;
     else p1->display = false;
@@ -544,6 +548,7 @@ Component* getComponentFromName(QString& Line)
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
 	else if(cstr == "JT") c = new BJT();
+	else if(cstr == "JTsub") c = new BJTsub();
 	break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
         break;
@@ -555,6 +560,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "CROSS") c = new MScross();
 	else if(cstr == "MBEND") c = new MSmbend();
 	else if(cstr == "OPEN") c = new MSopen();
+	else if(cstr == "GAP") c = new MSgap();
 	break;
   case 'E' : if(cstr == "qn") c = new Equation();
         break;

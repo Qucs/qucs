@@ -1546,6 +1546,26 @@ Błędny początek linii!</translation>
         <source>number of simulation steps</source>
         <translation>liczba kroków symulacji</translation>
     </message>
+    <message>
+        <source>npn bipolar junction transistor with substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of the line 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of the line 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
