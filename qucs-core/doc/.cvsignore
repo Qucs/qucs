@@ -10,7 +10,7 @@ Makefile.in
 *.dvi
 *.brf
 *.out
-*.pdf
+*.ps
 [a-z]*.eps
 Sparam.eps
 IEEEtran.bst
