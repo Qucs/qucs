@@ -20,26 +20,100 @@
 #endif
 
 #include <qapplication.h>
-#include <qfont.h>
 #include <qstring.h>
 #include <qtextcodec.h>
 #include <qtranslator.h>
+#include <qfile.h>
+#include <qtextstream.h>
+#include <qmessagebox.h>
 
 #include "qucs.h"
+#include "main.h"
+
+
+
+tQucsSettings QucsSettings
+    = {0, 0, 600, 400, QFont("helvetica", 12), QColor(255, 250, 225)};
+
+// #########################################################################
+// Loads the settings file and stores the settings.
+bool loadSettings()
+{
+  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
+  if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
+
+  QTextStream stream(&file);
+  QString Line, Setting;
+
+  bool ok;
+  while(!stream.atEnd()) {
+    Line = stream.readLine();
+    Setting = Line.section('=',0,0);
+    Line    = Line.section('=',1,1);
+    if(Setting == "Position") {
+	QucsSettings.x = Line.section(",",0,0).toInt(&ok);
+	QucsSettings.y = Line.section(",",1,1).toInt(&ok); }
+    else if(Setting == "Size") {
+	QucsSettings.dx = Line.section(",",0,0).toInt(&ok);
+	QucsSettings.dy = Line.section(",",1,1).toInt(&ok); }
+    else if(Setting == "Font") {
+	QucsSettings.font.fromString(Line); }
+    else if(Setting == "BGColor") {
+	QucsSettings.BGColor.setNamedColor(Line);
+	if(!QucsSettings.BGColor.isValid())
+	  QucsSettings.BGColor.setRgb(255, 250, 225); }
+  }
+
+  file.close();
+  return true;
+}
+
+// #########################################################################
+// Saves the settings in the settings file.
+bool saveSettings(QucsApp *qucs)
+{
+  QFile file(QDir::homeDirPath()+"/.qucs/qucsrc");
+  if(!file.open(IO_WriteOnly)) {    // settings file cannot be created
+    QMessageBox::warning(0, QObject::tr("Warning"),
+			QObject::tr("Cannot save settings !"));
+    return false;
+  }
+
+  QString Line;
+  QTextStream stream(&file);
+
+  stream << "Settings file, Qucs " PACKAGE_VERSION "\n"
+    << "Position=" << qucs->x() << "," << qucs->y() << "\n"
+    << "Size=" << qucs->width() << "," << qucs->height() << "\n"
+    << "Font=" << QucsSettings.font.toString() << "\n"
+    << "BGColor=" << qucs->view->viewport()->paletteBackgroundColor().name()
+    << "\n";
+  file.close();
+  return true;
+}
+
+// #########################################################################
+// ##########                                                     ##########
+// ##########                  Program Start                      ##########
+// ##########                                                     ##########
+// #########################################################################
 
 int main(int argc, char *argv[])
 {
+  loadSettings();
+
   QApplication a(argc, argv);
-  a.setFont(QFont("helvetica", 12));
+  a.setFont(QucsSettings.font);
+
   QTranslator tor( 0 );
-  // set the location where your .qm files are in load() below as the last parameter instead of "."
-  // for development, use "/" to use the english original as
-  // .qm files are stored in the base project directory.
   tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
   a.installTranslator( &tor );
-    
-  QucsApp *qucs=new QucsApp();
+
+  QucsApp *qucs = new QucsApp(&QucsSettings);
   a.setMainWidget(qucs);
   qucs->show();
-  return a.exec();
+  int result = a.exec();
+
+  saveSettings(qucs);
+  return result;
 }
