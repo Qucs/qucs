@@ -2649,6 +2649,15 @@ Czy chcesz kontynuować ?</translation>
         <source>Edit Schematic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This will delete the files
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>permanently! Continue ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
