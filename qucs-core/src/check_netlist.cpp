@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.42 2004-08-15 12:25:38 ela Exp $
+ * $Id: check_netlist.cpp,v 1.43 2004-08-16 10:29:56 ela Exp $
  *
  */
 
@@ -305,6 +305,7 @@ struct define_t definition_available[] =
       { "Fb", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Type", PROP_STR, { PROP_NO_VAL, "npn" }, PROP_NO_RANGE },
+      { "Ptf", PROP_REAL, { 0, PROP_NO_STR }, { -180, +180 } },
       PROP_NO_PROP }
   },
   /* fet: level 1 */

@@ -2186,7 +2186,7 @@ According to Scott W. Wedge and David B. Rutledge \cite{Wedge} the
 transformations between these representations write as follows.
 
 \begin{center}
-\setlength{\fboxsep}{4pt}
+\setlength{\fboxsep}{3pt}
 \begin{tabular}{|r|c|c|c|}
 \hline
 &
@@ -4892,6 +4892,7 @@ Tf & $T_F$ & ideal forward transit time & $\second$ & $0.0$\\
 Xtf & $X_{TF}$ & coefficient of bias-dependence for Tf & & $0.0$\\
 Vtf & $V_{TF}$ & voltage dependence of Tf on base-collector voltage & $\volt$ & $\infty$\\
 Itf & $I_{TF}$ & high-current effect on Tf & $\ampere$ & $0.0$\\
+Ptf & $\varphi_{TF}$ & excess phase at the frequency $1/(2\pi T_F)$ & $\degree$ & $0.0$\\
 Tr & $T_R$ & ideal reverse transit time & $\second$ & $0.0$\\
 Kf & $K_F$ & flicker noise coefficient & & $0.0$\\
 Af & $A_F$ & flicker noise exponent & & $1.0$\\
@@ -5225,6 +5226,14 @@ C_{BE_{diff}} = \dfrac{\partial Q_{BE}}{\partial V_{BE}} = \dfrac{1}{Q_B}\cdot \
 The base-collector diffusion capacitance writes as follows:
 \begin{equation}
 C_{BC_{diff}} = \dfrac{\partial Q_{BC}}{\partial V_{BC}} = T_{R} \cdot g_{IR}
+\end{equation}
+
+To take the excess phase parameter $\varphi_{TF}$ into account the
+forward transconductance is going to be a complex quantity.
+\begin{equation}
+g_{mf} = g_{mf}\cdot e^{-j\varphi_{ex}}
+\;\;\;\; \textrm{ with } \;\;\;\;
+\varphi_{ex} = \left(\dfrac{\pi}{180}\cdot\varphi_{TF}\right)\cdot T_F\cdot 2\pi f
 \end{equation}
 
 With these calculations made it is now possible to define the small

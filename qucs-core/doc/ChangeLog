@@ -1,3 +1,8 @@
+2004-08-16  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
+
+	* technical.tex (subsection{Small signal model}): Documented
+	excess phase parameter of BJT model.
+
 2004-08-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Jacobi method}): Documented
