@@ -84,9 +84,12 @@ enum ElementType {isDummy = 0,
 		  isComponent = 0x0010, isGraph = 0x0020, isNode = 0x0040,
 		  isMarker = 0x0080, isWire = 0x0100,
 		  isPainting = 0x2000, isPaintingResize = 0x2001,
+
+		  isLabel = 0x4000,
 		  isHWireLabel = 0x4002, isVWireLabel  = 0x4004,
 		  isNodeLabel  = 0x4008, isMovingLabel = 0x4010,
 		  isHMovingLabel = 0x4020, isVMovingLabel = 0x4040,
+
 		  isDiagram = 0x8000, isDiagramResize = 0x8001,
 		  isDiagramScroll = 0x8002};
 

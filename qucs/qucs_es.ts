@@ -2376,6 +2376,14 @@ Use:  qucsedit [-r] archivo
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>no variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -4206,7 +4214,7 @@ Simulador universal de circuitos Qt
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation>Italiano por Giorgio Luparia</translation>
+        <translation type="obsolete">Italiano por Giorgio Luparia</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
@@ -4234,6 +4242,15 @@ Mueve la propiedad texto de los componentes</translation>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hungarian by Bus Jozsef</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

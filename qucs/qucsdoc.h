@@ -104,7 +104,7 @@ public:
   bool  aligning(int);
   bool  distribHoriz();
   bool  distribVert();
-  int   elementsOnGrid();
+  bool  elementsOnGrid();
   void  switchPaintMode();
 
   QString copySelected(bool);
