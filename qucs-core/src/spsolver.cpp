@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.22 2004/07/27 16:43:58 ela Exp $
+ * $Id: spsolver.cpp,v 1.23 2004/07/28 17:09:44 ela Exp $
  *
  */
 
@@ -51,6 +51,8 @@ using namespace std;
 #include "spsolver.h"
 #include "components/constants.h"
 #include "components/component_id.h"
+
+#define TINYS 1.235e-12 // 'tiny' value for singularities
 
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
@@ -89,6 +91,17 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
   // interconnected port numbers
   int k = n1->getPort (), l = n2->getPort ();
 
+  // denominator needs to be calculated only once
+  complex d = (1.0 - s->getS (k, l)) * (1.0 - s->getS (l, k)) -
+    s->getS (k, k) * s->getS (l, l);
+
+  // avoid singularity when two full reflective ports are interconnected
+  nr_double_t tiny1 = (d == 0) ? 1.0 - TINYS : 1.0;
+  nr_double_t tiny2 = tiny1 * tiny1;
+  nr_double_t tiny3 = tiny1 * tiny2;
+  d = (1.0 - s->getS (k, l) * tiny1) * (1.0 - s->getS (l, k) * tiny1) -
+    s->getS (k, k) * s->getS (l, l) * tiny2;
+
   int j2; // column index for resulting matrix
   int i2; // row index for resulting matrix
   int j1; // column index for S matrix
@@ -113,12 +126,10 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
       // compute S'ij
       p = s->getS (i1, j1);
       p += 
-	(s->getS (k, j1) * s->getS (i1, l) * (1.0 - s->getS (l, k)) + 
-	 s->getS (l, j1) * s->getS (i1, k) * (1.0 - s->getS (k, l)) + 
-	 s->getS (k, j1) * s->getS (l, l) * s->getS (i1, k) +
-	 s->getS (l, j1) * s->getS (k, k) * s->getS (i1, l)) / 
-	((1.0 - s->getS (k, l)) * (1.0 - s->getS (l, k)) -
-	 s->getS (k, k) * s->getS (l, l));
+	(s->getS (k, j1) * s->getS (i1, l) * (1.0 - s->getS (l, k)) * tiny3 + 
+	 s->getS (l, j1) * s->getS (i1, k) * (1.0 - s->getS (k, l)) * tiny3 + 
+	 s->getS (k, j1) * s->getS (l, l) * s->getS (i1, k) * tiny3 +
+	 s->getS (l, j1) * s->getS (k, k) * s->getS (i1, l) * tiny3) / d;
       result->setS (i2++, j2, p);
     }
 
@@ -144,7 +155,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   complex d = 1.0 - s->getS (k, k) * t->getS (l, l);
 
   // avoid singularity when two full reflective ports are connected
-  nr_double_t tiny1 = (d == 0) ? 1.0 - 1.235e-12 : 1.0;
+  nr_double_t tiny1 = (d == 0) ? 1.0 - TINYS : 1.0;
   nr_double_t tiny2 = tiny1 * tiny1;
   nr_double_t tiny3 = tiny1 * tiny2;
   d = 1.0 - s->getS (k, k) * t->getS (l, l) * tiny2;
@@ -241,9 +252,14 @@ void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
   int k = n1->getPort (), l = n2->getPort ();
 
   // denominator needs to be calculated only once
-  complex t = 
-    (1.0 - c->getS (k, l)) * (1.0 - c->getS (l, k)) - 
+  complex t = (1.0 - c->getS (k, l)) * (1.0 - c->getS (l, k)) - 
     c->getS (k, k) * c->getS (l, l);
+
+  // avoid singularity when two full reflective ports are interconnected
+  nr_double_t tiny1 = (t == 0) ? 1.0 - TINYS : 1.0;
+  nr_double_t tiny2 = tiny1 * tiny1;
+  t = (1.0 - c->getS (k, l) * tiny1) * (1.0 - c->getS (l, k) * tiny1) - 
+    c->getS (k, k) * c->getS (l, l) * tiny2;
 
   int j2; // column index for resulting matrix
   int i2; // row index for resulting matrix
@@ -264,13 +280,13 @@ void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
       if (i1 == k || i1 == l) continue;
 
       k1 = (c->getS (i1, l) * (1.0 - c->getS (l, k)) +
-	    c->getS (l, l) * c->getS (i1, k)) / t;
+	    c->getS (l, l) * c->getS (i1, k)) * tiny2 / t;
       k2 = (c->getS (i1, k) * (1.0 - c->getS (k, l)) +
-	    c->getS (k, k) * c->getS (i1, l)) / t;
+	    c->getS (k, k) * c->getS (i1, l)) * tiny2 / t;
       k3 = (c->getS (j1, l) * (1.0 - c->getS (l, k)) +
-	    c->getS (l, l) * c->getS (j1, k)) / t;
+	    c->getS (l, l) * c->getS (j1, k)) * tiny2 / t;
       k4 = (c->getS (j1, k) * (1.0 - c->getS (k, l)) +
-	    c->getS (k, k) * c->getS (j1, l)) / t;
+	    c->getS (k, k) * c->getS (j1, l)) * tiny2 / t;
 
       p =
 	c->getN (i1, j1) + c->getN (k, j1) * k1 + c->getN (l, j1) * k2 +
@@ -306,7 +322,7 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
   complex t = 1.0 - c->getS (k, k) * d->getS (l, l);
 
   // avoid singularity when two full reflective ports are connected
-  nr_double_t tiny1 = (t == 0) ? 1.0 - 1.235e-12 : 1.0;
+  nr_double_t tiny1 = (t == 0) ? 1.0 - TINYS : 1.0;
   nr_double_t tiny2 = tiny1 * tiny1;
   nr_double_t tiny3 = tiny1 * tiny2;
   nr_double_t tiny4 = tiny1 * tiny3;

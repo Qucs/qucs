@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.h,v 1.5 2004/07/26 22:07:29 ela Exp $
+ * $Id: bjt.h,v 1.6 2004/07/28 17:09:44 ela Exp $
  *
  */
 
@@ -32,6 +32,7 @@ class bjt : public circuit
  public:
   bjt ();
   void calcSP (nr_double_t);
+  void calcNoise (nr_double_t);
   void initSP (spsolver *);
   void calcDC (void);
   void initDC (dcsolver *);
@@ -45,7 +46,7 @@ class bjt : public circuit
   circuit * rb;
   circuit * cbcx;
   nr_double_t dQbdUbe, dQbdUbc, If, Qb;
-  nr_double_t gbei, gben, gbci, gbcn, gitf, gitr, gif, gir, Rbb;
+  nr_double_t gbei, gben, gbci, gbcn, gitf, gitr, gif, gir, Rbb, Ibe, It;
   net * subnet;
   int enabled;
 };

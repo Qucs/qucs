@@ -59,7 +59,7 @@ unfixed) have a look at the file BUGS.
 	- Optimize reduce by searching for a connection that will result 
 	  in the new subnetwork with the smallest number of s-parameter
 	  to calculate.
-- Avoid both types of singularities of s-parameter analysis.
+	- Avoid both types of singularities of s-parameter analysis.
 	- Insert open node points if necessary.
 	- Make dedicated signal ports.
 	- Implement 4-port voltage controlled current source (VCCS).
