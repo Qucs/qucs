@@ -781,7 +781,7 @@ denom = T_1^2+T_2^2+T_1^2\cdot T_2^2
 \begin{eqnarray}
 S_{11} = S_{66} = \frac{T_2^2}{denom}  &  \qquad S_{16} = S_{61} = 1-S_{11} \\
 S_{44} = S_{55} = \frac{T_1^2}{denom}  &  \qquad S_{45} = S_{54} = 1-S_{44} \\
-S_{22} = S_{33} = \frac{T_1^2\cdot T_2^2}{denom}  &  \qquad S_{23} = S_{32} = 1-S_{22} \\
+S_{22} = S_{33} = \frac{T_1^2\cdot T_2^2}{denom}  &  \qquad S_{23} = S_{32} = 1-S_{22}
 \end{eqnarray}
 \begin{equation}
 S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
@@ -812,10 +812,10 @@ The scattering parameters of an ideal attenuator with (power) attenuation $L$
 (loss) (or power gain $G=1/L$) in reference to the impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
-r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
+r = \frac{Z_{ref}-Z_0}{Z_{ref}+Z_0}
 \end{equation}
 \begin{equation}
-S_{11} = S_{22} = \frac{r\cdot(1-L)}{L-r^2} = \frac{r\cdot(G-1)}{1-r^2\cdot G}
+S_{11} = S_{22} = \frac{r\cdot(L-1)}{L-r^2} = \frac{r\cdot(1-G)}{1-r^2\cdot G}
 \end{equation}
 \begin{equation}
 S_{12} = S_{21} = \frac{\sqrt{L}\cdot(1-r^2)}{L-r^2} = \frac{\sqrt{G}\cdot(1-r^2)}{1-r^2\cdot G}
@@ -889,10 +889,10 @@ The scattering parameters of an ideal phase shifter with phase shift
 $\phi$ and reference impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
-r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
+r = \frac{Z_{ref}-Z_0}{Z_{ref}+Z_0}
 \end{equation}
 \begin{equation}
-S_{11} = S_{22} = \frac{r\cdot\left(\exp(j\cdot 2\phi)-1\right)}{1-r^2\cdot\exp(j\cdot 2\phi)}
+S_{11} = S_{22} = \frac{r\cdot\left(1-\exp(j\cdot 2\phi)\right)}{1-r^2\cdot\exp(j\cdot 2\phi)}
 \end{equation}
 \begin{equation}
 S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp(j\cdot\phi)}{1-r^2\cdot\exp(j\cdot 2\phi)}
