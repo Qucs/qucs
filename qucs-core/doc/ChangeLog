@@ -1,3 +1,12 @@
+2004-09-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Inductor}): Small section
+	about the accompanied inductor model for transient analysis
+	added.
+
+	* technical.tex (subsubsection{Adams-Bashford}): Documented
+	Adams-Bashford and Adams-Moulton integration formulas.
+
 2004-09-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Capacitor}): Some more

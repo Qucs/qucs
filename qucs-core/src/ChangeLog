@@ -1,3 +1,11 @@
+2004-09-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.cpp: Implemented Adams-Moulton (corrector)
+	integration method and computation of Adams-Bashford (predictor)
+	coefficients.
+	(integratorType): Using now numerical identifiers for the
+	integration methods.  Changed all callers.
+
 2004-09-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Just enabled the timestep algorithm... seems

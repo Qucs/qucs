@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.54 2004-09-16 10:15:09 ela Exp $
+ * $Id: check_netlist.cpp,v 1.55 2004-09-19 10:31:44 ela Exp $
  *
  */
 
@@ -669,7 +669,7 @@ static struct special_t checker_specials[] = {
   { "DC",     "saveAll",     { "yes", "no", NULL } },
   { "TR",     "Type",        { "lin", "log", NULL } },
   { "TR",     "IntegrationMethod",
-    { "Euler", "Trapezoidal", "Gear", NULL } },
+    { "Euler", "Trapezoidal", "Gear", "AdamsMoulton", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },

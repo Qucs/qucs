@@ -4764,16 +4764,20 @@ x^{n+1} = x(t^{n+1})
 \end{equation}
 
 This can be achieved by the following equation system
-\begin{align}
+\begin{equation}
+\begin{split}
+\label{eq:MultiStepSys}
 \sum^p_{i=0} a_i = 1\\
 \sum^p_{i=1} (-i)^j a_i + j \sum^p_{i=-1} (-i)^{j-1} b_i = 1 & \textrm{ for } j = 1\ldots k
-\end{align}
+\end{split}
+\end{equation}
 
 \subsubsection{Gear}
 %\addcontentsline{toc}{subsubsection}{Gear}
 
-The Gear formulae have great importance within the multi-step
-integration methods used in transient analysis programs.  The conditions
+The Gear formulae (also called backward differentiation formulae) have
+great importance within the multi-step integration methods used in
+transient analysis programs.  The conditions
 \begin{equation}
 p = k - 1
 \;\;\;\; \textrm{ and } \;\;\;\;
@@ -4783,13 +4787,13 @@ b_0 = b_1 = \ldots = b_{k-1} = 0
 due to the following equation system
 \begin{equation}
 \label{eq:GearCoeff}
-\begin{bmatrix}
-0 & 1 & 1 & 1 & 1\\
-1 & 0 & -1 & -2 & -3\\
-2 & 0 & 1 & 4 & 9 \\
+\left[\begin{array}{lrrrr}
+0 & 1 &  1 &  1 &   1\\
+1 & 0 & -1 & -2 &  -3\\
+2 & 0 &  1 &  4 &   9\\
 3 & 0 & -1 & -8 & -27\\
-4 & 0 & 1 & 16 & 81\\
-\end{bmatrix}
+4 & 0 &  1 & 16 &  81\\
+\end{array}\right]
 \cdot
 \begin{bmatrix}
 b_{-1}\\
@@ -4828,8 +4832,116 @@ Gear's method of second order.
 \subsubsection{Adams-Bashford}
 %\addcontentsline{toc}{subsubsection}{Adams-Bashford}
 
+The Adams-Bashford algorithm is an explicit multi-step integration
+method whence
+\begin{equation}
+p = k - 1
+\;\;\;\; \textrm{ and } \;\;\;\;
+a_1 = a_2 = \ldots = a_{k-1} = 0
+\;\;\;\; \textrm{ and } \;\;\;\;
+b_{-1} = 0
+\end{equation}
+
+is set to satisfy the equation system \eqref{eq:MultiStepSys}.  The
+equation system of the Adams-Bashford coefficients of order 4 is as
+follows.
+\begin{equation}
+\left[\begin{array}{lrrrr}
+1 & 0 &  0 &   0 &    0\\
+0 & 1 &  1 &   1 &    1\\
+0 & 0 & -2 &  -4 &   -6\\
+0 & 0 &  3 &  12 &   27\\
+0 & 0 & -4 & -32 & -108\\
+\end{array}\right]
+\cdot
+\begin{bmatrix}
+a_0\\
+b_0\\
+b_1\\
+b_2\\
+b_3\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\\
+\end{bmatrix}
+\end{equation}
+
+This equation system results in the following integration formula.
+\begin{equation}
+\begin{split}
+x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{0}\cdot f^{n} + h\cdot b_{1}\cdot f^{n-1} + h\cdot b_{2}\cdot f^{n-2} + h\cdot b_{3}\cdot f^{n-3}\\
+&= x^{n} + h\cdot \dfrac{55}{24}\cdot f^{n} - h\cdot \dfrac{59}{24}\cdot f^{n-1} + h\cdot \dfrac{37}{24}\cdot f^{n-2} - h\cdot \dfrac{9}{24}\cdot f^{n-3}\\
+\end{split}
+\end{equation}
+
+The Adams-Bashford formula of order 1 yields the backward Euler
+integration method.
+
+\subsubsection{Adams-Moulton}
+%\addcontentsline{toc}{subsubsection}{Adams-Moulton}
+
+The Adams-Moulton algorithm is an implicit multi-step integration
+method whence
+\begin{equation}
+p = k - 2
+\;\;\;\; \textrm{ and } \;\;\;\;
+a_1 = a_2 = \ldots = a_{k-2} = 0
+\end{equation}
+
+is set to satisfy the equation system \eqref{eq:MultiStepSys}.  The
+equation system of the Adams-Moulton coefficients of order 4 is as
+follows.
+\begin{equation}
+\left[\begin{array}{lrrrr}
+1 & 0 &  0 &   0 &    0\\
+0 & 1 &  1 &   1 &    1\\
+0 & 2 &  0 &  -2 &   -4\\
+0 & 3 &  0 &   3 &   12\\
+0 & 4 &  0 &  -4 &  -32\\
+\end{array}\right]
+\cdot
+\begin{bmatrix}
+a_0\\
+b_{-1}\\
+b_0\\
+b_1\\
+b_2\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\\
+\end{bmatrix}
+\end{equation}
+
+This equation system results in the following integration formula.
+\begin{equation}
+\label{eq:MoultonInt}
+\begin{split}
+x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{-1}\cdot f^{n+1} + h\cdot b_{0}\cdot f^{n} + h\cdot b_{1}\cdot f^{n-1} + h\cdot b_{2}\cdot f^{n-2}\\
+&= x^{n} + h\cdot \dfrac{9}{24}\cdot f^{n+1} + h\cdot \dfrac{19}{24}\cdot f^{n} - h\cdot \dfrac{5}{24}\cdot f^{n-1} + h\cdot \dfrac{1}{24}\cdot f^{n-2}\\
+\end{split}
+\end{equation}
+
+The Adams-Moulton formula of order 1 yields the forward Euler
+integration method and the formula of order 2 yields the trapezoidal
+rule.
+
 \subsection{Energy-storage components}
 %\addcontentsline{toc}{subsection}{Energy-storage components}
+
+As already mentioned it is essential for the transient analysis to
+consider the energy storing effects of components.  The following
+section describes how the modified nodal analysis can be used to take
+this into account.
 
 \subsubsection{Capacitor}
 %\addcontentsline{toc}{subsubsection}{Capacitor}
@@ -4845,13 +4957,15 @@ With
 \dfrac{I_C(V, t)}{C} = \dfrac{d V_C}{d t} = f(x,t)
 \end{equation}
 
-the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt}
-and \eqref{eq:GearInt} can be applied to the problem.  Rewriting them
-in an explicit form regarding the next iteration current results in
+the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt},
+\eqref{eq:GearInt} and \eqref{eq:MoultonInt} can be applied to the
+problem.  Rewriting them in an explicit form regarding the next
+integration current results in
 \begin{align}
 I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n}\\
 I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n\\
-I_C^{n+1} &= \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n+1} - \dfrac{a_1\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{a_2\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-1} - \ldots - \dfrac{a_{k-1}\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-k+1} 
+I_C^{n+1} &= \dfrac{C}{b_{-1}\cdot h^{n}} V_C^{n+1} - \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{a_1\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-1} - \ldots - \dfrac{a_{k-1}\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-k+1}\\
+I_C^{n+1} &= \underbrace{\dfrac{C}{b_{-1}\cdot h^{n}}}_{g_{eq}} V_C^{n+1} \underbrace{- \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{b_0}{b_{-1}} I_C^n - \dfrac{b_1}{b_{-1}} I_C^{n-1} - \ldots - \dfrac{b_{k-2}}{b_{-1}} I_C^{n-k+2}}_{I_{eq}}
 \end{align}
 
 Each of these equations can be rewritten as
@@ -4859,10 +4973,11 @@ Each of these equations can be rewritten as
 I_C^{n+1} = g_{eq}\cdot V_C^{n+1} + I_{eq}
 \end{equation}
 
-which leads to the following companion model
+which leads to the following companion model representing a current
+source with its accompanied internal resistance.
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=0.3\linewidth]{transcap}
+\includegraphics[width=0.35\linewidth]{transcap}
 \end{center}
 \caption{companion equivalent circuit of a capacitor during transient analysis}
 \end{figure}
@@ -4882,10 +4997,80 @@ V_2^{n+1}\\
 \end{bmatrix}
 =
 \begin{bmatrix}
-+I_C^{n+1}\\
--I_C^{n+1}\\
+-I_{eq}\\
++I_{eq}\\
 \end{bmatrix}
 \end{equation}
+
+\subsubsection{Inductor}
+%\addcontentsline{toc}{subsubsection}{Inductor}
+
+The relation between current and voltage in terms of a differential
+equation for an ideal inductor can be written as
+\begin{equation}
+V_L(t) = L\cdot \dfrac{d I_L}{d t}
+\end{equation}
+
+With
+\begin{equation}
+\dfrac{V_L(I, t)}{L} = \dfrac{d I_L}{d t} = f(x,t)
+\end{equation}
+
+the discussed integration formulas \eqref{eq:BEInt}, \eqref{eq:TRInt},
+\eqref{eq:GearInt} and \eqref{eq:MoultonInt} can be applied to the
+problem.  Rewriting them in an explicit form regarding the next
+integration voltage results in
+\begin{align}
+V_L^{n+1} &= \dfrac{L}{h^{n}} I_L^{n+1} - \dfrac{L}{h^{n}} I_L^{n}\\
+V_L^{n+1} &= \dfrac{2L}{h^{n}} I_L^{n+1} - \dfrac{2L}{h^{n}} I_L^{n} - V_L^n\\
+V_L^{n+1} &= \dfrac{L}{b_{-1}\cdot h^{n}} I_L^{n+1} - \dfrac{a_0\cdot L}{b_{-1}\cdot h^{n}} I_L^{n} - \dfrac{a_1\cdot L}{b_{-1}\cdot h^{n}} I_L^{n-1} - \ldots - \dfrac{a_{k-1}\cdot L}{b_{-1}\cdot h^{n}} I_L^{n-k+1}\\
+V_L^{n+1} &= \underbrace{\dfrac{L}{b_{-1}\cdot h^{n}}}_{r_{eq}} I_L^{n+1} \underbrace{- \dfrac{a_0\cdot L}{b_{-1}\cdot h^{n}} I_L^{n} - \dfrac{b_0}{b_{-1}} V_L^n - \dfrac{b_1}{b_{-1}} V_L^{n-1} - \ldots - \dfrac{b_{k-2}}{b_{-1}} V_L^{n-k+2}}_{V_{eq}}
+\end{align}
+
+Each of these equations can be rewritten as
+\begin{equation}
+V_L^{n+1} = r_{eq}\cdot I_L^{n+1} + V_{eq}
+\end{equation}
+
+which leads to the following companion model representing a voltage
+source with its accompanied internal resistance.
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.375\linewidth]{transind}
+\end{center}
+\caption{companion equivalent circuit of a inductor during transient analysis}
+\end{figure}
+\FloatBarrier
+
+Thus the complete MNA matrix equation for an ideal inductor writes
+as follows.
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & +1\\
+0 & 0 & -1\\
++1 & -1 & -r_{eq}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1^{n+1}\\
+V_2^{n+1}\\
+I_L^{n+1}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+V_{eq}\\
+\end{bmatrix}
+\end{equation}
+
+It also possible to model the ideal inductor as a current source with
+an internal resistance which would yield a similar equivalent circuit
+as for the capacitor.  But with the proposed model it is possible to
+use alike computation schemes for capacitors and inductors.  Charges
+become flues, capacitance become inductances and finally voltages
+become currents and the other way around.  Everything else (especially
+the coeffcients in the integration formulas) can be reused.
 
 \chapter{Non-linear devices}
 %\addcontentsline{toc}{chapter}{Non-linear devices}

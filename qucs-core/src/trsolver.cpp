@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.8 2004-09-17 17:28:24 ela Exp $
+ * $Id: trsolver.cpp,v 1.9 2004-09-19 10:31:44 ela Exp $
  *
  */
 
@@ -126,9 +126,11 @@ void trsolver::solve (void) {
   swp->reset ();
 
   int running = 0;
+  //int currentOrder = 0;
   delta /= 10;
   updateCoefficients (delta, 1);
   setState (dState, delta);
+  //adjustOrder (currentOrder);
 
   // Start to sweep through time.
   for (int i = 0; i < swp->getSize (); i++) {
@@ -147,6 +149,7 @@ void trsolver::solve (void) {
       // Now advance in time or not...
       if (running > 1) {
 	adjustDelta ();
+	//adjustOrder (currentOrder);
       }
       else {
 	updateCoefficients (delta, 1);
@@ -192,7 +195,7 @@ int trsolver::corrector (void) {
   return error;
 }
 
-// The function advances one more timestep.
+// The function advances one more time-step.
 void trsolver::nextStates (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
@@ -202,7 +205,19 @@ void trsolver::nextStates (void) {
   nextState ();
 }
 
-/* This function tries to adapt the current timestep according to the
+/* This function stores the current state of each circuit into all
+   other states as well.  It is useful for higher order integration
+   methods in order to initialize the states after the initial
+   transient solution. */
+void trsolver::fillStates (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    for (int s = 0; s < c->getStates (); s++)
+      c->fillState (s, c->getState (s));
+  }
+}
+
+/* This function tries to adapt the current time-step according to the
    global truncation error. */
 void trsolver::adjustDelta (void) {
   nr_double_t save = delta;
@@ -239,6 +254,22 @@ void trsolver::adjustDelta (void) {
   }
 }
 
+/* The function can be used to increase the order of the current
+   integration method. */
+void trsolver::adjustOrder (int& currentOrder) {
+  circuit * root = subnet->getRoot ();
+  int type;
+  if (currentOrder < order) {
+    currentOrder++;
+    type = integratorType (IMethod, currentOrder);
+    for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+      c->setOrder (order);
+      setIntegrationMethod (c, type);
+    }
+    calcCorrectorCoeff (type, currentOrder, coefficients, delta, chargeCoeffs);
+  }
+}
+
 /* Goes through the list of circuit objects and runs its calcDC()
    function. */
 void trsolver::calcDC (trsolver * self) {
@@ -269,8 +300,8 @@ void trsolver::initDC (void) {
 /* Goes through the list of circuit objects and runs its initTR()
    function. */
 void trsolver::initTR (void) {
-  IMethod = getPropertyString ("IntegrationMethod");
   order = getPropertyInteger ("Order");
+  IMethod = integratorType (getPropertyString ("IntegrationMethod"), order);
   nr_double_t start = getPropertyDouble ("Start");
   nr_double_t stop = getPropertyDouble ("Stop");
   nr_double_t points = getPropertyDouble ("Points");
@@ -285,14 +316,14 @@ void trsolver::initTR (void) {
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
   
-  calcCoefficients (IMethod, order, coefficients, delta);
+  calcCorrectorCoeff (IMethod, order, coefficients, delta, chargeCoeffs);
 
   // initialize step history
   setStates (2);
   initStates ();
   fillState (dState, delta);
 
-  // initalize history of right hand side vectors (solutions)
+  // initialize history of right hand side vectors (solutions)
   for (int i = 0; i < 8; i++) {
     rhs[i] = new tmatrix<nr_double_t> (*x);
     setState (rState, (nr_double_t) i, i);
@@ -321,8 +352,8 @@ void trsolver::saveAllResults (nr_double_t time) {
   saveResults ("Vt", "It", 0, t);
 }
 
-/* This function is meant to adapt the current timestep the transient
-   analysis advanced.  For the computation of the new timestep the
+/* This function is meant to adapt the current time-step the transient
+   analysis advanced.  For the computation of the new time-step the
    truncation error depending on the integration method is used. */
 nr_double_t trsolver::checkDelta (void) {
   nr_double_t reltol = getPropertyDouble ("reltolTR");
@@ -339,28 +370,32 @@ nr_double_t trsolver::checkDelta (void) {
     rel = abs (x->get (r, 1));
     tol = reltol * rel + abstol;
 
-    if (!strcmp (IMethod, "Euler")) {
-      if (dif != 0) {
-	nr_double_t t = delta * tol * 2 / dif;
-	t = sqrt (fabs (t));
-	n = MIN (n, t);
-      }
-    }
-    else if (!strcmp (IMethod, "Trapezoidal")) {
-      if (dif != 0) {
-	nr_double_t del = delta + getState (dState, 1);
-	nr_double_t t = tol * 12 * del / dif;
-	t = exp (log (fabs (t)) / 3);
-	n = MIN (n, t);
-      }
-    }
-    else if (!strcmp (IMethod, "Gear")) {
-      nr_double_t del = 0;
-      for (int i = 0; i <= order; i++) del += getState (dState, i);
-      if (dif != 0) {
-	nr_double_t t = tol * del / dif;
-	t = exp (log (fabs (t)) / (order + 1));
-	n = MIN (n, t);
+    if (dif != 0) {
+      switch (IMethod) {
+      case INTEGRATOR_EULER:
+	{
+	  nr_double_t t = delta * tol * 2 / dif;
+	  t = sqrt (fabs (t));
+	  n = MIN (n, t);
+	}
+	break;
+      case INTEGRATOR_TRAPEZOIDAL:
+	{
+	  nr_double_t del = delta + getState (dState, 1);
+	  nr_double_t t = tol * 12 * del / dif;
+	  t = exp (log (fabs (t)) / 3);
+	  n = MIN (n, t);
+	}
+	break;
+      case INTEGRATOR_GEAR:
+	{
+	  nr_double_t del = 0;
+	  for (int i = 0; i <= order; i++) del += getState (dState, i);
+	  nr_double_t t = tol * del / dif;
+	  t = exp (log (fabs (t)) / (order + 1));
+	  n = MIN (n, t);
+	}
+	break;
       }
     }
   }
@@ -373,7 +408,7 @@ void trsolver::updateCoefficients (nr_double_t delta, int next) {
   nr_double_t c = getState (dState);
   coefficients[0] *= c / delta;
   if (next) {
-    for (int i = 1; i < 8; i++) {
+    for (int i = 1; i < chargeCoeffs; i++) {
       //coefficients[i] *= getState (dState, i) / getState (dState, i - 1);
       coefficients[i] *= c / delta;
     }
