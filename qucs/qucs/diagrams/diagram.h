@@ -50,7 +50,8 @@ public:
 
   virtual Diagram* newOne();
   virtual int  calcDiagram();
-  virtual void calcCoordinate(double* &, double* &, int*, int*, Axis*) {};
+  virtual void calcCoordinate
+               (double* &, double* &, double* &, int*, int*, Axis*) {};
   virtual void calcLimits() {};
   void    calcData(Graph*, int);
   void    setCenter(int, int, bool relative=false);
@@ -67,7 +68,7 @@ public:
   void loadGraphData(const QString&);
   void recalcGraphData();
   bool loadVarData(const QString&);
-  int  loadIndepVarData(const QString&, const QString&);
+  int  loadIndepVarData(const QString&, const QString&, Axis*);
 
   bool insideDiagram(int, int);
 
@@ -82,6 +83,8 @@ public:
   int x3, y3;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
+
+  int rotX, rotY, rotZ;  // for "Rect3D": rotation around x, y and z axis
 
 
 protected:

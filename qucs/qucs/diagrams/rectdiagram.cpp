@@ -40,7 +40,7 @@ RectDiagram::~RectDiagram()
 }
 
 // ------------------------------------------------------------
-void RectDiagram::calcCoordinate(double* &xD, double* &yD,
+void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
 				 int *px, int *py, Axis *pa)
 {
   double x  = *(xD++);
@@ -58,8 +58,7 @@ void RectDiagram::calcCoordinate(double* &xD, double* &yD,
     if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
       *py = int((yr-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
     else   // calculate magnitude of complex number
-      *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)
-		*double(y2) + 0.5);
+      *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
   }
 }
 

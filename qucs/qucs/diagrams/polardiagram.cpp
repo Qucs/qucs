@@ -38,7 +38,7 @@ PolarDiagram::~PolarDiagram()
 }
 
 // ------------------------------------------------------------
-void PolarDiagram::calcCoordinate(double* &, double* &yD,
+void PolarDiagram::calcCoordinate(double* &, double* &yD, double* &,
 				  int *px, int *py, Axis*)
 {
   double yr = *(yD++);

@@ -62,7 +62,7 @@ void Marker::initText(int n)
   Axis *pa;
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
-  double *num, *py = pGraph->cPointsY + 2*n;
+  double *num, *py = 0, *pz = pGraph->cPointsY + 2*n;
   Text = "";
   nVarPos = 0;
   DataX *pD = pGraph->cPointsX.first();
@@ -71,7 +71,7 @@ void Marker::initText(int n)
   int nn, x, y, d, dmin = INT_MAX;
   for(nn=0; nn<pD->count; nn++) {
     num = pD->Points + nn;
-    Diag->calcCoordinate(num, py, &x, &y, pa);
+    Diag->calcCoordinate(num, pz, py, &x, &y, pa);
     x -= cx;
     y -= cy;
     d = x*x + y*y;
@@ -93,19 +93,19 @@ void Marker::initText(int n)
   }
 
   // gather text of dependent variable
-  py = (pGraph->cPointsY) + 2*n;
+  pz = (pGraph->cPointsY) + 2*n;
   Text += pGraph->Var + ": ";
   switch(numMode) {
-    case 0: Text += complexRect(*py, *(py+1), Precision);
+    case 0: Text += complexRect(*pz, *(pz+1), Precision);
 	    break;
-    case 1: Text += complexDeg(*py, *(py+1), Precision);
+    case 1: Text += complexDeg(*pz, *(pz+1), Precision);
 	    break;
-    case 2: Text += complexRad(*py, *(py+1), Precision);
+    case 2: Text += complexRad(*pz, *(pz+1), Precision);
 	    break;
   }
 
-  num = &(VarPos[0]);
-  Diag->calcCoordinate(num, py, &cx, &cy, pa);
+  num = VarPos;
+  Diag->calcCoordinate(num, pz, py, &cx, &cy, pa);
 
   if(!Diag->insideDiagram(cx, cy))
     if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
@@ -153,14 +153,14 @@ void Marker::createText()
   }
 
 
-  double *py = (pGraph->cPointsY) + 2*n;
+  double *py = 0, *pz = (pGraph->cPointsY) + 2*n;
   Text += pGraph->Var + ": ";
   switch(numMode) {
-    case 0: Text += complexRect(*py, *(py+1), Precision);
+    case 0: Text += complexRect(*pz, *(pz+1), Precision);
 	    break;
-    case 1: Text += complexDeg(*py, *(py+1), Precision);
+    case 1: Text += complexDeg(*pz, *(pz+1), Precision);
 	    break;
-    case 2: Text += complexRad(*py, *(py+1), Precision);
+    case 2: Text += complexRad(*pz, *(pz+1), Precision);
 	    break;
   }
 
@@ -168,7 +168,7 @@ void Marker::createText()
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
   pp = &(VarPos[0]);
-  Diag->calcCoordinate(pp, py, &cx, &cy, pa);
+  Diag->calcCoordinate(pp, pz, py, &cx, &cy, pa);
 
   if(!Diag->insideDiagram(cx, cy))
     if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...

@@ -218,25 +218,121 @@ is the current of the non-linear circuit partition.
 
 \subsection{Frequency-Time Domain Transformation}
 
-During every iteration step, the time domain values have to be transformed
-into frequency domain and afterwards back again. A standard Fourier
-Transformation is not
-useful, because with multi-tone excitation many mixing products appear.
-The best way to cope with this problem is to use multi-dimensional
-Fast-Fourier-Transformation (FFT). The information in this subsection
-stems from \cite{Press}, where the theoretical background is explained,
-too.
+During every iteration step of the harmonic balance, the time domain
+values have to be transformed into frequency domain and afterwards
+back again. This is done by the so-called Fourier Transformation and
+the inverse Fourier Transformation, respectively:
+\begin{eqnarray}
+\text{Fourier Transformation:} & \qquad &
+     \underline{U}(j\omega) =
+     \int\limits_{-\infty}^{\infty} u(t)\cdot e^{-j\omega\cdot t} \; dt \\
+\text{inverse Fourier Transformation:} & \qquad &
+     u(t) = \frac{1}{2\pi} \cdot \int\limits_{-\infty}^{\infty}
+            \underline{U}(j\omega)\cdot e^{j\omega\cdot t} \; d\omega
+\end{eqnarray}
+In digital systems the data $u(t)$ or $\underline{U}(j\omega)$,
+respectively, consists of a finite number $N$ of samples $u_k$ and
+$\underline{U}_n$. This leads to the discrete Fourier Transformation
+(DFT) and its inverse operation (IDFT):
+\begin{eqnarray}
+\label{eqn:DFT}
+\text{DFT:} & \qquad &
+     \underline{U}_n =
+     \sum_{k=0}^{N-1} u_k\cdot \exp\left( -j\cdot n\frac{2\pi\cdot k}{N} \right) \\
+\text{IDFT:} & \qquad &
+     u_k = \frac{1}{N} \cdot \sum_{n=0}^{N}
+            \underline{U}_n\cdot \exp\left( j\cdot k\frac{2\pi\cdot n}{N} \right)
+\end{eqnarray}
+The absolute time and frequency values do not appear anymore in the DFT.
+They depend on the sample frequency $f_T$ and the number of samples $N$.
+\begin{equation}
+\Delta f = \frac{1}{N\cdot\Delta t} = \frac{f_T}{N}
+\end{equation}
+Where $\Delta t$ is distance between time samples and $\Delta f$
+distance between frequency samples.\\
+With DFT the $N$ time samples are transformed into $N$ frequency samples.
+This also holds if the time data are real numbers, as is always
+the case in "real life": The complex frequency samples are conjugate
+complex symmetrical and so equalizing the score:
+\begin{equation}
+\underline{U}_{N-n} = \underline{U}_n^*
+\end{equation}
 
 \addvspace{12pt}
 
-First, the one-dimensional FFT will be discused. The FFT is a strongly
-optimized discrete Fourier Transformation (DFT). It takes advantage of
-the symmetry and periodicity of the trigonometric functions in order
-to avoid redundancy. To achieve this, the number of data samples must
-be a power of two (2, 4, 8, 16, 32, ...). As first step, the data array
-is reordered by the bit-reversal method. Finally, the frequency domain
-values are calculated with the Danielson-Lanzcos algorithm. The
-following source code was taken from \cite{Press} and contains only a
+That is, knowing the input data has no imaginary part, only half of
+the Fourier data must be computed. \\
+As can be seen in equation \ref{eqn:DFT} the computing time of the
+DFT rises with $N^2$. This is really huge. Because this transformation
+must be performed many times during harmonic balance simulation, it is
+very important to reduce the time consumption. Using a strongly
+optimized algorithm, the so-called Fast Fourier Transformation (FFT),
+the DFT is reduced to an $N\cdot\log_2 N$ time rise.
+The following information stems from \cite{Press},
+where the theoretical background is explained comprehensively.\\
+
+The fundamental trick of the FFT is to cut the DFT into two parts,
+one with data having even indexes and the other with odd indexes:
+
+\begin{eqnarray}
+\underline{U}_n & = &
+  \sum_{k=0}^{N-1} u_k\cdot \exp\left( -j\cdot n\frac{2\pi\cdot k}{N} \right) \\
+  & = & \sum_{k=0}^{N/2-1} u_{2k}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot 2k}{N} \right) +
+        \sum_{k=0}^{N/2-1} u_{2k+1}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot (2k+1)}{N} \right) \\
+  & = & \underbrace{ \sum_{k=0}^{N/2-1} u_{2k}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot k}{N/2} \right) }_{F_{even}} +
+        W_{n,N}\cdot \underbrace{ \sum_{k=0}^{N/2-1} u_{2k+1}\cdot
+        \exp\left( -j\cdot n\frac{2\pi\cdot k}{N/2} \right) }_{F_{odd}} \\
+\text{with} & & W_{n,N} = \exp\left( 2\pi\cdot j\cdot \frac{k}{N} \right)
+\end{eqnarray}
+
+The new formula shows no speed advantages. The important thing is that
+the even as well as the odd part each is again a Fourier series. Thus
+the same procedure can be repeated again and again until the equation
+consists of $N$ terms. Then, each term contains only one data $u_k$
+with factor $e^0=1$. This works if the number of data is a power of
+two (2, 4, 8, 16, 32, ...).
+So finally, the FFT method performs $\log_2 N$ times the operation
+\begin{equation}
+\label{eqn:FFTstep}
+u_{k1,even} + W_{n,x}\cdot u_{k2,odd}
+\end{equation}
+to get one data of $\underline{U}_n$. This is called the
+Danielson-Lanzcos algorithm.
+The question now arises which data values of $u_k$
+needs to be combined according to equation \ref{eqn:FFTstep}.
+The answer is quite easy. The data array must be reordered by the
+bit-reversal method. This means the value at index $k_1$ is swapped
+with the value at index $k_2$ where $k_2$ is obtained by mirroring
+the binary number $k_1$, i.e. the most significant bit becomes the
+least significant one and so on. Example for $N=8$:\\
+
+\begin{tabular}{ccccccccccc}
+000 & $\leftrightarrow$ & 000  & \qquad\qquad &  011 & $\leftrightarrow$ & 110  & \qquad\qquad &  110 & $\leftrightarrow$ & 011 \\
+001 & $\leftrightarrow$ & 100  & \qquad\qquad &  100 & $\leftrightarrow$ & 001  & \qquad\qquad &  111 & $\leftrightarrow$ & 111 \\
+010 & $\leftrightarrow$ & 010  & \qquad\qquad &  101 & $\leftrightarrow$ & 101 \\
+\end{tabular}\\
+
+Having this new indexing, the values to combine according to
+equation \ref{eqn:FFTstep} are the adjacent values. So, performing
+the Danielson-Lanzcos algorithm has now become very easy.\\
+Figure \ref{fig:fft} illustrates the whole FFT algorithm starting with the
+input data $u_k$ and ending with one value of the output data
+$\underline{U}_n$.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=13cm]{fft}
+\end{center}
+\caption{principle of a FFT with data length 8}
+\label{fig:fft}
+\end{figure}
+\FloatBarrier
+
+Finally, a complete FFT source code should be presented. It was taken
+from \cite{Press} and contains only a
 few changes. (The function \texttt{SWAP(X, Y)} exchanges the values in
 \texttt{X} and \texttt{Y}.)
 
@@ -307,6 +403,10 @@ However, the algorithms are much more complex.
 
 \addvspace{12pt}
 
+A standard Fourier Transformation is not useful in harmonic balance
+methods, because with multi-tone excitation many mixing products appear.
+The best way to cope with this problem is to use multi-dimensional
+FFT.\\
 Fourier Transformations in more than one dimension soon become
 very time consuming. Using FFT mechanisms is therefore mandatory.
 A more-dimensional Fourier Transformation consists of many
@@ -315,8 +415,21 @@ are performed for the data of the first dimension at every index
 of the second dimension. The results are used as input data for
 the second dimension that is performed the same way with respect
 to the third dimension. This procedure is continued until all
-dimensions are calculated. The following routine computes the
-$n$-dimensional FFT and was taken from \cite{Press}.
+dimensions are calculated. The following equations shows this
+for two dimensions.
+
+\begin{eqnarray}
+\underline{U}_{n1,n2} & = & \sum_{k_2=0}^{N_2-1} \sum_{k_1=0}^{N_1-1}
+   u_{k_1,k_2}\cdot \exp\left( -j\cdot n_1\frac{2\pi\cdot k_1}{N_1} \right)
+              \cdot \exp\left( -j\cdot n_2\frac{2\pi\cdot k_2}{N_2} \right) \\
+ & = & \sum_{k_2=0}^{N_2-1} \exp\left( -j\cdot n_2\frac{2\pi\cdot k_2}{N_2} \right)
+       \cdot \underbrace{ \sum_{k_1=0}^{N_1-1}
+   u_{k_1,k_2}\cdot \exp\left( -j\cdot n_1\frac{2\pi\cdot k_1}{N_1} \right) }_\text{1D-FFT}
+\end{eqnarray}
+
+
+Finally, a complete $n$-dimensional FFT source code should be
+presented. It was taken from \cite{Press}.
 
 \addvspace{12pt}
 
