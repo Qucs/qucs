@@ -1,3 +1,9 @@
+2004-03-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Introduced new EQN state for parsing 
+	equations in netlists.  The parser+scanner is now working 
+	correctly.
+
 2004-03-07  Stefan Jahn  <stefan@lkcc.org>
 
 	* parse_netlist.y: Added parser and scanner rules for 
