@@ -1,3 +1,11 @@
+2004-10-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.tex (section{Convergence}): Started to document
+	convergence issues in transient analysis.
+
+	* microstrip.tex (section{Microstrip via hole}): Documented
+	microstrip via hole equations.
+
 2004-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices.tex (section{MOS Field-Effect Transistor}): Fixed

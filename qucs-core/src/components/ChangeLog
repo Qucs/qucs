@@ -1,3 +1,10 @@
+2004-10-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msvia.h (class msvia): New component added:
+	microstrip via hole to ground.
+
+	* devices/bjt.cpp: Fixed numerical bug in BJT model.
+
 2004-10-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/mosfet.cpp: Fixed tiny bug in calculation of threshold
