@@ -1,5 +1,5 @@
 /***************************************************************************
-                          capacitor.cpp  -  description
+                          iprobe.h  -  description
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,38 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "capacitor.h"
+#ifndef IPROBE_H
+#define IPROBE_H
+
+#include "component.h"
 
 
-Capacitor::Capacitor()
-{
-  Description = QObject::tr("capacitor");
+class iProbe : public Component  {
+public:
+	iProbe();
+	~iProbe();
+  iProbe* newOne();
+};
 
-  Lines.append(new Line( -4,-11, -4, 11,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line(  4,-11,  4, 11,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line(-30,  0, -4,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  4,  0, 30,  0,QPen(QPen::darkBlue,2)));
-
-  Ports.append(new Port(-30,  0));
-  Ports.append(new Port( 30,  0));
-
-  x1 = -30; y1 = -13;
-  x2 =  30; y2 =  13;
-
-  tx = x1+4;
-  ty = y2+4;
-  Sign  = "C";
-  Model = "C";
-  Name  = "C";
-
-  Props.append(new Property("C", "1 pF", true, QObject::tr("capacitance in Farad")));
-}
-
-Capacitor::~Capacitor()
-{
-}
-
-Capacitor* Capacitor::newOne()
-{
-  return new Capacitor();
-}
+#endif

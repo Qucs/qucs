@@ -37,12 +37,12 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   h1->setSpacing(5);
   v->addWidget(h1);
 
-  new QLabel("Line color: ", h1);
+  new QLabel(tr("Line color: "), h1);
   ColorButt = new QPushButton("        ",h1);
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 
-  new QLabel("      Line Width: ", h1);
+  new QLabel(tr("      Line Width: "), h1);
   Expr.setPattern("[0-9]{1,2}");  // valid expression for property input
   QValidator *Validator = new QRegExpValidator(Expr, this);
   LineWidth = new QLineEdit(h1);
@@ -55,13 +55,13 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   h2->setSpacing(5);
   v->addWidget(h2);
 
-  new QLabel("Line Style: ", h2);
+  new QLabel(tr("Line Style: "), h2);
   StyleBox = new QComboBox(h2);
-  StyleBox->insertItem("solid line");
-  StyleBox->insertItem("dash line");
-  StyleBox->insertItem("dot line");
-  StyleBox->insertItem("dash dot line");
-  StyleBox->insertItem("dash dot dot line");
+  StyleBox->insertItem(tr("solid line"));
+  StyleBox->insertItem(tr("dash line"));
+  StyleBox->insertItem(tr("dot line"));
+  StyleBox->insertItem(tr("dash dot line"));
+  StyleBox->insertItem(tr("dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
 
@@ -69,9 +69,9 @@ LineDialog::LineDialog(const QString& _Caption, QWidget *parent, const char *nam
   h3->setSpacing(5);
   v->addWidget(h3);
 
-  QPushButton *ButtOK = new QPushButton("OK",h3);
+  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
   connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton("Cancel",h3);
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
   connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
 
   ButtOK->setFocus();

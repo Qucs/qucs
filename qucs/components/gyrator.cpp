@@ -20,7 +20,7 @@
 
 Gyrator::Gyrator()
 {
-  Description = "gyrator (impedance inverter)";
+  Description = QObject::tr("gyrator (impedance inverter)");
 
   Arcs.append(new Arc(  2, -9, 19, 19, 16*90, 16*180,QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-21, -9, 19, 19,16*270, 16*180,QPen(QPen::darkBlue,2)));
@@ -52,8 +52,8 @@ Gyrator::Gyrator()
   Model = "Gyrator";
   Name  = "X";
 
-  Props.append(new Property("R", "50 Ohm", true, "gyrator ratio"));
-  Props.append(new Property("Zref", "50 Ohm", true, "referenz impedance"));
+  Props.append(new Property("R", "50 Ohm", true, QObject::tr("gyrator ratio")));
+  Props.append(new Property("Zref", "50 Ohm", true, QObject::tr("reference impedance")));
 }
 
 Gyrator::~Gyrator()

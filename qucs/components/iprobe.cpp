@@ -1,5 +1,5 @@
 /***************************************************************************
-                          capacitor.cpp  -  description
+                          iprobe.cpp  -  description
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,38 +15,40 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "capacitor.h"
+#include "iprobe.h"
 
 
-Capacitor::Capacitor()
+iProbe::iProbe()
 {
-  Description = QObject::tr("capacitor");
+  Description = QObject::tr("current probe");
 
-  Lines.append(new Line( -4,-11, -4, 11,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line(  4,-11,  4, 11,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line(-30,  0, -4,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  4,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -2, -3,  2,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( -2,  3,  2,  0,QPen(QPen::darkBlue,2)));
+
+  Lines.append(new Line(-20,-22, 20,-22,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,  6, 20,  6,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-20,-22, 20,  6,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 20,-22, 20,  6,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,  0));
   Ports.append(new Port( 30,  0));
 
-  x1 = -30; y1 = -13;
-  x2 =  30; y2 =  13;
+  x1 = -30; y1 = -11;
+  x2 =  30; y2 =  11;
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "C";
-  Model = "C";
-  Name  = "C";
-
-  Props.append(new Property("C", "1 pF", true, QObject::tr("capacitance in Farad")));
+  Sign  = "IProbe";
+  Model = "IProbe";
+  Name  = "Pr";
 }
 
-Capacitor::~Capacitor()
+iProbe::~iProbe()
 {
 }
 
-Capacitor* Capacitor::newOne()
+iProbe* iProbe::newOne()
 {
-  return new Capacitor();
+  return new iProbe();
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
-                          capacitor.cpp  -  description
+                          volt_noise.cpp  -  description
                              -------------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -15,38 +15,42 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "capacitor.h"
+#include "volt_noise.h"
 
 
-Capacitor::Capacitor()
+Volt_noise::Volt_noise()
 {
-  Description = QObject::tr("capacitor");
+  Description = QObject::tr("noise voltage source");
 
-  Lines.append(new Line( -4,-11, -4, 11,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line(  4,-11,  4, 11,QPen(QPen::darkBlue,4)));
-  Lines.append(new Line(-30,  0, -4,  0,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(  4,  0, 30,  0,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-12,-12, 25, 25,     0, 16*360,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-30,  0,-12,  0,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 30,  0, 12,  0,QPen(QPen::darkBlue,2)));
 
-  Ports.append(new Port(-30,  0));
+  Lines.append(new Line(-12,  0,  0,-12,QPen(QPen::darkBlue,2)));
+
   Ports.append(new Port( 30,  0));
+  Ports.append(new Port(-30,  0));
 
-  x1 = -30; y1 = -13;
-  x2 =  30; y2 =  13;
+  x1 = -30; y1 = -14;
+  x2 =  30; y2 =  14;
 
   tx = x1+4;
   ty = y2+4;
-  Sign  = "C";
-  Model = "C";
-  Name  = "C";
+  Sign  = "Vnoise";
+  Model = "Vnoise";
+  Name  = "V";
 
-  Props.append(new Property("C", "1 pF", true, QObject::tr("capacitance in Farad")));
+  Props.append(new Property("u", "1e-6", true, QObject::tr("equivalent voltage density in V/sqrt(Hz)")));
+  Props.append(new Property("e", "0", true, QObject::tr("frequency exponent")));
+  Props.append(new Property("c", "1", true, QObject::tr("frequency coefficient")));
+  Props.append(new Property("a", "0", true, QObject::tr("additive frequency term")));
 }
 
-Capacitor::~Capacitor()
+Volt_noise::~Volt_noise()
 {
 }
 
-Capacitor* Capacitor::newOne()
+Volt_noise* Volt_noise::newOne()
 {
-  return new Capacitor();
+  return new Volt_noise();
 }

@@ -20,7 +20,7 @@
 
 HB_Sim::HB_Sim()
 {
-  Description = "Harmonic balance simulation";
+  Description = QObject::tr("Harmonic balance simulation");
 
   Lines.append(new Line(-75,-21, 75,-21,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-75, 21, 75, 21,QPen(QPen::darkBlue,2)));
@@ -42,8 +42,8 @@ HB_Sim::HB_Sim()
   Model = ".HB";
   Name  = "HB";
 
-  Props.append(new Property("f", "1 GHz", true, "frequency in Hertz"));
-  Props.append(new Property("n", "4", true, "number of harmonics"));
+  Props.append(new Property("f", "1 GHz", true, QObject::tr("frequency in Hertz")));
+  Props.append(new Property("n", "4", true, QObject::tr("number of harmonics")));
 }
 
 HB_Sim::~HB_Sim()

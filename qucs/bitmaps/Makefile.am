@@ -31,7 +31,7 @@ XPMS = ac_voltage.xpm arrow.xpm capacitor.xpm dc_current.xpm dc_voltage.xpm  \
   isolator.xpm mscorner.xpm mscross.xpm msstep.xpm mstee.xpm substrate.xpm   \
   port.xpm spfile1.xpm spfile2.xpm spfile3.xpm spfile4.xpm spfile5.xpm       \
   spfile6.xpm coplanar.xpm ellipse.xpm mscoupled.xpm gyrator.xpm             \
-  pshifter.xpm
+  pshifter.xpm iprobe.xpm noise_current.xpm noise_volt.xpm
 
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png     \
   deactiv.png bottom.png editpaste.png equation.png fileclose.png            \

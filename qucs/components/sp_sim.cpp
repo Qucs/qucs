@@ -20,7 +20,7 @@
 
 SP_Sim::SP_Sim()
 {
-  Description = "S parameter simulation";
+  Description = QObject::tr("S parameter simulation");
 
   Lines.append(new Line(-53,-21, 53,-21,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-53, 21, 53, 21,QPen(QPen::darkBlue,2)));
@@ -42,9 +42,9 @@ SP_Sim::SP_Sim()
   Model = ".SP";
   Name  = "SP";
 
-  Props.append(new Property("Start", "1 GHz", true, "start frequency in Hertz"));
-  Props.append(new Property("Stop", "10 GHz", true, "stop frequency in Hertz"));
-  Props.append(new Property("Step", "1 GHz", true, "frequency steps in Hertz"));
+  Props.append(new Property("Start", "1 GHz", true, QObject::tr("start frequency in Hertz")));
+  Props.append(new Property("Stop", "10 GHz", true, QObject::tr("stop frequency in Hertz")));
+  Props.append(new Property("Step", "1 GHz", true, QObject::tr("frequency steps in Hertz")));
 }
 
 SP_Sim::~SP_Sim()

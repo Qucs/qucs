@@ -20,7 +20,7 @@
 
 DC_Sim::DC_Sim()
 {
-  Description = "dc simulation";
+  Description = QObject::tr("dc simulation");
 
   Lines.append(new Line(-56,-12, 56,-12,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-56, 12, 56, 12,QPen(QPen::darkBlue,2)));
