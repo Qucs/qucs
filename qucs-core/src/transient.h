@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.h,v 1.4 2004/09/22 16:47:57 ela Exp $
+ * $Id: transient.h,v 1.5 2004/10/07 19:49:35 ela Exp $
  *
  */
 
@@ -52,8 +52,11 @@ class transient
   friend void integrateMoulton (integrator *, int, nr_double_t, nr_double_t&,
 				nr_double_t&);
   friend void setIntegrationMethod (circuit *, int);
-  friend int  integratorType (char *, int&);
-  friend int  integratorType (int, int);
+  friend int  correctorType (char *, int&);
+  friend int  correctorType (int, int);
+  friend int  predictorType (int, int, int&);
+  friend nr_double_t getCorrectorError (int, int);
+  friend nr_double_t getPredictorError (int, int);
 };
 
 #endif /* __TRANSIENT_H__ */

@@ -27,8 +27,8 @@ unfixed) have a look at the file BUGS.
   integrators.
 - Transient models for controlled sources with time delay.
 - Transient noise analysis.
-- Implement a real predictor for transient analysis.
-- Use Milne's formula for local truncation error estimation.
+	- Implement a real predictor for transient analysis.
+	- Use Milne's formula for local truncation error estimation.
 - Transient models of transmission lines.
 	- Transient models of non-linear devices.
 	- Implementation of transient models for capacitor, inductor and

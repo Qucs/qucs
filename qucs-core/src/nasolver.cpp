@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.11 2004/10/03 10:30:51 ela Exp $
+ * $Id: nasolver.cpp,v 1.12 2004/10/07 19:49:35 ela Exp $
  *
  */
 
@@ -153,7 +153,7 @@ int nasolver<nr_type_t>::solve_once (void) {
   }
 
   // save results into circuits
-  if (!error) saveRHS ();
+  if (!error) saveSolution ();
   return error;
 }
 
@@ -604,7 +604,7 @@ void nasolver<nr_type_t>::saveBranchCurrents (void) {
 
 // The function saves the solution vector into each circuit.
 template <class nr_type_t>
-void nasolver<nr_type_t>::saveRHS (void) {
+void nasolver<nr_type_t>::saveSolution (void) {
   saveNodeVoltages ();
   saveBranchCurrents ();
 }
