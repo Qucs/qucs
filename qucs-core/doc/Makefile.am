@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-EXTRA_DIST = technical.tex technical.ps $(FIGURES)
+EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE)
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi
 MAINTAINERCLEANFILES = Makefile.in
@@ -37,19 +37,22 @@ EPSTOPDF = epstopdf
 FIG2DEV = fig2dev
 
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
-  nconnect.fig Sparam.fig
+  nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
+BIBFILE = $(srcdir)/literature.bib
 
 technical.dvi: $(EPSFILES)
 
-%.dvi: %.tex
+%.dvi: %.tex $(BIBFILE)
 	$(LATEX) $<
+	$(BIBTEX) $*
 	$(LATEX) $<
 	$(LATEX) -interaction=batchmode $<
 
 %.pdf: %.tex $(PDFFILES)
 	$(PDFLATEX) $<
+	$(BIBTEX) $*
 	$(PDFLATEX) $<
 	$(PDFLATEX) -interaction=batchmode $<
 

@@ -56,9 +56,9 @@
 
 \vspace*{24pt}
 
-Copyright \copyright{} 2003 Michael Margraf 
+Copyright \copyright{} 2003, 2004 Michael Margraf 
 \textless margraf@mwt.ee.tu-berlin.de\textgreater \par
-Copyright \copyright{} 2003 Stefan Jahn 
+Copyright \copyright{} 2003, 2004 Stefan Jahn 
 \textless jahn@mwt.ee.tu-berlin.de\textgreater \par
 
 \vspace*{12pt}
@@ -185,7 +185,7 @@ S
 \end{equation}
 
 This transformation can be applied to each S-parameter port in a
-circuit regardless whether it is actually differential or not.
+circuit regardless whether it is actually differential or not.\\
 
 It is also possible to do the impedance transformation within this step
 (for S-parameter ports with impedances different than $50\ohm$). This can
@@ -360,15 +360,15 @@ S_{22} = S_{33} = \frac{T_1^2\cdot T_2^2}{denom}  &  \qquad S_{23} = S_{32} = 1-
 \end{eqnarray}
 \begin{equation}
 S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
-       = \frac{T_1\cdot T_2^2}{denum}
+       = \frac{T_1\cdot T_2^2}{denom}
 \end{equation}
 \begin{equation}
 -S_{24} = -S_{42} = S_{25} = S_{52} = S_{34} = S_{43} = -S_{35} = -S_{53}
-       = \frac{T_1^2\cdot T_2}{denum}
+       = \frac{T_1^2\cdot T_2}{denom}
 \end{equation}
 \begin{equation}
 -S_{14} = -S_{41} = S_{15} = S_{51} = S_{46} = S_{64} = -S_{56} = -S_{65}
-       = \frac{T_1\cdot T_2}{denum}
+       = \frac{T_1\cdot T_2}{denom}
 \end{equation}
 
 \begin{figure}[ht]
@@ -428,32 +428,32 @@ reference impedances $Z_1$, $Z_2$ and $Z_3$ for the ports 1, 2 and 3
 the scattering matrix of an ideal circulator writes as follows.
 
 \begin{equation}
-denum = 1-r_1\cdot r_2\cdot r_3
+denom = 1-r_1\cdot r_2\cdot r_3
 \end{equation}
 \begin{equation}
-r_1 = \frac{Z_0-Z_1}{Z_0+Z_1} \quad,\qquad 
-r_2 = \frac{Z_0-Z_2}{Z_0+Z_2} \quad,\qquad 
+r_1 = \frac{Z_0-Z_1}{Z_0+Z_1} \qquad,\qquad 
+r_2 = \frac{Z_0-Z_2}{Z_0+Z_2} \qquad,\qquad 
 r_3 = \frac{Z_0-Z_3}{Z_0+Z_3}
 \end{equation}
 \begin{equation}
-S_{11} = \frac{r_2\cdot r_3 - r_1}{denum} \quad,\qquad 
-S_{22} = \frac{r_1\cdot r_3 - r_2}{denum} \quad,\qquad 
-S_{33} = \frac{r_1\cdot r_2 - r_3}{denum}
+S_{11} = \frac{r_2\cdot r_3 - r_1}{denom} \qquad,\qquad 
+S_{22} = \frac{r_1\cdot r_3 - r_2}{denom} \qquad,\qquad 
+S_{33} = \frac{r_1\cdot r_2 - r_3}{denom}
 \end{equation}
 \begin{equation}
-S_{12} = \sqrt{\frac{Z_2}{Z_1}}\cdot\frac{Z_1+Z_0}{Z_2+Z_0}\cdot\frac{r_3\cdot(1-r_1^2)}{denum}
-\quad,\qquad 
-S_{13} = \sqrt{\frac{Z_3}{Z_1}}\cdot\frac{Z_1+Z_0}{Z_3+Z_0}\cdot\frac{1-r_1^2}{denum}
+S_{12} = \sqrt{\frac{Z_2}{Z_1}}\cdot\frac{Z_1+Z_0}{Z_2+Z_0}\cdot\frac{r_3\cdot(1-r_1^2)}{denom}
+\qquad,\qquad 
+S_{13} = \sqrt{\frac{Z_3}{Z_1}}\cdot\frac{Z_1+Z_0}{Z_3+Z_0}\cdot\frac{1-r_1^2}{denom}
 \end{equation}
 \begin{equation}
-S_{21} = \sqrt{\frac{Z_1}{Z_2}}\cdot\frac{Z_2+Z_0}{Z_1+Z_0}\cdot\frac{1-r_2^2}{denum}
-\quad,\qquad 
-S_{23} = \sqrt{\frac{Z_3}{Z_2}}\cdot\frac{Z_2+Z_0}{Z_3+Z_0}\cdot\frac{r_1\cdot(1-r_2^2)}{denum}
+S_{21} = \sqrt{\frac{Z_1}{Z_2}}\cdot\frac{Z_2+Z_0}{Z_1+Z_0}\cdot\frac{1-r_2^2}{denom}
+\qquad,\qquad 
+S_{23} = \sqrt{\frac{Z_3}{Z_2}}\cdot\frac{Z_2+Z_0}{Z_3+Z_0}\cdot\frac{r_1\cdot(1-r_2^2)}{denom}
 \end{equation}
 \begin{equation}
-S_{31} = \sqrt{\frac{Z_1}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_1+Z_0}\cdot\frac{r_2\cdot(1-r_3^2)}{denum}
-\quad,\qquad 
-S_{32} = \sqrt{\frac{Z_2}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_2+Z_0}\cdot\frac{1-r_3^2}{denum}
+S_{31} = \sqrt{\frac{Z_1}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_1+Z_0}\cdot\frac{r_2\cdot(1-r_3^2)}{denom}
+\qquad,\qquad 
+S_{32} = \sqrt{\frac{Z_2}{Z_3}}\cdot\frac{Z_3+Z_0}{Z_2+Z_0}\cdot\frac{1-r_3^2}{denom}
 \end{equation}
 
 \subsection*{Phase shifter}
@@ -505,7 +505,7 @@ equals the one of the DC feed.
 \addcontentsline{toc}{subsection}{Controlled voltage and current sources}
 
 The scattering matrix of the voltage controlled current source
-depicted in fig.  \ref{fig:xCCS} (left) writes as follows ($\tau$ is
+depicted in fig. \ref{fig:xCCS} (left) writes as follows ($\tau$ is
 time delay).
 
 \begin{equation}
@@ -531,7 +531,7 @@ S_{24} = S_{31} = 2\cdot G\cdot \exp(-j\omega\tau)
 \FloatBarrier
 
 The scattering matrix of the current controlled current source
-depicted in fig.  \ref{fig:xCCS} (right) writes as follows ($\tau$ is
+depicted in fig. \ref{fig:xCCS} (right) writes as follows ($\tau$ is
 time delay).
 
 \begin{equation}
@@ -548,7 +548,7 @@ S_{24} = S_{31} = G\cdot \exp(-j\omega\tau)
 \end{equation}
 
 The scattering matrix of the voltage controlled voltage source
-depicted in fig.  \ref{fig:xCVS} (left) writes as follows ($\tau$ is
+depicted in fig. \ref{fig:xCVS} (left) writes as follows ($\tau$ is
 time delay).
 
 \begin{equation}
@@ -574,7 +574,7 @@ S_{24} = S_{31} = G\cdot \exp(j\pi-j\omega\tau)
 \FloatBarrier
 
 The scattering matrix of the current controlled voltage source
-depicted in fig.  \ref{fig:xCVS} (right) writes as follows ($\tau$ is
+depicted in fig. \ref{fig:xCVS} (right) writes as follows ($\tau$ is
 time delay).
 
 \begin{equation}
@@ -603,11 +603,11 @@ r = \frac{Z-Z_0}{Z+Z_0}
 p = \exp(-j\omega\frac{L}{c})
 \end{equation}
 \begin{equation}
-S_{11} = S_{22} = \frac{r\cdot(1-p^2)}{1-r^2\cdot p^2} \quad,\qquad
+S_{11} = S_{22} = \frac{r\cdot(1-p^2)}{1-r^2\cdot p^2} \qquad,\qquad
 S_{12} = S_{21} = \frac{p\cdot(1-r^2)}{1-r^2\cdot p^2}
 \end{equation}
 
-With $c$=299 792 458 m/s being the vacuum light velocity.
+With $c$ = 299 792 458 m/s being the vacuum light velocity.
 
 
 \chapter*{Noise Waves}
@@ -795,8 +795,17 @@ ideal, ohmic resistor with resistance $R$ writes as follows.
 \addcontentsline{toc}{subsection}{Voltage controlled current source}
 
 The voltage-dependent current source (VCCS), as shown in fig.
-\ref{fig:xCCS}, is designated by the following equation which
+\ref{fig:vccs}, is designated by the following equation which
 introduces one more unknown in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{vccs}
+\end{center}
+\caption{voltage controlled current source}
+\label{fig:vccs}
+\end{figure}
+\FloatBarrier
 
 \begin{equation}
 I_{out} = G\cdot\left(V_{1} - V_{2}\right)
@@ -847,8 +856,17 @@ right hand column in the matrix keeps the system consistent.
 \addcontentsline{toc}{subsection}{Voltage controlled voltage source}
 
 The voltage-dependent voltage source (VCVS), as shown in fig.
-\ref{fig:xCVS}, is designated by the following equation which
+\ref{fig:vcvs}, is designated by the following equation which
 introduces one more unknown in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{vcvs}
+\end{center}
+\caption{voltage controlled voltage source}
+\label{fig:vcvs}
+\end{figure}
+\FloatBarrier
 
 \begin{equation}
 V_{2} - V_{3} = G\cdot \left(V_{1} - V_{4}\right)
@@ -895,8 +913,17 @@ I_{4}\\
 \addcontentsline{toc}{subsection}{Current controlled current source}
 
 The current-dependent current source (CCCS), as shown in fig.
-\ref{fig:xCCS}, is designated by the following equation which
+\ref{fig:cccs}, is designated by the following equation which
 introduces one more unknown in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{cccs}
+\end{center}
+\caption{current controlled current source}
+\label{fig:cccs}
+\end{figure}
+\FloatBarrier
 
 \begin{equation}
 V_{1} - V_{4} = 0
@@ -940,6 +967,67 @@ I_{4}\\
 \subsection*{Current controlled voltage source}
 \addcontentsline{toc}{subsection}{Current controlled voltage source}
 
+The current-dependent voltage source (CCVS), as shown in fig.
+\ref{fig:ccvs}, is designated by the following equations which
+introduces two more unknowns in the MNA matrix.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4cm]{ccvs}
+\end{center}
+\caption{current controlled voltage source}
+\label{fig:ccvs}
+\end{figure}
+\FloatBarrier
+
+\begin{equation}
+V_{1} - V_{4} = 0
+\end{equation}
+\begin{equation}
+V_{2} - V_{3} = G\cdot I_{in}
+\quad \rightarrow \quad
+V_{2} - V_{3} - I_{in}\cdot G = 0
+\label{eq:ccvs}
+\end{equation}
+
+The new unknown variables $I_{out}$ and $I_{in}$ must be considered by
+the four remaining simple equations.
+
+\begin{equation}
+I_{1} = -I_{in} \quad I_{2} = -I_{out} \quad I_{3} = I_{out} \quad I_{4} = I_{in}
+\end{equation}
+
+The matrix representation needs to be augmented by two more new rows
+(for the new unknown variables) and their corresponding columns.
+\begin{equation}
+\begin{pmatrix}
+.&.&.&.& -1 & 0\\
+.&.&.&.& 0 & -1\\
+.&.&.&.& 0 & 1\\
+.&.&.&.& 1 & 0\\
+0 & 1 & -1 & 0 & -G & 0\\
+1 & 0 & 0 & -1 & 0 & 0
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{in}\\
+I_{out}
+\end{pmatrix}
+=
+\begin{pmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+0
+\end{pmatrix}
+\end{equation}
+
 \subsection*{Operational amplifier}
 \addcontentsline{toc}{subsection}{Operational amplifier}
 
@@ -948,5 +1036,18 @@ I_{4}\\
 
 \subsection*{Gyrator}
 \addcontentsline{toc}{subsection}{Gyrator}
+
+\nocite{Compton}
+\nocite{Queiroz}
+\nocite{Wedepohl}
+\nocite{Monaco}
+
+\chapter*{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+\def\chapter*{}% to suppress any header
+\def\section*{}% just to be sure
+\renewcommand{\bibname}{}
+\bibliographystyle{plaindin}
+\bibliography{literature}
 
 \end{document}

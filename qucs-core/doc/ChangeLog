@@ -1,3 +1,11 @@
+2004-01-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am: Added rules for bibliography creation.
+
+	* technical.tex (subsection*{Current controlled voltage source}): 
+	Added description of CCVS for use in DC analysis.
+	Added figures for VCCS, VCVS, CCVS and CCCS.  Added bibliography.
+
 2004-01-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section*{Extensions to the MNA}): Documented
