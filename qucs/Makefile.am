@@ -27,7 +27,7 @@ SUBDIRS = qucs
 # Release specific.
 # SUBDIRS = qucs qucs-core
 
-EXTRA_DIST = autogen.sh depcomp
+EXTRA_DIST = autogen.sh depcomp PLATFORMS
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \

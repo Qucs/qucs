@@ -23,7 +23,7 @@
 #
 
 EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
-  $(PSFILES) $(MATHFILES)
+  $(PSFILES) $(MATHFILES) PLATFORMS
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
   $(MPSFILES)
