@@ -26,16 +26,17 @@ SP_Sim::SP_Sim()
   QString s = Description;
   int a = s.find(" ");
   int b = s.findRev(" ");
-  if (a != -1 && b != -1)
+  if (a != -1 && b != -1) {
     if (a > (int) s.length() - b)  b = a;
-  s[b] = '\n';
+  }
+  if (b != -1) s[b] = '\n';
   QFontMetrics metrics(QucsSettings.largeFont);
   QSize r = metrics.size(0, s);
   int xb = r.width()  + 15;
   int yb = r.height() + 15;
 
   Texts.append(new Text(0, 0, s.left(b)));
-  Texts.append(new Text(0, 0, s.mid(b+1)));
+  if (b != -1) Texts.append(new Text(0, 0, s.mid(b+1)));
 
   x1 = -10; y1 = -9;
   x2 = x1+xb+8; y2 = y1+yb+8;

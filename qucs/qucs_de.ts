@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>durchsichtig</translation>
     </message>
 </context>
 <context>
@@ -2307,7 +2307,23 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> &lt;ungültig&gt;</translation>
+    </message>
+    <message>
+        <source>initial phase in degrees</source>
+        <translation>Anfangsphasenverschiebung in Grad</translation>
+    </message>
+    <message>
+        <source>relative tolerance of local truncation error</source>
+        <translation>relative Toleranz des lokalen Abbruchfehlers</translation>
+    </message>
+    <message>
+        <source>absolute tolerance of local truncation error</source>
+        <translation>absolute Toleranz des lokalen Abbruchfehlers</translation>
+    </message>
+    <message>
+        <source>overestimation of local truncation error</source>
+        <translation>Überschätzung des lokalen Abbruchfehlers</translation>
     </message>
 </context>
 <context>
@@ -4049,11 +4065,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
-        <translation type="unfinished">Schaltkreissymbol bearbeiten</translation>
+        <translation>Schaltkreissymbol bearbeiten</translation>
     </message>
     <message>
         <source>Edit Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan bearbeiten</translation>
     </message>
     <message>
         <source>This will delete the files

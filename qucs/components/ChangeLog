@@ -1,3 +1,9 @@
+2004-10-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* param_sweep.cpp (Param_Sweep), sp_sim.cpp (SP_Sim),
+	tr_sim.cpp (TR_Sim), hb_sim.cpp (HB_Sim): Fixed error in
+	word wrapping.
+
 2004-08-31  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
 	* component.cpp (paint): Using font metrics to calculate
