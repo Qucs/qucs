@@ -122,15 +122,15 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -217,71 +217,71 @@
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlendarstellung:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>Real- und Imaginärteil</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>Betrag/Phase (Grad)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>Betrag/Phase (Bogenmaß)</translation>
     </message>
     <message>
         <source>Precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Genauigkeit:</translation>
     </message>
     <message>
         <source>Thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dicke:</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil:</translation>
     </message>
     <message>
         <source>solid line</source>
-        <translation type="unfinished">durchgezogene Linie</translation>
+        <translation>durchgezogene Linie</translation>
     </message>
     <message>
         <source>dash line</source>
-        <translation type="unfinished">gestrichelte Linie</translation>
+        <translation>gestrichelte Linie</translation>
     </message>
     <message>
         <source>dot line</source>
-        <translation type="unfinished">gepunktete Linie</translation>
+        <translation>gepunktete Linie</translation>
     </message>
     <message>
         <source>Grid Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gitternetzfarbe:</translation>
     </message>
     <message>
         <source>Grid Style: </source>
-        <translation type="unfinished"></translation>
+        <translation>Gitternetzstil:</translation>
     </message>
     <message>
         <source>dash dot line</source>
-        <translation type="unfinished">Strich-Punkt-Linie</translation>
+        <translation>Strich-Punkt-Linie</translation>
     </message>
     <message>
         <source>dash dot dot line</source>
-        <translation type="unfinished">Strich-Punkt-Punkt-Linie</translation>
+        <translation>Strich-Punkt-Punkt-Linie</translation>
     </message>
     <message>
         <source>long dash line</source>
-        <translation type="unfinished"></translation>
+        <translation>lange gestrichelte Linie</translation>
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>logarithmisch eingeteilte X-Achse</translation>
     </message>
     <message>
         <source>logarithmical Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>logarithmisch eingeteilte Y-Achse</translation>
     </message>
 </context>
 <context>
@@ -411,19 +411,19 @@
     </message>
     <message>
         <source>Line Width: </source>
-        <translation type="unfinished"></translation>
+        <translation>Linienbreite:</translation>
     </message>
     <message>
         <source>Line Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Linienstil</translation>
     </message>
     <message>
         <source>enable filling</source>
-        <translation type="unfinished"></translation>
+        <translation>mit Füllung</translation>
     </message>
     <message>
         <source>Filling Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Füllmuster</translation>
     </message>
 </context>
 <context>
@@ -535,19 +535,19 @@
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlendarstellung:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
-        <translation type="unfinished"></translation>
+        <translation>Real- und Imaginärteil</translation>
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation type="unfinished"></translation>
+        <translation>Betrag/Phase (Grad)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation type="unfinished"></translation>
+        <translation>Betrag/Phase (Bogenmaß)</translation>
     </message>
 </context>
 <context>
@@ -1304,23 +1304,23 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>npn Bipolartransistor</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation type="unfinished"></translation>
+        <translation>Polarität (npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>Feldeffekttransistor mit pn-Übergängen</translation>
     </message>
     <message>
         <source>polarity (n,p)</source>
-        <translation type="unfinished"></translation>
+        <translation>Polarität (n,p)</translation>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS Feldeffekttransistor</translation>
     </message>
     <message>
         <source>Harmonic balance</source>
@@ -1328,27 +1328,27 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation type="unfinished">S-Parameter Simulation</translation>
+        <translation>S-Parameter Simulation</translation>
     </message>
     <message>
         <source>Transient simulation</source>
-        <translation type="unfinished">Transientsimulation</translation>
+        <translation>Transientsimulation</translation>
     </message>
     <message>
         <source>ac Current Source</source>
-        <translation type="unfinished">AC Stromquelle</translation>
+        <translation>AC Stromquelle</translation>
     </message>
     <message>
         <source>dc Current Source</source>
-        <translation type="unfinished">DC Stromquelle</translation>
+        <translation>DC Stromquelle</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
-        <translation type="unfinished">Rauschstromquelle</translation>
+        <translation>Rauschstromquelle</translation>
     </message>
     <message>
         <source>Attenuator</source>
-        <translation type="unfinished">Dämpfungsglied</translation>
+        <translation>Dämpfungsglied</translation>
     </message>
     <message>
         <source>Bias T</source>
@@ -1356,59 +1356,59 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>npn transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>npn Transistor</translation>
     </message>
     <message>
         <source>Capacitor</source>
-        <translation type="unfinished">Kondensator</translation>
+        <translation>Kondensator</translation>
     </message>
     <message>
         <source>Current Controlled Current Source</source>
-        <translation type="unfinished">stromgesteuerte Stromquelle</translation>
+        <translation>stromgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished">stromgesteuerte Spannungsquelle</translation>
+        <translation>stromgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>Circulator</source>
-        <translation type="unfinished">Zirkulator</translation>
+        <translation>Zirkulator</translation>
     </message>
     <message>
         <source>Coplanar Line</source>
-        <translation type="unfinished">Koplanarleitung</translation>
+        <translation>Koplanarleitung</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation type="unfinished">DC-Sperre</translation>
+        <translation>DC-Sperre</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished">DC-Zuführung</translation>
+        <translation>DC-Zuführung</translation>
     </message>
     <message>
         <source>Diode</source>
-        <translation type="unfinished">Diode</translation>
+        <translation>Diode</translation>
     </message>
     <message>
         <source>Ground</source>
-        <translation type="unfinished">Masse</translation>
+        <translation>Masse</translation>
     </message>
     <message>
         <source>Gyrator</source>
-        <translation type="unfinished">Gyrator</translation>
+        <translation>Gyrator</translation>
     </message>
     <message>
         <source>Inductor</source>
-        <translation type="unfinished">Spule</translation>
+        <translation>Spule</translation>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation type="unfinished">Amperemeter</translation>
+        <translation>Amperemeter</translation>
     </message>
     <message>
         <source>Isolator</source>
-        <translation type="unfinished">Isolator</translation>
+        <translation>Isolator</translation>
     </message>
     <message>
         <source>n-JFET</source>
@@ -1420,103 +1420,103 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished">Mikrostreifenwinkel</translation>
+        <translation>Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished">gekoppelte Mikrostreifenleitung</translation>
+        <translation>gekoppelte Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation type="unfinished">Mikrostreifenkreuzung</translation>
+        <translation>Mikrostreifenkreuzung</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished">Mikrostreifenleitung</translation>
+        <translation>Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished">Abgeflachter Mikrostreifenwinkel</translation>
+        <translation>Abgeflachter Mikrostreifenwinkel</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation type="unfinished">Offene Mikrostreifenleitung</translation>
+        <translation>Offene Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished">Mikrostreifenabsatz</translation>
+        <translation>Mikrostreifenabsatz</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished">Mikrostreifen T-Verzweigung</translation>
+        <translation>Mikrostreifen T-Verzweigung</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished">Phasenschieber</translation>
+        <translation>Phasenschieber</translation>
     </message>
     <message>
         <source>Resistor</source>
-        <translation type="unfinished">Widerstand</translation>
+        <translation>Widerstand</translation>
     </message>
     <message>
         <source>Resistor US</source>
-        <translation type="unfinished">Widerstand US</translation>
+        <translation>Widerstand US</translation>
     </message>
     <message>
         <source>Power Source</source>
-        <translation type="unfinished">Signalquelle</translation>
+        <translation>Signalquelle</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished">1-Tor S-Parameter Datei</translation>
+        <translation>1-Tor S-Parameter Datei</translation>
     </message>
     <message>
         <source>Subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreis</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
-        <translation type="unfinished">Schaltkreis-Anschluß</translation>
+        <translation>Schaltkreis-Anschluß</translation>
     </message>
     <message>
         <source>Substrate</source>
-        <translation type="unfinished">Substrat</translation>
+        <translation>Substrat</translation>
     </message>
     <message>
         <source>symmetric Transformer</source>
-        <translation type="unfinished">symmetrischer Transformator</translation>
+        <translation>symmetrischer Transformator</translation>
     </message>
     <message>
         <source>Transmission Line</source>
-        <translation type="unfinished">Übertragungsstrecke</translation>
+        <translation>Übertragungsstrecke</translation>
     </message>
     <message>
         <source>Transformer</source>
-        <translation type="unfinished">Transformator</translation>
+        <translation>Transformator</translation>
     </message>
     <message>
         <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished">spannungsgesteuerte Stromquelle</translation>
+        <translation>spannungsgesteuerte Stromquelle</translation>
     </message>
     <message>
         <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished">spannungsgesteuerte Spannungsquelle</translation>
+        <translation>spannungsgesteuerte Spannungsquelle</translation>
     </message>
     <message>
         <source>ac Voltage Source</source>
-        <translation type="unfinished">AC Spannungsquelle</translation>
+        <translation>AC Spannungsquelle</translation>
     </message>
     <message>
         <source>dc Voltage Source</source>
-        <translation type="unfinished">DC Spannungsquelle</translation>
+        <translation>DC Spannungsquelle</translation>
     </message>
     <message>
         <source>Noise Voltage Source</source>
-        <translation type="unfinished">Rauschspannungsquelle</translation>
+        <translation>Rauschspannungsquelle</translation>
     </message>
     <message>
         <source>pnp transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>pnp Transistor</translation>
     </message>
     <message>
         <source>p-JFET</source>
@@ -1528,139 +1528,139 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>depletion MOS field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS Feldeffekttransistor (Verarmungstyp)</translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation>MOSFET (Verarmungstyp)</translation>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ohmscher Serienwiderstand</translation>
     </message>
     <message>
         <source>transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>Transitzeit</translation>
     </message>
     <message>
         <source>threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwellspannung</translation>
     </message>
     <message>
         <source>transconductance parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Transkonduktanzparameter</translation>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameter für die Kanallängenmodulation</translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>parasitärer Drainwiderstand</translation>
     </message>
     <message>
         <source>parasitic source resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>parasitärer Sourcewiderstand</translation>
     </message>
     <message>
         <source>gate-junction saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>Sättigungsstrom des Gateübergangs</translation>
     </message>
     <message>
         <source>gate-junction emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Idealitätsfaktor des Gateübergangs</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Gate-Source-Sperrschichtkapazität bei 0 Volt</translation>
     </message>
     <message>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>Gate-Drain-Sperrschichtkapazität bei 0 Volt</translation>
     </message>
     <message>
         <source>gate-junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrschichtpotential des Gateübergangs</translation>
     </message>
     <message>
         <source>forward-bias junction capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Sperrschichtkapazitäts-Linearisierungskoeffizient</translation>
     </message>
     <message>
         <source>gate P-N grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Gradationskoeffizient des Gateübergangs</translation>
     </message>
     <message>
         <source>schematic symbol (european,US)</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreissymbol (european,US)</translation>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation type="unfinished"></translation>
+        <translation>Polarität (nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Emissionsfaktor für nichtidealen Gatestrom</translation>
     </message>
     <message>
         <source>Isr emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Isr Emissionsfaktor</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulationstemperatur in Grad Celsius</translation>
     </message>
     <message>
         <source>relative tolerance for convergence</source>
-        <translation type="unfinished"></translation>
+        <translation>relative Toleranz für Konvergenz</translation>
     </message>
     <message>
         <source>absolute tolerance for currents</source>
-        <translation type="unfinished"></translation>
+        <translation>absolute Toleranz für Ströme</translation>
     </message>
     <message>
         <source>absolute tolerance for voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>absolute Toleranz für Spannungen</translation>
     </message>
     <message>
         <source>put operating points into dataset (yes,no)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabe der Arbeitspunkte in den Datensatz (ja,nein)</translation>
     </message>
     <message>
         <source>maximum number of iterations until error</source>
-        <translation type="unfinished"></translation>
+        <translation>maximale Anzahl der Iterationen</translation>
     </message>
     <message>
         <source>put result into dataset (yes,no)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ergebnis in den Datensatz ausgeben (ja,nein)</translation>
     </message>
     <message>
         <source>quasi-static microstrip model (Hammerstad,Wheeler,Schneider)</source>
-        <translation type="unfinished"></translation>
+        <translation>quasi-statisches Mikrostreifenmodell (Hammerstad,Wheeler,Schneider)</translation>
     </message>
     <message>
         <source>microstrip dispersion model (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrostreifen-Dispersionsmodell (Kirschning,Kobayashi,Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)</translation>
     </message>
     <message>
         <source>calculate noise parameters (yes,no)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschparameter berechnen (ja,nein)</translation>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingangstor für die Rauschzahl</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangstor für die Rauschzahl</translation>
     </message>
     <message>
         <source>sweep type (lin,log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchlauftype (lin,log)</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Simulationsschritte</translation>
     </message>
 </context>
 <context>
@@ -2670,7 +2670,7 @@ Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>-port</source>
-        <translation>-Anschluß</translation>
+        <translation>-Tor</translation>
     </message>
     <message>
         <source>Enter Name to Save Document</source>
@@ -3358,11 +3358,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Programm qucshelp kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -4375,15 +4375,15 @@ Setzt die Einstellungen der Applikation</translation>
     </message>
     <message>
         <source>maximum undo operations:</source>
-        <translation type="unfinished"></translation>
+        <translation>maximal Anzahl der Rückgängig-Operationen:</translation>
     </message>
     <message>
         <source>text editor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor:</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
 </context>
 <context>
