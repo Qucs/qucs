@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_touchstone.y,v 1.1.1.1 2003-12-20 19:03:27 ela Exp $
+ * $Id: parse_touchstone.y,v 1.2 2004-07-22 21:04:46 ela Exp $
  *
  */
 
@@ -105,7 +105,16 @@ DataLine:
     $$ = new vector ();
     $$->add ($1);
     $$->add ($2);
-    $$->add ($3);    
+    $$->add ($3);
+  }
+  | Float Float Float Float Float Eol {
+    /* noise parameters */
+    $$ = new vector ();
+    $$->add ($1);
+    $$->add ($2);
+    $$->add ($3);
+    $$->add ($4);
+    $$->add ($5);
   }
   | Float Float Float Float Float Float Float Float Float Eol {
     /* 2-port and 4- to n-port start */

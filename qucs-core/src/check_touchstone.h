@@ -1,7 +1,7 @@
 /*
  * check_touchstone.h - checker definitions for Touchstone files
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,24 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.h,v 1.1.1.1 2003-12-20 19:03:27 ela Exp $
+ * $Id: check_touchstone.h,v 1.2 2004-07-22 21:04:46 ela Exp $
  *
  */
 
 #ifndef __CHECK_TOUCHSTONE_H__
 #define __CHECK_TOUCHSTONE_H__
+
+/* Touchstone (R) File Format Specification Rev 1.1
+
+   A Touchstone (R) file (also known as an SnP file) is an ASCII text file
+   used for documenting the n-port network parameter data of an active
+   device or passive interconnect network.  While Touchstone file have
+   been accepted as a de-facto standard for the transfer of frequency
+   dependent n-port network data, up till now there has been no formal
+   documentation of the file format or syntax.  This document, base upon
+   information from Agilent Corporation (the originator of Touchstone), is
+   a formal specification of the Touchstone file format, intended for use
+   with documents and specifications produced by the EIA/IBIS Open Forum. */
 
 extern dataset * touchstone_result;
 extern vector  * touchstone_vector;
@@ -33,9 +45,11 @@ struct touchstone_t {
   char * unit;
   char parameter;
   char * format;
-  float resistance;
-  float factor;
+  double resistance;
+  double factor;
   int ports;
+  int noise;
+  int lines;
 };
 
 __BEGIN_DECLS
