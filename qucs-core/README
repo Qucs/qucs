@@ -23,7 +23,7 @@
 Description
 ===========
 
-Qucs SP is a command line s-parameter simulator.  It takes a network
+Qucsator is a command line s-parameter simulator.  It takes a network
 list in a certain format as input and outputs a Qucs dataset.  It has
 been programmed for usage in the Qucs project but can also be used by
 other applications.
@@ -38,12 +38,12 @@ Installation
 
 Unpack the distribution tarball:
 
-    $ tar xvzf qucs-sp-<version>.tar.gz               (using GNU tar)
-    $ gzip -cd qucs-sp-<version>.tar.gz | tar xvf -   (using another tar)
+    $ tar xvzf qucs-core-<version>.tar.gz               (using GNU tar)
+    $ gzip -cd qucs-core-<version>.tar.gz | tar xvf -   (using another tar)
   
 Change into the source directory:
 
-    $ cd qucs-sp-<version>
+    $ cd qucs-core-<version>
   
 Configure the source package for your system:
 
@@ -53,7 +53,7 @@ Now compile the package:
 
     $ make
   
-Install Qucs SP:
+Install Qucsator:
 
     $ make install
 
@@ -68,12 +68,12 @@ file INSTALL included in this distribution.
 Getting the latest CVS snapshot
 ===============================
 
-You can always get the latest Qucs SP version from our CVS repository.
-Please use an official release if you want to work with Qucs SP.  The CVS
-version might not even compile.
+You can always get the latest Qucsator version from our CVS
+repository.  Please use an official release if you want to work with
+Qucsator.  The CVS version might not even compile.
 
     $ cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/qucs \
-      co qucs-sp
+      co qucs-core
 
 Press 'Enter' when asked for a password.  Run `sh autogen.sh' and
 `configure' with the appropriate options.  Maintainance currently

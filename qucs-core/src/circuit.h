@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: circuit.h,v 1.2 2003-12-21 13:25:37 ela Exp $
  *
  */
 
@@ -49,8 +49,8 @@ class circuit : public object
   int countCircuits (void);
   int countPorts (void);
   int countNodes (void);
-  circuit * interconnectJoin (node *, node *);
-  circuit * connectedJoin (node *, node *);
+  void setType (char *);
+  char * getType (void);
 
  protected:
   static const nr_double_t z0 = 50.0;
@@ -61,6 +61,7 @@ class circuit : public object
   int org;
   complex * data;
   node * nodes;
+  char * type;
 };
 
 #endif /* __CIRCUIT_H__ */

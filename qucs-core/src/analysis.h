@@ -1,5 +1,5 @@
 /*
- * input.h - input netlist class definitions
+ * analysis.h - analysis class definitions
  *
  * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,33 +18,32 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.2 2003-12-21 13:25:38 ela Exp $
+ * $Id: analysis.h,v 1.1 2003-12-21 13:25:37 ela Exp $
  *
  */
 
-#ifndef __INPUT_H__
-#define __INPUT_H__
+#ifndef __ANALYSIS_H__
+#define __ANALYSIS_H__
 
+class dataset;
 class net;
-class circuit;
-class analysis;
 
-class input : public object
+class analysis : public object
 {
  public:
-  input ();
-  input (char *);
-  ~input ();
-  int netlist (net *);
-  FILE * getFile (void) { return fd; }
-  void setFile (FILE * f) { fd = f; }
-  void factory (void);
-  circuit * createCircuit (char *);
-  analysis * createAnalysis (char *);
+  analysis ();
+  analysis (char *);
+  analysis (analysis &);
+  ~analysis ();
+  virtual void solve (void) { };
+  dataset * getData (void) { return data; }
+  void setData (dataset * d) { data = d; }
+  net * getNet (void) { return subnet; }
+  void setNet (net * netlist) { subnet = netlist; }
 
- private:
-  FILE * fd;
+ protected:
   net * subnet;
+  dataset * data;
 };
 
-#endif /* __INPUT_H__ */
+#endif /* __ANALYSIS_H__ */

@@ -1,5 +1,5 @@
 /*
- * input.h - input netlist class definitions
+ * spsolver.h - S-parameter solver class definitions
  *
  * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
  *
@@ -18,33 +18,35 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.2 2003-12-21 13:25:38 ela Exp $
+ * $Id: spsolver.h,v 1.1 2003-12-21 13:25:38 ela Exp $
  *
  */
 
-#ifndef __INPUT_H__
-#define __INPUT_H__
+#ifndef __SPSOLVER_H__
+#define __SPSOLVER_H__
 
-class net;
-class circuit;
 class analysis;
+class circuit;
+class node;
 
-class input : public object
+class spsolver : public analysis
 {
  public:
-  input ();
-  input (char *);
-  ~input ();
-  int netlist (net *);
-  FILE * getFile (void) { return fd; }
-  void setFile (FILE * f) { fd = f; }
-  void factory (void);
-  circuit * createCircuit (char *);
-  analysis * createAnalysis (char *);
-
- private:
-  FILE * fd;
-  net * subnet;
+  spsolver ();
+  spsolver (char *);
+  spsolver (spsolver &);
+  ~spsolver ();
+  void calc (nr_double_t);
+  void reduce (void);
+  void solve (void);
+  void insertConnections (void);
+  void insertDifferentialPorts (void);
+  void insertTee (node *);
+  void insertOpen (node *);
+  circuit * interconnectJoin (node *, node *);
+  circuit * connectedJoin (node *, node *);
+  void saveResults (nr_double_t);
+  char * createSP (int, int);
 };
 
-#endif /* __INPUT_H__ */
+#endif /* __SPSOLVER_H__ */

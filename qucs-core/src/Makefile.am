@@ -27,22 +27,23 @@ EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 
 SUBDIRS = components
 
-bin_PROGRAMS = qucs_sp
+bin_PROGRAMS = qucsator
 
 INCLUDES = -I$(top_srcdir)/src/components
 
-qucs_sp_LDADD = components/libcomponent.a
+qucsator_LDADD = components/libcomponent.a
 
-qucs_sp_SOURCES = qucs_sp.cpp logging.c strlist.cpp complex.cpp circuit.cpp \
+qucsator_SOURCES = ucs.cpp logging.c strlist.cpp complex.cpp circuit.cpp    \
 	check_netlist.c parse_netlist.c scan_netlist.c dataset.cpp node.cpp \
 	check_dataset.cpp parse_dataset.cpp scan_dataset.cpp property.cpp   \
 	vector.cpp object.cpp net.cpp input.cpp check_touchstone.cpp        \
-	parse_touchstone.cpp scan_touchstone.cpp matrix.cpp
+	parse_touchstone.cpp scan_touchstone.cpp matrix.cpp analysis.cpp    \
+	spsolver.cpp
 
 noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
 	tokens_netlist.h dataset.h logging.h node.h property.h vector.h     \
 	tokens_dataset.h check_dataset.h strlist.h tokens_touchstone.h      \
-	check_touchstone.h matrix.h
+	check_touchstone.h matrix.h analysis.h spsolver.h
 
 
 generated_FILES = scan_netlist.c parse_netlist.c scan_dataset.cpp \

@@ -21,7 +21,7 @@
 
 This file is intended to collect all known bugs (fixed or unfixed) in
 this package.  We will consider fixing these sooner or later.  Please
-send Qucs SP bug reports to <bug-qucs-sp@sourceforge.net>.
+send Qucs bug reports to <qucs-bugs@lists.sourceforge.net>.
 
 Bug:         B0001
 From:	     Stefan Jahn <stefan@lkcc.org>

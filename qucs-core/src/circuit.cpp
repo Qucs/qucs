@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.1.1.1 2003-12-20 19:03:26 ela Exp $
+ * $Id: circuit.cpp,v 1.2 2003-12-21 13:25:37 ela Exp $
  *
  */
 
@@ -44,6 +44,7 @@ circuit::circuit () : object () {
   nodes = NULL;
   port = 0;
   org = 1;
+  type = NULL;
 }
 
 /* Constructor creates an unnamed instance of the circuit class with a
@@ -54,6 +55,7 @@ circuit::circuit (int s) : object () {
   nodes = new node[s];
   port = 0;
   org = 1;
+  type = NULL;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -62,6 +64,7 @@ circuit::circuit (const circuit & c) : object (c) {
   size = c.size;
   port = c.port;
   org = c.org;
+  type = c.type ? strdup (c.type) : NULL;
   nodes = new node[size];
   data = new complex[size * size];
 
@@ -84,6 +87,18 @@ circuit::circuit (const circuit & c) : object (c) {
 circuit::~circuit () {
   delete[] data;
   delete[] nodes;
+  if (type) free (type);
+}
+
+// Sets the type of the circuit.
+void circuit::setType (char * t) {
+  if (type) free (type);
+  type = t ? strdup (t) : NULL;
+}
+
+// Returns the type of the circuit.
+char * circuit::getType (void) {
+  return type;
 }
 
 /* This function sets the name and port number of one of the circuit's
@@ -97,156 +112,6 @@ void circuit::setNode (int i, char * n) {
 // Returns one of the circuit's nodes.
 node * circuit::getNode (int i) {
   return &nodes[i - 1];
-}
-
-/* This function joins two nodes of a single circuit (interconnected
-   nodes) and returns the resulting circuit. */
-circuit * circuit::interconnectJoin (node * n1, node * n2) {
-
-  circuit * s = n1->getCircuit ();
-  circuit * result = new circuit (s->getSize () - 2);
-  complex p;
-
-  // interconnected port numbers
-  int k = n1->getPort (), l = n2->getPort ();
-
-  int j2; // column index for resulting matrix
-  int i2; // row index for resulting matrix
-  int j1; // column index for S matrix
-  int i1; // row index for S matrix
-
-  // handle single S block only
-  i2 = j2 = 1;
-  for (j1 = 1; j1 <= s->getSize (); j1++) {
-
-    // skip connected node
-    if (j1 == k || j1 == l) continue;
-
-    // assign node name of resulting circuit
-    result->setNode (j2, s->getNode(j1)->getName());
-
-    // inside S only
-    for (i1 = 1; i1 <= s->getSize (); i1++) {
-
-      // skip connected node
-      if (i1 == k || i1 == l) continue;
-
-      // compute S'ij
-      p = s->getS (i1, j1);
-      p += 
-	(s->getS (k, j1) * s->getS (i1, l) * (1.0 - s->getS (l, k)) + 
-	 s->getS (l, j1) * s->getS (i1, k) * (1.0 - s->getS (k, l)) + 
-	 s->getS (k, j1) * s->getS (l, l) * s->getS (i1, k) +
-	 s->getS (l, j1) * s->getS (k, k) * s->getS (i1, l)) / 
-	((1.0 - s->getS (k, l)) * (1.0 - s->getS (l, k)) -
-	 s->getS (k, k) * s->getS (l, l));
-      result->setS (i2++, j2, p);
-    }
-
-    // next column
-    j2++; i2 = 1;
-  }
-  return result;
-}
-
-/* This function joins two nodes of two different circuits (connected
-   nodes) and returns the resulting circuit. */
-circuit * circuit::connectedJoin (node * n1, node * n2) {
-
-  circuit * s = n1->getCircuit ();
-  circuit * t = n2->getCircuit ();
-  circuit * result = new circuit (s->getSize () + t->getSize () - 2);
-  complex p;
-
-  // connected port numbers
-  int k = n1->getPort (), l = n2->getPort ();
-
-  int j2; // column index for resulting matrix
-  int i2; // row index for resulting matrix
-  int j1; // column index for S matrix
-  int i1; // row index for S matrix
-
-  // handle S block
-  i2 = j2 = 1;
-  for (j1 = 1; j1 <= s->getSize (); j1++) {
-
-    // skip connected node
-    if (j1 == k) continue;
-
-    // assign node name of resulting circuit
-    result->setNode (j2, s->getNode(j1)->getName());
-
-    // inside S
-    for (i1 = 1; i1 <= s->getSize (); i1++) {
-
-      // skip connected node
-      if (i1 == k) continue;
-
-      // compute S'ij
-      p = s->getS (i1, j1);
-      p +=
-	(s->getS (k, j1) * t->getS (l, l) * s->getS (i1, k)) /
-	(1.0 - s->getS (k, k) * t->getS (l, l));
-      result->setS (i2++, j2, p);
-    }
-
-    // across S and T
-    for (i1 = 1; i1 <= t->getSize (); i1++) {
-
-      // skip connected node
-      if (i1 == l) continue;
-
-      // compute S'mj
-      p =
-	(s->getS (k, j1) * t->getS (i1, l)) /
-	(1.0 - s->getS (k, k) * t->getS (l, l));
-      result->setS (i2++, j2, p);
-    }
-    // next column
-    j2++; i2 = 1;
-  }
-
-  // handle T block
-  for (j1 = 1; j1 <= t->getSize (); j1++) {
-
-    // skip connected node
-    if (j1 == l) continue;
-
-    // assign node name of resulting circuit
-    result->setNode (j2, t->getNode(j1)->getName());
-
-    // across T and S
-    for (i1 = 1; i1 <= s->getSize (); i1++) {
-
-      // skip connected node
-      if (i1 == k) continue;
-
-      // compute S'mj
-      p =
-	(t->getS (l, j1) * s->getS (i1, k)) /
-	(1.0 - t->getS (l, l) * s->getS (k, k));
-      result->setS (i2++, j2, p);
-    }
-
-    // inside T
-    for (i1 = 1; i1 <= t->getSize (); i1++) {
-
-      // skip connected node
-      if (i1 == l) continue;
-
-      // compute S'ij
-      p = t->getS (i1, j1);
-      p +=
-	(t->getS (l, j1) * s->getS (k, k) * t->getS (i1, l)) /
-	(1.0 - t->getS (l, l) * s->getS (k, k));
-      result->setS (i2++, j2, p);
-    }
-
-    // next column
-    j2++; i2 = 1;
-  }
-
-  return result;
 }
 
 /* This function counts the number of signals (ports) within the list

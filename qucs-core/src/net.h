@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: net.h,v 1.2 2003-12-21 13:25:38 ela Exp $
  *
  */
 
@@ -27,6 +27,7 @@
 
 class circuit;
 class node;
+class analysis;
 class dataset;
 
 class net : public object
@@ -39,37 +40,31 @@ class net : public object
   circuit * getRoot (void) { return root; }
   void setRoot (circuit * c) { root = c; }
   void insertCircuit (circuit *);
-  void insertPort (circuit *);
   void removeCircuit (circuit *);
-  void calc (nr_double_t);
-  void reduce (void);
-  void solve (void);
   void list (void);
   void reducedCircuit (circuit *);
   node * findConnectedNode (node *);
   node * findConnectedCircuitNode (node *);
-  void insertConnections (void);
-  void insertDifferentialPorts (void);
-  void insertTee (node *);
-  void insertOpen (node *);
   void insertedCircuit (circuit *);
-  circuit * findCircuits (node *, int);
   void insertedNode (node *);
+  void insertAnalysis (analysis *);
+  void removeAnalysis (analysis *);
+  dataset * runAnalysis (void);
   void getDroppedCircuits (void);
   void deleteUnusedCircuits (void);
-  void saveResults (nr_double_t);
-  char * createSP (int, int);
-  dataset * getData (void);
+  int getPorts (void) { return nPorts; }
+  int getReduced (void) { return reduced; }
+  void setReduced (int r) { reduced = r; }
 
-private:
-  circuit * root;
+ private:
   circuit * drop;
-  int nCircuits;
+  circuit * root;
+  analysis * actions;
   int nPorts;
+  int nCircuits;
   int reduced;
   int inserted;
   int insertedNodes;
-  dataset * data;
 };
 
 #endif /* __NET_H__ */
