@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strlist.cpp,v 1.2 2004/03/20 16:58:49 ela Exp $
+ * $Id: strlist.cpp,v 1.3 2004/05/09 12:54:03 ela Exp $
  *
  */
 
@@ -131,7 +131,6 @@ char * strlist::toString (void) {
     txt = (s == root) ? strcpy (txt, t) : strcat (txt, t);
     txt = strcat (txt, " ");
   }
-  if (txt)
-    txt[strlen (txt) - 1] = '\0';
-  return txt;
+  if (txt) txt[strlen (txt) - 1] = '\0';
+  return txt ? txt : (char *) "";
 }

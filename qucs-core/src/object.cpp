@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.4 2004/03/14 17:42:47 ela Exp $
+ * $Id: object.cpp,v 1.5 2004/05/09 12:54:03 ela Exp $
  *
  */
 
@@ -57,9 +57,7 @@ object::object (char * n) {
 /* This copy constructor creates a instance of the object class based
    on the given object. */
 object::object (const object & o) {
-  name = NULL;
-  if (o.name != NULL)
-    name = strdup (o.name);
+  name = o.name ? strdup (o.name) : NULL;
   next = o.next;
   prev = o.prev;
   copyProperties (o.prop);
@@ -67,7 +65,7 @@ object::object (const object & o) {
 
 // Destructor deletes an instance of the object class.
 object::~object () {
-  free (name);
+  if (name) free (name);
   deleteProperties ();
 }
 

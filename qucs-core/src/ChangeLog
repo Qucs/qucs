@@ -1,3 +1,10 @@
+2004-05-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* equation.cpp: Fixed a bug occurring when solution of equations
+	appear to be plain reference vectors.
+	Made equations depending on independent data vectors of the dataset
+	dependent vectors.
+
 2004-05-05  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_netlist.cpp: Checking presence and necessity of DC

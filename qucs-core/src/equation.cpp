@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.7 2004/04/19 18:42:21 ela Exp $
+ * $Id: equation.cpp,v 1.8 2004/05/09 12:54:03 ela Exp $
  *
  */
 
@@ -560,7 +560,7 @@ int checker::findDuplicate (void) {
   // Emit appropriate error messages.
   foreach_equation (eqn) {
     if (eqn->duplicate > 1) {
-      logprint (LOG_ERROR, "checker error, variable `%s' occurred %dx\n",
+      logprint (LOG_ERROR, "checker error, variable `%s' assigned %dx\n",
 		eqn->result, eqn->duplicate);
       err++;
     }
@@ -764,7 +764,7 @@ vector * solver::dataVector (node * eqn) {
   vector * v = NULL;
   switch (eqn->getType ()) {
   case TAG_VECTOR:
-    v = eqn->getResult()->v;
+    v = new vector (* (eqn->getResult()->v));
     break;
   case TAG_DOUBLE:
     v = new vector ();
@@ -785,7 +785,10 @@ void solver::checkinDataset (void) {
   if (data == NULL) return;
   vector * v;
   for (v = data->getDependencies (); v != NULL; v = (vector *) v->getNext ()) {
-    addEquationData (v);
+    node * eqn = addEquationData (v);
+    strlist * deps = new strlist ();
+    deps->add (v->getName ());
+    eqn->setDataDependencies (deps);
   }
   for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
     node * eqn = addEquationData (v);
@@ -802,6 +805,7 @@ void solver::checkoutDataset (void) {
     char * str = A(eqn)->result;
     vector * dep = data->findDependency (str);
     vector * var = data->findVariable (str);
+
     // is the equation result already in the dataset ?
     if (dep == NULL && var == NULL) {
       vector * v = dataVector (eqn);
