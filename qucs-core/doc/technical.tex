@@ -599,4 +599,169 @@ S_{12} = S_{21} = \frac{p\cdot(1-r^2)}{1-r^2\cdot p^2}
 
 With $c$=299 792 458 m/s being the vacuum light velocity.
 
+
+\chapter*{Noise Waves}
+\addcontentsline{toc}{chapter}{Noise Waves}
+
+\section*{Definition}
+\addcontentsline{toc}{section}{Definition}
+
+In microwave circuits described by scattering parameters, it is advantageous to regard noise as
+noise waves. The noise characteristics of an n-port is then defined completely by one outgoing
+noise wave $\underline{b}_{noise,n}$ at each port (see 2-port example in fig. \ref{fig:Sparam})
+and the correlation between these noise sources.
+Therefore, mathematically, you can characterize a noisy n-port by its $n\times n$ scattering
+matrix $(\underline{S})$ and its $n\times n$ noise wave correlation matrix $(\underline{C})$.
+\begin{equation}
+\begin{split}
+(\underline{C}) =
+\begin{pmatrix}
+ \overline{\underline{b}_{noise,1}\cdot \underline{b}_{noise,1}^*} &
+    \overline{\underline{b}_{noise,1}\cdot \underline{b}_{noise,2}^*} &
+    \ldots & \overline{\underline{b}_{noise,1}\cdot \underline{b}_{noise,n}^*}\\
+ \overline{\underline{b}_{noise,2}\cdot \underline{b}_{noise,1}^*} &
+    \overline{\underline{b}_{noise,2}\cdot \underline{b}_{noise,2}^*} & \ldots &
+    \overline{\underline{b}_{noise,2}\cdot \underline{b}_{noise,n}^*}\\
+ \vdots & \vdots & \ddots & \vdots\\
+ \overline{\underline{b}_{noise,n}\cdot \underline{b}_{noise,1}^*} &
+    \overline{\underline{b}_{noise,n}\cdot \underline{b}_{noise,2}^*} &
+    \ldots & \overline{\underline{b}_{noise,n}\cdot \underline{b}_{noise,n}^*}\\
+\end{pmatrix}
+\\ =
+\begin{pmatrix}
+  \underline{c}_{11} & \underline{c}_{12} & \ldots & \underline{c}_{1n}\\
+  \underline{c}_{21} & \underline{c}_{22} & \ldots & \underline{c}_{2n}\\
+  \vdots & \vdots & \ddots & \vdots\\
+  \underline{c}_{n1} & \underline{c}_{n2} & \ldots & \underline{c}_{nn}\\
+\end{pmatrix}
+\end{split}
+\end{equation}
+Where $\overline{x}$ is the time average of $x$ and $\underline{x}^*$ is the conjugate complex
+of $\underline{x}$. As can be seen, the following equations hold:
+\begin{equation}
+\text{Im}(\underline{c}_{nn}) = \text{Im}(\overline{|b_{noise,n}|^2}) = 0
+\end{equation}
+\begin{equation}
+\underline{c}_{nm} = \underline{c}_{mn}^*
+\end{equation}
+Where $\text{Im}(\underline{x})$ is the imaginary part of $\underline{x}$ and $|\underline{x}|$ is
+the magnitude of $\underline{x}$.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{Sparam}
+\end{center}
+\caption{Signal flow graph of a noise 2-port}
+\label{fig:Sparam}
+\end{figure}
+\FloatBarrier
+
+
+\section*{Noise Parameters}
+\addcontentsline{toc}{section}{Noise Parameters}
+
+Having the noise wave correlation matrix, one can easily compute the noise parameters.
+The following equations calculate them with regard to port 1 (input) and port 2 (output).
+\\ \\Noise figure:
+\begin{equation}
+F = 1 + \frac{\underline{c}_{22}}{k\cdot T_0\cdot |\underline{S}_{21}|^2}
+\end{equation}
+\begin{equation}
+NF\,[\text{dB}]\, = 10\cdot\lg F
+\end{equation}
+\\ \\Optimal source reflexion coefficient:
+\begin{equation}
+\Gamma_{opt} = \frac{\eta_2}{2}\cdot\left( 1-\sqrt{1-\frac{4}{|\eta_2|^2}} \right)
+\end{equation}
+With
+\begin{equation}
+\eta_1 = \underline{c}_{11}\cdot |\underline{S}_{21}|^2
+       - \text{Re}(\underline{c}_{12}\cdot\underline{S}_{21}\cdot\underline{S}_{11}^*)
+       + \underline{c}_{22}\cdot|\underline{S}_{11}|^2
+\end{equation}
+\begin{equation}
+\eta_2 = \frac{\underline{c}_{22} + \eta_1}
+              {\underline{c}_{22}\cdot\underline{S}_{11} - \underline{c}_{12}\cdot\underline{S}_{21}}
+\end{equation}
+\\ \\Minimum noise figure:
+\begin{equation}
+F_{min} = 1 + \frac{\underline{c}_{22} - \eta_1\cdot |\Gamma_{opt}|^2}
+                   {k\cdot T_0\cdot |\underline{S}_{21}|^2\cdot (1+|\Gamma_{opt}|^2)}
+\end{equation}
+\begin{equation}
+NF_{min} = 10\cdot \lg F_{min}
+\end{equation}
+\\ \\Equivalent noise resistance:
+\begin{equation}
+R_n = \frac{Z_0}{4\cdot k\cdot T_0}\cdot
+      \left( \underline{c}_{11} - 2\cdot
+      \text{Re}\left( \underline{c}_{12}\cdot\left( \frac{1+\underline{S}_{11}}{\underline{S}_{21}} \right)^*
+      \right)\, + \underline{c}_{22}\cdot
+      \left| \frac{1+\underline{S}_{11}}{\underline{S}_{21}} \right|^2 \right)
+\end{equation}
+\begin{tabular}{ll}
+With & \quad Boltzmann constant $k = 1.380658\cdot 10^{-23}$ J/K\\
+     & \quad standard temperature $T_0 = 290$K\\
+\end{tabular}
+
+
+\section*{Noise Wave Correlation Matrix in CAE}
+\addcontentsline{toc}{section}{Noise Wave Correlation Matrix in CAE}
+
+We have the noise wave correlation ( $(\underline{C})$, $(\underline{D})$ ) and the scattering
+matrix ( $(\underline{S})$, $(\underline{T})$ ) of two arbitrary circuits and
+want to know the correlation matrix of the special circuit, that results from connecting port $m$
+of circuit 1 with port $k$ of circuit 2 (fig. \ref{fig:nconnect}). The following equations
+perform this operation:
+\begin{equation}
+\underline{c}_{nn}' = \underline{c}_{nn} + \left( \underline{d}_{kk} +
+   \underline{c}_{mm}\cdot|\underline{T}_{kk}|^2 \right) \cdot
+   \left| \frac{\underline{S}_{nm}}{1-\underline{S}_{mm}\cdot\underline{T}_{kk}} \right|^2
+   + 2\cdot\text{Re}\left( \underline{c}_{nm}\cdot
+   \frac{\underline{T}_{kk}\cdot\underline{S}_{nm}}{1-\underline{S}_{mm}\cdot\underline{T}_{kk}} \right)
+\end{equation}
+\begin{equation}
+\begin{split}
+\underline{c}_{nl}' = (\underline{c}_{ln}')^* = 
+   (\underline{c}_{mm}\cdot\underline{T}_{kk} + \underline{d}_{kk}\cdot\underline{S}_{mm}^*)\cdot
+   \frac{\underline{S}_{nm}\cdot\underline{T}_{lk}^*}{|1-\underline{S}_{mm}\cdot\underline{T}_{kk}|^2}
+\\ + \;\underline{c}_{nm}\cdot
+     \left(\frac{\underline{T}_{lk}}{1-\underline{S}_{mm}\cdot\underline{T}_{kk}}\right)^*
+   + \underline{d}_{kl}\cdot
+     \frac{\underline{S}_{nm}}{1-\underline{S}_{mm}\cdot\underline{T}_{kk}}
+\end{split}
+\end{equation}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=8cm]{nconnect}
+\end{center}
+\caption{Connecting two noisy circuits}
+\label{fig:nconnect}
+\end{figure}
+\FloatBarrier
+
+
+\section*{Noise Wave Correlation Matrix of Components}
+\addcontentsline{toc}{section}{Noise Wave Correlation Matrix of Components}
+
+Many components do not produce any noise. Every element of their noise correlation matrix
+therefore equals exactly zero. Examples are capacitors, inductors, transformers, voltage and
+current sources.
+
+
+\subsection*{Resistor}
+\addcontentsline{toc}{subsection}{Resistor}
+
+Being on temperature $T$, the noise wave correlation matrix of an ideal, ohmic resistor with
+resistance $R$ writes as follows.
+\begin{equation}
+(\underline{C}) = k\cdot T\cdot\frac{4\cdot R\cdot Z_0}{(2\cdot Z_0+R)^2}\cdot
+\begin{pmatrix}
+   1 & -1\\
+  -1 &  1\\
+\end{pmatrix}
+\end{equation}
+
+
 \end{document}
