@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.h,v 1.5 2004/11/24 19:15:46 raimi Exp $
+ * $Id: object.h,v 1.6 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -27,6 +27,7 @@
 
 class property;
 class variable;
+class vector;
 
 class object
 {
@@ -48,6 +49,7 @@ class object
   void setProperty (char *, char *);
   void setProperty (char *, nr_double_t);
   void setProperty (char *, variable *);
+  vector * getPropertyVector (char *);
   char * getPropertyString (char *);
   nr_double_t getPropertyDouble (char *);
   int  getPropertyInteger (char *);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.h,v 1.6 2004/05/17 19:50:51 ela Exp $
+ * $Id: analysis.h,v 1.7 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -29,6 +29,7 @@ class dataset;
 class net;
 class object;
 class environment;
+class sweep;
 
 enum analysis_type {
   ANALYSIS_UNKNOWN = -1,
@@ -58,8 +59,9 @@ class analysis : public object
   void setAnalysis (analysis * a) { actions = a; }
   void addAnalysis (analysis *);
   void delAnalysis (analysis *);
-  int getType (void) { return type; }
+  int  getType (void) { return type; }
   void setType (int t) { type = t; }
+  sweep * createSweep (char *);
 
  protected:
   int runs;

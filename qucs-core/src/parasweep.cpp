@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.8 2004/09/08 18:25:19 ela Exp $
+ * $Id: parasweep.cpp,v 1.9 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -83,19 +83,7 @@ void parasweep::solve (void) {
 
   // create sweep if necessary
   if (swp == NULL) {
-    char * type = getPropertyString ("Type");
-    nr_double_t start = getPropertyDouble ("Start");
-    nr_double_t stop = getPropertyDouble ("Stop");
-    int points = getPropertyInteger ("Points");
-
-    if (!strcmp (type, "lin")) {
-      swp = new linsweep (n);
-      ((linsweep *) swp)->create (start, stop, points);
-    }
-    else if (!strcmp (type, "log")) {
-      swp = new logsweep (n);
-      ((logsweep *) swp)->create (start, stop, points);
-    }
+    swp = createSweep (n);
   }
 
   // get parameter name and the appropriate variable from the current

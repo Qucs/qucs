@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: netdefs.h,v 1.3 2004/11/04 08:48:27 ela Exp $
+ * $Id: netdefs.h,v 1.4 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -121,11 +121,13 @@ struct define_t {
 #define PROP_INT          0
 #define PROP_REAL         1
 #define PROP_STR          2
+#define PROP_LIST         3
 
 #define PROP_IS_PROP(prop)   ((prop).key != NULL)
 #define PROP_IS_VAL(prop)    ((prop).type != PROP_STR)
 #define PROP_IS_INT(prop)    ((prop).type == PROP_INT)
 #define PROP_IS_STR(prop)    (!PROP_IS_VAL (prop))
+#define PROP_IS_LST(prop)    ((prop).type == PROP_LIST)
 #define PROP_HAS_RANGE(prop) ((prop).range.l != 0 || (prop).range.h != 0)
 
 #define create_definition() \

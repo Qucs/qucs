@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.67 2004/12/03 18:57:03 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.68 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -191,8 +191,8 @@ static struct special_t checker_specials[] = {
   { "BJT",    "Type",        { "npn", "pnp", NULL } },
   { "MOSFET", "Type",        { "nfet", "pfet", NULL } },
   { "SP",     "Noise",       { "yes", "no", NULL } },
-  { "SP",     "Type",        { "lin", "log", NULL } },
-  { "AC",     "Type",        { "lin", "log", NULL } },
+  { "SP",     "Type",        { "lin", "log", "list", "const", NULL } },
+  { "AC",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "DC",     "saveOPs",     { "yes", "no", NULL } },
   { "DC",     "saveAll",     { "yes", "no", NULL } },
   { "DC",     "convHelper",  { "none", "SourceStepping", "gMinStepping", 
@@ -205,7 +205,7 @@ static struct special_t checker_specials[] = {
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },
   { "MLIN",   "Model",       { "Wheeler", "Schneider", "Hammerstad", NULL } },
-  { "SW",     "Type",        { "lin", "log", NULL } },
+  { "SW",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "SPfile", "Data",        { "rectangular", "polar", NULL } },
   { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
@@ -287,8 +287,8 @@ static int checker_resolve_variable (struct definition_t * root,
     if ((val = checker_find_variable (root, "SW", "Param", value->ident))) {
       /* mark both the variable identifier and the parameter sweep
 	 variable to be actually variables */
-      val->var = 1;
-      value->var = 1;
+      val->var = eqn::TAG_DOUBLE;
+      value->var = eqn::TAG_DOUBLE;
       found++;
     }
     /* 2. find analysis in parameter sweeps */
@@ -551,6 +551,100 @@ static int checker_validate_ports (struct definition_t * root) {
   return errors;
 }
 
+/* The following funtion checks whether the parametric sweeps in the
+   netlist are valid or not.  It returns zero on success and non-zero
+   otherwise. */
+static int checker_validate_lists (struct definition_t * root) {
+  int errors = 0;
+  // go through each definition
+  for (struct definition_t * def = root; def != NULL; def = def->next) {
+    /* sweeps possible in parameter sweep, ac-analysis and
+       s-parameter analysis */
+    if (def->action == 1 && (!strcmp (def->type, "SW") ||
+			     !strcmp (def->type, "AC") ||
+			     !strcmp (def->type, "SP"))) {
+      struct value_t * val = checker_find_reference (def, "Type");
+      char * type = val->ident;
+      // list of constant values and constant values
+      if (type && (!strcmp (type, "const") || !strcmp (type, "list"))) {
+	// property 'Values' is required
+	if ((val = checker_find_prop_value (def, "Values")) == NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, required property "
+		    "`%s' not found in `%s:%s'\n", def->line, "Values",
+		    def->type, def->instance);
+	  errors++;
+	}
+	else {
+	  if (!strcmp (type, "const")) {
+	    // in constant sweeps only one value allowed
+	    if (val->next != NULL) {
+	      logprint (LOG_ERROR, "line %d: checker error, value of `%s' "
+			"needs to be a single constant value in `%s:%s', no "
+			"lists possible\n", def->line, "Values",
+			def->type, def->instance);
+	      errors++;
+	    }
+	  }
+	  val->var = eqn::TAG_VECTOR;
+	}
+	// property 'Start' is invalid
+	if ((val = checker_find_prop_value (def, "Start")) != NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
+		    "`%s' is invalid in `%s:%s'\n", def->line, "Start",
+		    def->type, def->instance);
+	  errors++;
+	}
+	// property 'Stop' is invalid
+	if ((val = checker_find_prop_value (def, "Stop")) != NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
+		    "`%s' is invalid in `%s:%s'\n", def->line, "Stop",
+		    def->type, def->instance);
+	  errors++;
+	}
+	// property 'Points' is also invalid
+	if ((val = checker_find_prop_value (def, "Points")) != NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
+		    "`%s' is invalid in `%s:%s'\n", def->line, "Points",
+		    def->type, def->instance);
+	  errors++;
+	}
+      }
+      // linearly and logarithmically stepped sweeps
+      else if (type && (!strcmp (type, "lin") || !strcmp (type, "log"))) {
+	// property 'Start' required
+	if ((val = checker_find_prop_value (def, "Start")) == NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, required property "
+		    "`%s' not found in `%s:%s'\n", def->line, "Start",
+		    def->type, def->instance);
+	  errors++;
+	}
+	// property 'Stop' required
+	if ((val = checker_find_prop_value (def, "Stop")) == NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, required property "
+		    "`%s' not found in `%s:%s'\n", def->line, "Stop",
+		    def->type, def->instance);
+	  errors++;
+	}
+	// property 'Points' is also required
+	if ((val = checker_find_prop_value (def, "Points")) == NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, required property "
+		    "`%s' not found in `%s:%s'\n", def->line, "Points",
+		    def->type, def->instance);
+	  errors++;
+	}
+	// property 'Values' is invalid
+	if ((val = checker_find_prop_value (def, "Values")) != NULL) {
+	  logprint (LOG_ERROR, "line %d: checker error, extraneous property "
+		    "`%s' is invalid in `%s:%s'\n", def->line, "Values",
+		    def->type, def->instance);
+	  errors++;
+	}
+      }
+    }
+  }
+  return errors;
+}
+
 /* This function checks the actions to be taken in the netlist.  It
    returns zero on success, non-zero otherwise. */
 static int checker_validate_actions (struct definition_t * root) {
@@ -586,6 +680,7 @@ static int checker_validate_actions (struct definition_t * root) {
   }
   errors += checker_validate_para (root);
   errors += checker_validate_ports (root);
+  errors += checker_validate_lists (root);
   return errors;
 }
 
@@ -755,15 +850,28 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
   int errors = 0;
   // check values
   if (PROP_IS_VAL (*prop)) {
-    if (PROP_HAS_RANGE (*prop)) {
-      if (pair->value->value < prop->range.l ||
-	  pair->value->value > prop->range.h) {
-	logprint (LOG_ERROR, 
-		  "checker error, value of `%s' (%g) is out of "
-		  "range [%g,%g] in `%s:%s'\n",
-		  pair->key, pair->value->value, prop->range.l,
-		  prop->range.h, def->type, instance);
+    if (!PROP_IS_LST (*prop)) {
+      // lists of values possible?
+      if (pair->value->next != NULL) {
+	logprint (LOG_ERROR,
+		  "checker error, value of `%s' needs to be "
+		  "a single value in `%s:%s', no lists possible\n",
+		  pair->key, def->type, instance);
 	errors++;
+      }
+    }
+    // check range of all values
+    if (PROP_HAS_RANGE (*prop)) {
+      struct value_t * val = pair->value;
+      for (; val != NULL; val = val->next) {
+	if (val->value < prop->range.l || val->value > prop->range.h) {
+	  logprint (LOG_ERROR, 
+		    "checker error, value of `%s' (%g) is out of "
+		    "range [%g,%g] in `%s:%s'\n",
+		    pair->key, val->value, prop->range.l,
+		    prop->range.h, def->type, instance);
+	  errors++;
+	}
       }
     }
     // check fraction of integers
@@ -1416,7 +1524,12 @@ static int netlist_checker_intern (struct definition_t * root) {
 static void netlist_list_value (struct value_t * value) {
   if (value->ident)
     logprint (LOG_STATUS, "%s", value->ident);
-  else {
+  else if (value->next) {
+    logprint (LOG_STATUS, "[");
+    for (; value != NULL; value = value->next)
+      logprint (LOG_STATUS, "%g%s", value->value, value->next ? ";" : "");
+    logprint (LOG_STATUS, "]");
+  } else {
     logprint (LOG_STATUS, "%g", value->value);
     if (value->scale)
       logprint (LOG_STATUS, "%s", value->scale);

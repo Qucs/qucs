@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.7 2004/10/03 10:30:51 ela Exp $
+ * $Id: pac.cpp,v 1.8 2004/12/07 22:33:32 raimi Exp $
  *
  */
 
@@ -61,7 +61,7 @@ void pac::calcDC (void) {
 void pac::calcAC (nr_double_t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
-  nr_double_t i = sqrt (p / r);
+  nr_double_t i = sqrt (8 * p / r);
   calcDC ();
   setI (1, +i); setI (2, -i);
 }
@@ -70,7 +70,7 @@ void pac::calcTR (nr_double_t t) {
   nr_double_t p = getPropertyDouble ("P");
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t f = getPropertyDouble ("f");
-  nr_double_t i = sqrt (p / r) * sin (2 * M_PI * f * t);
+  nr_double_t i = sqrt (8 * p / r) * sin (2 * M_PI * f * t);
   calcDC ();
   setI (1, +i); setI (2, -i);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.22 2004/11/29 19:03:33 raimi Exp $
+ * $Id: evaluate.cpp,v 1.23 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -1898,7 +1898,7 @@ struct application_t eqn::applications[] = {
   { "+", TAG_STRING,  evaluate::plus_s_s, 2, { TAG_STRING,  TAG_STRING  } },
   { "+", TAG_STRING,  evaluate::plus_c_s, 2, { TAG_CHAR,    TAG_STRING  } },
   { "+", TAG_STRING,  evaluate::plus_s_c, 2, { TAG_STRING,  TAG_CHAR    } },
-  { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC  } },
+  { "+", TAG_MATVEC,  evaluate::plus_mv_mv, 2, { TAG_MATVEC, TAG_MATVEC } },
   { "+", TAG_MATVEC,  evaluate::plus_mv_m, 2, { TAG_MATVEC, TAG_MATRIX  } },
   { "+", TAG_MATVEC,  evaluate::plus_m_mv, 2, { TAG_MATRIX, TAG_MATVEC  } },
 
@@ -2003,9 +2003,9 @@ struct application_t eqn::applications[] = {
   { "mag", TAG_MATRIX,  evaluate::abs_m, 1, { TAG_MATRIX  } },
   { "mag", TAG_MATVEC,  evaluate::abs_mv, 1, { TAG_MATVEC } },
 
-  { "conj", TAG_DOUBLE,  evaluate::conj_d, 1, { TAG_DOUBLE  } },
-  { "conj", TAG_COMPLEX, evaluate::conj_c, 1, { TAG_COMPLEX } },
-  { "conj", TAG_VECTOR,  evaluate::conj_v, 1, { TAG_VECTOR  } },
+  { "conj", TAG_DOUBLE,  evaluate::conj_d,  1, { TAG_DOUBLE  } },
+  { "conj", TAG_COMPLEX, evaluate::conj_c,  1, { TAG_COMPLEX } },
+  { "conj", TAG_VECTOR,  evaluate::conj_v,  1, { TAG_VECTOR  } },
   { "conj", TAG_MATRIX,  evaluate::conj_m,  1, { TAG_MATRIX  } },
   { "conj", TAG_MATVEC,  evaluate::conj_mv, 1, { TAG_MATVEC  } },
 

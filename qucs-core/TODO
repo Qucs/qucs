@@ -88,8 +88,8 @@ unfixed) have a look at the file BUGS.
 	- Implement sinc() and sign() functions.
 	- Fix dependency in dataset variables when e.g. using max().
 	- Add constants like pi to the available symbols in equations.
-- Implement list and logarithmic sweeps and merge them with the
-  existing linear parameter sweep.
+	- Implement list and logarithmic sweeps and merge them with the
+	  existing linear parameter sweep.
 	- Do not permit duplicate parameter names in parameter sweeps, but
 	  allow them in same order sweeps.
 	- Implement implicit dependencies of analysis types.

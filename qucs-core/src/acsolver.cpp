@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.5 2004/10/04 17:17:44 ela Exp $
+ * $Id: acsolver.cpp,v 1.6 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -69,19 +69,7 @@ void acsolver::solve (void) {
 
   // create frequency sweep if necessary
   if (swp == NULL) {
-    char * type = getPropertyString ("Type");
-    nr_double_t start = getPropertyDouble ("Start");
-    nr_double_t stop = getPropertyDouble ("Stop");
-    int points = getPropertyInteger ("Points");
-
-    if (!strcmp (type, "lin")) {
-      swp = new linsweep ("acfrequency");
-      ((linsweep *) swp)->create (start, stop, points);
-    }
-    else if (!strcmp (type, "log")) {
-      swp = new logsweep ("acfrequency");
-      ((logsweep *) swp)->create (start, stop, points);
-    }
+    swp = createSweep ("acfrequency");
   }
 
   // initialize node voltages, first guess for non-linear circuits and

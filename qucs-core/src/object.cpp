@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: object.cpp,v 1.8 2004/09/08 18:25:19 ela Exp $
+ * $Id: object.cpp,v 1.9 2004/12/07 22:33:31 raimi Exp $
  *
  */
 
@@ -124,6 +124,15 @@ void object::setProperty (char * n, nr_double_t val) {
    value to the object. */
 void object::addProperty (char * n, variable * val) {
   addProperty (new property (n, val));
+}
+
+/* Returns the requested property value which has been previously
+   added as its vector representation.  If there is no such property
+   the function returns NULL. */
+vector * object::getPropertyVector (char * n) {
+  property * p = prop->findProperty (n);
+  if (p != NULL) return p->getVector ();
+  return NULL;
 }
 
 /* Returns the requested property value which has been previously
