@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cccs.cpp,v 1.6 2004-02-17 15:30:57 ela Exp $
+ * $Id: cccs.cpp,v 1.7 2004-04-04 09:11:06 ela Exp $
  *
  */
 
@@ -74,6 +74,6 @@ void cccs::calcDC (void) {
   nr_double_t g = getPropertyDouble ("G");
   setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
   setB (1, 1, +1/g); setB (1, 2, +1.0); setB (1, 3, -1.0); setB (1, 4, -1/g);
-  setD (1, 0.0);
+  setD (1, 1, 0.0);
   setE (1, 0.0);
 }

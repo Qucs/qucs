@@ -26,6 +26,7 @@ files.
 Version 0.0.2
 -------------
 
+ * Qucs available under MacOS 10.3
  * implemented equation solver
  * parameter sweep
  * DC simulation for passive elements and controlled sources

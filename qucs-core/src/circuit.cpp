@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.8 2004-02-17 15:30:57 ela Exp $
+ * $Id: circuit.cpp,v 1.9 2004-04-04 09:11:05 ela Exp $
  *
  */
 
@@ -203,14 +203,14 @@ void circuit::setC (int nr, int port, complex z) {
 
 /* Returns the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
-complex circuit::getD (int nr) {
-  return MatrixD[nr - source];
+complex circuit::getD (int r, int c) {
+  return MatrixD[(r - source) * nSources + c - source];
 }
 
 /* Sets the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
-void circuit::setD (int nr, complex z) {
-  MatrixD[nr - 1] = z;
+void circuit::setD (int r, int c, complex z) {
+  MatrixD[(r - 1) * nSources + c - 1] = z;
 }
 
 /* Returns the circuits E-MNA matrix value of the given voltage source

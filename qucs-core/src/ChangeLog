@@ -1,3 +1,10 @@
+2004-04-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* logging.c: Check whether logging is possible.
+
+	* dcsolver.cpp: Using complete representation of the D-MNA matrix
+	including off-diagonal elements.  Changed all callers.
+
 2004-03-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: Fixed a bug in the copy constructor.
