@@ -28,3 +28,5 @@ qucs_LDFLAGS = $(all_libraries)
 # them while "make clean", use CLEANFILES
 DISTCLEANFILES = $(qucs_METASOURCES)
 
+dist-hook:
+	rm -f $(distdir)/$(bin_PROGRAMS)
