@@ -110,11 +110,11 @@
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinzufügen</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen</translation>
     </message>
 </context>
 <context>
@@ -204,15 +204,15 @@
     <name>FileShowDialog</name>
     <message>
         <source>File: </source>
-        <translation type="obsolete">Datei: </translation>
+        <translation>Datei: </translation>
     </message>
     <message>
         <source>ERROR: Cannot read file: </source>
-        <translation type="obsolete">FEHLER: Datei kann nicht gelesen werden: </translation>
+        <translation>FEHLER: Datei kann nicht gelesen werden: </translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="obsolete">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -242,30 +242,30 @@
     <name>HelpDialog</name>
     <message>
         <source>Qucs Help System</source>
-        <translation type="obsolete">Qucs Hilfesystem</translation>
+        <translation>Qucs Hilfesystem</translation>
     </message>
     <message>
         <source>Help Index</source>
-        <translation type="obsolete">Hilfeindex</translation>
+        <translation>Hilfeindex</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="obsolete">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
     <name>LineDialog</name>
     <message>
         <source>Line color: </source>
-        <translation>Linienfarbe:</translation>
+        <translation>Linienfarbe: </translation>
     </message>
     <message>
         <source>      Line Width: </source>
-        <translation>Linienbreite:</translation>
+        <translation>Linienbreite: </translation>
     </message>
     <message>
         <source>Line Style: </source>
-        <translation>Linienstil:</translation>
+        <translation>Linienstil: </translation>
     </message>
     <message>
         <source>solid line</source>
@@ -300,23 +300,23 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="obsolete">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="obsolete">Alle speichern</translation>
+        <translation>Alle speichern</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="obsolete">Verwerfen</translation>
+        <translation>Verwerfen</translation>
     </message>
     <message>
         <source>DiscardAll</source>
-        <translation type="obsolete">Alle verwerfen</translation>
+        <translation>Alle verwerfen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -648,11 +648,11 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>gyrator ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Gyratorverhältnis</translation>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
@@ -788,7 +788,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>name of qucs schematic file</source>
@@ -796,7 +796,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>port of a subcircuit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>number of the port within the subcircuit</source>
@@ -920,23 +920,23 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>Create new project</source>
-        <translation type="obsolete">Neues Projekt erstellen</translation>
+        <translation>Neues Projekt erstellen</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="obsolete">Projektname:</translation>
+        <translation>Projektname:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="obsolete">neues Projekt öffnen</translation>
+        <translation>neues Projekt öffnen</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="obsolete">Erstellen</translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>relative permittivity</source>
@@ -964,7 +964,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>microstrip open</source>
-        <translation type="unfinished"></translation>
+        <translation>offenen Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>ideality coefficient</source>
@@ -973,15 +973,16 @@ Unbekanntes Feld!</translation>
     <message>
         <source>Format Error:
 Wrong line start!</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierfehler:
+Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>power attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>Leistungsdämpfung</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation für den Parameterdurchlauf</translation>
     </message>
 </context>
 <context>
@@ -2170,7 +2171,7 @@ Fehler:
     </message>
     <message>
         <source>Cannot create </source>
-        <translation>Kann nicht erzeugen</translation>
+        <translation>Kann nicht erzeugen </translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
@@ -2514,51 +2515,51 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offene Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Cannot save settings !</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen können nicht gespeichert werden !</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>Umbenennen</translation>
     </message>
     <message>
         <source>Rename file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei umbenennen</translation>
     </message>
     <message>
         <source>Enter new name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuen Namen eingeben:</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies löscht die Datei unwiederruflich! Weiter ?</translation>
     </message>
     <message>
         <source>Cannot rename file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Datei kann nicht umbenannt werden: </translation>
     </message>
     <message>
         <source>Cannot delete schematic: </source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltplan kann nicht gelöscht werden: </translation>
     </message>
     <message>
         <source>Cannot delete an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Geöffnete Datei kann nicht gelöscht werden!</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>Cannot rename an open file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Geöffnete Datei kann nicht umbenannt werden!</translation>
     </message>
     <message>
         <source>Transient simulation</source>
@@ -2566,21 +2567,23 @@ Kurze Einführung in Qucs</translation>
     </message>
     <message>
         <source>Set Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Markierung setzen</translation>
     </message>
     <message>
         <source>Set Marker on Graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Markierung auf Diagramm setzen</translation>
     </message>
     <message>
         <source>Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Set Marker
 
 Sets a marker on a diagram&apos;s graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Markierung setzen
+
+Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
 </context>
 <context>
@@ -2595,89 +2598,89 @@ Sets a marker on a diagram&apos;s graph</source>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Massepotential kann nicht bezeichnet werden!</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Data Display:</source>
-        <translation type="obsolete">Datenvisualisierung:</translation>
+        <translation>Datenvisualisierung:</translation>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="obsolete">Datensatz:</translation>
+        <translation>Datensatz:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
-        <translation type="obsolete">Öffnen der Datenvisualisierung nach Simulation</translation>
+        <translation>Öffnen der Datenvisualisierung nach Simulation</translation>
     </message>
     <message>
         <source>show Grid</source>
-        <translation type="obsolete">Gitternetz anzeigen</translation>
+        <translation>Gitternetz anzeigen</translation>
     </message>
     <message>
         <source>horizontal Grid:</source>
-        <translation type="obsolete">horizontales Gitternetz:</translation>
+        <translation>horizontales Gitternetz:</translation>
     </message>
     <message>
         <source>vertical Grid:</source>
-        <translation type="obsolete">vertikales Gitternetz:</translation>
+        <translation>vertikales Gitternetz:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="obsolete">Fertig</translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="obsolete">Übernehmen</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Edit File Properties</source>
-        <translation type="obsolete">Dateieigenschaften bearbeiten</translation>
+        <translation>Dateieigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Simulation</source>
-        <translation type="obsolete">Simulation</translation>
+        <translation>Simulation</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="obsolete">Gitternetz</translation>
+        <translation>Gitternetz</translation>
     </message>
 </context>
 <context>
     <name>SimMessage</name>
     <message>
         <source>Qucs Simulation Messages</source>
-        <translation type="obsolete">Qucs Simulationsnachrichten</translation>
+        <translation>Qucs Simulationsnachrichten</translation>
     </message>
     <message>
         <source>Progress:</source>
-        <translation type="obsolete">Fortschritt:</translation>
+        <translation>Fortschritt:</translation>
     </message>
     <message>
         <source>Errors and Warnings:</source>
-        <translation type="obsolete">Fehler und Warnungen:</translation>
+        <translation>Fehler und Warnungen:</translation>
     </message>
     <message>
         <source>Goto display page</source>
-        <translation type="obsolete">Zur Anzeigeseite gehen</translation>
+        <translation>Zur Anzeigeseite gehen</translation>
     </message>
     <message>
         <source>Abort simulation</source>
-        <translation type="obsolete">Simulation abbrechen</translation>
+        <translation>Simulation abbrechen</translation>
     </message>
     <message>
         <source>Close window</source>
-        <translation type="obsolete">Fenster schließen</translation>
+        <translation>Fenster schließen</translation>
     </message>
 </context>
 </TS>

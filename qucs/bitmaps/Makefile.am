@@ -39,7 +39,7 @@ PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png     \
   fileprint.png filesaveall.png gear.png ground.png mirror.png nodename.png  \
   pointer.png port.png rebuild.png redo.png rotate_ccw.png top.png undo.png  \
   viewmag+.png viewmag-.png viewmagfit.png wire.png filenew.png mirrory.png  \
-  viewmag1.png 
+  viewmag1.png marker.png
 
 EXTRA_DIST = $(XPMS) $(PNGS)
 
