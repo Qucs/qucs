@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.6 2004-09-07 12:53:11 ela Exp $
+ * $Id: vac.cpp,v 1.7 2004-09-11 20:39:30 ela Exp $
  *
  */
 
@@ -28,12 +28,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "consts.h"
 #include "vac.h"
 
 vac::vac () : circuit (2) {
@@ -52,4 +54,14 @@ void vac::initDC (dcsolver *) {
 void vac::initAC (acsolver *) {
   initDC (NULL);
   setE (1, getPropertyDouble ("U"));
+}
+
+void vac::initTR (trsolver *) {
+  initDC (NULL);
+}
+
+void vac::calcTR (nr_double_t t) {
+  nr_double_t f = getPropertyDouble ("f");
+  nr_double_t u = getPropertyDouble ("U") * sin (2 * M_PI * f * t);
+  setE (1, u);
 }

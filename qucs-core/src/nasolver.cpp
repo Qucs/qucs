@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.4 2004-09-09 11:31:51 ela Exp $
+ * $Id: nasolver.cpp,v 1.5 2004-09-11 20:39:29 ela Exp $
  *
  */
 
@@ -431,7 +431,8 @@ void nasolver<nr_type_t>::createIMatrix (void) {
       is = n->nodes[i]->getCircuit ();
       // is this a current source ?
       if (is->getType () == CIR_IDC || is->getType () == CIR_IAC ||
-	  is->getType () == CIR_PAC || is->isNonLinear ()) {
+	  is->getType () == CIR_PAC || is->getType () == CIR_CAPACITOR ||
+	  is->getType () == CIR_INDUCTOR || is->isNonLinear ()) {
 	val += MatVal (is->getI (n->nodes[i]->getPort ()));
       }
     }

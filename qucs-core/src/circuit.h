@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.24 2004-09-10 16:26:56 ela Exp $
+ * $Id: circuit.h,v 1.25 2004-09-11 20:39:29 ela Exp $
  *
  */
 
@@ -37,6 +37,7 @@ class spsolver;
 class acsolver;
 class trsolver;
 class matrix;
+class transient;
 
 class circuit : public object
 {
@@ -148,10 +149,37 @@ class circuit : public object
   void    setMatrixY (matrix &);
   matrix& getMatrixY (void);
 
+  // save-state variables for transient analysis
+  nr_double_t getState (int, int n = 0);
+  void setState (int, nr_double_t, int n = 0);
+  void initStates (void);
+  void clearStates (void);
+  int getStates (void) { return states; }
+  void setStates (int n) { states = n; }
+  void nextState (void);
+  void prevState (void);
+
+  // integration specific
+  int order;
+  void setOrder (int o) { order = o; }
+  nr_double_t * coefficients;
+  void setCoefficients (nr_double_t * c) { coefficients = c; }
+  typedef void (* integrate_func_t)
+    (circuit *, int, nr_double_t, nr_double_t&, nr_double_t&);
+  integrate_func_t integrate_func;
+  void setIntegration (integrate_func_t f) { integrate_func = f; }
+  void integrate (int qstate, nr_double_t cap, nr_double_t& geq,
+		  nr_double_t& ceq) {
+    (*integrate_func) (this, qstate, cap, geq, ceq);
+  }
+
   static const nr_double_t z0 = 50.0;
 
  protected:
   int type;
+  nr_double_t * stateval;
+  int states;
+  int currentstate;
 
  private:
   int size;

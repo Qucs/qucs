@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.31 2004-09-08 18:25:19 ela Exp $
+ * $Id: input.cpp,v 1.32 2004-09-11 20:39:29 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 #include "dcsolver.h"
 #include "parasweep.h"
 #include "acsolver.h"
+#include "trsolver.h"
 #include "variable.h"
 #include "environment.h"
 #include "input.h"
@@ -340,6 +341,8 @@ analysis * input::createAnalysis (char * type) {
     return new parasweep ();
   else if (!strcmp (type, "AC"))
     return new acsolver ();
+  else if (!strcmp (type, "TR"))
+    return new trsolver ();
 
   logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
   return NULL;

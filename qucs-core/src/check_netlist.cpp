@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.51 2004-09-09 11:31:51 ela Exp $
+ * $Id: check_netlist.cpp,v 1.52 2004-09-11 20:39:29 ela Exp $
  *
  */
 
@@ -485,6 +485,20 @@ struct define_t definition_available[] =
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* transient analysis */
+  { "TR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Stop", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      PROP_NO_PROP },
+    { { "IntegrationMethod", PROP_STR, { PROP_NO_VAL, "Trapezoidal" },
+	PROP_NO_RANGE },
+      { "Order", PROP_INT, { 2, PROP_NO_STR }, { 1, 6 } },
+      { "InitialStep", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "MinStep", PROP_REAL, { 1e-16, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
   /* subcircuit definition */
   { "Def", PROP_NODES, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
@@ -647,6 +661,9 @@ static struct special_t checker_specials[] = {
   { "AC",     "Type",        { "lin", "log", NULL } },
   { "DC",     "saveOPs",     { "yes", "no", NULL } },
   { "DC",     "saveAll",     { "yes", "no", NULL } },
+  { "TR",     "Type",        { "lin", "log", NULL } },
+  { "TR",     "IntegrationMethod",
+    { "Euler", "Trapezoidal", "Gear", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },

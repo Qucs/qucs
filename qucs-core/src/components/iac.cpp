@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.2 2004-09-06 06:40:07 ela Exp $
+ * $Id: iac.cpp,v 1.3 2004-09-11 20:39:30 ela Exp $
  *
  */
 
@@ -28,12 +28,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "complex.h"
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
+#include "consts.h"
 #include "iac.h"
 
 iac::iac () : circuit (2) {
@@ -50,5 +52,11 @@ void iac::initDC (dcsolver *) {
 
 void iac::initAC (acsolver *) {
   nr_double_t i = getPropertyDouble ("I");
+  setI (1, +i); setI (2, -i);
+}
+
+void iac::calcTR (nr_double_t t) {
+  nr_double_t f = getPropertyDouble ("f");
+  nr_double_t i = getPropertyDouble ("I") * sin (2 * M_PI * f * t);
   setI (1, +i); setI (2, -i);
 }
