@@ -72,6 +72,14 @@ private slots:
   void slotSetChanged(int);
   void slotTextChanged(const QString&);
 
+  void slotParamEntered();
+  void slotSimEntered();
+  void slotValuesEntered();
+  void slotStartEntered();
+  void slotStopEntered();
+  void slotStepEntered();
+  void slotNumberEntered();
+
 private:
   void correctDesc(QString &desc, QStringList *clst = 0);
 

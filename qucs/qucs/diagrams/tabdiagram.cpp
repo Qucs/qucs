@@ -120,7 +120,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
 	  px++;
         }
 	if(pD == g->cPointsX.getFirst())   // only paint one time
-	  if(y > 0) if(y < y2-tHeight-5)
+	  if(y >= tHeight) if(y < y2-tHeight-5)
             Lines.append(new Line(0, y+1, x2, y+1, QPen(QPen::black,0)));
       }
       lastCount *= pD->count;
@@ -174,7 +174,8 @@ if(g) if(!g->cPointsX.isEmpty()) {
       Texts.append(new Text(x, y, Str));
     }
     x += colWidth+15;
-    Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
+    if(g != Graphs.getLast())   // do not paint last line
+      Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));
   }
 
 funcEnd:
