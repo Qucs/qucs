@@ -68,9 +68,15 @@ groups=Header,Quellen,Benutzerschnittstelle,Übersetzungen,GNU,Andere
 Übersetzungen=*.ts
 
 [Makefile.am]
-files=qucs.kdevprj,admin,AUTHORS,COPYING,ChangeLog,INSTALL,README,TODO,qucs.lsm,qucs.spec
+files=qucs.kdevprj,admin,AUTHORS,COPYING,ChangeLog,INSTALL,README,TODO,qucs.lsm,qucs.spec,NEWS,autogen.sh
 sub_dirs=qucs
 type=normal
+
+[NEWS]
+dist=true
+install=false
+install_location=
+type=DATA
 
 [README]
 dist=true
@@ -85,6 +91,12 @@ install_location=
 type=DATA
 
 [admin]
+dist=true
+install=false
+install_location=
+type=DATA
+
+[autogen.sh]
 dist=true
 install=false
 install_location=
@@ -109,7 +121,7 @@ install_location=
 type=DATA
 
 [qucs/Makefile.am]
-files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h,qucs/settingsdialog.cpp,qucs/settingsdialog.h,qucs/tabdiagram.cpp,qucs/tabdiagram.h,qucs/messagebox.cpp,qucs/messagebox.h,qucs/fileshowdialog.cpp,qucs/fileshowdialog.h,qucs/painting.cpp,qucs/painting.h,qucs/rectangle.cpp,qucs/rectangle.h,qucs/ellipse.cpp,qucs/ellipse.h,qucs/arrow.cpp,qucs/arrow.h,qucs/graphicline.cpp,qucs/graphicline.h,qucs/graphictext.cpp,qucs/graphictext.h,qucs/graphictextdialog.cpp,qucs/graphictextdialog.h,qucs/linedialog.cpp,qucs/linedialog.h
+files=qucs/main.cpp,qucs/qucs.cpp,qucs/qucs.h,qucs/qucsview.cpp,qucs/qucsview.h,qucs/lo32-app-qucs.png,qucs/lo16-app-qucs.png,qucs/newprojdialog.cpp,qucs/newprojdialog.h,qucs/component.cpp,qucs/component.h,qucs/wire.cpp,qucs/wire.h,qucs/qucsdoc.cpp,qucs/qucsdoc.h,qucs/simmessage.cpp,qucs/simmessage.h,qucs/componentdialog.cpp,qucs/componentdialog.h,qucs/element.cpp,qucs/element.h,qucs/node.cpp,qucs/node.h,qucs/graph.cpp,qucs/graph.h,qucs/diagram.cpp,qucs/diagram.h,qucs/rectdiagram.cpp,qucs/rectdiagram.h,qucs/diagramdialog.cpp,qucs/diagramdialog.h,qucs/polardiagram.cpp,qucs/polardiagram.h,qucs/smithdiagram.cpp,qucs/smithdiagram.h,qucs/settingsdialog.cpp,qucs/settingsdialog.h,qucs/tabdiagram.cpp,qucs/tabdiagram.h,qucs/messagebox.cpp,qucs/messagebox.h,qucs/fileshowdialog.cpp,qucs/fileshowdialog.h,qucs/painting.cpp,qucs/painting.h,qucs/rectangle.cpp,qucs/rectangle.h,qucs/ellipse.cpp,qucs/ellipse.h,qucs/arrow.cpp,qucs/arrow.h,qucs/graphicline.cpp,qucs/graphicline.h,qucs/graphictext.cpp,qucs/graphictext.h,qucs/graphictextdialog.cpp,qucs/graphictextdialog.h,qucs/linedialog.cpp,qucs/linedialog.h,qucs/arrowdialog.cpp,qucs/arrowdialog.h
 sub_dirs=bitmaps,sim
 type=prog_main
 
@@ -120,6 +132,18 @@ install_location=
 type=SOURCE
 
 [qucs/arrow.h]
+dist=true
+install=false
+install_location=
+type=HEADER
+
+[qucs/arrowdialog.cpp]
+dist=true
+install=false
+install_location=
+type=SOURCE
+
+[qucs/arrowdialog.h]
 dist=true
 install=false
 install_location=

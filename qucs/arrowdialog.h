@@ -1,7 +1,7 @@
 /***************************************************************************
-                          linedialog.h  -  description
+                          arrowdialog.h  -  description
                              -------------------
-    begin                : Wed Nov 26 2003
+    begin                : Fri Nov 28 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef LINEDIALOG_H
-#define LINEDIALOG_H
+#ifndef ARROWDIALOG_H
+#define ARROWDIALOG_H
 
 #include <qdialog.h>
 #include <qregexp.h>
@@ -29,11 +29,11 @@
   *@author Michael Margraf
   */
 
-class LineDialog : public QDialog  {
+class ArrowDialog : public QDialog  {
 Q_OBJECT
 public: 
-	LineDialog(const QString& _Caption, QWidget *parent=0, const char *name=0);
-	~LineDialog();
+	ArrowDialog(QWidget *parent=0, const char *name=0);
+	~ArrowDialog();
 
   void SetComboBox(Qt::PenStyle _Style);
 
@@ -43,7 +43,7 @@ private slots:
 
 public:
   QRegExp      Expr;
-  QLineEdit    *LineWidth;
+  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
   QPushButton  *ColorButt;
   QComboBox    *StyleBox;
   Qt::PenStyle LineStyle;
