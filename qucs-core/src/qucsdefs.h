@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.6 2004-12-03 18:57:03 raimi Exp $
+ * $Id: qucsdefs.h,v 1.7 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -68,7 +68,7 @@ struct define_t qucs_definition_available[] =
   /* power source */
   { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z", PROP_REAL, { 50, PROP_NO_STR }, { PROP_VAL_MIN, PROP_VAL_MAX } },
       { "Num", PROP_INT, { 1, PROP_NO_STR }, { 1, MAX_PORTS } },
       PROP_NO_PROP },
     { { "P", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
@@ -504,13 +504,14 @@ struct define_t qucs_definition_available[] =
   /* s-parameter analysis */
   { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
-      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
       PROP_NO_PROP },
     { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       { "NoiseIP", PROP_INT, { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, 
       { "NoiseOP", PROP_INT, { 2, PROP_NO_STR }, { 1, MAX_PORTS } },
+      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* dc analysis */
@@ -528,23 +529,25 @@ struct define_t qucs_definition_available[] =
   },
   /* parameter sweep */
   { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Start", PROP_REAL, { 5, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Stop", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Points", PROP_INT, { 5, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
-      { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
       { "Param", PROP_STR, { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
       { "Sim", PROP_STR, { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Points", PROP_INT, { 5, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      { "Stop", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Values", PROP_LIST, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP }
   },
   /* ac analysis */
   { "AC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
-      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      { "Values", PROP_LIST, { 10, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* transient analysis */
   { "TR", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.39 2004-11-24 19:15:45 raimi Exp $
+ * $Id: input.cpp,v 1.40 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -115,6 +115,14 @@ int input::netlist (net * netlist) {
   return 0;
 }
 
+/* The little helper function creates a vector given by the list of
+   values. */
+vector * input::createVector (struct value_t * values) {
+  vector * v = new vector ();
+  for (; values != NULL; values = values->next) v->add (values->value);
+  return v;
+}
+
 /* This function builds up the netlist representation from the checked
    netlist input.  It creates circuit components as necessary. */
 void input::factory (void) {
@@ -150,7 +158,17 @@ void input::factory (void) {
 	    }
 	    a->addProperty (pairs->key, pairs->value->ident);
 	  } else {
-	    a->addProperty (pairs->key, pairs->value->value);
+	    if (pairs->value->var) {
+	      // add list sweeps and constants to the properties
+	      variable * v = new variable (pairs->key);
+	      constant * c = new constant (TAG_VECTOR);
+	      c->v = createVector (pairs->value);
+	      v->setConstant (c);
+	      a->addProperty (pairs->key, v);
+	    }
+	    else {
+	      a->addProperty (pairs->key, pairs->value->value);
+	    }
 	  }
 	// additionally add missing optional properties
 	assignDefaultProperties (a, def->define);

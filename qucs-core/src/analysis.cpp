@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: analysis.cpp,v 1.5 2004-05-17 19:50:51 ela Exp $
+ * $Id: analysis.cpp,v 1.6 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -31,6 +31,9 @@
 #include <string.h>
 
 #include "object.h"
+#include "complex.h"
+#include "sweep.h"
+#include "vector.h"
 #include "analysis.h"
 
 // Constructor creates an unnamed instance of the analysis class.
@@ -87,4 +90,45 @@ void analysis::delAnalysis (analysis * a) {
     if (a->getNext ()) a->getNext()->setPrev (a->getPrev ());
     a->getPrev()->setNext (a->getNext ());
   }
+}
+
+/* The following function creates a sweep object depending on the
+   analysis's properties.  Supported sweep types are: linear,
+   logarithmic, lists and constants. */
+sweep * analysis::createSweep (char * n) {
+  sweep * swp = NULL;
+  // get type of sweep
+  char * type = getPropertyString ("Type");
+
+  // linearly or logarithmically stepped sweeps
+  if (!strcmp (type, "lin") || !strcmp (type, "log")) {
+    nr_double_t start = getPropertyDouble ("Start");
+    nr_double_t stop = getPropertyDouble ("Stop");
+    int points = getPropertyInteger ("Points");
+    if (!strcmp (type, "lin")) {
+      swp = new linsweep (n);
+      ((linsweep *) swp)->create (start, stop, points);
+    }
+    else if (!strcmp (type, "log")) {
+      swp = new logsweep (n);
+      ((logsweep *) swp)->create (start, stop, points);
+    }
+  }
+
+  // lists of values and constant values
+  else if (!strcmp (type, "list") || !strcmp (type, "const")) {
+    vector * values = getPropertyVector ("Values");
+    int points = values->getSize ();
+    if (!strcmp (type, "list")) {
+      swp = new lstsweep (n);
+      ((lstsweep *) swp)->create (points);
+    }
+    else if (!strcmp (type, "const")) {
+      swp = new consweep (n);
+      ((consweep *) swp)->create (points);
+    }
+    for (int i = 0; i < values->getSize (); i++)
+      swp->set (i, real (values->get (i)));
+  }
+  return swp;
 }

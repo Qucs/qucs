@@ -1,7 +1,7 @@
 /*
  * input.h - input netlist class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.h,v 1.6 2004-11-24 19:15:46 raimi Exp $
+ * $Id: input.h,v 1.7 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -46,6 +46,7 @@ class input : public object
   environment * getEnv (void) { return env; }
   void setEnv (environment * e) { env = e; }
   static void assignDefaultProperties (object *, struct define_t *);
+  static vector * createVector (struct value_t *);
 
  private:
   FILE * fd;

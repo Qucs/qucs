@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.29 2004-10-27 18:45:19 ela Exp $
+ * $Id: trsolver.cpp,v 1.30 2004-12-07 22:33:32 raimi Exp $
  *
  */
 
@@ -84,20 +84,7 @@ trsolver::trsolver (trsolver & o)
 // This function creates the time sweep if necessary.
 void trsolver::initSteps (void) {
   if (swp != NULL) return;
-
-  char * type = getPropertyString ("Type");
-  nr_double_t start = getPropertyDouble ("Start");
-  nr_double_t stop = getPropertyDouble ("Stop");
-  int points = getPropertyInteger ("Points");
-
-  if (!strcmp (type, "lin")) {
-    swp = new linsweep ("time");
-    ((linsweep *) swp)->create (start, stop, points);
-  }
-  else if (!strcmp (type, "log")) {
-    swp = new logsweep ("time");
-    ((logsweep *) swp)->create (start, stop, points);
-  }
+  swp = createSweep ("time");
 }
 
 /* This is the transient netlist solver.  It prepares the circuit list

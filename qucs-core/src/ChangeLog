@@ -1,3 +1,38 @@
+2004-12-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsdefs.h (qucs_definition_available): Permitted zero
+	impedance for AC power source.
+
+	* equation.cpp: Fixed null pointer bug in dataset vector length
+	computation.
+
+	* scan_netlist.l: Added special tokens for the new list of
+	values.
+
+	* qucsdefs.h (qucs_definition_available): Added 'Values' to
+	optional properties of 'AC', 'SP' and 'SW' actions.
+
+	* property.cpp: A property can now also be a vector of values.
+
+	* parse_netlist.y: Accept value lists as property values.
+	Also removed 'node_root' and 'pair_root' helpers (not necessary
+	anymore).
+
+	* object.cpp: New function returning a vector being property
+	of an object.
+
+	* input.cpp: Added possibility to pass vectors as properties
+	to analysis objects.
+
+	* check_netlist.cpp: Implemented checks for the new sweep types
+	'list' and 'const'.  Allowing these types in parameter sweeps,
+	ac-analysis and s-parameter analysis.
+
+	* analysis.cpp (createSweep): New function creating a sweep
+	object depending on the analysis's properties.  Changed all
+	possible callers (spsolver, acsolver, parasweep and trsolver)
+	to use this functionality.
+
 2004-12-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* net.cpp: Added new function returning the number of non-linear

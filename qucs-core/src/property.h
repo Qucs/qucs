@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: property.h,v 1.3 2004-07-08 06:38:43 ela Exp $
+ * $Id: property.h,v 1.4 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -26,6 +26,7 @@
 #define __PROPERTY_H__
 
 class variable;
+class vector;
 
 enum property_type {
   PROPERTY_UNKNOWN = -1,
@@ -49,6 +50,7 @@ class property
   void setNext (property * p) { next = p; }
   void setName (char *);
   char * getName (void);
+  vector * getVector (void);
   nr_double_t getDouble (void);
   int getInteger (void);
   char * getString (void);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.37 2004-11-24 19:15:46 raimi Exp $
+ * $Id: spsolver.cpp,v 1.38 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -555,19 +555,7 @@ void spsolver::solve (void) {
 
   // create frequency sweep if necessary
   if (swp == NULL) {
-    char * type = getPropertyString ("Type");
-    nr_double_t start = getPropertyDouble ("Start");
-    nr_double_t stop = getPropertyDouble ("Stop");
-    int points = getPropertyInteger ("Points");
-
-    if (!strcmp (type, "lin")) {
-      swp = new linsweep ("frequency");
-      ((linsweep *) swp)->create (start, stop, points);
-    }
-    else if (!strcmp (type, "log")) {
-      swp = new logsweep ("frequency");
-      ((logsweep *) swp)->create (start, stop, points);
-    }
+    swp = createSweep ("frequency");
   }
 
   init ();

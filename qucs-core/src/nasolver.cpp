@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.26 2004-12-03 18:57:03 raimi Exp $
+ * $Id: nasolver.cpp,v 1.27 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -619,15 +619,15 @@ void nasolver<nr_type_t>::createGMatrix (void) {
     for (int r = 1; r <= N; r++) {
       nr = nlist->getNode (r);
       g = 0.0;
-	// sum up the conductance of each connected circuit
-	for (int a = 0; a < nc->nNodes; a++)
-	  for (int b = 0; b < nr->nNodes; b++)
-	    if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ()) {
+      // sum up the conductance of each connected circuit
+      for (int a = 0; a < nc->nNodes; a++)
+	for (int b = 0; b < nr->nNodes; b++)
+	  if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ()) {
 	    ct = nc->nodes[a]->getCircuit ();
-	      pc = nc->nodes[a]->getPort ();
-	      pr = nr->nodes[b]->getPort ();
+	    pc = nc->nodes[a]->getPort ();
+	    pr = nr->nodes[b]->getPort ();
 	    g += MatVal (ct->getY (pr, pc));
-      }
+	  }
       // put value into G matrix
       A->set (r, c, g);
     }

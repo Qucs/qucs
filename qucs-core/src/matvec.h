@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.7 2004-11-29 19:03:37 raimi Exp $
+ * $Id: matvec.h,v 1.8 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -75,7 +75,7 @@ class matvec
 
   // other operations
   friend matvec transpose (matvec);
-  friend matvec conj (matvec);
+  friend matvec conj      (matvec);
   friend vector det       (matvec);
   friend matvec inverse   (matvec);
   friend matvec twoport   (matvec, char, char);

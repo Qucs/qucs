@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.26 2004-11-29 19:03:33 raimi Exp $
+ * $Id: equation.cpp,v 1.27 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -886,7 +886,7 @@ void solver::solve (void) {
     if (eqn->evalPossible && eqn->evaluated == 0) {
       // exception handling around evaluation
       try_running () {
-      eqn->evaluate ();
+	eqn->evaluate ();
 	strlist * deps = collectDataDependencies (eqn);
 	eqn->getResult()->setDataDependencies (deps);
 	delete deps;
@@ -1065,7 +1065,7 @@ void solver::findMatrixVectors (vector * v) {
       if (deps == NULL) {
 	strlist * deps = new strlist ();
 	deps->add (mv->getName ());
-      eqn->setDataDependencies (deps);
+	eqn->setDataDependencies (deps);
 	delete deps;
       } else {
 	eqn->setDataDependencies (deps);
@@ -1133,7 +1133,7 @@ int solver::getDependencySize (strlist * deps, int idx) {
    least one no matter whether the data vectors can be found or not. */
 int solver::dataSize (strlist * deps) {
   int size = 1;
-  for (int i = 0; i < deps->length (); i++) {
+  for (int i = 0; deps != NULL && i < deps->length (); i++) {
     char * str = deps->get (i);
     vector * dep = data->findDependency (str);
     vector * var = data->findVariable (str);

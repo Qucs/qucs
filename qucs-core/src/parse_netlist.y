@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_netlist.y,v 1.12 2004-11-29 19:03:39 raimi Exp $
+ * $Id: parse_netlist.y,v 1.13 2004-12-07 22:33:31 raimi Exp $
  *
  */
 
@@ -97,7 +97,7 @@
 %type <subcircuit> DefBegin SubcircuitBody
 %type <node> IdentifierList
 %type <pair> PairList
-%type <value> String
+%type <value> PropertyValue ValueList Value
 %type <eqn> EquationList Expression ExpressionList
 %type <assign> Equation
 %type <con> Constant Range
@@ -135,7 +135,6 @@ ActionLine:
     $$->instance = $4;
     $$->pairs = $5;
     $$->line = netlist_lineno;
-    pair_root = NULL;
   }
 ;
 
@@ -148,68 +147,71 @@ DefinitionLine:
     $$->nodes = $4;
     $$->pairs = $5;
     $$->line = netlist_lineno;
-    node_root = NULL;
-    pair_root = NULL;
   }
 ;
 
-IdentifierList: /* nothing */ { $$ = node_root = NULL; }
+IdentifierList: /* nothing */ { $$ = NULL; }
   | Identifier IdentifierList {
     $$ = (struct node_t *) calloc (sizeof (struct node_t), 1);
     $$->node = $1;
-    $$->next = node_root;
-    node_root = $$;
+    $$->next = $2;
   }
 ;
 
-PairList: /* nothing */ { $$ = pair_root = NULL; }
-  | Assign String PairList {
+PairList: /* nothing */ { $$ = NULL; }
+  | Assign Value PairList {
     $$ = (struct pair_t *) calloc (sizeof (struct pair_t), 1);
     $$->key = $1;
     $$->value = $2;
-    $$->next = pair_root;
-    pair_root = $$;
+    $$->next = $3;
   }    
 ;
 
-String:
+Value:
+  PropertyValue {
+    $$ = $1;
+  }
+  | '"' PropertyValue '"' {
+    $$ = $2;
+  }
+
+PropertyValue:
   REAL {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
+    $$ = create_value ();
     $$->value = $1;
   }
-  | '"' REAL '"' {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
-    $$->value = $2;
-  }
   | REAL ScaleOrUnit {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
+    $$ = create_value ();
     $$->value = $1;
     $$->scale = $2;
   }
-  | '"' REAL ScaleOrUnit '"' {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
-    $$->value = $2;
-    $$->scale = $3;
-  }
   | REAL ScaleOrUnit ScaleOrUnit {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
+    $$ = create_value ();
     $$->value = $1;
     $$->scale = $2;
     $$->unit = $3;
   }
-  | '"' REAL ScaleOrUnit ScaleOrUnit '"' {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
-    $$->value = $2;
-    $$->scale = $3;
-    $$->unit = $4;
-  }
   | Identifier {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
+    $$ = create_value ();
     $$->ident = $1;
   }
-  | '"' Identifier '"' {
-    $$ = (struct value_t *) calloc (sizeof (struct value_t), 1);
-    $$->ident = $2;
+  | '[' ValueList ']' {
+    $$ = $2;
+  }
+;
+
+ValueList: /* nothing */ { $$ = NULL; }
+  | REAL {
+    struct value_t * here = create_value ();
+    here->value = $1;
+    here->next = $$;
+    $$ = here;
+  }
+  | REAL ';' ValueList {
+    struct value_t * here = create_value ();
+    here->value = $1;
+    here->next = $3;
+    $$ = here;
   }
 ;
 
@@ -284,6 +286,7 @@ Range:
   | ':' {
   }
 ;
+
 Reference:
   Identifier {
     $$ = new eqn::reference ();
@@ -391,7 +394,6 @@ DefBegin:
     $$->nodes = $3;
     $$->action = PROP_ACTION;
     $$->line = netlist_lineno;
-    node_root = NULL;
   }
 ;
 
