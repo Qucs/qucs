@@ -19,13 +19,14 @@
 # include <config.h>
 #endif
 
+using namespace std;
+
 #include "diagram.h"
+#include "qucs.h"
 
-#include "../qucs.h"
-
-#include <math.h>
-#include <float.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cfloat>
+#include <cstdlib>
 
 #if HAVE_IEEEFP_H
 # include <ieeefp.h>
