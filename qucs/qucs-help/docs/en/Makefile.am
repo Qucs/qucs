@@ -22,8 +22,8 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-HTML = index.html short.html start.html
-PIC  = qucsmain.png paste.png wire.png select.png
+HTML = index.html short.html start.html mathfunc.html
+PIC  = qucsmain.png paste.png wire.png select.png contab.png
 
 EXTRA_DIST = $(HTML) $(PIC)
 
