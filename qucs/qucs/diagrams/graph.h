@@ -19,12 +19,15 @@
 #define GRAPH_H
 
 
+#include "marker.h"
 #include "../element.h"
 
 #include <qcolor.h>
 #include <qpainter.h>
 #include <qptrlist.h>
+#include <qtextstream.h>
 
+class Diagram;
 
 /**
   *@author Michael Margraf
@@ -45,10 +48,10 @@ public:
   Graph(const QString& _Line="");
   ~Graph();
 
-  void    paint(QPainter *p, int x0, int y0);
+  void    paint(QPainter*, int, int);
   QString save();
-  bool    load(const QString& Line);
-  int     getSelected(int x, int y);
+  bool    load(const QString&);
+  int     getSelected(int, int);
   Graph*  sameNewOne();
 
   QPtrList<DataX>  cPointsX;
@@ -58,6 +61,7 @@ public:
   QColor  Color;
   int     Thick;
   int     Style;
+  QPtrList<Marker> Markers;
 
   // for tabular diagram
   int  Precision;   // number of digits to show

@@ -477,7 +477,6 @@ void DiagramDialog::slotApply()
       }
     }
   }
-
   Diag->Graphs.clear();   // delete the graphs
   Graphs.setAutoDelete(false);
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
