@@ -176,6 +176,24 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
 
   if(fillStack) {
 
+    if(symbolMode) {  // for symbol edit mode
+      QString *Curr = UndoSymbol.current();
+      while(Curr != UndoSymbol.last())
+        UndoSymbol.remove();   // remove "Redo" items
+
+      UndoSymbol.append(new QString(File.createSymbolUndoString(Op)));
+
+      if(!App->undo->isEnabled()) App->undo->setEnabled(true);
+      if(App->redo->isEnabled())  App->redo->setEnabled(false);
+
+      while(UndoSymbol.count() > QucsSettings.maxUndo) { // "while..." because
+        UndoSymbol.removeFirst();    // "maxUndo" could be decreased meanwhile
+        UndoSymbol.last();
+      }
+      return;
+    }
+
+    // for schematic edit mode
     QString *Curr = UndoStack.current();
     while(Curr != UndoStack.last())
       UndoStack.remove();   // remove "Redo" items
@@ -2470,29 +2488,104 @@ bool QucsDoc::load()
   if(!File.load()) return false;
   setChanged(false, true); // "not changed" state, but put on undo stack
   UndoStack.current()->at(1) = 'i';  // state of being unchanged
+
+  // The unso stack of the circuit symbol is initialized when first
+  // entering its edit mode.
+
   sizeOfAll(UsedX1, UsedY1, UsedX2, UsedY2);
   return true;
 }
 
 // ---------------------------------------------------
-// Saves this Qucs document.
+// Saves this Qucs document. Returns the number of subcircuit ports.
 int QucsDoc::save()
 {
+  adjustPortNumbers();  // same port number for schematic and symbol
   int result = File.save();
   if(result >= 0) {
     setChanged(false);
-    QString *ps = UndoStack.current();
-    for(QString *p = UndoStack.first(); p != 0; p = UndoStack.next())
+    QString *p, *ps = UndoStack.current();
+    for(p = UndoStack.first(); p != 0; p = UndoStack.next())
       p->at(1) = ' ';  // state of being changed
     ps->at(1) = 'i';   // state of being unchanged
     UndoStack.findRef(ps);  // back to current
+
+    ps = UndoSymbol.current();
+    if(!ps)  return result;
+    for(p = UndoSymbol.first(); p != 0; p = UndoSymbol.next())
+      p->at(1) = ' ';  // state of being changed
+    ps->at(1) = 'i';   // state of being unchanged
+    UndoSymbol.findRef(ps);  // back to current
   }
   return result;
 }
 
 // ---------------------------------------------------
+// If the port number of the schematic and of the symbol are not
+// equal add or remove some in the symbol.
+int QucsDoc::adjustPortNumbers()
+{
+  int countPort = 0;
+  for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
+    if(pc->Model == "Port")  countPort++;
+
+  int countSymPort = countPort;
+  Painting *pp;
+  for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+    if(pp->Name == "PortSym ")  countSymPort--;
+
+  if(countSymPort < 0) {  // remove ports
+    QString num;
+    for(int z=-countSymPort; z>0; z--) {
+      num = QString::number(countPort + z);
+      for(pp = SymbolPaints.last(); pp!=0; pp = SymbolPaints.prev())
+	if(pp->Name == "PortSym ")
+	  if(((PortSymbol*)pp)->numberStr == num) {
+	    SymbolPaints.remove();
+	    break;
+	  }
+    }
+  }
+  else if(countSymPort > 0) {  // add ports
+    int x1, x2, y1, y2;
+    sizeOfAll(x1, y1, x2, y2);
+    x1 += 10;
+    y2 += 10;
+    setOnGrid(x1, y2);
+    for(int z=countSymPort-1; z>=0; z--) {
+      SymbolPaints.append(new PortSymbol(x1, y2, countPort-z));
+      x1 += 20;
+    }
+  }
+  return countPort;
+}
+
+// ---------------------------------------------------
 bool QucsDoc::undo()
 {
+  if(symbolMode) {
+    if(UndoSymbol.current() == UndoSymbol.getFirst())  return false;
+
+    File.rebuildSymbol(UndoSymbol.prev());
+
+    QString *ps = UndoSymbol.current();
+    if(ps != UndoSymbol.getFirst())  App->undo->setEnabled(true);
+    else  App->undo->setEnabled(false);
+    if(ps != UndoSymbol.getLast())  App->redo->setEnabled(true);
+    else  App->redo->setEnabled(false);
+
+    if(ps->at(1) == 'i')
+      if(UndoStack.current()->at(1) == 'i') {
+	setChanged(false, false);
+	return true;
+      }
+
+    setChanged(true, false);
+    return true;
+  }
+
+
+  // ...... for schematic edit mode .......
   if(UndoStack.current() == UndoStack.getFirst())  return false;
 
   File.rebuild(UndoStack.prev());
@@ -2504,10 +2597,15 @@ bool QucsDoc::undo()
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
 
-  if(ps->at(1) == 'i') {
-    setChanged(false, false);
-    return true;
-  }
+  if(ps->at(1) == 'i')
+    if(UndoSymbol.isEmpty()) {
+      setChanged(false, false);
+      return true;
+    }
+    else if(UndoSymbol.current()->at(1) == 'i') {
+      setChanged(false, false);
+      return true;
+    }
 
   setChanged(true, false);
   return true;
@@ -2516,6 +2614,29 @@ bool QucsDoc::undo()
 // ---------------------------------------------------
 bool QucsDoc::redo()
 {
+  if(symbolMode) {
+    if(UndoSymbol.current() == UndoSymbol.getLast())  return false;
+
+    File.rebuildSymbol(UndoSymbol.next());
+
+    QString *ps = UndoSymbol.current();
+    if(ps != UndoSymbol.getFirst())  App->undo->setEnabled(true);
+    else  App->undo->setEnabled(false);
+    if(ps != UndoSymbol.getLast())  App->redo->setEnabled(true);
+    else  App->redo->setEnabled(false);
+
+    if(ps->at(1) == 'i')
+      if(UndoStack.current()->at(1) == 'i') {
+	setChanged(false, false);
+	return true;
+      }
+
+    setChanged(true, false);
+    return true;
+  }
+
+
+  // ...... for schematic edit mode .......
   if(UndoStack.current() == UndoStack.getLast())  return false;
 
   File.rebuild(UndoStack.next());
@@ -2527,10 +2648,15 @@ bool QucsDoc::redo()
   if(ps != UndoStack.getLast())  App->redo->setEnabled(true);
   else  App->redo->setEnabled(false);
 
-  if(ps->at(1) == 'i') {
-    setChanged(false, false);
-    return true;
-  }
+  if(ps->at(1) == 'i')
+    if(UndoSymbol.isEmpty()) {
+      setChanged(false, false);
+      return true;
+    }
+    else if(UndoSymbol.current()->at(1) == 'i') {
+      setChanged(false, false);
+      return true;
+    }
 
   setChanged(true, false);
   return true;

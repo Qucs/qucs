@@ -1814,6 +1814,12 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     d->Nodes  = &(d->DocNodes);
     d->Diags  = &(d->DocDiags);
     d->Paints = &(d->DocPaints);
+
+    QString *ps = d->UndoStack.current();
+    if(ps != d->UndoStack.getFirst())  undo->setEnabled(true);
+    else  undo->setEnabled(false);
+    if(ps != d->UndoStack.getLast())  redo->setEnabled(true);
+    else  redo->setEnabled(false);
   }
   else {
     // go into select modus to avoid placing a forbidden element
@@ -1829,14 +1835,8 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
     d->Diags  = &(SymbolDiags);
     d->Paints = &(d->SymbolPaints);
 
-    int countPort = 0;
-    for(Component *pc = d->DocComps.first(); pc!=0; pc = d->DocComps.next())
-      if(pc->Model == "Port")  countPort++;
-
-    int countSymPort = countPort;
-    Painting *pp;
-    for(pp = d->SymbolPaints.first(); pp!=0; pp = d->SymbolPaints.next())
-      if(pp->Name == "PortSym ")  countSymPort--;
+    // If the number of ports is not equal, remove or add some.
+    int countPort = d->adjustPortNumbers();
 
     // If a symbol does not yet exist, create one.
     if(d->SymbolPaints.isEmpty()) {
@@ -1856,40 +1856,22 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 	i++;
 	d->SymbolPaints.append(
 	  new GraphicLine(-30, y, 10, 0, QPen(QPen::darkBlue,2)));
-	d->SymbolPaints.append(new PortSymbol(-30,  y, i));
+	d->SymbolPaints.at(i-1)->setCenter(-30,  y);
 
 	if(i == countPort)  break;
 	i++;
 	d->SymbolPaints.append(
 	  new GraphicLine( 20, y, 10, 0, QPen(QPen::darkBlue,2)));
-	d->SymbolPaints.append(new PortSymbol( 30,  y, i));
+	d->SymbolPaints.at(i-1)->setCenter(30,  y);
 	y += 60;
       }
     }
-    // If the number of ports is not equal, remove or add some.
-    else if(countSymPort < 0) {  // remove ports
-      QString num;
-      for(int z=-countSymPort; z>0; z--) {
-        num = QString::number(countPort + z);
-        for(pp = d->SymbolPaints.last(); pp!=0; pp = d->SymbolPaints.prev())
-	  if(pp->Name == "PortSym ")
-	    if(((PortSymbol*)pp)->numberStr == num) {
-	      d->SymbolPaints.remove();
-	      break;
-	    }
-      }
-    }
-    else if(countSymPort > 0) {  // add ports
-      int x1, x2, y1, y2;
-      d->sizeOfAll(x1, y1, x2, y2);
-      x1 += 10;
-      y2 += 10;
-      d->setOnGrid(x1, y1);
-      for(int z=countSymPort-1; z>=0; z--) {
-	d->SymbolPaints.append(new PortSymbol(x1, y2, countPort-z));
-	x1 += 20;
-      }
-    }
+
+    QString *ps = d->UndoSymbol.current();
+    if(ps != d->UndoSymbol.getFirst())  undo->setEnabled(true);
+    else  undo->setEnabled(false);
+    if(ps != d->UndoSymbol.getLast())  redo->setEnabled(true);
+    else  redo->setEnabled(false);
   }
   slotSetCompView(0);
 }
@@ -1903,6 +1885,12 @@ void QucsApp::slotSymbolEdit()
   QucsDoc *d = view->Docs.current();
   d->switchPaintMode();   // twist the view coordinates
   changeSchematicSymbolMode(d);
+
+  // This can only be true when switching to the symbol the first time.
+  if(d->UndoSymbol.isEmpty()) {
+    d->setChanged(false, true); // "not changed" state, but put on undo stack
+    d->UndoSymbol.current()->at(1) = 'i';  // state of being unchanged
+  }
 
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
