@@ -456,16 +456,16 @@ bool QucsApp::closeAllFiles()
     if(ptr->DocChanged) {
       if(notForAll)  Result = m->exec();
       switch(Result) {
-        case 1: slotFileSave();     // save button
-                break;
-        case 2: Result = 1;         // save all button
-                notForAll = false;
-                slotFileSave();
-                break;
-        case 4: Result = 3;         // discard all button
-                notForAll = false;
-                break;
-        case 5: return false;       // cancel button
+	case 1: if(!saveCurrentFile())  return false;  // save button
+		break;
+	case 2: Result = 1;         // save all button
+		notForAll = false;
+		if(!saveCurrentFile())  return false;
+		break;
+	case 4: Result = 3;         // discard all button
+		notForAll = false;
+		break;
+	case 5: return false;       // cancel button
       }
     }
 
@@ -694,7 +694,10 @@ bool QucsApp::saveCurrentFile()
   view->Docs.current()->PosX = view->contentsX();
   view->Docs.current()->PosY = view->contentsY();
 
-  updatePortNumber(view->Docs.current()->save());   // SAVE
+  int Result = view->Docs.current()->save();   // SAVE
+  if(Result < 0)  return false;
+
+  updatePortNumber(Result);
   return true;
 }
 
@@ -789,7 +792,10 @@ bool QucsApp::saveAs()
 
   view->Docs.current()->PosX = view->contentsX();
   view->Docs.current()->PosY = view->contentsY();
-  updatePortNumber(view->Docs.current()->save());   // SAVE
+  n = view->Docs.current()->save();   // SAVE
+  if(n < 0)  return false;
+
+  updatePortNumber(n);
   return true;
 }
 
@@ -907,8 +913,10 @@ void QucsApp::slotFileQuit()
 				      tr("Yes"), tr("No"));
   if(exit == 0)
     if(closeAllFiles()) {
-      for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
+      for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next()) {
+        pp->disconnect(this);
         pp->kill();   // terminate all running sub-programs
+      }
       qApp->quit();
     }
 
@@ -921,8 +929,10 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 {
   Event->ignore();
   if(closeAllFiles()) {
-    for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next())
+    for(QProcess *pp = Programs.first(); pp != 0; pp = Programs.next()) {
+      pp->disconnect(this);
       pp->kill();   // terminate all running sub-programs
+    }
     qApp->quit();
   }
 }
@@ -980,8 +990,7 @@ void QucsApp::showHTML(const QString& Page)
   }
 
   Programs.append(QucsHelp);
-  connect(QucsHelp, SIGNAL(processExited()),
-	  this, SLOT(slotDeleteProcess()));
+  connect(QucsHelp, SIGNAL(processExited()), SLOT(slotDeleteProcess()));
 }
 
 // ########################################################################

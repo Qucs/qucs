@@ -28,6 +28,7 @@ WireLabel::WireLabel(const QString& _Name, int _cx, int _cy, int _x1, int _y1, E
   x1 = _x1;
   y1 = _y1;
   setName(_Name);
+  initValue = "";
 
   Type = _Type;
   isSelected = false;
@@ -119,14 +120,14 @@ void WireLabel::paint(ViewPainter *p)
   int b = int(double(y2) / p->Scale) >> 1;
   if(cx < x1+a) {    // where should frame be painted ?
     if(cy < y1+b) {
-      if(phi < 16*90)  phi += 16*180;
+      if(phi == 16*50)  phi += 16*180;
       p->map(x1-3, y1-2, &a, &b);    // low right
       c = a + (x2>>1);
       d = b + y2;
       p->map(cx+xpaint, cy+ypaint, &xpaint, &ypaint);
     }
     else {
-      phi += 16*180;
+      if(phi != 0)  phi += 16*180;
       p->map(x1-3, y1+1, &a, &b);    // up right
       b += y2;
       c  = a + (x2>>1);
@@ -186,6 +187,7 @@ QString WireLabel::save()
 	s += QString::number(cx)+" "+QString::number(cy)+" "
 	  +  QString::number(cx)+" "+QString::number(cy)
 	  +  " \""+Name +"\" "
-	  +  QString::number(x1)+" "+QString::number(y1)+" 0>";
+	  +  QString::number(x1)+" "+QString::number(y1)+" 0 \""
+	  +  initValue+"\">";
   return s;
 }

@@ -59,6 +59,12 @@ DC_Sim::DC_Sim()
   Props.append(new Property("saveAll", "no", false,
 		QObject::tr("save subcircuit nodes into dataset")+
 		" [yes, no]"));
+  Props.append(new Property("convHelper", "none", false,
+		QObject::tr("preferred convergence algorithm")+
+		" [none, gMinStepping, SteepestDescent, LineSearch, Attenuation, SourceStepping]"));
+
+
+
 }
 
 DC_Sim::~DC_Sim()

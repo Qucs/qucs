@@ -359,6 +359,18 @@
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>stars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -530,6 +542,37 @@
     </message>
 </context>
 <context>
+    <name>LabelDialog</name>
+    <message>
+        <source>More...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Less...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="unfinished">ノード名追加</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="unfinished">ラベル入力 :</translation>
+    </message>
+    <message>
+        <source>Initial node voltage:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -589,6 +632,29 @@
     <message>
         <source>Cancel</source>
         <translation>キャンセル</translation>
+    </message>
+</context>
+<context>
+    <name>NewProjDialog</name>
+    <message>
+        <source>Create new project</source>
+        <translation type="unfinished">新規プロジェクトを作成</translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished">プロジェクト名:</translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished">新しいプロジェクトを開く</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">作成</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
     </message>
 </context>
 <context>
@@ -2081,23 +2147,23 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Create new project</source>
-        <translation>新規プロジェクトを作成</translation>
+        <translation type="obsolete">新規プロジェクトを作成</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation>プロジェクト名:</translation>
+        <translation type="obsolete">プロジェクト名:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation>新しいプロジェクトを開く</translation>
+        <translation type="obsolete">新しいプロジェクトを開く</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation type="obsolete">作成</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation type="obsolete">キャンセル</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
@@ -2190,6 +2256,18 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>OpAmp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Nodename</source>
+        <translation type="obsolete">ノード名追加</translation>
+    </message>
+    <message>
+        <source>Enter the label:</source>
+        <translation type="obsolete">ラベル入力 :</translation>
+    </message>
+    <message>
+        <source>preferred convergence algorithm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4041,11 +4119,11 @@ Qt universal circuit simulator
     <name>QucsView</name>
     <message>
         <source>Insert Nodename</source>
-        <translation>ノード名追加</translation>
+        <translation type="obsolete">ノード名追加</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation>ラベル入力 :</translation>
+        <translation type="obsolete">ラベル入力 :</translation>
     </message>
     <message>
         <source>Info</source>

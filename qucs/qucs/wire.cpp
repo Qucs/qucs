@@ -126,9 +126,9 @@ bool Wire::isHorizontal()
 }
 
 // ----------------------------------------------------------------
-void Wire::setName(const QString& Name_, int delta_, int x_, int y_)
+void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int x_, int y_)
 {
-  if(Name_.isEmpty()) {
+  if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
     Label = 0;
     return;
@@ -141,6 +141,7 @@ void Wire::setName(const QString& Name_, int delta_, int x_, int y_)
       Label = new WireLabel(Name_, x1, y1+delta_, x_, y_, isVWireLabel);
     Label->pNode = 0;
     Label->pWire = this;
+    Label->initValue = Value_;
   }
   else Label->setName(Name_);
 }
@@ -153,11 +154,12 @@ QString Wire::save()
   QString s  = "<"+QString::number(x1)+" "+QString::number(y1);
           s += " "+QString::number(x2)+" "+QString::number(y2);
   if(Label) {
-          s += " \""+Label->Name +"\" ";
+          s += " \""+Label->Name+"\" ";
           s += QString::number(Label->x1)+" "+QString::number(Label->y1)+" ";
-          s += QString::number(Label->cx-x1 + Label->cy-y1)+">";
+          s += QString::number(Label->cx-x1 + Label->cy-y1);
+          s += " \""+Label->initValue+"\">";
   }
-  else { s += " \"\" 0 0 0>"; }
+  else { s += " \"\" 0 0 0 \"\">"; }
   return s;
 }
 
@@ -200,7 +202,7 @@ bool Wire::load(const QString& _s)
     int delta = s.section(' ',7,7).toInt(&ok);    // delta for x/y root coordinate
     if(!ok) return false;
 
-    setName(n, delta, nx, ny);  // Wire Label
+    setName(n, s.section('"',3,3), delta, nx, ny);  // Wire Label
   }
 
   return true;

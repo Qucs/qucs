@@ -63,9 +63,9 @@ bool Node::getSelected(int x_, int y_)
 }
 
 // ----------------------------------------------------------------
-void Node::setName(const QString& Name_, int x_, int y_)
+void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
 {
-  if(Name_.isEmpty()) {
+  if(Name_.isEmpty() && Value_.isEmpty()) {
     if(Label) delete Label;
     Label = 0;
     return;
@@ -75,4 +75,5 @@ void Node::setName(const QString& Name_, int x_, int y_)
   else Label->setName(Name_);
   Label->pNode = this;
   Label->pWire = 0;
+  Label->initValue = Value_;
 }
