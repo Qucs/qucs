@@ -1,3 +1,7 @@
+2004-05-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (TRANSLATIONS): Added romanian translation file.
+
 2004-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_it.ts: Applied changes made by Gorgio.  Thanks.
