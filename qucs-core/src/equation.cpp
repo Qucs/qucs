@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.3 2004-03-20 16:58:49 ela Exp $
+ * $Id: equation.cpp,v 1.4 2004-03-21 09:57:10 ela Exp $
  *
  */
 
@@ -154,7 +154,7 @@ void application::addDependencies (strlist * depends) {
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
-  cycle = duplicate = 0;
+  evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
 }
@@ -162,7 +162,7 @@ node::node () {
 // This constructor creates an typed instance of the equation node class.
 node::node (int type) {
   tag = type;
-  cycle = duplicate = 0;
+  evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
 }
@@ -221,7 +221,7 @@ strlist * node::recurseDependencies (checker * check, strlist * deps) {
   /* Go through the list of passed dependency variables. */
   for (int i = 0; i < deps->length (); i++) {
     char * var = deps->get (i);
-    node * child = check->findEquation (var);
+    node * child = check->findEquation (check->equations, var);
     /* Check each child equation. */
     if (child != NULL) {
       if (child->cycle == 0) {
@@ -280,6 +280,7 @@ void checker::collectDependencies (void) {
 // Logs the textual representation of all equations.
 void checker::list (void) {
   for (node * eqn = equations; eqn != NULL; eqn = eqn->getNext ()) {
+    logprint (LOG_STATUS, "%s", eqn->evalPossible ? "!" : "?");
     eqn->print ();
     logprint (LOG_STATUS, "\n");
   }
@@ -354,9 +355,9 @@ int checker::findDuplicate (void) {
 
 /* The function returns the equations resulting in the passed variable
    or NULL if there is no such equation. */
-node * checker::findEquation (char * n) {
-  foreach_equation (eqn) {
-    if (!strcmp (eqn->result, n)) return eqn;
+node * checker::findEquation (node * root, char * n) {
+  for (node * eqn = root; eqn != NULL; eqn = eqn->getNext ()) {
+    if (!strcmp (A(eqn)->result, n)) return eqn;
   }
   return NULL;
 }
@@ -365,6 +366,7 @@ node * checker::findEquation (char * n) {
    returns zero if there are no such cycles. */
 int checker::detectCycles (void) {
   int err = 0;
+
   foreach_equation (eqn) {
     strlist * deps = eqn->recurseDependencies (this, eqn->getDependencies ());
     if (deps->contains (eqn->result) || eqn->cycle) {
@@ -374,9 +376,87 @@ int checker::detectCycles (void) {
       delete deps;
     }
     else {
-      logprint (LOG_STATUS, "%s depends: %s\n", 
-		eqn->result, deps->toString ());
+      // Set folded variable dependencies.
+      deps = foldDependencies (deps);
+      eqn->setDependencies (deps);
     }
   }
   return err;
+}
+
+/* The function returns a variable dependency list with unique entries
+   only.  The given string list gets deleted and a new one is created
+   and returned. */
+strlist * checker::foldDependencies (strlist * deps) {
+  strlist * res = new strlist ();
+  for (int i = 0; i < deps->length (); i++) {
+    char * var = deps->get (i);
+    if (!res->contains (var)) res->append (var);
+  }
+  delete deps;
+  return res;
+}
+
+// The function appends the given last node to the given equation root.
+node * checker::appendEquation (node * root, node * last) {
+  last->setNext (NULL);
+  if (root != NULL) {
+    node * eqn = lastEquation (root);
+    eqn->setNext (last);
+  }
+  else root = last;
+  return root;
+}
+
+// Returns the last node in the given equation root.
+node * checker::lastEquation (node * root) {
+  node * eqn;
+  for (eqn = root; eqn->getNext () != NULL; eqn = eqn->getNext ());
+  return eqn;
+}
+
+// Removes the given equation node from the list of known equations.
+void checker::dropEquation (node * eqn) {
+  if (eqn == equations) {
+    equations = eqn->getNext ();
+  }
+  else {
+    node * prev;
+    for (prev = equations; prev->getNext () != eqn; prev = prev->getNext());
+    prev->setNext (eqn->getNext ());
+  }
+}
+
+/* This function reorders the list of equations.  The new order can be
+   used to evaluate the list step by step.  Each equation being
+   evaluable is properly marked, remaining equations are appended. */
+void checker::reorderEquations (void) {
+  node * root = NULL, * next, * last;
+
+  // Go through the list of equations.
+  for (node * eqn = equations; eqn != NULL; eqn = next) {
+    strlist * deps = eqn->getDependencies ();
+    int i, found;
+    next = eqn->getNext ();
+    /* Check whether the variable dependencies can be found in
+       previous equations. */
+    for (found = i = 0; i < deps->length (); i++) {
+      char * var = deps->get (i);
+      if (findEquation (root, var) != NULL) found++;
+    }
+    // Yes.
+    if (found == deps->length ()) {
+      /* Remove the equation from the current list and append it to
+         the new list. */
+      dropEquation (eqn);
+      root = appendEquation (root, eqn);
+      eqn->evalPossible = 1;
+      // Now start over from the beginning.
+      next = equations;
+    }
+  }
+  // Any remaining equations get appended.
+  last = lastEquation (root);
+  last->setNext (equations);
+  equations = root;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.3 2004-03-20 16:58:49 ela Exp $
+ * $Id: equation.h,v 1.4 2004-03-21 09:57:10 ela Exp $
  *
  */
 
@@ -72,6 +72,7 @@ public:
 public:
   int duplicate;
   int cycle;
+  int evalPossible;
 
 private:
   int tag;
@@ -165,8 +166,13 @@ public:
   int findUndefined (void);
   strlist * getVariables (void);
   int findDuplicate (void);
-  node * findEquation (char *);
+  node * findEquation (node *, char *);
   int detectCycles (void);
+  static strlist * foldDependencies (strlist *);
+  node * appendEquation (node *, node *);
+  void dropEquation (node *);
+  void reorderEquations (void);
+  node * lastEquation (node *);
 
 public:
   node * equations;
