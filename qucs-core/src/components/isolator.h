@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: isolator.h,v 1.5 2004/07/26 06:30:29 ela Exp $
+ * $Id: isolator.h,v 1.6 2004/09/16 10:15:10 ela Exp $
  *
  */
 
@@ -31,7 +31,8 @@ class isolator : public circuit
   isolator ();
   void calcSP (nr_double_t);
   void calcNoise (nr_double_t);
-  void calcDC (void);
+  void initDC (void);
+  void initAC (void);
 };
 
 #endif /* __ISOLATOR_H__ */

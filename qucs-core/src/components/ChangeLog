@@ -1,3 +1,9 @@
+2004-09-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* gyrator.cpp, circulator.cpp, isolator.cpp, attenuator.cpp,
+	biastee.cpp, dcblock.cpp, dcfeed.cpp, devices/bjt.cpp:
+	Implemented AC analysis	callbacks.
+
 2004-09-13  Stefan Jahn  <stefan@lkcc.org>
 
 	* inductor.cpp (calcTR): Implemented callbacks for transient

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circulator.cpp,v 1.6 2004/05/20 17:27:46 margraf Exp $
+ * $Id: circulator.cpp,v 1.7 2004/09/16 10:15:10 ela Exp $
  *
  */
 
@@ -61,7 +61,7 @@ void circulator::calcSP (nr_double_t) {
   setS (3, 2, sqrt (z2 / z3) * (z3 + z0) / (z2 + z0) * (1 - r3 * r3) / d);
 }
 
-void circulator::calcDC (void) {
+void circulator::initDC (void) {
   nr_double_t z1 = getPropertyDouble ("Z1");
   nr_double_t z2 = getPropertyDouble ("Z2");
   nr_double_t z3 = getPropertyDouble ("Z3");
@@ -93,4 +93,8 @@ void circulator::calcDC (void) {
   setD (3, 1, z0 * s31); setD (3, 2, z0 * s32); setD (3, 3, z0 * (s33 + 1.0));
 
   setE (1, +0.0); setE (2, +0.0); setE (3, +0.0);
+}
+
+void circulator::initAC (void) {
+  initDC ();
 }
