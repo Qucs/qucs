@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.13 2004-10-12 18:13:09 ela Exp $
+ * $Id: transient.cpp,v 1.14 2004-10-14 13:28:25 ela Exp $
  *
  */
 
@@ -317,22 +317,25 @@ void setIntegrationMethod (circuit * c, int Method) {
 int correctorType (char * Method, int& MaxOrder) {
   if (!strcmp (Method, "Gear")) {
     if (MaxOrder > 6) MaxOrder = 6;
+    if (MaxOrder < 1) MaxOrder = 1;
     return INTEGRATOR_GEAR;
   }
   else if (!strcmp (Method, "Trapezoidal")) {
-    if (MaxOrder > 2) MaxOrder = 2;
+    MaxOrder = 2;
     return INTEGRATOR_TRAPEZOIDAL;
   }
   else if (!strcmp (Method, "Euler")) {
-    if (MaxOrder > 1) MaxOrder = 1;
+    MaxOrder = 1;
     return INTEGRATOR_EULER;
   }
   else if (!strcmp (Method, "AdamsMoulton")) {
     if (MaxOrder > 6) MaxOrder = 6;
+    if (MaxOrder < 1) MaxOrder = 1;
     return INTEGRATOR_ADAMSMOULTON;
   }
   else if (!strcmp (Method, "AdamsBashford")) {
     if (MaxOrder > 6) MaxOrder = 6;
+    if (MaxOrder < 1) MaxOrder = 1;
     return INTEGRATOR_ADAMSBASHFORD;
   }
   return INTEGRATOR_UNKNOWN;
@@ -346,21 +349,18 @@ int predictorType (int corrMethod, int corrOrder, int& predOrder) {
   switch (corrMethod) {
   case INTEGRATOR_GEAR:
     predMethod = INTEGRATOR_GEAR;
-    predOrder = corrOrder;
     break;
   case INTEGRATOR_ADAMSMOULTON:
     predMethod = INTEGRATOR_ADAMSBASHFORD;
-    predOrder = corrOrder;
     break;
   case INTEGRATOR_TRAPEZOIDAL:
     predMethod = INTEGRATOR_ADAMSBASHFORD;
-    predOrder = corrOrder;
     break;
   case INTEGRATOR_EULER:
     predMethod = INTEGRATOR_EULER;
-    predOrder = 1;
     break;
   }
+  predOrder = corrOrder;
   return predMethod;
 }
 

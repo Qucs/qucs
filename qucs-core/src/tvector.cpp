@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.2 2004-10-13 14:43:17 ela Exp $
+ * $Id: tvector.cpp,v 1.3 2004-10-14 13:28:25 ela Exp $
  *
  */
 
@@ -32,9 +32,16 @@
 #include <string.h>
 #include <math.h>
 
-#include "logging.h"
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
+
 #include "complex.h"
 #include "tvector.h"
+
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 
 // Constructor creates an unnamed instance of the tvector class.
 template <class nr_type_t>
@@ -164,6 +171,14 @@ nr_double_t maxnorm (tvector<nr_type_t> a) {
     if (n > nMax) nMax = n;
   }
   return nMax;
+}
+
+// Checks validity of vector.
+template <class nr_type_t>
+int tvector<nr_type_t>::isFinite (void) {
+  for (int i = 0; i < size; i++)
+    if (!finite (real (data[i]))) return 0;
+  return 1;
 }
 
 #ifdef DEBUG
