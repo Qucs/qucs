@@ -110,6 +110,7 @@ public:
   bool    paste(QTextStream*, QPtrList<Element>*);
   bool    load();
   int     save();
+  int     adjustPortNumbers();
   bool    undo();
   bool    redo();
 
@@ -155,6 +156,7 @@ public:
 
   QPtrList<Element> ElementCache;
   QPtrList<QString> UndoStack;
+  QPtrList<QString> UndoSymbol;    // undo stack for circuit symbol
 };
 
 
