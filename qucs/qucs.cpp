@@ -27,9 +27,7 @@
 #include "paintings/paintings.h"
 #include "diagrams/diagrams.h"
 #include "dialogs/messagebox.h"
-#include "dialogs/helpdialog.h"
 #include "dialogs/newprojdialog.h"
-#include "dialogs/fileshowdialog.h"
 #include "dialogs/settingsdialog.h"
 #include "dialogs/qucssettingsdialog.h"
 
@@ -785,15 +783,21 @@ void QucsApp::slotEditCopy()
 // ########################################################################
 void QucsApp::slotHelpIndex()
 {
-  HelpDialog *d = new HelpDialog("index.html");
-  d->show();
+  QStringList com;
+  com << BINARYDIR "qucshelp" << "index.html";
+  QProcess QucsHelp(com);
+  if(!QucsHelp.start())
+    QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
 }
 
 // ########################################################################
 void QucsApp::slotGettingStarted()
 {
-  HelpDialog *d = new HelpDialog("start.html");
-  d->show();
+  QStringList com;
+  com << BINARYDIR "qucshelp" << "start.html";
+  QProcess QucsHelp(com);
+  if(!QucsHelp.start())
+    QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
 }
 
 // ########################################################################
@@ -992,16 +996,20 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 // Is called to show the output messages of the last simulation.
 void QucsApp::slotShowLastMsg()
 {
-  FileShowDialog *d = new FileShowDialog("log.txt", this);
-  d->show();
+  QString com = QucsSettings.Editor + " log.txt";
+  QProcess QucsEditor(QStringList::split(" ", com));
+  if(!QucsEditor.start())
+    QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
 }
 
 // ------------------------------------------------------------------------
 // Is called to show the netlist of the last simulation.
 void QucsApp::slotShowLastNetlist()
 {
-  FileShowDialog *d = new FileShowDialog("netlist.txt", this);
-  d->show();
+  QString com = QucsSettings.Editor + " netlist.txt";
+  QProcess QucsEditor(QStringList::split(" ", com));
+  if(!QucsEditor.start())
+    QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
 }
 
 // ------------------------------------------------------------------------
@@ -1014,7 +1022,7 @@ void QucsApp::slotChangePage()
     QMessageBox::critical(this, tr("Error"), tr("No page set !"));
     return;
   }
-  
+
   QFileInfo Info;
   QucsDoc *d;
 

@@ -38,7 +38,8 @@ tQucsSettings QucsSettings
      = {0, 0, 600, 400,    // position and size
 	QFont("Helvetica", 12), QFont("Helvetica", 16, QFont::DemiBold),
 	QFont("Helvetica", 10, QFont::Light),
-	QColor(255, 250, 225), 20};
+	QColor(255, 250, 225), 20,
+	BINARYDIR "qucsedit"};
 
 QFont savingFont;    // to remember which font to save in "qucsrc"
 
@@ -82,6 +83,8 @@ bool loadSettings()
 	  QucsSettings.BGColor.setRgb(255, 250, 225); }
     else if(Setting == "maxUndo") {
 	QucsSettings.maxUndo = Line.toInt(&ok); }
+    else if(Setting == "Editor") {
+	QucsSettings.Editor = Line; }
   }
 
   file.close();
@@ -108,7 +111,8 @@ bool saveApplSettings(QucsApp *qucs)
     << "Font=" << savingFont.toString() << "\n"
     << "BGColor=" << qucs->view->viewport()->paletteBackgroundColor().name()
     << "\n"
-    << "maxUndo=" << QucsSettings.maxUndo << "\n";
+    << "maxUndo=" << QucsSettings.maxUndo << "\n"
+    << "Editor=" << QucsSettings.Editor << "\n";
   file.close();
 
   return true;
@@ -152,6 +156,7 @@ QString complexRad (double real, double imag, int Precision)
   }
   return Text;
 }
+
 
 // #########################################################################
 // ##########                                                     ##########

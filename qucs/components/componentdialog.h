@@ -47,6 +47,7 @@ private slots:
   void slotApplyInput();
   void slotApplyState(int State);
   void slotBrowseFile();
+  void slotEditFile();
   void slotApplyChange(const QString& Text);
   void slotApplyProperty();
   void slotApplyPropName();
@@ -60,7 +61,7 @@ private:
   QLineEdit   *edit, *NameEdit;
   QComboBox   *ComboEdit;
   QLabel      *Name, *Description;
-  QPushButton *BrowseButt, *ButtAdd, *ButtRem;
+  QPushButton *BrowseButt, *EditButt, *ButtAdd, *ButtRem;
   QCheckBox   *disp;
   Component   *Comp;
   bool        changed, transfered;
