@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.9 2004-08-14 15:41:56 ela Exp $
+ * $Id: device.cpp,v 1.10 2004-10-16 16:42:31 ela Exp $
  *
  */
 
@@ -141,25 +141,46 @@ nr_double_t pnConductance (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
 // Computes pn-junction depletion capacitance.
 nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
 			   nr_double_t Mj, nr_double_t Fc) {
-  nr_double_t C;
+  nr_double_t c;
   if (Uj <= Fc * Vj)
-    C = Cj * exp (-Mj * log (1 - Uj / Vj));
+    c = Cj * exp (-Mj * log (1 - Uj / Vj));
   else
-    C = Cj * exp (-Mj * log (1 - Fc)) * 
+    c = Cj * exp (-Mj * log (1 - Fc)) * 
       (1 + Mj * (Uj - Fc * Vj) / Vj / (1 - Fc));
-  return C;
+  return c;
+}
+
+// Computes pn-junction depletion charge.
+nr_double_t pnCharge (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
+		      nr_double_t Mj, nr_double_t Fc) {
+  nr_double_t q, a, b;
+  if (Uj <= Fc * Vj) {
+    a = 1 - Uj / Vj;
+    b = exp ((1 - Mj) * log (a));
+    q = Cj * Vj / (1 - Mj) * (1 - b);
+  }
+  else {
+    a = 1 - Fc;
+    b = exp ((1 - Mj) * log (a));
+    a = exp ((1 + Mj) * log (a));
+    nr_double_t c = 1 - Fc * (1 + Mj);
+    nr_double_t d = Fc * Vj;
+    nr_double_t e = Vj * (1 - b) / (1 - Mj);
+    q = Cj * (e + (c * (Uj - d) + Mj / 2 / Vj * (sqr (Uj) - sqr (d))) / a);
+  }
+  return q;
 }
 
 /* This function computes the pn-junction depletion capacitance with
    no linearization factor given. */
 nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
 			   nr_double_t Mj) {
-  nr_double_t C;
+  nr_double_t c;
   if (Uj <= 0)
-    C = Cj * exp (-Mj * log (1 - Uj / Vj));
+    c = Cj * exp (-Mj * log (1 - Uj / Vj));
   else
-    C = Cj * (1 + Mj * Uj / Vj);
-  return C;
+    c = Cj * (1 + Mj * Uj / Vj);
+  return c;
 }
 
 // Compute critical voltage of pn-junction.

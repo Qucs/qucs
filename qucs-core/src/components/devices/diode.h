@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.h,v 1.6 2004-10-04 20:54:23 ela Exp $
+ * $Id: diode.h,v 1.7 2004-10-16 16:42:31 ela Exp $
  *
  */
 
@@ -40,7 +40,7 @@ class diode : public circuit
   void calcTR (nr_double_t);
 
  private:
-  nr_double_t Uprev, gd, Id;
+  nr_double_t Uprev, gd, Id, Qd;
   circuit * rs;
 };
 

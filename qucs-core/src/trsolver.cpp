@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.23 2004-10-14 13:28:25 ela Exp $
+ * $Id: trsolver.cpp,v 1.24 2004-10-16 16:42:30 ela Exp $
  *
  */
 
@@ -191,7 +191,7 @@ void trsolver::solve (void) {
 	linesearch = 1;
 	convError = 2;
 
-#if STEPDEBUG || 1
+#if DEBUG
 	logprint (LOG_ERROR, "WARNING: delta rejected at t = %.3e, h = %.3e "
 		  "(no convergence)\n", current, delta);
 #endif

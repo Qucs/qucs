@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.30 2004-10-12 18:13:08 ela Exp $
+ * $Id: circuit.h,v 1.31 2004-10-16 16:42:30 ela Exp $
  *
  */
 
@@ -95,7 +95,8 @@ class circuit : public object, public integrator
   int  getVoltageSources (void);
   void setVoltageSources (int);
   void voltageSource (int, int, int, nr_double_t value = 0.0);
-  void transientCapacitance (int, int, int, nr_double_t, nr_double_t);
+  void transientCapacitance (int, int, int, nr_double_t, nr_double_t,
+			     nr_double_t);
   bool isVSource (void) { return RETFLAG (CIRCUIT_VSOURCE); }
   void setVSource (bool v) { MODFLAG (v, CIRCUIT_VSOURCE); }
   bool isISource (void) { return RETFLAG (CIRCUIT_ISOURCE); }
@@ -176,6 +177,7 @@ class circuit : public object, public integrator
 
  protected:
   int type;
+  int pol;
 
  private:
   int size;

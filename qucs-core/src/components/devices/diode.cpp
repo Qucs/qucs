@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.13 2004-10-04 20:54:23 ela Exp $
+ * $Id: diode.cpp,v 1.14 2004-10-16 16:42:31 ela Exp $
  *
  */
 
@@ -157,6 +157,7 @@ void diode::calcOperatingPoints (void) {
 
   Ud = real (getV (NODE_A) - getV (NODE_C));
   Cd = pnCapacitance (Ud, Cj0, Vj, M, Fc) + Tt * gd + Cp;
+  Qd = pnCharge (Ud, Cj0, Vj, M, Fc) + Tt * Id + Cp * Ud;
 
   setOperatingPoint ("gd", gd);
   setOperatingPoint ("Id", Id);
@@ -191,5 +192,5 @@ void diode::calcTR (nr_double_t) {
   nr_double_t Ud = getOperatingPoint ("Vd");
   nr_double_t Cd = getOperatingPoint ("Cd");
 
-  transientCapacitance (qState, NODE_A, NODE_C, Cd, Ud);
+  transientCapacitance (qState, NODE_A, NODE_C, Cd, Ud, Qd);
 }

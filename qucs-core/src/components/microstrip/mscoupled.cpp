@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.15 2004-10-15 18:38:53 margraf Exp $
+ * $Id: mscoupled.cpp,v 1.16 2004-10-16 16:42:31 ela Exp $
  *
  */
 
@@ -413,13 +413,6 @@ void mscoupled::initAC (void) {
 }
 
 void mscoupled::calcAC (nr_double_t frequency) {
-  // TODO: calculate Y-parameters directly
-  calcSP (frequency);
-  setMatrixY (stoy (getMatrixS ()));
-
-//#if 0
-  fprintf (stderr, "Y-indirect:\n");
-  getMatrixY().print();
   // fetch line properties
   nr_double_t l = getPropertyDouble ("L");
 
@@ -429,41 +422,19 @@ void mscoupled::calcAC (nr_double_t frequency) {
   complex go = rect (ao, bo);
 
   // compute abbreviations
-  complex De, Do, X1, X2, X3, X4;
-
+  complex De, Do, y1, y2, y3, y4;
   De = 0.5 / (ze * sinh (ge * l));
   Do = 0.5 / (zo * sinh (go * l));
-
-  X2 = -De - Do;
-  X3 = -De + Do;
-
+  y2 = -De - Do;
+  y3 = -De + Do;
   De *= cosh (ge * l);
   Do *= cosh (go * l);
+  y1 = De + Do;
+  y4 = De - Do;
 
-  X1 =  De + Do;
-  X4 =  De - Do;
-
-  setY (1, 1, X1);
-  setY (1, 2, X2);
-  setY (1, 3, X3);
-  setY (1, 4, X4);
-
-  setY (2, 1, X2);
-  setY (2, 2, X1);
-  setY (2, 3, X4);
-  setY (2, 4, X3);
-
-  setY (3, 1, X3);
-  setY (3, 2, X4);
-  setY (3, 3, X1);
-  setY (3, 4, X2);
-
-  setY (4, 1, X4);
-  setY (4, 2, X3);
-  setY (4, 3, X2);
-  setY (4, 4, X1);
-
-  fprintf (stderr, "Y-direct:\n");
-  getMatrixY().print();
-//#endif
+  // store Y-parameters
+  setY (1, 1, y1); setY (2, 2, y1); setY (3, 3, y1); setY (4, 4, y1);
+  setY (1, 2, y2); setY (2, 1, y2); setY (3, 4, y2); setY (4, 3, y2);
+  setY (1, 3, y3); setY (2, 4, y3); setY (3, 1, y3); setY (4, 2, y3);
+  setY (1, 4, y4); setY (2, 3, y4); setY (3, 2, y4); setY (4, 1, y4);
 }
