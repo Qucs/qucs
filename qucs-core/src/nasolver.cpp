@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.5 2004/09/11 20:39:29 ela Exp $
+ * $Id: nasolver.cpp,v 1.6 2004/09/13 21:05:34 ela Exp $
  *
  */
 
@@ -135,7 +135,10 @@ int nasolver<nr_type_t>::solve_once (void) {
   }
 
   // save results into circuits
-  if (!error) saveNodeVoltages ();
+  if (!error) {
+    saveNodeVoltages ();
+    saveBranchCurrents ();
+  }
   return error;
 }
 
@@ -574,6 +577,21 @@ void nasolver<nr_type_t>::saveNodeVoltages (void) {
   n = nlist->getNode (0);
   for (int i = 0; i < n->nNodes; i++) {
     n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), 0.0);
+  }
+}
+
+/* This function goes through solution (the x vector) and saves the
+   branch currents through the voltage sources of the last iteration
+   into each circuit. */
+template <class nr_type_t>
+void nasolver<nr_type_t>::saveBranchCurrents (void) {
+  int N = countNodes ();
+  int M = subnet->getVoltageSources ();
+  circuit * vs;
+  // save all branch currents of voltage sources
+  for (int r = 1; r <= M; r++) {
+    vs = findVoltageSource (r);
+    vs->setJ (r, x->get (r + N, 1));
   }
 }
 

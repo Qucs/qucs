@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.26 2004/09/12 14:09:19 ela Exp $
+ * $Id: circuit.h,v 1.27 2004/09/13 21:05:34 ela Exp $
  *
  */
 
@@ -105,6 +105,7 @@ class circuit : public object, public integrator
   complex getD (int, int);
   complex getE (int);
   complex getI (int);
+  complex getJ (int);
   complex getV (int);
   nr_double_t getG (int, int);
   void setS (int, int, complex);
@@ -115,6 +116,7 @@ class circuit : public object, public integrator
   void setD (int, int, complex);
   void setE (int, complex);
   void setI (int, complex);
+  void setJ (int, complex);
   void setV (int, complex);
   void setG (int, int, nr_double_t);
   void clearB (void);
@@ -122,6 +124,7 @@ class circuit : public object, public integrator
   void clearD (void);
   void clearE (void);
   void clearI (void);
+  void clearJ (void);
   void clearV (void);
   void clearY (void);
 
@@ -174,6 +177,7 @@ class circuit : public object, public integrator
   complex MatrixE[MAX_CIR_VSRCS];
   complex MatrixI[MAX_CIR_PORTS];
   complex MatrixV[MAX_CIR_PORTS];
+  complex MatrixJ[MAX_CIR_VSRCS];
   char * subcircuit;
   node * nodes;
   substrate * subst;

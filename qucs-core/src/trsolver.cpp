@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.4 2004/09/12 18:10:21 ela Exp $
+ * $Id: trsolver.cpp,v 1.5 2004/09/13 21:05:34 ela Exp $
  *
  */
 
@@ -121,44 +121,51 @@ void trsolver::solve (void) {
 	      getName (), (double) time);
 #endif
 
+    int running = 0;
     do {
       calc (current);
       // Start the linear solver.
       solve_linear ();
       nr_double_t save = delta;
-      delta = checkDelta ();
-      if (delta > deltaMax) delta = deltaMax;
-      if (delta < deltaMin) {
-	delta = deltaMin;
-	logprint (LOG_ERROR, "WARNING: delta t at %.3e\n", delta);
-      }
-      if (save < delta) {
-	delta = save * 1.05;
-	updateCoefficients (delta);
-	nextState ();
-	setState (dState, delta);
-	rejected = 0;
+      if (running) {
+	delta = checkDelta ();
+	if (delta > deltaMax) delta = deltaMax;
+	if (delta < deltaMin) delta = deltaMin;
+	if (save < delta) {
+	  delta = 1.1 * save;
+	  updateCoefficients (delta);
+	  nextState ();
+	  setState (dState, delta);
+	  rejected = 0;
 #if DEBUG
-	logprint (LOG_STATUS, "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
-		  current, delta);
+	  logprint (LOG_STATUS,
+		    "DEBUG: delta accepted at t = %.3e, h = %.3e\n",
+		    current, delta);
 #endif
-	savePreviousIteration ();
-      }
-      else if (save > delta) {
-	calcCoefficients (IMethod, order, coefficients, delta);
-	updateCoefficients (delta);
-	setState (dState, delta);
-	rejected++;
+	  savePreviousIteration ();
+	}
+	else if (save > delta) {
+	  delta = 0.9 * save;
+	  updateCoefficients (delta);
+	  //setState (dState, delta);
+	  rejected++;
 #if DEBUG
-	logprint (LOG_STATUS, "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
-		  current, delta);
+	  logprint (LOG_STATUS,
+		    "DEBUG: delta rejected at t = %.3e, h = %.3e\n",
+		    current, delta);
 #endif
-	current -= delta;
-      } else {
+	  current -= delta;
+	} else {
+	  nextState ();
+	  setState (dState, delta);
+	}
+      }
+      else {
 	nextState ();
 	setState (dState, delta);
       }
       current += delta;
+      running++;
     }
     while (current < time);
     
@@ -210,8 +217,8 @@ void trsolver::init (void) {
   deltaMin = getPropertyDouble ("MinStep");
   deltaMax = getPropertyDouble ("MaxStep");
   if (deltaMax == 0.0) deltaMax = (stop - start) / 50;
-  if (deltaMin == 0.0) deltaMin = 1e-12 * deltaMax;
-  if (delta == 0.0) delta = deltaMax;
+  if (deltaMin == 0.0) deltaMin = 1e-9 * deltaMax;
+  if (delta == 0.0) delta = stop / 20000;
   if (delta < deltaMin) delta = deltaMin;
   if (delta > deltaMax) delta = deltaMax;
   
@@ -252,11 +259,12 @@ nr_double_t trsolver::checkDelta (void) {
   nr_double_t reltol = getPropertyDouble ("reltolTR");
   nr_double_t abstol = getPropertyDouble ("abstolTR");
   nr_double_t dif, rel, tol, n = DBL_MAX;
+  int N = countNodes ();
 
   reltol = 1e-3;
   abstol = 1e-6;
 
-  for (int r = 1; r <= x->getRows (); r++) {
+  for (int r = 1; r <= N; r++) {
     dif = z->get (r, 1) - zprev->get (r, 1);
     rel = abs (x->get (r, 1));
     tol = reltol * rel + abstol;
@@ -270,7 +278,7 @@ nr_double_t trsolver::checkDelta (void) {
     }
     else if (!strcmp (IMethod, "Trapezoidal")) {
       if (dif != 0) {
-	nr_double_t t = getState (dState, 0) + getState (dState, 1);
+	nr_double_t t = delta + getState (dState, 0);
 	t = delta * t * fabs (tol * 3 / dif);
 	n = MIN (n, t);
       }
@@ -292,5 +300,7 @@ nr_double_t trsolver::checkDelta (void) {
 // The function updates the integration coefficients.
 void trsolver::updateCoefficients (nr_double_t delta) {
   nr_double_t c = getState (dState);
-  for (int i = 0; i < 8; i++) coefficients[i] *= c / delta;
+  for (int i = 0; i < 8; i++) {
+    coefficients[i] *= c / delta;
+  }
 }

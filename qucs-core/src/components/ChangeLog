@@ -1,3 +1,8 @@
+2004-09-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* inductor.cpp (calcTR): Implemented callbacks for transient
+	analysis.
+
 2004-09-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* idc.cpp, pac.cpp, iprobe.cpp: Implemented callbacks for

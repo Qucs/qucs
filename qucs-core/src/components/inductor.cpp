@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.8 2004/09/12 14:09:19 ela Exp $
+ * $Id: inductor.cpp,v 1.9 2004/09/13 21:05:35 ela Exp $
  *
  */
 
@@ -96,7 +96,9 @@ void inductor::initTR (void) {
 void inductor::calcTR (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t r, v;
+  nr_double_t i = real (getJ (1));
 
+  setState (fState, i * l);
   integrate (fState, l, r, v);
   setD (1, 1, -r);
   setE (1, v);

@@ -1,3 +1,11 @@
+2004-09-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* nasolver.cpp: Now also saving currents through voltage
+	sources into each circuit.
+
+	* circuit.cpp: Made solutions of branch currents (J-MNA matrix)
+	available to circuit components.
+
 2004-09-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* states.h (class states): New class to reuse save-state
