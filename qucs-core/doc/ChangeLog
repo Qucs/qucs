@@ -1,3 +1,11 @@
+2004-09-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (chapter{AC Analysis}): Started to document
+	the AC simulation and components.
+
+	* literature.bib: Completed the 'local' entries for IEEE
+	publications.
+
 2004-09-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Forming the noise current

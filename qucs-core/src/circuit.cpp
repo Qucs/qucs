@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.25 2004-09-06 06:40:07 ela Exp $
+ * $Id: circuit.cpp,v 1.26 2004-09-07 12:53:11 ela Exp $
  *
  */
 
@@ -493,4 +493,15 @@ void circuit::clearV (void) {
 // The function cleans up the G-MNA matrix entries.
 void circuit::clearY (void) {
   memset (MatrixY, 0, sizeof (complex) * size * size);
+}
+
+/* This function can be used by several components in order to place
+   the n-th voltage source between node 'pos' and node 'neg' with the
+   given value.  Remember to indicate this voltage source using the
+   function setVoltageSources(). */
+void circuit::voltageSource (int n, int pos, int neg, nr_double_t value) {
+  setC (n, pos, +1.0); setC (n, neg, -1.0);
+  setB (pos, n, +1.0); setB (neg, n, -1.0);
+  setD (n, n, 0.0);
+  setE (n, value);
 }

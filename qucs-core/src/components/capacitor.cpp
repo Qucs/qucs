@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.6 2004-09-06 06:40:07 ela Exp $
+ * $Id: capacitor.cpp,v 1.7 2004-09-07 12:53:11 ela Exp $
  *
  */
 
@@ -57,7 +57,7 @@ void capacitor::initDC (dcsolver *) {
 }
 
 void capacitor::calcAC (nr_double_t frequency) {
-  nr_double_t c = getPropertyDouble ("C") * z0;
+  nr_double_t c = getPropertyDouble ("C");
   complex y = rect (0, 2.0 * M_PI * frequency * c);
   setY (1, 1, +y); setY (2, 2, +y);
   setY (1, 2, -y); setY (2, 1, -y);

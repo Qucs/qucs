@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.22 2004-09-06 06:40:07 ela Exp $
+ * $Id: circuit.h,v 1.23 2004-09-07 12:53:11 ela Exp $
  *
  */
 
@@ -77,6 +77,7 @@ class circuit : public object
   int  isVoltageSource (void) { return vsource; }
   int  getVoltageSources (void);
   void setVoltageSources (int);
+  void voltageSource (int, int, int, nr_double_t value = 0.0);
 
   // s-parameter helpers
   int  isPort (void) { return pacport; }
