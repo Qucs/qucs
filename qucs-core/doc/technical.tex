@@ -430,17 +430,17 @@ S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}
 
-The scattering parameters of an ideal attenuator with attenuation $L$
-(loss) (or gain $G=1/L$) in reference to the impedance $Z_{ref}$ writes as follows.
+The scattering parameters of an ideal attenuator with (power) attenuation $L$
+(loss) (or power gain $G=1/L$) in reference to the impedance $Z_{ref}$ writes as follows.
 
 \begin{equation}
 r = \frac{Z_0-Z_{ref}}{Z_0+Z_{ref}}
 \end{equation}
 \begin{equation}
-S_{11} = S_{22} = \frac{r\cdot(1-L^2)}{L^2-r^2} = \frac{r\cdot(G^2-1)}{1-r^2\cdot G^2}
+S_{11} = S_{22} = \frac{r\cdot(1-L)}{L-r^2} = \frac{r\cdot(G-1)}{1-r^2\cdot G}
 \end{equation}
 \begin{equation}
-S_{12} = S_{21} = \frac{L\cdot(1-r^2)}{L^2-r^2} = \frac{G\cdot(1-r^2)}{1-r^2\cdot G^2}
+S_{12} = S_{21} = \frac{\sqrt{L}\cdot(1-r^2)}{L-r^2} = \frac{\sqrt{G}\cdot(1-r^2)}{1-r^2\cdot G}
 \end{equation}
 
 \subsection{Isolator}
@@ -2029,6 +2029,60 @@ I_{4}\\
 0\\
 0
 \end{bmatrix}
+\end{equation}
+
+\subsection*{Attenuator}
+\addcontentsline{toc}{subsection}{Attenuator}
+
+The ideal attenuator with (power) attenuation $L$ is determined by the
+following Z parameters.
+
+\begin{equation}
+Z_{11} = Z_{22} = Z_{ref}\cdot\frac{L+1}{L-1}
+\end{equation}
+\begin{equation}
+Z_{12} = Z_{21} = Z_{ref}\cdot\frac{2\cdot\sqrt{L}}{L-1}
+\end{equation}
+
+The MNA matrix representation can be derived from the Z parameters in the
+following way.
+\begin{equation}
+\begin{bmatrix}
+ . & .  &  1 & 0\\
+ . & .  &  0 & 1\\
+-1 &  0 & Z_{11} & Z_{12}\\
+ 0 & -1 & Z_{21} & Z_{22}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+I_{in}\\
+I_{out}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+
+\subsection*{Isolator}
+\addcontentsline{toc}{subsection}{Isolator}
+
+The ideal Isolator with reference impedances $Z_1$ (input) and
+$Z_2$ (output) is determined by the following Z parameters.
+
+\begin{equation}
+Z_{11} = Z_1  \qquad
+Z_{12} = 0
+\end{equation}
+\begin{equation}
+Z_{21} = 2\cdot\sqrt{Z_1\cdot Z_2}  \qquad
+Z_{22} = Z_2
 \end{equation}
 
 \nocite{*}
