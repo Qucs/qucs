@@ -37,7 +37,8 @@ EPSTOPDF = epstopdf
 FIG2DEV = fig2dev
 
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
-  nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig
+  nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
+  actrafo.fig
 EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
 BIBFILE = $(srcdir)/literature.bib
