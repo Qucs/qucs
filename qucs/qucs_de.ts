@@ -1856,15 +1856,15 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Burst-Rauschkoeffizient</translation>
     </message>
     <message>
         <source>burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>Burst-Rauschexponent</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>Grenzfrequenz für das Burst-Rauschen in Hertz</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
