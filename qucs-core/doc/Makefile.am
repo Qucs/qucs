@@ -25,6 +25,8 @@
 EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
   $(PSFILES) $(MATHFILES) PLATFORMS $(MATHHELPS)
 
+dist_man_MANS = qucsator.1
+
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
   $(MPSFILES) $(PDFFIGURES) $(PDFFILES)
 MAINTAINERCLEANFILES = Makefile.in
