@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.5 2004/05/06 09:47:17 ela Exp $
+ * $Id: constants.h,v 1.6 2004/05/07 18:34:21 ela Exp $
  *
  */
 
@@ -53,7 +53,7 @@
 #endif
 
 
-#define C    299792458.0      /* speed of light in vacuum */
+#define C0   299792458.0      /* speed of light in vacuum */
 #define kB   1.380650524e-23  /* Boltzmann constant       */
 #define Q    1.6021765314e-19 /* elementary charge        */
 #define MU0  12.566370614e-7  /* magnetic constant        */
