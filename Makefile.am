@@ -22,10 +22,10 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = qucs qucs-edit
+SUBDIRS = qucs qucs-edit qucs-help
 
 # Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-core
+# SUBDIRS = qucs qucs-edit qucs-help qucs-core
 
 EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
 

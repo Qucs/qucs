@@ -26,7 +26,7 @@ SP_Sim::SP_Sim()
   QString  s = Description;
   s[s.findRev(" ")] = '\n';    // break line before the word "simulation"
   QFontMetrics  metrics(QucsSettings.largeFont);
-  QRect r = metrics.boundingRect(0,0,0,0, Qt::AlignAuto, s);
+  QSize r = metrics.size(0, s);
   int xb = (r.width()  >> 1) + 6;
   int yb = (r.height() >> 1) + 4;
 
@@ -44,22 +44,24 @@ SP_Sim::SP_Sim()
   x1 = -xb-4; y1 = -yb-4;
   x2 =  xb+8; y2 =  yb+9;
 
-  tx = x1+4;
+  tx = x1+8;
   ty = y2+4;
   Model = ".SP";
   Name  = "SP";
 
+  Props.append(new Property("Type", "lin", true,
+			QObject::tr("sweep type (lin,log)")));
   Props.append(new Property("Start", "1 GHz", true,
 			QObject::tr("start frequency in Hertz")));
   Props.append(new Property("Stop", "10 GHz", true,
 			QObject::tr("stop frequency in Hertz")));
-  Props.append(new Property("Step", "1 GHz", true,
-			QObject::tr("frequency steps in Hertz")));
+  Props.append(new Property("Points", "20", true,
+			QObject::tr("number of simulation steps")));
   Props.append(new Property("Noise", "no", false,
 			QObject::tr("calculate noise parameters (yes,no)")));
-  Props.append(new Property("NoiseIP", "1", true,
+  Props.append(new Property("NoiseIP", "1", false,
 			QObject::tr("input port for noise figure")));
-  Props.append(new Property("NoiseOP", "2", true,
+  Props.append(new Property("NoiseOP", "2", false,
 			QObject::tr("output port for noise figure")));
 }
 

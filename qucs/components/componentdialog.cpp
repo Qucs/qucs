@@ -24,12 +24,14 @@
 #include <qmessagebox.h>
 #include <qvalidator.h>
 #include <qfiledialog.h>
+#include <qprocess.h>
 
 
 ComponentDialog::ComponentDialog(Component *c,
 			QWidget *parent, const char *name )
 			: QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
+  resize(400, 250);
   setCaption(tr("Edit Component Properties"));
 
   QGridLayout *g = new QGridLayout(this,9,2,5,5);
@@ -88,6 +90,10 @@ ComponentDialog::ComponentDialog(Component *c,
   QHBox *h3 = new QHBox(this);
   g->addWidget(h3,4,1);
   h3->setStretchFactor(new QWidget(h3),5); // stretchable placeholder
+  EditButt = new QPushButton(tr("Edit"),h3);
+  EditButt->setEnabled(false);
+  EditButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  connect(EditButt, SIGNAL(clicked()), SLOT(slotEditFile()));
   BrowseButt = new QPushButton(tr("Browse"),h3);
   BrowseButt->setEnabled(false);
   BrowseButt->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -132,8 +138,6 @@ ComponentDialog::ComponentDialog(Component *c,
 
   connect(prop, SIGNAL(clicked(QListViewItem*)),
 	  SLOT(slotSelectProperty(QListViewItem*)));
-
-  resize(400, 250);
 }
 
 ComponentDialog::~ComponentDialog()
@@ -151,8 +155,14 @@ void ComponentDialog::slotSelectProperty(QListViewItem *item)
   if(item->text(2) == tr("yes")) disp->setChecked(true);
   else disp->setChecked(false);
 
-  if(item->text(0) == "File") BrowseButt->setEnabled(true);
-  else BrowseButt->setEnabled(false);
+  if(item->text(0) == "File") {
+    EditButt->setEnabled(true);
+    BrowseButt->setEnabled(true);
+  }
+  else {
+    EditButt->setEnabled(false);
+    BrowseButt->setEnabled(false);
+  }
 
   int i;
   QString PropDesc = item->text(3);
@@ -340,6 +350,15 @@ void ComponentDialog::slotBrowseFile()
     changed = true;
   }
   prop->currentItem()->setText(1, s);
+}
+
+// -------------------------------------------------------------------------
+void ComponentDialog::slotEditFile()
+{
+  QString com = QucsSettings.Editor + " " + edit->text();
+  QProcess QucsEditor(QStringList::split(" ", com));
+  if(!QucsEditor.start())
+    QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
 }
 
 // -------------------------------------------------------------------------

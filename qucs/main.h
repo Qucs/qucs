@@ -30,6 +30,7 @@ struct tQucsSettings {
   QColor BGColor;      // background color of view area
 
   unsigned int maxUndo;    // size of undo stack
+  QString Editor;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used

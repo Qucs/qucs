@@ -416,6 +416,7 @@ bool Component::load(const QString& _s)
   cy = n.toInt(&ok);
   if(!ok) return false;
 
+if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
   n  = s.section(' ',5,5);    // tx
   ttx = n.toInt(&ok);
   if(!ok) return false;
@@ -434,6 +435,7 @@ bool Component::load(const QString& _s)
   for(int z=0; z<tmp; z++) rotate();   // rotate component
 
   tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
+}
 
   int z=0;
   // load all properties
