@@ -884,7 +884,7 @@ void QucsView::endElementMoving()
     }
     pe->isSelected = false;
   }
-  
+
   movingElements.clear();
 
   viewport()->repaint();
