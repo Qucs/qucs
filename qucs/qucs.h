@@ -51,6 +51,7 @@
 #include "dialogs/simmessage.h"
 
 extern QDir QucsWorkDir;
+extern QDir QucsHomeDir;
 
 /**
   * This Class is the base class for the application. It sets up the main
