@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.14 2004/06/04 16:01:47 ela Exp $
+ * $Id: circuit.cpp,v 1.15 2004/06/09 23:55:41 ela Exp $
  *
  */
 
@@ -345,7 +345,7 @@ void circuit::setS (int x, int y, complex z) {
 
 // Returns non-zero if the circuit is non-linear (DC dependent).
 int circuit::isNonLinear (void) {
-  if (type == CIR_DIODE)
+  if (type == CIR_DIODE || type == CIR_JFET)
     return 1;
   return 0;
 }

@@ -3296,6 +3296,33 @@ I_{GD_{eq}} &= I_{GD} - g_{gd}\cdot V_{GD}\\
 I_{DS_{eq}} &= I_{d} - g_{m}\cdot V_{GS} - g_{ds}\cdot V_{DS}
 \end{align}
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.45\linewidth]{spjfet}
+\end{center}
+\caption{small signal model of intrinsic junction FET}
+\label{fig:spjfet}
+\end{figure}
+\FloatBarrier
+
+The small signal Y-parameter matrix of the intrinsic junction FET
+writes as follows.  It can be converted to S-parameters.
+\begin{equation}
+Y =
+\begin{bmatrix}
+Y_{GD} + Y_{GS} & -Y_{GD} & -Y_{GS}\\
+g_{m} - Y_{GD} & Y_{GD} + Y_{DS} & -Y_{DS} - g_{m}\\
+-g_{m} - Y_{GS} & -Y_{DS} & Y_{GS} + Y_{DS} + g_{m}\\
+\end{bmatrix}
+\end{equation}
+
+with
+\begin{align}
+Y_{GD} &= g_{gd} + j\omega C_{gd}\\
+Y_{GS} &= g_{gs} + j\omega C_{gs}\\
+Y_{DS} &= g_{ds}
+\end{align}
+
 \chapter{Microstrip components}
 %\addcontentsline{toc}{chapter}{Microstrip components}
 

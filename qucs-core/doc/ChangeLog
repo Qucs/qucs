@@ -1,3 +1,9 @@
+2004-06-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (section{Junction FET}): Scribbled down 
+	S-parameters of junction FET and added the small signal 
+	equivalent circuit.
+
 2004-06-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (section{PN-Junction Diode}): Documented large
