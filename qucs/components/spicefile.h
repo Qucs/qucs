@@ -1,8 +1,8 @@
 /***************************************************************************
-                          tabdiagram.h  -  description
-                             -------------------
-    begin                : Fri Oct 24 2003
-    copyright            : (C) 2003 by Michael Margraf
+                                 spicefile.h
+                               ---------------
+    begin                : Tue Dez 28 2004
+    copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,26 +15,19 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef TABDIAGRAM_H
-#define TABDIAGRAM_H
+#ifndef SPICEFILE_H
+#define SPICEFILE_H
 
-#include "diagram.h"
+#include "component.h"
 
-/**
-  *@author Michael Margraf
-  */
 
-class TabDiagram : public Diagram  {
-public: 
-  TabDiagram(int _cx=0, int _cy=0);
-  ~TabDiagram();
-
-  TabDiagram* newOne();
-  int  calcDiagram();
-  bool scroll(int);
-
-private:
-  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
+class SpiceFile : public Component  {
+public:
+  SpiceFile(int No);
+  ~SpiceFile();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
+  void recreate();
 };
 
 #endif

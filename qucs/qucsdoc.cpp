@@ -1343,6 +1343,12 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
 
     if(pd->getSelected(x, y)) {
 
+      if(pd->Name[0] == 'T')    // tabular diagram ?
+        if(x< pd->cx) {      // clicked on scroll bar ?
+	  pd->Type = isDiagramScroll;
+	  return pd;
+        }
+
       // test graphs of diagram
       for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next())
         if(pg->getSelected(x-pd->cx, pd->cy-y) > 0) {
@@ -2612,14 +2618,12 @@ bool QucsDoc::deleteElements()
 }
 
 // ---------------------------------------------------
-// Updates the graph data of all diagrams.
+// Updates the graph data of all diagrams (load from data files).
 void QucsDoc::reloadGraphs()
 {
-  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next()) {
-    QFileInfo Info(DocName);
-    // load graphs from data files
+  QFileInfo Info(DocName);
+  for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
     pd->loadGraphData(Info.dirPath()+"/"+DataSet);
-  }
 }
 
 // ---------------------------------------------------
@@ -2658,8 +2662,8 @@ bool QucsDoc::load()
 // Saves this Qucs document. Returns the number of subcircuit ports.
 int QucsDoc::save()
 {
-  adjustPortNumbers();  // same port number for schematic and symbol
-  int result = File.save();
+  int result = adjustPortNumbers();// same port number for schematic and symbol
+  File.save();
   if(result >= 0) {
     setChanged(false);
     QString *p, *ps = UndoStack.current();

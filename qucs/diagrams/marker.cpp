@@ -35,7 +35,7 @@ Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)
 
   Diag   = Diag_;
   pGraph = pg_;
-  Precision = 2;   // before createText()
+  Precision = 3;   // before createText()
   lookNfeel = 1;
   numMode = nVarPos = 0;
   cx = cx_;  cy = -cy_;

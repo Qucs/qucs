@@ -1,3 +1,10 @@
+2004-12-29  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* scroll bar for tabular diagrams
+	* update diagrams if display page is the same as schematic
+	page
+	* better handling of tabular diagrams with empty data
+
 2004-12-27  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* component edit dialog extented to show special page for

@@ -226,12 +226,9 @@ int QucsFile::save()
     stream << "  <" << pp->save() << ">\n";
   stream << "</Symbol>\n";
 
-  int z=0;   // to count number of subcircuit ports
   stream << "<Components>\n";    // save all components
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
+  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
     stream << "  " << pc->save() << "\n";
-    if(pc->Model == "Port") z++;
-  }
   stream << "</Components>\n";
 
   stream << "<Wires>\n";    // save all wires
@@ -254,7 +251,7 @@ int QucsFile::save()
   stream << "</Paintings>\n";
 
   file.close();
-  return z;
+  return 0;
 }
 
 // -------------------------------------------------------------

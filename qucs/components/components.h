@@ -83,6 +83,7 @@
 #include "ipulse.h"
 #include "vrect.h"
 #include "irect.h"
+#include "spicefile.h"
 
 
 #endif

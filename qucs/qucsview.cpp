@@ -21,6 +21,7 @@
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
+#include "diagrams/tabdiagram.h"
 #include "dialogs/labeldialog.h"
 
 #include <qinputdialog.h>
@@ -1086,14 +1087,14 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 	     isMoveEqual = true;  // diagram must be square
 
 	 focusElement->Type = isDiagram;
-	 MAx1 = ((Diagram*)focusElement)->cx;
-	 MAx2 = ((Diagram*)focusElement)->x2;
+	 MAx1 = focusElement->cx;
+	 MAx2 = focusElement->x2;
 	 if(((Diagram*)focusElement)->State & 1) {
 	   MAx1 += MAx2;
 	   MAx2 *= -1;
 	 }
-	 MAy1 =  ((Diagram*)focusElement)->cy;
-	 MAy2 = -((Diagram*)focusElement)->y2;
+	 MAy1 =  focusElement->cy;
+	 MAy2 = -focusElement->y2;
 	 if(((Diagram*)focusElement)->State & 2) {
 	   MAy1 += MAy2;
 	   MAy2 *= -1;
@@ -1107,6 +1108,17 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 	 this->grabKeyboard(); // no keyboard inputs during move actions
 	 return;
       }
+  else if(focusElement->Type == isDiagramScroll) {  // scroll in tabular ?
+	 focusElement->Type = isDiagram;
+
+	 if(((TabDiagram*)focusElement)->scroll(MAy1))
+	   d->setChanged(true, true, 'm'); // 'm' = only the first time
+	 viewport()->repaint();
+	 drawn = false;
+//	 focusElement = 0;  // avoid double-click on diagram
+	 return;
+       }
+
 
 
   viewport()->repaint();
