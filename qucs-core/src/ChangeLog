@@ -1,3 +1,11 @@
+2004-07-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp (createSP): S-parameter solver outputs its
+	results in 'S[a,b]' notation, was 'Sab'.
+
+	* check_netlist.cpp: Netlist checker now also checks whether
+	properties are integers or real numbers.
+
 2004-06-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* sweep.cpp: Fixed bug in logarithmic sweep creation.

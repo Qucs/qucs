@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.20 2004-06-30 18:08:04 ela Exp $
+ * $Id: check_netlist.cpp,v 1.21 2004-07-01 14:18:27 ela Exp $
  *
  */
 
@@ -49,63 +49,66 @@ struct define_t definition_available[] =
 {
   /* resistor */
   { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
-    { { "R", { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* inductor */
   { "L", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "L", PROP_REAL, { 1e-9, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* capacitor */
   { "C", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "C", { 1e-12, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "C", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* voltage controlled current source */
   { "VCCS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* current controlled current source */
   { "CCCS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* voltage controlled voltage source */
   { "VCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* current controlled voltage source */
   { "CCVS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "G", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "T", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "T", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* power source */
   { "Pac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z", { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Num", { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, PROP_NO_PROP },
-    { { "P", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Num", PROP_INT, { 1, PROP_NO_STR }, { 1, MAX_PORTS } },
+      PROP_NO_PROP },
+    { { "P", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* circulator */
   { "Circulator", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { { "Z1", { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z2", { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z3", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z3", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* isolator */
   { "Isolator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { { "Z1", { 50, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Z2", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* attenuator */
   { "Attenuator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "L", { 10, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "Zref", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "L", PROP_REAL, { 10, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* bias tee */
   { "BiasT", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -124,51 +127,55 @@ struct define_t definition_available[] =
   },
   /* transformer */
   { "Tr", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "T", { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "T", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* symmetrical transformer */
   { "sTr", 6, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "T1", { 1, PROP_NO_STR }, PROP_POS_RANGE },
-      { "T2", { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "T1", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "T2", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* DC voltage source */
   { "Vdc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* DC current source */
   { "Idc", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "I", { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* AC voltage source */
   { "Vac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* AC current source */
   { "Iac", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "I", { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
-      { "f", { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE }, 
+      { "f", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* phase shifter */
   { "PShift", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "phi", { 1e-90, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Zref", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "phi", PROP_REAL, { 1e-90, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* gyrator */
   { "Gyrator", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "R", { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Zref", { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* ideal transmission line */
   { "TLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Z", { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "L", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* DC current probe */
@@ -179,82 +186,89 @@ struct define_t definition_available[] =
 
   /* diode */
   { "Diode", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Is", { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", { 1, PROP_NO_STR }, { 1, 100 } },
-      { "M", { 0.5, PROP_NO_STR }, { 0, 1 } },
-      { "Cj0", { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Vj", { 0.7, PROP_NO_STR }, { PROP_VAL_MIN, 10 } }, PROP_NO_PROP },
-    { { "Rs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Tt", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
+    { { "Is", PROP_REAL, { 1e-15, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
+      { "M", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 } },
+      { "Cj0", PROP_REAL, { 10e-15, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
+      PROP_NO_PROP },
+    { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* jfet */
   { "JFET", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_NONLINEAR,
-    { { "Is", { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
-      { "N", { 1, PROP_NO_STR }, { 1, 100 } },
-      { "Vt0", { -2, PROP_NO_STR }, PROP_NEG_RANGE },
-      { "Lambda", { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Beta", { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
-      { "M", { 0.5, PROP_NO_STR }, { 0, 1 } },
-      { "Pb", { 1.0, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
-      { "Fc", { 0.5, PROP_NO_STR }, { 0, 10 } },
-      { "Cgs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Cgd", { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "Rd", { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Rs", { 0, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Isr", { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Nr", { 2, PROP_NO_STR }, { 1, 100 } },
-      { "Type", { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE }, PROP_NO_PROP }
+    { { "Is", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "N", PROP_REAL, { 1, PROP_NO_STR }, { 1, 100 } },
+      { "Vt0", PROP_REAL, { -2, PROP_NO_STR }, PROP_NEG_RANGE },
+      { "Lambda", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Beta", PROP_REAL, { 1e-4, PROP_NO_STR }, PROP_POS_RANGE },
+      { "M", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 } },
+      { "Pb", PROP_REAL, { 1.0, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 10 } },
+      { "Cgs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Cgd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "Rd", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Isr", PROP_REAL, { 1e-14, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nr", PROP_REAL, { 2, PROP_NO_STR }, { 1, 100 } },
+      { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
   },
 
   /* microstrip substrate */
   { "SUBST", 0, PROP_COMPONENT, PROP_SUBSTRATE, PROP_LINEAR,
-    { { "er", { 9.8, PROP_NO_STR }, { 1, 100 } },
-      { "h", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "t", { 35e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      { "tand", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "rho", { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
-      { "D", { 0.15e-6, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
+    { { "er", PROP_REAL, { 9.8, PROP_NO_STR }, { 1, 100 } },
+      { "h", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "t", PROP_REAL, { 35e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "tand", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "rho", PROP_REAL, { 0.022e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "D", PROP_REAL, { 0.15e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* microstrip line */
   { "MLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "W", { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "L", { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
-      { "Subst", { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
-      { "DispModel", { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
-      { "Model", { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 10e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
+      { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
 
   /* s-parameter analysis */
   { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Type", { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
-      { "Start", { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Stop", { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Points", { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } }, PROP_NO_PROP },
-    { { "Noise", { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
-      { "NoiseIP", { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, 
-      { "NoiseOP", { 2, PROP_NO_STR }, { 1, MAX_PORTS } }, PROP_NO_PROP }
+    { { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Start", PROP_REAL, { 1e9, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Stop", PROP_REAL, { 10e9, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Points", PROP_INT, { 10, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      PROP_NO_PROP },
+    { { "Noise", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "NoiseIP", PROP_INT, { 1, PROP_NO_STR }, { 1, MAX_PORTS } }, 
+      { "NoiseOP", PROP_INT, { 2, PROP_NO_STR }, { 1, MAX_PORTS } },
+      PROP_NO_PROP }
   },
   /* dc analysis */
   { "DC", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { { "MaxIter", { 150, PROP_NO_STR }, { 2, 10000 } },
-      { "abstol", { 1e-12, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
-      { "vntol", { 1e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
-      { "reltol", { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
-      { "saveOPs", { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
-      { "Temp", { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } }, PROP_NO_PROP }
+    { { "MaxIter", PROP_REAL, { 150, PROP_NO_STR }, { 2, 10000 } },
+      { "abstol", PROP_REAL, { 1e-12, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "vntol", PROP_REAL, { 1e-6, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "reltol", PROP_REAL, { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
+      { "saveOPs", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* parameter sweep */
   { "SW", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "Start", { 5, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Stop", { 50, PROP_NO_STR }, PROP_NO_RANGE },
-      { "Points", { 5, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
-      { "Type", { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
-      { "Param", { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
-      { "Sim", { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { { "Start", PROP_REAL, { 5, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Stop", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE },
+      { "Points", PROP_INT, { 5, PROP_NO_STR }, { 2, PROP_VAL_MAX } },
+      { "Type", PROP_STR, { PROP_NO_VAL, "lin" }, PROP_NO_RANGE },
+      { "Param", PROP_STR, { PROP_NO_VAL, "R1" }, PROP_NO_RANGE },
+      { "Sim", PROP_STR, { PROP_NO_VAL, "DC1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
     { PROP_NO_PROP }
   },
 
@@ -755,6 +769,17 @@ static int checker_value_in_range (char * instance, struct define_t * def,
 		      "[%g,%g] in `%s:%s'\n",
 		      pair->key, pair->value->value, def->required[i].range.l,
 		      def->required[i].range.h, def->type, instance);
+	    errors++;
+	  }
+	}
+	// check fraction of integers
+	if (PROP_IS_INT (def->required[i])) {
+	  double integral;
+	  if (modf (pair->value->value, &integral) != 0) {
+	    logprint (LOG_ERROR,
+		      "checker error, value of `%s' (%g) needs to be an "
+		      "integer in `%s:%s'\n",
+		      pair->key, pair->value->value, def->type, instance);
 	    errors++;
 	  }
 	}

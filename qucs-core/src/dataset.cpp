@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.cpp,v 1.6 2004-05-17 19:50:51 ela Exp $
+ * $Id: dataset.cpp,v 1.7 2004-07-01 14:18:27 ela Exp $
  *
  */
 
@@ -292,10 +292,10 @@ void dataset::printData (vector * v, FILE * f) {
   for (int i = 0; i < v->getSize (); i++) {
     complex c = v->get (i);
     if (imag (c) == 0.0) {
-      fprintf (f, "  %+.9e\n", (double) real (c));
+      fprintf (f, "  %+.11e\n", (double) real (c));
     }
     else {
-      fprintf (f, "  %+.9e%cj%.9e\n", (double) real (c), 
+      fprintf (f, "  %+.11e%cj%.11e\n", (double) real (c), 
 	       imag (c) >= 0.0 ? '+' : '-', (double) fabs (imag (c)));
     }
   }

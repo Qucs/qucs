@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.13 2004-06-30 15:04:15 ela Exp $
+ * $Id: spsolver.cpp,v 1.14 2004-07-01 14:18:28 ela Exp $
  *
  */
 
@@ -916,8 +916,10 @@ void spsolver::saveNoiseResults (complex s[4], complex c[4], vector * f) {
 
   // optimal source reflection coefficient
   Ropt = 1.0 - sqr (abs (n2));
-  if (abs (Ropt) < 1e-12) Ropt = 1.0;  // avoid a negative radicant
-  else Ropt = (1.0 - sqrt (Ropt)) / n2;
+  if (abs (Ropt) < 1e-12)
+    Ropt = 1.0;  // avoid a negative radicant
+  else
+    Ropt = (1.0 - sqrt (Ropt)) / n2;
 
   // minimum noise figure
   Fmin =
@@ -955,6 +957,6 @@ void spsolver::saveVariable (char * n, complex z, vector * f) {
 // Create an appropriate variable name.
 char * spsolver::createSP (int i, int j) {
   static char text[16];
-  sprintf (text, "S%d%d", i, j);
+  sprintf (text, "S[%d,%d]", i, j);
   return text;
 }

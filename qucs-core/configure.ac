@@ -94,7 +94,7 @@ unset double_type
 
 # Checks for library functions.
 AC_CHECK_FUNCS([floor pow exp sqrt log10 log cos sin tan atan sinh cosh tanh \
-                fabs strdup strerror])
+                fabs modf strdup strerror])
 
 # Definitions at top of <config.h>.
 AH_TOP([

@@ -1,4 +1,4 @@
-% This document describes the ee knowhow used in Qucs.
+% This document describes the ee know-how used in Qucs.
 
 \documentclass[10pt]{report}
 \usepackage{a4wide}
@@ -839,6 +839,110 @@ And furthermore
 $\left[\underline{X}\right]^{-1}$ & = & 
 inverted matrix of $\left[\underline{X}\right]$\\& &\\
 \end{tabular}
+
+\subsection{Two-Port transformations}
+
+\subsubsection{Two-Port matrix conversion based on current and voltage}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=3cm]{twoportiv}
+\end{center}
+\caption{twoport definition using current and voltage}
+\label{fig:twoportiv}
+\end{figure}
+\FloatBarrier
+
+\fboxsep = 4pt
+\def\a{0.152\linewidth}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& A & Y & Z & H & G\\
+\hline
+A & 
+\makebox[\a][c]{$\begin{array}{cc}A_{11}&A_{12}\vspace{4pt}\\A_{21}&A_{22}\end{array}$} &
+\fboxrule=0pt
+\fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{-Y_{22}}{Y_{21}}&\dfrac{-1}{Y_{21}}\vspace{4pt}\\\dfrac{-\Delta Y}{Y_{21}}&\dfrac{-Y_{11}}{Y_{21}}\end{array}$}} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{Z_{11}}{Z_{21}}&\dfrac{\Delta Z}{Z_{21}}\vspace{4pt}\\\dfrac{1}{Z_{21}}&\dfrac{Z_{22}}{Z_{21}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{-\Delta H}{H_{21}}&\dfrac{-H_{11}}{H_{21}}\vspace{4pt}\\\dfrac{-H_{22}}{H_{21}}&\dfrac{-1}{H_{21}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{G_{21}}&\dfrac{G_{22}}{G_{21}}\vspace{4pt}\\\dfrac{G_{11}}{G_{21}}&\dfrac{\Delta G}{G_{21}}\end{array}$}\\
+\hline
+Y & 
+\fboxrule=0pt
+\fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{22}}{A_{12}}&\dfrac{-\Delta A}{A_{12}}\vspace{4pt}\\\dfrac{-1}{A_{12}}&\dfrac{A_{11}}{A_{12}}\end{array}$}} &
+\makebox[\a][c]{$\begin{array}{cc}Y_{11}&Y_{12}\vspace{4pt}\\Y_{21}&Y_{22}\end{array}$} & 
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{Z_{22}}{\Delta Z}&\dfrac{-Z_{12}}{\Delta Z}\vspace{4pt}\\\dfrac{-Z_{21}}{\Delta Z}&\dfrac{Z_{11}}{\Delta Z}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{H_{11}}&\dfrac{-H_{12}}{H_{11}}\vspace{4pt}\\\dfrac{H_{21}}{H_{11}}&\dfrac{\Delta H}{H_{11}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta G}{G_{22}}&\dfrac{G_{12}}{G_{22}}\vspace{4pt}\\\dfrac{-G_{21}}{G_{22}}&\dfrac{1}{G_{22}}\end{array}$}\\
+\hline
+Z & 
+\fboxrule=0pt
+\fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{11}}{A_{21}}&\dfrac{\Delta A}{A_{21}}\vspace{4pt}\\\dfrac{1}{A_{21}}&\dfrac{A_{22}}{A_{21}}\end{array}$}} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{Y_{22}}{\Delta Y}&\dfrac{-Y_{12}}{\Delta Y}\vspace{4pt}\\\dfrac{-Y_{21}}{\Delta Y}&\dfrac{Y_{11}}{\Delta Y}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}Z_{11}&Z_{12}\vspace{4pt}\\Z_{21}&Z_{22}\end{array}$} & 
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta H}{H_{22}}&\dfrac{H_{12}}{H_{22}}\vspace{4pt}\\\dfrac{-H_{21}}{H_{22}}&\dfrac{1}{H_{22}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{G_{11}}&\dfrac{-G_{12}}{G_{11}}\vspace{4pt}\\\dfrac{G_{21}}{G_{11}}&\dfrac{\Delta G}{G_{11}}\end{array}$}\\
+\hline
+H & 
+\fboxrule=0pt
+\fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{12}}{A_{22}}&\dfrac{\Delta A}{A_{22}}\vspace{4pt}\\\dfrac{-1}{A_{22}}&\dfrac{A_{21}}{A_{22}}\end{array}$}} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{Y_{11}}&\dfrac{-Y_{12}}{Y_{11}}\vspace{4pt}\\\dfrac{Y_{21}}{Y_{11}}&\dfrac{\Delta Y}{Y_{11}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta Z}{Z_{22}}&\dfrac{Z_{12}}{Z_{22}}\vspace{4pt}\\\dfrac{-Z_{21}}{Z_{22}}&\dfrac{1}{Z_{22}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}H_{11}&H_{12}\vspace{4pt}\\H_{21}&H_{22}\end{array}$} & 
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{G_{22}}{\Delta G}&\dfrac{-G_{12}}{\Delta G}\vspace{4pt}\\\dfrac{-G_{21}}{\Delta G}&\dfrac{G_{11}}{\Delta G}\end{array}$}\\
+\hline
+G & 
+\fboxrule=0pt
+\fbox{\makebox[\a][c]{$\begin{array}{cc}\dfrac{A_{21}}{A_{11}}&\dfrac{-\Delta A}{A_{11}}\vspace{4pt}\\\dfrac{1}{A_{11}}&\dfrac{A_{12}}{A_{11}}\end{array}$}} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{\Delta Y}{Y_{22}}&\dfrac{Y_{12}}{Y_{22}}\vspace{4pt}\\\dfrac{-Y_{21}}{Y_{22}}&\dfrac{1}{Y_{22}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{1}{Z_{11}}&\dfrac{-Z_{12}}{Z_{11}}\vspace{4pt}\\\dfrac{Z_{21}}{Z_{11}}&\dfrac{\Delta Z}{Z_{11}}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}\dfrac{H_{22}}{\Delta H}&\dfrac{-H_{12}}{\Delta H}\vspace{4pt}\\\dfrac{-H_{21}}{\Delta H}&\dfrac{H_{11}}{\Delta H}\end{array}$} &
+\makebox[\a][c]{$\begin{array}{cc}G_{11}&G_{12}\vspace{4pt}\\G_{21}&G_{22}\end{array}$}\\
+\hline
+\end{tabular}
+
+\subsubsection{Two-Port matrix conversion based on signal waves}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[height=3cm]{twoportab}
+\end{center}
+\caption{twoport definition using signal waves}
+\label{fig:twoportab}
+\end{figure}
+\FloatBarrier
+
+\begin{tabular}{|c|c|c|}
+\hline
+& S & T\\
+\hline
+S &
+$\begin{array}{cc}S_{11}&S_{12}\vspace{4pt}\\S_{21}&S_{22}\end{array}$ &
+\fboxrule=0pt
+\fbox{$\begin{array}{cc}\dfrac{T_{12}}{T_{22}}&\dfrac{\Delta T}{T_{22}}\vspace{4pt}\\\dfrac{1}{T_{22}}&\dfrac{-T_{21}}{T_{22}}\end{array}$}\\
+\hline
+T &
+\fboxrule=0pt
+\fbox{$\begin{array}{cc}\dfrac{-\Delta S}{S_{21}}&\dfrac{S_{11}}{S_{21}}\vspace{4pt}\\\dfrac{-S_{22}}{S_{21}}&\dfrac{1}{S_{21}}\end{array}$} &
+$\begin{array}{cc}T_{11}&T_{12}\vspace{4pt}\\T_{21}&T_{22}\end{array}$\\
+\hline
+\end{tabular}
+
+\subsubsection{Mixed Two-Port matrix conversions}
+
+\begin{align}
+A_{11} &= \dfrac{Z_{1}^{*} + Z_{1}\cdot S_{11} - Z_{1}^{*}\cdot S_{22} - Z_{1}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
+A_{12} &= \dfrac{Z_{1}^{*}\cdot Z_{2}^{*} + Z_{1}\cdot Z_{2}^{*}\cdot S_{11} + Z_{1}^{*}\cdot Z_{2}\cdot S_{22} + Z_{1}\cdot Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
+A_{21} &= \dfrac{1 - S_{11} - S_{22} + \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}\\
+A_{22} &= \dfrac{Z_{2}^{*} - Z_{2}^{*}\cdot S_{11} + Z_{2}\cdot S_{22} - Z_{2}\cdot \Delta S}{2\cdot S_{21}\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}
+\end{align}
+
+\begin{align}
+S_{11} &= \dfrac{A_{11}\cdot Z_{2} + A_{12} - A_{21}\cdot Z_{1}^{*}\cdot Z_{2} - A_{22}\cdot Z_{1}^{*}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
+S_{12} &= \dfrac{\Delta A\cdot 2\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
+S_{21} &= \dfrac{2\cdot \sqrt{Re\left(Z_{1}\right)\cdot Re\left(Z_{2}\right)}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}\\
+S_{22} &= \dfrac{-A_{11}\cdot Z_{2}^{*} + A_{12} - A_{21}\cdot Z_{1}\cdot Z_{2}^{*} + A_{22}\cdot Z_{1}}{A_{11}\cdot Z_{2} + A_{12} + A_{21}\cdot Z_{1}\cdot Z_{2} + A_{22}\cdot Z_{1}}
+\end{align}
 
 \section{Scattering parameters of components}
 %\addcontentsline{toc}{section}{Scattering parameters of components}
