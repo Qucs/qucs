@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.1.1.1 2003-12-20 19:03:28 ela Exp $
+ * $Id: trafo.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -33,12 +33,14 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "component_id.h"
 #include "trafo.h"
 
 trafo::trafo () : circuit (4) {
+  type = CIR_TRAFO;
 }
 
-void trafo::calc (nr_double_t frequency) {
+void trafo::calcS (nr_double_t frequency) {
 
   nr_double_t t = getPropertyDouble ("T");
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.c,v 1.1.1.1 2003-12-20 19:03:25 ela Exp $
+ * $Id: check_netlist.c,v 1.2 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -89,6 +89,8 @@ struct definition definition_available[] =
 
     /* s-parameter analysis */
     { "SP", 0, 1, { "Start", "Stop", "Step", NULL }, { NULL } },
+    /* dc analysis */
+    { "DC", 0, 1, { NULL }, { NULL } },
 
     /* end of list */
     { NULL, 0, 0, { NULL }, { NULL } }
@@ -222,8 +224,11 @@ static int checker_count_definitions (char * type, int action) {
   struct definition_t * def;
   int count = 0;
   for (def = definition_root; def != NULL; def = def->next) {
-    if (!strcmp (def->type, type) && def->action == action) {
-      count++;
+    if (def->action == action) {
+      if (type == NULL)
+	count++;
+      else if (!strcmp (def->type, type))
+	count++;
     }
   }
   return count;
@@ -233,16 +238,17 @@ static int checker_count_definitions (char * type, int action) {
    returns zero on success, non-zero otherwise. */
 static int checker_validate_actions (void) {
   int n, errors = 0;
-  if ((n = checker_count_definitions ("SP", 1)) != 1) {
-    logprint (LOG_ERROR, "checker error, %d `.SP' definitions found, 1 "
-	      "required\n", n);
+  if ((n = checker_count_definitions (NULL, 1)) < 1) {
+    logprint (LOG_ERROR, "checker error, no actions .XX defined\n");
     errors++;
   }
   else {
-    if ((n = checker_count_definitions ("Pac", 0)) < 1) {
-      logprint (LOG_ERROR, "checker error, %d `Pac' definitions found, at "
-		"least 1 required\n", n);
-      errors++;
+    if ((n = checker_count_definitions ("SP", 1)) >= 1) {
+      if ((n = checker_count_definitions ("Pac", 0)) < 1) {
+	logprint (LOG_ERROR, "checker error, %d `Pac' definitions found, at "
+		  "least 1 required\n", n);
+	errors++;
+      }
     }
   }
   return errors;

@@ -1,3 +1,22 @@
+2003-12-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Now running calcS() instead of calc().
+
+	* net.cpp: Now counts the DC voltage sources in a circuit 
+	list.
+
+	* matrix.cpp: Fixed bug in matrix multiplication.
+
+	* circuit.cpp: Each circuit has now 'type' field containing
+	a circuit identifier.  Renamed calc() to calcS() and added a
+	virtual calcG() method.  Changed all components.
+
+	* check_netlist.c: Applied changes for DC analysis.
+
+	* dcsolver.cpp, dcsolver.h, nodelist.cpp, nodelist.h: New 
+	files implementing the DC analysis for passive elements for
+	now.
+
 2003-12-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* analysis.cpp, analysis.h, spsolver.cpp, spsolver.h: New files.

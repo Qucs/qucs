@@ -1,3 +1,10 @@
+2003-12-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* resistor.cpp: Implemented calcG() method for DC analysis.
+
+	* component_id.h: New file containing the circuit identifiers
+	for each know circuit.
+
 2003-12-20  Stefan Jahn  <stefan@lkcc.org>
 
 	* vdc.cpp, idc.cpp, vac.cpp: New components.

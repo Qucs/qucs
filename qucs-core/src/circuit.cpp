@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.2 2003-12-21 13:25:37 ela Exp $
+ * $Id: circuit.cpp,v 1.3 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -36,6 +36,7 @@
 #include "node.h"
 #include "property.h"
 #include "circuit.h"
+#include "component_id.h"
 
 // Constructor creates an unnamed instance of the circuit class.
 circuit::circuit () : object () {
@@ -44,7 +45,7 @@ circuit::circuit () : object () {
   nodes = NULL;
   port = 0;
   org = 1;
-  type = NULL;
+  type = CIR_UNKNOWN;
 }
 
 /* Constructor creates an unnamed instance of the circuit class with a
@@ -55,7 +56,7 @@ circuit::circuit (int s) : object () {
   nodes = new node[s];
   port = 0;
   org = 1;
-  type = NULL;
+  type = CIR_UNKNOWN;
 }
 
 /* The copy constructor creates a new instance based on the given
@@ -64,7 +65,7 @@ circuit::circuit (const circuit & c) : object (c) {
   size = c.size;
   port = c.port;
   org = c.org;
-  type = c.type ? strdup (c.type) : NULL;
+  type = c.type;
   nodes = new node[size];
   data = new complex[size * size];
 
@@ -87,18 +88,6 @@ circuit::circuit (const circuit & c) : object (c) {
 circuit::~circuit () {
   delete[] data;
   delete[] nodes;
-  if (type) free (type);
-}
-
-// Sets the type of the circuit.
-void circuit::setType (char * t) {
-  if (type) free (type);
-  type = t ? strdup (t) : NULL;
-}
-
-// Returns the type of the circuit.
-char * circuit::getType (void) {
-  return type;
 }
 
 /* This function sets the name and port number of one of the circuit's
@@ -119,7 +108,7 @@ node * circuit::getNode (int i) {
 int circuit::countPorts (void) {
   int count = 0;
   for (circuit * c = this; c != NULL; c = (circuit *) c->getNext ()) {
-    if (c->isPort())
+    if (c->isPort ())
       count++;
   }
   return count;

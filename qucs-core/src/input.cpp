@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.2 2003-12-21 13:25:37 ela Exp $
+ * $Id: input.cpp,v 1.3 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@ using namespace std;
 #include "net.h"
 #include "analysis.h"
 #include "spsolver.h"
+#include "dcsolver.h"
 #include "input.h"
 #include "check_netlist.h"
 
@@ -129,7 +130,6 @@ void input::factory (void) {
       c = createCircuit (def->type);
       o = (object *) c;
       c->setName (def->instance);
-      c->setType (def->type);
 
       // add appropriate nodes to circuit
       for (i = 1, nodes = def->nodes; nodes != NULL; nodes = nodes->next, i++)
@@ -198,6 +198,8 @@ circuit * input::createCircuit (char * type) {
 analysis * input::createAnalysis (char * type) {
   if (!strcmp (type, "SP"))
     return new spsolver ();
+  else if (!strcmp (type, "DC"))
+    return new dcsolver ();
 
   logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
   return NULL;

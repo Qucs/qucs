@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.1.1.1 2003-12-20 19:03:28 ela Exp $
+ * $Id: attenuator.cpp,v 1.2 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -34,12 +34,14 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "component_id.h"
 #include "attenuator.h"
 
 attenuator::attenuator () : circuit (2) {
+  type = CIR_ATTENUATOR;
 }
 
-void attenuator::calc (nr_double_t frequency) {
+void attenuator::calcS (nr_double_t frequency) {
   nr_double_t a = pow (10.0, - getPropertyDouble ("L") / 20.0);
   setS (1, 1, 0.0);
   setS (2, 2, 0.0);

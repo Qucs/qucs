@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.2 2003-12-21 13:25:38 ela Exp $
+ * $Id: net.cpp,v 1.3 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -46,11 +46,12 @@ using namespace std;
 #include "open.h"
 #include "itrafo.h"
 #include "analysis.h"
+#include "component_id.h"
 
 // Constructor creates an unnamed instance of the net class.
 net::net () : object () {
   root = drop = NULL;
-  nPorts = nCircuits = 0;
+  nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
 }
@@ -58,7 +59,7 @@ net::net () : object () {
 // Constructor creates a named instance of the net class.
 net::net (char * n) : object (n) {
   root = drop = NULL;
-  nPorts = nCircuits = 0;
+  nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
 }
@@ -71,7 +72,7 @@ net::~net () {
    on the given net object. */
 net::net (net & n) : object (n) {
   root = drop = NULL;
-  nPorts = nCircuits = 0;
+  nPorts = nCircuits = nSources = 0;
   insertedNodes = inserted = reduced = 0;
   actions = NULL;
 }
@@ -86,9 +87,14 @@ void net::insertCircuit (circuit * c) {
   nCircuits++;
 
   // handle AC power sources as s-parameter ports
-  if (c->getType () != NULL && !strcmp (c->getType (), "Pac")) {
+  if (c->getType () == CIR_PAC) {
     nPorts++;
     if (!c->isPort ()) c->setPort (nPorts);
+  }
+  // handle DC voltage sources
+  else if (c->getType () == CIR_VDC) {
+    nSources++;
+    if (!c->isVoltageSource ()) c->setVoltageSource (nSources);
   }
 }
 
@@ -107,6 +113,7 @@ void net::removeCircuit (circuit * c) {
   }
   nCircuits--;
   if (c->isPort ()) nPorts--;
+  if (c->isVoltageSource ()) nSources--;
 
   // shift the circuit object to the drop list
   if (c->isOriginal ()) {
@@ -121,7 +128,7 @@ void net::removeCircuit (circuit * c) {
 }
 
 /* This function prepends the given analysis to the list of registered
-   analysises. */
+   analyses. */
 void net::insertAnalysis (analysis * a) {
   if (actions) actions->setPrev (a);
   a->setNext (actions);
@@ -130,7 +137,7 @@ void net::insertAnalysis (analysis * a) {
 }
 
 /* The function removes the given analysis from the list of registered
-   analysises. */
+   analyses. */
 void net::removeAnalysis (analysis * a) {
 
   // adjust the analysis chain appropriately
@@ -145,7 +152,7 @@ void net::removeAnalysis (analysis * a) {
   delete a;
 }
 
-/* This function runs all registered analysises applied to the current
+/* This function runs all registered analyses applied to the current
    netlist. */
 dataset * net::runAnalysis (void) {
   dataset * out = new dataset ();

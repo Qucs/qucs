@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.2 2003-12-21 13:25:38 ela Exp $
+ * $Id: net.h,v 1.3 2003-12-26 14:04:07 ela Exp $
  *
  */
 
@@ -55,12 +55,14 @@ class net : public object
   int getPorts (void) { return nPorts; }
   int getReduced (void) { return reduced; }
   void setReduced (int r) { reduced = r; }
+  int getVoltageSources (void) { return nSources; }
 
  private:
   circuit * drop;
   circuit * root;
   analysis * actions;
   int nPorts;
+  int nSources;
   int nCircuits;
   int reduced;
   int inserted;

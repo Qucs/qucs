@@ -23,7 +23,7 @@
 Description
 ===========
 
-Qucsator is a command line s-parameter simulator.  It takes a network
+Qucsator is a command line circuit simulator.  It takes a network
 list in a certain format as input and outputs a Qucs dataset.  It has
 been programmed for usage in the Qucs project but can also be used by
 other applications.
