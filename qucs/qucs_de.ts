@@ -3993,6 +3993,16 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <source>Edit Schematic</source>
         <translation>Schaltplan bearbeiten</translation>
     </message>
+    <message>
+        <source>This will delete the files
+</source>
+        <translation>Dies löscht die Dateien
+</translation>
+    </message>
+    <message>
+        <source>permanently! Continue ?</source>
+        <translation>unwiderruflich! Fortfahren?</translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
