@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "components.h"
-#include "../main.h"
+#include "main.h"
 
 #include <qpoint.h>
 #include <qpainter.h>
@@ -481,6 +481,8 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "ac") c = new Ampere_ac();
         else if(cstr == "noise") c = new Ampere_noise();
         else if(cstr == "solator") c = new Isolator();
+        break;
+  case 'J' : if(cstr == "FET") c = new JFET();
         break;
   case 'V' : if(cstr == "dc") c = new Volt_dc();
         else if(cstr == "ac") c = new Volt_ac();
