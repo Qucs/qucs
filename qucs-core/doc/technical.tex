@@ -5923,7 +5923,7 @@ matrix is known.
 \begin{center}
 \includegraphics[width=12cm]{msline}
 \end{center}
-\caption{microstrip line}
+\caption{single microstrip line}
 \label{fig:MSline}
 \end{figure}
 \FloatBarrier
@@ -6307,8 +6307,8 @@ $\Delta$& effective (rms) surface roughness of substrate\\
 $Z_{F0}$& wave impedance in vacuum
 \end{tabular}
 
-\subsection{S-parameter of the single microstrip line}
-%\addcontentsline{toc}{subsection}{S-parameter of the single microstrip line}
+\subsection{S-parameters of the single microstrip line}
+%\addcontentsline{toc}{subsection}{S-parameters of the single microstrip line}
 
 The calculation of the scattering parameters for the single microstrip
 line requires the physical length $l$ of the component, its impedance
@@ -6391,23 +6391,42 @@ j\omega L + \dfrac{1}{j\omega C} & \dfrac{1}{j\omega C}\\
 \end{equation}
 
 \section{Parallel coupled microstrip lines}
+%\addcontentsline{toc}{section}{Parallel coupled microstrip lines}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=12cm]{mscoupledphys}
+\end{center}
+\caption{parallel coupled microstrip lines}
+\label{fig:McoupledPhys}
+\end{figure}
+\FloatBarrier
+
+\subsection{Characteristic impedance and effective dielectric constant}
+%\addcontentsline{toc}{subsection}{Characteristic impedance and effective dielectric constant}
 
 Parallel coupled microstrip lines are defined by the characteristic
 impedance and the effective permittivity of the even and the odd mode.
+
+\subsubsection{Kirschning and Jansen}
+%\addcontentsline{toc}{subsubsection}{Kirschning and Jansen}
+
 These quantities can very precisely be modeled by the following
 equations \cite{Kirschning5}, \cite{Kirschning6}.
 
 \addvspace{12pt}
 
-Some normalized quantities (with microstrip line width $w$, spacing $s$ between
-the lines and substrate height $h$):
+Beforehand some normalised quantities (with microstrip line width $W$,
+spacing $s$ between the lines and substrate height $h$) are
+introduced:
 \begin{equation}
-u = \frac{w}{h} \quad,\quad g = \frac{s}{h} \quad,\quad
-f_n = \frac{f}{\text{GHz}}\cdot\frac{h}{\text{mm}} = \frac{f}{MHz}\cdot h
+u = \dfrac{W}{h} \quad,\quad g = \dfrac{s}{h} \quad,\quad
+f_n = \dfrac{f}{\giga\hertz}\cdot\dfrac{h}{\milli\meter} = \dfrac{f}{\mega\hertz}\cdot h
 \end{equation}
+
 The applicability of the described model is
 \begin{equation}
-0.1\le u\le 10 \qquad,\qquad 0.1\le g\le 10 \qquad,\qquad 1\le \epsilon_r\le 18
+0.1\le u\le 10 \qquad,\qquad 0.1\le g\le 10 \qquad,\qquad 1\le \varepsilon_r\le 18
 \end{equation}
 The accuracies of the formulas holds for these ranges.
 
@@ -6415,295 +6434,228 @@ The accuracies of the formulas holds for these ranges.
 
 Static effective permittivity of even mode:
 \begin{equation}
-\epsilon_{eff,e}(0) = 0.5\cdot (\epsilon_r+1) + 0.5\cdot (\epsilon_r-1)\cdot
-      \left( 1+\frac{10}{v} \right) ^{-a_e(v)\cdot b_e(\epsilon_r)}
+\varepsilon_{eff,e}(0) = 0.5\cdot (\varepsilon_r+1) + 0.5\cdot (\varepsilon_r-1)\cdot
+      \left( 1+\dfrac{10}{v} \right) ^{-a_e\left(v\right)\cdot b_e\left(\varepsilon_r\right)}
 \end{equation}
+
 with
-\begin{equation}
-v = u\cdot\frac{20+g^2}{10+g^2} + g\cdot\exp(-g)
-\end{equation}
-\begin{equation}
-a_e(v) = 1 + \frac{1}{49}\cdot\ln\left( \frac{v^4 + \left( \frac{v}{52} \right)^2}{v^4 + 0.432} \right)
-    + \frac{1}{18.7}\cdot\ln\left( 1 + \left( \frac{v}{18.1} \right)^3 \right)
-\end{equation}
-\begin{equation}
-b_e(\epsilon_r) = 0.564\cdot\left( \frac{\epsilon_r-0.9}{\epsilon_r+3} \right)^{0.053}
-\end{equation}
+\begin{align}
+v &= u\cdot\frac{20+g^2}{10+g^2} + g\cdot\exp{\left(-g\right)}\\
+a_e\left(v\right) &= 1 + \frac{1}{49}\cdot\ln\left( \frac{v^4 + \left( v/52 \right)^2}{v^4 + 0.432} \right)
+    + \frac{1}{18.7}\cdot\ln\left( 1 + \left( \dfrac{v}{18.1} \right)^3 \right)\\
+b_e\left(\varepsilon_r\right) &= 0.564\cdot\left( \frac{\varepsilon_r-0.9}{\varepsilon_r+3} \right)^{0.053}
+\end{align}
 
 Static effective permittivity of odd mode:
 \begin{equation}
-\epsilon_{eff,o}(0) = (0.5\cdot (\epsilon_r+1) + a_o(u,\epsilon_r) - \epsilon_{eff}(0) ) \cdot
-      \exp(-c_o\cdot g^{d_o}) + \epsilon_{eff}(0)
+\varepsilon_{eff,o}(0) = \left(0.5\cdot \left(\varepsilon_r+1\right) + a_o\left(u,\varepsilon_r\right) - \varepsilon_{eff}(0) \right) \cdot
+      \exp{\left(-c_o\cdot g^{d_o}\right)} + \varepsilon_{eff}(0)
 \end{equation}
+
 with
-\begin{equation}
-a_o(u,\epsilon_r) = 0.7287\cdot( \epsilon_{eff}(0) - 0.5\cdot ( \epsilon_r + 1) ) \cdot
-      (1-\exp(-0.179\cdot u))
-\end{equation}
-\begin{equation}
-b_o(\epsilon_r) = 0.747\cdot\frac{\epsilon_r}{0.15+\epsilon_r}
-\end{equation}
-\begin{equation}
-c_o = b_o(\epsilon_r) - (b_o(\epsilon_r)-0.207)\cdot\exp(-0.414\cdot u)
-\end{equation}
-\begin{equation}
-d_o = 0.593+0.694\cdot\exp(-0.562\cdot u)
-\end{equation}
-with $\epsilon_{eff}(0)$ refers to zero-thickness single microstrip of width
-$w$ according to \cite{Hammerstad} (equation \ref{eq:HandJErEff}).
+\begin{align}
+a_o\left(u,\varepsilon_r\right) &= 0.7287\cdot\left( \varepsilon_{eff}(0) - 0.5\cdot \left( \varepsilon_r + 1\right) \right) \cdot
+      \left(1-\exp{\left(-0.179\cdot u\right)}\right)\\
+b_o\left(\varepsilon_r\right) &= 0.747\cdot\dfrac{\varepsilon_r}{0.15+\varepsilon_r}\\
+c_o &= b_o(\varepsilon_r) - \left(b_o\left(\varepsilon_r\right)-0.207\right)\cdot\exp{\left(-0.414\cdot u\right)}\\
+d_o &= 0.593+0.694\cdot\exp{\left(-0.562\cdot u\right)}
+\end{align}
+
+whence $\varepsilon_{eff}(0)$ refers to the zero-thickness single
+microstrip line of width $W$ according to \cite{Hammerstad} (see also
+eq. \eqref{eq:HandJErEff}).
 
 \addvspace{12pt}
 
-The dispersion formula writes as follows.
+The dispersion formulae for the odd and even mode write as follows.
 \begin{equation}
-\epsilon_{eff,e,o}(f_n) = \epsilon_r - \frac{\epsilon_r - \epsilon_{eff,e,o}(0)}{1+F_{e,o}(f_n)}
+\varepsilon_{eff,e,o}\left(f_n\right) = \varepsilon_r - \dfrac{\varepsilon_r - \varepsilon_{eff,e,o}(0)}{1+F_{e,o}\left(f_n\right)}
 \end{equation}
+
 The frequency dependence for the even mode is
 \begin{equation}
-F_e(f_n) = P_1\cdot P_2\cdot ((P_3\cdot P_4 + 0.1844\cdot P_7)\cdot f_n)^{1.5763}
+F_e\left(f_n\right) = P_1\cdot P_2\cdot \left(\left(P_3\cdot P_4 + 0.1844\cdot P_7\right)\cdot f_n\right)^{1.5763}
 \end{equation}
+
 with
-\begin{equation}
-P_1 = 0.27488 + \left( 0.6315 + \frac{0.525}{(1+0.0157\cdot f_n)^{20}} \right) \cdot u
-     -0.065683\cdot\exp(-8.7513\cdot u)
-\end{equation}
-\begin{equation}
-P_2 = 0.33622\cdot (1-\exp(-0.03442\cdot\epsilon_r))
-\end{equation}
-\begin{equation}
-P_3 = 0.0363\cdot\exp(-4.6\cdot u)\cdot\left( 1-\exp\left(
-    -\left( \frac{f_n}{38.7}\right) ^{4.97} \right) \right)
-\end{equation}
-\begin{equation}
-P_4 = 1 + 2.751\cdot\left( 1-\exp\left( -\left( \frac{\epsilon_r}{15.916}\right) ^8 \right) \right)
-\end{equation}
-\begin{equation}
-P_5 = 0.334\cdot\exp\left( -3.3\cdot\left( \frac{\epsilon_r}{15}\right) ^3 \right) + 0.746
-\end{equation}
-\begin{equation}
-P_6 = P_5\cdot\exp\left( -\left( \frac{f_n}{18}\right) ^{0.368} \right)
-\end{equation}
-\begin{equation}
-P_7 = 1 + 4.069\cdot P_6 \cdot g^{0.479}\cdot\exp(-1.347\cdot g^{0.595} - 0.17\cdot g^{2.5} )
-\end{equation}
+\begin{align}
+P_1 &= 0.27488 + \left( 0.6315 + \dfrac{0.525}{(1+0.0157\cdot f_n)^{20}} \right) \cdot u
+     -0.065683\cdot\exp{\left(-8.7513\cdot u\right)}\\
+P_2 &= 0.33622\cdot \left(1-\exp{\left(-0.03442\cdot\varepsilon_r\right)}\right)\\
+P_3 &= 0.0363\cdot\exp{\left(-4.6\cdot u\right)}\cdot\left( 1-\exp\left(
+    -\left( f_n / 38.7\right) ^{4.97} \right) \right)\\
+P_4 &= 1 + 2.751\cdot\left( 1-\exp\left( -\left( \varepsilon_r/15.916\right) ^8 \right) \right)\\
+P_5 &= 0.334\cdot\exp\left( -3.3\cdot\left( \varepsilon_r/15\right) ^3 \right) + 0.746\\
+P_6 &= P_5\cdot\exp\left( -\left( f_n/18\right) ^{0.368} \right)\\
+P_7 &= 1 + 4.069\cdot P_6 \cdot g^{0.479}\cdot\exp\left(-1.347\cdot g^{0.595} - 0.17\cdot g^{2.5} \right)
+\end{align}
 
 The frequency dependence for the odd mode is
 \begin{equation}
-F_o(f_n) = P_1\cdot P_2\cdot ((P_3\cdot P_4 + 0.1844)\cdot f_n\cdot P_{15})^{1.5763}
+F_o\left(f_n\right) = P_1\cdot P_2\cdot \left(\left(P_3\cdot P_4 + 0.1844\right)\cdot f_n\cdot P_{15}\right)^{1.5763}
 \end{equation}
+
 with
-\begin{equation}
-P_8 = 0.7168\cdot \left(1 + \frac{1.076}{1+0.0576\cdot (\epsilon_r-1)} \right)
-\end{equation}
-\begin{equation}
-P_9 = P_8 - 0.7913\cdot\left( 1-\exp\left( -\left( \frac{f_n}{20}\right) ^{1.424} \right) \right)
-     \cdot\arctan\left( 2.481\cdot\left( \frac{\epsilon_r}{8}\right) ^{0.946} \right)
-\end{equation}
-\begin{equation}
-P_{10} = 0.242\cdot (\epsilon_r-1)^{0.55}
-\end{equation}
-\begin{equation}
-P_{11} = 0.6366\cdot (\exp(-0.3401\cdot f_n)-1) \cdot
-      \arctan\left(1.263\cdot\left( \frac{u}{3} \right) ^{1.629} \right)
-\end{equation}
-\begin{equation}
-P_{12} = P_9 + \frac{1-P_9}{1+1.183\cdot u^{1.376}}
-\end{equation}
-\begin{equation}
-P_{13} = 1.695\cdot \frac{P_{10}}{0.414+1.605\cdot P_{10}}
-\end{equation}
-\begin{equation}
-P_{14} = 0.8928 + 0.1072\cdot \left( 1-\exp\left(-0.42\cdot\left(
-        \frac{f_n}{20} \right) ^{3.215} \right)\right)
-\end{equation}
-\begin{equation}
-P_{15} = \text{abs}\left( 1 - 0.8928\cdot (1+P_{11}) \cdot \exp(-P_{13}\cdot g^{1.092})\cdot
-         \frac{P_{12}}{P_{14}} \right)
-\end{equation}
+\begin{align}
+P_8 &= 0.7168\cdot \left(1 + \frac{1.076}{1+0.0576\cdot \left(\varepsilon_r-1\right)} \right)\\
+P_9 &= P_8 - 0.7913\cdot\left( 1-\exp\left( -\left( f_n/20\right) ^{1.424} \right) \right)
+     \cdot\arctan\left( 2.481\cdot\left( \varepsilon_r/8\right) ^{0.946} \right)\\
+P_{10} &= 0.242\cdot \left(\varepsilon_r-1\right)^{0.55}\\
+P_{11} &= 0.6366\cdot \left(\exp\left(-0.3401\cdot f_n\right)-1\right) \cdot
+      \arctan\left(1.263\cdot\left( u/3 \right) ^{1.629} \right)\\
+P_{12} &= P_9 + \dfrac{1-P_9}{1+1.183\cdot u^{1.376}}\\
+P_{13} &= 1.695\cdot \dfrac{P_{10}}{0.414+1.605\cdot P_{10}}\\
+P_{14} &= 0.8928 + 0.1072\cdot \left( 1-\exp\left(-0.42\cdot\left(
+        f_n/20 \right) ^{3.215} \right)\right)\\
+P_{15} &= \left| 1 - 0.8928\cdot \left(1+P_{11}\right) \cdot \exp\left(-P_{13}\cdot g^{1.092}\right)\cdot
+         P_{12}/P_{14} \right|
+\end{align}
+
 Up to $f_n=25$ the maximum error of these equations is 1.4\%.
 
 \addvspace{12pt}
 
 The static characteristic impedance for the even mode writes as follows.
 \begin{equation}
-Z_{L,e}(0) = \sqrt{\frac{\epsilon_{eff}(0)}{\epsilon_{eff,e}(0)}} \cdot
-             \frac{Z_L(0)}{1 - \frac{Z_L(0)}{377\Omega} \cdot \sqrt{\epsilon_{eff}(0)} \cdot Q_4}
+Z_{L,e}(0) = \sqrt{\dfrac{\varepsilon_{eff}(0)}{\varepsilon_{eff,e}(0)}} \cdot
+             \dfrac{Z_L(0)}{1 - \dfrac{Z_L(0)}{377\ohm} \cdot \sqrt{\varepsilon_{eff}(0)} \cdot Q_4}
 \end{equation}
+
 with
-\begin{equation}
-Q_1 = 0.8695\cdot u^{0.194}
-\end{equation}
-\begin{equation}
-Q_2 = 1 + 0.7519\cdot g + 0.189\cdot g^{2.31}
-\end{equation}
-\begin{equation}
-Q_3 = 0.1975 + \left( 16.6 + \left( \frac{8.4}{g} \right) ^6 \right) ^{-0.387}
-     + \frac{1}{241} \cdot \ln\left( \frac{g^{10}}{1+\left( \frac{g}{3.4}\right) ^{10}} \right)
-\end{equation}
-\begin{equation}
-Q_4 = \frac{Q_1}{Q_2}\cdot \frac{2}{ \exp(-g)\cdot u^{Q_3} + (2-\exp(-g))\cdot u^{-Q_3} }
-\end{equation}
-with $Z_L(0)$ and $\epsilon_{eff}(0)$  being again quantities for
-a zero-thickness single microstrip of width $w$ according to
-\cite{Hammerstad} (equation \ref{eq:HandJErEff} and \ref{eq:HandJZL0}).
+\begin{align}
+Q_1 &= 0.8695\cdot u^{0.194}\\
+Q_2 &= 1 + 0.7519\cdot g + 0.189\cdot g^{2.31}\\
+Q_3 &= 0.1975 + \left( 16.6 + \left( 8.4/g \right) ^6 \right) ^{-0.387}
+     + \dfrac{1}{241} \cdot \ln\left( \dfrac{g^{10}}{1+\left( g/3.4\right) ^{10}} \right)\\
+Q_4 &= \frac{Q_1}{Q_2}\cdot \frac{2}{ \exp\left(-g\right)\cdot u^{Q_3} + (2-\exp\left(-g\right))\cdot u^{-Q_3} }
+\end{align}
+
+with $Z_L(0)$ and $\varepsilon_{eff}(0)$ being again quantities for a
+zero-thickness single microstrip line of width $W$ according to
+\cite{Hammerstad} (see also eq. \eqref{eq:HandJErEff} and
+\eqref{eq:HandJZL0}).
 
 \addvspace{12pt}
 
 The static characteristic impedance for the odd mode writes as follows.
 \begin{equation}
-Z_{L,o}(0) = \sqrt{\frac{\epsilon_{eff}(0)}{\epsilon_{eff,e}(0)}} \cdot
-             \frac{Z_L(0)}{1 - \frac{Z_L(0)}{377\Omega} \cdot \sqrt{\epsilon_{eff}(0)} \cdot Q_{10}}
+Z_{L,o}(0) = \sqrt{\dfrac{\varepsilon_{eff}(0)}{\varepsilon_{eff,o}(0)}} \cdot
+             \dfrac{Z_L(0)}{1 - \dfrac{Z_L(0)}{377\Omega} \cdot \sqrt{\varepsilon_{eff}(0)} \cdot Q_{10}}
 \end{equation}
+
 with
-\begin{equation}
-Q_5 = 1.794 +1.14\cdot\ln\left( 1 + \frac{0.638}{g+0.517\cdot g^{2.43}} \right)
-\end{equation}
-\begin{equation}
-Q_6 = 0.2305 + \frac{1}{281.3}\cdot \ln\left( \frac{g^{10}}{1+\left( \frac{g}{5.8}\right) ^{10}} \right)
-     + \frac{1}{5.1}\cdot \ln(1+0.598\cdot g^{1.154})
-\end{equation}
-\begin{equation}
-Q_7 = \frac{10+190\cdot g^2}{1+82.3\cdot g^3}
-\end{equation}
-\begin{equation}
-Q_8 = \exp\left( -6.5 - 0.95\cdot\ln(g) - \left(\frac{g}{0.15}\right)^5 \right)
-\end{equation}
-\begin{equation}
-Q_9 = \ln(Q_7)\cdot \left( Q_8 + \frac{1}{16.5} \right)
-\end{equation}
-\begin{equation}
-Q_{10} = \frac{Q_2\cdot Q_4 - Q_5\cdot\exp\left( \ln(u)\cdot Q_6\cdot u^{-Q_9} \right)}{Q_2}
+\begin{align}
+Q_5 &= 1.794 +1.14\cdot\ln\left( 1 + \frac{0.638}{g+0.517\cdot g^{2.43}} \right)\\
+Q_6 &= 0.2305 + \frac{1}{281.3}\cdot \ln\left( \frac{g^{10}}{1+\left( g/5.8\right) ^{10}} \right)
+     + \frac{1}{5.1}\cdot \ln\left(1+0.598\cdot g^{1.154}\right)\\
+Q_7 &= \frac{10+190\cdot g^2}{1+82.3\cdot g^3}\\
+Q_8 &= \exp\left( -6.5 - 0.95\cdot\ln\left(g\right) - \left(g/0.15\right)^5 \right)\\
+Q_9 &= \ln\left(Q_7\right)\cdot \left( Q_8 + 1/16.5 \right)\\
+Q_{10} &= \frac{Q_2\cdot Q_4 - Q_5\cdot\exp\left( \ln\left(u\right)\cdot Q_6\cdot u^{-Q_9} \right)}{Q_2}
        = Q_4 - \frac{Q_5}{Q_2}\cdot u^{Q_6\cdot u^{-Q_9}}
-\end{equation}
+\end{align}
+
 The accuracy of the static impedances is better than 0.6\%.
 
 \addvspace{12pt}
 
-Dispersion of characteristic impedance for the even mode can be
+Dispersion of the characteristic impedance for the even mode can be
 modeled by the following equations.
 \begin{equation}
-Z_{L,e}(f_n) = Z_{L,e}(0)\cdot \left( \frac{0.9408\cdot (\epsilon_{eff}(f_n))^{C_e} - 0.9603}
-                        {(0.9408-d_e)\cdot (\epsilon_{eff}(0))^{C_e} - 0.9603} \right) ^{Q_0}
+Z_{L,e}(f_n) = Z_{L,e}(0)\cdot \left( \dfrac{0.9408\cdot (\varepsilon_{eff}(f_n))^{C_e} - 0.9603}
+                        {\left(0.9408-d_e\right)\cdot \left(\varepsilon_{eff}(0)\right)^{C_e} - 0.9603} \right) ^{Q_0}
 \end{equation}
+
 with
 \begin{equation}
 \begin{split}
-C_e = 1 + 1.275\cdot \left( 1-\exp\left( -0.004625\cdot p_e\cdot \epsilon_r^{1.674}\cdot
-      \left( \frac{f_n}{18.365} \right) ^{2.745} \right) \right) \\
+C_e = 1 + 1.275\cdot \left( 1-\exp\left( -0.004625\cdot p_e\cdot \varepsilon_r^{1.674}\cdot
+      \left( f_n/18.365 \right) ^{2.745} \right) \right)\\
       - Q_{12}+Q_{16}-Q_{17}+Q_{18}+Q_{20}
 \end{split}
 \end{equation}
-\begin{equation}
-d_e = 5.086\cdot q_e\cdot\frac{r_e}{0.3838+0.386\cdot q_e}\cdot
-      \frac{\exp\left(-22.2\cdot u^{1.92}\right)}{1+1.2992\cdot r_e}\cdot
-      \frac{(\epsilon_r-1)^6}{1 + 10\cdot (\epsilon_r-1)^6}
-\end{equation}
-\begin{equation}
-p_e = 4.766\cdot \exp (-3.228\cdot u^{0.641})
-\end{equation}
-\begin{equation}
-q_e = 0.016 + (0.0514\cdot \epsilon_r\cdot Q_{21})^{4.524}
-\end{equation}
-\begin{equation}
-r_e = \left( \frac{f_n}{28.843} \right) ^{12}
-\end{equation}
-\begin{equation}
-Q_{11} = 0.893\cdot \left( 1 - \frac{0.3}{1+0.7\cdot(\epsilon_r-1)} \right)
-\end{equation}
-\begin{equation}
-Q_{12} = 2.121\cdot \frac{\left( \frac{f_n}{20}\right) ^{4.91}}
-                         {1+Q_{11}\cdot\left( \frac{f_n}{20}\right) ^{4.91}}
-	      \cdot \exp(-2.87\cdot g)\cdot g^{0.902}
-\end{equation}
-\begin{equation}
-Q_{13} = 1 + 0.038\cdot \left( \frac{\epsilon_r}{8} \right) ^{5.1}
-\end{equation}
-\begin{equation}
-Q_{14} = 1 + 1.203\cdot \frac{ \left( \frac{\epsilon_r}{15} \right) ^4}
-                             {1 + \cdot \left( \frac{\epsilon_r}{15} \right) ^4}
-\end{equation}
-\begin{equation}
-Q_{15} = \dfrac{ 1.887\cdot \exp(-1.5\cdot g^{0.84})\cdot g^{Q_{14}} }
-              { 1 + 0.41\cdot \left( \dfrac{f_n}{15} \right) ^3 \cdot
-	        \dfrac{u^{2/Q_{13}}}{0.125 + u^{1.626/Q_{13}}}}
-\end{equation}
-\begin{equation}
-Q_{16} = Q_{15}\cdot \left( 1 + \frac{9}{1+0.403\cdot (\epsilon_r-1)^2} \right)
-\end{equation}
-\begin{equation}
-Q_{17} = 0.394\cdot \left( 1-\exp\left( -1.47\cdot\left( \frac{u}{7} \right) ^{0.672} \right) \right)
-        \cdot \left( 1-\exp\left( -4.25\left( \frac{f_n}{20} \right) ^{1.87} \right) \right)
-\end{equation}
-\begin{equation}
-Q_{18} = 0.61\frac{1-\exp\left( -2.13\cdot\left( \frac{u}{8} \right) ^{1.593} \right)}
-                  {1+6.544\cdot g^{4.17}}
-\end{equation}
-\begin{equation}
-Q_{19} = \frac{ 0.21\cdot g^4 }{(1+0.18\cdot g^{4.9})\cdot (1+0.1\cdot u^2) \cdot
-                \left( 1+\left( \frac{f_n}{24} \right) ^3 \right)}
-\end{equation}
-\begin{equation}
-Q_{20} = Q_{19}\cdot \left( 0.09 + \frac{1}{1+0.1\cdot (\epsilon_r-1)^{2.7}} \right)
-\end{equation}
-\begin{equation}
-Q_{21} = \text{abs}\left( 1-42.54\cdot g^{0.133}\cdot \exp(-0.812\cdot g)
-                   \cdot\frac{u^{2.5}}{1+0.033\cdot u^{2.5}} \right)
-\end{equation}
-With $\epsilon_{eff}(f_n)$ being the single microstrip effective
-dielectric constant according to \cite{Kirschning3} (equation
-\ref{eq:KandJErEff_disp}) and $Q_0$ single microstrip
-impedance dispersion according to (y).
+\begin{align}
+d_e &= 5.086\cdot q_e\cdot\dfrac{r_e}{0.3838+0.386\cdot q_e}\cdot
+      \dfrac{\exp\left(-22.2\cdot u^{1.92}\right)}{1+1.2992\cdot r_e}\cdot
+      \dfrac{(\varepsilon_r-1)^6}{1 + 10\cdot (\varepsilon_r-1)^6}\\
+p_e &= 4.766\cdot \exp \left(-3.228\cdot u^{0.641}\right)\\
+q_e &= 0.016 + \left(0.0514\cdot \varepsilon_r\cdot Q_{21}\right)^{4.524}\\
+r_e &= \left( f_n/28.843 \right) ^{12}
+\end{align}
+
+and
+\begin{align}
+Q_{11} &= 0.893\cdot \left( 1 - \frac{0.3}{1+0.7\cdot\left(\varepsilon_r-1\right)} \right)\\
+Q_{12} &= 2.121\cdot \frac{\left( f_n/20\right) ^{4.91}}
+                         {1+Q_{11}\cdot\left( f_n/20\right) ^{4.91}}
+	      \cdot \exp\left(-2.87\cdot g\right)\cdot g^{0.902}\\
+Q_{13} &= 1 + 0.038\cdot \left( \varepsilon_r/8 \right) ^{5.1}\\
+Q_{14} &= 1 + 1.203\cdot \dfrac{ \left( \varepsilon_r/15 \right) ^4}
+                             {1 + \cdot \left( \varepsilon_r/15 \right) ^4}\\
+Q_{15} &= \dfrac{ 1.887\cdot \exp\left(-1.5\cdot g^{0.84}\right)\cdot g^{Q_{14}} }
+              { 1 + 0.41\cdot \left( f_n/15 \right) ^3 \cdot
+	        \dfrac{u^{2/Q_{13}}}{0.125 + u^{1.626/Q_{13}}}}\\
+Q_{16} &= Q_{15}\cdot \left( 1 + \frac{9}{1+0.403\cdot \left(\varepsilon_r-1\right)^2} \right)\\
+Q_{17} &= 0.394\cdot \left( 1-\exp\left( -1.47\cdot\left( u/7 \right) ^{0.672} \right) \right)
+        \cdot \left( 1-\exp\left( -4.25\left( f_n/20 \right) ^{1.87} \right) \right)\\
+Q_{18} &= 0.61\cdot\frac{1-\exp\left( -2.13\cdot\left( u/8 \right) ^{1.593} \right)}
+                  {1+6.544\cdot g^{4.17}}\\
+Q_{19} &= \frac{ 0.21\cdot g^4 }{\left(1+0.18\cdot g^{4.9}\right)\cdot \left(1+0.1\cdot u^2\right) \cdot
+                \left( 1+\left( f_n/24 \right) ^3 \right)}\\
+Q_{20} &= Q_{19}\cdot \left( 0.09 + \frac{1}{1+0.1\cdot \left(\varepsilon_r-1\right)^{2.7}} \right)\\
+Q_{21} &= \left| 1-42.54\cdot g^{0.133}\cdot \exp\left(-0.812\cdot g\right)
+                   \cdot\frac{u^{2.5}}{1+0.033\cdot u^{2.5}} \right|
+\end{align}
+
+With $\varepsilon_{eff}(f_n)$ being the single microstrip effective
+dielectric constant according to \cite{Kirschning3} (see eq.
+\eqref{eq:KandJErEff_disp}) and $Q_0$ single microstrip impedance
+dispersion according to (another reference !!!).
 
 \addvspace{12pt}
 
-Dispersion of characteristic impedance for the odd mode can be
+Dispersion of the characteristic impedance for the odd mode can be
 modeled by the following equations.
 \begin{equation}
-Z_{L,o}(f_n) = Z_L(f_n) + \frac{ Z_{L,o}(0)\cdot
-               \left( \frac{\epsilon_{eff,o}(f_n)}{\epsilon_{eff,o}(0)} \right) ^{Q_{22}}
-	     - Z_L(f_n)\cdot Q_{23} }{ 1+Q_{24}+(0.46\cdot g)^{2.2} \cdot Q_{25} }
+Z_{L,o}(f_n) = Z_L(f_n) + \dfrac{ Z_{L,o}(0)\cdot
+               \left( \dfrac{\varepsilon_{eff,o}(f_n)}{\varepsilon_{eff,o}(0)} \right) ^{Q_{22}}
+	     - Z_L(f_n)\cdot Q_{23} }{ 1+Q_{24}+\left(0.46\cdot g\right)^{2.2} \cdot Q_{25} }
 \end{equation}
+
 with
-\begin{equation}
-Q_{22} = 0.925\cdot \frac{ \left( \frac{f_n}{Q_{26}} \right) ^{1.536} }
-                         { 1+0.3\cdot \left( \frac{f_n}{30} \right)^{1.536} }
-\end{equation}
-\begin{equation}
-Q_{23} = 1+ \frac{ 0.005\cdot f_n\cdot Q_{27} }
-                 { \left( 1+0.812\cdot\left( \frac{f_n}{15} \right) ^{1.9} \right) \cdot
-		   (1 + 0.025\cdot u^2) }
-\end{equation}
-\begin{equation}
-Q_{24} = \frac{2.506\cdot Q_{28}\cdot u^{0.894}}{3.575+u^{0.894}} \cdot
-         \left( \frac{ (1+1.3\cdot u)\cdot f_n}{99.25} \right)^{4.29}
-\end{equation}
-\begin{equation}
-Q_{25} = \frac{0.3\cdot f_n^2}{10+f_n^2}\cdot
-         \left( 1+ \frac{2.333\cdot (\epsilon_r-1)^2}{5+(\epsilon_r-1)^2} \right)
-\end{equation}
-\begin{equation}
-Q_{26} = 30 - \frac{ 22.2\cdot \left( \frac{\epsilon_r-1}{13} \right)^{12} }
-                   { 1+ 3\cdot \left( \frac{\epsilon_r-1}{13} \right)^{12} } - Q_{29}
-\end{equation}
-\begin{equation}
-Q_{27} = 0.4\cdot g^{0.84}\cdot \left( 1+
-         \frac{2.5\cdot (\epsilon_r-1)^{1.5}}{5+(\epsilon_r-1)^{1.5}} \right)
-\end{equation}
-\begin{equation}
-Q_{28} = 0.149\cdot \frac{(\epsilon_r-1)^3}{94.5+0.038\cdot (\epsilon_r-1)^3}
-\end{equation}
-\begin{equation}
-Q_{29} = \frac{15.16}{1+0.196\cdot (\epsilon_r-1)^2}
-\end{equation}
-with $Z_L(f_n)$ being the frequency-dependent power-current characteristic
-impedance formulation of a single microstrip with width $w$ according to (z).
-Up to $f_n=20$, the numerical error of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is
-less than 2.5\%.
+\begin{align}
+Q_{22} &= 0.925\cdot \frac{ \left( f_n/Q_{26} \right) ^{1.536} }
+                         { 1+0.3\cdot \left( f_n/30 \right)^{1.536} }\\
+Q_{23} &= 1+ \frac{ 0.005\cdot f_n\cdot Q_{27} }
+                 { \left( 1+0.812\cdot\left( f_n/15 \right) ^{1.9} \right) \cdot
+		   \left(1 + 0.025\cdot u^2\right) }\\
+Q_{24} &= \frac{2.506\cdot Q_{28}\cdot u^{0.894}}{3.575+u^{0.894}} \cdot
+         \left( \frac{ (1+1.3\cdot u)\cdot f_n}{99.25} \right)^{4.29}\\
+Q_{25} &= \frac{0.3\cdot f_n^2}{10+f_n^2}\cdot
+         \left( 1+ \frac{2.333\cdot \left(\varepsilon_r-1\right)^2}{5+\left(\varepsilon_r-1\right)^2} \right)\\
+Q_{26} &= 30 - \frac{ 22.2\cdot \left( \dfrac{\varepsilon_r-1}{13} \right)^{12} }
+                   { 1+ 3\cdot \left( \dfrac{\varepsilon_r-1}{13} \right)^{12} } - Q_{29}\\
+Q_{27} &= 0.4\cdot g^{0.84}\cdot \left( 1+
+         \frac{2.5\cdot \left(\varepsilon_r-1\right)^{1.5}}{5+\left(\varepsilon_r-1\right)^{1.5}} \right)\\
+Q_{28} &= 0.149\cdot \frac{\left(\varepsilon_r-1\right)^3}{94.5+0.038\cdot \left(\varepsilon_r-1\right)^3}\\
+Q_{29} &= \frac{15.16}{1+0.196\cdot \left(\varepsilon_r-1\right)^2}
+\end{align}
+
+with $Z_L(f_n)$ being the frequency-dependent power-current
+characteristic impedance formulation of a single microstrip with width
+$W$ according to (another reference !!!).  Up to $f_n=20$, the numerical
+error of $Z_{L,o}(f_n)$ and $Z_{L,e}(f_n)$ is less than 2.5\%.
+
+\subsection{S-parameters of parallel coupled microstrip lines}
+%\addcontentsline{toc}{subsection}{S-parameters of parallel coupled microstrip lines}
+
+After endless equations formulating the effective dielectric constant
+and the characte\-ris\-tic impe\-dance of the even and odd mode, the
+S-parameters (according to the port numbering in
+fig. \ref{fig:mscoupled}) can now be defined \cite{Edwards}.
 
 \addvspace{12pt}
 
-After endless equations, the S parameters (according fig. \ref{fig:mscoupled})
-can now be defined \cite{Edwards}:\\
 reflexion coefficients
 \begin{equation}
 S_{11} = S_{22} = S_{33} = S{44} = X_e + X_o
@@ -6720,18 +6672,18 @@ isolated paths
 \begin{equation}
 S_{13} = S_{31} = S_{24} = S_{42} = Y_e - Y_o
 \end{equation}
-with denominator
+
+with the denominator
 \begin{equation}
-D_{e,o} = 2\cdot Z_{L,e,o}\cdot Z_L\cdot \cosh(\gamma_{e,o}\cdot l)
-         + (Z_{L,e,o}^2 + Z_L^2)\cdot \sinh(\gamma_{e,o}\cdot l)
+D_{e,o} = 2\cdot Z_{L,e,o}\cdot Z_L\cdot \cosh\left(\gamma_{e,o}\cdot l\right)
+         + \left(Z_{L,e,o}^2 + Z_L^2\right)\cdot \sinh\left(\gamma_{e,o}\cdot l\right)
 \end{equation}
+
 and
-\begin{equation}
-X_{e,o} = \frac{(Z_{L,e,o}^2 - Z_L^2)\cdot \sinh(\gamma_{e,o}\cdot l)}{2\cdot D_{e,o}}
-\end{equation}
-\begin{equation}
-Y_{e,o} = \frac{Z_{L,e,o}\cdot Z_L}{D_{e,o}}
-\end{equation}
+\begin{align}
+X_{e,o} &= \frac{\left(Z_{L,e,o}^2 - Z_L^2\right)\cdot \sinh\left(\gamma_{e,o}\cdot l\right)}{2\cdot D_{e,o}}\\
+Y_{e,o} &= \frac{Z_{L,e,o}\cdot Z_L}{D_{e,o}}
+\end{align}
 
 \begin{figure}[ht]
 \begin{center}
