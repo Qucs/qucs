@@ -1,3 +1,7 @@
+2004-11-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* amplifier.h (class amplifier): New component added.
+
 2004-10-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/jfet.cpp, devices/diode.cpp, devices/mosfet.cpp,

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.20 2004/10/25 07:55:46 ela Exp $
+ * $Id: component.h,v 1.21 2004/11/01 08:36:00 ela Exp $
  *
  */
 
@@ -67,6 +67,7 @@
 #include "ipulse.h"
 #include "vrect.h"
 #include "irect.h"
+#include "amplifier.h"
 
 #include "devices/diode.h"
 #include "devices/jfet.h"
