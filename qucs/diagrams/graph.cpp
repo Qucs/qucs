@@ -27,9 +27,10 @@ Graph::Graph(const QString& _Line)
   Var    = _Line;
   countY = 0;    // no points in graph
   Points = 0;
-  Thick = numMode = 0;
-  Precision = 3;
+  Thick  = numMode = 0;
   Color  = 0x0000ff;  // blue
+  Style  = 0;    // solid line
+  Precision  = 3;
   isSelected = false;
 
   Points = 0;
@@ -52,28 +53,39 @@ void Graph::paint(QPainter *p, int x0, int y0)
     return;
   }
 
-  int countX = cPointsX.getFirst()->count;
-  int n1, n2;
+  int n1;
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Thick+4));
     for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-      for(n2=countX-1; n2>0; n2--) {
-        p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
-        pp += 2;
-      }
-      pp += 2;
+      do {
+	pp += 2;
+	if(*pp > -2)
+	do {
+	  p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
+	  pp += 2;
+        } while(*pp > -2);    // until end of stroke
+        if(*pp < -9) break;   // end of line ?
+        pp++;
+      } while(*pp > -9);
+      pp++;
     }
 
     pp = Points;
     p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
     for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-      for(n2=countX-1; n2>0; n2--) {
-        p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
-        pp += 2;
-      }
-      pp += 2;
+      do {
+	pp += 2;
+	if(*pp > -2)
+	do {
+	  p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
+	  pp += 2;
+        } while(*pp > -2);    // until end of stroke
+        if(*pp < -9) break;   // end of line ?
+        pp++;
+      } while(*pp > -9);
+      pp++;
     }
     p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
@@ -83,11 +95,17 @@ void Graph::paint(QPainter *p, int x0, int y0)
   p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
   for(n1=countY; n1>0; n1--) {
     p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-    for(n2=countX-1; n2>0; n2--) {
-      p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
+    do {
       pp += 2;
-    }
-    pp += 2;
+      if(*pp > -2)
+      do {
+	p->drawLine(x0+(*(pp-2)), y0-(*(pp-1)), x0+(*pp), y0-(*(pp+1)));
+	pp += 2;
+      } while(*pp > -2);    // until end of stroke
+      if(*pp < -9) break;   // end of line ?
+      pp++;
+    } while(*pp > -9);
+    pp++;
   }
 }
 
@@ -96,7 +114,7 @@ QString Graph::save()
 {
   QString s = "      <\""+Var+"\" "+Color.name()+
 	      " "+QString::number(Thick)+" "+QString::number(Precision)+
-	      " "+QString::number(numMode)+">";
+	      " "+QString::number(numMode)+" "+QString::number(Style)+">";
   return s;
 }
 
@@ -110,7 +128,7 @@ bool Graph::load(const QString& _s)
   if(s.at(s.length()-1) != '>') return false;
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  if(s.at(0) == '"')  Var  = s.section('"',1,1);    // Var, the new style
+  if(s.at(0) == '"')  Var  = s.section('"',1,1);  // Var, the new style
   else  Var  = s.section(' ',0,0);    // Var, the old style
 
   QString n;
@@ -123,12 +141,17 @@ bool Graph::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // Precision
-  if(n.isEmpty()) return true;    // backward compatible
+  if(n.isEmpty()) return true;  // backward compatible
   Precision = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',4,4);    // numMode
   numMode = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',5,5);    // Style
+  if(n.isEmpty()) return true;  // backward compatible
+  Style = n.toInt(&ok);
   if(!ok) return false;
 
   return true;
@@ -142,17 +165,25 @@ int Graph::getSelected(int x, int y)
   int *pp = Points;
   if(pp == 0) return -1;
 
-  int A;
+  int A, zi;
   int dx, dx2, x1;
   int dy, dy2, y1;
 
   int countX = cPointsX.getFirst()->count;
   for(int z=0; z<countY; z++) {
-    for(int n=1; n<countX; n++) {  // count-1 runs (need 2 points per run)
+    zi = 0;
+    do {
       x1 = *(pp++);  y1 = *(pp++);
+      zi++;
 
       dx  = x - x1;
       dx2 = (*pp);
+      if(dx2 < -1) {
+	if(dx2 < -9) break;
+	dx2 = *(++pp);
+	if(dx2 < -9) break;
+	zi -= 2;  // because of space (edge-values)
+      }
       if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
       else { if(x > 5) if(x > dx2+5) continue; }
 
@@ -168,9 +199,9 @@ int Graph::getSelected(int x, int y)
       A *= A;                  // avoid the need for square root
       A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
 
-      if(A <= 0)  return z*countX + n;  // lies x/y onto the graph line ?
-    }
-    pp += 2;
+      if(A <= 0)  return z*countX + zi;  // lies x/y onto the graph line ?
+    } while(true);
+    pp++;
   }
 
   return -1;

@@ -36,17 +36,12 @@ public:
   FillDialog(const QString& _Caption, bool show=true, QWidget *parent=0);
   ~FillDialog();
 
-  void SetComboBox(Qt::PenStyle _Style);
-  void SetFillComboBox(Qt::BrushStyle _Style);
-
 public slots:
   void slotCheckFilled(bool on);
 
 private slots:
   void slotSetColor();
   void slotSetFillColor();
-  void slotSetStyle(int index);
-  void slotSetFillStyle(int index);
 
 public:
   QLabel        *FillLabel1, *FillLabel2;
@@ -54,8 +49,6 @@ public:
   QLineEdit     *LineWidth;
   QPushButton   *ColorButt, *FillColorButt;
   QComboBox     *StyleBox, *FillStyleBox;
-  Qt::PenStyle   LineStyle;
-  Qt::BrushStyle FillStyle;
 };
 
 #endif

@@ -24,8 +24,10 @@
 #include <qwidget.h>
 #include <qpainter.h>
 
+#include <limits.h>
 
-Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn)
+
+Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)
 {
   Type = isMarker;
   isSelected = false;
@@ -33,9 +35,9 @@ Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn)
   Diag   = Diag_;
   pGraph = pg_;
   Precision = 2;   // before createText()
-  numMode = 0;
   lookNfeel = 1;
-  nVarPos = 0;
+  numMode = nVarPos = 0;
+  cx = cx_;  cy = cy_;
 
   if(!pGraph)  makeInvalid();
   else initText(_nn);   // finally create marker
@@ -55,25 +57,38 @@ void Marker::initText(int n)
       makeInvalid();
       return;
   }
+//qDebug("n: %d",n);
 
-  int *pi = pGraph->Points + 2*n;
-  cx = *pi;
-  cy = *(pi+1);
+  double num, *py = (pGraph->cPointsY) + 2*n;
+  Text = "";
+  nVarPos = 0;
+  DataX *pD = pGraph->cPointsX.first();
 
+  // find exact marker position
+  int nn, x, y, d, dmin = INT_MAX;
+  for(nn=n % pD->count; nn<pD->count; nn++) {
+    num = *(pD->Points + nn);
+    Diag->calcCoordinate(num, *py, *(py+1), &x, &y);
+    x -= cx;
+    y -= cy;
+    d = x*x + y*y;
+    if(d < dmin) {
+      dmin = d;
+      n = (n - n % pD->count) + nn;
+    }
+    py += 2;
+  }
 
   // independent variables
-  int nn = n;
-  double num;
-  Text = "";
-  DataX *pD;
-  nVarPos = 0;
-  for(pD = pGraph->cPointsX.first(); pD!=0; pD = pGraph->cPointsX.next()) {
+  nn = n;
+  for(; pD!=0; pD = pGraph->cPointsX.next()) {
     num = *(pD->Points + (nn % pD->count));
     VarPos[nVarPos++] = num;
     Text += pD->Var + ": " + QString::number(num,'g',Precision) + "\n";
     nn /= pD->count;
   }
 
+  // dependent variable
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
   Text += pGraph->Var + ": ";
@@ -85,6 +100,8 @@ void Marker::initText(int n)
     case 2: Text += complexRad(yr, yi, Precision);
 	    break;
   }
+
+  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
 
   QFontMetrics  metrics(QucsSettings.font);
   QSize r = metrics.size(0, Text);
@@ -122,9 +139,6 @@ void Marker::createText()
     VarPos[nVarPos++] = *pp;
     Text += pD->Var + ": " + QString::number(*pp,'g',Precision) + "\n";
   }
-  int *pi = pGraph->Points + 2*n;
-  cx = *pi;
-  cy = *(pi+1);
 
   double yr = *((pGraph->cPointsY) + 2*n);
   double yi = *((pGraph->cPointsY) + 2*n+1);
@@ -137,6 +151,8 @@ void Marker::createText()
     case 2: Text += complexRad(yr, yi, Precision);
 	    break;
   }
+
+  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
 
   QFontMetrics  metrics(QucsSettings.font);
   QSize r = metrics.size(0, Text);

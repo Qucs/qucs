@@ -29,7 +29,6 @@ TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y1 = 20;
   x2 = 300;    // initial size of diagram
   y2 = 200;
-
   Name = "Tab";
 
   calcDiagram();    // calculate circles for smith chart with |r|=1
@@ -38,18 +37,6 @@ TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 TabDiagram::~TabDiagram()
 {
 }
-
-// ------------------------------------------------------------
-// No data has to be calculated.
-void TabDiagram::calcData(Graph *g)
-{
-  if(g->Points != 0) {
-    delete[] g->Points;    // memory is of no use in this diagram type
-    g->Points = 0;
-  }
-//  calcDiagram();
-}
-
 
 // ------------------------------------------------------------
 // calculates the text in the tabular

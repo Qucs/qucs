@@ -223,6 +223,42 @@
         <source>Thickness:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>solid line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid Style: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dash dot dot line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>long dash line</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>

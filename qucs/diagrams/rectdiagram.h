@@ -33,6 +33,7 @@ public:
   RectDiagram* newOne();
   void   calcDiagram();
   void   calcData(Graph *g);
+  void   calcCoordinate(double, double, double, int*, int*);
 
   QString xLabel, yLabel;
 };

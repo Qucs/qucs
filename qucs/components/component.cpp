@@ -153,8 +153,8 @@ void Component::paint(QPainter *p)
     }
 
   if(!isActive) {
-    p->setPen(QPen(QPen::red,1));
-    p->drawRect(cx+x1, cy+y1, x2-x1, y2-y1);
+    p->setPen(QPen(QPen::red,0));
+    p->drawRect(cx+x1, cy+y1, x2-x1+1, y2-y1+1);
     p->drawLine(cx+x1, cy+y1, cx+x2, cy+y2);
     p->drawLine(cx+x1, cy+y2, cx+x2, cy+y1);
   }

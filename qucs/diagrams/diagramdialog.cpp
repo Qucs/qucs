@@ -72,11 +72,11 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
   if(Diag->Name == "Tab") {
     new QLabel(tr("Number Notation: "), Box2);
-    NumberBox = new QComboBox(Box2);
-    NumberBox->insertItem(tr("real/imaginary"));
-    NumberBox->insertItem(tr("magnitude/angle (degree)"));
-    NumberBox->insertItem(tr("magnitude/angle (radian)"));
-    connect(NumberBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
+    PropertyBox = new QComboBox(Box2);
+    PropertyBox->insertItem(tr("real/imaginary"));
+    PropertyBox->insertItem(tr("magnitude/angle (degree)"));
+    PropertyBox->insertItem(tr("magnitude/angle (radian)"));
+    connect(PropertyBox, SIGNAL(activated(int)), SLOT(slotSetNumMode(int)));
     Box2->setStretchFactor(new QWidget(Box2), 5); // stretchable placeholder
 
     new QLabel(tr("Precision:"), Box2);
@@ -96,6 +96,18 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2->setValidator(Validator);
     Property2->setMaximumWidth(25);
     Property2->setText("0");
+
+    QHBox *Box3 = new QHBox(InputGroup);
+    Box3->setSpacing(5);
+    new QLabel(tr("Style:"),Box3);
+    PropertyBox = new QComboBox(Box3);
+    PropertyBox->insertItem(tr("solid line"));
+    PropertyBox->insertItem(tr("dash line"));
+    PropertyBox->insertItem(tr("dot line"));
+    PropertyBox->insertItem(tr("long dash line"));
+    connect(PropertyBox, SIGNAL(activated(int)),
+			 SLOT(slotSetGraphStyle(int)));
+    Box3->setStretchFactor(new QWidget(Box3), 5); // stretchable placeholder
   }
   connect(Property2, SIGNAL(textChanged(const QString&)),
 			SLOT(slotSetProp2(const QString&)));
@@ -143,7 +155,24 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     gp->addWidget(yLabel,1,1);
 
     GridOn = new QCheckBox(tr("show Grid"), Tab2);
+    connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
     gp->addMultiCellWidget(GridOn,2,2,0,1);
+
+    GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
+    gp->addWidget(GridLabel1, 3,0);
+    GridColorButt = new QPushButton("        ",Tab2);
+    connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
+    gp->addWidget(GridColorButt, 3,1);
+
+    GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
+    gp->addWidget(GridLabel2, 4,0);
+    GridStyleBox = new QComboBox(Tab2);
+    GridStyleBox->insertItem(tr("solid line"));
+    GridStyleBox->insertItem(tr("dash line"));
+    GridStyleBox->insertItem(tr("dot line"));
+    GridStyleBox->insertItem(tr("dash dot line"));
+    GridStyleBox->insertItem(tr("dash dot dot line"));
+    gp->addWidget(GridStyleBox, 4,1);
 
     t->addTab(Tab2, tr("Properties"));
 
@@ -152,6 +181,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     xLabel->setText(Diag->xLabel);
     yLabel->setText(Diag->yLabel);
     GridOn->setChecked(Diag->GridOn);
+    if(!Diag->GridOn) slotSetGridBox(QButton::Off);
+    GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
+    GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
   }
 
   // ...........................................................
@@ -245,8 +277,12 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
   if(toTake) GraphInput->setText("");
 
   int     i = GraphInput->cursorPosition();
-  QString s = GraphInput->text();
-  GraphInput->setText(s.left(i)+Item->text(0)+s.right(s.length()-i));
+  QString s  = GraphInput->text();
+  QString s1 = Item->text(0);
+  if(ChooseData->currentText() != defaultDataSet.section('.',0,0))
+    s1 = ChooseData->currentText() + ":" + s1;
+
+  GraphInput->setText(s.left(i) + s1 + s.right(s.length()-i));
 
   if(s.isEmpty()) {
     GraphList->insertItem(GraphInput->text());
@@ -259,10 +295,11 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
       g->Thick = Property2->text().toInt();
       ColorButt->setPaletteBackgroundColor(
 		QColor(DefaultColors[GraphList->count()]));
+      g->Style =  PropertyBox->currentItem();
     }
     else {
       g->Precision = Property2->text().toInt();
-      g->numMode =   NumberBox->currentItem();
+      g->numMode   = PropertyBox->currentItem();
     }
 
     Diag->Graphs.append(g);
@@ -291,10 +328,11 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
   if(Diag->Name != "Tab") {
     Property2->setText(QString::number(g->Thick));
     ColorButt->setPaletteBackgroundColor(g->Color);
+    PropertyBox->setCurrentItem(g->Style);
   }
   else {
     Property2->setText(QString::number(g->Precision));
-    NumberBox->setCurrentItem(g->numMode);
+    PropertyBox->setCurrentItem(g->numMode);
   }
   toTake = false;
 }
@@ -315,10 +353,8 @@ void DiagramDialog::slotDeleteGraph()
 		QColor(DefaultColors[GraphList->count()]));
     Property2->setText("0");
   }
-  else {
-    Property2->setText("3");
-    NumberBox->setCurrentItem(0);
-  }
+  else  Property2->setText("3");
+  PropertyBox->setCurrentItem(0);
   changed = true;
   toTake  = false;
 }
@@ -334,10 +370,11 @@ void DiagramDialog::slotNewGraph()
   if(Diag->Name != "Tab") {
     g->Color = ColorButt->paletteBackgroundColor();
     g->Thick = Property2->text().toInt();
+    g->Style = PropertyBox->currentItem();
   }
   else {
     g->Precision = Property2->text().toInt();
-    g->numMode   = NumberBox->currentItem();
+    g->numMode   = PropertyBox->currentItem();
   }
   Diag->Graphs.append(g);
   changed = true;
@@ -374,6 +411,14 @@ void DiagramDialog::slotApply()
       Diag->GridOn = GridOn->isChecked();
       changed = true;
     }
+    if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
+      Diag->GridPen.setColor(GridColorButt->paletteBackgroundColor());
+      changed = true;
+    }
+    if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentItem()+1)) {
+      Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentItem()+1));
+      changed = true;
+    }
   }
 
   Diag->loadGraphData(defaultDataSet);
@@ -399,6 +444,16 @@ void DiagramDialog::slotSetColor()
   g->Color = c;
   changed = true;
   toTake  = false;
+}
+
+// --------------------------------------------------------------------------
+void DiagramDialog::slotSetGridColor()
+{
+  QColor c = QColorDialog::getColor(
+			GridColorButt->paletteBackgroundColor(),this);
+  if(!c.isValid()) return;
+  GridColorButt->setPaletteBackgroundColor(c);
+  changed = true;
 }
 
 // --------------------------------------------------------------------------
@@ -438,6 +493,36 @@ void DiagramDialog::slotSetNumMode(int Mode)
 
   Graph *g = Diag->Graphs.at(i);
   g->numMode = Mode;
+  changed = true;
+  toTake  = false;
+}
+
+// --------------------------------------------------------------------------
+// Is called when the "show grid" checkbox is changed.
+void DiagramDialog::slotSetGridBox(int state)
+{
+  if(state == QButton::On) {
+    GridColorButt->setEnabled(true);
+    GridStyleBox->setEnabled(true);
+    GridLabel1->setEnabled(true);
+    GridLabel2->setEnabled(true);
+  }
+  else {
+    GridColorButt->setEnabled(false);
+    GridStyleBox->setEnabled(false);
+    GridLabel1->setEnabled(false);
+    GridLabel2->setEnabled(false);
+  }
+}
+// --------------------------------------------------------------------------
+// Is called if the user changes the graph style (combobox).
+void DiagramDialog::slotSetGraphStyle(int style)
+{
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
+
+  Graph *g = Diag->Graphs.at(i);
+  g->Style = style;
   changed = true;
   toTake  = false;
 }

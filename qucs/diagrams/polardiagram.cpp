@@ -30,8 +30,6 @@ PolarDiagram::PolarDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y1 = 16;
   x2 = 200;    // initial size of diagram
   y2 = 200;
-
-  GridOn = true;
   Name = "Polar";
 
   calcDiagram();
@@ -42,15 +40,11 @@ PolarDiagram::~PolarDiagram()
 }
 
 // ------------------------------------------------------------
-void PolarDiagram::calcData(Graph *g)
+void PolarDiagram::calcCoordinate(double, double yr, double yi,
+				  int *px, int *py)
 {
-  int *p = g->Points;
-  if(p == 0) return;
-  double *py = g->cPointsY;
-  for(int z = (g->cPointsX.getFirst()->count)*(g->countY); z>0; z--) {
-    *(p++) = (x2>>1)+int((*(py++))/xup*double(x2>>1) + 0.5);
-    *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1) + 0.5);
-  }
+  *px = (x2>>1)+int(yr/xup*double(x2>>1) + 0.5);
+  *py = (y2>>1)+int(yi/yup*double(y2>>1) + 0.5);
 }
 
 // --------------------------------------------------------------
@@ -61,8 +55,8 @@ void PolarDiagram::calcDiagram()
   Arcs.clear();
 
   // x and y line
-  Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,0)));
-  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,0)));
+  Lines.append(new Line(x2>>1, y2, x2>>1, 0, GridPen));
+  Lines.append(new Line(0, y2>>1, x2, y2>>1, GridPen));
 
   double phi, Expo, Base;
   xlow = ylow = 0.0;
@@ -82,10 +76,10 @@ void PolarDiagram::calcDiagram()
       if(Base < 7.5) Base = 5.0;
       else { Base = 1.0; Expo++; }
     }
-    double GridStep = Base * pow(10.0,Expo);     // distance between grids in real coordinates
+    double GridStep = Base * pow(10.0,Expo); // grid distance in real values
     numGrids -= floor(numGrids - ymax/GridStep); // corrects rounding faults
     xup = yup = GridStep*numGrids;
-    double zD = double(x2) / numGrids;     // distance between grids in pixel
+    double zD = double(x2) / numGrids;   // grid distance in pixel
 
 
 /*  ---------------------------------------------------------------------
@@ -115,14 +109,14 @@ void PolarDiagram::calcDiagram()
 
       phi = 16.0*180.0/M_PI*atan(30.0/zD);  // 2*(text height+3) / radius
       Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, 0, 16*360-int(phi),
-			  QPen(QPen::lightGray,0)));
+			  GridPen));
       zD += zDstep;
     }
   }
   else {
     Expo = floor(log10(ymax));
     Base = ceil(ymax/pow(10.0,Expo) - 0.01);
-    xup  = yup  = Base * pow(10.0,Expo);       // separate number into Base * 10^Expo
+    xup  = yup  = Base * pow(10.0,Expo);  // separate into Base * 10^Expo
   }
 
   // create outer circle
