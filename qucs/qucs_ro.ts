@@ -3311,8 +3311,7 @@ Despre Qt la Trolltech</translation>
         <source>
 Qt universal circuit simulator
 </source>
-        <translation>
-</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
@@ -3572,7 +3571,7 @@ Closes the current project</source>
     <name>QucsView</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Info</translation>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
