@@ -3299,6 +3299,47 @@ Distribute vertically selected elements</source>
 Sets selected elements on grid</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rumanian by Radu Circa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Close Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close Project
+
+Closes the current project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Selected Elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Selection...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prints Selected Elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Selected Elements
+
+Prints selected elements of the current document</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>

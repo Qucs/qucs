@@ -91,7 +91,15 @@ bool SimMessage::startProcess(const QStringList& commands)
 // Is called when the process sends an output to stdout.
 void SimMessage::slotDisplayMsg()
 {
-  ProgText->insert(QString(SimProcess.readStdout()));
+  int i;
+  QString s = QString(SimProcess.readStdout());
+  while((i = s.find('\r')) >= 0) {
+    ProgText->insert(s.left(i-1));
+    s = s.mid(i+1);
+    ProgText->removeParagraph(ProgText->paragraphs());
+  }
+
+  ProgText->insert(s);
 }
 
 // ------------------------------------------------------------------------

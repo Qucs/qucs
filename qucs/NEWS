@@ -27,10 +27,17 @@ Version 0.0.3
 -------------
 
  * avoided working directory changes during program execution
- * translation into polish
+ * translation into Polish, Rumanian
  * some new components (e.g. transistors)
- * undo function
+ * some new operations (e.g. aligning)
+ * undo/redo function
+ * improved subcircuit support
  * resize operation for paintings
+ * logarithmical scale for rectangle diagrams
+ * change style of graphs (dashed, dotted, ...)
+ * qucs-edit and qucs-help as external programs
+ * application settings dialog
+ * many small improvements and bug fixes
 
 Version 0.0.2
 -------------

@@ -755,6 +755,22 @@ void QucsApp::slotFilePrint()
   statusBar()->message(tr("Ready."));
 }
 
+// ######################################################################
+void QucsApp::slotFilePrintSelected()
+{
+  statusBar()->message(tr("Printing..."));
+
+  if (Printer.setup(this))  // print dialog
+  {
+    QPainter painter;
+    painter.begin(&Printer);
+    view->Docs.current()->paintSelected(&painter);
+    painter.end();
+  };
+
+  statusBar()->message(tr("Ready."));
+}
+
 // --------------------------------------------------------------------
 // Exits the application.
 void QucsApp::slotFileQuit()
@@ -1139,6 +1155,29 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 }
 
 // ########################################################################
+// Is called when the close project menu is called.
+void QucsApp::slotMenuCloseProject()
+{
+  if(!closeAllFiles()) return;   // close files and ask for saving them
+  view->Docs.append(new QucsDoc(this, ""));   // create 'untitled' file
+  view->viewport()->repaint();
+  view->drawn = false;
+
+  setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
+  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
+
+  Content->setColumnText(0,tr("Content of")); // column text
+
+  Content->clear();   // empty content view
+  ConDatasets   = new QListViewItem(Content, tr("Datasets"));
+  ConDisplays   = new QListViewItem(Content, tr("Data Displays"));
+  ConSchematics = new QListViewItem(Content, tr("Schematics"));
+
+  TabView->setCurrentPage(0);   // switch to "Projects"-Tab
+  ProjName = "";
+}
+
+// ########################################################################
 // Is called when the open project menu is called.
 void QucsApp::slotMenuOpenProject()
 {
@@ -1147,10 +1186,10 @@ void QucsApp::slotMenuOpenProject()
   d->setShowHiddenFiles(true);
   d->setMode(QFileDialog::DirectoryOnly);
   if(d->exec() != QDialog::Accepted) return;
-  
+
   QString s = d->selectedFile();
   if(s.isEmpty()) return;
-  
+
   s = s.left(s.length()-1);   // cut off trailing '/'
   int i = s.findRev('/');
   if(i > 0) s = s.mid(i+1);   // cut out the last subdirectory
