@@ -23,6 +23,9 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Use Markowitz pivoting when solving equation systems with a sparse
+  matrix.
+- Implement a sparse matrix template class.
 - Non-ideal transient models of bias-t, dc-block and dc-feed.
 	- Implement optional gmin-stepping algorithm.
 - More S-parameter computation formulas, e.g. stability factors.

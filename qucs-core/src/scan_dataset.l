@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_dataset.l,v 1.3 2004-06-01 17:07:21 ela Exp $
+ * $Id: scan_dataset.l,v 1.4 2004-12-01 20:23:46 raimi Exp $
  *
  */
 
@@ -49,7 +49,9 @@
 %}
 
 WS       [ \t\n\r]
-ID       [a-zA-Z_][a-zA-Z0-9_]*
+SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
+POSTID   "."[a-zA-Z_][a-zA-Z0-9_]*
+ID       {SIMPLEID}{POSTID}*
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
 RINT     [+-]?{DIGIT}+

@@ -28,7 +28,7 @@ EXTRA_DIST = technical.tex $(FIGURES) $(BIBFILE) \
 dist_man_MANS = qucsator.1 qucsconv.1
 
 CLEANFILES = *~ $(EPSFILES) *.bak *.aux *.log *.toc *.pdf *.bbl *.blg *.dvi \
-  $(MPSFILES) $(PDFFIGURES) $(PDFFILES)
+  $(MPSFILES) $(PDFFIGURES) $(PDFFILES) *.brf *.out $(PSFRAGTEXS)
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = *.ps *.pdf
 
@@ -61,6 +61,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   convprob2.fig convprob3.fig msvia.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps
 EPSFILES = $(FIGURES:.fig=.eps)
+PSFRAGTEXS = $(FIGURES:.fig=.tex) $(MATHFILES:.m=.tex)
 PDFFILES = $(FIGURES:.fig=.pdf)
 PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
 BIBFILE = $(srcdir)/literature.bib
