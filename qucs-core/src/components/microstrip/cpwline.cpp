@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.5 2005-02-03 20:40:19 raimi Exp $
+ * $Id: cpwline.cpp,v 1.6 2005-02-24 21:54:21 raimi Exp $
  *
  */
 
@@ -151,14 +151,14 @@ void cpwline::initPropagation (void) {
     q3  = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
     qz  = 1 / (q1 + q3);
     er0 = 1 + q3 * qz * (er - 1);
-    zl_factor = (60 * M_PI) * qz;
+    zl_factor = Z0 / 2 * qz;
   }
   // backside is air
   else if (!strcmp (back, "Air")) {
     k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
     q2  = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
     er0 = 1 + (er - 1) / 2 * q2 * q1;
-    zl_factor = (30 * M_PI) * q1;
+    zl_factor = Z0 / 4 * q1;
   }
 
   if (t > 0) {
@@ -194,7 +194,7 @@ void cpwline::initPropagation (void) {
   nr_double_t b  = a + s;
   nr_double_t ac = (M_PI + log (n * a)) / a + (M_PI + log (n * b)) / b;
 
-  ac_factor  = ac / (480 * M_PI * kk1 * kpk1 * (1 - k1 * k1));
+  ac_factor  = ac / (4 * Z0 * kk1 * kpk1 * (1 - k1 * k1));
   ac_factor *= sqrt (M_PI * MU0 * rho); // Rs factor
   ad_factor  = (er / (er - 1)) * tand * M_PI / C0;
 

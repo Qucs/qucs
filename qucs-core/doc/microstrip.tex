@@ -1349,6 +1349,7 @@ microstrip line impedance.
 The main arm displacements of the reference planes from the center
 lines are (index $x$ stand for $a$ or $b$):
 \begin{equation}
+\label{eq:MSTee_dx}
 d_x = 0.055\cdot D_2\cdot \frac{Z_{L,x}}{Z_{L,2}}\cdot
       \left( 1 - 2\cdot\frac{Z_{L,x}}{Z_{L,2}}\cdot \left( \frac{f}{f_{p,x}} \right)^2 \right)
 \end{equation}
@@ -1364,6 +1365,7 @@ where $f$ is frequency.
 The side arm displacement of the reference planes from the center
 lines is:
 \begin{equation}
+\label{eq:MSTee_d2}
 d_2 = \sqrt{D_a \cdot D_b}\cdot \left( 0.5 - R\cdot
       \left( 0.05 + 0.7\cdot\exp\left(-1.6\cdot R\right) + 0.25\cdot R\cdot Q - 0.17\cdot \ln R \right) \right)
 \end{equation}
@@ -1380,6 +1382,7 @@ R = \frac{\sqrt{Z_{L,a}\cdot Z_{L,b}}}{Z_{L,2}} \qquad Q = \frac{f^2}{f_{p,a}\cd
 
 Turn ratio of transformers in the side arms:
 \begin{equation}
+\label{eq:MSTee_Tx2}
 T_x^2 = 1 - \pi\cdot \left( \frac{f}{f_{p,x}} \right)^2 \cdot \left( \frac{1}{12}\cdot
         \left( \frac{Z_{L,x}}{Z_{L,2}} \right)^2
         + \left( 0.5 - \frac{d_2}{D_x} \right)^2 \right)
@@ -1466,6 +1469,19 @@ I_{3}\\
 0
 \end{bmatrix}
 \end{equation}
+
+Please note that the main arm displacements in eq. \eqref{eq:MSTee_dx}
+yield two small microstrip lines at each main arm and the side arm
+displacement of eq. \eqref{eq:MSTee_d2} results in a small microstrip
+strip line as well, but with negative length, i.e. kind of
+phaseshifter here.
+
+\addvspace{12pt}
+
+The transformer ratios defined in eq. \eqref{eq:MSTee_Tx2} are going
+to be negative with increasing frequency which produces complex values
+in the Z-parameter matrix as well as in the S-parameter matrix.  That
+is why the ratios are delimited to a minimum value.
 
 \section{Microstrip cross}
 %\addcontentsline{toc}{section}{Microstrip cross}

@@ -1,3 +1,12 @@
+2005-02-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip.tex (section{Microstrip tee junction}): Added
+	note about displacement interpretations and mentioned
+	negative transformer ratios.
+
+	* hbanalysis.tex (subsection{Creating Transadmittance 
+	Matrix}): Fixed spelling mistake and CVS conflict.
+
 2005-02-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* grammar-data.tex (section{Qucs dataset grammar}): Added
