@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.14 2004-05-20 18:06:34 ela Exp $
+ * $Id: msline.cpp,v 1.15 2004-06-26 10:36:15 ela Exp $
  *
  */
 
@@ -40,14 +40,6 @@
 #include "substrate.h"
 #include "constants.h"
 #include "msline.h"
-
-#define SQR(x)   ((x) * (x))
-#define CUBIC(x) ((x) * (x) * (x))
-#define QUAD(x)  ((x) * (x) * (x) * (x))
-
-#define coth(x)   (1 / tanh (x))
-#define sech(x)   (1 / cosh (x))
-#define cosech(x) (1 / sinh (x))
 
 msline::msline () : circuit (2) {
   type = CIR_MSLINE;
@@ -90,7 +82,7 @@ void msline::calcSP (nr_double_t frequency) {
     logprint (LOG_STATUS, "line height t (%g) < 3 * skin depth (%g)\n", t, ds);
   }
   Ki = exp (-1.2 * pow (ZlEffFreq / Z0, 0.7)); // current distribution factor
-  Kr = 1 + M_2_PI * atan (1.4 * SQR (D / ds)); // D is RMS surface roughness
+  Kr = 1 + M_2_PI * atan (1.4 * sqr (D / ds)); // D is RMS surface roughness
   ac = Rs / (ZlEffFreq * W) * Ki * Kr;
 
   // dielectric losses
@@ -128,33 +120,33 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
   if (!strcmp (Model, "Wheeler")) {
     nr_double_t a, b, c, d, x, dW1, dWr, Wr;
 
-    dW1 = t / M_PI * log (4 * M_E / sqrt (SQR (t / h) + 
-					  SQR (M_1_PI / (W / t + 1.10))));
+    dW1 = t / M_PI * log (4 * M_E / sqrt (sqr (t / h) + 
+					  sqr (M_1_PI / (W / t + 1.10))));
     dWr = (1 + 1 / er) / 2 * dW1;
     Wr  = W + dWr;
 
     if (W / h < 3.3) {
-      c = log (4 * h / Wr + sqrt (SQR (4 * h / Wr) + 2));
+      c = log (4 * h / Wr + sqrt (sqr (4 * h / Wr) + 2));
       b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
       z = (c - b) * Z0 / M_PI / sqrt (2 * (er + 1));
     }
     else {
       c = 1 + log (M_PI_2) + log (Wr / h / 2 + 0.94);
-      d = M_1_PI / 2 * (1 + log (SQR (M_PI) / 16)) * (er - 1) / SQR (er);
+      d = M_1_PI / 2 * (1 + log (sqr (M_PI) / 16)) * (er - 1) / sqr (er);
       x = 2 * M_LN2 / M_PI + Wr / h / 2 + (er + 1) / 2 / M_PI / er * c + d;
       z = Z0 / 2 / x / sqrt (er);
     }
 
     if (W / h < 1.3) {
-      a = log (8 * h / Wr) + SQR (Wr / h) / 32;
+      a = log (8 * h / Wr) + sqr (Wr / h) / 32;
       b = (er - 1) / (er + 1) / 2 * (log (M_PI_2) + log (2 * M_2_PI) / er);
-      e = (er + 1) / 2 * SQR (a / (a - b));
+      e = (er + 1) / 2 * sqr (a / (a - b));
     }
     else {
       a = (er - 1) / 2 / M_PI / er * (log (2.1349 * Wr / h + 4.0137) - 
 				      0.5169 / er);
       b = Wr / h / 2 + M_1_PI * log (8.5397 * Wr / h + 16.0547);
-      e = er * SQR ((b - a) / b);
+      e = er * sqr ((b - a) / b);
     }
 
     fprintf (stderr, "WHEELER e = %g, z = %g\n", e, z);
@@ -164,7 +156,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     nr_double_t c, d;
     e = (er + 1) / 2 + (er - 1) / 2 / sqrt (1 + 10 * h / W);
     c = 6 + (2 * M_PI - 6) * exp (- pow (30.666 * h / W, 0.7528));
-    d = Z0 / 2 / M_PI * log (c * h / W + sqrt (1 + SQR (2 * h / W)));
+    d = Z0 / 2 / M_PI * log (c * h / W + sqrt (1 + sqr (2 * h / W)));
     z = d / sqrt (e);
     fprintf (stderr, "SCHNEIDER e = %g, z = %g\n", e, z);
   }
@@ -173,24 +165,24 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     nr_double_t a, b, du1, du, u, ur, u1, cr, c1, zr, z1;
 
     u = W / h;
-    du1 = t / M_PI * log (1 + 4 * M_E / t / SQR (coth (sqrt (6.517 * W / h))));
+    du1 = t / M_PI * log (1 + 4 * M_E / t / sqr (coth (sqrt (6.517 * W / h))));
     du = du1 * (1 + sech (sqrt (er - 1))) / 2;
     u1 = u + du1;
     ur = u + du;
 
     cr = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / ur, 0.7528));
-    zr = Z0 / 2 / M_PI * log (cr / ur + sqrt (1 + SQR (2 / ur)));
+    zr = Z0 / 2 / M_PI * log (cr / ur + sqrt (1 + sqr (2 / ur)));
     c1 = 6 + (2 * M_PI - 6) * exp (- pow (30.666 / u1, 0.7528));
-    z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + SQR (2 / u1)));
+    z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + sqr (2 / u1)));
     
     a = 1 +
-      1 / 49 * log ((QUAD (ur) + SQR (ur / 52)) / (QUAD (ur) + 0.432)) + 
-      1 / 18.7 * log (1 + CUBIC (ur / 18.1));
+      1 / 49 * log ((quad (ur) + sqr (ur / 52)) / (quad (ur) + 0.432)) + 
+      1 / 18.7 * log (1 + cubic (ur / 18.1));
     b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
     e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
 
     z = zr / sqrt (e);
-    e = e * SQR (z1 / zr);
+    e = e * sqr (z1 / zr);
 
     fprintf (stderr, "HAMMERSTAD e = %g, z = %g\n", e, z);
   }
@@ -215,7 +207,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     nr_double_t g, f, d;
     g = 0.6 + 0.009 * ZlEff;
     f = 2 * MU0 * h * frequency / ZlEff;
-    e = er - (er - ErEff) / (1 + g * SQR (f));
+    e = er - (er - ErEff) / (1 + g * sqr (f));
     d = (er - e) * (e - ErEff) / e / (er - ErEff);
     z = ZlEff * sqrt (e / ErEff) / (1 + d);
     fprintf (stderr, "GETSINGER e = %g, z = %g\n", e, z);
@@ -225,7 +217,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     nr_double_t k, f;
     k = sqrt (ErEff / er);
     f = 4 * h * frequency / C0 * sqrt (er - 1);
-    e = ErEff * SQR ((1 + SQR (f)) / (1 + k * SQR (f)));
+    e = ErEff * sqr ((1 + sqr (f)) / (1 + k * sqr (f)));
     fprintf (stderr, "SCHNEIDER e = %g\n", e);
   }
   // YAMASHITA
@@ -233,8 +225,8 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     nr_double_t k, f;
     k = sqrt (er / ErEff);
     f = 4 * h * frequency / C0 * sqrt (er - 1) *
-      (0.5 + SQR (1 + 2 * log10 (1 + W / h)));
-    e = ErEff * SQR ((1 + k * pow (f, 1.5) / 4) / (1 + pow (f, 1.5) / 4));
+      (0.5 + sqr (1 + 2 * log10 (1 + W / h)));
+    e = ErEff * sqr ((1 + k * pow (f, 1.5) / 4) / (1 + pow (f, 1.5) / 4));
     fprintf (stderr, "YAMASHITA e = %g\n", e);
   }  
   // KOBAYASHI
@@ -243,7 +235,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     fk = C0 * atan (er * sqrt ((ErEff - 1) / (er - ErEff))) /
       (2 * M_PI * h * sqrt (er - ErEff));
     fh = fk / (0.75 + (0.75 - 0.332 / pow (er, 1.73)) * W / h);
-    no = 1 + 1 / (1 + sqrt (W / h)) + 0.32 * CUBIC (1 / (1 + sqrt (W / h))); 
+    no = 1 + 1 / (1 + sqrt (W / h)) + 0.32 * cubic (1 / (1 + sqrt (W / h))); 
     if (W / h < 0.7) {
       nc = 1 + 1.4 / (1 + W / h) * (0.15 - 0.235 * 
 				    exp (-0.45 * frequency / fh));
@@ -258,15 +250,15 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
     nr_double_t k, f;
     k = ErEff / er;
     f = 2 * MU0 * h * frequency / ZlEff;
-    e = ErEff * (1 + SQR (f)) / (1 + k * SQR (f));
+    e = ErEff * (1 + sqr (f)) / (1 + k * sqr (f));
     fprintf (stderr, "PRAMANICK e = %g\n", e);
   }
   // HAMMERSTAD and JENSEN
   else if (!strcmp (Model, "Hammerstad")) {
     nr_double_t f, g;
-    g = SQR (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / Z0);
+    g = sqr (M_PI) / 12 * (er - 1) / ErEff * sqrt (2 * M_PI * ZlEff / Z0);
     f = 2 * MU0 * h * frequency / ZlEff;
-    e = er - (er - ErEff) / (1 + g * SQR (f));
+    e = er - (er - ErEff) / (1 + g * sqr (f));
     z = ZlEff * sqrt (ErEff / e) * (e - 1) / (ErEff - 1);
     fprintf (stderr, "HAMMERSTAD e = %g, z = %g\n", e, z);
   }
@@ -298,11 +290,11 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
       pow (er - 1, 6) / (1 + 10 * pow (er - 1, 6));
     r10 = 0.00044 * pow (er, 2.136) + 0.0184;
     r11 = pow (fs / 19.47, 6) / (1 + 0.0962 * pow (fs / 19.47, 6));
-    r12 = 1 / (1 + 0.00245 * SQR (W / h));
+    r12 = 1 / (1 + 0.00245 * sqr (W / h));
     r13 = 0.9408 * pow (e, r08) - 0.9603;
     r14 = (0.9408 - r09) * pow (ErEff, r08) - 0.9603;
     r15 = 0.707 * r10 * pow (fs / 12.3, 1.097);
-    r16 = 1 + 0.0503 * SQR (er) * r11 * (1 - exp (- pow (W / 15 / h, 6)));
+    r16 = 1 + 0.0503 * sqr (er) * r11 * (1 - exp (- pow (W / 15 / h, 6)));
     r17 = r07 * (1 - 1.1241 * r12 / r16 * 
 		 exp (-0.026 * pow (fs, 1.15656) - r15));
     z = ZlEff * pow (r13 / r14, r17);
