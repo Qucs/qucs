@@ -998,6 +998,18 @@ Wrong line start!</source>
         <source>junction potential</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>specific resistance of metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rms substrate roughness</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
