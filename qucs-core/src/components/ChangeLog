@@ -1,3 +1,8 @@
+2004-07-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Fixed strip thickness effect
+	formulas by Hammerstad and Jensen.
+
 2004-07-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* constants.h (quadr): Renamed quad() to quadr() to avoid

@@ -1,3 +1,11 @@
+2004-07-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp: Implemented stos() functionality converting
+	reference impedances of scattering parameters.
+
+	* check_touchstone.cpp: Implemented re-normalizing the impedance
+	within touchstone files.
+
 2004-07-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Added additional tokens for subcircuit
