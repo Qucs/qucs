@@ -583,7 +583,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation>Bias T</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>capacitor</source>
@@ -1072,11 +1072,11 @@ Ungültiger Zeilenanfang!</translation>
     <name>QucsActions</name>
     <message>
         <source>Inserting clipboard contents...</source>
-        <translation type="unfinished">Füge den Inhalt der Zwischenablage ein...</translation>
+        <translation>Füge den Inhalt der Zwischenablage ein...</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Fertig.</translation>
+        <translation>Fertig.</translation>
     </message>
 </context>
 <context>
@@ -3694,7 +3694,7 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation type="unfinished"></translation>
+        <translation>Italienisch von Giorgio Luparia</translation>
     </message>
 </context>
 <context>
