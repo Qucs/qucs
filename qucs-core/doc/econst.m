@@ -18,30 +18,64 @@
 % Boston, MA 02111-1307, USA.  
 %
 
-function constants = econst (d, n, o, p)
-  for k = 0 : o + 1
-    fac1 = 1;
-    i = 1;
-    while i <= k - 1
-      fac1 = fac1 * i; i++;
-    endwhile
-    fac2 = fac1 * k;
-    s = 0;
-    if k != 0
-      if k == 1 && p >= length(d)
-	l = p;
-      else
-	l = p - 1;
-      endif
-      for i = -1 : l
-	s = s - 1 / fac1 * d(i+2) * (p - i)^(k - 1);
-      endfor
-    else
-      fac2 = 1;
+%
+% The function computes the error constants, order and steps for the
+% given linear multistep integration method characterized by the 'a'
+% and 'b' coefficients.
+%
+
+function constants = econst (b, a)
+
+  steps = 0;
+  for i = 1:length(a) % determine number of steps
+    if (b(i) != 0 || a(i) != 0)
+      steps++;
     endif
-    for i = -1 : p - 1
-      s = s - 1 / fac2 * n(i+2) * (p - i)^(k);
-    endfor
-    constants(k+1) = s;
   endfor
+  printf("%d-step, ", steps-1);
+
+  p = 0;
+  for i = 1:length(a) % determine highest coefficient index
+    if (b(length(a)-i+1) != 0 || a(length(a)-i+1) != 0)
+      p = length(a) - i;
+      break;
+    endif
+  endfor
+
+  coeff = 0;          % check order of method
+  q = 0;
+  while (abs(coeff) <= 1e-12)
+    coeff = 0;
+    if (q == 0)
+      % special C0 constant
+      for i = -1:p-1
+	coeff = coeff - a(i+2);
+      endfor
+    elseif (q == 1)
+      % special C1 constant
+      n = p - 1;
+      for i = -1:n
+	coeff = coeff - b(i+2) * (n - i)^(q-1);
+      endfor
+      for i = -1:n
+	coeff = coeff - a(i+2) * (n - i)^(q);
+      endfor      
+    else
+      % usual Cq coefficient
+      f = 1;
+      for i = 1:q-1
+	f = f * i;
+      endfor
+      n = p - 1;
+      for i = -1:n-1
+	coeff = coeff - 1 / f * b(i+2) * (n - i)^(q-1);
+      endfor
+      f = f * q;
+      for i = -1:n-1
+	coeff = coeff - 1 / f * a(i+2) * (n - i)^(q);
+      endfor
+    endif
+    constants(++q) = coeff;
+  endwhile
+  printf("order %d, error constant %g\n", q-2, coeff);
 endfunction

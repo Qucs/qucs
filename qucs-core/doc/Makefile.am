@@ -23,7 +23,7 @@
 #
 
 EXTRA_DIST = technical.tex $(srcdir)/technical.ps $(FIGURES) $(BIBFILE) \
-  $(PSFILES) $(MATHFILES) PLATFORMS $(MATHHELPS)
+  $(PSFILES) $(MATHFILES) PLATFORMS $(MATHHELPS) $(CHAPTERS)
 
 dist_man_MANS = qucsator.1
 
@@ -63,10 +63,12 @@ EPSFILES = $(FIGURES:.fig=.eps)
 PDFFILES = $(FIGURES:.fig=.pdf)
 PDFFIGURES = $(PSFILES:.eps=.pdf) $(MPSFILES:.eps=.pdf)
 BIBFILE = $(srcdir)/literature.bib
+CHAPTERS = sparameter.tex noisewaves.tex dcanalysis.tex acanalysis.tex \
+  transient.tex devices.tex microstrip.tex
 
 technical.dvi: $(EPSFILES) $(PSFILES) $(MPSFILES)
 
-%.dvi: %.tex $(BIBFILE)
+%.dvi: %.tex $(CHAPTERS) $(BIBFILE)
 	$(LATEX) $<
 	$(BIBTEX) $*
 	$(LATEX) $<

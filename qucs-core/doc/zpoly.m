@@ -18,16 +18,22 @@
 % Boston, MA 02111-1307, USA.  
 %
 
-function area = zpoly (d, n, z)
-  for k = 1 : length (z)
-    ds = 0;
-    ns = 0;
-    for l = 1 : length(d)
-      ds = ds + d(l) * z(k)^(-l);
+%
+% The function computes the region of absolute stability based upon the
+% coefficients 'a' and 'b' characterizing an integration method.  The
+% given complex vector 'z' should be the unity circle.
+%
+
+function area = zpoly (b, a, z)
+  for k = 1:length (z)   % go through complex vector z
+    bs = 0;
+    as = 0;
+    for i = 1:length(b)  % summarize denominator polynomial
+      bs = bs + b(i) * z(k)^(-i);
     endfor
-    for l = 1 : length(n)
-      ns = ns + n(l) * z(k)^(-l);
+    for i = 1:length(a)  % summarize numerator polynomial
+      as = as + a(i) * z(k)^(-i);
     endfor
-    area(k) = - ns / ds;
+    area(k) = - as / bs;
   endfor
 endfunction

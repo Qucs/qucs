@@ -68,28 +68,42 @@ eplot (x, y,"",0,[0 0 0],1);
 y = [-5 5]; x = [0 0];
 eplot (x, y,"",0,[0 0 0],1);
 
+output_precision = 12;
+
 Gear1 = [1 0; -1 1] ./ 1;
 area = zpoly (Gear1(1,:), Gear1(2,:), z);
+printf("GEAR1 error constants: ");
+disp(econst (Gear1(1,:), Gear1(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Gear2 = [2 0 0; -3 4 -1] ./ 3;
 area = zpoly (Gear2(1,:), Gear2(2,:), z);
+printf("GEAR2 error constants: ");
+disp(econst (Gear2(1,:), Gear2(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Gear3 = [6 0 0 0; -11 18 -9 2] ./ 11;
 area = zpoly (Gear3(1,:), Gear3(2,:), z);
+printf("GEAR3 error constants: ");
+disp(econst (Gear3(1,:), Gear3(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Gear4 = [12 0 0 0 0; -25 48 -36 16 -3] ./ 25;
 area = zpoly (Gear4(1,:), Gear4(2,:), z);
+printf("GEAR4 error constants: ");
+disp(econst (Gear4(1,:), Gear4(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Gear5 = [60 0 0 0 0 0; -137 300 -300 200 -75 12] ./ 137;
 area = zpoly (Gear5(1,:), Gear5(2,:), z);
+printf("GEAR5 error constants: ");
+disp(econst (Gear5(1,:), Gear5(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 Gear6 = [60 0 0 0 0 0 0; -147 360 -450 400 -225 72 -10] ./ 147;
 area = zpoly (Gear6(1,:), Gear6(2,:), z);
+printf("GEAR6 error constants: ");
+disp(econst (Gear6(1,:), Gear6(2,:)));
 eplot (real (area), imag (area),"",0,[0 0 1],0.5);
 
 eclose (1,0);
