@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.10 2004/05/22 19:48:32 ela Exp $
+ * $Id: equation.cpp,v 1.11 2004/06/03 12:42:45 ela Exp $
  *
  */
 
@@ -520,7 +520,7 @@ int checker::findUndefined (int noundefined) {
 	}
 	else {
 	  logprint (LOG_STATUS, "checker notice, variable `%s' in "
-		    "equation `%s' no yet defined\n", var, eqn->result);
+		    "equation `%s' not yet defined\n", var, eqn->result);
 	}
       }
     }
