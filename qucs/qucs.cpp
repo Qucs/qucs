@@ -108,7 +108,7 @@ void QucsApp::initActions()
   fileNew->setWhatsThis(tr("New\n\nCreates a new schematic or data display document"));
   connect(fileNew, SIGNAL(activated()), this, SLOT(slotFileNew()));
 
-  fileOpen = new QAction(tr("Open File"), QIconSet(QImage(BITMAPDIR "fileopen.png")), tr("&Open..."), 0, this);
+  fileOpen = new QAction(tr("Open File"), QIconSet(QImage(BITMAPDIR "fileopen.png")), tr("&Open..."), QAccel::stringToKey(tr("Ctrl+O")), this);
   fileOpen->setStatusTip(tr("Opens an existing document"));
   fileOpen->setWhatsThis(tr("Open File\n\nOpens an existing document"));
   connect(fileOpen, SIGNAL(activated()), this, SLOT(slotFileOpen()));
@@ -202,7 +202,7 @@ void QucsApp::initActions()
   magAll->setWhatsThis(tr("View All\n\nShows the whole page content"));
   connect(magAll, SIGNAL(activated()), this, SLOT(slotShowAll()));
 
-  magOne = new QAction(tr("View 1:1"), QIconSet(QImage(BITMAPDIR "viewmag1.png")), tr("View 1:1"), 0, this);
+  magOne = new QAction(tr("View 1:1"), QIconSet(QImage(BITMAPDIR "viewmag1.png")), tr("View 1:1"), QAccel::stringToKey(tr("1")), this);
   magOne->setStatusTip(tr("Views without magnification"));
   magOne->setWhatsThis(tr("View 1:1\n\nShows the page content without magnification"));
   connect(magOne, SIGNAL(activated()), this, SLOT(slotShowOne()));
@@ -678,6 +678,7 @@ void QucsApp::slotFileSettings()
 // --------------------------------------------------------------
 void QucsApp::slotFileNew()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Creating new schematic..."));
 
   view->Docs.append(new QucsDoc(WorkView, ""));
@@ -689,6 +690,7 @@ void QucsApp::slotFileNew()
 // --------------------------------------------------------------
 void QucsApp::slotFileOpen()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(".", tr("Schematic (*.sch)"), this,
@@ -746,6 +748,7 @@ bool QucsApp::saveCurrentFile()
 // ###################################################################################
 void QucsApp::slotFileSave()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Saving file..."));
   view->blockSignals(true);   // no user interaction during that time
 
@@ -762,6 +765,7 @@ void QucsApp::slotFileSave()
 // ###################################################################################
 void QucsApp::slotFileSaveAs()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Saving file under new filename..."));
   view->blockSignals(true);   // no user interaction during the time
   
@@ -793,7 +797,9 @@ void QucsApp::slotFileSaveAs()
 
 
 // ###################################################################################
-void QucsApp::slotFileSaveAll() {
+void QucsApp::slotFileSaveAll()
+{
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Saving all files..."));
 
   QucsDoc *tmp = view->Docs.current();  // remember the current
@@ -815,6 +821,7 @@ void QucsApp::slotFileSaveAll() {
 // ###################################################################################
 void QucsApp::slotFileClose()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Closing file..."));
 
   if(view->Docs.current()->DocChanged) {
@@ -846,6 +853,7 @@ void QucsApp::slotFileClose()
 // ###################################################################################
 void QucsApp::slotFilePrint()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Printing..."));
   
   if (Printer.setup(this))  // print dialog
@@ -863,6 +871,7 @@ void QucsApp::slotFilePrint()
 // Exits the application.
 void QucsApp::slotFileQuit()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Exiting application..."));
 
   int exit=QMessageBox::information(this, tr("Quit..."),
@@ -892,6 +901,7 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 // --------------------------------------------------------------------
 void QucsApp::slotEditCut()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Cutting selection..."));
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
@@ -907,6 +917,7 @@ void QucsApp::slotEditCut()
 // ###################################################################################
 void QucsApp::slotEditCopy()
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   statusBar()->message(tr("Copying selection to clipboard..."));
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
@@ -920,6 +931,7 @@ void QucsApp::slotEditCopy()
 // ###################################################################################
 void QucsApp::slotEditPaste(bool on)
 {
+  if(!view->movingElements.isEmpty()) return;   // elements are moving ?
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -1754,6 +1766,8 @@ void QucsApp::slotInsertLabel(bool on)
 // Is called when the select toolbar button is pressed.
 void QucsApp::slotSelect(bool on)
 {
+  if(!view->movingElements.isEmpty())   // elements are moving ?
+    view->endElementMoving();
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -1854,6 +1868,12 @@ void QucsApp::slotSetWire(bool on)
 // Is called if "Delete"-Button is pressed.
 void QucsApp::slotEditDelete(bool on)
 {
+  if(!view->movingElements.isEmpty()) {   // elements are moving ?
+    editDelete->blockSignals(true);
+    editDelete->setOn(false);  // release toolbar button
+    editDelete->blockSignals(false);
+    return;
+  }
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;

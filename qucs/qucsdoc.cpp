@@ -265,7 +265,7 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
 }
 
 // ---------------------------------------------------
-void QucsDoc::insertRawComponent(Component *c)
+void QucsDoc::insertRawComponent(Component *c, int pos)
 {
   Node *p;
   // connect every node of component
@@ -274,14 +274,39 @@ void QucsDoc::insertRawComponent(Component *c)
     ptr->Connection = p;  // connect component node to schematic node
   }
 
-  Comps.append(c);
+  if(pos < 0) Comps.append(c);
+  else Comps.insert(pos, c);   // insert component at wanted position
   setChanged(true);
+}
+
+// ---------------------------------------------------
+// Finds the correct position and number for power sources and subcircuit ports.
+int QucsDoc::getComponentPos(Component *c)
+{
+  int n=0;
+  QString s, cSign = c->Sign;
+  // power sources and subcirciut ports have to be numbered
+  if((cSign == "Pac") || (cSign == "Port")) {
+    s  = c->Props.getFirst()->Value;
+    // look for existing ports and their numbers
+    for(Component *pc = Comps.first(); pc != 0; pc = Comps.next()) {
+      if(pc->Sign == cSign)
+        if(pc->Props.getFirst()->Value > s) break;
+        else {
+          if(pc->Props.getFirst()->Value < s) { n++; continue; }
+          c->Props.getFirst()->Value = s = QString::number(s.toInt()+1); // create new number
+        }
+      n++;
+    }
+    return n;
+  }
+  return Comps.count();
 }
 
 // ---------------------------------------------------
 void QucsDoc::insertComponent(Component *c)
 {
-  Component *ptr2;
+  Component *pc;
   Node *p;
   // connect every node of the component
   for(Port *ptr = c->Ports.first(); ptr != 0; ptr = c->Ports.next()) {
@@ -294,9 +319,9 @@ void QucsDoc::insertComponent(Component *c)
   int  max=1, len = c->Name.length(), z;
   // determines the name by looking for names with the same prefix and increment the number
   if(!c->Name.isEmpty()) {
-    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
-      if(ptr2->Name.left(len) == c->Name) {
-        s = ptr2->Name.right(ptr2->Name.length()-len);
+    for(pc = Comps.first(); pc != 0; pc = Comps.next())
+      if(pc->Name.left(len) == c->Name) {
+        s = pc->Name.right(pc->Name.length()-len);
         z = s.toInt(&ok);
         if(ok) if(z >= max) max = z + 1;
       }
@@ -304,26 +329,9 @@ void QucsDoc::insertComponent(Component *c)
   }
 
 
-  if(c->Sign == "Pac") { // power sources have to be numbered
-    max=1;
-    // look for existing ports and count the numbers
-    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
-      if(ptr2->Sign == "Pac") max++;
-
-    c->Props.first()->Value = QString::number(max); // create port number
-  }
-  else
-  if(c->Sign == "Port") { // subcircuit ports have to be numbered
-    max=1;
-    // look for existing ports and count the numbers
-    for(ptr2 = Comps.first(); ptr2 != 0; ptr2 = Comps.next())
-      if(ptr2->Sign == "Port") max++;
-
-    c->Props.first()->Value = QString::number(max); // create port number
-  }
-
-  Comps.append(c);
   setChanged(true);
+  max = getComponentPos(c); // important for power sources and subcircuit ports
+  Comps.insert(max, c);   // insert component at appropriate position
 }
 
 // ---------------------------------------------------
@@ -1964,7 +1972,9 @@ bool QucsDoc::loadComponents(QTextStream *stream, bool insert)
       return false;
     }
 
-    if(insert) insertRawComponent(c);
+    if(insert)
+      insertRawComponent(c, getComponentPos(c));   // insert component at appropriate position ...
+      // (... for power sources and ports (only necessary if file was manipulated outside qucs) )
     else {
       int z;
       for(z=c->Name.length()-1; z>=0; z--)  // cut off number of component name

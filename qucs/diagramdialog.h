@@ -50,12 +50,12 @@ public slots:
   void slotSelectGraph(QListBoxItem *item);
   void slotNewGraph();
   void slotDeleteGraph();
-  void slotApplyGraphInput();
   void slotOK();
   void slotApply();
   void slotFuncHelp();
   void slotSetColor();
   void slotResetToTake(const QString&);
+  void slotSetThick(const QString&);
 
 public:
   Diagram *Diag;

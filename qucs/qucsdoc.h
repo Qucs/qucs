@@ -69,8 +69,9 @@ public:
   void  NewMovingWires(QPtrList<Element> *p, Node *pn);
   void  copySelectedElements(QPtrList<Element> *p);
   Node* insertNode(int x, int y, Element *e);
-  void  insertRawComponent(Component *c);
+  void  insertRawComponent(Component *c, int pos=-1);
   void  insertComponent(Component *c);
+  int   getComponentPos(Component *c);
   void  oneLabel(Node *n1);
   Wire* getWireLabel(Wire *w);
   void  setCompPorts(Component *pc);
