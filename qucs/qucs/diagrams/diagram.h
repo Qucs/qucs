@@ -50,8 +50,8 @@ public:
   void updateGraphData();
   void loadGraphData(const QString& defaultDataSet);
   bool loadVarData(const QString& fileName);
-  int  loadIndepVarData(const QString& var, const QString& fileName);
-  
+  int  loadIndepVarData(const QString& var, const QString& FileString);
+
   QString Name;   // identity string for the diagram type (e.g. Polar), used for saving etc.
   bool    GridOn;
   QString xLabel, yLabel;
