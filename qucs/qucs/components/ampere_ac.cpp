@@ -35,7 +35,7 @@ Ampere_ac::Ampere_ac()
   Ports.append(new Port(-30,  0));
 
   x1 = -30; y1 = -14;
-  x2 =  30; y2 =  14;
+  x2 =  30; y2 =  16;
 
   tx = x1+4;
   ty = y2+4;

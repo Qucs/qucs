@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.14 2004-10-13 14:43:18 ela Exp $
+ * $Id: mscoupled.cpp,v 1.15 2004-10-15 18:38:53 margraf Exp $
  *
  */
 
@@ -417,7 +417,7 @@ void mscoupled::calcAC (nr_double_t frequency) {
   calcSP (frequency);
   setMatrixY (stoy (getMatrixS ()));
 
-#if 0
+//#if 0
   fprintf (stderr, "Y-indirect:\n");
   getMatrixY().print();
   // fetch line properties
@@ -429,44 +429,41 @@ void mscoupled::calcAC (nr_double_t frequency) {
   complex go = rect (ao, bo);
 
   // compute abbreviations
-  complex Ee, Eo, De, Do, Xe, Xo, Ye, Yo, Ze, Zo;
+  complex De, Do, X1, X2, X3, X4;
 
-  De = 2 * ze * z0 * cosh (ge * l) + (sqr (ze) + sqr (z0)) * sinh (ge * l);
-  Do = 2 * zo * z0 * cosh (go * l) + (sqr (zo) + sqr (z0)) * sinh (go * l);
+  De = 0.5 / (ze * sinh (ge * l));
+  Do = 0.5 / (zo * sinh (go * l));
 
-  Xe = Do * (ze * z0 * cosh (ge * l) + sqr (ze) * sinh (ge * l));
-  Xo = De * (zo * z0 * cosh (go * l) + sqr (zo) * sinh (go * l));
+  X2 = -De - Do;
+  X3 = -De + Do;
 
-  Ye = Do * (ze * cosh (ge * l) + z0 * sinh (ge * l));
-  Yo = De * (zo * cosh (go * l) + z0 * sinh (go * l));
+  De *= cosh (ge * l);
+  Do *= cosh (go * l);
 
-  Ee = Do * z0 * ze;
-  Eo = De * z0 * zo;
+  X1 =  De + Do;
+  X4 =  De - Do;
 
-  Ze = Do * ze;
-  Zo = De * zo;
+  setY (1, 1, X1);
+  setY (1, 2, X2);
+  setY (1, 3, X3);
+  setY (1, 4, X4);
 
-  setY (1, 1, (Ye + Yo) / (Xe + Xo));
-  setY (1, 2, (Ye + Yo) / (Ee + Eo));
-  setY (1, 3, (Ye + Yo) / (Xe - Xo));
-  setY (1, 4, (Ye + Yo) / (Ee - Eo));
+  setY (2, 1, X2);
+  setY (2, 2, X1);
+  setY (2, 3, X4);
+  setY (2, 4, X3);
 
-  setY (2, 1, (Ze + Zo) / (Xe + Xo));
-  setY (2, 2, (Ze + Zo) / (Ee + Eo));
-  setY (2, 3, (Ze + Zo) / (Xe - Xo));
-  setY (2, 4, (Ze + Zo) / (Ee - Eo));
+  setY (3, 1, X3);
+  setY (3, 2, X4);
+  setY (3, 3, X1);
+  setY (3, 4, X2);
 
-  setY (3, 1, (Ye - Yo) / (Xe + Xo));
-  setY (3, 2, (Ye - Yo) / (Ee + Eo));
-  setY (3, 3, (Ye - Yo) / (Xe - Xo));
-  setY (3, 4, (Ye - Yo) / (Ee - Eo));
-
-  setY (4, 1, (Ze - Zo) / (Xe + Xo));
-  setY (4, 2, (Ze - Zo) / (Ee + Eo));
-  setY (4, 3, (Ze - Zo) / (Xe - Xo));
-  setY (4, 4, (Ze - Zo) / (Ee - Eo));
+  setY (4, 1, X4);
+  setY (4, 2, X3);
+  setY (4, 3, X2);
+  setY (4, 4, X1);
 
   fprintf (stderr, "Y-direct:\n");
   getMatrixY().print();
-#endif
+//#endif
 }
