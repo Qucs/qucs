@@ -1,3 +1,7 @@
+2004-10-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex: Added hyperref package for PDF output.
+
 2004-10-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.tex (section{Convergence}): Wrote something about

@@ -25,7 +25,7 @@
 EXTRA_DIST = parse_netlist.y scan_netlist.l scan_dataset.l parse_dataset.y \
 	parse_touchstone.y scan_touchstone.l
 
-SUBDIRS = components
+SUBDIRS = converter components
 
 bin_PROGRAMS = qucsator
 
@@ -52,7 +52,7 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h      \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
-	tvector.h nodeset.h
+	tvector.h nodeset.h netdefs.h qucsdefs.h
 
 noinst_LIBRARIES = libqucsator.a
 

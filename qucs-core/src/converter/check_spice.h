@@ -1,7 +1,7 @@
 /*
- * check_netlist.h - checker definitions for the Qucs netlist
+ * check_spice.h - checker definitions for a Spice netlist
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,35 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.16 2004/10/29 18:01:29 ela Exp $
+ * $Id: check_spice.h,v 1.1 2004/10/29 18:01:29 ela Exp $
  *
  */
 
-#ifndef __CHECK_NETLIST_H__
-#define __CHECK_NETLIST_H__
+#ifndef __CHECK_SPICE_H__
+#define __CHECK_SPICE_H__
 
 #include "netdefs.h"
+
+#define HINT_NODE         1
+#define HINT_NUMBER       2
+#define HINT_NAME         4
+#define HINT_PAIR         8
 
 __BEGIN_DECLS
 
 /* Externalize variables used by the scanner and parser. */
 extern struct definition_t * definition_root;
-extern struct node_t * node_root;
-extern struct pair_t * pair_root;
-extern int netlist_lineno;
-extern FILE * netlist_in;
+extern struct definition_t * subcircuit_root;
+extern struct value_t * value_root;
+extern int spice_lineno;
+extern FILE * spice_in;
 
 /* Available functions of the checker. */
-void netlist_status (void);
-void netlist_list (void);
-void netlist_destroy (void);
-int  netlist_checker (void);
-int  netlist_parse (void);
-int  netlist_error (char *);
-int  netlist_lex (void);
-int  netlist_checker_variables (void);
+int  spice_checker (void);
+int  spice_parse (void);
+int  spice_error (char *);
+int  spice_lex (void);
 
 __END_DECLS
 
-#endif /* __CHECK_NETLIST_H__ */
+#endif /* __CHECK_SPICE_H__ */

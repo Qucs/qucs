@@ -9,7 +9,7 @@
 % or any later version published by the Free Software Foundation.
 %
 
-\documentclass[10pt]{report}
+\documentclass[10pt,a4paper,oneside]{report}
 \usepackage{a4wide}
 \usepackage{epsfig}
 \usepackage{array}
@@ -23,6 +23,7 @@
 \usepackage[section]{placeins}
 \usepackage{listings}
 
+% Compatibility code for LaTeX and pdfTeX.
 \newif\ifpdf
 \ifx\pdfoutput\undefined
   \pdffalse
@@ -31,15 +32,29 @@
   \pdftrue
 \fi
 
+% Only evaluated if run using pdfTeX.
 \ifpdf
-\pdfcompresslevel=9
+\usepackage[pdftex,
+	a4paper,
+	bookmarks,
+	bookmarksopen=true,
+	bookmarksnumbered=true,
+	colorlinks,
+	linkcolor=black,
+	urlcolor=black,
+	citecolor=black,
+	backref=false,
+	plainpages=false,
+	pagebackref=false]{hyperref}
+\pdfcompresslevel 9
 \pdfinfo {
   /Title   (Qucs)
   /Subject (Technical Papers)
-  /Author  (Stefan Jahn)
+  /Author  (Stefan Jahn and Michael Margraf)
 }
 \fi
 
+% Title page definitions.
 \makeatletter
 \renewcommand{\maketitle}{\begin{titlepage}%
     \setlength{\parindent}{0pt}
@@ -83,6 +98,7 @@ Documentation License".
 \title{Qucs}
 \date{}
 
+% Here finally starts everything.
 \begin{document}
 
 \maketitle
