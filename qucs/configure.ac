@@ -138,6 +138,9 @@ else
   QT_INC="$QT_DEF"
   QT_MTS="non-threaded"
 fi
+case $host_os in
+  *mingw32* ) QT_LIB="$QT_LIB -lqtmain"; QT_INC="$QT_INC -DQT_DLL -DUNICODE" ;;
+esac
 unset enable_mt
 
 # Check library path to Qt.

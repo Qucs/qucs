@@ -72,8 +72,8 @@ QucsApp::QucsApp()
                    tr("Data Display")+" (*.dpl);;"+
 		   tr("Qucs Documents")+" (*.sch *.dpl);;"+
 		   tr("Any File")+" (*)";
-  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
-  QucsHomeDir.setPath(QDir::homeDirPath()+"/.qucs");
+  QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
+  QucsHomeDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
 
   move  (QucsSettings.x,  QucsSettings.y);
   resize(QucsSettings.dx, QucsSettings.dy);
@@ -128,7 +128,8 @@ QucsApp::~QucsApp()
 // #########################################################################
 void QucsApp::initView()
 {
-  setIcon (QPixmap(BITMAPDIR "big.qucs.xpm"));  // set application icon
+  // set application icon
+  setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   QVBox *all = new QVBox(this);   // only to fill the entire view area
   QSplitter *Hsplit = new QSplitter(QSplitter::Horizontal, all);
 
@@ -987,7 +988,7 @@ void QucsApp::slotGettingStarted()
 void QucsApp::showHTML(const QString& Page)
 {
   QStringList com;
-  com << BINARYDIR "qucshelp" << Page;
+  com << QucsSettings.BinDir + "qucshelp" << Page;
   QProcess *QucsHelp = new QProcess(com);
   if(!QucsHelp->start()) {
     QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
@@ -1127,7 +1128,7 @@ void QucsApp::slotSimulate()
   sim->ProgText->insert(tr("done.\n"));
 
   QStringList com;
-  com << BINARYDIR "qucsator" << "-b" << "-i"
+  com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
       << QucsHomeDir.filePath("netlist.txt")
       << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
   if(!sim->startProcess(com)) {
@@ -1248,7 +1249,8 @@ void QucsApp::slotChangePage(QString Name)
       if(!file.open(IO_ReadWrite)) {  // if it doesn't exist, create
         view->Docs.findRef(Doc);
         QMessageBox::critical(this, tr("Error"),
-			tr("Cannot create ")+Info.dirPath(true)+"/"+Name);
+			tr("Cannot create ")+Info.dirPath(true)+
+			QDir::convertSeparators ("/")+Name);
         return;
       }
       else new QListViewItem(ConDisplays, Info.fileName()); // add new name
@@ -1305,7 +1307,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 
   
   QucsWorkDir.setPath(QucsHomeDir.path());
-  if(!QucsWorkDir.cd(ProjName+"_prj/")) {
+  if(!QucsWorkDir.cd(ProjName+QDir::convertSeparators ("_prj/"))) {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+
 			  QucsWorkDir.path());
@@ -1341,7 +1343,7 @@ void QucsApp::slotMenuCloseProject()
   view->drawn = false;
 
   setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
-  QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
+  QucsWorkDir.setPath(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs"));
 
   Content->setColumnText(0,tr("Content of")); // column text
 
@@ -1570,21 +1572,21 @@ void QucsApp::slotSetCompView(int index)
   CompComps->clear();   // clear the IconView
   if((index+1) >= CompChoose->count()) {
     new QIconViewItem(CompComps, tr("Line"),
-		QImage(BITMAPDIR "line.xpm"));
+		QImage(QucsSettings.BitmapDir + "line.xpm"));
     new QIconViewItem(CompComps, tr("Arrow"),
-		QImage(BITMAPDIR "arrow.xpm"));
+		QImage(QucsSettings.BitmapDir + "arrow.xpm"));
     new QIconViewItem(CompComps, tr("Text"),
-		QImage(BITMAPDIR "text.xpm"));
+		QImage(QucsSettings.BitmapDir + "text.xpm"));
     new QIconViewItem(CompComps, tr("Ellipse"),
-		QImage(BITMAPDIR "ellipse.xpm"));
+		QImage(QucsSettings.BitmapDir + "ellipse.xpm"));
     new QIconViewItem(CompComps, tr("Rectangle"),
-		QImage(BITMAPDIR "rectangle.xpm"));
+		QImage(QucsSettings.BitmapDir + "rectangle.xpm"));
     new QIconViewItem(CompComps, tr("filled Ellipse"),
-		QImage(BITMAPDIR "filledellipse.xpm"));
+		QImage(QucsSettings.BitmapDir + "filledellipse.xpm"));
     new QIconViewItem(CompComps, tr("filled Rectangle"),
-		QImage(BITMAPDIR "filledrect.xpm"));
+		QImage(QucsSettings.BitmapDir + "filledrect.xpm"));
     new QIconViewItem(CompComps, tr("Elliptic Arc"),
-		QImage(BITMAPDIR "ellipsearc.xpm"));
+		QImage(QucsSettings.BitmapDir + "ellipsearc.xpm"));
     return;
   }
 
@@ -1595,43 +1597,43 @@ void QucsApp::slotSetCompView(int index)
     case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
     case COMBO_File:
       new QIconViewItem(CompComps, tr("SPICE netlist"),
-		QImage(BITMAPDIR "spicefile.xpm"));
+		QImage(QucsSettings.BitmapDir + "spicefile.xpm"));
       new QIconViewItem(CompComps, tr("1-port S parameter file"),
-		QImage(BITMAPDIR "spfile1.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile1.xpm"));
       new QIconViewItem(CompComps, tr("2-port S parameter file"),
-		QImage(BITMAPDIR "spfile2.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile2.xpm"));
       new QIconViewItem(CompComps, tr("3-port S parameter file"),
-		QImage(BITMAPDIR "spfile3.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile3.xpm"));
       new QIconViewItem(CompComps, tr("4-port S parameter file"),
-		QImage(BITMAPDIR "spfile4.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile4.xpm"));
       new QIconViewItem(CompComps, tr("5-port S parameter file"),
-		QImage(BITMAPDIR "spfile5.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile5.xpm"));
       new QIconViewItem(CompComps, tr("6-port S parameter file"),
-		QImage(BITMAPDIR "spfile6.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile6.xpm"));
       return;
     case COMBO_Sims:     Infos = &Simulations[0];  break;
     case COMBO_Diagrams:
       new QIconViewItem(CompComps, tr("Cartesian"),
-		QImage(BITMAPDIR "rect.xpm"));
+		QImage(QucsSettings.BitmapDir + "rect.xpm"));
       new QIconViewItem(CompComps, tr("Polar"),
-		QImage(BITMAPDIR "polar.xpm"));
+		QImage(QucsSettings.BitmapDir + "polar.xpm"));
       new QIconViewItem(CompComps, tr("Tabular"),
-		QImage(BITMAPDIR "tabular.xpm"));
+		QImage(QucsSettings.BitmapDir + "tabular.xpm"));
       new QIconViewItem(CompComps, tr("Smith Chart"),
-		QImage(BITMAPDIR "smith.xpm"));
+		QImage(QucsSettings.BitmapDir + "smith.xpm"));
       new QIconViewItem(CompComps, tr("Admittance Smith"),
-		QImage(BITMAPDIR "ysmith.xpm"));
+		QImage(QucsSettings.BitmapDir + "ysmith.xpm"));
       new QIconViewItem(CompComps, tr("Polar-Smith Combi"),
-		QImage(BITMAPDIR "polarsmith.xpm"));
+		QImage(QucsSettings.BitmapDir + "polarsmith.xpm"));
       new QIconViewItem(CompComps, tr("Smith-Polar Combi"),
-		QImage(BITMAPDIR "smithpolar.xpm"));
+		QImage(QucsSettings.BitmapDir + "smithpolar.xpm"));
       return;
   }
 
   while(*Infos != 0) {
     (**Infos) (Name, File, false);
     new QIconViewItem(CompComps, Name,
-		QImage(BITMAPDIR+QString(File)+".xpm"));
+		QImage(QucsSettings.BitmapDir+QString(File)+".xpm"));
     Infos++;
   }
 }
