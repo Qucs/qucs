@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.11 2004-04-13 20:41:17 ela Exp $
+ * $Id: dcsolver.cpp,v 1.12 2004-04-26 13:50:03 ela Exp $
  *
  */
 
@@ -92,7 +92,7 @@ void dcsolver::solve (void) {
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: creating node list for DC analysis\n");
 #endif
-  createNodelist ();
+  if (nlist == NULL) createNodelist ();
   nlist->assignNodes ();
 #if DEBUG && 0
   logprint (LOG_STATUS, "NodeList:\n");

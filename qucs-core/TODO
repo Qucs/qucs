@@ -23,8 +23,16 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Check for cyclic analysis definitions.
-- Somehow merge the variable class and the equation base classes.
+- Do not permit duplicate parameter names in parameter sweeps, but
+  allow them in same order sweeps.
+- Implement implicite dependencies of analysis types.
+- Check for duplicate definitions in equations and parameter sweep
+  variables.
+- Add string constants to equation base class.
+- Allow equation variables in component properties.
+- Implement class for vectors of matrices.
+	- Check for cyclic analysis definitions.
+	- Somehow merge the variable class and the equation base classes.
 - Fix dataset output of multiple variable sweeps.
 	- Implement correct analysis order.
 	- Optimize reduce by searching for a connection that will result 
@@ -47,7 +55,7 @@ unfixed) have a look at the file BUGS.
 	- Add already implemented components to checker + factory.
 	- Allow s-parameter impedances other than Z=50 Ohm.
 - Implement "@file" component property.
-- Allow variable definitions and sweeps.
+	- Allow variable definitions and sweeps.
 	- Exit code indicating simulation success/failure.
 	- Status and error message file descriptors.
 	- Autofy the package.
