@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.9 2004/07/16 19:14:37 ela Exp $
+ * $Id: scan_netlist.l,v 1.10 2004/07/21 16:25:09 ela Exp $
  *
  */
 
@@ -49,6 +49,7 @@ WS       [ \t\n\r]
 SIMPLEID [a-zA-Z_][a-zA-Z0-9_]*
 POSTID   "."[a-zA-Z_][a-zA-Z0-9_]*
 ID       {SIMPLEID}{POSTID}*
+FILE     "{"[^\t\n\r\}]+"}"
 DIGIT    [0-9]
 EXPONENT [Ee][+-]?{DIGIT}+
 PFX      ("dBm"|"dB"|"T"|"G"|"M"|"k"|"m"|"u"|"n"|"p"|"f"|"a")
@@ -98,8 +99,13 @@ UCOMPLEX {UCREAL}{UCIMAG}
     return EndSub;
   }
 <INITIAL,STR>{ID} { /* identify identifier */
-    netlist_lval.ident = strdup (netlist_text); 
-    return Identifier; 
+    netlist_lval.ident = strdup (netlist_text);
+    return Identifier;
+  }
+<INITIAL,STR>{FILE} { /* identify file reference */
+    char * p = rindex (netlist_text, '}'); *p = '\0';
+    netlist_lval.ident = strdup (&netlist_text[1]);
+    return Identifier;
   }
 <INITIAL,STR>{CREAL} { /* identify (signed) real float */
     netlist_lval.d = strtod (netlist_text, NULL);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.20 2004/07/07 13:52:33 ela Exp $
+ * $Id: input.cpp,v 1.21 2004/07/21 16:25:09 ela Exp $
  *
  */
 
@@ -191,6 +191,10 @@ void input::factory (void) {
       c->setName (def->instance);
       c->setNonLinear (def->nonlinear);
 
+      // change size (number of ports) of S-parameter files
+      if (c->getType () == CIR_SPFILE) {
+	c->setSize (def->ncount);
+      }
       // add appropriate nodes to circuit
       for (i = 1, nodes = def->nodes; nodes; nodes = nodes->next, i++)
 	if (i <= c->getSize ())
@@ -300,6 +304,8 @@ circuit * input::createCircuit (char * type) {
     return new jfet ();
   else if (!strcmp (type, "BJT"))
     return new bjt ();
+  else if (!strcmp (type, "SPfile"))
+    return new spfile ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

@@ -1,3 +1,8 @@
+2004-07-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex: Changed some latex statements for better
+	readablity.
+
 2004-07-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Strip thickness correction}):

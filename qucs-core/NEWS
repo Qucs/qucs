@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * new S-parameter file (currently only touchstone) component
  * subcircuit definitions are now possible
  * npn BJT implementation (Gummel-Poon)
  * additional noise analysis with s-parameters

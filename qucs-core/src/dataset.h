@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dataset.h,v 1.6 2004/07/04 15:46:24 ela Exp $
+ * $Id: dataset.h,v 1.7 2004/07/21 16:25:08 ela Exp $
  *
  */
 
@@ -60,6 +60,9 @@ class dataset : public object
   vector * findOrigin (char *);
   static dataset * load (const char *);
   static dataset * load_touchstone (const char *);
+
+  int countDependencies (void);
+  int countVariables (void);
 
  private:
   char * file;

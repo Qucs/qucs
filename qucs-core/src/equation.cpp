@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.17 2004/07/06 22:05:47 ela Exp $
+ * $Id: equation.cpp,v 1.18 2004/07/21 16:25:09 ela Exp $
  *
  */
 
@@ -911,7 +911,7 @@ vector * solver::dataVector (node * eqn) {
       for (int r = 1; r <= m->getRows (); r++) {
 	for (int c = 1; c <= m->getCols (); c++) {
 	  vector * t = new vector ();
-	  t->setName (createMatrixString (A(eqn)->result, r, c));
+	  t->setName (matvec::createMatrixString (A(eqn)->result, r, c));
 	  t->add (m->get (r, c));
 	  // chain the vectors appropriately
 	  t->setNext (v); v = t;
@@ -971,7 +971,7 @@ void solver::findMatrixVectors (vector * v) {
       // skip detected vectors
       if (vec->getRequested ()) continue;
       // is the vector a possible matrix vector element ?
-      if ((p = isMatrixVector (vec->getName (), a, b)) != NULL) {
+      if ((p = matvec::isMatrixVector (vec->getName (), a, b)) != NULL) {
 	if (cand != NULL) {
 	  // does this vectors name equals the current one ?
 	  if (!strcmp (p, cand) && s == vec->getSize ()) {
@@ -1005,7 +1005,7 @@ void solver::findMatrixVectors (vector * v) {
       for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
 	// and collect the vectors with the same 'found' flags
 	if (vec->getRequested () == n) {
-	  p = isMatrixVector (vec->getName (), a, b);
+	  p = matvec::isMatrixVector (vec->getName (), a, b);
 	  mv->set (vec, a, b);
 	  free (p);
 	  vec->setRequested (-1);
@@ -1023,33 +1023,6 @@ void solver::findMatrixVectors (vector * v) {
     // increase the current 'found' flag
     n++;
   } while (cand != NULL);
-}
-
-/* The function investigates the given vectors name.  If this name
-   matches the 'A[r,c]' pattern it returns the name 'A' and saves the
-   row and column indices as well.  The caller is responsible to
-   'free()' the returned string.  If the vectors name does not match
-   the pattern the function returns NULL. */
-char * solver::isMatrixVector (char * n, int& r, int& c) {
-  char * p;
-  int len;
-  if ((p = index (n, '[')) != NULL) {     // find first '['
-    r = atoi (p + 1);                     // get first index
-    if ((p = index (p, ',')) != NULL) {   // find the ','
-      c = atoi (p + 1);                   // get second index
-      if ((p = index (p, ']')) != NULL) { // find trailing ']'
-	if (p[1] == '\0') {               // identifier must end in ']'
-	  // parse actual identifier
-	  len = index (n, '[') - n + 1;
-	  p = (char *) malloc (len);
-	  memcpy (p, n, len - 1);
-	  p[len - 1] = '\0';
-	  return p;
-	}
-      }
-    }
-  }
-  return NULL;
 }
 
 /* The function creates an assignment equation from the given matrix
@@ -1145,7 +1118,7 @@ int solver::findEquationResult (node * eqn) {
     matvec * mv = eqn->getResult()->mv;
     for (int r = 1; r <= mv->getRows (); r++) {
       for (int c = 1; c <= mv->getCols (); c++) {
-	char * str = createMatrixString (A(eqn)->result, r, c);
+	char * str = matvec::createMatrixString (A(eqn)->result, r, c);
 	if (data->findDependency (str) || data->findVariable (str))
 	  return 1;
       }
@@ -1158,14 +1131,6 @@ int solver::findEquationResult (node * eqn) {
       return 1;
   }
   return 0;
-}
-
-/* This function returns a static text representation with the
-   'n[r,c]' scheme indicating a matrix (vector) entry. */
-char * solver::createMatrixString (char * n, int r, int c) {
-  static char str[256];
-  sprintf (str, "%s[%d,%d]", n, r, c);
-  return str;
 }
 
 /* This function is called in order to run the equation checker and

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.19 2004/07/12 18:14:58 ela Exp $
+ * $Id: spsolver.cpp,v 1.20 2004/07/21 16:25:09 ela Exp $
  *
  */
 
@@ -40,6 +40,7 @@ using namespace std;
 #include "circuit.h"
 #include "strlist.h"
 #include "vector.h"
+#include "matvec.h"
 #include "dataset.h"
 #include "net.h"
 #include "tee.h"
@@ -482,6 +483,7 @@ void spsolver::reduce (void) {
 void spsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    c->initSP ();
     if (c->isNonLinear ())
       c->calcOperatingPoints ();
   }
@@ -849,7 +851,5 @@ void spsolver::saveVariable (char * n, complex z, vector * f) {
 
 // Create an appropriate variable name.
 char * spsolver::createSP (int i, int j) {
-  static char text[16];
-  sprintf (text, "S[%d,%d]", i, j);
-  return text;
+  return matvec::createMatrixString ("S", i, j);
 }

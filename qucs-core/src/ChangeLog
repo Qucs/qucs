@@ -1,3 +1,35 @@
+2004-07-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Running 'initSP()' on every circuit before
+	simulating.  Using 'matvec::createMatrixString()' for creating
+	the vector names.
+
+	* scan_netlist.l: Allowing "{File}" token in order to pass
+	file references to component properties.
+
+	* matvec.cpp: Two new functions: createMatrixString() and
+	isMatrixVector().  Moved from 'equation.cpp'.
+
+	* input.cpp: Changing the number of ports when creating a 
+	S-parameter file component.
+
+	* equation.cpp:  Using 'matvec::createMatrixString()'
+	for creating the vector names and 'matvec::isMatrixVector()'
+	to detect matrix vectors.
+
+	* dataset.cpp: New functions returning the number of dataset
+	vectors (variables and dependencies).
+
+	* circuit.cpp: Size (number of ports) can now be changed by
+	calling 'setSize()'.
+
+	* check_touchstone.cpp: Using 'matvec::createMatrixString()'
+	for creating the vector names.
+
+	* check_netlist.cpp (definition_available): Added 'SPfile' as
+	new available component.
+	Checking range for both required *and* optional properties.
+
 2004-07-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* matrix.cpp: Implemented stos() functionality converting

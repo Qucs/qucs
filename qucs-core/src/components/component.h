@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.10 2004/07/07 13:52:34 ela Exp $
+ * $Id: component.h,v 1.11 2004/07/21 16:25:09 ela Exp $
  *
  */
 
@@ -60,6 +60,7 @@
 #include "gyrator.h"
 #include "tline.h"
 #include "iprobe.h"
+#include "spfile.h"
 
 #include "devices/diode.h"
 #include "devices/jfet.h"

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.2 2004/07/04 11:16:16 ela Exp $
+ * $Id: matvec.h,v 1.3 2004/07/21 16:25:09 ela Exp $
  *
  */
 
@@ -44,6 +44,9 @@ class matvec
   void set (matrix&, int);
   vector * get (int, int);
   matrix& get (int);
+  static char * createMatrixString (char *, int, int);
+  static char * createMatrixString (char, int, int);
+  static char * isMatrixVector (char *, int&, int&);
 
   // operator functions
   friend matvec& operator + (matvec&, matvec&);
