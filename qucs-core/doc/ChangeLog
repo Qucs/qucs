@@ -1,3 +1,8 @@
+2004-05-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile.am (MATHFILES): New files added.  Octave is now
+	needed in order to rebuild the documentation.
+
 2004-05-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (chapter{Microstrip components}): New 
