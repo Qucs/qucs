@@ -141,7 +141,7 @@ void WireLabel::paint(ViewPainter *p)
       a += x2;
       c  = a - (x2>>1);
       d  = b + y2;
-      p->map(cx+xpaint, cy-ypaint, &xpaint, &ypaint);
+      p->map(cx-xpaint, cy+ypaint, &xpaint, &ypaint);
     }
     else {
       p->map(x1+3, y1+1, &a, &b);    // up left

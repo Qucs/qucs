@@ -7,6 +7,11 @@
 	* qucsinit.cpp (slotHelpAbout): Added Toyoyuki ISHIKAWA
 	to the list of translators.
 
+2004-11-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* three new diagrams: admittance smith chart and two combi
+	diagrams smith/polar
+
 2004-11-05  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed many small bugs
