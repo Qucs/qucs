@@ -18,6 +18,9 @@
 #include "config.h"
 #include "qucsdoc.h"
 #include "component.h"
+#include "rectdiagram.h"
+#include "polardiagram.h"
+#include "smithdiagram.h"
 
 #include <qmessagebox.h>
 #include <qfileinfo.h>
@@ -36,6 +39,7 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
   else {
     QFileInfo Info(DocName);
     Tab = new QTab(Info.fileName());
+    DataSet = Info.baseName()+".dat";   // name of the default dataset
   }
 
   Bar = b;
@@ -63,6 +67,8 @@ void QucsDoc::setName(const QString& _Name)
 
   QFileInfo Info(DocName);
   Tab->setText(Info.fileName());  // remove path from file name and show it in TabBar
+
+  DataSet = Info.baseName()+".dat";   // name of the default dataset
 }
 
 // ---------------------------------------------------
@@ -761,6 +767,7 @@ bool QucsDoc::save()
   stream << "   <GridX=" << GridX << ">\n";
   stream << "   <GridY=" << GridY << ">\n";
   stream << "   <GridOn=" << GridOn << ">\n";
+  stream << "   <DataSet=" << DataSet << ">\n";
   stream << "</Properties>\n";
     
   stream << "<Components>\n";
@@ -774,6 +781,8 @@ bool QucsDoc::save()
   stream << "</Wires>\n";
     
   stream << "<Diagrams>\n";
+  for(Diagram *ptr3 = Diags.first(); ptr3 != 0; ptr3 = Diags.next())  // save all diagrams
+    stream << ptr3->save() << "\n";
   stream << "</Diagrams>\n";
 
   file.close();
@@ -784,10 +793,37 @@ bool QucsDoc::save()
 // ---------------------------------------------------
 bool QucsDoc::loadProperties(QTextStream *stream)
 {
-  QString Line;
+  bool ok = true;
+  QString Line, cstr, nstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line == "</Properties>") return true;
+    Line = Line.stripWhiteSpace();
+
+    if(Line.at(0) != '<') {
+      QMessageBox::critical(0, "Error", "File Format Error:\nWrong property field limiter!");
+      return false;
+    }
+    if(Line.at(Line.length()-1) != '>') {
+      QMessageBox::critical(0, "Error", "File Format Error:\nWrong property field limiter!");
+      return false;
+    }
+    Line = Line.mid(1, Line.length()-2);   // cut off start and end character
+
+    cstr = Line.section('=',0,0);    // property type
+    nstr = Line.section('=',1,1);    // property value
+         if(cstr == "GridX") GridX = nstr.toInt(&ok);
+    else if(cstr == "GridY") GridY = nstr.toInt(&ok);
+    else if(cstr == "GridOn") if(nstr.toInt(&ok) == 0) GridOn = false; else GridOn = true;
+    else if(cstr == "DataSet") DataSet = nstr;
+    else {
+      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown property: "+cstr);
+      return false;
+    }
+    if(!ok) {
+      QMessageBox::critical(0, "Error", "File Format Error:\nNumber expected in property field!");
+      return false;
+    }
   }
 
   QMessageBox::critical(0, "Error", "File Format Error:\n'Property' field is not closed!");
@@ -846,6 +882,7 @@ bool QucsDoc::loadComponents(QTextStream *stream)
 
     if(!c->load(Line)) {
       QMessageBox::critical(0, "Error", "File Format Error:\nWrong 'component' line format!");
+      delete c;
       return false;
     }
     Line = c->Name;
@@ -871,9 +908,7 @@ bool QucsDoc::loadWires(QTextStream *stream)
       QMessageBox::critical(0, "Error", "File Format Error:\nWrong 'wire' line format!");
       return false;
     }
-//QMessageBox::information(0, "Info", w->Name+"  "+QString::number(w->x1)+","+QString::number(w->y1));
     insertWire(w);
-//QMessageBox::information(0, "Info", w->Name+"  "+QString::number(w->x1)+","+QString::number(w->y1));
   }
 
   QMessageBox::critical(0, "Error", "File Format Error:\n'Wire' field is not closed!");
@@ -882,10 +917,28 @@ bool QucsDoc::loadWires(QTextStream *stream)
 
 bool QucsDoc::loadDiagrams(QTextStream *stream)
 {
-  QString Line;
+  Diagram *d;
+  QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
     if(Line == "</Diagrams>") return true;
+    Line = Line.stripWhiteSpace();
+
+    cstr = Line.section(' ',0,0);    // diagram type
+         if(cstr == "<Rect") d = new RectDiagram();
+    else if(cstr == "<Polar") d = new PolarDiagram();
+    else if(cstr == "<Smith") d = new SmithDiagram();
+    else {
+      QMessageBox::critical(0, "Error", "File Format Error:\nUnknown diagram!");
+      return false;
+    }
+
+    if(!d->load(Line, stream)) {
+      QMessageBox::critical(0, "Error", "File Format Error:\nWrong 'diagram' line format!");
+      delete d;
+      return false;
+    }
+    Diags.append(d);
   }
 
   QMessageBox::critical(0, "Error", "File Format Error:\n'Diagram' field is not closed!");

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rectdiagram.h  -  description
+                          polardiagram.h  -  description
                              -------------------
-    begin                : Thu Oct 2 2003
+    begin                : Fri Oct 17 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,26 +15,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RECTDIAGRAM_H
-#define RECTDIAGRAM_H
+#ifndef POLARDIAGRAM_H
+#define POLARDIAGRAM_H
 
-#include "diagram.h"
+#include <diagram.h>
+
 
 /**
   *@author Michael Margraf
   */
 
-class RectDiagram : public Diagram  {
+class PolarDiagram : public Diagram  {
 public: 
-	RectDiagram(int _cx=0, int _cy=0);
-	~RectDiagram();
+	PolarDiagram(int _cx=0, int _cy=0);
+	~PolarDiagram();
 
-  
-  virtual RectDiagram* newOne();
+
+  virtual PolarDiagram* newOne();
   virtual void paint(QPainter *p);
   virtual void calcData(Graph *g);
-
-  QString xLabel, yLabel;
 };
 
 #endif

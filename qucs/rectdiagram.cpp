@@ -17,6 +17,11 @@
 
 #include "rectdiagram.h"
 
+#include <math.h>
+
+#include <qmessagebox.h>
+
+
 RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   dx = 240;
@@ -25,6 +30,8 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   GridOn = true;
   GridX = 60;
   GridY = 40;
+
+  Name = "Rect";
 
   xLabel = "x-Achse";
   yLabel = "y-Achse";
@@ -62,20 +69,36 @@ void RectDiagram::paint(QPainter *p)
     p->drawLine(cx+z, cy-5, cx+z, cy+5);   // paint x axis mark
     z += GridX;
   }
+  p->drawText(cx,   cy+15, QString::number(x1));
+  p->drawText(cx+z, cy+15, QString::number(x2));
+
   z=dy-GridY;
   while(z >= 0) {
     p->drawLine(cx-5, cy-z, cx+5, cy-z);   // paint y axis mark
     z -= GridY;
   }
+  p->drawText(cx-20, cy-dy, QString::number(y2));
+  p->drawText(cx-20, cy, QString::number(y1));
 
-  p->drawText(cx, cy+20, xLabel);
+  p->drawText(cx, cy+40, xLabel);
   p->save();
   p->rotate(270);
-  p->drawText(-cy, cx-15, yLabel);
+  p->drawText(-cy, cx-30, yLabel);
   p->restore();
   
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     pg->paint(p);
+}
+
+// ------------------------------------------------------------
+void RectDiagram::calcData(Graph *g)
+{
+  int *p = g->Points;
+  for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
+    *(p++) = cx+int((cp->x-x1)/(x2-x1)*dx);
+    *(p++) = cy-int((sqrt(cp->yr*cp->yr + cp->yi*cp->yi)-y1)/(y2-y1)*dy);
+//QMessageBox::critical(0, "Error", QString::number(cp->x)+"  "+QString::number(cp->yr));
+  }
 }
 
 // ------------------------------------------------------------

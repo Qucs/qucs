@@ -43,9 +43,17 @@ void Diagram::paintScheme(QPainter *p)
   p->drawRect(cx, cy-dy, dx, dy);
 }
 
-// --------------------------------------------------------------------------
-bool Diagram::loadVarData(const QString& var, const QString& fileName)
+// ------------------------------------------------------------
+void Diagram::calcData(Graph *)
 {
+}
+
+// --------------------------------------------------------------------------
+bool Diagram::loadVarData(const QString& fileName)
+{
+  Graph *g = Graphs.current();
+  if(g->Line.isEmpty()) return false;
+
   QFile file(fileName);
   if(!file.open(IO_ReadOnly)) {
     QMessageBox::critical(0, "Error", "Cannot load dataset: "+fileName);
@@ -59,7 +67,7 @@ bool Diagram::loadVarData(const QString& var, const QString& fileName)
     Line = stream.readLine();
     if(Line.left(4) == "<dep") {
       tmp = Line.section(' ', 1, 1);
-      if(var == tmp) break;
+      if(g->Line == tmp) break;
     }
   }
 
@@ -70,15 +78,15 @@ bool Diagram::loadVarData(const QString& var, const QString& fileName)
 
   tmp = Line.section(' ', 2, 2);
   tmp.remove('>');
-  int n = loadIndepVarData(tmp, fileName);    // get independent variable
+/*  int n =*/ loadIndepVarData(tmp, fileName);    // get independent variable
 
-  Graph *g = Graphs.current();
-  g->Line = var;
-  int   *p = g->Points;
+//  g->Line = var;
+//  int   *p = g->Points;
+  cPoint *p = g->cPoints.first();
 
   int i;
   bool ok;
-  double x, y;
+  double x, y, ymin=1e45, ymax=-1e45;
   Line = stream.readLine();
   while(Line.left(2) != "</") {
     Line = Line.stripWhiteSpace();
@@ -91,8 +99,9 @@ bool Diagram::loadVarData(const QString& var, const QString& fileName)
       i = tmp.find('j');
       if(i < 0) {
         x = tmp.toDouble(&ok);
-        p++;
-        *(p++) = cy-int(x);
+        y = 0;
+//        p++;
+//        *(p++) = cy-int(x);
       }
       else {
         tmp0 = tmp.mid(i-1);  // imaginary part
@@ -100,16 +109,27 @@ bool Diagram::loadVarData(const QString& var, const QString& fileName)
         y = tmp0.toDouble(&ok);
         tmp = tmp.left(i-1);  // real part
         x = tmp.toDouble(&ok);
-        p++;
-        *(p++) = cy-int(sqrt(x*x+y*y));
+//        p++;
+//        *(p++) = cy-int(sqrt(x*x+y*y));
       }
+      p->yr = x;
+      p->yi = y;
+      y = sqrt(x*x+y*y);
+      if(y > ymax) ymax = y;
+      if(y < ymin) ymin = y;
+      p = g->cPoints.next();
 //QMessageBox::critical(0, "Error", QString::number(x)+"  "+QString::number(y));
       i = Line.find(' ');
     }
     Line = stream.readLine();
   }
 
+  y1 = ymin; y2 = ymax;
+//QMessageBox::critical(0, "Error", QString::number(ymin)+"  "+QString::number(ymax));
+
   file.close();
+
+  calcData(g);
   return true;
 }
 
@@ -144,15 +164,15 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
   tmp.remove('>');
   int n = tmp.toInt(&ok);
   
-  Graph *g = new Graph();   // create a new graph
-  Graphs.append(g);
+  Graph *g = Graphs.current();
 
   int *p = new int[2*n];    // create memory for points
   g->Points = p;
   g->count  = n;
+  g->cPoints.clear();
 
   int i;
-  double x;
+  double x, xmin=1e45, xmax=-1e45;
   Line = stream.readLine();
   while(Line.left(2) != "</") {
     Line = Line.stripWhiteSpace();
@@ -163,13 +183,18 @@ int Diagram::loadIndepVarData(const QString& var, const QString& fileName)
       Line = Line.mid(i+1);
 
       x = tmp.toDouble(&ok);  // get number
-      *(p++) = cx+int(x);
-      p++;
+//      *(p++) = cx+int(x);
+//      p++;
+      g->cPoints.append(new cPoint(x,0,0));
+      if(x > xmax) xmax = x;
+      if(x < xmin) xmin = x;
 
       i = Line.find(' ');
     }
     Line = stream.readLine();
   }
+
+  x1 = xmin; x2 = xmax;
 
   file.close();
   return n;
@@ -186,4 +211,77 @@ void Diagram::setCenter(int _cx, int _cy)
 Diagram* Diagram::newOne()
 {
   return new Diagram();
+}
+
+// ------------------------------------------------------------
+QString Diagram::save()
+{
+  QString s = "   <"+Name+" "+QString::number(cx)+" "+QString::number(cy)+" ";
+  s += QString::number(dx)+" "+QString::number(dy)+" ";
+  if(GridOn) s+= "1 ";
+  else s += "0 ";
+  s += QString::number(GridX)+" "+QString::number(GridY)+">\n";
+
+  for(Graph *p=Graphs.first(); p!=0; p=Graphs.next())
+    s += p->save()+"\n";
+
+  s += "   </"+Name+">";
+  return s;
+}
+
+// ------------------------------------------------------------
+bool Diagram::load(const QString& Line, QTextStream *stream)
+{
+  bool ok;
+  QString s = Line;
+
+  if(s.at(0) != '<') return false;
+  if(s.at(s.length()-1) != '>') return false;
+  s = s.mid(1, s.length()-2);   // cut off start and end character
+
+  QString n;
+  n  = s.section(' ',1,1);    // cx
+  cx = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',2,2);    // cy
+  cy = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',3,3);    // dx
+  dx = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',4,4);    // dy
+  dy = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',5,5);    // GridOn
+  if(n.toInt(&ok) == 1) GridOn = true;
+  else GridOn = false;
+  if(!ok) return false;
+
+  n  = s.section(' ',6,6);    // GridX
+  GridX = n.toInt(&ok);
+  if(!ok) return false;
+
+  n  = s.section(' ',7,7);    // GridY
+  GridY = n.toInt(&ok);
+  if(!ok) return false;
+
+  // .......................................................
+  while(!stream->atEnd()) {
+    s = stream->readLine();
+    s = s.stripWhiteSpace();
+    if(s == ("</"+Name+">")) return true;  // found end tag
+    Graph *g = new Graph();
+    if(!g->load(s)) return false;
+    Graphs.append(g);
+    n = ((QFile*)stream->device())->name();
+    n.replace(QString(".sch"),QString(".dat"));
+    loadVarData(n);
+//QMessageBox::critical(0, "Error", n);
+  }
+
+  return false;   // end tag missing
 }
