@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>Function Help</source>
-        <translation>Hilfefunktion</translation>
+        <translation type="obsolete">Hilfefunktion</translation>
     </message>
     <message>
         <source>Number Notation: </source>
@@ -1328,7 +1328,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
-        <translation>npn Bipolartransistor</translation>
+        <translation type="obsolete">npn Bipolartransistor</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
@@ -1688,7 +1688,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor with substrate</source>
-        <translation>npn Bipolartransistor mit Substratanschluß</translation>
+        <translation type="obsolete">npn Bipolartransistor mit Substratanschluß</translation>
     </message>
     <message>
         <source>microstrip gap</source>
@@ -2045,6 +2045,14 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>channel-length modulation parameter in 1/V</source>
         <translation>Parameter für die Kanallängenmodulation in 1/V</translation>
+    </message>
+    <message>
+        <source>bipolar junction transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bipolar junction transistor with substrate</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3230,7 +3238,7 @@ Fehler:
     </message>
     <message>
         <source>No page set !</source>
-        <translation>Seite nicht gesetzt !</translation>
+        <translation type="unfinished">Seite nicht gesetzt !</translation>
     </message>
     <message>
         <source>Cannot create </source>

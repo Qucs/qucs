@@ -25,8 +25,10 @@
 //#include <qmessagebox.h>
 
 
-SimMessage::SimMessage(QWidget *parent) : QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
+SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
+		: QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
+  DataDisplay = DataDpl;
   setCaption(tr("Qucs Simulation Messages"));
 
   QVBoxLayout *all = new QVBoxLayout(this);
@@ -135,6 +137,6 @@ void SimMessage::slotClose()
 // ------------------------------------------------------------------------
 void SimMessage::slotDisplayButton()
 {
-  emit displayDataPage();
+  emit displayDataPage(DataDisplay);
   close();
 }

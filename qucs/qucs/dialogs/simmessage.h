@@ -31,16 +31,16 @@
 
 class SimMessage : public QDialog  {
    Q_OBJECT
-public: 
-	SimMessage(QWidget *parent=0);
-	~SimMessage();
+public:
+  SimMessage(const QString& DataDpl=0, QWidget *parent=0);
+  ~SimMessage();
 
-  bool startProcess(const QStringList& commands);
+  bool startProcess(const QStringList&);
   void errorSimEnded();
 
 signals:
-  void SimulationEnded(int Status, SimMessage *sim);
-  void displayDataPage();
+  void SimulationEnded(int, SimMessage*);
+  void displayDataPage(QString);
 
 public slots:
   void slotDisplayMsg();
@@ -48,12 +48,12 @@ public slots:
   void slotSimEnded();
   void slotClose();
   void slotDisplayButton();
-  
-public:
-  QProcess   SimProcess;
-  QTextEdit *ProgText, *ErrText;
-  QPushButton *Display, *Abort;
 
+public:
+  QProcess    SimProcess;
+  QTextEdit   *ProgText, *ErrText;
+  QPushButton *Display, *Abort;
+  QString     DataDisplay;
 };
 
 #endif

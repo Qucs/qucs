@@ -213,7 +213,7 @@
     </message>
     <message>
         <source>Function Help</source>
-        <translation>Dostępne funkcje</translation>
+        <translation type="obsolete">Dostępne funkcje</translation>
     </message>
     <message>
         <source>Number Notation: </source>
@@ -1192,7 +1192,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>npn bipolar junction transistor</source>
-        <translation>bipolarny tranzystor złączowy npn</translation>
+        <translation type="obsolete">bipolarny tranzystor złączowy npn</translation>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
@@ -1549,10 +1549,6 @@ Błędny początek linii!</translation>
     <message>
         <source>number of simulation steps</source>
         <translation>liczba kroków symulacji</translation>
-    </message>
-    <message>
-        <source>npn bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>microstrip gap</source>
@@ -2183,7 +2179,7 @@ Błędy:
     </message>
     <message>
         <source>No page set !</source>
-        <translation>Nie ustawiono strony !</translation>
+        <translation type="unfinished">Nie ustawiono strony !</translation>
     </message>
     <message>
         <source>Cannot create </source>

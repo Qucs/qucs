@@ -51,6 +51,7 @@ public:
 
   void updateGraphData();
   void loadGraphData(const QString&);
+  void recalcGraphData();
   bool loadVarData(const QString&);
   int  loadIndepVarData(const QString&, const QString&);
 
