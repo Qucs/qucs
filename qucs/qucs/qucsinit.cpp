@@ -88,7 +88,7 @@ void QucsInit::initActions()
   connect(App->fileSave, SIGNAL(activated()), App, SLOT(slotFileSave()));
 
   App->fileSaveAs =
-    new QAction(tr("Save File As"), tr("Save &as..."), 0, App);
+    new QAction(tr("Save File As"), tr("Save &as..."), CTRL+Key_Minus, App);
   App->fileSaveAs->setStatusTip(
 	tr("Saves the current document under a new filename"));
   App->fileSaveAs->setWhatsThis(
@@ -98,7 +98,7 @@ void QucsInit::initActions()
   App->fileSaveAll =
     new QAction(tr("Save All Files"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "filesaveall.png")),
-		tr("Save &All"), 0, App);
+		tr("Save &All"), CTRL+Key_Plus, App);
   App->fileSaveAll->setStatusTip(tr("Saves all open documents"));
   App->fileSaveAll->setWhatsThis(
 	tr("Save All Files\n\nSaves all open documents"));
@@ -123,7 +123,7 @@ void QucsInit::initActions()
 
   App->fileSettings =
     new QAction(tr("Document Settings"),
-		tr("Document Settings..."), 0, App);
+		tr("Document Settings..."), CTRL+Key_Period, App);
   App->fileSettings->setStatusTip(tr("Document Settings"));
   App->fileSettings->setWhatsThis(
 	tr("Settings\n\nSets properties of the file"));
@@ -156,7 +156,7 @@ void QucsInit::initActions()
 
   App->applSettings =
     new QAction(tr("Application Settings"),
-		tr("Application Settings..."), 0, App);
+		tr("Application Settings..."), CTRL+Key_Comma, App);
   App->applSettings->setStatusTip(tr("Application Settings"));
   App->applSettings->setWhatsThis(
 	tr("Qucs Settings\n\nSets properties of the application"));
@@ -299,13 +299,15 @@ void QucsInit::initActions()
   App->redo->setWhatsThis(tr("Redo\n\nRepeats the last action once more"));
   connect(App->redo, SIGNAL(activated()), App, SLOT(slotEditRedo()));
 
-  App->projNew = new QAction(tr("New Project"), tr("&New Project..."), 0, App);
+  App->projNew = new QAction(tr("New Project"), tr("&New Project..."),
+			CTRL+SHIFT+Key_N, App);
   App->projNew->setStatusTip(tr("Creates a new project"));
   App->projNew->setWhatsThis(tr("New Project\n\nCreates a new project"));
   connect(App->projNew, SIGNAL(activated()), App, SLOT(slotProjNewButt()));
 
   App->projOpen =
-    new QAction(tr("Open Project"), tr("&Open Project..."), 0, App);
+    new QAction(tr("Open Project"), tr("&Open Project..."),
+		CTRL+SHIFT+Key_O, App);
   App->projOpen->setStatusTip(tr("Opens a project"));
   App->projOpen->setWhatsThis(
 	tr("Open Project\n\nOpens an existing project"));
@@ -313,14 +315,16 @@ void QucsInit::initActions()
 	  App, SLOT(slotMenuOpenProject()));
 
   App->projDel =
-    new QAction(tr("Delete Project"), tr("&Delete Project..."), 0, App);
+    new QAction(tr("Delete Project"), tr("&Delete Project..."),
+		CTRL+SHIFT+Key_D, App);
   App->projDel->setStatusTip(tr("Deletes a project"));
   App->projDel->setWhatsThis(
 	tr("Delete Project\n\nDeletes an existing project"));
   connect(App->projDel, SIGNAL(activated()), App, SLOT(slotMenuDelProject()));
 
   App->projClose =
-    new QAction(tr("Close Project"), tr("&Close Project"), 0, App);
+    new QAction(tr("Close Project"), tr("&Close Project"),
+		CTRL+SHIFT+Key_W, App);
   App->projClose->setStatusTip(tr("Close current project"));
   App->projClose->setWhatsThis(
 	tr("Close Project\n\nCloses the current project"));
@@ -330,7 +334,7 @@ void QucsInit::initActions()
   App->magAll =
     new QAction(tr("View All"),
                 QIconSet(QImage(QucsSettings.BitmapDir + "viewmagfit.png")),
-                tr("View All"), 0, App);
+                tr("View All"), Key_0, App);
   App->magAll->setStatusTip(tr("Views the whole page"));
   App->magAll->setWhatsThis(tr("View All\n\nShows the whole page content"));
   connect(App->magAll, SIGNAL(activated()), App, SLOT(slotShowAll()));
@@ -557,7 +561,8 @@ void QucsInit::initActions()
   connect(App->showMsg, SIGNAL(activated()), App, SLOT(slotShowLastMsg()));
 
   App->showNet =
-    new QAction(tr("Show Last Netlist"), tr("Show Last Netlist"), 0, App);
+    new QAction(tr("Show Last Netlist"), tr("Show Last Netlist"),
+		Key_F6, App);
   App->showNet->setStatusTip(tr("Shows last simulation netlist"));
   App->showNet->setWhatsThis(
 	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
