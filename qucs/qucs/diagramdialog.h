@@ -28,6 +28,7 @@
 #include <qdir.h>
 #include <qpoint.h>
 #include <qregexp.h>
+#include <qcheckbox.h>
 
 
 /**
@@ -66,6 +67,7 @@ public:
 
   QRegExp     Expr;
   QLineEdit   *GraphInput, *GraphThick, *xLabel, *yLabel;
+  QCheckBox   *GridOn;
   QPushButton *ColorButt;
   bool changed, toTake;
 };
