@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.h,v 1.8 2004/09/06 06:40:07 ela Exp $
+ * $Id: dcsolver.h,v 1.9 2004/09/17 11:48:52 ela Exp $
  *
  */
 
@@ -35,7 +35,7 @@ class dcsolver : public nasolver<nr_double_t>
   dcsolver (dcsolver &);
   ~dcsolver ();
   void solve (void);
-  void calc (void);
+  static void calc (dcsolver *);
   void init (void);
 
  private:

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.7 2004/09/14 19:33:09 ela Exp $
+ * $Id: nasolver.cpp,v 1.8 2004/09/17 11:48:52 ela Exp $
  *
  */
 
@@ -59,6 +59,7 @@ nasolver<nr_type_t>::nasolver () : analysis () {
   xprev = zprev = NULL;
   reltol = abstol = vntol = 0;
   desc = NULL;
+  calculate_func = NULL;
 }
 
 // Constructor creates a named instance of the nasolver class.
@@ -69,6 +70,7 @@ nasolver<nr_type_t>::nasolver (char * n) : analysis (n) {
   xprev = zprev = NULL;
   reltol = abstol = vntol = 0;
   desc = NULL;
+  calculate_func = NULL;
 }
 
 // Destructor deletes the nasolver class object.
@@ -95,6 +97,7 @@ nasolver<nr_type_t>::nasolver (nasolver & o) : analysis (o) {
   abstol = o.abstol;
   vntol = o.vntol;
   desc = o.desc;
+  calculate_func = o.calculate_func;
 }
 
 /* The function runs the nodal analysis solver once, reports errors if
@@ -103,6 +106,9 @@ template <class nr_type_t>
 int nasolver<nr_type_t>::solve_once (void) {
   qucs::exception * e;
   int error = 0, d;
+
+  // run the calculation function for each circuit
+  calculate ();
 
   // generate A matrix and z vector
   createMatrix ();
@@ -135,10 +141,7 @@ int nasolver<nr_type_t>::solve_once (void) {
   }
 
   // save results into circuits
-  if (!error) {
-    saveNodeVoltages ();
-    saveBranchCurrents ();
-  }
+  if (!error) saveRHS ();
   return error;
 }
 
@@ -201,12 +204,7 @@ int nasolver<nr_type_t>::solve_nonlinear (void) {
     throw_exception (e);
     error++;
   }
-#if DEBUG
-  else {
-    logprint (LOG_STATUS, "NOTIFY: convergence reached after %d iterations\n",
-	      run);
-  }
-#endif /* DEBUG */
+  iterations = run;
   return error;
 }
 
@@ -377,9 +375,6 @@ void nasolver<nr_type_t>::createGMatrix (void) {
   nr_type_t g;
   struct nodelist_t * nr, * nc;
   circuit * cir;
-
-  // run the calculation of the conductance for each circuit
-  calc ();
 
   // go through each column of the G matrix
   for (int c = 1; c <= N; c++) {
@@ -597,6 +592,12 @@ void nasolver<nr_type_t>::saveBranchCurrents (void) {
   }
 }
 
+// The function saves the solution vector into each circuit.
+template <class nr_type_t>
+void nasolver<nr_type_t>::saveRHS (void) {
+  saveNodeVoltages ();
+  saveBranchCurrents ();
+}
 
 /* This function saves the results of a single solve() functionality
    into the output dataset. */

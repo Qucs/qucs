@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.3 2004/09/16 10:15:09 ela Exp $
+ * $Id: acsolver.cpp,v 1.4 2004/09/17 11:48:52 ela Exp $
  *
  */
 
@@ -65,7 +65,6 @@ acsolver::acsolver (acsolver & o) : nasolver<complex> (o) {
 /* This is the AC netlist solver.  It prepares the circuit list for
    each requested frequency and solves it then. */
 void acsolver::solve (void) {
-  nr_double_t freq;
   runs++;
 
   // create frequency sweep if necessary
@@ -88,13 +87,13 @@ void acsolver::solve (void) {
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
   init ();
+  setCalculation ((calculate_func_t) &calc);
   solve_pre ();
 
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     freq = swp->next ();
     logprogressbar (i, swp->getSize (), 40);
-    calc (freq);
 
 #if DEBUG && 0
     logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for f = %e\n",
@@ -113,10 +112,10 @@ void acsolver::solve (void) {
 
 /* Goes through the list of circuit objects and runs its calcAC()
    function. */
-void acsolver::calc (nr_double_t frequency) {
-  circuit * root = subnet->getRoot ();
+void acsolver::calc (acsolver * self) {
+  circuit * root = self->getNet()->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->calcAC (frequency);
+    c->calcAC (self->freq);
   }
 }
 

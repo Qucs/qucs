@@ -1,3 +1,14 @@
+2004-09-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* trsolver.cpp: Added predictor/corector functionality.  The
+	transient analysis works now for simple RCL networks with
+	constant timesteps.
+
+	* nasolver.h (class nasolver): Added a real calculate()
+	callback in order to allow simulation types derived from
+	the nasolver class to switch the calculator.  Changed
+	callers dcsolver, acsolver and trsolver.
+
 2004-09-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* trsolver.cpp: Tried to fix timestep adaption... not yet
