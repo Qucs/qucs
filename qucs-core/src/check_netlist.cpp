@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.47 2004/08/21 13:29:07 ela Exp $
+ * $Id: check_netlist.cpp,v 1.48 2004/08/22 15:38:27 ela Exp $
  *
  */
 
@@ -106,13 +106,15 @@ struct define_t definition_available[] =
   /* isolator */
   { "Isolator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      { "Z1", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       { "Z2", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP }
   },
   /* attenuator */
   { "Attenuator", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "L", PROP_REAL, { 10, PROP_NO_STR }, PROP_POS_RANGE }, PROP_NO_PROP },
-    { { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      { "Zref", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE },
       PROP_NO_PROP }
   },
   /* bias tee */
@@ -376,7 +378,8 @@ struct define_t definition_available[] =
       { "DispModel", PROP_STR, { PROP_NO_VAL, "Kirschning" }, PROP_NO_RANGE },
       { "Model", PROP_STR, { PROP_NO_VAL, "Hammerstad" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      PROP_NO_PROP }
   },
   /* parallel coupled microstrip lines */
   { "MCOUPLED", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
