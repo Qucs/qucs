@@ -483,6 +483,7 @@ Component* getComponentFromName(QString& Line)
         break;
   case 'I' : if(cstr == "Probe") c = new iProbe();
         else if(cstr == "dc") c = new Ampere_dc();
+        else if(cstr == "ac") c = new Ampere_ac();
         else if(cstr == "noise") c = new Ampere_noise();
         else if(cstr == "solator") c = new Isolator();
         break;
