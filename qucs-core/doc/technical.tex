@@ -2096,8 +2096,8 @@ U$ is one as well.  The elements of the new coefficient matrix $LU$
 for the k-th elimination step with $k = 1, \ldots,n$ compute as
 follows:
 \begin{align}
-u_{jk} &= \frac{1}{l_{jj}}\left(a_{jk} - \sum_{s=1}^{j-1} l_{js} u_{sk}\right) & k &= j + 1,\ldots,n\\
-l_{jk} &= a_{jk} - \sum_{s=1}^{k-1} l_{js} u_{sk} & j &= k,\ldots,n
+u_{jk} &= \frac{1}{l_{jj}}\left(a_{jk} - \sum_{r=1}^{j-1} l_{jr} u_{rk}\right) & j &= 1,\ldots,k-1\\
+l_{jk} &= a_{jk} - \sum_{r=1}^{k-1} l_{jr} u_{rk} & j &= k,\ldots,n
 \end{align}
 
 Pivoting may be necessary as you are going to divide by the diagonal
@@ -2146,31 +2146,31 @@ should rather be solved with iterative methods.
 
 \addvspace{12pt}
 
-\begin{tabular}{|p{2.2cm}|p{1.5cm}|p{1.8cm}|p{2.1cm}|p{1.7cm}|p{3cm}|}
+\begin{tabular}{|p{2.2cm}|p{1.5cm}|p{1.8cm}|p{2.1cm}|p{1.7cm}|p{2.95cm}|}
 \hline
 \raggedright method & \raggedleft precision & \raggedleft application & 
 \raggedleft programming effort & \raggedleft computing complexity & 
-\parbox[t]{3cm}{\raggedleft notes}\\
+\parbox[t]{2.95cm}{\raggedleft notes}\\
 \hline
 \raggedright Laplace expansion & \raggedleft numerical errors & 
 \raggedleft general & \raggedleft straight forward &
-\raggedleft $n!$ & \parbox[t]{3cm}{\raggedleft very time consuming}\\
+\raggedleft $n!$ & \parbox[t]{2.95cm}{\raggedleft very time consuming}\\
 \hline
 \raggedright Gaussian elimination & \raggedleft numerical errors & 
 \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2/2$ &
-\parbox[t]{3cm}{\raggedleft }\\
+\parbox[t]{2.95cm}{\raggedleft }\\
 \hline
-\raggedright Gauss-Jordan & \raggedleft numerical errors & \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2 - n/3$ & \parbox[t]{3cm}{\raggedleft computes the inverse besides}\\
+\raggedright Gauss-Jordan & \raggedleft numerical errors & \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2 - n/3$ & \parbox[t]{2.95cm}{\raggedleft computes the inverse besides}\\
 \hline
-\raggedright LU decomposition & \raggedleft numerical errors & \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2 - n/3$ & \parbox[t]{3cm}{\raggedleft useful for consecutive solutions}
+\raggedright LU decomposition & \raggedleft numerical errors & \raggedleft general & \raggedleft intermediate & \raggedleft $n^3/3 + n^2 - n/3$ & \parbox[t]{2.95cm}{\raggedleft useful for consecutive solutions}
 
 \addvspace{1pt}
 
 \\
 \hline
-\raggedright Jacobi & \raggedleft ? & \raggedleft ? & \raggedleft ? & \raggedleft ? & \parbox[t]{3cm}{\raggedleft }\\
+\raggedright Jacobi & \raggedleft ? & \raggedleft ? & \raggedleft ? & \raggedleft ? & \parbox[t]{2.95cm}{\raggedleft }\\
 \hline
-\raggedright Gauss-Seidel & \raggedleft very good & \raggedleft diagonally dominant systems & \raggedleft easy & & \parbox[t]{3cm}{\raggedleft possibly no convergence}\\
+\raggedright Gauss-Seidel & \raggedleft very good & \raggedleft diagonally dominant systems & \raggedleft easy & & \parbox[t]{2.95cm}{\raggedleft possibly no convergence}\\
 \hline
 \end{tabular}
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.10 2004-05-21 15:33:05 ela Exp $
+ * $Id: diode.cpp,v 1.11 2004-05-22 09:17:25 ela Exp $
  *
  */
 
@@ -86,6 +86,9 @@ void diode::calcDC (void) {
   setY (1, 2, -gd); setY (2, 1, -gd);
 }
 
+/* The function limits the forward pn-voltage for each DC iteration in
+   order to avoid numerical overflows and thereby improve the
+   convergence. */
 nr_double_t diode::pnVoltage (nr_double_t Ud, nr_double_t Uold, nr_double_t Ut,
 			      nr_double_t Ucrit) {
   nr_double_t arg;

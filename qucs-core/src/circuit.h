@@ -18,12 +18,15 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.11 2004-05-02 12:02:11 ela Exp $
+ * $Id: circuit.h,v 1.12 2004-05-22 09:17:24 ela Exp $
  *
  */
 
 #ifndef __CIRCUIT_H__
 #define __CIRCUIT_H__
+
+#define MAX_CIR_PORTS 6
+#define MAX_CIR_VSRCS 3
 
 class node;
 class property;
@@ -56,8 +59,8 @@ class circuit : public object
   void setPort (int p) { port = p; }
   int isVoltageSource (void) { return source; }
   void setVoltageSource (int s) { source = s; }
-  int getVoltageSources (void) { return nSources; }
-  void setVoltageSources (int s) { nSources = s; }
+  int getVoltageSources (void);
+  void setVoltageSources (int);
   int isOriginal (void) { return org; }
   void setOriginal (int o) { org = o; }
   int countCircuits (void);
@@ -99,12 +102,12 @@ class circuit : public object
   int org;
   complex * MatrixS;
   complex * MatrixY;
-  complex MatrixB[2 * 6];
-  complex MatrixC[2 * 6];
-  complex MatrixD[2 * 2];
-  complex MatrixE[2];
-  complex MatrixI[6];
-  complex MatrixV[6];
+  complex MatrixB[MAX_CIR_VSRCS * MAX_CIR_PORTS];
+  complex MatrixC[MAX_CIR_VSRCS * MAX_CIR_PORTS];
+  complex MatrixD[MAX_CIR_VSRCS * MAX_CIR_VSRCS];
+  complex MatrixE[MAX_CIR_VSRCS];
+  complex MatrixI[MAX_CIR_PORTS];
+  complex MatrixV[MAX_CIR_PORTS];
 
   node * nodes;
   substrate * subst;
