@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rectdiagram.h  -  description
+                          smithdiagram.h  -  description
                              -------------------
-    begin                : Thu Oct 2 2003
+    begin                : Sat Oct 18 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,26 +15,25 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RECTDIAGRAM_H
-#define RECTDIAGRAM_H
+#ifndef SMITHDIAGRAM_H
+#define SMITHDIAGRAM_H
 
-#include "diagram.h"
+#include <diagram.h>
+
 
 /**
   *@author Michael Margraf
   */
 
-class RectDiagram : public Diagram  {
+class SmithDiagram : public Diagram  {
 public: 
-	RectDiagram(int _cx=0, int _cy=0);
-	~RectDiagram();
+	SmithDiagram(int _cx=0, int _cy=0);
+	~SmithDiagram();
 
-  
-  virtual RectDiagram* newOne();
+
+  virtual SmithDiagram* newOne();
   virtual void paint(QPainter *p);
   virtual void calcData(Graph *g);
-
-  QString xLabel, yLabel;
 };
 
 #endif

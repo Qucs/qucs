@@ -78,6 +78,7 @@ public:
   QPtrList<Component> Comps;
   QPtrList<Diagram>   Diags;
 
+  QString DataSet;  // name of the default dataset
   int  GridX, GridY;
   bool GridOn;
 

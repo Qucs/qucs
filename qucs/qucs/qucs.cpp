@@ -24,6 +24,8 @@
 #include "newprojdialog.h"
 #include "wire.h"
 #include "rectdiagram.h"
+#include "polardiagram.h"
+#include "smithdiagram.h"
 
 #include <qaccel.h>
 #include <qimage.h>
@@ -1067,6 +1069,10 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
             return;
     case 6: switch(CompComps->index(item)) {
               case 0: view->selDiag = new RectDiagram();
+                      break;
+              case 1: view->selDiag = new PolarDiagram();
+                      break;
+              case 3: view->selDiag = new SmithDiagram();
                       break;
             }
 
