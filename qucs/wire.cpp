@@ -118,13 +118,10 @@ bool Wire::isHorizontal()
 // save it to an ASCII file or to transport it via the clipboard.
 QString Wire::save()
 {
-  QString s  = "<"+QString::number(x1);
-          s += " "+QString::number(y1);
-          s += " "+QString::number(x2);
-          s += " "+QString::number(y2);
+  QString s  = "   <"+QString::number(x1)+" "+QString::number(y1);
+          s += " "+QString::number(x2)+" "+QString::number(y2);
           s += " \""+Name +"\" ";
-          s += QString::number(nx)+" ";
-          s += QString::number(ny)+" ";
+          s += QString::number(nx)+" "+QString::number(ny)+" ";
           s += QString::number(delta)+">";
   return s;
 }

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          smithdiagram.h  -  description
+                          painting.h  -  description
                              -------------------
-    begin                : Sat Oct 18 2003
+    begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,25 +15,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SMITHDIAGRAM_H
-#define SMITHDIAGRAM_H
+#ifndef PAINTING_H
+#define PAINTING_H
 
-#include "diagram.h"
+#include <element.h>
 
+#include <qpainter.h>
 
 /**
   *@author Michael Margraf
   */
 
-class SmithDiagram : public Diagram  {
+class Painting : public Element  {
 public: 
-	SmithDiagram(int _cx=0, int _cy=0);
-	~SmithDiagram();
+	Painting();
+	~Painting();
 
+//  virtual void paintScheme(QPainter *p);
+//  virtual void setCenter(int x, int y, bool relative=false);
+  virtual void getCenter(int&, int &) {};
 
-  virtual SmithDiagram* newOne();
-  virtual void calcData(Graph *g);
-  virtual void calcDiagram();
+  virtual Painting* newOne();
+  virtual bool load(const QString&) { return true; };
+  virtual QString save();
+  virtual void paint(QPainter*) {};
+  virtual void MouseMoving(int, int, int, int, QPainter*, bool) {};
+  virtual bool MousePressing() { return false; };
+  virtual bool getSelected(int, int) { return false; };
+  virtual void Bounding(int&, int&, int&, int&) {};
+
+  virtual void rotate() {};
+  virtual void mirrorX() {};
+  virtual void mirrorY() {};
+  virtual bool Dialog() { return false; };
+
+  int  State;   // state for different mouse operations
 };
 
 #endif

@@ -57,9 +57,11 @@ public:
   bool   pasteElements();
   void   enlargeView(int x1, int y1, int x2, int y2);
   void   setPainter(QPainter *p, QucsDoc *d);
+  void   eraseCross();
 
   Component *selComp;   // component selected in IconView
   Diagram   *selDiag;   // diagram selected in IconView
+  Painting  *selPaint;  // painting selected in IconView
 
   bool    drawn;   // indicates whether the scheme component was drawn the last time
   QString ProjName;
@@ -76,7 +78,6 @@ protected:
   virtual void contentsMouseDoubleClickEvent(QMouseEvent *Event);
   virtual void contentsMouseReleaseEvent(QMouseEvent *Event);
 
-//private:
 public:
   void MouseDoNothing(QMouseEvent *Event);
   void MMoveSelect(QMouseEvent *Event);
@@ -87,7 +88,8 @@ public:
   void MMoveMoving(QMouseEvent *Event);
   void MMoveMoving2(QMouseEvent *Event);
   void MMovePaste(QMouseEvent *Event);
-  void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to actual mouse move method
+  void MMovePainting(QMouseEvent *Event);
+  void (QucsView::*MouseMoveAction) (QMouseEvent*); // pointer to current mouse move method
 
   void MPressSelect(QMouseEvent *Event);
   void MPressDelete(QMouseEvent *Event);
@@ -100,18 +102,19 @@ public:
   void MPressLabel(QMouseEvent *Event);
   void MPressWire1(QMouseEvent *Event);
   void MPressWire2(QMouseEvent *Event);
-  void (QucsView::*MousePressAction) (QMouseEvent*); // pointer to actual mouse press button method
+  void MPressPainting(QMouseEvent *Event);
+  void (QucsView::*MousePressAction) (QMouseEvent*); // pointer to current mouse press button method
 
   void MDoubleClickSelect(QMouseEvent *Event);
   void MDoubleClickWire2(QMouseEvent *Event);
-  void (QucsView::*MouseDoubleClickAction) (QMouseEvent*); // pointer to actual mouse double click method
+  void (QucsView::*MouseDoubleClickAction) (QMouseEvent*); // pointer to current mouse double click method
   
   void MReleaseSelect(QMouseEvent *Event);
   void MReleaseSelect2(QMouseEvent *Event);
   void MReleaseActivate(QMouseEvent *Event);
   void MReleaseMoving(QMouseEvent *Event);
   void MReleasePaste(QMouseEvent *);
-  void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to actual mouse release button method
+  void (QucsView::*MouseReleaseAction) (QMouseEvent*); // pointer to current mouse release button method
 
 signals:
   void CompsSelected(bool);
