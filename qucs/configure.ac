@@ -14,6 +14,9 @@ AC_CANONICAL_SYSTEM
 dnl Automake doc recommends to do this only here. (Janos)
 AM_INIT_AUTOMAKE(qucs,0.0.1)
 
+dnl Release specific.
+dnl AC_CONFIG_SUBDIRS(qucs-sp)
+
 dnl KDE_SET_PREFIX
 
 AC_PREFIX_DEFAULT(/usr/local)
@@ -73,3 +76,8 @@ AC_CONFIG_FILES([ qucs/Makefile ])
 AC_CONFIG_FILES([ qucs/bitmaps/Makefile ])
 AC_CONFIG_FILES([ qucs/sim/Makefile ])
 AC_OUTPUT
+
+dnl Print results.
+AC_MSG_RESULT([])
+AC_MSG_RESULT([ $PACKAGE version $VERSION configured successfully.])
+AC_MSG_RESULT([])
