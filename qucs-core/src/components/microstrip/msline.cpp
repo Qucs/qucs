@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.21 2004-08-19 19:44:24 ela Exp $
+ * $Id: msline.cpp,v 1.22 2004-08-20 10:45:37 ela Exp $
  *
  */
 
@@ -43,7 +43,6 @@
 
 msline::msline () : circuit (2) {
   type = CIR_MSLINE;
-  setVoltageSources (1);
 }
 
 void msline::calcSP (nr_double_t frequency) {
@@ -347,10 +346,27 @@ void msline::analyseLoss (nr_double_t W, nr_double_t t, nr_double_t er,
   }
 }
 
-void msline::calcDC (void) {
-  // a DC short (voltage source V = 0 volts)
-  setC (1, 1, +1.0); setC (1, 2, -1.0);
-  setB (1, 1, +1.0); setB (2, 1, -1.0);
-  setE (1, 0.0);
-  setD (1, 1, 0.0);
+void msline::initDC (dcsolver *) {
+  nr_double_t l     = getPropertyDouble ("L");
+  nr_double_t W     = getPropertyDouble ("W");
+  substrate * subst = getSubstrate ();
+  nr_double_t t     = subst->getPropertyDouble ("t");
+  nr_double_t rho   = subst->getPropertyDouble ("rho");
+
+  if (t != 0.0 && rho != 0.0) {
+    // tiny resistance
+    nr_double_t g = t * W / rho / l;
+    setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
+    setVoltageSources (0);
+  }
+  else {
+    // a DC short (voltage source V = 0 volts)
+    setY (1, 1, 0); setY (2, 2, 0); setY (1, 2, 0); setY (2, 1, 0);
+    setC (1, 1, +1.0); setC (1, 2, -1.0);
+    setB (1, 1, +1.0); setB (2, 1, -1.0);
+    setE (1, 0.0);
+    setD (1, 1, 0.0);
+    setVoltageSources (1);
+    setInternalVoltageSource (1);
+  }
 }

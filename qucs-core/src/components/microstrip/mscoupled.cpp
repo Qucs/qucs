@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.1 2004-08-19 19:44:24 ela Exp $
+ * $Id: mscoupled.cpp,v 1.2 2004-08-20 10:45:36 ela Exp $
  *
  */
 
@@ -184,4 +184,31 @@ void mscoupled::calcSP (nr_double_t frequency) {
   // isolated paths
   setS (1, 3, Ye - Yo); setS (3, 1, Ye - Yo);
   setS (2, 4, Ye - Yo); setS (4, 2, Ye - Yo);
+}
+
+void mscoupled::initDC (dcsolver *) {
+  nr_double_t l     = getPropertyDouble ("L");
+  nr_double_t W     = getPropertyDouble ("W");
+  substrate * subst = getSubstrate ();
+  nr_double_t t     = subst->getPropertyDouble ("t");
+  nr_double_t rho   = subst->getPropertyDouble ("rho");
+
+  if (t != 0.0 && rho != 0.0) {
+    // tiny resistances
+    nr_double_t g = t * W / rho / l;
+    setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
+    setY (3, 3, +g); setY (4, 4, +g); setY (3, 4, -g); setY (4, 3, -g);
+    setVoltageSources (0);
+  }
+  else {
+    // DC shorts (voltage sources V = 0 volts)
+    setY (1, 1, 0); setY (2, 2, 0); setY (1, 2, 0); setY (2, 1, 0);
+    setY (3, 3, 0); setY (4, 4, 0); setY (3, 4, 0); setY (4, 3, 0);
+    setC (1, 1, +1.0); setC (1, 2, -1.0); setC (2, 3, +1.0); setC (2, 4, -1.0);
+    setB (1, 1, +1.0); setB (2, 1, -1.0); setB (3, 2, +1.0); setB (4, 2, -1.0);
+    setE (1, 0.0); setE (2, 0.0);
+    setD (1, 1, 0.0); setD (1, 2, 0.0); setD (2, 1, 0.0); setD (2, 2, 0.0);
+    setVoltageSources (2);
+    setInternalVoltageSource (1);
+  }
 }

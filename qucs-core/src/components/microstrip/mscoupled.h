@@ -18,17 +18,20 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.h,v 1.1 2004-08-19 19:44:24 ela Exp $
+ * $Id: mscoupled.h,v 1.2 2004-08-20 10:45:36 ela Exp $
  *
  */
 
 #ifndef __MSCOUPLED_H__
 #define __MSCOUPLED_H__
 
+class dcsolver;
+
 class mscoupled : public circuit
 {
  public:
   mscoupled ();
+  void initDC (dcsolver *);
   void calcSP (nr_double_t);
 };
 

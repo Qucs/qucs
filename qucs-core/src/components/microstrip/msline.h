@@ -18,18 +18,21 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.8 2004-08-19 19:44:24 ela Exp $
+ * $Id: msline.h,v 1.9 2004-08-20 10:45:37 ela Exp $
  *
  */
 
 #ifndef __MSLINE_H__
 #define __MSLINE_H__
 
+class dcsolver;
+
 class msline : public circuit
 {
  public:
   msline ();
-  void calcDC (void);
+  void calcDC (void) { }
+  void initDC (dcsolver *);
   void calcSP (nr_double_t);
   static void analyseQuasiStatic (nr_double_t, nr_double_t, nr_double_t,
 				  nr_double_t, char *,

@@ -93,7 +93,7 @@ and open circuits (used by definitions of most n-port parameters) are
 hard to realize at high frequencies.  Therefore, microwave engineers
 work with so-called scattering parameters (S parameters), that uses
 waves and matched terminations (normally $50 \Omega$).  This procedure
-also minimizes reflexion problems.
+also minimizes reflection problems.
 
 \addvspace{12pt}
 
@@ -1563,10 +1563,10 @@ $\phi$ and reference impedance $Z_{ref}$ writes as follows.
 r = \frac{Z_{ref}-Z_0}{Z_{ref}+Z_0}
 \end{equation}
 \begin{equation}
-S_{11} = S_{22} = \frac{r\cdot\left(1-\exp(j\cdot 2\phi)\right)}{1-r^2\cdot\exp(j\cdot 2\phi)}
+S_{11} = S_{22} = \frac{r\cdot\left(1-\exp\left(j\cdot 2\phi\right)\right)}{1-r^2\cdot\exp\left(j\cdot 2\phi\right)}
 \end{equation}
 \begin{equation}
-S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp(j\cdot\phi)}{1-r^2\cdot\exp(j\cdot 2\phi)}
+S_{12} = S_{21} = \frac{(1-r^2)\cdot\exp\left(j\cdot\phi\right)}{1-r^2\cdot\exp\left(j\cdot 2\phi\right)}
 \end{equation}
 
 
@@ -1612,10 +1612,10 @@ S_{11} = S_{22} = S_{33} = S_{44} = 1
 S_{12} = S_{13} = S_{14} = S_{23} = S_{32} = S_{41} = S_{42} = S_{43} = 0
 \end{equation}
 \begin{equation}
-S_{21} = S_{34} = 2\cdot G\cdot \exp(j\pi-j\omega\tau)
+S_{21} = S_{34} = 2\cdot G\cdot \exp\left(j\pi-j\omega\tau\right)
 \end{equation}
 \begin{equation}
-S_{24} = S_{31} = 2\cdot G\cdot \exp(-j\omega\tau)
+S_{24} = S_{31} = 2\cdot G\cdot \exp\left(-j\omega\tau\right)
 \end{equation}
 
 \begin{figure}[ht]
@@ -1638,10 +1638,10 @@ S_{14} = S_{22} = S_{33} = S_{41} = 1
 S_{11} = S_{12} = S_{13} = S_{23} = S_{32} = S_{42} = S_{43} = S_{44} = 0
 \end{equation}
 \begin{equation}
-S_{21} = S_{34} = G\cdot \exp(j\pi-j\omega\tau)
+S_{21} = S_{34} = G\cdot \exp\left(j\pi-j\omega\tau\right)
 \end{equation}
 \begin{equation}
-S_{24} = S_{31} = G\cdot \exp(-j\omega\tau)
+S_{24} = S_{31} = G\cdot \exp\left(-j\omega\tau\right)
 \end{equation}
 
 The scattering matrix of the voltage controlled voltage source
@@ -1655,10 +1655,10 @@ S_{11} = S_{23} = S_{32} = S_{44} = 1
 S_{12} = S_{13} = S_{14} = S_{22} = S_{33} = S_{41} = S_{42} = S_{43} = 0
 \end{equation}
 \begin{equation}
-S_{21} = S_{34} = G\cdot \exp(-j\omega\tau)
+S_{21} = S_{34} = G\cdot \exp\left(-j\omega\tau\right)
 \end{equation}
 \begin{equation}
-S_{24} = S_{31} = G\cdot \exp(j\pi-j\omega\tau)
+S_{24} = S_{31} = G\cdot \exp\left(j\pi-j\omega\tau\right)
 \end{equation}
 
 \begin{figure}[ht]
@@ -1681,10 +1681,10 @@ S_{14} = S_{23} = S_{32} = S_{41} = 1
 S_{11} = S_{12} = S_{13} = S_{22} = S_{33} = S_{42} = S_{43} = S_{44} = 0
 \end{equation}
 \begin{equation}
-S_{21} = S_{34} = \frac{G}{2}\cdot \exp(-j\omega\tau)
+S_{21} = S_{34} = \frac{G}{2}\cdot \exp\left(-j\omega\tau\right)
 \end{equation}
 \begin{equation}
-S_{24} = S_{31} = \frac{G}{2}\cdot \exp(j\pi-j\omega\tau)
+S_{24} = S_{31} = \frac{G}{2}\cdot \exp\left(j\pi-j\omega\tau\right)
 \end{equation}
 
 \subsection{Transmission Line}
@@ -1697,7 +1697,7 @@ impedance $Z$ and electrical length $l$ writes as follows.
 r = \frac{Z-Z_0}{Z+Z_0}
 \end{equation}
 \begin{equation}
-p = \exp(-j\omega\frac{l}{c_0})
+p = \exp\left(-j\omega\frac{l}{c_0}\right)
 \end{equation}
 \begin{equation}
 S_{11} = S_{22} = \frac{r\cdot(1-p^2)}{1-r^2\cdot p^2} \qquad,\qquad
@@ -1706,6 +1706,41 @@ S_{12} = S_{21} = \frac{p\cdot(1-r^2)}{1-r^2\cdot p^2}
 
 With $c_0$ = 299 792 458 m/s being the vacuum light velocity.
 
+\subsection{S-parameter container with additional reference port}
+%\addcontentsline{toc}{subsection}{S-parameter container with additional reference port}
+\label{sec:spfile}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{spfile}
+\end{center}
+\caption{S-parameter container}
+\label{fig:spfile}
+\end{figure}
+\FloatBarrier
+
+In order to extend a $m - 1$-port to have a S-parameter device with
+$m$ ports assuming that the original reference port had a reflection
+coefficient $\Gamma_m$ the new S-parameters are according to
+T. O. Grosch and L. A. Carpenter \cite{Grosch}:
+\begin{align}
+S_{mm} &= \dfrac{2 - \Gamma_m - m + {\displaystyle\sum_{i=1}^{m-1}}\, {\displaystyle\sum_{j=1}^{m-1}} S'_{ij}}{1 - m\cdot \Gamma_m - {\displaystyle\sum_{i=1}^{m-1}}\, {\displaystyle\sum_{j=1}^{m-1}} S'_{ij}}\\
+S_{im} &= \left(\dfrac{1 - \Gamma_m\cdot S_{mm}}{1 - \Gamma_m}\right)\cdot \left(1 - \sum_{j=1}^{m-1} S'_{ij}\right) &
+\textrm{ for } i = 1,2 \ldots m - 1\\
+S_{mj} &= \left(\dfrac{1 - \Gamma_m\cdot S_{mm}}{1 - \Gamma_m}\right)\cdot \left(1 - \sum_{i=1}^{m-1} S'_{ij}\right) &
+\textrm{ for } j = 1,2 \ldots m - 1\\
+S_{ij} &= S'_{ij} - \left(\dfrac{\Gamma_m\cdot S_{im}\cdot S_{mj}}{1 - \Gamma_m\cdot S_{mm}}\right) &
+\textrm{ for } i,j = 1,2 \ldots m - 1
+\end{align}
+
+If the reference port has been ground potential, then $\Gamma_m$
+simply folds to -1.  The reverse transformation by connecting a
+termination with a reflection coefficient of $\Gamma_m$ to the $m$th
+port writes as follows.
+\begin{equation}
+S'_{ij} = S_{ij} + \left(\dfrac{\Gamma_m\cdot S_{im}\cdot S_{mj}}{1 - \Gamma_m\cdot S_{mm}}\right)
+\;\;\;\; \textrm{ for } i,j = 1,2 \ldots m - 1
+\end{equation}
 
 \chapter{Noise Waves}
 %\addcontentsline{toc}{chapter}{Noise Waves}
@@ -1863,7 +1898,7 @@ K_x = \frac{4\cdot k\cdot T_0\cdot R_n}{Z_0\cdot|1+\Gamma_{opt}|^2}
 
 Once having the noise parameters, one can calculate the noise figure for
 every source admittance $Y_S=G_S+j\cdot B_s$, source impedance
-$Z_S=R_S+j\cdot X_s$, or source reflexion coefficient $r_S$.
+$Z_S=R_S+j\cdot X_s$, or source reflection coefficient $r_S$.
 
 \begin{align}
   F & = \frac{SNR_{in}}{SNR_{out}} = \frac{T_{equi}}{T_0} + 1\\
@@ -1882,8 +1917,8 @@ noise temperature.  Note that $G_n$ does not equal $1/R_n$.
 \addvspace{12pt}
 
 All curves with constant noise figures are circles (in all planes,
-i.e. impedance, admittance and reflexion coefficient).  A circle in
-the reflexion coefficient plane has the following parameters.
+i.e. impedance, admittance and reflection coefficient).  A circle in
+the reflection coefficient plane has the following parameters.
 
 \addvspace{12pt}
 
@@ -2362,6 +2397,7 @@ Lorentzian PSD (generation-recombination noise): & $a=1$, $b=1/f_c^2$, $c=2$ \\
 
 
 \subsection{Diode}
+%\addcontentsline{toc}{subsection}{Diode}
 
 An ideal diode (pn- or schottky-diode) generates shot noise.  Both
 types of current (field and diffusion) contribute independently to it.
@@ -2426,15 +2462,82 @@ thermal noise.
 
 \addvspace{12pt}
 
-Some
-special diodes have additional current or noise components (tunnel
-diodes, avalanche diodes etc.).  All these mechanisms are not taken
-into account in equation \eqref{eqn:diode_noise}.
+Some special diodes have additional current or noise components
+(tunnel diodes, avalanche diodes etc.).  All these mechanisms are not
+taken into account in equation \eqref{eqn:diode_noise}.
 
 \addvspace{12pt}
 
 The parasitic ohmic resistance in a non-ideal diode, of course,
 creates thermal noise.
+
+\subsection{S-parameter container with additional reference port}
+%\addcontentsline{toc}{subsection}{S-parameter container with additional reference port}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{spnfile}
+\end{center}
+\caption{S-parameter container with noise wave correlation matrix}
+\label{fig:spnfile}
+\end{figure}
+\FloatBarrier
+
+With the S-parameter transformation done, as noted in section
+\ref{sec:spfile} on page \pageref{sec:spfile}, the $m$-port noise wave
+correlation matrix is
+\begin{equation}
+C_m = \left|\dfrac{1}{1 - \Gamma_m}\right|^2 \cdot \left(K\cdot C_{m-1}\cdot K^+ -T_s\cdot k_B \cdot\left|1 - \left|\Gamma_m\right|^2\right|\cdot D\cdot D^+\right)
+\end{equation}
+
+with
+\begin{align}
+K &=
+\begin{bmatrix}
+1 + \Gamma_m\left(S_{1m} -1\right) & \Gamma_m S_{1m} & \ldots & \Gamma_m S_{1m}\\
+\Gamma_m S_{2m} & 1 + \Gamma_m\left(S_{2m} -1\right) & \ldots & \Gamma_m S_{2m}\\
+\vdots & \vdots & \ddots & \vdots\\
+\Gamma_m S_{(m-1)m} & \Gamma_m S_{(m-1)m} & \ldots & 1 + \Gamma_m\left(S_{(m-1)m} -1\right)\\
+\Gamma_m S_{mm} - 1 & \Gamma_m S_{mm} - 1 & \ldots & \Gamma_m S_{mm} - 1
+\end{bmatrix}\\
+D &=
+\begin{bmatrix}
+S_{1m}\\
+S_{2m}\\
+\vdots\\
+S_{(m-1)m}\\
+S_{mm} - 1
+\end{bmatrix}
+\end{align}
+
+whence $T_s$ denotes the equivalent noise temperature of the original
+reference port and the $ ^{+}$ operator indicates the transposed
+conjugate matrix (also called adjoint or adjugate).
+
+\addvspace{12pt}
+
+The reverse transformation can be written as
+\begin{equation}
+C_{m-1} = K'\cdot C_m\cdot K'^+ +T_s\cdot k_B \cdot\dfrac{\left|1 - \left|\Gamma_m\right|^2\right|}{\left|1 - \Gamma_m S_{mm}\right|^2}\cdot D'\cdot D'^+
+\end{equation}
+
+with
+\begin{align}
+K' &=
+\begin{bmatrix}
+1 & 0 & \ldots & 0 & \dfrac{\Gamma_m S_{1m}}{1 - \Gamma_m S_{mm}}\\
+0 & 1 & \ldots & 0 & \dfrac{\Gamma_m S_{2m}}{1 - \Gamma_m S_{mm}}\\
+. & . & \ddots & . & \vdots\\
+0 & 0 & \ldots & 1 & \dfrac{\Gamma_m S_{(m-1)m}}{1 - \Gamma_m S_{mm}}\\
+\end{bmatrix}\\
+D' &=
+\begin{bmatrix}
+S_{1m}\\
+S_{2m}\\
+\vdots\\
+S_{(m-1)m}
+\end{bmatrix}
+\end{align}
 
 \chapter{DC Analysis}
 %\addcontentsline{toc}{chapter}{DC Analysis}
@@ -6188,7 +6291,9 @@ allow slide-rule prediction of microstrip dispersion.
 \end{equation}
 with
 \begin{align}
+\label{eq:GetFp}
 f_{p} &= \frac{Z_{L}}{2\mu_{0} h}\\
+\label{eq:GetG}
 G &= 0.6 + 0.009\cdot Z_{L}
 \end{align}
 
@@ -6718,6 +6823,40 @@ asymmetry.  Dispersion is also not included.  W. J. Getsinger
 dispersion model, but unfortunately it is easily shown that the
 results are asymptotically wrong for extreme values of gap width.
 
+\addvspace{12pt}
+
+In fact he correctly assumes that in the even mode the two strips are
+at the same potential, and the total current is twice that on a single
+strip, and dispersion for even-mode propagation is computed by
+substituting $Z_{L,e}/2$ for $Z_L$ in eqs. \eqref{eq:GetFp} and
+\eqref{eq:GetG}.  In the odd mode the two strips are at opposite
+potentials, and the voltage between strips is twice that of a single
+strip to ground.  Thus the total mode impedance is twice that of a
+single strip, and the dispersion for odd-mode propagation is computed
+substituting $2Z_{L,o}$ for $Z_L$ in eqs. \eqref{eq:GetFp} and
+\eqref{eq:GetG}.
+\begin{equation}
+\varepsilon_{r,e,o}\left(f\right) = \varepsilon_{r} - \frac{\varepsilon_{r} - \varepsilon_{r_{eff,e,o}}}{1 + G\cdot \left(\dfrac{f}{f_{p}}\right)^{2}}
+\end{equation}
+
+with
+\begin{align}
+f_{p} &=
+\begin{cases}
+\begin{array}{ll}
+\dfrac{Z_{L,e}}{4\mu_{0} h} & \textrm{ even mode }\\&\\
+\dfrac{Z_{L,o}}{\mu_{0} h}  & \textrm{ odd mode }\\
+\end{array}
+\end{cases}\\
+G &=
+\begin{cases}
+\begin{array}{ll}
+0.6 + Z_{L,e}\cdot 0.0045 & \textrm{ even mode }\\&\\
+0.6 + Z_{L,o}\cdot 0.018 & \textrm{ odd mode }\\
+\end{array}
+\end{cases}
+\end{align}
+
 \subsection{Transmission losses}
 %\addcontentsline{toc}{subsection}{Transmission losses}
 
@@ -6743,7 +6882,7 @@ fig. \ref{fig:mscoupled}) can now be defined \cite{Edwards}.
 
 \addvspace{12pt}
 
-reflexion coefficients
+reflection coefficients
 \begin{equation}
 S_{11} = S_{22} = S_{33} = S{44} = X_e + X_o
 \end{equation}
