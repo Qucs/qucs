@@ -339,26 +339,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>dense 2 (densest)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dense 3 (densest)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dense 4 (densest)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dense 5 (densest)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dense 6 (densest)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>dense 7 (least dense)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -400,6 +380,26 @@
     </message>
     <message>
         <source>Filling Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 6</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1868,12 +1868,6 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This will destroy all the project
-files permanently !
-Go on ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1998,6 +1992,10 @@ Go on ?</source>
     </message>
     <message>
         <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will destroy all the project files permanently ! Continue ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

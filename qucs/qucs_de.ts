@@ -363,23 +363,23 @@
     </message>
     <message>
         <source>dense 2 (densest)</source>
-        <translation>Dichte 2 (am dichtesten)</translation>
+        <translation type="obsolete">Dichte 2 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 3 (densest)</source>
-        <translation>Dichte 3 (am dichtesten)</translation>
+        <translation type="obsolete">Dichte 3 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 4 (densest)</source>
-        <translation>Dichte 4 (am dichtesten)</translation>
+        <translation type="obsolete">Dichte 4 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 5 (densest)</source>
-        <translation>Dichte 5 (am dichtesten)</translation>
+        <translation type="obsolete">Dichte 5 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 6 (densest)</source>
-        <translation>Dichte 6 (am dichtesten)</translation>
+        <translation type="obsolete">Dichte 6 (am dichtesten)</translation>
     </message>
     <message>
         <source>dense 7 (least dense)</source>
@@ -424,6 +424,26 @@
     <message>
         <source>Filling Style</source>
         <translation>Füllmuster</translation>
+    </message>
+    <message>
+        <source>dense 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dense 6</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3104,7 +3124,7 @@ Fehler:
         <source>This will destroy all the project
 files permanently !
 Go on ?</source>
-        <translation>Dies zerstört alle Projekt-
+        <translation type="obsolete">Dies zerstört alle Projekt-
 dateien für immer !
 Weiter ?</translation>
     </message>
@@ -3363,6 +3383,10 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     <message>
         <source>Cannot start text editor!</source>
         <translation>Texteditor kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>This will destroy all the project files permanently ! Continue ?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
