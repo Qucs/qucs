@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.21 2004/11/24 19:15:52 raimi Exp $
+ * $Id: mosfet.cpp,v 1.22 2004/12/09 20:30:08 raimi Exp $
  *
  */
 
@@ -558,14 +558,21 @@ void mosfet::calcOperatingPoints (void) {
     fetCapacitanceMeyer (Ugd, Ugs, Uon, Udsat, Phi, Cox, Cgd, Cgs, Cgb);
   }
 
-  // approximate charges by trapezoidal rule
+  // charge approximation
   if (transientMode) {
-    // gate-source charge
-    Qgs = transientCharge (qgsState, Cgs, Ugs, Cgso * W);
-    // gate-drain charge
-    Qgd = transientCharge (qgdState, Cgd, Ugd, Cgdo * W);
-    // gate-bulk charge
-    Qgb = transientCharge (qgbState, Cgb, Ugb, Cgbo * Leff);
+    if (transientMode == 1) {      // by trapezoidal rule
+      // gate-source charge
+      Qgs = transientChargeTR (qgsState, Cgs, Ugs, Cgso * W);
+      // gate-drain charge
+      Qgd = transientChargeTR (qgdState, Cgd, Ugd, Cgdo * W);
+      // gate-bulk charge
+      Qgb = transientChargeTR (qgbState, Cgb, Ugb, Cgbo * Leff);
+    }
+    else if (transientMode == 2) { // by simpson's rule
+      Qgs = transientChargeSR (qgsState, Cgs, Ugs, Cgso * W);
+      Qgd = transientChargeSR (qgdState, Cgd, Ugd, Cgdo * W);
+      Qgb = transientChargeSR (qgbState, Cgb, Ugb, Cgbo * Leff);
+    }
   }
   // usual operating point
   else {
@@ -611,7 +618,7 @@ void mosfet::initTR (void) {
 
 void mosfet::calcTR (nr_double_t) {
   calcDC ();
-  transientMode = 1;
+  transientMode = getPropertyInteger ("capModel");
   calcOperatingPoints ();
   transientMode = 0;
 
@@ -635,11 +642,25 @@ void mosfet::calcTR (nr_double_t) {
   transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb, Qgb);
 }
 
-nr_double_t mosfet::transientCharge (int qstate, nr_double_t& cap,
-				     nr_double_t voltage, nr_double_t ccap) {
+/* The function uses the trapezoidal rule to compute the current
+   capacitance and charge.  The approximation is necessary because the
+   Meyer model is a capacitance model and not a charge model. */
+nr_double_t mosfet::transientChargeTR (int qstate, nr_double_t& cap,
+				       nr_double_t voltage, nr_double_t ccap) {
   int vstate = qstate + 2, cstate = qstate + 3;
-  setState (cstate, cap / 2);
-  cap = cap / 2 + getState (cstate, 1) + ccap;
+  setState (cstate, cap);
+  cap = (cap + getState (cstate, 1)) / 2 + ccap;
+  setState (vstate, voltage);
+  return cap * (voltage - getState (vstate, 1)) + getState (qstate, 1);
+}
+
+/* The function uses Simpson's numerical integration rule to compute
+   the current capacitance and charge. */
+nr_double_t mosfet::transientChargeSR (int qstate, nr_double_t& cap,
+				       nr_double_t voltage, nr_double_t ccap) {
+  int vstate = qstate + 2, cstate = qstate + 3;
+  setState (cstate, cap);
+  cap = (cap + 4 * getState (cstate, 1) + getState (cstate, 2)) / 6 + ccap;
   setState (vstate, voltage);
   return cap * (voltage - getState (vstate, 1)) + getState (qstate, 1);
 }

@@ -1,3 +1,11 @@
+2004-12-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Fixed a bug in the BJT model occurring when
+	forward current is zero (successive nan value).
+
+	* devices/mosfet.cpp (transientChargeSR): Implemented Simpson's
+	numerical integration rule for the MOS charges.
+
 2004-12-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* pac.cpp: Using available power for current calculation

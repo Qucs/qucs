@@ -35,8 +35,8 @@ unfixed) have a look at the file BUGS.
 	- Spice to Qucs netlist converter.
 - Reordering algorithm for MNA matrices (fail of convergence).
 	- Allow array indices in vectors with multiple dependencies.
-- Add charge-conversing model for MOS capacitances (i.e. Simpson's
-  numerical integration rule).
+	- Add charge-conversing model for MOS capacitances (i.e. Simpson's
+	  numerical integration rule).
 - Implement variable step-size coefficient for Adams-Bashford.
 	- Implement variable step-size coefficient calculations for
 	  transient integrators.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.7 2004/12/07 22:33:31 raimi Exp $
+ * $Id: qucsdefs.h,v 1.8 2004/12/09 20:30:07 raimi Exp $
  *
  */
 
@@ -389,6 +389,7 @@ struct define_t qucs_definition_available[] =
       { "Ps", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Type", PROP_STR, { PROP_NO_VAL, "nfet" }, PROP_NO_RANGE },
+      { "capModel", PROP_INT, { 2, PROP_NO_STR }, { 1 , 2 } },
       PROP_NO_PROP }
   },
 

@@ -1692,45 +1692,57 @@ S'_{ij} = S_{ij} + \left(\dfrac{\Gamma_m\cdot S_{im}\cdot S_{mj}}{1 - \Gamma_m\c
 \;\;\;\; \textrm{ for } i,j = 1,2 \ldots m - 1
 \end{equation}
 
-
-
 \section{Applications}
 %\addcontentsline{toc}{section}{Applications}
 
 \subsection{Stability}
 %\addcontentsline{toc}{subsection}{Stability}
 
-A very important task in microwave design (especially for amplifiers) is the
-question, whether the circuit tends to unwanted oscillations. A two-port
-oscillates if, despite of no signal being fed into it, ac power issues from at
-least one of its ports. This condition can be easily expressed in terms of RF
-quantities:
+A very important task in microwave design (especially for amplifiers)
+is the question, whether the circuit tends to unwanted oscillations.
+A two-port oscillates if, despite of no signal being fed into it, ac
+power issues from at least one of its ports.  This condition can be
+easily expressed in terms of RF quantities:
 \begin{equation}
 |\underline{r}_1| < 1  \qquad \text{and} \qquad  |\underline{r}_2| < 1
 \end{equation}
+
 with $|\underline{r}_1|$ being reflexion coefficient of port 1 and
-$|\underline{r}_2|$ the one of port 2.\\
+$|\underline{r}_2|$ the one of port 2.
+
+\addvspace{12pt}
+
 A further question can be asked: What conditions must be fulfilled to have a
 two-port be stable for all combinations of passive impedance terminations at
-port 1 and port 2 ? Such a circuit is called unconditionally stable.
-\cite{Edwards} is one of the best discussions dealing with this subject.\\
-A circuit is unconditionally stable if the following two relations hold:
+port 1 and port 2?  Such a circuit is called unconditionally stable.
+\cite{Edwards3} is one of the best discussions dealing with this subject.
+
+\addvspace{12pt}
+
+A circuit is unconditionally stable if the following two relations
+hold:
 \begin{equation}
 K = \frac{1-|S_{11}|^2-|S_{22}|^2+|\Delta|^2}{2\cdot |S_{12}\cdot S_{21}|} > 1
 \end{equation}
 \begin{equation}
 |\Delta| = |S_{11}\cdot S_{22} - S_{12}\cdot S_{21}| < 1
 \end{equation}
-with $\Delta$ being the determinante of the S parameter matrix of the two port.
-$K$ is called Rollet factor. Two relations must be fulfilled to have a
-necessary and sufficient criterion.\\
-A more practical criterion (necessary and sufficient) for unconditional
-stability is obtained with the $\mu$-factor:
+
+with $\Delta$ being the determinante of the S parameter matrix of the
+two port.  $K$ is called Rollet factor.  Two relations must be
+fulfilled to have a necessary and sufficient criterion.
+
+\addvspace{12pt}
+
+A more practical criterion (necessary and sufficient) for
+unconditional stability is obtained with the $\mu$-factor:
 \begin{equation}
 \mu = \frac{1-|S_{11}|^2}{|S_{22}-S_{11}^*\cdot \Delta| + |S_{12}\cdot S_{21}|} > 1
 \end{equation}
-Because of  symmetry reasons, a second stability factor must exist that also
-gives a necessary and sufficient criterion for unconditional stability:
+
+Because of symmetry reasons, a second stability factor must exist that
+also gives a necessary and sufficient criterion for unconditional
+stability:
 \begin{equation}
 \mu' = \frac{1-|S_{22}|^2}{|S_{11}-S_{22}^*\cdot \Delta| + |S_{12}\cdot S_{21}|} > 1
 \end{equation}
