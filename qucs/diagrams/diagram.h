@@ -62,7 +62,6 @@ public:
   bool    xlog, ylog;   // in "rectdiagram": x-/y-axis logarithmic or linear
 
   QPtrList<Graph>  Graphs;
-  QPtrList<Marker> Markers;
   QPtrList<Arc>    Arcs;
   QPtrList<Line>   Lines;
   QPtrList<Text>   Texts;

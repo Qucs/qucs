@@ -1080,6 +1080,8 @@ void QucsApp::slotChangePage(QString Name)
     if(!d->load()) {
       view->Docs.remove();
       view->Docs.findRef(Doc);
+      view->viewport()->repaint();
+      view->drawn = false;
       return;
     }
   }

@@ -49,6 +49,7 @@ public:
   QString save();
   bool    load(const QString& Line);
   int     getSelected(int, int);
+  Marker* sameNewOne(Graph*);
 
   Diagram *Diag;     // the corresponding diagram
   Graph   *pGraph;   // the corresponding graph
