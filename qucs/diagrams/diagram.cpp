@@ -222,9 +222,17 @@ void Diagram::updateGraphData()
   int n, *pi;
   double *pp;
   for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next()) {
-    pg = Graphs.at(pm->GraphNum);
+    pg = Graphs.at(Graphs.findRef(pm->pGraph));
+    if(!pg) {
+      Markers.remove();    // graph can't be found -> remove marker
+      pm = Markers.current();
+      continue;
+    }
     pp = pg->cPointsX;
-    if(pp == 0) continue;
+    if(pp == 0) {
+      pm->makeInvalid();
+      continue;
+    }
     for(n=0; n<pg->count; n++) {
       if(pm->xpos <= *pp) break;
       pp++;

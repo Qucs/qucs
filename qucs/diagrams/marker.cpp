@@ -17,6 +17,7 @@
 
 #include "marker.h"
 #include "diagram.h"
+#include "graph.h"
 
 #include <qstring.h>
 #include <qwidget.h>
@@ -25,8 +26,8 @@
 #include <math.h>
 
 
-Marker::Marker(Diagram *Diag_, int _cx, int _cy, double _xpos,
-               double _yrpos, double _yipos, int _gNum)
+Marker::Marker(Diagram *Diag_, Graph *pg_, int _cx, int _cy, double _xpos,
+               double _yrpos, double _yipos)
 {
   Type = isMarker;
   isSelected = false;
@@ -37,11 +38,11 @@ Marker::Marker(Diagram *Diag_, int _cx, int _cy, double _xpos,
   y1 = cy + 100;
 
   Diag = Diag_;
+  pGraph = pg_;
   Precision = 2;
   xpos = _xpos;
   yr = _yrpos;  yi = _yipos;
   createText();
-  GraphNum = _gNum;
   lookNfeel = 1;
 }
 
@@ -70,6 +71,24 @@ void Marker::createText()
 }
 
 // ---------------------------------------------------------------------
+void Marker::makeInvalid()
+{
+//  xpos = 0.0;
+  yr = 0.0;
+  yi = 0.0;
+  cx = 0;
+  cy = 0;
+  Text = QObject::tr("invalid");
+
+  QWidget w;
+  QPainter p(&w);
+  p.setFont(QFont("Helvetica",12, QFont::Light));
+  QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);  // width of text
+  x2 = r.width()+5;
+  y2 = r.height()+5;
+}
+
+// ---------------------------------------------------------------------
 void Marker::paint(QPainter *p, int x0, int y0)
 {
   p->setPen(QPen(QPen::darkMagenta,0));
@@ -77,20 +96,20 @@ void Marker::paint(QPainter *p, int x0, int y0)
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
-    if(cy < y1-(y2>>1))
+    if(cy < y1+(y2>>1))
       p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
     else
       p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1-y2);
   }
   else {
-    if(cy < y1-(y2>>1))
+    if(cy < y1+(y2>>1))
       p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1);
     else
       p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1-y2);
   }
 
   p->setPen(QPen(QPen::black,1));
-  p->drawText(x0+x1+2, y0-y1-y2+2, x2, y2, Qt::AlignAuto, Text);
+  p->drawText(x0+x1+3, y0-y1-y2+3, x2, y2, Qt::AlignAuto, Text);
 
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,3));
@@ -107,13 +126,13 @@ void Marker::paintScheme(QPainter *p)
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
-    if(cy < y1-(y2>>1))
+    if(cy < y1+(y2>>1))
       p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
     else
       p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1-y2);
   }
   else {
-    if(cy < y1-(y2>>1))
+    if(cy < y1+(y2>>1))
       p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1);
     else
       p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1-y2);
@@ -144,6 +163,7 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 // ---------------------------------------------------------------------
 QString Marker::save()
 {
+  int GraphNum = Diag->Graphs.findRef(pGraph);
   QString s  = "      <Mkr "+QString::number(GraphNum)+" ";
           s += QString::number(xpos)+" "+QString::number(x1)
 	       +" "+QString::number(y1)+" "
@@ -164,9 +184,10 @@ bool Marker::load(const QString& _s)
   if(s.section(' ',0,0) != "Mkr") return false;
 
   QString n;
-  n  = s.section(' ',1,1);    // GraphNum
-  GraphNum = n.toInt(&ok);
+  n  = s.section(' ',1,1);    // pGraph
+  int Num = n.toInt(&ok);
   if(!ok) return false;
+  pGraph = Diag->Graphs.at(Num);
 
   n  = s.section(' ',2,2);    // xpos
   xpos = n.toDouble(&ok);

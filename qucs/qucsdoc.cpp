@@ -1031,8 +1031,7 @@ bool QucsDoc::setMarker(int x, int y)
           px = pg->cPointsX + n-1;
           py = pg->cPointsY + 2*(n-1);
           p = pg->Points + 2*(n-1);
-          Marker *pm = new Marker(pd, *p, *(p+1),
-	                          *px, *py, *(py+1), pd->Graphs.at());
+          Marker *pm = new Marker(pd, pg, *p, *(p+1), *px, *py, *(py+1));
           pd->Markers.append(pm);
           setChanged(true);
           return true;
@@ -1054,8 +1053,9 @@ bool QucsDoc::MarkerLeftRight(bool left)
     // test all markers of the diagram
     for(Marker *pm = pd->Markers.first(); pm!=0; pm = pd->Markers.next()) {
       if(pm->isSelected) {
-        Graph *pg = pd->Graphs.at(pm->GraphNum);
+        Graph *pg = pm->pGraph;
         px = pg->cPointsX;
+	if(!px) continue;
         for(n=0; n<pg->count; n++) {
           if(pm->xpos <= *px) break;
           px++;

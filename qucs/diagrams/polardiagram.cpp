@@ -56,19 +56,21 @@ void PolarDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,1)));  // y line
-  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,1)));  // x line
+  // x and y line
+  Lines.append(new Line(x2>>1, y2, x2>>1, 0, QPen(QPen::lightGray,1)));
+  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::lightGray,1)));
 
   double phi, Expo, Base;
   xlow = ylow = 0.0;
+  if(fabs(ymin) > ymax)  ymax = fabs(ymin);  // also fit negative values
 
 
   if(GridOn) {
 
-    double numGrids = floor(double(x2)/80.0);   // minimal grid is 40 pixel
+    double numGrids = floor(double(x2)/80.0); // minimal grid is 40 pixel
     Expo = floor(log10(ymax/numGrids));
-    Base = ymax/numGrids/pow(10.0,Expo);        // separate first significant digit
-    if(Base < 3.5) {            // use only 1, 2 and 5, which ever is best fitted
+    Base = ymax/numGrids/pow(10.0,Expo); // separate first significant digit
+    if(Base < 3.5) {       // use only 1, 2 and 5, which ever is best fitted
       if(Base < 1.5) Base = 1.0;
       else Base = 2.0;
     }
@@ -77,7 +79,7 @@ void PolarDiagram::calcDiagram()
       else { Base = 1.0; Expo++; }
     }
     double GridStep = Base * pow(10.0,Expo);     // distance between grids in real coordinates
-    numGrids -= floor(numGrids - ymax/GridStep);     // correct rounding faults
+    numGrids -= floor(numGrids - ymax/GridStep); // corrects rounding faults
     xup = yup = GridStep*numGrids;
     double zD = double(x2) / numGrids;     // distance between grids in pixel
 
@@ -104,7 +106,7 @@ void PolarDiagram::calcDiagram()
       else
         Texts.append(new Text(((x2+z)>>1)-10, (y2>>1)-12, QString::number(GridNum, 'e', 0)));
 
-      phi = 16.0*180.0/M_PI*atan(30.0/zD);    // 2*(text height+3) / circle radius
+      phi = 16.0*180.0/M_PIl*atan(30.0/zD);    // 2*(text height+3) / circle radius
       Arcs.append(new Arc((x2-z)>>1, (y2+z)>>1, z, z, 0, 16*360-int(phi), QPen(QPen::lightGray,1)));
       zD += zDstep;
     }
@@ -120,7 +122,7 @@ void PolarDiagram::calcDiagram()
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup)));
   else
     Texts.append(new Text(x2-10, (y2>>1)-12, QString::number(xup, 'e', 0)));
-  phi = 16.0*180.0/M_PI*atan(30.0/double(x2));    // (text height+3) / circle radius
+  phi = 16.0*180.0/M_PIl*atan(30.0/double(x2));    // (text height+3) / circle radius
   Arcs.append(new Arc(0, y2, x2, y2, 0, 16*360-int(phi), QPen(QPen::black,1)));
 }
 

@@ -50,6 +50,8 @@ public:
   QColor   Color;
   int      Size;
   QString  Text;
+  int      Angle;
+  double   cx_d, cy_d;    // cx/cy coordinates already rotated
 };
 
 #endif

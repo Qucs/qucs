@@ -954,9 +954,9 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
   if(selDiag == 0) return;
   if(Event->button() != Qt::LeftButton) return;
   
+  // dialog is Qt::WDestructiveClose !!!
   DiagramDialog *dia = new DiagramDialog(selDiag, d->DataSet);
-  if(dia->exec() == QDialog::Rejected) {  // don't insert a diagram if dialog canceled
-    delete dia;
+  if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
     viewport()->repaint();
     drawn = false;
     return;
@@ -964,7 +964,8 @@ void QucsView::MPressDiagram(QMouseEvent *Event)
   delete dia;
 
   d->Diags.append(selDiag);
-  enlargeView(selDiag->cx, selDiag->cy-selDiag->y2, selDiag->cx+selDiag->x2, selDiag->cy);
+  enlargeView(selDiag->cx, selDiag->cy-selDiag->y2,
+	      selDiag->cx+selDiag->x2, selDiag->cy);
   d->setChanged(true);   // document has been changed
 
   viewport()->repaint();
@@ -1329,25 +1330,29 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 
     for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
       switch(pe->Type) {
-        case isComponent: ((Component*)pe)->rotate();// rotate component !before! rotating its center
-                          x2 = x1 - pe->cx;
-                          pe->setCenter(pe->cy - y1 + x1, x2 + y1);
-                          break;
-        case isWire:      x2    = pe->x1;
-                          pe->x1 = pe->y1 - y1 + x1;
-                          pe->y1 = x1 - x2 + y1;
-                          x2    = pe->x2;
-                          pe->x2 = pe->y2 - y1 + x1;
-                          pe->y2 = x1 - x2 + y1;
-                          break;
-        case isPainting:  ((Painting*)pe)->rotate();   // rotate painting !before! rotating its center
-                          ((Painting*)pe)->getCenter(x2, y2);
-                          tmp = x1 - x2;
-                          pe->setCenter(y2 - y1 + x1, tmp + y1);
-                          break;
-        default:          x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
-                          pe->setCenter(pe->cy - y1 + x1, x2 + y1);
-                          break;
+        case isComponent:
+	  ((Component*)pe)->rotate(); // rotate !before! rotating the center
+          x2 = x1 - pe->cx;
+          pe->setCenter(pe->cy - y1 + x1, x2 + y1);
+          break;
+        case isWire:
+	  x2    = pe->x1;
+          pe->x1 = pe->y1 - y1 + x1;
+          pe->y1 = x1 - x2 + y1;
+          x2    = pe->x2;
+          pe->x2 = pe->y2 - y1 + x1;
+          pe->y2 = x1 - x2 + y1;
+          break;
+        case isPainting:
+	  ((Painting*)pe)->rotate();  // rotate !before! rotating the center
+          ((Painting*)pe)->getCenter(x2, y2);
+          tmp = x1 - x2;
+          pe->setCenter(y2 - y1 + x1, tmp + y1);
+          break;
+        default:
+	  x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
+          pe->setCenter(pe->cy - y1 + x1, x2 + y1);
+          break;
       }
       pe->paintScheme(&painter);
     }
