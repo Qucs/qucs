@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.9 2004-07-26 22:07:29 ela Exp $
+ * $Id: jfet.cpp,v 1.10 2004-07-27 08:45:04 ela Exp $
  *
  */
 
@@ -100,7 +100,7 @@ void jfet::calcNoise (nr_double_t frequency) {
   y.set (NODE_S, NODE_S, +i);
   y.set (NODE_D, NODE_S, -i);
   y.set (NODE_S, NODE_D, -i);
-  setMatrixN (cytocs (y, getMatrixS ()));
+  setMatrixN (cytocs (y * z0, getMatrixS ()));
 }
 
 void jfet::initDC (dcsolver * solver) {
@@ -276,14 +276,15 @@ void jfet::calcOperatingPoints (void) {
   nr_double_t Cgs0 = getPropertyDouble ("Cgs");
   nr_double_t Pb   = getPropertyDouble ("Pb");
   nr_double_t Fc   = getPropertyDouble ("Fc");
-  
-  nr_double_t Ugs, Ugd, Ut, T, ggd, ggs, Cgs, Cgd, Igs, Igd;
+  nr_double_t T    = getPropertyDouble ("Temp");
+
+  nr_double_t Ugs, Ugd, Ut, ggd, ggs, Cgs, Cgd, Igs, Igd;
 
   // apply polarity of JFET
   char * type = getPropertyString ("Type");
   nr_double_t pol = !strcmp (type, "pfet") ? -1 : 1;
 
-  T = -K + 26.5;
+  T = kelvin (T);
   Ut = kB * T / Q;
   Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
   Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
