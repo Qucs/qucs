@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.13 2004-07-27 16:43:58 ela Exp $
+ * $Id: constants.h,v 1.14 2004-08-03 15:36:20 ela Exp $
  *
  */
 
@@ -70,6 +70,9 @@
 
 #define kBoverQ 0.86173433260414314916e-4
 #define QoverkB 1.16045045690360379713e+4
+#define ESiO2   3.9
+#define Ni      1.45e16
+#define ESi     11.7
 
 #define sqr(x)    ((x) * (x))
 #define cubic(x)  (exp (3 * log (x)))
@@ -81,5 +84,13 @@
 #define degree(x) (K + (x))
 #define rad(x)    (M_PI * (x) / 180.0)
 #define deg(x)    (180.0 * (x) / M_PI)
+
+#ifndef MAX
+# define MAX(x,y) (((x) > (y)) ? (x) : (y))
+#endif
+
+#ifndef MIN
+# define MIN(x,y) (((x) < (y)) ? (x) : (y))
+#endif
 
 #endif /* __CONSTANTS_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.12 2004-07-25 16:58:47 margraf Exp $
+ * $Id: component_id.h,v 1.13 2004-08-03 15:36:20 ela Exp $
  *
  */
 
@@ -72,6 +72,7 @@ enum circuit_type {
   CIR_DIODE,
   CIR_JFET,
   CIR_BJT,
+  CIR_MOSFET,
 };
 
 #endif /* __COMPONENT_ID_H__ */

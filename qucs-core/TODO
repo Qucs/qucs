@@ -23,7 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
-- Check polarity of BJT (SPICE Gummel-Poon) device.
+	- Check polarity of BJT (SPICE Gummel-Poon) device.
 - Implement temperature models of existing non-linear devices.
 	- Implement DC model for transmission line.
 	- Implement noise model for attenuator, diode and isolator.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.25 2004-07-31 16:59:14 ela Exp $
+ * $Id: input.cpp,v 1.26 2004-08-03 15:36:19 ela Exp $
  *
  */
 
@@ -316,6 +316,8 @@ circuit * input::createCircuit (char * type) {
     return new vnoise ();
   else if (!strcmp (type, "Inoise"))
     return new inoise ();
+  else if (!strcmp (type, "MOSFET"))
+    return new mosfet ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;

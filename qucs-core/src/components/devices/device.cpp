@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.5 2004-07-30 06:25:55 ela Exp $
+ * $Id: device.cpp,v 1.6 2004-08-03 15:36:20 ela Exp $
  *
  */
 
@@ -159,4 +159,110 @@ nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
 // Compute critical voltage of pn-junction.
 nr_double_t pnCriticalVoltage (nr_double_t Iss, nr_double_t Ute) {
   return Ute * log (Ute / M_SQRT2 / Iss);
+}
+
+/* The function limits the forward fet-voltage for each DC iteration
+   in order to avoid numerical overflows and thereby improve the
+   convergence. */
+nr_double_t fetVoltage (nr_double_t Ufet, nr_double_t Uold, nr_double_t Uth) {
+  nr_double_t Utsthi = fabs (2 * (Uold - Uth)) + 2.0;
+  nr_double_t Utstlo = Utsthi / 2 + 2.0;
+  nr_double_t Utox   = Uth + 3.5;
+  nr_double_t DeltaU = Ufet - Uold;
+
+  if (Uold >= Uth) { /* FET is on */
+    if (Uold >= Utox) {
+      if (DeltaU <= 0) { /* going off */
+	if (Ufet >= Utox) {
+	  if (-DeltaU > Utstlo) {
+	    Ufet = Uold - Utstlo;
+	  }
+	} else {
+	  Ufet = MAX (Ufet, Uth + 2);
+	}
+      } else { /* staying on */
+	if (DeltaU >= Utsthi) {
+	  Ufet = Uold + Utsthi;
+	}
+      }
+    } else { /* middle region */
+      if (DeltaU <= 0) { /* decreasing */
+	Ufet = MAX (Ufet, Uth - 0.5);
+      } else { /* increasing */
+	Ufet = MIN (Ufet, Uth + 4);
+      }
+    }
+  } else { /* FET is off */
+    if (DeltaU <= 0) { /* staying off */
+      if (-DeltaU > Utsthi) {
+	Ufet = Uold - Utsthi;
+      } 
+    } else { /* going on */
+      if (Ufet <= Uth + 0.5) {
+	if (DeltaU > Utstlo) {
+	  Ufet = Uold + Utstlo;
+	}
+      } else {
+	Ufet = Uth + 0.5;
+      }
+    }
+  }
+  return Ufet;
+}
+
+/* The function limits the drain-source voltage for each DC iteration
+   in order to avoid numerical overflows and thereby improve the
+   convergence. */
+nr_double_t fetVoltageDS (nr_double_t Ufet, nr_double_t Uold) {
+  if (Uold >= 3.5) {
+    if (Ufet > Uold) {
+      Ufet = MIN (Ufet, 3 * Uold + 2);
+    } else if (Ufet < 3.5) {
+      Ufet = MAX (Ufet, 2);
+    }
+  } else {
+    if (Ufet > Uold) {
+      Ufet = MIN (Ufet, 4);
+    } else {
+      Ufet = MAX (Ufet, -0.5);
+    }
+  }
+  return Ufet;
+}
+
+/* This function calculates the overlap capacitance for MOS based upon
+   the given voltages, surface potential and the zero-bias oxide
+   capacitance. */
+void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Ugb,
+			  nr_double_t Uth, nr_double_t Udsat, nr_double_t Phi,
+			  nr_double_t Cox, nr_double_t& Cgs, nr_double_t& Cgd,
+			  nr_double_t& Cgb) {
+
+  nr_double_t Utst = Ugs - Uth;
+  if (Utst <= -Phi) {
+    Cgb = Cox;
+    Cgs = 0;
+    Cgd = 0;
+  } else if (Utst <= -Phi / 2) {
+    Cgb = -Utst * Cox / Phi;
+    Cgs = 0;
+    Cgd = 0;
+  } else if (Utst <= 0) {
+    Cgb = -Utst * Cox / Phi;
+    Cgs = -Utst * Cox * 2 / 3 / Phi + 2 * Cox / 3;
+    Cgd = 0;
+  } else  {
+    nr_double_t Uds = Ugs - Ugd;
+    if (Udsat <= Uds) {
+      Cgs = 2 * Cox / 3;
+      Cgd = 0;
+      Cgb = 0;
+    } else {
+      nr_double_t Sqr1 = sqr (Udsat - Uds);
+      nr_double_t Sqr2 = sqr (2 * Udsat - Uds);
+      Cgd = Cox * (1 - Udsat * Udsat / Sqr2) * 2 / 3;
+      Cgs = Cox * (1 - Sqr1 / Sqr2) * 2 / 3;
+      Cgb = 0;
+    }
+  }
 }

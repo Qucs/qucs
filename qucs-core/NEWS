@@ -26,6 +26,7 @@ files.
 Version 0.0.3
 -------------
 
+ * simple P- and N-type MOSFET implementation
  * new S-parameter file (currently only touchstone) component
  * subcircuit definitions are now possible
  * npn- and pnp-type BJT implementation (Gummel-Poon model)

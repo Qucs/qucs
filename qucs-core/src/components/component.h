@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.13 2004-07-25 16:58:47 margraf Exp $
+ * $Id: component.h,v 1.14 2004-08-03 15:36:20 ela Exp $
  *
  */
 
@@ -67,6 +67,7 @@
 #include "devices/diode.h"
 #include "devices/jfet.h"
 #include "devices/bjt.h"
+#include "devices/mosfet.h"
 
 #include "microstrip/substrate.h"
 #include "microstrip/msline.h"
