@@ -1,3 +1,12 @@
+2004-05-15  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
+
+	* diagrams/diagram.cpp (loadIndepVarData): Fixed typo
+	in error message.
+
+	* qucs_de.ts: Updated german translation.
+
+	* qucs.cpp (QucsApp): Fixed Qucs file filter description.
+
 2004-04-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug after placing diagram dialog

@@ -445,7 +445,7 @@ int Diagram::loadIndepVarData(const QString& var, const QString& FileString)
     x = Line.toDouble(&ok);  // get number
     if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Too few independent data\"")+
+                   QObject::tr("Too few independent data \"")+
 		   var+"\"");
       return -1;
     }
