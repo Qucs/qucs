@@ -17,6 +17,8 @@
 
 #include "id_text.h"
 
+#include "id_dialog.h"
+
 
 ID_Text::ID_Text(int cx_, int cy_)
 {
@@ -135,4 +137,28 @@ void ID_Text::mirrorX()
 // Mirrors about center line.
 void ID_Text::mirrorY()
 {
+}
+
+// --------------------------------------------------------------------------
+// Calls the property dialog for the painting and changes them accordingly.
+// If there were changes, it returns 'true'.
+bool ID_Text::Dialog()
+{
+  bool changed = false;
+
+  ID_Dialog *d = new ID_Dialog();
+  d->Prefix->setText(Prefix);
+
+  if(d->exec() == QDialog::Rejected) {
+    delete d;
+    return false;
+  }
+
+  if(Prefix  != d->Prefix->text()) {
+    Prefix = d->Prefix->text();
+    changed = true;
+  }
+
+  delete d;
+  return changed;
 }

@@ -387,3 +387,31 @@ void QucsActions::slotOnGrid(bool on)
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
+
+// #######################################################################
+// Is called, when "move component text" action is activated.
+void QucsActions::slotMoveText(bool on)
+{
+  if(!on) {
+    view->MouseMoveAction = &QucsView::MouseDoNothing;
+    view->MousePressAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = &QucsView::MouseDoNothing;
+    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    App->activeAction = 0;   // no action active
+    if(view->drawn) view->viewport()->repaint();
+    return;
+  }
+  if(App->activeAction) {
+    App->activeAction->blockSignals(true); // do not call toggle slot
+    App->activeAction->setOn(false);       // set last toolbar button off
+    App->activeAction->blockSignals(false);
+  }
+  App->activeAction = moveText;
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveMoveTextB;
+  view->MousePressAction = &QucsView::MPressMoveText;
+  view->MouseReleaseAction = &QucsView::MouseDoNothing;
+  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}

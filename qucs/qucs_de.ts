@@ -501,6 +501,25 @@
     </message>
 </context>
 <context>
+    <name>ID_Dialog</name>
+    <message>
+        <source>Edit Subcircuit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefix:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+</context>
+<context>
     <name>LineDialog</name>
     <message>
         <source>Line color: </source>
@@ -5367,6 +5386,16 @@ Bearbeitet das Symbol für diesen Schaltkreis</translation>
 </source>
         <translation>Spanisch von Jose L. Redrejo Rodriguez
 </translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

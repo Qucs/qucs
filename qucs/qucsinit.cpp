@@ -204,6 +204,15 @@ void QucsInit::initActions()
   Acts->onGrid->setToggleAction(true);
   connect(Acts->onGrid, SIGNAL(toggled(bool)), Acts, SLOT(slotOnGrid(bool)));
 
+  Acts->moveText = new QAction(tr("Move Component Text"),
+			tr("Move Component Text"), CTRL+Key_K, App);
+  Acts->moveText->setStatusTip(tr("Move Component Text"));
+  Acts->moveText->setWhatsThis(
+	tr("Move Component Text\n\nMoves the property text of components"));
+  Acts->moveText->setToggleAction(true);
+  connect(Acts->moveText, SIGNAL(toggled(bool)),
+	  Acts, SLOT(slotMoveText(bool)));
+
   App->editCut = new QAction(tr("Cut"),
 			QIconSet(QImage(BITMAPDIR "editcut.png")),
 			tr("Cu&t"), CTRL+Key_X, App);
@@ -581,6 +590,7 @@ void QucsInit::initMenuBar()
   Acts->editActivate->addTo(editMenu);
   editMenu->insertItem(tr("Align"), alignMenu);
   Acts->onGrid->addTo(editMenu);
+  Acts->moveText->addTo(editMenu);
   editMenu->insertSeparator();
   App->intoH->addTo(editMenu);
   App->popH->addTo(editMenu);

@@ -459,6 +459,25 @@
     </message>
 </context>
 <context>
+    <name>ID_Dialog</name>
+    <message>
+        <source>Edit Subcircuit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefix:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Porzuć</translation>
+    </message>
+</context>
+<context>
     <name>MarkerDialog</name>
     <message>
         <source>Edit Marker Properties</source>
@@ -3953,6 +3972,16 @@ Edits the symbol for this schematic</source>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Component Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Component Text
+
+Moves the property text of components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -48,8 +48,6 @@ void Node::paint(ViewPainter *p)
 	     p->Painter->setBrush(Qt::NoBrush);
              break;
   }
-
-  if(Label) Label->paint(p);
 }
 
 // ----------------------------------------------------------------

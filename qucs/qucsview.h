@@ -54,7 +54,7 @@ public:
   QucsView(QWidget *parent=0);
   ~QucsView();
 
-  double Zoom(double s);
+  float Zoom(float s);
   bool   pasteElements();
   void   enlargeView(int x1, int y1, int x2, int y2);
   void   setPainter(QPainter *p, QucsDoc *d);
@@ -118,6 +118,8 @@ public:
   void MMoveActivate(QMouseEvent*);
   void MMoveOnGrid(QMouseEvent*);
   void MMoveResizePainting(QMouseEvent*);
+  void MMoveMoveText(QMouseEvent*);
+  void MMoveMoveTextB(QMouseEvent*);
   void (QucsView::*MouseMoveAction) (QMouseEvent*);// current mouse move method
 
   void MPressSelect(QMouseEvent*);
@@ -134,6 +136,7 @@ public:
   void MPressPainting(QMouseEvent*);
   void MPressMarker(QMouseEvent*);
   void MPressOnGrid(QMouseEvent*);
+  void MPressMoveText(QMouseEvent*);
   void (QucsView::*MousePressAction) (QMouseEvent*); // mouse press method
 
   void MDoubleClickSelect(QMouseEvent*);
@@ -147,6 +150,7 @@ public:
   void MReleaseResizeDiagram(QMouseEvent*);
   void MReleasePaste(QMouseEvent*);
   void MReleaseResizePainting(QMouseEvent*);
+  void MReleaseMoveText(QMouseEvent*);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*);
 
   void MovingElements();

@@ -44,7 +44,7 @@ public:
 
   QAction *insWire, *insLabel, *insGround, *insPort, *insEquation;
   QAction *editRotate, *editMirror, *editMirrorY, *editPaste, *select;
-  QAction *editActivate, *wire, *editDelete, *setMarker, *onGrid;
+  QAction *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -61,6 +61,7 @@ public slots:
   void slotInsertLabel(bool);
   void slotSetMarker(bool);
   void slotOnGrid(bool);      // set selected elements on grid
+  void slotMoveText(bool);    // move property text of components
 
 private:
   void QucsActions::performToggleAction(bool, QAction*, pToggleFunc,

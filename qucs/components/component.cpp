@@ -165,8 +165,8 @@ void Component::paint(ViewPainter *p)
     }
     xb = a + int(12.0*p->Scale);
     yb = b + int(10.0*p->Scale);
-    x2 = x1+25 + int(double(a) / p->Scale);
-    y2 = y1+23 + int(double(b) / p->Scale);
+    x2 = x1+25 + int(float(a) / p->Scale);
+    y2 = y1+23 + int(float(b) / p->Scale);
     ty = y2 + 1;
 
     p->map(cx-1, cy,   &x, &y);
@@ -192,7 +192,7 @@ void Component::paint(ViewPainter *p)
       p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
     }
 
-    newFont.setPointSizeFloat(float(p->Scale) * QucsSettings.smallFontSize);
+    newFont.setPointSizeFloat(p->Scale * QucsSettings.smallFontSize);
     newFont.setWeight(QFont::Light);
     p->Painter->setFont(newFont);
 
@@ -257,6 +257,23 @@ void Component::paintScheme(QPainter *p)
 
   for(Arc *p3 = Arcs.first(); p3 != 0; p3 = Arcs.next())   // paint all arcs
     p->drawArc(cx+p3->x, cy+p3->y, p3->w, p3->h, p3->angle, p3->arclen);
+}
+
+// -------------------------------------------------------
+// For output on a printer device.
+void Component::print(ViewPainter *p)
+{
+  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
+    pa->w -= 1;   // to look nice after printing, arcs have to be
+    pa->h -= 1;   // made smaller
+  }
+
+  paint(p);
+
+  for(Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
+    pa->w += 1;   // back to old size
+    pa->h += 1;
+  }
 }
 
 // -------------------------------------------------------
