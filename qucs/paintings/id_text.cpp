@@ -1,7 +1,7 @@
 /***************************************************************************
-                        portsymbol.cpp  -  description
+                        id_text.cpp  -  description
                              -------------------
-    begin                : Sun Sep 5 2004
+    begin                : Thu Oct 14 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -15,72 +15,65 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "main.h"
-#include "portsymbol.h"
+#include "id_text.h"
 
 
-PortSymbol::PortSymbol(int cx_, int cy_, int number_)
+ID_Text::ID_Text(int cx_, int cy_)
 {
-  Name = ".PortSym ";
+  Name = ".ID ";
   isSelected = false;
   cx = cx_;
   cy = cy_;
-  y1 = 8;
+  x2 = y2 = 20;
 
-  numberStr = QString::number(number_);
-  QFontMetrics  metrics(QucsSettings.font);
-  QSize r = metrics.size(0, numberStr);
-  x2 = r.width() + 10;
-  x1 = x2 >> 1;
-  if(x1 < 8)  x1 = 8;
-  y2 = r.height() + 20;
+  Prefix = "SUB";
 }
 
-PortSymbol::~PortSymbol()
+ID_Text::~ID_Text()
 {
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::paint(ViewPainter *p)
+void ID_Text::paint(ViewPainter *p)
 {
-  p->Painter->setPen(QPen(QPen::red,1));  // like open node
-  p->drawEllipse(cx-4, cy-4, 8, 8);
-
-  p->Painter->setPen(QPen(QPen::lightGray,1));
-  p->drawRect(cx-x1, cy-y1, x2, y2);
-
-  p->drawText(numberStr, cx-x1+5, cy+7);
+  int Width1, Width2, Height;
+  p->Painter->setPen(QPen(QPen::black,1));
+  Width1 = p->drawText(Prefix, cx, cy, &Height);
+  y2 = Height;
+  Width2 = p->drawText("File=name", cx, cy+Height, &Height);
+  y2 += Height;
+  if(Width1 > Width2)  x2 = Width1;
+  else  x2 = Width2;
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(cx-x1-4, cy-y1-4, x2+8, y2+8);
+    p->drawRoundRect(cx-4, cy-4, x2+8, y2+8);
   }
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::paintScheme(QPainter *p)
+void ID_Text::paintScheme(QPainter *p)
 {
-  p->drawEllipse(cx-4, cy-4, 8, 8);
-  p->drawRect(cx-x1, cy-y1, x2, y2);
+  p->drawRect(cx, cy, x2, y2);
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::getCenter(int& x, int &y)
+void ID_Text::getCenter(int& x, int &y)
 {
-  x = cx;
-  y = cy;
+  x = cx+(x2>>1);
+  y = cy+(y2>>1);
 }
 
 // --------------------------------------------------------------------------
 // Sets the center of the painting to x/y.
-void PortSymbol::setCenter(int x, int y, bool relative)
+void ID_Text::setCenter(int x, int y, bool relative)
 {
   if(relative) { cx += x;  cy += y; }
-  else { cx = x;  cy = y; }
+  else { cx = x-(x2>>1);  cy = y-(y2>>1); }
 }
 
 // --------------------------------------------------------------------------
-bool PortSymbol::load(const QString& s)
+bool ID_Text::load(const QString& s)
 {
   bool ok;
 
@@ -93,53 +86,53 @@ bool PortSymbol::load(const QString& s)
   cy = n.toInt(&ok);
   if(!ok) return false;
 
-  numberStr  = s.section(' ',3,3);    // number
-  if(numberStr.isEmpty()) return false;
+  Prefix = s.section(' ',3,3);    // Prefix
+  if(Prefix.isEmpty()) return false;
 
   return true;
 }
 
 // --------------------------------------------------------------------------
-QString PortSymbol::save()
+QString ID_Text::save()
 {
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += numberStr;
+  s += Prefix;
   return s;
 }
 
 // --------------------------------------------------------------------------
 // Checks if the coordinates x/y point to the painting.
-bool PortSymbol::getSelected(int x, int y)
+bool ID_Text::getSelected(int x, int y)
 {
-  if(x < cx-x1)  return false;
-  if(y < cy-y1)  return false;
-  if(x > cx-x1+x2)  return false;
-  if(y > cy-y1+y2)  return false;
+  if(x < cx)  return false;
+  if(y < cy)  return false;
+  if(x > cx+x2)  return false;
+  if(y > cy+y2)  return false;
 
   return true;
 }
 
 // --------------------------------------------------------------------------
-void PortSymbol::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
+void ID_Text::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx-x1;     _y1 = cy-y1;
-  _x2 = cx-x1+x2;  _y2 = cy-y1+y2;
+  _x1 = cx;     _y1 = cy;
+  _x2 = cx+x2;  _y2 = cy+y2;
 }
 
 // --------------------------------------------------------------------------
 // Rotates around the center.
-void PortSymbol::rotate()
+void ID_Text::rotate()
 {
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
-void PortSymbol::mirrorX()
+void ID_Text::mirrorX()
 {
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
-void PortSymbol::mirrorY()
+void ID_Text::mirrorY()
 {
 }

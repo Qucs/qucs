@@ -507,7 +507,9 @@ bool QucsFile::loadPaintings(QTextStream *stream, QPtrList<Painting> *List)
     cstr = Line.section(' ',0,0);    // painting type
          if(cstr == "Line") p = new GraphicLine();
     else if(cstr == "EArc") p = new EllipseArc();
-    else if(cstr == "PortSym") p = new PortSymbol();
+    else if(cstr == "PortSym") p = new PortSymbol();  // obsolete
+    else if(cstr == ".PortSym") p = new PortSymbol();
+    else if(cstr == ".ID") p = new ID_Text();
     // all other paintings are for schematics only
     else if(Doc->symbolMode) continue;
     else if(cstr == "Text") p = new GraphicText();

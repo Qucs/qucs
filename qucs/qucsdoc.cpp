@@ -2602,7 +2602,7 @@ bool QucsDoc::deleteElements()
   while(pp != 0) {    // test all paintings
     if(pp->isSelected) {
       sel = true;
-      if(strcmp(pp->Name, "PortSym ") != 0) {
+      if(pp->Name.at(0) != '.') {  // do not delete "PortSym", "ID_text"
 	Paints->remove();
 	pp = Paints->current();
 	continue;
@@ -2697,14 +2697,15 @@ int QucsDoc::adjustPortNumbers()
   int countSymPort = countPort;
   Painting *pp;
   for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
-    if(pp->Name == "PortSym ")  countSymPort--;
+    if(pp->Name == ".PortSym ")  countSymPort--;
+
 
   if(countSymPort < 0) {  // remove ports
     QString num;
     for(int z=-countSymPort; z>0; z--) {
       num = QString::number(countPort + z);
       for(pp = SymbolPaints.last(); pp!=0; pp = SymbolPaints.prev())
-	if(pp->Name == "PortSym ")
+	if(pp->Name == ".PortSym ")
 	  if(((PortSymbol*)pp)->numberStr == num) {
 	    SymbolPaints.remove();
 	    break;
