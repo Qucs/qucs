@@ -1,7 +1,7 @@
 /*
  * node.h - node class definitions
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: node.h,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: node.h,v 1.2 2004/06/04 16:01:47 ela Exp $
  *
  */
 
@@ -40,10 +40,13 @@ class node : public object
   int getPort (void);
   void setCircuit (circuit *);
   circuit * getCircuit (void);
+  void setInternal (int i) { internal = i; }
+  int getInternal (void) { return internal; }
 
  private:
   int nNode;
   int port;
+  int internal;
   circuit * _circuit;
 };
 

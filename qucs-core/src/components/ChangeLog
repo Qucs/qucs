@@ -1,3 +1,11 @@
+2004-06-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* resistor.cpp: It is now possible to set R=0.  In this case
+	the actual resistor is replaced by a voltage source with U=0.
+
+	* diode.cpp: Implemented series resistance 'Rs' by creating
+	and new circuit and re-arranging the node names.
+
 2004-05-22  Stefan Jahn  <stefan@lkcc.org>
 
 	* biastee.cpp: Fixed Bias-T DC model.

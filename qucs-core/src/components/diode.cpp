@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.11 2004/05/22 09:17:25 ela Exp $
+ * $Id: diode.cpp,v 1.12 2004/06/04 16:01:47 ela Exp $
  *
  */
 
@@ -34,11 +34,15 @@
 #include "object.h"
 #include "node.h"
 #include "circuit.h"
+#include "net.h"
+#include "analysis.h"
+#include "dcsolver.h"
 #include "component_id.h"
 #include "constants.h"
 #include "diode.h"
 
 diode::diode () : circuit (2) {
+  rs = NULL;
   type = CIR_DIODE;
 }
 
@@ -52,10 +56,74 @@ void diode::calcSP (nr_double_t frequency) {
   setS (2, 1, 2.0 / (z + 2.0));
 }
 
-void diode::initDC (void) {
+void diode::initDC (dcsolver * solver) {
+
+  // initialize starting values
   setV (1, 0.0);
   setV (2, 0.9);
-  Uprev = 0.9;
+  Uprev = real (getV (2) - getV (1));
+
+  // possibly insert series resistance
+  nr_double_t Rs = getPropertyDouble ("Rs");
+  if (Rs != 0) {
+    // create additional circuit if necessary and reassign nodes
+    rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", 2);
+    applyResistance (rs, Rs);
+  }
+  // no series resistance
+  else {
+    disableResistance (this, rs, solver->getNet (), 2);
+  }
+}
+
+/* The function fills in the necessary values for all types of analyses
+   into the given resistor circuit. */
+void diode::applyResistance (circuit * res, nr_double_t Rs) {
+  // apply constant MNA entries
+  nr_double_t g = 1.0 / Rs;
+  res->setY (1, 1, +g); res->setY (2, 2, +g);
+  res->setY (1, 2, -g); res->setY (2, 1, -g);
+
+  // apply constant S-Matrix
+  nr_double_t r = Rs / z0;
+  res->setS (1, 1, r / (r + 2.0)); res->setS (1, 2, 2.0 / (r + 2.0));
+  res->setS (2, 2, r / (r + 2.0)); res->setS (2, 1, 2.0 / (r + 2.0));
+}
+
+/* This function can be used to create an extra resistor circuit.  If
+   the 'res' argument is NULL then the new circuit is created, the
+   nodes get re-arranged and it is inserted into the given
+   netlist. The given arguments can be explained as follows.
+   base:     calling circuit (this)
+   res:      additional resistor circuit (can be NULL)
+   subnet:   the netlist object
+   c:        name of the additional circuit
+   n:        name of the inserted (internal) node
+   internal: number of new internal node (the orignal external node) */
+circuit * diode::splitResistance (circuit * base, circuit * res, net * subnet,
+				  char * c, char * n, int internal) {
+  int external = (internal == 1) ? 2 : 1;
+  if (res == NULL) {
+    res = new circuit (2);
+    res->setName (createInternal (c, base->getName ()));
+    res->setNode (external, base->getNode(internal)->getName ());
+    res->setNode (internal, createInternal (n, base->getName ()), 1);
+    subnet->insertCircuit (res);
+  }
+  base->setNode (internal, res->getNode(internal)->getName (), 1);
+  return res;
+}
+
+/* This function is the counterpart of the above routine.  It removes
+   the resistance circuit from the netlist and re-assigns the original
+   node. */
+void diode::disableResistance (circuit * base, circuit * res, net * subnet,
+			       int internal) {
+  int external = (internal == 1) ? 2 : 1;
+  if (res != NULL) {
+    subnet->removeCircuit (res);
+    base->setNode (internal, res->getNode(external)->getName (), 0);
+  }
 }
 
 void diode::calcDC (void) {

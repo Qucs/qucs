@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.13 2004/05/23 15:27:26 ela Exp $
+ * $Id: dcsolver.cpp,v 1.14 2004/06/04 16:01:47 ela Exp $
  *
  */
 
@@ -67,7 +67,7 @@ dcsolver::dcsolver (char * n) : analysis (n) {
 
 // Destructor deletes the dcsolver class object.
 dcsolver::~dcsolver () {
-  delete nlist;
+  if (nlist) delete nlist;
   delete A;
   delete z;
   delete x;
@@ -88,21 +88,23 @@ dcsolver::dcsolver (dcsolver & o) : analysis (o) {
 /* This is the DC netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void dcsolver::solve (void) {
-  int convergence, run = 0, MaxIterations = 1000;
+  int convergence, run = 0, MaxIterations = 150;
+
+  // initialize node voltages, first guess for non-linear circuits
+  init ();
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: creating node list for DC analysis\n");
 #endif
-  if (nlist == NULL) createNodelist ();
+  createNodeList ();
   nlist->assignNodes ();
-#if DEBUG && 0
+  assignVoltageSources ();
+#if DEBUG
   logprint (LOG_STATUS, "NodeList:\n");
   nlist->print ();
 #endif
 #if DEBUG
   logprint (LOG_STATUS, "NOTIFY: solving DC netlist\n");
 #endif
-  // initialize node voltages, first guess for non-linear circuits
-  init ();
   // run solving loop until convergence is reached
   do {
     createMatrix ();
@@ -122,6 +124,7 @@ void dcsolver::solve (void) {
   }
 #endif /* DEBUG */
   saveResults ();
+  delete nlist; nlist = NULL;
 }
 
 /* The function creates a nodelist for the DC analysis.  The nodelist
@@ -129,14 +132,15 @@ void dcsolver::solve (void) {
    inside the circuit list only.  Each node in the list has references
    to their actual circuit nodes and thereby to the circuits it is
    connected to. */
-void dcsolver::createNodelist (void) {
+void dcsolver::createNodeList (void) {
   circuit * root = subnet->getRoot ();
   nlist = new nodelist ();
   // go through circuit list and find unique nodes
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     for (int i = 1; i <= c->getSize (); i++) {
-      if (nlist->contains (c->getNode(i)->getName ()) == 0) {
-	nlist->add (c->getNode(i)->getName ());
+      node * n = c->getNode (i);
+      if (nlist->contains (n->getName ()) == 0) {
+	nlist->add (n->getName (), n->getInternal ());
       }
     }
   }
@@ -394,6 +398,21 @@ circuit * dcsolver::findVoltageSource (int n) {
   return NULL;
 }
 
+/* The function applies unique voltage source identifiers to each DC
+   voltage source (explicit and built in internal ones) in the list of
+   registered circuits. */
+void dcsolver::assignVoltageSources (void) {
+  circuit * root = subnet->getRoot ();
+  int nSources = 0;
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->getVoltageSources () > 0) {
+      c->setVoltageSource (nSources + 1);
+      nSources += c->getVoltageSources ();
+    }
+  }
+  subnet->setVoltageSources (nSources);
+}
+
 /* The matrix equation Ax = z is solved by x = A^-1*z.  The function
    applies the operation to the previously generated matrices. */
 void dcsolver::runMNA (void) {
@@ -487,7 +506,7 @@ void dcsolver::calc (void) {
 void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    c->initDC ();
+    c->initDC (this);
   }
 }
 
@@ -499,33 +518,36 @@ void dcsolver::saveResults (void) {
   vector * v, * i;
   char * n;
 
-  // add voltage variables
+  // add node voltage variables
   for (int r = 1; r <= N; r++) {
-    n = createV (r);
-    if ((v = data->findVariable (n)) == NULL) {
-      v = new vector (n);
-      v->setOrigin (getName ());
-      data->addVariable (v);
+    if ((n = createV (r)) != NULL) {
+      if ((v = data->findVariable (n)) == NULL) {
+	v = new vector (n);
+	v->setOrigin (getName ());
+	data->addVariable (v);
+      }
+      v->add (x->get (r, 1));
     }
-    v->add (x->get (r, 1));
   }
 
-  // add current variables
+  // add branch current variables
   for (int r = 1; r <= M; r++) {
-    n = createI (r);
-    if ((i = data->findVariable (n)) == NULL) {
-      i = new vector (n);
-      i->setOrigin (getName ());
-      data->addVariable (i);
+    if ((n = createI (r)) != NULL) {
+      if ((i = data->findVariable (n)) == NULL) {
+	i = new vector (n);
+	i->setOrigin (getName ());
+	data->addVariable (i);
+      }
+      i->add (x->get (r + N, 1));
     }
-    i->add (x->get (r + N, 1));
   }
 }
 
 // Create an appropriate variable name for voltages.
 char * dcsolver::createV (int n) {
   static char text[128];
-  sprintf (text, "V%s", nlist->get (n - 1));
+  if (nlist->isInternal (n)) return NULL;
+  sprintf (text, "V%s", nlist->get (n));
   return text;
 }
 
@@ -533,6 +555,7 @@ char * dcsolver::createV (int n) {
 char * dcsolver::createI (int n) {
   static char text[128];
   circuit * vs = findVoltageSource (n);
+  if (vs->isInternalVoltageSource ()) return NULL;
   sprintf (text, "I_%s_%d", vs->getName (), n - vs->isVoltageSource () + 1);
   return text;
 }

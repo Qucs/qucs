@@ -1,3 +1,31 @@
+2004-06-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* nodelist.cpp: Also saves the internal flag of each node
+	added to the nodelist.
+
+	* node.cpp: Node have now an internal flag.
+
+	* dcsolver.cpp: When solving DC networks initDC() is now 
+	called before setting up the node list and the voltage source
+	list.
+	(assignVoltageSources): New function re-assigning the volttage
+	source numbers.
+	When saving node voltages and branch current into the dataset
+	it is checked whether these are internal or not.
+
+	* circuit.h (class circuit): The initDC() function takes
+	now an argument containing the actual DC analysis object.
+	(class circuit): A built in DC voltage can be marked as
+	internal as well.
+
+	* circuit.cpp: It is now possible to mark circuit nodes to
+	be for internal use only (series resistances of non-linear
+	devices).
+	(createInternal): Returns name for internal nodes/circuits.
+
+	* check_netlist.cpp: Added optional Rs parameter to diode
+	model.
+
 2004-06-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_dataset.l, scan_netlist.l, scan_touchstone.l: Included

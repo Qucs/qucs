@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.h,v 1.6 2004/05/22 09:17:25 ela Exp $
+ * $Id: diode.h,v 1.7 2004/06/04 16:01:47 ela Exp $
  *
  */
 
 #ifndef __DIODE_H__
 #define __DIODE_H__
+
+class net;
 
 class diode : public circuit
 {
@@ -31,13 +33,19 @@ class diode : public circuit
   diode ();
   void calcSP (nr_double_t);
   void calcDC (void);
-  void initDC (void);
+  void initDC (dcsolver *);
   void calcOperatingPoints (void);
+
   static nr_double_t pnVoltage (nr_double_t, nr_double_t,
 				nr_double_t, nr_double_t);
+  static circuit * splitResistance (circuit *, circuit *, net *,
+				    char *, char *, int);
+  static void disableResistance (circuit *, circuit *, net *, int);
+  static void applyResistance (circuit *, nr_double_t);
 
  private:
   nr_double_t Uprev;
+  circuit * rs;
 };
 
 #endif /* __DIODE_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.13 2004/05/26 20:03:39 ela Exp $
+ * $Id: circuit.cpp,v 1.14 2004/06/04 16:01:47 ela Exp $
  *
  */
 
@@ -111,11 +111,14 @@ circuit::~circuit () {
 }
 
 /* This function sets the name and port number of one of the circuit's
-   nodes. */
-void circuit::setNode (int i, char * n) {
+   nodes.  It also tells the appropriate node about the circuit it
+   belongs to.  The optional 'intern' argument is used to mark a node
+   to be for internal use only. */
+void circuit::setNode (int i, char * n, int intern) {
   nodes[i - 1].setName (n);
   nodes[i - 1].setCircuit (this);
   nodes[i - 1].setPort (i);
+  nodes[i - 1].setInternal (intern);
 }
 
 // Returns one of the circuit's nodes.
@@ -356,4 +359,12 @@ int circuit::getVoltageSources (void) {
 void circuit::setVoltageSources (int s) {
   assert (s >= 0 && s <= MAX_CIR_VSRCS);
   nSources = s;
+}
+
+/* The function returns an internal node or circuit name with the
+   given prefix and based on the given circuits name. */
+char * circuit::createInternal (char * prefix, char * obj) {
+  static char n[128];
+  sprintf (n, "_%s#%s", prefix, obj);
+  return n;
 }

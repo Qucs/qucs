@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.h,v 1.4 2004/02/03 21:57:28 ela Exp $
+ * $Id: dcsolver.h,v 1.5 2004/06/04 16:01:47 ela Exp $
  *
  */
 
@@ -38,8 +38,9 @@ class dcsolver : public analysis
   dcsolver (dcsolver &);
   ~dcsolver ();
   void solve (void);
-  void createNodelist (void);
+  void createNodeList (void);
   void createMatrix (void);
+  void assignVoltageSources (void);
   circuit * findVoltageSource (int);
   int countNodes (void);
   void createGMatrix (void);

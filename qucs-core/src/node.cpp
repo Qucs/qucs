@@ -1,7 +1,7 @@
 /*
  * node.cpp - node class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: node.cpp,v 1.1 2003/12/20 19:03:25 ela Exp $
+ * $Id: node.cpp,v 1.2 2004/06/04 16:01:47 ela Exp $
  *
  */
 
@@ -36,19 +36,20 @@
 
 // Constructor creates an unnamed instance of the node class.
 node::node () : object () {
-  port = nNode = 0;
+  internal = port = nNode = 0;
   _circuit = NULL;
 }
 
 // Constructor creates a named instance of the node class.
 node::node (char * n) : object (n) {
-  port = nNode = 0;
+  internal = port = nNode = 0;
   _circuit = NULL;
 }
 
 /* The copy constructor creates a new instance of the node class based
    on the given node object. */
 node::node (const node & n) : object (n) {
+  internal = n.internal;
   port = n.port;
   nNode = n.nNode;
   _circuit = n._circuit;
