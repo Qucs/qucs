@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.15 2004/07/30 06:25:54 ela Exp $
+ * $Id: net.cpp,v 1.16 2004/07/31 16:59:14 ela Exp $
  *
  */
 
@@ -264,7 +264,7 @@ void net::orderAnalysis (void) {
 	  // apply DC analysis if necessary
 	  if (child->getType () != ANALYSIS_DC && 
 	      child->getType () != ANALYSIS_SWEEP && dc != NULL) {
-	    removeAnalysis (dc);
+	    if (!dcApplied) removeAnalysis (dc);
 	    a->addAnalysis (dc);
 	    dcApplied++;
 	  }

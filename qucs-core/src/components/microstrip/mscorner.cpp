@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: mscorner.cpp,v 1.1 2004/07/25 16:58:47 margraf Exp $
+ * $Id: mscorner.cpp,v 1.2 2004/07/31 16:59:15 ela Exp $
  *
  */
 
@@ -57,11 +57,11 @@ void mscorner::calcSP (nr_double_t frequency) {
   nr_double_t h     = subst->getPropertyDouble ("h");
 
   /* local variables */
-  complex s11, s21;
-  nr_double_t L, C, wh = W/H;
+  complex z11, z21;
+  nr_double_t L, C, Wh = W/h;
 
   // check validity
-  if ((wh < 0.2) || (wh > 6.0)) {
+  if ((Wh < 0.2) || (Wh > 6.0)) {
     logprint (LOG_STATUS,
 	"Model for microstrip corner defined for 0.2 <= W/h <= 6.0\n");
   }
@@ -75,24 +75,19 @@ void mscorner::calcSP (nr_double_t frequency) {
   }
 
   // capacitance in pF
-  C = W * ( (10.35 * er + 2.5) * wh + (2.6 * er + 5.64) );
+  C = W * ( (10.35 * er + 2.5) * Wh + (2.6 * er + 5.64) );
   // inductance in nH
-  L = 220.0 * h * ( 1.0 - 1.35 * exp( -0.18 * pow(wh, 1.39) ) );
+  L = 220.0 * h * ( 1.0 - 1.35 * exp( -0.18 * pow(Wh, 1.39) ) );
 
-  s21 = complex(0.0, 1e12 / (2*M_PI*frequency*C));
-  s11 = complex(0.0, 2e-9*M_PI*frequency*L) + s21;
+  z21 = rect (0.0, 1e12 / (2*M_PI*frequency*C));
+  z11 = rect (0.0, 2e-9*M_PI*frequency*L) + z21;
 
-  matrix matrixZ (2,2);
-  matrixZ.set (1, 1, s11);
-  matrixZ.set (1, 2, s21);
-  matrixZ.set (2, 1, s21);
-  matrixZ.set (2, 2, s11);
-  matrixZ = ztos (matrixZ);
-
-  setS (1, 1, matrixZ.get (1, 1));
-  setS (1, 2, matrixZ.get (1, 2));
-  setS (2, 1, matrixZ.get (2, 1));
-  setS (2, 2, matrixZ.get (2, 2));
+  matrix z (2);
+  z.set (1, 1, z11);
+  z.set (1, 2, z21);
+  z.set (2, 1, z21);
+  z.set (2, 2, z11);
+  setMatrixS (ztos (z));
 }
 
 void mscorner::calcDC (void) {

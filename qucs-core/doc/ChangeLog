@@ -1,3 +1,9 @@
+2004-07-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsection{Gauss-Jordan method}): Documented
+	Gauss-Jordan method for solving linear equation systems.
+	(subsection{Diode}): Fixed equations for noise.
+
 2004-07-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Two-Port parameters

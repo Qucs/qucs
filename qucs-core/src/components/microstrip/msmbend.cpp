@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.2 2004/07/27 16:43:59 ela Exp $
+ * $Id: msmbend.cpp,v 1.3 2004/07/31 16:59:15 ela Exp $
  *
  */
 
@@ -57,7 +57,7 @@ void msmbend::calcSP (nr_double_t frequency) {
   nr_double_t h     = subst->getPropertyDouble ("h");
 
   /* local variables */
-  complex s11, s21;
+  complex z11, z21;
   nr_double_t L, C, Wh = W / h;
 
   // check validity
@@ -79,20 +79,15 @@ void msmbend::calcSP (nr_double_t frequency) {
   // inductance in nH
   L = 440.0 * h * ( 1.0 - 1.062 * exp( -0.177 * pow(Wh, 0.947) ) );
 
-  s21 = complex(0.0, 1e12 / 2*M_PI*frequency*C);
-  s11 = complex(0.0, 2e-9*M_PI*frequency*L) + s21;
+  z21 = rect (0.0, 1e12 / 2*M_PI*frequency*C);
+  z11 = rect (0.0, 2e-9*M_PI*frequency*L) + z21;
 
-  matrix matrixZ (2, 2);
-  matrixZ.set (1, 1, s11);
-  matrixZ.set (1, 2, s21);
-  matrixZ.set (2, 1, s21);
-  matrixZ.set (2, 2, s11);
-  matrixZ = ztos (matrixZ);
-
-  setS (1, 1, matrixZ.get (1, 1));
-  setS (1, 2, matrixZ.get (1, 2));
-  setS (2, 1, matrixZ.get (2, 1));
-  setS (2, 2, matrixZ.get (2, 2));
+  matrix z (2);
+  z.set (1, 1, z11);
+  z.set (1, 2, z21);
+  z.set (2, 1, z21);
+  z.set (2, 2, z11);
+  setMatrixS (ztos (z));
 }
 
 void msmbend::calcDC (void) {

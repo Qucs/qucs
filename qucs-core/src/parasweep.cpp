@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parasweep.cpp,v 1.6 2004/07/12 18:14:58 ela Exp $
+ * $Id: parasweep.cpp,v 1.7 2004/07/31 16:59:14 ela Exp $
  *
  */
 
@@ -117,6 +117,10 @@ void parasweep::solve (void) {
   for (int i = 0; i < swp->getSize (); i++) {
     D (val) = swp->next ();
     if (runs == 1) saveResults ();
+#if DEBUG
+    logprint (LOG_STATUS, "NOTIFY: %s: running netlist for %s = %g\n",
+	      getName (), n, D (val));
+#endif
     for (analysis * a = actions; a != NULL; a = (analysis *) a->getNext ()) {
       a->solve ();
       // assign variable dataset dependencies to last order analyses

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.2 2004/02/18 17:45:11 ela Exp $
+ * $Id: eqnsys.h,v 1.3 2004/07/31 16:59:14 ela Exp $
  *
  */
 
@@ -30,7 +30,8 @@ enum algo_type {
   ALGO_INVERSE = 0,
   ALGO_GAUSS,
   ALGO_GAUSS_JORDAN,
-  ALGO_LU_DECOMPOSITION
+  ALGO_LU_DECOMPOSITION,
+  ALGO_JACOBI
 };
 
 class matrix;
@@ -55,6 +56,8 @@ class eqnsys
   void solve_gauss (void);
   void solve_gauss_jordan (void);
   void solve_lu (void);
+  void solve_jacobi (void);
+  nr_double_t criteria_schmidt_mises (void);
 };
 
 #endif /* __EQNSYS_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.23 2004/07/28 17:09:44 ela Exp $
+ * $Id: spsolver.cpp,v 1.24 2004/07/31 16:59:15 ela Exp $
  *
  */
 
@@ -474,7 +474,7 @@ void spsolver::reduce (void) {
   if (cand1 != NULL && cand2 != NULL) {
     // connected
     if (cand1 != cand2) {
-#if DEBUG
+#if DEBUG && 0
       logprint (LOG_STATUS, "DEBUG: connected node (%s): %s - %s\n",
 		n1->getName (), cand1->getName (), cand2->getName ());
 #endif /* DEBUG */
@@ -488,7 +488,7 @@ void spsolver::reduce (void) {
     }
     // interconnect
     else {
-#if DEBUG
+#if DEBUG && 0
       logprint (LOG_STATUS, "DEBUG: interconnected node (%s): %s\n",
 		n1->getName (), cand1->getName ());
 #endif
@@ -546,6 +546,10 @@ void spsolver::solve (void) {
   init ();
   insertConnections ();
 
+#if DEBUG
+    logprint (LOG_STATUS, "NOTIFY: %s: solving SP netlist\n", getName ());
+#endif
+
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
     freq = swp->next ();
@@ -555,9 +559,9 @@ void spsolver::solve (void) {
     subnet->setReduced (0);
     calc (freq);
 
-#if DEBUG
-    logprint (LOG_STATUS, "NOTIFY: solving netlist for f = %e\n", 
-	      (double) freq);
+#if DEBUG && 0
+    logprint (LOG_STATUS, "NOTIFY: %s: solving netlist for f = %e\n",
+	      getName (), (double) freq);
 #endif
     
     while (ports > subnet->getPorts ()) {
@@ -670,7 +674,8 @@ void spsolver::insertConnections (void) {
 
   circuit * root = subnet->getRoot ();
 #if DEBUG
-  logprint (LOG_STATUS, "NOTIFY: preparing circuit for analysis\n");
+  logprint (LOG_STATUS, "NOTIFY: %s: preparing circuit for analysis\n",
+	    getName ());
 #endif /* DEBUG */
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     for (int i = 1; i <= c->getSize (); i++) {

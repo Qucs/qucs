@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.33 2004/07/30 06:25:54 ela Exp $
+ * $Id: check_netlist.cpp,v 1.34 2004/07/31 16:59:14 ela Exp $
  *
  */
 
@@ -224,6 +224,9 @@ struct define_t definition_available[] =
       PROP_NO_PROP },
     { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       PROP_NO_PROP }
   },
@@ -919,7 +922,19 @@ static int netlist_checker_variables_intern (struct definition_t * root) {
 	    errors++;
 	  }
 	}
-	// collect parameter sweep variables for the above check
+	// check for duplicate simulations in parameter sweeps (same order
+	// sweep) and allow same parameter name only
+	if ((pos = refs->index (ref->ident)) != -1) {
+	  if (strcmp (para->ident, vars->get (pos))) {
+	    logprint (LOG_ERROR, "checker error, conflicting variables `%s' "
+		      "in `%s:%s' and `%s' in `%s:%s' for `%s'\n",
+		      para->ident, def->type, def->instance,
+		      vars->get (pos), def->type, instances->get (pos),
+		      ref->ident);
+	    errors++;
+	  }
+	}
+	// collect parameter sweep variables for the above two checks
 	instances->add (def->instance);
 	vars->add (para->ident);
 	refs->add (ref->ident);

@@ -1,3 +1,11 @@
+2004-07-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msmbend.cpp, microstrip/mscorner.cpp: Simplified
+	generation of S-parameters.
+
+	* devices/diode.cpp: Additionally using flicker noise
+	parameters for noise calculation.
+
 2004-07-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.h (class msline): Both the quasi-static
