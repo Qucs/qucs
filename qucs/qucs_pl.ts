@@ -2137,6 +2137,22 @@ Usage:  qucsedit [-r] file
         <source> &lt;invalid&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>initial phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative tolerance of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>overestimation of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>

@@ -2029,38 +2029,6 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation>fuente de señal cuadrada de intensidad ideal</translation>
-    </message>
-    <message>
-        <source>current at high pulse</source>
-        <translation>intensidad en el pulso alto</translation>
-    </message>
-    <message>
-        <source>duration of high pulses</source>
-        <translation>duración de los pulsos altos</translation>
-    </message>
-    <message>
-        <source>duration of low pulses</source>
-        <translation>duración de los pulsos bajos</translation>
-    </message>
-    <message>
-        <source>Rectangle Current</source>
-        <translation>Intensidad Cuadrada</translation>
-    </message>
-    <message>
-        <source>ideal rectangle voltage source</source>
-        <translation>fuente de tensión cuadrada ideal</translation>
-    </message>
-    <message>
-        <source>voltage of high signal</source>
-        <translation>tensión de la señal alta</translation>
-    </message>
-    <message>
-        <source>Rectangle Voltage</source>
-        <translation>Tensión Cuadrada</translation>
-    </message>
-    <message>
-        <source>ideal rectangle current source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2093,6 +2061,22 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>relative tolerance of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>absolute tolerance of local truncation error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>overestimation of local truncation error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
