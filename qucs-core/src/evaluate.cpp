@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.15 2004/08/21 13:29:07 ela Exp $
+ * $Id: evaluate.cpp,v 1.16 2004/09/01 21:40:19 ela Exp $
  *
  */
 
@@ -1251,6 +1251,24 @@ constant * evaluate::rtoswr_v (constant * args) {
   return res;
 }
 
+// ** differentiate vector with respect to another vector **
+constant * evaluate::diff_v_2 (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (diff (*v1, *v2));
+  return res;
+}
+
+constant * evaluate::diff_v_3 (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  vector *    v2 = V (args->getResult (1));
+  nr_double_t d3 = D (args->getResult (2));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (diff (*v1, *v2, (int) d3));
+  return res;
+}
+
 // ***************** maximum *******************
 constant * evaluate::max_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
@@ -1512,7 +1530,7 @@ struct application_t eqn::applications[] = {
   { "-", TAG_VECTOR,  evaluate::minus_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "-", TAG_VECTOR,  evaluate::minus_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
   { "-", TAG_VECTOR,  evaluate::minus_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
-  { "-", TAG_VECTOR,  evaluate::minus_c_v, 2, { TAG_COMPLEX,  TAG_VECTOR } },
+  { "-", TAG_VECTOR,  evaluate::minus_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "-", TAG_VECTOR,  evaluate::minus_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
 
   { "*", TAG_DOUBLE,  evaluate::times_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
@@ -1522,7 +1540,7 @@ struct application_t eqn::applications[] = {
   { "*", TAG_VECTOR,  evaluate::times_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "*", TAG_VECTOR,  evaluate::times_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
   { "*", TAG_VECTOR,  evaluate::times_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
-  { "*", TAG_VECTOR,  evaluate::times_c_v, 2, { TAG_COMPLEX,  TAG_VECTOR } },
+  { "*", TAG_VECTOR,  evaluate::times_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "*", TAG_VECTOR,  evaluate::times_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
 
   { "/", TAG_DOUBLE,  evaluate::over_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
@@ -1532,7 +1550,7 @@ struct application_t eqn::applications[] = {
   { "/", TAG_VECTOR,  evaluate::over_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "/", TAG_VECTOR,  evaluate::over_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
   { "/", TAG_VECTOR,  evaluate::over_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
-  { "/", TAG_VECTOR,  evaluate::over_c_v, 2, { TAG_COMPLEX,  TAG_VECTOR } },
+  { "/", TAG_VECTOR,  evaluate::over_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "/", TAG_VECTOR,  evaluate::over_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
 
   { "%", TAG_DOUBLE,  evaluate::modulo_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
@@ -1542,7 +1560,7 @@ struct application_t eqn::applications[] = {
   { "%", TAG_VECTOR,  evaluate::modulo_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "%", TAG_VECTOR,  evaluate::modulo_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
   { "%", TAG_VECTOR,  evaluate::modulo_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
-  { "%", TAG_VECTOR,  evaluate::modulo_c_v, 2, { TAG_COMPLEX,  TAG_VECTOR } },
+  { "%", TAG_VECTOR,  evaluate::modulo_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "%", TAG_VECTOR,  evaluate::modulo_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
 
   { "^", TAG_DOUBLE,  evaluate::power_d_d, 2, { TAG_DOUBLE,  TAG_DOUBLE  } },
@@ -1552,7 +1570,7 @@ struct application_t eqn::applications[] = {
   { "^", TAG_VECTOR,  evaluate::power_v_d, 2, { TAG_VECTOR,  TAG_DOUBLE  } },
   { "^", TAG_VECTOR,  evaluate::power_d_v, 2, { TAG_DOUBLE,  TAG_VECTOR  } },
   { "^", TAG_VECTOR,  evaluate::power_v_c, 2, { TAG_VECTOR,  TAG_COMPLEX } },
-  { "^", TAG_VECTOR,  evaluate::power_c_v, 2, { TAG_COMPLEX,  TAG_VECTOR } },
+  { "^", TAG_VECTOR,  evaluate::power_c_v, 2, { TAG_COMPLEX, TAG_VECTOR  } },
   { "^", TAG_VECTOR,  evaluate::power_v_v, 2, { TAG_VECTOR,  TAG_VECTOR  } },
 
   { "real", TAG_DOUBLE,  evaluate::real_d, 1, { TAG_DOUBLE  } },
@@ -1687,9 +1705,13 @@ struct application_t eqn::applications[] = {
   { "rtoz", TAG_COMPLEX, evaluate::rtoz_c, 1, { TAG_COMPLEX } },
   { "rtoz", TAG_VECTOR,  evaluate::rtoz_v, 1, { TAG_VECTOR  } },
 
-  { "rtoswr", TAG_DOUBLE,  evaluate::rtoswr_d, 1, { TAG_DOUBLE  } },
-  { "rtoswr", TAG_DOUBLE,  evaluate::rtoswr_c, 1, { TAG_COMPLEX } },
-  { "rtoswr", TAG_VECTOR,  evaluate::rtoswr_v, 1, { TAG_VECTOR  } },
+  { "rtoswr", TAG_DOUBLE, evaluate::rtoswr_d, 1, { TAG_DOUBLE  } },
+  { "rtoswr", TAG_DOUBLE, evaluate::rtoswr_c, 1, { TAG_COMPLEX } },
+  { "rtoswr", TAG_VECTOR, evaluate::rtoswr_v, 1, { TAG_VECTOR  } },
+
+  { "diff", TAG_VECTOR, evaluate::diff_v_2, 2, { TAG_VECTOR, TAG_VECTOR } },
+  { "diff", TAG_VECTOR, evaluate::diff_v_3, 3, { TAG_VECTOR, TAG_VECTOR,
+						 TAG_DOUBLE } },
 
   { "max", TAG_DOUBLE,  evaluate::max_d, 1, { TAG_DOUBLE  } },
   { "max", TAG_DOUBLE,  evaluate::max_c, 1, { TAG_COMPLEX } },

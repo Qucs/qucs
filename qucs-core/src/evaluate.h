@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.8 2004/08/17 18:38:59 ela Exp $
+ * $Id: evaluate.h,v 1.9 2004/09/01 21:40:19 ela Exp $
  *
  */
 
@@ -231,6 +231,9 @@ public:
   static constant * rtoswr_d (constant *);
   static constant * rtoswr_c (constant *);
   static constant * rtoswr_v (constant *);
+
+  static constant * diff_v_2 (constant *);
+  static constant * diff_v_3 (constant *);
 
   static constant * max_d (constant *);
   static constant * max_c (constant *);

@@ -1,3 +1,8 @@
+2004-09-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: Implemented numerical differentiation of
+	vectors.
+
 2004-08-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* ucs.cpp (main): Fixed bug when using the '-b' command

@@ -1,7 +1,7 @@
 -- 
 -- BUGS
 -- 
--- Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -26,5 +26,6 @@ send Qucs bug reports to <qucs-bugs@lists.sourceforge.net>.
 Bug:         B0001
 From:	     Stefan Jahn <stefan@lkcc.org>
 State:       unfixed
-Date:	     2003-10-01
-Description: None.
+Date:	     2004-09-01
+Description: Parallel coupled microstrip models do not work.  In fact the
+	     characteristic impedances for even and odd mode are wrong.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.9 2004/07/26 06:30:28 ela Exp $
+ * $Id: vector.h,v 1.10 2004/09/01 21:40:19 ela Exp $
  *
  */
 
@@ -59,9 +59,9 @@ class vector : public object
   nr_double_t maximum ();
   nr_double_t minimum ();
 
-  friend complex sum  (vector & v);
-  friend complex prod (vector & v);
-  friend complex avg  (vector & v);
+  friend complex sum  (vector &);
+  friend complex prod (vector &);
+  friend complex avg  (vector &);
 
   // vector manipulations
   friend vector& real  (vector &);  // the real part
@@ -75,8 +75,9 @@ class vector : public object
   friend vector& pow   (vector &, const complex);
   friend vector& pow   (const complex, vector &);
   friend vector& pow   (vector &, vector &);
-  friend vector& ztor  (vector & v, nr_double_t zref = 50.0);
-  friend vector& rtoz  (vector & v, nr_double_t zref = 50.0);
+  friend vector& ztor  (vector &, nr_double_t zref = 50.0);
+  friend vector& rtoz  (vector &, nr_double_t zref = 50.0);
+  friend vector& diff  (vector &, vector &, int n = 1);
 
   // overloaded math functions
   friend vector& abs    (vector &);
