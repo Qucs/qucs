@@ -1,7 +1,7 @@
 -- 
 -- README
 -- 
--- Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+-- Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 -- 
 -- This is free software; you can redistribute it and/or modify
 -- it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ Unpack the distribution tarball:
 Change into the source directory:
 
     $ cd qucs-core-<version>
-  
+
 Configure the source package for your system:
 
     $ ./configure
@@ -52,7 +52,7 @@ Configure the source package for your system:
 Now compile the package:
 
     $ make
-  
+
 Install Qucsator:
 
     $ make install
@@ -64,6 +64,8 @@ by root.
 For further information on installing the package, please consult the
 file INSTALL included in this distribution.
 
+Please note:  Users of the FreeBSD OS may use a GNU make (probably gmake)
+to compile and install the package.
 
 Getting the latest CVS snapshot
 ===============================

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.32 2005-02-21 20:50:36 raimi Exp $
+ * $Id: nasolver.cpp,v 1.33 2005-02-22 16:41:10 raimi Exp $
  *
  */
 
@@ -804,22 +804,6 @@ void nasolver<nr_type_t>::runMNA (void) {
       steepestDescent ();
     }
   }
-}
-
-/* The function exchanges the rows of a real vector according to the
-   pivot exchanges done during LU decomposition. */
-template <class nr_type_t>
-void nasolver<nr_type_t>::reorderVector (tvector<nr_double_t> * v) {
-  int * change = eqns->getExchangeVector ();
-  v->reorder (change);
-}
-
-/* The function exchanges the rows of a complex vector according to
-   the pivot exchanges done during LU decomposition. */
-template <class nr_type_t>
-void nasolver<nr_type_t>::reorderVector (tvector<complex> * v) {
-  int * change = eqns->getExchangeVector ();
-  v->reorder (change);
 }
 
 /* This function applies a damped Newton-Raphson (limiting scheme) to
