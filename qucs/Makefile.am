@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = bitmaps components diagrams paintings dialogs docs
+SUBDIRS = bitmaps components diagrams paintings dialogs
 bin_PROGRAMS = qucs
 
 MOCHEADERS = qucsview.h qucs.h qucsinit.h qucsactions.h
