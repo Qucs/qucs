@@ -4,7 +4,7 @@
 /*
  * parse_dataset.y - parser for the Qucs dataset
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: parse_dataset.y,v 1.1.1.1 2003-12-20 19:03:26 ela Exp $
+ * $Id: parse_dataset.y,v 1.2 2004-01-17 19:57:36 ela Exp $
  *
  */
 
@@ -52,6 +52,7 @@
 %token Identifier
 %token REAL
 %token IMAG
+%token COMPLEX
 %token Integer
 %token Eol
 %token IndepBegin
@@ -63,6 +64,10 @@
 %union {
   char * ident;
   double f;
+  struct {
+    double r;
+    double i;
+  } c;
   long n;
   vector * v;
   dataset * data;
@@ -72,6 +77,7 @@
 %type <list> IdentifierList
 %type <ident> Identifier
 %type <f> REAL IMAG
+%type <c> COMPLEX
 %type <n> Integer
 %type <v> FloatList
 %type <data> VersionLine VariableList Variable
@@ -119,8 +125,8 @@ FloatList: /* nothing */ { $$ = dataset_vector = new vector (); }
   | REAL FloatList {
     dataset_vector->add ($1);
   }
-  | REAL IMAG FloatList {
-    dataset_vector->add (rect ($1, $2));
+  | COMPLEX FloatList {
+    dataset_vector->add (rect ($1.r, $1.i));
   }
   | IMAG FloatList {
     dataset_vector->add (rect (0.0, $1));

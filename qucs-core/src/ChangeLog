@@ -1,3 +1,9 @@
+2004-01-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_dataset.y: Fixed reduce/reduce conflict.
+
+	* scan_dataset.l: Added explicit rule for complex number.
+
 2003-12-26  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Now running calcS() instead of calc().
