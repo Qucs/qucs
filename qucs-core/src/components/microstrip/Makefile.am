@@ -4,7 +4,7 @@
 #
 # Automake input file for the component library.
 #
-# Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+# Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,10 +28,10 @@ noinst_LIBRARIES = libmicrostrip.a
 
 libmicrostrip_a_SOURCES = substrate.cpp msline.cpp mscorner.cpp msmbend.cpp \
 	msstep.cpp msopen.cpp msgap.cpp mscoupled.cpp mstee.cpp mscross.cpp \
-	msvia.cpp cpline.cpp cpwline.cpp
+	msvia.cpp cpwline.cpp
 
 noinst_HEADERS = substrate.h msline.h mscorner.h msmbend.h msstep.h msopen.h \
-	msgap.h mscoupled.h mstee.h mscross.h msvia.h cpline.h cpwline.h
+	msgap.h mscoupled.h mstee.h mscross.h msvia.h cpwline.h
 
 INCLUDES = -I$(top_srcdir)/src -I$(top_srcdir)/src/components
 

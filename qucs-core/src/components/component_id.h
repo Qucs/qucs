@@ -1,7 +1,7 @@
 /*
  * component_id.h - global component identifier header file
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component_id.h,v 1.21 2004/11/29 19:03:57 raimi Exp $
+ * $Id: component_id.h,v 1.22 2005/01/28 19:24:40 raimi Exp $
  *
  */
 
@@ -82,7 +82,6 @@ enum circuit_type {
   CIR_MSVIA,
 
   // coplanar components
-  CIR_CPLINE,
   CIR_CPWLINE,
 
   // non-linear components

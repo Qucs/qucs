@@ -1,7 +1,7 @@
 /*
  * component.h - global component header file
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.23 2004/11/29 19:03:57 raimi Exp $
+ * $Id: component.h,v 1.24 2005/01/28 19:24:39 raimi Exp $
  *
  */
 
@@ -86,7 +86,6 @@
 #include "microstrip/mstee.h"
 #include "microstrip/mscross.h"
 #include "microstrip/msvia.h"
-#include "microstrip/cpline.h"
 #include "microstrip/cpwline.h"
 
 #endif /* __COMPONENT_H__ */
