@@ -47,8 +47,8 @@ Substrate::Substrate()
   Lines.append(new Line( 52,-22, 66, -8,QPen(QPen::darkBlue,1)));
   Lines.append(new Line( 66,-30, 80,-16,QPen(QPen::darkBlue,1)));
 
-  x1 = -30; y1 =-40;
-  x2 =  80; y2 = 16;
+  x1 = -34; y1 =-44;
+  x2 =  84; y2 = 20;
 
   tx = x1+4;
   ty = y2+4;

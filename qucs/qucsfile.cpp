@@ -617,11 +617,12 @@ bool QucsFile::giveNodeNames(QTextStream *stream)
 		continue;   // insert each subcircuit just one time
 
 	     StringList.append(s);
-             QucsDoc *d = new QucsDoc(0, QucsWorkDir.filePath(s));
+	     QucsDoc *d = new QucsDoc(0, QucsWorkDir.filePath(s));
              if(!d->File.load()) {  // load document if possible
                delete d;
                return false;
              }
+	     d->DocName = s;
 	     d->File.createSubNetlist(stream);
 	     delete d;
            }
@@ -706,8 +707,11 @@ bool QucsFile::createSubNetlist(QTextStream *stream)
     }
 
   QString  Type = Doc->DocName;
+  QFileInfo Info(Type);
+  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
+  if(Type.at(0) <= '9') if(Type.at(0) >= '0')  Type = '_' + Type;
   Type.replace(QRegExp("\\W"), "_"); // replace all none [a-zA-Z0-9] with _
-  (*stream) << "\n.Def:_" << Type << " " << sl.join(" ") << "\n";
+  (*stream) << "\n.Def:" << Type << " " << sl.join(" ") << "\n";
 
 
   QString s;

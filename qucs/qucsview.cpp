@@ -956,7 +956,10 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
-  if(Event->button() != Qt::LeftButton) return;
+  if(Event->button() != Qt::LeftButton) {
+    if(focusElement)  focusElement->isSelected = true;
+    return;
+  }
 
   MousePressAction = &QucsView::MouseDoNothing;
   MouseDoubleClickAction = &QucsView::MouseDoNothing;

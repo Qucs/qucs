@@ -222,7 +222,8 @@ void MOSFET_sub::recreate()
   }
 
   // depletion or enhancement MOSFET ?
-  if(Props.next()->Value.stripWhiteSpace().at(0) == '-') {
+  if((Props.next()->Value.stripWhiteSpace().at(0) == '-') ==
+     (Props.first()->Value == "nfet")) {
     pl3->x1 = -10;  pl3->y1 = -8;  pl3->x2 = -10; pl3->y2 = 8;
   }
   else {
