@@ -1,3 +1,9 @@
+2004-06-20  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* graphs can be shown dashed (real dashes, i.e. independent
+	of point-to-point distance !!!!)
+	* variables of different datasets can be shown on one page
+
 2004-06-14  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* resize function for paintings
@@ -11,6 +17,7 @@
 	* fixed bug that doesn't load diagrams after undo
 	* all transistors can now be loaded
 	* put Resistor and Resistorus together to one component
+	* implemented "redo" function
 
 2004-06-10  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 

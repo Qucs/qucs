@@ -56,6 +56,7 @@ public:
   QString Var;
   QColor  Color;
   int     Thick;
+  int     Style;
 
   // for tabular diagram
   int  Precision;   // number of digits to show

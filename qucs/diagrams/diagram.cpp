@@ -36,7 +36,8 @@ Diagram::Diagram(int _cx, int _cy)
 
   Type = isDiagram;
   isSelected = false;
-  
+  GridOn  = true;
+  GridPen = QPen(QPen::lightGray,0);
   Graphs.setAutoDelete(true);
   Markers.setAutoDelete(true);
   Arcs.setAutoDelete(true);
@@ -104,7 +105,7 @@ void Diagram::paint(QPainter *p)
     }
     else {
         // get width of text
-        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,yLabel);
+        r = p->boundingRect(0,0,0,0, Qt::AlignAuto, yLabel);
         p->setPen(QColor(0,0,0));
         p->drawText(-cy+((y2-r.width())>>1), cx-delta, yLabel);
     }
@@ -143,8 +144,89 @@ void Diagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-void Diagram::calcData(Graph *)
+void Diagram::calcData(Graph *g)
 {
+  if(Name[0] == 'T') {   // no graph within tabulars
+    if(g->Points != 0) {
+      delete[] g->Points;  // memory is of no use in this diagram type
+      g->Points = 0;
+    }
+    return;
+  }
+
+  int *p = g->Points;
+  if(p == 0) return;
+  double *px;
+  double *py = g->cPointsY;
+
+  double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
+  switch(g->Style) {
+    case 0:   // solid line
+      for(int i=g->countY; i>0; i--) {
+        px = g->cPointsX.getFirst()->Points;
+        for(int z=g->cPointsX.getFirst()->count; z>0; z--) {
+          calcCoordinate(*px, *py, *(py+1), p, p+1);
+          px++;
+          py += 2;
+          p  += 2;
+        }
+        *(p++) = -10;
+      }
+      *p = -100;
+      return;
+    case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
+    case 2: Stroke =  2.0; Space =  4.0;  break;   // dot line
+    case 3: Stroke = 24.0; Space =  8.0;  break;   // long dash line
+  }
+
+  int dx, dy, xtmp, ytmp;
+  double alpha, dist;
+  int Flag;    // current state: 1=stroke, 0=space
+  for(int i=g->countY; i>0; i--) {
+    Flag = 1;
+    dist = -Stroke;
+    px = g->cPointsX.getFirst()->Points;
+    calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
+    px++;  py += 2;
+    *(p++) = xtmp;
+    *(p++) = ytmp;
+    for(int z=g->cPointsX.getFirst()->count-1; z>0; z--) {
+      dx = xtmp;
+      dy = ytmp;
+      calcCoordinate(*px, *py, *(py+1), &xtmp, &ytmp);
+      px++;  py += 2;
+      dx = xtmp - dx;
+      dy = ytmp - dy;
+      dist += sqrt(double(dx*dx + dy*dy)); // distance between points
+      if(Flag == 1) if(dist <= 0) {
+	*(p++) = xtmp;    // if stroke then save points
+	*(p++) = ytmp;
+	continue;
+      }
+      alpha   = atan2(dy, dx);   // slope for interpolation
+      while(dist > 0) {   // stroke or space finished ?
+        *(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
+        *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+
+         if(Flag == 0) {
+            dist -= Stroke;
+            if(dist <= 0) {
+               *(p++) = xtmp;  // don't forget point after ...
+               *(p++) = ytmp;  // ... interpolated point
+            }
+         }
+         else {
+            dist -= Space;
+            *(p++) = -2;  // value for interrupt stroke
+         }
+         Flag ^= 1; // toggle between stroke and space
+      }
+
+    } // of x loop
+    *(p++) = -10;
+  } // of y loop
+  *p = -100;
+
 }
 
 // -------------------------------------------------------
@@ -232,10 +314,21 @@ bool Diagram::loadVarData(const QString& fileName)
   if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Var.isEmpty()) return false;
 
-  QFile file(fileName);
+  QFile file;
+  QString Variable;
+  int pos = g->Var.find(':');
+  if(pos < 0) {
+    file.setName(fileName);
+    Variable = g->Var;
+  }
+  else {
+    file.setName(g->Var.left(pos)+".dat");
+    Variable = g->Var.mid(pos+1);
+  }
+
   if(!file.open(IO_ReadOnly)) {
     QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load dataset: ")+fileName);
+                 QObject::tr("Cannot load dataset: ")+file.name());
     return false;
   }
 
@@ -258,7 +351,7 @@ bool Diagram::loadVarData(const QString& fileName)
     i = FileString.find('<', j)+1;
     if(Line.left(3) == "dep") {
       tmp = Line.section(' ', 1, 1);
-      if(g->Var != tmp) continue;  // found variable with name sought for ?
+      if(Variable != tmp) continue; // found variable with name sought for ?
 
       k = 2;
       tmp = Line.section(' ',k,k);
@@ -271,7 +364,7 @@ bool Diagram::loadVarData(const QString& fileName)
     }
     if(Line.left(5) == "indep") {
       tmp = Line.section(' ', 1, 1);
-      if(g->Var != tmp) continue;  // found variable with name sought for ?
+      if(Variable != tmp) continue;  // found variable with name sought for ?
       break;
     }
   }
@@ -290,7 +383,7 @@ bool Diagram::loadVarData(const QString& fileName)
     if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
                    QObject::tr("Cannot get size of independent data \"")+
-		   g->Var+"\"");
+		   Variable+"\"");
       return false;
     }
 
@@ -320,7 +413,8 @@ bool Diagram::loadVarData(const QString& fileName)
   }
 
   counting  *= g->countY;
-  g->Points  = new int[2*counting];  // create memory for points
+  g->Points  = new int[2*counting+1024];  // create memory for points
+  // reserve 1024 extra bytes for dash line etc.
 
   // *****************************************************************
   // get dependent variables *****************************************
@@ -348,7 +442,7 @@ bool Diagram::loadVarData(const QString& fileName)
     if((!ok) || (!ok2)) {
       QMessageBox::critical(0, QObject::tr("Error"),
                    QObject::tr("Too few dependent data \"")+
-		   g->Var+"\"");
+		   Variable+"\"");
       g->Var += " (invalid)";
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
@@ -458,7 +552,10 @@ QString Diagram::save()
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   if(GridOn) s+= "1 ";
   else s += "0 ";
-  s += "\""+xLabel+"\" \""+yLabel+"\">\n";
+  s += GridPen.color().name() + " " + QString::number(GridPen.style());
+  if(xlog) s+= " 1";  else s += " 0";
+  if(ylog) s+= "1";   else s += "0";
+  s += " \""+xLabel+"\" \""+yLabel+"\">\n";
 
   for(Graph *pg=Graphs.first(); pg != 0; pg=Graphs.next())
     s += pg->save()+"\n";
@@ -498,9 +595,23 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   if(!ok) return false;
 
   n  = s.section(' ',5,5);    // GridOn
-  if(n.toInt(&ok) == 1) GridOn = true;
-  else GridOn = false;
-  if(!ok) return false;
+  GridOn = n.at(0) != '0';
+
+  n  = s.section(' ',6,6);    // color for GridPen
+  if(n.at(0) == '#') {    // backward compatible
+    QColor co;
+    co.setNamedColor(n);
+    GridPen.setColor(co);
+    if(!GridPen.color().isValid()) return false;
+
+    n  = s.section(' ',7,7);    // line style
+    GridPen.setStyle((Qt::PenStyle)n.toInt(&ok));
+    if(!ok) return false;
+
+    n  = s.section(' ',8,8);    // xlog, ylog
+    xlog = n.at(0) != '0';
+    ylog = n.at(1) != '0';
+  }
 
   xLabel = s.section('"',1,1);    // xLabel
   yLabel = s.section('"',3,3);    // yLabel

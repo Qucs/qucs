@@ -32,6 +32,8 @@ JFET::JFET()
   Lines.append(new Line(-16, -5,-11,  0,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-16,  5,-11,  0,QPen(QPen::darkBlue,2)));
 
+  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
+
   Ports.append(new Port(-30,  0));
   Ports.append(new Port(  0, 30));
   Ports.append(new Port(  0,-30));

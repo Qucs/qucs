@@ -85,6 +85,7 @@ public slots:
     void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
     void slotEditUndo();    // makes the last operation undone
+    void slotEditRedo();    // makes the last undo undone
     void slotApplSettings();// open dialog to change application settings
 
     void slotHelpIndex();       // shows a HTML docu: Help Index
@@ -126,7 +127,8 @@ public slots:
     void slotSelectAll();
 
 public:
-    QucsView     *view; // the working area with schematics, data displays etc.
+    QucsView  *view; // the working area with schematics, data displays etc.
+    QTabBar   *WorkView;
 
     // menu appearing by right mouse button click on content listview
     QPopupMenu *ContentMenu;
@@ -149,7 +151,6 @@ private:
 
 // ********* Widgets on the main area **********************************
     QTabWidget    *TabView;
-    QTabBar       *WorkView;
 
     QListBox      *Projects;
     QListView     *Content;

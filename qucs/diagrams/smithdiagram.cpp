@@ -30,8 +30,6 @@ SmithDiagram::SmithDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y1 = 16;
   x2 = 200;    // initial size of diagram
   y2 = 200;
-
-  GridOn = true;
   Name = "Smith";
 
   calcDiagram();    // calculate circles for smith chart with |r|=1
@@ -43,15 +41,11 @@ SmithDiagram::~SmithDiagram()
 
 // ------------------------------------------------------------
 // calculate the screen coordinates for the graph data
-void SmithDiagram::calcData(Graph *g)
+void SmithDiagram::calcCoordinate(double, double yr, double yi,
+				 int *px, int *py)
 {
-  int *p = g->Points;
-  if(p == 0) return;
-  double *py = g->cPointsY;
-  for(int z = (g->cPointsX.getFirst()->count)*(g->countY); z>0; z--) {
-    *(p++) = (x2>>1)+int((*(py++))/yup*double(x2>>1) + 0.5);
-    *(p++) = (y2>>1)+int((*(py++))/yup*double(y2>>1) + 0.5);
-  }
+  *px = (x2>>1)+int(yr/yup*double(x2>>1) + 0.5);
+  *py = (y2>>1)+int(yi/yup*double(y2>>1) + 0.5);
 }
 
 
@@ -101,14 +95,15 @@ if(GridOn) {
         theta = 16*360;  // ... draw whole circle
       }
       else {
-        real1 =  sqrt(root)-real;   // calculate both intersections with most outer circle
-        real2 = -sqrt(root)-real;
+	// calculate both intersections with most outer circle
+	real1 =  sqrt(root)-real;
+	real2 = -sqrt(root)-real;
 
-        root  = (real1+1)*(real1+1) + im*im;
-        n_cos = (real1*real1 + im*im - 1) / root;
-        n_sin = 2*im / root;
-        beta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PI);
-        if(beta<0) beta += 16*360;
+	root  = (real1+1)*(real1+1) + im*im;
+	n_cos = (real1*real1 + im*im - 1) / root;
+	n_sin = 2*im / root;
+	beta  = int(16.0*180.0*atan2(n_sin-1/im,n_cos-1)/M_PI);
+	if(beta<0) beta += 16*360;
 
 
         root  = (real2+1)*(real2+1) + im*im;
@@ -121,10 +116,8 @@ if(GridOn) {
       }
     }
 
-    Arcs.append(new Arc(dx2+x, dx2+y, y, y, beta, theta,
-			QPen(QPen::lightGray,0)));
-    Arcs.append(new Arc(dx2+x, dx2  , y, y, 16*360-beta-theta, theta,
-			QPen(QPen::lightGray,0)));
+    Arcs.append(new Arc(dx2+x, dx2+y, y, y, beta, theta, GridPen));
+    Arcs.append(new Arc(dx2+x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
   }
 
   // ....................................................
@@ -135,28 +128,25 @@ if(GridOn) {
     im = (1-im);
     y  = int(im/xup*double(dx2));    // diameter
 
-    Arcs.append(new Arc(dx2+x, dx2+(y>>1), y, y, 0, 16*360,
-			QPen(QPen::lightGray,0)));
+    Arcs.append(new Arc(dx2+x, dx2+(y>>1), y, y, 0, 16*360, GridPen));
 /*        if abs(abs(r)-1) > 0.4      // do not draw if to close to most outer circle (beauty correction)
         */
 
     if(xup > 1.0) {    // draw arcs on the rigth-handed side ?
       im = (rMAXq-1)/(im*(im/2+1)) - 1;
       if(im>=1)
-        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, 0, 16*360,
-			    QPen(QPen::lightGray,0)));
+        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, 0, 16*360, GridPen));
       else {
         beta  = int(16.0*180.0/M_PI*acos(im));
         theta = 2*(16*180-beta);
-        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, beta, theta,
-			    QPen(QPen::lightGray,0)));
+        Arcs.append(new Arc(dx2+x+y, dx2+(y>>1), y, y, beta, theta, GridPen));
       }
     }
   }
 
 
   // horizontal line Im(r)=0
-  Lines.append(new Line(0, dx2, x2, dx2, QPen(QPen::lightGray,0)));
+  Lines.append(new Line(0, dx2, x2, dx2, GridPen));
 
   // ....................................................
   if(xup > 1.0) {  // draw circle with |r|=1 ?
@@ -167,8 +157,7 @@ if(GridOn) {
     // vertical line Re(r)=1 (visible only if |r|>1)
     x = int(x2/xup)>>1;
     y = int(sqrt(rMAXq-1)/xup*dx2);
-    Lines.append(new Line(dx2+x, dx2+y, dx2+x, dx2-y,
-			  QPen(QPen::lightGray,0)));
+    Lines.append(new Line(dx2+x, dx2+y, dx2+x, dx2-y, GridPen));
 
     Texts.append(new Text(0, 4, QString::number(xup)));
   }

@@ -325,9 +325,9 @@ bool Ellipse::Dialog()
   FillDialog *d = new FillDialog(QObject::tr("Edit Ellipse Properties"));
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
-  d->SetComboBox(Pen.style());
+  d->StyleBox->setCurrentItem(Pen.style()-1);
   d->FillColorButt->setPaletteBackgroundColor(Brush.color());
-  d->SetFillComboBox(Brush.style());
+  d->FillStyleBox->setCurrentItem(Brush.style());
   d->CheckFilled->setChecked(filled);
   d->slotCheckFilled(filled);
 
@@ -344,8 +344,8 @@ bool Ellipse::Dialog()
     Pen.setWidth(d->LineWidth->text().toUInt());
     changed = true;
   }
-  if(Pen.style()  != d->LineStyle) {
-    Pen.setStyle(d->LineStyle);
+  if(Pen.style()  != (Qt::PenStyle)(d->StyleBox->currentItem()+1)) {
+    Pen.setStyle((Qt::PenStyle)(d->StyleBox->currentItem()+1));
     changed = true;
   }
   if(filled != d->CheckFilled->isChecked()) {
@@ -356,8 +356,8 @@ bool Ellipse::Dialog()
     Brush.setColor(d->FillColorButt->paletteBackgroundColor());
     changed = true;
   }
-  if(Brush.style()  != d->FillStyle) {
-    Brush.setStyle(d->FillStyle);
+  if(Brush.style()  != d->FillStyleBox->currentItem()) {
+    Brush.setStyle((Qt::BrushStyle)d->FillStyleBox->currentItem());
     changed = true;
   }
 

@@ -19,6 +19,7 @@
 # include <config.h>
 #endif
 
+#include "qucs.h"
 #include "qucsdoc.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
@@ -72,7 +73,7 @@ static const char *smallsave_xpm[] = {
 
 
 
-QucsDoc::QucsDoc(QTabBar *b, const QString& _Name) : File(this)
+QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
 {
   GridX  = 10;
   GridY  = 10;
@@ -98,10 +99,10 @@ QucsDoc::QucsDoc(QTabBar *b, const QString& _Name) : File(this)
   }
   SimOpenDpl = true;
 
-  Bar = b;
+  App = App_;
+  Bar = App->WorkView;
   if(Bar != 0) {
     Bar->addTab(Tab);  // create tab in TabBar
-//    Bar->setCurrentTab(Tab);  // make it the current  ===>  Qt 3.1 CRASHES !!!???!!!
     Bar->repaint();
   }
 
@@ -162,6 +163,9 @@ void QucsDoc::setChanged(bool c, bool fillStack)
 //QString str;
 //t.start();
 //for(int z=0; z<100; z++) str = File.createClipboardFile();
+    QString *Curr = UndoStack.current();
+    while(Curr != UndoStack.last())
+      UndoStack.remove();   // remove "Redo" items
     UndoStack.append(new QString(File.createUndoString()));
 //qDebug("time: %d ms", t.elapsed());
     while(UndoStack.count() > QucsSettings.maxUndo)   // "while..." because
@@ -410,7 +414,7 @@ int QucsDoc::insertWireNode1(Wire *w)
       if(ptr2->y1 > w->y1) continue;
       if(ptr2->y2 < w->y1) continue;
 
-      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is vertical)
+      if(ptr2->isHorizontal() == w->isHorizontal()) // (ptr2-wire is vertical)
         if(ptr2->y2 >= w->y2) {
 	  delete w;    // new wire lies within an existing wire
 	  return 0; }
@@ -442,7 +446,7 @@ int QucsDoc::insertWireNode1(Wire *w)
       if(ptr2->x1 > w->x1) continue;
       if(ptr2->x2 < w->x1) continue;
 
-      if(ptr2->isHorizontal() == w->isHorizontal())   // (ptr2-wire is horizontal)
+      if(ptr2->isHorizontal() == w->isHorizontal()) // (ptr2-wire is horizontal)
         if(ptr2->x2 >= w->x2) { delete w; return 0; }  // new wire lies within an existing wire
         else {
 	  // one part of the wire lies within an existing wire
@@ -1054,13 +1058,13 @@ Marker* QucsDoc::setMarker(int x, int y)
 
       // test all graphs of the diagram
       for(Graph *pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
-        n  = pg->getSelected(x-pd->cx, pd->cy-y);
-        if(n > 0) {
-          Marker *pm = new Marker(pd, pg, n-1);
-          pd->Markers.append(pm);
-          setChanged(true, true);
-          return pm;
-        }
+	n  = pg->getSelected(x-pd->cx, pd->cy-y);
+	if(n > 0) {
+	  Marker *pm = new Marker(pd, pg, n-1, x-pd->cx, pd->cy-y);
+	  pd->Markers.append(pm);
+	  setChanged(true, true);
+	  return pm;
+	}
       }
     }
 
@@ -2498,10 +2502,19 @@ bool QucsDoc::createNetlist(QFile *NetlistFile)
 // ---------------------------------------------------
 bool QucsDoc::undo()
 {
-  if(UndoStack.count() < 2)  return false;
+  if(UndoStack.current() == UndoStack.getFirst())  return false;
 
-  UndoStack.removeLast();    // last item is current state  !!!
-  File.rebuild(UndoStack.current());
+  File.rebuild(UndoStack.prev());
+  reloadGraphs();  // load recent simulation data
+  return true;
+}
+
+// ---------------------------------------------------
+bool QucsDoc::redo()
+{
+  if(UndoStack.current() == UndoStack.getLast())  return false;
+
+  File.rebuild(UndoStack.next());
   reloadGraphs();  // load recent simulation data
   return true;
 }
