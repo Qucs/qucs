@@ -1,3 +1,27 @@
+2004-04-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* input.cpp: Putting substrate definitions into an environment
+	and assiging these to the appropriate components.
+	(createSubstrate): New function creating substrate instances.
+
+	* check_netlist.cpp: Added substrate and microstrip line
+	to the list of available netlist definitions.  Allowing 
+	variables in microstrip elements.
+
+	* variable.h (class variable): Changed variable content
+	within environments.
+
+	* property.cpp (getDouble): Returning changed variable content.
+
+	* parasweep.cpp: Using parameter sweep variable as now
+	defined in the environment.
+
+	* input.cpp: Putting correct parameter sweep variable into
+	environment.
+
+	* check_netlist.cpp: Validating parameter sweeps.  Detecting 
+	cyclic definitions.
+
 2004-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: Replaced 'module()' functions by '%' operator.

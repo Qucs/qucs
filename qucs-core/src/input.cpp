@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.14 2004/03/28 11:24:44 ela Exp $
+ * $Id: input.cpp,v 1.15 2004/04/25 17:08:50 ela Exp $
  *
  */
 
@@ -117,6 +117,7 @@ void input::factory (void) {
   circuit * c;
   object * o;
   analysis * a;
+  substrate * s;
   int i;
 
   // go through the list of input definitions
@@ -131,6 +132,8 @@ void input::factory (void) {
 	    if (pairs->value->var) {
 	      // put new parameter sweep variable into environment
 	      variable * v = new variable (pairs->value->ident);
+	      constant * c = new constant (TAG_DOUBLE);
+	      v->setConstant (c);
 	      env->addVariable (v);
 	    }
 	    a->addProperty (pairs->key, pairs->value->ident);
@@ -146,18 +149,41 @@ void input::factory (void) {
   // go through the list of input definitions
   for (def = definition_root; def != NULL; def = def->next) {
 
+    // handle substrate definitions
+    if (!def->action && def->substrate) {
+      if ((s = createSubstrate (def->type)) != NULL) {
+	s->setName (def->instance);
+
+	// add the properties to substrate
+	for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
+	  if (pairs->value->ident) {
+	    s->addProperty (pairs->key, pairs->value->ident);
+	  } else {
+	    s->addProperty (pairs->key, pairs->value->value);
+	  }
+	// put new substrate definition into environment
+	variable * v = new variable (def->instance);
+	v->setSubstrate (s);
+	env->addVariable (v);
+      }
+    }
+  }
+
+  // go through the list of input definitions
+  for (def = definition_root; def != NULL; def = def->next) {
+
     // handle component definitions
-    if (!def->action) {
+    if (!def->action && !def->substrate) {
       c = createCircuit (def->type);
       o = (object *) c;
       c->setName (def->instance);
 
       // add appropriate nodes to circuit
-      for (i = 1, nodes = def->nodes; nodes != NULL; nodes = nodes->next, i++)
+      for (i = 1, nodes = def->nodes; nodes; nodes = nodes->next, i++)
 	if (i <= c->getSize ())
 	  c->setNode (i, nodes->node);
 
-      // add the properties to circuit
+      // add the properties to circuit/substrate
       for (pairs = def->pairs; pairs != NULL; pairs = pairs->next)
 	if (pairs->value->ident) {
 	  if (pairs->value->var) {
@@ -166,6 +192,10 @@ void input::factory (void) {
 	    variable * v = env->getVariable (pairs->value->ident);
 	    o->addProperty (pairs->key, v);
 	  } else {
+	    if (pairs->value->subst) {
+	      variable * v = env->getVariable (pairs->value->ident);
+	      c->setSubstrate (v->getSubstrate ());
+	    }
 	    o->addProperty (pairs->key, pairs->value->ident);
 	  }
 	} else {
@@ -228,6 +258,8 @@ circuit * input::createCircuit (char * type) {
     return new tline ();
   else if (!strcmp (type, "Diode"))
     return new diode ();
+  else if (!strcmp (type, "MLIN"))
+    return new msline ();
   else if (!strcmp (type, "IProbe"))
     return new iprobe ();
 
@@ -245,5 +277,14 @@ analysis * input::createAnalysis (char * type) {
     return new parasweep ();
 
   logprint (LOG_ERROR, "no such analysis type `%s'\n", type);
+  return NULL;
+}
+
+// The function creates a substrate specified by the type of substrate.
+substrate * input::createSubstrate (char * type) {
+  if (!strcmp (type, "SUBST"))
+    return new substrate ();
+
+  logprint (LOG_ERROR, "no such substrate type `%s'\n", type);
   return NULL;
 }

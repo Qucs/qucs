@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.2 2004/02/13 20:31:45 ela Exp $
+ * $Id: check_netlist.h,v 1.3 2004/04/25 17:08:50 ela Exp $
  *
  */
 
@@ -38,6 +38,7 @@ struct value_t {
   char * scale;
   double value;
   int var;
+  int subst;
 };
 
 /* Representation of a key / value pair. */
@@ -56,6 +57,7 @@ struct definition_t {
   struct definition_t * next;
   int duplicate;
   int action;
+  int substrate;
 };
 
 __BEGIN_DECLS

@@ -1,7 +1,7 @@
 /*
  * complex.cpp - complex number class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.5 2004/04/25 16:25:51 margraf Exp $
+ * $Id: complex.cpp,v 1.6 2004/04/25 17:08:50 ela Exp $
  *
  */
 
@@ -112,21 +112,21 @@ complex pow (const complex z1, const complex z2) {
 }
 
 complex sin (const complex z) {
-  nr_double_t re = real (z);
-  nr_double_t im = imag (z);
-  return (polar (exp (-im), re) + polar (exp (im), -re)) / 2.0;
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return (polar (exp (-i), r) + polar (exp (i), -r)) / 2.0;
 }
 
 complex cos (const complex z) {
-  nr_double_t re = real (z);
-  nr_double_t im = imag (z);
-  return (polar (exp (-im), re) - polar (exp (im), -re)) / 2.0;
+  nr_double_t r = real (z);
+  nr_double_t i = imag (z);
+  return (polar (exp (-i), r) - polar (exp (i), -r)) / 2.0;
 }
 
 complex tan (const complex z) {
-  nr_double_t re = 2.0 * real (z);
-  nr_double_t im = 2.0 * imag (z);
-  return 1.0 + 2.0 / (polar (exp (-im), re) + 1.0);
+  nr_double_t r = 2.0 * real (z);
+  nr_double_t i = 2.0 * imag (z);
+  return 1.0 + 2.0 / (polar (exp (-i), r) + 1.0);
 }
 
 // converts impedance to reflexion coefficient

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.5 2004/04/25 16:26:04 margraf Exp $
+ * $Id: evaluate.cpp,v 1.6 2004/04/25 17:08:50 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 
 using namespace eqn;
 
-// Short macros in order to obtains the correct constant value.
+// Short macros in order to obtain the correct constant value.
 #define D(con) ((constant *) (con))->d
 #define C(con) ((constant *) (con))->c
 #define V(con) ((constant *) (con))->v
@@ -866,7 +866,7 @@ constant * evaluate::tan_v (constant * args) {
 constant * evaluate::ztor_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_COMPLEX);
-  *res->c = ztor (complex (d1));
+  *res->c = ztor (d1);
   return res;
 }
 
@@ -888,7 +888,7 @@ constant * evaluate::ztor_v (constant * args) {
 constant * evaluate::rtoz_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_COMPLEX);
-  *res->c = rtoz (complex (d1));
+  *res->c = rtoz (d1);
   return res;
 }
 
