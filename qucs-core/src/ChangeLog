@@ -1,0 +1,74 @@
+2003-12-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* input.cpp (createCircuit): Added 'Vdc', 'Idc' and 'Vac'
+	components to the list of available components.
+
+2003-12-07  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.c: Made modifications regarding the
+	symmetrical transformator.
+
+	* input.cpp (createCircuit): Added 'sTr' component to the
+	list of available circuit components.
+
+2003-12-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp (stoy, stoz): New matrix conversion routines.
+
+2003-12-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* net.cpp: Added support for differential s parameter 
+	ports.
+
+2003-11-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.c: Checking the number of .SP actions and
+	the number of Pac definitions.
+
+2003-11-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp, matrix.h: Added new matrix computation class.
+	Implemented all function necessary for port impedance
+	transformations (add, sub, mul, inverse, etc.).
+
+2003-11-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* parse_touchstone.y: New parser grammar for the touchstone file
+	format implemented.
+
+	* scan_touchstone.l: New scanner (lexer) for the touchstone file
+	format added.  Adjusted Makefile rule.
+
+	* vector.cpp: The 'add()' method can now also join the vector
+	object data with another vector.
+
+	* dataset.cpp (load_touchstone): Added import functionality for
+	the touchstone file format.
+
+	* strlist.cpp: Two new function 'contains()' and 'get()'
+	implemented.
+
+	* scan_dataset.l: Allow dataset values to be normal integers.
+
+2003-11-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* checker.c: Fixed bug in available component list.
+
+2003-11-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_dataset.l, parse_dataset.y, check_dataset.cpp: Scanner,
+	parser and checker functionality needed for the dataset::load()
+	functionality.  Makefile rules added.
+
+	* dataset.cpp (load): New function.  Can be uses to read a
+	dataset from a file.
+
+	* vector.cpp: New function reverse(), added dependency list
+	and original request size.
+
+	* strlist.cpp, strlist.h: New class representing a list
+	of strings.  Added those files to 'Makefile.am'.
+
+2003-11-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* logging.c: Documented this file's functions.

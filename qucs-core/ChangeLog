@@ -1,0 +1,84 @@
+2003-11-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Suppressing '-g' compiler option when debug 
+	option is disabled.
+
+2003-11-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Renamed 'configure.in' to 'configure.ac'.
+	Added some static definitions to top of 'config.h.in'.
+	New configure option '--enable-debug' added.
+
+2003-11-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.in: Made the double representation configurable.
+
+2003-11-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* complex.cpp: Fixed major bug in complex addition.
+
+	* logging.c: Added logging facility via 'logprint()'.  Changed
+	all callers.
+
+2003-10-20  Stefan Jahn  <stefan@lkcc.org>
+
+	* complex.h: Renamed 'double_t' to 'nr_double_t' to avoid
+	name clashes with compiler types.
+
+	* pac.cpp (pac): Renamed the signal class into pac class to 
+	avoid clashes with the system <signal.h>.
+
+2003-10-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_sp.cpp (main): Implemented main program options -v, -i 
+	and -o.
+
+	* dataset.cpp: New class representing a dataset.
+
+	* vector.cpp: New class.  Allows storage of complex numbers.
+
+2003-10-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* parser.y, scanner.l, checker.c: Added the netlist parser
+	to the project.  Added the appropriate rules to the Makefile.
+
+2003-10-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile (SOURCES): Implemented the following ideal components:
+	cccs, vcvs, ccvs, and trafo.  Added the appropriate source files.
+
+	* vccs.cpp: Added the delay constant T to the s-parameter 
+	matrix.
+
+2003-10-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* Makefile (SOURCES): Implemented the following ideal components: 
+	DC feed, DC block, attenuator, isolator, circulator and bias T.
+	Added the appropriate source files.
+
+	* net.cpp: Documented part of the netlist class.
+
+2003-10-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* property.cpp, object.cpp: Documented each method of both
+	classes and fixed minor bugs.
+
+2003-09-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* test.cir: New file.  Contains a test circuit which can be
+	piped into the program, e.g `$ ./qucs_sp < test.cir`.
+
+	* spice.cpp: Basic implementation of spice netlist input parser.
+	Currently supports C, R and L.  Implemented token helper class.
+
+2003-09-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* net.cpp: Inserting open ports where necessary.
+
+	* signal.cpp (signal): Implemented dedicated signal ports.  Thus
+	you can form netlists with more than one component directly
+	connected to a external node.
+
+	* inductance.cpp, capacity.cpp, open.cpp: Added these components.
+
+	* ChangeLog: Created this file.
