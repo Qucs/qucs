@@ -25,14 +25,14 @@ HB_Sim::HB_Sim()
 
   QString  s = Description;
   int a = s.findRev(" ");
-  s[a] = '\n';    // break line before the word "simulation"
+  if (a != -1) s[a] = '\n';    // break line before the word "simulation"
   QFontMetrics  metrics(QucsSettings.largeFont);
   QSize r = metrics.size(0, s);
   int xb = r.width()  + 15;
   int yb = r.height() + 15;
 
   Texts.append(new Text(0, 0, s.left(a)));
-  Texts.append(new Text(0, 0, s.mid(a+1)));
+  if (a != -1) Texts.append(new Text(0, 0, s.mid(a+1)));
 
   x1 = -10; y1 = -9;
   x2 = x1+xb+8; y2 = y1+yb+8;
