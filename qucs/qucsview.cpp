@@ -25,6 +25,7 @@
 #include <qmessagebox.h>
 
 #include <limits.h>
+#include <stdlib.h>
 
 
 //QucsView::QucsView(QWidget *parent, const char *name, WFlags f) : QScrollView(parent,name,f)
@@ -48,6 +49,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   selComp  = 0;  // no component is selected
   selDiag  = 0;  // no diagram is selected
   selPaint = 0;  // no painting is selected
+  isMoveEqual = false;  // mouse cursor move x and y the same way
 
   Docs.setAutoDelete(true);
 
@@ -280,6 +282,7 @@ void QucsView::MMoveDiagram(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+// Paints a rectangle to select elements within it.
 void QucsView::MMoveSelect(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
@@ -290,6 +293,9 @@ void QucsView::MMoveSelect(QMouseEvent *Event)
   drawn = true;
   MAx2 = int(Event->pos().x()/d->Scale) + d->ViewX1 - MAx1;
   MAy2 = int(Event->pos().y()/d->Scale) + d->ViewY1 - MAy1;
+  if(isMoveEqual)     // x and y size must be equal ?
+    if(abs(MAx2) > abs(MAy2)) { if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2); }
+    else { if(MAy2<0) MAy2 = -abs(MAx2); else MAy2 = abs(MAx2); }
   painter.drawRect(MAx1, MAy1, MAx2, MAy2); // paint new rectangle
 }
 
@@ -318,10 +324,10 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are only moved with one node
 
-      if(int(pw->Port1) > 3) { pw->x1 += MAx1; pw->y1 += MAy1; }
+      if(int(pw->Port1) > 3) { pw->x1 += MAx1; pw->y1 += MAy1;  pw->nx += MAx1;  pw->ny += MAy1; }
       else {
-        if(int(pw->Port1) & 1) pw->x1 += MAx1;
-        if(int(pw->Port1) & 2) pw->y1 += MAy1;
+        if(int(pw->Port1) & 1) { pw->x1 += MAx1; pw->nx += MAx1; }
+        if(int(pw->Port1) & 2) { pw->y1 += MAy1; pw->ny += MAy1; }
       }
 
       if(int(pw->Port2) > 3) { pw->x2 += MAx1; pw->y2 += MAy1; }
@@ -329,9 +335,12 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
         if(int(pw->Port2) & 1) pw->x2 += MAx1;
         if(int(pw->Port2) & 2) pw->y2 += MAy1;
       }
+
+      int l = pw->x2-pw->x1+pw->y2-pw->y1;
+      if(pw->delta > l) pw->delta = l-4;      // root of node label must lie on wire
     }
     else pe->setCenter(MAx1, MAy1, true);
-    
+
     pe->paintScheme(&painter);
   }
 
@@ -368,13 +377,16 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(int(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
-      else {  if(int(pw->Port1) & 1) pw->x1 += MAx1;
-              if(int(pw->Port1) & 2) pw->y1 += MAy1; }
+      if(int(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1;  pw->nx += MAx1;  pw->ny += MAy1; }
+      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; pw->nx += MAx1; }
+              if(int(pw->Port1) & 2) { pw->y1 += MAy1; pw->ny += MAy1; } }
 
       if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
       else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
               if(int(pw->Port2) & 2) pw->y2 += MAy1; }
+
+      int l = pw->x2-pw->x1+pw->y2-pw->y1;
+      if(pw->delta > l) pw->delta = l-4;      // root of node label must lie on wire
     }
     else pe->setCenter(MAx1, MAy1, true);
 
@@ -471,14 +483,28 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   viewport()->repaint();
   if(Event->button() != Qt::LeftButton) return;
   if(focusElement == 0) {
-    MAx2 = 0;  // if not clicking on a component => open a rectangle
+    MAx2 = 0;  // if not clicking on an element => open a rectangle
     MAy2 = 0;
     MouseReleaseAction = &QucsView::MReleaseSelect2;
     MouseMoveAction = &QucsView::MMoveSelect;
     MousePressAction = &QucsView::MouseDoNothing;
     MouseDoubleClickAction = &QucsView::MouseDoNothing;
   }
-  else {  // component could be moved
+  else {  // element could be moved
+  
+    if(focusElement->Type == isDiagram)   // resize diagram ?
+      if(((Diagram*)focusElement)->ResizeTouched(MAx1, MAy1, MAx2, MAy2)) {
+        if(((Diagram*)focusElement)->Name == "Polar") isMoveEqual = true;   // diagram must be square
+        else if(((Diagram*)focusElement)->Name == "Smith") isMoveEqual = true;
+        
+        Docs.current()->setOnGrid(MAx1, MAy1);
+        MouseReleaseAction = &QucsView::MReleaseResizeDiagram;
+        MouseMoveAction = &QucsView::MMoveSelect;
+        MousePressAction = &QucsView::MouseDoNothing;
+        MouseDoubleClickAction = &QucsView::MouseDoNothing;
+        return;
+      }
+  
     Docs.current()->setOnGrid(MAx1, MAy1);
     MouseMoveAction = &QucsView::MMoveMoving;
     MousePressAction = &QucsView::MouseDoNothing;
@@ -635,14 +661,15 @@ void QucsView::MPressComponent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressDiagram(QMouseEvent *)
+void QucsView::MPressDiagram(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
   setPainter(&painter, d);
 
   if(selDiag == 0) return;
-
+  if(Event->button() != Qt::LeftButton) return;
+  
   DiagramDialog *dia = new DiagramDialog(selDiag, d->DataSet);
   if(dia->exec() == QDialog::Rejected) {  // don't insert a diagram if dialog canceled
     delete dia;
@@ -858,6 +885,40 @@ void QucsView::MReleaseMoving(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
+void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
+{
+  if(Event->button() != Qt::LeftButton) return;
+
+  if(MAx2 < 0) {    // resize diagram
+    focusElement->x2 = -MAx2;
+    focusElement->cx = MAx1+MAx2;
+  }
+  else {
+    focusElement->x2 = MAx2;
+    focusElement->cx = MAx1;
+  }
+  if(MAy2 < 0) {
+    focusElement->y2 = -MAy2;
+    focusElement->cy = MAy1;
+  }
+  else {
+    focusElement->y2 = MAy2;
+    focusElement->cy = MAy1+MAy2;
+  }
+  ((Diagram*)focusElement)->updateGraphData();
+  isMoveEqual = false;
+  Docs.current()->setChanged(true);
+  
+  MouseMoveAction = &QucsView::MouseDoNothing;
+  MousePressAction = &QucsView::MPressSelect;
+  MouseReleaseAction = &QucsView::MReleaseSelect;
+  MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
+
+  viewport()->repaint();
+  drawn = false;
+}
+
+// -----------------------------------------------------------
 void QucsView::endElementMoving()
 {  
   int x1, y1, x2, y2;
@@ -989,16 +1050,13 @@ void QucsView::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MDoubleClickSelect(QMouseEvent *Event)
 {
-  if(focusElement == 0) {  // if no component was double clicked, try the wires
-    MPressLabel(Event);
-    return;
-  }
-  
+  if(focusElement == 0) return;  // if no component was double clicked, try the wires
+
   Component *c;
   Diagram *dia;
   ComponentDialog *d;
   DiagramDialog *ddia;
-  
+
   switch(focusElement->Type) {
     case isComponent:  c = (Component*)focusElement;
                        if(c->Sign == "GND") return;
@@ -1009,7 +1067,7 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
                          Docs.current()->Comps.take();
                          x1 = Docs.current()->getComponentPos(c); // for ports and power sources
                          Docs.current()->Comps.insert(x1, c);  // insert at appropriate position
-                         
+
                          Docs.current()->setChanged(true);
                          c->entireBounds(x1,y1,x2,y2);
                          enlargeView(x1,y1,x2,y2);
@@ -1022,6 +1080,9 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
                        if(ddia->exec()  != QDialog::Rejected)
                          Docs.current()->setChanged(true);
                        delete ddia;
+                       break;
+
+    case isWire:       MPressLabel(Event);
                        break;
 
     case isPainting:   if( ((Painting*)focusElement)->Dialog() )

@@ -71,7 +71,7 @@ void RectDiagram::calcDiagram()
     z += GridX;
   }
   Texts.append(new Text(0, -15, QString::number(xmin)));
-  Texts.append(new Text(z, -15, QString::number(xmax)));
+  Texts.append(new Text(x2, -15, QString::number(xmax)));
 
   z=y2-GridY;
   while(z >= 0) {
@@ -86,7 +86,7 @@ void RectDiagram::calcDiagram()
   Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,1)));
 
   Texts.append(new Text(-20, y2, QString::number(ymax)));
-  Texts.append(new Text(-20, 0,    QString::number(ymin)));
+  Texts.append(new Text(-20, 0,  QString::number(ymin)));
 }
 
 // ------------------------------------------------------------

@@ -54,7 +54,6 @@ TRANSFILES = $(TRANSLATIONS:.ts=.qm)
 
 %.qm: %.ts
 	$(LRELEASE) $<
-
 # installation of translations
 langdatadir = ${prefix}/share/qucs/lang
 langdata_DATA = $(TRANSFILES)

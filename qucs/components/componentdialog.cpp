@@ -160,7 +160,7 @@ void ComponentDialog::slotApplyChange(const QString& Text)
 // -------------------------------------------------------------------------
 void ComponentDialog::slotApplyProperty()
 {
-  prop->currentItem()->setText(1, edit->text());
+  prop->currentItem()->setText(1, edit->text());	// apply edit line
 
   QListViewItem *item = prop->currentItem()->itemBelow();
   if(item == 0) {
@@ -194,6 +194,8 @@ void ComponentDialog::slotApplyInput()
   QListViewItem *item = prop->firstChild();
   if(item == 0) return;
 
+  prop->currentItem()->setText(1, edit->text());	// apply edit line to current item
+
   bool display;
   // take all the new property values
   for(Property *pp = Comp->Props.first(); pp!=0; pp = Comp->Props.next()) {
@@ -207,7 +209,7 @@ void ComponentDialog::slotApplyInput()
       pp->display = display;
       changed = true;
     }
-    
+
     item = item->itemBelow();   // next item
   }
 }
