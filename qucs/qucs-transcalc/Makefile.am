@@ -31,12 +31,20 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucstrans_SOURCES = main.cpp qucstrans.cpp
 
+qucstrans_LDADD = libtranscalc.a
+
 nodist_qucstrans_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucstrans_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 
-noinst_HEADERS = $(MOCHEADERS)
+noinst_HEADERS = $(MOCHEADERS) transline.h units.h microstrip.h coax.h \
+	rectwaveguide.h c_microstrip.h
+
+noinst_LIBRARIES = libtranscalc.a
+
+libtranscalc_a_SOURCES = microstrip.cpp transline.cpp coax.cpp \
+	rectwaveguide.cpp c_microstrip.cpp
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<

@@ -1421,3 +1421,190 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   len = x2+r.width()-4;   // more space at the right
   if(len > x3)  x3 = len;
 }
+
+// --------------------------------------------------------------
+// Calculations for Cartesian diagrams (RectDiagram and Rect3DDiagram).
+bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
+				double& zDstep, double& GridStep, double Dist)
+{
+  bool back=false;
+  if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
+    Axis->max += fabs(Axis->max);
+    Axis->min -= fabs(Axis->min);
+  }
+  if(Axis->max == 0) if(Axis->min == 0) {
+    Axis->max = 1;
+    Axis->min = -1;
+  }
+  Axis->low = Axis->min; Axis->up = Axis->max;
+
+  double numGrids, Base, Expo, corr;
+if(Axis->autoScale) {
+  numGrids = floor(Dist/60.0);   // minimal grid is 60 pixel
+  if(numGrids < 1.0) Base = Axis->max-Axis->min;
+  else Base = (Axis->max-Axis->min)/numGrids;
+  Expo = floor(log10(Base));
+  Base = Base/pow(10.0,Expo);        // separate first significant digit
+  if(Base < 3.5) {     // use only 1, 2 and 5, which ever is best fitted
+    if(Base < 1.5) Base = 1.0;
+    else Base = 2.0;
+  }
+  else {
+    if(Base < 7.5) Base = 5.0;
+    else { Base = 1.0; Expo++; }
+  }
+  GridStep = Base * pow(10.0,Expo);   // grid distance in real coordinates
+  corr = floor((Axis->max-Axis->min)/GridStep - numGrids);
+  if(corr < 0.0) corr++;
+  numGrids += corr;     // correct rounding faults
+
+
+  // upper y boundery ...........................
+  zD = fabs(fmod(Axis->max, GridStep));// expand grid to upper diagram edge ?
+  GridNum = zD/GridStep;
+  if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
+  if(Axis->max <= 0.0) {
+    if(GridNum < 0.3) { Axis->up += zD;  zD = 0.0; }
+  }
+  else  if(GridNum > 0.7)  Axis->up += GridStep-zD;
+        else if(GridNum < 0.1)
+	       if(GridNum*Dist >= 1.0)// more than 1 pixel above ?
+		 Axis->up += 0.3*GridStep;  // beauty correction
+
+
+  // lower y boundery ...........................
+  zD = fabs(fmod(Axis->min, GridStep));// expand grid to lower diagram edge ?
+  GridNum = zD/GridStep;
+  if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
+  if(Axis->min <= 0.0) {
+    if(GridNum > 0.7) { Axis->low -= GridStep-zD;  zD = 0.0; }
+    else if(GridNum < 0.1)
+	   if(GridNum*Dist >= 1.0) { // more than 1 pixel above ?
+	     Axis->low -= 0.3*GridStep;   // beauty correction
+	     zD += 0.3*GridStep;
+	   }
+  }
+  else {
+    if(GridNum > 0.3) {
+      zD = GridStep-zD;
+      if(GridNum > 0.9) {
+	if((1.0-GridNum)*Dist >= 1.0) { // more than 1 pixel above ?
+	  Axis->low -= 0.3*GridStep;    // beauty correction
+	  zD += 0.3*GridStep;
+	}
+      }
+    }
+    else { Axis->low -= zD; zD = 0.0; }
+  }
+
+  GridNum = Axis->low + zD;
+  zD /= (Axis->up-Axis->low)/Dist;
+}
+else {   // user defined limits
+  zD = 0.0;
+  Axis->low = GridNum = Axis->limit_min;
+  Axis->up  = Axis->limit_max;
+  if(Axis->limit_max < Axis->limit_min)
+    back = true;
+  GridStep  = Axis->step;
+}
+
+  zDstep = GridStep/(Axis->up-Axis->low)*Dist; // grid in pixel
+  return back;
+}
+
+// --------------------------------------------------------------
+// Calculations for Cartesian diagrams (RectDiagram and Rect3DDiagram).
+bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
+				   double& zDstep, double& corr, int len)
+{
+  if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
+    Axis->max += fabs(Axis->max);
+    Axis->min -= fabs(Axis->min);
+  }
+  if(Axis->max == 0) if(Axis->min == 0) {
+    Axis->max = 1;
+    Axis->min = -1;
+  }
+  Axis->low = Axis->min; Axis->up = Axis->max;
+
+  if(!Axis->autoScale) {
+    Axis->low = Axis->limit_min;
+    Axis->up  = Axis->limit_max;
+  }
+
+
+  bool mirror=false, mirror2=false;
+  double tmp;
+  if(Axis->up < 0.0) {   // for negative values
+    tmp = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -tmp;
+    mirror = true;
+  }
+
+  double Base, Expo;
+  if(Axis->autoScale) {
+    if(mirror) {   // set back values ?
+      tmp = Axis->min;
+      Axis->min = -Axis->max;
+      Axis->max = -tmp;
+    }
+
+    Expo = floor(log10(Axis->max));
+    Base = Axis->max/pow(10.0,Expo);
+    if(Base > 3.0001) Axis->up = pow(10.0,Expo+1.0);
+    else  if(Base < 1.0001) Axis->up = pow(10.0,Expo);
+	  else Axis->up = 3.0 * pow(10.0,Expo);
+
+    Expo = floor(log10(Axis->min));
+    Base = Axis->min/pow(10.0,Expo);
+    if(Base < 2.999) Axis->low = pow(10.0,Expo);
+    else  if(Base > 9.999) Axis->low = pow(10.0,Expo+1.0);
+	  else Axis->low = 3.0 * pow(10.0,Expo);
+
+    corr = double(len) / log10(Axis->up / Axis->low);
+
+    z = 0;
+    zD = Axis->low;
+    zDstep = pow(10.0,Expo);
+
+    if(mirror) {   // set back values ?
+      tmp = Axis->min;
+      Axis->min = -Axis->max;
+      Axis->max = -tmp;
+    }
+  }
+  else {   // user defined limits
+    if(Axis->up < Axis->low) {
+      tmp = Axis->low;
+      Axis->low = Axis->up;
+      Axis->up  = tmp;
+      mirror2 = true;
+    }
+
+    Expo = floor(log10(Axis->low));
+    Base = ceil(Axis->low/pow(10.0,Expo));
+    zD = Base * pow(10.0, Expo);
+    zDstep = pow(10.0,Expo);
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+
+    corr = double(len) / log10(Axis->up / Axis->low);
+    z = int(corr*log10(zD / Axis->low) + 0.5); // int(..) implies floor(..)
+
+    if(mirror2) {   // set back values ?
+      tmp = Axis->low;
+      Axis->low = Axis->up;
+      Axis->up  = tmp;
+    }
+  }
+
+  if(mirror) {   // set back values ?
+    tmp = Axis->low;
+    Axis->low = -Axis->up;
+    Axis->up  = -tmp;
+  }
+
+  if(mirror == mirror2)  return false;
+  else  return true;
+}

@@ -33,8 +33,8 @@ unfixed) have a look at the file BUGS.
   width)
 - improve wiring algorithm
 	- don't change into project directory or any other directory
-- microwave line calculation program
-- filter synthesis program
+	- microwave line calculation program
+	- filter synthesis program
 - import filters for different data formats (ADS, touchstone, etc.)
 	- s-parameter simulator program
 	- DC analysis

@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rectdiagram.h  -  description
-                             -------------------
-    begin                : Thu Oct 2 2003
-    copyright            : (C) 2003 by Michael Margraf
+                              rect3ddiagram.h
+                             -----------------
+    begin                : Sat Mar 5 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RECTDIAGRAM_H
-#define RECTDIAGRAM_H
+#ifndef RECT3DDIAGRAM_H
+#define RECT3DDIAGRAM_H
 
 #include "diagram.h"
 
@@ -24,10 +24,10 @@
   *@author Michael Margraf
   */
 
-class RectDiagram : public Diagram  {
-public: 
-  RectDiagram(int _cx=0, int _cy=0);
-  ~RectDiagram();
+class Rect3DDiagram : public Diagram  {
+public:
+  Rect3DDiagram(int _cx=0, int _cy=0);
+  ~Rect3DDiagram();
 
 
   Diagram* newOne();
@@ -36,6 +36,17 @@ public:
   bool calcYAxis(Axis*, int);
   void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, int*, int*, Axis*);
+
+  double rotX, rotY, rotZ;  // rotation around x, y and z axis
+
+private:
+  void calcCoefficients();
+  double calcX_2D(double, double, double);
+  double calcY_2D(double, double, double);
+
+  int xorig, yorig;    // where is the 3D origin with respect to cx/cy
+  double cxx, cxy, cxz, cyx, cyy, cyz; // coefficients 3D -> 2D transformation
+  double scaleX, scaleY;
 };
 
 #endif

@@ -34,16 +34,16 @@ HelpDialog::HelpDialog(QWidget *parent)
 
 
   // --------  set help text into dialog  ------------
-  QString s(tr("QucsFilter is a filter synthesis program.\n")+
-	    tr("To create a filter, simply enter all\n")+
-	    tr("parameters and press the big button at the\n")+
-	    tr("bottom of the main window. Immediatly, the\n")+
-	    tr("schematic of the filter is calculated and\n")+
-	    tr("put into the clipboard. Now go to Qucs,\n")+
-	    tr("open an empty schematic and press\n")+
-	    tr("CTRL-V (paste from clipboard). The filter\n")+
-	    tr("schematic can now be inserted and\n")+
-	    tr(" simulated. Have lots of fun!"));
+  QString s(tr("QucsFilter is a filter synthesis program. "
+	       "To create a filter, simply enter all "
+	       "parameters and press the big button at the "
+	       "bottom of the main window. Immediatly, the "
+	       "schematic of the filter is calculated and "
+	       "put into the clipboard. Now go to Qucs, "
+	       "open an empty schematic and press "
+	       "CTRL-V (paste from clipboard). The filter "
+	       "schematic can now be inserted and "
+	       " simulated. Have lots of fun!"));
 
 
   // --------  create dialog widgets  ------------
@@ -54,7 +54,7 @@ HelpDialog::HelpDialog(QWidget *parent)
   Text = new QTextEdit(s, QString::null, this);
   Text->setTextFormat(Qt::PlainText);
   Text->setReadOnly(true);
-  Text->setWordWrap(QTextEdit::NoWrap);
+//  Text->setWordWrap(QTextEdit::NoWrap);
   Text->setMinimumSize(200,200);
   vLayout->addWidget(Text);
 

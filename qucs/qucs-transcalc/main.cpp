@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Sun Feb 27 2005
-    copyright            : (C) 2004 by Stefan Jahn
+    copyright            : (C) 2005 by Stefan Jahn
     email                : stefan@lkcc.org
  ***************************************************************************/
 

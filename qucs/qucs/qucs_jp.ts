@@ -462,6 +462,14 @@
         <source>arrows</source>
         <translation>矢</translation>
     </message>
+    <message>
+        <source>Rotation around y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation around z-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FillDialog</name>
@@ -2971,6 +2979,14 @@ Edits the schematic</source>
         <source>Cannot start filter synthesis program!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4274,6 +4290,25 @@ Starts QucsFilter</source>
     <message>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsTrans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line calculation
+
+Starts transmission line calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Swedish by Markus Gothe
 </source>
         <translation type="unfinished"></translation>
     </message>

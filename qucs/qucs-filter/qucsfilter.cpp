@@ -21,6 +21,7 @@
 
 #include "qucsfilter.h"
 #include "helpdialog.h"
+#include "bwfilter.h"
 
 #include <qmenubar.h>
 #include <qpopupmenu.h>
@@ -32,8 +33,13 @@
 #include <qcombobox.h>
 #include <qvalidator.h>
 #include <qtimer.h>
+#include <qclipboard.h>
+#include <qapplication.h>
 
 #include <math.h>
+
+
+//bwfilter Butterworth;
 
 
 QucsFilter::QucsFilter()
@@ -76,11 +82,8 @@ QucsFilter::QucsFilter()
   QLabel *Label2 = new QLabel(tr("Filter class:"), this);
   gbox->addWidget(Label2, 2,0);
   ComboClass = new QComboBox(this);
-  #define CLASS_LOWPASS   0
   ComboClass->insertItem(tr("Low pass"));
-  #define CLASS_HIGHPASS  1
   ComboClass->insertItem(tr("High pass"));
-  #define CLASS_BANDPASS  2
 //  ComboClass->insertItem(tr("Band pass"));
 //  ComboClass->insertItem(tr("Band stop"));
   gbox->addWidget(ComboClass, 2,1);
@@ -206,29 +209,40 @@ void QucsFilter::slotCalculate()
   int Order = EditOrder->text().toInt();
   double CornerFreq = EditCorner->text().toDouble();
   double StopFreq   = EditStop->text().toDouble();
-  double Ripple_dB  = EditRipple->text().toDouble();
+//  double Ripple_dB  = EditRipple->text().toDouble();
   double Impedance  = EditImpedance->text().toDouble();
 
-  CornerFreq *= pow(10, double(3*ComboCorner->currentItem()));
+  CornerFreq *= pow(10, double(3*ComboCorner->currentItem())); // add exponent
   StopFreq   *= pow(10, double(3*ComboStop->currentItem()));
 
 
+  QString *s = 0;
   // call appropriate filter synthesis function
   switch(ComboType->currentItem()) {
     case TYPE_BUTTERWORTH :
 	switch(ComboClass->currentItem()) {
 	  case CLASS_LOWPASS :
+		s = bwfilter::createSchematic(CLASS_LOWPASS, Impedance,
+						Order, CornerFreq);
 		break;
 	  case CLASS_HIGHPASS :
+		s = bwfilter::createSchematic(CLASS_HIGHPASS, Impedance,
+						Order, CornerFreq);
 		break;
 	}
 	break;
   }
+  if(!s) return;
 
+
+  // put resulting filter schematic into clipboard
+  QClipboard *cb = QApplication::clipboard();
+  cb->setText(*s);
+  delete s;
 
   // show result for some time
   ResultState = 0;
-  LabelResult->setText(tr("Result:") + "<font color=\"#008000\"><b>" +
+  LabelResult->setText(tr("Result:") + "<font color=\"#008000\"><b>  " +
                        tr("Succesfull") + "</b></font>");
   QTimer::singleShot(500, this, SLOT(slotShowResult()));
 }
@@ -246,7 +260,7 @@ void QucsFilter::slotShowResult()
   ResultState++;
   if(ResultState & 1)  c = 0xFF;
   else c = 0x80;
-  QString s = QString("<font color=\"#00%100\"><b>").arg(c, 2, 16);
+  QString s = QString("<font color=\"#00%100\"><b>  ").arg(c, 2, 16);
   LabelResult->setText(tr("Result:") + s + tr("Succesfull") + "</b></font>");
 
   c = 500;

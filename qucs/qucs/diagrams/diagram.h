@@ -69,15 +69,7 @@ public:
   bool loadVarData(const QString&);
   int  loadIndepVarData(const QString&, const QString&);
 
-  void calcSmithAxisScale(Axis*, int&, int&);
-  void createSmithChart(Axis*, int Mode=7);
-  void calcPolarAxisScale(Axis*, double&, double&, double&);
-  void createPolarDiagram(Axis*, int Mode=3);
-
-  int  regionCode(int, int);
   bool insideDiagram(int, int);
-  void clip(int* &);
-  void roundClip(int* &);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
@@ -90,6 +82,20 @@ public:
   int x3, y3;
   Axis  xAxis, yAxis, zAxis;   // axes (x, y left, y right)
   int State;  // to remember which resize area was touched
+
+
+protected:
+  void calcSmithAxisScale(Axis*, int&, int&);
+  void createSmithChart(Axis*, int Mode=7);
+  void calcPolarAxisScale(Axis*, double&, double&, double&);
+  void createPolarDiagram(Axis*, int Mode=3);
+
+  bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
+  bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
+
+  int  regionCode(int, int);
+  void clip(int* &);
+  void roundClip(int* &);
 };
 
 #endif
