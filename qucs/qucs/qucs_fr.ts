@@ -58,23 +58,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished">Tout enregistrer</translation>
+        <translation>Tout enregistrer</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished">Jeter</translation>
+        <translation>Jeter</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished">Tout jeter</translation>
+        <translation>Tout jeter</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -3017,7 +3017,7 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancement du programme de synthèse impossible !</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
@@ -4322,58 +4322,64 @@ Déplace la légende du composant</translation>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Japonais par Toyoyuki Ishikawa
+</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Hébreu par Dotan Nahum
+</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos de Qt…</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de texte</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de texte</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de texte : lance l&apos;éditeur de texte de Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Synthèse de filtres</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Lance QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Synthèse de filtres
+
+Lance QucsFilter</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Outils</translation>
     </message>
     <message>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter par Toyoyuki Ishikawa et Michael Margraf
+
+</translation>
     </message>
     <message>
         <source>Line calculation</source>

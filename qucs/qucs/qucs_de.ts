@@ -3489,7 +3489,7 @@ About the application</source>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="obsolete">Über Qt</translation>
+        <translation>Über Qt</translation>
     </message>
     <message>
         <source>&amp;About Qt...</source>
@@ -4449,7 +4449,7 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Programm für die Filtersynthese kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
@@ -5798,7 +5798,7 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor</translation>
     </message>
     <message>
         <source>Text Editor</source>
@@ -5806,37 +5806,43 @@ Verschiebt den Eigenschaftentext von Komponenten</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Startet den Qucs Texteditor</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Texteditor
+
+Startet den Qucs Texteditor</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtersynthese</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Start das QucsFilter Programm</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtersynthese
+
+Startet das QucsFilter Programm</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Werkzeuge</translation>
     </message>
     <message>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter von Toyoyuki Ishikawa und Michael Margraf
+
+</translation>
     </message>
     <message>
         <source>Line calculation</source>
@@ -5855,7 +5861,8 @@ Starts transmission line calculator</source>
     <message>
         <source>Swedish by Markus Gothe
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Schwedisch von Markus Gothe
+</translation>
     </message>
 </context>
 <context>
