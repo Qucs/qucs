@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.3 2004/07/03 10:56:40 ela Exp $
+ * $Id: nodelist.cpp,v 1.4 2004/08/15 12:25:38 ela Exp $
  *
  */
 
@@ -29,34 +29,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "logging.h"
 #include "object.h"
 #include "node.h"
 #include "complex.h"
 #include "circuit.h"
+#include "net.h"
 #include "nodelist.h"
 
 // Constructor creates an instance of the nodelist class.
 nodelist::nodelist () {
-  root = NULL;
+  root = last = NULL;
   txt = NULL;
+  sorting = 0;
+}
+
+/* The function creates a nodelist for the given netlist.  The
+   nodelist is based on the circuit list and consists of unique nodes
+   inside the circuit list only.  Each node in the list has references
+   to their actual circuit nodes and thereby to the circuits it is
+   connected to. */
+nodelist::nodelist (net * subnet) {
+  root = last = NULL;
+  txt = NULL;
+  sorting = 0;
+
+  circuit * c;
+  // go through circuit list and find unique nodes
+  for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
+    for (int i = 1; i <= c->getSize (); i++) {
+      node * n = c->getNode (i);
+      if (contains (n->getName ()) == 0) {
+	add (n->getName (), n->getInternal ());
+      }
+    }
+  }
+  // add circuit nodes to each unique node in the list
+  for (struct nodelist_t * n = getRoot (); n != NULL; n = n->next) {
+    for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
+      for (int i = 1; i <= c->getSize (); i++) {
+	if (!strcmp (n->name, c->getNode(i)->getName ())) {
+	  addCircuitNode (n, c->getNode (i));
+	}
+      }
+    }
+  }
 }
 
 /* This copy constructor creates a instance of the nodelist class
    based on the given nodelist. */
 nodelist::nodelist (const nodelist & o) {
-  struct nodelist_t * n, * last;
-  root = NULL;
-  for (n = o.root; n != NULL; n = n->next) {
-    append (n->name);
-    last = getLastNode ();
-    last->n = n->n;
-    last->nNodes = n->nNodes;
-    last->nodes = (node **) malloc (sizeof (node *) * last->nNodes);
-    memcpy (last->nodes, n->nodes, sizeof (node *) * last->nNodes);
-  }
+  struct nodelist_t * n;
+  root = last = NULL;
+  for (n = o.root; n != NULL; n = n->next) append (copy (n));
   txt = o.txt ? strdup (o.txt) : NULL;
+  sorting = o.sorting;
 }
 
 // Destructor deletes an instance of the nodelist class.
@@ -64,39 +93,89 @@ nodelist::~nodelist () {
   struct nodelist_t * next;
   while (root) {
     next = root->next;
-    if (root->name) free (root->name);
-    if (root->nodes) free (root->nodes);
-    free (root);
+    release (root);
     root = next;
   }
   if (txt) free (txt);
 }
 
+// The function copies the given node with all its properties.
+struct nodelist_t * nodelist::copy (struct nodelist_t * n) {
+  struct nodelist_t * copy = create (n->name, n->internal);
+  copy->n = n->n;
+  copy->nNodes = n->nNodes;
+  if (copy->nNodes) {
+    copy->nodes = (node **) malloc (sizeof (node *) * n->nNodes);
+    memcpy (copy->nodes, n->nodes, sizeof (node *) * n->nNodes);
+  }
+  return copy;
+}
+
 // This function adds a node name to the list and saves the internal flag.
 void nodelist::add (char * str, int intern) {
+  add (create (str, intern));
+}
+
+// The function creates a node based upon the given arguments.
+struct nodelist_t * nodelist::create (char * str, int intern) {
   struct nodelist_t * n;
   n = (struct nodelist_t *) calloc (sizeof (struct nodelist_t), 1);
-  n->next = root;
   n->internal = intern;
   n->name = str ? strdup (str) : NULL;
+  return n;
+}
+
+// This function adds a node to the list.
+void nodelist::add (struct nodelist_t * n) {
+  n->next = root;
+  if (root == NULL) last = n;
   root = n;
 }
 
-// This function append a node name to the list.
+// This function appends a node name to the list.
 void nodelist::append (char * str, int intern) {
-  struct nodelist_t * n;
-  n = (struct nodelist_t *) calloc (sizeof (struct nodelist_t), 1);
+  append (create (str, intern));
+}
+
+// This function appends the given node to the list.
+void nodelist::append (struct nodelist_t * n) {
   n->next = NULL;
-  n->internal = intern;
-  n->name = str ? strdup (str) : NULL;
-  if (root) {
-    struct nodelist_t * e;
-    for (e = root; e->next != NULL; e = e->next);
-    e->next = n;
-  }
-  else {
+  if (root)
+    last->next = n;
+  else
     root = n;
+  last = n;
+}
+
+// This function removes the node with the given name from the list.
+void nodelist::remove (char * name) {
+  remove (getNode (name));
+}
+
+// The function removes the given node from the list.
+void nodelist::remove (struct nodelist_t * del, int keep) {
+  struct nodelist_t * prev, * n;
+  // go through the list
+  for (prev = NULL, n = root; n != NULL; prev = n, n = n->next) {
+    if (n == del) {
+      // adjust the chain properly
+      if (prev == NULL)
+	root = n->next;
+      else
+	prev->next = n->next;
+      if (n == last) last = prev;
+      // delete node if requested and return
+      if (!keep) release (n);
+      return;
+    }
   }
+}
+
+// This function free()'s the given node.
+void nodelist::release (struct nodelist_t * n) {
+  if (n->name) free (n->name);
+  if (n->nodes) free (n->nodes);
+  free (n);
 }
 
 // This function counts the node names in the list.
@@ -141,6 +220,14 @@ struct nodelist_t * nodelist::getNode (int nr) {
   return NULL;
 }
 
+/* The function returns the nodelist structure with the given name in
+   the node name list.  It returns NULL if there is no such node. */
+struct nodelist_t * nodelist::getNode (char * name) {
+  for (struct nodelist_t * n = root; n != NULL; n = n->next)
+    if (!strcmp (name, n->name)) return n;
+  return NULL;
+}
+
 /* Returns a comma separated list of the circuits connected to the
    node specified by the given number. */
 char * nodelist::getNodeString (int nr) {
@@ -166,9 +253,7 @@ char * nodelist::getNodeString (int nr) {
 /* The function returns the nodelist structure at the end of the node
    name list. */
 struct nodelist_t * nodelist::getLastNode (void) {
-  for (struct nodelist_t * n = root; n != NULL; n = n->next)
-    if (n->next == NULL) return n;
-  return NULL;
+  return last;
 }
 
 // This function enumerates the nodes in the node name list.
@@ -195,6 +280,179 @@ void nodelist::addCircuitNode (struct nodelist_t * nl, node * n) {
       realloc (nl->nodes, sizeof (node *) * (1 + nl->nNodes));
   }
   nl->nodes[nl->nNodes++] = n;
+}
+
+/* This function deletes the given node from the nodelist
+   structure. */
+void nodelist::delCircuitNode (struct nodelist_t * nl, node * n) {
+  assert (nl->nNodes > 0);
+  if (nl->nNodes > 1) {
+    int i, j;
+    node ** nodes = (node **) malloc (sizeof (node *) * (nl->nNodes - 1));
+    // copy nodelist except the given one
+    for (j = i = 0; j < nl->nNodes - 1; i++, j++) {
+      if (nl->nodes[i] == n) i++;
+      nodes[j] = nl->nodes[i];
+    }
+    free (nl->nodes);
+    nl->nodes = nodes;
+  }
+  else {
+    // no more nodes in the list
+    free (nl->nodes);
+    nl->nodes = NULL;
+  }
+  nl->nNodes--;
+}
+
+static int sortfunc (struct nodelist_t * n) {
+  int i, p;
+  for (p = 0, i = 0; i < n->nNodes; i++) {
+    if (n->nodes[i]->getCircuit()->isPort ()) return -1;
+    p += n->nodes[i]->getCircuit()->getSize ();
+  }
+  return p;
+}
+
+static int insfunc (struct nodelist_t * n1, struct nodelist_t * n2) {
+  int p1 = sortfunc (n1);
+  int p2 = sortfunc (n2);
+  return ((p1 <= p2) || (p2 < 0)) && p1 >= 0;
+}
+
+/* The function inserts the given node structure into the node list.
+   If the nodelist is sorted then the node gets inserted at a certain
+   position. */
+void nodelist::insert (struct nodelist_t * n) {
+  // first node at all
+  if (root == NULL) {
+    last = root = n;
+    return;
+  }
+
+  // sorted node list
+  if (sorting) {
+    int added = 0;
+    struct nodelist_t * nl, * prev;
+    for (prev = NULL, nl = root; nl != NULL; prev = nl, nl = nl->next) {
+      if (insfunc (n, nl)) {
+	if (prev == NULL) {
+	  n->next = root;
+	  root = n;
+	} else {
+	  n->next = nl;
+	  prev->next = n;
+	}
+	added++;
+	break;
+      }
+    }
+    if (!added) append (n);
+    return;
+  }
+
+  // unsorted node list
+  add (n);
+}
+
+/* This function removes the nodes associated with the given circuit
+   from the node list.  If the node list is sorted then the order gets
+   rearranged properly. */
+void nodelist::remove (circuit * c) {
+  // go through each node of the circuit
+  for (int i = 1; i <= c->getSize (); i++) {
+    node * n = c->getNode (i);
+    struct nodelist_t * nl;
+    if ((nl = getNode (n->getName ())) != NULL) {
+      // remove node from node structure
+      delCircuitNode (nl, n);
+      if (nl->nNodes <= 0) {
+	// completely remove the node structure
+	remove (nl);
+      }
+      else if (sorting && sortfunc (nl) > 0) {
+	// rearrange sorting
+	remove (nl, 1);
+	insert (nl);
+      }
+    }
+  }
+}
+
+/* The following function can be used to insert a new circuit to the
+   node list.  It goes through each node of the circuit and rearranges
+   the node list appropriately. */
+void nodelist::insert (circuit * c) {
+  // go through each node of the circuit
+  for (int i = 1; i <= c->getSize (); i++) {
+    struct nodelist_t * nl;
+    node * n = c->getNode (i);
+    // is this node already in the nodelist?
+    if (contains (n->getName ()) == 0) {
+      // no, create new node and put it into the list
+      nl = create (n->getName (), n->getInternal ());
+      addCircuitNode (nl, n);
+      if (sorting) {
+	if (c->isPort ())
+	  append (nl);
+	else
+	  insert (nl);
+      }
+      else add (nl);
+    }
+    else {
+      // yes, put additional node into nodelist structure
+      if ((nl = getNode (n->getName ())) != NULL) {
+	addCircuitNode (nl, n);
+	if (sorting && sortfunc (nl) > 0) {
+	  // rearrange sorting
+	  remove (nl, 1);
+	  insert (nl);
+	}
+      }
+    }
+  }
+}
+
+/* The function completely rebuilds the nodelist.  Once sort()'ed it
+   keeps being sorted when removing or inserting new circuits. */
+void nodelist::sort (void) {
+  nodelist * nodes = new nodelist ();
+  struct nodelist_t * nl, * cand;
+  int p, i, ports, MaxPorts, len = length ();
+
+  // go through the list until there is no node left
+  for (i = 0; i < len; i++) {
+    // find last order node
+    cand = NULL;
+    for (MaxPorts = -1, p = 0, nl = root; nl != NULL; nl = nl->next) {
+      ports = sortfunc (nl);
+      if (ports > MaxPorts || MaxPorts < 0 || ports == -1) {
+	cand = nl;
+	MaxPorts = ports;
+      }
+      if (ports == -1) break;
+    }
+    // add last order node
+    remove (cand, 1);
+    nodes->add (cand);
+  }
+
+  // store sorted node list in current object
+  root = nodes->getRoot ();
+  last = nodes->getLastNode ();
+  nodes->root = NULL;
+  sorting = 1;
+
+  // delete temporary node list
+  delete nodes;
+}
+
+// The function returns the first two nodes of the sorted list.
+void nodelist::sortedNodes (node ** node1, node ** node2) {
+  assert (root->nNodes == 2);
+  *node1 = root->nodes[0];
+  *node2 = root->nodes[1];
 }
 
 #if DEBUG

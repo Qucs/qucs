@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.h,v 1.9 2004/08/09 15:34:45 ela Exp $
+ * $Id: spsolver.h,v 1.10 2004/08/15 12:25:38 ela Exp $
  *
  */
 
@@ -31,6 +31,7 @@ class node;
 class complex;
 class vector;
 class sweep;
+class nodelist;
 
 class spsolver : public analysis
 {
@@ -63,6 +64,7 @@ class spsolver : public analysis
  private:
   int noise;
   sweep * swp;
+  nodelist * nlist;
 };
 
 #endif /* __SPSOLVER_H__ */

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.h,v 1.9 2004/07/11 10:22:13 ela Exp $
+ * $Id: net.h,v 1.10 2004/08/15 12:25:38 ela Exp $
  *
  */
 
@@ -27,6 +27,7 @@
 
 class circuit;
 class node;
+class nodelist;
 class analysis;
 class dataset;
 class environment;
@@ -53,8 +54,8 @@ class net : public object
   void insertAnalysis (analysis *);
   void removeAnalysis (analysis *);
   dataset * runAnalysis (void);
-  void getDroppedCircuits (void);
-  void deleteUnusedCircuits (void);
+  void getDroppedCircuits (nodelist * nodes = NULL);
+  void deleteUnusedCircuits (nodelist * nodes = NULL);
   int getPorts (void) { return nPorts; }
   int getReduced (void) { return reduced; }
   void setReduced (int r) { reduced = r; }

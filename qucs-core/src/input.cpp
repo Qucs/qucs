@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.27 2004/08/07 10:48:46 margraf Exp $
+ * $Id: input.cpp,v 1.28 2004/08/15 12:25:38 ela Exp $
  *
  */
 
@@ -103,6 +103,7 @@ int input::netlist (net * netlist) {
 #if DEBUG
   netlist_list ();
 #endif /* DEBUG */
+  netlist_status ();
 
   logprint (LOG_STATUS, "creating netlist...\n");
   factory ();

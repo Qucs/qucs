@@ -3330,6 +3330,14 @@ must apply.  If these conditions are not met, the iterative equations
 may still converge.  If these conditions are met the iterative
 equations will definitely converge.
 
+\addvspace{12pt}
+
+Another simple approach to a convergence criteria for iterative
+algorithms is the Schmidt and v. Mises criteria.
+\begin{equation}
+\sqrt{\sum_{i = 1}^n \sum_{j = 1, j \ne i}^n \left|\dfrac{a_{ij}}{a_{ii}}\right|^2} < 1
+\end{equation}
+
 \subsection{Gauss-Seidel method}
 %\addcontentsline{toc}{subsection}{Gauss-Seidel method}
 

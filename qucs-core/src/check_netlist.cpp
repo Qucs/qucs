@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.41 2004/08/09 15:34:44 ela Exp $
+ * $Id: check_netlist.cpp,v 1.42 2004/08/15 12:25:38 ela Exp $
  *
  */
 
@@ -1784,6 +1784,23 @@ void netlist_list (void) {
   }
 }
 #endif /* DEBUG */
+
+/* The function logs the content of the current netlist by telling how
+   many instances of which kind of components are used in the netlist. */
+void netlist_status  (void) {
+  struct define_t * def;
+  struct definition_t * cir;
+  int count;
+  logprint (LOG_STATUS, "netlist content\n");
+  for (def = definition_available; def->type != NULL; def++) {
+    for (count = 0, cir = definition_root; cir != NULL; cir = cir->next) {
+      if (!strcmp (def->type, cir->type)) count++;
+    }
+    if (count > 0) {
+      logprint (LOG_STATUS, "  %5d %s instances\n", count, def->type);
+    }
+  }
+}
 
 /* This is the global netlist checker.  It returns zero on success and
    non-zero on errors. */
