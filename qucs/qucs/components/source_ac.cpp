@@ -54,6 +54,7 @@ Source_ac::Source_ac()
   Model = "Pac";
   Name  = "P";
 
+  // This property must be the first one !
   Props.append(new Property("Num", "1", true,
 		QObject::tr("number of the port")));
   Props.append(new Property("Z", "50 Ohm", true,
