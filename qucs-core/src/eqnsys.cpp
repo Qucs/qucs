@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.2 2004/02/18 17:45:11 ela Exp $
+ * $Id: eqnsys.cpp,v 1.3 2004/05/20 18:06:33 ela Exp $
  *
  */
 
@@ -105,7 +105,7 @@ void eqnsys::solve_gauss (void) {
   int i, c, r, pivot, N = A->getCols ();
   
   // triangulate the matrix
-  for (i = 1; i <= N; i++) {
+  for (i = 1; i < N; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r <= N; r++) {
       if (abs (A->get (r, i)) > MaxPivot) {
@@ -122,7 +122,6 @@ void eqnsys::solve_gauss (void) {
     // compute new rows and columns
     for (r = i + 1; r <= N; r++) {
       f = A->get (r, i) / A->get (i, i);
-      A->set (r, i, 0);
       for (c = i + 1; c <= N; c++) {
 	A->set (r, c, A->get (r, c) - f * A->get (i, c));
       }
@@ -148,7 +147,7 @@ void eqnsys::solve_gauss_jordan (void) {
   nr_double_t MaxPivot;
   complex f;
   int i, c, r, pivot, N = A->getCols ();
-  
+
   // create the eye matrix
   for (i = 1; i <= N; i++) {
     // find maximum column value for pivoting
@@ -164,24 +163,45 @@ void eqnsys::solve_gauss_jordan (void) {
       A->exchangeRows (i, pivot);
       B->exchangeRows (i, pivot);
     }
+
+#if 1
+    // compute current column
+    f = A->get (i, i);
+    for (c = 1; c <= N; c++) {
+      A->set (i, c, A->get (i, c) / f);
+    }
+    B->set (i, 1, B->get (i, 1) / f);
+
     // compute new rows and columns
     for (r = 1; r <= N; r++) {
-      A->set (r, i, (r == i) ? 1 : 0);
-      if (r == i) {
-	f = A->get (i, i);
-	for (c = i + 1; c <= N; c++) {
-	  A->set (r, c, A->get (r, c) / f);
-	}
-	B->set (r, 1, B->get (r, 1) / f);
-      }
-      else {
-	f = A->get (r, i) / A->get (i, i);
-	for (c = i + 1; c <= N; c++) {
+      if (r != i) {
+	f = A->get (r, i);
+	for (c = 1; c <= N; c++) {
 	  A->set (r, c, A->get (r, c) - f * A->get (i, c));
 	}
 	B->set (r, 1, B->get (r, 1) - f * B->get (i, 1));
       }
     }
+#else
+    // compute new rows and columns
+    for (r = 1; r <= N; r++) {
+      if (r == i) {
+        f = A->get (i, i);
+        for (c = i + 1; c <= N; c++) {
+          A->set (r, c, A->get (r, c) / f);
+        }
+        B->set (r, 1, B->get (r, 1) / f);
+      }
+      else {
+        f = A->get (r, i) / A->get (i, i);
+        for (c = i + 1; c <= N; c++) {
+          A->set (r, c, A->get (r, c) - f * A->get (i, c));
+        }
+        B->set (r, 1, B->get (r, 1) - f * B->get (i, 1));
+      }
+      A->set (r, i, (r == i) ? 1 : 0);
+    }
+#endif
   }
 
   // right hand side is now the solution

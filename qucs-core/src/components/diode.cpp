@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.8 2004/05/02 12:02:14 ela Exp $
+ * $Id: diode.cpp,v 1.9 2004/05/20 18:06:33 ela Exp $
  *
  */
 
@@ -46,8 +46,8 @@ void diode::calcSP (nr_double_t frequency) {
   complex z = getOperatingPoint ("gd");
   z += rect (0, getOperatingPoint ("Cd") * 2.0 * M_PI * frequency);
   z = 1.0 / z / z0; 
-  setS (1, 1, z / (z + 2.0));
-  setS (2, 2, z / (z + 2.0));
+  setS (1, 1,   z / (z + 2.0));
+  setS (2, 2,   z / (z + 2.0));
   setS (1, 2, 2.0 / (z + 2.0));
   setS (2, 1, 2.0 / (z + 2.0));
 }
@@ -55,6 +55,7 @@ void diode::calcSP (nr_double_t frequency) {
 void diode::initDC (void) {
   setV (1, 0.0);
   setV (2, 0.9);
+  lastU = 0.9;
 }
 
 void diode::calcDC (void) {
@@ -68,11 +69,13 @@ void diode::calcDC (void) {
 
   // critical voltage necessary for bad start values
   Ucrit = n * Ut * log (Ut / M_SQRT2 / Is);
+  lastU = Ud = pnVoltage (Ud, lastU, Ut / n, Ucrit);
+
   // tiny derivative for little junction voltage
   gtiny = Ud < - 10 * Ut * n ? Is : 0;
 
   gd = Is / Ut / n * exp (Ud / Ut / n) + gtiny;
-  //fprintf (stderr, "gd=%g, Ud=%g\n", gd, Ud);
+  fprintf (stderr, "%s: gd=%g, Ud=%g\n", getName(), gd, Ud);
   Id = Is * (exp (Ud / Ut / n) - 1) + gtiny * Ud;
   Ieq = Id - Ud * gd;
 
@@ -81,6 +84,19 @@ void diode::calcDC (void) {
 
   setY (1, 1, +gd); setY (2, 2, +gd);
   setY (1, 2, -gd); setY (2, 1, -gd);
+}
+
+nr_double_t diode::pnVoltage (nr_double_t Ud, nr_double_t Uold, nr_double_t Ut,
+			      nr_double_t Ucrit) {
+  nr_double_t arg;
+  if (Ud > Ucrit && fabs (Ud - Uold) > 2 * Ut) {
+    if (Uold > 0) {
+      arg = 1 + (Ud - Uold) / Ut;
+      Ud = arg > 0 ? Uold + Ut * log (arg) : Ucrit;
+    }
+    else Ud = Ut * log (Ud / Ut);
+  }
+  return Ud;
 }
 
 void diode::calcOperatingPoints (void) {

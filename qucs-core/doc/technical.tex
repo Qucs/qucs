@@ -1864,11 +1864,13 @@ det A = \sum_{\nu = 1}^{n} a_{\mu\nu}\cdot A_{\mu\nu}
 \quad &\text{using the $\mu$-th row}
 \end{align}
 
-A sub determinant $(n-1)$-th order of a matrix's element $a_{\mu\nu}$
-of $n$-th order is the determinant which is computed by canceling the
-$\mu$-th row and $\nu$-th column.  The following example demonstrates
-calculating the determinant of a 4th order matrix with the elements of
-the 3rd row.
+This methode is called the Laplace expansion.  In order to save
+computing time the row or column with the most zeros in it is used for
+the expansion expressed in the above equations.  A sub determinant
+$(n-1)$-th order of a matrix's element $a_{\mu\nu}$ of $n$-th order is
+the determinant which is computed by canceling the $\mu$-th row and
+$\nu$-th column.  The following example demonstrates calculating the
+determinant of a 4th order matrix with the elements of the 3rd row.
 \begin{align}
 \begin{vmatrix}
 a_{11} & a_{12} & a_{13} & a_{14}\\
@@ -1904,13 +1906,272 @@ a_{41} & a_{42} & a_{43}\\
 \end{align}
 
 This recursive process for computing the inverse of a matrix is most
-easiest to be implemented but as well the slowest algorithm.
+easiest to be implemented but as well the slowest algorithm.  It
+requires approximately $n!$ operations.
 
 \subsection{Gaussian elimination}
 %\addcontentsline{toc}{subsection}{Gaussian elimination}
 
+The Gaussian algorithm for solving a linear equation system is done in
+two parts: forward elimination and backward substitution.  During
+forward elimination the matrix A is transformed into an upper
+triangular equivalent matrix.  Elementary transformations due to an
+equation system having the same solutions for the unknowns as the
+original system.
+
+\begin{equation}
+A =
+\begin{bmatrix}
+a_{11} & a_{12} & \ldots & a_{1n}\\
+a_{21} & a_{22} & \ldots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{n1} & a_{n2} & \ldots & a_{nn}
+\end{bmatrix}
+\rightarrow
+\begin{bmatrix}
+a_{11} & a_{12} & \ldots & a_{1n}\\
+0 & a_{22} & \ldots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & \ldots & 0 & a_{nn}
+\end{bmatrix}
+\end{equation}
+
+The modifications applied to the matrix A in order to achieve this
+transformations are limited to the following set of operations.
+\begin{itemize}
+\item multiplication of a row with a scalar factor
+\item addition or subtraction of multiples of rows
+\item exchanging two rows of a matrix
+\end{itemize}
+
+\subsubsection{Step 1: Forward elimination}
+%\addcontentsline{toc}{subsubsection}{Step 1: Forward elimination}
+
+The transformation of the matrix A is done in $\mathrm{n - 1}$
+elimination steps.  The new matrix elements of the k-th step with
+$\mathrm{k = 1, \ldots, n - 1}$ are computed with the following
+recursive formulas.
+
+\begin{align}
+a_{ij} &= 0 & i = k+1, \ldots, n &\text{ and } j = k\\
+a_{ij} &= a_{ij} - a_{kj} \cdot a_{ik} / a_{kk} & i = k+1, \ldots, n &\text{ and } j = k+1, \ldots, n\\
+z_{i} &= z_{i} - z_{k} \cdot a_{ik} / a_{kk} & i = k+1, \ldots, n &
+\end{align}
+
+The triangulated matrix can be used to calculate the determinant very
+easily.  The determinant of a triangulated matrix is the product of
+the diagonal elements.  If the determinant $det A$ is non-zero the
+equation system has a solution.  Otherwise the matrix A is singular.
+
+\begin{equation}
+det A = a_{11}\cdot a_{22}\cdot \ldots \cdot a_{nn} = \prod_{i=1}^{n} a_{ii}
+\end{equation}
+
+When using row and/or column pivoting the resulting determinant may
+differ in its sign and must be multiplied with $(-1)^m$ whereas $m$ is
+the number of row and column substitutions.
+
+\subsubsection{Finding an appropriate pivot element}
+%\addcontentsline{toc}{subsubsection}{Finding an appropriate pivot element}
+
+The Gaussian elimination fails if the pivot element $a_{kk}$ turns to
+be zero (division by zero).  That is why row and/or column pivoting
+must be used before each elimination step.  If a diagonal element
+$a_{kk} = 0$, then exchange the pivot row $k$ with the row $m > k$
+having the coefficient with the largest absolute value.  The new pivot
+row is $m$ and the new pivot element is going to be $a_{mk}$.  If no
+such pivot row can be found the matrix is singular.
+
+\addvspace{12pt}
+
+Total pivoting looks for the element with the largest absolute value
+within the matrix and exchanges rows and columns.  When exchanging
+columns in equation systems the unknowns get reordered as well.  For
+the numerical solution of equation systems with Gaussian elimination
+column pivoting is clever, and total pivoting recommended.
+
+\addvspace{12pt}
+
+In order to improve numerical stability pivoting should also be
+applied if $a_{kk} \ne 0$ because division by small diagonal elements
+propagates numerical (rounding) errors.  This appears especially with
+poorly conditioned (the two dimensional case: two lines with nearly
+the same slope) equation systems.
+
+\subsubsection{Step 2: Backward substitution}
+%\addcontentsline{toc}{subsubsection}{Step 2: Backward substitution}
+
+The solutions in the vector x are obtained by backward substituting
+into the triangulated matrix.  The elements of the solution vector x
+are computed by the following recursive equations.
+
+\begin{align}
+x_{n} &= \frac{z_{n}}{a_{nn}}\\
+x_{i} &= \frac{z_{i}}{a_{ii}} - \sum_{k=i+1}^{n} x_{k}\cdot \frac{a_{ik}}{a_{ii}} & i = n - 1,\ldots,1
+\end{align}
+
+The forward elimination in the Gaussian algorithm requires
+approximately $n^3/3$, the backward substitution $n^2/2$ operations.
+
 \subsection{LU decomposition}
 %\addcontentsline{toc}{subsection}{LU decomposition}
+
+LU decomposition (decomposition into a lower and upper triangular
+matrix) is recommended when dealing with equation systems where the
+matrix A does not alter but the right hand side (the vector z) does.
+Both the Gaussian elimination and the Gauss-Jordan method involve both
+the right hand side and the matrix in their algorithm.  Consecutive
+solutions of an equation system with an altering right hand side can
+be computed faster with LU decomposition.
+
+\addvspace{12pt}
+
+The LU decomposition splits a matrix A into a product of a lower
+triangular matrix L with an upper triangular matrix U.
+
+\begin{equation}
+A = L U \;\text{ with }\;
+L = 
+\begin{bmatrix}
+l_{11} & 0 & \ldots & 0\\
+l_{21} & l_{22} & \ddots & \vdots\\
+\vdots &  & \ddots & 0\\
+l_{n1} & \ldots & \ldots & l_{nn}
+\end{bmatrix}
+\;\text{ and }\;
+U =
+\begin{bmatrix}
+u_{11} & u_{12} & \ldots & u_{1n}\\
+0 & u_{22} &  & \vdots\\
+\vdots & \ddots & \ddots & \vdots\\
+0 & \ldots & 0 & u_{nn}
+\end{bmatrix}
+\end{equation}
+
+The algorithm for solving the linear equation system $Ax = z$ involves
+three steps:
+\begin{itemize}
+\item LU decomposition of the coefficient matrix A\\
+$\rightarrow Ax = LUx = z$
+\item introduction of an (unknown) arbitrary vector y and solving the equation system $Ly = z$ by forward substitution\\
+$\rightarrow y = Ux = L^{-1}z$
+\item solving the equation system $Ux = y$  by backward substitution\\
+$\rightarrow x = U^{-1}y$
+\end{itemize}
+
+The decomposition of the matrix A into a lower and upper triangular
+matrix is not unique.  The most important decompositions, based on
+Gaussian elimination, are the Doolittle, the Crout and the Cholesky
+decomposition.
+
+\addvspace{12pt}
+
+If pivoting is necessary during these algorithms they do not decompose
+the matrix $A$ but the product with an arbitrary matrix $PA$ (a
+permutation of the matrix $A$).  When exchanging rows and columns the
+order of the unknowns as represented by the vector $z$ changes as well
+and must be saved during this process for the forward substitution in
+the algorithms second step.
+
+\subsubsection{Step 1: LU decomposition}
+%\addcontentsline{toc}{subsubsection}{Step 1: LU decomposition}
+
+Using the decomposition according to Crout the coefficients of the L
+and U matrices can be stored in place the original matrix A.  The
+upper triangular matrix U has the form
+
+\begin{equation}
+U = 
+\begin{bmatrix}
+1 & u_{12} & \ldots & u_{1n}\\
+0 & 1 &  & \vdots\\
+\vdots & \ddots & \ddots & u_{n-1,n}\\
+0 & \ldots & 0 & 1
+\end{bmatrix}
+\label{eq:CroutU}
+\end{equation}
+
+The diagonal elements $u_{jj}$ are ones and thus the determinant $det
+U$ is one as well.  The elements of the new coefficient matrix $LU$
+for the k-th elimination step with $k = 1, \ldots,n$ compute as
+follows:
+\begin{align}
+u_{jk} &= \frac{1}{l_{jj}}\left(a_{jk} - \sum_{s=1}^{j-1} l_{js} u_{sk}\right) & k &= j + 1,\ldots,n\\
+l_{jk} &= a_{jk} - \sum_{s=1}^{k-1} l_{js} u_{sk} & j &= k,\ldots,n
+\end{align}
+
+Pivoting may be necessary as you are going to divide by the diagonal
+element $l_{jj}$.
+
+\subsubsection{Step 2: Forward substitution}
+%\addcontentsline{toc}{subsubsection}{Step 2: Forward substitution}
+
+The solutions in the arbitrary vector $y$ are obtained by forward
+substituting into the triangulated $L$ matrix.  At this stage you need
+to remember the order of unknowns in the vector $z$ as changed by
+pivoting.  The elements of the solution vector $y$ are computed by the
+following recursive equation.
+
+\begin{align}
+y_{i} &= \frac{z_{i}}{l_{ii}} - \sum_{k=1}^{i-1} y_{k}\cdot \frac{l_{ik}}{l_{ii}} & i = 1,\ldots,n
+\end{align}
+
+\subsubsection{Step 3: Backward substitution}
+%\addcontentsline{toc}{subsubsection}{Step 3: Backward substitution}
+
+The solutions in the vector $x$ are obtained by backward substituting
+into the triangulated $U$ matrix.  The elements of the solution vector
+$x$ are computed by the following recursive equation.
+
+\begin{align}
+x_{i} &= y_{i} - \sum_{k=i+1}^{n} x_{k}\cdot u_{ik} & i = n,\ldots,1
+\end{align}
+
+The division by the diagonal elements of the matrix U is not necessary
+because of Crouts definition in eq. (\ref{eq:CroutU}) with $u_{ii} =
+1$.
+
+\addvspace{12pt}
+
+The LU decomposition requires approximately $n^3/3 + n^2 - n/3$
+operations for solving a linear equation system.  For $M$ consecutive
+solutions the method requires $n^3/3 + Mn^2 - n/3$ operations.
+
+\subsection{A comparison}
+%\addcontentsline{toc}{subsection}{A comparison}
+
+\begin{tabular}{l|r|r|r|r|r}
+method                & precision        & application & programming &
+computing      & notes\\
+                      &                  &              & effort &
+time      & \\
+\hline
+Laplace     & numerical & general     & straight   &
+$n!$                & very time \\
+expansion   & errors    &             & forward    &
+                    & consuming\\
+\hline
+Gaussian & numerical & general     & intermediate       &
+$n^3/3 + n^2/2$     &\\
+eliminiation & errors &      &        &
+     &\\
+\hline
+Gauss-Jordan          & numerical & general     & intermediate       &
+$n^3/3 + n^2 - n/3$ &\\
+          & errors &      &        &
+ &\\
+\hline
+LU      & numerical & general     & intermediate       &
+$n^3/3 + n^2 - n/3$ &\\
+decomposition      & errors &      &        &
+ &\\
+\hline
+Jacobi                &                  &             &                    &
+                    &\\
+\hline
+Gauss-Seidel          & very good        &             &                    &
+                    &\\
+\end{tabular}
 
 \section{Extensions to the MNA}
 %\addcontentsline{toc}{section}{Extensions to the MNA}
