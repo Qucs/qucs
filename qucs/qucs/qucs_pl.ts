@@ -2518,11 +2518,12 @@ Qt universal circuit simulator
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>French by Eric Marzolf</source>
+        <source>Italian by Giorgio Luparia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Italian by Giorgio Luparia</source>
+        <source>French by Eric Marzolf
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
