@@ -20,16 +20,8 @@
 #endif
 
 #include "qucsdoc.h"
-#include "component.h"
-#include "rectdiagram.h"
-#include "polardiagram.h"
-#include "smithdiagram.h"
-#include "tabdiagram.h"
-#include "rectangle.h"
-#include "ellipse.h"
-#include "arrow.h"
-#include "graphicline.h"
-#include "graphictext.h"
+#include "diagrams/diagrams.h"
+#include "paintings/paintings.h"
 
 #include <qmessagebox.h>
 #include <qfileinfo.h>

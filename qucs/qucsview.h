@@ -33,7 +33,7 @@
 
 
 // application specific includes
-#include "component.h"
+#include "components/components.h"
 #include "wire.h"
 #include "qucsdoc.h"
 
@@ -72,11 +72,11 @@ public:
   QPtrList<QucsDoc>  Docs;  // instances of the documents (schematics, data displays)
 
 protected:
-  virtual void drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph);
-  virtual void contentsMouseMoveEvent(QMouseEvent *Event);
-  virtual void contentsMousePressEvent(QMouseEvent *Event);
-  virtual void contentsMouseDoubleClickEvent(QMouseEvent *Event);
-  virtual void contentsMouseReleaseEvent(QMouseEvent *Event);
+  void drawContents(QPainter *p, int clipx, int clipy, int clipw, int cliph);
+  void contentsMouseMoveEvent(QMouseEvent *Event);
+  void contentsMousePressEvent(QMouseEvent *Event);
+  void contentsMouseDoubleClickEvent(QMouseEvent *Event);
+  void contentsMouseReleaseEvent(QMouseEvent *Event);
 
 public:
   void MouseDoNothing(QMouseEvent *Event);

@@ -1,7 +1,7 @@
 /***************************************************************************
-                          wire.h  -  description
+                          equation.cpp  -  description
                              -------------------
-    begin                : Wed Sep 3 2003
+    begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,38 +15,34 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
-
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-
-#include <qpainter.h>
-#include <qstring.h>
-#include <qptrlist.h>
-
-/**
-  *@author Michael Margraf
-  */
+#include "equation.h"
 
 
-class Wire : public Element {
-public: 
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0, const QString& _Name=0);
-	virtual ~Wire();
+Equation::Equation()
+{
+  Description = "equation";
 
-  virtual void paintScheme(QPainter *p);
-  virtual void setCenter(int x, int y, bool relative=false);
+  Lines.append(new Line(-24, -6,-24,  6,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-24,  6, 24,  6,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text(-20,  2,"Equation"));
 
-  Node    *Port1, *Port2;
-  QString Name;
-  int     nx, ny, delta;  // position of the nodename label
+  x1 = -27; y1 = -9;
+  x2 =  27; y2 =  9;
 
-  void    paint(QPainter *p);
-  void    rotate();
-  QString save();
-  bool    load(const QString& s);
-  bool    isHorizontal();
-};
+  tx = x1+4;
+  ty = y2+4;
+  Sign  = "Eqn";
+  Model = "Eqn";
+  Name  = "Eqn";
 
-#endif
+  Props.append(new Property("y", "1", true));
+}
+
+Equation::~Equation()
+{
+}
+
+Equation* Equation::newOne()
+{
+  return new Equation();
+}
