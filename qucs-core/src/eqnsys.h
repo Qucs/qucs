@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.12 2005/02/22 16:41:09 raimi Exp $
+ * $Id: eqnsys.h,v 1.13 2005/04/01 06:52:47 raimi Exp $
  *
  */
 
@@ -27,15 +27,23 @@
 
 // Definition of equation system solving algorithms.
 enum algo_type {
-  ALGO_INVERSE = 0,
-  ALGO_GAUSS,
-  ALGO_GAUSS_JORDAN,
-  ALGO_LU_DECOMPOSITION,
-  ALGO_LU_SUBSTITUTION_CROUT,
-  ALGO_LU_SUBSTITUTION_DOOLITTLE,
-  ALGO_JACOBI,
-  ALGO_GAUSS_SEIDEL,
-  ALGO_SOR
+  ALGO_INVERSE                   = 0x0001,
+  ALGO_GAUSS                     = 0x0002,
+  ALGO_GAUSS_JORDAN              = 0x0004,
+  ALGO_LU_FACTORIZATION          = 0x0008,
+  ALGO_LU_SUBSTITUTION_CROUT     = 0x0010,
+  ALGO_LU_SUBSTITUTION_DOOLITTLE = 0x0020,
+  ALGO_LU_DECOMPOSITION          = 0x0018,
+  ALGO_JACOBI                    = 0x0040,
+  ALGO_GAUSS_SEIDEL              = 0x0080,
+  ALGO_SOR                       = 0x0100
+};
+
+// Definition of pivoting strategies.
+enum pivot_type {
+  PIVOT_NONE    = 0x01,
+  PIVOT_PARTIAL = 0x02,
+  PIVOT_FULL    = 0x04
 };
 
 #include "tvector.h"
@@ -57,7 +65,9 @@ class eqnsys
  private:
   int update;
   int algo;
-  int * change;
+  int pivoting;
+  int * rMap;
+  int * cMap;
   tmatrix<nr_type_t> * A;
   tvector<nr_type_t> * B;
   tvector<nr_type_t> * X;
@@ -65,6 +75,7 @@ class eqnsys
   void solve_gauss (void);
   void solve_gauss_jordan (void);
   void solve_lu (void);
+  void solve_lu_factorization (void);
   void solve_lu_subst_crout (void);
   void solve_lu_subst_doolittle (void);
   void solve_iterative (void);

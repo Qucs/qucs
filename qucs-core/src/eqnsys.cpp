@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.24 2005/02/12 09:49:31 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.25 2005/04/01 06:52:46 raimi Exp $
  *
  */
 
@@ -49,6 +49,11 @@
 # define finite(x) _finite(x)
 #endif
 
+#define TINY 1e-12
+
+// Little helper macro.
+#define Swap(type,a,b) { type t; t = a; a = b; b = t; }
+
 using namespace qucs;
 
 // Constructor creates an unnamed instance of the eqnsys class.
@@ -56,15 +61,17 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
   A = NULL;
   B = X = NULL;
-  change = NULL;
+  cMap = rMap = NULL;
   update = 1;
+  pivoting = PIVOT_PARTIAL;
 }
 
 // Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
   if (B != NULL) delete B;
-  if (change != NULL) delete change;
+  if (rMap != NULL) delete rMap;
+  if (cMap != NULL) delete cMap;
 }
 
 /* The copy constructor creates a new instance of the eqnsys class
@@ -73,7 +80,7 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   A = e.A;
   if (e.B != NULL) B = new tvector<nr_type_t> (*(e.B));
-  change = NULL;
+  cMap = rMap = NULL;
   update = 1;
   X = e.X;
 }
@@ -119,6 +126,9 @@ void eqnsys<nr_type_t>::solve (void) {
     break;
   case ALGO_LU_DECOMPOSITION:
     solve_lu ();
+    break;
+  case ALGO_LU_FACTORIZATION:
+    solve_lu_factorization ();
     break;
   case ALGO_LU_SUBSTITUTION_CROUT:
     solve_lu_subst_crout ();
@@ -242,7 +252,7 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR); \
   e->setText (txt);						  \
   e->setData (i);						  \
-  A->set (i, i, 1e-12); /* virtual resistance to ground */	  \
+  A->set (i, i, TINY); /* virtual resistance to ground */	  \
   throw_exception (e); }
 
 /* This function decomposites the left hand matrix into an upper U and
@@ -252,72 +262,82 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
    right hand side (the B vector) only. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_lu (void) {
-  nr_double_t MaxPivot;
-  nr_type_t f;
-  int k, i, c, r, pivot, N = A->getCols ();
-  tvector<nr_type_t> Y (N);
 
   // skip decomposition if requested
-  if (!update) goto noupdate;
+  if (update) {
+    // perform LU composition
+    solve_lu_factorization ();
+  }
+
+  // finally solve the equation system
+  solve_lu_subst_crout ();
+}
+
+/* The function performs the actual LU decomposition of the matrix A
+   using (implicit) partial row pivoting. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_lu_factorization (void) {
+  nr_double_t d, MaxPivot, * iPvt;
+  nr_type_t f;
+  int k, c, r, pivot, N = A->getCols ();
 
   // initialize pivot exchange table
-  if (change) delete change;
-  change = new int[N];
-  for (i = 1; i <= N; i++) change[i - 1] = i;
+  iPvt = new nr_double_t[N];
+  if (rMap) delete rMap; rMap = new int[N];
+  for (r = 1; r <= N; r++) {
+    for (MaxPivot = 0, c = 1; c <= N; c++)
+      if ((d = abs (A->get (r, c))) > MaxPivot)
+	MaxPivot = d;
+    if (MaxPivot <= 0) MaxPivot = TINY;
+    iPvt[r - 1] = 1 / MaxPivot;
+    rMap[r - 1] = r;
+  }
 
   // decomposite the matrix into L (lower) and U (upper) matrix
-  for (i = 1, c = 2; c <= N; c++, i++) {
-    // find maximum column value for pivoting
-    for (MaxPivot = 0, pivot = r = i; r <= N; r++) {
-      if (abs (A->get (r, i)) > MaxPivot) {
-        MaxPivot = abs (A->get (r, i));
-        pivot = r;
+  for (c = 1; c <= N; c++) {
+    // upper matrix entries
+    for (r = 1; r < c; r++) {
+      f = A->get (r, c);
+      for (k = 1; k < r; k++) f -= A->get (r, k) * A->get (k, c);
+      A->set (r, c, f / A->get (r, r));
+    }
+    // lower matrix entries
+    for (MaxPivot = 0, pivot = r; r <= N; r++) {
+      f = A->get (r, c);
+      for (k = 1; k < c; k++) f -= A->get (r, k) * A->get (k, c);
+      A->set (r, c, f);
+      // larger pivot ?
+      if ((d = iPvt[r - 1] * abs (f)) > MaxPivot) {
+	MaxPivot = d;
+	pivot = r;
       }
     }
+
     // check pivot element and throw appropriate exception
     if (MaxPivot <= 0) {
 #if LU_FAILURE
       qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
       e->setText ("no pivot != 0 found during LU decomposition");
-      e->setData (i);
+      e->setData (c);
       throw_exception (e);
       goto fail;
 #else /* insert virtual resistance */
-      VIRTUAL_RES ("no pivot != 0 found during LU decomposition", i);
+      VIRTUAL_RES ("no pivot != 0 found during LU decomposition", c);
 #endif
     }
 
     // swap matrix rows if necessary and remember that step in the
     // exchange table
-    if (i != pivot) {
-      A->exchangeRows (i, pivot);
-      k = change[i - 1];
-      change[i - 1] = change[pivot - 1];
-      change[pivot - 1] = k;
-    }
-    // compute new column
-    for (r = 1; r <= N; r++) {
-      if (r < c) {
-        // upper matrix entries
-        for (f = 0, k = 1; k <= r - 1; k++)
-          f += A->get (r, k) * A->get (k, c);
-        A->set (r, c, (A->get (r, c) - f) / A->get (r, r));
-      }
-      else {
-        // lower matrix entries
-        for (f = 0, k = 1; k <= c - 1; k++)
-          f += A->get (r, k) * A->get (k, c);
-        A->set (r, c, A->get (r, c) - f);
-      }
+    if (c != pivot) {
+      A->exchangeRows (c, pivot);
+      Swap (int, rMap[c - 1], rMap[pivot - 1]);
+      Swap (nr_double_t, iPvt[c - 1], iPvt[pivot - 1]);
     }
   }
-
- noupdate:
-  // finally solve the equation system
-  solve_lu_subst_crout ();
 #if LU_FAILURE
  fail:
 #endif
+  delete iPvt;
 }
 
 /* The function is used in order to run the forward and backward
@@ -331,20 +351,8 @@ void eqnsys<nr_type_t>::solve_lu_subst_crout (void) {
 
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
-    f = B->get (change[i - 1]);
+    f = B->get (rMap[i - 1]);
     for (c = 1; c <= i - 1; c++) f -= A->get (i, c) * Y.get (c);
-    // check for possible division by zero
-    if (A->get (i, i) == 0) {
-#if LU_FAILURE
-      qucs::exception * e = new qucs::exception (EXCEPTION_WRONG_VOLTAGE);
-      e->setText ("forward substitution failed in LU decomposition");
-      e->setData (i);
-      throw_exception (e);
-      goto fail;
-#else /* insert virtual resistance */
-      VIRTUAL_RES ("forward substitution failed in LU decomposition", i);
-#endif
-    }
     f /= A->get (i, i);
     Y.set (i, f);
   }
@@ -356,9 +364,6 @@ void eqnsys<nr_type_t>::solve_lu_subst_crout (void) {
     // remember that the Uii diagonal are ones only in Crout's definition
     X->set (i, f);
   }
-#if LU_FAILURE
- fail:
-#endif
 }
 
 /* The function is used in order to run the forward and backward
@@ -373,7 +378,7 @@ void eqnsys<nr_type_t>::solve_lu_subst_doolittle (void) {
 
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
-    f = B->get (change[i - 1]);
+    f = B->get (rMap[i - 1]);
     for (c = 1; c <= i - 1; c++) f -= A->get (i, c) * Y.get (c);
     // remember that the Lii diagonal are ones only in Doolittle's definition
     Y.set (i, f);
@@ -383,24 +388,9 @@ void eqnsys<nr_type_t>::solve_lu_subst_doolittle (void) {
   for (i = N; i > 0; i--) {
     f = Y.get (i);
     for (c = i + 1; c <= N; c++) f -= A->get (i, c) * X->get (c);
-    // check for possible division by zero
-    if (A->get (i, i) == 0) {
-#if LU_FAILURE
-      qucs::exception * e = new qucs::exception (EXCEPTION_WRONG_VOLTAGE);
-      e->setText ("backward substitution failed in LU decomposition");
-      e->setData (i);
-      throw_exception (e);
-      goto fail;
-#else /* insert virtual resistance */
-      VIRTUAL_RES ("backward substitution failed in LU decomposition", i);
-#endif
-    }
     f /= A->get (i, i);
     X->set (i, f);
   }
-#if LU_FAILURE
- fail:
-#endif
 }
 
 /* The function solves the equation system using a full-step iterative

@@ -1,3 +1,8 @@
+2005-03-31  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msvia.cpp: Fixed noise calculations as well as
+	static resistance computation.
+
 2005-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msline.cpp, microstrip/mscoupled.cpp: Fixed

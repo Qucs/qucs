@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.5 2005/02/03 20:40:20 raimi Exp $
+ * $Id: msvia.cpp,v 1.6 2005/04/01 06:52:48 raimi Exp $
  *
  */
 
@@ -50,9 +50,8 @@ msvia::msvia () : circuit (2) {
 
 void msvia::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
-  nr_double_t r = real (Z);
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
+  nr_double_t f = kelvin (T) * 4.0 * real (Z) * z0 / norm (4.0 * z0 + Z) / T0;
   setN (1, 1, +f); setN (2, 2, +f);
   setN (1, 2, -f); setN (2, 1, -f);
 }
@@ -101,7 +100,7 @@ nr_double_t msvia::calcResistance (void) {
   nr_double_t t   = subst->getPropertyDouble ("t");
   nr_double_t rho = subst->getPropertyDouble ("rho");
   nr_double_t r   = getPropertyDouble ("D") / 2;
-  nr_double_t v   = M_PI * (sqr (r) - sqr (r - t)) * h;
+  nr_double_t v   = h / M_PI / (sqr (r) - sqr (r - t));
   return R = rho * v;
 }
 
@@ -129,7 +128,7 @@ void msvia::initDC (void) {
 void msvia::initAC (void) {
   setVoltageSources (0);
   allocMatrixMNA ();
-  initSP ();
+  R = calcResistance ();
 }
 
 void msvia::calcAC (nr_double_t frequency) {
@@ -140,9 +139,9 @@ void msvia::calcAC (nr_double_t frequency) {
 
 void msvia::calcNoiseAC (nr_double_t) {
   // calculate noise current correlation matrix
-  nr_double_t r = real (Z);
+  nr_double_t y = real (1 / Z);
   nr_double_t T = getPropertyDouble ("Temp");
-  nr_double_t f = kelvin (T) / T0 * 4.0 / r;
+  nr_double_t f = kelvin (T) / T0 * 4.0 * y;
   setN (1, 1, +f); setN (2, 2, +f);
   setN (1, 2, -f); setN (2, 1, -f);
 }
