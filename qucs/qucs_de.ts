@@ -594,11 +594,15 @@
     </message>
     <message>
         <source>DiscardAll</source>
-        <translation>Alle verwerfen</translation>
+        <translation type="obsolete">Alle verwerfen</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation>Alle verwerfen</translation>
     </message>
 </context>
 <context>
@@ -3770,7 +3774,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Data Display (*.dpl)</source>
-        <translation>Datenvisualisierungen (*.dpl)</translation>
+        <translation type="obsolete">Datenvisualisierungen (*.dpl)</translation>
     </message>
     <message>
         <source>Enter a Document Name</source>
@@ -3782,11 +3786,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Schematic (*.sch);;Data Display (*.dpl);;</source>
-        <translation>Schaltplan (*.sch);;Datenvisualisierung (*.dpl);;</translation>
+        <translation type="obsolete">Schaltplan (*.sch);;Datenvisualisierung (*.dpl);;</translation>
     </message>
     <message>
         <source>Qucs Documents (*.sch *.dpl);;Any File (*)</source>
-        <translation>Qucs-Dokumente (*.sch *.dpl);;Alle Dateien (*)</translation>
+        <translation type="obsolete">Qucs-Dokumente (*.sch *.dpl);;Alle Dateien (*)</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
@@ -3815,6 +3819,22 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     <message>
         <source>At least two elements must be selected !</source>
         <translation>Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
+    </message>
+    <message>
+        <source>Schematic</source>
+        <translation>Schaltplan</translation>
+    </message>
+    <message>
+        <source>Data Display</source>
+        <translation>Datenvisualisierung</translation>
+    </message>
+    <message>
+        <source>Qucs Documents</source>
+        <translation>Qucs-Dokumente</translation>
+    </message>
+    <message>
+        <source>Any File</source>
+        <translation>Alle Dateien</translation>
     </message>
 </context>
 <context>

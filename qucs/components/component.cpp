@@ -170,7 +170,7 @@ void Component::paint(QPainter *p)
     p->drawText(cx+pt->x, cy+pt->y, pt->s);
   p->setFont(f);
 
-  int Height = p->font().pointSize();
+  int Height = QFontMetrics(p->font()).height();
   int y = cy+ty+Height;
   p->drawText(cx+tx, cy+ty, 0, 0, Qt::DontClip, Name);
   // write all properties

@@ -66,8 +66,10 @@ QucsApp::QucsApp()
 {
   setCaption("Qucs " PACKAGE_VERSION);
 
-  QucsFileFilter = tr("Schematic (*.sch);;Data Display (*.dpl);;")+
-		   tr("Qucs Documents (*.sch *.dpl);;Any File (*)");
+  QucsFileFilter = tr("Schematic")+" (*.sch);;"+
+                   tr("Data Display")+" (*.dpl);;"+
+		   tr("Qucs Documents")+" (*.sch *.dpl);;"+
+		   tr("Any File")+" (*)";
   QucsWorkDir.setPath(QDir::homeDirPath()+"/.qucs");
   QucsHomeDir.setPath(QDir::homeDirPath()+"/.qucs");
 
@@ -607,7 +609,7 @@ bool QucsApp::saveAs()
     Info.setFile(view->Docs.current()->DocName);
     if(Info.extension() == "dpl")
       s = QFileDialog::getSaveFileName(QucsWorkDir.filePath(Info.fileName()),
-				tr("Data Display (*.dpl)"), this, "",
+				tr("Data Display")+" (*.dpl)", this, "",
 				tr("Enter a Document Name"), &Filter);
     else  s = QFileDialog::getSaveFileName(
 		QucsWorkDir.filePath(Info.fileName()), QucsFileFilter,
