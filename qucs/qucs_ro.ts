@@ -1023,7 +1023,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nou</translation>
     </message>
     <message>
         <source>Open</source>
