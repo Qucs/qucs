@@ -92,10 +92,10 @@ protected slots:
   void slotScrollRight();
 
 public slots:
-  void slotMarkerLeft();
-  void slotMarkerRight();
-  void slotMarkerUp();
-  void slotMarkerDown();
+  void slotCursorLeft();
+  void slotCursorRight();
+  void slotCursorUp();
+  void slotCursorDown();
 
 public:
   void MouseDoNothing(QMouseEvent*);
@@ -148,6 +148,7 @@ public:
   void MReleaseResizePainting(QMouseEvent*);
   void (QucsView::*MouseReleaseAction) (QMouseEvent*);
 
+  void MovingElements();
   void endElementMoving();
 
 signals:

@@ -1164,7 +1164,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation>model linii mikropaskowej |Kirschning|Kobayashi|Yamashita </translation>
+        <translation type="obsolete">model linii mikropaskowej |Kirschning|Kobayashi|Yamashita </translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
@@ -1916,6 +1916,18 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip dispersion model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open end model (Kirschning,Hammerstad)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -49,15 +49,15 @@ Graph::~Graph()
 // ---------------------------------------------------------------------
 void Graph::paint(QPainter *p, int x0, int y0)
 {
+  // draw markers
+  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
+    pm->paint(p, x0, y0);
+
   int *pp = Points;
   if(pp == 0) {
     p->setPen(QPen(QColor(Color)));   // set color for xlabel text
     return;
   }
-
-  // draw markers
-  for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next())
-    pm->paint(p, x0, y0);
 
   int n1;
   if(isSelected) {

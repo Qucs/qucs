@@ -1300,7 +1300,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>microstrip model |Kirschning|Kobayashi|Yamashita</source>
-        <translation>Mikrostreifenmodell |Kirschning|Kobayashi|Yamashita</translation>
+        <translation type="obsolete">Mikrostreifenmodell |Kirschning|Kobayashi|Yamashita</translation>
     </message>
     <message>
         <source>specific resistance of metal</source>
@@ -2057,6 +2057,18 @@ Ungültiger Zeilenanfang!</translation>
     <message>
         <source>excess phase in degrees</source>
         <translation>Zusatzphase in Grad</translation>
+    </message>
+    <message>
+        <source>microstrip model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip dispersion model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open end model (Kirschning,Hammerstad)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
