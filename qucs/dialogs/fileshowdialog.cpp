@@ -53,8 +53,7 @@ FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const c
   }
 
   QTextStream stream(&file);
-  while(!stream.atEnd())
-    text->append(stream.readLine()+" ");
+  text->setText(stream.read());
   file.close();
 }
 
