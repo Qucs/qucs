@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include "qucsdoc.h"
@@ -63,8 +63,6 @@ static const char *smallsave_xpm[] = {
 "      0x9y      ",
 "       zA       "};
 
-
-#define BITMAPDIR  "/home/knoppix/qucs/qucs/"
 
 QucsDoc::QucsDoc(QTabBar *b, const QString& _Name)
 {

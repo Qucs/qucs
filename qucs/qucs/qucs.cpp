@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
+#if HAVE_CONFIG_H
+# include <config.h>
 #endif
 
 #include "qucs.h"
@@ -41,9 +41,6 @@
 #include <qpainter.h>
 #include <qfiledialog.h>
 
-
-
-#define BITMAPDIR  "/home/knoppix/qucs/qucs/"
 
 QucsApp::QucsApp()
 {

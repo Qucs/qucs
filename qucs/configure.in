@@ -59,6 +59,11 @@ dnl PACKAGE set before
 
 KDE_CREATE_SUBDIRSLIST
 
+dnl Create path info.
+BITMAP_PATH="$prefix/share/"
+AC_DEFINE_UNQUOTED([BITMAPDIR], ["$BITMAP_PATH"], [Where the data files go.])
+unset BITMAP_PATH
+
 dnl add here all your Makefiles. This are created by configure
 AC_CONFIG_FILES([ Makefile ])
 AC_CONFIG_FILES([ qucs/Makefile ])
