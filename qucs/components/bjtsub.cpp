@@ -20,7 +20,7 @@
 
 BJTsub::BJTsub()
 {
-  Description = QObject::tr("npn bipolar junction transistor with substrate");
+  Description = QObject::tr("bipolar junction transistor with substrate");
 
   Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));

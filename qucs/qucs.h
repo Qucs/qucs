@@ -69,11 +69,11 @@ public:
     void initCursorMenu();
 
     bool closeAllFiles();
-    static int testFile(const QString& DocName);
+    static int testFile(const QString&);
 
 
 protected:
-    void closeEvent(QCloseEvent* Event);
+    void closeEvent(QCloseEvent*);
 
 public slots:
     void slotFileNew();     // generate a new schematic in the view TabBar
@@ -109,7 +109,7 @@ public slots:
     void slotZoomOut(); // Zoom out by 2
 
     // for menu that appears by right click in content ListView
-    void slotShowContentMenu(QListViewItem *item, const QPoint& point, int);
+    void slotShowContentMenu(QListViewItem*, const QPoint&, int);
     void slotCMenuOpen();
     void slotCMenuRename();
     void slotCMenuDelete();
@@ -117,22 +117,23 @@ public slots:
 // ########################################################################
 //  private slots:
     void slotMenuOpenProject();
-    void slotOpenProject(QListBoxItem *item);
-    void slotSelectComponent(QIconViewItem *item);
+    void slotOpenProject(QListBoxItem*);
+    void slotSelectComponent(QIconViewItem*);
 //    void slotOpenContent(QListViewItem *item, const QPoint &, int column);  // Qt3.2
-    void slotSelectSubcircuit(QListViewItem *item);
-    void slotOpenContent(QListViewItem *item);
-    void slotSetCompView(int index);
+    void slotSelectSubcircuit(QListViewItem*);
+    void slotOpenContent(QListViewItem*);
+    void slotSetCompView(int);
     void slotProjNewButt();
     void slotProjOpenButt();
     void slotProjDelButt();
     void slotMenuDelProject();
-    void slotChangeView(int id);
+    void slotChangeView(int);
     void slotSimulate();
     void slotShowLastMsg();
     void slotShowLastNetlist();
-    void slotAfterSimulation(int Status, SimMessage *sim);
-    void slotChangePage();
+    void slotAfterSimulation(int, SimMessage*);
+    void slotChangePage(QString);
+    void slotToPage();
     void slotSelectAll();
     void slotNextTab();
 

@@ -532,7 +532,7 @@ QString QucsFile::createUndoString(char Op)
   Component *pc;
 
   // Build element document.
-  QString s = " \n";
+  QString s = "  \n";
   s.at(0) = Op;
   for(pc = Comps->first(); pc != 0; pc = Comps->next())
     s += pc->save()+"\n";

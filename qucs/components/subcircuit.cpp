@@ -46,6 +46,7 @@ Subcircuit::~Subcircuit()
 Component* Subcircuit::newOne()
 {
   Subcircuit *p = new Subcircuit();
+  p->Props.getFirst()->Value = Props.getFirst()->Value;
   p->remakeSymbol(Ports.count());
   return p;
 }

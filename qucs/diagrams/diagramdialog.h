@@ -44,6 +44,7 @@ public:
   ~DiagramDialog();
 
   bool loadVarData(const QString&);
+  void copyDiagramGraphs();
 
 public slots:
   void slotReadVars(int);
@@ -54,7 +55,7 @@ public slots:
   void slotDeleteGraph();
   void slotOK();
   void slotApply();
-  void slotFuncHelp();
+  void slotCancel();
   void slotSetColor();
   void slotSetGridColor();
   void slotResetToTake(const QString&);
@@ -78,6 +79,7 @@ public:
   QComboBox   *PropertyBox, *GridStyleBox;
   QPushButton *ColorButt, *GridColorButt;
   bool changed, toTake;
+  QPtrList<Graph>  Graphs;
 };
 
 #endif
