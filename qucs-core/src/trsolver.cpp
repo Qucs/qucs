@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.15 2004-10-09 19:59:42 ela Exp $
+ * $Id: trsolver.cpp,v 1.16 2004-10-09 21:06:27 ela Exp $
  *
  */
 
@@ -530,6 +530,11 @@ nr_double_t trsolver::checkDelta (void) {
 
 // The function updates the integration coefficients.
 void trsolver::updateCoefficients (nr_double_t delta) {
+  /// --- Why? ---
+  prevState ();
+  setState (dState, delta);
+  nextState ();
+  /// --- End! ---
   setState (dState, delta);
   saveState (dState, deltas);
   calcCorrectorCoeff (CMethod, corrOrder, corrCoeff, deltas);
