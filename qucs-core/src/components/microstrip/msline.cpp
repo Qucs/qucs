@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.10 2004-05-12 11:39:45 ela Exp $
+ * $Id: msline.cpp,v 1.11 2004-05-13 09:20:34 ela Exp $
  *
  */
 
@@ -149,7 +149,7 @@ nr_double_t msline::analyseZl (nr_double_t W, nr_double_t h, nr_double_t er) {
   // WHEELER
   if (W / h < 3.3) {
     c = log (4 * h / W + sqrt (SQR (4 * h / W) + 2));
-    z = c - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (M_PI_4) / er);
+    z = c - 0.5 * (er - 1) / (er + 1) * (log (M_PI_2) + log (2 * M_2_PI) / er);
     z = z * Z0 / M_PI / sqrt (2 * (er + 1));
   }
   else {
