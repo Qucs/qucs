@@ -1,3 +1,14 @@
+2004-10-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/device.cpp: Simplified charge computation for
+	pn-junction added with no linearization coefficient given.
+
+	* devices/bjt.cpp: Computing external base-collector capacitance
+	appropriately during transient analysis.
+
+	* capacitor.cpp: Do not run the transient code for a constant
+	capacitance if it reveals to be a controlled capacitance.
+
 2004-10-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/mscoupled.cpp: Removed some debug code.

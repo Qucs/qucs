@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.12 2004-10-03 10:30:51 ela Exp $
+ * $Id: capacitor.cpp,v 1.13 2004-10-17 09:44:30 ela Exp $
  *
  */
 
@@ -77,6 +77,10 @@ void capacitor::initTR (void) {
 }
 
 void capacitor::calcTR (nr_double_t) {
+
+  /* if this is a controlled capacitance then do nothing here */
+  if (hasProperty ("Controlled")) return;
+
   nr_double_t c = getPropertyDouble ("C");
   nr_double_t g, i;
   nr_double_t v = real (getV (1) - getV (2));

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.10 2004-10-16 16:42:31 ela Exp $
+ * $Id: device.cpp,v 1.11 2004-10-17 09:44:30 ela Exp $
  *
  */
 
@@ -181,6 +181,18 @@ nr_double_t pnCapacitance (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
   else
     c = Cj * (1 + Mj * Uj / Vj);
   return c;
+}
+
+/* This function computes the pn-junction depletion charge with no
+   linearization factor given. */
+nr_double_t pnCharge (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
+		      nr_double_t Mj) {
+  nr_double_t q;
+  if (Uj <= 0)
+    q = Cj * Vj / (1 - Mj) * (1 - exp ((1 - Mj) * log (1 - Uj / Vj)));
+  else
+    q = Cj * Uj * (1 + Mj * Uj / 2 / Vj);
+  return q;
 }
 
 // Compute critical voltage of pn-junction.

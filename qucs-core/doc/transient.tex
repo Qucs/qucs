@@ -1029,11 +1029,32 @@ I_C^{n+1,m} &= \dfrac{Q^{n+1,m}}{h^{n}} - \dfrac{Q^{n}}{h^{n}}\\
 The double indices now indicate the $n$-th integration step and the
 $m$-th Newton-Raphson iteration.  The same can be done for the other
 integration formulas and results also in a similar equivalent
-companion model as shown in fig. \ref{fig:TransCap}.  The capacitance
-$C$ within the above equations is computed according to the
-appropriate (non-linear) model formulations, e.g.
+companion model as shown in fig. \ref{fig:TransCap}.
+
+\addvspace{12pt}
+
+The capacitance $C$ and the charge $Q$ within the above equations is
+computed according to the appropriate (non-linear) model formulations.
 \begin{equation}
-C^{n+1,m} = C_{0}\cdot \left(1 - \dfrac{V_{C}^{n+1,m}}{V_{j}}\right)^{-M}
+\begin{split}
+Q = C_0\cdot \Biggl(
+& + \dfrac{V_J\cdot \left(1- \left(1 - F\right)^{1-M}\right)}{1-M}\\
+& + \dfrac{1 - F\cdot\left(1 + M\right)}{\left(1-F\right)^{1+M}} \cdot \left(V_C - F\cdot V_J\right)\\
+& + \dfrac{M}{2\cdot V_J \cdot \left(1-F\right)^{1+M}} \cdot\left(V_C^2 + F^2\cdot V_J^2\right) \Biggr)
+\end{split}
+\end{equation}
+and
+\begin{equation}
+C = \dfrac{d Q}{d V_C} = \dfrac{C_0}{\left(1 - F\right)^M}\cdot \left(1 + \dfrac{M\cdot \left(V_C - F\cdot V_J\right)}{V_J\cdot \left(1 - F\right)}\right)
+\end{equation}
+for a depletion capacitance with $V_C > F\cdot V_J$ and for $V_C <
+F\cdot V_J$ those capacitances yield
+\begin{equation}
+Q = \dfrac{C_0\cdot V_J}{1-M}\cdot\left(1-\left(1 - \dfrac{V_C}{V_J}\right)^{1-M}\right)
+\end{equation}
+with
+\begin{equation}
+C = \dfrac{d Q}{d V_C} = C_{0}\cdot \left(1 - \dfrac{V_{C}}{V_{J}}\right)^{-M}
 \end{equation}
 
 \subsection{Diffusion Capacitance}
@@ -1063,3 +1084,13 @@ Similar to the diffusion capacitance a Newton-Raphson iteration is
 necessary.  Also the formulas for the other integration methods can be
 easily rewritten and the equivalent companion model shown in
 fig. \ref{fig:TransCap} is valid as well.
+
+\addvspace{12pt}
+
+The capacitance $C$ and the charge $Q$ for a diffusion capacitance of
+a pn-junction according to the most model formulations write as
+follows.
+\begin{align}
+Q &= \tau_D\cdot I_D\\
+C = \dfrac{d Q}{d V_C} &= \tau_D\cdot g_D
+\end{align}
