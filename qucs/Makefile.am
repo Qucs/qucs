@@ -22,7 +22,7 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = sim bitmaps components diagrams paintings docs
+SUBDIRS = bitmaps components diagrams paintings docs
 bin_PROGRAMS = qucs
 
 MOCHEADERS = qucsview.h settingsdialog.h messagebox.h simmessage.h qucs.h \
@@ -35,7 +35,7 @@ qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp \
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
-qucs_LDADD = sim/libsim.a components/libcomponents.a diagrams/libdiagrams.a \
+qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
 	paintings/libpaintings.a
 
 noinst_HEADERS = $(MOCHEADERS) newprojdialog.h wire.h qucsdoc.h element.h \
