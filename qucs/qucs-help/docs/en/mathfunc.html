@@ -22,60 +22,75 @@ Short Description of mathematical Functions<br><br>
 The following operations and functions can be applied in
 Qucs equations.<br><br>
 
-<tt>+x</tt> unary plus<br>
-<tt>-x</tt> unary minus<br>
-<tt>x+y</tt> addition<br>
-<tt>x-y</tt> subtraction<br>
-<tt>x*y</tt> multiplication<br>
-<tt>x/y</tt> division<br>
-<tt>x%y</tt> modulo (remainder of division)<br>
-<tt>x^y</tt> power<br>
-<tt>max(x)</tt> maximum value in vector<br>
-<tt>min(x)</tt> minimum value in vector<br>
-<tt>sum(x)</tt> sum of values in vector<br>
-<tt>prod(x)</tt> product of values in vector<br>
-<tt>avg(x)</tt> arithmetic average of values in vector<br>
-<tt>real(x)</tt> real part of complex number<br>
-<tt>imag(x)</tt> imaginary part of complex number<br>
-<tt>abs(x)</tt> absolute value, magnitude of complex number<br>
-<tt>mag(x)</tt> same as abs(x)<br>
-<tt>norm(x)</tt> square of mag(x)<br>
-<tt>conj(x)</tt> conjugate complex<br>
-<tt>phase(x)</tt> phase in degree<br>
-<tt>angle(x)</tt> phase in radians<br>
-<tt>arg(x)</tt> same as angle(x)<br>
-<tt>dB(x)</tt> voltage decibel<br>
-<tt>sqrt(x)</tt> square root<br>
-<tt>exp(x)</tt> exponential function to basis e<br>
-<tt>ln(x)</tt> natural logarithm<br>
-<tt>log10(x)</tt> decimal logarithm<br>
-<tt>log2(x)</tt> binary logarithm<br>
-<tt>sin(x)</tt> sine<br>
-<tt>cos(x)</tt> cosine<br>
-<tt>tan(x)</tt> tangent<br>
-<tt>sinh(x)</tt> sine hyperbolicus<br>
-<tt>cosh(x)</tt> cosine hyperbolicus<br>
-<tt>tanh(x)</tt> tangent hyperbolicus<br>
-<tt>arcsin(x)</tt> arcus sine<br>
-<tt>arccos(x)</tt> arcus cosine<br>
-<tt>arctan(x)</tt> arcus tangent<br>
-<tt>arsinh(x)</tt> area sine hyperbolicus<br>
-<tt>arcosh(x)</tt> area cosine hyperbolicus<br>
-<tt>artanh(x)</tt> area tangent hyperbolicus<br>
-<tt>ztor(x)</tt> converts impedance to reflexion coefficient (reference
-50 ohms)<br>
-<tt>rtoz(x)</tt> converts reflexion coefficient (reference 50 ohms) to
-impedance<br>
-<tt>rtoswr(x)</tt> converts reflexion coefficient to (voltage)
-standing wave ratio (SWR or VSWR)<br>
-<tt>diff(y,x)</tt> differentiates vector y with respect to x<br>
-<tt>diff(y,x,n)</tt> differentiates vector y with respect to x n-times<br>
-<tt>stoy(s)</tt> converts s-parameter matrix to y-parameter matrix<br>
-<tt>stoz(s)</tt> converts s-parameter matrix to z-parameter matrix<br>
-<tt>ytos(y)</tt> converts y-parameter matrix to s-parameter matrix<br>
-<tt>ytoz(y)</tt> converts y-parameter matrix to z-parameter matrix<br>
-<tt>ztos(z)</tt> converts z-parameter matrix to s-parameter matrix<br>
-<tt>ztoy(z)</tt> converts z-parameter matrix to y-parameter matrix<br>
+<table cellspacing=2 cellpadding=2>
+<tr><td><tt>+x</tt></td><td>unary plus</td></tr>
+<tr><td><tt>-x</tt></td><td>unary minus</td></tr>
+<tr><td><tt>x+y</tt></td><td>addition</td></tr>
+<tr><td><tt>x-y</tt></td><td>subtraction</td></tr>
+<tr><td><tt>x*y</tt></td><td>multiplication</td></tr>
+<tr><td><tt>x/y</tt></td><td>division</td></tr>
+<tr><td><tt>x%y</tt></td><td>modulo (remainder of division)</td></tr>
+<tr><td><tt>x^y</tt></td><td>power</td></tr>
+<tr><td><tt>max(x)</tt></td><td>maximum value in vector</td></tr>
+<tr><td><tt>min(x)</tt></td><td>minimum value in vector</td></tr>
+<tr><td><tt>sum(x)</tt></td><td>sum of values in vector</td></tr>
+<tr><td><tt>prod(x)</tt></td><td>product of values in vector</td></tr>
+<tr><td><tt>avg(x)</tt></td><td>arithmetic average of values in vector</td></tr>
+<tr><td><tt>real(x)</tt></td><td>real part of complex number</td></tr>
+<tr><td><tt>imag(x)</tt></td><td>imaginary part of complex number</td></tr>
+<tr><td><tt>abs(x)</tt></td><td>absolute value, magnitude of complex number</td></tr>
+<tr><td><tt>mag(x)</tt></td><td>same as abs(x)</td></tr>
+<tr><td><tt>norm(x)</tt></td><td>square of mag(x)</td></tr>
+<tr><td><tt>conj(x)</tt></td><td>conjugate complex</td></tr>
+<tr><td><tt>phase(x)</tt></td><td>phase in degree</td></tr>
+<tr><td><tt>angle(x)</tt></td><td>phase in radians</td></tr>
+<tr><td><tt>arg(x)</tt></td><td>same as angle(x)</td></tr>
+<tr><td><tt>dB(x)</tt></td><td>voltage decibel</td></tr>
+<tr><td><tt>sqrt(x)</tt></td><td>square root</td></tr>
+<tr><td><tt>exp(x)</tt></td><td>exponential function to basis e</td></tr>
+<tr><td><tt>ln(x)</tt></td><td>natural logarithm</td></tr>
+<tr><td><tt>log10(x)</tt></td><td>decimal logarithm</td></tr>
+<tr><td><tt>log2(x)</tt></td><td>binary logarithm</td></tr>
+<tr><td><tt>sin(x)</tt></td><td>sine</td></tr>
+<tr><td><tt>cos(x)</tt></td><td>cosine</td></tr>
+<tr><td><tt>tan(x)</tt></td><td>tangent</td></tr>
+<tr><td><tt>sinh(x)</tt></td><td>sine hyperbolicus</td></tr>
+<tr><td><tt>cosh(x)</tt></td><td>cosine hyperbolicus</td></tr>
+<tr><td><tt>tanh(x)</tt></td><td>tangent hyperbolicus</td></tr>
+<tr><td><tt>arcsin(x)</tt></td><td>arcus sine</td></tr>
+<tr><td><tt>arccos(x)</tt></td><td>arcus cosine</td></tr>
+<tr><td><tt>arctan(x)</tt></td><td>arcus tangent</td></tr>
+<tr><td><tt>arsinh(x)</tt></td><td>area sine hyperbolicus</td></tr>
+<tr><td><tt>arcosh(x)</tt></td><td>area cosine hyperbolicus</td></tr>
+<tr><td><tt>artanh(x)</tt></td><td>area tangent hyperbolicus</td></tr>
+<tr><td><tt>ztor(x)</tt></td>
+<td>converts impedance to reflexion coefficient (reference 50 ohms)</td></tr>
+<tr><td><tt>rtoz(x)</tt></td>
+<td>converts reflexion coefficient (reference 50 ohms) to impedance</td></tr>
+<tr><td><tt>rtoswr(x)</tt></td>
+<td>converts reflexion coefficient to (voltage) standing wave ratio
+(SWR or VSWR)</td></tr>
+<tr><td><tt>diff(y,x)</tt></td>
+<td>differentiates vector y with respect to x</td></tr>
+<tr><td><tt>diff(y,x,n)</tt></td>
+<td>differentiates vector y with respect to x n-times</td></tr>
+<tr><td><tt>stoy(s)</tt></td>
+<td>converts s-parameter matrix to y-parameter matrix</td></tr>
+<tr><td><tt>stoz(s)</tt></td>
+<td>converts s-parameter matrix to z-parameter matrix</td></tr>
+<tr><td><tt>ytos(y)</tt></td>
+<td>converts y-parameter matrix to s-parameter matrix</td></tr>
+<tr><td><tt>ytoz(y)</tt></td>
+<td>converts y-parameter matrix to z-parameter matrix</td></tr>
+<tr><td><tt>ztos(z)</tt></td>
+<td>converts z-parameter matrix to s-parameter matrix</td></tr>
+<tr><td><tt>ztoy(z)</tt></td>
+<td>converts z-parameter matrix to y-parameter matrix</td></tr>
+<tr><td><tt>twoport(m,from,to)</tt></td>
+<td>converts the given 2-port matrix from one representation into another,
+possible values for <tt>from</tt> and <tt>to</tt> are 'Y', 'Z', 'H', 'G',
+'A', 'S' and 'T'.</td></tr>
+</table>
 
 <br><a href="#top">back to the top</a><br>
 
