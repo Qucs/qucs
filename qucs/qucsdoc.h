@@ -82,6 +82,9 @@ public:
   void  deleteComp(Component *c);
   void  deleteWire(Wire *w);
   bool  deleteElements();
+
+  bool  giveNodeNames(QTextStream *stream);
+  bool  createSubNetlist(QTextStream *stream);
   bool  createNetlist(QFile *NetlistFile);
 
   QString copySelected(bool cut);

@@ -37,7 +37,7 @@ FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const c
   text->setTextFormat(Qt::PlainText);
   text->setReadOnly(true);
   text->setWordWrap(QTextEdit::NoWrap);
-  text->setMinimumSize(300,380);
+  text->setMinimumSize(320,350);
   v->addWidget(text);
 
   QPushButton *ButtOK = new QPushButton("OK",this);
@@ -54,7 +54,7 @@ FileShowDialog::FileShowDialog(const QString& FileName, QWidget *parent, const c
 
   QTextStream stream(&file);
   while(!stream.atEnd())
-    text->append(stream.readLine());
+    text->append(stream.readLine()+" ");
   file.close();
 }
 

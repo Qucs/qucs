@@ -635,23 +635,26 @@ void QucsView::MPressComponent(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressDiagram(QMouseEvent *Event)
+void QucsView::MPressDiagram(QMouseEvent *)
 {
   QucsDoc *d = Docs.current();
   QPainter painter(viewport());
   setPainter(&painter, d);
 
   if(selDiag == 0) return;
-  selDiag->setCenter(int(Event->pos().x()/d->Scale) + d->ViewX1,
-                     int(Event->pos().y()/d->Scale) + d->ViewY1);
-  d->Diags.append(selDiag);
-
-  enlargeView(selDiag->cx, selDiag->cy-selDiag->y2, selDiag->cx+selDiag->x2, selDiag->cy);
-  d->setChanged(true);   // document has been changed
 
   DiagramDialog *dia = new DiagramDialog(selDiag, d->DataSet);
-  dia->exec();
+  if(dia->exec() == QDialog::Rejected) {  // don't insert a diagram if dialog canceled
+    delete dia;
+    viewport()->repaint();
+    drawn = false;
+    return;
+  }
   delete dia;
+
+  d->Diags.append(selDiag);
+  enlargeView(selDiag->cx, selDiag->cy-selDiag->y2, selDiag->cx+selDiag->x2, selDiag->cy);
+  d->setChanged(true);   // document has been changed
 
   viewport()->repaint();
   selDiag = selDiag->newOne(); // the component is used, so create a new one
