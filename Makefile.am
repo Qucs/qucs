@@ -1,6 +1,6 @@
 ####### kdevelop will overwrite this part!!! (begin)##########
 
-SUBDIRS = qucs 
+SUBDIRS = qucs
 
 EXTRA_DIST = qucs.kdevprj admin AUTHORS COPYING ChangeLog INSTALL README TODO qucs.lsm qucs.spec NEWS autogen.sh 
 
@@ -21,11 +21,11 @@ $(top_srcdir)/acinclude.m4: $(top_srcdir)/admin/acinclude.m4.in $(top_srcdir)/ad
 MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 configure.files 
 
 package-messages:
-	$(MAKE) -f admin/Makefile.common package-messages
+	$(MAKE) -f $(top_srcdir)/admin/Makefile.common package-messages
 	$(MAKE) -C po merge
 
 dist-hook:
 	rm -rf $(distdir)/admin/CVS
 	rm -f $(distdir)/*.tar.gz
-	cd $(top_distdir) && perl admin/am_edit -padmin
-	cd $(top_distdir) && $(MAKE) -f admin/Makefile.common subdirs
+	cd $(top_distdir) && perl $(top_srcdir)/admin/am_edit -padmin
+	cd $(top_distdir) && $(MAKE) -f $(top_srcdir)/admin/Makefile.common subdirs
