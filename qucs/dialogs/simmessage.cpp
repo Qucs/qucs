@@ -41,7 +41,7 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
   ProgText->setReadOnly(true);
   ProgText->setWordWrap(QTextEdit::NoWrap);
   ProgText->setMinimumSize(400,80);
-
+  wasLF = false;
 
   QVGroupBox *Group2 = new QVGroupBox(tr("Errors and Warnings:"),this);
   all->addWidget(Group2);
@@ -91,24 +91,35 @@ bool SimMessage::startProcess(const QStringList& commands)
 // Is called when the process sends an output to stdout.
 void SimMessage::slotDisplayMsg()
 {
-//qDebug("-");
-  int i;
+  int i, Para;
   QString s = QString(SimProcess.readStdout());
+
   while((i = s.find('\r')) >= 0) {
-//qDebug("*");
+    if(wasLF) {
+      Para = ProgText->paragraphs()-1;
+      ProgText->setSelection(Para, 0, Para, ProgText->paragraphLength(Para));
+      ProgText->removeSelectedText();
+    }
     ProgText->insert(s.left(i-1));
     s = s.mid(i+1);
-    ProgText->removeParagraph(ProgText->paragraphs());
+    wasLF = true;
   }
+  if(s.length() < 1)  return;
 
+  if(wasLF) {
+    Para = ProgText->paragraphs()-1;
+    ProgText->setSelection(Para, 0, Para, ProgText->paragraphLength(Para));
+    ProgText->removeSelectedText();
+    }
   ProgText->insert(s);
+  wasLF = false;
 }
 
 // ------------------------------------------------------------------------
 // Is called when the process sends an output to stderr.
 void SimMessage::slotDisplayErr()
 {
-  ErrText->insert(QString(SimProcess.readStderr()));
+  ErrText->append(QString(SimProcess.readStderr()));
 }
 
 // ------------------------------------------------------------------------
