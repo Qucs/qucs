@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.h,v 1.9 2004-08-20 10:45:37 ela Exp $
+ * $Id: msline.h,v 1.10 2004-08-22 11:01:20 ela Exp $
  *
  */
 
@@ -40,7 +40,11 @@ class msline : public circuit
   static void analyseDispersion (nr_double_t, nr_double_t, nr_double_t,
 				 nr_double_t, nr_double_t, nr_double_t, char *,
 				 nr_double_t&, nr_double_t&);
-  static void HandJ_ab (nr_double_t, nr_double_t, nr_double_t&, nr_double_t&);
+  static void Hammerstad_ab (nr_double_t, nr_double_t,
+			     nr_double_t&, nr_double_t&);
+  static void Getsinger_disp (nr_double_t, nr_double_t, nr_double_t,
+			      nr_double_t, nr_double_t,
+			      nr_double_t&, nr_double_t&);
   static void analyseLoss (nr_double_t, nr_double_t, nr_double_t, nr_double_t,
 			   nr_double_t, nr_double_t, nr_double_t, nr_double_t,
 			   nr_double_t, nr_double_t, char *,

@@ -6340,6 +6340,45 @@ G &= \frac{\pi^{2}}{12}\cdot\frac{\varepsilon_{r} - 1}{\varepsilon_{r_{eff}}}\cd
 Z_{L}(f) = Z_{L}\cdot\sqrt{\frac{\varepsilon_{r_{eff}}}{\varepsilon_{r}(f)}}\cdot\frac{\varepsilon_{r}(f) - 1}{\varepsilon_{r_{eff}} - 1}
 \end{equation}
 
+\subsubsection{Edwards and Owens}
+%\addcontentsline{toc}{subsubsection}{Edwards and Owens}
+
+The authors T. C. Edwards and R. P. Owens \cite{Edwards2} developed a
+dispersion formula based upon measurements of microstrip lines on
+sapphire in the range $10\ohm \le Z_L \le 100\ohm$ and up to
+$18\giga\hertz$.  The procedure was repeated for several microstrip
+width-to-substrate-height ratios ($W/h$) between 0.1 and 10.
+\begin{equation}
+\varepsilon_{r}(f) = \varepsilon_{r} - \dfrac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + P}
+\end{equation}
+
+with
+\begin{equation}
+P = \left(\dfrac{h}{Z_{L}}\right)^{1.33}\cdot\left(0.43 f^2 - 0.009 f^3\right)
+\end{equation}
+
+where $h$ is in millimeters and $f$ is in gigahertz.  Their new
+dispersion equation involving the polynomial, which was developed to
+predict the fine detail of the experimental $\varepsilon_{r}(f)$
+versus frequency curves, includes two empicical parameters.  However,
+it seems the formula is not too sensitive to changes in substrate
+parameters.
+
+\subsubsection{Pramanick and Bhartia}
+%\addcontentsline{toc}{subsubsection}{Pramanick and Bhartia}
+
+P. Bhartia and P. Pramanick \cite{Pramanick} ... and (another reference !!!)
+\begin{equation}
+\varepsilon_{r}(f) = \varepsilon_{r} - \dfrac{\varepsilon_{r} - \varepsilon_{r_{eff}}}{1 + K\cdot\left(\dfrac{f}{f_p}\right)^2}
+\end{equation}
+
+where
+\begin{equation}
+K = \dfrac{\varepsilon_{r_{eff}}}{\varepsilon_{r}}
+\;\;\;\; \textrm{ and } \;\;\;\;
+f_p = \dfrac{Z_L}{2\mu_0 h}
+\end{equation}
+
 \subsection{Transmission losses}
 %\addcontentsline{toc}{subsection}{Transmission losses}
 

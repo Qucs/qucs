@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.30 2004-08-21 13:29:07 ela Exp $
+ * $Id: spsolver.cpp,v 1.31 2004-08-22 11:01:19 ela Exp $
  *
  */
 
@@ -608,6 +608,7 @@ void spsolver::solve (void) {
     subnet->getDroppedCircuits (nlist);
     subnet->deleteUnusedCircuits (nlist);
   }
+  logprogressclear (40);
   dropConnections ();
 }
 

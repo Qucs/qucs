@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.22 2004-08-20 10:45:37 ela Exp $
+ * $Id: msline.cpp,v 1.23 2004-08-22 11:01:20 ela Exp $
  *
  */
 
@@ -117,8 +117,11 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     nr_double_t a, b, c, d, x, dW1, dWr, Wr;
 
     // compute strip thickness effect
-    dW1 = t / M_PI * log (4 * M_E / sqrt (sqr (t / h) + 
-					  sqr (M_1_PI / (W / t + 1.10))));
+    if (t != 0) {
+      dW1 = t / M_PI * log (4 * M_E / sqrt (sqr (t / h) + 
+					    sqr (M_1_PI / (W / t + 1.10))));
+    }
+    else dW1 = 0;
     dWr = (1 + 1 / er) / 2 * dW1;
     Wr  = WEff = W + dWr;
 
@@ -164,7 +167,11 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     t = t / h; // normalized thickness
 
     // compute strip thickness effect
-    du1 = t / M_PI * log (1 + 4 * M_E / t / sqr (coth (sqrt (6.517 * W / h))));
+    if (t != 0) {
+      du1 = t / M_PI * log (1 + 4 * M_E / t / 
+			    sqr (coth (sqrt (6.517 * W / h))));
+    }
+    else du1 = 0;
     du = du1 * (1 + sech (sqrt (er - 1))) / 2;
     u1 = u + du1;
     ur = u + du;
@@ -177,7 +184,7 @@ void msline::analyseQuasiStatic (nr_double_t W, nr_double_t h, nr_double_t t,
     z1 = Z0 / 2 / M_PI * log (c1 / u1 + sqrt (1 + sqr (2 / u1)));
     
     // compute effective dielectric constant
-    HandJ_ab (ur, er, a, b);
+    Hammerstad_ab (ur, er, a, b);
     e = (er + 1) / 2 + (er - 1) / 2 * pow (1 + 10 / ur, -a * b);
 
     // compute final characteristic impedance and dielectric constant
@@ -207,12 +214,7 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
 
   // GETSINGER
   if (!strcmp (Model, "Getsinger")) {
-    nr_double_t g, f, d;
-    g = 0.6 + 0.009 * ZlEff;
-    f = 2 * MU0 * h * frequency / ZlEff;
-    e = er - (er - ErEff) / (1 + g * sqr (f));
-    d = (er - e) * (e - ErEff) / e / (er - ErEff);
-    z = ZlEff * sqrt (e / ErEff) / (1 + d);  // group delay model
+    Getsinger_disp (h, er, ErEff, ZlEff, frequency, e, z);
   }
   // SCHNEIDER
   else if (!strcmp (Model, "Schneider")) {
@@ -301,12 +303,28 @@ void msline::analyseDispersion (nr_double_t W, nr_double_t h, nr_double_t er,
   ErEffFreq = e;
 }
 
-void msline::HandJ_ab (nr_double_t u, nr_double_t er, nr_double_t& a,
-		       nr_double_t& b) {
-  a = 1 +
-    1 / 49 * log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) + 
-    1 / 18.7 * log (1 + cubic (u / 18.1));
+/* Computes the exponent factors a(u) and b(er) used within the
+   effective relative dielectric constant calculations for single and
+   coupled microstrip lines by Hammerstad and Jensen. */
+void msline::Hammerstad_ab (nr_double_t u, nr_double_t er, nr_double_t& a,
+			    nr_double_t& b) {
+  a = 1 + 49 * log ((quadr (u) + sqr (u / 52)) / (quadr (u) + 0.432)) / 49 + 
+    18.7 * log (1 + cubic (u / 18.1)) / 18.7;
   b = 0.564 * pow ((er - 0.9) / (er + 3), 0.053);
+}
+
+/* Calculates dispersion effects for effective dielectric constant and
+   characteristic impedance as defined by Getsinger (for single and
+   coupled microstrips). */
+void msline::Getsinger_disp (nr_double_t h, nr_double_t er, nr_double_t ErEff,
+			     nr_double_t ZlEff, nr_double_t frequency,
+			     nr_double_t& e, nr_double_t& z) {
+  nr_double_t g, f, d;
+  g = 0.6 + 0.009 * ZlEff;
+  f = frequency * 2 * MU0 * h / ZlEff;
+  e = er - (er - ErEff) / (1 + g * sqr (f));
+  d = (er - e) * (e - ErEff) / e / (er - ErEff);
+  z = ZlEff * sqrt (e / ErEff) / (1 + d);  // group delay model
 }
 
 /* The function calculates the conductor and dielectric losses of a

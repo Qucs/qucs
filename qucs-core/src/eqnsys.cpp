@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.12 2004-08-21 13:29:07 ela Exp $
+ * $Id: eqnsys.cpp,v 1.13 2004-08-22 11:01:19 ela Exp $
  *
  */
 
@@ -35,6 +35,10 @@ using namespace std;
 #include <assert.h>
 #include <time.h>
 #include <math.h>
+
+#if HAVE_IEEEFP_H
+# include <ieeefp.h>
+#endif
 
 #include "logging.h"
 #include "complex.h"

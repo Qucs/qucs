@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.2 2004-08-20 10:45:36 ela Exp $
+ * $Id: mscoupled.cpp,v 1.3 2004-08-22 11:01:20 ela Exp $
  *
  */
 
@@ -104,7 +104,7 @@ void mscoupled::calcSP (nr_double_t frequency) {
     fo = fo1 * exp (p * log (u) + q * sin (M_PI * log (u) / M_LN10));
     Mu = g * exp (-g) + u * (20 + sqr (g)) / (10 + sqr (g));
     t1 = (1 + 10 / Mu);
-    msline::HandJ_ab (u, er, a, b);
+    msline::Hammerstad_ab (u, er, a, b);
     Fe = pow (t1, -a * b);
     Fo = fo * Fe;
 
@@ -124,23 +124,14 @@ void mscoupled::calcSP (nr_double_t frequency) {
 
   // GETSINGER
   if (!strcmp (DModel, "Getsinger")) {
-    nr_double_t g, f, d, e, z;
-
     // even mode dispersion
-    g = 0.6 + 0.009 * Zle / 2;
-    f = 2 * MU0 * h * frequency / Zle * 2;
-    e = er - (er - ErEffe) / (1 + g * sqr (f));
-    d = (er - e) * (e - ErEffe) / e / (er - ErEffe);
-    z = Zle * sqrt (e / ErEffe) / (1 + d);
-    ErEffeFreq = e; ZleFreq = z;
-
+    msline::Getsinger_disp (h, er, ErEffe, Zle / 2,
+			    frequency, ErEffeFreq, ZleFreq);
+    ZleFreq *= 2;
     // odd mode dispersion
-    g = 0.6 + 0.009 * Zlo * 2;
-    f = 2 * MU0 * h * frequency / Zlo / 2;
-    e = er - (er - ErEffo) / (1 + g * sqr (f));
-    d = (er - e) * (e - ErEffo) / e / (er - ErEffo);
-    z = Zlo * sqrt (e / ErEffo) / (1 + d);
-    ErEffoFreq = e; ZloFreq = z;
+    msline::Getsinger_disp (h, er, ErEffo, Zlo * 2,
+			    frequency, ErEffoFreq, ZloFreq);
+    ZloFreq /= 2;
   }
 
   // analyse losses of line

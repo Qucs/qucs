@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.h,v 1.3 2004-08-21 13:29:07 ela Exp $
+ * $Id: logging.h,v 1.4 2004-08-22 11:01:19 ela Exp $
  *
  */
 
@@ -33,6 +33,7 @@ __BEGIN_DECLS
 void logprint (int, const char *, ...);
 void loginit (void);
 void logprogressbar (nr_double_t, nr_double_t, int);
+void logprogressclear (int);
 extern FILE * file_status;
 extern FILE * file_error;
 extern int progressbar_enable;

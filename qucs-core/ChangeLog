@@ -1,3 +1,7 @@
+2004-08-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Checking for 'ieeefp.h'.
+
 2004-08-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Additionally checking for strchr() and atan2().
