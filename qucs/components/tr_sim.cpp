@@ -65,6 +65,16 @@ TR_Sim::TR_Sim()
 	QObject::tr("initial step size in seconds")));
   Props.append(new Property("MinStep", "1e-16", false,
 	QObject::tr("minimum step size in seconds")));
+  Props.append(new Property("MaxIter", "150", false,
+	QObject::tr("maximum number of iterations until error")));
+  Props.append(new Property("reltol", "0.001", false,
+	QObject::tr("relative tolerance for convergence")));
+  Props.append(new Property("abstol", "1 pA", false,
+	QObject::tr("absolute tolerance for currents")));
+  Props.append(new Property("vntol", "1 uV", false,
+	QObject::tr("absolute tolerance for voltages")));
+  Props.append(new Property("Temp", "26.85", false,
+	QObject::tr("simulation temperature in degree Celsius")));
 }
 
 TR_Sim::~TR_Sim()
