@@ -46,15 +46,26 @@ Isolator::Isolator()
   Model = "Isolator";
   Name  = "X";
 
-  Props.append(new Property("Z1", "50 Ohm", false, QObject::tr("reference impedance of input port")));
-  Props.append(new Property("Z2", "50 Ohm", false, QObject::tr("reference impedance of output port")));
+  Props.append(new Property("Z1", "50 Ohm", false,
+		QObject::tr("reference impedance of input port")));
+  Props.append(new Property("Z2", "50 Ohm", false,
+		QObject::tr("reference impedance of output port")));
 }
 
 Isolator::~Isolator()
 {
 }
 
-Isolator* Isolator::newOne()
+Component* Isolator::newOne()
 {
   return new Isolator();
+}
+
+Component* Isolator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Isolator");
+  BitmapFile = "isolator";
+
+  if(getNewOne)  return new Isolator();
+  return 0;
 }

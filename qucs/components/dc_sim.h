@@ -23,9 +23,10 @@
 
 class DC_Sim : public Component  {
 public:
-	DC_Sim();
-	~DC_Sim();
-  DC_Sim* newOne();
+  DC_Sim();
+  ~DC_Sim();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -23,9 +23,10 @@
 
 class AC_Sim : public Component  {
 public:
-	AC_Sim();
-	~AC_Sim();
-  AC_Sim* newOne();
+  AC_Sim();
+  ~AC_Sim();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

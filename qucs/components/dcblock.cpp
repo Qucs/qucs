@@ -48,7 +48,16 @@ dcBlock::~dcBlock()
 {
 }
 
-dcBlock* dcBlock::newOne()
+Component* dcBlock::newOne()
 {
   return new dcBlock();
+}
+
+Component* dcBlock::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("dc Block");
+  BitmapFile = "dcblock";
+
+  if(getNewOne)  return new dcBlock();
+  return 0;
 }

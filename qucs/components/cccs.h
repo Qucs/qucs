@@ -23,9 +23,10 @@
 
 class CCCS : public Component  {
 public:
-	CCCS();
-	~CCCS();
-  CCCS* newOne();
+  CCCS();
+  ~CCCS();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -61,7 +61,8 @@ VCVS::VCVS()
   Model = "VCVS";
   Name  = "SRC";
 
-  Props.append(new Property("G", "1", true, QObject::tr("forward transfer factor")));
+  Props.append(new Property("G", "1", true,
+		QObject::tr("forward transfer factor")));
   Props.append(new Property("T", "0", true, QObject::tr("delay time")));
 }
 
@@ -69,7 +70,16 @@ VCVS::~VCVS()
 {
 }
 
-VCVS* VCVS::newOne()
+Component* VCVS::newOne()
 {
   return new VCVS();
+}
+
+Component* VCVS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Voltage Controlled Voltage Source");
+  BitmapFile = "vcvs";
+
+  if(getNewOne)  return new VCVS();
+  return 0;
 }

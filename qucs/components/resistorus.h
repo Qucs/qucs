@@ -23,9 +23,10 @@
 
 class ResistorUS : public Component  {
 public:
-	ResistorUS();
-	~ResistorUS();
-  ResistorUS* newOne();
+  ResistorUS();
+  ~ResistorUS();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

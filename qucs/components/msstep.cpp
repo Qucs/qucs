@@ -47,16 +47,28 @@ MSstep::MSstep()
   Model = "MSTEP";
   Name  = "MS";
 
-  Props.append(new Property("Subst", "Subst1", true, QObject::tr("substrate")));
-  Props.append(new Property("W1", "2 mm", true, QObject::tr("width 1 of the line")));
-  Props.append(new Property("W2", "1 mm", true, QObject::tr("width 2 of the line")));
+  Props.append(new Property("Subst", "Subst1", true,
+		QObject::tr("substrate")));
+  Props.append(new Property("W1", "2 mm", true,
+		QObject::tr("width 1 of the line")));
+  Props.append(new Property("W2", "1 mm", true,
+		QObject::tr("width 2 of the line")));
 }
 
 MSstep::~MSstep()
 {
 }
 
-MSstep* MSstep::newOne()
+Component* MSstep::newOne()
 {
   return new MSstep();
+}
+
+Component* MSstep::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Microstrip Step");
+  BitmapFile = "msstep";
+
+  if(getNewOne)  return new MSstep();
+  return 0;
 }

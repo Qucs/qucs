@@ -23,9 +23,10 @@
 
 class Capacitor : public Component  {
 public:
-	Capacitor();
-	~Capacitor();
-  Capacitor* newOne();
+  Capacitor();
+  ~Capacitor();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

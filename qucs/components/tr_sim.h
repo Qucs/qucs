@@ -23,9 +23,10 @@
 
 class TR_Sim : public Component  {
 public:
-	TR_Sim();
-	~TR_Sim();
-  TR_Sim* newOne();
+  TR_Sim();
+  ~TR_Sim();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

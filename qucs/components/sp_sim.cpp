@@ -62,7 +62,16 @@ SP_Sim::~SP_Sim()
 {
 }
 
-SP_Sim* SP_Sim::newOne()
+Component* SP_Sim::newOne()
 {
   return new SP_Sim();
+}
+
+Component* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("S-parameter simulation");
+  BitmapFile = "sparameter";
+
+  if(getNewOne)  return new SP_Sim();
+  return 0;
 }

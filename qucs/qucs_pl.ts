@@ -1133,6 +1133,238 @@ Wrong line start!</source>
         <source>Cannot save settings !</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>npn bipolar junction transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polarity (npn,pnp)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>junction field-effect transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polarity (n,p)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MOS field-effect transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Harmonic balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S-parameter simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transient simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attenuator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias T</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>npn transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Controlled Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Controlled Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gyrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inductor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isolator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-JFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-MOSFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coupled Microstrip Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Mitered Bend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Tee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phase Shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistor US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1-port S parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subcircuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Subcircuit Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>symmetric Transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmission Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Current Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voltage Controlled Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dc Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pnp transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p-JFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p-MOSFET</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>depletion MOS field-effect transistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>depletion MOSFET</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -1436,162 +1668,6 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resistor US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Capacitor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inductor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Subcircuit Port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>symmetric Transformer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Feed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bias T</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attenuator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Isolator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circulator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gyrator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Probe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage Controlled Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Controlled Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voltage Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Controlled Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmission Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Substrate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coplanar Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Diode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>1-port S parameter file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1613,26 +1689,6 @@ Errors:
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dc simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parameter sweep</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1746,10 +1802,6 @@ Go on ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Transient simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Saving will overwrite the old one! Continue?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1806,10 +1858,6 @@ Go on ?</source>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac Current Source</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

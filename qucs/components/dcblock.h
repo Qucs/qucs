@@ -23,9 +23,10 @@
 
 class dcBlock : public Component  {
 public:
-	dcBlock();
-	~dcBlock();
-  dcBlock* newOne();
+  dcBlock();
+  ~dcBlock();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

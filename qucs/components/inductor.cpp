@@ -40,14 +40,24 @@ Inductor::Inductor()
   Model = "L";
   Name  = "L";
 
-  Props.append(new Property("L", "1 nH", true, QObject::tr("inductance in Henry")));
+  Props.append(new Property("L", "1 nH", true,
+		QObject::tr("inductance in Henry")));
 }
 
 Inductor::~Inductor()
 {
 }
 
-Inductor* Inductor::newOne()
+Component* Inductor::newOne()
 {
   return new Inductor();
+}
+
+Component* Inductor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Inductor");
+  BitmapFile = "inductor";  // bitmap file name without suffix
+
+  if(getNewOne)  return new Inductor();
+  return 0;
 }

@@ -23,9 +23,10 @@
 
 class TLine : public Component  {
 public:
-	TLine();
-	~TLine();
-  TLine* newOne();
+  TLine();
+  ~TLine();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

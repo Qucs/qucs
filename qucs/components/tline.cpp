@@ -42,15 +42,26 @@ TLine::TLine()
   Model = "TLIN";
   Name  = "Line";
 
-  Props.append(new Property("Z", "50 Ohm", true, QObject::tr("characteristic impedance")));
-  Props.append(new Property("L", "1 mm", true, QObject::tr("electrical length of the line")));
+  Props.append(new Property("Z", "50 Ohm", true,
+		QObject::tr("characteristic impedance")));
+  Props.append(new Property("L", "1 mm", true,
+		QObject::tr("electrical length of the line")));
 }
 
 TLine::~TLine()
 {
 }
 
-TLine* TLine::newOne()
+Component* TLine::newOne()
 {
   return new TLine();
+}
+
+Component* TLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Transmission Line");
+  BitmapFile = "tline";
+
+  if(getNewOne)  return new TLine();
+  return 0;
 }

@@ -23,9 +23,10 @@
 
 class Gyrator : public Component  {
 public:
-	Gyrator();
-	~Gyrator();
-  Gyrator* newOne();
+  Gyrator();
+  ~Gyrator();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

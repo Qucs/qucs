@@ -23,9 +23,10 @@
 
 class Ground : public Component  {
 public:
-	Ground();
-	~Ground();
-  Ground* newOne();
+  Ground();
+  ~Ground();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -23,9 +23,10 @@
 
 class MScoupled : public Component  {
 public:
-	MScoupled();
-	~MScoupled();
-  MScoupled* newOne();
+  MScoupled();
+  ~MScoupled();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

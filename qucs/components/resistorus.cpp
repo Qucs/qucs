@@ -43,15 +43,24 @@ ResistorUS::ResistorUS()
   Model = "R";
   Name  = "R";
 
-  Props.append(new Property("R", "50 Ohm", true, QObject::tr("ohmic resistance in Ohms")));
-//  Props.append(new Property("Noise", "yes", false, QObject::tr("thermal noise yes or no")));
+  Props.append(new Property("R", "50 Ohm", true,
+		QObject::tr("ohmic resistance in Ohms")));
 }
 
 ResistorUS::~ResistorUS()
 {
 }
 
-ResistorUS* ResistorUS::newOne()
+Component* ResistorUS::newOne()
 {
   return new ResistorUS();
+}
+
+Component* ResistorUS::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Resistor US");
+  BitmapFile = "resistor_us";
+
+  if(getNewOne)  return new ResistorUS();
+  return 0;
 }

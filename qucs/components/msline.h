@@ -23,9 +23,10 @@
 
 class MSline : public Component  {
 public:
-	MSline();
-	~MSline();
-  MSline* newOne();
+  MSline();
+  ~MSline();
+  Component* newOne();
+  static Component* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

@@ -69,15 +69,26 @@ symTrafo::symTrafo()
   Model = "sTr";
   Name  = "Tr";
 
-  Props.append(new Property("T1", "1", true, QObject::tr("voltage transformation ratio of coil 1")));
-  Props.append(new Property("T2", "1", true, QObject::tr("voltage transformation ratio of coil 2")));
+  Props.append(new Property("T1", "1", true,
+		QObject::tr("voltage transformation ratio of coil 1")));
+  Props.append(new Property("T2", "1", true,
+		QObject::tr("voltage transformation ratio of coil 2")));
 }
 
 symTrafo::~symTrafo()
 {
 }
 
-symTrafo* symTrafo::newOne()
+Component* symTrafo::newOne()
 {
   return new symTrafo();
+}
+
+Component* symTrafo::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("symmetric Transformer");
+  BitmapFile = "symtrans";
+
+  if(getNewOne)  return new symTrafo();
+  return 0;
 }
