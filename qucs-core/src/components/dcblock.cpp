@@ -1,7 +1,7 @@
 /*
  * dcblock.cpp - DC block class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcblock.cpp,v 1.2 2003/12/26 14:04:07 ela Exp $
+ * $Id: dcblock.cpp,v 1.3 2004/05/18 15:19:03 ela Exp $
  *
  */
 

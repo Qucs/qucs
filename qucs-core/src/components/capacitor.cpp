@@ -1,7 +1,7 @@
 /*
  * capacitor.cpp - capacitor class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.3 2004/02/17 15:30:57 ela Exp $
+ * $Id: capacitor.cpp,v 1.4 2004/05/18 15:19:03 ela Exp $
  *
  */
 
@@ -46,8 +46,8 @@ capacitor::capacitor () : circuit (2) {
 void capacitor::calcSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
   complex z = rect (0, -1.0 / (2.0 * M_PI * frequency * c));
-  setS (1, 1, z / (z + 2.0));
-  setS (2, 2, z / (z + 2.0));
+  setS (1, 1,   z / (z + 2.0));
+  setS (2, 2,   z / (z + 2.0));
   setS (1, 2, 2.0 / (z + 2.0));
   setS (2, 1, 2.0 / (z + 2.0));
 }
