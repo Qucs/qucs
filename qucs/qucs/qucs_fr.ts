@@ -93,19 +93,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Files (*.*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Files (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -199,11 +199,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: Cannot read file: </source>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>OK</source>
+        <source>ERROR: Cannot read file: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -314,6 +314,26 @@
 <context>
     <name>QObject</name>
     <message>
+        <source>Create new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Project name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>open new project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>untitled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -420,14 +440,6 @@ Wrong &apos;painting&apos; line format!</source>
     <message>
         <source>File Format Error:
 Unknown field!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>resistor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ohmic resistance in Ohms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -567,10 +579,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>dc simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>dc block</source>
         <translation type="unfinished"></translation>
     </message>
@@ -579,7 +587,15 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>dc simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>diode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>saturation current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -683,6 +699,14 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>microstrip mitered bend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>microstrip open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>microstrip impedance step</source>
         <translation type="unfinished"></translation>
     </message>
@@ -719,11 +743,39 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>phase shifter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>phase shift in degree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ohmic resistance in Ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>resistor (US symbol)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>S parameter simulation</source>
+        <source>ac power source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of the port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>port impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ac power in Watts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -736,6 +788,10 @@ Unknown field!</source>
     </message>
     <message>
         <source>name of the s parameter file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S parameter simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -759,6 +815,10 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>relative permittivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>thickness in meters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -775,6 +835,14 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>voltage transformation ratio of coil 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio of coil 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ideal transmission line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -784,6 +852,14 @@ Unknown field!</source>
     </message>
     <message>
         <source>electrical length of the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ideal transformer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage transformation ratio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -800,10 +876,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>time step in seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ideal transformer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -840,70 +912,6 @@ Unknown field!</source>
     </message>
     <message>
         <source>equivalent voltage density in V/sqrt(Hz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>phase shifter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac power source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>number of the port</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>port impedance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ac power in Watts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Project name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>open new project</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>relative permittivity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>voltage transformation ratio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>saturation current</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1636,6 +1644,42 @@ Enables/disables the statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Help Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Index of Qucs Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Index
+
+Index of intern Qucs help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started with Qucs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Getting Started
+
+Short introduction into Qucs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2085,6 +2129,10 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Current Probe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>dc Voltage Source</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2098,6 +2146,14 @@ Errors:
     </message>
     <message>
         <source>Power Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Voltage Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Noise Current Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2146,6 +2202,14 @@ Errors:
     </message>
     <message>
         <source>Microstrip Cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Mitered Bend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2274,54 +2338,6 @@ Go on ?</source>
         <source>Choose Project Directory for Deleting</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Help Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Index of Qucs Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help Index
-
-Index of intern Qucs help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started with Qucs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Getting Started
-
-Short introduction into Qucs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Probe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Voltage Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Noise Current Source</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsView</name>
@@ -2337,6 +2353,10 @@ Short introduction into Qucs</source>
 <context>
     <name>SettingsDialog</name>
     <message>
+        <source>Edit File Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Data Display:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2346,6 +2366,10 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>open data display after simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2361,6 +2385,10 @@ Short introduction into Qucs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2370,18 +2398,6 @@ Short introduction into Qucs</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit File Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Simulation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

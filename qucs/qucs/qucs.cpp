@@ -1507,6 +1507,8 @@ void QucsApp::slotSetCompView(int index)
           new QIconViewItem(CompComps, tr("Microstrip Corner"), QImage(BITMAPDIR "mscorner.xpm"));
           new QIconViewItem(CompComps, tr("Microstrip Tee"), QImage(BITMAPDIR "mstee.xpm"));
           new QIconViewItem(CompComps, tr("Microstrip Cross"), QImage(BITMAPDIR "mscross.xpm"));
+          new QIconViewItem(CompComps, tr("Microstrip Mitered Bend"), QImage(BITMAPDIR "msmbend.xpm"));
+          new QIconViewItem(CompComps, tr("Microstrip Open"), QImage(BITMAPDIR "msopen.xpm"));
           new QIconViewItem(CompComps, tr("Coplanar Line"), QImage(BITMAPDIR "coplanar.xpm"));
           break;
     case COMBO_nonlinear:
@@ -1606,8 +1608,8 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                        break;
               case 15: view->selComp = new Phaseshifter();
                        break;
-//              case 16: view->selComp = new iProbe();
-//                       break;
+              case 16: view->selComp = new iProbe();
+                       break;
           }
           break;
     case COMBO_Sources:
@@ -1620,10 +1622,10 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
                       break;
               case 3: view->selComp = new Source_ac();
                       break;
-//              case 4: view->selComp = new Volt_noise();
-//                      break;
-//              case 5: view->selComp = new Ampere_noise();
-//                      break;
+              case 4: view->selComp = new Volt_noise();
+                      break;
+              case 5: view->selComp = new Ampere_noise();
+                      break;
               case 6: view->selComp = new VCCS();
                       break;
               case 7: view->selComp = new CCCS();
@@ -1636,24 +1638,28 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
           break;
     case COMBO_TLines:
           switch(CompComps->index(item)) {
-              case 0: view->selComp = new TLine();
-                      break;
-              case 1: view->selComp = new Substrate();
-                      break;
-              case 2: view->selComp = new MSline();
-                      break;
-              case 3: view->selComp = new MScoupled();
-                      break;
-              case 4: view->selComp = new MSstep();
-                      break;
-              case 5: view->selComp = new MScorner();
-                      break;
-              case 6: view->selComp = new MStee();
-                      break;
-              case 7: view->selComp = new MScross();
-                      break;
-              case 8: view->selComp = new Coplanar();
-                      break;
+              case  0: view->selComp = new TLine();
+                       break;
+              case  1: view->selComp = new Substrate();
+                       break;
+              case  2: view->selComp = new MSline();
+                       break;
+              case  3: view->selComp = new MScoupled();
+                       break;
+              case  4: view->selComp = new MSstep();
+                       break;
+              case  5: view->selComp = new MScorner();
+                       break;
+              case  6: view->selComp = new MStee();
+                       break;
+              case  7: view->selComp = new MScross();
+                       break;
+              case  8: view->selComp = new MSmbend();
+                       break;
+              case  9: view->selComp = new MSopen();
+                       break;
+              case 10: view->selComp = new Coplanar();
+                       break;
           }
           break;
     case COMBO_nonlinear:
