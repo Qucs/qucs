@@ -1,3 +1,7 @@
+2004-06-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Renamed some diode parameters.
+
 2004-06-04  Stefan Jahn  <stefan@lkcc.org>
 
 	* nodelist.cpp: Also saves the internal flag of each node
