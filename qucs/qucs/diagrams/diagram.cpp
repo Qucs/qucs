@@ -224,9 +224,9 @@ bool Diagram::loadVarData(const QString& fileName)
     return false;
   }
 
-  QTextStream ReadWhole(&file);            // to strongly speed up the file read operation ...
-  QString FileString = ReadWhole.read();   // the whole file is read into the memory ...
-  file.close();                            // in one piece
+  QTextStream ReadWhole(&file);          // to strongly speed up the file read operation ...
+  QString FileString = ReadWhole.read(); // the whole file is read into the memory ...
+  file.close();                          // in one piece
 
 
   QString Line, tmp;
@@ -267,7 +267,7 @@ bool Diagram::loadVarData(const QString& fileName)
     k = Line.find('j');
     if(k < 0) {
       x = Line.toDouble(&ok);
-      y = 0;
+      y = 0.0;
     }
     else {
       tmp = Line.mid(k);  // imaginary part
@@ -278,9 +278,9 @@ bool Diagram::loadVarData(const QString& fileName)
     }
     g->cPoints.append(new cPoint(0,x,y));
     counting++;
-    y = sqrt(x*x+y*y);
-    if(y > ymax) ymax = y;
-    if(y < ymin) ymin = y;
+    if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
+    if(x > ymax) ymax = x;
+    if(x < ymin) ymin = x;
 
     i = FileString.find(noWhiteSpace, j);
     j = FileString.find(WhiteSpace, i);
