@@ -1446,7 +1446,7 @@ void QucsView::MPressMoveText(QMouseEvent *Event)
   QucsDoc *d = Docs.current();
   MAx1 = int(Event->pos().x()/d->Scale)+d->ViewX1;
   MAy1 = int(Event->pos().y()/d->Scale)+d->ViewY1;
-  (Component*)focusElement = d->selectCompText(MAx1, MAy1, MAx2, MAy2);
+  focusElement = d->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
   if(focusElement) {
     MAx3 = MAx1;

@@ -68,6 +68,7 @@ the tarballs created using `make distcheck'.
   - GNU Bison 1.875d
   - a LaTeX installation
   - GNU Octave
+  - epsTk 2.0.1 (at least)
   - Qt installation >= version 3.1
 
 * Unpack the packages in a temporary directory.
