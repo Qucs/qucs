@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.1 2004-07-21 16:25:09 ela Exp $
+ * $Id: spfile.cpp,v 1.2 2004-07-21 17:34:56 ela Exp $
  *
  */
 
@@ -166,7 +166,7 @@ complex spfile::interpolate_lin (vector * dep, vector * var,
   x2 = real (dep->get (idx + 1));
 
   // rectangular data
-  if (!strcmp (type, "rect")) {
+  if (!strcmp (type, "rectangular")) {
     y1 = real (var->get (idx));
     y2 = real (var->get (idx + 1));
     f1 = ((x2 - x) * y1 + (x - x1) * y2) / (x2 - x1);
