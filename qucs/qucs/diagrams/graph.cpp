@@ -25,7 +25,7 @@ Graph::Graph(const QString& _Line)
   Type = isGraph;
 
   Var    = _Line;
-  countX1 = countX2 = 0;    // no points in graph
+  countY = 0;    // no points in graph
   Points = 0;
   Thick  = 0;
   Color  = 0x0000ff;  // blue
@@ -51,12 +51,13 @@ void Graph::paint(QPainter *p, int x0, int y0)
     return;
   }
 
+  int countX = cPointsX.getFirst()->count;
   int n1, n2;
   if(isSelected) {
     p->setPen(QPen(QPen::darkGray,Thick+4));
-    for(n1=countX2-1; n1>0; n1--) {
+    for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-      for(n2=countX1-1; n2>0; n2--) {
+      for(n2=countX-1; n2>0; n2--) {
         p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
         pp += 2;
       }
@@ -65,9 +66,9 @@ void Graph::paint(QPainter *p, int x0, int y0)
 
     pp = Points;
     p->setPen(QPen(QPen::white, Thick, Qt::SolidLine));
-    for(n1=countX2-1; n1>0; n1--) {
+    for(n1=countY; n1>0; n1--) {
       p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-      for(n2=countX1-1; n2>0; n2--) {
+      for(n2=countX-1; n2>0; n2--) {
         p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
         pp += 2;
       }
@@ -79,9 +80,9 @@ void Graph::paint(QPainter *p, int x0, int y0)
 
   // **** not selected ****
   p->setPen(QPen(QColor(Color), Thick, Qt::SolidLine));
-  for(n1=countX2; n1>0; n1--) {
+  for(n1=countY; n1>0; n1--) {
     p->drawPoint(x0+(*pp), y0-(*(pp+1)));
-    for(n2=countX1-1; n2>0; n2--) {
+    for(n2=countX-1; n2>0; n2--) {
       p->drawLine(x0+(*pp), y0-(*(pp+1)), x0+(*(pp+2)), y0-(*(pp+3)));
       pp += 2;
     }
@@ -92,7 +93,8 @@ void Graph::paint(QPainter *p, int x0, int y0)
 // ---------------------------------------------------------------------
 QString Graph::save()
 {
-  QString s = "      <"+Var+" "+Color.name()+" "+QString::number(Thick)+">";
+  QString s = "      <\""+Var+"\" "+Color.name()+
+	      " "+QString::number(Thick)+">";
   return s;
 }
 
@@ -106,7 +108,8 @@ bool Graph::load(const QString& _s)
   if(s.at(s.length()-1) != '>') return false;
   s = s.mid(1, s.length()-2);   // cut off start and end character
 
-  Var  = s.section(' ',0,0);    // Var
+  if(s.at(0) == '"')  Var  = s.section('"',1,1);    // Var, the new style
+  else  Var  = s.section(' ',0,0);    // Var, the old style
 
   QString n;
   n  = s.section(' ',1,1);    // Color
@@ -132,28 +135,31 @@ int Graph::getSelected(int x, int y)
   int dx, dx2, x1;
   int dy, dy2, y1;
 
-  int runs = countX1 * countX2;
-  for(int n=1; n<runs; n++) {  // count-1 runs (need 2 points per run)
-    x1 = *(pp++);  y1 = *(pp++);
+  int countX = cPointsX.getFirst()->count;
+  for(int z=0; z<countY; z++) {
+    for(int n=1; n<countX; n++) {  // count-1 runs (need 2 points per run)
+      x1 = *(pp++);  y1 = *(pp++);
 
-    dx  = x - x1;
-    dx2 = (*pp);
-    if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
-    else { if(x > dx2+5) continue; }
+      dx  = x - x1;
+      dx2 = (*pp);
+      if(dx < -5) { if(x < dx2-5) continue; } // point between x coordinates ?
+      else { if(x > dx2+5) continue; }
 
-    dy  = y - y1;
-    dy2 = (*(pp+1));
-    if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
-    else { if(y > dy2+5) continue; }
+      dy  = y - y1;
+      dy2 = (*(pp+1));
+      if(dy < -5) { if(y < dy2-5) continue; } // point between y coordinates ?
+      else { if(y > dy2+5) continue; }
 
-    dx2 -= x1;
-    dy2 -= y1;
+      dx2 -= x1;
+      dy2 -= y1;
 
-    A  = dx2*dy - dx*dy2;    // calculate the rectangle area spanned
-    A *= A;                  // avoid the need for square root
-    A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
+      A  = dx2*dy - dx*dy2;    // calculate the rectangle area spanned
+      A *= A;                  // avoid the need for square root
+      A -= 25*(dx2*dx2 + dy2*dy2);  // substract selectable area
 
-    if(A <= 0)  return n;    // lies x/y onto the graph line ?
+      if(A <= 0)  return z*countX + n;  // lies x/y onto the graph line ?
+    }
+    pp += 2;
   }
 
   return -1;

@@ -221,8 +221,6 @@ void Diagram::updateGraphData()
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     calcData(pg);   // calculate graph coordinates
 
-  int n, *pi;
-  double *pp;
   for(Marker *pm = Markers.first(); pm != 0; pm = Markers.next()) {
     pg = Graphs.at(Graphs.findRef(pm->pGraph));
     if(!pg) {
@@ -230,23 +228,8 @@ void Diagram::updateGraphData()
       pm = Markers.current();
       continue;
     }
-    if(pg->cPointsX.isEmpty() == 0) {
-      pm->makeInvalid();
-      continue;
-    }
-    DataX *pD = pg->cPointsX.getFirst();
-    pp = pD->Points;
-    for(n=0; n<pD->count; n++) {
-      if(pm->xpos <= *pp) break;
-      pp++;
-    }
-    if(n == pD->count) pp--;
-    pm->xpos = *pp;
-    pm->yr = *((pg->cPointsY)+2*n);  pm->yi = *((pg->cPointsY)+2*n+1);
+
     pm->createText();
-    pi = pg->Points + 2*n;
-    pm->cx = *pi;
-    pm->cy = *(pi+1);
   }
 }
 
@@ -254,7 +237,7 @@ void Diagram::updateGraphData()
 bool Diagram::loadVarData(const QString& fileName)
 {
   Graph *g = Graphs.current();
-  g->countX1 = g->countX2 = 0;
+  g->countY = 0;
   if(g->Points != 0) { delete[] g->Points;  g->Points = 0; }
   g->cPointsX.clear();
   if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
@@ -314,6 +297,7 @@ bool Diagram::loadVarData(const QString& fileName)
   if(g->cPointsX.isEmpty()) {    // create independent variable by myself ?
     tmp = Line.section(' ', 2, 2);  // get number of points
     counting = tmp.toInt(&ok);
+    g->cPointsX.append(new DataX("number", 0, counting));
     if(!ok) {
       QMessageBox::critical(0, QObject::tr("Error"),
                    QObject::tr("Cannot get size of independent data \"")+
@@ -322,28 +306,27 @@ bool Diagram::loadVarData(const QString& fileName)
     }
 
     p = new double[counting];  // memory of new independent variable
-    g->countX2 = 1;
-    g->cPointsX.append(new DataX("number", p, counting));
+    g->countY = 1;
+    g->cPointsX.current()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
     xmin = 1.0;
     xmax = double(counting);
   }
   else {
     // get independent variables from data file
-    g->countX2 = 1;
+    g->countY = 1;
     for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
       counting = loadIndepVarData(pD->Var, FileString);
-      g->countX2 *= counting;
+      g->countY *= counting;
       if(counting <= 0) {     // failed to load independent variable ?
         g->cPointsX.clear();
         return false;  // error message was already created
       }
     }
-    g->countX2 /= counting;
+    g->countY /= counting;
   }
 
-  g->countX1 = counting;
-  counting  *= g->countX2;
+  counting  *= g->countY;
   g->Points  = new int[2*counting];  // create memory for points
 
   // *****************************************************************
@@ -376,7 +359,7 @@ bool Diagram::loadVarData(const QString& fileName)
       g->Var += " (invalid)";
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
-      g->countX1 = g->countX2 = 0;
+      g->countY = 0;
       delete[] g->Points;  g->Points = 0;
       return false;
     }

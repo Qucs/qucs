@@ -1016,6 +1016,17 @@ Wrong &apos;component&apos; line format!</source>
     </message>
 </context>
 <context>
+    <name>QucsActions</name>
+    <message>
+        <source>Inserting clipboard contents...</source>
+        <translation type="unfinished">Inserimento contenuto degli appunti...</translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">Pronto.</translation>
+    </message>
+</context>
+<context>
     <name>QucsApp</name>
     <message>
         <source>Warning</source>
@@ -1955,7 +1966,7 @@ Vuoi salvare i cambiamenti prima di chiuderlo?</translation>
     </message>
     <message>
         <source>Inserting clipboard contents...</source>
-        <translation>Inserimento contenuto degli appunti...</translation>
+        <translation type="obsolete">Inserimento contenuto degli appunti...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -3367,6 +3378,10 @@ Qt universal circuit simulator
     <message>
         <source>French by Eric Marzolf</source>
         <translation type="unfinished">Francese di Eric Marzolf</translation>
+    </message>
+    <message>
+        <source>Italian by Giorgio Luparia</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
