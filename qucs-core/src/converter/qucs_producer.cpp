@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.2 2004/11/02 23:48:40 ela Exp $
+ * $Id: qucs_producer.cpp,v 1.3 2004/11/04 08:48:32 ela Exp $
  *
  */
 
@@ -55,7 +55,11 @@ static void netlist_lister (struct definition_t * root, char * prefix) {
   struct node_t * node;
   struct pair_t * pair;
   for (def = root; def != NULL; def = def->next) {
-    if (def->define == NULL) continue;
+    if (def->define == NULL) {
+      if (def->text != NULL)
+	fprintf (qucs_out, "# %s\n", def->text);
+      continue;
+    }
     fprintf (qucs_out, "%s%s%s:%s", prefix, def->action ? "." : "",
 	     def->type, def->instance);
     for (node = def->nodes; node != NULL; node = node->next) {

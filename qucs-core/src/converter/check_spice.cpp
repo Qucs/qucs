@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.4 2004/11/02 23:48:40 ela Exp $
+ * $Id: check_spice.cpp,v 1.5 2004/11/04 08:48:32 ela Exp $
  *
  */
 
@@ -68,8 +68,24 @@ struct define_t spice_definition_available[] =
   },
   /* voltage sources */
   { "V", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
-    { { "U", PROP_REAL, { 1e-12, PROP_NO_STR }, PROP_NO_RANGE },
+    { { "U", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* current sources */
+  { "I", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "I", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* voltage-controlled current source */
+  { "G", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* voltage-controlled voltage source */
+  { "E", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "G", PROP_REAL, { 1, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
     { PROP_NO_PROP }
   },
   /* BJT device */
@@ -393,7 +409,7 @@ static struct pair_t * spice_generate_Model_pairs (struct value_t * values) {
    and checks whether there is the given property stored.  It returns
    NULL if not. */
 static struct pair_t *
-spice_find_property (struct definition_t * def, char * prop) {
+spice_find_property (struct definition_t * def, const char * prop) {
   struct pair_t * pair;
   for (pair = def->pairs; pair != NULL; pair = pair->next) {
     if (!strcmp (pair->key, prop))
@@ -405,7 +421,8 @@ spice_find_property (struct definition_t * def, char * prop) {
 /* The function replaces or appends the given key/value pair to the
    list of properties of the given definition. */
 static void
-spice_set_property_string (struct definition_t * def, char * key, char * val) {
+spice_set_property_string (struct definition_t * def, const char * key,
+			   char * val) {
   struct pair_t * prop = spice_find_property (def, key);
   if (prop != NULL) {
     if (prop->value->ident) free (prop->value->ident);
@@ -478,6 +495,36 @@ spice_get_qucs_definition (struct definition_t * def) {
   return NULL;
 }
 
+// Helper structure for direct type translations.
+struct spice_device_table_t {
+  char * type;  // Spice type
+  char * trans; // Qucs type
+}
+spice_device_table[] = {
+  { "Q", "BJT"    },
+  { "J", "JFET",  },
+  { "M", "MOSFET" },
+  { "D", "Diode"  },
+  { "V", "Vdc"    },
+  { "I", "Idc"    },
+  { "G", "VCCS"   },
+  { "E", "VCVS"   },
+  { NULL, NULL }
+};
+
+/* This little funtion translates the Spice type definitions into Qucs
+   types. */
+static void spice_translate_type (struct definition_t * def) {
+  struct spice_device_table_t * tran;
+  for (tran = spice_device_table; tran->type; tran++) {
+    if (!strcasecmp (tran->type, def->type)) {
+      free (def->type);
+      def->type = strdup (tran->trans);
+      break;
+    }
+  }
+}
+
 // Helper structure for node translations.
 struct node_translation_t {
   char * type;    // the type of definition
@@ -496,6 +543,14 @@ node_translations[] = {
   { "JFET",
     { 2, 1, 3, -1 },
     { 1, 2, 3, -1 }
+  },
+  { "VCCS",
+    { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
+  },
+  { "VCVS",
+    { 3, 1, 2, 4, -1 },
+    { 1, 2, 3, 4, -1 }
   },
   { NULL, { -1 }, { -1 } }
 };
@@ -573,13 +628,14 @@ struct unit_translation_t {
 }
 unit_translations[] = {
   { "OHM",  "Ohm" },
+  { "OHMS", "Ohm" },
   { "MHO",  "S" },
   { "S",    "s" },
   { "H",    "H" },
   { "F",    "F" },
   { "HZ",   "Hz" },
   { "V",    "V" },
-  { "Volt", "V" },
+  { "VOLT", "V" },
   { "A",    "A" },
   { "M",    "m" },
   { NULL, NULL }
@@ -724,7 +780,7 @@ static void spice_free_value (struct value_t * value) {
    definition.  If the replace flag is non-zero the pair gets
    replaced.  If the replace flag is zero and the pair already exists
    nothing is done here. */
-static void spice_append_pair (struct definition_t * def, char * prop,
+static void spice_append_pair (struct definition_t * def, const char * prop,
 			       char * value, int replace) {
   struct pair_t * p = spice_find_property (def, prop);
   if (p != NULL) {
@@ -801,11 +857,22 @@ static void spice_adjust_vsource_nodes (struct definition_t * up,
   node->node = strdup (inode);
 }
 
+/* The function copies both of the nodes from the 'right' component
+   into the 'left' component. */
+static void spice_adjust_isource_nodes (struct definition_t * left,
+					struct definition_t * right) {
+  struct node_t * node;
+  node = spice_get_node (right, 1);
+  spice_append_node (left, node->node);
+  node = spice_get_node (right, 2);
+  spice_append_node (left, node->node);
+}
+
 /* The function creates a new definition based upon the given
    definition.  The type of the new component must be given as
    well. */
 static struct definition_t *
-spice_create_definition (struct definition_t * base, char * type) {
+spice_create_definition (struct definition_t * base, const char * type) {
   struct definition_t * res = create_definition ();
   res->type = strdup (type);
   res->action = PROP_COMPONENT;
@@ -870,140 +937,9 @@ spice_set_property_value (struct definition_t * def, char * key, double val) {
   }
 }
 
-#define VAL_IS_NUMBER(val) \
-  ((val) != NULL && \
-  (val)->hint & (HINT_NUMBER | HINT_NODE) && \
-  !((val)->hint & HINT_DONE))
-
-/* This function is the voltage source translator.  If necessary new
-   kinds of voltage source are created.  This must be done since Qucs
-   has separate voltage sources for each type of excitation and Spice
-   summarizes these voltage excitations in a single source. */
-static void spice_translate_vsource (struct definition_t * def) {
-  struct definition_t * vac = NULL, * vdc = def, * vpulse = NULL;
-  struct value_t * prop;
-
-  // adjust the DC part of the voltage source
-  if ((prop = spice_find_property (vdc->values, "DC")) != NULL) {
-    spice_append_pair (def, "U", prop->unit, 1);
-    prop->hint |= HINT_DONE;
-  }
-  free (vdc->type);
-  vdc->type = strdup ("Vdc");
-
-  // adjust the sinusoidal part of the voltage source
-  if ((prop = spice_find_property (vdc->values, "SIN")) != NULL) {
-    vac = spice_create_definition (vdc, "Vac");
-    prop->hint |= HINT_DONE;
-    prop = prop->next;
-    int i = 0;
-    while (VAL_IS_NUMBER (prop)) {
-      switch (i++) {
-      case 0: // DC Offset
-	spice_append_pair (vdc, "U", prop->ident, 0);
-	break;
-      case 1: // Magnitude
-	spice_append_pair (vac, "U", prop->ident, 0);
-	break;
-      case 2: // Frequency
-	spice_append_pair (vac, "f", prop->ident, 0);
-	break;
-      case 3: // Delay
-	spice_append_pair (vac, "Phase", prop->ident, 0);
-	break;
-      case 4: break;
-      }
-      prop->hint |= HINT_DONE;
-      prop = prop->next;
-    }
-    double v;
-    v = spice_get_property_value (vac, "f");
-    v = spice_get_property_value (vac, "Phase") * v * 360;
-    spice_set_property_value (vac, "Phase", -v);
-  }
-
-  // adjust the AC part of the voltage source
-  if ((prop = spice_find_property (vdc->values, "AC")) != NULL) {
-    char * Mag = NULL, * Phase = NULL;
-    prop->hint |= HINT_DONE;
-    if (prop->hint & HINT_PAIR) {
-      Mag = prop->unit;
-    }
-    else {
-      prop = prop->next;
-      if (VAL_IS_NUMBER (prop)) {
-	Mag = prop->ident;
-	prop->hint |= HINT_DONE;
-	prop = prop->next;
-	if (VAL_IS_NUMBER (prop)) {
-	  Phase = prop->ident;
-	  prop->hint |= HINT_DONE;
-	}
-      }
-    }
-    if (vac == NULL)
-      vac = spice_create_definition (vdc, "Vac");
-    if (Mag)
-      spice_append_pair (vac, "U", Mag, 1);
-    if (Phase)
-      spice_append_pair (vac, "Phase", Phase, 1);
-  }
-
-  // adjust the pulse part of the voltage source
-  if ((prop = spice_find_property (vdc->values, "PULSE")) != NULL) {
-    vpulse = spice_create_definition (vdc, "Vpulse");
-    prop->hint |= HINT_DONE;
-    prop = prop->next;
-    int i = 0;
-    while (VAL_IS_NUMBER (prop)) {
-      switch (i++) {
-      case 0: // Initial Value
-	spice_append_pair (vpulse, "U1", prop->ident, 0);
-	spice_append_pair (vdc, "U", "0", 1);
-	break;
-      case 1: // Pulsed Value
-	spice_append_pair (vpulse, "U2", prop->ident, 0);
-	break;
-      case 2: // Delay
-	spice_append_pair (vpulse, "T1", prop->ident, 0);
-	break;
-      case 3: // Rise
-	spice_append_pair (vpulse, "Tr", prop->ident, 0);
-	break;
-      case 4: // Fall
-	spice_append_pair (vpulse, "Tf", prop->ident, 0);
-	break;
-      case 5: // Pulse Width
-	spice_append_pair (vpulse, "T2", prop->ident, 0);
-	break;
-      case 6: // Period
-	break;
-      }
-      prop->hint |= HINT_DONE;
-      prop = prop->next;
-    }
-    double v;
-    v  = spice_get_property_value (vpulse, "T1");
-    v += spice_get_property_value (vpulse, "Tr");
-    v += spice_get_property_value (vpulse, "Tf");
-    v += spice_get_property_value (vpulse, "T2");
-    spice_set_property_value (vpulse, "T2", v);
-  }
-
-  // finally add sources to list of definitions
-  if (vac) {
-    spice_adjust_vsource_nodes (vac, vdc);
-    spice_add_definition (vac);
-  }
-  if (vpulse) {
-    spice_adjust_vsource_nodes (vpulse, vac ? vac : vdc);
-    spice_add_definition (vpulse);
-  }
-}
-
 // Helper structure for property extraction routine.
 struct property_field_t {
-  char * field[16];
+  const char * field[16];
 };
 
 /* The function extracts a list of properties from the given value
@@ -1029,6 +965,112 @@ static void spice_extract_properties (struct definition_t * def,
     if (val->hint & HINT_MSTOP) break; // stop here if necessary
     i++;
   }  
+}
+
+#define VAL_IS_NUMBER(val) \
+  ((val) != NULL && \
+  (val)->hint & (HINT_NUMBER | HINT_NODE) && \
+  !((val)->hint & HINT_DONE))
+
+/* This function is the independent source translator.  If necessary
+   new kinds of sources are created.  This must be done since Qucs has
+   separate sources for each type of excitation and Spice summarizes
+   these voltage/current excitations in a single source. */
+static void spice_translate_source (struct definition_t * def, char type) {
+  struct definition_t * ac = NULL, * dc = def, * pulse = NULL;
+  struct value_t * prop;
+
+  // adjust the DC part of the source
+  if ((prop = spice_find_property (dc->values, "DC")) != NULL) {
+    spice_append_pair (def, type == 'U' ? "U" : "I", prop->unit, 1);
+    prop->hint |= HINT_DONE;
+  }
+  free (dc->type);
+  dc->type = strdup (type == 'U' ? "Vdc" : "Idc");
+
+  // adjust the sinusoidal part of the source
+  if ((prop = spice_find_property (dc->values, "SIN")) != NULL) {
+    ac = spice_create_definition (dc, type == 'U' ? "Vac" : "Iac");
+    prop->hint |= HINT_DONE;
+    prop = prop->next;
+    if (VAL_IS_NUMBER (prop)) {
+      spice_append_pair (dc, type == 'U' ? "U" : "I", prop->ident, 0);
+      prop->hint |= HINT_DONE;
+      prop = prop->next;
+      struct property_field_t field =
+      { { type == 'U' ? "U" : "I", "f", "Phase", NULL } };
+      spice_extract_properties (ac, prop, &field);
+    }
+    double v;
+    v = spice_get_property_value (ac, "f");
+    v = spice_get_property_value (ac, "Phase") * v * 360;
+    spice_set_property_value (ac, "Phase", -v);
+  }
+
+  // adjust the AC part of the source
+  if ((prop = spice_find_property (dc->values, "AC")) != NULL) {
+    char * Mag = NULL, * Phase = NULL;
+    prop->hint |= HINT_DONE;
+    if (prop->hint & HINT_PAIR) {
+      Mag = prop->unit;
+    }
+    else {
+      prop = prop->next;
+      if (VAL_IS_NUMBER (prop)) {
+	Mag = prop->ident;
+	prop->hint |= HINT_DONE;
+	prop = prop->next;
+	if (VAL_IS_NUMBER (prop)) {
+	  Phase = prop->ident;
+	  prop->hint |= HINT_DONE;
+	}
+      }
+    }
+    if (ac == NULL)
+      ac = spice_create_definition (dc, type == 'U' ? "Vac" : "Iac");
+    if (Mag)
+      spice_append_pair (ac, type == 'U' ? "U" : "I", Mag, 1);
+    if (Phase)
+      spice_append_pair (ac, "Phase", Phase, 1);
+  }
+
+  // adjust the pulse part of the source
+  if ((prop = spice_find_property (dc->values, "PULSE")) != NULL) {
+    pulse = spice_create_definition (dc, type == 'U' ? "Vpulse" : "Ipulse");
+    prop->hint |= HINT_DONE;
+    prop = prop->next;
+    if (VAL_IS_NUMBER (prop)) {
+      spice_append_pair (pulse, type == 'U' ? "U1" : "I1", prop->ident, 0);
+      spice_append_pair (dc, type == 'U' ? "U" : "I", "0", 1);
+      prop->hint |= HINT_DONE;
+      prop = prop->next;
+      struct property_field_t field =
+      { { type == 'U' ? "U2" : "I2", "T1", "Tr", "Tf", "T2", NULL } };
+      spice_extract_properties (pulse, prop, &field);
+    }
+    double v;
+    v  = spice_get_property_value (pulse, "T1");
+    v += spice_get_property_value (pulse, "Tr");
+    v += spice_get_property_value (pulse, "Tf");
+    v += spice_get_property_value (pulse, "T2");
+    spice_set_property_value (pulse, "T2", v);
+  }
+
+  // finally add sources to list of definitions
+  if (ac) {
+    if (type == 'U')
+      spice_adjust_vsource_nodes (ac, dc);
+    else
+      spice_adjust_isource_nodes (ac, dc);
+    spice_add_definition (ac);
+  }
+  if (pulse) {
+    if (type == 'U')
+      spice_adjust_vsource_nodes (pulse, ac ? ac : dc);
+    else
+      spice_adjust_isource_nodes (pulse, ac ? ac : dc);
+    spice_add_definition (pulse);
+  }
 }
 
 /* This little function returns a static string containing an instance
@@ -1114,6 +1156,37 @@ static struct definition_t * spice_find_definition (char * type, char * inst) {
   return NULL;
 }
 
+/* This function tries to reproduce a Soice netlist line.  It is used
+   if no proper translation could be found for the line and is printed
+   as commentary line then. */
+static char * spice_untranslated_text (struct definition_t * def) {
+  struct value_t * val;
+  char str[256];
+  sprintf (str, "%s%s%s ", def->action ? "." : "", def->type,
+	   def->action ? "" : &def->instance[1]);
+  char * txt = (char *) malloc (strlen (str) + 1);
+  strcpy (txt, str);
+  for (val = def->values; val != NULL; val = val->next) {
+    if (val->hint == HINT_NODE) {
+      sprintf (str, "%g ", val->value);
+    }
+    else if (val->hint & (HINT_NODE | HINT_NUMBER)) {
+      sprintf (str, "%s ", val->ident);
+    }
+    else if (val->hint & HINT_PAIR) {
+      sprintf (str, "%s%s=%s%s ", val->hint & HINT_MSTART ? "(" : "",
+	       val->ident, val->unit, val->hint & HINT_MSTOP ? ")" : "");
+    }
+    else if (val->hint & HINT_NAME) {
+      sprintf (str, "%s%s", val->ident,
+	       (val->hint & HINT_MSTART && val->next) ? " (" : " ");
+    }
+    txt = (char *) realloc (txt, strlen (txt) + strlen (str) + 1);
+    strcat (txt, str);
+  }
+  return spice_toupper (txt);
+}
+
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
    resulting netlist. */
@@ -1140,6 +1213,9 @@ static int spice_post_translator (void) {
 	  prop->value->ident = strdup (val);
 	}
       }
+    }
+    if (def->define == NULL) {
+      def->text = spice_untranslated_text (def);
     }
   }
   return 0;
@@ -1240,8 +1316,12 @@ static int spice_translator (void) {
 	  spice_translate_device (def);
 	}
 	if (!strcasecmp (def->type, "V")) {
-	  spice_translate_vsource (def);
+	  spice_translate_source (def, 'U');
 	}
+	if (!strcasecmp (def->type, "I")) {
+	  spice_translate_source (def, 'I');
+	}
+	spice_translate_type (def);
       }
       else {              // handle special actions (dot '.' commands)
 	spice_translate_action (def);
@@ -1256,13 +1336,15 @@ static int spice_translator (void) {
 }
 
 /* TODO list for Spice Translator:
-   - current sources
+       - current sources
    - subcircuits
    - file includes
    - transmission line
-   - dependent sources
+       - voltage dependent sources
+   - current dependent sources
    - initial conditions
    - options
+   - mutual inductors (transformer)
 */
 
 #if 0

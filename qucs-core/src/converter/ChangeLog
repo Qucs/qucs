@@ -1,3 +1,9 @@
+2004-11-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Implemented translations for voltage
+	controlled sources.  Also create commentary lines for
+	untranslated Spice netlist lines.
+
 2004-11-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Added transformations for DC, AC and
