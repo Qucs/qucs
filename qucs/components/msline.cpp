@@ -48,8 +48,12 @@ MSline::MSline()
 		QObject::tr("width of the line")));
   Props.append(new Property("L", "10 mm", true,
 		QObject::tr("length of the line")));
-  Props.append(new Property("Model", "Kirschning", false,
-	QObject::tr("microstrip model (Kirschning,Kobayashi,Yamashita)")));
+  Props.append(new Property("Model", "Hammerstad", false,
+		QObject::tr("quasi-static microstrip model"
+			    " (Hammerstad,Wheeler,Schneider)")));
+  Props.append(new Property("DispModel", "Kirschning", false,
+	QObject::tr("microstrip dispersion model (Kirschning,Kobayashi,"
+		    "Yamashita,Hammerstad,Getsinger,Schneider,Pramanick)")));
 }
 
 MSline::~MSline()
