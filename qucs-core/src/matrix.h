@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.7 2004-07-18 17:22:46 ela Exp $
+ * $Id: matrix.h,v 1.8 2004-07-26 22:07:28 ela Exp $
  *
  */
 
@@ -58,13 +58,16 @@ class matrix
   // other operations
   friend matrix& transpose (matrix&);
   friend matrix& conj (matrix&);
+  friend matrix& adjoint (matrix&);
   friend matrix& eye (int, int);
   friend matrix& eye (int);
-  friend complex adjoint (matrix&, int, int);
-  friend complex det (matrix&);
+  friend complex cofactor (matrix&, int, int);
+  friend complex detLaplace (matrix&);
   friend complex detGauss (matrix&);
-  friend matrix& inverse (matrix&);
+  friend complex det (matrix&);
+  friend matrix& inverseLaplace (matrix&);
   friend matrix& inverseGaussJordan (matrix&);
+  friend matrix& inverse (matrix&);
   friend matrix& stos (matrix&, complex, complex z0 = 50.0);
   friend matrix& stoz (matrix&, complex z0 = 50.0);
   friend matrix& ztos (matrix&, complex z0 = 50.0);
@@ -76,6 +79,12 @@ class matrix
   friend matrix& atos (matrix&, complex z0 = 50.0);
   friend matrix& stoh (matrix&, complex z0 = 50.0);
   friend matrix& htos (matrix&, complex z0 = 50.0);
+  friend matrix& cytocs (matrix&, matrix&);
+  friend matrix& cztocs (matrix&, matrix&);
+  friend matrix& cztocy (matrix&, matrix&);
+  friend matrix& cstocy (matrix&, matrix&);
+  friend matrix& cytocz (matrix&, matrix&);
+  friend matrix& cstocz (matrix&, matrix&);
 
   friend matrix& twoport (matrix&, char, char);
 

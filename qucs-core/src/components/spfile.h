@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.h,v 1.2 2004-07-26 06:30:29 ela Exp $
+ * $Id: spfile.h,v 1.3 2004-07-26 22:07:29 ela Exp $
  *
  */
 
@@ -51,17 +51,15 @@ class spfile : public circuit
   vector& fetchS (int, int);
   matrix& fetchS (int);
   void storeS (int, int, complex, int);
-  void expandPort (void);
   void createVector (int, int);
-  void createNoiseMatrix (void);
   matrix& correlationMatrix (nr_double_t, complex, nr_double_t, matrix&);
-  nr_double_t noisePara (matrix&, matrix&, nr_double_t&,
-			 complex&, nr_double_t&);
+  nr_double_t noiseFigure (matrix&, matrix&, nr_double_t&, complex&,
+			   nr_double_t&);
   matrix& expandNoiseMatrix (matrix&, matrix&);
   matrix& shrinkNoiseMatrix (matrix&, matrix&);
   matrix& expandSParaMatrix (matrix&);
   matrix& shrinkSParaMatrix (matrix&);
-  matrix& getInterpolatedMatrixS (nr_double_t);
+  matrix& getInterpolMatrixS (nr_double_t);
 
  private:
   dataset * data;
@@ -71,7 +69,6 @@ class spfile : public circuit
   vector * Rn;
   vector * Fmin;
   vector * Gopt;
-  matvec * ndata;
 };
 
 #endif /* __SPFILE_H__ */

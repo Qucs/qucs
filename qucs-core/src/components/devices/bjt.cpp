@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.6 2004-07-26 06:30:29 ela Exp $
+ * $Id: bjt.cpp,v 1.7 2004-07-26 22:07:29 ela Exp $
  *
  */
 
@@ -39,6 +39,7 @@
 #include "net.h"
 #include "analysis.h"
 #include "dcsolver.h"
+#include "spsolver.h"
 #include "component_id.h"
 #include "constants.h"
 #include "device.h"
@@ -101,13 +102,18 @@ void bjt::calcSP (nr_double_t frequency) {
 
 void bjt::initDC (dcsolver * solver) {
 
+  // apply polarity of BJT
+  char * type = getPropertyString ("Type");
+  nr_double_t pol = !strcmp (type, "pnp") ? -1 : 1;
+  nr_double_t T = getPropertyDouble ("Temp");
+
   // initialize starting values
   setV (NODE_B, 0.8);
   setV (NODE_C, 0.0);
   setV (NODE_E, 0.0);
   setV (NODE_S, 0.0);
-  UbePrev = real (getV (NODE_B) - getV (NODE_E));
-  UbcPrev = real (getV (NODE_B) - getV (NODE_C));
+  UbePrev = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  UbcPrev = real (getV (NODE_B) - getV (NODE_C)) * pol;
   subnet = solver->getNet ();
 
   // disable additional base-collector capacitance
@@ -122,7 +128,7 @@ void bjt::initDC (dcsolver * solver) {
     // create additional circuit if necessary and reassign nodes
     re = splitResistance (this, re, subnet, "Re", "emitter", NODE_E);
     re->setProperty ("R", Re);
-    re->setProperty ("Temp", 26.85);
+    re->setProperty ("Temp", T);
   }
   // no series resistance at emitter
   else {
@@ -135,7 +141,7 @@ void bjt::initDC (dcsolver * solver) {
     // create additional circuit if necessary and reassign nodes
     rc = splitResistance (this, rc, subnet, "Rc", "collector", NODE_C);
     rc->setProperty ("R", Rc);
-    rc->setProperty ("Temp", 26.85);
+    rc->setProperty ("Temp", T);
   }
   // no series resistance at collector
   else {
@@ -151,8 +157,8 @@ void bjt::initDC (dcsolver * solver) {
   if (Rbm != 0) {
     // create additional circuit and reassign nodes
     rb = splitResistance (this, rb, subnet, "Rbb", "base", NODE_B);
-    rb->setProperty ("Temp", 26.85);
     rb->setProperty ("R", Rb);
+    rb->setProperty ("Temp", T);
   }
   // no series resistance at base
   else {
@@ -180,11 +186,16 @@ void bjt::calcDC (void) {
   nr_double_t Rb   = getPropertyDouble ("Rb");
   nr_double_t Rbm  = getPropertyDouble ("Rbm");
   nr_double_t Irb  = getPropertyDouble ("Irb");
+  nr_double_t T    = getPropertyDouble ("Temp");
 
-  nr_double_t T, Ut, Ube, Ubc, Ir, It, Q1, Q2, Ibe, Ibc;
+  nr_double_t Ut, Ube, Ubc, Ir, It, Q1, Q2, Ibe, Ibc;
   nr_double_t Iben, Ibcn, Ibei, Ibci, gbe, gbc, gtiny;
   nr_double_t Uce, IeqB, IeqC, IeqE, IeqS, UbeCrit, UbcCrit;
   nr_double_t gm, go;
+
+  // apply polarity of BJT
+  char * type = getPropertyString ("Type");
+  nr_double_t pol = !strcmp (type, "pnp") ? -1 : 1;
 
   // interpret zero as infinity for these model parameters
   Ikf = Ikf > 0 ? 1.0 / Ikf : 0;
@@ -192,10 +203,10 @@ void bjt::calcDC (void) {
   Vaf = Vaf > 0 ? 1.0 / Vaf : 0;
   Var = Var > 0 ? 1.0 / Var : 0;
 
-  T = -K + 26.85;
+  T = kelvin (T);
   Ut = T * kB / Q;
-  Ube = real (getV (NODE_B) - getV (NODE_E));
-  Ubc = real (getV (NODE_B) - getV (NODE_C));
+  Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
 
   // critical voltage necessary for bad start values
   UbeCrit = pnCriticalVoltage (Is, Nf * Ut);
@@ -262,6 +273,7 @@ void bjt::calcDC (void) {
       Rbb = Rbm + (Rb - Rbm) / Qb;
     }
     rb->setProperty ("R", Rbb);
+    rb->calcDC ();
   }
 
   // compute autonomic current sources
@@ -273,10 +285,10 @@ void bjt::calcDC (void) {
   IeqE = It - gm * Ube - go * Uce;
 #endif
   IeqS = 0;
-  setI (NODE_B, -IeqB - IeqC);
-  setI (NODE_C, +IeqC - IeqE - IeqS);
-  setI (NODE_E, +IeqB + IeqE);
-  setI (NODE_S, +IeqS);
+  setI (NODE_B, (-IeqB - IeqC) * pol);
+  setI (NODE_C, (+IeqC - IeqE - IeqS) * pol);
+  setI (NODE_E, (+IeqB + IeqE) * pol);
+  setI (NODE_S, (+IeqS) * pol);
 
   // apply admittance matrix elements
 #if NEWSGP
@@ -338,12 +350,16 @@ void bjt::calcOperatingPoints (void) {
 
   nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Usc, Cbc, Ccs;
 
+  // apply polarity of BJT
+  char * type = getPropertyString ("Type");
+  nr_double_t pol = !strcmp (type, "pnp") ? -1 : 1;
+
   // interpret zero as infinity for that model parameter
   Vtf = Vtf > 0 ? 1.0 / Vtf : 0;
 
-  Ube = real (getV (NODE_B) - getV (NODE_E));
-  Ubc = real (getV (NODE_B) - getV (NODE_C));
-  Usc = real (getV (NODE_S) - getV (NODE_C));
+  Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
+  Usc = real (getV (NODE_S) - getV (NODE_C)) * pol;
 
   // depletion capacitance of base-emitter diode
   Cbe = pnCapacitance (Ube, Cje0, Vje, Mje, Fc);
@@ -376,6 +392,12 @@ void bjt::calcOperatingPoints (void) {
   setOperatingPoint ("Vbc", Ubc);
   setOperatingPoint ("Vce", Ube - Ubc);
   setOperatingPoint ("Rbb", Rbb);
+}
+
+void bjt::initSP (spsolver * solver) {
+  nr_double_t Cbcx = getOperatingPoint ("Cbcx");
+  nr_double_t Rbb  = getOperatingPoint ("Rbb");
+  subnet = solver->getNet ();
 
   /* if necessary then insert external capacitance between internal
      collector node and external base node */
@@ -385,7 +407,7 @@ void bjt::calcOperatingPoints (void) {
 			       getNode (NODE_C));
       enabled = 1;
     }
-    cbcx->setProperty ("C", Cbcx);
+    cbcx->setProperty ("C", Cbcx);  // S-parameters will be computed
   }
   else {
     disableCapacitance (this, cbcx, subnet);

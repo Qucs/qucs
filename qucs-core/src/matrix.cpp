@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.10 2004-07-18 17:22:46 ela Exp $
+ * $Id: matrix.cpp,v 1.11 2004-07-26 22:07:28 ela Exp $
  *
  */
 
@@ -211,6 +211,12 @@ matrix& conj (matrix& a) {
   return *res;
 }
 
+/* The function returns the adjoint complex matrix.  This is also
+   called the adjugate or transpose conjugate. */
+matrix& adjoint (matrix& a) {
+  return transpose (conj (a));
+}
+
 // Create identity matrix with specified number of rows and columns.
 matrix& eye (int r, int c) {
   matrix * res = new matrix (r, c);
@@ -225,33 +231,33 @@ matrix& eye (int s) {
   return eye (s, s);
 }
 
-/* Computes the adjoint of the given determinant (in matrix
+/* Computes the cofactor of the given determinant (in matrix
    representation) for the given row and column. */
-complex adjoint (matrix& a, int u, int v) {
-  matrix * res = new matrix (a.getRows () - 1, a.getCols () - 1);
+complex cofactor (matrix& a, int u, int v) {
+  matrix res = matrix (a.getRows () - 1, a.getCols () - 1);
   int r, c, ra, ca;
-  for (ra = r = 1; r <= res->getRows (); r++, ra++) {
+  for (ra = r = 1; r <= res.getRows (); r++, ra++) {
     if (ra == u) ra++;
-    for (ca = c = 1; c <= res->getCols (); c++, ca++) {
+    for (ca = c = 1; c <= res.getCols (); c++, ca++) {
       if (ca == v) ca++;
-      res->set (r, c, a.get (ra, ca));
+      res.set (r, c, a.get (ra, ca));
     }
   }
-  complex z = det (*res);
-  delete res;
+  complex z = detLaplace (res);
   return ((u + v) & 1) ? -z : z;
 }
 
-// Compute determinant of the given matrix.
-complex det (matrix& a) {
+// Compute determinant of the given matrix using Laplace expansion.
+complex detLaplace (matrix& a) {
   assert (a.getRows () == a.getCols ());
   int s = a.getRows ();
   complex res = 0;
   if (s > 1) {
-    // always use the first row for sub-determinant
+    /* always use the first row for sub-determinant, but you should
+       use the row or column with most zeros in it */
     int r = 1;
     for (int i = 1; i <= s; i++) {
-      res += a.get (r, i) * adjoint (a, r, i);
+      res += a.get (r, i) * cofactor (a, r, i);
     }
     return res;
   }
@@ -305,14 +311,23 @@ complex detGauss (matrix& a) {
   return res;
 }
 
-// Compute inverse matrix of the given matrix.
-matrix& inverse (matrix& a) {
+// Compute determinant of the given matrix.
+complex det (matrix& a) {
+#if 1
+  return detLaplace (a);
+#else
+  return detGauss (a);
+#endif
+}
+
+// Compute inverse matrix of the given matrix using Laplace expansion.
+matrix& inverseLaplace (matrix& a) {
   matrix * res = new matrix (a.getRows (), a.getCols ());
-  complex d = det (a);
+  complex d = detLaplace (a);
   assert (abs (d) != 0); // singular matrix
   for (int r = 1; r <= a.getRows (); r++)
     for (int c = 1; c <= a.getCols (); c++)
-      res->set (r, c, adjoint (a, c, r) / d);
+      res->set (r, c, cofactor (a, c, r) / d);
   return *res;
 }
 
@@ -338,7 +353,7 @@ matrix& inverseGaussJordan (matrix& a) {
       }
     }
     // exchange rows if necessary
-    assert (MaxPivot != 0);
+    assert (MaxPivot != 0); // singular matrix
     if (i != pivot) {
       b->exchangeRows (i, pivot);
       e->exchangeRows (i, pivot);
@@ -364,6 +379,15 @@ matrix& inverseGaussJordan (matrix& a) {
   }
   delete b;
   return *e;
+}
+
+// Compute inverse matrix of the given matrix.
+matrix& inverse (matrix& a) {
+#if 1
+  return inverseLaplace (a);
+#else
+  return inverseGaussJordan (a);
+#endif
 }
 
 /* Convert scattering parameters with the reference impedance 'zref'
@@ -408,9 +432,7 @@ matrix& ztos (matrix& z, complex z0) {
 // Convert impedance matrix to admittance matrix.
 matrix& ztoy (matrix& z) {
   assert (z.getRows () == z.getCols ());
-  matrix y;
-  y = inverse (z);
-  return * (new matrix (y));
+  return inverse (z);
 }
 
 // Convert scattering parameters to admittance matrix.
@@ -505,10 +527,59 @@ matrix& htos (matrix& h, complex z1) {
 // Convert admittance matrix to impedance matrix.
 matrix& ytoz (matrix& y) {
   assert (y.getRows () == y.getCols ());
-  matrix z, * res;
-  z = inverse (y);
-  res = new matrix (z);
-  return *res;
+  return inverse (y);
+}
+
+/* Converts admittance noise correlation matrix to S-parameter noise
+   correlation matrix. */
+matrix& cytocs (matrix& cy, matrix& s) {
+  assert (cy.getRows () == cy.getCols () && s.getRows () == s.getCols () &&
+	  cy.getRows () == s.getRows ());
+  matrix e = eye (s.getRows ());
+  return (e + s) * cy * adjoint (e + s) / 4;
+}
+
+/* Converts impedance noise correlation matrix to S-parameter noise
+   correlation matrix. */
+matrix& cztocs (matrix& cz, matrix& s) {
+  assert (cz.getRows () == cz.getCols () && s.getRows () == s.getCols () &&
+	  cz.getRows () == s.getRows ());
+  matrix e = eye (s.getRows ());
+  return (e - s) * cz * adjoint (e - s) / 4;
+}
+
+/* Converts impedance noise correlation matrix to admittance noise
+   correlation matrix.  Both matrices are assumed to be normalized. */
+matrix& cztocy (matrix& cz, matrix& y) {
+  assert (cz.getRows () == cz.getCols () && y.getRows () == y.getCols () &&
+	  cz.getRows () == y.getRows ());
+  return y * cz * adjoint (y);
+}
+
+/* Converts S-parameter noise correlation matrix to admittance noise
+   correlation matrix.  Both matrices are assumed to be normalized. */
+matrix& cstocy (matrix& cs, matrix& y) {
+  assert (cs.getRows () == cs.getCols () && y.getRows () == y.getCols () &&
+	  cs.getRows () == y.getRows ());
+  matrix e = eye (y.getRows ());
+  return (e + y) * cs * adjoint (e + y);
+}
+
+/* Converts admittance noise correlation matrix to impedance noise
+   correlation matrix.  Both matrices are assumed to be normalized. */
+matrix& cytocz (matrix& cy, matrix& z) {
+  assert (cy.getRows () == cy.getCols () && z.getRows () == z.getCols () &&
+	  cy.getRows () == z.getRows ());
+  return z * cy * adjoint (z);
+}
+
+/* Converts S-parameter noise correlation matrix to impedance noise
+   correlation matrix.  Both matrices are assumed to be normalized. */
+matrix& cstocz (matrix& cs, matrix& z) {
+  assert (cs.getRows () == cs.getCols () && z.getRows () == z.getCols () &&
+	  cs.getRows () == z.getRows ());
+  matrix e = eye (z.getRows ());
+  return (e + z) * cs * adjoint (e + z);
 }
 
 // The function swaps the given rows with each other.
