@@ -1,3 +1,10 @@
+2004-02-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* substrate.cpp, symtrafo.cpp, transformer.cpp: Fixed some
+	typos in the property descriptions.
+
+	* diode.cpp (Diode): Added 'Is' property to diode component.
+
 2004-01-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* componentdialog.cpp:  Added translatable strings.

@@ -58,7 +58,7 @@ Transformer::Transformer()
   Model = "Tr";
   Name  = "Tr";
 
-  Props.append(new Property("T", "1", true, QObject::tr("voltage transformation ration")));
+  Props.append(new Property("T", "1", true, QObject::tr("voltage transformation ratio")));
 }
 
 Transformer::~Transformer()
