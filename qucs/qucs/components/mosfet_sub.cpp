@@ -34,6 +34,8 @@ MOSFET_sub::MOSFET_sub()
   Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
   Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
 
+  Lines.append(new Line( -4, 24,  4, 20,QPen(QPen::darkBlue,2)));
+
   // These three lines must be the last.
   Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
   Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
