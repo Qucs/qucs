@@ -38,12 +38,10 @@ void ViewPainter::init(QPainter *p, double Scale_, int DX_, int DY_)
   DY = floor(double(DY_) * Scale);
 
   QFont f = p->font();
-  f.setPointSizeFloat( float(Scale * double(f.pointSize())) );
+  f.setPointSizeFloat( float(Scale) * float(f.pointSize()) );
   p->setFont(f);
   LineSpacing = p->fontMetrics().lineSpacing();
   p->setWorldXForm(false);   // we use our own coordinate transformation
-
-//  Painter->setWorldMatrix(QWMatrix());   // no scaling for original painter
 }
 
 // -------------------------------------------------------------
@@ -84,18 +82,6 @@ void ViewPainter::drawLine(int x1, int y1, int x2, int y2)
   Painter->drawLine(x1, y1, x2, y2);
 }
 
-// -------------------------------------------------------------
-/*void ViewPainter::drawLineD(int x1, int y1, int dx, int dy)
-{
-  double z;
-  z = double(x1)*Scale + DX;
-  x1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-  z = double(y1)*Scale + DY;
-  y1 = z > 0.0 ? int(z + 0.5) : int(z - 0.5);
-
-  Painter->drawLine(x1, y1, x1+dx, y1+dy);
-}
-*/
 // -------------------------------------------------------------
 void ViewPainter::drawRect(int x1, int y1, int dx, int dy)
 {

@@ -1,3 +1,10 @@
+2004-10-13  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed bug in paint routine of the markers
+	* new paintGrid routine in QucsDoc (also works with zoom)
+	* class graphictext works with rotation
+	* changed the font handling to avoid problems with Qt bug
+
 2004-10-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* README.translations: Added a brief description about the

@@ -30,16 +30,12 @@ SP_Sim::SP_Sim()
     if (a > (int) s.length() - b)  b = a;
   }
   if (b != -1) s[b] = '\n';
-  QFontMetrics metrics(QucsSettings.largeFont);
-  QSize r = metrics.size(0, s);
-  int xb = r.width()  + 15;
-  int yb = r.height() + 15;
 
   Texts.append(new Text(0, 0, s.left(b)));
   if (b != -1) Texts.append(new Text(0, 0, s.mid(b+1)));
 
   x1 = -10; y1 = -9;
-  x2 = x1+xb+8; y2 = y1+yb+8;
+  x2 = x1+108; y2 = y1+46;
 
   tx = 0;
   ty = y2+1;

@@ -46,7 +46,7 @@ public:
   void setChanged(bool, bool fillStack=false, char Op='*');
 
   void paint(ViewPainter*);
-  void paintGrid(QPainter*, int, int, int, int);
+  void paintGrid(ViewPainter*, int, int, int, int);
   void paintSelected(QPainter*);
 
   int   insertWireNode1(Wire*);

@@ -285,8 +285,8 @@ void Marker::paint(ViewPainter *p, int x0, int y0)
     p->eraseRect(x0+x1, y0+y1, x2, y2);
     p->drawText(Text, x0+x1+3, y0+y1+3);
   }
-  p->Painter->setWorldXForm(false);
   p->Painter->setWorldMatrix(wm);
+  p->Painter->setWorldXForm(false);
 
   p->Painter->setPen(QPen(QPen::darkMagenta,0));
   p->drawRectD(x0+x1, y0+y1, x2, y2);
