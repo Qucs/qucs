@@ -25,8 +25,9 @@ PolarDiagram::PolarDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;     // position of label text
   y1 = 2;
-  x2 = x3 = 200;    // initial size of diagram
+  x2 = 200;    // initial size of diagram
   y2 = 200;
+  x3 = 207;    // with some distance for right axes text
   Name = "Polar";
 
   calcDiagram();
@@ -65,6 +66,7 @@ int PolarDiagram::calcDiagram()
   // x line
   Lines.append(new Line(0, y2>>1, x2, y2>>1, GridPen));
 
+  x3 = x2 + 7;
   createPolarDiagram(&yAxis);
   return 1;
 }

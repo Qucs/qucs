@@ -48,6 +48,7 @@ int TabDiagram::calcDiagram()
   Arcs.clear();
 
   x1 = 0;  // no scroll bar
+  x3 = x2;
   QFontMetrics  metrics(QucsSettings.font);
   int tHeight = metrics.lineSpacing();
   QString Str;

@@ -1,3 +1,7 @@
+2005-02-19  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* fixed two small bugs that painted diagrams wrong.
+
 2005-02-06  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* avoid last lines in tabulars (more beautiful)
