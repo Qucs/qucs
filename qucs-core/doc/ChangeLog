@@ -1,3 +1,11 @@
+2004-08-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (subsubsection{Mixed Two-Port matrix
+	conversions}): Added the formulas for G to S and S to G
+	transformations.
+	(section{PN-Junction Diode}): Documented new model parameters
+	'Fc', 'Cp', 'Isr' and 'Nr'.
+
 2004-07-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsection{Gauss-Jordan method}): Documented

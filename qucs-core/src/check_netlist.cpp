@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.34 2004-07-31 16:59:14 ela Exp $
+ * $Id: check_netlist.cpp,v 1.35 2004-08-01 16:08:02 ela Exp $
  *
  */
 
@@ -223,7 +223,11 @@ struct define_t definition_available[] =
       { "Vj", PROP_REAL, { 0.7, PROP_NO_STR }, { PROP_VAL_MIN, 10 } },
       PROP_NO_PROP },
     { { "Rs", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Isr", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Nr", PROP_REAL, { 2, PROP_NO_STR }, { 1, 100 } },
       { "Tt", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Fc", PROP_REAL, { 0.5, PROP_NO_STR }, { 0, 1 - PROP_VAL_MIN } },
+      { "Cp", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Kf", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
       { "Af", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
       { "Ffe", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
@@ -1089,7 +1093,8 @@ checker_copy_subcircuit (struct definition_t * sub) {
    'xlate' field of each node of the subcircuit element 'sub'. */
 static void checker_xlat_subcircuit_nodes (struct definition_t * type,
 					   struct definition_t * inst,
-					   struct definition_t * sub) {
+					   struct definition_t * sub,
+					   char * instances) {
   struct node_t * n, * ninst, * ntype;
   // go through nodes of the subcircuit 'type' and 'inst'
   for (ntype = type->nodes, ninst = inst->nodes; ntype != NULL;
@@ -1125,7 +1130,8 @@ static void
 checker_copy_subcircuit_nodes (struct definition_t * type,
 			       struct definition_t * inst,
 			       struct definition_t * sub,
-			       struct definition_t * copy) {
+			       struct definition_t * copy,
+			       char * instances) {
   struct node_t * n, * ncopy, * root = NULL;
 
   // go through the list of the subcircuit element's 'sub' nodes
@@ -1142,7 +1148,11 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
     }
     else { // internal subcircuit element node
       char txt[256];
-      sprintf (txt, "%s.%s.%s", type->instance, inst->instance, n->node);
+      if (instances && strlen (instances) > 0)
+	sprintf (txt, "%s.%s.%s.%s", type->instance, instances,
+		 inst->instance, n->node);
+      else
+	sprintf (txt, "%s.%s.%s", type->instance, inst->instance, n->node);
       ncopy->node = strdup (txt);
     }
 
@@ -1172,33 +1182,51 @@ checker_find_last_definition (struct definition_t * root) {
    circuit element list in reverse order. */
 static struct definition_t *
 checker_copy_subcircuits (struct definition_t * type,
-			  struct definition_t * inst) {
+			  struct definition_t * inst, strlist * * instances) {
   struct definition_t * def, * copy;
   struct definition_t * root = NULL;
-  char txt[256];
+  strlist * instcopy;
+  char txt[256], * list;
+
   // go through element list of subcircuit
   for (def = type->sub; def != NULL; def = def->next) {
     if (!strcmp (def->type, "Sub")) {
       // allow recursive subcircuits
       struct definition_t * sub = checker_get_subcircuit (def);
-      copy = checker_copy_subcircuits (sub, def);
+      if ((*instances) == NULL) (*instances) = new strlist ();
+      instcopy = new strlist (* (*instances));
+      // append instance name to recursive instance list
+      (*instances)->append (inst->instance);
+      copy = checker_copy_subcircuits (sub, def, instances);
       // put the expanded definitions into the sublist
       if (copy) {
 	struct definition_t * last = checker_find_last_definition (copy);
 	last->next = root;
 	root = copy;
       }
+      // restore original instance list
+      delete *instances;
+      *instances = instcopy;
     }
     else {
       // element copy
       copy = checker_copy_subcircuit (def);
       // assign new instance name to the element
-      sprintf (txt, "%s.%s.%s", type->instance, inst->instance, def->instance);
+      if (*instances && (*instances)->length () > 0) {
+	list = (*instances)->toString (".");
+	sprintf (txt, "%s.%s.%s.%s", type->instance, list, inst->instance,
+		 def->instance);
+      }
+      else {
+	list = NULL;
+	sprintf (txt, "%s.%s.%s", type->instance, inst->instance,
+		 def->instance);
+      }
       copy->instance = strdup (txt);
       copy->subcircuit = strdup (type->instance);
       // translate and assign node list
-      checker_xlat_subcircuit_nodes (type, inst, def);
-      checker_copy_subcircuit_nodes (type, inst, def, copy);
+      checker_xlat_subcircuit_nodes (type, inst, def, list);
+      checker_copy_subcircuit_nodes (type, inst, def, copy, list);
       // chain definition (circuit) list
       copy->next = root;
       root = copy;
@@ -1351,6 +1379,7 @@ static void netlist_free_definition (struct definition_t * def) {
 static struct definition_t *
 checker_expand_subcircuits (struct definition_t * root) {
   struct definition_t * def, * sub, * copy, * next, * prev;
+  strlist * instances = NULL;
 
   // go through the list of definitions
   for (prev = NULL, def = root; def != NULL; def = next) {
@@ -1359,7 +1388,10 @@ checker_expand_subcircuits (struct definition_t * root) {
     if (!strcmp (def->type, "Sub")) {
       // get the subcircuit type definition and make a copy of it
       sub = checker_get_subcircuit (def);
-      copy = checker_copy_subcircuits (sub, def);
+      copy = checker_copy_subcircuits (sub, def, &instances);
+      if (instances) {
+	delete instances; instances = NULL;
+      }
       // remove the subcircuit instance from the original list
       if (prev) {
 	prev->next = next;

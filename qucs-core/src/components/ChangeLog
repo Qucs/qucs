@@ -1,3 +1,11 @@
+2004-08-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/diode.cpp: Implemented 'Isr', 'Nr' and 'Fc' an d'Cp'
+	diode model parameters.
+
+	* spfile.cpp: Converting different kind of multi-port
+	parameters to S-parameters if necessary.
+
 2004-07-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msmbend.cpp, microstrip/mscorner.cpp: Simplified

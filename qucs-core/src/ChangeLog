@@ -1,3 +1,17 @@
+2004-08-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* strlist.cpp (toString): The function takes an (optional)
+	argument which specifies the concatinating string.
+
+	* eqnsys.cpp: Finally got the iterative Jacobi's method
+	for solving linear equation systems working.
+
+	* matrix.cpp: New functionality.  Converting S to G and G to
+	S twoport parameters possible.
+
+	* check_touchstone.cpp (touchstone_check): Fixed a mini bug
+	causing multiport definitions to fail loading.
+
 2004-07-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_netlist.cpp: Checking for non-equal variables in same
