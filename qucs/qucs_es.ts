@@ -1349,7 +1349,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>bulk junction emission coefficient</source>
-        <translation></translation>
+        <translation>coeficiente de emisión de la unión del sustrato</translation>
     </message>
     <message>
         <source>channel width</source>
@@ -1381,11 +1381,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation></translation>
+        <translation>capacidad de la polarización de la unión sustrato-drenador</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation></translation>
+        <translation>capacidad de la polarización de la unión sustrato-surtidor</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
@@ -1397,19 +1397,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation></translation>
+        <translation>bulk junction forward-bias depletion capacitance coefficient</translation>
     </message>
     <message>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation></translation>
+        <translation>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</translation>
     </message>
     <message>
         <source>bulk junction periphery grading coefficient</source>
-        <translation></translation>
+        <translation>bulk junction periphery grading coefficient</translation>
     </message>
     <message>
         <source>bulk transit time</source>
-        <translation></translation>
+        <translation>tiempo de tránsito del sustrato</translation>
     </message>
     <message>
         <source>substrate bulk doping density in 1/cm^3</source>
@@ -1489,7 +1489,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Esquina Microstrip</translation>
     </message>
     <message>
         <source>coupled microstrip line</source>
@@ -1569,11 +1569,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip en esquina biselada</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip en Esquina Biselada</translation>
     </message>
     <message>
         <source>microstrip open</source>
@@ -1949,13 +1949,13 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Versión del Editor Qucs</translation>
+        <translation>Versión del Editor Qucs </translation>
     </message>
     <message>
         <source>
 very simple text editor for Qucs
 </source>
-        <translation>
+        <translation type="obsolete">
 editor de texto muy simple para Qucs
 </translation>
     </message>
@@ -1969,7 +1969,7 @@ editor de texto muy simple para Qucs
         <source>
 Usage:  qucsedit [-r] filename
 </source>
-        <translation>
+        <translation type="obsolete">
 Úselo:  qucsedit [-r] nombre_del_archivo</translation>
     </message>
     <message>
@@ -2000,6 +2000,23 @@ Usage:  qucsedit [-r] filename
         <translation>¡Sólo está permitido el nombre de un archivo!
 
 </translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    -h  display this help and exit
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2050,7 +2067,7 @@ Usage:  qucsedit [-r] filename
     </message>
     <message>
         <source>Datasets</source>
-        <translation></translation>
+        <translation>Conjuntos de datos</translation>
     </message>
     <message>
         <source>Data Displays</source>
@@ -2323,11 +2340,11 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Iniciando una nueva simulación</translation>
+        <translation>Iniciando una nueva simulación </translation>
     </message>
     <message>
         <source> at </source>
-        <translation>en</translation>
+        <translation> en </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
@@ -2353,7 +2370,7 @@ Abortado.</translation>
         <source>
 Simulation ended on </source>
         <translation>
-La simulación ha finalizado</translation>
+La simulación ha finalizado </translation>
     </message>
     <message>
         <source>Ready.
@@ -2365,7 +2382,7 @@ La simulación ha finalizado</translation>
         <source>
 Errors occured during simulation on </source>
         <translation>
-Han ocurrido errores durante la simulación</translation>
+Han ocurrido errores durante la simulación </translation>
     </message>
     <message>
         <source>Aborted.
@@ -2417,7 +2434,7 @@ Errores:
     </message>
     <message>
         <source> - Project: </source>
-        <translation>- Proyecto:</translation>
+        <translation> - Proyecto: </translation>
     </message>
     <message>
         <source>Choose Project Directory for Opening</source>
@@ -2572,13 +2589,13 @@ Errores:
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation>Versión del Editor Qucs</translation>
+        <translation>Versión del Editor Qucs </translation>
     </message>
     <message>
         <source>
 very simple text editor for Qucs
 </source>
-        <translation>
+        <translation type="obsolete">
 editor de texto muy simple para Qucs
 </translation>
     </message>
@@ -2629,6 +2646,12 @@ editor de texto muy simple para Qucs
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3715,7 +3738,7 @@ Acerca de Qt por Trolltech</translation>
     </message>
     <message>
         <source>Qucs Version </source>
-        <translation>Versión de Qucs</translation>
+        <translation>Versión de Qucs </translation>
     </message>
     <message>
         <source>
@@ -3783,12 +3806,13 @@ Simulador universal de circuitos Qt
     </message>
     <message>
         <source>Italian by Giorgio Luparia</source>
-        <translation>Deshacer</translation>
+        <translation>Deshacer por Giorgio Luparia</translation>
     </message>
     <message>
         <source>Spanish by Jose L. Redrejo Rodriguez
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Español por José L. Redrejo Rodríguez
+</translation>
     </message>
 </context>
 <context>

@@ -2152,7 +2152,7 @@ Falsches &apos;painting&apos; Zeilenformat!</translation>
         <source>
 very simple text editor for Qucs
 </source>
-        <translation>
+        <translation type="obsolete">
 Einfacher Texteditor für Qucs
 </translation>
     </message>
@@ -2165,7 +2165,7 @@ Einfacher Texteditor für Qucs
         <source>
 Usage:  qucsedit [-r] filename
 </source>
-        <translation>
+        <translation type="obsolete">
 Verwendung:  qucsedit [-r] Dateiname
 </translation>
     </message>
@@ -2246,6 +2246,28 @@ Verwendung:  qucsedit [-r] Dateiname
     <message>
         <source>Voltage Pulse</source>
         <translation>Spannungspulsquelle</translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation>
+Einfacher Texteditor für Qucs
+</translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] file
+</source>
+        <translation>
+Verwendung:  qucsedit [-r] Datei
+</translation>
+    </message>
+    <message>
+        <source>    -h  display this help and exit
+</source>
+        <translation>    -h  Anzeige dieser Hilfe und Ende
+</translation>
     </message>
 </context>
 <context>
@@ -4030,7 +4052,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
         <source>
 very simple text editor for Qucs
 </source>
-        <translation>
+        <translation type="obsolete">
 Einfacher Texteditor für Qucs
 </translation>
     </message>
@@ -4081,6 +4103,14 @@ Einfacher Texteditor für Qucs
     <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation>
+Einfacher Texteditor für Qucs
+</translation>
     </message>
 </context>
 <context>

@@ -1960,22 +1960,10 @@ Wrong &apos;painting&apos; line delimiter!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-very simple text editor for Qucs
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
         <translation type="unfinished">Copyright (C) 2004 de Michael Margraf
 </translation>
-    </message>
-    <message>
-        <source>
-Usage:  qucsedit [-r] filename
-</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>    -r  open file read-only
@@ -2046,6 +2034,23 @@ Usage:  qucsedit [-r] filename
     </message>
     <message>
         <source>Voltage Pulse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Usage:  qucsedit [-r] file
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>    -h  display this help and exit
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2630,12 +2635,6 @@ Erori:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-very simple text editor for Qucs
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyright (C) 2004 by Michael Margraf
 </source>
         <translation type="unfinished">Copyright (C) 2004 de Michael Margraf
@@ -2681,6 +2680,12 @@ very simple text editor for Qucs
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Revocare</translation>
+    </message>
+    <message>
+        <source>
+Very simple text editor for Qucs
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
