@@ -45,7 +45,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   mscross.h msline.h msstep.h mstee.h param_sweep.h sp_sim.h substrate.h      \
   tline.h tr_sim.h component.h vcvs.h gyrator.h phaseshifter.h resistorus.h
 
-INCLUDES = $(QINCLUDES)
+INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<
