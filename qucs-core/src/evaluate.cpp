@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.14 2004-08-17 18:38:59 ela Exp $
+ * $Id: evaluate.cpp,v 1.15 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -36,7 +36,7 @@
 #include "object.h"
 #include "vector.h"
 #include "matrix.h"
-#include "components/constants.h"
+#include "constants.h"
 #include "equation.h"
 #include "evaluate.h"
 

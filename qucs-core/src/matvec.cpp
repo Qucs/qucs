@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.7 2004-08-17 18:38:59 ela Exp $
+ * $Id: matvec.cpp,v 1.8 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -38,6 +38,11 @@
 #include "vector.h"
 #include "matrix.h"
 #include "matvec.h"
+
+#if !HAVE_STRCHR
+# define strchr  index
+# define strrchr rindex
+#endif
 
 // Constructor creates an unnamed instance of the matvec class.
 matvec::matvec () {
@@ -134,15 +139,15 @@ char * matvec::createMatrixString (char n, int r, int c) {
    the pattern the function returns NULL. */
 char * matvec::isMatrixVector (char * n, int& r, int& c) {
   char * p; int len;
-  if (n == NULL) return NULL;             // nothing todo here
-  if ((p = index (n, '[')) != NULL) {     // find first '['
-    r = atoi (p + 1);                     // get first index
-    if ((p = index (p, ',')) != NULL) {   // find the ','
-      c = atoi (p + 1);                   // get second index
-      if ((p = index (p, ']')) != NULL) { // find trailing ']'
-	if (p[1] == '\0') {               // identifier must end in ']'
+  if (n == NULL) return NULL;              // nothing todo here
+  if ((p = strchr (n, '[')) != NULL) {     // find first '['
+    r = atoi (p + 1);                      // get first index
+    if ((p = strchr (p, ',')) != NULL) {   // find the ','
+      c = atoi (p + 1);                    // get second index
+      if ((p = strchr (p, ']')) != NULL) { // find trailing ']'
+	if (p[1] == '\0') {                // identifier must end in ']'
 	  // parse actual identifier
-	  if ((len = index (n, '[') - n) > 0) {
+	  if ((len = strchr (n, '[') - n) > 0) {
 	    p = (char *) malloc (len + 1);
 	    memcpy (p, n, len);
 	    p[len] = '\0';

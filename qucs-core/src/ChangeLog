@@ -1,3 +1,24 @@
+2004-08-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* consts.h: New file.  Split 'constants.h' into 'constants.h'
+	and 'consts.h'.  Moved these file up one directory.
+
+	* ucs.cpp (main): Checking for command line option '-b'
+	which enables progress bar functionality.
+
+	* spsolver.cpp: Using progress bar if requested.
+
+	* scan_netlist.l: Using strrchr() instead of rindex() for 
+	compatibility with native Win32.
+
+	* matvec.cpp: Using strchr() instead of index() for 
+	compatibility with native Win32.
+
+	* logging.c: Implemented text based progress bar
+	functionality.
+
+	* eqnsys.cpp (finite): Ensure MinGW knows about that macro.
+
 2004-08-18  Stefan Jahn  <stefan@lkcc.org>
 
 	* nodelist.cpp: Improved memory management for nodelist

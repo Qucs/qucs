@@ -48,7 +48,7 @@ noinst_HEADERS = check_netlist.h complex.h input.h net.h object.h circuit.h \
 	check_touchstone.h matrix.h analysis.h spsolver.h dcsolver.h        \
 	nodelist.h variable.h environment.h parasweep.h eqnsys.h sweep.h    \
 	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h    \
-	exceptionstack.h matvec.h
+	exceptionstack.h matvec.h constants.h consts.h
 
 noinst_LIBRARIES = libqucsator.a
 

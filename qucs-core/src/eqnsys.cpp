@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.11 2004-08-14 15:41:55 ela Exp $
+ * $Id: eqnsys.cpp,v 1.12 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -43,6 +43,10 @@ using namespace std;
 #include "constants.h"
 #include "exception.h"
 #include "exceptionstack.h"
+
+#ifdef __MINGW32__
+# define finite(x) _finite(x)
+#endif
 
 using namespace qucs;
 

@@ -1,7 +1,7 @@
 /*
  * logging.c - logging facility class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.c,v 1.3 2004-04-04 09:11:05 ela Exp $
+ * $Id: logging.c,v 1.4 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -55,3 +55,19 @@ void loginit (void) {
 /* Both of the log level dependent FILE streams. */
 FILE * file_status = NULL;
 FILE * file_error = NULL;
+
+/* Print a tiny progress-bar depending on the arguments. */
+void logprogressbar (nr_double_t current, nr_double_t final, int points) {
+  int i;
+  if (progressbar_enable) {
+    logprint (LOG_STATUS, "[");
+    for (i = 0; i < (current / final) * points; i++)
+      logprint (LOG_STATUS, "*");
+    for (; i < points; i++) logprint (LOG_STATUS, " ");
+    logprint (LOG_STATUS, "] %.4g%%      \r", current * 100.0 / final);
+    if (current >= final) logprint (LOG_STATUS, "\n");
+  }
+}
+
+/* If non-zero then progress bars are painted... */
+int progressbar_enable = 0;

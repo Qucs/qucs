@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.10 2004-06-30 15:04:15 ela Exp $
+ * $Id: complex.cpp,v 1.11 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -29,6 +29,7 @@
 #include <math.h>
 
 #include "complex.h"
+#include "consts.h"
 
 complex::complex (nr_double_t real, nr_double_t imag) {
   r = real;

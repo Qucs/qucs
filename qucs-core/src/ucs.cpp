@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ucs.cpp,v 1.8 2004-07-24 11:54:16 ela Exp $
+ * $Id: ucs.cpp,v 1.9 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -82,6 +82,10 @@ int main (int argc, char ** argv) {
     else if (!strcmp (argv[i], "-o")) {
       outfile = argv[++i];
       file_status = stdout;
+    }
+    else if (!strcmp (argv[i], "-b")) {
+      progressbar_enable = 1;
+      i++;
     }
   }
 

@@ -39,7 +39,7 @@ noinst_HEADERS = attenuator.h dcblock.h open.h vccs.h biastee.h circulator.h \
 	dcfeed.h pac.h vcvs.h capacitor.h ground.h resistor.h cccs.h cross.h \
 	trafo.h inductor.h tee.h ccvs.h isolator.h component.h itrafo.h      \
 	strafo.h vdc.h idc.h vac.h component_id.h phaseshifter.h gyrator.h   \
-	tline.h constants.h iprobe.h iac.h spfile.h vnoise.h inoise.h
+	tline.h iprobe.h iac.h spfile.h vnoise.h inoise.h
 
 #libcomponent_a_LIBADD = microstrip/libmicrostrip.a devices/libdevices.a
 

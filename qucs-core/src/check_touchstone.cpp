@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.7 2004-08-06 18:24:43 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.8 2004-08-21 13:29:07 ela Exp $
  *
  */
 
@@ -41,7 +41,7 @@
 #include "dataset.h"
 #include "strlist.h"
 #include "circuit.h"
-#include "components/constants.h"
+#include "constants.h"
 #include "check_touchstone.h"
 
 strlist * touchstone_idents = NULL;
