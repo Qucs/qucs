@@ -1,3 +1,7 @@
+2004-10-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* *.tex: Added copyright notice in all LaTex files.
+
 2004-10-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcanalysis.tex (subsection{Symmetrical transformer}): Fixed

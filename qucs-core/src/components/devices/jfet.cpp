@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.18 2004/10/12 18:13:12 ela Exp $
+ * $Id: jfet.cpp,v 1.19 2004/10/16 16:42:31 ela Exp $
  *
  */
 
@@ -117,6 +117,10 @@ void jfet::initDC (void) {
   UgdPrev = real (getV (NODE_G) - getV (NODE_D));
   UgsPrev = real (getV (NODE_G) - getV (NODE_S));
 
+  // apply polarity of JFET
+  char * type = getPropertyString ("Type");
+  pol = !strcmp (type, "pfet") ? -1 : 1;
+
   // get device temperature
   nr_double_t T = getPropertyDouble ("Temp");
 
@@ -161,10 +165,6 @@ void jfet::calcDC (void) {
 
   nr_double_t Ugs, Ugd, Ut, IeqG, IeqD, IeqS, UgsCrit, UgdCrit;
   nr_double_t Uds, Igs, Igd, gtiny;
-
-  // apply polarity of JFET
-  char * type = getPropertyString ("Type");
-  nr_double_t pol = !strcmp (type, "pfet") ? -1 : 1;
 
   T = kelvin (T);
   Ut = T * kB / Q;
@@ -276,10 +276,6 @@ void jfet::calcOperatingPoints (void) {
   
   nr_double_t Ugs, Ugd, Ut, Cgs, Cgd;
 
-  // apply polarity of JFET
-  char * type = getPropertyString ("Type");
-  nr_double_t pol = !strcmp (type, "pfet") ? -1 : 1;
-
   T = kelvin (T);
   Ut = kB * T / Q;
   Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
@@ -287,9 +283,11 @@ void jfet::calcOperatingPoints (void) {
 
   // capacitance of gate-drain diode
   Cgd = pnCapacitance (Ugd, Cgd0, Pb, z, Fc);
+  Qgd = pnCharge (Ugd, Cgd0, Pb, z, Fc);
 
   // capacitance of gate-source diode
   Cgs = pnCapacitance (Ugs, Cgs0, Pb, z, Fc);
+  Qgs = pnCharge (Ugs, Cgs0, Pb, z, Fc);
 
   // save operating points
   setOperatingPoint ("ggs", ggs);
@@ -331,6 +329,6 @@ void jfet::calcTR (nr_double_t) {
   nr_double_t Cgs = getOperatingPoint ("Cgs");
   nr_double_t Cgd = getOperatingPoint ("Cgd");
 
-  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs);
-  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd);
+  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs, Qgs);
+  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd, Qgd);
 }

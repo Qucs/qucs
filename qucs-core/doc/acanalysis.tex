@@ -1,6 +1,13 @@
 %
 % This document contains the chapter about AC analysis.
 %
+% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
+%
+% Permission is granted to copy, distribute and/or modify this document
+% under the terms of the GNU Free Documentation License, Version 1.1
+% or any later version published by the Free Software Foundation.
+%
 
 \chapter{AC Analysis}
 %\addcontentsline{toc}{chapter}{AC Analysis}
@@ -103,13 +110,13 @@ Y_{12} = Y_{21} &= \frac{j}{Z_L\cdot \sin{\left(\beta\cdot l\right)}}
 \end{align}
 
 \subsection{Coupled transmission line}
-%\addcontentsline{toc}{subsection}{Transmission line}
+%\addcontentsline{toc}{subsection}{Coupled transmission line}
 
-A coupled transmission line is described by two identical
-transmission line ABCD-matrizes, one for the even and one for
-the odd mode. Because the coupled lines are a symmetrical 3-line
-system, the matrizes are completely independent of each other.
-Therefore, its Y-parameters write as follows.
+A coupled transmission line is described by two identical transmission
+line ABCD-matrizes, one for the even and one for the odd mode.
+Because the coupled lines are a symmetrical 3-line system, the
+matrizes are completely independent of each other.  Therefore, its
+Y-parameters write as follows.
 \begin{align}
 Y_{11} = Y_{22} = Y_{33} = Y_{44} &= \frac{1}{2\cdot Z_{L,e} \cdot \tanh\left(\gamma_e\cdot l\right)}
               + \frac{1}{2\cdot Z_{L,o} \cdot \tanh\left(\gamma_o\cdot l\right)}\\
@@ -118,10 +125,8 @@ Y_{12} = Y_{21} = Y_{34} = Y_{43} &= \frac{-1}{2\cdot Z_{L,e} \cdot \sinh\left(\
 Y_{13} = Y_{31} = Y_{24} = Y_{42} &= \frac{-1}{2\cdot Z_{L,e} \cdot \sinh\left(\gamma_e\cdot l\right)}
               + \frac{1}{2\cdot Z_{L,o} \cdot \sinh\left(\gamma_o\cdot l\right)}\\
 Y_{14} = Y_{41} = Y_{23} = Y_{32} &= \frac{1}{2\cdot Z_{L,e} \cdot \tanh\left(\gamma_e\cdot l\right)}
-              + \frac{-1}{2\cdot Z_{L,o} \cdot \tanh\left(\gamma_o\cdot l\right)}\\
+              + \frac{-1}{2\cdot Z_{L,o} \cdot \tanh\left(\gamma_o\cdot l\right)}
 \end{align}
-
-
 
 \subsection{Phase shifter}
 %\addcontentsline{toc}{subsection}{Phase shifter}

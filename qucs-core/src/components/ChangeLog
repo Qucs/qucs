@@ -1,3 +1,14 @@
+2004-10-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/mscoupled.cpp: Removed some debug code.
+	Y-parameters are now working correctly.
+
+	* devices/device.cpp: New funtion implemented which calculates
+	the charge of a pn-junction.  Used by all non-linear devices.
+
+	* devices/*.cpp: Fixed transient models of all non-linear
+	devices.  Now computing the real charge of each pn-junction.
+
 2004-10-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/mscoupled.cpp: Added preliminary direct

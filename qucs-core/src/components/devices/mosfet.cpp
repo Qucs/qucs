@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.12 2004/10/12 18:13:12 ela Exp $
+ * $Id: mosfet.cpp,v 1.13 2004/10/16 16:42:31 ela Exp $
  *
  */
 
@@ -191,7 +191,7 @@ void mosfet::initModel (void) {
 
   // apply polarity of MOSFET
   char * type = getPropertyString ("Type");
-  MOSpol = !strcmp (type, "pfet") ? -1 : 1;
+  pol = !strcmp (type, "pfet") ? -1 : 1;
 
   // calculate effective channel length
   nr_double_t L  = getPropertyDouble ("L");
@@ -269,13 +269,13 @@ void mosfet::initModel (void) {
     // bandgap for silicon
     Eg = Egap (kelvin (T));
     if (Tpg != 0.0) { // n-poly or p-poly
-      PhiG = 4.15 + Eg / 2 - MOSpol * Tpg * Eg / 2;
+      PhiG = 4.15 + Eg / 2 - pol * Tpg * Eg / 2;
     } else {          // alumina
       PhiG = 4.1;
     }
-    PhiMS = PhiG - (4.15 + Eg / 2 + MOSpol * Phi / 2);
+    PhiMS = PhiG - (4.15 + Eg / 2 + pol * Phi / 2);
     if (Nss >= 0 && Cox > 0) {
-      Vto = PhiMS - Q * Nss * 1e4 / Cox + MOSpol * (Phi + Ga * sqrt (Phi));
+      Vto = PhiMS - Q * Nss * 1e4 / Cox + pol * (Phi + Ga * sqrt (Phi));
     } else {
       logprint (LOG_STATUS, "WARNING: adjust Tox, Nss or Vt0 to get a "
 		"valid threshold voltage\n");
@@ -356,14 +356,14 @@ void mosfet::calcDC (void) {
   nr_double_t T   = getPropertyDouble ("Temp");
 
   nr_double_t Ugs, Ugd, Ut, IeqBS, IeqBD, IeqDS, UbsCrit, UbdCrit;
-  nr_double_t Uds, Ibs, Ibd, gtiny, Ubs, Ubd;
+  nr_double_t Uds, gtiny, Ubs, Ubd;
 
   T = kelvin (T);
   Ut = T * kBoverQ;
-  Ugd = real (getV (NODE_G) - getV (NODE_D)) * MOSpol;
-  Ugs = real (getV (NODE_G) - getV (NODE_S)) * MOSpol;
-  Ubs = real (getV (NODE_B) - getV (NODE_S)) * MOSpol;
-  Ubd = real (getV (NODE_B) - getV (NODE_D)) * MOSpol;
+  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
+  Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
   Uds = Ugs - Ugd;
 
   // critical voltage necessary for bad start values
@@ -372,15 +372,15 @@ void mosfet::calcDC (void) {
 
   // for better convergence
   if (Uds >= 0) {
-    Ugs = fetVoltage (Ugs, UgsPrev, Vto * MOSpol);
+    Ugs = fetVoltage (Ugs, UgsPrev, Vto * pol);
     Uds = Ugs - Ugd;
-    Uds = fetVoltage (Uds, UdsPrev, Vto * MOSpol);
+    Uds = fetVoltage (Uds, UdsPrev, Vto * pol);
     Ugd = Ugs - Uds;
   }
   else {
-    Ugd = fetVoltage (Ugd, UgdPrev, Vto * MOSpol);
+    Ugd = fetVoltage (Ugd, UgdPrev, Vto * pol);
     Uds = Ugs - Ugd;
-    Uds = -fetVoltage (-Uds, -UdsPrev, Vto * MOSpol);
+    Uds = -fetVoltage (-Uds, -UdsPrev, Vto * pol);
     Ugs = Ugd + Uds;
   }
   if (Uds >= 0) {
@@ -420,7 +420,7 @@ void mosfet::calcDC (void) {
   }
 
   // calculate bias-dependent threshold voltage
-  Uon = Vto * MOSpol + Ga * (Sarg - Sphi);
+  Uon = Vto * pol + Ga * (Sarg - Sphi);
   nr_double_t Utst = ((MOSdir > 0) ? Ugs : Ugd) - Uon;
   // no infinite backgate transconductance (if non-zero Ga)
   nr_double_t arg = (Sarg != 0.0) ? (Ga / Sarg / 2) : 0;
@@ -449,9 +449,9 @@ void mosfet::calcDC (void) {
     }
     gmb = gm * arg;
   }
-  Udsat = MOSpol * MAX (Utst, 0);
+  Udsat = pol * MAX (Utst, 0);
   Ids = MOSdir * Ids;
-  Uon = MOSpol * Uon;
+  Uon = pol * Uon;
 
   // compute autonomic current sources
   IeqBD = Ibd - gbd * Ubd;
@@ -467,9 +467,9 @@ void mosfet::calcDC (void) {
   }
 
   setI (NODE_G, 0);
-  setI (NODE_D, (+IeqBD - IeqDS) * MOSpol);
-  setI (NODE_S, (+IeqBS + IeqDS) * MOSpol);
-  setI (NODE_B, (-IeqBD - IeqBS) * MOSpol);
+  setI (NODE_D, (+IeqBD - IeqDS) * pol);
+  setI (NODE_S, (+IeqBS + IeqDS) * pol);
+  setI (NODE_B, (-IeqBD - IeqBS) * pol);
 
   // apply admittance matrix elements
   setY (NODE_G, NODE_G, 0);
@@ -510,19 +510,23 @@ void mosfet::calcOperatingPoints (void) {
   nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds;
   nr_double_t Cgd, Cgb, Cgs;
 
-  Ugd = real (getV (NODE_G) - getV (NODE_D)) * MOSpol;
-  Ugs = real (getV (NODE_G) - getV (NODE_S)) * MOSpol;
-  Ubs = real (getV (NODE_B) - getV (NODE_S)) * MOSpol;
-  Ubd = real (getV (NODE_B) - getV (NODE_D)) * MOSpol;
+  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
+  Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
   Uds = Ugs - Ugd;
 
   // capacitance of bulk-drain diode
   Cbd = gbd * Tt + pnCapacitance (Ubd, Cbd0, Pb, M, Fc) +
     pnCapacitance (Ubd, Cbds, Pb, Ms, Fc);
+  Qbd = Ibd * Tt + pnCharge (Ubd, Cbd0, Pb, M, Fc) +
+    pnCharge (Ubd, Cbds, Pb, Ms, Fc);
 
   // capacitance of bulk-source diode
   Cbs = gbs * Tt + pnCapacitance (Ubs, Cbs0, Pb, M, Fc) +
     pnCapacitance (Ubs, Cbss, Pb, Ms, Fc);
+  Qbs = Ibs * Tt + pnCharge (Ubs, Cbs0, Pb, M, Fc) +
+    pnCharge (Ubs, Cbss, Pb, Ms, Fc);
 
   // calculate bias-dependent MOS overlap capacitances
   if (MOSdir > 0) {
@@ -594,9 +598,9 @@ void mosfet::calcTR (nr_double_t) {
   nr_double_t Ubs = getOperatingPoint ("Vbs");
   nr_double_t Ugb = Ugs - Ubs;
 
-  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd);
-  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs);
-  transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd);
-  transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs);
-  transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb);
+  transientCapacitance (qgdState, NODE_G, NODE_D, Cgd, Ugd, Cgd * Ugd);
+  transientCapacitance (qgsState, NODE_G, NODE_S, Cgs, Ugs, Cgs * Ugs);
+  transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd, Qbd);
+  transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs, Qbs);
+  transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb, Cgb * Ugb);
 }

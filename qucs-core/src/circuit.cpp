@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.32 2004/10/12 18:13:08 ela Exp $
+ * $Id: circuit.cpp,v 1.33 2004/10/16 16:42:30 ela Exp $
  *
  */
 
@@ -48,6 +48,7 @@ circuit::circuit () : object (), integrator () {
   MatrixN = MatrixS = MatrixY = NULL;
   nodes = NULL;
   pacport = 0;
+  pol = 1;
   flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
   subst = NULL;
   vsource = 0;
@@ -71,6 +72,7 @@ circuit::circuit (int s) : object (), integrator () {
     nodes = new node[s];
   }
   pacport = 0;
+  pol = 1;
   flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
   subst = NULL;
   vsource = 0;
@@ -86,6 +88,7 @@ circuit::circuit (int s) : object (), integrator () {
    circuit object. */
 circuit::circuit (const circuit & c) : object (c), integrator (c) {
   size = c.size;
+  pol = c.pol;
   pacport = c.pacport;
   flag = c.flag;
   type = c.type;
@@ -535,13 +538,15 @@ void circuit::voltageSource (int n, int pos, int neg, nr_double_t value) {
 /* The function runs the necessary calculation in order to perform a
    single integration step of a voltage controlled capacitance placed
    in between the given nodes. */
-void circuit::transientCapacitance (int state, int pos, int neg,
-				    nr_double_t cap, nr_double_t voltage) {
-  nr_double_t g, i;
-  setState (state, cap * voltage);
-  integrate (state, cap, g, i);
+void circuit::transientCapacitance (int qstate, int pos, int neg,
+				    nr_double_t cap, nr_double_t voltage,
+				    nr_double_t charge) {
+  nr_double_t g, i, cstate = qstate + 1;
+  setState (qstate, charge);
+  integrate (qstate, cap, g, i);
   addY (pos, pos, +g); addY (neg, neg, +g);
   addY (pos, neg, -g); addY (neg, pos, -g);
+  i = pol * (getState (cstate) - g * voltage);
   addI (pos , -i);
   addI (neg , +i);
 }

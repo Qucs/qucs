@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.16 2004/10/12 18:13:11 ela Exp $
+ * $Id: bjt.cpp,v 1.17 2004/10/16 16:42:31 ela Exp $
  *
  */
 
@@ -144,7 +144,9 @@ void bjt::initDC (void) {
 
   // apply polarity of BJT
   char * type = getPropertyString ("Type");
-  nr_double_t pol = !strcmp (type, "pnp") ? -1 : 1;
+  pol = !strcmp (type, "pnp") ? -1 : 1;
+
+  // get simulation temperature
   nr_double_t T = getPropertyDouble ("Temp");
 
   // initialize starting values
@@ -226,14 +228,10 @@ void bjt::calcDC (void) {
   nr_double_t Irb  = getPropertyDouble ("Irb");
   nr_double_t T    = getPropertyDouble ("Temp");
 
-  nr_double_t Ut, Ube, Ubc, Ir, Q1, Q2, Ibc;
-  nr_double_t Iben, Ibcn, Ibei, Ibci, gbe, gbc, gtiny;
+  nr_double_t Ut, Ube, Ubc, Q1, Q2;
+  nr_double_t Iben, Ibcn, Ibei, Ibci, Ibc, gbe, gbc, gtiny;
   nr_double_t Uce, IeqB, IeqC, IeqE, IeqS, UbeCrit, UbcCrit;
   nr_double_t gm, go;
-
-  // apply polarity of BJT
-  char * type = getPropertyString ("Type");
-  nr_double_t pol = !strcmp (type, "pnp") ? -1 : 1;
 
   // interpret zero as infinity for these model parameters
   Ikf = Ikf > 0 ? 1.0 / Ikf : 0;
@@ -388,10 +386,6 @@ void bjt::calcOperatingPoints (void) {
 
   nr_double_t Cbe, Ube, Ubc, Cbci, Cbcx, Ucs, Cbc, Ccs;
 
-  // apply polarity of BJT
-  char * type = getPropertyString ("Type");
-  nr_double_t pol = !strcmp (type, "pnp") ? -1 : 1;
-
   // interpret zero as infinity for that model parameter
   Vtf = Vtf > 0 ? 1.0 / Vtf : 0;
 
@@ -401,21 +395,25 @@ void bjt::calcOperatingPoints (void) {
 
   // depletion capacitance of base-emitter diode
   Cbe = pnCapacitance (Ube, Cje0, Vje, Mje, Fc);
+  Qbe = pnCharge (Ube, Cje0, Vje, Mje, Fc);
 
   // diffusion capacitance of base-emitter diode
   nr_double_t e, Tff, dTffdUbe;
-  e = exp (Ubc / 1.44 * Vtf);
+  e = 2 * exp (Ubc * Vtf);
   Tff = Tf * (1 + Xtf * sqr (If / (If + Itf)) * e);
   dTffdUbe = Tf * Xtf * 2 * gif * If * Itf / cubic (If + Itf) * e;
   Cbe += (If * dTffdUbe + Tff * (gif - If / Qb * dQbdUbe)) / Qb;
+  Qbe += If * Tff / Qb;
 
   // depletion and diffusion capacitance of base-collector diode
   Cbc = pnCapacitance (Ubc, Cjc0, Vjc, Mjc, Fc);
   Cbci = Cbc * Xcjc + Tr * gir;
+  Qbci = Xcjc * pnCharge (Ubc, Cjc0, Vjc, Mjc, Fc) + Tr * Ir;
   Cbcx = Cbc * (1 - Xcjc);
 
   // depletion capacitance of collector-substrate diode
   Ccs = pnCapacitance (Ucs, Cjs0, Vjs, Mjs);
+  Qcs = pnCharge (Ucs, Cjs0, Vjs, Mjs, 0);
 
   // finally save the operating points
   setOperatingPoint ("Cbe", Cbe);
@@ -486,7 +484,7 @@ void bjt::calcTR (nr_double_t) {
   nr_double_t Ccs = getOperatingPoint ("Ccs");
 
   // TODO: excess phase
-  transientCapacitance (qbeState, NODE_B, NODE_E, Cbe, Ube);
-  transientCapacitance (qbcState, NODE_B, NODE_C, Cbc, Ubc);
-  transientCapacitance (qcsState, NODE_S, NODE_C, Ccs, Ucs);
+  transientCapacitance (qbeState, NODE_B, NODE_E, Cbe, Ube, Qbe);
+  transientCapacitance (qbcState, NODE_B, NODE_C, Cbc, Ubc, Qbci);
+  transientCapacitance (qcsState, NODE_S, NODE_C, Ccs, Ucs, Qcs);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.h,v 1.7 2004/10/12 18:13:12 ela Exp $
+ * $Id: jfet.h,v 1.8 2004/10/16 16:42:31 ela Exp $
  *
  */
 
@@ -43,7 +43,7 @@ class jfet : public circuit
  private:
   nr_double_t UgsPrev;
   nr_double_t UgdPrev;
-  nr_double_t ggs, ggd, gm, gds, Ids;
+  nr_double_t ggs, ggd, gm, gds, Ids, Qgs, Qgd;
   circuit * rs;
   circuit * rd;
 };
