@@ -62,7 +62,7 @@ public:
 
 
   QPtrList<Line>     Lines;
-  QPtrList<Arc>      Arcs;
+  QPtrList<struct Arc>      Arcs;
   QPtrList<Area>     Rects, Ellips;
   QPtrList<Port>     Ports;
   QPtrList<Text>     Texts;
