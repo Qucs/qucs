@@ -20,7 +20,7 @@
 #endif
 
 #include "qucssettingsdialog.h"
-#include "../main.h"
+#include "main.h"
 
 #include <qwidget.h>
 #include <qlabel.h>

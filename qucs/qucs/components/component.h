@@ -18,8 +18,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "../element.h"
-#include "../node.h"
+#include "element.h"
+#include "node.h"
 
 
 #include <qptrlist.h>

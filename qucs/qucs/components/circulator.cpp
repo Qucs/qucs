@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 #include "circulator.h"
-#include "../main.h"
+#include "main.h"
 
 
 Circulator::Circulator()
