@@ -1752,7 +1752,8 @@ stability:
 
 For conditional stable two-ports it is interesting which which
 load and which source impedance may cause instability. This can
-be seen using stability circles. A disadvantage of this method
+be seen using stability circles \cite{Michel1}. A disadvantage
+of this method
 is that the radius of the below-mentioned circles can become
 infinity. (A circle with infinite radius is a line.)
 
@@ -1794,7 +1795,8 @@ coefficients outside the circle.
 
 \subsection{Gain}
 
-Maximum available and stable power gain (only for unconditional stable 2-ports):
+Maximum available and stable power gain (only for unconditional stable 2-ports)
+\cite{Michel1}:
 \begin{equation}
 G_{max} = \left| \frac{S_{21}}{S_{12}} \right| \cdot \left( K - \sqrt{K^2-1} \right)
 \end{equation}
@@ -1802,4 +1804,49 @@ where $K$ is Rollet stability factor.
 
 \addvspace{12pt}
 
+The (bilateral) transmission power gain of a two-port can be split
+into three parts \cite{Michel1}:
+\begin{equation}
+G = G_S \cdot G_0 \cdot G_L
+\end{equation}
+with
+\begin{equation}
+G_S = \frac{(1 - |r_S|^2) \cdot (1 - |r_1|^2)}{|1 - r_S\cdot r_1|^2}
+\end{equation}
+\begin{equation}
+G_0 = |S_{21}|^2
+\end{equation}
+\begin{equation}
+G_L = \frac{1 - |r_L|^2}{|1 - r_L\cdot S_{22}|^2 \cdot (1 - |r_1|^2)}
+\end{equation}
+where $r_1$ is eflexion coefficient of the two-port input.
+
+\addvspace{12pt}
+
+The curves of constant gain are circles in the reflexion
+coefficient plan.\\
+The circle for the load-mismatched two-port with gain $G_L$
+is
+\begin{equation}
+r_{center} = \frac{(S_{22}^* - S_{11}\cdot \Delta^*) \cdot G_L}{G_L\cdot (|S_{22}|^2 - |\Delta|^2) + 1}
+\end{equation}
+\begin{equation}
+\text{Radius} =
+   \frac{\sqrt{1 - G_L\cdot (1-|S_{11}|^2-|S_{22}|^2+|\Delta|^2) + G_L^2\cdot |S_{12}\cdot S_{21}|^2}}
+        {G_L\cdot (|S_{22}|^2 - |\Delta|^2) + 1}
+\end{equation}
+
+The circle for the source-mismatched two-port with gain $G_S$
+is
+\begin{equation}
+r_{center} = \frac{G_S\cdot r_1^*}{1 - |r_1|^2\cdot (1-G_S)}
+\end{equation}
+\begin{equation}
+\text{Radius} =
+   \frac{\sqrt{1 - G_S}\cdot (1-|r_1|^2)}{1 - |r_1|^2\cdot (1-G_S)}
+\end{equation}
+with
+\begin{equation}
+r_1 = S_{11} + \frac{S_{12}\cdot S_{21}\cdot r_L}{1 - r_L\cdot S_{22}}
+\end{equation}
 
