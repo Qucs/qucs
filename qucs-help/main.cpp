@@ -19,6 +19,8 @@
 # include <config.h>
 #endif
 
+#include <stdlib.h>
+
 #include <qapplication.h>
 #include <qstring.h>
 #include <qtextcodec.h>
@@ -33,21 +35,13 @@
 #include "qucshelp.h"
 
 QDir QucsHelpDir; // directory to find helps files
-
-struct tQucsSettings {
-  int x, y, dx, dy;    // position and size of main window
-  QFont font;
-};
-
-struct tQucsSettings QucsSettings
-     = {60, 30, 640, 400,    // position and size
-	QFont("Helvetica", 12)};
+tQucsSettings QucsSettings; // application settings
 
 // #########################################################################
 // Loads the settings file and stores the settings.
 bool loadSettings()
 {
-  QFile file(QDir::homeDirPath()+"/.qucs/helprc");
+  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/helprc"));
   if(!file.open(IO_ReadOnly)) return false; // settings file doesn't exist
 
   QTextStream stream(&file);
@@ -66,7 +60,7 @@ bool loadSettings()
   }
   file.close();
 
-  file.setName(QDir::homeDirPath()+"/.qucs/qucsrc");
+  file.setName(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/qucsrc"));
   if(!file.open(IO_ReadOnly)) return true; // qucs settings not necessary
 
   while(!stream.atEnd()) {
@@ -94,7 +88,7 @@ bool saveApplSettings(QucsHelp *qucs)
 	  return true;   // nothing has changed
 
 
-  QFile file(QDir::homeDirPath()+"/.qucs/helprc");
+  QFile file(QDir::homeDirPath()+QDir::convertSeparators ("/.qucs/helprc"));
   if(!file.open(IO_WriteOnly)) {
     QMessageBox::warning(0, QObject::tr("Warning"),
 			QObject::tr("Cannot save settings !"));
@@ -121,26 +115,50 @@ bool saveApplSettings(QucsHelp *qucs)
 
 int main(int argc, char *argv[])
 {
+  // apply default settings
+  QucsSettings.x = 60;
+  QucsSettings.y = 30;
+  QucsSettings.dx = 640;
+  QucsSettings.dy = 400;
+  QucsSettings.font = QFont("Helvetica", 12);
+
+  // is application relocated?
+  char * var = getenv ("QUCSDIR");
+  if (var != NULL) {
+    QDir QucsDir = QDir (var);
+    QString QucsDirStr = QucsDir.canonicalPath ();
+    QucsSettings.DocDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/docs/");
+    QucsSettings.BitmapDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/bitmaps/");
+    QucsSettings.LangDir =
+      QDir::convertSeparators (QucsDirStr + "/share/qucs/lang/");
+  } else {
+    QucsSettings.DocDir = DOCDIR;
+    QucsSettings.BitmapDir = BITMAPDIR;
+    QucsSettings.LangDir = LANGUAGEDIR;
+  }
+
   loadSettings();
 
   QApplication a(argc, argv);
   a.setFont(QucsSettings.font);
 
   QTranslator tor( 0 );
-  tor.load( QString("qucs_") + QTextCodec::locale(), LANGUAGEDIR );
+  tor.load( QString("qucs_") + QTextCodec::locale(), QucsSettings.LangDir);
   a.installTranslator( &tor );
 
   QString locale = QTextCodec::locale();
-  QucsHelpDir = QString (DOCDIR) + locale;
+  QucsHelpDir = QucsSettings.DocDir + locale;
   if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
     int p = locale.find ('_');
     if (p != -1) {
-      QucsHelpDir = QString (DOCDIR) + locale.left (p);
+      QucsHelpDir = QucsSettings.DocDir + locale.left (p);
       if (!QucsHelpDir.exists () || !QucsHelpDir.isReadable ()) {
-	QucsHelpDir = QString (DOCDIR) + "en";
+	QucsHelpDir = QucsSettings.DocDir + "en";
       }
     }
-    else QucsHelpDir = QString (DOCDIR) + "en";
+    else QucsHelpDir = QucsSettings.DocDir + "en";
   }
 
   QString Page;

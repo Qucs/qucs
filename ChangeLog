@@ -1,3 +1,9 @@
+2005-02-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-help/main.cpp, qucs-edit/main.cpp (main): Made the
+	QucsHelp and QucsEdit applications relocatable using the
+	environment variable QUCSDIR.
+
 2005-02-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* THANKS: Corrected Toyoyuki Ishikawa's name at all locations

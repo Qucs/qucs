@@ -27,7 +27,8 @@
 
 QucsHelp::QucsHelp(const QString& page)
 {
-  setIcon (QPixmap(BITMAPDIR "big.qucs.xpm"));  // set application icon
+  // set application icon
+  setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption(tr("Qucs Help System"));
 
   QVBoxLayout *v = new QVBoxLayout(this);

@@ -34,7 +34,8 @@
 
 QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
 {
-  setIcon (QPixmap(BITMAPDIR "big.qucs.xpm"));  // set application icon
+  // set application icon
+  setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
   setCaption("QucsEdit " PACKAGE_VERSION " - " + tr("File: "));
 
   QVBoxLayout *v = new QVBoxLayout(this);
@@ -43,11 +44,13 @@ QucsEdit::QucsEdit(const QString& FileName_, bool readOnly)
   v->addWidget(h);
 
   QToolButton *ButtLoad = new QToolButton(h);
-  ButtLoad->setIconSet(QIconSet(QImage(BITMAPDIR "fileopen.png")));
+  ButtLoad->setIconSet(
+	    QIconSet(QImage(QucsSettings.BitmapDir + "fileopen.png")));
   connect(ButtLoad, SIGNAL(clicked()), SLOT(slotLoad()));
 
   QToolButton *ButtSave = new QToolButton(h);
-  ButtSave->setIconSet(QIconSet(QImage(BITMAPDIR "filesave.png")));
+  ButtSave->setIconSet(
+            QIconSet(QImage(QucsSettings.BitmapDir + "filesave.png")));
   connect(ButtSave, SIGNAL(clicked()), SLOT(slotSave()));
   ButtSave->setDisabled(readOnly);
 

@@ -198,5 +198,5 @@ void QucsSettingsDialog::slotDefaultValues()
   BGColorButton->setPaletteBackgroundColor(QColor(255,250,225));
 
   undoNumEdit->setText("20");
-  editorEdit->setText(BINARYDIR "qucsedit");
+  editorEdit->setText(QucsSettings.BinDir + "qucsedit");
 }
