@@ -1,7 +1,7 @@
 /*
  * circuit.cpp - circuit class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.35 2004-11-24 19:15:44 raimi Exp $
+ * $Id: circuit.cpp,v 1.36 2005-02-08 23:08:31 raimi Exp $
  *
  */
 
@@ -41,6 +41,9 @@
 #include "microstrip/substrate.h"
 #include "operatingpoint.h"
 #include "component_id.h"
+
+// normalising impedance
+const nr_double_t circuit::z0 = 50.0;
 
 // Constructor creates an unnamed instance of the circuit class.
 circuit::circuit () : object (), integrator () {

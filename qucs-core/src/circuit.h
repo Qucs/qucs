@@ -1,7 +1,7 @@
 /*
  * circuit.h - circuit class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.33 2005-01-17 12:19:01 raimi Exp $
+ * $Id: circuit.h,v 1.34 2005-02-08 23:08:32 raimi Exp $
  *
  */
 
@@ -35,7 +35,7 @@ enum circuit_flag {
 };
 
 #define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
-#define RETFLAG(bit)     (flag & (bit))
+#define RETFLAG(bit)     ((flag & (bit)) != 0)
 
 class node;
 class property;
@@ -176,7 +176,7 @@ class circuit : public object, public integrator
   void   setMatrixY (matrix);
   matrix getMatrixY (void);
 
-  static const nr_double_t z0 = 50.0;
+  static const nr_double_t z0;
 
  protected:
   int type;

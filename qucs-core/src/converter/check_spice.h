@@ -1,7 +1,7 @@
 /*
  * check_spice.h - checker definitions for a Spice netlist
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.h,v 1.3 2004-11-24 19:16:05 raimi Exp $
+ * $Id: check_spice.h,v 1.4 2005-02-08 23:08:40 raimi Exp $
  *
  */
 
@@ -35,13 +35,14 @@
 #define HINT_MSTART      32
 #define HINT_MSTOP       64
 
+extern int spice_lineno;
+extern FILE * spice_in;
+
 __BEGIN_DECLS
 
 /* Externalize variables used by the scanner and parser. */
 extern struct definition_t * definition_root;
 extern struct definition_t * subcircuit_root;
-extern int spice_lineno;
-extern FILE * spice_in;
 extern char * spice_title;
 
 /* Available functions of the checker. */

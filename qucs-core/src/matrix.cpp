@@ -1,7 +1,7 @@
 /*
  * matrix.cpp - matrix class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.16 2004-11-29 19:03:36 raimi Exp $
+ * $Id: matrix.cpp,v 1.17 2005-02-08 23:08:32 raimi Exp $
  *
  */
 
@@ -278,8 +278,8 @@ matrix adjoint (matrix a) {
 }
 
 // Create identity matrix with specified number of rows and columns.
-matrix eye (int r, int c) {
-  matrix res (r, c);
+matrix eye (int rs, int cs) {
+  matrix res (rs, cs);
   for (int r = 1; r <= res.getRows (); r++)
     for (int c = 1; c <= res.getCols (); c++)
       if (r == c) res.set (r, c, 1);

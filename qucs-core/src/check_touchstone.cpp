@@ -1,7 +1,7 @@
 /*
  * check_touchstone.cpp - checker for Touchstone files
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.8 2004-08-21 13:29:07 ela Exp $
+ * $Id: check_touchstone.cpp,v 1.9 2005-02-08 23:08:30 raimi Exp $
  *
  */
 
@@ -320,15 +320,15 @@ static void touchstone_create (void) {
 static void touchstone_normalize_sp (void) {
   int ports = touchstone_options.ports;
   vector * v = touchstone_result->getVariables ();
-  int len = v->getSize ();
+  int i, j, n, len = v->getSize ();
   matrix s = matrix (ports);
-  
+
   // go through each matrix entry
-  for (int n = 0; n < len; n++) {
+  for (n = 0; n < len; n++) {
     v = touchstone_result->getVariables ();
     // save entries in a temporary matrix
-    for (int i = 1; i <= ports; i++) {
-      for (int j = 1; j <= ports; j++) {
+    for (i = 1; i <= ports; i++) {
+      for (j = 1; j <= ports; j++) {
 	s.set (i, j, v->get (n));
 	v = (vector *) v->getNext ();
       }
@@ -337,8 +337,8 @@ static void touchstone_normalize_sp (void) {
     s = stos (s, touchstone_options.resistance, circuit::z0);
     v = touchstone_result->getVariables ();
     // restore the results in the entries
-    for (int i = 1; i <= ports; i++) {
-      for (int j = 1; j <= ports; j++) {
+    for (i = 1; i <= ports; i++) {
+      for (j = 1; j <= ports; j++) {
 	v->set (s.get (i, j), n);
 	v = (vector *) v->getNext ();
       }
@@ -415,7 +415,7 @@ static void touchstone_finalize (void) {
    contained errors. */
 int touchstone_check (void) {
 
-  int n, errors = 0;
+  int i, n, errors = 0;
 
   /* first checking the options */
   if (touchstone_idents->length () > 3) {
@@ -424,12 +424,12 @@ int touchstone_check (void) {
     errors++;
   }
   /* touchstone is case insensitive */
-  for (int i = 0; i < touchstone_idents->length (); i++) {
+  for (i = 0; i < touchstone_idents->length (); i++) {
     for (char * p = touchstone_idents->get (i); *p != '\0'; p++)
       *p = tolower (*p);
   }
   /* check duplicate options */
-  for (int i = 0; i < touchstone_idents->length (); i++) {
+  for (i = 0; i < touchstone_idents->length (); i++) {
     char * str = touchstone_idents->get (i);
     if ((n = touchstone_idents->contains (str)) != 1) {
       logprint (LOG_ERROR, "checker error, option `%s' occurred %dx\n", 
@@ -438,7 +438,7 @@ int touchstone_check (void) {
     }
   }
   /* check valid options */
-  for (int i = 0; i < touchstone_idents->length (); i++) {
+  for (i = 0; i < touchstone_idents->length (); i++) {
     char * str = touchstone_idents->get (i);
     int valid = 0;
     for (int v = 0; touchstone_valid_options[v] != NULL; v++) {
