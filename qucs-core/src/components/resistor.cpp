@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: resistor.cpp,v 1.10 2004/07/04 11:16:21 ela Exp $
+ * $Id: resistor.cpp,v 1.11 2004/07/11 10:22:13 ela Exp $
  *
  */
 
@@ -78,5 +78,15 @@ void resistor::initDC (dcsolver *) {
   }
 }
 
+/* The calcDC() function is here partly implemented again because the
+   circuit can be used to simulate controlled non-zero resistances. */
 void resistor::calcDC (void) {
+  nr_double_t r = getPropertyDouble ("R");
+
+  // for non-zero resistances usual MNA entries
+  if (r != 0) {
+    nr_double_t g = 1.0 / r;
+    setY (1, 1, +g); setY (2, 2, +g);
+    setY (1, 2, -g); setY (2, 1, -g);
+  }
 }

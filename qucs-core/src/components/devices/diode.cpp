@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.2 2004/07/10 14:45:27 ela Exp $
+ * $Id: diode.cpp,v 1.3 2004/07/11 10:22:13 ela Exp $
  *
  */
 
@@ -53,11 +53,11 @@ diode::diode () : circuit (2) {
 void diode::calcSP (nr_double_t frequency) {
   complex y = getOperatingPoint ("gd");
   y += rect (0, getOperatingPoint ("Cd") * 2.0 * M_PI * frequency);
-  y *= z0; 
-  setS (NODE_C, NODE_C, 1.0 / (1.0 + 2.0 * y));
-  setS (NODE_A, NODE_A, 1.0 / (1.0 + 2.0 * y));
-  setS (NODE_C, NODE_A, 2.0 * y / (1.0 + 2.0 * y));
-  setS (NODE_A, NODE_C, 2.0 * y / (1.0 + 2.0 * y));
+  y *= 2 * z0; 
+  setS (NODE_C, NODE_C, 1.0 / (1.0 + y));
+  setS (NODE_A, NODE_A, 1.0 / (1.0 + y));
+  setS (NODE_C, NODE_A, y / (1.0 + y));
+  setS (NODE_A, NODE_C, y / (1.0 + y));
 }
 
 void diode::initDC (dcsolver * solver) {
@@ -72,7 +72,8 @@ void diode::initDC (dcsolver * solver) {
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "anode", NODE_A);
-    applyResistance (rs, Rs);
+    rs->setProperty ("Temp", 26.85);
+    rs->setProperty ("R", Rs);
   }
   // no series resistance
   else {
@@ -85,19 +86,19 @@ void diode::calcDC (void) {
   nr_double_t n  = getPropertyDouble ("N");
   nr_double_t Ud, Id, Ut, T, gd, Ieq, Ucrit, gtiny;
 
-  T = -K + 26.5;
+  T = kelvin (26.85);
   Ut = T * kB / Q;
   Ud = real (getV (NODE_A) - getV (NODE_C));
 
   // critical voltage necessary for bad start values
-  Ucrit = n * Ut * log (n * Ut / M_SQRT2 / Is);
+  Ucrit = pnCriticalVoltage (Is, n * Ut);
   Uprev = Ud = pnVoltage (Ud, Uprev, Ut * n, Ucrit);
 
   // tiny derivative for little junction voltage
   gtiny = Ud < - 10 * Ut * n ? Is : 0;
 
-  gd = Is / Ut / n * exp (Ud / Ut / n) + gtiny;
-  Id = Is * (exp (Ud / Ut / n) - 1) + gtiny * Ud;
+  gd = pnConductance (Ud, Is, Ut * n) + gtiny;
+  Id = pnCurrent (Ud, Is, Ut * n) + gtiny * Ud;
   Ieq = Id - Ud * gd;
 
   setI (NODE_C, +Ieq);
@@ -117,17 +118,12 @@ void diode::calcOperatingPoints (void) {
   
   nr_double_t Ud, Id, Ut, T, gd, Cd;
 
-  T = -K + 26.5;
+  T = kelvin (26.85);
   Ut = kB * T / Q;
   Ud = real (getV (NODE_A) - getV (NODE_C));
-  gd = Is / Ut / n * exp (Ud / Ut / n);
-  Id = Is * (exp (Ud / Ut / n) - 1);
-
-  if (Ud < 0)
-    Cd = cj0 * pow (1 - Ud / vd, -z);
-  else
-    Cd = cj0 * (1 + z * Ud / vd);
-  Cd = Cd + Tt * gd;
+  gd = pnConductance (Ud, Is, Ut * n);
+  Id = pnCurrent (Ud, Is, Ut * n);
+  Cd = pnCapacitance (Ud, cj0, vd, z) + Tt * gd;
 
   setOperatingPoint ("gd", gd);
   setOperatingPoint ("Id", Id);

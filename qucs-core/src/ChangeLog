@@ -1,3 +1,17 @@
+2004-07-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Running the init() function before
+	insertConnections() to give components a chance to add new
+	circuits to the netlist.
+
+	* net.cpp: removeCircuit() has now an additional argument
+	'dropping' indicating whether the the circuit to be removed
+	should go into the drop list or not.  New function
+	containsCircuit() which checks whether a given circuit is in
+	the netlist or not.  New function checkCircuitChain() checking
+	the the double chain of the netlist (programmers helper
+	function).
+
 2004-07-08  Stefan Jahn  <stefan@lkcc.org>
 
 	* property.cpp (toString): New function returning text

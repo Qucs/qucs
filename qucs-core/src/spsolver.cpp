@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.17 2004/07/06 22:05:47 ela Exp $
+ * $Id: spsolver.cpp,v 1.18 2004/07/11 10:22:13 ela Exp $
  *
  */
 
@@ -516,8 +516,8 @@ void spsolver::solve (void) {
     }
   }
 
-  insertConnections ();
   init ();
+  insertConnections ();
 
   swp->reset ();
   for (int i = 0; i < swp->getSize (); i++) {
@@ -684,14 +684,14 @@ void spsolver::dropConnections (void) {
   } while (cand != NULL);
 }
 
-/* This function inserts an ideal transformator before an AC power
+/* This function inserts an ideal transformer before an AC power
    source in order to allow differential S parameter ports.  */
 void spsolver::insertDifferentialPorts (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->isPort ()) {
 
-      // create an ideal transformator and assign its node names
+      // create an ideal transformer and assign its node names
       circuit * result = new itrafo ();
       subnet->insertedCircuit (result);
       subnet->insertedNode (result->getNode (1));

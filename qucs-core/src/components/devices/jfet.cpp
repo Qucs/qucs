@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.6 2004/07/10 14:45:27 ela Exp $
+ * $Id: jfet.cpp,v 1.7 2004/07/11 10:22:13 ela Exp $
  *
  */
 
@@ -69,7 +69,7 @@ void jfet::calcSP (nr_double_t frequency) {
   complex Yds = gds;
 
   // build admittance matrix and convert it to S-parameter matrix
-  matrix y = matrix (3); 
+  matrix y = matrix (3);
   y.set (NODE_G, NODE_G, Ygd + Ygs);
   y.set (NODE_G, NODE_D, -Ygd);
   y.set (NODE_G, NODE_S, -Ygs);
@@ -96,7 +96,8 @@ void jfet::initDC (dcsolver * solver) {
   if (Rs != 0) {
     // create additional circuit if necessary and reassign nodes
     rs = splitResistance (this, rs, solver->getNet (), "Rs", "source", NODE_S);
-    applyResistance (rs, Rs);
+    rs->setProperty ("Temp", 26.85);
+    rs->setProperty ("R", Rs);
   }
   // no series resistance at source
   else {
@@ -108,7 +109,8 @@ void jfet::initDC (dcsolver * solver) {
   if (Rd != 0) {
     // create additional circuit if necessary and reassign nodes
     rd = splitResistance (this, rd, solver->getNet (), "Rd", "drain", NODE_D);
-    applyResistance (rd, Rd);
+    rd->setProperty ("Temp", 26.85);
+    rd->setProperty ("R", Rd);
   }
   // no series resistance at drain
   else {

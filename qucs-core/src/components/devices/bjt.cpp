@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.4 2004/07/10 14:45:27 ela Exp $
+ * $Id: bjt.cpp,v 1.5 2004/07/11 10:22:13 ela Exp $
  *
  */
 
@@ -52,11 +52,51 @@
 #define NODE_S 4 /* substrate node  */
 
 bjt::bjt () : circuit (4) {
-  rb = re = rc = NULL;
+  cbcx = rb = re = rc = NULL;
   type = CIR_BJT;
+  enabled = 0;
 }
 
-void bjt::calcSP (nr_double_t) {
+void bjt::calcSP (nr_double_t frequency) {
+
+  // fetch computed operating points
+  nr_double_t Cbe  = getOperatingPoint ("Cbe");
+  nr_double_t gbe  = getOperatingPoint ("gpi");
+  nr_double_t Cbci = getOperatingPoint ("Cbci");
+  nr_double_t Cbcx = getOperatingPoint ("Cbcx");
+  nr_double_t gbc  = getOperatingPoint ("gmu");
+  nr_double_t Ccs  = getOperatingPoint ("Ccs");
+  nr_double_t gmf  = getOperatingPoint ("gmf");
+  nr_double_t gmr  = getOperatingPoint ("gmr");
+  nr_double_t Rbb  = getOperatingPoint ("Rbb");
+
+  // summarize internal and external base-collector capacitance
+  if (Rbb == 0) Cbci += Cbcx;
+
+  // compute admittance matrix entries
+  complex Ybe = rect (gbe, 2.0 * M_PI * frequency * Cbe);
+  complex Ybc = rect (gbc, 2.0 * M_PI * frequency * Cbci);
+  complex Ycs = rect (0.0, 2.0 * M_PI * frequency * Ccs);
+
+  // build admittance matrix and convert it to S-parameter matrix
+  matrix y = matrix (4);
+  y.set (NODE_B, NODE_B, Ybc + Ybe);
+  y.set (NODE_B, NODE_C, -Ybc);
+  y.set (NODE_B, NODE_E, -Ybe);
+  y.set (NODE_B, NODE_S, 0);
+  y.set (NODE_C, NODE_B, -Ybc + gmf - gmr);
+  y.set (NODE_C, NODE_C, Ybc + gmr + Ycs);
+  y.set (NODE_C, NODE_E, -gmf);
+  y.set (NODE_C, NODE_S, -Ycs);
+  y.set (NODE_E, NODE_B, -Ybe - gmf + gmr);
+  y.set (NODE_E, NODE_C, -gmr);
+  y.set (NODE_E, NODE_E, Ybe + gmf);
+  y.set (NODE_E, NODE_S, 0);
+  y.set (NODE_S, NODE_B, 0);
+  y.set (NODE_S, NODE_C, -Ycs);
+  y.set (NODE_S, NODE_E, 0);
+  y.set (NODE_S, NODE_S, Ycs);
+  copyMatrixS (ytos (y));
 }
 
 void bjt::initDC (dcsolver * solver) {
@@ -68,37 +108,57 @@ void bjt::initDC (dcsolver * solver) {
   setV (NODE_S, 0.0);
   UbePrev = real (getV (NODE_B) - getV (NODE_E));
   UbcPrev = real (getV (NODE_B) - getV (NODE_C));
+  subnet = solver->getNet ();
+
+  // disable additional base-collector capacitance
+  if (enabled) {
+    disableCapacitance (this, cbcx, subnet);
+    enabled = 0;
+  }
 
   // possibly insert series resistance at emitter
   nr_double_t Re = getPropertyDouble ("Re");
   if (Re != 0) {
     // create additional circuit if necessary and reassign nodes
-    re = splitResistance (this, re, solver->getNet (),
-			  "Re", "emitter", NODE_E);
-    applyResistance (re, Re);
+    re = splitResistance (this, re, subnet, "Re", "emitter", NODE_E);
+    re->setProperty ("R", Re);
+    re->setProperty ("Temp", 26.85);
   }
   // no series resistance at emitter
   else {
-    disableResistance (this, re, solver->getNet (), NODE_E);
+    disableResistance (this, re, subnet, NODE_E);
   }
 
   // possibly insert series resistance at collector
   nr_double_t Rc = getPropertyDouble ("Rc");
   if (Rc != 0) {
     // create additional circuit if necessary and reassign nodes
-    rc = splitResistance (this, rc, solver->getNet (), "Rc", "drain", NODE_C);
-    applyResistance (rc, Rc);
+    rc = splitResistance (this, rc, subnet, "Rc", "collector", NODE_C);
+    rc->setProperty ("R", Rc);
+    rc->setProperty ("Temp", 26.85);
   }
   // no series resistance at collector
   else {
-    disableResistance (this, rc, solver->getNet (), NODE_C);
+    disableResistance (this, rc, subnet, NODE_C);
   }
 
-  // insert base series resistance
-  nr_double_t Rb = getPropertyDouble ("Rbm");
-  // create additional circuit and reassign nodes
-  rb = splitResistance (this, rb, solver->getNet (), "Rbb", "base", NODE_B);
-  applyResistance (rb, Rb);
+  // possibly insert base series resistance
+  nr_double_t Rb  = getPropertyDouble ("Rb");
+  nr_double_t Rbm = getPropertyDouble ("Rbm");
+  if (Rbm == 0) Rbm = Rb; // Rbm defaults to Rb if zero
+  if (Rb < Rbm) Rbm = Rb; // Rbm must be less or equal Rb
+  setProperty ("Rbm", Rbm);
+  if (Rbm != 0) {
+    // create additional circuit and reassign nodes
+    rb = splitResistance (this, rb, subnet, "Rbb", "base", NODE_B);
+    rb->setProperty ("Temp", 26.85);
+    rb->setProperty ("R", Rb);
+  }
+  // no series resistance at base
+  else {
+    disableResistance (this, rb, subnet, NODE_B);
+    Rbb = 0; // set this operating point
+  }
 }
 
 void bjt::calcDC (void) {
@@ -132,14 +192,14 @@ void bjt::calcDC (void) {
   Vaf = Vaf > 0 ? 1.0 / Vaf : 0;
   Var = Var > 0 ? 1.0 / Var : 0;
 
-  T = -K + 26.5;
+  T = -K + 26.85;
   Ut = T * kB / Q;
   Ube = real (getV (NODE_B) - getV (NODE_E));
   Ubc = real (getV (NODE_B) - getV (NODE_C));
 
   // critical voltage necessary for bad start values
-  UbeCrit = Nf * Ut * log (Nf * Ut / M_SQRT2 / Is);
-  UbcCrit = Nr * Ut * log (Nr * Ut / M_SQRT2 / Is);
+  UbeCrit = pnCriticalVoltage (Is, Nf * Ut);
+  UbcCrit = pnCriticalVoltage (Is, Nr * Ut);
   UbePrev = Ube = pnVoltage (Ube, UbePrev, Ut * Nf, UbeCrit);
   UbcPrev = Ubc = pnVoltage (Ubc, UbcPrev, Ut * Nr, UbcCrit);
 
@@ -149,7 +209,8 @@ void bjt::calcDC (void) {
   gtiny = Ube < - 10 * Ut * Nf ? (Is + Ise) : 0;
   If = pnCurrent (Ube, Is, Ut * Nf);
   Ibei = If / Bf;
-  gbei = pnConductance (Ube, Is, Ut * Nf) / Bf;
+  gif = pnConductance (Ube, Is, Ut * Nf);
+  gbei = gif / Bf;
   Iben = pnCurrent (Ube, Ise, Ut * Ne);
   gben = pnConductance (Ube, Ise, Ut * Ne);
   Ibe = Ibei + Iben + gtiny * Ube;
@@ -159,19 +220,17 @@ void bjt::calcDC (void) {
   gtiny = Ubc < - 10 * Ut * Nr ? (Is + Isc) : 0;
   Ir = pnCurrent (Ubc, Is, Ut * Nr);
   Ibci = Ir / Br;
-  gbci = pnConductance (Ubc, Is, Ut * Nr) / Br;
+  gir = pnConductance (Ubc, Is, Ut * Nr);
+  gbci = gir / Br;
   Ibcn = pnCurrent (Ubc, Isc, Ut * Nc);
   gbcn = pnConductance (Ubc, Isc, Ut * Nc);
   Ibc = Ibci + Ibcn + gtiny * Ubc;
   gbc = gbci + gbcn + gtiny;
 
-  gif = gbei * Bf;
-  gir = gbci * Br;
-
   // compute base charge quantities
   Q1 = 1 / (1 - Ubc * Vaf - Ube * Var);
   Q2 = If * Ikf + Ir * Ikr;
-  nr_double_t SArg = 1 + 4 * Q2;
+  nr_double_t SArg = 1.0 + 4.0 * Q2;
   nr_double_t Sqrt = SArg > 0 ? sqrt (SArg) : 1;
   Qb = Q1 * (1 + Sqrt) / 2;
   dQbdUbe = Q1 * (Qb * Var + gif * Ikf / Sqrt);
@@ -187,19 +246,23 @@ void bjt::calcDC (void) {
   // compute old SPICE values
   go = (gir + It * dQbdUbc) / Qb;
   gm = (gif - It * dQbdUbe) / Qb - go;
+  setOperatingPoint ("gm", gm);
+  setOperatingPoint ("go", go);
 
   // calculate current-dependent base resistance
-  if (Irb != 0) {
-    nr_double_t a, b, z;
-    a = (Ibci + Ibcn + Ibei + Iben) / Irb;
-    z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
-    b = tan (z);
-    Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
+  if (Rbm != 0) {
+    if (Irb != 0) {
+      nr_double_t a, b, z;
+      a = (Ibci + Ibcn + Ibei + Iben) / Irb;
+      z = (sqrt (1 + 144 / sqr (M_PI) * a) - 1) / 24 * sqr (M_PI) / sqrt (a);
+      b = tan (z);
+      Rbb = Rbm + 3 * (Rb - Rbm) * (b - z) / z / sqr (b);
+    }
+    else {
+      Rbb = Rbm + (Rb - Rbm) / Qb;
+    }
+    rb->setProperty ("R", Rbb);
   }
-  else {
-    Rbb = Rbm + (Rb - Rbm) / Qb;
-  }
-  applyResistance (rb, Rbb);
 
   // compute autonomic current sources
   IeqB = Ibe - gbe * Ube;
@@ -313,4 +376,19 @@ void bjt::calcOperatingPoints (void) {
   setOperatingPoint ("Vbc", Ubc);
   setOperatingPoint ("Vce", Ube - Ubc);
   setOperatingPoint ("Rbb", Rbb);
+
+  /* if necessary then insert external capacitance between internal
+     collector node and external base node */
+  if (Rbb != 0 && Cbcx != 0) {
+    if (!enabled) {
+      cbcx = splitCapacitance (this, cbcx, subnet, "Cbcx", rb->getNode (1),
+			       getNode (NODE_C));
+      enabled = 1;
+    }
+    cbcx->setProperty ("C", Cbcx);
+  }
+  else {
+    disableCapacitance (this, cbcx, subnet);
+    enabled = 0;
+  }
 }
