@@ -149,14 +149,6 @@
         <translation>Simulation:</translation>
     </message>
     <message>
-        <source>frequency</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>time</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Sweep Parameter:</source>
         <translation>Durchlaufparameter:</translation>
     </message>
@@ -203,6 +195,10 @@
     <message>
         <source>Properties</source>
         <translation>Eigenschaften</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation>Punkte pro Dekade:</translation>
     </message>
 </context>
 <context>

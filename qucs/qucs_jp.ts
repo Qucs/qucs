@@ -138,67 +138,71 @@
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>スイープ</translation>
     </message>
     <message>
         <source>Simulation:</source>
-        <translation type="unfinished"></translation>
+        <translation>シミュレーション:</translation>
     </message>
     <message>
         <source>frequency</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">周波数</translation>
     </message>
     <message>
         <source>time</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">時間</translation>
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>スイープパラメータ:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>タイプ:</translation>
     </message>
     <message>
         <source>linear</source>
-        <translation type="unfinished"></translation>
+        <translation>リニア</translation>
     </message>
     <message>
         <source>logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation>ログ</translation>
     </message>
     <message>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>リスト</translation>
     </message>
     <message>
         <source>constant</source>
-        <translation type="unfinished"></translation>
+        <translation>コンスタント</translation>
     </message>
     <message>
         <source>Values:</source>
-        <translation type="unfinished"></translation>
+        <translation>値:</translation>
     </message>
     <message>
         <source>Start:</source>
-        <translation type="unfinished"></translation>
+        <translation>スタート:</translation>
     </message>
     <message>
         <source>Stop:</source>
-        <translation type="unfinished"></translation>
+        <translation>ストップ:</translation>
     </message>
     <message>
         <source>Step:</source>
-        <translation type="unfinished"></translation>
+        <translation>ステップ:</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>ステップ数:</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished">プロパティー</translation>
+        <translation>プロパティー</translation>
+    </message>
+    <message>
+        <source>Points per decade:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -345,95 +349,95 @@
     </message>
     <message>
         <source>y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y軸:</translation>
     </message>
     <message>
         <source>smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>スミス軸</translation>
     </message>
     <message>
         <source>polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>極座標</translation>
     </message>
     <message>
         <source>left Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>左軸</translation>
     </message>
     <message>
         <source>right Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>右軸</translation>
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>左のY軸ラベル:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>右のY軸ラベル:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>対数 Y軸グリッド(左)</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>対数 Y軸グリッド(右)</translation>
     </message>
     <message>
         <source>x-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X軸</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation type="unfinished"></translation>
+        <translation>マニュアル</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>スタート</translation>
     </message>
     <message>
         <source>step</source>
-        <translation type="unfinished"></translation>
+        <translation>ステップ</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation type="unfinished"></translation>
+        <translation>ストップ</translation>
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>スミス軸</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>極座標</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>左 Y軸</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>右 Y軸</translation>
     </message>
     <message>
         <source>Limits</source>
-        <translation type="unfinished"></translation>
+        <translation>リミット</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>数</translation>
     </message>
     <message>
         <source>stars</source>
-        <translation type="unfinished"></translation>
+        <translation>星</translation>
     </message>
     <message>
         <source>circles</source>
-        <translation type="unfinished"></translation>
+        <translation>円</translation>
     </message>
     <message>
         <source>arrows</source>
-        <translation type="unfinished"></translation>
+        <translation>矢</translation>
     </message>
 </context>
 <context>
@@ -609,31 +613,31 @@
     <name>LabelDialog</name>
     <message>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>さらに...</translation>
     </message>
     <message>
         <source>Less...</source>
-        <translation type="unfinished"></translation>
+        <translation>省略...</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
-        <translation type="unfinished">ノード名追加</translation>
+        <translation>ノード名追加</translation>
     </message>
     <message>
         <source>Enter the label:</source>
-        <translation type="unfinished">ラベル入力 :</translation>
+        <translation>ラベル入力 :</translation>
     </message>
     <message>
         <source>Initial node voltage:</source>
-        <translation type="unfinished"></translation>
+        <translation>初期ノード電圧:</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -702,23 +706,23 @@
     <name>NewProjDialog</name>
     <message>
         <source>Create new project</source>
-        <translation type="unfinished">新規プロジェクトを作成</translation>
+        <translation>新規プロジェクトを作成</translation>
     </message>
     <message>
         <source>Project name:</source>
-        <translation type="unfinished">プロジェクト名:</translation>
+        <translation>プロジェクト名:</translation>
     </message>
     <message>
         <source>open new project</source>
-        <translation type="unfinished">新しいプロジェクトを開く</translation>
+        <translation>新しいプロジェクトを開く</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">作成</translation>
+        <translation>作成</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -957,15 +961,15 @@ Unknown field!</source>
     </message>
     <message>
         <source>frequency exponent</source>
-        <translation type="unfinished">周波数 指数</translation>
+        <translation>周波数 指数</translation>
     </message>
     <message>
         <source>frequency coefficient</source>
-        <translation type="unfinished">周波数 係数</translation>
+        <translation>周波数 係数</translation>
     </message>
     <message>
         <source>additive frequency term</source>
-        <translation type="unfinished">周波数付加</translation>
+        <translation>周波数付加</translation>
     </message>
     <message>
         <source>Noise Current Source</source>
@@ -1061,31 +1065,31 @@ Unknown field!</source>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished">ベース抵抗中点時の電流</translation>
+        <translation>ベース抵抗中点時の電流</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished">コレクタ抵抗</translation>
+        <translation>コレクタ抵抗</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished">エミッタ抵抗</translation>
+        <translation>エミッタ抵抗</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished">ゼロバイアス ベース抵抗 (恐らく大電流に依存)</translation>
+        <translation>ゼロバイアス ベース抵抗 (恐らく大電流に依存)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation type="unfinished">ベースエミッタ間 ゼロバイアス 空乏容量</translation>
+        <translation>ベースエミッタ間 ゼロバイアス 空乏容量</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation type="unfinished">ベースエミッタ間 電位</translation>
+        <translation>ベースエミッタ間 電位</translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
@@ -1109,11 +1113,11 @@ Unknown field!</source>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>substrate junction exponential factor</source>
@@ -1571,11 +1575,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>MOS field-effect transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>MOS-FET</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>ゼロバイアス スレッショルド電圧</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
@@ -1591,15 +1595,15 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>drain ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ドレイン抵抗</translation>
     </message>
     <message>
         <source>source ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ソース抵抗</translation>
     </message>
     <message>
         <source>gate ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲート抵抗</translation>
     </message>
     <message>
         <source>bulk junction saturation current</source>
@@ -1611,11 +1615,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>channel width</source>
-        <translation type="unfinished"></translation>
+        <translation>チャネル幅</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation type="unfinished"></translation>
+        <translation>チャネル長</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
@@ -1723,11 +1727,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>n-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>p-MOSFET</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>depletion MOSFET</source>
@@ -1811,7 +1815,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">マイクロストリップモデル</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
@@ -1923,7 +1927,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ac power source</source>
-        <translation></translation>
+        <translation>交流電力源</translation>
     </message>
     <message>
         <source>number of the port</source>
@@ -2119,7 +2123,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage transformation ratio</source>
-        <translation></translation>
+        <translation>電圧変換比</translation>
     </message>
     <message>
         <source>Transformer</source>
@@ -2195,19 +2199,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧パルス</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>矩形電圧源</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>HI信号電圧</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>矩形電圧</translation>
     </message>
     <message>
         <source>Create new project</source>
@@ -2264,35 +2268,35 @@ Usage:  qucsedit [-r] file
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished">Too long command line argument!</translation>
+        <translation>コマンドラインの引数が長すぎます!</translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドラインの引数が不正です!</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>一つのファイルネームのみ許可されています!</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>不正なドキュメントタイプ:</translation>
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>理想アンプ</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>電圧ゲイン</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>アンプ</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
@@ -2300,27 +2304,27 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップ ビア</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>ビアの直径</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクロストリップ ビア</translation>
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>オペアンプ</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>最大最小出力電圧限界値</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>オペアンプ</translation>
     </message>
     <message>
         <source>Insert Nodename</source>
@@ -2336,23 +2340,23 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICEネットリストファイル</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>spice</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICEネットリスト</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>変数無し</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>データ無し</translation>
     </message>
 </context>
 <context>
@@ -2910,23 +2914,23 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>アドミッタンスチャート</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>極座標-スミス混合</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>スミス-極座標混合</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICEネットリスト</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>プロパティ編集</translation>
     </message>
 </context>
 <context>
@@ -4156,21 +4160,21 @@ Qt universal circuit simulator
     <message>
         <source>French by Vincent Habchi, F5RCS
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki ISHIKAWA
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Italian by Giorgio Luparia
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Hungarian by Jozsef Bus</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
