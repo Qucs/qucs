@@ -1,7 +1,7 @@
 /*
- * tee.cpp - tee connector class implementation
+ * mscross.cpp - microstrip cross-junction class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tee.cpp,v 1.5 2004-09-26 13:31:36 ela Exp $
+ * $Id: mscross.cpp,v 1.1 2004-09-26 13:31:37 ela Exp $
  *
  */
 
@@ -34,27 +34,38 @@
 #include "node.h"
 #include "circuit.h"
 #include "component_id.h"
-#include "tee.h"
+#include "mscross.h"
 
-tee::tee () : circuit (3) {
-  setS (1, 1, -1.0 / 3.0);
-  setS (1, 2,  2.0 / 3.0);
-  setS (1, 3,  2.0 / 3.0);
-  setS (2, 1,  2.0 / 3.0);
-  setS (2, 2, -1.0 / 3.0);
-  setS (2, 3,  2.0 / 3.0);
-  setS (3, 1,  2.0 / 3.0);
-  setS (3, 2,  2.0 / 3.0);
-  setS (3, 3, -1.0 / 3.0);
-  type = CIR_TEE;
+mscross::mscross () : circuit (4) {
+  type = CIR_MSCROSS;
 }
 
-void tee::initDC (void) {
-  setVoltageSources (2);
+void mscross::initSP (void) {
+  setS (1, 1, -1.0 / 2.0);
+  setS (1, 2,  1.0 / 2.0);
+  setS (1, 3,  1.0 / 2.0);
+  setS (1, 4,  1.0 / 2.0);
+  setS (2, 1,  1.0 / 2.0);
+  setS (2, 2, -1.0 / 2.0);
+  setS (2, 3,  1.0 / 2.0);
+  setS (2, 4,  1.0 / 2.0);
+  setS (3, 1,  1.0 / 2.0);
+  setS (3, 2,  1.0 / 2.0);
+  setS (3, 3, -1.0 / 2.0);
+  setS (3, 4,  1.0 / 2.0);
+  setS (4, 1,  1.0 / 2.0);
+  setS (4, 2,  1.0 / 2.0);
+  setS (4, 3,  1.0 / 2.0);
+  setS (4, 4, -1.0 / 2.0);
+}
+
+void mscross::initDC (void) {
+  setVoltageSources (3);
   voltageSource (1, 1, 2);
   voltageSource (2, 1, 3);
+  voltageSource (3, 1, 4);
 }
 
-void tee::initAC (void) {
+void mscross::initAC (void) {
   initDC ();
 }

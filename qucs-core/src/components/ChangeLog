@@ -1,5 +1,13 @@
 2004-09-26  Stefan Jahn  <stefan@lkcc.org>
 
+	* cross.cpp, tee.cpp: Implemented AC and DC functionality.
+
+	* microstrip/mscross.h (class mscross): New class implementing
+	an ideal cross-junction for now.
+
+	* microstrip/mstee.h (class mstee): New class implementing
+	an ideal t-junction for now.
+
 	* microstrip/mscoupled.cpp: Fixed bug in S-parameter
 	computation and implemented preliminary AC functionality.
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.56 2004-09-20 10:09:54 ela Exp $
+ * $Id: check_netlist.cpp,v 1.57 2004-09-26 13:31:36 ela Exp $
  *
  */
 
@@ -463,6 +463,25 @@ struct define_t definition_available[] =
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
+  /* microstrip t-junction */
+  { "MTEE", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W2", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W3", PROP_REAL, { 2e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
+  /* microstrip cross-junction */
+  { "MCROSS", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W1", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W2", PROP_REAL, { 2e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W3", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "W4", PROP_REAL, { 2e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { PROP_NO_PROP }
+  },
 
   /* s-parameter analysis */
   { "SP", 0, PROP_ACTION, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -545,7 +564,8 @@ struct define_t definition_available[] =
 
 // List of available microstrip components.
 static char * strip_available[] = {
-  "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", "MCOUPLED", NULL };
+  "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", "MCOUPLED", "MTEE",
+  "MCROSS", NULL };
 
 /* The function counts the nodes in a definition line. */
 static int checker_count_nodes (struct definition_t * def) {
