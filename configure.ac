@@ -170,6 +170,9 @@ fi
 AC_SUBST(QT_LDFLAGS)
 AC_LANG(C)
 
+# Check for additional header files.
+AC_CHECK_HEADERS([ieeefp.h])
+
 # Check for path transformation.
 case $build_os in
 mingw* | cygwin*)

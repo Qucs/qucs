@@ -60,9 +60,9 @@ void RectDiagram::calcCoordinate(double x, double yr, double yi,
 // --------------------------------------------------------------
 bool RectDiagram::calcDiagram()
 {
-  Lines.clear();
-  Texts.clear();
-  Arcs.clear();
+  if(!Lines.isEmpty()) Lines.clear();
+  if(!Texts.isEmpty()) Texts.clear();
+  if(!Arcs.isEmpty()) Arcs.clear();
 
   if(fabs(xmax-xmin) < 1e-200) { xmax += fabs(xmax); xmin -= fabs(xmin); }
   if(fabs(ymax-ymin) < 1e-200) { ymax += fabs(ymax); ymin -= fabs(ymin); }
