@@ -79,7 +79,7 @@ void EllipseArc::setCenter(int x, int y, bool relative)
 }
 
 // --------------------------------------------------------------------------
-EllipseArc* EllipseArc::newOne()
+Painting* EllipseArc::newOne()
 {
   return new EllipseArc();
 }

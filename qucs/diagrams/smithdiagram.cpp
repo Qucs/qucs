@@ -82,7 +82,7 @@ int SmithDiagram::calcDiagram()
 }
 
 // ------------------------------------------------------------
-SmithDiagram* SmithDiagram::newOne()
+Diagram* SmithDiagram::newOne()
 {
   return new SmithDiagram();
 }

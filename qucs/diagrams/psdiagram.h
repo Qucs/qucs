@@ -32,7 +32,7 @@ public:
   ~PSDiagram();
 
 
-  PSDiagram* newOne();
+  Diagram* newOne();
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(double* &, double* &, int*, int*, Axis*);

@@ -26,11 +26,11 @@ class QVBoxLayout;
   *@author Michael Margraf
   */
 
-class MessageBox : public QDialog  {
+class CloseMessageBox : public QDialog  {
 Q_OBJECT
 public:
-	MessageBox(const QString& Caption, const QString& Text, QWidget *parent=0, const char *name=0);
-	~MessageBox();
+	CloseMessageBox(const QString& Caption, const QString& Text, QWidget *parent=0, const char *name=0);
+	~CloseMessageBox();
 
 private slots:
   void slotSave();

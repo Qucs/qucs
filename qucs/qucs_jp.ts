@@ -55,6 +55,29 @@
     </message>
 </context>
 <context>
+    <name>CloseMessageBox</name>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <source>Save all</source>
+        <translation type="unfinished">全て保存</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished">破棄</translation>
+    </message>
+    <message>
+        <source>Discard all</source>
+        <translation type="unfinished">全て破棄</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+</context>
+<context>
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
@@ -683,23 +706,23 @@
     <name>MessageBox</name>
     <message>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation type="obsolete">保存</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation>全て保存</translation>
+        <translation type="obsolete">全て保存</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation>破棄</translation>
+        <translation type="obsolete">破棄</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation>全て破棄</translation>
+        <translation type="obsolete">全て破棄</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation type="obsolete">キャンセル</translation>
     </message>
 </context>
 <context>
@@ -4196,6 +4219,11 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hebrew by Dotan Nahum
 </source>
         <translation type="unfinished"></translation>
     </message>
