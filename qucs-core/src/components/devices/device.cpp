@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.11 2004-10-17 09:44:30 ela Exp $
+ * $Id: device.cpp,v 1.12 2004-10-18 16:21:21 ela Exp $
  *
  */
 
@@ -286,22 +286,21 @@ void fetCapacitanceMeyer (nr_double_t Ugs, nr_double_t Ugd, nr_double_t Uth,
     Cgb = -Utst * Cox / Phi;
     Cgs = 0;
     Cgd = 0;
-  } else if (Utst <= 0) {
+  } else if (Utst <= 0) { // depletion region
     Cgb = -Utst * Cox / Phi;
     Cgs = Utst * Cox * 4 / 3 / Phi + 2 * Cox / 3;
     Cgd = 0;
-  } else  {
+  } else {
+    Cgb = 0;
     nr_double_t Uds = Ugs - Ugd;
     if (Udsat <= Uds) { // saturation region
       Cgs = 2 * Cox / 3;
       Cgd = 0;
-      Cgb = 0;
     } else { // linear region
       nr_double_t Sqr1 = sqr (Udsat - Uds);
       nr_double_t Sqr2 = sqr (2 * Udsat - Uds);
-      Cgd = Cox * (1 - Udsat * Udsat / Sqr2) * 2 / 3;
       Cgs = Cox * (1 - Sqr1 / Sqr2) * 2 / 3;
-      Cgb = 0;
+      Cgd = Cox * (1 - Udsat * Udsat / Sqr2) * 2 / 3;
     }
   }
 }

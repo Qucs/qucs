@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.19 2004-10-14 13:28:25 ela Exp $
+ * $Id: nasolver.cpp,v 1.20 2004-10-18 16:21:21 ela Exp $
  *
  */
 
@@ -621,7 +621,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
     v_abs = abs (x->get (r) - xprev->get (r));
     v_rel = abs (x->get (r));
     if (v_abs >= vntol + reltol * v_rel) return 0;
-    if (!linesearch) {
+    if (!linesearch && !attenuation) {
       i_abs = abs (z->get (r) - zprev->get (r));
       i_rel = abs (z->get (r));
       if (i_abs >= abstol + reltol * i_rel) return 0;
@@ -631,7 +631,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
     i_abs = abs (x->get (r + N) - xprev->get (r + N));
     i_rel = abs (x->get (r + N));
     if (i_abs >= abstol + reltol * i_rel) return 0;
-    if (!linesearch) {
+    if (!linesearch && !attenuation) {
       v_abs = abs (z->get (r + N) - zprev->get (r + N));
       v_rel = abs (z->get (r + N));
       if (v_abs >= vntol + reltol * v_rel) return 0;

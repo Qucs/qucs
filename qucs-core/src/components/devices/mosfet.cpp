@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.14 2004-10-17 09:44:30 ela Exp $
+ * $Id: mosfet.cpp,v 1.15 2004-10-18 16:21:21 ela Exp $
  *
  */
 
@@ -604,11 +604,13 @@ void mosfet::calcTR (nr_double_t) {
   transientCapacitance (qbdState, NODE_B, NODE_D, Cbd, Ubd, Qbd);
   transientCapacitance (qbsState, NODE_B, NODE_S, Cbs, Ubs, Qbs);
 
-  // handle Meyer charges and capacitances
+#if 0
+  // TODO: approximate charges by trapezoidal rule
   Qgd = Cgd * (Ugd - UgdPrev) + getState (qgdState, 1);
   Qgs = Cgs * (Ugs - UgsPrev) + getState (qgsState, 1);
   Qgb = Cgb * (Ugb - UgbPrev) + getState (qgbState, 1);
-  // TODO: not yet correct
+#endif
+  // handle Meyer charges and capacitances
   Qgd = Cgd * Ugd;
   Qgs = Cgs * Ugs;
   Qgb = Cgb * Ugb;
