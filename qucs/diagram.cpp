@@ -58,12 +58,47 @@ void Diagram::paint(QPainter *p)
     p->drawArc(cx+pa->x, cy-pa->y, pa->w, pa->h, pa->angle, pa->arclen);
   }
 
-  if(Name[0] != 'T')   // no graph within tabulars
-    for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
-      pg->paint(p, cx, cy);
+  if(Name[0] != 'T') {   // no graph within tabulars
+    Graph *pg;
+    QRect r;
+    int delta=20;
 
+    if(xLabel.isEmpty())
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {   // draw all graphs
+        pg->paint(p, cx, cy);
+        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,pg->IndepVar);    // get width of text
+        p->drawText(cx+((x2-r.width())>>1), cy+delta, pg->IndepVar);
+        delta += r.height();
+      }
+    else {
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next())   // draw all graphs
+        pg->paint(p, cx, cy);
+      r = p->boundingRect(0,0,0,0,Qt::AlignAuto,xLabel);    // get width of text
+      p->setPen(QColor(0,0,0));
+      p->drawText(cx+((x2-r.width())>>1), cy+delta, xLabel);
+    }
+
+    delta = 10;
+    p->save();
+    p->rotate(270);
+    if(yLabel.isEmpty()) {
+      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {   // draw y-label for all graphs
+        p->setPen(pg->Color);
+        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,pg->Line);    // get width of text
+        p->drawText(-cy+((y2-r.width())>>1), cx-delta, pg->Line);
+        delta += r.height();
+      }
+    }
+    else {
+        r = p->boundingRect(0,0,0,0,Qt::AlignAuto,yLabel);    // get width of text
+        p->setPen(QColor(0,0,0));
+        p->drawText(-cy+((y2-r.width())>>1), cx-delta, yLabel);
+    }
+    p->restore();
+  }
+  
   p->setPen(QPen(QPen::black,1));
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())    // write whole text
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())      // write whole text
     p->drawText(cx+pt->x, cy-pt->y, pt->s);
 
   if(isSelected) {
@@ -106,11 +141,12 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet);    // load data and determine max and min values
 //QMessageBox::critical(0, "Error", QString::number(xmin)+"  "+QString::number(xmax)+" * "+QString::number(ymin)+"  "+QString::number(ymax));
+//QMessageBox::critical(0, "Error", Name);
+
+  calcDiagram();
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     calcData(pg);   // calculate graph coordinates
-
-  calcDiagram();
 }
 
 // --------------------------------------------------------------------------
@@ -278,7 +314,7 @@ QString Diagram::save()
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   if(GridOn) s+= "1 ";
   else s += "0 ";
-  s += QString::number(GridX)+" "+QString::number(GridY)+">\n";
+  s += QString::number(GridX)+" "+QString::number(GridY) + " \""+xLabel+"\" \""+yLabel+"\">\n";
 
   for(Graph *p=Graphs.first(); p!=0; p=Graphs.next())
     s += p->save()+"\n";
@@ -326,6 +362,9 @@ bool Diagram::load(const QString& Line, QTextStream *stream)
   n  = s.section(' ',7,7);    // GridY
   GridY = n.toInt(&ok);
   if(!ok) return false;
+
+  xLabel = s.section('"',1,1);    // xLabel
+  yLabel = s.section('"',3,3);    // yLabel
 
   // .......................................................
   // load graphs of the diagram

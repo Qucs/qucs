@@ -27,6 +27,8 @@
 #include <qmessagebox.h>
 #include <qptrlist.h>
 #include <qpoint.h>
+#include <qvalidator.h>
+#include <qcolordialog.h>
 
 
 // standard colors: blue, red, magenta, green, cyan, yellow, black (white is only a dummy)
@@ -41,6 +43,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   defaultDataSet = _DataSet;
   setCaption("Edit Diagram Properties");
   changed = false;
+  toTake = false;   // should double-clicked variable be inserted immediately into the graph list ?
 //  setFixedSize(QSize(400, 400));
 //  setMinimumSize(QSize(400, 400));
   
@@ -51,6 +54,22 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   // ...........................................................
   QVBox *Tab1 = new QVBox(this);
   Tab1->setSpacing(5);
+
+  QVButtonGroup *InputGroup = new QVButtonGroup("Graph Input", Tab1);
+  GraphInput = new QLineEdit(InputGroup);
+  connect(GraphInput, SIGNAL(textChanged(const QString&)), SLOT(slotResetToTake(const QString&)));
+  QHBox *Box2 = new QHBox(InputGroup);
+  Box2->setSpacing(5);
+  QLabel *l3 = new QLabel("Color:",Box2);
+  ColorButt = new QPushButton("        ",Box2);
+  connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
+  QLabel *l4 = new QLabel("       Thickness:",Box2);
+  Expr.setPattern("[0-9]{1}");  // valid expression for property input
+  QValidator *Validator = new QRegExpValidator(Expr, this);
+  GraphThick = new QLineEdit(Box2);
+  GraphThick->setValidator(Validator);
+  GraphThick->setMaximumWidth(20);
+  GraphThick->setText("1");
 
   QHBox *Box1 = new QHBox(Tab1);
   Box1->setSpacing(5);
@@ -71,16 +90,13 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
 
   QVButtonGroup *GraphGroup = new QVButtonGroup("Graph", Box1);
   GraphList = new QListBox(GraphGroup);
-  connect(GraphList, SIGNAL(highlighted(int)), SLOT(slotSelectGraph(int)));
+  connect(GraphList, SIGNAL(clicked(QListBoxItem*)), SLOT(slotSelectGraph(QListBoxItem*)));
   QPushButton *NewButt = new QPushButton("New Graph", GraphGroup);
   connect(NewButt, SIGNAL(clicked()), SLOT(slotNewGraph()));
   QPushButton *DelButt = new QPushButton("Delete Graph", GraphGroup);
   connect(DelButt, SIGNAL(clicked()), SLOT(slotDeleteGraph()));
   QPushButton *AppButt = new QPushButton("Apply Graph Input", GraphGroup);
   connect(AppButt, SIGNAL(clicked()), SLOT(slotApplyGraphInput()));
-
-  QVButtonGroup *InputGroup = new QVButtonGroup("Graph Input", Tab1);
-  GraphInput = new QLineEdit(InputGroup);
 
   t->addTab(Tab1, "Data");
 
@@ -134,6 +150,21 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *paren
   // put all graphs into the ListBox
   for(Graph *ptr1 = Diag->Graphs.first(); ptr1 != 0; ptr1 = Diag->Graphs.next())
     GraphList->insertItem(ptr1->Line);
+  ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+
+  // ...........................................................
+  // some differences between the different diagram types
+  if(Diag->Name == "Tab") {
+    ColorButt->setEnabled(false);
+    GraphThick->setEnabled(false);
+    l3->setEnabled(false);
+    l4->setEnabled(false);
+  }
+
+  // ...........................................................
+  // transfer the diagram properties to the dialog
+  xLabel->setText(Diag->xLabel);
+  yLabel->setText(Diag->yLabel);
 }
 
 DiagramDialog::~DiagramDialog()
@@ -171,43 +202,75 @@ void DiagramDialog::slotReadVars(int)
 
 // --------------------------------------------------------------------------
 // Inserts the double-clicked variable into the Graph Input Line at the cursor position.
+// If the Graph Input is empty, then the variable is also inserted as graph.
 void DiagramDialog::slotTakeVar(QListViewItem *Item)
 {
+  if(toTake) GraphInput->setText("");
+  
   int     i = GraphInput->cursorPosition();
   QString s = GraphInput->text();
   GraphInput->setText(s.left(i)+Item->text(0)+s.right(s.length()-i));
+
+  if(s.isEmpty()) {
+    GraphList->insertItem(GraphInput->text());
+    GraphList->setSelected(GraphList->count()-1,true);
+
+    Graph *g = new Graph(GraphInput->text());   // create a new graph
+    g->Color = ColorButt->paletteBackgroundColor();
+    g->Thick = GraphThick->text().toInt();
+    Diag->Graphs.append(g);
+
+    ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+    changed = true;
+    toTake  = true;
+  }
 }
 
 // --------------------------------------------------------------------------
 // Puts the text of the selected graph into the line edit.
-void DiagramDialog::slotSelectGraph(int index)
+void DiagramDialog::slotSelectGraph(QListBoxItem *item)
 {
+  if(item == 0) {
+    GraphList->clearSelection();
+    return;
+  }
+
+  int index = GraphList->index(item);
   GraphInput->setText(GraphList->text(index));
+  
+  Graph *g = Diag->Graphs.at(index);
+  GraphThick->setText(QString::number(g->Thick));
+  ColorButt->setPaletteBackgroundColor(g->Color);
+  toTake = false;
 }
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotApplyGraphInput()
 {
   if(GraphInput->text().isEmpty()) return;
-  if(GraphList->currentItem() == -1) {   // is item selected ?
+
+  Graph *g;
+  if(GraphList->selectedItem() == 0) {   // is item selected ?
     GraphList->insertItem(GraphInput->text());
 
-    int z=0;
-    Graph *g = Diag->Graphs.last();
-    if(g != 0) {
-      while(DefaultColors[z] != 0)  // find the next graph color
-        if(g->Color == QColor(DefaultColors[z++])) break;
-      if(DefaultColors[z] == 0) z = 0;
-    }
-
     g = new Graph(GraphInput->text());   // create a new graph
-    g->Color = QColor(DefaultColors[z]);
+    g->Color = ColorButt->paletteBackgroundColor();
+    g->Thick = GraphThick->text().toInt();
     Diag->Graphs.append(g);
   }
-  else  // change the selected graph
-    GraphList->changeItem(GraphInput->text(), GraphList->currentItem());
+  else {    // change the selected graph
+    int index = GraphList->index(GraphList->selectedItem());
+    g = Diag->Graphs.at(index);
+    g->Line = GraphInput->text();
+    g->Color = ColorButt->paletteBackgroundColor();
+    g->Thick = GraphThick->text().toInt();
 
-  GraphInput->setText("");  // erase input line
+    GraphList->changeItem(GraphInput->text(), index);   // must done after the graph settings !!!
+  }
+
+  GraphInput->setText("");  // erase input line and back to default values
+  ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+  GraphThick->setText("1");
   changed = true;
 }
 
@@ -215,12 +278,17 @@ void DiagramDialog::slotApplyGraphInput()
 // Is called when the 'delelte graph' button is pressed.
 void DiagramDialog::slotDeleteGraph()
 {
-  int i = GraphList->currentItem();
-  if(i == -1) return;   // return, if no item selected
+  int i = GraphList->index(GraphList->selectedItem());
+  if(i < 0) return;   // return, if no item selected
 
   GraphList->removeItem(i);
   Diag->Graphs.remove(i);
+
+  GraphInput->setText("");  // erase input line and back to default values
+  ColorButt->setPaletteBackgroundColor(QColor(DefaultColors[GraphList->count()]));
+  GraphThick->setText("1");
   changed = true;
+  toTake  = false;
 }
 
 // --------------------------------------------------------------------------
@@ -230,18 +298,12 @@ void DiagramDialog::slotNewGraph()
 
   GraphList->insertItem(GraphInput->text());
 
-  int z=0;
-  Graph *g = Diag->Graphs.last();
-  if(g != 0) {
-    while(DefaultColors[z] != 0)  // find the next graph color
-      if(g->Color == QColor(DefaultColors[z++])) break;
-    if(DefaultColors[z] == 0) z = 0;
-  }
-
-  g = new Graph(GraphInput->text());   // create a new graph
-  g->Color = QColor(DefaultColors[z]);
+  Graph *g = new Graph(GraphInput->text());   // create a new graph
+  g->Color = ColorButt->paletteBackgroundColor();
+  g->Thick = GraphThick->text().toInt();
   Diag->Graphs.append(g);
   changed = true;
+  toTake  = false;
 }
 
 // --------------------------------------------------------------------------
@@ -256,9 +318,32 @@ void DiagramDialog::slotOK()
 void DiagramDialog::slotApply()
 {
   Diag->loadGraphData(defaultDataSet);
+
+  if(Diag->xLabel != xLabel->text()) {
+    Diag->xLabel = xLabel->text();
+    changed = true;
+  }
+
+  if(Diag->yLabel != yLabel->text()) {
+    Diag->yLabel = yLabel->text();
+    changed = true;
+  }
 }
 
 // --------------------------------------------------------------------------
 void DiagramDialog::slotFuncHelp()
 {
+}
+
+// --------------------------------------------------------------------------
+void DiagramDialog::slotSetColor()
+{
+  QColor c = QColorDialog::getColor(ColorButt->paletteBackgroundColor(),this);
+  ColorButt->setPaletteBackgroundColor(c);
+}
+
+// --------------------------------------------------------------------------
+void DiagramDialog::slotResetToTake(const QString&)
+{
+  toTake = false;
 }

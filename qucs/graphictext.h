@@ -1,7 +1,7 @@
 /***************************************************************************
-                          smithdiagram.h  -  description
+                          graphictext.h  -  description
                              -------------------
-    begin                : Sat Oct 18 2003
+    begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : margraf@mwt.ee.tu-berlin.de
  ***************************************************************************/
@@ -15,25 +15,41 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SMITHDIAGRAM_H
-#define SMITHDIAGRAM_H
+#ifndef GRAPHICTEXT_H
+#define GRAPHICTEXT_H
 
-#include "diagram.h"
-
+#include <painting.h>
 
 /**
   *@author Michael Margraf
   */
 
-class SmithDiagram : public Diagram  {
+class GraphicText : public Painting  {
 public: 
-	SmithDiagram(int _cx=0, int _cy=0);
-	~SmithDiagram();
+	GraphicText();
+	~GraphicText();
 
+  virtual void paintScheme(QPainter*);
+  virtual void getCenter(int& x, int &y);
+  virtual void setCenter(int x, int y, bool relative=false);
 
-  virtual SmithDiagram* newOne();
-  virtual void calcData(Graph *g);
-  virtual void calcDiagram();
+  virtual GraphicText* newOne();
+  virtual bool load(const QString& s);
+  virtual QString save();
+  virtual void paint(QPainter *p);
+  virtual void MouseMoving(int x, int y, int, int, QPainter *p, bool drawn);
+  virtual bool MousePressing();
+  virtual bool getSelected(int x, int y);
+  virtual void Bounding(int&, int&, int&, int&);
+
+  virtual void rotate();
+  virtual void mirrorX();
+  virtual void mirrorY();
+  virtual bool Dialog();
+
+  QColor   Color;
+  int      Size;
+  QString  Text;
 };
 
 #endif

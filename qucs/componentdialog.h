@@ -26,6 +26,8 @@
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qregexp.h>
+#include <qcombobox.h>
+#include <qpushbutton.h>
 
 
 /**
@@ -44,16 +46,18 @@ private slots:
   void slotSelectProperty(QListViewItem *item);
   void slotApplyInput();
   void slotApplyState(int State);
+  void slotBrowseFile();
   
 private:
-  QRegExp   Expr;
-  QListView *prop;
-  QLineEdit *edit;
-  QLabel    *Name;
-  QCheckBox *disp;
-  QLabel    *Description;
-  Component *Comp;
-  bool      changed;
+  QRegExp     Expr;
+  QListView   *prop;
+  QLineEdit   *edit;
+  QComboBox   *ComboEdit;
+  QLabel      *Name, *Description;
+  QPushButton *BrowseButt;
+  QCheckBox   *disp;
+  Component   *Comp;
+  bool        changed;
 };
 
 #endif

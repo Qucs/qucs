@@ -25,7 +25,7 @@
   *@author Michael Margraf
   */
 
-enum ElementType {isDummy, isComponent, isWire, isDiagram};
+enum ElementType {isDummy, isComponent, isWire, isDiagram, isPainting};
   
 class Element {
 public: 
