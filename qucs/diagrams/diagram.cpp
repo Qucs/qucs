@@ -98,12 +98,12 @@ void Diagram::paint(ViewPainter *p)
     if(xAxis.Label.isEmpty()) {
       // write all x labels ----------------------------------------
       for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+	y += p->LineSpacing;
 	DataX *pD = pg->cPointsX.getFirst();
 	if(!pD) continue;
 	p->Painter->setPen(pg->Color);
 	s = p->Painter->fontMetrics().size(0, pD->Var);
 	p->Painter->drawText(x-(s.width()>>1), y, pD->Var);
-	y += p->LineSpacing;
       }
     }
     else {
@@ -564,14 +564,45 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   _x1 = cx-x1;
   _y1 = cy-y2;
-  _x2 = cx+x2;
+  _x2 = cx+x3;
   _y2 = cy+y1;
+
+  if(Name == "Tab") return;
+
+  bool xLabelHide=true, yLabelHide=true, zLabelHide=true;
+  QFontMetrics  metrics(QucsSettings.font);
+  if(!xAxis.Label.isEmpty()) {
+    xLabelHide = false;
+    _x1 -= metrics.lineSpacing();
+  }
+  if(!yAxis.Label.isEmpty()) {
+    yLabelHide = false;
+    _y2 += metrics.lineSpacing();
+  }
+  if(!zAxis.Label.isEmpty()) {
+    zLabelHide = false;
+    _x2 += metrics.lineSpacing();
+  }
+
+  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+
+    if(pg->yAxisNo == 0) {   // used with left axis ?
+      if(xLabelHide)
+        _x1 -= metrics.lineSpacing();   // expand bounding with text size
+    }
+    else {
+      if(zLabelHide)
+        _x2 += metrics.lineSpacing();
+    }
+    if(yLabelHide) _y2 += metrics.lineSpacing();
+
+  }
 }
 
 // -------------------------------------------------------
 bool Diagram::getSelected(int x_, int y_)
 {
-  if(x_ >= cx-x1) if(x_ <= cx+x2) if(y_ >= cy-y2) if(y_ <= cy+y1)
+  if(x_ >= cx-x1) if(x_ <= cx+x3) if(y_ >= cy-y2) if(y_ <= cy+y1)
     return true;
 
   return false;
