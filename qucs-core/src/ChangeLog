@@ -1,3 +1,9 @@
+2004-07-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Avoiding second singularity when two full
+	reflective ports get interconnected.  Done for both
+	S-parameter and noise analysis.
+
 2004-07-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Avoiding same singularity for noise matrices

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.7 2004-07-26 22:07:29 ela Exp $
+ * $Id: bjt.cpp,v 1.8 2004-07-28 17:09:44 ela Exp $
  *
  */
 
@@ -98,6 +98,39 @@ void bjt::calcSP (nr_double_t frequency) {
   y.set (NODE_S, NODE_E, 0);
   y.set (NODE_S, NODE_S, Ycs);
   setMatrixS (ytos (y));
+}
+
+void bjt::calcNoise (nr_double_t frequency) {
+
+  // fetch computed operating points
+  nr_double_t Ibe = getOperatingPoint ("Ibe");
+  nr_double_t Ice = getOperatingPoint ("Ice");
+
+  // get model properties
+  nr_double_t Kf  = getPropertyDouble ("Kf");
+  nr_double_t Af  = getPropertyDouble ("Af");
+  nr_double_t Ffe = getPropertyDouble ("Ffe");
+  nr_double_t Kb  = getPropertyDouble ("Kb");
+  nr_double_t Ab  = getPropertyDouble ("Ab");
+  nr_double_t Fb  = getPropertyDouble ("Fb");
+
+  nr_double_t ib = 2 * Ibe * QoverkB / T0 +            // shot noise
+    (Kf * pow (Ibe, Af) / pow (frequency, Ffe) +       // flicker noise
+     Kb * pow (Ibe, Ab) / (1 + sqr (frequency / Fb)))  // burst noise
+    / kB / T0;
+  nr_double_t ic = 2 * Ice * QoverkB / T0;             // shot noise
+
+  /* build noise current correlation matrix and convert it to
+     noise-wave correlation matrix */
+  matrix y = matrix (4);
+  y.set (NODE_B, NODE_B, ib);
+  y.set (NODE_B, NODE_E, -ib);
+  y.set (NODE_C, NODE_C, ic);
+  y.set (NODE_C, NODE_E, -ic);
+  y.set (NODE_E, NODE_B, -ib);
+  y.set (NODE_E, NODE_C, -ic);
+  y.set (NODE_E, NODE_E, ic + ib);
+  setMatrixN (cytocs (y * z0, getMatrixS ()));
 }
 
 void bjt::initDC (dcsolver * solver) {
@@ -188,7 +221,7 @@ void bjt::calcDC (void) {
   nr_double_t Irb  = getPropertyDouble ("Irb");
   nr_double_t T    = getPropertyDouble ("Temp");
 
-  nr_double_t Ut, Ube, Ubc, Ir, It, Q1, Q2, Ibe, Ibc;
+  nr_double_t Ut, Ube, Ubc, Ir, Q1, Q2, Ibc;
   nr_double_t Iben, Ibcn, Ibei, Ibci, gbe, gbc, gtiny;
   nr_double_t Uce, IeqB, IeqC, IeqE, IeqS, UbeCrit, UbcCrit;
   nr_double_t gm, go;
@@ -204,7 +237,7 @@ void bjt::calcDC (void) {
   Var = Var > 0 ? 1.0 / Var : 0;
 
   T = kelvin (T);
-  Ut = T * kB / Q;
+  Ut = T * kBoverQ;
   Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
   Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
 
@@ -392,6 +425,8 @@ void bjt::calcOperatingPoints (void) {
   setOperatingPoint ("Vbc", Ubc);
   setOperatingPoint ("Vce", Ube - Ubc);
   setOperatingPoint ("Rbb", Rbb);
+  setOperatingPoint ("Ibe", Ibe);
+  setOperatingPoint ("Ice", It);
 }
 
 void bjt::initSP (spsolver * solver) {

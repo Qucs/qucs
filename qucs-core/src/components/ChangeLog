@@ -1,3 +1,7 @@
+2004-07-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/bjt.cpp: Added noise calculation to BJT model.
+
 2004-07-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msmbend.cpp: Fixed typo.
