@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.5 2004/04/25 17:08:50 ela Exp $
+ * $Id: complex.h,v 1.6 2004/04/26 18:36:37 ela Exp $
  *
  */
 
@@ -68,21 +68,23 @@ class complex
   // operator functions
   friend complex operator + (const complex, const complex);
   friend complex operator + (const complex, const nr_double_t);
-  friend complex operator + (const nr_double_t,  const complex);
+  friend complex operator + (const nr_double_t, const complex);
 
   friend complex operator - (const complex, const complex);
   friend complex operator - (const complex, const nr_double_t);
-  friend complex operator - (const nr_double_t,  const complex);
+  friend complex operator - (const nr_double_t, const complex);
 
   friend complex operator * (const complex, const complex);
   friend complex operator * (const complex, const nr_double_t);
-  friend complex operator * (const nr_double_t,  const complex);
+  friend complex operator * (const nr_double_t, const complex);
 
   friend complex operator / (const complex, const complex);
   friend complex operator / (const complex, const nr_double_t);
-  friend complex operator / (const nr_double_t,  const complex);
+  friend complex operator / (const nr_double_t, const complex);
 
   friend complex operator % (const complex, const complex);
+  friend complex operator % (const complex, const nr_double_t);
+  friend complex operator % (const nr_double_t, const complex);
 
   // comparisons
   friend int     operator == (const complex, const complex);
@@ -103,6 +105,9 @@ class complex
 
   complex&       operator /= (const complex);
   complex&       operator /= (const nr_double_t);
+
+  complex&       operator %= (const complex);
+  complex&       operator %= (const nr_double_t);
 
   complex        operator +  ();
   complex        operator -  ();

@@ -92,22 +92,27 @@ Documentation License".
 \chapter{Scattering parameters}
 %\addcontentsline{toc}{chapter}{Scattering parameters}
 
-\section{Introduction and Definition}
-%\addcontentsline{toc}{section}{Introduction and Definition}
+\section{Introduction and definition}
+%\addcontentsline{toc}{section}{Introduction and definition}
 
-Voltage and current are hard to measure at high frequencies. Short and open circuits
-(used by definitions of most n-port parameters) are hard to realize at high frequencies.
-Therefore, microwave engineers work with so-called scattering parameters (S parameters),
-that uses waves and matched terminations (normally $50 \Omega$). This procedure also
-minimizes reflexion problems.\\
-A (normalized) wave is defined as ingoing wave $\underline{a}$ or outgoing wave
-$\underline{b}$:
+Voltage and current are hard to measure at high frequencies.  Short
+and open circuits (used by definitions of most n-port parameters) are
+hard to realize at high frequencies.  Therefore, microwave engineers
+work with so-called scattering parameters (S parameters), that uses
+waves and matched terminations (normally $50 \Omega$).  This procedure
+also minimizes reflexion problems.
+
+\addvspace{12pt}
+
+A (normalized) wave is defined as ingoing wave $\underline{a}$ or
+outgoing wave $\underline{b}$:
+
 \begin{equation}
 \underline{a} = \frac{u+Z_0\cdot i}{\sqrt{\text{Re}(Z_0)}} \qquad
 \underline{b} = \frac{u-Z_0^*\cdot i}{\sqrt{\text{Re}(Z_0)}}
 \end{equation}
-where $u$ is (peak) voltage, $i$ (peak) current and $Z_0$ reference impedance. The waves
-are related to power in the following way.
+where $u$ is (peak) voltage, $i$ (peak) current and $Z_0$ reference
+impedance. The waves are related to power in the following way.
 \begin{equation}
 P = \frac{1}{2}\cdot \left( |\underline{a}|^2 - |\underline{b}|^2 \right)
 \end{equation}
@@ -199,29 +204,34 @@ element of matrix $\left[\underline{X}\right]$ at row n and column m\\& &\\
 \subsection{S-parameters in CAE programs}
 %\addcontentsline{toc}{subsection}{S-parameters in CAE programs}
 
-The most common task of a simulation program is to compute the S parameters of an arbitrary
-network that consists of many elementary components connected to each other. To perform
-this, one can build a large matrix containing the S parameters of all components and then
-use matrix operations to solve it. However this method needs heavy algorithms. A more elegant
-possibility was published in \cite{Compton}: Each step computes only one connection and so
-unites two connected components to a single S parameter block. This procedure has to be done
-with every connection until there is only one block left ehose S parameters therefore are the
-simulation result.\\
-Connecting port $k$ of circuit $(\underline{S})$ with port $l$ of circuit $(\underline{T})$,
-the new S-parameters are
+The most common task of a simulation program is to compute the S
+parameters of an arbitrary network that consists of many elementary
+components connected to each other.  To perform this, one can build a
+large matrix containing the S parameters of all components and then
+use matrix operations to solve it.  However this method needs heavy
+algorithms.  A more elegant possibility was published in
+\cite{Compton}. Each step computes only one connection and so unites
+two connected components to a single S parameter block.  This
+procedure has to be done with every connection until there is only one
+block left whose S parameters therefore are the simulation result.
+
+\addvspace{12pt}
+
+Connecting port $k$ of circuit $(\underline{S})$ with port $l$ of
+circuit $(\underline{T})$, the new S-parameters are
 \begin{equation}
 \underline{S}'_{ij} = \underline{S}_{ij} +
       \frac{\underline{S}_{kj}\cdot \underline{T}_{ll}\cdot \underline{S}_{ik}}
            {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
 \end{equation}
-with $i$ and $j$ both being ports of $(\underline{S})$. Furthermore, it is
+with $i$ and $j$ both being ports of $(\underline{S})$.  Furthermore, it is
 \begin{equation}
 \underline{S}'_{mj} =
       \frac{\underline{S}_{kj}\cdot \underline{T}_{ml}}
            {1-\underline{S}_{kk}\cdot \underline{T}_{ll}}
 \end{equation}
-with $m$ being a port of $(\underline{T})$.
-If two ports of the same circuit $(\underline{S})$ are connected, the new S-parameters are
+with $m$ being a port of $(\underline{T})$.  If two ports of the same
+circuit $(\underline{S})$ are connected, the new S-parameters are
 \begin{equation}
 \underline{S}'_{ij} = \underline{S}_{ij} +
       \frac{ \underline{S}_{kj}\cdot \underline{S}_{il}\cdot (1-\underline{S}_{lk})
@@ -230,8 +240,8 @@ If two ports of the same circuit $(\underline{S})$ are connected, the new S-para
            + \underline{S}_{lj}\cdot \underline{S}_{kk}\cdot \underline{S}_{il}}
            {(1-\underline{S}_{kl})\cdot (1-\underline{S}_{lk}) - \underline{S}_{kk}\cdot \underline{S}_{ll}}.
 \end{equation}
-If more than two ports are connected at a node, one have to insert a tee. Its S-parameters writes as
-follows.
+If more than two ports are connected at a node, one have to insert a
+tee.  Its S-parameters write as follows.
 \begin{equation}
 \begin{pmatrix}
 \underline{S}
@@ -963,11 +973,11 @@ independently to it. The noise wave correlation matrix, therefore, writes as fol
 Where $e$ is charge of an electron, $U_T$ temperature voltage.
 
 
-\chapter*{DC Analysis}
-\addcontentsline{toc}{chapter}{DC Analysis}
+\chapter{DC Analysis}
+%\addcontentsline{toc}{chapter}{DC Analysis}
 
-\section*{Modified Nodal Analysis}
-\addcontentsline{toc}{section}{Modified Nodal Analysis}
+\section{Modified Nodal Analysis}
+%\addcontentsline{toc}{section}{Modified Nodal Analysis}
 
 Many different kinds of network element are encountered in network
 analysis.  For circuit analysis it is necessary to formulate equations
@@ -1055,16 +1065,16 @@ The circuit is solved by a simple matrix manipulation:
 Though this may be difficult by hand, it is straightforward and so is
 easily done by computer.
 
-\subsection*{Generating the MNA matrices}
-\addcontentsline{toc}{subsection}{Generating the MNA matrices}
+\subsection{Generating the MNA matrices}
+%\addcontentsline{toc}{subsection}{Generating the MNA matrices}
 
 The following section is an algorithmic approach to the concept of the
 Modified Nodal Analysis.  There are three matrices we need to
 generate, the A matrix, the x matrix and the z matrix.  Each of these
 will be created by combining several individual sub-matrices.
 
-\subsection*{The A matrix}
-\addcontentsline{toc}{subsection}{The A matrix}
+\subsection{The A matrix}
+%\addcontentsline{toc}{subsection}{The A matrix}
 
 The A matrix will be developed as the combination of 4 smaller
 matrices, G, B, C, and D.
@@ -1096,8 +1106,8 @@ the D matrix is M$\times$M and is zero if only independent sources are
 considered
 \end{itemize}
 
-\subsubsection*{Rules for making the G matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the G matrix}
+\subsubsection{Rules for making the G matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the G matrix}
 
 The G matrix is an N$\times$N matrix formed in two steps.
 
@@ -1121,8 +1131,8 @@ is ungrounded it will contribute to four entries in the matrix -- two
 diagonal entries (corresponding to the two nodes) and two off-diagonal
 entries.
 
-\subsubsection*{Rules for making the B matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the B matrix}
+\subsubsection{Rules for making the B matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the B matrix}
 
 The B matrix is an M$\times$N matrix with only 0, 1 and -1 elements.
 Each location in the matrix corresponds to a particular voltage source
@@ -1138,8 +1148,8 @@ If a voltage source is ungrounded, it will have two elements in the B
 matrix (a 1 and a -1 in the same column).  If it is grounded it will
 only have one element in the matrix.
 
-\subsubsection*{Rules for making the C matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the C matrix}
+\subsubsection{Rules for making the C matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the C matrix}
 
 The C matrix is an N$\times$M matrix with only 0, 1 and -1 elements.
 Each location in the matrix corresponds to a particular node (first
@@ -1154,14 +1164,14 @@ the C matrix is a -1.  Otherwise, elements of the C matrix are zero.
 In other words, the C matrix is the transpose of the B matrix.  This
 is not the case when dependent sources are present.
 
-\subsubsection*{Rules for making the D matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the D matrix}
+\subsubsection{Rules for making the D matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the D matrix}
 
 The D matrix is an M$\times$M matrix that is composed entirely of
 zeros.  It can be non-zero if dependent sources are considered.
 
-\subsection*{The x matrix}
-\addcontentsline{toc}{subsection}{The x matrix}
+\subsection{The x matrix}
+%\addcontentsline{toc}{subsection}{The x matrix}
 
 The x matrix holds our unknown quantities and will be developed as the
 combination of 2 smaller matrices v and j.  It is considerably easier
@@ -1186,8 +1196,8 @@ the j matrix is 1$\times$M and holds the unknown currents through the
 voltage sources
 \end{itemize}
 
-\subsubsection*{Rules for making the v matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the v matrix}
+\subsubsection{Rules for making the v matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the v matrix}
 
 The v matrix is an 1$\times$N matrix formed of the node voltages.
 Each element in v corresponds to the voltage at the equivalent node in
@@ -1207,8 +1217,8 @@ v_{N}\\
 \end{bmatrix}
 \end{equation}
 
-\subsubsection*{Rules for making the j matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the j matrix}
+\subsubsection{Rules for making the j matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the j matrix}
 
 The j matrix is an 1$\times$M matrix, with one entry for the current
 through each voltage source.  So if there are M voltage sources
@@ -1224,8 +1234,8 @@ i_{V_{M}}\\
 \end{bmatrix}
 \end{equation}
 
-\subsection*{The z matrix}
-\addcontentsline{toc}{subsection}{The z matrix}
+\subsection{The z matrix}
+%\addcontentsline{toc}{subsection}{The z matrix}
 
 The z matrix holds our independent voltage and current sources and
 will be developed as the combination of 2 smaller matrices i and e.
@@ -1252,8 +1262,8 @@ the e matrix is 1$\times$M and holds the values of the independent
 voltage sources
 \end{itemize}
 
-\subsubsection*{Rules for making the i matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the i matrix}
+\subsubsection{Rules for making the i matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the i matrix}
 
 The i matrix is an 1$\times$N matrix with each element of the matrix
 corresponding to a particular node.  The value of each element of i is
@@ -1261,14 +1271,14 @@ determined by the sum of current sources into the corresponding node.
 If there are no current sources connected to the node, the value is
 zero.
 
-\subsubsection*{Rules for making the e matrix}
-\addcontentsline{toc}{subsubsection}{Rules for making the e matrix}
+\subsubsection{Rules for making the e matrix}
+%\addcontentsline{toc}{subsubsection}{Rules for making the e matrix}
 
 The e matrix is an 1$\times$M matrix with each element of the matrix
 equal in value to the corresponding independent voltage source.
 
-\subsection*{A simple example}
-\addcontentsline{toc}{subsection}{A simple example}
+\subsection{A simple example}
+%\addcontentsline{toc}{subsection}{A simple example}
 
 The example given in fig. \ref{fig:MNAexample} illustrates applying
 the rules for building the MNA matrices and how this relates to basic
@@ -1283,8 +1293,8 @@ equations used in circuit analysis.
 \end{figure}
 \FloatBarrier
 
-\subsubsection*{Going through the MNA algorithm}
-\addcontentsline{toc}{subsubsection}{Going through the MNA algorithm}
+\subsubsection{Going through the MNA algorithm}
+%\addcontentsline{toc}{subsubsection}{Going through the MNA algorithm}
 
 The G matrix is a 2$\times$2 matrix because there are 2 different
 nodes apart from ground which is the reference node.  On the diagonal
@@ -1453,8 +1463,8 @@ The result in eq. (\ref{eq:MNAresult}) denotes the current through the
 voltage source $V_{1}$ is $0.6\ampere$, the voltage at node 1 is
 $1\volt$ and the voltage at node 2 is $4\volt$.
 
-\subsubsection*{How the algorithm relates to basic equations in circuit analysis}
-\addcontentsline{toc}{subsubsection}{How the algorithm relates to basic equations in circuit analysis}
+\subsubsection{How the algorithm relates to basic equations in circuit analysis}
+%\addcontentsline{toc}{subsubsection}{How the algorithm relates to basic equations in circuit analysis}
 
 Expanding the matrix representation in eq. (\ref{eq:MNAfull}) to a set
 of equations denotes the follwing equation system consisting of 3 of
@@ -1494,8 +1504,8 @@ The small example, shown in fig. \ref{fig:MNAexample}, and the
 excursus into artless math verifies that the MNA algorithm and classic
 electrical handiwork tend to produce the same results.
 
-\section*{Solving linear equation systems}
-\addcontentsline{toc}{section}{Solving linear equation systems}
+\section{Solving linear equation systems}
+%\addcontentsline{toc}{section}{Solving linear equation systems}
 
 When dealing with non-linear networks the number of equation systems
 to be solved depends on the required precision of the solution and the
@@ -1514,8 +1524,8 @@ solution can be written as
 \left[x\right] = \left[A\right]^{-1} \cdot \left[z\right]
 \end{equation}
 
-\subsection*{Matrix inversion}
-\addcontentsline{toc}{subsection}{Matrix inversion}
+\subsection{Matrix inversion}
+%\addcontentsline{toc}{subsection}{Matrix inversion}
 
 The elements $\beta_{\mu\nu}$ of the inverse of the matrix $A$ are
 \begin{equation}
@@ -1574,19 +1584,22 @@ a_{41} & a_{42} & a_{43}\\
 This recursive process for computing the inverse of a matrix is most
 easiest to be implemented but as well the slowest algorithm.
 
-\subsection*{Gaussian elimination}
-\addcontentsline{toc}{subsection}{Gaussian elimination}
+\subsection{Gaussian elimination}
+%\addcontentsline{toc}{subsection}{Gaussian elimination}
 
-\section*{Extensions to the MNA}
-\addcontentsline{toc}{section}{Extensions to the MNA}
+\subsection{LU decomposition}
+%\addcontentsline{toc}{subsection}{LU decomposition}
+
+\section{Extensions to the MNA}
+%\addcontentsline{toc}{section}{Extensions to the MNA}
 
 As noted in the previous sections the D matrix is zero and the B and C
 matrices are transposed each other and filled with either 1, -1 or 0
 provided that there are no dependent sources within the circuit.  This
 changes when introducing active (and controlled) elements.
 
-\subsection*{Voltage controlled current source}
-\addcontentsline{toc}{subsection}{Voltage controlled current source}
+\subsection{Voltage controlled current source}
+%\addcontentsline{toc}{subsection}{Voltage controlled current source}
 
 The voltage-dependent current source (VCCS), as shown in fig.
 \ref{fig:vccs}, is determined by the following equation which
@@ -1646,8 +1659,8 @@ As you can see the last row which has been added by the VCCS
 represents the determining equation (\ref{eq:vccs}).  The additional
 right hand column in the matrix keeps the system consistent.
 
-\subsection*{Voltage controlled voltage source}
-\addcontentsline{toc}{subsection}{Voltage controlled voltage source}
+\subsection{Voltage controlled voltage source}
+%\addcontentsline{toc}{subsection}{Voltage controlled voltage source}
 
 The voltage-dependent voltage source (VCVS), as shown in fig.
 \ref{fig:vcvs}, is determined by the following equation which
@@ -1703,8 +1716,8 @@ I_{4}\\
 \end{bmatrix}
 \end{equation}
 
-\subsection*{Current controlled current source}
-\addcontentsline{toc}{subsection}{Current controlled current source}
+\subsection{Current controlled current source}
+%\addcontentsline{toc}{subsection}{Current controlled current source}
 
 The current-dependent current source (CCCS), as shown in fig.
 \ref{fig:cccs}, is determined by the following equation which
@@ -1758,8 +1771,8 @@ I_{4}\\
 \end{bmatrix}
 \end{equation}
 
-\subsection*{Current controlled voltage source}
-\addcontentsline{toc}{subsection}{Current controlled voltage source}
+\subsection{Current controlled voltage source}
+%\addcontentsline{toc}{subsection}{Current controlled voltage source}
 
 The current-dependent voltage source (CCVS), as shown in fig.
 \ref{fig:ccvs}, is determined by the following equations which
@@ -1822,8 +1835,8 @@ I_{4}\\
 \end{bmatrix}
 \end{equation}
 
-\subsection*{Operational amplifier}
-\addcontentsline{toc}{subsection}{Operational amplifier}
+\subsection{Operational amplifier}
+%\addcontentsline{toc}{subsection}{Operational amplifier}
 
 The ideal operational amplifier, as shown in fig. \ref{fig:opamp}, is
 determined by the following equation which introduces one more unknown
@@ -1878,8 +1891,8 @@ The operational amplifier could be considered as a special case of a
 voltage controlled current source with infinite forward
 transconductance $G$.
 
-\subsection*{Transformer}
-\addcontentsline{toc}{subsection}{Transformer}
+\subsection{Transformer}
+%\addcontentsline{toc}{subsection}{Transformer}
 
 The two winding ideal transformer, as shown in fig.
 \ref{fig:actrafo}, is determined by the following equation which
@@ -1942,8 +1955,8 @@ an additional phase the transformer can be used as phase-shifting
 transformer.  Both the vectors must be conjugated complex transposed
 in this case.
 
-\subsection*{Symmetrical transformer}
-\addcontentsline{toc}{subsection}{Symmetrical transformer}
+\subsection{Symmetrical transformer}
+%\addcontentsline{toc}{subsection}{Symmetrical transformer}
 
 The ideal symmetrical tranformator, as shown in fig.
 \ref{fig:acstrafo}, is determined by the following equations which
@@ -2017,8 +2030,8 @@ I_{6}\\
 \end{bmatrix}
 \end{equation}
 
-\subsection*{Gyrator}
-\addcontentsline{toc}{subsection}{Gyrator}
+\subsection{Gyrator}
+%\addcontentsline{toc}{subsection}{Gyrator}
 
 The ideal gyrator, as shown in fig. \ref{fig:gyrator}, is determined
 by the following equations which introduce two more unknowns in the
@@ -2083,8 +2096,8 @@ I_{4}\\
 \end{bmatrix}
 \end{equation}
 
-\subsection*{Attenuator}
-\addcontentsline{toc}{subsection}{Attenuator}
+\subsection{Attenuator}
+%\addcontentsline{toc}{subsection}{Attenuator}
 
 The ideal attenuator with (power) attenuation $L$ is determined by the
 following Z parameters.
@@ -2122,8 +2135,8 @@ I_{2}\\
 \end{equation}
 
 
-\subsection*{Isolator}
-\addcontentsline{toc}{subsection}{Isolator}
+\subsection{Isolator}
+%\addcontentsline{toc}{subsection}{Isolator}
 
 The ideal Isolator with reference impedances $Z_1$ (input) and
 $Z_2$ (output) is determined by the following Z parameters.
@@ -2137,13 +2150,38 @@ Z_{21} = 2\cdot\sqrt{Z_1\cdot Z_2}  \qquad
 Z_{22} = Z_2
 \end{equation}
 
-\subsection*{Circulator}
-\addcontentsline{toc}{subsection}{Circulator}
+The MNA matrix representation can be derived from the Z parameters in the
+following way.
+\begin{equation}
+\begin{bmatrix}
+ . & .  &  1 & 0\\
+ . & .  &  0 & 1\\
+-1 &  0 & Z_{11} & Z_{12}\\
+ 0 & -1 & Z_{21} & Z_{22}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+I_{in}\\
+I_{out}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
 
-The ideal circulator cannot be characterized with Z or Y parameters, because
-their values are infinity. But implementing with S parameters is practical.
-(see chapter \ref{sec:CirculatorSparameter} for S parameters of the
-circulator)
+\subsection{Circulator}
+%\addcontentsline{toc}{subsection}{Circulator}
+
+The ideal circulator cannot be characterized with Z or Y parameters,
+because their values are partly infinite.  But implementing with S
+parameters is practical (see chapter \ref{sec:CirculatorSparameter}
+for S parameters of the circulator).
 \begin{equation}
 \begin{bmatrix}
  . & . & .  &  1 & 0 & 0\\
@@ -2158,9 +2196,9 @@ S_{31} &  S_{32} & S_{33}-1 & Z_0\cdot S_{31} & Z_0\cdot S_{32} & Z_0\cdot (S_{3
 V_{1}\\
 V_{2}\\
 V_{3}\\
-I_{i,1}\\
-I_{i,2}\\
-I_{i,3}
+I_{I1}\\
+I_{I2}\\
+I_{I3}
 \end{bmatrix}
 =
 \begin{bmatrix}
