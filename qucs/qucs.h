@@ -67,8 +67,8 @@ class QucsApp : public QMainWindow
     void initStatusBar();  // setup the statusbar
     void initView();       // setup the mainview
 
-    //bool queryExit();      // overloaded for Message box on last window exit
     bool closeAllFiles();
+    int  testFile(const QString& DocName);
 
     
   protected:
@@ -86,7 +86,7 @@ class QucsApp : public QMainWindow
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put the marked object into the clipboard and remove it from the document
     void slotEditCopy();    // put the marked object into the clipboard
-    void slotEditPaste();   // paste the clipboard into the document
+    void slotEditPaste(bool on);   // paste the clipboard into the document
     void slotEditDelete(bool on);  // delete the selected components
     void slotEditRotate(bool on);  // rotate the selected components
     void slotEditMirrorX(bool on); // mirror the selected components about the X axis
@@ -101,6 +101,7 @@ class QucsApp : public QMainWindow
     void slotZoomIn();  // Zoom in by 2
     void slotZoomOut(); // Zoom out by 2    
     void slotInsertGround(bool on);
+    void slotInsertPort(bool on);
     void slotSetWire(bool on);
 
 // ##########################################################################################
@@ -115,18 +116,20 @@ class QucsApp : public QMainWindow
     void slotProjDelButt();
     void slotChangeView(int id);
     void slotSimulate();
-    void slotAfterSimulation();
+    void slotAfterSimulation(int Status);
     void slotChangePage();
     void slotSelect(bool on);
     void slotEditActivate(bool on);
     void slotInsertLabel(bool on);
+
+//    void slotActivateCopy(bool on);
     
   private:
 
     SimMessage sim;   // simulation message window
 
-    QucsView *view;   // the working area with schematics, data displays etc.
-    QPrinter Printer; // printer global in order to remember the user settings
+    QucsView   *view;   // the working area with schematics, data displays etc.
+    QPrinter   Printer; // printer global in order to remember the user settings
 
 
     QPopupMenu *fileMenu;    // file_menu contains all items of the menubar entry "File"
