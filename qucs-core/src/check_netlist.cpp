@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.19 2004/06/30 15:04:15 ela Exp $
+ * $Id: check_netlist.cpp,v 1.20 2004/06/30 18:08:04 ela Exp $
  *
  */
 
@@ -744,15 +744,28 @@ static int checker_value_in_range (char * instance, struct define_t * def,
 				   struct pair_t * pair) {
   int errors = 0;
   for (int i = 0; PROP_IS_PROP (def->required[i]); i++) {
-    if (PROP_IS_VAL (def->required[i]) && PROP_HAS_RANGE (def->required[i])) {
-      if (!strcmp (def->required[i].key, pair->key)) {
-	if (pair->value->value < def->required[i].range.l ||
-	    pair->value->value > def->required[i].range.h) {
-	  logprint (LOG_ERROR, 
-		    "checker error, value of `%s' (%g) is out of range "
-		    "[%g,%g] in `%s:%s'\n",
-		    pair->key, pair->value->value, def->required[i].range.l,
-		    def->required[i].range.h, def->type, instance);
+    if (!strcmp (def->required[i].key, pair->key)) {
+      // check values
+      if (PROP_IS_VAL (def->required[i])) {
+	if (PROP_HAS_RANGE (def->required[i])) {
+	  if (pair->value->value < def->required[i].range.l ||
+	      pair->value->value > def->required[i].range.h) {
+	    logprint (LOG_ERROR, 
+		      "checker error, value of `%s' (%g) is out of range "
+		      "[%g,%g] in `%s:%s'\n",
+		      pair->key, pair->value->value, def->required[i].range.l,
+		      def->required[i].range.h, def->type, instance);
+	    errors++;
+	  }
+	}
+      }      
+      // check identifiers
+      else {
+	if (pair->value->ident == NULL) {
+	  logprint (LOG_ERROR,
+		    "checker error, value of `%s' (%g) needs to be an "
+		    "identifier in `%s:%s'\n",
+		    pair->key, pair->value->value, def->type, instance);
 	  errors++;
 	}
       }
@@ -826,15 +839,15 @@ int netlist_checker (void) {
 		    pair->key, def->type, def->instance);
 	  errors++;
 	}
+	/* check and evaluate the unit scale in a property */
+	if (!checker_evaluate_scale (pair->value))
+	  errors++;
 	/* check whether properties are in range */
 	if (!checker_value_in_range (def->instance, available, pair)) {
 	  errors++;
 	}
 	/* check variables in properties */
 	if (!checker_resolve_variable (def, pair->value))
-	  errors++;
-	/* check and evaluate the unit scale in a property */
-	if (!checker_evaluate_scale (pair->value))
 	  errors++;
       }
     }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: sweep.cpp,v 1.1 2004/06/22 19:32:56 ela Exp $
+ * $Id: sweep.cpp,v 1.2 2004/06/30 18:08:04 ela Exp $
  *
  */
 
@@ -185,7 +185,7 @@ logsweep::logsweep (char * n) : sweep (n) {
    and containing points elements. */
 void logsweep::create (nr_double_t start, nr_double_t stop, int points) {
   assert (start * stop > 0);
-  nr_double_t step, first, last, d, n;
+  nr_double_t step, first, last, d;
 
   // ensure the last value being larger than the first
   if (fabs (start) > fabs (stop)) {
@@ -197,16 +197,15 @@ void logsweep::create (nr_double_t start, nr_double_t stop, int points) {
     last = fabs (stop);
   }
   // check direction and sign of sweep
-  n = start > 0 ? 1 : -1;
   d = fabs (start) > fabs (stop) ? -1 : 1;
   // compute logarithmic step size
   step = (log (last) - log (first)) / (points - 1);
   setSize (points);
   for (int i = 0, j = points - 1; i < points; i++, j--) {
     if (d > 0)
-      set (i, start + n * (exp (step * i) - 1));
+      set (i, start * exp (step * i));
     else
-      set (j, stop + n * (exp (step * i) - 1));
+      set (j, stop * exp (step * i));
   }
 }
 
