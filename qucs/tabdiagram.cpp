@@ -48,21 +48,22 @@ void TabDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  Lines.append(new Line(cx, cy-y2, cx+x2, cy-y2, QPen(QPen::black,1)));
-  Lines.append(new Line(cx, cy-y2+15, cx+x2, cy-y2+15, QPen(QPen::black,1)));
-  Lines.append(new Line(cx, cy-y2, cx, cy, QPen(QPen::black,1)));
-  Lines.append(new Line(cx+x2, cy-y2, cx+x2, cy, QPen(QPen::black,1)));
-  Lines.append(new Line(cx, cy, cx+x2, cy, QPen(QPen::black,1)));
+  Lines.append(new Line(0, y2, x2, y2, QPen(QPen::black,1)));
+  Lines.append(new Line(0, y2-15, x2, y2-15, QPen(QPen::black,1)));
+  Lines.append(new Line(0, y2, 0, 0, QPen(QPen::black,1)));
+  Lines.append(new Line(x2, y2, x2, 0, QPen(QPen::black,1)));
+  Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,1)));
 
-  int y = cy-y2+30;
   Graph *g = Graphs.first();
   if(g == 0) return;
   
-  Texts.append(new Text(cx+84, cy-y2+13, g->Line));
+  int y = y2-30;
+  Texts.append(new Text(84, y2-13, g->Line));
   for(cPoint *cp = g->cPoints.first(); cp != 0; cp = g->cPoints.next()) {
-    Texts.append(new Text(cx+4, y, QString::number(cp->x)));
-    Texts.append(new Text(cx+84, y, QString::number(cp->yr)+"/"+QString::number(cp->yi)));
-    y += 14;
+    Texts.append(new Text( 4, y, QString::number(cp->x)));
+    Texts.append(new Text(84, y, QString::number(cp->yr)+"/"+QString::number(cp->yi)));
+    y -= 14;
+    if(y < 0) break;
   }
 }
 

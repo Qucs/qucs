@@ -22,9 +22,10 @@
 
 #include <qlabel.h>
 #include <qdialog.h>
-#include <qlistbox.h>
+#include <qlistview.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
+#include <qregexp.h>
 
 
 /**
@@ -38,17 +39,21 @@ public:
 	~ComponentDialog();
 
 private slots:
+  void slotApplyChange(const QString& Text);
   void slotButtOK();
-  void slotButtApply();
-  void slotSelectProperty(int n);
+  void slotSelectProperty(QListViewItem *item);
   void slotApplyInput();
-
+  void slotApplyState(int State);
+  
 private:
-  QListBox  *prop;
+  QRegExp   Expr;
+  QListView *prop;
   QLineEdit *edit;
   QLabel    *Name;
   QCheckBox *disp;
+  QLabel    *Description;
   Component *Comp;
+  bool      changed;
 };
 
 #endif

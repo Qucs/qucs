@@ -242,11 +242,23 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
   for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are only moved with one node
-      pw->x2 += MAx1;
-      if(pw->Port2 != 0) {
+
+      if(int(pw->Port1) > 3) {
         pw->x1 += MAx1;
+        pw->y1 += MAy1;
+      }
+      else {
+        if(int(pw->Port1) & 1) pw->x1 += MAx1;
+        if(int(pw->Port1) & 2) pw->y1 += MAy1;
+      }
+
+      if(int(pw->Port2) > 3) {
+        pw->x2 += MAx1;
         pw->y2 += MAy1;
-        if(pw->Port1 != 0) pw->y1 += MAy1;
+      }
+      else {
+        if(int(pw->Port2) & 1) pw->x2 += MAx1;
+        if(int(pw->Port2) & 2) pw->y2 += MAy1;
       }
     }
     else pe->setCenter(MAx1, MAy1, true);
@@ -290,12 +302,24 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
   Wire *pw;
   for(Element *pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
     if(pe->Type == isWire) {
-      pw = (Wire*)pe;   // connecting wires are only moved with one node
-      pw->x2 += MAx1;
-      if(pw->Port2 != 0) {
+      pw = (Wire*)pe;   // connecting wires are not moved completely
+
+      if(int(pw->Port1) > 3) {
         pw->x1 += MAx1;
+        pw->y1 += MAy1;
+      }
+      else {
+        if(int(pw->Port1) & 1) pw->x1 += MAx1;
+        if(int(pw->Port1) & 2) pw->y1 += MAy1;
+      }
+
+      if(int(pw->Port2) > 3) {
+        pw->x2 += MAx1;
         pw->y2 += MAy1;
-        if(pw->Port1 != 0) pw->y1 += MAy1;
+      }
+      else {
+        if(int(pw->Port2) & 1) pw->x2 += MAx1;
+        if(int(pw->Port2) & 2) pw->y2 += MAy1;
       }
     }
     else pe->setCenter(MAx1, MAy1, true);
@@ -329,6 +353,7 @@ void QucsView::MPressLabel(QMouseEvent *Event)
   QString Name = QInputDialog::getText("Insert Nodename", "Enter the label:", QLineEdit::Normal,
                                        QString::null, &OK, this);
   if(OK && !Name.isEmpty()) {
+    if(Name.at(0) == '_') Name.remove(0,1);   // label must not start with '_'
     ptr->Name = Name;
     ptr->delta = x-ptr->x1 + y-ptr->y1;
     ptr->nx = x + 30;
@@ -427,7 +452,7 @@ void QucsView::MPressDiagram(QMouseEvent *)
 
   Docs.current()->setChanged(true);   // document has been changed
 
-  DiagramDialog *d = new DiagramDialog(selDiag);
+  DiagramDialog *d = new DiagramDialog(selDiag, Docs.current()->DataSet);
   d->exec();
   delete d;
 
@@ -590,18 +615,21 @@ void QucsView::MReleaseMoving(QMouseEvent *)//Event)
   Wire *pw;
 
   // insert all moved elements into document
-  for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next())
+  for(Element *pe = movingElements.first(); pe!=0; pe = movingElements.next()) {
     switch(pe->Type) {
       case isWire:    pw = (Wire*)pe;
                       if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) break;
                       Docs.current()->insertWire(pw);
                       break;
       case isDiagram: Docs.current()->Diags.append((Diagram*)pe);
+                      Docs.current()->setChanged(true);
                       break;
       default:        Component *c = (Component*)pe;
                       Docs.current()->insertRawComponent(c);
                       break;
     }
+    pe->isSelected = false;
+  }
   
   movingElements.clear();
 
@@ -630,14 +658,15 @@ void QucsView::MDoubleClickSelect(QMouseEvent *Event)
   Component *c = Docs.current()->selectedComponent(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale));
   if(c != 0) if(!c->Model.isEmpty()) {
     ComponentDialog *d = new ComponentDialog(c, this);
-    d->exec();
+    if(d->exec() == 1)
+      Docs.current()->setChanged(true);
     viewport()->repaint();
     return;
   }
 
   Diagram *dia = Docs.current()->selectedDiagram(int(Event->pos().x()/Scale), int(Event->pos().y()/Scale));
   if(dia != 0) {
-    DiagramDialog *ddia = new DiagramDialog(dia, this);
+    DiagramDialog *ddia = new DiagramDialog(dia, Docs.current()->DataSet, this);
     ddia->exec();
     viewport()->repaint();
     return;
