@@ -850,7 +850,7 @@ void QucsApp::slotFileQuit()
   statusBar()->message(tr("Exiting application..."));
 
   int exit=QMessageBox::information(this, tr("Quit..."),
-                                    tr("Do your really want to quit?"),
+                                    tr("Do you really want to quit?"),
                                     QMessageBox::Ok, QMessageBox::Cancel);
   if(exit == 1)
     if(closeAllFiles())  qApp->quit();
