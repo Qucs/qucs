@@ -259,6 +259,14 @@
         <source>long dash line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>logarithmical X Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical Y Axis Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileShowDialog</name>
