@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.h,v 1.1 2004-07-07 13:52:34 ela Exp $
+ * $Id: bjt.h,v 1.2 2004-07-08 23:20:44 ela Exp $
  *
  */
 
@@ -42,6 +42,8 @@ class bjt : public circuit
   circuit * re;
   circuit * rc;
   circuit * rb;
+  nr_double_t dQbdUbe, dQbdUbc, If, Qb;
+  nr_double_t git, gbei, gben, gbci, gbcn, gitf, gitr, gif, gir;
 };
 
 #endif /* __BJT_H__ */
