@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.17 2004/10/21 09:00:31 ela Exp $
+ * $Id: mosfet.cpp,v 1.18 2004/10/21 17:10:30 ela Exp $
  *
  */
 
@@ -559,14 +559,11 @@ void mosfet::calcOperatingPoints (void) {
   // approximate charges by trapezoidal rule
   if (transientMode) {
     // gate-source charge
-    Cgs = Cgs / 2 + getState (cgsState, 1) + Cgso * W;
-    Qgs = transientCharge (qgsState, Cgs, Ugs);
+    Qgs = transientCharge (qgsState, Cgs, Ugs, Cgso * W);
     // gate-drain charge
-    Cgd = Cgd / 2 + getState (cgdState, 1) + Cgdo * W;
-    Qgd = transientCharge (qgdState, Cgd, Ugd);
+    Qgd = transientCharge (qgdState, Cgd, Ugd, Cgdo * W);
     // gate-bulk charge
-    Cgb = Cgb / 2 + getState (cgbState, 1) + Cgbo * Leff;
-    Qgb = transientCharge (qgbState, Cgb, Ugb);
+    Qgb = transientCharge (qgbState, Cgb, Ugb, Cgbo * Leff);
   }
   // usual operating point
   else {
@@ -635,10 +632,11 @@ void mosfet::calcTR (nr_double_t) {
   transientCapacitance (qgbState, NODE_G, NODE_B, Cgb, Ugb, Qgb);
 }
 
-nr_double_t mosfet::transientCharge (int qstate, nr_double_t cap,
-				     nr_double_t voltage) {
+nr_double_t mosfet::transientCharge (int qstate, nr_double_t& cap,
+				     nr_double_t voltage, nr_double_t ccap) {
   int vstate = qstate + 2, cstate = qstate + 3;
+  setState (cstate, cap / 2);
+  cap = cap / 2 + getState (cstate, 1) + ccap;
   setState (vstate, voltage);
-  setState (cstate, cap);
   return cap * (voltage - getState (vstate, 1)) + getState (qstate, 1);
 }
