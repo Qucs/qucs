@@ -1,3 +1,15 @@
+2004-08-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* spsolver.cpp: Using input port impedance of noise
+	analysis for calculating Rn.
+
+	* check_netlist.cpp: Fixed yet another bug caused by nested
+	subcircuit definitions.
+	Checking for substrate definitions of all known microstrip
+	components properly.
+	Search for non-linearities within subcircuit definitions in
+	order to verify that DC simulation is required.
+
 2004-08-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* spsolver.cpp: Renamed Gopt into Sopt.  Changed all

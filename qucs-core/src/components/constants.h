@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: constants.h,v 1.14 2004-08-03 15:36:20 ela Exp $
+ * $Id: constants.h,v 1.15 2004-08-09 15:34:45 ela Exp $
  *
  */
 
@@ -75,8 +75,8 @@
 #define ESi     11.7
 
 #define sqr(x)    ((x) * (x))
-#define cubic(x)  (exp (3 * log (x)))
-#define quadr(x)  (exp (4 * log (x)))
+#define cubic(x)  ((x) * (x) * (x))
+#define quadr(x)  (exp (4 * log (fabs (x))))
 #define coth(x)   (1 / tanh (x))
 #define sech(x)   (1 / cosh (x))
 #define cosech(x) (1 / sinh (x))

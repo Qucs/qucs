@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.40 2004-08-07 10:48:46 margraf Exp $
+ * $Id: check_netlist.cpp,v 1.41 2004-08-09 15:34:44 ela Exp $
  *
  */
 
@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <assert.h>
 #include <float.h>
 
 #include "logging.h"
@@ -471,6 +472,10 @@ struct define_t definition_available[] =
   { NULL, 0, 0, 0, 0, { PROP_NO_PROP }, { PROP_NO_PROP } }
 };
 
+// List of available microstrip components.
+static char * strip_available[] = {
+  "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", NULL };
+
 /* The function counts the nodes in a definition line. */
 static int checker_count_nodes (struct definition_t * def) {
   int count = 0;
@@ -663,6 +668,24 @@ static int checker_validate_special (struct definition_t * root,
   return found;
 }
 
+/* This function checks whether the given definition is a known
+   microstrip component with a substrate definition.  If the given
+   identifier equals this substrate definition then the function
+   returns the appropriate value.  Otherwise it returns NULL. */
+static struct value_t * checker_find_substrate (struct definition_t * def,
+						char * ident) {
+  struct value_t * val;
+  for (int i = 0; strip_available[i] != NULL; i++) {
+    if (!strcmp (strip_available[i], def->type)) {
+      if ((val = checker_find_reference (def, "Subst")) != NULL) {
+	if (ident != NULL && !strcmp (val->ident, ident))
+	  return val;
+      }
+    }
+  }
+  return NULL;
+}
+
 /* Resolves the variable of a property value.  Returns non-zero on
    success, otherwise zero. */
 static int checker_resolve_variable (struct definition_t * root,
@@ -684,7 +707,7 @@ static int checker_resolve_variable (struct definition_t * root,
       found++;
     }
     /* 3. find substrate in microstrip components */
-    if ((val = checker_find_variable (root, "MLIN", "Subst", value->ident))) {
+    if ((val = checker_find_substrate (def, value->ident))) {
       value->subst = 1;
       found++;
     }
@@ -776,12 +799,45 @@ static int checker_count_definitions (struct definition_t * root,
   return count;
 }
 
+/* This function looks for the specified subcircuit type in the list
+   of available subcircuits and returns its definition.  If there is
+   no such subcircuit the function returns NULL: */
+static struct definition_t * checker_find_subcircuit (char * n) {
+  struct definition_t * def;
+  for (def = subcircuit_root; def != NULL; def = def->next)
+    if (n != NULL && !strcmp (def->instance, n)) return def;
+  return NULL;
+}
+
+/* The function returns the subcircuit definition for the given
+   subcircuit instance. */
+static struct definition_t *
+checker_get_subcircuit (struct definition_t * def) {
+  struct value_t * val;
+  struct definition_t * sub = NULL;
+  if ((val = checker_find_reference (def, "Type")) != NULL)
+    sub = checker_find_subcircuit (val->ident);
+  return sub;
+}
+
+// Global variable indicating cycles in subcircuit definitions.
+static int checker_sub_cycles = 0;
+
 /* The following function returns the number of circuit instances
    requiring a DC analysis (being nonlinear) in the list of definitions. */
 static int checker_count_nonlinearities (struct definition_t * root) {
   int count = 0;
+  struct definition_t * sub;
   for (struct definition_t * def = root; def != NULL; def = def->next) {
     if (def->nonlinear != 0) count++;
+    // also recurse into subcircuits if possible
+    if (checker_sub_cycles <= 0) {
+      if (!strcmp (def->type, "Sub")) {
+	if ((sub = checker_get_subcircuit (def)) != NULL) {
+	  count += checker_count_nonlinearities (sub->sub);
+	}
+      }
+    }
   }
   return count;
 }
@@ -933,7 +989,7 @@ static int checker_validate_actions (struct definition_t * root) {
     }
     if (a >=1 && c >= 1 && n < 1) {
       logprint (LOG_ERROR, "checker error, a .DC action is required for this "
-		"circuit definition\n");
+		"circuit definition (accounted %d non-linearities)\n", c);
       errors++;
     }
   }
@@ -941,10 +997,6 @@ static int checker_validate_actions (struct definition_t * root) {
   errors += checker_validate_ports (root);
   return errors;
 }
-
-// List of available microstrip components.
-static char * strip_available[] = {
-  "MLIN", "MCORN", "MMBEND", NULL };
 
 /* This function checks the validity of each microstrip component and
    its substrate and model references.  It returns zero on success,
@@ -1141,25 +1193,6 @@ checker_build_subcircuits (struct definition_t * root) {
   return root;
 }
 
-/* This function looks for the specified subcircuit type in the list
-   of available subcircuits and returns its definition.  If there is
-   no such subcircuit the function returns NULL: */
-static struct definition_t * checker_find_subcircuit (char * n) {
-  struct definition_t * def;
-  for (def = subcircuit_root; def != NULL; def = def->next)
-    if (!strcmp (def->instance, n)) return def;
-  return NULL;
-}
-
-/* The function returns the subcircuit definition for the given
-   subcircuit instance. */
-static struct definition_t *
-checker_get_subcircuit (struct definition_t * def) {
-  struct value_t * val = checker_find_reference (def, "Type");
-  struct definition_t * sub = checker_find_subcircuit (val->ident);
-  return sub;
-}
-
 /* The function produces a copy of the given circuit definition and
    marks it as a copy.  The node definition are not included within
    the copy. */
@@ -1186,14 +1219,16 @@ static void checker_xlat_subcircuit_nodes (struct definition_t * type,
 					   struct definition_t * inst,
 					   struct definition_t * sub) {
   struct node_t * n, * ninst, * ntype;
+  int i;
   // go through nodes of the subcircuit 'type' and 'inst'
-  for (ntype = type->nodes, ninst = inst->nodes; ntype != NULL;
-       ntype = ntype->next, ninst = ninst->next) {
+  for (i = 1, ntype = type->nodes, ninst = inst->nodes; ntype != NULL;
+       ntype = ntype->next, ninst = ninst->next, i++) {
     for (n = sub->nodes; n != NULL; n = n->next) {
       /* check whether a node in the subcircuit element 'sub' corresponds
 	 with the 'type', then assign the 'inst's node name */
       if (!strcmp (n->node, ntype->node)) {
 	n->xlate = strdup (ninst->node);
+	n->xlatenr = i;
       }
     }
   }
@@ -1244,12 +1279,12 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
 
     // create new node based upon the node translation
     ncopy = (struct node_t *) calloc (sizeof (struct node_t), 1);
+    ncopy->xlatenr = n->xlatenr;
     if (n->xlate) { // translated node
       if (instances == NULL)
 	ncopy->node = strdup (n->xlate);
       else
 	ncopy->node = NULL; // leave it blank yet, indicates translation
-      free (n->xlate); n->xlate = NULL;
     }
     else if (!strcmp (n->node, "gnd")) { // ground node
       ncopy->node = strdup (n->node);
@@ -1258,7 +1293,6 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
       ncopy->node = checker_subcircuit_node (type->instance, instances,
 					     inst->instance, n->node);
     }
-
     // chain the new node list
     ncopy->next = root;
     root = ncopy;
@@ -1267,6 +1301,24 @@ checker_copy_subcircuit_nodes (struct definition_t * type,
   /* and finally reverse the created node list and assign it to the
      subcircuit element's 'copy' */
   copy->nodes = checker_reverse_nodes (root);
+}
+
+// Returns the node at the given position.
+static struct node_t * checker_get_circuit_node (struct node_t * root, int n) {
+  for (int i = 1; i < n; i++) {
+    root = root->next;
+    assert (root != NULL);
+  }
+  return root;
+}
+
+// The function cleans the translated nodes of a subcircuit template.
+static void checker_cleanup_xlat_nodes (struct definition_t * sub) {
+  for (struct node_t * n = sub->nodes; n != NULL; n = n->next) {
+    if (n->xlate) free (n->xlate);
+    n->xlate = NULL;
+    n->xlatenr = 0;
+  }
 }
 
 /* The function is used to assign the nodes of the 'copy' subcircuit
@@ -1282,19 +1334,22 @@ checker_copy_circuit_nodes (struct definition_t * type,
 			    struct definition_t * sub,
 			    struct definition_t * copy,
 			    char * instances) {
-  struct node_t * n = sub->nodes, * ncopy;
+  struct node_t * n, * ncopy;
 
   // go through the list of the subcircuit element's 'copy' nodes
-  for (ncopy = copy->nodes; ncopy != NULL; ncopy = ncopy->next, n = n->next) {
+  for (ncopy = copy->nodes; ncopy != NULL; ncopy = ncopy->next) {
     // these NULL nodes have intentionally been blanked
     if (ncopy->node == NULL) {
+      assert (ncopy->xlatenr != 0);
+      // get translated node
+      n = checker_get_circuit_node (sub->nodes, ncopy->xlatenr);
+      ncopy->xlatenr = n->xlatenr;
       if (n->xlate) { // translated node
 	if (instances == NULL)
 	   // external node indicated by no instances given
 	  ncopy->node = strdup (n->xlate);
 	else
 	  ncopy->node = NULL; // keep blank
-	free (n->xlate); n->xlate = NULL;
       }
       else if (!strcmp (n->node, "gnd")) { // global ground node
 	ncopy->node = strdup (n->node);
@@ -1372,8 +1427,9 @@ checker_copy_subcircuits (struct definition_t * type,
       if (copy) {
 	list = checker_subcircuit_instance_list (instcopy);
 	// assign blanked node names to each subcircuit
-	for (struct definition_t * c = copy; c != NULL; c = c->next)
+	for (struct definition_t * c = copy; c != NULL; c = c->next) {
 	  checker_copy_circuit_nodes (type, inst, def, c, list);
+	}
 	// append the copies to the subcircuit list
 	struct definition_t * last = checker_find_last_definition (copy);
 	last->next = root;
@@ -1398,6 +1454,9 @@ checker_copy_subcircuits (struct definition_t * type,
       copy->next = root;
       root = copy;
     }
+
+    // cleanup translated nodes
+    checker_cleanup_xlat_nodes (def);
   }
   return root;
 }
@@ -1494,8 +1553,10 @@ static int checker_validate_subcircuits (struct definition_t * root) {
 	  }
 	  // and finally check for cyclic definitions
 	  strlist * deps = new strlist ();
-	  errors += checker_validate_sub_cycles (sub, sub->instance,
+	  int err = checker_validate_sub_cycles (sub, sub->instance,
 						 def->instance, &deps);
+	  errors += err;
+	  checker_sub_cycles = err;
 	  delete deps;
 	}
       }
@@ -1733,14 +1794,14 @@ int netlist_checker (void) {
   definition_root = checker_build_subcircuits (definition_root);
   // check global netlist
   errors += netlist_checker_intern (definition_root);
-  // check actions
-  errors += checker_validate_actions (definition_root);
   // check list of subcircuits
   errors += netlist_checker_intern (subcircuit_root);
   // then check each subcircuit list
   for (def = subcircuit_root; def != NULL; def = def->next) {
     errors += netlist_checker_intern (def->sub);
   }
+  // check actions
+  errors += checker_validate_actions (definition_root);
   if (!errors) {
     // and finally expand the subcircuits into the global netlist
     definition_root = checker_expand_subcircuits (definition_root);

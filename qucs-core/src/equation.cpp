@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.19 2004-07-26 06:30:28 ela Exp $
+ * $Id: equation.cpp,v 1.20 2004-08-09 15:34:44 ela Exp $
  *
  */
 
@@ -821,7 +821,7 @@ int equation_checker (int noundefined) {
   err += check->detectCycles ();
   check->reorderEquations ();
   err += check->applyTypes ();
-#if DEBUG
+#if DEBUG && 0
   check->list ();
 #endif /* DEBUG */
   eqn::equations = check->getEquations ();

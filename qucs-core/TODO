@@ -23,6 +23,8 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Find an efficient algorithm to ensure non-zero diagonal matrix
+  elements for iterative methods.
 - Clarify pn-junction noise issue.
 	- Check polarity of BJT (SPICE Gummel-Poon) device.
 - Implement temperature models of existing non-linear devices.

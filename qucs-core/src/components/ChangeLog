@@ -1,3 +1,8 @@
+2004-08-08  Stefan Jahn  <stefan@lkcc.org>
+
+	* constants.h (cubic): Fixed a severe macro bug.  cubic() did
+	not work for negative arguments.
+
 2004-08-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/diode.cpp: Fixed noise calculation.  Both field and

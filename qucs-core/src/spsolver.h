@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.h,v 1.8 2004-06-30 15:04:15 ela Exp $
+ * $Id: spsolver.h,v 1.9 2004-08-09 15:34:45 ela Exp $
  *
  */
 
@@ -52,7 +52,7 @@ class spsolver : public analysis
   void noiseConnect (circuit *, node *, node *);
   void noiseInterconnect (circuit *, node *, node *);
   void saveResults (nr_double_t);
-  void saveNoiseResults (complex[4], complex[4], vector *);
+  void saveNoiseResults (complex[4], complex[4], nr_double_t, vector *);
   void saveVariable (char *, complex, vector *);
   char * createSP (int, int);
   void dropTee (circuit *);
