@@ -1,3 +1,8 @@
+2004-05-05  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Checking presence and necessity of DC
+	analysis.
+
 2004-05-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* net.cpp: Implemented implicit dependencies of analyses.

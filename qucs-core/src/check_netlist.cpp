@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.5 2004-05-02 12:02:11 ela Exp $
+ * $Id: check_netlist.cpp,v 1.6 2004-05-05 07:10:10 ela Exp $
  *
  */
 
@@ -44,6 +44,7 @@ struct definition {
   int nodes;
   int action;
   int substrate;
+  int nonlinear;
   char * required[16];
   char * optional[16];
 };
@@ -51,72 +52,72 @@ struct definition {
 struct definition definition_available[] =
   {
     /* resistor */
-    { "R", 2, 0, 0, { "R", NULL }, { NULL } },
+    { "R", 2, 0, 0, 0, { "R", NULL }, { NULL } },
     /* inductor */
-    { "L", 2, 0, 0, { "L", NULL }, { NULL } },
+    { "L", 2, 0, 0, 0, { "L", NULL }, { NULL } },
     /* capacitor */
-    { "C", 2, 0, 0, { "C", NULL }, { NULL } },
+    { "C", 2, 0, 0, 0, { "C", NULL }, { NULL } },
     /* voltage controlled current source */
-    { "VCCS", 4, 0, 0, { "G", NULL }, { "T", NULL } },
+    { "VCCS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
     /* current controlled current source */
-    { "CCCS", 4, 0, 0, { "G", NULL }, { "T", NULL } },
+    { "CCCS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
     /* voltage controlled voltage source */
-    { "VCVS", 4, 0, 0, { "G", NULL }, { "T", NULL } },
+    { "VCVS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
     /* current controlled voltage source */
-    { "CCVS", 4, 0, 0, { "G", NULL }, { "T", NULL } },
+    { "CCVS", 4, 0, 0, 0, { "G", NULL }, { "T", NULL } },
     /* power source */
-    { "Pac", 2, 0, 0, { "f", "Z", "Num", NULL }, { "P", NULL } },
+    { "Pac", 2, 0, 0, 0, { "f", "Z", "Num", NULL }, { "P", NULL } },
     /* circulator */
-    { "Circulator", 3, 0, 0, { "Z1", "Z2", "Z3", NULL }, { NULL } },
+    { "Circulator", 3, 0, 0, 0, { "Z1", "Z2", "Z3", NULL }, { NULL } },
     /* isolator */
-    { "Isolator", 2, 0, 0, { "Z1", "Z2", NULL }, { NULL } },
+    { "Isolator", 2, 0, 0, 0, { "Z1", "Z2", NULL }, { NULL } },
     /* attenuator */
-    { "Attenuator", 2, 0, 0, { "L", "Zref", NULL }, { NULL } },
+    { "Attenuator", 2, 0, 0, 0, { "L", "Zref", NULL }, { NULL } },
     /* bias tee */
-    { "BiasT", 3, 0, 0, { NULL }, { NULL } },
+    { "BiasT", 3, 0, 0, 0, { NULL }, { NULL } },
     /* DC feed */
-    { "DCFeed", 2, 0, 0, { NULL }, { NULL } },
+    { "DCFeed", 2, 0, 0, 0, { NULL }, { NULL } },
     /* DC block */
-    { "DCBlock", 2, 0, 0, { NULL }, { NULL } },
+    { "DCBlock", 2, 0, 0, 0, { NULL }, { NULL } },
     /* transformator */
-    { "Tr", 4, 0, 0, { "T", NULL }, { NULL } },
+    { "Tr", 4, 0, 0, 0, { "T", NULL }, { NULL } },
     /* symmetrical transformator */
-    { "sTr", 6, 0, 0, { "T1", "T2", NULL }, { NULL } },
+    { "sTr", 6, 0, 0, 0, { "T1", "T2", NULL }, { NULL } },
     /* DC voltage source */
-    { "Vdc", 2, 0, 0, { "U", NULL }, { NULL } },
+    { "Vdc", 2, 0, 0, 0, { "U", NULL }, { NULL } },
     /* DC current source */
-    { "Idc", 2, 0, 0, { "I", NULL }, { NULL } },
+    { "Idc", 2, 0, 0, 0, { "I", NULL }, { NULL } },
     /* AC voltage source */
-    { "Vac", 2, 0, 0, { "U", "f", NULL }, { NULL } },
+    { "Vac", 2, 0, 0, 0, { "U", "f", NULL }, { NULL } },
     /* AC current source */
-    { "Iac", 2, 0, 0, { "I", "f", NULL }, { NULL } },
+    { "Iac", 2, 0, 0, 0, { "I", "f", NULL }, { NULL } },
     /* phase shifter */
-    { "PShift", 2, 0, 0, { "phi", "Zref", NULL }, { NULL } },
+    { "PShift", 2, 0, 0, 0, { "phi", "Zref", NULL }, { NULL } },
     /* gyrator */
-    { "Gyrator", 4, 0, 0, { "R", "Zref", NULL }, { NULL } },
+    { "Gyrator", 4, 0, 0, 0, { "R", "Zref", NULL }, { NULL } },
     /* ideal transmission line */
-    { "TLIN", 2, 0, 0, { "Z", "L", NULL }, { NULL } },
+    { "TLIN", 2, 0, 0, 0, { "Z", "L", NULL }, { NULL } },
     /* DC current probe */
-    { "IProbe", 2, 0, 0, { NULL }, { NULL } },
+    { "IProbe", 2, 0, 0, 0, { NULL }, { NULL } },
 
     /* diode */
-    { "Diode", 2, 0, 0, { "Is", "n", "z", "Cj0", "Vd", NULL }, { NULL } },
+    { "Diode", 2, 0, 0, 1, { "Is", "n", "z", "Cj0", "Vd", NULL }, { NULL } },
 
     /* microstrip substrate */
-    { "SUBST", 0, 0, 1, { "er", "h", "t", "tand", NULL }, { NULL } },
+    { "SUBST", 0, 0, 1, 0, { "er", "h", "t", "tand", NULL }, { NULL } },
     /* microstrip line */
-    { "MLIN", 2, 0, 0, { "W", "L", "Subst", "Model", NULL }, { NULL } },
+    { "MLIN", 2, 0, 0, 0, { "W", "L", "Subst", "Model", NULL }, { NULL } },
 
     /* s-parameter analysis */
-    { "SP", 0, 1, 0, { "Start", "Stop", "Step", NULL }, { NULL } },
+    { "SP", 0, 1, 0, 0, { "Start", "Stop", "Step", NULL }, { NULL } },
     /* dc analysis */
-    { "DC", 0, 1, 0, { NULL }, { NULL } },
+    { "DC", 0, 1, 0, 0, { NULL }, { NULL } },
     /* parameter sweep */
-    { "SW", 0, 1, 0, { "Start", "Stop", "Step", "Param", "Sim", NULL }, 
+    { "SW", 0, 1, 0, 0, { "Start", "Stop", "Step", "Param", "Sim", NULL }, 
       { NULL } },
 
     /* end of list */
-    { NULL, 0, 0, 0, { NULL }, { NULL } }
+    { NULL, 0, 0, 0, 0, { NULL }, { NULL } }
   };
 
 /* The function counts the nodes in a definition line. */
@@ -303,6 +304,17 @@ static int checker_count_definitions (char * type, int action) {
   return count;
 }
 
+/* The following function returns the number of circuit instances
+   requiring a DC analysis (being nonlinear) in the list of definitions. */
+static int checker_count_nonlinearities (void) {
+  struct definition_t * def;
+  int count = 0;
+  for (def = definition_root; def != NULL; def = def->next) {
+    if (def->nonlinear != 0) count++;
+  }
+  return count;
+}
+
 /* This function returns the number of action definitions with the
    given instance name. */
 static int checker_count_action (char * instance) {
@@ -402,18 +414,32 @@ static int checker_validate_para (void) {
 /* This function checks the actions to be taken in the netlist.  It
    returns zero on success, non-zero otherwise. */
 static int checker_validate_actions (void) {
-  int n, errors = 0;
+  int a, c, n, errors = 0;
   if ((n = checker_count_definitions (NULL, 1)) < 1) {
     logprint (LOG_ERROR, "checker error, no actions .XX defined\n");
     errors++;
   }
   else {
-    if ((n = checker_count_definitions ("SP", 1)) >= 1) {
+    // check requirements for s-parameter analysis
+    if ((a = checker_count_definitions ("SP", 1)) >= 1) {
       if ((n = checker_count_definitions ("Pac", 0)) < 1) {
 	logprint (LOG_ERROR, "checker error, %d `Pac' definitions found, at "
 		  "least 1 required\n", n);
 	errors++;
       }
+    }
+    // check dc-analysis requirements
+    c = checker_count_nonlinearities ();
+    n = checker_count_definitions ("DC", 1);
+    if (n > 1) {
+      logprint (LOG_ERROR, "checker error, the .DC action is defined %dx, "
+		"single or none required\n", n);
+      errors++;
+    }
+    if (a >=1 && c >= 1 && n < 1) {
+      logprint (LOG_ERROR, "checker error, a .DC action is required for this "
+		"circuit definition\n");
+      errors++;
     }
   }
   errors += checker_validate_para ();
@@ -501,6 +527,8 @@ int netlist_checker (void) {
       errors++;
     }
     else {
+      /* mark nonlinear circuit definitions */
+      def->nonlinear = available->nonlinear;
       /* mark substrate definitions */
       def->substrate = available->substrate;
       /* check whether the number of nodes is correct */

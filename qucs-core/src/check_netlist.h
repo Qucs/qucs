@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.h,v 1.3 2004-04-25 17:08:50 ela Exp $
+ * $Id: check_netlist.h,v 1.4 2004-05-05 07:10:10 ela Exp $
  *
  */
 
@@ -58,6 +58,7 @@ struct definition_t {
   int duplicate;
   int action;
   int substrate;
+  int nonlinear;
 };
 
 __BEGIN_DECLS

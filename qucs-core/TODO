@@ -25,7 +25,7 @@ unfixed) have a look at the file BUGS.
 
 - Do not permit duplicate parameter names in parameter sweeps, but
   allow them in same order sweeps.
-- Implement implicite dependencies of analysis types.
+	- Implement implicit dependencies of analysis types.
 - Check for duplicate definitions in equations and parameter sweep
   variables.
 - Add string constants to equation base class.
