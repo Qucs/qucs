@@ -23,7 +23,17 @@ AC_Sim::AC_Sim()
 {
   Description = QObject::tr("ac simulation");
 
-  Texts.append(new Text(0, 0, Description));
+  QString s = Description;
+  int a = s.find(" ");
+  int b = s.findRev(" ");
+  if (a != -1 && b != -1) {
+    if (a > (int) s.length() - b)  b = a;
+  }
+  if (a < 8 || s.length() - b < 8) b = -1;
+  if (b != -1) s[b] = '\n';
+
+  Texts.append(new Text(0, 0, s.left(b)));
+  if (b != -1) Texts.append(new Text(0, 0, s.mid(b+1)));
 
   x1 = -10; y1 = -9;
   x2 = x1+115; y2 = y1+28;
