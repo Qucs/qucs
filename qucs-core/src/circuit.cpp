@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.28 2004-09-12 14:09:19 ela Exp $
+ * $Id: circuit.cpp,v 1.29 2004-09-13 21:05:34 ela Exp $
  *
  */
 
@@ -275,6 +275,18 @@ void circuit::setI (int port, complex z) {
   MatrixI[port - 1] = z;
 }
 
+/* Returns the circuits J-MNA matrix value of the given voltage source
+   built in the circuit. */
+complex circuit::getJ (int nr) {
+  return MatrixJ[nr - 1];
+}
+
+/* Sets the circuits J-MNA matrix value of the given voltage source
+   built in the circuit. */
+void circuit::setJ (int nr, complex z) {
+  MatrixJ[nr - vsource] = z;
+}
+
 // Returns the circuits voltage value at the given port.
 complex circuit::getV (int port) {
   return MatrixV[port - 1];
@@ -481,6 +493,11 @@ void circuit::clearD (void) {
 // The function cleans up the E-MNA matrix entries.
 void circuit::clearE (void) {
   memset (MatrixE, 0, sizeof (complex) * vsources);
+}
+
+// The function cleans up the J-MNA matrix entries.
+void circuit::clearJ (void) {
+  memset (MatrixJ, 0, sizeof (complex) * vsources);
 }
 
 // The function cleans up the I-MNA matrix entries.

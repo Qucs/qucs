@@ -1,3 +1,8 @@
+2004-09-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* technical.tex (chapter{Transient Analysis}): Started to
+	document transient analysis.
+
 2004-09-10  Stefan Jahn  <stefan@lkcc.org>
 
 	* technical.tex (subsubsection{Schneider}): Documented

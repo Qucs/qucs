@@ -4595,6 +4595,231 @@ Y =
 \subsection{Transmission line}
 %\addcontentsline{toc}{subsection}{Transmission line}
 
+\chapter{Transient Analysis}
+%\addcontentsline{toc}{chapter}{Transient Analysis}
+
+The transient simulation is the calculation of a networks response on
+arbitrary excitations.  The results are network quantities (branch
+currents and node voltages) as a function of time.  Substantial for
+the transient analysis is the consideration of energy storing
+components, i.e. inductors and capacitors.
+
+\addvspace{12pt}
+
+The relations between current and voltage of ideal capacitors and
+inductors are given by
+\begin{equation}
+V_C(t) = \dfrac{1}{C}\int I_C(t) \cdot dt
+\;\;\;\; \textrm{ and } \;\;\;\;
+I_L(t) = \dfrac{1}{L}\int V_L(t) \cdot dt
+\end{equation}
+
+or in terms of differential equations
+\begin{equation}
+I_C(t) = C\cdot \dfrac{d V_C}{d t}
+\;\;\;\; \textrm{ and } \;\;\;\;
+V_L(t) = L\cdot \dfrac{d I_L}{d t}
+\end{equation}
+
+To calculate these quantities in a computer program numerical
+integration methods are required.  With the current-voltage relations
+of these components at hand it is possible to apply the modified nodal
+analysis algorithm in order to calculate the networks response.
+
+\section{Integration methods}
+%\addcontentsline{toc}{section}{Integration methods}
+
+The following differential equation is going to be solved.
+\begin{equation}
+\dfrac{d x}{d t} = \dot{x}(t) = f(x,t)
+\label{eq:IntEquation}
+\end{equation}
+
+This differential equation is transformed into an algorithm-dependent
+finite difference equation by quantizing and replacing
+\begin{equation}
+\dot{x}(t) = \lim_{h \rightarrow 0} \dfrac{x(t+h) - x(t)}{h}
+\end{equation}
+
+by the following equation.
+\begin{equation}
+\dot{x}^n = \dfrac{x^{n+1} - x^{n}}{h^{n}}
+\end{equation}
+
+There are several linear single- and multi-step numerical integration
+methods available, each having advantages and disadvantages concerning
+aspects of stability and accuracy.  Integration methods can also be
+classified into implicit and explicit methods.
+
+\subsection{Single-step methods}
+%\addcontentsline{toc}{subsection}{Single-step methods}
+
+\subsubsection{Backward Euler}
+%\addcontentsline{toc}{subsubsection}{Backward Euler}
+
+In the explicit Euler method the right hand side of
+eq. \eqref{eq:IntEquation} is substituted by $f(x^n, t^n)$ which
+yields
+\begin{equation}
+f(x,t) = f(x^n, t^n)
+\;\;\;\; \rightarrow \;\;\;\;
+x^{n+1} = x^n + h^n\cdot f(x^n, t^n)
+\end{equation}
+
+\subsubsection{Forward Euler}
+%\addcontentsline{toc}{subsubsection}{Forward Euler}
+
+In the implicit Euler method the right hand side of
+eq. \eqref{eq:IntEquation} is substituted by $f(x^{n+1}, t^{n+1})$ which
+yields
+\begin{equation}
+f(x,t) = f(x^{n+1}, t^{n+1})
+\;\;\;\; \rightarrow \;\;\;\;
+x^{n+1} = x^n + h^n\cdot f(x^{n+1}, t^{n+1})
+\end{equation}
+
+\subsubsection{Trapezoidal method}
+%\addcontentsline{toc}{subsubsection}{Trapezoidal method}
+
+For the bilinear (also called trapezoidal) integration method $f(x,t)$
+is substituted by
+\begin{equation}
+f(x,t) = \dfrac{1}{2}\cdot \left(f(x^{n+1}, t^{n+1}) + f(x^{n}, t^{n})\right)
+\end{equation}
+
+which yields
+\begin{equation}
+x^{n+1} = x^n + \dfrac{h^n}{2}\cdot \left(f(x^{n+1}, t^{n+1}) + f(x^{n}, t^{n})\right)
+\end{equation}
+
+In each integration step the average value of the intervals beginning
+and end is taken into account.
+
+\subsection{Multi-step methods}
+%\addcontentsline{toc}{subsection}{Multi-step methods}
+
+For higher order multi-step integration methods the general purpose
+method of resolution for the equation $\dot{x} = f(x,t)$
+\begin{equation}
+x^{n+1} = \sum^p_{i=0} a_i\cdot x^{n-i} + h \sum^p_{i=-1} b_i\cdot f(x^{n-i}, t^{n-i})
+\end{equation}
+
+is used.  For a polynom of order $k$ the number of required coefficients is
+\begin{equation}
+2p + 3 \ge k + 1
+\end{equation}
+
+The $2p +3$ coeffcients are choosen to satisfy
+\begin{equation}
+x^{n+1} = x(t^{n+1})
+\end{equation}
+
+This can be achieved by the following equation system
+\begin{align}
+\sum^p_{i=0} a_i = 1\\
+\sum^p_{i=1} (-i)^j a_i + j \sum^p_{i=-1} (-i)^{j-1} b_i = 1 & \textrm{ for } j = 1\ldots k
+\end{align}
+
+\subsubsection{Gear}
+%\addcontentsline{toc}{subsubsection}{Gear}
+
+The Gear formulae have great importance within the multi-step
+integration methods used in transient analysis programs.  The conditions
+\begin{equation}
+p = k - 1
+\;\;\;\; \textrm{ and } \;\;\;\;
+b_0 = b_1 = \ldots = b_{k-1} = 0
+\end{equation}
+
+due to the following equation system.
+\begin{equation}
+\label{eq:GearCoeff}
+\begin{bmatrix}
+0 & 1 & 1 & 1 & 1\\
+1 & 0 & -1 & -2 & -3\\
+2 & 0 & 1 & 4 & 9 \\
+3 & 0 & -1 & -8 & -27\\
+4 & 0 & 1 & 16 & 81\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+b_{-1}\\
+a_0\\
+a_1\\
+a_2\\
+a_3\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+1\\
+1\\
+1\\
+1\\
+\end{bmatrix}
+\end{equation}
+
+for the Gear formulae of order $4$.  Order $k = 1$ yields the implicit
+Euler method.  The example given in the equation system
+\eqref{eq:GearCoeff} results in the following integration formula.
+\begin{equation}
+\begin{split}
+x^{n+1} &= a_0\cdot x^{n} + a_1\cdot x^{n-1} + a_2\cdot x^{n-2} + a_3\cdot x^{n-3} + h\cdot b_{-1}\cdot f(x^{n+1}, t^{n+1})\\
+&= \dfrac{48}{25}\cdot x^{n} - \dfrac{36}{25}\cdot x^{n-1} + \dfrac{16}{25}\cdot x^{n-2} - \dfrac{3}{25}\cdot x^{n-3} + h\cdot \dfrac{12}{25}\cdot f(x^{n+1}, t^{n+1})
+\end{split}
+\end{equation}
+
+\subsubsection{Runga-Kutta}
+%\addcontentsline{toc}{subsubsection}{Runga-Kutta}
+
+\subsubsection{Adams-Bashford}
+%\addcontentsline{toc}{subsubsection}{Adams-Bashford}
+
+\subsection{Energy-storage components}
+%\addcontentsline{toc}{subsection}{Energy-storage components}
+
+\subsubsection{Capacitor}
+%\addcontentsline{toc}{subsubsection}{Capacitor}
+
+\begin{align}
+I_C^{n+1} &= \dfrac{C}{h^{n}} V_C^{n+1} - \dfrac{C}{h^{n}} V_C^{n}\\
+I_C^{n+1} &= \dfrac{2C}{h^{n}} V_C^{n+1} - \dfrac{2C}{h^{n}} V_C^{n} - I_C^n\\
+I_C^{n+1} &= \dfrac{a_0\cdot C}{b_{-1}\cdot h^{n}} V_C^{n+1} - \dfrac{a_1\cdot C}{b_{-1}\cdot h^{n}} V_C^{n} - \dfrac{a_2\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-1} - \ldots - \dfrac{a_{k-1}\cdot C}{b_{-1}\cdot h^{n}} V_C^{n-k+1} 
+\end{align}
+
+Each of these equations can be rewritten as
+\begin{equation}
+I_C^{n+1} = g_{eq}\cdot V_C^{n+1} + I_{eq}
+\end{equation}
+
+which leads to the following companion model
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.3\linewidth]{transcap}
+\end{center}
+\caption{companion equivalent circuit of a capacitor during transient analysis}
+\end{figure}
+\FloatBarrier
+
+Thus the complete MNA matrix equation for an ideal capacitance writes
+as follows.
+\begin{equation}
+\begin{bmatrix}
++g_{eq} & -g_{eq}\\
+-g_{eq} & +g_{eq}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+\end{bmatrix}
+=
+\begin{bmatrix}
++I_{eq}\\
+-I_{eq}\\
+\end{bmatrix}
+\end{equation}
+
 \chapter{Non-linear devices}
 %\addcontentsline{toc}{chapter}{Non-linear devices}
 \label{sec:NLdevices}
@@ -5954,12 +6179,12 @@ of three constant overlap capacitances.  The intrinsic capacitances
 consist of the nonlinear thin-oxide capacitance, which is distributed
 among the gate, drain, source and bulk regions.  The MOS gate
 capacitances, as a nonlinear function of the terminal voltages, are
-modeled by Meyer's piece-wise linear model.
+modeled by J.E. Meyer's piece-wise linear model \cite{Meyer}.
 
 \addvspace{12pt}
 
 The bias-dependent gate-oxide capacitances distribute according to the
-Meyer model as follows.
+Meyer model \cite{Meyer} as follows.
 
 \begin{itemize}
 \item cutoff regions: $V_{GS} - V_{Th} < 0$

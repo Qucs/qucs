@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.h,v 1.3 2004-09-12 14:09:19 ela Exp $
+ * $Id: nasolver.h,v 1.4 2004-09-13 21:05:34 ela Exp $
  *
  */
 
@@ -56,12 +56,12 @@ class nasolver : public analysis
 
  protected:
   void savePreviousIteration (void);
+  int countNodes (void);
 
  private:
   void createMatrix (void);
   void assignVoltageSources (void);
   circuit * findVoltageSource (int);
-  int countNodes (void);
   void createGMatrix (void);
   void createBMatrix (void);
   void createCMatrix (void);
@@ -73,6 +73,7 @@ class nasolver : public analysis
   char * createI (int, char *, int);
   char * createOP (char *, char *);
   void saveNodeVoltages (void);
+  void saveBranchCurrents (void);
   int checkConvergence (void);
   void saveVariable (char *, nr_type_t, vector * f = NULL);
   nr_type_t MatValX (complex, complex *);
