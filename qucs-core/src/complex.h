@@ -18,12 +18,16 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.8 2004-05-02 12:02:11 ela Exp $
+ * $Id: complex.h,v 1.9 2004-05-24 10:11:08 ela Exp $
  *
  */
 
 #ifndef __COMPLEX_H__
 #define __COMPLEX_H__
+
+#ifdef log2
+#undef log2
+#endif
 
 class complex
 {

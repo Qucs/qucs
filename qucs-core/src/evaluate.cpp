@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.9 2004-05-22 19:48:32 ela Exp $
+ * $Id: evaluate.cpp,v 1.10 2004-05-24 10:11:09 ela Exp $
  *
  */
 
@@ -804,8 +804,8 @@ constant * evaluate::log10_v (constant * args) {
 constant * evaluate::log2_d (constant * args) {
   nr_double_t d1 = D (args->getResult (0));
   constant * res = new constant (TAG_COMPLEX);
-  if (d1 >= 0.0) res->c = new complex (log2 (d1));
-  else res->c = new complex (log2 (-d1), M_PI * M_LOG2E);
+  if (d1 >= 0.0) res->c = new complex (log (d1) * M_LOG2E);
+  else res->c = new complex (log (-d1) * M_LOG2E , M_PI * M_LOG2E);
   return res;
 }
 
