@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.7 2004/04/30 22:27:03 ela Exp $
+ * $Id: diode.cpp,v 1.8 2004/05/02 12:02:14 ela Exp $
  *
  */
 
@@ -67,12 +67,12 @@ void diode::calcDC (void) {
   Ud = real (getV (2) - getV (1));
 
   // critical voltage necessary for bad start values
-  Ucrit = n * Ut * log (Ut / sqrt (2) / Is);
+  Ucrit = n * Ut * log (Ut / M_SQRT2 / Is);
   // tiny derivative for little junction voltage
   gtiny = Ud < - 10 * Ut * n ? Is : 0;
 
   gd = Is / Ut / n * exp (Ud / Ut / n) + gtiny;
-  //fprintf(stderr, "gd=%g, Ud=%g\n", gd, Ud);
+  //fprintf (stderr, "gd=%g, Ud=%g\n", gd, Ud);
   Id = Is * (exp (Ud / Ut / n) - 1) + gtiny * Ud;
   Ieq = Id - Ud * gd;
 
@@ -103,6 +103,7 @@ void diode::calcOperatingPoints (void) {
   else
     Cd = cj0 * (1 + z * Ud / vd);
 
+  //fprintf (stderr, "gd=%g, Ud=%g, Id=%g, Cd=%g\n", gd, Ud, Id, Cd);
   setOperatingPoint ("gd", gd);
   setOperatingPoint ("Id", Id);
   setOperatingPoint ("Ud", Ud);

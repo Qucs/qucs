@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.10 2004/04/04 09:11:05 ela Exp $
+ * $Id: circuit.h,v 1.11 2004/05/02 12:02:11 ela Exp $
  *
  */
 
@@ -85,6 +85,7 @@ class circuit : public object
   int hasOperatingPoint (char *);
   void copyOperatingPoints (operatingpoint *);
   void deleteOperatingPoints (void);
+  int isNonLinear (void);
 
  protected:
   static const nr_double_t z0 = 50.0;

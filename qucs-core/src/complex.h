@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.7 2004/04/30 17:27:41 margraf Exp $
+ * $Id: complex.h,v 1.8 2004/05/02 12:02:11 ela Exp $
  *
  */
 
@@ -54,30 +54,30 @@ class complex
   friend complex     exp (const complex);
   friend complex      ln (const complex);
   friend complex   log10 (const complex);
-  friend complex   log2  (const complex);
+  friend complex    log2 (const complex);
   friend complex   floor (const complex);
   friend complex     pow (const complex, nr_double_t);
   friend complex     pow (nr_double_t, const complex);
   friend complex     pow (const complex, const complex);
   friend nr_double_t abs (const complex);
   friend complex     sin (const complex);
-  friend complex     arcsin (const complex);
+  friend complex  arcsin (const complex);
   friend complex     cos (const complex);
-  friend complex     arccos (const complex);
+  friend complex  arccos (const complex);
   friend complex     tan (const complex);
-  friend complex     arctan (const complex);
+  friend complex  arctan (const complex);
   friend complex     cot (const complex);
-  friend complex     arccot (const complex);
-  friend complex     sinh (const complex);
-  friend complex     arsinh (const complex);
-  friend complex     cosh (const complex);
-  friend complex     arcosh (const complex);
-  friend complex     tanh (const complex);
-  friend complex     artanh (const complex);
-  friend complex     coth (const complex);
-  friend complex     arcoth (const complex);
-  friend complex     ztor (const complex z, nr_double_t zref = 50.0);
-  friend complex     rtoz (const complex r, nr_double_t zref = 50.0);
+  friend complex  arccot (const complex);
+  friend complex    sinh (const complex);
+  friend complex  arsinh (const complex);
+  friend complex    cosh (const complex);
+  friend complex  arcosh (const complex);
+  friend complex    tanh (const complex);
+  friend complex  artanh (const complex);
+  friend complex    coth (const complex);
+  friend complex  arcoth (const complex);
+  friend complex    ztor (const complex, nr_double_t zref = 50.0);
+  friend complex    rtoz (const complex, nr_double_t zref = 50.0);
 
   // operator functions
   friend complex operator + (const complex, const complex);

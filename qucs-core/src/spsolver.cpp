@@ -1,7 +1,7 @@
 /*
  * spsolver.cpp - S-parameter solver class implementation
  *
- * Copyright (C) 2003 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.5 2004/04/13 20:41:17 ela Exp $
+ * $Id: spsolver.cpp,v 1.6 2004/05/02 12:02:11 ela Exp $
  *
  */
 
@@ -47,6 +47,7 @@ using namespace std;
 #include "itrafo.h"
 #include "analysis.h"
 #include "spsolver.h"
+#include "components/component_id.h"
 
 // Constructor creates an unnamed instance of the spsolver class.
 spsolver::spsolver () : analysis () {
@@ -306,6 +307,16 @@ void spsolver::reduce (void) {
   }
 }
 
+/* Goes through the list of circuit objects and runs initializing
+   functions if necessary. */
+void spsolver::init (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isNonLinear ())
+      c->calcOperatingPoints ();
+  }
+}
+
 /* This is the netlist solver.  It prepares the circuit list for each
    requested frequency and solves it then. */
 void spsolver::solve (void) {
@@ -320,6 +331,7 @@ void spsolver::solve (void) {
   step  = getPropertyDouble ("Step");
 
   insertConnections ();
+  init ();
 
   for (freq = start; freq <= stop; freq += step) {
 
@@ -342,6 +354,7 @@ void spsolver::solve (void) {
     subnet->getDroppedCircuits ();
     subnet->deleteUnusedCircuits ();
   }
+  dropConnections ();
   runs++;
 }
 
@@ -398,6 +411,27 @@ void spsolver::insertTee (node * n) {
   }
 }
 
+/* This function removes each inserted tee from the netlist and
+   restores the original node names. */
+void spsolver::dropTees (void) {
+  circuit * next;
+  node * n;
+  char * name;
+  // go through list of circuit objects
+  for (circuit * c = subnet->getRoot (); c != NULL; c = next) {
+    next = (circuit *) c->getNext ();
+    if (c->getType () == CIR_TEE) {
+      name = c->getNode(1)->getName ();
+      n = subnet->findConnectedNode (c->getNode (2));
+      n->setName (name);
+      n = subnet->findConnectedNode (c->getNode (3));
+      n->setName (name);
+      c->setOriginal (0);
+      subnet->removeCircuit (c);
+    }
+  }
+}
+
 /* The function adds an open to the circuit list if the given node is
    unconnected. */
 void spsolver::insertOpen (node * n) {
@@ -409,6 +443,18 @@ void spsolver::insertOpen (node * n) {
     subnet->insertedCircuit (result);
     result->setNode (1, n->getName());
     subnet->insertCircuit (result);
+  }
+}
+
+// This function removes each inserted open from the netlist.
+void spsolver::dropOpens (void) {
+  circuit * next;
+  for (circuit * c = subnet->getRoot (); c != NULL; c = next) {
+    next = (circuit *) c->getNext ();
+    if (c->getType () == CIR_OPEN) {
+      c->setOriginal (0);
+      subnet->removeCircuit (c);
+    }
   }
 }
 
@@ -428,6 +474,15 @@ void spsolver::insertConnections (void) {
     }
   }
   insertDifferentialPorts ();
+}
+
+/* The function is the counterpart of insertConnections().  It removes
+   all additional circuits from the netlist which were necessary to
+   run the analysis algorithm. */
+void spsolver::dropConnections (void) {
+  dropTees ();
+  dropOpens ();
+  dropDifferentialPorts ();
 }
 
 /* This function inserts an ideal transformator before an AC power
@@ -457,6 +512,27 @@ void spsolver::insertDifferentialPorts (void) {
 
       // put the trafo in the circuit list
       subnet->insertCircuit (result);
+    }
+  }
+}
+
+/* This function removes each ideal transformer which was necessary to
+   be placed in front of a s-parameter port in order to allow
+   differential s-parameters.  It also restores the original node
+   names. */
+void spsolver::dropDifferentialPorts (void) {
+  circuit * next, * pac;
+  node * n;
+  // go through list of circuit objects
+  for (circuit * c = subnet->getRoot (); c != NULL; c = next) {
+    next = (circuit *) c->getNext ();
+    if (c->getType () == CIR_ITRAFO) {
+      n = subnet->findConnectedNode (c->getNode (1));
+      pac = n->getCircuit ();
+      pac->getNode(1)->setName (c->getNode(2)->getName ());
+      pac->getNode(2)->setName (c->getNode(3)->getName ());
+      c->setOriginal (0);
+      subnet->removeCircuit (c);
     }
   }
 }
