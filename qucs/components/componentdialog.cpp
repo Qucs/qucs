@@ -278,11 +278,12 @@ void ComponentDialog::slotApplyPropName()
 {
   QListViewItem *item = prop->currentItem();
   if(item->text(0) != NameEdit->text()) {
-      if(NameEdit->text() == "Export") {
-	item->setText(0, "Export_");   // name must not be "Export" !!!
-	NameEdit->setText("Export_");
-      }
-      else  item->setText(0, NameEdit->text());  // apply property name
+//    if(NameEdit->text() == "Export") {
+//	item->setText(0, "Export_");   // name must not be "Export" !!!
+//	NameEdit->setText("Export_");
+//    }
+//      else
+    item->setText(0, NameEdit->text());  // apply property name
     changed = true;
   }
   edit->setFocus();   // cursor into "edit" widget
@@ -327,6 +328,8 @@ void ComponentDialog::slotButtCancel()
 void ComponentDialog::slotApplyInput()
 {
   Component *pc;
+  if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->Name);
+  else
   if(CompNameEdit->text() != Comp->Name) {
     for(pc = cList->first(); pc!=0; pc = cList->next())
       if(pc->Name == CompNameEdit->text())

@@ -456,7 +456,7 @@ bool Diagram::loadVarData(const QString& fileName)
       QMessageBox::critical(0, QObject::tr("Error"),
                    QObject::tr("Too few dependent data \"")+
 		   Variable+"\"");
-      g->Var += " (invalid)";
+//      g->Var += " (invalid)";
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
       g->countY = 0;
