@@ -30,7 +30,7 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent, const char *name)
   setCaption(tr("Edit Marker Properties"));
   pMarker = pm_;
 
-  QGridLayout *g = new QGridLayout(this, 4,2,5,5);
+  QGridLayout *g = new QGridLayout(this, 5,2,5,5);
 
   g->addWidget(new QLabel(tr("Precision: "), this), 0,0);
   Precision = new QLineEdit(this);
@@ -46,9 +46,13 @@ MarkerDialog::MarkerDialog(Marker *pm_, QWidget *parent, const char *name)
   NumberBox->setCurrentItem(pMarker->numMode);
   g->addWidget(NumberBox, 1, 1);
 
+  TransBox = new QCheckBox(tr("transparent"), this);
+  TransBox->setChecked(pMarker->transparent);
+  g->addMultiCellWidget(TransBox,3,3,0,1);
+
   QHBox *b = new QHBox(this);
   b->setSpacing(5);
-  g->addMultiCellWidget(b,3,3,0,1);
+  g->addMultiCellWidget(b,4,4,0,1);
 
   // first => activated by pressing RETURN
   QPushButton *ButtOK = new QPushButton(tr("OK"),b);
@@ -73,6 +77,10 @@ void MarkerDialog::slotAcceptValues()
   }
   if(NumberBox->currentItem() != pMarker->numMode) {
     pMarker->numMode = NumberBox->currentItem();
+    changed = true;
+  }
+  if(TransBox->isChecked() != pMarker->transparent) {
+    pMarker->transparent = TransBox->isChecked();
     changed = true;
   }
 

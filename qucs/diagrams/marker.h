@@ -20,6 +20,7 @@
 
 
 #include "element.h"
+#include "viewpainter.h"
 
 #include <qpainter.h>
 #include <qvaluelist.h>
@@ -42,7 +43,7 @@ public:
   void    makeInvalid();
   bool    moveLeftRight(bool);
   bool    moveUpDown(bool);
-  void    paint(QPainter*, int, int);
+  void    paint(ViewPainter*, int, int);
   void    paintScheme(QPainter*);
   void    setCenter(int, int, bool);
   void    Bounding(int& _x1, int& _y1, int& _x2, int& _y2);
@@ -50,6 +51,7 @@ public:
   bool    load(const QString& Line);
   bool    getSelected(int, int);
   Marker* sameNewOne(Graph*);
+  void    getTextSize(const QFont&);
 
   Diagram *Diag;     // the corresponding diagram
   Graph   *pGraph;   // the corresponding graph
@@ -58,7 +60,8 @@ public:
   double VarPos[256];  // values the marker is pointing to
 
   QString Text;     // the string to be displayed in the marker text
-  int lookNfeel;    // different marker designs possible
+  int  lookNfeel;   // different marker designs possible
+  bool transparent; // background shines through marker body
 
   int  Precision;   // number of digits to show
   int  numMode;     // real/imag or polar (deg/rad)

@@ -21,6 +21,7 @@
 #include <qdialog.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
+#include <qcheckbox.h>
 
 #include "marker.h"
 
@@ -43,6 +44,7 @@ public:
 
   QComboBox  *NumberBox;
   QLineEdit  *Precision;
+  QCheckBox  *TransBox;
 };
 
 #endif

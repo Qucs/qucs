@@ -31,20 +31,20 @@
 Marker::Marker(Diagram *Diag_, Graph *pg_, int _nn, int cx_, int cy_)
 {
   Type = isMarker;
-  isSelected = false;
+  isSelected = transparent = false;
 
   Diag   = Diag_;
   pGraph = pg_;
   Precision = 2;   // before createText()
   lookNfeel = 1;
   numMode = nVarPos = 0;
-  cx = cx_;  cy = cy_;
+  cx = cx_;  cy = -cy_;
 
   if(!pGraph)  makeInvalid();
   else initText(_nn);   // finally create marker
 
-  x1 = cx + 100;
-  y1 = cy + 100;
+  x1 =  cx + 60;
+  y1 = -cy - 60;
 }
 
 Marker::~Marker()
@@ -87,8 +87,6 @@ void Marker::initText(int n)
     num = *(pD->Points + (nn % pD->count));
     VarPos[nVarPos++] = num;
     Text += pD->Var + ": " + QString::number(num,'g',Precision) + "\n";
-    // because of a bug in Qt, line breaks
-//    Text += pD->Var + ": " + QString::number(num,'g',Precision) + "\n";
     nn /= pD->count;
   }
 
@@ -107,10 +105,7 @@ void Marker::initText(int n)
 
   Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
 
-  QFontMetrics  metrics(QucsSettings.font);
-  QSize r = metrics.size(0, Text);
-  x2 = r.width()+5;
-  y2 = r.height()+5;
+  getTextSize(QucsSettings.font);
 }
 
 // ---------------------------------------------------------------------
@@ -158,12 +153,9 @@ void Marker::createText()
 	    break;
   }
 
-  Diag->calcCoordinate(VarPos[0], yr, yi, &cx, &cy);
+  Diag->calcCoordinate(VarPos[0], yr, -yi, &cx, &cy);
 
-  QFontMetrics  metrics(QucsSettings.font);
-  QSize r = metrics.size(0, Text);
-  x2 = r.width()+5;
-  y2 = r.height()+5;
+  getTextSize(QucsSettings.font);
 }
 
 // ---------------------------------------------------------------------
@@ -177,7 +169,13 @@ void Marker::makeInvalid()
   }
   Text = QObject::tr("invalid");
 
-  QFontMetrics  metrics(QucsSettings.font);
+  getTextSize(QucsSettings.font);
+}
+
+// ---------------------------------------------------------------------
+void Marker::getTextSize(const QFont& Font)
+{
+  QFontMetrics  metrics(Font);
   QSize r = metrics.size(0, Text);
   x2 = r.width()+5;
   y2 = r.height()+5;
@@ -271,36 +269,48 @@ bool Marker::moveUpDown(bool up)
 }
 
 // ---------------------------------------------------------------------
-void Marker::paint(QPainter *p, int x0, int y0)
+void Marker::paint(ViewPainter *p, int x0, int y0)
 {
-  p->setPen(QPen(QPen::darkMagenta,0));
-  p->drawRect(x0+x1, y0-y1, x2+1, -y2);
+  // Workaround for bug in Qt: If WorldMatrix is turned off, \n in the
+  // text creates a terrible mess.
+  p->Painter->setWorldXForm(true);
+  QWMatrix wm = p->Painter->worldMatrix();
+  p->Painter->setWorldMatrix(QWMatrix());
+
+  p->Painter->setPen(QPen(QPen::black,1));
+  x2 = p->drawText(Text, x0+x1+3, y0+y1+3, &y2);
+  x2 += int(6.0*p->Scale);
+  y2 += int(6.0*p->Scale);
+  if(!transparent) {
+    p->eraseRect(x0+x1, y0+y1, x2, y2);
+    p->drawText(Text, x0+x1+3, y0+y1+3);
+  }
+  p->Painter->setWorldXForm(false);
+  p->Painter->setWorldMatrix(wm);
+
+  p->Painter->setPen(QPen(QPen::darkMagenta,0));
+  p->drawRectD(x0+x1, y0+y1, x2, y2);
+
+  x2 = int(double(x2) / p->Scale);
+  y2 = int(double(y2) / p->Scale);
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
-    if(cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
+    if(-cy < y1+(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1);
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1-y2);
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1+y2);
   }
   else {
-    if(cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1);
+    if(-cy < y1+(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1);
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1-y2);
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1+y2);
   }
 
-  p->setPen(QPen(QPen::black,1));
-  int x, y;
-  QWMatrix wm = p->worldMatrix(); // workaround for bug in Qt: If WorldMatrix
-  p->setWorldMatrix(QWMatrix());  // is turned off, \n in the text creates
-  wm.map(x0+x1+3, y0-y1-y2+3, &x, &y);   // a terrible mess.
-  p->drawText( x, y, 0, 0, Qt::DontClip, Text);
-  p->setWorldMatrix(wm);
-
   if(isSelected) {
-    p->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(x0+x1-2, y0-y1+2, x2+4, -y2-4);
+    p->Painter->setPen(QPen(QPen::darkGray,3));
+    p->drawRoundRect(x0+x1-3, y0+y1-3, x2+6, y2+6);
   }
 }
 
@@ -309,20 +319,20 @@ void Marker::paintScheme(QPainter *p)
 {
   int x0 = Diag->cx;
   int y0 = Diag->cy;
-  p->drawRect(x0+x1, y0-y1, x2, -y2);
+  p->drawRect(x0+x1, y0+y1, x2, y2);
 
   // which corner of rectangle should be connected to line ?
   if(cx < x1+(x2>>1)) {
-    if(cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1);
+    if(-cy < y1+(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1);
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1, y0-y1-y2);
+      p->drawLine(x0+cx, y0-cy, x0+x1, y0+y1+y2);
   }
   else {
-    if(cy < y1+(y2>>1))
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1);
+    if(-cy < y1+(y2>>1))
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1);
     else
-      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0-y1-y2);
+      p->drawLine(x0+cx, y0-cy, x0+x1+x2, y0+y1+y2);
   }
 }
 
@@ -330,7 +340,7 @@ void Marker::paintScheme(QPainter *p)
 void Marker::setCenter(int x, int y, bool relative)
 {
   if(relative) {
-    x1 += x;  y1 -= y;
+    x1 += x;  y1 += y;
   }
   else {
     x1 = x;  y1 = y;
@@ -342,9 +352,9 @@ void Marker::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
   if(Diag) {
     _x1 = Diag->cx + x1;
-    _y1 = Diag->cy - y1-y2;
+    _y1 = Diag->cy + y1;
     _x2 = Diag->cx + x1+x2;
-    _y2 = Diag->cy - y1;
+    _y2 = Diag->cy + y1+y2;
   }
   else {
     _x1 = x1;
@@ -364,7 +374,10 @@ QString Marker::save()
   s.at(s.length()-1) = ' ';
 
   s += QString::number(x1) +" "+ QString::number(y1) +" "
-      +QString::number(Precision) +" "+ QString::number(numMode) +">";
+      +QString::number(Precision) +" "+ QString::number(numMode);
+  if(transparent)  s += " 1>";
+  else  s += " 0>";
+
   return s;
 }
 
@@ -402,14 +415,17 @@ bool Marker::load(const QString& _s)
   if(!ok) return false;
 
   n  = s.section(' ',4,4);      // Precision
-  if(n.isEmpty()) return true;  //  is optional
   Precision = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',5,5);      // numMode
-  if(n.isEmpty()) return true;  //  is optional
   numMode = n.toInt(&ok);
   if(!ok) return false;
+
+  n  = s.section(' ',6,6);      // transparent
+  if(n.isEmpty()) return true;  // is optional
+  if(n == "0")  transparent = false;
+  else  transparent = true;
 
   return true;
 }
@@ -437,11 +453,12 @@ Marker* Marker::sameNewOne(Graph *pGraph_)
   for(int z=0; z<nVarPos; z++)
     pm->VarPos[z] = VarPos[z];
 
-  pm->Text      = Text;
-  pm->lookNfeel = lookNfeel;
+  pm->Text        = Text;
+  pm->lookNfeel   = lookNfeel;
+  pm->transparent = transparent;
 
-  pm->Precision = Precision;
-  pm->numMode   = numMode;
+  pm->Precision   = Precision;
+  pm->numMode     = numMode;
 
   return pm;
 }

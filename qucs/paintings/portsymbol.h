@@ -36,7 +36,7 @@ public:
 
   bool load(const QString&);
   QString save();
-  void paint(QPainter*);
+  void paint(ViewPainter*);
   bool getSelected(int, int);
   void Bounding(int&, int&, int&, int&);
 

@@ -22,22 +22,22 @@ symTrafo::symTrafo()
 {
   Description = QObject::tr("ideal symmetrical transformer");
 
-  Arcs.append(new Arc(-16,-58, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16,-46, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16,-34, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16, 46, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16, 34, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-16, 22, 13, 13, 16*270, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4,-18, 13, 13,  16*90, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4, -6, 13, 13,  16*90, 16*180,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(  4,  5, 13, 13,  16*90, 16*180,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,-58,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,-46,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16,-34,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16, 46,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16, 34,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-16, 22,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4,-18,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4, -6,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(  4,  6,13,13,  16*90,16*180, QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-58,-10,-70,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-70,-30,-70,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10,-18, 10,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10,-30, 30,-30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 58,-10, 70,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 70,-30, 70,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 10, 17, 10, 30,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 10, 18, 10, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10, 30, 30, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-10,-30,-10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10,-22,-10,-10,QPen(QPen::darkBlue,2)));

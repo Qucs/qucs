@@ -163,6 +163,32 @@ QString complexRad (double real, double imag, int Precision)
   return Text;
 }
 
+// #########################################################################
+QString StringNum(double num, char form, int Precision)
+{
+  int a = 0;
+  char *p, Buffer[512], Format[6] = "%.00g";
+  QString s;
+
+  Format[4]  = form;
+  Format[2] += Precision / 10;
+  Format[3] += Precision % 10;
+  sprintf(Buffer, Format, num);
+  p = strchr(Buffer, 'e');
+  if(p) {
+    p++;
+    if(*(p++) == '+') { a = 1; }
+    if(*p == '0') { a++; p++; }
+    if(a > 0)
+      do {
+        *(p-a) = *p;
+      } while(*(p++) != 0);
+  }
+
+  s = Buffer;
+  return s;
+}
+
 
 // #########################################################################
 // ##########                                                     ##########

@@ -48,7 +48,7 @@ bool TabDiagram::calcDiagram()
 
   QSize r;
   QFontMetrics  metrics(QucsSettings.font);
-  int tHeight = metrics.height();
+  int tHeight = metrics.lineSpacing();
   QString Str;
   int colWidth=0, x=8, y = y2-tHeight-6;
 
@@ -80,15 +80,15 @@ bool TabDiagram::calcDiagram()
         return false;
       }
     }
-    Texts.append(new Text(x-4, y2-tHeight-1, Str)); // independent variable
+    Texts.append(new Text(x-4, y2-2, Str)); // independent variable
     if(pD->count != 0) {
-    y = y2-2*tHeight-6;
+    y = y2-tHeight-5;
     counting /= pD->count;   // how many rows to be skipped
     for(int z1=0; z1<lastCount; z1++) {
       px = pD->Points;
       for(int z=pD->count; z>0; z--) {
-	if(y < 0) break;
-	Str = QString::number(*(px++));
+	if(y < tHeight) break;
+	Str = StringNum(*(px++));
 	r = metrics.size(0, Str);  // width of text
 	if(r.width() > colWidth) {
           colWidth = r.width();
@@ -102,11 +102,10 @@ bool TabDiagram::calcDiagram()
         }
 
         Texts.append(new Text( x, y, Str));
-        y -= (tHeight+2)*counting;
+        y -= tHeight*counting;
       }
       if(pD == g->cPointsX.getFirst())
-        Lines.append(new Line(0, y+tHeight, x2, y+tHeight,
-			QPen(QPen::black,0)));
+        Lines.append(new Line(0, y, x2, y, QPen(QPen::black,0)));
     }
     lastCount *= pD->count; }
     x += colWidth+10;
@@ -116,7 +115,7 @@ bool TabDiagram::calcDiagram()
 
   // ................................................
   for(; g!=0; g = Graphs.next()) {    // write all dependent variables
-    y = y2-2*tHeight-6;
+    y = y2-tHeight-5;
     colWidth = 0;
 
     Str = g->Var;
@@ -131,13 +130,13 @@ bool TabDiagram::calcDiagram()
         return false;
       }
     }
-    Texts.append(new Text(x, y2-tHeight-1, Str));  // dependent variable
+    Texts.append(new Text(x, y2-2, Str));  // dependent variable
 
 
     py = g->cPointsY;
     if (!g->cPointsX.getFirst()) return false;
     for(int z=g->cPointsX.getFirst()->count * g->countY; z>0; z--) {
-      if(y < 0) break;
+      if(y < tHeight) break;
       switch(g->numMode) {
         case 0: Str = complexRect(*py, *(py+1), g->Precision);
 	        break;
@@ -161,7 +160,7 @@ bool TabDiagram::calcDiagram()
       }
 
       Texts.append(new Text(x, y, Str));
-      y -= tHeight+2;
+      y -= tHeight;
     }
     x += colWidth+10;
     Lines.append(new Line(x-8, y2, x-8, 0, QPen(QPen::black,0)));

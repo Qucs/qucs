@@ -464,6 +464,10 @@
         <source>magnitude/angle (radian)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessageBox</name>
@@ -2008,6 +2012,10 @@ Usage:  qucsedit [-r] file
     <message>
         <source>    -h  display this help and exit
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> &lt;invalid&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
