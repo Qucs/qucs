@@ -29,26 +29,26 @@
 
 class Arrow : public Painting  {
 public: 
-	Arrow();
-	~Arrow();
+  Arrow();
+  ~Arrow();
 
-  virtual void paintScheme(QPainter *p);
-  virtual void getCenter(int& x, int &y);
-  virtual void setCenter(int x, int y, bool relative=false);
+  void paintScheme(QPainter *p);
+  void getCenter(int& x, int &y);
+  void setCenter(int x, int y, bool relative=false);
 
-  virtual Arrow* newOne();
-  virtual bool load(const QString& s);
-  virtual QString save();
-  virtual void paint(QPainter *p);
-  virtual void MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn);
-  virtual bool MousePressing();
-  virtual bool getSelected(int x, int y);
-  virtual void Bounding(int&, int&, int&, int&);
+  Arrow* newOne();
+  bool load(const QString& s);
+  QString save();
+  void paint(QPainter *p);
+  void MouseMoving(int x, int y, int gx, int gy, QPainter *p, bool drawn);
+  bool MousePressing();
+  bool getSelected(int x, int y);
+  void Bounding(int&, int&, int&, int&);
 
-  virtual void rotate();
-  virtual void mirrorX();
-  virtual void mirrorY();
-  virtual bool Dialog();
+  void rotate();
+  void mirrorX();
+  void mirrorY();
+  bool Dialog();
 
   void calcArrowHead();
   

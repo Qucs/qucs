@@ -17,6 +17,8 @@
 
 #include "tabdiagram.h"
 
+#include <qwidget.h>
+
 
 TabDiagram::TabDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
@@ -56,7 +58,7 @@ void TabDiagram::calcDiagram()
 
   Graph *g = Graphs.first();
   if(g == 0) return;
-  
+
   QWidget w;
   QPainter p(&w);
   p.setFont(QFont("Helvetica",12, QFont::Light));

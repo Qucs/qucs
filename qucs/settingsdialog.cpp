@@ -27,7 +27,7 @@
 
 
 SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
-                                : QDialog(parent, name, Qt::WDestructiveClose)
+                                : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
 {
   Doc = d;
   setCaption(tr("Edit File Properties"));

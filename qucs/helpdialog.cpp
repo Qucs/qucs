@@ -27,7 +27,7 @@
 /* FIXME: #include <qtextcodec.h> */
 
 HelpDialog::HelpDialog(const QString& page, QWidget *parent, const char *name )
-                                  : QDialog(parent, name, Qt::WDestructiveClose)
+                                  : QDialog(parent, name, FALSE, Qt::WDestructiveClose)
 {
   setCaption(tr("Qucs Help System"));
 

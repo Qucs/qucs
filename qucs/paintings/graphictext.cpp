@@ -241,7 +241,10 @@ bool GraphicText::Dialog()
   d->TextSize->setText(QString::number(Size));
   d->text->setText(Text);
 
-  if(d->exec() == QDialog::Rejected) return false;
+  if(d->exec() == QDialog::Rejected) {
+    delete d;
+    return false;
+  }
 
   if(Color != d->ColorButt->paletteBackgroundColor()) {
     Color = d->ColorButt->paletteBackgroundColor();
@@ -261,12 +264,14 @@ bool GraphicText::Dialog()
       Text = _Text;
       changed = true;
     }
-  
+
   QWidget w;
   QPainter p(&w);
   p.setFont(QFont("Helvetica",Size, QFont::Light));
   QRect r = p.boundingRect(0,0,0,0,Qt::AlignAuto,Text);      // get width of text
   x2 = r.width();
   y2 = r.height();
+
+  delete d;
   return changed;
 }

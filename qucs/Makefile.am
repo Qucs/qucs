@@ -31,7 +31,7 @@ MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
 qucs_SOURCES = fileshowdialog.cpp messagebox.cpp settingsdialog.cpp node.cpp \
   element.cpp simmessage.cpp qucsdoc.cpp wire.cpp newprojdialog.cpp          \
-  qucsview.cpp qucs.cpp main.cpp helpdialog.cpp $(MOCFILES)
+  qucsview.cpp qucs.cpp main.cpp helpdialog.cpp wirelabel.cpp qucsfile.cpp $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucs_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
@@ -39,7 +39,7 @@ qucs_LDADD = components/libcomponents.a diagrams/libdiagrams.a \
 	paintings/libpaintings.a
 
 noinst_HEADERS = $(MOCHEADERS) newprojdialog.h wire.h qucsdoc.h element.h \
-  node.h
+  node.h wirelabel.h qucsfile.h
 
 # rules for translations
 TRANSLATIONS = $(srcdir)/qucs_de.ts $(srcdir)/qucs_pl.ts $(srcdir)/qucs_fr.ts

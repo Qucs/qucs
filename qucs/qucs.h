@@ -139,7 +139,7 @@ class QucsApp : public QMainWindow
     void slotSimulate();
     void slotShowLastMsg();
     void slotShowLastNetlist();
-    void slotAfterSimulation(int Status);
+    void slotAfterSimulation(int Status, SimMessage *sim);
     void slotChangePage();
     void slotSelect(bool on);
     void slotSelectAll();
@@ -149,8 +149,6 @@ class QucsApp : public QMainWindow
 //    void slotActivateCopy(bool on);
     
   private:
-
-    SimMessage sim;   // simulation message window
 
     QucsView   *view;   // the working area with schematics, data displays etc.
     QPrinter   Printer; // printer global in order to remember the user settings

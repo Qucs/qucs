@@ -49,7 +49,6 @@ class QucsView : public QScrollView
   Q_OBJECT
 
 public:
-//	DrawArea(QWidget *parent=0, const char *name=0, WFlags f=0);
   QucsView(QWidget *parent=0);
   ~QucsView();
 
@@ -78,6 +77,18 @@ protected:
   void contentsMouseDoubleClickEvent(QMouseEvent *Event);
   void contentsMouseReleaseEvent(QMouseEvent *Event);
   void contentsWheelEvent(QWheelEvent *Event);
+
+  bool ScrollUp(int step);
+  bool ScrollDown(int step);
+  bool ScrollLeft(int step);
+  bool ScrollRight(int step);
+
+protected slots:
+  void slotScrollUp();
+  void slotScrollDown();
+  void slotScrollLeft();
+  void slotScrollRight();
+
 
 public:
   void MouseDoNothing(QMouseEvent *Event);
@@ -123,7 +134,7 @@ public:
   void endElementMoving();
 
 signals:
-  void CompsSelected(bool);
+//  void CompsSelected(bool);
 //  void AreaMouseMove(QMouseEvent *Event);
 //  void AreaMousePress(QMouseEvent *Event);
 

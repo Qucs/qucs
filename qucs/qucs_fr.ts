@@ -930,6 +930,11 @@ Unknown field!</source>
         <source>simulation to perform parameter sweep on</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Format Error:
+Wrong line start!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2419,6 +2424,14 @@ Go on ?</source>
     </message>
     <message>
         <source>Enter the label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The ground potential cannot be labeled!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

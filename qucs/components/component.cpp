@@ -15,12 +15,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "component.h"
+#include "components.h"
 
 #include <qpoint.h>
 #include <qpainter.h>
 #include <qstring.h>
 #include <qpen.h>
+#include <qmessagebox.h>
 
 
 
@@ -101,6 +102,15 @@ void Component::setCenter(int x, int y, bool relative)
 {
   if(relative) { cx += x;  cy += y; }
   else { cx = x;  cy = y; }
+}
+
+// -------------------------------------------------------
+bool Component::getSelected(int x_, int y_)
+{
+  if(x_ >= x1+cx) if(x_ <= x2+cx) if(y_ >= y1+cy) if(y_ <= y2+cy)
+    return true;
+
+  return false;
 }
 
 // -------------------------------------------------------
@@ -386,7 +396,7 @@ bool Component::load(const QString& _s)
       if(p1->Description.isEmpty()) Props.remove();    // remove if allocated in vain
       return true;
     }
-    if(p1->Description.isEmpty()) {
+    if(p1->Description.isEmpty()) {   // unknown number of properties follows ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1,1);
       Props.append(new Property("y", "1", true));   // allocate memory for a new property (e.g. for equations)
@@ -400,6 +410,112 @@ bool Component::load(const QString& _s)
     else p1->display = false;
     if(!ok) return false;
   }
-  
+
   return true;
+}
+
+
+
+// ********************************************************************************
+// **********                                                            **********
+// **********    The following function does not below to any class.     **********
+// **********    It creates a component by getting the identification    **********
+// **********    string used in the schematic file and for copy/paste.   **********
+// **********                                                            **********
+// ********************************************************************************
+
+Component* getComponentFromName(QString& Line)
+{
+  Component *c = 0;
+
+  Line = Line.stripWhiteSpace();
+  if(Line.at(0) != '<') {
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Format Error:\nWrong line start!"));
+    return 0;
+  }
+
+  QString cstr = Line.section(' ',0,0);    // component type
+  char first = Line.at(1).latin1();     // first letter of component name
+  cstr.remove(0,2);    // remove leading "<" and first letter
+
+  // to speed up the string comparision, they are ordered by the first letter of their name
+  switch(first) {
+  case 'R' : if(cstr.isEmpty()) c = new Resistor();
+        else if(cstr == "us") c = new ResistorUS();
+        break;
+  case 'C' : if(cstr.isEmpty()) c = new Capacitor();
+        else if(cstr == "CCS") c = new CCCS();
+        else if(cstr == "CVS") c = new CCVS();
+        else if(cstr == "irculator") c = new Circulator();
+        break;
+  case 'L' : if(cstr.isEmpty()) c = new Inductor();
+        break;
+  case 'G' : if(cstr == "ND") c = new Ground();
+        else if(cstr == "yrator") c = new Gyrator();
+        break;
+  case 'I' : if(cstr == "Probe") c = new iProbe();
+        else if(cstr == "dc") c = new Ampere_dc();
+        else if(cstr == "noise") c = new Ampere_noise();
+        else if(cstr == "solator") c = new Isolator();
+        break;
+  case 'V' : if(cstr == "dc") c = new Volt_dc();
+        else if(cstr == "ac") c = new Volt_ac();
+        else if(cstr == "CCS") c = new VCCS();
+        else if(cstr == "CVS") c = new VCVS();
+        else if(cstr == "noise") c = new Volt_noise();
+        break;
+  case 'T' : if(cstr == "r") c = new Transformer();
+        else if(cstr == "LIN") c = new TLine();
+        break;
+  case 's' : if(cstr == "Tr") c = new symTrafo();
+        break;
+  case 'P' : if(cstr == "ac") c = new Source_ac();
+        else if(cstr == "ort") c = new SubCirPort();
+        else if(cstr == "Shift") c = new Phaseshifter();
+        break;
+  case 'S' : if(cstr.left(7) == "Pfile") { c = new SParamFile(cstr.mid(7).toInt()); }
+        else if(cstr.left(4) == "ub") { c = new Subcircuit(cstr.mid(4).toInt()); }
+        else if(cstr == "UBST") c = new Substrate();
+        break;
+  case 'D' : if(cstr == "CBlock") c = new dcBlock();
+        else if(cstr == "CFeed") c = new dcFeed();
+        else if(cstr == "iode") c = new Diode();
+        break;
+  case 'B' : if(cstr == "iasT") c = new BiasT();
+        break;
+  case 'A' : if(cstr == "ttenuator") c = new Attenuator();
+        break;
+  case 'M' : if(cstr == "LIN") c = new MSline();
+        else if(cstr == "STEP") c = new MSstep();
+        else if(cstr == "CORN") c = new MScorner();
+        else if(cstr == "TEE") c = new MStee();
+        else if(cstr == "CROSS") c = new MScross();
+        else if(cstr == "MBEND") c = new MSmbend();
+        else if(cstr == "OPEN") c = new MSopen();
+        break;
+  case 'E' : if(cstr == "qn") c = new Equation();
+        break;
+  case '.' : if(cstr == "DC") c = new DC_Sim();
+        else if(cstr == "AC") c = new AC_Sim();
+        else if(cstr == "TR") c = new TR_Sim();
+        else if(cstr == "SP") c = new SP_Sim();
+        else if(cstr == "HB") c = new HB_Sim();
+        else if(cstr == "SW") c = new Param_Sweep();
+        break;
+  }
+  if(!c) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Format Error:\nUnknown component!"));
+    return 0;
+  }
+
+  if(!c->load(Line)) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+                 QObject::tr("Format Error:\nWrong 'component' line format!"));
+    delete c;
+    return 0;
+  }
+
+  return c;
 }
