@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.25 2005/04/01 06:52:46 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.26 2005/04/07 11:57:49 raimi Exp $
  *
  */
 
@@ -61,6 +61,7 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
   A = NULL;
   B = X = NULL;
+  Rdiag = NULL;
   cMap = rMap = NULL;
   update = 1;
   pivoting = PIVOT_PARTIAL;
@@ -69,6 +70,7 @@ eqnsys<nr_type_t>::eqnsys () {
 // Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
+  if (Rdiag != NULL) delete Rdiag;
   if (B != NULL) delete B;
   if (rMap != NULL) delete rMap;
   if (cMap != NULL) delete cMap;
@@ -79,7 +81,8 @@ eqnsys<nr_type_t>::~eqnsys () {
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   A = e.A;
-  if (e.B != NULL) B = new tvector<nr_type_t> (*(e.B));
+  Rdiag = NULL;
+  B = e.B ? new tvector<nr_type_t> (*(e.B)) : NULL;
   cMap = rMap = NULL;
   update = 1;
   X = e.X;
@@ -128,19 +131,22 @@ void eqnsys<nr_type_t>::solve (void) {
     solve_lu ();
     break;
   case ALGO_LU_FACTORIZATION:
-    solve_lu_factorization ();
+    factorize_lu_crout ();
     break;
   case ALGO_LU_SUBSTITUTION_CROUT:
-    solve_lu_subst_crout ();
+    substitute_lu_crout ();
     break;
   case ALGO_LU_SUBSTITUTION_DOOLITTLE:
-    solve_lu_subst_doolittle ();
+    substitute_lu_doolittle ();
     break;
   case ALGO_JACOBI: case ALGO_GAUSS_SEIDEL:
     solve_iterative ();
     break;
   case ALGO_SOR:
     solve_sor ();
+    break;
+  case ALGO_QR_DECOMPOSITION:
+    solve_qr ();
     break;
   }
 #if DEBUG && 0
@@ -251,32 +257,34 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
 #define VIRTUAL_RES(txt,i) {					  \
   qucs::exception * e = new qucs::exception (EXCEPTION_SINGULAR); \
   e->setText (txt);						  \
-  e->setData (i);						  \
+  e->setData (rMap[i - 1]);					  \
   A->set (i, i, TINY); /* virtual resistance to ground */	  \
   throw_exception (e); }
 
-/* This function decomposites the left hand matrix into an upper U and
-   lower L matrix.  The algorithm is called LU decomposition (Crout's
-   definition).  It is very useful when dealing with equation systems
-   where the left hand side (the A matrix) does not change but the
-   right hand side (the B vector) only. */
+/* The function uses LU decomposition and the appropriate forward and
+   backward substitutions in order to solve the linear equation
+   system.  It is very useful when dealing with equation systems where
+   the left hand side (the A matrix) does not change but the right
+   hand side (the B vector) only. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_lu (void) {
 
   // skip decomposition if requested
   if (update) {
     // perform LU composition
-    solve_lu_factorization ();
+    factorize_lu_crout ();
   }
 
   // finally solve the equation system
-  solve_lu_subst_crout ();
+  substitute_lu_crout ();
 }
 
-/* The function performs the actual LU decomposition of the matrix A
-   using (implicit) partial row pivoting. */
+/* This function decomposes the left hand matrix into an upper U and
+   lower L matrix.  The algorithm is called LU decomposition (Crout's
+   definition).  The function performs the actual LU decomposition of
+   the matrix A using (implicit) partial row pivoting. */
 template <class nr_type_t>
-void eqnsys<nr_type_t>::solve_lu_factorization (void) {
+void eqnsys<nr_type_t>::factorize_lu_crout (void) {
   nr_double_t d, MaxPivot, * iPvt;
   nr_type_t f;
   int k, c, r, pivot, N = A->getCols ();
@@ -293,7 +301,7 @@ void eqnsys<nr_type_t>::solve_lu_factorization (void) {
     rMap[r - 1] = r;
   }
 
-  // decomposite the matrix into L (lower) and U (upper) matrix
+  // decompose the matrix into L (lower) and U (upper) matrix
   for (c = 1; c <= N; c++) {
     // upper matrix entries
     for (r = 1; r < c; r++) {
@@ -340,11 +348,86 @@ void eqnsys<nr_type_t>::solve_lu_factorization (void) {
   delete iPvt;
 }
 
+/* This function decomposes the left hand matrix into an upper U and
+   lower L matrix.  The algorithm is called LU decomposition
+   (Doolittle's definition).  The function performs the actual LU
+   decomposition of the matrix A using (implicit) partial row pivoting. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
+  nr_double_t d, MaxPivot, * iPvt;
+  nr_type_t f;
+  int k, c, r, pivot, N = A->getCols ();
+
+  // initialize pivot exchange table
+  iPvt = new nr_double_t[N];
+  if (rMap) delete rMap; rMap = new int[N];
+  for (r = 1; r <= N; r++) {
+    for (MaxPivot = 0, c = 1; c <= N; c++)
+      if ((d = abs (A->get (r, c))) > MaxPivot)
+	MaxPivot = d;
+    if (MaxPivot <= 0) MaxPivot = TINY;
+    iPvt[r - 1] = 1 / MaxPivot;
+    rMap[r - 1] = r;
+  }
+
+  // decompose the matrix into L (lower) and U (upper) matrix
+  for (c = 1; c <= N; c++) {
+    // upper matrix entries
+    for (r = 1; r < c; r++) {
+      f = A->get (r, c);
+      for (k = 1; k < r; k++) f -= A->get (r, k) * A->get (k, c);
+      A->set (r, c, f);
+    }
+    // lower matrix entries
+    for (MaxPivot = 0, pivot = r; r <= N; r++) {
+      f = A->get (r, c);
+      for (k = 1; k < c; k++) f -= A->get (r, k) * A->get (k, c);
+      A->set (r, c, f);
+      // larger pivot ?
+      if ((d = iPvt[r - 1] * abs (f)) > MaxPivot) {
+	MaxPivot = d;
+	pivot = r;
+      }
+    }
+
+    // check pivot element and throw appropriate exception
+    if (MaxPivot <= 0) {
+#if LU_FAILURE
+      qucs::exception * e = new qucs::exception (EXCEPTION_PIVOT);
+      e->setText ("no pivot != 0 found during LU decomposition");
+      e->setData (c);
+      throw_exception (e);
+      goto fail;
+#else /* insert virtual resistance */
+      VIRTUAL_RES ("no pivot != 0 found during LU decomposition", c);
+#endif
+    }
+
+    // swap matrix rows if necessary and remember that step in the
+    // exchange table
+    if (c != pivot) {
+      A->exchangeRows (c, pivot);
+      Swap (int, rMap[c - 1], rMap[pivot - 1]);
+      Swap (nr_double_t, iPvt[c - 1], iPvt[pivot - 1]);
+    }
+
+    // finally divide by the pivot element
+    if (c != N) {
+      f = 1 / A->get (c, c);
+      for (r = c + 1; r <= N; r++) A->set (r, c, A->get (r, c) * f);
+    }
+  }
+#if LU_FAILURE
+ fail:
+#endif
+  delete iPvt;
+}
+
 /* The function is used in order to run the forward and backward
    substitutions using the LU decomposed matrix (Crout's definition -
    Uii are ones).  */
 template <class nr_type_t>
-void eqnsys<nr_type_t>::solve_lu_subst_crout (void) {
+void eqnsys<nr_type_t>::substitute_lu_crout (void) {
   nr_type_t f;
   int i, c, N = A->getCols ();
   tvector<nr_type_t> Y (N);
@@ -352,7 +435,7 @@ void eqnsys<nr_type_t>::solve_lu_subst_crout (void) {
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
     f = B->get (rMap[i - 1]);
-    for (c = 1; c <= i - 1; c++) f -= A->get (i, c) * Y.get (c);
+    for (c = 1; c < i; c++) f -= A->get (i, c) * Y.get (c);
     f /= A->get (i, i);
     Y.set (i, f);
   }
@@ -371,7 +454,7 @@ void eqnsys<nr_type_t>::solve_lu_subst_crout (void) {
    definition - Lii are ones).  This function is here because of
    transposed LU matrices as used in the AC noise analysis. */
 template <class nr_type_t>
-void eqnsys<nr_type_t>::solve_lu_subst_doolittle (void) {
+void eqnsys<nr_type_t>::substitute_lu_doolittle (void) {
   nr_type_t f;
   int i, c, N = A->getCols ();
   tvector<nr_type_t> Y (N);
@@ -379,7 +462,7 @@ void eqnsys<nr_type_t>::solve_lu_subst_doolittle (void) {
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
     f = B->get (rMap[i - 1]);
-    for (c = 1; c <= i - 1; c++) f -= A->get (i, c) * Y.get (c);
+    for (c = 1; c < i; c++) f -= A->get (i, c) * Y.get (c);
     // remember that the Lii diagonal are ones only in Doolittle's definition
     Y.set (i, f);
   }
@@ -606,7 +689,7 @@ void eqnsys<nr_type_t>::ensure_diagonal (void) {
    the equation system matrix A.  It achieves this condition for
    non-singular matrices which have been produced by the modified
    nodal analysis.  It takes advantage of the fact that the zero
-   diagonal elements have pairs of 1 und -1 on the same column and
+   diagonal elements have pairs of 1 and -1 on the same column and
    row. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
@@ -665,7 +748,7 @@ int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
   return pairs;
 }
 
-/* The function tries to raise the absulute value of diagonal elements
+/* The function tries to raise the absolute value of diagonal elements
    by swapping rows and thereby make the A matrix diagonally
    dominant. */
 template <class nr_type_t>
@@ -686,5 +769,125 @@ void eqnsys<nr_type_t>::preconditioner (void) {
       A->exchangeRows (i, pivot);
       B->exchangeRows (i, pivot);
     }
+  }
+}
+
+/* This function uses QR decomposition using householder
+   transformations in order to solve the given equation system. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_qr (void) {
+  factorize_qrh ();
+  substitute_qrh ();
+}
+
+/* The following function computes the euclidian norm of the given
+   column vector of the matrix A starting from the given row. */
+template <class nr_type_t>
+nr_double_t eqnsys<nr_type_t>::euclidianCol (int c, int r) {
+  nr_double_t n = 0;
+  int N = A->getRows ();
+  for (int i = r; i <= N; i++) n += norm (A->get (i, c));
+  return sqrt (n);
+}
+
+/* The function decomposes the matrix A into two matrices, the
+   orthonormal matrix Q and the upper triangular matrix R.  The
+   original matrix is replaced by the householder vectors in the lower
+   triangular (including the diagonal) and the upper triangular R
+   matrix with its diagonal elements stored in the Rdiag vector. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::factorize_qrh (void) {
+  int c, r, k, pivot, N = A->getCols ();
+  nr_type_t f, t;
+  nr_double_t s, MaxPivot;
+  tvector<nr_double_t> n (N);
+
+  if (cMap) delete cMap; cMap = new int[N];
+  if (Rdiag) delete Rdiag; Rdiag = new tvector<nr_type_t> (N);
+
+  for (c = 1; c <= N; c++) {
+    // compute column norms and save in work array
+    n.set (c, euclidianCol (c));
+    cMap[c - 1] = c; // initialize permutation vector
+  }
+
+  for (c = 1; c <= N; c++) {
+
+    // put column with largest norm into pivot position
+    MaxPivot = n.get (c); pivot = c;
+    for (r = c + 1; r <= N; r++) {
+      nr_double_t x = n.get (r);
+      if (x > MaxPivot) {
+	pivot = r;
+	MaxPivot = x;
+      }
+    }
+    if (pivot != c && 0) {
+      A->exchangeCols (pivot, c);
+      Swap (int, cMap[pivot - 1], cMap[c - 1]);
+      n.exchangeRows (pivot, c);
+    }
+
+    // compute householder vector
+    if (c < N) {
+      nr_type_t a, b;
+      s = euclidianCol (c, c + 1);
+      a = A->get (c, c);
+      b = - sign (a) * sqrt (norm (a) + s * s); // Wj
+      t = sqrt (s * s + norm (a - b));          // || Vi - Wi ||
+      Rdiag->set (c, b);
+      // householder vector entries Ui
+      A->set (c, c, (a - b) / t);
+      for (r = c + 1; r <= N; r++) A->set (r, c, A->get (r, c) / t);
+    }
+    else {
+      Rdiag->set (c, A->get (c, c));
+    }
+    
+    // apply householder transformation to remaining columns
+    for (r = c + 1; r <= N; r++) {
+      for (f = 0, k = c; k <= N; k++) f += A->get (k, c) * A->get (k, r);
+      for (k = c; k <= N; k++)
+	A->set (k, r, A->get (k, r) - 2 * f * A->get (k, c));
+    }
+
+    // update norms of remaining columns too
+    for (r = c + 1; r <= N && 0; r++) {
+      nr_double_t x = n.get (r);
+      if (x > 0) {
+	f = A->get (c, r) / x;
+	if (abs (f) >= 1)
+	  s = 0;
+	else
+	  s = x * sqrt (1 - norm (f));
+	if (abs (s / x) < TINY) s = euclidianCol (r, c + 1);
+	n.set (r, s);
+      }
+    }
+  }
+}
+
+/* The function uses the householder vectors in order to compute Q'B,
+   then the equation system RX = B is solved by backward substitution. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::substitute_qrh (void) {
+  int c, r, N = A->getCols ();
+  nr_type_t f;
+
+  // form the new right hand side Q'B
+  for (c = 1; c < N; c++) {
+    // scalar product u_k^T * B
+    for (f = 0, r = c; r <= N; r++) f += A->get (r, c) * B->get (cMap[r - 1]);
+    // z - 2 * f * u_k
+    for (r = c; r <= N; r++)
+      B->set (cMap[r - 1], B->get (cMap[r - 1]) - 2 * f * A->get (r, c));
+  }
+
+  // backward substitution in order to solve RX = Q'B
+  for (r = N; r > 0; r--) {
+    f = B->get (r);
+    for (c = r + 1; c <= N; c++) f -= A->get (r, c) * X->get (c);
+    f /= Rdiag->get (r);
+    X->set (r, f);
   }
 }

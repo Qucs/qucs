@@ -1,3 +1,13 @@
+2005-04-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp: Added Doolittle's LU factorization.  Just for
+	completeness. Implemented new preliminary QR solver.  The
+	functionality is given (really solves equation systems), but
+	pivoting, numerical over/underflow and solution of singular
+	matrices is still missing...
+
+	* consts.h (M_SQRT1_2): Added 'M_SQRT1_2' constant.
+
 2005-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp: Split LU factorization from LU solver and also

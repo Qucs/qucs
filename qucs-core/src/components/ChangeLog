@@ -1,3 +1,12 @@
+2005-04-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msvia.cpp: Fixed yet another typo in the
+	microstrip via implementation.
+
+	* microstrip/cpwline.cpp: Introduced new parameter 'Approx'
+	allowing to switch between approximated (fast) and exact (slow)
+	K/K' expression.
+
 2005-03-31  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msvia.cpp: Fixed noise calculations as well as

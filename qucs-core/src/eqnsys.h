@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.13 2005/04/01 06:52:47 raimi Exp $
+ * $Id: eqnsys.h,v 1.14 2005/04/07 11:57:49 raimi Exp $
  *
  */
 
@@ -36,7 +36,8 @@ enum algo_type {
   ALGO_LU_DECOMPOSITION          = 0x0018,
   ALGO_JACOBI                    = 0x0040,
   ALGO_GAUSS_SEIDEL              = 0x0080,
-  ALGO_SOR                       = 0x0100
+  ALGO_SOR                       = 0x0100,
+  ALGO_QR_DECOMPOSITION          = 0x0200
 };
 
 // Definition of pivoting strategies.
@@ -71,13 +72,19 @@ class eqnsys
   tmatrix<nr_type_t> * A;
   tvector<nr_type_t> * B;
   tvector<nr_type_t> * X;
+  tvector<nr_type_t> * Rdiag;
   void solve_inverse (void);
   void solve_gauss (void);
   void solve_gauss_jordan (void);
   void solve_lu (void);
-  void solve_lu_factorization (void);
-  void solve_lu_subst_crout (void);
-  void solve_lu_subst_doolittle (void);
+  void factorize_lu_crout (void);
+  void factorize_lu_doolittle (void);
+  void substitute_lu_crout (void);
+  void substitute_lu_doolittle (void);
+  void solve_qr (void);
+  void factorize_qrh (void);
+  void substitute_qrh (void);
+  nr_double_t euclidianCol (int, int r = 1);
   void solve_iterative (void);
   void solve_sor (void);
   nr_double_t convergence_criteria (void);

@@ -1,3 +1,11 @@
+2005-04-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip.tex (section{Microstrip via hole}): Fixed typo
+	in microstrip via hole documentation.
+
+	* dcanalysis.tex (subsection{QR decomposition}): Documented
+	QR decomposition.
+
 2005-03-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices.tex (subsection{Small signal model}): Documented
