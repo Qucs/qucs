@@ -56,7 +56,8 @@ qucs_%.ts: $(qucs_SOURCES)
 	  $(LUPDATE) `$(PATHXFORM) $(srcdir)/*.cpp $(srcdir)/paintings/*.cpp \
 	  $(srcdir)/diagrams/*.cpp $(srcdir)/components/*.cpp \
 	  $(srcdir)/dialogs/*.cpp  $(top_srcdir)/qucs-help/*.cpp \
-	  $(top_srcdir)/qucs-edit/*.cpp` -ts $(srcdir)/$$file; \
+	  $(top_srcdir)/qucs-edit/*.cpp $(top_srcdir)/qucs-filter/*.cpp \
+	  $(top_srcdir)/qucs-transcalc/*.cpp` -ts $(srcdir)/$$file; \
 	done
 
 %.qm: %.ts
