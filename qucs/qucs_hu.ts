@@ -58,23 +58,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Mentés</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished">Mindent ment</translation>
+        <translation>Mindent ment</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished">Eldobás</translation>
+        <translation>Eldob</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished">Mindent eldob</translation>
+        <translation>Mindent eldob</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation>Mégsem</translation>
     </message>
 </context>
 <context>
@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>Points per decade:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pont per dekád:</translation>
     </message>
 </context>
 <context>
@@ -463,16 +463,16 @@
         <translation>Határadatok</translation>
     </message>
     <message>
+        <source>Rotation around x-Axis:</source>
+        <translation>Forgatás az X-tengely körül:</translation>
+    </message>
+    <message>
         <source>Rotation around y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forgatás az Y-tengely körül:</translation>
     </message>
     <message>
         <source>Rotation around z-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation around x-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forgatás az Z-tengely körül:</translation>
     </message>
 </context>
 <context>
@@ -629,15 +629,15 @@
     <name>HelpDialog</name>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>A QucsFilter egy szűrő méretező program. A szűrőkészítéshez egyszerüen csak meg kell adnia a paramétereket, és meg kell nyomni az ablak alján lévő nagy gombot. Azonnal a vágólapra helyezi a kiszámolt szűrő kapcsolási rajzát. Ezután a Qucs-ba beilleszthető a rajz a Szerkesztés / Beillesztés menüben vagy a CTRL-V billenytükombinációval. így a szűrőrajz beillesztkető és szimulálható. Jó szórakozást!</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Bezár</translation>
+        <translation>Bezár</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <source>Qucs Transcalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
@@ -653,7 +653,7 @@
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -795,35 +795,35 @@
     <name>OptionsDialog</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciók</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Mértékegységek</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvencia</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Hossz</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenállás</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Szög</translation>
     </message>
     <message>
         <source>Save as Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés alapértelmezettként</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Eldob</translation>
     </message>
 </context>
 <context>
@@ -2466,7 +2466,7 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>zajfeszültség számolás</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
@@ -2474,17 +2474,17 @@ Használat:  qucsedit [-r] fájl
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>Hőmérséklet celziuszfok-ban</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
+        <translation>Változó nem található:</translation>
     </message>
 </context>
 <context>
@@ -2737,7 +2737,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>nem fog látszani betöltéskor! Folytatja?</translation>
     </message>
     <message>
         <source>Info</source>
@@ -2776,7 +2776,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>&amp;Eldobás</translation>
+        <translation>&amp;Eldob</translation>
     </message>
     <message>
         <source>Printing...</source>
@@ -3079,19 +3079,23 @@ Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulajdonságok beállítása</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Nem indítható a szűrő méretező program!
+</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Nem indítható a tápvonal tervező program!
+</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation>3D-Derékszögű</translation>
     </message>
 </context>
 <context>
@@ -3166,7 +3170,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>&amp;Eldobás</translation>
+        <translation>&amp;Eldob</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3175,7 +3179,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
 </context>
@@ -3183,130 +3187,133 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     <name>QucsFilter</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Kilépés</translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished"></translation>
+        <translation>Súgó...</translation>
     </message>
     <message>
         <source>&amp;About QucsFilter...</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter &amp;Névjegy...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt Névjegy...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Fájl</translation>
+        <translation>&amp;Fájl</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Súgó</translation>
+        <translation>&amp;Súgó</translation>
     </message>
     <message>
         <source>Filter type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrő típus:</translation>
     </message>
     <message>
         <source>Butterworth</source>
-        <translation type="unfinished"></translation>
+        <translation>Butterworth</translation>
     </message>
     <message>
         <source>Filter class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrő osztály:</translation>
     </message>
     <message>
         <source>Low pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Aluláteresztő</translation>
     </message>
     <message>
         <source>High pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Felüláteresztő</translation>
     </message>
     <message>
         <source>Order:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fokszám:</translation>
     </message>
     <message>
         <source>Corner frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Törésponti frekvencia:</translation>
     </message>
     <message>
         <source>Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Hz</translation>
     </message>
     <message>
         <source>kHz</source>
-        <translation type="unfinished"></translation>
+        <translation>kHz</translation>
     </message>
     <message>
         <source>MHz</source>
-        <translation type="unfinished"></translation>
+        <translation>MHz</translation>
     </message>
     <message>
         <source>GHz</source>
-        <translation type="unfinished"></translation>
+        <translation>GHz</translation>
     </message>
     <message>
         <source>Stop frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Befejező frekvencia:</translation>
     </message>
     <message>
         <source>Pass band ripple:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lengés:</translation>
     </message>
     <message>
         <source>dB</source>
-        <translation type="unfinished"></translation>
+        <translation>dB</translation>
     </message>
     <message>
         <source>Impedance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedancia:</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Számolás és vágólapra helyezés</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Névjegy...</translation>
+        <translation>Névjegy...</translation>
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter verzió</translation>
     </message>
     <message>
         <source>
 Filter synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Szűrő méretező program
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">Qt Névjegy</translation>
+        <translation>Qt Névjegy</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredmény:</translation>
     </message>
     <message>
         <source>Succesfull</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikeres</translation>
     </message>
     <message>
         <source>Result: --</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredmény: --</translation>
     </message>
 </context>
 <context>
@@ -4498,89 +4505,104 @@ Qt univerzális áramkör szimuláció
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Külön köszönet Jens Flucke-nek és Raimund Jacob-nak
+
+</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Toyoyuki Ishikawa - Japán</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotan Nahum - Héber
+</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Szövegszerkesztő</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Szövegszerkesztő</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs szövegszerkesztő indítása</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Szövegszerkesztő
+
+Qucs szövegszerkesztő indítása</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrő méretező</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter indítása</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
+        <translation>Szűrő méretező
 
-</source>
-        <translation type="unfinished"></translation>
+QucsFilter indítása</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Tápvonal számítás</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsTrans indítása</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Tápvonal kalkulátor
+
+QucsTrans indítása</translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation>Qt Névjegy...</translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation>&amp;Eszközök</translation>
+    </message>
+    <message>
+        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
+
+</source>
+        <translation>QucsFiltert Toyoyuki Ishikawa és Michael Margraf írta
+
+
+
+</translation>
     </message>
     <message>
         <source>Swedish by Markus Gothe
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Markus Gothe - Svéd
+
+</translation>
     </message>
 </context>
 <context>
@@ -4630,87 +4652,87 @@ Starts transmission line calculator</source>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Betölt</translation>
     </message>
     <message>
         <source>&amp;Load</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Betölt</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Mentés</translation>
+        <translation>Mentés</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Mentés</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciók</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opciók</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">Kilépés</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kilépés</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolás a vágólapra</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolás a &amp;vágólapra</translation>
     </message>
     <message>
         <source>Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>Analizálás</translation>
     </message>
     <message>
         <source>&amp;Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Analizálás</translation>
     </message>
     <message>
         <source>Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>Szintetizál</translation>
     </message>
     <message>
         <source>&amp;Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Szintetizál</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Súgó</translation>
+        <translation>&amp;Súgó</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Névjegy</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Fájl</translation>
+        <translation>&amp;Fájl</translation>
     </message>
     <message>
         <source>&amp;Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Futtatás</translation>
     </message>
     <message>
         <source>Transmission Line Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tápvonala típus</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrosztrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -4722,39 +4744,39 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Coupled Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>Páros Mikrosztrip</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Szubsztrát paraméterek</translation>
     </message>
     <message>
         <source>Component Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponens paraméterek</translation>
     </message>
     <message>
         <source>Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Fizikai paraméterek</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredő elektromos paraméterek</translation>
     </message>
     <message>
         <source>Compute Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalkulált fizikai paraméterek</translation>
     </message>
     <message>
         <source>Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektromos paraméterek</translation>
     </message>
     <message>
         <source>Calculated Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredmény számítás</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Kész.
+        <translation>Kész.
 </translation>
     </message>
     <message>
@@ -4763,11 +4785,11 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Conductor Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezető veszteségei</translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrikum veszteségei</translation>
     </message>
     <message>
         <source>Skin Depth</source>
@@ -4807,7 +4829,7 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Relative Permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatív dielektromos állandó</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
@@ -4815,7 +4837,7 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Szubsztrát magassága</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
@@ -4823,15 +4845,15 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Strip Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezetősáv vastagsága</translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vezetősáv vezetése</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrikum veszteség tangense</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
@@ -4839,59 +4861,59 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frekvencia</translation>
     </message>
     <message>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonal szélesség</translation>
     </message>
     <message>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Vonal hossz</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakterisztikus ellenállás</translation>
     </message>
     <message>
         <source>Electrical Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektromos hossz</translation>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished"></translation>
+        <translation>Fém vezetése</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Mágneses veszteség tangense</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Hullámvezető szélessége</translation>
     </message>
     <message>
         <source>Height of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Hullámvezető magassága</translation>
     </message>
     <message>
         <source>Waveguide Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Hullámvezető hossza</translation>
     </message>
     <message>
         <source>Inner Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Belső átmérő</translation>
     </message>
     <message>
         <source>Outer Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulső átmérő</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Hossz</translation>
     </message>
     <message>
         <source>Gap Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Rés szélessége</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
@@ -4911,31 +4933,35 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Névjegy...</translation>
+        <translation>Névjegy...</translation>
     </message>
     <message>
         <source>Qucs Transcalc</source>
-        <translation type="unfinished"></translation>
+        <translation>Qucs Transcalc</translation>
     </message>
     <message>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tápvonal kalkulátor a Qucs-hoz
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001 by Gopal Narayanan
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2002 by Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 by Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Values are consistent.</source>
@@ -4947,39 +4973,39 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Loading file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájl betöltés...</translation>
     </message>
     <message>
         <source>Transcalc File</source>
-        <translation type="unfinished"></translation>
+        <translation>Transcalc Fájl</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished">Fájl név</translation>
+        <translation>Fájl név</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <source>Cannot load file:</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl nem töltető be:</translation>
     </message>
     <message>
         <source>Loading aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Betöltés megszakítva.</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished">Fájl mentése...</translation>
+        <translation>Fájl mentése...</translation>
     </message>
     <message>
         <source>Cannot save file:</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl nem menthető:</translation>
     </message>
     <message>
         <source>Saving aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés megszakítva.</translation>
     </message>
 </context>
 <context>
