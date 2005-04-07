@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.8 2005-03-14 21:59:09 raimi Exp $
+ * $Id: cpwline.cpp,v 1.9 2005-04-07 11:57:50 raimi Exp $
  *
  */
 
@@ -118,6 +118,20 @@ nr_double_t cpwline::ellipk (nr_double_t k) {
   return r;
 }
 
+/* More or less accurate approximation of K(k)/K'(k).  Suggested by
+   publications dealing with coplanar components. */
+nr_double_t cpwline::ellipa (nr_double_t k) {
+  nr_double_t r, kp;
+  if (k < M_SQRT1_2) {
+    kp = sqrt (1 - k * k);
+    r = M_PI / log (2 * (1 + sqrt (kp)) / (1 - sqrt (kp)));
+  }
+  else {
+    r = log (2 * (1 + sqrt (k)) / (1 - sqrt (k))) / M_PI;
+  }
+  return r;
+}
+
 void cpwline::initSP (void) {
   // allocate S-parameter matrix
   allocMatrixS ();
@@ -134,6 +148,7 @@ void cpwline::initPropagation (void) {
   nr_double_t h  = subst->getPropertyDouble ("h");
   nr_double_t t  = subst->getPropertyDouble ("t");
   char * back    = getPropertyString ("Backside");
+  int approx     = !strcmp (getPropertyString ("Approx"), "yes");
 
   tand = subst->getPropertyDouble ("tand");
   rho  = subst->getPropertyDouble ("rho");
@@ -146,13 +161,21 @@ void cpwline::initPropagation (void) {
   k1   = W / (W + s + s);
   kk1  = ellipk (k1);
   kpk1 = ellipk (sqrt (1 - k1 * k1));
-  q1   = kk1 / kpk1;
+  if (approx) {
+    q1 = ellipa (k1);
+  } else {
+    q1   = kk1 / kpk1;
+  }
 
   // backside is metal
   if (!strcmp (back, "Metal")) {
     nr_double_t k3, q3, qz;
     k3  = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
-    q3  = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+    if (approx) {
+      q3 = ellipa (k3);
+    } else {
+      q3  = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+    }
     qz  = 1 / (q1 + q3);
     er0 = 1 + q3 * qz * (er - 1);
     zl_factor = Z0 / 2 * qz;
@@ -160,7 +183,11 @@ void cpwline::initPropagation (void) {
   // backside is air
   else if (!strcmp (back, "Air")) {
     k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
-    q2  = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+    if (approx) {
+      q2 = ellipa (k2);
+    } else {
+      q2  = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+    }
     er0 = 1 + (er - 1) / 2 * q2 * q1;
     zl_factor = Z0 / 4 * q1;
   }

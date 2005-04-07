@@ -896,6 +896,239 @@ The LU decomposition requires approximately $n^3/3 + n^2 - n/3$
 operations for solving a linear equation system.  For $M$ consecutive
 solutions the method requires $n^3/3 + Mn^2 - n/3$ operations.
 
+\subsection{QR decomposition}
+%\addcontentsline{toc}{subsection}{QR decomposition}
+
+Singular matrices actually having a solution are over-determined.
+These types of matrices can be handled by three different types of
+decompositions: Householder, Jacobi and singular value decomposition.
+Householder decomposition factors a matrix $A$ into the product of an
+orthonormal matrix $Q$ and an upper triangular matrix $R$, such that:
+\begin{equation}
+A = Q\cdot R
+\end{equation}
+
+The Householder decomposition is based on the fact that for any two
+different vectors, $v$ and $w$, with $\left\lVert v\right\rVert =
+\left\lVert w\right\rVert$, (i.e. different vectors of equal length),
+a reflection matrix $H$ exists such that:
+\begin{equation}
+H \cdot v = w
+\end{equation}
+
+To obtain the matrix $H$, define the vector $u$ by:
+\begin{equation}
+u = \dfrac{v - w}{\left\lVert v - w\right\rVert}
+\end{equation}
+
+The matrix $H$ defined by: 
+\begin{equation}
+\label{eq:ReflectionMatrix}
+H = I - 2 \cdot u \cdot u^T
+\end{equation}
+
+is the required reflection matrix. 
+
+\addvspace{12pt}
+
+The equation system
+\begin{equation}
+A\cdot x = z
+\;\;\;\; \textrm{is transformed into} \;\;\;\;
+Q R\cdot x = z
+\end{equation}
+
+With $Q^T\cdot Q = I$ this yields
+\begin{equation}
+Q^T Q R\cdot x = Q^T z
+\;\;\;\; \rightarrow \;\;\;\;
+R\cdot x = Q^T z
+\end{equation}
+
+Since $R$ is triangular the equation system is solved by a simple
+matrix-vector multiplication on the right hand side and backward
+substitution.
+
+\subsubsection{Step 1: QR decomposition}
+%\addcontentsline{toc}{subsubsection}{Step 1: QR decomposition}
+
+Starting with $A_1 = A$, let $v_1$ = the first column of $A_1$, and
+$w_1^T = \left(\lVert v_1\rVert , 0 , \ldots 0\right)$, i.e. a column
+vector whose first component is the norm of $v_1$ with the remaining
+components equal to 0.  The Householder transformation $H_1 = I - 2
+\cdot u_1 \cdot u_1^T$ with $u_1 = v_1 - w_1 / \lVert v_1 - w_1
+\rVert$ will turn the first column of $A_1$ into $w_1$ as with $H_1
+\cdot A_1 = A_2$.  At each stage $k$, $v_k$ = the kth column of $A_k$
+on and below the diagonal with all other components equal to 0, and
+$w_k$'s kth component equals the norm of $v_k$ with all other
+components equal to 0.  Letting $H_k \cdot A_k = A_{k+1}$, the
+components of the kth column of $A_{k+1}$ below the diagonal are each
+0.  These calculations are listed below for each stage for the matrix
+A.
+
+\begin{equation}
+\begin{split}
+v_1 =
+\begin{bmatrix}
+a_{11}\\
+a_{21}\\
+\vdots\\
+a_{n1}
+\end{bmatrix}
+\;\;\;
+w_1 =
+\begin{bmatrix}
+\lVert v_1 \rVert\\
+0\\
+\vdots\\
+0
+\end{bmatrix}
+\;\;\;
+u_1 = \dfrac{v_1 - w_1}{\left\lVert v_1 - w_1\right\rVert} =
+\begin{bmatrix}
+u_{11}\\
+u_{21}\\
+\vdots\\
+u_{n1}
+\end{bmatrix}
+\\
+H_1 = I - 2 \cdot u_1 \cdot u_1^T
+\;\;\; \rightarrow \;\;\;
+H_1 \cdot A_1 = A_2 =
+\begin{bmatrix}
+a_{11} & a_{12} & \ldots & a_{1n}\\
+0 & a_{22} & \ldots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & a_{n2} & \ldots & a_{nn}
+\end{bmatrix}
+\end{split}
+\end{equation}
+
+With this first step the upper left diagonal element of the $R$
+matrix, $a_{11} = \lVert v_1 \rVert$, has been generated.  The
+elements below are zeroed out.  Since $H_1$ can be generated from
+$u_1$ stored in place of the first column of $A_1$ the multiplication
+$H_1 \cdot A_1$ can be performed without actually generating $H_1$.
+
+\begin{equation}
+\begin{split}
+v_2 =
+\begin{bmatrix}
+0\\
+a_{22}\\
+\vdots\\
+a_{n2}
+\end{bmatrix}
+\;\;\;
+w_1 =
+\begin{bmatrix}
+0\\
+\lVert v_2 \rVert\\
+\vdots\\
+0
+\end{bmatrix}
+\;\;\;
+u_2 = \dfrac{v_2 - w_2}{\left\lVert v_2 - w_2\right\rVert} =
+\begin{bmatrix}
+0\\
+u_{22}\\
+\vdots\\
+u_{n2}
+\end{bmatrix}
+\\
+H_2 = I - 2 \cdot u_2 \cdot u_2^T
+\;\;\; \rightarrow \;\;\;
+H_2 \cdot A_2 = A_3 =
+\begin{bmatrix}
+a_{11} & a_{12} & \ldots & a_{1n}\\
+0 & a_{22} & \ldots & a_{2n}\\
+\vdots & 0 & \ddots & \vdots\\
+0 & 0 &  & a_{nn}
+\end{bmatrix}
+\end{split}
+\end{equation}
+
+These elimination steps generate the $R$ matrix because $Q$ is
+orthonormal, i.e.
+\begin{equation}
+\begin{split}
+A = Q\cdot R
+\;\;\; \rightarrow \;\;\;
+Q^T A = Q^T Q\cdot R
+\;\;\; \rightarrow \;\;\;
+Q^T A = R
+\\
+\;\;\; \rightarrow \;\;\;
+H_n \cdot \ldots \cdot H_2 \cdot H_1 \cdot A = R
+\end{split}
+\end{equation}
+
+\addvspace{12pt}
+
+After $n$ elimination steps the original matrix $A$ contains the upper
+triangular matrix $R$, except for the diagonal elements which can be
+stored in some vector.  The lower triangular matrix contains the
+Householder vectors $u_1 \ldots u_n$.
+\begin{equation}
+A =
+\begin{bmatrix}
+u_{11} & r_{12} & \ldots & r_{1n}\\
+u_{21} & u_{22} &  & r_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+u_{n1} & u_{n2} & \ldots & u_{nn}
+\end{bmatrix}
+\;\;\;\;
+R_{diag} = 
+\begin{bmatrix}
+r_{11}\\
+r_{22}\\
+\vdots\\
+r_{nn}
+\end{bmatrix}
+\end{equation}
+
+With $Q^T = H_1 \cdot H_2 \cdot \ldots \cdot H_n$ this representation
+contains both the $Q$ and $R$ matrix, in a packed form, of course: $Q$
+as a composition of Householder vectors and $R$ in the upper
+triangular part and its diagonal vector $R_{diag}$.
+
+\subsubsection{Step 2: Forming the new right hand side}
+%\addcontentsline{toc}{subsubsection}{Step 2: Forming the new right hand side}
+
+In order to form the right hand side $Q^T z$ let remember
+eq. \eqref{eq:ReflectionMatrix} denoting the reflection matrices used
+to compute $Q^T$.
+\begin{equation}
+H_n\cdot \ldots \cdot H_2\cdot H_1 = Q^T
+\end{equation}
+
+Thus it is possible to replace the original right hand side vector $z$
+by
+\begin{equation}
+H_n\cdot \ldots \cdot H_2\cdot H_1\cdot z = Q^T \cdot z
+\end{equation}
+
+which yields for each $k = 1\ldots n$ the following expression:
+\begin{equation}
+\label{eq:QTz}
+H_k \cdot z = \left(I - 2\cdot u_k \cdot u_k^T\right)\cdot z = z - 2\cdot u_k \cdot u_k^T\cdot z
+\end{equation}
+
+The latter $u_k^T\cdot z$ is a simple scalar product of two vectors.
+Performing eq. \eqref{eq:QTz} for each Householder vector finally
+results in the new right hand side vector $Q^T z$.
+
+\subsubsection{Step 3: Backward substitution}
+%\addcontentsline{toc}{subsubsection}{Step 3: Backward substitution}
+
+The solutions in the vector $x$ are obtained by backward substituting
+into the triangulated $R$ matrix.  The elements of the solution vector
+$x$ are computed by the following recursive equation.
+
+\begin{align}
+x_{i} &= \dfrac{z_{i}}{r_{ii}} - \sum_{k=i+1}^{n} x_{k}\cdot \dfrac{r_{ik}}{r_{ii}} & i = n,\ldots,1
+\end{align}
+
 \subsection{Jacobi method}
 %\addcontentsline{toc}{subsection}{Jacobi method}
 

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.6 2005-04-01 06:52:48 raimi Exp $
+ * $Id: msvia.cpp,v 1.7 2005-04-07 11:57:50 raimi Exp $
  *
  */
 
@@ -86,7 +86,7 @@ complex msvia::calcImpedance (nr_double_t frequency) {
   }
 
   // create Z-parameter
-  nr_double_t fs  = M_PI * MU0 * rho * sqr (t);
+  nr_double_t fs  = M_PI * MU0 * sqr (t) / rho;
   nr_double_t res = R * sqrt (1 + frequency * fs);
   nr_double_t a   = sqrt (sqr (r) + sqr (h));
   nr_double_t ind = MU0 * (h * log ((h + a) / r) + 1.5 * (r - a));
