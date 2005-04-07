@@ -603,6 +603,37 @@
     </message>
 </context>
 <context>
+    <name>HelpDialog</name>
+    <message>
+        <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">סגור</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qucs Transcalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to sythesize physical parameters of the required transmission line.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ID_Dialog</name>
     <message>
         <source>Edit Subcircuit Properties</source>
@@ -735,6 +766,41 @@
     <message>
         <source>Cancel</source>
         <translation>בטל</translation>
+    </message>
+</context>
+<context>
+    <name>OptionsDialog</name>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3030,6 +3096,136 @@ Very simple text editor for Qucs
     </message>
 </context>
 <context>
+    <name>QucsFilter</name>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="unfinished">&amp;צא</translation>
+    </message>
+    <message>
+        <source>Help...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About QucsFilter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;עזרה</translation>
+    </message>
+    <message>
+        <source>Filter type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Butterworth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter class:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Corner frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>kHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GHz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pass band ripple:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate and put into Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">אודות...</translation>
+    </message>
+    <message>
+        <source>QucsFilter Version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Filter synthesis program
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished">אודות QT</translation>
+    </message>
+    <message>
+        <source>Result:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Succesfull</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result: --</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QucsHelp</name>
     <message>
         <source>Qucs Help System</source>
@@ -4323,6 +4519,361 @@ Starts transmission line calculator</source>
     <message>
         <source>Default Values</source>
         <translation>ערכי ברירת מחדל</translation>
+    </message>
+</context>
+<context>
+    <name>QucsTranscalc</name>
+    <message>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">שמור</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished">&amp;שמור</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished">צא</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Copy to Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Analyze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Analyze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synthesize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Synthesize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;עזרה</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">אודות</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;קובץ</translation>
+    </message>
+    <message>
+        <source>&amp;Execute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmission Line Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microstrip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rectangular Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coaxial Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coupled Microstrip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Substrate Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Physical Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Derive Electrical Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compute Physical Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electrical Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculated Results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.</source>
+        <translation type="unfinished">מוכן.</translation>
+    </message>
+    <message>
+        <source>er_eff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conductor Losses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dielectric Losses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skin Depth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TE-Modes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TM-Modes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>er_eff_e</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>er_eff_o</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conductor Losses Even</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conductor Losses Odd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dielectric Losses Even</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dielectric Losses Odd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative Permittivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relative Permeability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height of Substrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height of Box Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strip Thickness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strip Conductivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dielectric Loss Tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conductor Roughness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Characteristic Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Electrical Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conductivity of Metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magnetic Loss Tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width of Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height of Waveguide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waveguide Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inner Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Outer Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gap Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Even-Mode Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Odd-Mode Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selected for Calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check item for Calculation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished">אודות...</translation>
+    </message>
+    <message>
+        <source>Qucs Transcalc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmission Line Calculator for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2001 by Gopal Narayanan
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2002 by Claudio Girardi
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by Stefan Jahn
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Values are consistent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Values are inconsistent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transcalc File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a Filename</source>
+        <translation type="unfinished">הכנס שם קובץ</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">שגיאה</translation>
+    </message>
+    <message>
+        <source>Cannot load file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving file...</source>
+        <translation type="unfinished">שומר קובץ...</translation>
+    </message>
+    <message>
+        <source>Cannot save file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving aborted.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
