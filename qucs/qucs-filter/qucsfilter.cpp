@@ -76,7 +76,7 @@ QucsFilter::QucsFilter()
   gbox->addWidget(Label1, 1,0);
   ComboType = new QComboBox(this);
   #define TYPE_BUTTERWORTH  0
-  ComboType->insertItem(tr("Butterworth"));
+  ComboType->insertItem("Butterworth");
   gbox->addWidget(ComboType, 1,1);
   connect(ComboType, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
 
@@ -103,10 +103,10 @@ QucsFilter::QucsFilter()
   EditCorner = new QLineEdit("1", this);
   gbox->addWidget(EditCorner, 4,1);
   ComboCorner = new QComboBox(this);
-  ComboCorner->insertItem(tr("Hz"));
-  ComboCorner->insertItem(tr("kHz"));
-  ComboCorner->insertItem(tr("MHz"));
-  ComboCorner->insertItem(tr("GHz"));
+  ComboCorner->insertItem("Hz");
+  ComboCorner->insertItem("kHz");
+  ComboCorner->insertItem("MHz");
+  ComboCorner->insertItem("GHz");
   ComboCorner->setCurrentItem(3);
   gbox->addWidget(ComboCorner, 4,2);
 
@@ -115,10 +115,10 @@ QucsFilter::QucsFilter()
   EditStop = new QLineEdit("2", this);
   gbox->addWidget(EditStop, 5,1);
   ComboStop = new QComboBox(this);
-  ComboStop->insertItem(tr("Hz"));
-  ComboStop->insertItem(tr("kHz"));
-  ComboStop->insertItem(tr("MHz"));
-  ComboStop->insertItem(tr("GHz"));
+  ComboStop->insertItem("Hz");
+  ComboStop->insertItem("kHz");
+  ComboStop->insertItem("MHz");
+  ComboStop->insertItem("GHz");
   ComboStop->setCurrentItem(3);
   gbox->addWidget(ComboStop, 5,2);
 
@@ -126,14 +126,14 @@ QucsFilter::QucsFilter()
   gbox->addWidget(LabelRipple, 6,0);
   EditRipple = new QLineEdit("1", this);
   gbox->addWidget(EditRipple, 6,1);
-  Label_dB = new QLabel(tr("dB"), this);
+  Label_dB = new QLabel("dB", this);
   gbox->addWidget(Label_dB, 6,2);
 
   QLabel *Label9 = new QLabel(tr("Impedance:"), this);
   gbox->addWidget(Label9, 7,0);
   EditImpedance = new QLineEdit("50", this);
   gbox->addWidget(EditImpedance, 7,1);
-  QLabel *Label10 = new QLabel(tr("Ohm"), this);
+  QLabel *Label10 = new QLabel("Ohm", this);
   gbox->addWidget(Label10, 7,2);
 
   DoubleVal = new QDoubleValidator(this);
@@ -244,7 +244,7 @@ void QucsFilter::slotCalculate()
   // show result for some time
   ResultState = 0;
   LabelResult->setText(tr("Result:") + "<font color=\"#008000\"><b>  " +
-                       tr("Succesfull") + "</b></font>");
+                       tr("Successful") + "</b></font>");
   QTimer::singleShot(500, this, SLOT(slotShowResult()));
 }
 
@@ -262,7 +262,7 @@ void QucsFilter::slotShowResult()
   if(ResultState & 1)  c = 0xFF;
   else c = 0x80;
   QString s = QString("<font color=\"#00%100\"><b>  ").arg(c, 2, 16);
-  LabelResult->setText(tr("Result:") + s + tr("Succesfull") + "</b></font>");
+  LabelResult->setText(tr("Result:") + s + tr("Successful") + "</b></font>");
 
   c = 500;
   if(ResultState > 5)  c = 3000;

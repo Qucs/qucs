@@ -3063,10 +3063,6 @@ Very simple text editor for Qucs
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Butterworth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Filter class:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3087,22 +3083,6 @@ Very simple text editor for Qucs
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>kHz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MHz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GHz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Stop frequency:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3111,15 +3091,7 @@ Very simple text editor for Qucs
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>dB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Impedance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ohm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3154,11 +3126,11 @@ Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Succesfull</source>
+        <source>Result: --</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Result: --</source>
+        <source>Successful</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
