@@ -3215,7 +3215,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <source>Butterworth</source>
-        <translation>Butterworth</translation>
+        <translation type="obsolete">Butterworth</translation>
     </message>
     <message>
         <source>Filter class:</source>
@@ -3239,19 +3239,19 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <source>Hz</source>
-        <translation>Hz</translation>
+        <translation type="obsolete">Hz</translation>
     </message>
     <message>
         <source>kHz</source>
-        <translation>kHz</translation>
+        <translation type="obsolete">kHz</translation>
     </message>
     <message>
         <source>MHz</source>
-        <translation>MHz</translation>
+        <translation type="obsolete">MHz</translation>
     </message>
     <message>
         <source>GHz</source>
-        <translation>GHz</translation>
+        <translation type="obsolete">GHz</translation>
     </message>
     <message>
         <source>Stop frequency:</source>
@@ -3263,7 +3263,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <source>dB</source>
-        <translation>dB</translation>
+        <translation type="obsolete">dB</translation>
     </message>
     <message>
         <source>Impedance:</source>
@@ -3271,7 +3271,7 @@ Egyszerü szövegszerkesztő a Qucs-hoz
     </message>
     <message>
         <source>Ohm</source>
-        <translation>Ohm</translation>
+        <translation type="obsolete">Ohm</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
@@ -3309,11 +3309,15 @@ Szűrő méretező program
     </message>
     <message>
         <source>Succesfull</source>
-        <translation>Sikeres</translation>
+        <translation type="obsolete">Sikeres</translation>
     </message>
     <message>
         <source>Result: --</source>
         <translation>Eredmény: --</translation>
+    </message>
+    <message>
+        <source>Successful</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
