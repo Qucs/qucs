@@ -199,7 +199,7 @@ struct TransUnit TransUnits[] = {
 QucsTranscalc::QucsTranscalc() {
   // set application icon
   setIcon (QPixmap(QucsSettings.BitmapDir + "big.qucs.xpm"));
-  setCaption("Qucs Transcalc " PACKAGE_VERSION);
+  setCaption("QucsTranscalc " PACKAGE_VERSION);
 
   QMenuBar * menuBar = new QMenuBar (this);
 
@@ -817,7 +817,7 @@ bool QucsTranscalc::isSelected (QString prop) {
 void QucsTranscalc::slotAbout()
 {
   QMessageBox::about(this, tr("About..."),
-    tr("Qucs Transcalc")+" "+PACKAGE_VERSION+"\n"+
+    "QucsTranscalc " PACKAGE_VERSION "\n"+
     tr("Transmission Line Calculator for Qucs\n")+
     tr("Copyright (C) 2001 by Gopal Narayanan\n")+
     tr("Copyright (C) 2002 by Claudio Girardi\n")+
@@ -948,10 +948,10 @@ bool QucsTranscalc::saveFile(QString fname) {
   QTextStream stream (&file);
 
   // some lines of documentation
-  stream << "# Qucs Transcalc " << PACKAGE_VERSION << "  " << fname << "\n";
+  stream << "# QucsTranscalc " << PACKAGE_VERSION << "  " << fname << "\n";
   stream << "#   Generated on " << QDate::currentDate().toString()
 	 << " at " << QTime::currentTime().toString() << ".\n";
-  stream << "#   It is not suggested to edit the file, use Qucs Transcalc "
+  stream << "#   It is not suggested to edit the file, use QucsTranscalc "
 	 << "instead.\n\n";
 
   storeValues ();
@@ -1129,13 +1129,15 @@ void QucsTranscalc::slotRadioChecked(int id)
 
 void QucsTranscalc::slotCopyToClipBoard()
 {
+  int created = 0;
   QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
 
+  // create microstrip schematic
   if (mode == ModeMicrostrip) {
     transline * l = TransLineTypes[0].line;
     s += "<Components>\n";
-    s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
     s += "  <Pac P1 1 90 150 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s +="  <Pac P2 1 270 150 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
     s += "  <GND * 1 90 180 0 0 0 0>\n";
     s += "  <GND * 1 270 180 0 0 0 0>\n";
     s += QString("  <SUBST SubstTC1 1 390 140 -30 24 0 0 \"%1\" 1 \"%2 mm\" 1 \"%3 um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").
@@ -1164,9 +1166,61 @@ void QucsTranscalc::slotCopyToClipBoard()
     s += "  <210 100 270 100 \"\" 0 0 0 \"\">\n";
     s += "  <270 100 270 120 \"\" 0 0 0 \"\">\n";
     s += "</Wires>\n";
+    created++;
+  }
+
+  // create coupled microstrip schematic
+  else if (mode == ModeCoupledMicrostrip) {
+    transline * l = TransLineTypes[3].line;
+    s += "<Components>\n";
+    s += "  <Pac P1 1 100 130 -74 -26 1 1 \"1\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <Pac P2 1 320 130 18 -26 0 1 \"2\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <Pac P3 1 280 220 18 -26 0 1 \"3\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <Pac P4 1 140 200 -74 -26 1 1 \"4\" 1 \"50 Ohm\" 1 \"0 dBm\" 0 \"1 GHz\" 0 \"26.85\" 0>\n";
+    s += "  <GND * 1 100 160 0 0 0 0>\n";
+    s += "  <GND * 1 140 230 0 0 0 0>\n";
+    s += "  <GND * 1 320 160 0 0 0 0>\n";
+    s += "  <GND * 1 280 250 0 0 0 0>\n";
+    s += QString("  <SUBST SubstTC1 1 410 220 -30 24 0 0 \"%1\" 1 \"%2 mm\" 1 \"%3 um\" 1 \"%4\" 1 \"%5\" 1 \"%6\" 1>\n").
+      arg(l->getProperty("Er")).
+      arg(l->getProperty("H", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("T", UNIT_LENGTH, LENGTH_UM)).
+      arg(l->getProperty("Tand")).
+      arg(1 / l->getProperty("Cond")).
+      arg(l->getProperty("Rough", UNIT_LENGTH, LENGTH_M));
+    s += "  <.SP SPTC1 1 100 290 0 51 0 0 ";
+    double freq = l->getProperty("Freq", UNIT_FREQ, FREQ_GHZ);
+    if (freq > 0)
+      s += QString("\"log\" 1 \"%1 GHz\" 1 \"%2 GHz\" 1 ").
+	arg(freq / 10).arg(freq * 10);
+    else
+      s += "\"lin\" 1 \"0 GHz\" 1 \"10 GHz\" 1 ";
+    s += "\"51\" 1 \"no\" 0 \"1\" 0 \"2\" 0>\n";
+    s += QString("  <MCOUPLED MSTC1 1 190 110 -26 37 0 0 \"SubstTC1\" 1 \"%1 mm\" 1 \"%2 mm\" 1 \"%3 mm\" 1 \"Kirschning\" 0 \"Kirschning\" 0 \"26.85\" 0>\n").
+      arg(l->getProperty("W", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("L", UNIT_LENGTH, LENGTH_MM)).
+      arg(l->getProperty("S", UNIT_LENGTH, LENGTH_MM));
+    s += "</Components>\n";
+    s += "<Wires>\n";
+    s += "  <100 80 160 80 \"\" 0 0 0 \"\">\n";
+    s += "  <100 80 100 100 \"\" 0 0 0 \"\">\n";
+    s += "  <140 140 140 170 \"\" 0 0 0 \"\">\n";
+    s += "  <140 140 160 140 \"\" 0 0 0 \"\">\n";
+    s += "  <320 80 320 100 \"\" 0 0 0 \"\">\n";
+    s += "  <220 80 320 80 \"\" 0 0 0 \"\">\n";
+    s += "  <280 140 280 190 \"\" 0 0 0 \"\">\n";
+    s += "  <220 140 280 140 \"\" 0 0 0 \"\">\n";
+    s += "</Wires>\n";
+    created++;
   }
 
   // put resulting transmission line schematic into clipboard
   QClipboard *cb = QApplication::clipboard();
   cb->setText(s);
+
+  // put a message into status line
+  if (created)
+    statBar->message(tr("Schematic copied into clipboard."), 2000);
+  else
+    statBar->message(tr("Transmission line type not available."), 2000);
 }

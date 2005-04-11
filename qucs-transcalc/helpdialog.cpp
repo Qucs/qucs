@@ -30,10 +30,10 @@
 HelpDialog::HelpDialog(QWidget *parent)
                      : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
-  setCaption("Qucs Transcalc "+tr("Help"));
+  setCaption("QucsTranscalc "+tr("Help"));
 
   // --------  set help text into dialog  ------------
-  QString s(tr("Qucs Transcalc is an analysis and synthesis tool for "
+  QString s(tr("QucsTranscalc is an analysis and synthesis tool for "
        "calculating the electrical and physical properties of "
        "different kinds of RF and microwave transmission lines.")+
        "\n\n"+
