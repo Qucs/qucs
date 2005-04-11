@@ -1,3 +1,8 @@
+2005-04-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwline.cpp: Fixed bug in conductor loss
+	calculation if the metalization thickness appears to be zero.
+
 2005-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/msvia.cpp: Fixed yet another typo in the

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.h,v 1.16 2005/03/30 07:35:52 raimi Exp $
+ * $Id: complex.h,v 1.17 2005/04/11 06:40:49 raimi Exp $
  *
  */
 
@@ -57,40 +57,42 @@ class complex
   friend nr_double_t  arg  (const complex);  // the angle in the plane
 
   // overloaded math functions
-  friend nr_double_t   dB (const complex);
-  friend complex     sqrt (const complex);
-  friend complex      exp (const complex);
-  friend complex       ln (const complex);
-  friend complex    log10 (const complex);
-  friend complex     log2 (const complex);
-  friend complex    floor (const complex);
-  friend complex      pow (const complex, nr_double_t);
-  friend complex      pow (nr_double_t, const complex);
-  friend complex      pow (const complex, const complex);
-  friend nr_double_t  abs (const complex);
-  friend nr_double_t  abs (nr_double_t);
-  friend complex      sin (const complex);
-  friend complex   arcsin (const complex);
-  friend complex      cos (const complex);
-  friend complex   arccos (const complex);
-  friend complex      tan (const complex);
-  friend complex   arctan (const complex);
-  friend complex      cot (const complex);
-  friend complex   arccot (const complex);
-  friend complex     sinh (const complex);
-  friend complex   arsinh (const complex);
-  friend complex     cosh (const complex);
-  friend complex   arcosh (const complex);
-  friend complex     tanh (const complex);
-  friend complex   artanh (const complex);
-  friend complex     coth (const complex);
-  friend complex   arcoth (const complex);
-  friend complex     ztor (const complex, nr_double_t zref = 50.0);
-  friend complex     rtoz (const complex, nr_double_t zref = 50.0);
-  friend complex     sign (const complex);
-  friend nr_double_t sign (const nr_double_t);
-  friend complex     sinc (const complex);
-  friend nr_double_t sinc (const nr_double_t);
+  friend nr_double_t     dB (const complex);
+  friend complex       sqrt (const complex);
+  friend complex        exp (const complex);
+  friend complex         ln (const complex);
+  friend complex      log10 (const complex);
+  friend complex       log2 (const complex);
+  friend complex      floor (const complex);
+  friend complex        pow (const complex, nr_double_t);
+  friend complex        pow (nr_double_t, const complex);
+  friend complex        pow (const complex, const complex);
+  friend nr_double_t    abs (const complex);
+  friend nr_double_t    abs (nr_double_t);
+  friend complex        sin (const complex);
+  friend complex     arcsin (const complex);
+  friend complex        cos (const complex);
+  friend complex     arccos (const complex);
+  friend complex        tan (const complex);
+  friend complex     arctan (const complex);
+  friend complex        cot (const complex);
+  friend complex     arccot (const complex);
+  friend complex       sinh (const complex);
+  friend complex     arsinh (const complex);
+  friend complex       cosh (const complex);
+  friend complex     arcosh (const complex);
+  friend complex       tanh (const complex);
+  friend complex     artanh (const complex);
+  friend complex       coth (const complex);
+  friend complex     arcoth (const complex);
+  friend complex       ztor (const complex, nr_double_t zref = 50.0);
+  friend complex       rtoz (const complex, nr_double_t zref = 50.0);
+  friend complex       sign (const complex);
+  friend nr_double_t   sign (const nr_double_t);
+  friend complex       sinc (const complex);
+  friend nr_double_t   sinc (const nr_double_t);
+  friend nr_double_t xhypot (const nr_double_t, const nr_double_t);
+  friend nr_double_t xhypot (const complex, const complex);
 
   // operator functions
   friend complex operator + (const complex, const complex);

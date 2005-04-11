@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.26 2005/04/07 11:57:49 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.27 2005/04/11 06:40:49 raimi Exp $
  *
  */
 
@@ -61,19 +61,23 @@ template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys () {
   A = NULL;
   B = X = NULL;
-  Rdiag = NULL;
+  T = R = NULL;
+  nPvt = NULL;
   cMap = rMap = NULL;
   update = 1;
   pivoting = PIVOT_PARTIAL;
+  N = 0;
 }
 
 // Destructor deletes the eqnsys class object.
 template <class nr_type_t>
 eqnsys<nr_type_t>::~eqnsys () {
-  if (Rdiag != NULL) delete Rdiag;
+  if (R != NULL) delete R;
+  if (T != NULL) delete T;
   if (B != NULL) delete B;
   if (rMap != NULL) delete rMap;
   if (cMap != NULL) delete cMap;
+  if (nPvt != NULL) delete nPvt;
 }
 
 /* The copy constructor creates a new instance of the eqnsys class
@@ -81,11 +85,13 @@ eqnsys<nr_type_t>::~eqnsys () {
 template <class nr_type_t>
 eqnsys<nr_type_t>::eqnsys (eqnsys & e) {
   A = e.A;
-  Rdiag = NULL;
+  T = R = NULL;
   B = e.B ? new tvector<nr_type_t> (*(e.B)) : NULL;
   cMap = rMap = NULL;
+  nPvt = NULL;
   update = 1;
   X = e.X;
+  N = 0;
 }
 
 /* With this function the describing matrices for the equation system
@@ -100,6 +106,12 @@ void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
   if (nA != NULL) {
     A = nA;
     update = 1;
+    if (N != A->getCols ()) {
+      N = A->getCols ();
+      if (cMap) delete cMap; cMap = new int[N];
+      if (rMap) delete rMap; rMap = new int[N];
+      if (nPvt) delete nPvt; nPvt = new nr_double_t[N];
+    }
   }
   else {
     update = 0;
@@ -167,7 +179,7 @@ template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_gauss (void) {
   nr_double_t MaxPivot;
   nr_type_t f;
-  int i, c, r, pivot, N = A->getCols ();
+  int i, c, r, pivot;
   
   // triangulate the matrix
   for (i = 1; i < N; i++) {
@@ -212,7 +224,7 @@ template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
   nr_double_t MaxPivot;
   nr_type_t f;
-  int i, c, r, pivot, N = A->getCols ();
+  int i, c, r, pivot;
 
   // create the eye matrix
   for (i = 1; i <= N; i++) {
@@ -285,19 +297,17 @@ void eqnsys<nr_type_t>::solve_lu (void) {
    the matrix A using (implicit) partial row pivoting. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::factorize_lu_crout (void) {
-  nr_double_t d, MaxPivot, * iPvt;
+  nr_double_t d, MaxPivot;
   nr_type_t f;
-  int k, c, r, pivot, N = A->getCols ();
+  int k, c, r, pivot;
 
   // initialize pivot exchange table
-  iPvt = new nr_double_t[N];
-  if (rMap) delete rMap; rMap = new int[N];
   for (r = 1; r <= N; r++) {
     for (MaxPivot = 0, c = 1; c <= N; c++)
       if ((d = abs (A->get (r, c))) > MaxPivot)
 	MaxPivot = d;
     if (MaxPivot <= 0) MaxPivot = TINY;
-    iPvt[r - 1] = 1 / MaxPivot;
+    nPvt[r - 1] = 1 / MaxPivot;
     rMap[r - 1] = r;
   }
 
@@ -315,7 +325,7 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
       for (k = 1; k < c; k++) f -= A->get (r, k) * A->get (k, c);
       A->set (r, c, f);
       // larger pivot ?
-      if ((d = iPvt[r - 1] * abs (f)) > MaxPivot) {
+      if ((d = nPvt[r - 1] * abs (f)) > MaxPivot) {
 	MaxPivot = d;
 	pivot = r;
       }
@@ -339,13 +349,12 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
     if (c != pivot) {
       A->exchangeRows (c, pivot);
       Swap (int, rMap[c - 1], rMap[pivot - 1]);
-      Swap (nr_double_t, iPvt[c - 1], iPvt[pivot - 1]);
+      Swap (nr_double_t, nPvt[c - 1], nPvt[pivot - 1]);
     }
   }
 #if LU_FAILURE
  fail:
 #endif
-  delete iPvt;
 }
 
 /* This function decomposes the left hand matrix into an upper U and
@@ -354,19 +363,17 @@ void eqnsys<nr_type_t>::factorize_lu_crout (void) {
    decomposition of the matrix A using (implicit) partial row pivoting. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
-  nr_double_t d, MaxPivot, * iPvt;
+  nr_double_t d, MaxPivot;
   nr_type_t f;
-  int k, c, r, pivot, N = A->getCols ();
+  int k, c, r, pivot;
 
   // initialize pivot exchange table
-  iPvt = new nr_double_t[N];
-  if (rMap) delete rMap; rMap = new int[N];
   for (r = 1; r <= N; r++) {
     for (MaxPivot = 0, c = 1; c <= N; c++)
       if ((d = abs (A->get (r, c))) > MaxPivot)
 	MaxPivot = d;
     if (MaxPivot <= 0) MaxPivot = TINY;
-    iPvt[r - 1] = 1 / MaxPivot;
+    nPvt[r - 1] = 1 / MaxPivot;
     rMap[r - 1] = r;
   }
 
@@ -384,7 +391,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
       for (k = 1; k < c; k++) f -= A->get (r, k) * A->get (k, c);
       A->set (r, c, f);
       // larger pivot ?
-      if ((d = iPvt[r - 1] * abs (f)) > MaxPivot) {
+      if ((d = nPvt[r - 1] * abs (f)) > MaxPivot) {
 	MaxPivot = d;
 	pivot = r;
       }
@@ -408,7 +415,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
     if (c != pivot) {
       A->exchangeRows (c, pivot);
       Swap (int, rMap[c - 1], rMap[pivot - 1]);
-      Swap (nr_double_t, iPvt[c - 1], iPvt[pivot - 1]);
+      Swap (nr_double_t, nPvt[c - 1], nPvt[pivot - 1]);
     }
 
     // finally divide by the pivot element
@@ -420,7 +427,6 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
 #if LU_FAILURE
  fail:
 #endif
-  delete iPvt;
 }
 
 /* The function is used in order to run the forward and backward
@@ -429,7 +435,7 @@ void eqnsys<nr_type_t>::factorize_lu_doolittle (void) {
 template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_lu_crout (void) {
   nr_type_t f;
-  int i, c, N = A->getCols ();
+  int i, c;
   tvector<nr_type_t> Y (N);
 
   // forward substitution in order to solve LY = B
@@ -456,7 +462,7 @@ void eqnsys<nr_type_t>::substitute_lu_crout (void) {
 template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_lu_doolittle (void) {
   nr_type_t f;
-  int i, c, N = A->getCols ();
+  int i, c;
   tvector<nr_type_t> Y (N);
 
   // forward substitution in order to solve LY = B
@@ -486,7 +492,7 @@ void eqnsys<nr_type_t>::substitute_lu_doolittle (void) {
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_iterative (void) {
   nr_type_t f;
-  int error, conv, i, c, r, N = A->getCols ();
+  int error, conv, i, c, r;
   int MaxIter = N; // -> less than N^3 operations
   nr_double_t reltol = 1e-4;
   nr_double_t abstol = 1e-12;
@@ -575,7 +581,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_sor (void) {
   nr_type_t f;
-  int error, conv, i, c, r, N = A->getCols ();
+  int error, conv, i, c, r;
   int MaxIter = N; // -> less than N^3 operations
   nr_double_t reltol = 1e-4;
   nr_double_t abstol = 1e-12;
@@ -694,7 +700,7 @@ void eqnsys<nr_type_t>::ensure_diagonal (void) {
 template <class nr_type_t>
 void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
   int restart, exchanged, begin = 1, pairs;
-  int pivot1, pivot2, i, N = A->getCols ();
+  int pivot1, pivot2, i;
   do {
     restart = exchanged = 0;
     /* search for zero diagonals with lone pairs */
@@ -732,7 +738,7 @@ void eqnsys<nr_type_t>::ensure_diagonal_MNA (void) {
    looks for the pairs of 1 and -1 on the given row and column index. */
 template <class nr_type_t>
 int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
-  int pairs = 0, N = A->getCols ();
+  int pairs = 0;
   for (int r = 1; r <= N; r++) {
     if (fabs (real (A->get (r, i))) == 1.0) {
       r1 = r;
@@ -753,7 +759,7 @@ int eqnsys<nr_type_t>::countPairs (int i, int& r1, int& r2) {
    dominant. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::preconditioner (void) {
-  int pivot, r, N = A->getCols ();
+  int pivot, r;
   nr_double_t MaxPivot;
   for (int i = 1; i <= N; i++) {
     // find maximum column value for pivoting
@@ -772,97 +778,186 @@ void eqnsys<nr_type_t>::preconditioner (void) {
   }
 }
 
+#define A_ (*A)
+#define X_ (*X)
+#define B_ (*B)
+#define R_ (*R)
+#define T_ (*T)
+
 /* This function uses QR decomposition using householder
    transformations in order to solve the given equation system. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::solve_qr (void) {
-  factorize_qrh ();
-  substitute_qrh ();
+  factorize_qr_householder ();
+  substitute_qr_householder ();
+  //factorize_qrh ();
+  //substitute_qrh ();
 }
 
 /* The following function computes the euclidian norm of the given
    column vector of the matrix A starting from the given row. */
 template <class nr_type_t>
 nr_double_t eqnsys<nr_type_t>::euclidianCol (int c, int r) {
-  nr_double_t n = 0;
-  int N = A->getRows ();
-  for (int i = r; i <= N; i++) n += norm (A->get (i, c));
-  return sqrt (n);
+  nr_double_t scale = 0, n = 1, x, ax;
+  for (int i = r; i <= N; i++) {
+    if ((x = real (A_(i, c))) != 0) {
+      ax = fabs (x);
+      if (scale < ax) {
+	x = scale / ax;
+	n = 1 + n * x * x;
+	scale = ax;
+      }
+      else {
+	x = ax / scale;
+	n += x * x;
+      }
+    }
+    if ((x = imag (A_(i, c))) != 0) {
+      ax = fabs (x);
+      if (scale < ax) {
+	x = scale / ax;
+	n = 1 + n * x * x;
+	scale = ax;
+      }
+      else {
+	x = ax / scale;
+	n += x * x;
+      }
+    }
+  }
+  return scale * sqrt (n);
 }
 
 /* The function decomposes the matrix A into two matrices, the
    orthonormal matrix Q and the upper triangular matrix R.  The
    original matrix is replaced by the householder vectors in the lower
    triangular (including the diagonal) and the upper triangular R
-   matrix with its diagonal elements stored in the Rdiag vector. */
+   matrix with its diagonal elements stored in the R vector. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::factorize_qrh (void) {
-  int c, r, k, pivot, N = A->getCols ();
+  int c, r, k, pivot;
   nr_type_t f, t;
   nr_double_t s, MaxPivot;
-  tvector<nr_double_t> n (N);
 
-  if (cMap) delete cMap; cMap = new int[N];
-  if (Rdiag) delete Rdiag; Rdiag = new tvector<nr_type_t> (N);
+  if (R) delete R; R = new tvector<nr_type_t> (N);
 
   for (c = 1; c <= N; c++) {
     // compute column norms and save in work array
-    n.set (c, euclidianCol (c));
+    nPvt[c - 1] = euclidianCol (c);
     cMap[c - 1] = c; // initialize permutation vector
   }
 
   for (c = 1; c <= N; c++) {
 
     // put column with largest norm into pivot position
-    MaxPivot = n.get (c); pivot = c;
+    MaxPivot = nPvt[c - 1]; pivot = c;
     for (r = c + 1; r <= N; r++) {
-      nr_double_t x = n.get (r);
-      if (x > MaxPivot) {
+      if ((s = nPvt[r - 1]) > MaxPivot) {
 	pivot = r;
-	MaxPivot = x;
+	MaxPivot = s;
       }
     }
-    if (pivot != c && 0) {
+    if (pivot != c) {
       A->exchangeCols (pivot, c);
       Swap (int, cMap[pivot - 1], cMap[c - 1]);
-      n.exchangeRows (pivot, c);
+      Swap (nr_double_t, nPvt[pivot - 1], nPvt[c - 1]);
     }
 
     // compute householder vector
     if (c < N) {
-      nr_type_t a, b;
+      nr_type_t a, b, l;
       s = euclidianCol (c, c + 1);
-      a = A->get (c, c);
-      b = - sign (a) * sqrt (norm (a) + s * s); // Wj
-      t = sqrt (s * s + norm (a - b));          // || Vi - Wi ||
-      Rdiag->set (c, b);
+      a = A_(c, c);
+      l = a != 0 ? sign (a) : 1;
+      b = - l * xhypot (a, s); // Wj
+      t = xhypot (s, a - b);   // || Vi - Wi ||
+      R_(c) = b;
       // householder vector entries Ui
-      A->set (c, c, (a - b) / t);
-      for (r = c + 1; r <= N; r++) A->set (r, c, A->get (r, c) / t);
+      A_(c, c) = (a - b) / t;
+      for (r = c + 1; r <= N; r++) A_(r, c) /= t;
     }
     else {
-      Rdiag->set (c, A->get (c, c));
+      R_(c) = A_(c, c);
     }
-    
+
     // apply householder transformation to remaining columns
     for (r = c + 1; r <= N; r++) {
-      for (f = 0, k = c; k <= N; k++) f += A->get (k, c) * A->get (k, r);
-      for (k = c; k <= N; k++)
-	A->set (k, r, A->get (k, r) - 2 * f * A->get (k, c));
+      for (f = 0, k = c; k <= N; k++) f += conj (A_(k, c)) * A_(k, r);
+      for (k = c; k <= N; k++) A_(k, r) -= 2 * f * A_(k, c);
     }
 
     // update norms of remaining columns too
-    for (r = c + 1; r <= N && 0; r++) {
-      nr_double_t x = n.get (r);
-      if (x > 0) {
-	f = A->get (c, r) / x;
-	if (abs (f) >= 1)
-	  s = 0;
-	else
-	  s = x * sqrt (1 - norm (f));
-	if (abs (s / x) < TINY) s = euclidianCol (r, c + 1);
-	n.set (r, s);
+    for (r = c + 1; r <= N; r++) {
+      nPvt[r - 1] = euclidianCol (r, c + 1);
+    }
+  }
+}
+
+/* The function decomposes the matrix A into two matrices, the
+   orthonormal matrix Q and the upper triangular matrix R.  The
+   original matrix is replaced by the householder vectors in the lower
+   triangular and the upper triangular R matrix (including the
+   diagonal).  The householder vectors are normalized to have in its
+   first position. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::factorize_qr_householder (void) {
+  int c, r, k, pivot;
+  nr_type_t f, t;
+  nr_double_t s, MaxPivot;
+
+  if (T) delete T; T = new tvector<nr_type_t> (N);
+
+  for (c = 1; c <= N; c++) {
+    // compute column norms and save in work array
+    nPvt[c - 1] = euclidianCol (c);
+    cMap[c - 1] = c; // initialize permutation vector
+  }
+
+  for (c = 1; c <= N; c++) {
+
+    // put column with largest norm into pivot position
+    MaxPivot = nPvt[c - 1]; pivot = c;
+    for (r = c + 1; r <= N; r++) {
+      if ((s = nPvt[r - 1]) > MaxPivot) {
+	pivot = r;
+	MaxPivot = s;
       }
+    }
+    if (pivot != c) {
+      A->exchangeCols (pivot, c);
+      Swap (int, cMap[pivot - 1], cMap[c - 1]);
+      Swap (nr_double_t, nPvt[pivot - 1], nPvt[c - 1]);
+    }
+
+    // compute householder vector
+    {
+      nr_type_t a, b, l;
+      s = euclidianCol (c, c + 1);
+      a = A_(c, c);
+      if (s == 0) {
+	t = T_(c) = 0;
+      } else {
+	l = a != 0 ? sign (a) : 1;
+	b = - l * xhypot (a, s); // Wj
+	t = T_(c) = (b - a) / b;
+	// householder vector entries Ui
+	for (f = a - b, r = c + 1; r <= N; r++) A_(r, c) /= f;
+	A_(c, c) = b;
+      }
+    }
+
+    // apply householder transformation to remaining columns
+    if (t != 0) for (r = c + 1; r <= N; r++) {
+      for (f = A_(c, r), k = c + 1; k <= N; k++)
+	f += conj (A_(k, c)) * A_(k, r);
+      A_(c, r) -= t * f;
+      for (k = c + 1; k <= N; k++) A_(k, r) -= t * f * A_(k, c);
+    }
+
+    // update norms of remaining columns too
+    for (r = c + 1; r <= N; r++) {
+      if (nPvt[r - 1] > 0)
+	nPvt[r - 1] = euclidianCol (r, c + 1);
     }
   }
 }
@@ -871,23 +966,55 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
    then the equation system RX = B is solved by backward substitution. */
 template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_qrh (void) {
-  int c, r, N = A->getCols ();
+  int c, r;
   nr_type_t f;
 
   // form the new right hand side Q'B
   for (c = 1; c < N; c++) {
     // scalar product u_k^T * B
-    for (f = 0, r = c; r <= N; r++) f += A->get (r, c) * B->get (cMap[r - 1]);
+    for (f = 0, r = c; r <= N; r++) f += conj (A_(r, c)) * B_(r);
     // z - 2 * f * u_k
-    for (r = c; r <= N; r++)
-      B->set (cMap[r - 1], B->get (cMap[r - 1]) - 2 * f * A->get (r, c));
+    for (r = c; r <= N; r++) B_(r) -= 2 * f * A_(r, c);
   }
 
   // backward substitution in order to solve RX = Q'B
   for (r = N; r > 0; r--) {
-    f = B->get (r);
-    for (c = r + 1; c <= N; c++) f -= A->get (r, c) * X->get (c);
-    f /= Rdiag->get (r);
-    X->set (r, f);
+    f = B_(r);
+    for (c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
+    if (abs (R_(r)) > 0)
+      X_(cMap[r - 1]) = f / R_(r);
+    else
+      X_(cMap[r - 1]) = 0;
   }
+}
+
+/* The function uses the householder vectors in order to compute Q'B,
+   then the equation system RX = B is solved by backward substitution. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::substitute_qr_householder (void) {
+  int c, r;
+  nr_type_t f;
+
+  // form the new right hand side Q'B
+  for (c = 1; c < N; c++) {
+    if (T_(c) != 0) {
+      // scalar product u_k^T * B
+      for (f = B_(c), r = c + 1; r <= N; r++) f += conj (A_(r, c)) * B_(r);
+      B_(c) -= T_(c) * f;
+      // z - 2 * f * u_k
+      for (r = c + 1; r <= N; r++) B_(r) -= T_(c) * f * A_(r, c);
+    }
+  }
+
+  // backward substitution in order to solve RX = Q'B
+  for (r = N; r > 0; r--) {
+    f = B_(r);
+    for (c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
+    if (abs (A_(r, r)) > 0)
+      X_(cMap[r - 1]) = f / A_(r, r);
+    else 
+      X_(cMap[r - 1]) = 0;
+  }
+
+  // TODO: compute least square solution for singular matrices
 }

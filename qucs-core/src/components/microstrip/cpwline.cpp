@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.9 2005/04/07 11:57:50 raimi Exp $
+ * $Id: cpwline.cpp,v 1.10 2005/04/11 06:40:49 raimi Exp $
  *
  */
 
@@ -164,7 +164,7 @@ void cpwline::initPropagation (void) {
   if (approx) {
     q1 = ellipa (k1);
   } else {
-    q1   = kk1 / kpk1;
+    q1 = kk1 / kpk1;
   }
 
   // backside is metal
@@ -174,7 +174,7 @@ void cpwline::initPropagation (void) {
     if (approx) {
       q3 = ellipa (k3);
     } else {
-      q3  = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+      q3 = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
     }
     qz  = 1 / (q1 + q3);
     er0 = 1 + q3 * qz * (er - 1);
@@ -186,7 +186,7 @@ void cpwline::initPropagation (void) {
     if (approx) {
       q2 = ellipa (k2);
     } else {
-      q2  = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+      q2 = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
     }
     er0 = 1 + (er - 1) / 2 * q2 * q1;
     zl_factor = Z0 / 4 * q1;
@@ -220,11 +220,13 @@ void cpwline::initPropagation (void) {
   G = exp (u * log (W / s) + v);
 
   // loss constant factors (computed only once for efficency sake)
-  nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1)); 
-  nr_double_t a  = W / 2;
-  nr_double_t b  = a + s;
-  nr_double_t ac = (M_PI + log (n * a)) / a + (M_PI + log (n * b)) / b;
-
+  nr_double_t ac = 0;
+  if (t > 0) {
+    nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1)); 
+    nr_double_t a  = W / 2;
+    nr_double_t b  = a + s;
+    ac = (M_PI + log (n * a)) / a + (M_PI + log (n * b)) / b;
+  }
   ac_factor  = ac / (4 * Z0 * kk1 * kpk1 * (1 - k1 * k1));
   ac_factor *= sqrt (M_PI * MU0 * rho); // Rs factor
   ad_factor  = (er / (er - 1)) * tand * M_PI / C0;

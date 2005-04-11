@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.75 2005/04/07 11:57:48 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.76 2005/04/11 06:40:48 raimi Exp $
  *
  */
 
@@ -662,7 +662,7 @@ static int checker_validate_lists (struct definition_t * root) {
 static int checker_validate_actions (struct definition_t * root) {
   int a, c, n, errors = 0;
   if ((n = checker_count_definitions (root, NULL, 1)) < 1) {
-    logprint (LOG_ERROR, "checker error, no actions .XX defined\n");
+    logprint (LOG_ERROR, "checker error, no actions defined: nothing to do\n");
     errors++;
   }
   else {

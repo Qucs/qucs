@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.9 2005/02/28 09:28:45 raimi Exp $
+ * $Id: tmatrix.h,v 1.10 2005/04/11 06:40:49 raimi Exp $
  *
  */
 
@@ -69,6 +69,12 @@ class tmatrix
   friend tvector<nr_type_t> operator *<> (tmatrix, tvector<nr_type_t>);
   friend tvector<nr_type_t> operator *<> (tvector<nr_type_t>, tmatrix);
 #endif
+
+  // easy accessor operators
+  nr_type_t  operator () (int r, int c) const {
+    return data[(r - 1) * cols + c - 1]; }
+  nr_type_t& operator () (int r, int c) { 
+    return data[(r - 1) * cols + c - 1]; }
 
  private:
   int cols;

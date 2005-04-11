@@ -1,7 +1,7 @@
 %
 % This document contains the chapter about DC analysis.
 %
-% Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 % Copyright (C) 2004 Michael Margraf <Michael.Margraf@alumni.TU-Berlin.DE>
 %
 % Permission is granted to copy, distribute and/or modify this document
@@ -899,11 +899,12 @@ solutions the method requires $n^3/3 + Mn^2 - n/3$ operations.
 \subsection{QR decomposition}
 %\addcontentsline{toc}{subsection}{QR decomposition}
 
-Singular matrices actually having a solution are over-determined.
-These types of matrices can be handled by three different types of
-decompositions: Householder, Jacobi and singular value decomposition.
-Householder decomposition factors a matrix $A$ into the product of an
-orthonormal matrix $Q$ and an upper triangular matrix $R$, such that:
+Singular matrices actually having a solution are over- or
+under-determined.  These types of matrices can be handled by three
+different types of decompositions: Householder, Jacobi (Givens
+rotation) and singular value decomposition.  Householder decomposition
+factors a matrix $A$ into the product of an orthonormal matrix $Q$ and
+an upper triangular matrix $R$, such that:
 \begin{equation}
 A = Q\cdot R
 \end{equation}
@@ -953,7 +954,7 @@ substitution.
 %\addcontentsline{toc}{subsubsection}{Step 1: QR decomposition}
 
 Starting with $A_1 = A$, let $v_1$ = the first column of $A_1$, and
-$w_1^T = \left(\lVert v_1\rVert , 0 , \ldots 0\right)$, i.e. a column
+$w_1^T = \left(\pm\lVert v_1\rVert , 0 , \ldots 0\right)$, i.e. a column
 vector whose first component is the norm of $v_1$ with the remaining
 components equal to 0.  The Householder transformation $H_1 = I - 2
 \cdot u_1 \cdot u_1^T$ with $u_1 = v_1 - w_1 / \lVert v_1 - w_1
@@ -978,7 +979,7 @@ a_{n1}
 \;\;\;
 w_1 =
 \begin{bmatrix}
-\lVert v_1 \rVert\\
+\pm\lVert v_1 \rVert\\
 0\\
 \vdots\\
 0
@@ -1005,7 +1006,7 @@ a_{11} & a_{12} & \ldots & a_{1n}\\
 \end{equation}
 
 With this first step the upper left diagonal element of the $R$
-matrix, $a_{11} = \lVert v_1 \rVert$, has been generated.  The
+matrix, $a_{11} = \pm\lVert v_1 \rVert$, has been generated.  The
 elements below are zeroed out.  Since $H_1$ can be generated from
 $u_1$ stored in place of the first column of $A_1$ the multiplication
 $H_1 \cdot A_1$ can be performed without actually generating $H_1$.
@@ -1023,7 +1024,7 @@ a_{n2}
 w_1 =
 \begin{bmatrix}
 0\\
-\lVert v_2 \rVert\\
+\pm\lVert v_2 \rVert\\
 \vdots\\
 0
 \end{bmatrix}
