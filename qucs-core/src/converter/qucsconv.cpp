@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: qucsconv.cpp,v 1.3 2004-11-24 19:16:05 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.4 2005-04-11 06:40:49 raimi Exp $
  *
  */
 
@@ -56,7 +56,7 @@ int main (int argc, char ** argv) {
   for (int i = 1; i < argc; i++) {
     if (!strcmp (argv[i], "-v") || !strcmp (argv[i], "--version")) {
       fprintf (stdout,
-	"Qucs-Converter " PACKAGE_VERSION "\n"
+	"QucsConverter " PACKAGE_VERSION "\n"
 	"Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>\n"
 	"\nThis is free software; see the source for copying "
 	"conditions.  There is NO\n"

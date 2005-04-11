@@ -36,7 +36,8 @@ From:	     Stefan Jahn <stefan@lkcc.org>
 State:       unfixed
 Date:	     2005-03-01
 Description: Depending on the netlist input order it may occur that a DC
-	     analysis converges or does not converge.
+	     analysis converges or does not converge (under-determined
+	     equation system?).
 
 Bug:         B0003
 From:	     Stefan Jahn <stefan@lkcc.org>

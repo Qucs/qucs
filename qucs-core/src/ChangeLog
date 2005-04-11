@@ -1,3 +1,25 @@
+2005-04-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.h (class tvector), tmatrix.h (class tmatrix):
+	Added the () accessors for better readability of the code.
+
+	* logging.c: For performance's sake optimizing progressbar
+	output for simulations with large amount of points.
+
+	* eqnsys.cpp: Avoid numerous allocations/deallocations if the
+	matrices' size does not change.
+	(euclidiaCol): Using an algorithm without destructive underflow
+	or overflow.
+	(solve_qr): Having now two working variants of the QR
+	decomposition solver.  Both now using column pivoting and working
+	for real and complex equation systems.
+
+	* complex.cpp: Implemented xhypot() functions for complex and
+	real arguments using an algorithm without destructive underflow
+	or overflow.
+
+	* check_netlist.cpp: Improved error message.
+
 2005-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp: Added Doolittle's LU factorization.  Just for

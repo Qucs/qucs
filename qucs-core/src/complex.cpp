@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.18 2005-03-30 07:35:52 raimi Exp $
+ * $Id: complex.cpp,v 1.19 2005-04-11 06:40:48 raimi Exp $
  *
  */
 
@@ -235,6 +235,32 @@ complex floor (const complex z) {
 complex sign (const complex z) {
   if (z == 0) return 0;
   return z / abs (z);
+}
+
+nr_double_t xhypot (const nr_double_t a, const nr_double_t b) {
+  nr_double_t c = fabs (a);
+  nr_double_t d = fabs (b);
+  if (c > d) {
+    nr_double_t e = d / c;
+    return c * sqrt (1 + e * e);
+  }
+  else if (d == 0)
+    return 0;
+  else {
+    nr_double_t e = c / d;
+    return d * sqrt (1 + e * e);
+  }
+}
+
+nr_double_t xhypot (const complex a, const complex b) {
+  nr_double_t c = norm (a);
+  nr_double_t d = norm (b);
+  if (c > d)
+    return abs (a) * sqrt (1 + d / c);
+  else if (d == 0)
+    return 0;
+  else
+    return abs (b) * sqrt (1 + c / d);
 }
 
 nr_double_t sign (const nr_double_t d) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.14 2005-04-07 11:57:49 raimi Exp $
+ * $Id: eqnsys.h,v 1.15 2005-04-11 06:40:49 raimi Exp $
  *
  */
 
@@ -69,10 +69,15 @@ class eqnsys
   int pivoting;
   int * rMap;
   int * cMap;
+  int N;
+  nr_double_t * nPvt;
+
   tmatrix<nr_type_t> * A;
   tvector<nr_type_t> * B;
   tvector<nr_type_t> * X;
-  tvector<nr_type_t> * Rdiag;
+  tvector<nr_type_t> * R;
+  tvector<nr_type_t> * T;
+
   void solve_inverse (void);
   void solve_gauss (void);
   void solve_gauss_jordan (void);
@@ -84,6 +89,8 @@ class eqnsys
   void solve_qr (void);
   void factorize_qrh (void);
   void substitute_qrh (void);
+  void factorize_qr_householder (void);
+  void substitute_qr_householder (void);
   nr_double_t euclidianCol (int, int r = 1);
   void solve_iterative (void);
   void solve_sor (void);

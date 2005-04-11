@@ -1,7 +1,7 @@
 /*
  * logging.c - logging facility class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.c,v 1.6 2004-08-30 20:55:18 ela Exp $
+ * $Id: logging.c,v 1.7 2005-04-11 06:40:49 raimi Exp $
  *
  */
 
@@ -56,12 +56,18 @@ void loginit (void) {
 FILE * file_status = NULL;
 FILE * file_error = NULL;
 
+/* Last number of '*' in the progress bar. */
+int progressbar_last = 0;
+
 /* Print a tiny progress-bar depending on the arguments. */
 void logprogressbar (nr_double_t current, nr_double_t final, int points) {
   int i;
   if (progressbar_enable) {
+    if (((int) (current * 100 / final)) == progressbar_last && current)
+      return;
+    progressbar_last = current * 100 / final;
     logprint (LOG_STATUS, "[");
-    for (i = 0; i < (current / final) * points; i++)
+    for (i = 0; i < (current  * points / final); i++)
       logprint (LOG_STATUS, "*");
     for (; i < points; i++) logprint (LOG_STATUS, " ");
     logprint (LOG_STATUS, "] %.2f%%      \r", current * 100.0 / final);
@@ -74,6 +80,7 @@ int progressbar_enable = 0;
 /* Clears up the progress bar if requested. */
 void logprogressclear (int points) {
   int i;
+  progressbar_last = 0;
   if (progressbar_enable) {
     for (i = 0; i < points + 15; i++) logprint (LOG_STATUS, " ");
     logprint (LOG_STATUS, "\r");
