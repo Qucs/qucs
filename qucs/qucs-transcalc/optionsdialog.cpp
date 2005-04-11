@@ -35,7 +35,7 @@ extern struct TransUnit TransUnits[];
 OptionsDialog::OptionsDialog(QWidget *parent)
                      : QDialog(parent, 0, false, Qt::WDestructiveClose)
 {
-  setCaption("Qucs Transcalc "+tr("Options"));
+  setCaption("QucsTranscalc "+tr("Options"));
 
   // --------  create dialog widgets  ------------
   vLayout = new QVBoxLayout(this);
