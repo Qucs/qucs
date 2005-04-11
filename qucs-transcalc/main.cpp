@@ -107,7 +107,7 @@ bool saveApplSettings(QucsTranscalc *qucs)
   QString Line;
   QTextStream stream(&file);
 
-  stream << "Settings file, Qucs Transcalc " PACKAGE_VERSION "\n"
+  stream << "Settings file, QucsTranscalc " PACKAGE_VERSION "\n"
 	 << "Mode=" << qucs->getMode() << "\n"
 	 << "Frequency=" << TransUnits[0].units[QucsSettings.freq_unit] << "\n"
 	 << "Length=" << TransUnits[1].units[QucsSettings.length_unit] << "\n"
