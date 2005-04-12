@@ -695,10 +695,6 @@
         <translation>Hilfe</translation>
     </message>
     <message>
-        <source>Qucs Transcalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to sythesize physical parameters of the required transmission line.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -708,6 +704,10 @@
     </message>
     <message>
         <source>Dismiss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6302,7 +6302,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Frequenz</translation>
     </message>
     <message>
         <source>Line Width</source>
@@ -6350,7 +6350,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Länge</translation>
     </message>
     <message>
         <source>Gap Width</source>
@@ -6375,10 +6375,6 @@ Startet das Programm für die Leitungsberechnung</translation>
     <message>
         <source>About...</source>
         <translation>Über...</translation>
-    </message>
-    <message>
-        <source>Qucs Transcalc</source>
-        <translation></translation>
     </message>
     <message>
         <source>Transmission Line Calculator for Qucs
@@ -6443,6 +6439,14 @@ Startet das Programm für die Leitungsberechnung</translation>
     <message>
         <source>Saving aborted.</source>
         <translation>Das Speichern wurde abgebrochen.</translation>
+    </message>
+    <message>
+        <source>Schematic copied into clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmission line type not available.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

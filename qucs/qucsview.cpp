@@ -394,16 +394,16 @@ void QucsView::MovingElements()
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(int(pw->Port1) > 3) {
+      if(long(pw->Port1) > 3) {
 	pw->x1 += MAx1;  pw->y1 += MAy1;
 	if(pw->Label) { pw->Label->cx += MAx1;  pw->Label->cy += MAy1; }
       }
-      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if(int(pw->Port1) & 2) { pw->y1 += MAy1; } }
+      else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
+              if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
       if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
-              if(int(pw->Port2) & 2) pw->y2 += MAy1; }
+      else {  if(long(pw->Port2) & 1) pw->x2 += MAx1;
+              if(long(pw->Port2) & 2) pw->y2 += MAy1; }
 
       if(pw->Label) {      // root of node label must lie on wire
         if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
@@ -608,13 +608,13 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(int(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
-      else {  if(int(pw->Port1) & 1) { pw->x1 += MAx1; }
-              if(int(pw->Port1) & 2) { pw->y1 += MAy1; } }
+      if(long(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
+      else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
+              if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
       if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
-      else {  if(int(pw->Port2) & 1) pw->x2 += MAx1;
-              if(int(pw->Port2) & 2) pw->y2 += MAy1; }
+      else {  if(long(pw->Port2) & 1) pw->x2 += MAx1;
+              if(long(pw->Port2) & 2) pw->y2 += MAy1; }
 
       if(pw->Label) {      // root of node label must lie on wire
         if(pw->Label->cx < pw->x1) pw->Label->cx = pw->x1;
