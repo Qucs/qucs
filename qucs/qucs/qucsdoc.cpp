@@ -1571,7 +1571,7 @@ void QucsDoc::NewMovingWires(QPtrList<Element> *p, Node *pn)
       if(pw->Port2->Connections.getFirst() !=  (Element*)1)
         pw->Port2->Connections.prepend((Element*)1);  // remember this action
       Wires->take(Wires->findRef(pw));
-      int mask = 1;
+      long mask = 1;
       if(pw->isHorizontal()) mask = 2;
 
       if(pw->Port1 != pn) {

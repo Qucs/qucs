@@ -1,3 +1,8 @@
+2005-04-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsview.cpp, qucsdoc.cpp: Fixed int/pointer mismatch for
+	64bit architectures.  Reported by Debian build logs.
+
 2005-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (qucs_%.ts): Added the qucs-filter and 
