@@ -68,8 +68,9 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     if(Comp->Model == ".SW") {   // parameter sweep
       textSim = new QLabel(tr("Simulation:"), Tab1);
       gp->addWidget(textSim, row,0);
-      editSim = new QLineEdit(Tab1);
-      connect(editSim, SIGNAL(returnPressed()), SLOT(slotSimEntered()));
+      editSim = new QComboBox(Tab1);
+      editSim->setEditable(true);
+      connect(editSim, SIGNAL(activated(int)), SLOT(slotSimEntered(int)));
       gp->addWidget(editSim, row,1);
       checkSim = new QCheckBox(tr("display in schematic"), Tab1);
       gp->addWidget(checkSim, row++,2);
@@ -144,7 +145,12 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
 
     if(Comp->Model == ".SW") {   // parameter sweep
-      editSim->setText(Comp->Props.first()->Value);
+      for(Component *pc=Doc->Comps->first(); pc!=0; pc=Doc->Comps->next())
+        if(pc != Comp)
+          if(pc->Model[0] == '.')
+            editSim->insertItem(pc->Name);
+      editSim->setCurrentText(Comp->Props.first()->Value);
+
       checkSim->setChecked(Comp->Props.current()->display);
       s = Comp->Props.next()->Value;
       checkType->setChecked(Comp->Props.current()->display);
@@ -185,8 +191,8 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     }
     slotNumberChanged(0);
 
-    connect(editValues, SIGNAL(textChanged(const QString&)),
-	    SLOT(slotTextChanged(const QString&)));
+/*    connect(editValues, SIGNAL(textChanged(const QString&)),
+	    SLOT(slotTextChanged(const QString&)));*/
     connect(editStart, SIGNAL(textChanged(const QString&)),
 	    SLOT(slotNumberChanged(const QString&)));
     connect(editStop, SIGNAL(textChanged(const QString&)),
@@ -196,13 +202,13 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     connect(editNumber, SIGNAL(textChanged(const QString&)),
 	    SLOT(slotNumberChanged(const QString&)));
 
-    if(checkSim)
+/*    if(checkSim)
       connect(checkSim, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
     connect(checkType, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
     connect(checkParam, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
     connect(checkStart, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
     connect(checkStop, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
-    connect(checkNumber, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));
+    connect(checkNumber, SIGNAL(stateChanged(int)), SLOT(slotSetChanged(int)));*/
 
 
     QWidget *Tab2 = new QWidget(t);
@@ -309,7 +315,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
   // ------------------------------------------------------------
   CompNameEdit->setText(Comp->Name);
-  changed = transfered = false;
+  changed = false;
 
   Comp->TextSize(tx_Dist, ty_Dist);
   int tmp = Comp->tx+tx_Dist - Comp->x1;
@@ -453,7 +459,6 @@ void ComponentDialog::slotApplyChange(const QString& Text)
 {
   edit->setText(Text);
   prop->currentItem()->setText(1, Text);	// apply edit line
-  changed = true;
 
   ComboEdit->setFocus();
   QListViewItem *item = prop->currentItem()->itemBelow();
@@ -472,17 +477,15 @@ void ComponentDialog::slotApplyProperty()
   if(ComboEdit->isShown())   // take text from ComboBox ?
     edit->setText(ComboEdit->currentText());
 
-  if(item->text(1) != edit->text()) {
+  if(item->text(1) != edit->text())
     item->setText(1, edit->text());    // apply edit line
-    changed = true;
-  }
+
   if(NameEdit->isShown())	// also apply property name ?
     if(item->text(0) != NameEdit->text()) {
 //      if(NameEdit->text() == "Export")
 //        item->setText(0, "Export_");   // name must not be "Export" !!!
 //      else
       item->setText(0, NameEdit->text());  // apply property name
-      changed = true;
     }
 
   item = item->itemBelow();
@@ -508,7 +511,6 @@ void ComponentDialog::slotApplyPropName()
 //    }
 //      else
     item->setText(0, NameEdit->text());  // apply property name
-    changed = true;
   }
   edit->setFocus();   // cursor into "edit" widget
 }
@@ -526,7 +528,6 @@ void ComponentDialog::slotApplyState(int State)
 
   if(item->text(2) != ButtonState) {
     item->setText(2, ButtonState);
-    changed = true;
   }
 }
 
@@ -543,8 +544,8 @@ void ComponentDialog::slotButtOK()
 // Is called if the "Cancel"-button is pressed.
 void ComponentDialog::slotButtCancel()
 {
-  if(transfered) done(1);	// changed could have been done before
-  else done(0);			// (by "Apply"-button)
+  if(changed) done(1);	// changed could have been done before
+  else done(0);		// (by "Apply"-button)
 }
 
 // -------------------------------------------------------------------------
@@ -566,53 +567,111 @@ void ComponentDialog::slotApplyInput()
     }
   }
 
-
   bool display;
-  Comp->Props.clear();
+  Property *pp = Comp->Props.first();
   // apply all the new property values, i.e. rebuild the properties
   if(editSim) {
     display = checkSim->isChecked();
-    Comp->Props.append(new
-	Property("Sim", editSim->text(), display, QString("--")));
+    if(pp->display != display) {
+      pp->display = display;
+      changed = true;
+    }
+    if(pp->Value != editSim->currentText()) {
+      pp->Value = editSim->currentText();
+      changed = true;
+    }
+    pp = Comp->Props.next();
   }
   if(comboType) {
     display = checkType->isChecked();
+    if(pp->display != display) {
+      pp->display = display;
+      changed = true;
+    }
     switch(comboType->currentItem()) {
       case 1:  tmp = "log";   break;
       case 2:  tmp = "list";  break;
       case 3:  tmp = "const"; break;
       default: tmp = "lin";   break;
     }
-    Comp->Props.append(new
-	Property("Type", tmp, display, QString("--")));
+    if(pp->Value != tmp) {
+      pp->Value = tmp;
+      changed = true;
+    }
+    pp = Comp->Props.next();
   }
   if(checkParam) if(checkParam->isEnabled()) {
     display = checkParam->isChecked();
-    Comp->Props.append(new
-	Property("Param", editParam->text(), display, QString("--")));
+    if(pp->display != display) {
+      pp->display = display;
+      changed = true;
+    }
+    if(pp->Value != editParam->text()) {
+      pp->Value = editParam->text();
+      changed = true;
+    }
+    pp = Comp->Props.next();
   }
   if(editStart) {
     if(comboType->currentItem() < 2) {
       display = checkStart->isChecked();
-      Comp->Props.append(new
-	Property("Start", editStart->text(), display, QString("--")));
+      if(pp->display != display) {
+        pp->display = display;
+        changed = true;
+      }
+      pp->Name  = "Start";
+      if(pp->Value != editStart->text()) {
+        pp->Value = editStart->text();
+        changed = true;
+      }
+      pp = Comp->Props.next();
 
       display = checkStop->isChecked();
-      Comp->Props.append(new
-	Property("Stop", editStop->text(), display, QString("--")));
+      if(pp->display != display) {
+        pp->display = display;
+        changed = true;
+      }
+      pp->Name  = "Stop";
+      if(pp->Value != editStop->text()) {
+        pp->Value = editStop->text();
+        changed = true;
+      }
+      pp = Comp->Props.next();
 
       display = checkNumber->isChecked();
-      Comp->Props.append(new
-	Property("Points", editNumber->text(), display, QString("--")));
+      if(pp->display != display) {
+        pp->display = display;
+        changed = true;
+      }
+      if((pp->Value != editNumber->text()) || (pp->Name != "Points")) {
+        pp->Value = editNumber->text();
+        pp->Name  = "Points";
+        changed = true;
+      }
+      pp = Comp->Props.next();
     }
     else {
-      // Call them "Symbol" to omit them in the netlist.
-      Comp->Props.append(new Property("Symbol", "0", false, QString("--")));
-      Comp->Props.append(new Property("Symbol", "0", false, QString("--")));
+      // If a value list is used, the properties "Start" and "Stop" are not
+      // used. -> Call them "Symbol" to omit them in the netlist.
+      pp->Name = "Symbol";
+      pp->display = false;
+      pp = Comp->Props.next();
+      pp->Name = "Symbol";
+      pp->display = false;
+      pp = Comp->Props.next();
 
       display = checkValues->isChecked();
-      Comp->Props.append(new Property("Values", "["+editValues->text()+"]",
-			     display, QString("--")));
+      if(pp->display != display) {
+        pp->display = display;
+        changed = true;
+      }
+      tmp = "["+editValues->text()+"]";
+      if((pp->Value != tmp) || (pp->Name != "Values")) {
+        pp->Value = tmp;
+        pp->Name  = "Values";
+        changed = true;
+      }
+      pp = Comp->Props.next();
     }
   }
 
@@ -635,11 +694,33 @@ void ComponentDialog::slotApplyInput()
   // apply all the new property values in the ListView
   for(item = prop->firstChild(); item != 0; item = item->itemBelow()) {
     display = (item->text(2) == tr("yes"));
-    Comp->Props.append(new
-	Property(item->text(0), item->text(1), display, item->text(3)));
+    if(pp) {
+      if(pp->display != display) {
+        pp->display = display;
+        changed = true;
+      }
+      if(pp->Value != item->text(1)) {
+        pp->Value = item->text(1);
+        changed = true;
+      }
+      pp->Name = item->text(0);   // override if previous one was removed
+      pp->Description = item->text(3);
+    }
+    else {  // if less properties than in ListView -> create new
+      Comp->Props.append(new
+	  Property(item->text(0), item->text(1), display, item->text(3)));
+      changed = true;
+    }
+    pp = Comp->Props.next();
+  }
+  if(pp) {  // if more properties than in ListView -> delete the rest
+    pp = Comp->Props.prev();
+    Comp->Props.last();
+    while(pp != Comp->Props.current())
+      Comp->Props.remove();
+    changed = true;
   }
  }
-  transfered = true;     // applied changes to the component itself
 
   if(changed) {
     int dx, dy;
@@ -676,7 +757,6 @@ void ComponentDialog::slotBrowseFile()
     if(QucsWorkDir.exists(file.fileName()) &&
        QucsWorkDir.absPath() == file.dirPath(true)) s = file.fileName();
     edit->setText(s);
-    changed = true;
   }
   prop->currentItem()->setText(1, s);
 }
@@ -700,7 +780,6 @@ void ComponentDialog::slotButtAdd()
 
   prop->setSelected(new QListViewItem(prop, item,
 			NameEdit->text(), edit->text(), s), true);
-  changed = true;
 }
 
 // -------------------------------------------------------------------------
@@ -716,7 +795,6 @@ void ComponentDialog::slotButtRem()
   if(next_item == 0) next_item = item->itemAbove();
   prop->takeItem(item);     // remove from ListView
   delete item;              // delete item
-  changed = true;
 
   slotSelectProperty(next_item);
 }
@@ -724,8 +802,6 @@ void ComponentDialog::slotButtRem()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotSimTypeChange(int Type)
 {
-  changed = true;
-
   if(Type < 2) {  // new type is "linear" or "logarithmic"
     if(!editNumber->isEnabled()) {  // was the other mode before ?
       // this text change, did not emit the textChange signal !??!
@@ -786,8 +862,6 @@ void ComponentDialog::slotSimTypeChange(int Type)
 // Is called when "Start", "Stop" or "Number" is edited.
 void ComponentDialog::slotNumberChanged(const QString&)
 {
-  changed = true;
-
   QString Unit, tmp;
   double x, y, Factor, ftmp;
   if(comboType->currentItem() == 1) {   // logarithmic ?
@@ -825,8 +899,6 @@ void ComponentDialog::slotNumberChanged(const QString&)
 // -------------------------------------------------------------------------
 void ComponentDialog::slotStepChanged(const QString& Step)
 {
-  changed = true;
-
   QString Unit;
   double x, y, Factor;
   if(comboType->currentItem() == 1) {   // logarithmic ?
@@ -860,20 +932,6 @@ void ComponentDialog::slotStepChanged(const QString& Step)
 }
 
 // -------------------------------------------------------------------------
-// Is called if one of the "display on schematic" CheckBoxes is clicked.
-void ComponentDialog::slotSetChanged(int)
-{
-  changed = true;
-}
-
-// -------------------------------------------------------------------------
-// Is called if text in the LineEdit (e.g. "editValues") is changed.
-void ComponentDialog::slotTextChanged(const QString&)
-{
-  changed = true;
-}
-
-// -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Parameter".
 void ComponentDialog::slotParamEntered()
 {
@@ -885,7 +943,7 @@ void ComponentDialog::slotParamEntered()
 
 // -------------------------------------------------------------------------
 // Is called if return is pressed in LineEdit "Simulation".
-void ComponentDialog::slotSimEntered()
+void ComponentDialog::slotSimEntered(int)
 {
   editParam->setFocus();
 }

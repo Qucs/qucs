@@ -992,7 +992,7 @@ Nieznane pole!</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Nie można otworzyć wyników:</translation>
+        <translation type="obsolete">Nie można otworzyć wyników:</translation>
     </message>
     <message>
         <source>ac simulation</source>
@@ -1466,19 +1466,19 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Nie można pobrać rozmiaru niezależnej danej &apos;&apos;</translation>
+        <translation type="obsolete">Nie można pobrać rozmiaru niezależnej danej &apos;&apos;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Za mało zależnych danych &apos;&apos;</translation>
+        <translation type="obsolete">Za mało zależnych danych &apos;&apos;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Nieyależne dane &apos;&apos;</translation>
+        <translation type="obsolete">Nieyależne dane &apos;&apos;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>nie znaleziono &apos;&apos;</translation>
+        <translation type="obsolete">nie znaleziono &apos;&apos;</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -1514,7 +1514,7 @@ Błędny początek linii!</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Za mało niezależnych danych &apos;&apos;</translation>
+        <translation type="obsolete">Za mało niezależnych danych &apos;&apos;</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
@@ -2582,10 +2582,6 @@ Stosowanie:  qucsedit [-r] plik
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3207,6 +3203,10 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

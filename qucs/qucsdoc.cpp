@@ -2572,6 +2572,7 @@ bool QucsDoc::deleteElements()
       sel = true;
     }
     else {
+      bool wasGraphDeleted = false;
       // all graphs of diagram
       for(Graph *pg = pd->Graphs.first(); pg != 0; ) {
         // all markers of diagram
@@ -2586,25 +2587,25 @@ bool QucsDoc::deleteElements()
         if(pg->isSelected) {
           pd->Graphs.remove();
           pg = pd->Graphs.current();
-          sel = true;
+          sel = wasGraphDeleted = true;
         }
         else  pg = pd->Graphs.next();
       }
-      pd->recalcGraphData();  // update diagram (resize etc.)
+      if(wasGraphDeleted)
+        pd->recalcGraphData();  // update diagram (resize etc.)
 
       pd = Diags->next();
     }
 
   Painting *pp = Paints->first();
   while(pp != 0) {    // test all paintings
-    if(pp->isSelected) {
-      sel = true;
+    if(pp->isSelected)
       if(pp->Name.at(0) != '.') {  // do not delete "PortSym", "ID_text"
+	sel = true;
 	Paints->remove();
 	pp = Paints->current();
 	continue;
       }
-    }
     pp = Paints->next();
   }
 

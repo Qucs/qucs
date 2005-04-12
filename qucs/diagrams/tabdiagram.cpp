@@ -40,6 +40,62 @@ TabDiagram::~TabDiagram()
 }
 
 // ------------------------------------------------------------
+void TabDiagram::paint(ViewPainter *p)
+{
+  // paint all lines
+  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
+    p->Painter->setPen(pl->style);
+    p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+  }
+
+  if(x1 > 0) {  // paint scroll bar ?
+    int   x, y, dx, dy;
+    y = y2 - 20;
+    // draw scroll bar
+    p->fillRect(cx-15, cy-y + yAxis.numGraphs, 14, zAxis.numGraphs, Qt::gray);
+
+    // draw frame for scroll bar
+    p->Painter->setPen(QPen(QPen::black,0));
+    p->drawLine(cx-17, cy-y2, cx-17, cy);
+    p->drawLine(cx-17, cy-y2, cx, cy-y2);
+    p->drawLine(cx-17, cy, cx, cy);
+    y += 2;
+    p->drawLine(cx-17, cy-y, cx, cy-y);
+    y -= y2;
+    p->drawLine(cx-17, cy+y, cx, cy+y);
+
+    // draw the arrows above and below the scroll bar
+    p->Painter->setBrush(QBrush(Qt::gray));
+    p->map(cx-20, cy-y2-8, &x, &y);
+    p->map(cx+4, cy-y2+16, &dx, &dy);
+    dx -= x;
+    dy -= y;
+    p->Painter->drawPie(x, y, dx, dy, 16*240, 16*60);
+
+    p->map(cx-20, cy-15, &x, &y);
+    p->Painter->drawPie(x, y, dx, dy, 16*60, 16*60);
+    p->Painter->setBrush(QBrush(Qt::NoBrush));
+  }
+
+
+  p->Painter->setPen(Qt::black);
+  // write whole text
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
+    p->drawText(pt->s, cx+pt->x, cy-pt->y);
+
+
+  if(isSelected) {
+    p->Painter->setPen(QPen(QPen::darkGray,3));
+    p->drawRect(cx-5, cy-y2-5, x2+10, y2+10);
+    p->Painter->setPen(QPen(QPen::darkRed,2));
+    p->drawResizeRect(cx, cy-y2);  // markers for changing the size
+    p->drawResizeRect(cx, cy);
+    p->drawResizeRect(cx+x2, cy-y2);
+    p->drawResizeRect(cx+x2, cy);
+  }
+}
+
+// ------------------------------------------------------------
 // calculates the text in the tabular
 int TabDiagram::calcDiagram()
 {

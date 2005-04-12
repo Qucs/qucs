@@ -966,27 +966,27 @@ Campo desconhecido!</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Não é possível carregar conjunto de dados:</translation>
+        <translation type="obsolete">Não é possível carregar conjunto de dados:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Não é possível obter tamanho de dado independente &quot;</translation>
+        <translation type="obsolete">Não é possível obter tamanho de dado independente &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Muito poucos dados dependentes &quot;</translation>
+        <translation type="obsolete">Muito poucos dados dependentes &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Dado Independente &quot;</translation>
+        <translation type="obsolete">Dado Independente &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; não encontrado</translation>
+        <translation type="obsolete">&quot; não encontrado</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Muito pouco dado independente &quot;</translation>
+        <translation type="obsolete">Muito pouco dado independente &quot;</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -2470,10 +2470,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3076,6 +3072,10 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

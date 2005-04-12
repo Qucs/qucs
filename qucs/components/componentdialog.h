@@ -69,11 +69,9 @@ private slots:
   void slotSimTypeChange(int);
   void slotNumberChanged(const QString&);
   void slotStepChanged(const QString&);
-  void slotSetChanged(int);
-  void slotTextChanged(const QString&);
 
   void slotParamEntered();
-  void slotSimEntered();
+  void slotSimEntered(int);
   void slotValuesEntered();
   void slotStartEntered();
   void slotStopEntered();
@@ -95,17 +93,17 @@ private:
   QCheckBox   *disp;
   Component   *Comp;
   QucsDoc     *Doc;
-  bool        changed, transfered;
+  bool        changed;
   int         tx_Dist, ty_Dist;   // remember the text position
 
   QLabel    *textType;
   QLabel    *textSim, *textParam, *textValues, *textStart, *textStop,
             *textStep, *textNumber;
-  QLineEdit *editSim, *editParam, *editValues, *editStart, *editStop,
+  QLineEdit *editParam, *editValues, *editStart, *editStop,
             *editStep, *editNumber;
   QCheckBox *checkSim, *checkParam, *checkValues, *checkStart, *checkStop,
             *checkNumber, *checkType;
-  QComboBox *comboType;
+  QComboBox *editSim, *comboType;
 };
 
 #endif

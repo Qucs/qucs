@@ -1,8 +1,8 @@
 /***************************************************************************
-                          tabdiagram.h  -  description
+                               curvediagram.h
                              -------------------
-    begin                : Fri Oct 24 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Sat Apr 9 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,8 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef TABDIAGRAM_H
-#define TABDIAGRAM_H
+#ifndef CURVEDIAGRAM_H
+#define CURVEDIAGRAM_H
 
 #include "diagram.h"
 
@@ -24,18 +24,17 @@
   *@author Michael Margraf
   */
 
-class TabDiagram : public Diagram  {
+class CurveDiagram : public Diagram  {
 public: 
-  TabDiagram(int _cx=0, int _cy=0);
-  ~TabDiagram();
+  CurveDiagram(int _cx=0, int _cy=0);
+  ~CurveDiagram();
+
 
   Diagram* newOne();
-  void paint(ViewPainter*);
   int  calcDiagram();
-  bool scroll(int);
-
-private:
-  int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
+  void calcLimits();
+  void calcData(Graph *g);
+  void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 };
 
 #endif
