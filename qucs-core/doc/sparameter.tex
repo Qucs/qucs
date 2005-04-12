@@ -1718,7 +1718,8 @@ A very important task in microwave design (especially for amplifiers)
 is the question, whether the circuit tends to unwanted oscillations.
 A two-port oscillates if, despite of no signal being fed into it, AC
 power issues from at least one of its ports.  This condition can be
-easily expressed in terms of RF quantities:
+easily expressed in terms of RF quantities, so a circuit is stable
+if:
 \begin{equation}
 |\underline{r}_1| < 1  \qquad \text{and} \qquad  |\underline{r}_2| < 1
 \end{equation}
@@ -1861,3 +1862,37 @@ with
 \begin{equation}
 r_1 = S_{11} + \frac{S_{12}\cdot S_{21}\cdot r_L}{1 - r_L\cdot S_{22}}
 \end{equation}
+
+\addvspace{12pt}
+
+The available power gain $G_a$ of a two-port is reached when the load is
+conjugately matched to the output port. It is:
+\begin{equation}
+G_a = \frac{|S_{21}|^2\cdot (1-|r_S|^2)}{|1-S_{11}\cdot r_S|^2 - |S_{22}-\Delta\cdot r_S|^2}
+\end{equation}
+with $\Delta = S_{11}S_{22} - S_{12}S_{21}$. The curves with constant
+gain $G_a$ are circles in the source reflexion coefficient plane ($r_S$-plane).
+The center $r_{S,c}$ and the radius $R_S$ are:
+\begin{align}
+r_{S,c} & = \frac{g_a\cdot C_1^*}{1 + g_a\cdot(|S_{11}|^2 - |\Delta|^2)} \\
+R_S     & = \frac{\sqrt{1 - 2\cdot K\cdot g_a\cdot|S_{12}S_{21}| + g_a^2\cdot|S_{12}S_{21}|^2}}
+                 {|1 + g_a\cdot(|S_{11}|^2 - |\Delta|^2)|}
+\end{align}
+with $C_1 = S_{11} - S_{22}^*\cdot\Delta$, $g_a = G_a / |S_{21}|^2$ and $K$ Rollet stability factor.
+
+\addvspace{12pt}
+
+The operating power gain $G_P$ of a two-port is the power delivered
+to the load divided by the input power of the amplifier. It is:
+\begin{equation}
+G_P = \frac{|S_{21}|^2\cdot (1-|r_L|^2)}{|1-S_{22}\cdot r_L|^2 - |S_{11}-\Delta\cdot r_L|^2}
+\end{equation}
+with $\Delta = S_{11}S_{22} - S_{12}S_{21}$. The curves with constant
+gain $G_P$ are circles in the load reflexion coefficient plane ($r_L$-plane).
+The center $r_{L,c}$ and the radius $R_L$ are:
+\begin{align}
+r_{L,c} & = \frac{g_P\cdot C_2^*}{1 + g_P\cdot(|S_{22}|^2 - |\Delta|^2)} \\
+R_L     & = \frac{\sqrt{1 - 2\cdot K\cdot g_P\cdot|S_{12}S_{21}| + g_P^2\cdot|S_{12}S_{21}|^2}}
+                 {|1 + g_P\cdot(|S_{22}|^2 - |\Delta|^2)|}
+\end{align}
+with $C_2 = S_{22} - S_{11}^*\cdot\Delta$, $g_P = G_P / |S_{21}|^2$ and $K$ Rollet stability factor.

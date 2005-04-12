@@ -651,7 +651,7 @@ void QucsApp::slotFileOpen()
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(
-	lastDir.isEmpty() ? QDir::currentDirPath() : lastDir,
+	lastDir.isEmpty() ? "." : lastDir,
 	QucsFileFilter, this, "", tr("Enter a Schematic Name"));
 
   if(s.isEmpty())
@@ -1689,6 +1689,8 @@ void QucsApp::slotSetCompView(int index)
 		QImage(QucsSettings.BitmapDir + "smithpolar.xpm"));
       new QIconViewItem(CompComps, tr("3D-Cartesian"),
 		QImage(QucsSettings.BitmapDir + "rect3d.xpm"));
+      new QIconViewItem(CompComps, tr("Location Curve"),
+		QImage(QucsSettings.BitmapDir + "curve.xpm"));
       return;
   }
 
@@ -1783,6 +1785,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
               case 5: view->selDiag = new PSDiagram();  break;
               case 6: view->selDiag = new PSDiagram(0,0,false); break;
               case 7: view->selDiag = new Rect3DDiagram(); break;
+              case 8: view->selDiag = new CurveDiagram();  break;
           }
 
           if(view->drawn) view->viewport()->repaint();

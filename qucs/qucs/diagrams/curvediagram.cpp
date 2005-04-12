@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rectdiagram.cpp  -  description
-                             -------------------
-    begin                : Thu Oct 2 2003
-    copyright            : (C) 2003 by Michael Margraf
+                              curvediagram.cpp
+                             ------------------
+    begin                : Sat Apr 9 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rectdiagram.h"
+#include "curvediagram.h"
 #include "main.h"
 
 #include <math.h>
@@ -23,7 +23,7 @@
 #include <qmessagebox.h>
 
 
-RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
+CurveDiagram::CurveDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;      // position of label text
   y1 = y3 = 33;
@@ -31,39 +31,33 @@ RectDiagram::RectDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 160;
   x3 = 247;    // with some distance for right axes text
 
-  Name = "Rect";
+  Name = "Curve";
   calcDiagram();
 }
 
-RectDiagram::~RectDiagram()
+CurveDiagram::~CurveDiagram()
 {
 }
 
 // ------------------------------------------------------------
-void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
-				 int *px, int *py, Axis *pa)
+void CurveDiagram::calcCoordinate(double* &, double* &yD, double* &,
+				  int *px, int *py, Axis *pa)
 {
-  double x  = *(xD++);
   double yr = *(yD++);
   double yi = *(yD++);
   if(xAxis.log)
-    *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
+    *px = int(log10(yr / xAxis.low)/log10(xAxis.up / xAxis.low)
 		*double(x2) + 0.5);
-  else  *px = int((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
+  else  *px = int((yr-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
 
   if(pa->log)
-    *py = int(log10(sqrt(yr*yr + yi*yi)/fabs(pa->low)) /
-		log10(pa->up/pa->low) * double(y2) + 0.5);
-  else {
-    if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
-      *py = int((yr-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
-    else   // calculate magnitude of complex number
-      *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
-  }
+    *py = int(log10(yi / pa->low)/log10(pa->up / pa->low)
+		*double(y2) + 0.5);
+  else  *py = int((yi-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
 }
 
 // --------------------------------------------------------------
-void RectDiagram::calcLimits()
+void CurveDiagram::calcLimits()
 {
   int i;
   double a, b, c;
@@ -100,7 +94,7 @@ void RectDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-int RectDiagram::calcDiagram()
+int CurveDiagram::calcDiagram()
 {
   Lines.clear();
   Texts.clear();
@@ -220,7 +214,7 @@ Frame:
 }
 
 // ------------------------------------------------------------
-Diagram* RectDiagram::newOne()
+Diagram* CurveDiagram::newOne()
 {
-  return new RectDiagram();
+  return new CurveDiagram();
 }

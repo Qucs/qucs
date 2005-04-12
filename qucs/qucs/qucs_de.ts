@@ -1078,7 +1078,7 @@ Unbekanntes Feld!</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Datensatz kann nicht geladen werden: </translation>
+        <translation type="obsolete">Datensatz kann nicht geladen werden: </translation>
     </message>
     <message>
         <source>ac simulation</source>
@@ -1568,19 +1568,19 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Länge des unabhängigen Datensatzes unbekannt &quot;</translation>
+        <translation type="obsolete">Länge des unabhängigen Datensatzes unbekannt &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Zu wenige Datensatzeinträge in &quot;</translation>
+        <translation type="obsolete">Zu wenige Datensatzeinträge in &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Unabhängiger Datensatz &quot;</translation>
+        <translation type="obsolete">Unabhängiger Datensatz &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; nicht gefunden</translation>
+        <translation type="obsolete">&quot; nicht gefunden</translation>
     </message>
     <message>
         <source>microstrip model (Kirschning,Kobayashi,Yamashita)</source>
@@ -1620,7 +1620,7 @@ Ungültiger Zeilenanfang!</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Zu wenige Datensatzeinträge in &quot;</translation>
+        <translation type="obsolete">Zu wenige Datensatzeinträge in &quot;</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
@@ -2709,10 +2709,6 @@ Verwendung:  qucsedit [-r] Datei
 </source>
         <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
-    </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation>Variable kann nicht gefunden werden: </translation>
     </message>
 </context>
 <context>
@@ -4525,6 +4521,10 @@ Bearbeitet den Schaltplan</translation>
     <message>
         <source>Cannot start line calculation program!</source>
         <translation>Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

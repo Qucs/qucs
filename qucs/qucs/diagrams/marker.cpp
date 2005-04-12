@@ -108,8 +108,9 @@ void Marker::initText(int n)
   Diag->calcCoordinate(num, pz, py, &cx, &cy, pa);
 
   if(!Diag->insideDiagram(cx, cy))
-    if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
-      cx = Diag->x2 >> 1;        // ... point to origin
+    // if marker out of valid bounds, point to origin
+    if((Diag->Name != "Rect") && (Diag->Name != "Curve")) {
+      cx = Diag->x2 >> 1;
       cy = Diag->y2 >> 1;
     }
     else {
@@ -171,8 +172,9 @@ void Marker::createText()
   Diag->calcCoordinate(pp, pz, py, &cx, &cy, pa);
 
   if(!Diag->insideDiagram(cx, cy))
-    if(Diag->Name != "Rect") {   // if marker out of valid bounds, ...
-      cx = Diag->x2 >> 1;        // ... point to origin
+    // if marker out of valid bounds, point to origin
+    if((Diag->Name != "Rect") && (Diag->Name != "Curve")) {
+      cx = Diag->x2 >> 1;
       cy = Diag->y2 >> 1;
     }
     else {
@@ -188,7 +190,7 @@ void Marker::makeInvalid()
 {
   cx = 0;
   cy = 0;
-  if(Diag) if(Diag->Name != "Rect") {
+  if(Diag) if(Diag->Name != "Rect") if(Diag->Name != "Curve") {
     cx = Diag->x2 >> 1;
     cy = Diag->y2 >> 1;
   }

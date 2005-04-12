@@ -3,6 +3,14 @@
 	* qucsview.cpp, qucsdoc.cpp: Fixed int/pointer mismatch for
 	64bit architectures.  Reported by Debian build logs.
 
+2005-04-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* open dialogs remember last directory (qucs & qucsedit)
+	* fixed wrong 3D scaling after delete
+	* parameter sweep with combobox for simulation
+	* fixed bug omitting set "changed"
+	* new diagram: location curves
+
 2005-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am (qucs_%.ts): Added the qucs-filter and 

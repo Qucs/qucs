@@ -93,9 +93,12 @@ void QucsEdit::slotAbout()
 // ************************************************************
 void QucsEdit::slotLoad()
 {
-  QString s = QFileDialog::getOpenFileName(".", "*", this,
-					"", tr("Enter a Filename"));
+  static QString lastDir;  // to remember last directory and file
+
+  QString s = QFileDialog::getOpenFileName(
+    lastDir.isEmpty() ? "." : lastDir, "*", this, "", tr("Enter a Filename"));
   if(s.isEmpty()) return;
+  lastDir = s;   // remember last directory and file
   if(!closeFile()) return;
   loadFile(s);
 }
@@ -159,8 +162,9 @@ bool QucsEdit::loadFile(const QString& Name)
   text->setText(stream.read());
   file.close();
 
-  QFileInfo info(Name);
-  FileName = info.fileName();
+  FileName = Name;
+//  QFileInfo info(Name);
+//  FileName = info.fileName();
   setCaption("QucsEdit " PACKAGE_VERSION " - " + tr("File: ")+FileName);
   return true;
 }

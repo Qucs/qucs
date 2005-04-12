@@ -978,27 +978,27 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Nem tölthető be az adat:</translation>
+        <translation type="obsolete">Nem tölthető be az adat:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Független adat mérete nem elérhető &quot;</translation>
+        <translation type="obsolete">Független adat mérete nem elérhető &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Túl sok függő adat &quot;</translation>
+        <translation type="obsolete">Túl sok függő adat &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Független adat &quot;</translation>
+        <translation type="obsolete">Független adat &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; nem található</translation>
+        <translation type="obsolete">&quot; nem található</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Túl kevés független adat &quot;</translation>
+        <translation type="obsolete">Túl kevés független adat &quot;</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -2482,10 +2482,6 @@ Használat:  qucsedit [-r] fájl
         <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation>Változó nem található:</translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3096,6 +3092,10 @@ Nem indítható a tápvonal tervező program!
     <message>
         <source>3D-Cartesian</source>
         <translation>3D-Derékszögű</translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

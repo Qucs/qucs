@@ -58,8 +58,6 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   setCaption(tr("Edit Diagram Properties"));
   changed = false;
   toTake = false;   // double-clicked variable be inserted into graph list ?
-//  setFixedSize(QSize(400, 400));
-//  setMinimumSize(QSize(400, 400));
 
   ValDouble = new QDoubleValidator(-1e200, 1e200, 6, this);
 
@@ -248,7 +246,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
     GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
 
-    if(Diag->Name == "Rect") {
+    if((Diag->Name == "Rect") || (Diag->Name == "Curve")) {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
       gp->addMultiCellWidget(GridLogX, Row,Row,0,2);
       Row++;
@@ -441,11 +439,12 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
        (Diag->Name == "Polar")) {
        axisZ->setEnabled(false);
     }
-    if(Diag->Name.left(4) != "Rect") {   // cartesian 2D and 3D
-      axisX->setEnabled(false);
-      startY->setEnabled(false);
-      startZ->setEnabled(false);
-    }
+    if(Diag->Name.left(4) != "Rect")   // cartesian 2D and 3D
+      if(Diag->Name != "Curve") {
+        axisX->setEnabled(false);
+        startY->setEnabled(false);
+        startZ->setEnabled(false);
+      }
   }
   else  stepX = 0;
 
@@ -980,7 +979,7 @@ void DiagramDialog::slotSetYAxis(int axis)
 void DiagramDialog::slotManualX(int state)
 {
   if(state == QButton::On) {
-    if(Diag->Name == "Rect")
+    if((Diag->Name == "Rect") || (Diag->Name == "Curve"))
       startX->setEnabled(true);
     stopX->setEnabled(true);
     if(GridLogX) if(GridLogX->isChecked())  return;
@@ -997,7 +996,7 @@ void DiagramDialog::slotManualX(int state)
 void DiagramDialog::slotManualY(int state)
 {
   if(state == QButton::On) {
-    if(Diag->Name == "Rect")
+    if((Diag->Name == "Rect") || (Diag->Name == "Curve"))
       startY->setEnabled(true);
     stopY->setEnabled(true);
     if(GridLogY) if(GridLogY->isChecked())  return;
@@ -1014,7 +1013,7 @@ void DiagramDialog::slotManualY(int state)
 void DiagramDialog::slotManualZ(int state)
 {
   if(state == QButton::On) {
-    if(Diag->Name == "Rect")
+    if((Diag->Name == "Rect") || (Diag->Name == "Curve"))
       startZ->setEnabled(true);
     stopZ->setEnabled(true);
     if(GridLogZ) if(GridLogZ->isChecked())  return;
