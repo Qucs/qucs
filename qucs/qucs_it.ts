@@ -703,10 +703,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Qucs Transcalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to sythesize physical parameters of the required transmission line.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -716,6 +712,10 @@
     </message>
     <message>
         <source>Dismiss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5911,10 +5911,6 @@ Starts transmission line calculator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Qucs Transcalc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Transmission Line Calculator for Qucs
 </source>
         <translation type="unfinished"></translation>
@@ -5976,6 +5972,14 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Saving aborted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Schematic copied into clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmission line type not available.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
