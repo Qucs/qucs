@@ -969,7 +969,7 @@ Champ inconnu !</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Ne peut charger le fichier résultat :</translation>
+        <translation type="obsolete">Ne peut charger le fichier résultat :</translation>
     </message>
     <message>
         <source>ac simulation</source>
@@ -1431,19 +1431,19 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Ne peut déterminer la taille de la variable indépendante « </translation>
+        <translation type="obsolete">Ne peut déterminer la taille de la variable indépendante « </translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Trop peu de variables indexées « </translation>
+        <translation type="obsolete">Trop peu de variables indexées « </translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Variable indépendante « </translation>
+        <translation type="obsolete">Variable indépendante « </translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation> » introuvable</translation>
+        <translation type="obsolete"> » introuvable</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -1475,7 +1475,7 @@ Début de ligne incorrect !</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Trop peu de données indépendates « </translation>
+        <translation type="obsolete">Trop peu de données indépendates « </translation>
     </message>
     <message>
         <source>ideal ac current source</source>
@@ -2495,10 +2495,6 @@ Invocation :  qucsedit [-r] fichier
         <translation>© Copyright 2003, 2004 par Michael Margraf
  {2004, 2005?}</translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3099,6 +3095,10 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

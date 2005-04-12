@@ -956,23 +956,23 @@ Câmp necunoscut!</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Setul de date nu poate fi încărcat:</translation>
+        <translation type="obsolete">Setul de date nu poate fi încărcat:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Mărimea datei independente nu poate fi citită &quot;</translation>
+        <translation type="obsolete">Mărimea datei independente nu poate fi citită &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Prea multe date dependente &quot;</translation>
+        <translation type="obsolete">Prea multe date dependente &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Date independente &quot;</translation>
+        <translation type="obsolete">Date independente &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; nu se găseşte</translation>
+        <translation type="obsolete">&quot; nu se găseşte</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -1482,7 +1482,7 @@ Fals format de linie a &apos;component&apos;!</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Prea puţine date independente</translation>
+        <translation type="obsolete">Prea puţine date independente</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
@@ -2542,10 +2542,6 @@ Folosire:  qucsedit [-r] file
         <translation type="unfinished">Copyright (C) 2004, 2005 de Michael Margraf
 </translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3159,6 +3155,10 @@ Editează această schemă</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

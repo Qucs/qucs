@@ -76,6 +76,7 @@ Diagram::~Diagram()
 }
 
 // ------------------------------------------------------------
+// Paint function for most diagrams (cartesian, smith, polar, ...)
 void Diagram::paint(ViewPainter *p)
 {
   // paint all arcs (1 pixel larger to compensate for strange Qt circles)
@@ -93,115 +94,104 @@ void Diagram::paint(ViewPainter *p)
   QSize s;
   Graph *pg;
   int   x, y;
-  if(Name[0] != 'T') {   // no graph within tabulars
-    // draw all graphs
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
-      pg->paint(p, cx, cy);
+  // draw all graphs
+  for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
+    pg->paint(p, cx, cy);
 
-    p->map(cx+(x2>>1), cy+y1, &x, &y);
-    if(xAxis.Label.isEmpty()) {
-      // write all x labels ----------------------------------------
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+  p->map(cx+(x2>>1), cy+y1, &x, &y);
+  if(xAxis.Label.isEmpty()) {
+    // write all x labels ----------------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
 	y += p->LineSpacing;
 	DataX *pD = pg->cPointsX.getFirst();
 	if(!pD) continue;
 	p->Painter->setPen(pg->Color);
-	s = p->Painter->fontMetrics().size(0, pD->Var);
-	p->Painter->drawText(x-(s.width()>>1), y, pD->Var);
-      }
+	if(Name[0] != 'C') {   // location curve ?
+	  s = p->Painter->fontMetrics().size(0, pD->Var);
+	  p->Painter->drawText(x-(s.width()>>1), y, pD->Var);
+	}
+	else {
+	  s = p->Painter->fontMetrics().size(0, "real("+pg->Var+")");
+	  p->Painter->drawText(x-(s.width()>>1), y, "real("+pg->Var+")");
+	}
     }
-    else {
-      // write x label text -----------------------------------------
-      p->Painter->setPen(Qt::black);
-      s = p->Painter->fontMetrics().size(0, xAxis.Label);
-      p->Painter->drawText(x-(s.width()>>1), y+p->LineSpacing, xAxis.Label);
-    }
+  }
+  else {
+    // write x label text -----------------------------------------
+    p->Painter->setPen(Qt::black);
+    s = p->Painter->fontMetrics().size(0, xAxis.Label);
+    p->Painter->drawText(x-(s.width()>>1), y+p->LineSpacing, xAxis.Label);
+  }
 
-    QWMatrix wm = p->Painter->worldMatrix();
-    p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
-    p->map(cx-x1, cy-(y2>>1), &x, &y);
-    if(yAxis.Label.isEmpty()) {
-      // draw left y-label for all graphs ------------------------------
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-        if(pg->yAxisNo != 0)  continue;
-        p->Painter->setPen(pg->Color);
-	if(pg->Points) {
+  QWMatrix wm = p->Painter->worldMatrix();
+  p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
+  p->map(cx-x1, cy-(y2>>1), &x, &y);
+  if(yAxis.Label.isEmpty()) {
+    // draw left y-label for all graphs ------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      if(pg->yAxisNo != 0)  continue;
+      p->Painter->setPen(pg->Color);
+      if(pg->Points) {
+	if(Name[0] != 'C') {   // location curve ?
 	  s = p->Painter->fontMetrics().size(0, pg->Var);
 	  p->Painter->drawText(-y-(s.width()>>1), x, pg->Var);
 	}
-	else {     // if no data => <invalid>
-	  s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
-	  p->Painter->drawText(-y-(s.width()>>1), x, pg->Var+INVALID_STR);
+	else {
+	  s = p->Painter->fontMetrics().size(0, "imag("+pg->Var+")");
+	  p->Painter->drawText(-y-(s.width()>>1), x, "imag("+pg->Var+")");
 	}
-	x -= p->LineSpacing;
       }
+      else {     // if no data => <invalid>
+	s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
+	p->Painter->drawText(-y-(s.width()>>1), x, pg->Var+INVALID_STR);
+      }
+      x -= p->LineSpacing;
     }
-    else {
-	p->Painter->setPen(Qt::black);
-	s = p->Painter->fontMetrics().size(0, yAxis.Label);
-	p->Painter->drawText(-y-(s.width()>>1), x, yAxis.Label);
-    }
+  }
+  else {
+    p->Painter->setPen(Qt::black);
+    s = p->Painter->fontMetrics().size(0, yAxis.Label);
+    p->Painter->drawText(-y-(s.width()>>1), x, yAxis.Label);
+  }
 
-    p->Painter->setWorldMatrix(QWMatrix(0.0,1.0,-1.0,0.0, 0, 0));
-    p->map(cx+x3, cy-(y2>>1), &x, &y);
-    if(zAxis.Label.isEmpty()) {
-      // draw right y-label for all graphs ------------------------------
-      for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-        if(pg->yAxisNo != 1)  continue;
-        p->Painter->setPen(pg->Color);
-	if(pg->Points) {
+  p->Painter->setWorldMatrix(QWMatrix(0.0,1.0,-1.0,0.0, 0, 0));
+  p->map(cx+x3, cy-(y2>>1), &x, &y);
+  if(zAxis.Label.isEmpty()) {
+    // draw right y-label for all graphs ------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      if(pg->yAxisNo != 1)  continue;
+      p->Painter->setPen(pg->Color);
+      if(pg->Points) {
+	if(Name[0] != 'C') {   // location curve ?
 	  s = p->Painter->fontMetrics().size(0, pg->Var);
 	  p->Painter->drawText(y-(s.width()>>1), -x, pg->Var);
 	}
-	else {     // if no data => <invalid>
-	  s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
-	  p->Painter->drawText(y-(s.width()>>1), -x, pg->Var+INVALID_STR);
+	else {
+	  s = p->Painter->fontMetrics().size(0, "imag("+pg->Var+")");
+	  p->Painter->drawText(y-(s.width()>>1), -x, "imag("+pg->Var+")");
 	}
-	x += p->LineSpacing;
       }
+      else {     // if no data => <invalid>
+	s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
+	p->Painter->drawText(y-(s.width()>>1), -x, pg->Var+INVALID_STR);
+      }
+      x += p->LineSpacing;
     }
-    else {
-	p->Painter->setPen(Qt::black);
-	s = p->Painter->fontMetrics().size(0, zAxis.Label);
-	p->Painter->drawText(y-(s.width()>>1), -x, zAxis.Label);
-    }
-    p->Painter->setWorldMatrix(wm);
-    p->Painter->setWorldXForm(false);
   }
-  else    // tabular diagram
-  if(x1 > 0) {  // paint scroll bar ?
-    y = y2 - 20;
-    // draw scroll bar
-    p->fillRect(cx-15, cy-y + yAxis.numGraphs, 14, zAxis.numGraphs, Qt::gray);
-
-    // draw frame for scroll bar
-    p->Painter->setPen(QPen(QPen::black,0));
-    p->drawLine(cx-17, cy-y2, cx-17, cy);
-    p->drawLine(cx-17, cy-y2, cx, cy-y2);
-    p->drawLine(cx-17, cy, cx, cy);
-    y += 2;
-    p->drawLine(cx-17, cy-y, cx, cy-y);
-    y -= y2;
-    p->drawLine(cx-17, cy+y, cx, cy+y);
-
-    // draw the arrows above and below the scroll bar
-    p->Painter->setBrush(QBrush(Qt::gray));
-    int dx, dy;
-    p->map(cx-20, cy-y2-8, &x, &y);
-    p->map(cx+4, cy-y2+16, &dx, &dy);
-    dx -= x;
-    dy -= y;
-    p->Painter->drawPie(x, y, dx, dy, 16*240, 16*60);
-
-    p->map(cx-20, cy-15, &x, &y);
-    p->Painter->drawPie(x, y, dx, dy, 16*60, 16*60);
-    p->Painter->setBrush(QBrush(Qt::NoBrush));
+  else {
+    p->Painter->setPen(Qt::black);
+    s = p->Painter->fontMetrics().size(0, zAxis.Label);
+    p->Painter->drawText(y-(s.width()>>1), -x, zAxis.Label);
   }
+  p->Painter->setWorldMatrix(wm);
+  p->Painter->setWorldXForm(false);
 
-  p->Painter->setPen(QPen(QPen::black,1));
+
   // write whole text
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next())
-    p->drawText(pt->s, cx+pt->x, cy-pt->y);
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
+    p->Painter->setPen(pt->Color);
+      p->drawText(pt->s, cx+pt->x, cy-pt->y);
+  }
 
   // draw markers last, so they are at the top of painting layers
   for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
@@ -246,7 +236,7 @@ int Diagram::regionCode(int x, int y)
 // ------------------------------------------------------------
 bool Diagram::insideDiagram(int x, int y)
 {
-  if(Name.at(0) == 'R')
+  if((Name[0] == 'R') || (Name[0] == 'C'))
     return (regionCode(x, y) == 0);
 
   int R = (x2 >> 1) + 1;  // +1 seems better (graph sometimes little outside)
@@ -259,7 +249,7 @@ bool Diagram::insideDiagram(int x, int y)
 // Cohen-Sutherland clipping algorithm
 void Diagram::clip(int* &p)
 {
-  if(Name.at(0) != 'R') {
+  if(Name[0] != 'R')  if(Name[0] != 'C') { // Cartesian or location curve ?
     roundClip(p);
     return;
   }
@@ -668,13 +658,27 @@ void Diagram::recalcGraphData()
   double x, y, *p;
   // get maximum and minimum values
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-    DataX *pD=pg->cPointsX.getFirst();
+    DataX *pD = pg->cPointsX.first();
     if(pD == 0) continue;
-    p = pD->Points;
-    for(z=pD->count; z>0; z--) { // check every x coordinate (1. dimension)
-      x = *(p++);
-      if(x > xAxis.max) xAxis.max = x;
-      if(x < xAxis.min) xAxis.min = x;
+    if(Name[0] != 'C') {   // not for location curves
+      p = pD->Points;
+      for(z=pD->count; z>0; z--) { // check x coordinates (1. dimension)
+        x = *(p++);
+        if(x > xAxis.max) xAxis.max = x;
+        if(x < xAxis.min) xAxis.min = x;
+      }
+    }
+
+    if(Name == "Rect3D") {
+      pD = pg->cPointsX.next();
+      if(pD) {
+        p = pD->Points;
+        for(z=pD->count; z>0; z--) { // check y coordinates (2. dimension)
+          y = *(p++);
+          if(y > yAxis.max) yAxis.max = y;
+          if(y < yAxis.min) yAxis.min = y;
+        }
+      }
     }
 
     Axis *pa;
@@ -684,9 +688,24 @@ void Diagram::recalcGraphData()
     for(z=pg->countY*pD->count; z>0; z--) {  // check every y coordinate
       x = *(p++);
       y = *(p++);
-      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-      if(x > pa->max) pa->max = x;
-      if(x < pa->min) pa->min = x;
+    
+      if(Name[0] != 'C') {
+        if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
+        if(finite(x)) {
+          if(x > pa->max) pa->max = x;
+          if(x < pa->min) pa->min = x;
+        }
+      }
+      else {   // location curve needs different treatment
+        if(finite(x)) {
+          if(x > xAxis.max) xAxis.max = x;
+          if(x < xAxis.min) xAxis.min = x;
+        }
+        if(finite(y)) {
+          if(y > pa->max) pa->max = y;
+          if(y < pa->min) pa->min = y;
+        }
+      }
     }
   }
 
@@ -745,8 +764,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
 
   file.setName(QucsWorkDir.filePath(file.name()));
   if(!file.open(IO_ReadOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot load dataset: ")+file.name());
+//    QMessageBox::critical(0, QObject::tr("Error"),
+//                 QObject::tr("Cannot load dataset: ")+file.name());
     return false;
   }
 
@@ -788,8 +807,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   }
 
   if(i <= 0) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-                 QObject::tr("Cannot find variable: ")+Variable);
+//    QMessageBox::critical(0, QObject::tr("Error"),
+//                 QObject::tr("Cannot find variable: ")+Variable);
     return false;   // return if data name was not found
   }
 
@@ -804,9 +823,9 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     counting = tmp.toInt(&ok);
     g->cPointsX.append(new DataX("number", 0, counting));
     if(!ok) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-                   QObject::tr("Cannot get size of independent data \"")+
-		   Variable+"\"");
+//      QMessageBox::critical(0, QObject::tr("Error"),
+//                   QObject::tr("Cannot get size of independent data \"")+
+//		   Variable+"\"");
       return false;
     }
 
@@ -871,18 +890,30 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
       x = Line.toDouble(&ok2);
     }
     if((!ok) || (!ok2)) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Too few dependent data \"") + Variable+"\"");
+//      QMessageBox::critical(0, QObject::tr("Error"),
+//		QObject::tr("Too few dependent data \"") + Variable+"\"");
       g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
       return false;
     }
     *(p++) = x;
     *(p++) = y;
-    if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
-    if(finite(x)) {
-      if(x > pa->max) pa->max = x;
-      if(x < pa->min) pa->min = x;
+    if(Name[0] != 'C') {
+      if(fabs(y) >= 1e-250) x = sqrt(x*x+y*y);
+      if(finite(x)) {
+        if(x > pa->max) pa->max = x;
+        if(x < pa->min) pa->min = x;
+      }
+    }
+    else {   // location curve needs different treatment
+      if(finite(x)) {
+        if(x > xAxis.max) xAxis.max = x;
+        if(x < xAxis.min) xAxis.min = x;
+      }
+      if(finite(y)) {
+        if(y > pa->max) pa->max = y;
+        if(y < pa->min) pa->min = y;
+      }
     }
 
     i = FileString.find(noWhiteSpace, j);
@@ -926,8 +957,8 @@ int Diagram::loadIndepVarData(const QString& var,
   } while(i > 0);
 
   if(i <= 0) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Independent data \"")+var+QObject::tr("\" not found"));
+//    QMessageBox::critical(0, QObject::tr("Error"),
+//	QObject::tr("Independent data \"")+var+QObject::tr("\" not found"));
     return -1;
   }
 
@@ -935,8 +966,8 @@ int Diagram::loadIndepVarData(const QString& var,
   tmp = Line.section(' ', 2, 2);  // get number of points
   int n = tmp.toInt(&ok);
   if(!ok) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Cannot get size of independent data \"")+var+"\"");
+//    QMessageBox::critical(0, QObject::tr("Error"),
+//	QObject::tr("Cannot get size of independent data \"")+var+"\"");
     return -1;
   }
 
@@ -954,16 +985,17 @@ int Diagram::loadIndepVarData(const QString& var,
   for(int z=0; z<n; z++) {
     x = Line.toDouble(&ok);  // get number
     if(!ok) {
-      QMessageBox::critical(0, QObject::tr("Error"),
-		 QObject::tr("Too few independent data \"") + var + "\"");
+//      QMessageBox::critical(0, QObject::tr("Error"),
+//		 QObject::tr("Too few independent data \"") + var + "\"");
       delete[] pD->Points;  pD->Points = 0;
       return -1;
     }
     *(p++) = x;
-    if(finite(x)) {
-      if(x > pa->max) pa->max = x;
-      if(x < pa->min) pa->min = x;
-    }
+    if(Name[0] != 'C')   // not for location curves
+      if(finite(x)) {
+        if(x > pa->max) pa->max = x;
+        if(x < pa->min) pa->min = x;
+      }
 
     i = FileString.find(noWhiteSpace, j);
     j = FileString.find(WhiteSpace, i);
@@ -1239,11 +1271,11 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     n_cos = cos(n_sin);
     n_sin = sin(n_sin);
     im = (1-n_cos)/n_sin * pow(Axis->up,0.7); // up^0.7 is beauty correction
-    x  = int((1-im)/Axis->up*dx2 + 0.5);
-    y  = int(im/Axis->up*x2 + 0.5);
+    x  = int((1-im)/Axis->up*dx2);
+    y  = int(im/Axis->up*x2);
 
     if(Axis->up <= 1.0) {       // Smith chart with |r|=1
-      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PI);
+      beta  = int(16.0*180.0*atan2(n_sin-im,n_cos-1)/M_PI - 0.5);
       if(beta<0) beta += 16*360;
       theta = 16*270-beta;
     }
@@ -1300,7 +1332,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
   for(m=1; m<GridX; m++) {
     im = m*(Axis->up+1.0)/GridX - Axis->up;
     x  = int(im/Axis->up*double(dx2) + 0.5);        // center
-    y  = int((1.0-im)/Axis->up*double(dx2) + 0.5);  // diameter
+    y  = int((1.0-im)/Axis->up*double(dx2));  // diameter
 
     if(Zplane)  x += dx2;
     else  x = 0;
@@ -1315,7 +1347,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
       if(im >= 1.0)
 	Arcs.append(new struct Arc(x, dx2+(y>>1), y, y, beta, theta, GridPen));
       else {
-	phi = int(16.0*180.0/M_PI*acos(im) + 0.5);
+	phi = int(16.0*180.0/M_PI*acos(im));
 	len = 16*180-phi;
 	if(Above && Below)  len += len;
 	else if(Below)  phi = 16*180;
@@ -1652,4 +1684,92 @@ bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
 
   if(mirror == mirror2)  return false;
   else  return true;
+}
+
+// --------------------------------------------------------------
+bool Diagram::calcYAxis(Axis *Axis, int x0)
+{
+  int z;
+  double GridStep, corr, zD, zDstep, GridNum;
+
+  QSize r;
+  QString tmp;
+  QFontMetrics  metrics(QucsSettings.font);
+  int maxWidth = 0;
+  int Prec;
+  char form;
+
+  bool back = false;
+if(Axis->log) {
+  if(Axis->autoScale) {
+    if(Axis->max*Axis->min <= 0.0)  return false;  // invalid
+  }
+  else  if(Axis->limit_min*Axis->limit_max <= 0.0)  return false;  // invalid
+
+  back = calcAxisLogScale(Axis, z, zD, zDstep, corr, y2);
+
+  if(back) z = y2;
+  while((z <= y2) && (z >= 0)) {    // create all grid lines
+    if(Axis->GridOn)  if(z < y2)  if(z > 0)
+      Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
+
+    if((zD < 1.5*zDstep) || (z == 0)) {
+      if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
+      else  tmp = StringNum(zD, 'e', 1);
+      if(Axis->up < 0.0)  tmp = '-'+tmp;
+
+      r = metrics.size(0, tmp);  // width of text
+      if(maxWidth < r.width()) maxWidth = r.width();
+      if(x0 > 0)
+        Texts.append(new Text(x0+7, z+6, tmp)); // text aligned left
+      else
+        Texts.append(new Text(-r.width()-7, z+6, tmp)); // text aligned right
+
+      // y marks
+      Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0)));
+    }
+
+    zD += zDstep;
+    if(zD > 9.5*zDstep)  zDstep *= 10.0;
+    if(back) {
+      z = int(corr*log10(zD / fabs(Axis->up)) + 0.5); // int() implies floor()
+      z = y2 - z;
+    }
+    else
+      z = int(corr*log10(zD / fabs(Axis->low)) + 0.5);// int() implies floor()
+  }
+}
+else {  // not logarithmical
+  back = calcAxisScale(Axis, GridNum, zD, zDstep, GridStep, double(y2));
+
+  double Expo;
+  if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
+  else  Expo = log10(fabs(Axis->up));
+  if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
+  else  { form = 'e';  Prec = 0; }
+
+  zD += 0.5;     // perform rounding
+  z = int(zD);   //  "int(...)" implies "floor(...)"
+  while((z <= y2) && (z >= 0)) {  // create all grid lines
+    if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
+    tmp = StringNum(GridNum, form, Prec);
+
+    r = metrics.size(0, tmp);  // width of text
+    if(maxWidth < r.width()) maxWidth = r.width();
+    if(x0 > 0)
+      Texts.append(new Text(x0+8, z+6, tmp));  // text aligned left
+    else
+      Texts.append(new Text(-r.width()-7, z+6, tmp));  // text aligned right
+    GridNum += GridStep;
+
+    if(Axis->GridOn)  if(z < y2)  if(z > 0)
+      Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
+    Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0))); // y marks
+    zD += zDstep;
+    z = int(zD);
+  }
+} // of "if(ylog) ... else ..."
+  if(x0 == 0)  x1 = maxWidth+14;
+  else  x3 = x2+maxWidth+14;
+  return true;
 }

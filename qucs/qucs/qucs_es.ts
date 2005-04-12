@@ -973,27 +973,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>No puedo cargar el conjunto de datos:</translation>
+        <translation type="obsolete">No puedo cargar el conjunto de datos:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>No puedo averiguar el tamaño de los datos independientes &quot;</translation>
+        <translation type="obsolete">No puedo averiguar el tamaño de los datos independientes &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Datos dependientes muy excasos &quot;</translation>
+        <translation type="obsolete">Datos dependientes muy excasos &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Datos independientes &quot;</translation>
+        <translation type="obsolete">Datos independientes &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; no encontrado</translation>
+        <translation type="obsolete">&quot; no encontrado</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Datos independientes muy excasos &quot;</translation>
+        <translation type="obsolete">Datos independientes muy excasos &quot;</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -2507,10 +2507,6 @@ Use:  qucsedit [-r] archivo
         <translation type="unfinished">Copyright (C) 2004, 2005 por Michael Margraf
 </translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3115,6 +3111,10 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

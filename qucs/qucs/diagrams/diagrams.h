@@ -28,5 +28,6 @@
 #include "tabdiagram.h"
 #include "psdiagram.h"
 #include "rect3ddiagram.h"
+#include "curvediagram.h"
 
 #endif

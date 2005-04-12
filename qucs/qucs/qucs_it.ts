@@ -1053,23 +1053,23 @@ Campo sconosciuto!</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>Impossibile caricare dataset:</translation>
+        <translation type="obsolete">Impossibile caricare dataset:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>Impossibile ottenere dimensione della variabile indipendente &quot;</translation>
+        <translation type="obsolete">Impossibile ottenere dimensione della variabile indipendente &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>Troppo poche variabili dipendenti &quot;</translation>
+        <translation type="obsolete">Troppo poche variabili dipendenti &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>Variabile indipendente &quot;</translation>
+        <translation type="obsolete">Variabile indipendente &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; non trovato/a</translation>
+        <translation type="obsolete">&quot; non trovato/a</translation>
     </message>
     <message>
         <source>ac simulation</source>
@@ -1580,7 +1580,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>Troppo poche variabili indipendenti &quot;</translation>
+        <translation type="obsolete">Troppo poche variabili indipendenti &quot;</translation>
     </message>
     <message>
         <source>ideal ac current source</source>
@@ -2600,10 +2600,6 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
-    </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4101,6 +4097,10 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
