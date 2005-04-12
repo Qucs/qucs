@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.27 2005/04/11 06:40:49 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.28 2005/04/12 06:50:37 raimi Exp $
  *
  */
 
@@ -1010,9 +1010,9 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   for (r = N; r > 0; r--) {
     f = B_(r);
     for (c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
-    if (abs (A_(r, r)) > 0)
+    if (abs (A_(r, r)) > TINY)
       X_(cMap[r - 1]) = f / A_(r, r);
-    else 
+    else
       X_(cMap[r - 1]) = 0;
   }
 
