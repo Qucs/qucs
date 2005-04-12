@@ -212,6 +212,18 @@ effect of these resistors can be easily removed by subtracting
 
 \subsection{Starting Values}
 
+A difficult question is how to find appropriate start values for the
+harmonic balance simulation. It is recommended to first perform a DC
+analysis and start the algorithm with this result. In many situation
+(perhaps always) an even better starting point can be achieved by
+also using the result of a linear AC simulation. However with a large
+signal strength and strong non-linearities, convergence may still
+fail. Then, the following procedure might succeed: Perform HB
+simulation by applying half of the desired signal levels. If convergence
+is reached, the result can be used as start values for the simulation
+with the full signal levels. Otherwise the amplitude of the signals can
+be further decreased in order to repeat the above-mentioned procedure.
+
 
 \subsection{Solution algorithm}
 
@@ -238,7 +250,25 @@ So, two Jacobian matrices have to be built, one for the current
 $\boldsymbol{I}_G$ and one for the charge $\boldsymbol{Q}$. Both resulted
 from a Fourier Transformation. The two operations (Fourier Transformation
 and differentiation) can be exchanged. Hence, the Jacobian matrices
-are built in time domain and transformed into frequency domain afterwards.
+are built in time domain and transformed into frequency domain afterwards.\\
+To obtain a practical algorithm of this procedure, the DFT is best written
+as matrix equation. By having a look at equation \ref{eqn:DFT} and
+\ref{eqn:IDFT}, it becomes clear how this works. The harmonic factors
+$\exp(j\omega_k t_n)$ build the matrix $\boldsymbol{\Gamma}$:
+\begin{align}
+\text{DFT:}  \qquad & \boldsymbol{U}(j\omega) = \boldsymbol{\Gamma}\cdot \boldsymbol{u}(t) \\
+\text{IDFT:} \qquad & \boldsymbol{u}(t) = \boldsymbol{\Gamma}^{-1}\cdot \boldsymbol{U}(j\omega)
+\end{align}
+with $\boldsymbol{u}$ and $\boldsymbol{U}$ being the vectors of the time
+and frequency values, respectively. Now, it is possible to transform the
+desired Jacobian matrix into frequency domain:
+\begin{equation}
+\boldsymbol{J}_{F,IG} = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
+  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\boldsymbol{v}}
+    \cdot\boldsymbol{\Gamma}^{-1}
+\end{equation}
+This formula seems to be quite clear, but it has to be pointed out how
+this works with FFT algorithm.
 
 
 \subsection{Termination Criteria}
@@ -289,6 +319,7 @@ $\underline{U}_n$. This leads to the discrete Fourier Transformation
 \text{DFT:} & \qquad &
      \underline{U}_n =
      \sum_{k=0}^{N-1} u_k\cdot \exp\left( -j\cdot n\frac{2\pi\cdot k}{N} \right) \\
+\label{eqn:IDFT}
 \text{IDFT:} & \qquad &
      u_k = \frac{1}{N} \cdot \sum_{n=0}^{N}
             \underline{U}_n\cdot \exp\left( j\cdot k\frac{2\pi\cdot n}{N} \right)
