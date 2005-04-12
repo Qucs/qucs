@@ -53,11 +53,12 @@ public:
   virtual void calcCoordinate
                (double* &, double* &, double* &, int*, int*, Axis*) {};
   virtual void calcLimits() {};
+  
+  virtual void paint(ViewPainter*);
   void    calcData(Graph*, int);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(QPainter*);
-  void    paint(ViewPainter*);
   void    Bounding(int&, int&, int&, int&);
   bool    getSelected(int, int);
   bool    ResizeTouched(int, int);
@@ -95,6 +96,7 @@ protected:
 
   bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
   bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
+  bool calcYAxis(Axis*, int);
 
   int  regionCode(int, int);
   void clip(int* &);

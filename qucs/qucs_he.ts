@@ -953,27 +953,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>לא יכול לטעון קומץ מידע:</translation>
+        <translation type="obsolete">לא יכול לטעון קומץ מידע:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>אין באפשרותי למצוא את הגודל של המידע העצמאי &quot;</translation>
+        <translation type="obsolete">אין באפשרותי למצוא את הגודל של המידע העצמאי &quot;</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>מעט מדי מידע תלותי &quot;</translation>
+        <translation type="obsolete">מעט מדי מידע תלותי &quot;</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>מידע עצמאי &quot;</translation>
+        <translation type="obsolete">מידע עצמאי &quot;</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>&quot; לא נמצא</translation>
+        <translation type="obsolete">&quot; לא נמצא</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>מעט מדי מידע עצמאי &quot;</translation>
+        <translation type="obsolete">מעט מדי מידע עצמאי &quot;</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -2425,10 +2425,6 @@ Usage:  qucsedit [-r] file
 
 </translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3016,6 +3012,10 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

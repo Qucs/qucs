@@ -914,30 +914,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot load dataset: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot get size of independent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Too few dependent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Independent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&quot; not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Too few independent data &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>invalid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2373,10 +2349,6 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2954,6 +2926,10 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

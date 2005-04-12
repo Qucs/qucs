@@ -978,27 +978,27 @@ Unknown field!</source>
     </message>
     <message>
         <source>Cannot load dataset: </source>
-        <translation>データセットをロードできません:</translation>
+        <translation type="obsolete">データセットをロードできません:</translation>
     </message>
     <message>
         <source>Cannot get size of independent data &quot;</source>
-        <translation>ファイルサイズが取得できません</translation>
+        <translation type="obsolete">ファイルサイズが取得できません</translation>
     </message>
     <message>
         <source>Too few dependent data &quot;</source>
-        <translation>データが少なすぎます</translation>
+        <translation type="obsolete">データが少なすぎます</translation>
     </message>
     <message>
         <source>Independent data &quot;</source>
-        <translation>データ”</translation>
+        <translation type="obsolete">データ”</translation>
     </message>
     <message>
         <source>&quot; not found</source>
-        <translation>”が見つかりません</translation>
+        <translation type="obsolete">”が見つかりません</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
-        <translation>データが少なすぎます”</translation>
+        <translation type="obsolete">データが少なすぎます”</translation>
     </message>
     <message>
         <source>invalid</source>
@@ -2471,10 +2471,6 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf</translation>
     </message>
-    <message>
-        <source>Cannot find variable: </source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -3059,6 +3055,10 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
