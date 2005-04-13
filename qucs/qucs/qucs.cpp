@@ -651,7 +651,7 @@ void QucsApp::slotFileOpen()
   statusBar()->message(tr("Opening file..."));
 
   QString s = QFileDialog::getOpenFileName(
-	lastDir.isEmpty() ? "." : lastDir,
+	lastDir.isEmpty() ? QString(".") : lastDir,
 	QucsFileFilter, this, "", tr("Enter a Schematic Name"));
 
   if(s.isEmpty())
