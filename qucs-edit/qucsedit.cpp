@@ -96,7 +96,8 @@ void QucsEdit::slotLoad()
   static QString lastDir;  // to remember last directory and file
 
   QString s = QFileDialog::getOpenFileName(
-    lastDir.isEmpty() ? "." : lastDir, "*", this, "", tr("Enter a Filename"));
+    lastDir.isEmpty() ? QString(".") : lastDir,
+    "*", this, "", tr("Enter a Filename"));
   if(s.isEmpty()) return;
   lastDir = s;   // remember last directory and file
   if(!closeFile()) return;
