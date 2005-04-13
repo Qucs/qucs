@@ -1130,6 +1130,134 @@ $x$ are computed by the following recursive equation.
 x_{i} &= \dfrac{z_{i}}{r_{ii}} - \sum_{k=i+1}^{n} x_{k}\cdot \dfrac{r_{ik}}{r_{ii}} & i = n,\ldots,1
 \end{align}
 
+\subsubsection{Motivation}
+%\addcontentsline{toc}{subsubsection}{Motivation}
+
+Though the QR decomposition has an operation count of $2n^3 + 3n^2$
+(which is about six times more than the LU decomposition) it has its
+advantages.  The QR factorization method is said to be unconditional
+stable and more accurate.  Also it can be used to obtain the
+minimum-norm (or least square) solution of under-determined equation
+systems.
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=10cm]{MNAsingular}
+\end{center}
+\caption{circuit with singular modified nodal analysis matrix}
+\label{fig:MNAsingular}
+\end{figure}
+\FloatBarrier
+
+The circuit in fig. \ref{fig:MNAsingular} has the following MNA
+representation:
+\begin{equation}
+A x =
+\begin{bmatrix}
+\frac{1}{R_{2}} & 0 & 0\\
+0 & \frac{1}{R_{1}} & -\frac{1}{R_{1}}\\
+0 & -\frac{1}{R_{1}} & \frac{1}{R_{1}}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+0.1 & 0 & 0\\
+0 & 0.1 & -0.1\\
+0 & -0.1 & 0.1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_1\\
+-I_1\\
+I_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+0.1\\
+-0.1\\
+0.1
+\end{bmatrix}
+=
+z
+\end{equation}
+
+The second and third row of the matrix $A$ are linear dependent and
+the matrix is singular because its determinant is zero.  Depending on
+the right hand side $z$, the equation system has none or unlimited
+solutions.  This is called an under-determined system.  The discussed
+QR decomposition easily computes a valid solution without reducing
+accuracy.  The LU decomposition would probably fail because of the
+singularity.
+
+\subsubsection{Least norm problem}
+%\addcontentsline{toc}{subsubsection}{Least norm problem}
+
+With some more effort it is possible to obtain the minimum-norm
+solution of this problem.  The algorithm as described here would
+probably yield the following solution:
+\begin{equation}
+x =
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+0\\
+1
+\end{bmatrix}
+\end{equation}
+
+This is one out of unlimited solutions.  The following short
+description shows how it is possible to obtain the minimum-norm
+solution.  When decomposing the transposed problem
+\begin{equation}
+A^T = Q\cdot R
+\end{equation}
+
+the minimum-norm solution $\hat{x}$ is obtained by forward substitution of
+\begin{equation}
+R^T\cdot x = z
+\end{equation}
+
+and multiplying the result with $Q$.
+\begin{equation}
+\hat{x} = Q\cdot x
+\end{equation}
+
+In the example above this algorithm results in a solution vector with
+the least vector norm possible:
+\begin{equation}
+\hat{x} =
+\begin{bmatrix}
+V_1\\
+V_2\\
+V_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+1\\
+-0.5\\
+0.5
+\end{bmatrix}
+\end{equation}
+
+This algorithm outline is also sometimes called LQ decomposition
+because of $R^T$ being a lower triangular matrix used by the forward
+substitution.
+
 \subsection{Jacobi method}
 %\addcontentsline{toc}{subsection}{Jacobi method}
 

@@ -1,3 +1,9 @@
+2005-04-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* eqnsys.cpp (substitute_qr_householder_ls): Implemented least
+	square solution of under-determined equation systems using
+	QR decomposition.
+
 2005-04-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* tvector.h (class tvector), tmatrix.h (class tmatrix):
