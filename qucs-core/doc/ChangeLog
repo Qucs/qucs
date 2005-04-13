@@ -1,3 +1,8 @@
+2005-04-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* dcanalysis.tex (subsubsection{Motivation}): Documented
+	least square solution using QR decomposition.
+
 2005-04-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip.tex (section{Microstrip via hole}): Fixed typo

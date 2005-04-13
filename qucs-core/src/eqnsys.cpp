@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.28 2005-04-12 06:50:37 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.29 2005-04-13 07:24:30 raimi Exp $
  *
  */
 
@@ -794,6 +794,16 @@ void eqnsys<nr_type_t>::solve_qr (void) {
   //substitute_qrh ();
 }
 
+/* The function uses QR decomposition using householder
+   transformations in order to solve the given under-determinded
+   equation system in its minimum norm (least square) sense. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_qr_ls (void) {
+  A->transpose ();
+  factorize_qr_householder ();
+  substitute_qr_householder_ls ();
+}
+
 /* The following function computes the euclidian norm of the given
    column vector of the matrix A starting from the given row. */
 template <class nr_type_t>
@@ -956,8 +966,15 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
 
     // update norms of remaining columns too
     for (r = c + 1; r <= N; r++) {
-      if (nPvt[r - 1] > 0)
-	nPvt[r - 1] = euclidianCol (r, c + 1);
+      if ((s = nPvt[r - 1]) > 0) {
+	nr_double_t y = 0;
+	t = A_(c, r) / s;
+	if (norm (t) < 1) y = s * sqrt (1 - norm (t));
+	if (fabs (y / s) < TINY)
+	  nPvt[r - 1] = euclidianCol (r, c + 1);
+	else
+	  nPvt[r - 1] = y;
+      }
     }
   }
 }
@@ -981,7 +998,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   for (r = N; r > 0; r--) {
     f = B_(r);
     for (c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
-    if (abs (R_(r)) > 0)
+    if (abs (R_(r)) > TINY)
       X_(cMap[r - 1]) = f / R_(r);
     else
       X_(cMap[r - 1]) = 0;
@@ -1008,13 +1025,43 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
 
   // backward substitution in order to solve RX = Q'B
   for (r = N; r > 0; r--) {
-    f = B_(r);
-    for (c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
+    for (f = B_(r), c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
     if (abs (A_(r, r)) > TINY)
       X_(cMap[r - 1]) = f / A_(r, r);
     else
       X_(cMap[r - 1]) = 0;
   }
+}
 
-  // TODO: compute least square solution for singular matrices
+/* The function uses the householder vectors in order to the solve the
+   equation system R'X = B by forward substitution, then QX is computed
+   to obtain the least square solution of the under-determined equation
+   system AX = B. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
+  int c, r;
+  nr_type_t f;
+
+  // forward substitution in order to solve R'X = B
+  for (r = 1; r <= N; r++) {
+    for (f = B_(r), c = 1; c < r; c++) f -= A_(c, r) * B_(c);
+    if (abs (A_(r, r)) > TINY)
+      B_(r) = f / A_(r, r);
+    else
+      B_(r) = 0;
+  }
+
+  // compute the least square solution QX
+  for (c = N - 1; c > 0; c--) {
+    if (T_(c) != 0) {
+      // scalar product u_k^T * B
+      for (f = B_(c), r = c + 1; r <= N; r++) f += conj (A_(r, c)) * B_(r);
+      B_(c) -= T_(c) * f;
+      // z - 2 * f * u_k
+      for (r = c + 1; r <= N; r++) B_(r) -= T_(c) * f * A_(r, c);
+    }
+  }
+
+  // permute solution vector
+  for (r = 1; r <= N; r++) X_(cMap[r - 1]) = B_(r);
 }

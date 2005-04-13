@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.15 2005-04-11 06:40:49 raimi Exp $
+ * $Id: eqnsys.h,v 1.16 2005-04-13 07:24:30 raimi Exp $
  *
  */
 
@@ -87,10 +87,12 @@ class eqnsys
   void substitute_lu_crout (void);
   void substitute_lu_doolittle (void);
   void solve_qr (void);
+  void solve_qr_ls (void);
   void factorize_qrh (void);
   void substitute_qrh (void);
   void factorize_qr_householder (void);
   void substitute_qr_householder (void);
+  void substitute_qr_householder_ls (void);
   nr_double_t euclidianCol (int, int r = 1);
   void solve_iterative (void);
   void solve_sor (void);
