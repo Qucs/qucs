@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.35 2005-02-17 16:02:35 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.36 2005-04-15 09:07:55 raimi Exp $
  *
  */
 
@@ -66,6 +66,7 @@ void dcsolver::solve (void) {
   // fetch simulation properties
   saveOPs |= !strcmp (getPropertyString ("saveOPs"), "yes") ? SAVE_OPS : 0;
   saveOPs |= !strcmp (getPropertyString ("saveAll"), "yes") ? SAVE_ALL : 0;
+  char * solver = getPropertyString ("Solver");
 
   // initialize node voltages, first guess for non-linear circuits and
   // generate extra circuits if necessary
@@ -74,6 +75,16 @@ void dcsolver::solve (void) {
 
   // start the iterative solver
   solve_pre ();
+
+  // choose a solver
+  if (!strcmp (solver, "CroutLU"))
+    eqnAlgo = ALGO_LU_DECOMPOSITION_CROUT;
+  else if (!strcmp (solver, "DoolittleLU"))
+    eqnAlgo = ALGO_LU_DECOMPOSITION_DOOLITTLE;
+  else if (!strcmp (solver, "HouseholderQR"))
+    eqnAlgo = ALGO_QR_DECOMPOSITION;
+  else if (!strcmp (solver, "HouseholderLQ"))
+    eqnAlgo = ALGO_QR_DECOMPOSITION_LS;
 
   // local variables for the fallback thingies
   int retry = -1, error, fallback = 0, preferred;

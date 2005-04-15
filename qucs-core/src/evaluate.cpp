@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.26 2005-03-14 21:59:06 raimi Exp $
+ * $Id: evaluate.cpp,v 1.27 2005-04-15 09:07:56 raimi Exp $
  *
  */
 
@@ -1806,7 +1806,13 @@ constant * evaluate::twoport_m (constant * args) {
   char f = CHR (args->getResult (1));
   char t = CHR (args->getResult (2));
   constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (twoport (*m, toupper (f), toupper (t)));
+  if (m->getRows () < 2 || m->getCols () < 2) {
+    THROW_MATH_EXCEPTION ("invalid matrix dimensions for twoport "
+			  "transformation");
+    res->m = new matrix (*m);
+  }
+  else
+    res->m = new matrix (twoport (*m, toupper (f), toupper (t)));
   return res;
 }
 
@@ -1815,7 +1821,13 @@ constant * evaluate::twoport_mv (constant * args) {
   char f = CHR (args->getResult (1));
   char t = CHR (args->getResult (2));
   constant * res = new constant (TAG_MATVEC);
-  res->mv = new matvec (twoport (*mv, toupper (f), toupper (t)));
+  if (mv->getRows () < 2 || mv->getCols () < 2) {
+    THROW_MATH_EXCEPTION ("invalid matrix dimensions for twoport "
+			  "transformation");
+    res->mv = new matvec (*mv);
+  }
+  else
+    res->mv = new matvec (twoport (*mv, toupper (f), toupper (t)));
   return res;
 }
 
@@ -1953,7 +1965,7 @@ constant * evaluate::linspace (constant * args) {
   int points = INT (args->getResult (2));
   constant * res = new constant (TAG_VECTOR);
   if (points < 2) {
-    THROW_MATH_EXCEPTION ("number of points must be greater than 1");
+    THROW_MATH_EXCEPTION ("linspace: number of points must be greater than 1");
     res->v = new vector ();
     return res;
   }
@@ -1985,7 +1997,8 @@ constant * evaluate::noise_circle_d (constant * args) {
   }
 
   if (args->get(4)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("5th argument must be a variable reference");
+    THROW_MATH_EXCEPTION ("NoiseCircle: 5th argument must be a variable "
+			  "reference");
   } else {
     res->addPrepDependencies (((reference *) args->get(4))->n);
   }
@@ -2017,12 +2030,14 @@ constant * evaluate::noise_circle_v (constant * args) {
   }
 
   if (args->get(3)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("4th argument must be a variable reference");
+    THROW_MATH_EXCEPTION ("NoiseCircle: 4th argument must be a variable "
+			  "reference");
   } else {
     res->addPrepDependencies (((reference *) args->get(3))->n);
   }
   if (args->get(4)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("5th argument must be a variable reference");
+    THROW_MATH_EXCEPTION ("NoiseCircle: 5th argument must be a variable "
+			  "reference");
   } else {
     res->addPrepDependencies (((reference *) args->get(4))->n);
   }
@@ -2046,7 +2061,8 @@ constant * evaluate::stab_circle_l (constant * args) {
     }
   }
   if (args->get(1)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("2nd argument must be a variable reference");
+    THROW_MATH_EXCEPTION ("StabCircleL: 2nd argument must be a variable "
+			  "reference");
   } else {
     res->addPrepDependencies (((reference *) args->get(1))->n);
   }
@@ -2070,7 +2086,8 @@ constant * evaluate::stab_circle_s (constant * args) {
     }
   }
   if (args->get(1)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("2nd argument must be a variable reference");
+    THROW_MATH_EXCEPTION ("StabCircleS: 2nd argument must be a variable "
+			  "reference");
   } else {
     res->addPrepDependencies (((reference *) args->get(1))->n);
   }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.33 2005-02-21 20:50:59 raimi Exp $
+ * $Id: trsolver.cpp,v 1.34 2005-04-15 09:07:57 raimi Exp $
  *
  */
 
@@ -95,6 +95,7 @@ void trsolver::initSteps (void) {
 void trsolver::solve (void) {
   nr_double_t time;
   int error = 0, convError = 0;
+  char * solver = getPropertyString ("Solver");
   runs++;
   current = 0;
   fixpoint = 0;
@@ -109,6 +110,16 @@ void trsolver::solve (void) {
   setCalculation ((calculate_func_t) &calcDC);
   solve_pre ();
   applyNodeset ();
+
+  // Choose a solver.
+  if (!strcmp (solver, "CroutLU"))
+    eqnAlgo = ALGO_LU_DECOMPOSITION;
+  else if (!strcmp (solver, "DoolittleLU"))
+    eqnAlgo = ALGO_LU_DECOMPOSITION_DOOLITTLE;
+  else if (!strcmp (solver, "HouseholderQR"))
+    eqnAlgo = ALGO_QR_DECOMPOSITION;
+  else if (!strcmp (solver, "HouseholderLQ"))
+    eqnAlgo = ALGO_QR_DECOMPOSITION_LS;
 
   // Run the DC solver once.
   try_running () {

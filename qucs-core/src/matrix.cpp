@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.17 2005-02-08 23:08:32 raimi Exp $
+ * $Id: matrix.cpp,v 1.18 2005-04-15 09:07:56 raimi Exp $
  *
  */
 
@@ -687,7 +687,7 @@ void matrix::exchangeCols (int c1, int c2) {
    Z, H, G and A to any other.  Also converts S<->(A, T, H, Y and Z)
    matrices. */
 matrix twoport (matrix m, char in, char out) {
-  assert (m.getRows () == 2 && m.getCols () == 2);
+  assert (m.getRows () >= 2 && m.getCols () >= 2);
   complex d;
   matrix res (2);
 
