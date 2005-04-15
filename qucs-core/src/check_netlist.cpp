@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.76 2005/04/11 06:40:48 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.77 2005/04/15 09:07:55 raimi Exp $
  *
  */
 
@@ -199,9 +199,13 @@ static struct special_t checker_specials[] = {
   { "DC",     "convHelper",  { "none", "SourceStepping", "gMinStepping", 
 			       "LineSearch", "Attenuation", "SteepestDescent",
 			       NULL } },
+  { "DC",     "Solver",      { "CroutLU", "DoolittleLU", "HouseholderQR",
+			       "HouseholderLQ", NULL } },
   { "TR",     "Type",        { "lin", "log", NULL } },
   { "TR",     "IntegrationMethod",
     { "Euler", "Trapezoidal", "Gear", "AdamsMoulton", NULL } },
+  { "TR",     "Solver",      { "CroutLU", "DoolittleLU", "HouseholderQR",
+			       "HouseholderLQ", NULL } },
   { "MLIN",   "DispModel",   { "Kirschning", "Kobayashi", "Yamashita",
 			       "Getsinger", "Schneider", "Pramanick",
 			       "Hammerstad", NULL } },

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.29 2005/04/13 07:24:30 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.30 2005/04/15 09:07:55 raimi Exp $
  *
  */
 
@@ -50,6 +50,7 @@
 #endif
 
 #define TINY 1e-12
+#define EPSI 2.2204460492503131e-16 /* IEEE double precision 2^{-52} */
 
 // Little helper macro.
 #define Swap(type,a,b) { type t; t = a; a = b; b = t; }
@@ -139,11 +140,17 @@ void eqnsys<nr_type_t>::solve (void) {
   case ALGO_GAUSS_JORDAN:
     solve_gauss_jordan ();
     break;
-  case ALGO_LU_DECOMPOSITION:
-    solve_lu ();
+  case ALGO_LU_DECOMPOSITION_CROUT:
+    solve_lu_crout ();
     break;
-  case ALGO_LU_FACTORIZATION:
+  case ALGO_LU_DECOMPOSITION_DOOLITTLE:
+    solve_lu_doolittle ();
+    break;
+  case ALGO_LU_FACTORIZATION_CROUT:
     factorize_lu_crout ();
+    break;
+  case ALGO_LU_FACTORIZATION_DOOLITTLE:
+    factorize_lu_doolittle ();
     break;
   case ALGO_LU_SUBSTITUTION_CROUT:
     substitute_lu_crout ();
@@ -159,6 +166,9 @@ void eqnsys<nr_type_t>::solve (void) {
     break;
   case ALGO_QR_DECOMPOSITION:
     solve_qr ();
+    break;
+  case ALGO_QR_DECOMPOSITION_LS:
+    solve_qr_ls ();
     break;
   }
 #if DEBUG && 0
@@ -279,7 +289,7 @@ void eqnsys<nr_type_t>::solve_gauss_jordan (void) {
    the left hand side (the A matrix) does not change but the right
    hand side (the B vector) only. */
 template <class nr_type_t>
-void eqnsys<nr_type_t>::solve_lu (void) {
+void eqnsys<nr_type_t>::solve_lu_crout (void) {
 
   // skip decomposition if requested
   if (update) {
@@ -289,6 +299,20 @@ void eqnsys<nr_type_t>::solve_lu (void) {
 
   // finally solve the equation system
   substitute_lu_crout ();
+}
+
+/* The other LU decomposition. */
+template <class nr_type_t>
+void eqnsys<nr_type_t>::solve_lu_doolittle (void) {
+
+  // skip decomposition if requested
+  if (update) {
+    // perform LU composition
+    factorize_lu_doolittle ();
+  }
+
+  // finally solve the equation system
+  substitute_lu_doolittle ();
 }
 
 /* This function decomposes the left hand matrix into an upper U and
@@ -436,19 +460,18 @@ template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_lu_crout (void) {
   nr_type_t f;
   int i, c;
-  tvector<nr_type_t> Y (N);
 
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
     f = B->get (rMap[i - 1]);
-    for (c = 1; c < i; c++) f -= A->get (i, c) * Y.get (c);
+    for (c = 1; c < i; c++) f -= A->get (i, c) * X->get (c);
     f /= A->get (i, i);
-    Y.set (i, f);
+    X->set (i, f);
   }
    
   // backward substitution in order to solve UX = Y
   for (i = N; i > 0; i--) {
-    f = Y.get (i);
+    f = X->get (i);
     for (c = i + 1; c <= N; c++) f -= A->get (i, c) * X->get (c);
     // remember that the Uii diagonal are ones only in Crout's definition
     X->set (i, f);
@@ -463,19 +486,18 @@ template <class nr_type_t>
 void eqnsys<nr_type_t>::substitute_lu_doolittle (void) {
   nr_type_t f;
   int i, c;
-  tvector<nr_type_t> Y (N);
 
   // forward substitution in order to solve LY = B
   for (i = 1; i <= N; i++) {
     f = B->get (rMap[i - 1]);
-    for (c = 1; c < i; c++) f -= A->get (i, c) * Y.get (c);
+    for (c = 1; c < i; c++) f -= A->get (i, c) * X->get (c);
     // remember that the Lii diagonal are ones only in Doolittle's definition
-    Y.set (i, f);
+    X->set (i, f);
   }
    
   // backward substitution in order to solve UX = Y
   for (i = N; i > 0; i--) {
-    f = Y.get (i);
+    f = X->get (i);
     for (c = i + 1; c <= N; c++) f -= A->get (i, c) * X->get (c);
     f /= A->get (i, i);
     X->set (i, f);
@@ -563,7 +585,7 @@ void eqnsys<nr_type_t>::solve_iterative (void) {
     logprint (LOG_ERROR,
 	      "WARNING: no convergence after %d %s iterations\n",
 	      i, algo == ALGO_JACOBI ? "jacobi" : "gauss-seidel");
-    solve_lu ();
+    solve_lu_crout ();
   }
 #if DEBUG && 0
   else {
@@ -659,7 +681,7 @@ void eqnsys<nr_type_t>::solve_sor (void) {
     logprint (LOG_ERROR,
 	      "WARNING: no convergence after %d sor iterations (l = %g)\n",
 	      i, l);
-    solve_lu ();
+    solve_lu_crout ();
   }
 #if DEBUG && 0
   else {
@@ -998,7 +1020,7 @@ void eqnsys<nr_type_t>::substitute_qrh (void) {
   for (r = N; r > 0; r--) {
     f = B_(r);
     for (c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
-    if (abs (R_(r)) > TINY)
+    if (abs (R_(r)) > EPSI)
       X_(cMap[r - 1]) = f / R_(r);
     else
       X_(cMap[r - 1]) = 0;
@@ -1026,7 +1048,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder (void) {
   // backward substitution in order to solve RX = Q'B
   for (r = N; r > 0; r--) {
     for (f = B_(r), c = r + 1; c <= N; c++) f -= A_(r, c) * X_(cMap[c - 1]);
-    if (abs (A_(r, r)) > TINY)
+    if (abs (A_(r, r)) > EPSI)
       X_(cMap[r - 1]) = f / A_(r, r);
     else
       X_(cMap[r - 1]) = 0;
@@ -1045,7 +1067,7 @@ void eqnsys<nr_type_t>::substitute_qr_householder_ls (void) {
   // forward substitution in order to solve R'X = B
   for (r = 1; r <= N; r++) {
     for (f = B_(r), c = 1; c < r; c++) f -= A_(c, r) * B_(c);
-    if (abs (A_(r, r)) > TINY)
+    if (abs (A_(r, r)) > EPSI)
       B_(r) = f / A_(r, r);
     else
       B_(r) = 0;

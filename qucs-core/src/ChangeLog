@@ -1,3 +1,20 @@
+2005-04-14  Stefan Jahn  <stefan@lkcc.org>
+
+	* matvec.cpp, matrix.cpp (twoport): Check size of matrices
+	to be at least >= 2 for twoport operations instead of
+	exactly 2.
+
+	* evaluate.cpp: Improved some error messages.
+
+	* eqnsys.cpp: Reduced memory consumption of LU substitution
+	routines (Doolittle and Crout) by using in-place code.
+	(substitute_qr_householder_ls): Improved numeric stability of
+	QR solver.  Now it's possible to use both the QR and LQ solver
+	for equation systems.
+
+	* check_netlist.cpp: Added 'Solver' property to transient and
+	dc analysis.
+
 2005-04-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* eqnsys.cpp (substitute_qr_householder_ls): Implemented least

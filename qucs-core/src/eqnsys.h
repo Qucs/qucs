@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.h,v 1.16 2005/04/13 07:24:30 raimi Exp $
+ * $Id: eqnsys.h,v 1.17 2005/04/15 09:07:56 raimi Exp $
  *
  */
 
@@ -27,17 +27,21 @@
 
 // Definition of equation system solving algorithms.
 enum algo_type {
-  ALGO_INVERSE                   = 0x0001,
-  ALGO_GAUSS                     = 0x0002,
-  ALGO_GAUSS_JORDAN              = 0x0004,
-  ALGO_LU_FACTORIZATION          = 0x0008,
-  ALGO_LU_SUBSTITUTION_CROUT     = 0x0010,
-  ALGO_LU_SUBSTITUTION_DOOLITTLE = 0x0020,
-  ALGO_LU_DECOMPOSITION          = 0x0018,
-  ALGO_JACOBI                    = 0x0040,
-  ALGO_GAUSS_SEIDEL              = 0x0080,
-  ALGO_SOR                       = 0x0100,
-  ALGO_QR_DECOMPOSITION          = 0x0200
+  ALGO_INVERSE                    = 0x0001,
+  ALGO_GAUSS                      = 0x0002,
+  ALGO_GAUSS_JORDAN               = 0x0004,
+  ALGO_LU_FACTORIZATION_CROUT     = 0x0008,
+  ALGO_LU_FACTORIZATION_DOOLITTLE = 0x0010,
+  ALGO_LU_SUBSTITUTION_CROUT      = 0x0020,
+  ALGO_LU_SUBSTITUTION_DOOLITTLE  = 0x0040,
+  ALGO_LU_DECOMPOSITION           = 0x0028,
+  ALGO_LU_DECOMPOSITION_CROUT     = 0x0028,
+  ALGO_LU_DECOMPOSITION_DOOLITTLE = 0x0050,
+  ALGO_JACOBI                     = 0x0080,
+  ALGO_GAUSS_SEIDEL               = 0x0100,
+  ALGO_SOR                        = 0x0200,
+  ALGO_QR_DECOMPOSITION           = 0x0400,
+  ALGO_QR_DECOMPOSITION_LS        = 0x0800
 };
 
 // Definition of pivoting strategies.
@@ -81,7 +85,8 @@ class eqnsys
   void solve_inverse (void);
   void solve_gauss (void);
   void solve_gauss_jordan (void);
-  void solve_lu (void);
+  void solve_lu_crout (void);
+  void solve_lu_doolittle (void);
   void factorize_lu_crout (void);
   void factorize_lu_doolittle (void);
   void substitute_lu_crout (void);

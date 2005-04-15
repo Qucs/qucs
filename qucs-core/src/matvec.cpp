@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.12 2004/11/29 19:03:37 raimi Exp $
+ * $Id: matvec.cpp,v 1.13 2005/04/15 09:07:56 raimi Exp $
  *
  */
 
@@ -444,7 +444,7 @@ matvec ytoz (matvec y) {
    forms Y, Z, H, G and A to any other.  Also converts S<->(A, T, H, Y
    and Z) matrix vectors. */
 matvec twoport (matvec m, char in, char out) {
-  assert (m.getCols () == 2 && m.getRows () == 2);
+  assert (m.getCols () >= 2 && m.getRows () >= 2);
   matvec res (m.getSize (), m.getCols (), m.getRows ());
   for (int i = 0; i < m.getSize (); i++)
     res.set (twoport (m.get (i), in, out), i);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.15 2005/04/07 11:57:49 raimi Exp $
+ * $Id: qucsdefs.h,v 1.16 2005/04/15 09:07:57 raimi Exp $
  *
  */
 
@@ -547,6 +547,7 @@ struct define_t qucs_definition_available[] =
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "saveAll", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
       { "convHelper", PROP_STR, { PROP_NO_VAL, "none" }, PROP_NO_RANGE },
+      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* parameter sweep */
@@ -592,6 +593,7 @@ struct define_t qucs_definition_available[] =
       { "LTEreltol", PROP_REAL, { 1e-3, PROP_NO_STR }, { PROP_VAL_MIN, 1 } },
       { "LTEfactor", PROP_REAL, { 1, PROP_NO_STR }, { 1, 16 } },
       { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+      { "Solver", PROP_STR, { PROP_NO_VAL, "CroutLU" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
   /* harmonic balance analysis */
