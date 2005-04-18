@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.18 2005-03-14 21:59:06 raimi Exp $
+ * $Id: equation.h,v 1.19 2005-04-18 13:41:03 raimi Exp $
  *
  */
 
@@ -37,6 +37,7 @@ class dataset;
 
 namespace eqn {
 
+class solver;
 class checker;
 class constant;
 class reference;
@@ -85,6 +86,7 @@ public:
   char * getInstance (void);
   void setInstance (char *);
   void applyInstance (void);
+  constant * calculate (void);    
 
   /* These functions should be overloaded by derivative classes. */
   virtual void print (void) { }
@@ -101,6 +103,7 @@ public:
   int evaluated;
   char * instance;
   int output;
+  solver * solvee;
 
 private:
   int type;
@@ -167,7 +170,7 @@ public:
   node * ref;
 };
 
-/* This class represents assigments with a left hand and right hand
+/* This class represents assignments with a left hand and right hand
    side. */
 class assignment : public node
 {
@@ -246,6 +249,7 @@ public:
   void solve (void);
   node * addEquationData (vector *);
   node * addEquationData (matvec *);
+  node * addGeneratedEquation (vector *, char *);
   vector * dataVector (node *);
   void checkinDataset (void);
   void checkoutDataset (void);
@@ -263,6 +267,7 @@ public:
 
 private:
   dataset * data;
+  int generated;
 };
 
 /* The global list of equations and expression lists. */

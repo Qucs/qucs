@@ -1,7 +1,7 @@
 /*
  * sweep.cpp - variable sweep class implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: sweep.cpp,v 1.5 2004-08-22 15:38:27 ela Exp $
+ * $Id: sweep.cpp,v 1.6 2005-04-18 13:41:04 raimi Exp $
  *
  */
 
@@ -33,6 +33,8 @@
 #include <assert.h>
 
 #include "object.h"
+#include "complex.h"
+#include "vector.h"
 #include "sweep.h"
 
 // Constructor creates an unnamed instance of the sweep class.
@@ -161,15 +163,9 @@ linsweep::linsweep (char * n) : sweep (n) {
    the given start value, ending with the given stop value and
    containing points elements. */
 void linsweep::create (nr_double_t start, nr_double_t stop, int points) {
-  nr_double_t val, step = (stop - start) / (points - 1);
+  vector v = linspace (start, stop, points);
   setSize (points);
-  for (int i = 0; i < points; i++) {
-    val = start + (i * step);
-    if (i != 0 && fabs (val) < fabs (step) / 2 &&
-	fabs (val - (start + (i - 1) * step)) < fabs (step))
-      val = 0.0;
-    set (i, val);
-  }
+  for (int i = 0; i < points; i++) set (i, real (v.get (i)));
 }
 
 // Destructor deletes the linsweep class object.
@@ -190,29 +186,9 @@ logsweep::logsweep (char * n) : sweep (n) {
    starting at the given start value, ending with the given stop value
    and containing points elements. */
 void logsweep::create (nr_double_t start, nr_double_t stop, int points) {
-  assert (start * stop > 0);
-  nr_double_t step, first, last, d;
-
-  // ensure the last value being larger than the first
-  if (fabs (start) > fabs (stop)) {
-    first = fabs (stop);
-    last = fabs (start);
-  }
-  else {
-    first = fabs (start);
-    last = fabs (stop);
-  }
-  // check direction and sign of sweep
-  d = fabs (start) > fabs (stop) ? -1 : 1;
-  // compute logarithmic step size
-  step = (log (last) - log (first)) / (points - 1);
+  vector v = logspace (start, stop, points);
   setSize (points);
-  for (int i = 0, j = points - 1; i < points; i++, j--) {
-    if (d > 0)
-      set (i, start * exp (step * i));
-    else
-      set (j, stop * exp (step * i));
-  }
+  for (int i = 0; i < points; i++) set (i, real (v.get (i)));
 }
 
 // Destructor deletes the logsweep class object.

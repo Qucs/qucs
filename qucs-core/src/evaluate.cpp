@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.27 2005-04-15 09:07:56 raimi Exp $
+ * $Id: evaluate.cpp,v 1.28 2005-04-18 13:41:03 raimi Exp $
  *
  */
 
@@ -57,6 +57,9 @@ using namespace qucs;
 #define STR(con) ((constant *) (con))->s
 #define CHR(con) ((constant *) (con))->chr
 #define INT(con) ((int) D (con))
+
+#define A(a) ((assignment *) (a))
+#define R(r) ((reference *) (r))
 
 // Throws a math exception.
 #define THROW_MATH_EXCEPTION(txt) do { \
@@ -1894,24 +1897,18 @@ constant * evaluate::adjoint_mv (constant * args) {
   return res;
 }
 
-// ***************** s-parameter applications *****************
+// ***************** s-parameter stability factors *****************
 constant * evaluate::rollet_m (constant * args) {
   matrix * m = M (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
-  nr_double_t k;
-  k = (1 - norm (m->get (1, 1)) - norm (m->get (2, 2)) + norm (det (*m))) /
-    2 / abs (m->get (1, 2) * m->get (2, 1));
-  res->d = k;
+  res->d = rollet (*m);
   return res;
 }
 
 constant * evaluate::rollet_mv (constant * args) {
   matvec * mv = MV (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
-  vector k;
-  k = (1 - norm (mv->get (1, 1)) - norm (mv->get (2, 2)) + norm (det (*mv))) /
-    2 / abs (mv->get (1, 2) * mv->get (2, 1));
-  res->v = new vector (k);
+  res->v = new vector (rollet (*mv));
   return res;
 }
 
@@ -1959,6 +1956,8 @@ constant * evaluate::mu2_mv (constant * args) {
   return res;
 }
 
+
+// ***************** vector creation *****************
 constant * evaluate::linspace (constant * args) {
   nr_double_t start = D (args->getResult (0));
   nr_double_t stop = D (args->getResult (1));
@@ -1969,14 +1968,56 @@ constant * evaluate::linspace (constant * args) {
     res->v = new vector ();
     return res;
   }
-  vector * k = new vector (points);
-  for (int i = 0; i < points; i++)
-    k->set (start + (i * ((stop - start) / (points - 1))), i);
-  res->v = k;
+  res->v = new vector (::linspace (start, stop, points));
   return res;
 }
 
-constant * evaluate::noise_circle_d (constant * args) {
+constant * evaluate::logspace (constant * args) {
+  nr_double_t start = D (args->getResult (0));
+  nr_double_t stop = D (args->getResult (1));
+  int points = INT (args->getResult (2));
+  constant * res = new constant (TAG_VECTOR);
+  if (points < 2) {
+    THROW_MATH_EXCEPTION ("logspace: number of points must be greater than 1");
+    res->v = new vector ();
+    return res;
+  }
+  if (start * stop <= 0) {
+    THROW_MATH_EXCEPTION ("logspace: invalid start/stop values");
+    res->v = new vector (points);
+    return res;
+  }
+  res->v = new vector (::logspace (start, stop, points));
+  return res;
+}
+
+// Circle helper macro with a number of points given.
+#define CIRCLE_HELPER_D(argi)                   \
+  int n = INT (args->getResult (argi));         \
+  if (n < 2) {                                  \
+    THROW_MATH_EXCEPTION ("Circle: number of points must be greater than 1"); \
+    constant * res = new constant (TAG_VECTOR); \
+    res->v = new vector ();                     \
+    return res;                                 \
+  }                                             \
+  constant * arg = new constant (TAG_VECTOR);   \
+  arg->v = new vector (::linspace (0, 360, n)); \
+  arg->solvee = args->getResult(0)->solvee;     \
+  arg->evaluate ();                             \
+  delete args->get(argi);                       \
+  args->get((argi)-1)->setNext (NULL);          \
+  args->append (arg);
+
+// Circle helper macro with no additional argument given.
+#define CIRCLE_HELPER_A()                        \
+  constant * arg = new constant (TAG_VECTOR);    \
+  arg->v = new vector (::linspace (0, 360, 64)); \
+  arg->solvee = args->getResult(0)->solvee;      \
+  arg->evaluate ();                              \
+  args->append (arg);
+
+// ***************** s-parameter noise circles *****************
+constant * evaluate::noise_circle_d_v (constant * args) {
   vector * Sopt = V (args->getResult (0));
   vector * Fmin = V (args->getResult (1));
   vector * Rn   = V (args->getResult (2));
@@ -1988,25 +2029,31 @@ constant * evaluate::noise_circle_d (constant * args) {
   vector R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
   vector C = *Sopt / (1 + N);
   vector * circle = new vector (C.getSize () * arc->getSize ());
-  int i, a, d; complex v;
-  for (i = 0, d = 0; i < C.getSize (); i++) {
-    for (a = 0; a < arc->getSize (); a++, d++) {
+  int i, a, j; complex v;
+  for (i = 0, j = 0; i < C.getSize (); i++) {
+    for (a = 0; a < arc->getSize (); a++, j++) {
       v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
-      circle->set (v, d);
+      circle->set (v, j);
     }
   }
 
-  if (args->get(4)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("NoiseCircle: 5th argument must be a variable "
-			  "reference");
-  } else {
-    res->addPrepDependencies (((reference *) args->get(4))->n);
-  }
+  node * gen = args->get(4)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
   res->v = circle;
   return res;
 }
 
-constant * evaluate::noise_circle_v (constant * args) {
+constant * evaluate::noise_circle_d_d (constant * args) {
+  CIRCLE_HELPER_D (4);
+  return noise_circle_d_v (args);
+}
+
+constant * evaluate::noise_circle_d (constant * args) {
+  CIRCLE_HELPER_A ();
+  return noise_circle_d_v (args);
+}
+
+constant * evaluate::noise_circle_v_v (constant * args) {
   vector * Sopt = V (args->getResult (0));
   vector * Fmin = V (args->getResult (1));
   vector * Rn   = V (args->getResult (2));
@@ -2016,36 +2063,42 @@ constant * evaluate::noise_circle_v (constant * args) {
   constant * res = new constant (TAG_VECTOR);
   vector * circle =
     new vector (Sopt->getSize () * arc->getSize () * F->getSize ());
-  int i, a, d, f; complex v; vector N, R, C;
-  for (i = 0, d = 0; i < Sopt->getSize (); i++) {
-    for (f = 0; f < F->getSize (); f++) {
-      N = circuit::z0 / 4 / *Rn * (F->get (f) - *Fmin) * norm (1 + *Sopt);
-      R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
-      C = *Sopt / (1 + N);
-      for (a = 0; a < arc->getSize (); a++, d++) {
+  int i, a, j, f; complex v; vector N, R, C;
+  for (f = 0; f < F->getSize (); f++) {
+    N = circuit::z0 / 4 / *Rn * (F->get (f) - *Fmin) * norm (1 + *Sopt);
+    R = sqrt (N * N + N * (1 - norm (*Sopt))) / (1 + N);
+    C = *Sopt / (1 + N);
+    for (i = 0; i < C.getSize (); i++) {
+      for (a = 0; a < arc->getSize (); a++) {
 	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
-	circle->set (v, d);
+	j = i * F->getSize () * arc->getSize () + f * arc->getSize () + a;
+	circle->set (v, j);
       }
     }
   }
 
-  if (args->get(3)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("NoiseCircle: 4th argument must be a variable "
-			  "reference");
-  } else {
-    res->addPrepDependencies (((reference *) args->get(3))->n);
-  }
-  if (args->get(4)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("NoiseCircle: 5th argument must be a variable "
-			  "reference");
-  } else {
-    res->addPrepDependencies (((reference *) args->get(4))->n);
-  }
+  node * gen;
+  gen = args->get(3)->solvee->addGeneratedEquation (F, "NF");
+  res->addPrepDependencies (A(gen)->result);
+  gen = args->get(4)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
+
   res->v = circle;
   return res;
 }
 
-constant * evaluate::stab_circle_l (constant * args) {
+constant * evaluate::noise_circle_v_d (constant * args) {
+  CIRCLE_HELPER_D (4);
+  return noise_circle_v_v (args);
+}
+
+constant * evaluate::noise_circle_v (constant * args) {
+  CIRCLE_HELPER_A ();
+  return noise_circle_v_v (args);
+}
+
+// ***************** s-parameter stability circles *****************
+constant * evaluate::stab_circle_l_v (constant * args) {
   matvec * S = MV (args->getResult (0));
   vector * arc = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
@@ -2060,17 +2113,23 @@ constant * evaluate::stab_circle_l (constant * args) {
       circle->set (v, d);
     }
   }
-  if (args->get(1)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("StabCircleL: 2nd argument must be a variable "
-			  "reference");
-  } else {
-    res->addPrepDependencies (((reference *) args->get(1))->n);
-  }
+  node * gen = args->get(1)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
   res->v = circle;
   return res;
 }
 
-constant * evaluate::stab_circle_s (constant * args) {
+constant * evaluate::stab_circle_l_d (constant * args) {
+  CIRCLE_HELPER_D (1);
+  return stab_circle_l_v (args);
+}
+
+constant * evaluate::stab_circle_l (constant * args) {
+  CIRCLE_HELPER_A ();
+  return stab_circle_l_v (args);
+}
+
+constant * evaluate::stab_circle_s_v (constant * args) {
   matvec * S = MV (args->getResult (0));
   vector * arc = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
@@ -2085,13 +2144,226 @@ constant * evaluate::stab_circle_s (constant * args) {
       circle->set (v, d);
     }
   }
-  if (args->get(1)->getTag () != REFERENCE) {
-    THROW_MATH_EXCEPTION ("StabCircleS: 2nd argument must be a variable "
-			  "reference");
-  } else {
-    res->addPrepDependencies (((reference *) args->get(1))->n);
-  }
+  node * gen = args->get(1)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
   res->v = circle;
+  return res;
+}
+
+constant * evaluate::stab_circle_s_d (constant * args) {
+  CIRCLE_HELPER_D (1);
+  return stab_circle_s_v (args);
+}
+
+constant * evaluate::stab_circle_s (constant * args) {
+  CIRCLE_HELPER_A ();
+  return stab_circle_s_v (args);
+}
+
+// ***************** s-parameter gain circles *****************
+constant * evaluate::ga_circle_d_v (constant * args) {
+  matvec * S = MV (args->getResult (0));
+  nr_double_t G = D (args->getResult (1));
+  vector * arc = V (args->getResult (2));
+
+  constant * res = new constant (TAG_VECTOR);
+  vector g, D, c, s, k, C, R, d;
+  D = det (*S);
+  c = S->get (1, 1) - conj (S->get (2, 2)) * D;
+  k = rollet (*S);
+  s = S->get (1, 2) * S->get (2, 1);
+  g = G / norm (S->get (2, 1));
+  d = 1 + g * (norm (S->get (1, 1)) - norm (D));
+  C = g * conj (c) / d;
+  R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+
+  vector * circle = new vector (S->getSize () * arc->getSize ());
+  int i, a, j; complex v;
+  for (i = 0, j = 0; i < C.getSize (); i++) {
+    for (a = 0; a < arc->getSize (); a++, j++) {
+      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      circle->set (v, j);
+    }
+  }
+
+  node * gen = args->get(2)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::ga_circle_d_d (constant * args) {
+  CIRCLE_HELPER_D (2);
+  return ga_circle_d_v (args);
+}
+
+constant * evaluate::ga_circle_d (constant * args) {
+  CIRCLE_HELPER_A ();
+  return ga_circle_d_v (args);
+}
+
+constant * evaluate::ga_circle_v_v (constant * args) {
+  matvec * S = MV (args->getResult (0));
+  vector * G = V (args->getResult (1));
+  vector * arc = V (args->getResult (2));
+
+  constant * res = new constant (TAG_VECTOR);
+  vector * circle =
+    new vector (S->getSize () * arc->getSize () * G->getSize ());
+  int i, a, j, f; complex v; vector g, D, c, s, k, R, C, d;
+  D = det (*S);
+  c = S->get (1, 1) - conj (S->get (2, 2)) * D;
+  k = rollet (*S);
+  s = S->get (1, 2) * S->get (2, 1);
+  for (f = 0; f < G->getSize (); f++) {
+    g = G->get (f) / norm (S->get (2, 1));
+    d = 1 + g * (norm (S->get (1, 1)) - norm (D));
+    C = g * conj (c) / d;
+    R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+    for (i = 0; i < C.getSize (); i++) {
+      for (a = 0; a < arc->getSize (); a++) {
+	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+	j = i * G->getSize () * arc->getSize () + f * arc->getSize () + a;
+	circle->set (v, j);
+      }
+    }
+  }
+
+  node * gen;
+  gen = args->get(1)->solvee->addGeneratedEquation (G, "Ga");
+  res->addPrepDependencies (A(gen)->result);
+  gen = args->get(2)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::ga_circle_v_d (constant * args) {
+  CIRCLE_HELPER_D (2);
+  return ga_circle_v_v (args);
+}
+
+constant * evaluate::ga_circle_v (constant * args) {
+  CIRCLE_HELPER_A ();
+  return ga_circle_v_v (args);
+}
+
+constant * evaluate::gp_circle_d_v (constant * args) {
+  matvec * S = MV (args->getResult (0));
+  nr_double_t G = D (args->getResult (1));
+  vector * arc = V (args->getResult (2));
+
+  constant * res = new constant (TAG_VECTOR);
+  vector g, D, c, s, k, C, R, d;
+  D = det (*S);
+  c = S->get (2, 2) - conj (S->get (1, 1)) * D;
+  k = rollet (*S);
+  s = S->get (1, 2) * S->get (2, 1);
+  g = G / norm (S->get (2, 1));
+  d = 1 + g * (norm (S->get (2, 2)) - norm (D));
+  C = g * conj (c) / d;
+  R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+
+  vector * circle = new vector (S->getSize () * arc->getSize ());
+  int i, a, j; complex v;
+  for (i = 0, j = 0; i < C.getSize (); i++) {
+    for (a = 0; a < arc->getSize (); a++, j++) {
+      v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+      circle->set (v, j);
+    }
+  }
+
+  node * gen = args->get(2)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::gp_circle_d_d (constant * args) {
+  CIRCLE_HELPER_D (2);
+  return gp_circle_d_v (args);
+}
+
+constant * evaluate::gp_circle_d (constant * args) {
+  CIRCLE_HELPER_A ();
+  return gp_circle_d_v (args);
+}
+
+constant * evaluate::gp_circle_v_v (constant * args) {
+  matvec * S = MV (args->getResult (0));
+  vector * G = V (args->getResult (1));
+  vector * arc = V (args->getResult (2));
+
+  constant * res = new constant (TAG_VECTOR);
+  vector * circle =
+    new vector (S->getSize () * arc->getSize () * G->getSize ());
+  int i, a, j, f; complex v; vector g, D, c, s, k, R, C, d;
+  D = det (*S);
+  c = S->get (2, 2) - conj (S->get (1, 1)) * D;
+  k = rollet (*S);
+  s = S->get (1, 2) * S->get (2, 1);
+  for (f = 0; f < G->getSize (); f++) {
+    g = G->get (f) / norm (S->get (2, 1));
+    d = 1 + g * (norm (S->get (2, 2)) - norm (D));
+    C = g * conj (c) / d;
+    R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
+    for (i = 0; i < C.getSize (); i++) {
+      for (a = 0; a < arc->getSize (); a++) {
+	v = C.get (i) + R.get (i) * exp (rect (0, 1) * rad (arc->get (a)));
+	j = i * G->getSize () * arc->getSize () + f * arc->getSize () + a;
+	circle->set (v, j);
+      }
+    }
+  }
+
+  node * gen;
+  gen = args->get(1)->solvee->addGeneratedEquation (G, "Gp");
+  res->addPrepDependencies (A(gen)->result);
+  gen = args->get(2)->solvee->addGeneratedEquation (arc, "Arcs");
+  res->addPrepDependencies (A(gen)->result);
+  res->v = circle;
+  return res;
+}
+
+constant * evaluate::gp_circle_v_d (constant * args) {
+  CIRCLE_HELPER_D (2);
+  return gp_circle_v_v (args);
+}
+
+constant * evaluate::gp_circle_v (constant * args) {
+  CIRCLE_HELPER_A ();
+  return gp_circle_v_v (args);
+}
+
+constant * evaluate::plot_vs_v (constant * args) {
+  vector * v = V (args->getResult (0));
+  vector * a = V (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (*v);
+  strlist * deps = strlist::join (args->getResult(0)->getDataDependencies (),
+				  args->getResult(1)->getDataDependencies ());
+  for (int i = 0; i < deps->length (); i++) {
+    res->addDropDependencies (deps->get (i));
+  }
+  delete deps;
+  node * gen = args->get(1)->solvee->addGeneratedEquation (a, "Versus");
+  res->addPrepDependencies (A(gen)->result);
+  return res;
+}
+
+constant * evaluate::plot_vs_mv (constant * args) {
+  matvec * mv = MV (args->getResult (0));
+  vector * a = V (args->getResult (1));
+  constant * res = new constant (TAG_MATVEC);
+  res->mv = new matvec (*mv);
+  strlist * deps = strlist::join (args->getResult(0)->getDataDependencies (),
+				  args->getResult(1)->getDataDependencies ());
+  for (int i = 0; i < deps->length (); i++) {
+    res->addDropDependencies (deps->get (i));
+  }
+  delete deps;
+  node * gen = args->get(1)->solvee->addGeneratedEquation (a, "Versus");
+  res->addPrepDependencies (A(gen)->result);
   return res;
 }
 
@@ -2446,13 +2718,57 @@ struct application_t eqn::applications[] = {
 
   { "linspace", TAG_VECTOR, evaluate::linspace, 3,
     { TAG_DOUBLE, TAG_DOUBLE, TAG_DOUBLE } },
-  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_d, 5,
+  { "logspace", TAG_VECTOR, evaluate::logspace, 3,
+    { TAG_DOUBLE, TAG_DOUBLE, TAG_DOUBLE } },
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_d_v, 5,
     { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE, TAG_VECTOR } },
-  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_v, 5,
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_d_d, 5,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE, TAG_DOUBLE } },
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_d, 4,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE } },
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_v_v, 5,
     { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
-  { "StabCircleL", TAG_VECTOR, evaluate::stab_circle_l, 2,
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_v_d, 5,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE } },
+  { "NoiseCircle", TAG_VECTOR, evaluate::noise_circle_v, 4,
+    { TAG_VECTOR, TAG_VECTOR, TAG_VECTOR, TAG_VECTOR } },
+  { "StabCircleL", TAG_VECTOR, evaluate::stab_circle_l_v, 2,
     { TAG_MATVEC, TAG_VECTOR } },
-  { "StabCircleS", TAG_VECTOR, evaluate::stab_circle_s, 2,
+  { "StabCircleL", TAG_VECTOR, evaluate::stab_circle_l_d, 2,
+    { TAG_MATVEC, TAG_DOUBLE } },
+  { "StabCircleL", TAG_VECTOR, evaluate::stab_circle_l, 1, { TAG_MATVEC } },
+  { "StabCircleS", TAG_VECTOR, evaluate::stab_circle_s_v, 2,
+    { TAG_MATVEC, TAG_VECTOR } },
+  { "StabCircleS", TAG_VECTOR, evaluate::stab_circle_s_d, 2,
+    { TAG_MATVEC, TAG_DOUBLE } },
+  { "StabCircleS", TAG_VECTOR, evaluate::stab_circle_s, 1, { TAG_MATVEC } },
+  { "GaCircle", TAG_VECTOR, evaluate::ga_circle_d_v, 3,
+    { TAG_MATVEC, TAG_DOUBLE, TAG_VECTOR } },
+  { "GaCircle", TAG_VECTOR, evaluate::ga_circle_d_d, 3,
+    { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
+  { "GaCircle", TAG_VECTOR, evaluate::ga_circle_d, 2,
+    { TAG_MATVEC, TAG_DOUBLE } },
+  { "GaCircle", TAG_VECTOR, evaluate::ga_circle_v_v, 3,
+    { TAG_MATVEC, TAG_VECTOR, TAG_VECTOR } },
+  { "GaCircle", TAG_VECTOR, evaluate::ga_circle_v_d, 3,
+    { TAG_MATVEC, TAG_VECTOR, TAG_DOUBLE } },
+  { "GaCircle", TAG_VECTOR, evaluate::ga_circle_v, 2,
+    { TAG_MATVEC, TAG_VECTOR } },
+  { "GpCircle", TAG_VECTOR, evaluate::gp_circle_d_v, 3,
+    { TAG_MATVEC, TAG_DOUBLE, TAG_VECTOR } },
+  { "GpCircle", TAG_VECTOR, evaluate::gp_circle_d_d, 3,
+    { TAG_MATVEC, TAG_DOUBLE, TAG_DOUBLE } },
+  { "GpCircle", TAG_VECTOR, evaluate::gp_circle_d, 2,
+    { TAG_MATVEC, TAG_DOUBLE } },
+  { "GpCircle", TAG_VECTOR, evaluate::gp_circle_v_v, 3,
+    { TAG_MATVEC, TAG_VECTOR, TAG_VECTOR } },
+  { "GpCircle", TAG_VECTOR, evaluate::gp_circle_v_d, 3,
+    { TAG_MATVEC, TAG_VECTOR, TAG_DOUBLE } },
+  { "GpCircle", TAG_VECTOR, evaluate::gp_circle_v, 2,
+    { TAG_MATVEC, TAG_VECTOR } },
+  { "PlotVs", TAG_VECTOR, evaluate::plot_vs_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
+  { "PlotVs", TAG_MATVEC, evaluate::plot_vs_mv, 2,
     { TAG_MATVEC, TAG_VECTOR } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }

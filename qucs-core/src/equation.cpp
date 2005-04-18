@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.29 2005-03-14 21:59:06 raimi Exp $
+ * $Id: equation.cpp,v 1.30 2005-04-18 13:41:03 raimi Exp $
  *
  */
 
@@ -261,6 +261,7 @@ int assignment::evalType (void) {
 
 // Returns the result of the assignment.
 constant * assignment::evaluate (void) {
+  body->solvee = solvee;
   setResult (body->evaluate ());
   return getResult ();
 }
@@ -375,6 +376,7 @@ constant * application::evaluate (void) {
   // first evaluate each argument
   for (node * arg = args; arg != NULL; arg = arg->getNext ()) {
     if (arg->evaluated == 0) {
+      arg->solvee = solvee;
       arg->evaluate ();
       arg->evaluated++;
     }
@@ -401,6 +403,7 @@ node::node () {
   txt = NULL;
   res = NULL;
   instance = NULL;
+  solvee = NULL;
 }
 
 // This constructor creates an typed instance of the equation node class.
@@ -561,6 +564,15 @@ void node::addPrepDependencies (char * dep) {
 void node::setDataDependencies (strlist * deps) {
   if (dataDependencies != NULL) delete dataDependencies;
   dataDependencies = deps ? new strlist (*deps) : NULL;
+}
+
+/* Evaluates the equation node and applies the data dependencies. */
+constant * node::calculate (void) {
+  constant * res = evaluate ();
+  strlist * deps = solvee->collectDataDependencies (this);
+  getResult()->setDataDependencies (deps);
+  delete deps;
+  return res;
 }
 
 // Constructor creates an instance of the checker class.
@@ -879,6 +891,7 @@ int equation_checker (int noundefined) {
 solver::solver () {
   equations = NULL;
   data = NULL;
+  generated = 0;
 }
 
 // Destructor deletes an instance of the solver class.
@@ -896,10 +909,8 @@ void solver::solve (void) {
     if (eqn->evalPossible && eqn->evaluated == 0) {
       // exception handling around evaluation
       try_running () {
-	eqn->evaluate ();
-	strlist * deps = collectDataDependencies (eqn);
-	eqn->getResult()->setDataDependencies (deps);
-	delete deps;
+	eqn->solvee = this;
+	eqn->calculate ();
       }
       // handle evaluation exceptions
       catch_exception () {
@@ -927,6 +938,29 @@ node * solver::addEquationData (vector * v) {
   assign->setNext (equations);
   equations = assign;
   return assign;
+}
+
+/* The function puts the given vector into the equation set.  The
+   resulting data vector is going to be copied and exported - given a
+   generated name based upon the second argument. */
+node * solver::addGeneratedEquation (vector * v, char * n) {
+  // create generated name
+  char * str = (char *) malloc (strlen (n) + 6);
+  sprintf (str, "%s.%04d", n, ++generated);
+  // copy data vector
+  vector * c = new vector (*v);
+  c->setName (str);
+  // put vector into the equation set and ensure data export as
+  // independent variable
+  node * res = addEquationData (c);
+  res->setInstance ("#generated");
+  res->setDependencies (new strlist ());
+  res->evalType ();
+  res->solvee = this;
+  res->evaluate ();
+  res->output = 1;
+  free (str);
+  return res;
 }
 
 /* Depending on the type of equation result the function converts the
@@ -1071,6 +1105,7 @@ void solver::findMatrixVectors (vector * v) {
       }
       // now store this new matrix vector into the set of equations
       node * eqn = addEquationData (mv);
+      eqn->solvee = this;
       eqn->evaluate ();
       if (deps == NULL) {
 	strlist * deps = new strlist ();
@@ -1160,7 +1195,7 @@ strlist * solver::collectDataDependencies (node * eqn) {
   strlist * deps = eqn->getDependencies ();
   datadeps = eqn->getDataDependencies ();
   datadeps = datadeps ? new strlist (*datadeps) : NULL;
-  for (int i = 0; i < deps->length (); i++) {
+  for (int i = 0; deps && i < deps->length (); i++) {
     char * var = deps->get (i);
     node * n = checker::findEquation (eqn::equations, var);
     sub = strlist::join (datadeps, n->getDataDependencies ());

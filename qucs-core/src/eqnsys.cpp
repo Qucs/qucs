@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.30 2005-04-15 09:07:55 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.31 2005-04-18 13:41:03 raimi Exp $
  *
  */
 
@@ -965,10 +965,10 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
     {
       nr_type_t a, b, l;
       s = euclidianCol (c, c + 1);
-      a = A_(c, c);
       if (s == 0) {
 	t = T_(c) = 0;
       } else {
+	a = A_(c, c);
 	l = a != 0 ? sign (a) : 1;
 	b = - l * xhypot (a, s); // Wj
 	t = T_(c) = (b - a) / b;

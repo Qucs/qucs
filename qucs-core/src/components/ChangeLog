@@ -1,3 +1,11 @@
+2005-04-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* devices/mosfet.cpp: Using the new pnJunctionMOS() function.
+
+	* devices/device.cpp: New function computing the current and
+	conductance of a MOS pn-junction.
+	(pnCharge): More stable implementation of this computation.
+
 2005-04-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwline.cpp: Fixed bug in conductor loss
