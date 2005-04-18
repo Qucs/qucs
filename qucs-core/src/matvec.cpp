@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.13 2005/04/15 09:07:56 raimi Exp $
+ * $Id: matvec.cpp,v 1.14 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -449,4 +449,13 @@ matvec twoport (matvec m, char in, char out) {
   for (int i = 0; i < m.getSize (); i++)
     res.set (twoport (m.get (i), in, out), i);
   return res;  
+}
+
+/* The function returns the Rollet stability factor vector of the
+   given S-parameter matrix vector. */
+vector rollet (matvec m) {
+  assert (m.getCols () >= 2 && m.getRows () >= 2);
+  vector res (m.getSize ());
+  for (int i = 0; i < m.getSize (); i++) res.set (rollet (m.get (i)), i);
+  return res;
 }

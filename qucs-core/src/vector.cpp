@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.17 2005/03/30 07:35:53 raimi Exp $
+ * $Id: vector.cpp,v 1.18 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -758,4 +758,50 @@ void vector::sort (bool ascending) {
       }
     }
   }
+}
+
+/* The function creates a linear stepped vector of values starting at
+   the given start value, ending with the given stop value and
+   containing points elements. */
+vector linspace (nr_double_t start, nr_double_t stop, int points) {
+  vector result (points);
+  nr_double_t val, step = (stop - start) / (points - 1);
+  for (int i = 0; i < points; i++) {
+    val = start + (i * step);
+    if (i != 0 && fabs (val) < fabs (step) / 2 &&
+	fabs (val - (start + (i - 1) * step)) < fabs (step))
+      val = 0.0;
+    result.set (val, i);
+  }
+  return result;
+}
+
+/* The function creates a logarithmic stepped vector of values
+   starting at the given start value, ending with the given stop value
+   and containing points elements. */
+vector logspace (nr_double_t start, nr_double_t stop, int points) {
+  assert (start * stop > 0);
+  vector result (points);
+  nr_double_t step, first, last, d;
+
+  // ensure the last value being larger than the first
+  if (fabs (start) > fabs (stop)) {
+    first = fabs (stop);
+    last = fabs (start);
+  }
+  else {
+    first = fabs (start);
+    last = fabs (stop);
+  }
+  // check direction and sign of values
+  d = fabs (start) > fabs (stop) ? -1 : 1;
+  // compute logarithmic step size
+  step = (log (last) - log (first)) / (points - 1);
+  for (int i = 0, j = points - 1; i < points; i++, j--) {
+    if (d > 0)
+      result.set (start * exp (step * i), i);
+    else
+      result.set (stop * exp (step * i), j);
+  }
+  return result;
 }

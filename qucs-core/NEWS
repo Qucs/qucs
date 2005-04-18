@@ -26,6 +26,7 @@ files.
 Version 0.0.6
 -------------
 
+ * gain circle formulas in equation solver available
  * improvements in the equation system solvers
  * implementation of noise and stability circle formulas
  * fixed noise calculations of microstrip and coplanar components

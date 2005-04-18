@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.13 2005/03/30 07:35:53 raimi Exp $
+ * $Id: vector.h,v 1.14 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -64,6 +64,9 @@ class vector : public object
   friend complex sum  (vector);
   friend complex prod (vector);
   friend complex avg  (vector);
+
+  friend vector linspace (nr_double_t, nr_double_t, int);
+  friend vector logspace (nr_double_t, nr_double_t, int);
 
   // vector manipulations
   friend vector real  (vector);  // the real part

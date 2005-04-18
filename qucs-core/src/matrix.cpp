@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.18 2005/04/15 09:07:56 raimi Exp $
+ * $Id: matrix.cpp,v 1.19 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -926,5 +926,15 @@ matrix twoport (matrix m, char in, char out) {
     }
     break;
   }
+  return res;
+}
+
+/* The function returns the Rollet stability factor of the given
+   S-parameter matrix. */
+nr_double_t rollet (matrix m) {
+  assert (m.getRows () >= 2 && m.getCols () >= 2);
+  nr_double_t res;
+  res = (1 - norm (m.get (1, 1)) - norm (m.get (2, 2)) + norm (det (m))) /
+    2 / abs (m.get (1, 2) * m.get (2, 1));
   return res;
 }

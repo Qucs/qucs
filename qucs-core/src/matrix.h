@@ -1,7 +1,7 @@
 /*
  * matrix.h - matrix class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.11 2004/11/29 19:03:36 raimi Exp $
+ * $Id: matrix.h,v 1.12 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -96,6 +96,7 @@ class matrix
   friend matrix cstocz (matrix, matrix);
 
   friend matrix twoport (matrix, char, char);
+  friend nr_double_t rollet (matrix);
 
  private:
   int cols;

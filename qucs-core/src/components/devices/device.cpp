@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.14 2005/03/14 21:59:09 raimi Exp $
+ * $Id: device.cpp,v 1.15 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -137,6 +137,20 @@ nr_double_t pnVoltage (nr_double_t Ud, nr_double_t Uold,
   return Ud;
 }
 
+// Computes current and its derivative for a pn-junction.
+void pnJunctionMOS (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
+		    nr_double_t& I, nr_double_t& g) {
+  if (Upn <= 0) {
+    g = Iss / Ute;
+    I = g * Upn;
+  }
+  else {
+    nr_double_t e = exp (MIN (Upn / Ute, 709));
+    I = Iss * (e - 1);
+    g = Iss * e / Ute;
+  }
+}
+
 // The function computes the exponential pn-junction current.
 nr_double_t pnCurrent (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute) {
   return Iss * (exp (MIN (Upn / Ute, 709)) - 1);
@@ -169,6 +183,7 @@ nr_double_t pnCharge (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
     q = Cj * Vj / (1 - Mj) * (1 - b);
   }
   else {
+#if 0
     a = 1 - Fc;
     b = exp ((1 - Mj) * log (a));
     a = exp ((1 + Mj) * log (a));
@@ -176,6 +191,14 @@ nr_double_t pnCharge (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
     nr_double_t d = Fc * Vj;
     nr_double_t e = Vj * (1 - b) / (1 - Mj);
     q = Cj * (e + (c * (Uj - d) + Mj / 2 / Vj * (sqr (Uj) - sqr (d))) / a);
+#else /* this variant is numerically more stable */
+    a = 1 - Fc;
+    b = exp (-Mj * log (a));
+    nr_double_t c = Cj * (1 - Fc * (1 + Mj)) * b / a;
+    nr_double_t d = Cj * Mj * b / a / Vj;
+    nr_double_t e = Cj * Vj * (1 - a * b) / (1 - Mj) - d / 2 * Cj * Cj;
+    q = e + Uj * (c + Uj * d / 2);
+#endif
   }
   return q;
 }

@@ -1,7 +1,7 @@
 /*
  * matvec.h - matrix vector class definitions
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.h,v 1.8 2004/12/07 22:33:31 raimi Exp $
+ * $Id: matvec.h,v 1.9 2005/04/18 13:41:04 raimi Exp $
  *
  */
 
@@ -84,6 +84,7 @@ class matvec
   friend matvec abs       (matvec);
   friend matvec arg       (matvec);
   friend matvec adjoint   (matvec);
+  friend vector rollet    (matvec);
 
   friend matvec stoz (matvec, complex z0 = 50.0);
   friend matvec ztos (matvec, complex z0 = 50.0);

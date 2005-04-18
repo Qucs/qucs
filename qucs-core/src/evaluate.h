@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.15 2005/03/14 21:59:06 raimi Exp $
+ * $Id: evaluate.h,v 1.16 2005/04/18 13:41:03 raimi Exp $
  *
  */
 
@@ -364,10 +364,33 @@ public:
   static constant * mu2_mv (constant *);
 
   static constant * linspace (constant *);
-  static constant * noise_circle_d (constant *);
-  static constant * noise_circle_v (constant *);
-  static constant * stab_circle_l (constant *);
-  static constant * stab_circle_s (constant *);
+  static constant * logspace (constant *);
+  static constant * noise_circle_d   (constant *);
+  static constant * noise_circle_d_d (constant *);
+  static constant * noise_circle_d_v (constant *);
+  static constant * noise_circle_v   (constant *);
+  static constant * noise_circle_v_d (constant *);
+  static constant * noise_circle_v_v (constant *);
+  static constant * stab_circle_l   (constant *);
+  static constant * stab_circle_l_d (constant *);
+  static constant * stab_circle_l_v (constant *);
+  static constant * stab_circle_s   (constant *);
+  static constant * stab_circle_s_d (constant *);
+  static constant * stab_circle_s_v (constant *);
+  static constant * ga_circle_d   (constant *);
+  static constant * ga_circle_d_d (constant *);
+  static constant * ga_circle_d_v (constant *);
+  static constant * ga_circle_v   (constant *);
+  static constant * ga_circle_v_d (constant *);
+  static constant * ga_circle_v_v (constant *);
+  static constant * gp_circle_d   (constant *);
+  static constant * gp_circle_d_d (constant *);
+  static constant * gp_circle_d_v (constant *);
+  static constant * gp_circle_v   (constant *);
+  static constant * gp_circle_v_d (constant *);
+  static constant * gp_circle_v_v (constant *);
+  static constant * plot_vs_v  (constant *);
+  static constant * plot_vs_mv (constant *);
 };
 
 // Type of application function.

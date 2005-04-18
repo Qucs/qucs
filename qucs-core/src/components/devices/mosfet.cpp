@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.25 2005/03/14 21:59:09 raimi Exp $
+ * $Id: mosfet.cpp,v 1.26 2005/04/18 13:41:05 raimi Exp $
  *
  */
 
@@ -402,14 +402,16 @@ void mosfet::calcDC (void) {
   UgsPrev = Ugs; UgdPrev = Ugd; UbdPrev = Ubd; UdsPrev = Uds; UbsPrev = Ubs;
 
   // parasitic bulk-source diode
-  gtiny = Ubs < - 10 * Ut * n ? Iss : 0;
-  gbs = pnConductance (Ubs, Iss, Ut * n) + gtiny;
-  Ibs = pnCurrent (Ubs, Iss, Ut * n) + gtiny * Ubs;
+  gtiny = Iss;
+  pnJunctionMOS (Ubs, Iss, Ut * n, Ibs, gbs);
+  Ibs += gtiny * Ubs;
+  gbs += gtiny;
 
   // parasitic bulk-drain diode
-  gtiny = Ubd < - 10 * Ut * n ? Isd : 0;
-  gbd = pnConductance (Ubd, Isd, Ut * n) + gtiny;
-  Ibd = pnCurrent (Ubd, Isd, Ut * n) + gtiny * Ubd;
+  gtiny = Isd;
+  pnJunctionMOS (Ubd, Isd, Ut * n, Ibd, gbd);
+  Ibd += gtiny * Ubd;
+  gbd += gtiny;
 
   // differentiate inverse and forward mode
   MOSdir = (Uds >= 0) ? +1 : -1;

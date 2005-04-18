@@ -1,3 +1,27 @@
+2005-04-17  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Added convenience functions for all the
+	circle functionality: GaCircle(S,Ga[,Arcs]) - Ga can be
+	either vector or number, Arcs can be vector (angles in
+	degree), number (number of equally spaced circle segments)
+	or be omitted (the number defaults to 64).
+
+	* sweep.cpp: Using the linspace/logspace functions of the
+	vector class.
+
+	* vector.cpp (logspace, linspace): Added these functions
+	for convenience here.
+
+	* matvec.cpp, matrix.cpp (rollet): Moved these functions from
+	the equation solver to the matrix and matvec class.
+
+	* evaluate.cpp: Speed up noise circle calculations.  Added
+	gain circle and PlotVs() applications.
+
+	* equation.cpp: It's now possible to generate independent
+	data vectors on the fly.  Useful for circle functions and
+	PlotVs().
+
 2005-04-14  Stefan Jahn  <stefan@lkcc.org>
 
 	* matvec.cpp, matrix.cpp (twoport): Check size of matrices
