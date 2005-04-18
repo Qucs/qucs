@@ -109,9 +109,13 @@ possible values for <tt>"from"</tt> and <tt>"to"</tt> are 'Y', 'Z', 'H', 'G',
 <tr><td><tt>Mu(x)</tt></td><td>Mu stability factor of matrix x (twoport S-parameter matrix)</td></tr>
 <tr><td><tt>Mu2(x)</tt></td><td>Mu' stability factor of matrix x (twoport S-parameter matrix)</td></tr>
 <tr><td><tt>linspace(from,to,n)</tt></td><td>creates a vector with <tt>n</tt> linearly spaced elements between <tt>from</tt> and <tt>to</tt>, both inclusively</td></tr>
-<tr><td><tt>NoiseCircle(Sopt,<br>&nbsp;&nbsp;Fmin,Rn,F,Arcs)</tt></td><td>circles with constant noise figure(s) <tt>F</tt> (can be a constant or a vector), <tt>Arcs</tt> specifies the angles in degree created by e.g. <tt>linspace(0,360,100)</tt></td></tr>
-<tr><td><tt>StabCircleS(S,Arcs)</tt></td><td>stability circle in the source plane</tt></td></tr>
-<tr><td><tt>StabCircleL(S,Arcs)</tt></td><td>stability circle in the load plane</tt></td></tr>
+<tr><td><tt>logspace(from,to,n)</tt></td><td>creates a vector with <tt>n</tt> logarithmically spaced elements between <tt>from</tt> and <tt>to</tt>, both inclusively</td></tr>
+<tr><td><tt>NoiseCircle(Sopt,<br>&nbsp;&nbsp;Fmin,Rn,F[,Arcs])</tt></td><td>circles with constant noise figure(s) <tt>F</tt> (can be a constant or a vector), <tt>Arcs</tt> specifies the angles in degree created by e.g. <tt>linspace(0,360,100)</tt>, if <tt>Arcs</tt> is a number it specifies the number of equally spaced circle segments, if it is omitted this number defaults to a reasonable value</td></tr>
+<tr><td><tt>StabCircleS(S[,Arcs])</tt></td><td>stability circle in the source plane</td></tr>
+<tr><td><tt>StabCircleL(S[,Arcs])</tt></td><td>stability circle in the load plane</td></tr>
+<tr><td><tt>GaCircle(S,Ga[,Arcs])</tt></td><td>circle(s) with constant available power gain <tt>Ga</tt> in the source plane</td></tr>
+<tr><td><tt>GpCircle(S,Gp[,Arcs])</tt></td><td>circle(s) with constant operating power gain <tt>Gp</tt> in the load plane</td></tr>
+<tr><td><tt>PlotVs(data,dep)</tt></td><td>returns a data item based upon <tt>data</tt> (vector or matrix vector) with dependency on the given <tt>dep</tt> vector, e.g. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 </table>
 <br>
 
