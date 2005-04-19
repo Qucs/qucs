@@ -2231,10 +2231,6 @@ Formato da linha &apos;componente&apos; errado!</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>initial phase in degrees</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2469,6 +2465,45 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Informação</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Ao menos dois elementos devem ser selecionados !</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erro</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">Não é possível iniciar o editor de texto!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Não é possível iniciar o help do qucs!</translation>
     </message>
 </context>
 <context>
@@ -2767,7 +2802,7 @@ Você desenha salvar as mudanças antes de fechar?</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Não é possível iniciar o help do qucs!</translation>
+        <translation type="obsolete">Não é possível iniciar o help do qucs!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -2849,7 +2884,7 @@ Erros:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Não é possível iniciar o editor de texto!</translation>
+        <translation type="obsolete">Não é possível iniciar o editor de texto!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -2989,7 +3024,7 @@ Erros:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Ao menos dois elementos devem ser selecionados !</translation>
+        <translation type="obsolete">Ao menos dois elementos devem ser selecionados !</translation>
     </message>
     <message>
         <source>Delete Group</source>
@@ -3059,23 +3094,11 @@ Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4945,6 +4968,10 @@ Starts transmission line calculator</source>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>O nó de terra não pode ser rotulado!</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

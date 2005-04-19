@@ -115,7 +115,7 @@ void QucsInit::initActions()
 
   App->symEdit =
     new QAction(tr("Edit Circuit Symbol"),
-		tr("Edit Circuit Symbol"), CTRL+Key_U, App);
+		tr("Edit Circuit Symbol"), Key_F3, App);
   App->symEdit->setStatusTip(tr("Edits the symbol for this schematic"));
   App->symEdit->setWhatsThis(
 	tr("Edit Circuit Symbol\n\nEdits the symbol for this schematic"));
@@ -163,51 +163,52 @@ void QucsInit::initActions()
   connect(App->applSettings, SIGNAL(activated()),
 	  App, SLOT(slotApplSettings()));
 
-  App->alignTop =
+  Acts->alignTop =
     new QAction(tr("Align top"), tr("Align top"), CTRL+Key_T, App);
-  App->alignTop->setStatusTip(tr("Align top selected elements"));
-  App->alignTop->setWhatsThis(
+  Acts->alignTop->setStatusTip(tr("Align top selected elements"));
+  Acts->alignTop->setWhatsThis(
 	tr("Align top\n\nAlign selected elements to their upper edge"));
-  connect(App->alignTop, SIGNAL(activated()), App, SLOT(slotAlignTop()));
+  connect(Acts->alignTop, SIGNAL(activated()), Acts, SLOT(slotAlignTop()));
 
-  App->alignBottom =
-    new QAction(tr("Align bottom"), tr("Align bottom"),	0, App);
-  App->alignBottom->setStatusTip(tr("Align bottom selected elements"));
-  App->alignBottom->setWhatsThis(
+  Acts->alignBottom =
+    new QAction(tr("Align bottom"), tr("Align bottom"), 0, App);
+  Acts->alignBottom->setStatusTip(tr("Align bottom selected elements"));
+  Acts->alignBottom->setWhatsThis(
 	tr("Align bottom\n\nAlign selected elements to their lower edge"));
-  connect(App->alignBottom, SIGNAL(activated()),
-	  App, SLOT(slotAlignBottom()));
+  connect(Acts->alignBottom, SIGNAL(activated()),
+	  Acts, SLOT(slotAlignBottom()));
 
-  App->alignLeft = new QAction(tr("Align left"), tr("Align left"), 0, App);
-  App->alignLeft->setStatusTip(tr("Align left selected elements"));
-  App->alignLeft->setWhatsThis(
+  Acts->alignLeft = new QAction(tr("Align left"), tr("Align left"), 0, App);
+  Acts->alignLeft->setStatusTip(tr("Align left selected elements"));
+  Acts->alignLeft->setWhatsThis(
 	tr("Align left\n\nAlign selected elements to their left edge"));
-  connect(App->alignLeft, SIGNAL(activated()), App, SLOT(slotAlignLeft()));
+  connect(Acts->alignLeft, SIGNAL(activated()), Acts, SLOT(slotAlignLeft()));
 
-  App->alignRight = new QAction(tr("Align right"), tr("Align right"), 0, App);
-  App->alignRight->setStatusTip(tr("Align right selected elements"));
-  App->alignRight->setWhatsThis(
+  Acts->alignRight = new QAction(tr("Align right"), tr("Align right"), 0, App);
+  Acts->alignRight->setStatusTip(tr("Align right selected elements"));
+  Acts->alignRight->setWhatsThis(
 	tr("Align right\n\nAlign selected elements to their right edge"));
-  connect(App->alignRight, SIGNAL(activated()), App, SLOT(slotAlignRight()));
+  connect(Acts->alignRight, SIGNAL(activated()), Acts, SLOT(slotAlignRight()));
 
-  App->distrHor = new QAction(tr("Distribute horizontally"),
+  Acts->distrHor = new QAction(tr("Distribute horizontally"),
 	tr("Distribute horizontally"), 0, App);
-  App->distrHor->setStatusTip(tr("Distribute equally horizontally"));
-  App->distrHor->setWhatsThis(
+  Acts->distrHor->setStatusTip(tr("Distribute equally horizontally"));
+  Acts->distrHor->setWhatsThis(
 	tr("Distribute horizontally\n\n"
 	   "Distribute horizontally selected elements"));
-  connect(App->distrHor, SIGNAL(activated()), App, SLOT(slotDistribHoriz()));
+  connect(Acts->distrHor, SIGNAL(activated()), Acts, SLOT(slotDistribHoriz()));
 
-  App->distrVert =
+  Acts->distrVert =
     new QAction(tr("Distribute vertically"),
 		tr("Distribute vertically"), 0, App);
-  App->distrVert->setStatusTip(tr("Distribute equally vertically"));
-  App->distrVert->setWhatsThis(
+  Acts->distrVert->setStatusTip(tr("Distribute equally vertically"));
+  Acts->distrVert->setWhatsThis(
 	tr("Distribute vertically\n\n"
 	   "Distribute vertically selected elements"));
-  connect(App->distrVert, SIGNAL(activated()), App, SLOT(slotDistribVert()));
+  connect(Acts->distrVert, SIGNAL(activated()), Acts, SLOT(slotDistribVert()));
 
-  Acts->onGrid = new QAction(tr("Set on Grid"), tr("Set on Grid"), 0, App);
+  Acts->onGrid = new QAction(tr("Set on Grid"), tr("Set on Grid"),
+				CTRL+Key_U, App);
   Acts->onGrid->setStatusTip(tr("Set on Grid"));
   Acts->onGrid->setWhatsThis(
 	tr("Set on Grid\n\nSets selected elements on grid"));
@@ -289,7 +290,7 @@ void QucsInit::initActions()
 		tr("&Undo"), CTRL+Key_Z, App);
   App->undo->setStatusTip(tr("Undoes the last command"));
   App->undo->setWhatsThis(tr("Undo\n\nMakes the last action undone"));
-  connect(App->undo, SIGNAL(activated()), App, SLOT(slotEditUndo()));
+  connect(App->undo, SIGNAL(activated()), Acts, SLOT(slotEditUndo()));
 
   App->redo =
     new QAction(tr("Redo"),
@@ -297,7 +298,7 @@ void QucsInit::initActions()
 		tr("&Redo"), CTRL+Key_Y, App);
   App->redo->setStatusTip(tr("Redoes the last command"));
   App->redo->setWhatsThis(tr("Redo\n\nRepeats the last action once more"));
-  connect(App->redo, SIGNAL(activated()), App, SLOT(slotEditRedo()));
+  connect(App->redo, SIGNAL(activated()), Acts, SLOT(slotEditRedo()));
 
   App->projNew = new QAction(tr("New Project"), tr("&New Project..."),
 			CTRL+SHIFT+Key_N, App);
@@ -374,12 +375,12 @@ void QucsInit::initActions()
   Acts->select->setToggleAction(true);
   connect(Acts->select, SIGNAL(toggled(bool)), Acts, SLOT(slotSelect(bool)));
 
-  App->selectAll =
+  Acts->selectAll =
     new QAction(tr("Select All"), tr("Select All"), CTRL+Key_A, App);
-  App->selectAll->setStatusTip(tr("Selects all elements"));
-  App->selectAll->setWhatsThis(
+  Acts->selectAll->setStatusTip(tr("Selects all elements"));
+  Acts->selectAll->setWhatsThis(
 	tr("Select All\n\nSelects all elements of the document"));
-  connect(App->selectAll, SIGNAL(activated()), App, SLOT(slotSelectAll()));
+  connect(Acts->selectAll, SIGNAL(activated()), Acts, SLOT(slotSelectAll()));
 
   Acts->editRotate =
     new QAction(tr("Rotate"),
@@ -501,26 +502,26 @@ void QucsInit::initActions()
   connect(Acts->insLabel, SIGNAL(toggled(bool)),
 	  Acts, SLOT(slotInsertLabel(bool)));
 
-  App->callEditor = new QAction(tr("Text editor"), tr("Text Editor"),
+  Acts->callEditor = new QAction(tr("Text editor"), tr("Text Editor"),
 				CTRL+Key_1, App);
-  App->callEditor->setStatusTip(tr("Starts the Qucs text editor"));
-  App->callEditor->setWhatsThis(
+  Acts->callEditor->setStatusTip(tr("Starts the Qucs text editor"));
+  Acts->callEditor->setWhatsThis(
 			tr("Text editor\n\nStarts the Qucs text editor"));
-  connect(App->callEditor, SIGNAL(activated()), App, SLOT(slotCallEditor()));
+  connect(Acts->callEditor, SIGNAL(activated()), Acts, SLOT(slotCallEditor()));
 
-  App->callFilter = new QAction(tr("Filter synthesis"), tr("Filter synthesis"),
+  Acts->callFilter = new QAction(tr("Filter synthesis"), tr("Filter synthesis"),
 				CTRL+Key_2, App);
-  App->callFilter->setStatusTip(tr("Starts QucsFilter"));
-  App->callFilter->setWhatsThis(
+  Acts->callFilter->setStatusTip(tr("Starts QucsFilter"));
+  Acts->callFilter->setWhatsThis(
 			tr("Filter synthesis\n\nStarts QucsFilter"));
-  connect(App->callFilter, SIGNAL(activated()), App, SLOT(slotCallFilter()));
+  connect(Acts->callFilter, SIGNAL(activated()), Acts, SLOT(slotCallFilter()));
 
-  App->callLine = new QAction(tr("Line calculation"), tr("Line calculation"),
+  Acts->callLine = new QAction(tr("Line calculation"), tr("Line calculation"),
 				CTRL+Key_3, App);
-  App->callLine->setStatusTip(tr("Starts QucsTrans"));
-  App->callLine->setWhatsThis(
+  Acts->callLine->setStatusTip(tr("Starts QucsTrans"));
+  Acts->callLine->setWhatsThis(
 		tr("Line calculation\n\nStarts transmission line calculator"));
-  connect(App->callLine, SIGNAL(activated()), App, SLOT(slotCallLine()));
+  connect(Acts->callLine, SIGNAL(activated()), Acts, SLOT(slotCallLine()));
 
   App->simulate =
     new QAction(tr("Simulate"),
@@ -552,22 +553,22 @@ void QucsInit::initActions()
   connect(Acts->setMarker, SIGNAL(toggled(bool)),
 	Acts, SLOT(slotSetMarker(bool)));
 
-  App->showMsg =
+  Acts->showMsg =
     new QAction(tr("Show Last Messages"),
 		tr("Show Last Messages"), Key_F5, App);
-  App->showMsg->setStatusTip(tr("Shows last simulation messages"));
-  App->showMsg->setWhatsThis(
+  Acts->showMsg->setStatusTip(tr("Shows last simulation messages"));
+  Acts->showMsg->setWhatsThis(
     tr("Show Last Messages\n\nShows the messages of the last simulation"));
-  connect(App->showMsg, SIGNAL(activated()), App, SLOT(slotShowLastMsg()));
+  connect(Acts->showMsg, SIGNAL(activated()), Acts, SLOT(slotShowLastMsg()));
 
-  App->showNet =
+  Acts->showNet =
     new QAction(tr("Show Last Netlist"), tr("Show Last Netlist"),
 		Key_F6, App);
-  App->showNet->setStatusTip(tr("Shows last simulation netlist"));
-  App->showNet->setWhatsThis(
+  Acts->showNet->setStatusTip(tr("Shows last simulation netlist"));
+  Acts->showNet->setWhatsThis(
 	tr("Show Last Netlist\n\nShows the netlist of the last simulation"));
-  connect(App->showNet, SIGNAL(activated()),
-	  App, SLOT(slotShowLastNetlist()));
+  connect(Acts->showNet, SIGNAL(activated()),
+	  Acts, SLOT(slotShowLastNetlist()));
 
   viewToolBar =
     new QAction(tr("Toolbar"), tr("Tool&bar"), 0, App, 0, true);
@@ -584,20 +585,20 @@ void QucsInit::initActions()
   connect(viewStatusBar, SIGNAL(toggled(bool)),
 	  this, SLOT(slotViewStatusBar(bool)));
 
-  App->helpIndex =
+  Acts->helpIndex =
     new QAction(tr("Help Index"), tr("Help Index..."), Key_F1, App);
-  App->helpIndex->setStatusTip(tr("Index of Qucs Help"));
-  App->helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
-  connect(App->helpIndex, SIGNAL(activated()), App, SLOT(slotHelpIndex()));
+  Acts->helpIndex->setStatusTip(tr("Index of Qucs Help"));
+  Acts->helpIndex->setWhatsThis(tr("Help Index\n\nIndex of intern Qucs help"));
+  connect(Acts->helpIndex, SIGNAL(activated()), Acts, SLOT(slotHelpIndex()));
 
-  App->helpGetStart =
+  Acts->helpGetStart =
     new QAction(tr("Getting Started"),
 		tr("Getting Started..."), 0, App);
-  App->helpGetStart->setStatusTip(tr("Getting Started with Qucs"));
-  App->helpGetStart->setWhatsThis(
+  Acts->helpGetStart->setStatusTip(tr("Getting Started with Qucs"));
+  Acts->helpGetStart->setWhatsThis(
 	tr("Getting Started\n\nShort introduction into Qucs"));
-  connect(App->helpGetStart, SIGNAL(activated()),
-	  App, SLOT(slotGettingStarted()));
+  connect(Acts->helpGetStart, SIGNAL(activated()),
+	  Acts, SLOT(slotGettingStarted()));
 
   helpAboutApp = new QAction(tr("About"), tr("&About Qucs..."), 0, App);
   helpAboutApp->setStatusTip(tr("About the application"));
@@ -632,13 +633,13 @@ void QucsInit::initMenuBar()
   App->fileQuit->addTo(fileMenu);
 
   alignMenu = new QPopupMenu();  // submenu for "editMenu"
-  App->alignTop->addTo(alignMenu);
-  App->alignBottom->addTo(alignMenu);
-  App->alignLeft->addTo(alignMenu);
-  App->alignRight->addTo(alignMenu);
+  Acts->alignTop->addTo(alignMenu);
+  Acts->alignBottom->addTo(alignMenu);
+  Acts->alignLeft->addTo(alignMenu);
+  Acts->alignRight->addTo(alignMenu);
   alignMenu->insertSeparator();
-  App->distrHor->addTo(alignMenu);
-  App->distrVert->addTo(alignMenu);
+  Acts->distrHor->addTo(alignMenu);
+  Acts->distrVert->addTo(alignMenu);
 
   editMenu = new QPopupMenu();  // menuBar entry editMenu
   App->undo->addTo(editMenu);
@@ -650,7 +651,7 @@ void QucsInit::initMenuBar()
   Acts->editDelete->addTo(editMenu);
   editMenu->insertSeparator();
   Acts->select->addTo(editMenu);
-  App->selectAll->addTo(editMenu);
+  Acts->selectAll->addTo(editMenu);
   Acts->editRotate->addTo(editMenu);
   Acts->editMirror->addTo(editMenu);
   Acts->editMirrorY->addTo(editMenu);
@@ -677,15 +678,15 @@ void QucsInit::initMenuBar()
   App->projDel->addTo(projMenu);
 
   toolMenu = new QPopupMenu();  // menuBar entry toolMenu
-  App->callEditor->addTo(toolMenu);
-  App->callFilter->addTo(toolMenu);
-  App->callLine->addTo(toolMenu);
+  Acts->callEditor->addTo(toolMenu);
+  Acts->callFilter->addTo(toolMenu);
+  Acts->callLine->addTo(toolMenu);
 
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);
   App->dpl_sch->addTo(simMenu);
-  App->showMsg->addTo(simMenu);
-  App->showNet->addTo(simMenu);
+  Acts->showMsg->addTo(simMenu);
+  Acts->showNet->addTo(simMenu);
 
   viewMenu = new QPopupMenu();  // menuBar entry viewMenu
   App->magAll->addTo(viewMenu);
@@ -698,8 +699,8 @@ void QucsInit::initMenuBar()
   viewStatusBar->addTo(viewMenu);
 
   helpMenu = new QPopupMenu();  // menuBar entry helpMenu
-  App->helpIndex->addTo(helpMenu);
-  App->helpGetStart->addTo(helpMenu);
+  Acts->helpIndex->addTo(helpMenu);
+  Acts->helpGetStart->addTo(helpMenu);
   helpMenu->insertSeparator();
   helpAboutApp->addTo(helpMenu);
   helpAboutQt->addTo(helpMenu);

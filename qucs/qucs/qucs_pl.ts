@@ -2470,7 +2470,7 @@ Stosowanie:  qucsedit [-r] plik
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;ułomny&gt;</translation>
+        <translation type="obsolete">&lt;ułomny&gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
@@ -2581,6 +2581,45 @@ Stosowanie:  qucsedit [-r] plik
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Informacja</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Przynajmniej dwa elementy muszą być wybrane !</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Błąd</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">Nie mogę uruchomić edytora tekstu!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Nie mogę uruchomić qucshelp (systemu pomocy)!</translation>
     </message>
 </context>
 <context>
@@ -3089,11 +3128,11 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Nie mogę uruchomić qucshelp (systemu pomocy)!</translation>
+        <translation type="obsolete">Nie mogę uruchomić qucshelp (systemu pomocy)!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Nie mogę uruchomić edytora tekstu!</translation>
+        <translation type="obsolete">Nie mogę uruchomić edytora tekstu!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -3101,7 +3140,7 @@ Czy chcesz kontynuować ?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Przynajmniej dwa elementy muszą być wybrane !</translation>
+        <translation type="obsolete">Przynajmniej dwa elementy muszą być wybrane !</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -3190,23 +3229,11 @@ Edytuj schemat</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5094,6 +5121,10 @@ Starts transmission line calculator</source>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>Nie możesz przypisać żadnej nazwy do węzła masy!</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

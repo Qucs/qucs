@@ -74,7 +74,7 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
 
 
   new QLabel(tr("Line color: "), h1);
-  ColorButt = new QPushButton("        ",h1);
+  ColorButt = new QPushButton("      ",h1);
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
 

@@ -21,7 +21,8 @@
 #include "main.h"
 
 
-WireLabel::WireLabel(const QString& _Name, int _cx, int _cy, int _x1, int _y1, ElementType _Type)
+WireLabel::WireLabel(const QString& _Name, int _cx, int _cy,
+                     int _x1, int _y1, int _Type)
 {
   cx = _cx;
   cy = _cy;

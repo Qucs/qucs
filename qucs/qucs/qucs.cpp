@@ -86,19 +86,6 @@ QucsApp::QucsApp()
   initCursorMenu();
 
 
-  // define menu appearing by right mouse button on component
-  view->ComponentMenu->insertItem(
-	tr("Edit Properties"), view, SLOT(slotEditElement()));
-  Acts.moveText->addTo(view->ComponentMenu);
-  Acts.onGrid->addTo(view->ComponentMenu);
-  Acts.editDelete->addTo(view->ComponentMenu);
-  view->ComponentMenu->insertSeparator();
-  Acts.editActivate->addTo(view->ComponentMenu);
-  Acts.editRotate->addTo(view->ComponentMenu);
-  Acts.editMirror->addTo(view->ComponentMenu);
-  Acts.editMirrorY->addTo(view->ComponentMenu);
-
-
   // default settings of the printer
   Printer = new QPrinter(QPrinter::PrinterResolution);
   Printer->setOrientation(QPrinter::Landscape);
@@ -241,6 +228,8 @@ void QucsApp::initCursorMenu()
 // It shows a menu.
 void QucsApp::slotShowContentMenu(QListViewItem *item, const QPoint& point, int)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(item)
     if(item->parent() != 0)   // no component, but item "schematic", ...
       ContentMenu->popup(point);
@@ -521,6 +510,8 @@ void QucsApp::nextDocument(bool loadDiagrams)
 // Is called when another document is selected via the TabBar.
 void QucsApp::slotChangeView(int id)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   QucsDoc *d = view->Docs.current();
   d->PosX = view->contentsX();    // save position for old document
   d->PosY = view->contentsY();
@@ -616,6 +607,8 @@ void QucsApp::slotNextTab()
 // #######################################################################
 void QucsApp::slotFileSettings()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   SettingsDialog *d = new SettingsDialog(view->Docs.current(), this);
   d->exec();
   view->viewport()->repaint();
@@ -625,6 +618,8 @@ void QucsApp::slotFileSettings()
 // --------------------------------------------------------------
 void QucsApp::slotApplSettings()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
   view->viewport()->repaint();
@@ -635,6 +630,7 @@ void QucsApp::slotApplSettings()
 void QucsApp::slotFileNew()
 {
   statusBar()->message(tr("Creating new schematic..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   view->Docs.append(new QucsDoc(this, ""));
   // make new document the current
@@ -647,6 +643,7 @@ void QucsApp::slotFileNew()
 void QucsApp::slotFileOpen()
 {
   static QString lastDir;  // to remember last directory and file
+  view->editText->setHidden(true); // disable text edit of component property
 
   statusBar()->message(tr("Opening file..."));
 
@@ -726,6 +723,7 @@ void QucsApp::slotFileSave()
 {
   statusBar()->message(tr("Saving file..."));
   view->blockSignals(true);   // no user interaction during that time
+  view->editText->setHidden(true); // disable text edit of component property
 
   if(!saveCurrentFile()) {
     view->blockSignals(false);
@@ -833,6 +831,7 @@ void QucsApp::slotFileSaveAs()
 {
   statusBar()->message(tr("Saving file under new filename..."));
   view->blockSignals(true);   // no user interaction during the time
+  view->editText->setHidden(true); // disable text edit of component property
 
   if(!saveAs()) {
     view->blockSignals(false);
@@ -850,6 +849,7 @@ void QucsApp::slotFileSaveAs()
 void QucsApp::slotFileSaveAll()
 {
   statusBar()->message(tr("Saving all files..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   QucsDoc *tmp = view->Docs.current();  // remember the current
   view->blockSignals(true);   // no user interaction during the time
@@ -872,6 +872,7 @@ void QucsApp::slotFileSaveAll()
 void QucsApp::slotFileClose()
 {
   statusBar()->message(tr("Closing file..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   if(view->Docs.current()->DocChanged) {
     switch(QMessageBox::warning(this,tr("Closing Qucs document"),
@@ -903,6 +904,7 @@ void QucsApp::slotFileClose()
 void QucsApp::slotFilePrint()
 {
   statusBar()->message(tr("Printing..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   if (Printer->setup(this))  // print dialog
   {
@@ -919,6 +921,7 @@ void QucsApp::slotFilePrint()
 void QucsApp::slotFilePrintSelected()
 {
   statusBar()->message(tr("Printing..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   if (Printer->setup(this))  // print dialog
   {
@@ -936,6 +939,7 @@ void QucsApp::slotFilePrintSelected()
 void QucsApp::slotFileQuit()
 {
   statusBar()->message(tr("Exiting application..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   int exit = QMessageBox::information(this, tr("Quit..."),
 				      tr("Do you really want to quit?"),
@@ -964,6 +968,7 @@ void QucsApp::closeEvent(QCloseEvent* Event)
 void QucsApp::slotEditCut()
 {
   statusBar()->message(tr("Cutting selection..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = view->Docs.current()->copySelected(true);
@@ -979,6 +984,7 @@ void QucsApp::slotEditCut()
 void QucsApp::slotEditCopy()
 {
   statusBar()->message(tr("Copying selection to clipboard..."));
+  view->editText->setHidden(true); // disable text edit of component property
 
   QClipboard *cb = QApplication::clipboard();   // get system clipboard
   QString s = view->Docs.current()->copySelected(false);
@@ -989,38 +995,11 @@ void QucsApp::slotEditCopy()
 }
 
 // ########################################################################
-void QucsApp::slotHelpIndex()
-{
-  showHTML("index.html");
-}
-
-// ########################################################################
-void QucsApp::slotGettingStarted()
-{
-  showHTML("start.html");
-}
-
-// ########################################################################
-void QucsApp::showHTML(const QString& Page)
-{
-  QStringList com;
-  com << QucsSettings.BinDir + "qucshelp" << Page;
-  QProcess *QucsHelp = new QProcess(com);
-  QucsHelp->setCommunication(0);
-  if(!QucsHelp->start()) {
-    QMessageBox::critical(this, tr("Error"), tr("Cannot start qucshelp!"));
-    delete QucsHelp;
-    return;
-  }
-
-  // to kill it before qucs ends
-  connect(this, SIGNAL(signalKillEmAll()), QucsHelp, SLOT(kill()));
-}
-
-// ########################################################################
 // Is called when the toolbar button is pressed to go into a subcircuit.
 void QucsApp::slotIntoHierarchy()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   QucsDoc *Doc = view->Docs.current();
   Component *pc = view->Docs.current()->searchSelSubcircuit();
   if(pc == 0) return;
@@ -1039,6 +1018,8 @@ void QucsApp::slotIntoHierarchy()
 // Is called when the toolbar button is pressed to leave a subcircuit.
 void QucsApp::slotPopHierarchy()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(HierarchyHistory.count() == 0) return;
 
   QString Doc = *(HierarchyHistory.getLast());
@@ -1053,6 +1034,8 @@ void QucsApp::slotPopHierarchy()
 // ########################################################################
 void QucsApp::slotShowAll()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   int x1 = view->Docs.current()->UsedX1;
   int y1 = view->Docs.current()->UsedY1;
   int x2 = view->Docs.current()->UsedX2;
@@ -1083,6 +1066,7 @@ void QucsApp::slotShowAll()
 // Sets the scale factor to 1.
 void QucsApp::slotShowOne()
 {
+  view->editText->setHidden(true); // disable text edit of component property
   QucsDoc *d = view->Docs.current();
 
   d->Scale = 1.0;
@@ -1106,6 +1090,8 @@ void QucsApp::slotShowOne()
 
 void QucsApp::slotZoomOut()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+  
   view->Zoom(0.5);
   view->viewport()->repaint();
   view->drawn = false;
@@ -1115,6 +1101,8 @@ void QucsApp::slotZoomOut()
 // Is called when the simulate toolbar button is pressed.
 void QucsApp::slotSimulate()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+  
   if(view->Docs.current()->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveCurrentFile()) return;            // ... save schematic before
 
@@ -1211,79 +1199,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 }
 
 // ------------------------------------------------------------------------
-// Is called to show the output messages of the last simulation.
-void QucsApp::slotShowLastMsg()
-{
-  editFile(QucsHomeDir.filePath("log.txt"));
-}
-
-// ------------------------------------------------------------------------
-// Is called to show the netlist of the last simulation.
-void QucsApp::slotShowLastNetlist()
-{
-  editFile(QucsHomeDir.filePath("netlist.txt"));
-}
-
-// ------------------------------------------------------------------------
-// Is called to start the text editor.
-void QucsApp::slotCallEditor()
-{
-  editFile(QString(""));
-}
-
-// ------------------------------------------------------------------------
-// Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
-// component edit dialog.
-void QucsApp::editFile(const QString& File)
-{
-  QString com = QucsSettings.Editor+" "+File;
-  QProcess *QucsEditor = new QProcess(QStringList::split(" ", com));
-  QucsEditor->setCommunication(0);
-  if(!QucsEditor->start()) {
-    QMessageBox::critical(this, tr("Error"), tr("Cannot start text editor!"));
-    delete QucsEditor;
-    return;
-  }
-
-  // to kill it before qucs ends
-  connect(this, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
-}
-
-// ------------------------------------------------------------------------
-// Is called to start the filter synthesis program.
-void QucsApp::slotCallFilter()
-{
-  QProcess *QucsFilter =
-    new QProcess(QString(QucsSettings.BinDir + "qucsfilter"));
-  if(!QucsFilter->start()) {
-    QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot start filter synthesis program!"));
-    delete QucsFilter;
-    return;
-  }
-
-  // to kill it before qucs ends
-  connect(this, SIGNAL(signalKillEmAll()), QucsFilter, SLOT(kill()));
-}
-
-// ------------------------------------------------------------------------
-// Is called to start the transmission line calculation program.
-void QucsApp::slotCallLine()
-{
-  QProcess *QucsLine =
-    new QProcess(QString(QucsSettings.BinDir + "qucstrans"));
-  if(!QucsLine->start()) {
-    QMessageBox::critical(this, tr("Error"),
-                          tr("Cannot start line calculation program!"));
-    delete QucsLine;
-    return;
-  }
-
-  // to kill it before qucs ends
-  connect(this, SIGNAL(signalKillEmAll()), QucsLine, SLOT(kill()));
-}
-
-// ------------------------------------------------------------------------
 // Changes to the corresponding data display page or vice versa.
 void QucsApp::slotChangePage(QString Name)
 {
@@ -1361,6 +1276,8 @@ void QucsApp::slotToPage()
 //void QucsApp::slotOpenContent(QListViewItem *item, const QPoint &, int column)   // QT 3.2
 void QucsApp::slotOpenContent(QListViewItem *item)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(item == 0) return;   // no item was double clicked
   if(item->parent() == 0) return;  // no component, but item "schematic", ...
 
@@ -1376,7 +1293,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 
   QFileInfo Info(QucsWorkDir.filePath(item->text(0)));
   if(Info.extension(false) == "dat") {
-    editFile(Info.absFilePath());   // open datasets with text editor
+    Acts.editFile(Info.absFilePath());  // open datasets with text editor
     return;
   }
   gotoPage(Info.absFilePath());
@@ -1393,6 +1310,8 @@ void QucsApp::slotOpenContent(QListViewItem *item)
 // Is called when the close project menu is called.
 void QucsApp::slotMenuCloseProject()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!closeAllFiles()) return;   // close files and ask for saving them
   QucsDoc *d = new QucsDoc(this, "");
   view->Docs.append(d);   // create 'untitled' file
@@ -1512,6 +1431,8 @@ int QucsApp::testFile(const QString& DocName)
 // Opens an existing project.
 void QucsApp::OpenProject(const QString& Path, const QString& Name)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!closeAllFiles()) return;   // close files and ask for saving them
   QucsDoc *d = new QucsDoc(this, "");
   view->Docs.append(d);   // create 'untitled' file
@@ -1574,6 +1495,8 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
 // Is called, when "Create New Project"-Button is pressed.
 void QucsApp::slotProjNewButt()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   NewProjDialog *d = new NewProjDialog(this);
   if(d->exec() != QDialog::Accepted) return;
 
@@ -1625,6 +1548,8 @@ pInfoFunc nonlinearComps[] =
 // Component IconView with the appropriat components.
 void QucsApp::slotSetCompView(int index)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   char *File;
   QString Name;
   pInfoFunc *Infos = 0;
@@ -1689,7 +1614,7 @@ void QucsApp::slotSetCompView(int index)
 		QImage(QucsSettings.BitmapDir + "smithpolar.xpm"));
       new QIconViewItem(CompComps, tr("3D-Cartesian"),
 		QImage(QucsSettings.BitmapDir + "rect3d.xpm"));
-      new QIconViewItem(CompComps, tr("Location Curve"),
+      new QIconViewItem(CompComps, tr("Locus Curve"),
 		QImage(QucsSettings.BitmapDir + "curve.xpm"));
       return;
   }
@@ -1706,6 +1631,8 @@ void QucsApp::slotSetCompView(int index)
 // Is called when the mouse is clicked within the Component QIconView.
 void QucsApp::slotSelectComponent(QIconViewItem *item)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   // delete previously selected elements
   if(view->selComp != 0)  delete view->selComp;
   if(view->selDiag != 0)  delete view->selDiag;
@@ -1813,6 +1740,8 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 // Is called when the mouse is clicked within the Content QListView.
 void QucsApp::slotSelectSubcircuit(QListViewItem *item)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(item == 0) {   // mouse button pressed not over an item ?
     Content->clearSelection();  // deselect component in ListView
     if(view->drawn) view->viewport()->repaint();
@@ -1851,20 +1780,12 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
 }
 
-// -----------------------------------------------------------------------
-// Is called when the select all action is activated.
-void QucsApp::slotSelectAll()
-{
-  view->Docs.current()->selectElements(INT_MIN, INT_MIN,
-				INT_MAX, INT_MAX, true);
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
 // #######################################################################
 // Is called, when "Open Project"-Button is pressed.
 void QucsApp::slotProjOpenButt()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   QListBoxItem *item = Projects->selectedItem();
   if(item) slotOpenProject(item);
   else QMessageBox::information(this, tr("Info"),
@@ -1874,6 +1795,8 @@ void QucsApp::slotProjOpenButt()
 // #######################################################################
 bool QucsApp::DeleteProject(const QString& Path, const QString& Name)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(Name == ProjName) {
     QMessageBox::information(this, tr("Info"),
 			tr("Cannot delete an open project !"));
@@ -1943,86 +1866,6 @@ void QucsApp::slotProjDelButt()
   if(!DeleteProject(QucsHomeDir.filePath(item->text()+"_prj"),
 	item->text()))  return;
   Projects->removeItem(Projects->currentItem());  // remove from project list
-}
-
-// #######################################################################
-// Is called, when "Undo"-Button is pressed.
-void QucsApp::slotEditUndo()
-{
-  view->Docs.current()->undo();
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Undo"-Button is pressed.
-void QucsApp::slotEditRedo()
-{
-  view->Docs.current()->redo();
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Align top" action is activated.
-void QucsApp::slotAlignTop()
-{
-  if(!view->Docs.current()->aligning(0))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Align bottom" action is activated.
-void QucsApp::slotAlignBottom()
-{
-  if(!view->Docs.current()->aligning(1))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Align left" action is activated.
-void QucsApp::slotAlignLeft()
-{
-  if(!view->Docs.current()->aligning(2))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Align right" action is activated.
-void QucsApp::slotAlignRight()
-{
-  if(!view->Docs.current()->aligning(3))
-    QMessageBox::information(this, tr("Info"),
-		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Distribute horizontally" action is activated.
-void QucsApp::slotDistribHoriz()
-{
-  view->Docs.current()->distribHoriz();
-  view->viewport()->repaint();
-  view->drawn = false;
-}
-
-// #######################################################################
-// Is called, when "Distribute vertically" action is activated.
-void QucsApp::slotDistribVert()
-{
-  view->Docs.current()->distribVert();
-  view->viewport()->repaint();
-  view->drawn = false;
 }
 
 // #######################################################################
@@ -2133,6 +1976,8 @@ void QucsApp::changeSchematicSymbolMode(QucsDoc *d)
 // symbol.
 void QucsApp::slotSymbolEdit()
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   QucsDoc *d = view->Docs.current();
   d->symbolMode = !(d->symbolMode);  // change mode
   d->switchPaintMode();   // twist the view coordinates

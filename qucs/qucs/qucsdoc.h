@@ -33,9 +33,6 @@
 
 class QucsApp;
 
-/**
-  *@author Michael Margraf
-  */
 
 class QucsDoc {
 public: 
@@ -70,7 +67,7 @@ public:
   Wire*      selectedWire(int, int);
   Painting*  selectedPainting(int, int);
   void       selectWireLine(Element*, Node*, bool);
-  Element*   selectElement(int, int, bool);
+  Element*   selectElement(int, int, bool, int *index=0);
   int        selectElements(int, int, int, int, bool);
   void       deselectElements(Element*);
   bool  activateComponent(int, int);

@@ -44,6 +44,11 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   QWidget *myParent = this;
   ValInteger = new QIntValidator(1, 1000000, this);
 
+  Expr.setPattern("[^\"=]+");  // valid expression for property 'edit' etc
+  Validator = new QRegExpValidator(Expr, this);
+  Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit' etc
+  ValRestrict = new QRegExpValidator(Expr, this);
+
   checkSim  = 0;  editSim   = 0;  comboType = 0;  checkParam = 0;
   editStart = 0;  editStop  = 0;  editNumber = 0;
 
@@ -63,6 +68,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
     int row=1;
     editParam = new QLineEdit(Tab1);
+    editParam->setValidator(ValRestrict);
     connect(editParam, SIGNAL(returnPressed()), SLOT(slotParamEntered()));
     checkParam = new QCheckBox(tr("display in schematic"), Tab1);
     if(Comp->Model == ".SW") {   // parameter sweep
@@ -107,6 +113,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textValues = new QLabel(tr("Values:"), Tab1);
     gp->addWidget(textValues, row,0);
     editValues = new QLineEdit(Tab1);
+    editValues->setValidator(Validator);
     connect(editValues, SIGNAL(returnPressed()), SLOT(slotValuesEntered()));
     gp->addWidget(editValues, row,1);
     checkValues = new QCheckBox(tr("display in schematic"), Tab1);
@@ -115,6 +122,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textStart  = new QLabel(tr("Start:"), Tab1);
     gp->addWidget(textStart, row,0);
     editStart  = new QLineEdit(Tab1);
+    editStart->setValidator(Validator);
     connect(editStart, SIGNAL(returnPressed()), SLOT(slotStartEntered()));
     gp->addWidget(editStart, row,1);
     checkStart = new QCheckBox(tr("display in schematic"), Tab1);
@@ -123,6 +131,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textStop   = new QLabel(tr("Stop:"), Tab1);
     gp->addWidget(textStop, row,0);
     editStop   = new QLineEdit(Tab1);
+    editStop->setValidator(Validator);
     connect(editStop, SIGNAL(returnPressed()), SLOT(slotStopEntered()));
     gp->addWidget(editStop, row,1);
     checkStop = new QCheckBox(tr("display in schematic"), Tab1);
@@ -131,6 +140,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
     textStep   = new QLabel(tr("Step:"), Tab1);
     gp->addWidget(textStep, row,0);
     editStep   = new QLineEdit(Tab1);
+    editStep->setValidator(Validator);
     connect(editStep, SIGNAL(returnPressed()), SLOT(slotStepEntered()));
     gp->addWidget(editStep, row++,1);
 
@@ -230,6 +240,7 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   gp2->addWidget(h5, 1,0);
   new QLabel(tr("Name:"), h5);
   CompNameEdit = new QLineEdit(h5);
+  CompNameEdit->setValidator(ValRestrict);
   connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtOK()));
 
   prop = new QListView(myParent);
@@ -243,11 +254,6 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
 
   Name = new QLabel(myParent);
   gp2->addWidget(Name, 2,1);
-
-  Expr.setPattern("[^\"=]+");  // valid expression for property input 'edit'
-  Validator = new QRegExpValidator(Expr, this);
-  Expr.setPattern("[\\w_]+");  // valid expression for property input 'edit'
-  ValRestrict = new QRegExpValidator(Expr, this);
 
   Description = new QLabel(myParent);
   gp2->addWidget(Description, 3,1);
@@ -764,7 +770,7 @@ void ComponentDialog::slotBrowseFile()
 // -------------------------------------------------------------------------
 void ComponentDialog::slotEditFile()
 {
-  Doc->App->editFile(QucsWorkDir.filePath(edit->text()));
+  Doc->App->Acts.editFile(QucsWorkDir.filePath(edit->text()));
 }
 
 // -------------------------------------------------------------------------

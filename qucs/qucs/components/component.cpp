@@ -137,9 +137,42 @@ void Component::getCenter(int& x, int& y)
 }
 
 // -------------------------------------------------------
+int Component::getTextSelected(int x_, int y_)
+{
+  x_ -= cx;
+  y_ -= cy;
+  if(x_ < tx) return -1;
+  if(y_ < ty) return -1;
+
+  x_ -= tx;
+  y_ -= ty;
+  QFontMetrics  metrics(QucsSettings.font);
+  QSize r = metrics.size(0, Name);
+  int dy = r.height();
+  if(y_ < dy) {
+    if(x_ < r.width()) return 0;
+    return -1;
+  }
+
+  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display) {
+      dy += r.height();   // height is always the same
+      if(y_ > dy) continue;
+      // get width of text
+      r = metrics.size(0, pp->Name+"="+pp->Value);
+      if(x_ > r.width()) return -1;
+      return dy/r.height()-1;
+    }
+  
+  return -1;
+}
+
+// -------------------------------------------------------
 bool Component::getSelected(int x_, int y_)
 {
-  if(x_ >= x1+cx) if(x_ <= x2+cx) if(y_ >= y1+cy) if(y_ <= y2+cy)
+  x_ -= cx;
+  y_ -= cy;
+  if(x_ >= x1) if(x_ <= x2) if(y_ >= y1) if(y_ <= y2)
     return true;
 
   return false;

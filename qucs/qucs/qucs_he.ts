@@ -949,7 +949,7 @@ Unknown field!</source>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;פסול&gt;</translation>
+        <translation type="obsolete">&lt;פסול&gt;</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
@@ -2425,6 +2425,45 @@ Usage:  qucsedit [-r] file
 
 </translation>
     </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">מידע</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">בחר לפחות שני אלמנטים!</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">שגיאה</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">לא יכול להריץ את עורץ הטקסט!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">לא יכול להתחיל את QUCSHELP!</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2446,7 +2485,7 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>מאפייני עריכה</translation>
+        <translation type="obsolete">מאפייני עריכה</translation>
     </message>
     <message>
         <source>New</source>
@@ -2740,7 +2779,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>לא יכול להתחיל את QUCSHELP!</translation>
+        <translation type="obsolete">לא יכול להתחיל את QUCSHELP!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -2814,7 +2853,7 @@ Errors:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>לא יכול להריץ את עורץ הטקסט!</translation>
+        <translation type="obsolete">לא יכול להריץ את עורץ הטקסט!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -2970,7 +3009,7 @@ Errors:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>בחר לפחות שני אלמנטים!</translation>
+        <translation type="obsolete">בחר לפחות שני אלמנטים!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -3003,19 +3042,11 @@ Edits the schematic</source>
         <translation>ערוך סכימה עורך את הסכימה</translation>
     </message>
     <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4862,6 +4893,10 @@ Starts transmission line calculator</source>
         <source>The ground potential cannot be labeled!</source>
         <translation>לא ניתן לתת תוית לפונציאל האדמה!
 </translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">מאפייני עריכה</translation>
     </message>
 </context>
 <context>

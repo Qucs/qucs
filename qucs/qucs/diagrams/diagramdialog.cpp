@@ -59,7 +59,10 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   changed = false;
   toTake = false;   // double-clicked variable be inserted into graph list ?
 
-  ValDouble = new QDoubleValidator(-1e200, 1e200, 6, this);
+  Expr.setPattern("[^\"]+");
+  Validator  = new QRegExpValidator(Expr, this);
+  ValInteger = new QIntValidator(0, 360, this);
+  ValDouble  = new QDoubleValidator(-1e200, 1e200, 6, this);
 
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget(this);
@@ -76,11 +79,11 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
   QVButtonGroup *InputGroup = new QVButtonGroup(tr("Graph Input"), Tab1);
   GraphInput = new QLineEdit(InputGroup);
+  GraphInput->setValidator(Validator);
   connect(GraphInput, SIGNAL(textChanged(const QString&)),
 		      SLOT(slotResetToTake(const QString&)));
   QHBox *Box2 = new QHBox(InputGroup);
   Box2->setSpacing(5);
-  Validator = new QIntValidator(0, 360, this);
 
   if(Diag->Name == "Tab") {
     Label1 = new QLabel(tr("Number Notation: "), Box2);
@@ -93,7 +96,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
     Label2 = new QLabel(tr("Precision:"), Box2);
     Property2 = new QLineEdit(Box2);
-    Property2->setValidator(Validator);
+    Property2->setValidator(ValInteger);
     Property2->setMaxLength(2);
     Property2->setMaximumWidth(25);
     Property2->setText("3");
@@ -122,12 +125,13 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
     Label2 = new QLabel(tr("Thickness:"),Box2);
     Property2 = new QLineEdit(Box2);
-    Property2->setValidator(Validator);
+    Property2->setValidator(ValInteger);
     Property2->setMaximumWidth(25);
     Property2->setMaxLength(2);
     Property2->setText("0");
 
-    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP")){
+    if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") ||
+       (Diag->Name=="Curve")){
       QHBox *Box3 = new QHBox(InputGroup);
       Box3->setSpacing(5);
 
@@ -196,12 +200,14 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
     gp->addMultiCellWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row,Row,0,0);
     xLabel = new QLineEdit(Tab2);
+    xLabel->setValidator(Validator);
     gp->addMultiCellWidget(xLabel, Row,Row,1,2);
     Row++;
 
     gp->addMultiCellWidget(
 		new QLabel(tr("left y-Axis Label:"), Tab2), Row,Row,0,0);
     ylLabel = new QLineEdit(Tab2);
+    ylLabel->setValidator(Validator);
     gp->addMultiCellWidget(ylLabel, Row,Row,1,2);
     Row++;
 
@@ -209,6 +215,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       gp->addMultiCellWidget(
 		new QLabel(tr("right y-Axis Label:"), Tab2), Row,Row,0,0);
       yrLabel = new QLineEdit(Tab2);
+      yrLabel->setValidator(Validator);
       gp->addMultiCellWidget(yrLabel, Row,Row,1,2);
       Row++;
     }
@@ -275,7 +282,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 	gp->addWidget(SliderRotX, Row,1);
 	connect(SliderRotX, SIGNAL(valueChanged(int)), SLOT(slotNewRotX(int)));
 	rotationX = new QLineEdit(Tab2);
-	rotationX->setValidator(Validator);
+	rotationX->setValidator(ValInteger);
 	rotationX->setMaxLength(3);
 	rotationX->setMaximumWidth(40);
 	gp->addWidget(rotationX, Row,2);
@@ -289,7 +296,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 	gp->addWidget(SliderRotY, Row,1);
 	connect(SliderRotY, SIGNAL(valueChanged(int)), SLOT(slotNewRotY(int)));
 	rotationY = new QLineEdit(Tab2);
-	rotationY->setValidator(Validator);
+	rotationY->setValidator(ValInteger);
 	rotationY->setMaxLength(3);
 	rotationY->setMaximumWidth(40);
 	gp->addWidget(rotationY, Row,2);
@@ -303,7 +310,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 	gp->addWidget(SliderRotZ, Row,1);
 	connect(SliderRotZ, SIGNAL(valueChanged(int)), SLOT(slotNewRotZ(int)));
 	rotationZ = new QLineEdit(Tab2);
-	rotationZ->setValidator(Validator);
+	rotationZ->setValidator(ValInteger);
 	rotationZ->setMaxLength(3);
 	rotationZ->setMaximumWidth(40);
 	gp->addWidget(rotationZ, Row,2);
@@ -493,8 +500,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 DiagramDialog::~DiagramDialog()
 {
   delete all;   // delete all widgets from heap
-  delete Validator;
+  delete ValInteger;
   delete ValDouble;
+  delete Validator;
 }
 
 // --------------------------------------------------------------------------

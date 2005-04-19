@@ -33,9 +33,12 @@ public:
   Diagram* newOne();
   int  calcDiagram();
   void calcLimits();
-  bool calcAxis(Axis*, int, int, int, int, bool);
+  int  calcAxis(Axis*, int, int, int, int, bool);
   void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
+
+  void createAxisLabels() {};   // labels created during calcDiagram
+  void clip(int* &);
 
 private:
   void calcCoefficients();

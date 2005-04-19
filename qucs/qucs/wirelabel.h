@@ -36,7 +36,7 @@ class Node;
 class WireLabel : public Element {
 public:
   WireLabel(const QString& _Name=0, int _cx=0, int _cy=0,
-            int _x1=0, int _y1=0, ElementType _Type=isNodeLabel);
+            int _x1=0, int _y1=0, int _Type=isNodeLabel);
   ~WireLabel();
 
   void paintScheme(QPainter *p);

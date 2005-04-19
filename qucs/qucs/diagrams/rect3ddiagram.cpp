@@ -34,7 +34,11 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   rotZ = 225;
 
   Name = "Rect3D";
-  calcDiagram();
+  // symbolic diagram painting
+  Lines.append(new Line(0, 0, cx,  0, QPen(QPen::black,0)));
+  Lines.append(new Line(0, 0,  0, cy, QPen(QPen::black,0)));
+  Lines.append(new Line(0, 0, cx/2, cy/2, QPen(QPen::black,0)));
+//  calcDiagram();
 }
 
 Rect3DDiagram::~Rect3DDiagram()
@@ -133,7 +137,7 @@ void Rect3DDiagram::calcLimits()
 }
 
 // --------------------------------------------------------------
-bool Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
+int Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
                                          int y, int yLen, bool Right)
 {
 //  int z;
@@ -222,9 +226,9 @@ else {  // not logarithmical
     r = metrics.size(0, tmp);  // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
     if(Right)
-      Texts.append(new Text(x+3+gx, y+6+gy, tmp)); // place text right
+      Texts.append(new Text(x+3+gx, y-6+gy, tmp)); // place text right
     else
-      Texts.append(new Text(x-r.width()-2-gx, y+6-gy, tmp)); // place left
+      Texts.append(new Text(x-r.width()-2-gx, y-6-gy, tmp)); // place left
     GridNum += GridStep;
 
     // short grid marks
@@ -233,10 +237,8 @@ else {  // not logarithmical
     yD += ystepD;
   }
 } // of "if(ylog) ... else ..."
-//  if(x0 == 0)  x1 = maxWidth+14;
-//  else
-  x3 = x2+maxWidth+15;
-  return true;
+
+  return maxWidth+5;
 }
 
 // --------------------------------------------------------------
@@ -382,25 +384,138 @@ else {  // not logarithmical
   Lines.append(new Line(coord[0], coord[1], coord[10], coord[11], QPen(QPen::lightGray,0)));
   Lines.append(new Line(coord[8], coord[9], coord[10], coord[11], QPen(QPen::lightGray,0)));
 
-  // -----------------------------------------
-  // write axis numbering
-//qDebug("x:");
-  if(calcAxis(&xAxis, coord[4], coord[2]-coord[4],
-                      coord[5], coord[3]-coord[5], true)) valid |= 1;
-//qDebug("y:");
-  if(calcAxis(&yAxis, coord[0], coord[2]-coord[0],
-                      coord[1], coord[3]-coord[1], false)) valid |= 1;
-//qDebug("z:");
-  if(calcAxis(&zAxis, coord[4], coord[6]-coord[4],
-                      coord[5], coord[7]-coord[5], true)) valid |= 1;
+  // ------------------------------------------------------------
+  // Put axis labels into the text list.
+
+  QSize s;
+  Graph *pg;
+  int x, y;
+  int LineSpacing = metrics.lineSpacing();
+
+
+  x = coord[4]-coord[2];
+  y = coord[5]-coord[3];
+  z = (int)sqrt(double(x*x) + double(y*y));
+  double phi = atan2(double(y), double(x));
+  double cos_phi = cos(phi);
+  double sin_phi = sin(phi);
+  
+  y = calcAxis(&xAxis, coord[4], coord[2]-coord[4], // write axis numbering
+                       coord[5], coord[3]-coord[5], true);
+  if(y >= 0) valid |= 1;
+  x = coord[2] + int(double(y)*sin_phi);
+  y = coord[3] - int(double(y)*cos_phi);
+  if(xAxis.Label.isEmpty()) {
+    // write all x labels ----------------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      DataX *pD = pg->cPointsX.getFirst();
+      if(!pD) continue;
+      x += int(double(LineSpacing)*sin_phi);
+      y -= int(double(LineSpacing)*cos_phi);
+      s = metrics.size(0, pD->Var);
+      Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                            y+int(double((z-s.width())>>1)*sin_phi),
+                            pD->Var, pg->Color, 12.0, cos_phi, sin_phi));
+    }
+  }
+  else {
+    x += int(double(LineSpacing)*sin_phi);
+    y -= int(double(LineSpacing)*cos_phi);
+    s = metrics.size(0, xAxis.Label);
+    Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                          y+int(double((z-s.width())>>1)*sin_phi),
+                          xAxis.Label, Qt::black, 12.0, cos_phi, sin_phi));
+  }
+
+
+  x = coord[2]-coord[0];
+  y = coord[3]-coord[1];
+  z = (int)sqrt(double(x*x) + double(y*y));
+  phi = atan2(double(y), double(x));
+  cos_phi = cos(phi);
+  sin_phi = sin(phi);
+  
+  y = calcAxis(&yAxis, coord[0], coord[2]-coord[0], // write axis numbering
+                       coord[1], coord[3]-coord[1], false);
+  if(y >= 0) valid |= 2;
+  x = coord[0] + int(double(y)*sin_phi);
+  y = coord[1] - int(double(y)*cos_phi);
+  if(yAxis.Label.isEmpty()) {
+    // draw left y-label for all graphs ------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      if(!pg->cPointsY)  continue;
+      if(!valid) {
+        delete[] pg->cPointsY;
+        pg->cPointsY = 0;
+        continue;
+      }
+      x += int(double(LineSpacing)*sin_phi);
+      y -= int(double(LineSpacing)*cos_phi);
+      s = metrics.size(0, pg->Var);
+      Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                            y+int(double((z-s.width())>>1)*sin_phi),
+                            pg->Var, pg->Color, 12.0, cos_phi, sin_phi));
+    }
+  }
+  else {
+    s = metrics.size(0, yAxis.Label);
+    Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                          y+int(double((z-s.width())>>1)*sin_phi),
+                          yAxis.Label, Qt::black, 12.0, cos_phi, sin_phi));
+  }
+
+
+  x = coord[6]-coord[4];
+  y = coord[7]-coord[5];
+  z = (int)sqrt(double(x*x) + double(y*y));
+  phi = atan2(double(y), double(x));
+  cos_phi = cos(phi);
+  sin_phi = sin(phi);
+  
+  y = calcAxis(&zAxis, coord[4], coord[6]-coord[4], // write axis numbering
+                       coord[5], coord[7]-coord[5], true);
+  if(y >= 0) valid |= 4;
+  x = coord[4] + int(double(y)*sin_phi);
+  y = coord[5] - int(double(y)*cos_phi);
+  if(zAxis.Label.isEmpty()) {
+    // draw right y-label for all graphs ------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      x += int(double(LineSpacing)*sin_phi);
+      y -= int(double(LineSpacing)*cos_phi);
+      if(pg->cPointsY) {
+        s = metrics.size(0, pg->Var);
+        Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                              y+int(double((z-s.width())>>1)*sin_phi),
+                              pg->Var, pg->Color, 12.0, cos_phi, sin_phi));
+      }
+      else {     // if no data => <invalid>
+        s = metrics.size(0, pg->Var+INVALID_STR);
+        Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                              y+int(double((z-s.width())>>1)*sin_phi),
+                              pg->Var+INVALID_STR, pg->Color, 12.0,
+                              cos_phi, sin_phi));
+      }
+    }
+  }
+  else {
+    x += int(double(LineSpacing)*sin_phi);
+    y -= int(double(LineSpacing)*cos_phi);
+    s = metrics.size(0, zAxis.Label);
+    Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
+                          y+int(double((z-s.width())>>1)*sin_phi),
+                          zAxis.Label, Qt::black, 12.0,
+                          cos_phi, sin_phi));
+  }
+
+}  // of if(logarithmical) ... else ...
+  
+  return 3;
 }
 
-  // ====  y grid  =======================================================
-//  if(zAxis.numGraphs > 0) if(calcYAxis(&zAxis, x2)) valid |= 1;
-//  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0))  valid |= 2;
-
-//  return valid;
-  return 0;
+// ------------------------------------------------------------
+void Rect3DDiagram::clip(int* &p)
+{
+  rectClip(p);
 }
 
 // ------------------------------------------------------------
