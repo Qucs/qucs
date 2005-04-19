@@ -26,9 +26,6 @@ class QucsDoc;
 class QucsView;
 
 
-/**
-  *@author Michael Margraf
-  */
 
 typedef bool (QucsDoc::*pToggleFunc) (); // pointer to toggle action
 typedef void (QucsView::*pMouseFunc) (QMouseEvent*);
@@ -41,10 +38,14 @@ public:
   ~QucsActions();
 
   void init(QucsApp *p_);
+  void editFile(const QString&);
 
-  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus;
-  QAction *editRotate, *editMirror, *editMirrorY, *editPaste, *select;
-  QAction *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText;
+  QAction *insWire, *insLabel, *insGround, *insPort, *insEquation, *magPlus,
+          *editRotate, *editMirror, *editMirrorY, *editPaste, *select,
+          *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
+          *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
+          *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
+          *distrHor, *distrVert, *selectAll;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -63,9 +64,26 @@ public slots:
   void slotOnGrid(bool);      // set selected elements on grid
   void slotMoveText(bool);    // move property text of components
   void slotZoomIn(bool);
+  void slotEditUndo();    // makes the last operation undone
+  void slotEditRedo();    // makes the last undo undone
+  void slotAlignTop();    // align selected elements with respect to top
+  void slotAlignBottom(); // align selected elements with respect to bottom
+  void slotAlignLeft();   // align selected elements with respect to left
+  void slotAlignRight();  // align selected elements with respect to right
+  void slotDistribHoriz();// distribute horizontally selected elements
+  void slotDistribVert(); // distribute vertically selected elements
+  void slotSelectAll();
+  void slotShowLastMsg();
+  void slotShowLastNetlist();
+  void slotCallEditor();
+  void slotCallFilter();
+  void slotCallLine();
+  void slotHelpIndex();       // shows a HTML docu: Help Index
+  void slotGettingStarted();  // shows a HTML docu: Getting started
 
 private:
-  bool performToggleAction(bool, QAction*, pToggleFunc,	pMouseFunc, pMouseFunc);
+  void showHTML(const QString&);
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc);
 
   // copies of variables in QucsApps
   QucsApp  *App;

@@ -67,6 +67,9 @@ Coplanar::Coplanar()
   Props.append(new Property("Backside", "Air", false,
 		QObject::tr("material at the backside of the substrate")+
 		" [Metal, Air]"));
+  Props.append(new Property("Approx", "yes", false,
+		QObject::tr("use approximation instead of precise equation")+
+		" [yes, no]"));
 }
 
 Coplanar::~Coplanar()

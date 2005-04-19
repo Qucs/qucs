@@ -2598,7 +2598,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation> &lt;ungültig&gt;</translation>
+        <translation type="obsolete"> &lt;ungültig&gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
@@ -2710,6 +2710,14 @@ Verwendung:  qucsedit [-r] Datei
         <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2720,6 +2728,34 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>Ready.</source>
         <translation type="obsolete">Fertig.</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Information</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">Der Texteditor kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished">Das Programm für die Filtersynthese kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished">Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Das Programm qucshelp kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -4406,11 +4442,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Das Programm qucshelp kann nicht gestartet werden!</translation>
+        <translation type="obsolete">Das Programm qucshelp kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Der Texteditor kann nicht gestartet werden!</translation>
+        <translation type="obsolete">Der Texteditor kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -4418,7 +4454,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
+        <translation type="obsolete">Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
     </message>
     <message>
         <source>Schematic</source>
@@ -4508,11 +4544,11 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Eigenschaften bearbeiten</translation>
+        <translation type="obsolete">Eigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Das Programm für die Filtersynthese kann nicht gestartet werden!</translation>
+        <translation type="obsolete">Das Programm für die Filtersynthese kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
@@ -4520,10 +4556,10 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
+        <translation type="obsolete">Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
     </message>
     <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6466,6 +6502,10 @@ Startet das Programm für die Leitungsberechnung</translation>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>Massepotential kann nicht bezeichnet werden!</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Eigenschaften bearbeiten</translation>
     </message>
 </context>
 <context>

@@ -2,7 +2,7 @@
                                 diagram.cpp
                              -------------------
     begin                : Thu Oct 2 2003
-    copyright            : (C) 2003, 2004 by Michael Margraf
+    copyright            : (C) 2003, 2004, 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -40,7 +40,6 @@
 # define finite(x) _finite(x)
 #endif
 
-#define INVALID_STR QObject::tr(" <invalid>")
 
 using namespace std;
 
@@ -91,107 +90,25 @@ void Diagram::paint(ViewPainter *p)
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
 
-  QSize s;
   Graph *pg;
-  int   x, y;
   // draw all graphs
   for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
     pg->paint(p, cx, cy);
 
-  p->map(cx+(x2>>1), cy+y1, &x, &y);
-  if(xAxis.Label.isEmpty()) {
-    // write all x labels ----------------------------------------
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-	y += p->LineSpacing;
-	DataX *pD = pg->cPointsX.getFirst();
-	if(!pD) continue;
-	p->Painter->setPen(pg->Color);
-	if(Name[0] != 'C') {   // location curve ?
-	  s = p->Painter->fontMetrics().size(0, pD->Var);
-	  p->Painter->drawText(x-(s.width()>>1), y, pD->Var);
-	}
-	else {
-	  s = p->Painter->fontMetrics().size(0, "real("+pg->Var+")");
-	  p->Painter->drawText(x-(s.width()>>1), y, "real("+pg->Var+")");
-	}
-    }
-  }
-  else {
-    // write x label text -----------------------------------------
-    p->Painter->setPen(Qt::black);
-    s = p->Painter->fontMetrics().size(0, xAxis.Label);
-    p->Painter->drawText(x-(s.width()>>1), y+p->LineSpacing, xAxis.Label);
-  }
 
+  // write whole text (axis label inclusively)
   QWMatrix wm = p->Painter->worldMatrix();
-  p->Painter->setWorldMatrix(QWMatrix(0.0,-1.0,1.0,0.0, 0, 0));
-  p->map(cx-x1, cy-(y2>>1), &x, &y);
-  if(yAxis.Label.isEmpty()) {
-    // draw left y-label for all graphs ------------------------------
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      if(pg->yAxisNo != 0)  continue;
-      p->Painter->setPen(pg->Color);
-      if(pg->Points) {
-	if(Name[0] != 'C') {   // location curve ?
-	  s = p->Painter->fontMetrics().size(0, pg->Var);
-	  p->Painter->drawText(-y-(s.width()>>1), x, pg->Var);
-	}
-	else {
-	  s = p->Painter->fontMetrics().size(0, "imag("+pg->Var+")");
-	  p->Painter->drawText(-y-(s.width()>>1), x, "imag("+pg->Var+")");
-	}
-      }
-      else {     // if no data => <invalid>
-	s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
-	p->Painter->drawText(-y-(s.width()>>1), x, pg->Var+INVALID_STR);
-      }
-      x -= p->LineSpacing;
-    }
-  }
-  else {
-    p->Painter->setPen(Qt::black);
-    s = p->Painter->fontMetrics().size(0, yAxis.Label);
-    p->Painter->drawText(-y-(s.width()>>1), x, yAxis.Label);
-  }
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
+    p->Painter->setWorldMatrix(
+        QWMatrix(pt->mCos, -pt->mSin, pt->mSin, pt->mCos,
+                 p->DX + float(cx+pt->x) * p->Scale,
+                 p->DY + float(cy-pt->y) * p->Scale));
 
-  p->Painter->setWorldMatrix(QWMatrix(0.0,1.0,-1.0,0.0, 0, 0));
-  p->map(cx+x3, cy-(y2>>1), &x, &y);
-  if(zAxis.Label.isEmpty()) {
-    // draw right y-label for all graphs ------------------------------
-    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      if(pg->yAxisNo != 1)  continue;
-      p->Painter->setPen(pg->Color);
-      if(pg->Points) {
-	if(Name[0] != 'C') {   // location curve ?
-	  s = p->Painter->fontMetrics().size(0, pg->Var);
-	  p->Painter->drawText(y-(s.width()>>1), -x, pg->Var);
-	}
-	else {
-	  s = p->Painter->fontMetrics().size(0, "imag("+pg->Var+")");
-	  p->Painter->drawText(y-(s.width()>>1), -x, "imag("+pg->Var+")");
-	}
-      }
-      else {     // if no data => <invalid>
-	s = p->Painter->fontMetrics().size(0, pg->Var+INVALID_STR);
-	p->Painter->drawText(y-(s.width()>>1), -x, pg->Var+INVALID_STR);
-      }
-      x += p->LineSpacing;
-    }
-  }
-  else {
-    p->Painter->setPen(Qt::black);
-    s = p->Painter->fontMetrics().size(0, zAxis.Label);
-    p->Painter->drawText(y-(s.width()>>1), -x, zAxis.Label);
+    p->Painter->setPen(pt->Color);
+    p->Painter->drawText(0, 0, pt->s);
   }
   p->Painter->setWorldMatrix(wm);
   p->Painter->setWorldXForm(false);
-
-
-  // write whole text
-  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
-    p->Painter->setPen(pt->Color);
-      p->drawText(pt->s, cx+pt->x, cy-pt->y);
-  }
 
   // draw markers last, so they are at the top of painting layers
   for(pg = Graphs.first(); pg != 0; pg = Graphs.next())
@@ -211,15 +128,114 @@ void Diagram::paint(ViewPainter *p)
 }
 
 // ------------------------------------------------------------
-void Diagram::paintScheme(QPainter *p)
+// Put axis labels into the text list.
+void Diagram::createAxisLabels()
 {
-  p->drawRect(cx, cy-y2, x2, y2);
+  QSize s;
+  Graph *pg;
+  int   x, y;
+  QFont f = QucsSettings.font;
+  f.setPointSizeFloat(10.0);
+  QFontMetrics  metrics(f);
+  int LineSpacing = metrics.lineSpacing();
+
+
+  x = (x2>>1);
+  y = -y1;
+  if(xAxis.Label.isEmpty()) {
+    // write all x labels ----------------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+	DataX *pD = pg->cPointsX.getFirst();
+	if(!pD) continue;
+	y -= LineSpacing;
+	if(Name[0] != 'C') {   // location curve ?
+          s = metrics.size(0, pD->Var);
+          Texts.append(new Text(x-(s.width()>>1), y, pD->Var, pg->Color, 12.0));
+	}
+	else {
+          s = metrics.size(0, "real("+pg->Var+")");
+          Texts.append(new Text(x-(s.width()>>1), y, "real("+pg->Var+")",
+                                pg->Color, 12.0));
+	}
+    }
+  }
+  else {
+    s = metrics.size(0, xAxis.Label);
+    Texts.append(new Text(x-(s.width()>>1), y-LineSpacing, xAxis.Label,
+                          Qt::black, 12.0));
+  }
+
+
+  x = -x1;
+  y = y2>>1;
+  if(yAxis.Label.isEmpty()) {
+    // draw left y-label for all graphs ------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      if(pg->yAxisNo != 0)  continue;
+      if(pg->cPointsY) {
+	if(Name[0] != 'C') {   // location curve ?
+          s = metrics.size(0, pg->Var);
+          Texts.append(new Text(x, y-(s.width()>>1), pg->Var,
+                                pg->Color, 12.0, 0.0, 1.0));
+	}
+	else {
+          s = metrics.size(0, "imag("+pg->Var+")");
+          Texts.append(new Text(x, y-(s.width()>>1), "imag("+pg->Var+")",
+                                pg->Color, 12.0, 0.0, 1.0));
+	}
+      }
+      else {     // if no data => <invalid>
+        s = metrics.size(0, pg->Var+INVALID_STR);
+        Texts.append(new Text(x, y-(s.width()>>1), pg->Var+INVALID_STR,
+                              pg->Color, 12.0, 0.0, 1.0));
+      }
+      x -= LineSpacing;
+    }
+  }
+  else {
+    s = metrics.size(0, yAxis.Label);
+    Texts.append(new Text(x, y-(s.width()>>1), yAxis.Label,
+                          Qt::black, 12.0, 0.0, 1.0));
+  }
+
+
+  x = x3;
+  y = y2>>1;
+  if(zAxis.Label.isEmpty()) {
+    // draw right y-label for all graphs ------------------------------
+    for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+      if(pg->yAxisNo != 1)  continue;
+      if(pg->cPointsY) {
+	if(Name[0] != 'C') {   // location curve ?
+          s = metrics.size(0, pg->Var);
+          Texts.append(new Text(x, y+(s.width()>>1), pg->Var,
+                                pg->Color, 12.0, 0.0, -1.0));
+	}
+	else {
+          s = metrics.size(0, "imag("+pg->Var+")");
+          Texts.append(new Text(x, y+(s.width()>>1), "imag("+pg->Var+")",
+                                pg->Color, 12.0, 0.0, -1.0));
+	}
+      }
+      else {     // if no data => <invalid>
+        s = metrics.size(0, pg->Var+INVALID_STR);
+        Texts.append(new Text(x, y+(s.width()>>1), pg->Var+INVALID_STR,
+                              pg->Color, 12.0, 0.0, -1.0));
+      }
+      x += LineSpacing;
+    }
+  }
+  else {
+    s = metrics.size(0, zAxis.Label);
+    Texts.append(new Text(x, y+(s.width()>>1), zAxis.Label,
+                          Qt::black, 12.0, 0.0, -1.0));
+  }
 }
 
 // ------------------------------------------------------------
-int Diagram::calcDiagram()
+void Diagram::paintScheme(QPainter *p)
 {
-  return 0;
+  p->drawRect(cx, cy-y2, x2, y2);
 }
 
 // ------------------------------------------------------------
@@ -234,11 +250,9 @@ int Diagram::regionCode(int x, int y)
 }
 
 // ------------------------------------------------------------
+// Is virtual. This one is for round diagrams only.
 bool Diagram::insideDiagram(int x, int y)
 {
-  if((Name[0] == 'R') || (Name[0] == 'C'))
-    return (regionCode(x, y) == 0);
-
   int R = (x2 >> 1) + 1;  // +1 seems better (graph sometimes little outside)
   x -= R;
   y -= R;
@@ -247,13 +261,8 @@ bool Diagram::insideDiagram(int x, int y)
 
 // ------------------------------------------------------------
 // Cohen-Sutherland clipping algorithm
-void Diagram::clip(int* &p)
+void Diagram::rectClip(int* &p)
 {
-  if(Name[0] != 'R')  if(Name[0] != 'C') { // Cartesian or location curve ?
-    roundClip(p);
-    return;
-  }
-
   int x=0, y=0, dx, dy, code, z=0;
   int x_1 = *(p-4), y_1 = *(p-3);
   int x_2 = *(p-2), y_2 = *(p-1);
@@ -326,7 +335,7 @@ void Diagram::clip(int* &p)
 
 // ------------------------------------------------------------
 // Clipping for round diagrams (smith, polar, ...)
-void Diagram::roundClip(int* &p)
+void Diagram::clip(int* &p)
 {
   int R = x2 >> 1;
   int x_1 = *(p-4) - R, y_1 = *(p-3) - R;
@@ -406,12 +415,10 @@ void Diagram::roundClip(int* &p)
   } \
 
 // ------------------------------------------------------------
-void Diagram::calcData(Graph *g, int valid)
+void Diagram::calcData(Graph *g)
 {
   if(g->Points != 0) { free(g->Points);  g->Points = 0; }
   if(Name[0] == 'T')  return;   // no graph within tabulars
-  if((valid | g->yAxisNo) == 0)  return;
-
 
   if(g->cPointsX.count() < 1) return;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
@@ -424,6 +431,7 @@ void Diagram::calcData(Graph *g, int valid)
   double *px;
   double *py = 0;
   double *pz = g->cPointsY;
+  if(!pz)  return;
 
   if(g->countY > 1)  if(Name == "Rect3D")  py = g->cPointsX.at(1)->Points;
 
@@ -448,8 +456,7 @@ void Diagram::calcData(Graph *g, int valid)
 	  if(Counter >= 2)   // clipping only if an axis is manual
 	    clip(p);
 	}
-	if(*(p-3) == -2)
-	  p -= 3;  // no single point after "no stroke"
+	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
 	*(p++) = -10;
 //qDebug("s: %d/%d, %d/%d", *(p-4), *(p-3), *(p-2), *(p-1));
 
@@ -457,6 +464,44 @@ void Diagram::calcData(Graph *g, int valid)
 	py++;   // because of Rect3D
 //	}
       }
+/*qDebug("\n****** p=%p", p);
+for(int zz=60; zz>0; zz-=2)
+  qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
+
+      if(Name == "Rect3D") {
+	px = g->cPointsX.getFirst()->Points;
+	pz = g->cPointsY;
+	dx = g->cPointsX.first()->count;
+	dy = g->cPointsX.next()->count;
+	for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+	  py = g->cPointsX.at(1)->Points;
+	  calcCoordinate(px, pz, py, p, p+1, 0);
+	  p += 2;
+	  px--;  // back to the current x coordinate
+	  py++;  // next y coordinate
+	  pz += 2*(dx-1);  // next z coordinate
+	  for(z=dy-1; z>0; z--) {  // every point
+	    FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	    calcCoordinate(px, pz, py, p, p+1, pa);
+	    p += 2;
+	    if(Counter >= 2)   // clipping only if an axis is manual
+	      rectClip(p);
+	    px--;  // back to the current x coordinate
+	    py++;  // next y coordinate
+	    pz += 2*(dx-1);  // next z coordinate
+	  }
+	  if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+	  *(p++) = -10;
+
+	  px++;   // next x coordinate
+	  pz -= 2*dx*dy - 2;  // next z coordinate
+	}
+/*qDebug("\n------ p=%p", p);
+for(int zz=120; zz>0; zz-=2)
+  qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
+      }
+
+      
       *p = -100;
       return;
 
@@ -735,11 +780,15 @@ void Diagram::updateGraphData()
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-    calcData(pg, valid);   // calculate graph coordinates
+    if((valid & (pg->yAxisNo+1)) != 0)
+      calcData(pg);   // calculate screen coordinates
+    else if(pg->cPointsY) { delete[] pg->cPointsY;  pg->cPointsY = 0; }
 
     for(Marker *pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next())
       pm->createText();
   }
+
+  createAxisLabels();  // virtual function
 }
 
 // --------------------------------------------------------------------------
@@ -747,7 +796,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
 {
   g->countY = 0;
   g->cPointsX.clear();
-  if(g->cPointsY != 0) { delete[] g->cPointsY;  g->cPointsY = 0; }
+  if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Var.isEmpty()) return false;
 
   QFile file;
@@ -826,6 +875,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
 //      QMessageBox::critical(0, QObject::tr("Error"),
 //                   QObject::tr("Cannot get size of independent data \"")+
 //		   Variable+"\"");
+      // do not clear cPointX, but show it as invalid
+//      g->cPointsX.clear();
       return false;
     }
 
@@ -852,7 +903,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
       counting = loadIndepVarData(pD->Var, FileString, pa, g);
       if(counting <= 0) {     // failed to load independent variable ?
-	g->cPointsX.clear();
+        // do not clear cPointX, but show it as invalid
+//	g->cPointsX.clear();
         return false;  // error message was already created
       }
       g->countY *= counting;
@@ -892,7 +944,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     if((!ok) || (!ok2)) {
 //      QMessageBox::critical(0, QObject::tr("Error"),
 //		QObject::tr("Too few dependent data \"") + Variable+"\"");
-      g->cPointsX.clear();
+      // do not clear cPointX, but show it as invalid
+//      g->cPointsX.clear();
       delete[] g->cPointsY;  g->cPointsY = 0;
       return false;
     }
@@ -1331,7 +1384,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
 
   for(m=1; m<GridX; m++) {
     im = m*(Axis->up+1.0)/GridX - Axis->up;
-    x  = int(im/Axis->up*double(dx2) + 0.5);        // center
+    x  = int(im/Axis->up*double(dx2) + 0.5);  // center
     y  = int((1.0-im)/Axis->up*double(dx2));  // diameter
 
     if(Zplane)  x += dx2;
@@ -1374,11 +1427,11 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     if(!Below)  y = 0;
     Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
 
-    if(!Below)
-      Texts.append(new Text(0, y2-4, StringNum(Axis->up)));
+    if(Below)
+      Texts.append(new Text(0, 4, StringNum(Axis->up)));
     else
       Texts.append(
-	new Text(0, QucsSettings.font.pointSize()+4, StringNum(Axis->up)));
+        new Text(0, y2-4-QucsSettings.font.pointSize(), StringNum(Axis->up)));
   }
 
 }
@@ -1440,7 +1493,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   int phi, tPos;
   int tHeight = QucsSettings.font.pointSize() + 5;
   if(!Below)  tPos = (y2>>1) + tHeight - 3;
-  else  tPos = (y2>>1) - 2;
+  else  tPos = (y2>>1) - tHeight + 3;
 
   int Prec;
   char form;
@@ -1721,9 +1774,9 @@ if(Axis->log) {
       r = metrics.size(0, tmp);  // width of text
       if(maxWidth < r.width()) maxWidth = r.width();
       if(x0 > 0)
-        Texts.append(new Text(x0+7, z+6, tmp)); // text aligned left
+        Texts.append(new Text(x0+7, z-6, tmp)); // text aligned left
       else
-        Texts.append(new Text(-r.width()-7, z+6, tmp)); // text aligned right
+        Texts.append(new Text(-r.width()-7, z-6, tmp)); // text aligned right
 
       // y marks
       Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0)));
@@ -1757,9 +1810,9 @@ else {  // not logarithmical
     r = metrics.size(0, tmp);  // width of text
     if(maxWidth < r.width()) maxWidth = r.width();
     if(x0 > 0)
-      Texts.append(new Text(x0+8, z+6, tmp));  // text aligned left
+      Texts.append(new Text(x0+8, z-6, tmp));  // text aligned left
     else
-      Texts.append(new Text(-r.width()-7, z+6, tmp));  // text aligned right
+      Texts.append(new Text(-r.width()-7, z-6, tmp));  // text aligned right
     GridNum += GridStep;
 
     if(Axis->GridOn)  if(z < y2)  if(z > 0)

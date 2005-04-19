@@ -72,8 +72,6 @@ public:
 
     bool closeAllFiles();
     static int testFile(const QString&);
-    void editFile(const QString&);
-    void showHTML(const QString&);
 
 
 protected:
@@ -93,18 +91,7 @@ public slots:
     void slotFileQuit();    // exits the application
     void slotEditCut();     // put marked object into clipboard and delete it
     void slotEditCopy();    // put the marked object into the clipboard
-    void slotEditUndo();    // makes the last operation undone
-    void slotEditRedo();    // makes the last undo undone
     void slotApplSettings();// open dialog to change application settings
-    void slotAlignTop();    // align selected elements with respect to top
-    void slotAlignBottom(); // align selected elements with respect to bottom
-    void slotAlignLeft();   // align selected elements with respect to left
-    void slotAlignRight();  // align selected elements with respect to right
-    void slotDistribHoriz();// distribute horizontally selected elements
-    void slotDistribVert(); // distribute vertically selected elements
-
-    void slotHelpIndex();       // shows a HTML docu: Help Index
-    void slotGettingStarted();  // shows a HTML docu: Getting started
 
     void slotIntoHierarchy();
     void slotPopHierarchy();
@@ -113,9 +100,6 @@ public slots:
     void slotShowOne();
     void slotZoomOut(); // Zoom out by 2
 
-    void slotCallEditor();
-    void slotCallFilter();
-    void slotCallLine();
 
     // for menu that appears by right click in content ListView
     void slotShowContentMenu(QListViewItem*, const QPoint&, int);
@@ -140,36 +124,29 @@ public slots:
     void slotMenuDelProject();
     void slotChangeView(int);
     void slotSimulate();
-    void slotShowLastMsg();
-    void slotShowLastNetlist();
     void slotAfterSimulation(int, SimMessage*);
     void slotChangePage(QString);
     void slotToPage();
-    void slotSelectAll();
     void slotNextTab();
 
 signals:
     void signalKillEmAll();
 
 public:
-    QucsView  *view; // the working area with schematics, data displays etc.
-    QTabBar   *WorkView;
+  QucsView  *view; // the working area with schematics, data displays etc.
+  QTabBar   *WorkView;
 
-    // menu appearing by right mouse button click on content listview
-    QPopupMenu *ContentMenu;
+  // menu appearing by right mouse button click on content listview
+  QPopupMenu *ContentMenu;
 
-    QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs;
-    QAction *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit;
-    QAction *projNew, *projOpen, *projDel, *projClose, *applSettings;
-    QAction *editCut, *editCopy, *undo, *redo, *magAll, *magOne;
-    QAction *magMinus, *distrHor, *distrVert, *filePrintSel;
-    QAction *intoH, *popH, *alignTop, *alignBottom, *alignLeft, *alignRight;
-    QAction *simulate, *dpl_sch, *selectAll, *showMsg, *showNet;
-    QAction *helpIndex, *helpGetStart, *symEdit, *callEditor, *callFilter;
-    QAction *callLine;
+  QAction *fileNew, *fileNewDpl, *fileOpen, *fileSave, *fileSaveAs,
+          *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit,
+          *projNew, *projOpen, *projDel, *projClose, *applSettings,
+          *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintSel,
+          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo;
 
-    QAction *activeAction;    // pointer to the action selected by the user
-    QucsActions  Acts;    // contains most of the toggle actions
+  QAction *activeAction;    // pointer to the action selected by the user
+  QucsActions  Acts;    // contains most of the toggle actions
 
 private:
     QPrinter  *Printer; // printer is global (to remember the user settings)

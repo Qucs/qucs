@@ -110,6 +110,7 @@ int RectDiagram::calcDiagram()
   QSize  r;
   double GridStep, corr, zD, zDstep, GridNum;
   QFontMetrics  metrics(QucsSettings.font);
+  y1 = QucsSettings.font.pointSize() + 6;
 
   x1 = 10;      // position of label text
   x3 = x2 + 7;
@@ -152,9 +153,9 @@ if(xAxis.log) {
       r = metrics.size(0, tmp);  // width of text
 
       if(xAxis.up < 0.0)
-        Texts.append(new Text(z-(r.width()>>1), -6, '-'+tmp));
+        Texts.append(new Text(z-(r.width()>>1), -y1, '-'+tmp));
       else
-        Texts.append(new Text(z-(r.width()>>1), -6, tmp));
+        Texts.append(new Text(z-(r.width()>>1), -y1, tmp));
 
       Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));  // x marks
     }
@@ -184,7 +185,7 @@ else {  // not logarithmical
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     tmp = StringNum(GridNum, form, Prec);
     r = metrics.size(0, tmp);  // width of text
-    Texts.append(new Text(z-(r.width()>>1), -6, tmp));
+    Texts.append(new Text(z-(r.width()>>1), -y1, tmp));
     GridNum += GridStep;
 
     if(xAxis.GridOn)  if(z < x2)  if(z > 0)
@@ -194,29 +195,32 @@ else {  // not logarithmical
     z = int(zD);
   }
 } // of "if(xlog) ... else ..."
-  y1 = QucsSettings.font.pointSize() + 6;
 
 
   // ====  y grid  =======================================================
-  if(zAxis.numGraphs > 0) if(calcYAxis(&zAxis, x2)) valid |= 1;
-  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0))  valid |= 2;
-  if(valid == 0)  goto Frame;
+  if(zAxis.numGraphs > 0) if(calcYAxis(&zAxis, x2)) valid |= 2;
+  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0))  valid |= 1;
 
 
+Frame:
   // outer frame
   Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::black,0)));
   Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0,   0, x2,  0, QPen(QPen::black,0)));
   Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::black,0)));
   return valid;
+}
 
-Frame:
-  // outer frame
-  Lines.append(new Line(0,  y2, x2, y2, QPen(QPen::red,0)));
-  Lines.append(new Line(x2, y2, x2,  0, QPen(QPen::red,0)));
-  Lines.append(new Line(0,   0, x2,  0, QPen(QPen::red,0)));
-  Lines.append(new Line(0,  y2,  0,  0, QPen(QPen::red,0)));
-  return 0;
+// ------------------------------------------------------------
+bool RectDiagram::insideDiagram(int x, int y)
+{
+  return (regionCode(x, y) == 0);
+}
+
+// ------------------------------------------------------------
+void RectDiagram::clip(int* &p)
+{
+  rectClip(p);
 }
 
 // ------------------------------------------------------------
