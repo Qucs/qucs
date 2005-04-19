@@ -26,9 +26,7 @@
 #include <qfile.h>
 
 
-/**
-  *@author Michael Margraf
-  */
+#define INVALID_STR QObject::tr(" <invalid>")
 
 struct Axis {
   double  min, max; // least and greatest values of all graph data
@@ -49,13 +47,12 @@ public:
   virtual ~Diagram();
 
   virtual Diagram* newOne();
-  virtual int  calcDiagram();
+  virtual int  calcDiagram() { return 0; };
   virtual void calcCoordinate
                (double* &, double* &, double* &, int*, int*, Axis*) {};
   virtual void calcLimits() {};
   
   virtual void paint(ViewPainter*);
-  void    calcData(Graph*, int);
   void    setCenter(int, int, bool relative=false);
   void    getCenter(int&, int&);
   void    paintScheme(QPainter*);
@@ -71,7 +68,7 @@ public:
   bool loadVarData(const QString&, Graph*);
   int  loadIndepVarData(const QString&, const QString&, Axis*, Graph*);
 
-  bool insideDiagram(int, int);
+  virtual bool insideDiagram(int, int);
 
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
@@ -97,10 +94,14 @@ protected:
   bool calcAxisScale(Axis*, double&, double&, double&, double&, double);
   bool calcAxisLogScale(Axis*, int&, double&, double&, double&, int);
   bool calcYAxis(Axis*, int);
+  virtual void createAxisLabels();
 
   int  regionCode(int, int);
-  void clip(int* &);
-  void roundClip(int* &);
+  virtual void clip(int* &);
+  void rectClip(int* &);
+
+private:
+  void calcData(Graph*);
 };
 
 #endif

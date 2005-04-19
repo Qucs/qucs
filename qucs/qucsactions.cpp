@@ -23,6 +23,9 @@
 #include "components/subcirport.h"
 #include "components/equation.h"
 
+#include <qprocess.h>
+#include <qmessagebox.h>
+
 
 QucsActions::QucsActions()
 {
@@ -44,6 +47,8 @@ void QucsActions::init(QucsApp *p_)
 bool QucsActions::performToggleAction(bool on, QAction *Action,
 	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc MousePress)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -180,6 +185,8 @@ void QucsActions::slotSelect(bool on)
 // -----------------------------------------------------------------------
 void QucsActions::slotEditPaste(bool on)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -215,6 +222,8 @@ void QucsActions::slotEditPaste(bool on)
 // Is called when the mouse is clicked upon the equation toolbar button.
 void QucsActions::slotInsertEquation(bool on)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -247,6 +256,8 @@ void QucsActions::slotInsertEquation(bool on)
 // Is called when the mouse is clicked upon the ground toolbar button.
 void QucsActions::slotInsertGround(bool on)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -279,6 +290,8 @@ void QucsActions::slotInsertGround(bool on)
 // Is called when the mouse is clicked upon the port toolbar button.
 void QucsActions::slotInsertPort(bool on)
 {
+  view->editText->setHidden(true); // disable text edit of component property
+
   if(!on) {
     view->MouseMoveAction = &QucsView::MouseDoNothing;
     view->MousePressAction = &QucsView::MouseDoNothing;
@@ -305,4 +318,214 @@ void QucsActions::slotInsertPort(bool on)
   view->MousePressAction = &QucsView::MPressComponent;
   view->MouseReleaseAction = &QucsView::MouseDoNothing;
   view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+}
+
+// #######################################################################
+// Is called, when "Undo"-Button is pressed.
+void QucsActions::slotEditUndo()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+  
+  view->Docs.current()->undo();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Undo"-Button is pressed.
+void QucsActions::slotEditRedo()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+  
+  view->Docs.current()->redo();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align top" action is activated.
+void QucsActions::slotAlignTop()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  if(!view->Docs.current()->aligning(0))
+    QMessageBox::information(App, tr("Info"),
+		      tr("At least two elements must be selected !"));
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align bottom" action is activated.
+void QucsActions::slotAlignBottom()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  if(!view->Docs.current()->aligning(1))
+    QMessageBox::information(App, tr("Info"),
+		      tr("At least two elements must be selected !"));
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align left" action is activated.
+void QucsActions::slotAlignLeft()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  if(!view->Docs.current()->aligning(2))
+    QMessageBox::information(App, tr("Info"),
+		      tr("At least two elements must be selected !"));
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Align right" action is activated.
+void QucsActions::slotAlignRight()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  if(!view->Docs.current()->aligning(3))
+    QMessageBox::information(App, tr("Info"),
+		      tr("At least two elements must be selected !"));
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Distribute horizontally" action is activated.
+void QucsActions::slotDistribHoriz()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  view->Docs.current()->distribHoriz();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// #######################################################################
+// Is called, when "Distribute vertically" action is activated.
+void QucsActions::slotDistribVert()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  view->Docs.current()->distribVert();
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// ---------------------------------------------------------------------
+// Is called when the select all action is activated.
+void QucsActions::slotSelectAll()
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  view->Docs.current()->selectElements(INT_MIN, INT_MIN,
+				INT_MAX, INT_MAX, true);
+  view->viewport()->repaint();
+  view->drawn = false;
+}
+
+// ------------------------------------------------------------------------
+// Is called by slotShowLastMsg(), by slotShowLastNetlist() and from the
+// component edit dialog.
+void QucsActions::editFile(const QString& File)
+{
+  QString com = QucsSettings.Editor+" "+File;
+  QProcess *QucsEditor = new QProcess(QStringList::split(" ", com));
+  QucsEditor->setCommunication(0);
+  if(!QucsEditor->start()) {
+    QMessageBox::critical(App, tr("Error"), tr("Cannot start text editor!"));
+    delete QucsEditor;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(App, SIGNAL(signalKillEmAll()), QucsEditor, SLOT(kill()));
+}
+
+// ------------------------------------------------------------------------
+// Is called to show the output messages of the last simulation.
+void QucsActions::slotShowLastMsg()
+{
+  editFile(QucsHomeDir.filePath("log.txt"));
+}
+
+// ------------------------------------------------------------------------
+// Is called to show the netlist of the last simulation.
+void QucsActions::slotShowLastNetlist()
+{
+  editFile(QucsHomeDir.filePath("netlist.txt"));
+}
+
+// ------------------------------------------------------------------------
+// Is called to start the text editor.
+void QucsActions::slotCallEditor()
+{
+  editFile(QString(""));
+}
+
+// ------------------------------------------------------------------------
+// Is called to start the filter synthesis program.
+void QucsActions::slotCallFilter()
+{
+  QProcess *QucsFilter =
+    new QProcess(QString(QucsSettings.BinDir + "qucsfilter"));
+  if(!QucsFilter->start()) {
+    QMessageBox::critical(App, tr("Error"),
+                          tr("Cannot start filter synthesis program!"));
+    delete QucsFilter;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(App, SIGNAL(signalKillEmAll()), QucsFilter, SLOT(kill()));
+}
+
+// ------------------------------------------------------------------------
+// Is called to start the transmission line calculation program.
+void QucsActions::slotCallLine()
+{
+  QProcess *QucsLine =
+    new QProcess(QString(QucsSettings.BinDir + "qucstrans"));
+  if(!QucsLine->start()) {
+    QMessageBox::critical(App, tr("Error"),
+                          tr("Cannot start line calculation program!"));
+    delete QucsLine;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(App, SIGNAL(signalKillEmAll()), QucsLine, SLOT(kill()));
+}
+
+// ########################################################################
+void QucsActions::slotHelpIndex()
+{
+  showHTML("index.html");
+}
+
+// ########################################################################
+void QucsActions::slotGettingStarted()
+{
+  showHTML("start.html");
+}
+
+// ########################################################################
+void QucsActions::showHTML(const QString& Page)
+{
+  QStringList com;
+  com << QucsSettings.BinDir + "qucshelp" << Page;
+  QProcess *QucsHelp = new QProcess(com);
+  QucsHelp->setCommunication(0);
+  if(!QucsHelp->start()) {
+    QMessageBox::critical(App, tr("Error"), tr("Cannot start qucshelp!"));
+    delete QucsHelp;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(App, SIGNAL(signalKillEmAll()), QucsHelp, SLOT(kill()));
 }

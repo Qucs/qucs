@@ -62,9 +62,9 @@ DC_Sim::DC_Sim()
   Props.append(new Property("convHelper", "none", false,
 		QObject::tr("preferred convergence algorithm")+
 		" [none, gMinStepping, SteepestDescent, LineSearch, Attenuation, SourceStepping]"));
-
-
-
+  Props.append(new Property("Solver", "CroutLU", false,
+	QObject::tr("method for solving the circuit matrix")+
+	" [CroutLU, HouseholderQR, HouseholderLQ]"));
 }
 
 DC_Sim::~DC_Sim()

@@ -33,7 +33,7 @@ LabelDialog::LabelDialog(WireLabel *pl, QWidget *parent)
   pLabel = pl;
   gbox = new QGridLayout(this,4,3,5,5);
 
-  Expr1.setPattern("[0-9a-zA-Z]+");  // valid expression for LineEdit
+  Expr1.setPattern("[a-zA-Z][0-9a-zA-Z_]+"); // valid expression for LineEdit
   Validator1 = new QRegExpValidator(Expr1, this);
 
   QLabel *Label1 = new QLabel(tr("Enter the label:"),this);

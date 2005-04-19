@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsview.cpp  -  description
-                             -------------------
+                               qucsview.cpp
+                             ----------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "qucs.h"
 #include "main.h"
 #include "node.h"
 #include "qucsview.h"
@@ -73,6 +74,17 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   ComponentMenu = new QPopupMenu(this);
   focusMEvent   = new QMouseEvent(QEvent::MouseButtonPress, QPoint(0,0),
 				  Qt::NoButton, Qt::NoButton);
+
+  // .......................................................................
+  // valid expressions for component property editor
+  Expression.setPattern("[^\"=]+");
+  Validator = new QRegExpValidator(Expression, this);
+  editText  = new QLineEdit(viewport());
+  editText->setValidator(Validator);
+  editText->setFrame(false);
+  editText->setHidden(true);
+  connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
+//  addChild(editText);
 }
 
 
@@ -80,6 +92,7 @@ QucsView::~QucsView()
 {
   delete ComponentMenu;
   delete focusMEvent;
+  delete Validator;
 }
 
 // -----------------------------------------------------------
@@ -369,7 +382,6 @@ void QucsView::endElementMoving()
       case isMarker:
 	((Marker*)pe)->pGraph->Markers.append((Marker*)pe);
 	break;
-      default: ;
     }
   }
 
@@ -1001,22 +1013,40 @@ void QucsView::rightPressMenu(QMouseEvent *Event)
   MAy1 = int(double(Event->pos().y())/d->Scale) + d->ViewY1;
   focusElement = d->selectElement(MAx1, MAy1, false);
 
-  if(focusElement) {
-    switch(focusElement->Type) {
-      case isDiagramScroll:   // scroll in tabular ?
-      case isDiagramResize:   // resize diagram ?
-        focusElement->Type = isDiagram;
-        break;
-      case isPaintingResize:  // resize painting ?
-        focusElement->Type = isPainting;
-        break;
-      default: ;
-    }
+  if(focusElement)  // remove special function (4 least significant bits)
+    focusElement->Type &= isSpecialMask;
 
-    focusElement->isSelected = true;
+
+  // define menu
+  ComponentMenu->clear();
+  while(true) {
+    if(focusElement) {
+      focusElement->isSelected = true;
+      ComponentMenu->insertItem(
+               tr("Edit Properties"), this, SLOT(slotEditElement()));
+
+      if(focusElement->Type != isComponent) break;
+    }
+    QucsMain->Acts.moveText->addTo(ComponentMenu);
+    break;
+  }
+  QucsMain->Acts.onGrid->addTo(ComponentMenu);
+  QucsMain->editCopy->addTo(ComponentMenu);
+  QucsMain->Acts.editPaste->addTo(ComponentMenu);
+  QucsMain->Acts.editDelete->addTo(ComponentMenu);
+  while(true) {
+    if(focusElement) if(focusElement->Type == isDiagram) break;
+    ComponentMenu->insertSeparator();
+    if(focusElement) if(focusElement->Type == isComponent)
+      QucsMain->Acts.editActivate->addTo(ComponentMenu);
+    QucsMain->Acts.editRotate->addTo(ComponentMenu);
+    QucsMain->Acts.editMirror->addTo(ComponentMenu);
+    QucsMain->Acts.editMirrorY->addTo(ComponentMenu);
+    break;
   }
 
-  *focusMEvent = *Event;
+
+  *focusMEvent = *Event;  // remember event for "edit component" action
   ComponentMenu->popup(Event->globalPos());
   viewport()->repaint();
   drawn = false;
@@ -1125,74 +1155,82 @@ void QucsView::MPressLabel(QMouseEvent *Event)
 // -----------------------------------------------------------
 void QucsView::MPressSelect(QMouseEvent *Event)
 {
+  editText->setHidden(true); // disable text edit of component property
+  
+  if(Event->button() != Qt::LeftButton) {
+    rightPressMenu(Event);
+    return;
+  }
+
   bool Ctrl;
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
 
+  int No=0;
   QucsDoc *d = Docs.current();
   MAx1 = int(double(Event->pos().x())/d->Scale) + d->ViewX1;
   MAy1 = int(double(Event->pos().y())/d->Scale) + d->ViewY1;
-  focusElement = d->selectElement(MAx1, MAy1, Ctrl);
+  focusElement = d->selectElement(MAx1, MAy1, Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
+
   if(focusElement)
-   if(focusElement->Type == isPaintingResize) {  // resize painting ?
-    focusElement->Type = isPainting;
-    MouseReleaseAction = &QucsView::MReleaseResizePainting;
-    MouseMoveAction = &QucsView::MMoveResizePainting;
-    MousePressAction = &QucsView::MouseDoNothing;
-    MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    this->grabKeyboard();  // no keyboard inputs during move actions
-    return;
+  switch(focusElement->Type) {
+    case isPaintingResize:  // resize painting ?
+	focusElement->Type = isPainting;
+	MouseReleaseAction = &QucsView::MReleaseResizePainting;
+	MouseMoveAction = &QucsView::MMoveResizePainting;
+	MousePressAction = &QucsView::MouseDoNothing;
+	MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	this->grabKeyboard();  // no keyboard inputs during move actions
+	return;
+
+    case isDiagramResize:  // resize diagram ?
+	if(((Diagram*)focusElement)->Name != "Rect")
+	  if(((Diagram*)focusElement)->Name != "Tab")
+	    isMoveEqual = true;  // diagram must be square
+
+	focusElement->Type = isDiagram;
+	MAx1 = focusElement->cx;
+	MAx2 = focusElement->x2;
+	if(((Diagram*)focusElement)->State & 1) {
+	  MAx1 += MAx2;
+	  MAx2 *= -1;
+	}
+	MAy1 =  focusElement->cy;
+	MAy2 = -focusElement->y2;
+	if(((Diagram*)focusElement)->State & 2) {
+	  MAy1 += MAy2;
+	  MAy2 *= -1;
+	}
+
+//	Docs.current()->setOnGrid(MAx1, MAy1);
+	MouseReleaseAction = &QucsView::MReleaseResizeDiagram;
+	MouseMoveAction = &QucsView::MMoveSelect;
+	MousePressAction = &QucsView::MouseDoNothing;
+	MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	this->grabKeyboard(); // no keyboard inputs during move actions
+	return;
+
+    case isDiagramScroll:  // scroll in tabular ?
+	focusElement->Type = isDiagram;
+
+	if(((TabDiagram*)focusElement)->scroll(MAy1))
+	  d->setChanged(true, true, 'm'); // 'm' = only the first time
+	viewport()->repaint();
+	drawn = false;
+//	focusElement = 0;  // avoid double-click on diagram scrollbar
+	return;
+
+    case isComponentText:  // property text of component ?
+	focusElement->Type = isComponent;
+
+	MAx3 = No-1;   // is increased by 1 afterwards
+	slotApplyCompText();
+	return;
   }
-  else if(focusElement->Type == isDiagramResize) {  // resize diagram ?
-	 if(((Diagram*)focusElement)->Name != "Rect")
-	   if(((Diagram*)focusElement)->Name != "Tab")
-	     isMoveEqual = true;  // diagram must be square
-
-	 focusElement->Type = isDiagram;
-	 MAx1 = focusElement->cx;
-	 MAx2 = focusElement->x2;
-	 if(((Diagram*)focusElement)->State & 1) {
-	   MAx1 += MAx2;
-	   MAx2 *= -1;
-	 }
-	 MAy1 =  focusElement->cy;
-	 MAy2 = -focusElement->y2;
-	 if(((Diagram*)focusElement)->State & 2) {
-	   MAy1 += MAy2;
-	   MAy2 *= -1;
-	 }
-
-//	 Docs.current()->setOnGrid(MAx1, MAy1);
-	 MouseReleaseAction = &QucsView::MReleaseResizeDiagram;
-	 MouseMoveAction = &QucsView::MMoveSelect;
-	 MousePressAction = &QucsView::MouseDoNothing;
-	 MouseDoubleClickAction = &QucsView::MouseDoNothing;
-	 this->grabKeyboard(); // no keyboard inputs during move actions
-	 return;
-      }
-  else if(focusElement->Type == isDiagramScroll) {  // scroll in tabular ?
-	 focusElement->Type = isDiagram;
-
-	 if(((TabDiagram*)focusElement)->scroll(MAy1))
-	   d->setChanged(true, true, 'm'); // 'm' = only the first time
-	 viewport()->repaint();
-	 drawn = false;
-//	 focusElement = 0;  // avoid double-click on diagram scrollbar
-	 return;
-       }
 
 
-
-  if(Event->button() != Qt::LeftButton) {
-    if(focusElement)  focusElement->isSelected = true;
-    *focusMEvent = *Event;
-    ComponentMenu->popup(Event->globalPos());
-    viewport()->repaint();
-    drawn = false;
-    return;
-  }
 
   MousePressAction = &QucsView::MouseDoNothing;
   MouseDoubleClickAction = &QucsView::MouseDoNothing;
@@ -1333,11 +1371,12 @@ void QucsView::MPressRotate(QMouseEvent *Event)
 
   QucsDoc *d = Docs.current();
   Element *e = d->selectElement(
-	int(Event->pos().x()/Docs.current()->Scale)+Docs.current()->ViewX1,
-	int(Event->pos().y()/Docs.current()->Scale)+Docs.current()->ViewY1,
-	false);
+	int(Event->pos().x()/d->Scale)+d->ViewX1,
+	int(Event->pos().y()/d->Scale)+d->ViewY1, false);
   if(e == 0) return;
+  e->Type &= isSpecialMask;  // remove special functions
 
+  
   WireLabel *pl;
   int x1, y1, x2, y2;
 //  e->isSelected = false;
@@ -1596,6 +1635,7 @@ void QucsView::MPressOnGrid(QMouseEvent *Event)
 				 int(Event->pos().y()/d->Scale)+d->ViewY1,
 				 false);
   if(pe) {
+    pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
     pe->isSelected = true;
     Docs.current()->elementsOnGrid();
 
@@ -1859,7 +1899,6 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 	  ((Component*)pe)->entireBounds(x1,y1,x2,y2);
 	  enlargeView(x1, y1, x2, y2);
 	  break;
-	default: ;
       }
     }
 
@@ -2055,7 +2094,6 @@ void QucsView::editElement(QMouseEvent *Event)
          mdia = new MarkerDialog((Marker*)focusElement, this);
          if(mdia->exec() > 1) d->setChanged(true, true);
          break;
-    default:  ;
   }
 
   viewport()->repaint();
@@ -2266,4 +2304,71 @@ void QucsView::slotScrollRight()
   ScrollRight(-horizontalScrollBar()->lineStep());
   viewport()->repaint();   // because QScrollView thinks nothing has changed
   drawn = false;
+}
+
+// -----------------------------------------------------------
+// Is called if return is pressed in the component text QLineEdit.
+void QucsView::slotApplyCompText()
+{
+  MAx3++;  // number of current property
+  
+  QString s;
+  QucsDoc *d = Docs.current();
+  QFont f = QucsSettings.font;
+//  f.setPointSizeFloat(10.0);
+  QFontMetrics metrics(f);
+
+  Component *pc = (Component*)focusElement;
+  MAx1 = pc->cx + pc->tx;
+  MAy1 = pc->cy + pc->ty + MAx3*metrics.lineSpacing();
+
+  if(MAx3 > 0) {   // search for next property
+    int z=1;
+    Property *pp = pc->Props.first();
+    while((z < MAx3) && pp) {
+      if(pp->display)  z++;
+      pp = pc->Props.next();
+    }
+    if(pp) {
+      s = pp->Value;
+      MAx1 += metrics.width(pp->Name+"=");
+    }
+  
+    // apply last property to the component
+    if(!editText->isHidden()) {   // was return pressed ?
+      if(MAx3 == 1) {   // was component name applied ?
+        if(pc->Name != editText->text()) {
+          pc->Name = editText->text();
+          d->setChanged(true, true, 'p');  // only one undo state
+        }
+      }
+      else {  // property was applied
+        if(pp) pp = pc->Props.prev();
+	else pp = pc->Props.last();
+        if(pp->Value != editText->text()) {
+          pp->Value = editText->text();
+          d->setChanged(true, true, 'p');  // only one undo state
+        }
+      }
+    }
+  }
+  else s = pc->Name;
+
+
+  if(s.isEmpty()) {   // was already last property ?
+    editText->setHidden(true);
+    return;
+  }
+  
+  contentsToViewport(int(d->Scale * double(MAx1 - d->ViewX1)),
+			 int(d->Scale * double(MAy1 - d->ViewY1)),
+			 MAx2, MAy2);
+  editText->move(QPoint(MAx2, MAy2));
+  editText->setText(s);
+  QSize r = editText->size();
+  r.setHeight(metrics.lineSpacing());
+  editText->resize(r);
+  editText->setFocus();
+  editText->selectAll();
+  editText->setHidden(false);
 }

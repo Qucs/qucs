@@ -974,7 +974,7 @@ Ismeretlen mező!</translation>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;érvénytelen&gt;</translation>
+        <translation type="obsolete">&lt;érvénytelen&gt;</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
@@ -2482,6 +2482,49 @@ Használat:  qucsedit [-r] fájl
         <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Infó</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Legalább két elemet kell kiválasztani! </translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hiba</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">A szövegszerkesztő (qucsedit) nem indítható!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished">
+Nem indítható a szűrő méretező program!
+</translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished">
+Nem indítható a tápvonal tervező program!
+</translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">A Qucs Súgó (qucshelp) nem indítható!</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2800,7 +2843,7 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>A Qucs Súgó (qucshelp) nem indítható!</translation>
+        <translation type="obsolete">A Qucs Súgó (qucshelp) nem indítható!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -2883,7 +2926,7 @@ Hibák:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>A szövegszerkesztő (qucsedit) nem indítható!</translation>
+        <translation type="obsolete">A szövegszerkesztő (qucsedit) nem indítható!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3023,7 +3066,7 @@ Hibák:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Legalább két elemet kell kiválasztani! </translation>
+        <translation type="obsolete">Legalább két elemet kell kiválasztani! </translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -3075,17 +3118,17 @@ Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Tulajdonságok beállítása</translation>
+        <translation type="obsolete">Tulajdonságok beállítása</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>
+        <translation type="obsolete">
 Nem indítható a szűrő méretező program!
 </translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>
+        <translation type="obsolete">
 Nem indítható a tápvonal tervező program!
 </translation>
     </message>
@@ -3094,7 +3137,7 @@ Nem indítható a tápvonal tervező program!
         <translation>3D-Derékszögű</translation>
     </message>
     <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5037,6 +5080,10 @@ QucsTrans indítása</translation>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>A földpotenciál nem lehet cimke!</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Tulajdonságok beállítása</translation>
     </message>
 </context>
 <context>

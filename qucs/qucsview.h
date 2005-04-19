@@ -27,6 +27,9 @@
 #include <qptrlist.h>
 #include <qstring.h>
 #include <qevent.h>
+#include <qregexp.h>
+#include <qvalidator.h>
+#include <qlineedit.h>
 
 
 class Wire;
@@ -61,6 +64,7 @@ public:
 
   bool    drawn;  // indicates whether the scheme element was drawn last time
   QString ProjName;
+  QLineEdit *editText;  // for edit component properties
 
   QPtrList<Element> movingElements;
 
@@ -88,6 +92,7 @@ protected slots:
   void slotScrollDown();
   void slotScrollLeft();
   void slotScrollRight();
+  void slotApplyCompText();
 
 public slots:
   void slotCursorLeft();
@@ -169,6 +174,9 @@ private:
   QMouseEvent *focusMEvent;
   Wire *labeledWire;     // remember the wire whose label is moving
   ViewPainter Painter;
+
+  QRegExp Expression;
+  QRegExpValidator *Validator;
 };
 
 #endif
