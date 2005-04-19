@@ -974,7 +974,7 @@ Unknown field!</source>
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;無効&gt;</translation>
+        <translation type="obsolete">&lt;無効&gt;</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
@@ -2471,6 +2471,45 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf</translation>
     </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">情報</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">少なくとも二つ以上の要素を選択してください!</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">エラー</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Qucsヘルプを開けません!</translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2782,7 +2821,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Qucsヘルプを開けません!</translation>
+        <translation type="obsolete">Qucsヘルプを開けません!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -2851,7 +2890,7 @@ Errors:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>テキストエディタを開始できません!</translation>
+        <translation type="obsolete">テキストエディタを開始できません!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -2991,7 +3030,7 @@ Errors:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>少なくとも二つ以上の要素を選択してください!</translation>
+        <translation type="obsolete">少なくとも二つ以上の要素を選択してください!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -3043,22 +3082,14 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>プロパティ編集</translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">プロパティ編集</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4908,6 +4939,10 @@ Starts transmission line calculator</source>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>グラウンドにはラベルを付けられません !</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">プロパティ編集</translation>
     </message>
 </context>
 <context>

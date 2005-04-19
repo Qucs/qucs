@@ -910,10 +910,6 @@ Unknown field!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>invalid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2349,6 +2345,45 @@ Usage:  qucsedit [-r] file
 </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -2366,10 +2401,6 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Any File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2662,10 +2693,6 @@ Do you want to save the changes before closing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start qucshelp!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Starting new simulation on </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2726,10 +2753,6 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start text editor!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2885,10 +2908,6 @@ Errors:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least two elements must be selected !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit Circuit Symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2917,19 +2936,11 @@ Edits the schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4639,6 +4650,10 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>The ground potential cannot be labeled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

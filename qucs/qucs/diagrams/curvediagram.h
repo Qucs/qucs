@@ -35,6 +35,8 @@ public:
   void calcLimits();
   void calcData(Graph *g);
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
+  bool insideDiagram(int, int);
+  void clip(int* &);
 };
 
 #endif

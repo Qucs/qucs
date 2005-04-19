@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsdoc.cpp  -  description
-                             -------------------
+                                qucsdoc.cpp
+                              ---------------
     begin                : Wed Sep 3 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -201,8 +201,8 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
     while(Curr != UndoStack.last())
       UndoStack.remove();   // remove "Redo" items
 
-    if(Op == 'm')
-      if(UndoStack.current()->at(0) == 'm')  // only one move marker action
+    if((Op == 'm') || (Op == 'p')) // only one for move marker or edit property
+      if(UndoStack.current()->at(0) == Op)
         UndoStack.remove();
 
     UndoStack.append(new QString(File.createUndoString(Op)));
@@ -1262,8 +1262,9 @@ bool QucsDoc::MarkerUpDown(bool up)
 // Selects the element that contains the coordinates x/y.
 // Returns the pointer to the element.
 // If 'flag' is true, the element can be deselected.
-Element* QucsDoc::selectElement(int x, int y, bool flag)
+Element* QucsDoc::selectElement(int x, int y, bool flag, int *index)
 {
+  int n;
   Element *pe_1st=0, *pe_sel=0;
   // test all components
   for(Component *pc = Comps->last(); pc != 0; pc = Comps->prev())
@@ -1275,6 +1276,14 @@ Element* QucsDoc::selectElement(int x, int y, bool flag)
       }
       if(pe_1st == 0) pe_1st = pc;  // give access to elements lying beneath
       if(pc->isSelected) pe_sel = pc;
+    }
+    else {
+      n = pc->getTextSelected(x, y);
+      if(n >= 0) {   // was property text clicked ?
+        pc->Type = isComponentText;
+        if(index)  *index = n;
+        return pc;
+      }
     }
 
   WireLabel *pl;
@@ -3169,7 +3178,7 @@ bool QucsDoc::elementsOnGrid()
       count = true;
     }
 
-  setChanged(true, true);
+  if(count) setChanged(true, true);
   return count;
 }
 

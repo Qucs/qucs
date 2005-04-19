@@ -2383,7 +2383,7 @@ Invocation :  qucsedit [-r] fichier
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt; invalide &gt;</translation>
+        <translation type="obsolete">&lt; invalide &gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
@@ -2494,6 +2494,45 @@ Invocation :  qucsedit [-r] fichier
 </source>
         <translation>© Copyright 2003, 2004 par Michael Margraf
  {2004, 2005?}</translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Sélectionner au moins deux éléments !</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished">Lancement du programme de synthèse impossible !</translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Ne peut lancer l&apos;aide !</translation>
     </message>
 </context>
 <context>
@@ -2977,11 +3016,11 @@ Erreurs :
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Ne peut lancer l&apos;aide !</translation>
+        <translation type="obsolete">Ne peut lancer l&apos;aide !</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Ne peut pas lancer l&apos;éditeur de texte !</translation>
+        <translation type="obsolete">Ne peut pas lancer l&apos;éditeur de texte !</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -2989,7 +3028,7 @@ Erreurs :
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Sélectionner au moins deux éléments !</translation>
+        <translation type="obsolete">Sélectionner au moins deux éléments !</translation>
     </message>
     <message>
         <source>No page set !</source>
@@ -3083,22 +3122,18 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Modifier les paramètres</translation>
+        <translation type="obsolete">Modifier les paramètres</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Lancement du programme de synthèse impossible !</translation>
-    </message>
-    <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Lancement du programme de synthèse impossible !</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4996,6 +5031,10 @@ Starts transmission line calculator</source>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>La masse ne peut être nommée !</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Modifier les paramètres</translation>
     </message>
 </context>
 <context>

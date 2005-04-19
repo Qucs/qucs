@@ -61,12 +61,13 @@ struct Port {
 
 struct Text {
   Text(int _x, int _y, const QString& _s, QColor _Color = QColor(0,0,0),
-	float _Size = 10.0) : x(_x), y(_y), s(_s), Color(_Color),
-	Size(_Size) {};
+	float _Size = 10.0, float _mCos=1.0, float _mSin=0.0)
+	: x(_x), y(_y), s(_s), Color(_Color), Size(_Size),
+	  mSin(_mSin), mCos(_mCos) {};
   int     x, y;
   QString s;
   QColor  Color;
-  float   Size;
+  float   Size, mSin, mCos;   // font size and rotation coefficients
 };
 
 struct Property {
@@ -79,19 +80,35 @@ struct Property {
 };
 
 
+// valid values for Element.Type
+// The 4 least significant bits of each value are reserved for special
+// additionals !!!
+#define isDummy           0
+#define isSpecialMask    -16
 
-enum ElementType {isDummy = 0,
-		  isComponent = 0x0010, isGraph = 0x0020, isNode = 0x0040,
-		  isMarker = 0x0080, isWire = 0x0100,
-		  isPainting = 0x2000, isPaintingResize = 0x2001,
+#define isComponent       0x0010
+#define isComponentText   0x0012
 
-		  isLabel = 0x4000,
-		  isHWireLabel = 0x4002, isVWireLabel  = 0x4004,
-		  isNodeLabel  = 0x4008, isMovingLabel = 0x4010,
-		  isHMovingLabel = 0x4020, isVMovingLabel = 0x4040,
+#define isGraph           0x0020
+#define isNode            0x0040
+#define isMarker          0x0080
+#define isWire            0x0100
 
-		  isDiagram = 0x8000, isDiagramResize = 0x8001,
-		  isDiagramScroll = 0x8002};
+#define isPainting        0x2000
+#define isPaintingResize  0x2001
+
+#define isLabel           0x4000
+#define isHWireLabel      0x4002
+#define isVWireLabel      0x4004
+#define isNodeLabel       0x4008
+#define isMovingLabel     0x4010
+#define isHMovingLabel    0x4020
+#define isVMovingLabel    0x4040
+
+#define isDiagram         0x8000
+#define isDiagramResize   0x8001
+#define isDiagramScroll   0x8002
+
 
 
 class Element {
@@ -104,8 +121,7 @@ public:
   virtual void getCenter(int&, int&);
 
   bool isSelected;
-
-  ElementType  Type;    // whether it is Component, Wire, ...
+  int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
 };
 

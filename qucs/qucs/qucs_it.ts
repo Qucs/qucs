@@ -2492,10 +2492,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> &lt;invalid&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>initial phase in degrees</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2601,6 +2597,14 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2611,6 +2615,34 @@ Usage:  qucsedit [-r] file
     <message>
         <source>Ready.</source>
         <translation type="obsolete">Pronto.</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Almeno due elementi devono essere selezionati!</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Errore</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">Impossibile lanciare qucshelp!</translation>
     </message>
 </context>
 <context>
@@ -3979,11 +4011,11 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Impossibile lanciare qucshelp!</translation>
+        <translation type="obsolete">Impossibile lanciare qucshelp!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Impossibile eseguire editor di testo!</translation>
+        <translation type="obsolete">Impossibile eseguire editor di testo!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -3991,7 +4023,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Almeno due elementi devono essere selezionati!</translation>
+        <translation type="obsolete">Almeno due elementi devono essere selezionati!</translation>
     </message>
     <message>
         <source>No page set !</source>
@@ -4085,22 +4117,14 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Modifica proprietà</translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Modifica proprietà</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5996,6 +6020,10 @@ Starts transmission line calculator</source>
     <message>
         <source>Enter the label:</source>
         <translation type="obsolete">Inserire etichetta:</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Modifica proprietà</translation>
     </message>
 </context>
 <context>

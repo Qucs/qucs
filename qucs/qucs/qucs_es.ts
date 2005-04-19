@@ -2395,7 +2395,7 @@ Use:  qucsedit [-r] archivo
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;inválido&gt;</translation>
+        <translation type="obsolete">&lt;inválido&gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
@@ -2506,6 +2506,45 @@ Use:  qucsedit [-r] archivo
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 por Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Información</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">¡Al menos deben seleccionarse dos elementos!</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">¡No puedo arrancar el editor de textos!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">¡No puedo arrancar la ayuda!</translation>
     </message>
 </context>
 <context>
@@ -2825,7 +2864,7 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>¡No puedo arrancar la ayuda!</translation>
+        <translation type="obsolete">¡No puedo arrancar la ayuda!</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
@@ -2907,7 +2946,7 @@ Errores:
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>¡No puedo arrancar el editor de textos!</translation>
+        <translation type="obsolete">¡No puedo arrancar el editor de textos!</translation>
     </message>
     <message>
         <source>Cannot create </source>
@@ -3047,7 +3086,7 @@ Errores:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>¡Al menos deben seleccionarse dos elementos!</translation>
+        <translation type="obsolete">¡Al menos deben seleccionarse dos elementos!</translation>
     </message>
     <message>
         <source>Edit Circuit Symbol</source>
@@ -3099,22 +3138,14 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation>Editar Propiedades</translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Editar Propiedades</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5014,6 +5045,10 @@ Starts transmission line calculator</source>
     <message>
         <source>The ground potential cannot be labeled!</source>
         <translation>¡El potencial de tierra no se puede etiquetar!</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished">Editar Propiedades</translation>
     </message>
 </context>
 <context>

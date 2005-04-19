@@ -2430,7 +2430,7 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source> &lt;invalid&gt;</source>
-        <translation>&lt;invalid&gt;</translation>
+        <translation type="obsolete">&lt;invalid&gt;</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
@@ -2541,6 +2541,45 @@ Folosire:  qucsedit [-r] file
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 de Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>method for solving the circuit matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsActions</name>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>At least two elements must be selected !</source>
+        <translation type="unfinished">Cel puţin două elemente trebuie selectate!</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Eroare</translation>
+    </message>
+    <message>
+        <source>Cannot start text editor!</source>
+        <translation type="unfinished">Editorul de text nu poate fi iniţializat!</translation>
+    </message>
+    <message>
+        <source>Cannot start filter synthesis program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start line calculation program!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot start qucshelp!</source>
+        <translation type="unfinished">qucshelp nu poate fi iniţializat!</translation>
     </message>
 </context>
 <context>
@@ -3037,11 +3076,11 @@ Erori:
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>qucshelp nu poate fi iniţializat!</translation>
+        <translation type="obsolete">qucshelp nu poate fi iniţializat!</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Editorul de text nu poate fi iniţializat!</translation>
+        <translation type="obsolete">Editorul de text nu poate fi iniţializat!</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
@@ -3049,7 +3088,7 @@ Erori:
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation>Cel puţin două elemente trebuie selectate!</translation>
+        <translation type="obsolete">Cel puţin două elemente trebuie selectate!</translation>
     </message>
     <message>
         <source>No page set !</source>
@@ -3142,23 +3181,11 @@ Editează această schemă</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>3D-Cartesian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location Curve</source>
+        <source>Locus Curve</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5039,6 +5066,10 @@ Starts transmission line calculator</source>
     <message>
         <source>Enter the label:</source>
         <translation type="obsolete">Introdu eticheta:</translation>
+    </message>
+    <message>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

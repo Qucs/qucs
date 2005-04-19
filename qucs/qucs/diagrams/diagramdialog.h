@@ -21,6 +21,7 @@
 #include "diagram.h"
 
 #include <qdialog.h>
+#include <qregexp.h>
 
 class QLabel;
 class QListBox;
@@ -33,6 +34,7 @@ class QListBoxItem;
 class QVBoxLayout;
 class QDoubleValidator;
 class QIntValidator;
+class QRegExpValidator;
 class QSlider;
 
 /**
@@ -83,8 +85,10 @@ public:
   Diagram *Diag;
   QString defaultDataSet;
 
+  QRegExp Expr;
   QDoubleValidator *ValDouble;
-  QIntValidator    *Validator;
+  QIntValidator    *ValInteger;
+  QRegExpValidator *Validator;
 
   QComboBox *ChooseData;
   QListView *ChooseVars;

@@ -39,7 +39,6 @@
 #include <math.h>
 
 
-//bwfilter Butterworth;
 
 
 QucsFilter::QucsFilter()
@@ -90,17 +89,19 @@ QucsFilter::QucsFilter()
   gbox->addWidget(ComboClass, 2,1);
   connect(ComboClass, SIGNAL(activated(int)), SLOT(slotClassChanged(int)));
 
+  IntVal = new QIntValidator(1, 200, this);
+  DoubleVal = new QDoubleValidator(this);
+
   QLabel *Label3 = new QLabel(tr("Order:"), this);
   gbox->addWidget(Label3, 3,0);
   EditOrder = new QLineEdit("3", this);
-  gbox->addWidget(EditOrder, 3,1);
-
-  IntVal = new QIntValidator(1, 200, this);
   EditOrder->setValidator(IntVal);
+  gbox->addWidget(EditOrder, 3,1);
 
   QLabel *Label4 = new QLabel(tr("Corner frequency:"), this);
   gbox->addWidget(Label4, 4,0);
   EditCorner = new QLineEdit("1", this);
+  EditCorner->setValidator(DoubleVal);
   gbox->addWidget(EditCorner, 4,1);
   ComboCorner = new QComboBox(this);
   ComboCorner->insertItem("Hz");
@@ -113,6 +114,7 @@ QucsFilter::QucsFilter()
   LabelStop = new QLabel(tr("Stop frequency:"), this);
   gbox->addWidget(LabelStop, 5,0);
   EditStop = new QLineEdit("2", this);
+  EditStop->setValidator(DoubleVal);
   gbox->addWidget(EditStop, 5,1);
   ComboStop = new QComboBox(this);
   ComboStop->insertItem("Hz");
@@ -125,6 +127,7 @@ QucsFilter::QucsFilter()
   LabelRipple = new QLabel(tr("Pass band ripple:"), this);
   gbox->addWidget(LabelRipple, 6,0);
   EditRipple = new QLineEdit("1", this);
+  EditRipple->setValidator(DoubleVal);
   gbox->addWidget(EditRipple, 6,1);
   Label_dB = new QLabel("dB", this);
   gbox->addWidget(Label_dB, 6,2);
@@ -132,15 +135,11 @@ QucsFilter::QucsFilter()
   QLabel *Label9 = new QLabel(tr("Impedance:"), this);
   gbox->addWidget(Label9, 7,0);
   EditImpedance = new QLineEdit("50", this);
+  EditImpedance->setValidator(DoubleVal);
   gbox->addWidget(EditImpedance, 7,1);
   QLabel *Label10 = new QLabel("Ohm", this);
   gbox->addWidget(Label10, 7,2);
 
-  DoubleVal = new QDoubleValidator(this);
-  EditCorner->setValidator(DoubleVal);
-  EditStop->setValidator(DoubleVal);
-  EditRipple->setValidator(DoubleVal);
-  EditImpedance->setValidator(DoubleVal);
 
   QPushButton *ButtonGo =
                new QPushButton(tr("Calculate and put into Clipboard"), this);
