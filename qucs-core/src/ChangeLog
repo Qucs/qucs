@@ -1,3 +1,8 @@
+2005-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* complex.cpp: Using xhypot() in abs() calculation for better
+	numerical stability.
+
 2005-04-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Added convenience functions for all the

@@ -1,6 +1,6 @@
 % -*-octave-*-
 % 
-% Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+% Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
 %
 % This is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ eYGridVisible=1; eYGridDash=1;
 eXAxisNorthValueVisible=0;
 %eXAxisSouthScale=[-1 1 1];
 eYAxisEastValueVisible=0;
-eYAxisWestScale=[0 25 125];
+eYAxisWestScale=[0 50 250];
 eYAxisWestLabelDistance=8;
 
 % set axes options
@@ -76,7 +76,7 @@ eXAxisSouthScaleType=2;
 for n = 1 : length (k)
   er = (k(n) + 1) / 2;
   a  = 1 ./ (1 + 2 ./ u);
-  d  = Z0 / 4 * Kapprox (a);
+  d  = Z0 / 4 ./ Kapprox (a);
   zl = d ./ sqrt (er);
   eplot (u,zl,"",0,[0 0 0],1);
 endfor
