@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: complex.cpp,v 1.19 2005-04-11 06:40:48 raimi Exp $
+ * $Id: complex.cpp,v 1.20 2005-04-20 07:08:18 raimi Exp $
  *
  */
 
@@ -47,7 +47,7 @@ complex::complex (const complex& z) {
 }
 
 nr_double_t abs (const complex z) {
-  return sqrt (z.r * z.r + z.i * z.i);
+  return xhypot (z.r, z.i);
 }
 
 nr_double_t abs (nr_double_t r) {

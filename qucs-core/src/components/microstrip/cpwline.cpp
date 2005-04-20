@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.10 2005-04-11 06:40:49 raimi Exp $
+ * $Id: cpwline.cpp,v 1.11 2005-04-20 07:08:36 raimi Exp $
  *
  */
 
@@ -147,7 +147,7 @@ void cpwline::initPropagation (void) {
   nr_double_t er = subst->getPropertyDouble ("er");
   nr_double_t h  = subst->getPropertyDouble ("h");
   nr_double_t t  = subst->getPropertyDouble ("t");
-  char * back    = getPropertyString ("Backside");
+  int backMetal  = !strcmp (getPropertyString ("Backside"), "Metal");
   int approx     = !strcmp (getPropertyString ("Approx"), "yes");
 
   tand = subst->getPropertyDouble ("tand");
@@ -155,7 +155,7 @@ void cpwline::initPropagation (void) {
   len  = getPropertyDouble ("L");
 
   // other local variables (quasi-static constants)
-  nr_double_t k1, kk1, kpk1, k2, q1, q2, er0 = 0;
+  nr_double_t k1, kk1, kpk1, k2, k3, q1, q2, q3 = 0, qz, er0 = 0;
   
   // compute the necessary quasi-static approx. (K1, K3, er(0) and Z(0))
   k1   = W / (W + s + s);
@@ -168,8 +168,7 @@ void cpwline::initPropagation (void) {
   }
 
   // backside is metal
-  if (!strcmp (back, "Metal")) {
-    nr_double_t k3, q3, qz;
+  if (backMetal) {
     k3  = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
     if (approx) {
       q3 = ellipa (k3);
@@ -181,26 +180,41 @@ void cpwline::initPropagation (void) {
     zl_factor = Z0 / 2 * qz;
   }
   // backside is air
-  else if (!strcmp (back, "Air")) {
+  else {
     k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
     if (approx) {
       q2 = ellipa (k2);
     } else {
       q2 = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
     }
-    er0 = 1 + (er - 1) / 2 * q2 * q1;
-    zl_factor = Z0 / 4 * q1;
+    er0 = 1 + (er - 1) / 2 * q2 / q1;
+    zl_factor = Z0 / 4 / q1;
   }
 
+  // adds effect of strip thickness
   if (t > 0) {
-    // adds effect of strip thickness
-    nr_double_t d;
-    d = (t * 1.25 / M_PI) * (1 + log (4 * M_PI * W / t));
-    s = s - d;
-    W = W + d;
+    nr_double_t d, se, We, ke, qe;
+    d  = (t * 1.25 / M_PI) * (1 + log (4 * M_PI * W / t));
+    se = s - d;
+    We = W + d;
 
     // modifies k1 accordingly (k1 = ke)
-    k1 = W / (W + s + s);
+    ke = We / (We + se + se); // ke = k1 + (1 - k1 * k1) * d / 2 / s;
+    if (approx) {
+      qe = ellipa (ke);
+    } else {
+      qe = ellipk (ke) / ellipk (sqrt (1 - ke * ke));
+    }
+    // backside is metal
+    if (backMetal) {
+      qz  = 1 / (qe + q3);
+      er0 = 1 + q3 * qz * (er - 1);
+      zl_factor = Z0 / 2 * qz;
+    }
+    // backside is air
+    else {
+      zl_factor = Z0 / 4 / qe;
+    }
 
     // modifies er0 as well
     er0 = er0 - (0.7 * (er0 - 1) * t / s) / (q1 + (0.7 * t / s));
@@ -222,6 +236,7 @@ void cpwline::initPropagation (void) {
   // loss constant factors (computed only once for efficency sake)
   nr_double_t ac = 0;
   if (t > 0) {
+    // equations by GHIONE
     nr_double_t n  = (1 - k1) * 8 * M_PI / (t * (1 + k1)); 
     nr_double_t a  = W / 2;
     nr_double_t b  = a + s;
@@ -252,7 +267,7 @@ void cpwline::calcAB (nr_double_t f, nr_double_t& zl, nr_double_t& al,
   // for now, the loss are limited to strip losses (no radiation
   // losses yet) losses in neper/length
   ad *= f * (sr_er_f - 1 / sr_er_f);
-  ac *= sqrt (f) * sr_er_f;
+  ac *= sqrt (f) * sr_er0;
 
   al  = ac + ad;
   bt *= sr_er_f * f;

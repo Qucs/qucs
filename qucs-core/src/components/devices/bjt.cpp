@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.27 2005-03-14 21:59:08 raimi Exp $
+ * $Id: bjt.cpp,v 1.28 2005-04-20 07:08:36 raimi Exp $
  *
  */
 
@@ -340,12 +340,12 @@ void bjt::calcDC (void) {
   }
 
   // compute autonomic current sources
-  IeqB = Ibe - gbe * Ube;
-  IeqC = Ibc - gbc * Ubc;
+  IeqB = Ibe - Ube * gbe;
+  IeqC = Ibc - Ubc * gbc;
 #if NEWSGP
   IeqE = It - gitf * Ube + gitr * Ubc;
 #else
-  IeqE = It - gm * Ube - go * Uce;
+  IeqE = It - Ube * gm - Uce * go;
 #endif
   IeqS = 0;
   setI (NODE_B, (-IeqB - IeqC) * pol);

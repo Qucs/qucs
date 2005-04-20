@@ -1,3 +1,13 @@
+2005-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* transient.tex (subsection{Depletion Capacitance}): Fixed tiny
+	typo in documentation of depletion charge.
+
+	* coplanarzl.m: Fixed wave resistance computation.
+
+	* coplanar.tex (subsection{Evaluation of losses}): Fixed some
+	typo in the documentation of coplanar waveguide.
+
 2005-04-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* dcanalysis.tex (subsubsection{Motivation}): Documented

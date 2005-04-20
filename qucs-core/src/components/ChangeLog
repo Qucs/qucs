@@ -1,3 +1,10 @@
+2005-04-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwline.cpp: Fixed strip thickness calculation and
+	impedance of coplanar waveguide.
+
+	* devices/device.cpp: Fixed computation of pn charge.
+
 2005-04-17  Stefan Jahn  <stefan@lkcc.org>
 
 	* devices/mosfet.cpp: Using the new pnJunctionMOS() function.

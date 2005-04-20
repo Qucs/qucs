@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.15 2005-04-18 13:41:04 raimi Exp $
+ * $Id: device.cpp,v 1.16 2005-04-20 07:08:36 raimi Exp $
  *
  */
 
@@ -194,9 +194,10 @@ nr_double_t pnCharge (nr_double_t Uj, nr_double_t Cj, nr_double_t Vj,
 #else /* this variant is numerically more stable */
     a = 1 - Fc;
     b = exp (-Mj * log (a));
+    nr_double_t f = Fc * Vj;
     nr_double_t c = Cj * (1 - Fc * (1 + Mj)) * b / a;
     nr_double_t d = Cj * Mj * b / a / Vj;
-    nr_double_t e = Cj * Vj * (1 - a * b) / (1 - Mj) - d / 2 * Cj * Cj;
+    nr_double_t e = Cj * Vj * (1 - a * b) / (1 - Mj) - d / 2 * f * f - f * c;
     q = e + Uj * (c + Uj * d / 2);
 #endif
   }
