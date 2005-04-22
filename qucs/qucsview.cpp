@@ -406,7 +406,7 @@ void QucsView::MovingElements()
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(long(pw->Port1) > 3) {
+      if(((unsigned long)pw->Port1) > 3) {
 	pw->x1 += MAx1;  pw->y1 += MAy1;
 	if(pw->Label) { pw->Label->cx += MAx1;  pw->Label->cy += MAy1; }
       }
@@ -620,7 +620,7 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
     if(pe->Type == isWire) {
       pw = (Wire*)pe;   // connecting wires are not moved completely
 
-      if(long(pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
+      if(((unsigned long)pw->Port1) > 3) { pw->x1 += MAx1;  pw->y1 += MAy1; }
       else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
               if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
