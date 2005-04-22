@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.7 2005/02/14 19:56:44 raimi Exp $
+ * $Id: tvector.cpp,v 1.8 2005/04/22 06:21:48 raimi Exp $
  *
  */
 
@@ -202,7 +202,7 @@ tvector<nr_type_t> tvector<nr_type_t>::operator = (const nr_type_t val) {
 template <class nr_type_t>
 nr_type_t sum (tvector<nr_type_t> a) {
   nr_type_t res = 0;
-  for (int i = 0; i < a.getSize (); i++) res += a.get (i);
+  for (int i = 1; i <= a.getSize (); i++) res += a.get (i);
   return res;
 }
 
