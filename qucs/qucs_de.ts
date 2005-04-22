@@ -2712,11 +2712,11 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>use approximation instead of precise equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden der Näherungsformel statt der präzisen Gleichung</translation>
     </message>
     <message>
         <source>method for solving the circuit matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichungslöser für die Schaltkreismatrix</translation>
     </message>
 </context>
 <context>
@@ -2731,31 +2731,31 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
+        <translation>Für diese Aktion müssen mindestens zwei Elemente ausgewählt werden !</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished">Der Texteditor kann nicht gestartet werden!</translation>
+        <translation>Der Texteditor kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished">Das Programm für die Filtersynthese kann nicht gestartet werden!</translation>
+        <translation>Das Programm für die Filtersynthese kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished">Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
+        <translation>Das Programm für die Leitungsberechnung kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">Das Programm qucshelp kann nicht gestartet werden!</translation>
+        <translation>Das Programm qucshelp kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -4560,7 +4560,7 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Locus Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortskurve</translation>
     </message>
 </context>
 <context>
@@ -6162,7 +6162,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation>In Zwischenablage kopieren</translation>
+        <translation>Kopie in die Zwischenablage</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
@@ -6206,11 +6206,11 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Transmission Line Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungstyp</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation>Mikrostreifen</translation>
+        <translation>Mikrostreifenleitung</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
@@ -6222,7 +6222,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Coupled Microstrip</source>
-        <translation>Gekoppelte Mikrostreifenleitung</translation>
+        <translation>Gekoppelte Mikrostreifen</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
@@ -6238,11 +6238,11 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung der elektrische Parameter</translation>
     </message>
     <message>
         <source>Compute Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung der physikalischen Parameter</translation>
     </message>
     <message>
         <source>Electrical Parameters</source>
@@ -6262,23 +6262,23 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Conductor Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohmsche Verluste</translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrische Verluste</translation>
     </message>
     <message>
         <source>Skin Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Skintiefe</translation>
     </message>
     <message>
         <source>TE-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TE-Moden</translation>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>TM-Moden</translation>
     </message>
     <message>
         <source>er_eff_e</source>
@@ -6310,87 +6310,87 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative Permeabilität</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Substrathöhe</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Höhe der Abdeckung</translation>
     </message>
     <message>
         <source>Strip Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Streifendicke</translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitfähigkeit des Streifens</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrischer Verlustwinkel</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>Oberflächenrauhigkeit</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished">Frequenz</translation>
+        <translation>Frequenz</translation>
     </message>
     <message>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsbreite</translation>
     </message>
     <message>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungslänge</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Charakteristische Impedanz</translation>
     </message>
     <message>
         <source>Electrical Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektrische Länge</translation>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitfähigkeit des Metalls</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Magnetischer Verlustwinkel</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite des Wellenleiters</translation>
     </message>
     <message>
         <source>Height of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Höhe des Wellenleiters</translation>
     </message>
     <message>
         <source>Waveguide Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Wellenleiterlänge</translation>
     </message>
     <message>
         <source>Inner Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Innerer Durchmesser</translation>
     </message>
     <message>
         <source>Outer Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Äußerer Durchmesser</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished">Länge</translation>
+        <translation>Länge</translation>
     </message>
     <message>
         <source>Gap Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaltbreite</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
@@ -6402,11 +6402,11 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählt für die Berechnung</translation>
     </message>
     <message>
         <source>Check item for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Anklicken für die Berechnung</translation>
     </message>
     <message>
         <source>About...</source>
@@ -6415,30 +6415,34 @@ Startet das Programm für die Leitungsberechnung</translation>
     <message>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungsberechner für Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001 von Gopal Narayanan
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2002 von Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 von Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Values are consistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Werte sind konsistent.</translation>
     </message>
     <message>
         <source>Values are inconsistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>Werte sind inkonsistent.</translation>
     </message>
     <message>
         <source>Loading file...</source>
@@ -6446,7 +6450,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Transcalc File</source>
-        <translation type="unfinished"></translation>
+        <translation>Transcalc Datei</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
@@ -6478,11 +6482,11 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Schematic copied into clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltkreis wurde in die Zwischenablage kopiert.</translation>
     </message>
     <message>
         <source>Transmission line type not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Leitungstyp ist nicht verfügbar.</translation>
     </message>
 </context>
 <context>
@@ -6505,7 +6509,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished">Eigenschaften bearbeiten</translation>
+        <translation>Eigenschaften bearbeiten</translation>
     </message>
 </context>
 <context>
