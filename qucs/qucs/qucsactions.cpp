@@ -433,8 +433,9 @@ void QucsActions::slotSelectAll()
 // component edit dialog.
 void QucsActions::editFile(const QString& File)
 {
-  QString com = QucsSettings.Editor+" "+File;
-  QProcess *QucsEditor = new QProcess(QStringList::split(" ", com));
+  QStringList com;
+  com << QucsSettings.Editor << File;
+  QProcess *QucsEditor = new QProcess(com);
   QucsEditor->setCommunication(0);
   if(!QucsEditor->start()) {
     QMessageBox::critical(App, tr("Error"), tr("Cannot start text editor!"));
