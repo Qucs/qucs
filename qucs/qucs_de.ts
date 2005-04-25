@@ -704,7 +704,7 @@
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
@@ -925,7 +925,7 @@
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Fertig</translation>
     </message>
 </context>
 <context>
@@ -4684,7 +4684,7 @@ Einfacher Texteditor für Qucs
     </message>
     <message>
         <source>Filter type:</source>
-        <translation>Filtertype:</translation>
+        <translation>Filtertyp:</translation>
     </message>
     <message>
         <source>Filter class:</source>
@@ -4712,7 +4712,7 @@ Einfacher Texteditor für Qucs
     </message>
     <message>
         <source>Pass band ripple:</source>
-        <translation type="unfinished"></translation>
+        <translation>Durchlasswelligkeit:</translation>
     </message>
     <message>
         <source>Impedance:</source>
@@ -6306,7 +6306,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Relative Permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative Permittivität</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
