@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.23 2005-02-03 20:40:19 raimi Exp $
+ * $Id: jfet.cpp,v 1.24 2005-04-25 18:46:32 raimi Exp $
  *
  */
 
@@ -270,6 +270,15 @@ void jfet::calcDC (void) {
   setY (NODE_S, NODE_S, ggs + gds + gm);
 }
 
+void jfet::saveOperatingPoints (void) {
+  nr_double_t Ugs, Ugd;
+  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  setOperatingPoint ("Vgs", Ugs);
+  setOperatingPoint ("Vgd", Ugd);
+  setOperatingPoint ("Vds", Ugs - Ugd);
+}
+
 void jfet::calcOperatingPoints (void) {
 
   // fetch device model parameters
@@ -284,8 +293,8 @@ void jfet::calcOperatingPoints (void) {
 
   T = kelvin (T);
   Ut = kB * T / Q;
-  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
-  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  Ugd = getOperatingPoint ("Vgd");
+  Ugs = getOperatingPoint ("Vgs");
 
   // capacitance of gate-drain diode
   Cgd = pnCapacitance (Ugd, Cgd0, Pb, z, Fc);
@@ -301,9 +310,6 @@ void jfet::calcOperatingPoints (void) {
   setOperatingPoint ("gds", gds);
   setOperatingPoint ("gm", gm);
   setOperatingPoint ("Id", Ids);
-  setOperatingPoint ("Vgs", Ugs);
-  setOperatingPoint ("Vgd", Ugd);
-  setOperatingPoint ("Vds", Ugs - Ugd);
   setOperatingPoint ("Cgd", Cgd);
   setOperatingPoint ("Cgs", Cgs);
 }
@@ -333,6 +339,7 @@ void jfet::initTR (void) {
 
 void jfet::calcTR (nr_double_t) {
   calcDC ();
+  saveOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Ugs = getOperatingPoint ("Vgs");

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.h,v 1.14 2005-04-18 13:41:04 raimi Exp $
+ * $Id: vector.h,v 1.15 2005-04-25 18:46:29 raimi Exp $
  *
  */
 
@@ -157,6 +157,10 @@ class vector : public object
   vector operator /= (vector);
   vector operator /= (const complex);
   vector operator /= (const nr_double_t);
+
+  // easy accessor operators
+  complex  operator () (int i) const { return data[i]; }
+  complex& operator () (int i) { return data[i]; }
 
  private:
   int requested;

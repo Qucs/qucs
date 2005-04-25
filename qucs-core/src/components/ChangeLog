@@ -1,3 +1,11 @@
+2005-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* strafo.cpp: Fixed S-parameter calculation.  Thanks to Vincent
+	for pointing out the misbehaviour and to Michael for fixing it.
+
+	* devices/mosfet.cpp, devices/jfet.cpp, devices/diode.cpp,
+	devices/bjt.cpp: Implemented new saveOperatingPoints() function.
+
 2005-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwline.cpp: Fixed strip thickness calculation and

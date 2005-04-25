@@ -1,7 +1,7 @@
 /*
  * dcsolver.cpp - DC solver class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcsolver.cpp,v 1.36 2005-04-15 09:07:55 raimi Exp $
+ * $Id: dcsolver.cpp,v 1.37 2005-04-25 18:46:28 raimi Exp $
  *
  */
 
@@ -156,6 +156,7 @@ void dcsolver::solve (void) {
   } while (retry != -1);
 
   // save results and cleanup the solver
+  saveOperatingPoints ();
   saveResults ("V", "I", saveOPs);
 
   solve_post ();
@@ -176,5 +177,14 @@ void dcsolver::init (void) {
   circuit * root = subnet->getRoot ();
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     c->initDC ();
+  }
+}
+
+/* Goes through the list of non-linear circuit objects and runs its
+   saveOperatingPoints() function. */
+void dcsolver::saveOperatingPoints (void) {
+  circuit * root = subnet->getRoot ();
+  for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
+    if (c->isNonLinear ()) c->saveOperatingPoints ();
   }
 }

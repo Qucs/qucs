@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.19 2005-04-18 13:41:04 raimi Exp $
+ * $Id: matrix.cpp,v 1.20 2005-04-25 18:46:28 raimi Exp $
  *
  */
 
@@ -406,8 +406,8 @@ matrix inverseGaussJordan (matrix a) {
   for (i = 1; i <= n; i++) {
     // find maximum column value for pivoting
     for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
-      if (abs (b.get (r, i)) > MaxPivot) {
-	MaxPivot = abs (b.get (r, i));
+      if (abs (b (r, i)) > MaxPivot) {
+	MaxPivot = abs (b (r, i));
 	pivot = r;
       }
     }
@@ -419,19 +419,17 @@ matrix inverseGaussJordan (matrix a) {
     }
 
     // compute current row
-    f = b.get (i, i);
-    for (c = 1; c <= n; c++) {
-      b.set (i, c, b.get (i, c) / f);
-      e.set (i, c, e.get (i, c) / f);
+    for (f = b (i, i), c = 1; c <= n; c++) {
+      b (i, c) /= f;
+      e (i, c) /= f;
     }
 
     // compute new rows and columns
     for (r = 1; r <= n; r++) {
       if (r != i) {
-	f = b.get (r, i);
-	for (c = 1; c <= n; c++) {
-	  b.set (r, c, b.get (r, c) - f * b.get (i, c));
-	  e.set (r, c, e.get (r, c) - f * e.get (i, c));
+	for (f = b (r, i), c = 1; c <= n; c++) {
+	  b (r, c) -= f * b (i, c);
+	  e (r, c) -= f * e (i, c);
 	}
       }
     }

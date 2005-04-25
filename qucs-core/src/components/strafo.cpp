@@ -1,7 +1,7 @@
 /*
  * strafo.cpp - symmetrical trafo class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.10 2004-11-24 19:15:49 raimi Exp $
+ * $Id: strafo.cpp,v 1.11 2005-04-25 18:46:32 raimi Exp $
  *
  */
 
@@ -46,13 +46,13 @@ void strafo::initSP (void) {
   nr_double_t t1 = getPropertyDouble ("T1");
   nr_double_t t2 = getPropertyDouble ("T2");
 
-  complex  d = t1 * t1 + t2 * t2 + t1 * t1 * t2 * t2;
-  complex z1 = t2 * t2 / d;
-  complex z2 = t1 * t1 / d;
-  complex z3 = t1 * t1 * t2 * t2 / d;
-  complex z4 = t1 * t2 * t2 / d;
-  complex z5 = t1 * t1 * t2 / d;
-  complex z6 = t1 * t2 / d;
+  nr_double_t  d = t1 * t1 + t2 * t2 + 1.0;
+  nr_double_t z1 = t1 * t1 / d;
+  nr_double_t z2 = t2 * t2 / d;
+  nr_double_t z3 = 1.0 / d;
+  nr_double_t z4 = t1 / d;
+  nr_double_t z5 = t2 / d;
+  nr_double_t z6 = t1 * t2 / d;
 
   allocMatrixS ();
 

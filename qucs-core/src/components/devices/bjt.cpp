@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.28 2005-04-20 07:08:36 raimi Exp $
+ * $Id: bjt.cpp,v 1.29 2005-04-25 18:46:32 raimi Exp $
  *
  */
 
@@ -391,6 +391,17 @@ void bjt::calcDC (void) {
 #endif
 }
 
+void bjt::saveOperatingPoints (void) {
+  nr_double_t Ube, Ubc, Ucs;
+  Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
+  Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
+  Ucs = real (getV (NODE_S) - getV (NODE_C)) * pol;
+  setOperatingPoint ("Vbe", Ube);
+  setOperatingPoint ("Vbc", Ubc);
+  setOperatingPoint ("Vce", Ube - Ubc);
+  setOperatingPoint ("Vcs", Ucs);
+}
+
 void bjt::calcOperatingPoints (void) {
 
   // fetch device model parameters
@@ -416,9 +427,9 @@ void bjt::calcOperatingPoints (void) {
   // interpret zero as infinity for that model parameter
   Vtf = Vtf > 0 ? 1.0 / Vtf : 0;
 
-  Ube = real (getV (NODE_B) - getV (NODE_E)) * pol;
-  Ubc = real (getV (NODE_B) - getV (NODE_C)) * pol;
-  Ucs = real (getV (NODE_S) - getV (NODE_C)) * pol;
+  Ube = getOperatingPoint ("Vbe");
+  Ubc = getOperatingPoint ("Vbc");
+  Ucs = getOperatingPoint ("Vcs");
 
   // depletion capacitance of base-emitter diode
   Cbe = pnCapacitance (Ube, Cje0, Vje, Mje, Fc);
@@ -456,10 +467,6 @@ void bjt::calcOperatingPoints (void) {
   setOperatingPoint ("gmr", gitr);
   setOperatingPoint ("gmu", gbci + gbcn);
   setOperatingPoint ("gpi", gbei + gben);
-  setOperatingPoint ("Vbe", Ube);
-  setOperatingPoint ("Vbc", Ubc);
-  setOperatingPoint ("Vce", Ube - Ubc);
-  setOperatingPoint ("Vcs", Ucs);
   setOperatingPoint ("Rbb", Rbb);
   setOperatingPoint ("Ibe", Ibe);
   setOperatingPoint ("Ice", It);
@@ -529,6 +536,7 @@ void bjt::initTR (void) {
 
 void bjt::calcTR (nr_double_t t) {
   calcDC ();
+  saveOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Ube = getOperatingPoint ("Vbe");

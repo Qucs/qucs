@@ -1,7 +1,7 @@
 /*
  * trafo.cpp - trafo class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trafo.cpp,v 1.10 2004-11-24 19:15:49 raimi Exp $
+ * $Id: trafo.cpp,v 1.11 2005-04-25 18:46:32 raimi Exp $
  *
  */
 
@@ -42,10 +42,11 @@ trafo::trafo () : circuit (4) {
 }
 
 void trafo::initSP (void) {
-  nr_double_t t = getPropertyDouble ("T");
-  complex z1 = (t * t) / (t * t + 1.0);
-  complex z2 = t / (t * t + 1.0);
-  complex z3 = 1 / (t * t + 1.0);
+  nr_double_t  t = getPropertyDouble ("T");
+  nr_double_t  d = t * t + 1.0;
+  nr_double_t z1 = t * t / d;
+  nr_double_t z2 = t / d;
+  nr_double_t z3 = 1 / d;
   allocMatrixS ();
   setS (1, 1,  z1); setS (1, 2,  z2); setS (1, 3, -z2); setS (1, 4,  z3);
   setS (2, 1,  z2); setS (2, 2,  z3); setS (2, 3,  z1); setS (2, 4, -z2);

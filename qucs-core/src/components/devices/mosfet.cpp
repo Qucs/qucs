@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.26 2005-04-18 13:41:05 raimi Exp $
+ * $Id: mosfet.cpp,v 1.27 2005-04-25 18:46:32 raimi Exp $
  *
  */
 
@@ -519,6 +519,19 @@ void mosfet::calcDC (void) {
 #define vgbState 14 // gate-bulk voltage state
 #define cgbState 15 // gate-bulk capacitance state
 
+void mosfet::saveOperatingPoints (void) {
+  nr_double_t Ugs, Ugd, Ubs, Ubd;
+  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
+  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
+  Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
+  Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
+  setOperatingPoint ("Vgs", Ugs);
+  setOperatingPoint ("Vgd", Ugd);
+  setOperatingPoint ("Vbs", Ubs);
+  setOperatingPoint ("Vbd", Ubd);
+  setOperatingPoint ("Vds", Ugs - Ugd);
+}
+
 void mosfet::calcOperatingPoints (void) {
 
   // fetch device model parameters
@@ -539,10 +552,10 @@ void mosfet::calcOperatingPoints (void) {
   nr_double_t Ubs, Ubd, Cbs, Cbd, Ugs, Ugd, Uds, Ugb;
   nr_double_t Cgd, Cgb, Cgs;
 
-  Ugd = real (getV (NODE_G) - getV (NODE_D)) * pol;
-  Ugs = real (getV (NODE_G) - getV (NODE_S)) * pol;
-  Ubs = real (getV (NODE_B) - getV (NODE_S)) * pol;
-  Ubd = real (getV (NODE_B) - getV (NODE_D)) * pol;
+  Ugd = getOperatingPoint ("Vgd");
+  Ugs = getOperatingPoint ("Vgs");
+  Ubs = getOperatingPoint ("Vbs");
+  Ubd = getOperatingPoint ("Vbd");
   Uds = Ugs - Ugd;
   Ugb = Ugs - Ubs;
 
@@ -597,11 +610,6 @@ void mosfet::calcOperatingPoints (void) {
   setOperatingPoint ("Vdsat", Udsat);
   setOperatingPoint ("gbs", gbs);
   setOperatingPoint ("gbd", gbd);
-  setOperatingPoint ("Vgs", Ugs);
-  setOperatingPoint ("Vgd", Ugd);
-  setOperatingPoint ("Vbs", Ubs);
-  setOperatingPoint ("Vbd", Ubd);
-  setOperatingPoint ("Vds", Ugs - Ugd);
   setOperatingPoint ("Cbd", Cbd);
   setOperatingPoint ("Cbs", Cbs);
   setOperatingPoint ("Cgs", Cgs);
@@ -630,6 +638,7 @@ void mosfet::initTR (void) {
 void mosfet::calcTR (nr_double_t) {
   calcDC ();
   transientMode = getPropertyInteger ("capModel");
+  saveOperatingPoints ();
   calcOperatingPoints ();
   transientMode = 0;
 
