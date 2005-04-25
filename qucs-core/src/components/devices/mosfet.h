@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.h,v 1.14 2005/02/03 20:40:19 raimi Exp $
+ * $Id: mosfet.h,v 1.15 2005/04/25 18:46:32 raimi Exp $
  *
  */
 
@@ -34,6 +34,7 @@ class mosfet : public circuit
   void calcDC (void);
   void initDC (void);
   void initModel (void);
+  void saveOperatingPoints (void);
   void calcOperatingPoints (void);
   void initAC (void);
   void calcAC (nr_double_t);

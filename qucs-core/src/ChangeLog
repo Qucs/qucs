@@ -1,3 +1,14 @@
+2005-04-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.h (class vector), matrix.h (class matrix): Added the
+	'()' accessors.
+
+	* dcsolver.cpp (saveOperatingPoints): Calling the function
+	for non-linear circuits.
+
+	* circuit.h (class circuit): New virtual function for saving
+	the DC operating points (branch currents and node voltages).
+
 2005-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* complex.cpp: Using xhypot() in abs() calculation for better

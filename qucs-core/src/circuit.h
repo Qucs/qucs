@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.36 2005/03/30 07:35:52 raimi Exp $
+ * $Id: circuit.h,v 1.37 2005/04/25 18:46:28 raimi Exp $
  *
  */
 
@@ -72,6 +72,7 @@ class circuit : public object, public integrator
   virtual void initHB (void) { allocMatrixMNA (); }
   virtual void calcHB (nr_double_t) { }
   virtual void calcOperatingPoints (void) { }
+  virtual void saveOperatingPoints (void) { }
 
   // real basics
   void   setNode (int, char *, int intern = 0);

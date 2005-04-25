@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.21 2005/02/28 09:28:48 raimi Exp $
+ * $Id: diode.cpp,v 1.22 2005/04/25 18:46:32 raimi Exp $
  *
  */
 
@@ -216,6 +216,11 @@ void diode::calcDC (void) {
   setY (NODE_C, NODE_A, -gd); setY (NODE_A, NODE_C, -gd);
 }
 
+void diode::saveOperatingPoints (void) {
+  nr_double_t Ud = real (getV (NODE_A) - getV (NODE_C));
+  setOperatingPoint ("Vd", Ud);
+}
+
 void diode::calcOperatingPoints (void) {
   nr_double_t M   = getPropertyDouble ("M");
   nr_double_t Cj0 = getPropertyDouble ("Cj0");
@@ -226,13 +231,12 @@ void diode::calcOperatingPoints (void) {
   
   nr_double_t Ud, Cd;
 
-  Ud = real (getV (NODE_A) - getV (NODE_C));
+  Ud = getOperatingPoint ("Vd");
   Cd = pnCapacitance (Ud, Cj0, Vj, M, Fc) + Tt * gd + Cp;
   Qd = pnCharge (Ud, Cj0, Vj, M, Fc) + Tt * Id + Cp * Ud;
 
   setOperatingPoint ("gd", gd);
   setOperatingPoint ("Id", Id);
-  setOperatingPoint ("Vd", Ud);
   setOperatingPoint ("Cd", Cd);
 }
 
@@ -263,6 +267,7 @@ void diode::initTR (void) {
 
 void diode::calcTR (nr_double_t) {
   calcDC ();
+  saveOperatingPoints ();
   calcOperatingPoints ();
 
   nr_double_t Ud = getOperatingPoint ("Vd");
