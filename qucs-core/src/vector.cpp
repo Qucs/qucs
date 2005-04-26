@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vector.cpp,v 1.18 2005-04-18 13:41:04 raimi Exp $
+ * $Id: vector.cpp,v 1.19 2005-04-26 06:27:33 raimi Exp $
  *
  */
 
@@ -153,7 +153,7 @@ void vector::set (nr_double_t d, int i) {
 }
 
 void vector::set (const complex z, int i) {
-  data[i] = z;
+  data[i] = complex (z);
 }
 
 // The function returns the current size of the vector.
@@ -484,7 +484,7 @@ vector diff (vector var, vector dep, int n) {
 }
 
 vector vector::operator=(const complex c) {
-  for (int i = 0; i < getSize (); i++) data[i] = c;
+  for (int i = 0; i < getSize (); i++) data[i] = complex (c);
   return *this;
 }
 

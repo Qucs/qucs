@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: eqnsys.cpp,v 1.31 2005-04-18 13:41:03 raimi Exp $
+ * $Id: eqnsys.cpp,v 1.32 2005-04-26 06:27:33 raimi Exp $
  *
  */
 
@@ -76,9 +76,9 @@ eqnsys<nr_type_t>::~eqnsys () {
   if (R != NULL) delete R;
   if (T != NULL) delete T;
   if (B != NULL) delete B;
-  if (rMap != NULL) delete rMap;
-  if (cMap != NULL) delete cMap;
-  if (nPvt != NULL) delete nPvt;
+  if (rMap != NULL) delete[] rMap;
+  if (cMap != NULL) delete[] cMap;
+  if (nPvt != NULL) delete[] nPvt;
 }
 
 /* The copy constructor creates a new instance of the eqnsys class
@@ -109,9 +109,9 @@ void eqnsys<nr_type_t>::passEquationSys (tmatrix<nr_type_t> * nA,
     update = 1;
     if (N != A->getCols ()) {
       N = A->getCols ();
-      if (cMap) delete cMap; cMap = new int[N];
-      if (rMap) delete rMap; rMap = new int[N];
-      if (nPvt) delete nPvt; nPvt = new nr_double_t[N];
+      if (cMap) delete[] cMap; cMap = new int[N];
+      if (rMap) delete[] rMap; rMap = new int[N];
+      if (nPvt) delete[] nPvt; nPvt = new nr_double_t[N];
     }
   }
   else {
@@ -900,7 +900,7 @@ void eqnsys<nr_type_t>::factorize_qrh (void) {
       nr_type_t a, b, l;
       s = euclidianCol (c, c + 1);
       a = A_(c, c);
-      l = a != 0 ? sign (a) : 1;
+      l = a != 0 ? sign (a) : nr_type_t (1);
       b = - l * xhypot (a, s); // Wj
       t = xhypot (s, a - b);   // || Vi - Wi ||
       R_(c) = b;
@@ -969,7 +969,7 @@ void eqnsys<nr_type_t>::factorize_qr_householder (void) {
 	t = T_(c) = 0;
       } else {
 	a = A_(c, c);
-	l = a != 0 ? sign (a) : 1;
+	l = a != 0 ? sign (a) : nr_type_t (1);
 	b = - l * xhypot (a, s); // Wj
 	t = T_(c) = (b - a) / b;
 	// householder vector entries Ui

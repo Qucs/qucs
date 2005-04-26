@@ -1,3 +1,11 @@
+2005-04-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* matrix.cpp, tmatrix.cpp: Fixed yet another memory leak.
+	Thanks to Brendan for pointing this out.
+
+	* eqnsys.cpp: Fixed memory leaks as well as ANSI-C++ compile
+	warning of Borland C.
+
 2005-04-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.h (class vector), matrix.h (class matrix): Added the

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: ucs.cpp,v 1.17 2005-02-08 23:08:36 raimi Exp $
+ * $Id: ucs.cpp,v 1.18 2005-04-26 06:27:33 raimi Exp $
  *
  */
 
@@ -137,5 +137,6 @@ int main (int argc, char ** argv) {
   delete subnet;
   delete in;
   delete out;
+  delete root;
   return 0;
 }
