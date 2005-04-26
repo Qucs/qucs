@@ -393,19 +393,19 @@
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation>variable gauche :</translation>
+        <translation type="obsolete">variable gauche :</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation>variable droite :</translation>
+        <translation type="obsolete">variable droite :</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation>ordonnées gauches logarithmiques</translation>
+        <translation type="obsolete">ordonnées gauches logarithmiques</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation>ordonnées droites logarithmiques</translation>
+        <translation type="obsolete">ordonnées droites logarithmiques</translation>
     </message>
     <message>
         <source>x-Axis</source>
@@ -417,11 +417,11 @@
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation>ordonnées gauches</translation>
+        <translation type="obsolete">ordonnées gauches</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation>ordonnées droites</translation>
+        <translation type="obsolete">ordonnées droites</translation>
     </message>
     <message>
         <source>Limits</source>
@@ -441,11 +441,11 @@
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation>Axe Smith</translation>
+        <translation type="obsolete">Axe Smith</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation>Axe polaire</translation>
+        <translation type="obsolete">Axe polaire</translation>
     </message>
     <message>
         <source>number</source>
@@ -474,6 +474,26 @@
     <message>
         <source>Rotation around x-Axis:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished">Quadrillage</translation>
     </message>
 </context>
 <context>

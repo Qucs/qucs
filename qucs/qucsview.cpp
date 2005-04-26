@@ -69,6 +69,10 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   connect(this, SIGNAL(verticalSliderReleased()),
 		viewport(), SLOT(repaint()));
 
+  // to prevent user from editing something that he doesn't see
+  connect(this, SIGNAL(horizontalSliderPressed()), SLOT(slotHideEdit()));
+  connect(this, SIGNAL(verticalSliderPressed()), SLOT(slotHideEdit()));
+
   // .......................................................................
   // initialize menu appearing by right mouse button click on component
   ComponentMenu = new QPopupMenu(this);
@@ -84,7 +88,7 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   editText->setFrame(false);
   editText->setHidden(true);
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
-//  addChild(editText);
+  connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
 }
 
 
@@ -217,6 +221,8 @@ void QucsView::setPainter(QPainter *p, QucsDoc *d)
 // -----------------------------------------------------------
 void QucsView::slotCursorLeft()
 {
+  if(!editText->isHidden()) return;  // for edit of component property ?
+
   QucsDoc *d = Docs.current();
   if(d->MarkerLeftRight(true)) {
     viewport()->repaint();
@@ -241,6 +247,8 @@ void QucsView::slotCursorLeft()
 
 void QucsView::slotCursorRight()
 {
+  if(!editText->isHidden()) return;  // for edit of component property ?
+
   QucsDoc *d = Docs.current();
   if(d->MarkerLeftRight(false)) {
     viewport()->repaint();
@@ -265,6 +273,26 @@ void QucsView::slotCursorRight()
 
 void QucsView::slotCursorUp()
 {
+  if(!editText->isHidden()) {  // for edit of component property ?
+    if(MAx3 == 0) return;  // edit component namen ?
+    Component *pc = (Component*)focusElement;
+    Property *pp = pc->Props.at(MAx3-1);  // current property
+    int Begin = pp->Description.find('[');
+    if(Begin < 0) return;  // no selection list ?
+    int End = pp->Description.find(editText->text(), Begin); // current
+    if(End < 0) return;  // should never happen
+    End = pp->Description.findRev(',', End);
+    if(End < Begin) return;  // was first item ?
+    End--;
+    int Pos = pp->Description.findRev(',', End);
+    if(Pos < Begin) Pos = Begin;   // is first item ?
+    Pos++;
+    if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
+    editText->setText(pp->Description.mid(Pos, End-Pos+1));
+    editText->selectAll();
+    return;
+  }
+
   QucsDoc *d = Docs.current();
   if(d->MarkerUpDown(true)) {
     viewport()->repaint();
@@ -289,6 +317,28 @@ void QucsView::slotCursorUp()
 
 void QucsView::slotCursorDown()
 {
+  if(!editText->isHidden()) {  // for edit of component property ?
+    if(MAx3 == 0) return;  // edit component namen ?
+    Component *pc = (Component*)focusElement;
+    Property *pp = pc->Props.at(MAx3-1);  // current property
+    int Pos = pp->Description.find('[');
+    if(Pos < 0) return;  // no selection list ?
+    Pos = pp->Description.find(editText->text(), Pos); // current list item
+    if(Pos < 0) return;  // should never happen
+    Pos = pp->Description.find(',', Pos);
+    if(Pos < 0) return;  // was last item ?
+    Pos++;
+    if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
+    int End = pp->Description.find(',', Pos);
+    if(End < 0) {  // is last item ?
+      End = pp->Description.find(']', Pos);
+      if(End < 0) return;  // should never happen
+    }
+    editText->setText(pp->Description.mid(Pos, End-Pos));
+    editText->selectAll();
+    return;
+  }
+
   QucsDoc *d = Docs.current();
   if(d->MarkerUpDown(false)) {
     viewport()->repaint();
@@ -1225,7 +1275,7 @@ void QucsView::MPressSelect(QMouseEvent *Event)
     case isComponentText:  // property text of component ?
 	focusElement->Type = isComponent;
 
-	MAx3 = No-1;   // is increased by 1 afterwards
+	MAx3 = No;
 	slotApplyCompText();
 	return;
   }
@@ -2071,7 +2121,7 @@ void QucsView::editElement(QMouseEvent *Event)
            }
 	 }
          ddia = new DiagramDialog(dia, d->DataSet, this);
-         if(ddia->exec()  != QDialog::Rejected)   // is WDestructiveClose
+         if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
            d->setChanged(true, true);
          break;
 
@@ -2133,6 +2183,7 @@ void QucsView::MDoubleClickWire2(QMouseEvent *Event)
 // *************************************************************************
 void QucsView::contentsWheelEvent(QWheelEvent *Event)
 {
+  editText->setHidden(true);  // disable edit of component property
   int delta = Event->delta() >> 1;     // use smaller steps
 
   // .....................................................................
@@ -2274,6 +2325,7 @@ bool QucsView::ScrollRight(int step)
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void QucsView::slotScrollUp()
 {
+  editText->setHidden(true);  // disable edit of component property
   ScrollUp(verticalScrollBar()->lineStep());
   viewport()->repaint();   // because QScrollView thinks nothing has changed
   drawn = false;
@@ -2283,6 +2335,7 @@ void QucsView::slotScrollUp()
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void QucsView::slotScrollDown()
 {
+  editText->setHidden(true);  // disable edit of component property
   ScrollDown(-verticalScrollBar()->lineStep());
   viewport()->repaint();   // because QScrollView thinks nothing has changed
   drawn = false;
@@ -2292,6 +2345,7 @@ void QucsView::slotScrollDown()
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void QucsView::slotScrollLeft()
 {
+  editText->setHidden(true);  // disable edit of component property
   ScrollLeft(horizontalScrollBar()->lineStep());
   viewport()->repaint();   // because QScrollView thinks nothing has changed
   drawn = false;
@@ -2301,6 +2355,7 @@ void QucsView::slotScrollLeft()
 // Is called if the scroll arrow of the ScrollBar is pressed.
 void QucsView::slotScrollRight()
 {
+  editText->setHidden(true);  // disable edit of component property
   ScrollRight(-horizontalScrollBar()->lineStep());
   viewport()->repaint();   // because QScrollView thinks nothing has changed
   drawn = false;
@@ -2310,65 +2365,101 @@ void QucsView::slotScrollRight()
 // Is called if return is pressed in the component text QLineEdit.
 void QucsView::slotApplyCompText()
 {
-  MAx3++;  // number of current property
-  
   QString s;
   QucsDoc *d = Docs.current();
   QFont f = QucsSettings.font;
-//  f.setPointSizeFloat(10.0);
-  QFontMetrics metrics(f);
+  f.setPointSizeFloat( float(d->Scale) * float(f.pointSize()) );
+  editText->setFont(f);
 
+  Property  *pp = 0;
   Component *pc = (Component*)focusElement;
+  if(!pc) return;  // should never happen
   MAx1 = pc->cx + pc->tx;
-  MAy1 = pc->cy + pc->ty + MAx3*metrics.lineSpacing();
+  MAy1 = pc->cy + pc->ty;
 
-  if(MAx3 > 0) {   // search for next property
-    int z=1;
-    Property *pp = pc->Props.first();
-    while((z < MAx3) && pp) {
-      if(pp->display)  z++;
-      pp = pc->Props.next();
+  int z, n=0;  // "n" is number of property on screnn
+  pp = pc->Props.first();
+  for(z=MAx3; z>0; z--) {  // calculate "n"
+    if(!pp) {  // should never happen
+      editText->setHidden(true);
+      return;
     }
-    if(pp) {
-      s = pp->Value;
-      MAx1 += metrics.width(pp->Name+"=");
-    }
-  
-    // apply last property to the component
-    if(!editText->isHidden()) {   // was return pressed ?
-      if(MAx3 == 1) {   // was component name applied ?
-        if(pc->Name != editText->text()) {
-          pc->Name = editText->text();
-          d->setChanged(true, true, 'p');  // only one undo state
-        }
-      }
-      else {  // property was applied
-        if(pp) pp = pc->Props.prev();
-	else pp = pc->Props.last();
-        if(pp->Value != editText->text()) {
-          pp->Value = editText->text();
-          d->setChanged(true, true, 'p');  // only one undo state
-        }
-      }
-    }
+    if(pp->display) n++;   // is visible ?
+    pp = pc->Props.next();
   }
+  
+  pp = 0;
+  if(MAx3 > 0)  pp = pc->Props.at(MAx3-1);   // current property
   else s = pc->Name;
 
-
-  if(s.isEmpty()) {   // was already last property ?
-    editText->setHidden(true);
-    return;
-  }
   
+  if(!editText->isHidden()) {   // is called the first time ?
+    // no -> apply value to current property
+    if(MAx3 == 0) {   // component name ?
+      Component *pc2;
+      if(!editText->text().isEmpty())
+        if(pc->Name != editText->text()) {
+          for(pc2 = d->Comps->first(); pc2!=0; pc2 = d->Comps->next())
+            if(pc2->Name == editText->text())
+              break;  // found component with the same name ?
+          if(!pc2) {
+            pc->Name = editText->text();
+            d->setChanged(true, true, 'p');  // only one undo state
+          }
+        }
+    }
+    else if(pp) {  // property was applied
+      if(pp->Value != editText->text()) {
+        pp->Value = editText->text();
+        if(MAx3 == 1)  d->setComponentNumber(pc); // number for sources, ports
+        d->setChanged(true, true, 'p');  // only one undo state
+      }
+    }
+
+    n++;     // next row on screen
+    MAx3++;  // next property
+    pp = pc->Props.at(MAx3-1);  // search for next property
+
+    if(!pp) {     // was already last property ?
+      editText->setHidden(true);
+      return;
+    }
+
+
+    while(!pp->display) {  // search for next visible property
+      MAx3++;  // next property
+      pp = pc->Props.next();
+      if(!pp) {     // was already last property ?
+        editText->setHidden(true);
+        return;
+      }
+    }
+  }
+
+
   contentsToViewport(int(d->Scale * double(MAx1 - d->ViewX1)),
 			 int(d->Scale * double(MAy1 - d->ViewY1)),
 			 MAx2, MAy2);
+  editText->setReadOnly(false);
+  if(pp) {
+    s = pp->Value;
+    MAx2 += editText->fontMetrics().width(pp->Name+"=");
+    if(pp->Description.find('[') >= 0)  // is selection list ?
+      editText->setReadOnly(true);
+  }
+  z = editText->fontMetrics().lineSpacing();
+  MAy2 += n*z;
   editText->move(QPoint(MAx2, MAy2));
   editText->setText(s);
-  QSize r = editText->size();
-  r.setHeight(metrics.lineSpacing());
-  editText->resize(r);
+  editText->resize(editText->fontMetrics().width(s)+3*z, z);
   editText->setFocus();
   editText->selectAll();
   editText->setHidden(false);
+}
+
+// -----------------------------------------------------------
+// Hides the edit for component property. Called e.g. if QLineEdit lost focus.
+void QucsView::slotHideEdit()
+{
+  editText->setHidden(true);
 }

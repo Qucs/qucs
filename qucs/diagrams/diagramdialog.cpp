@@ -57,6 +57,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   defaultDataSet = _DataSet;
   setCaption(tr("Edit Diagram Properties"));
   changed = false;
+  transfer = false;  // have changes be applied ? (used by "Cancel")
   toTake = false;   // double-clicked variable be inserted into graph list ?
 
   Expr.setPattern("[^\"]+");
@@ -64,6 +65,31 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   ValInteger = new QIntValidator(0, 360, this);
   ValDouble  = new QDoubleValidator(-1e200, 1e200, 6, this);
 
+  QString NameY, NameZ;
+  if((Diag->Name == "Rect") || (Diag->Name == "Curve")) {
+    NameY = tr("left Axis");
+    NameZ = tr("right Axis");
+  }
+  else if(Diag->Name == "Polar") {
+    NameY = tr("y-Axis");
+  }
+  else if((Diag->Name == "Smith") || (Diag->Name == "ySmith")) {
+    NameY = tr("y-Axis");
+  }
+  else if(Diag->Name == "PS") {
+    NameY = tr("smith Axis");
+    NameZ = tr("polar Axis");
+  }
+  else if(Diag->Name == "SP") {
+    NameY = tr("polar Axis");
+    NameZ = tr("smith Axis");
+  }
+  else if(Diag->Name == "Rect3D") {
+    NameY = tr("y-Axis");
+    NameZ = tr("z-Axis");
+  }
+
+  
   all = new QVBoxLayout(this); // to provide neccessary size
   QTabWidget *t = new QTabWidget(this);
   all->addWidget(t);
@@ -138,18 +164,8 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       Label4 = new QLabel(tr("y-Axis:"),Box3);
       Label4->setEnabled(false);
       yAxisBox = new QComboBox(Box3);
-      if(Diag->Name == "PS") {
-        yAxisBox->insertItem(tr("smith Axis"));
-        yAxisBox->insertItem(tr("polar Axis"));
-      }
-      else if(Diag->Name == "SP") {
-        yAxisBox->insertItem(tr("polar Axis"));
-        yAxisBox->insertItem(tr("smith Axis"));
-      }
-      else {
-        yAxisBox->insertItem(tr("left Axis"));
-        yAxisBox->insertItem(tr("right Axis"));
-      }
+      yAxisBox->insertItem(NameY);
+      yAxisBox->insertItem(NameZ);
       yAxisBox->setEnabled(false);
       connect(yAxisBox, SIGNAL(activated(int)), SLOT(slotSetYAxis(int)));
       Box3->setStretchFactor(new QWidget(Box3), 5); // stretchable placeholder
@@ -205,7 +221,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Row++;
 
     gp->addMultiCellWidget(
-		new QLabel(tr("left y-Axis Label:"), Tab2), Row,Row,0,0);
+		new QLabel(NameY+" "+tr("Label:"), Tab2), Row,Row,0,0);
     ylLabel = new QLineEdit(Tab2);
     ylLabel->setValidator(Validator);
     gp->addMultiCellWidget(ylLabel, Row,Row,1,2);
@@ -213,56 +229,60 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
     if((Diag->Name != "Smith") && (Diag->Name != "Polar")) {
       gp->addMultiCellWidget(
-		new QLabel(tr("right y-Axis Label:"), Tab2), Row,Row,0,0);
+		new QLabel(NameZ +" "+tr("Label:"), Tab2), Row,Row,0,0);
       yrLabel = new QLineEdit(Tab2);
       yrLabel->setValidator(Validator);
       gp->addMultiCellWidget(yrLabel, Row,Row,1,2);
       Row++;
     }
 
-    GridOn = new QCheckBox(tr("show Grid"), Tab2);
-    connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
-    gp->addMultiCellWidget(GridOn, Row,Row,0,2);
-    Row++;
+    if(Diag->Name != "Rect3D") {
+      GridOn = new QCheckBox(tr("show Grid"), Tab2);
+      gp->addMultiCellWidget(GridOn, Row,Row,0,2);
+      Row++;
 
-    GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
-    gp->addMultiCellWidget(GridLabel1, Row,Row,0,0);
-    GridColorButt = new QPushButton("        ",Tab2);
-    connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
-    gp->addMultiCellWidget(GridColorButt, Row,Row,1,2);
-    Row++;
+      GridLabel1 = new QLabel(tr("Grid Color:"),Tab2);
+      gp->addMultiCellWidget(GridLabel1, Row,Row,0,0);
+      GridColorButt = new QPushButton("        ",Tab2);
+      connect(GridColorButt, SIGNAL(clicked()), SLOT(slotSetGridColor()));
+      gp->addMultiCellWidget(GridColorButt, Row,Row,1,2);
+      Row++;
+      GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
 
-    GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
-    gp->addMultiCellWidget(GridLabel2, Row,Row,0,0);
-    GridStyleBox = new QComboBox(Tab2);
-    GridStyleBox->insertItem(tr("solid line"));
-    GridStyleBox->insertItem(tr("dash line"));
-    GridStyleBox->insertItem(tr("dot line"));
-    GridStyleBox->insertItem(tr("dash dot line"));
-    GridStyleBox->insertItem(tr("dash dot dot line"));
-    gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
-    Row++;
+      GridLabel2 = new QLabel(tr("Grid Style: "), Tab2);
+      gp->addMultiCellWidget(GridLabel2, Row,Row,0,0);
+      GridStyleBox = new QComboBox(Tab2);
+      GridStyleBox->insertItem(tr("solid line"));
+      GridStyleBox->insertItem(tr("dash line"));
+      GridStyleBox->insertItem(tr("dot line"));
+      GridStyleBox->insertItem(tr("dash dot line"));
+      GridStyleBox->insertItem(tr("dash dot dot line"));
+      gp->addMultiCellWidget(GridStyleBox, Row,Row,1,2);
+      Row++;
+      GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
+    
+      GridOn->setChecked(Diag->xAxis.GridOn);
+      if(!Diag->xAxis.GridOn) slotSetGridBox(QButton::Off);
+      connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
+    }
+    else  (void*)GridOn = (void*)GridColorButt = (void*)GridStyleBox = 0;
 
     // ...........................................................
     // transfer the diagram properties to the dialog
     xLabel->setText(Diag->xAxis.Label);
     ylLabel->setText(Diag->yAxis.Label);
     if(yrLabel)  yrLabel->setText(Diag->zAxis.Label);
-    GridOn->setChecked(Diag->xAxis.GridOn);
-    if(!Diag->xAxis.GridOn) slotSetGridBox(QButton::Off);
-    GridColorButt->setPaletteBackgroundColor(Diag->GridPen.color());
-    GridStyleBox->setCurrentItem(Diag->GridPen.style()-1);
 
-    if((Diag->Name == "Rect") || (Diag->Name == "Curve")) {
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve")) {
       GridLogX = new QCheckBox(tr("logarithmical X Axis Grid"), Tab2);
       gp->addMultiCellWidget(GridLogX, Row,Row,0,2);
       Row++;
 
-      GridLogY = new QCheckBox(tr("logarithmical left Y Axis Grid"), Tab2);
+      GridLogY = new QCheckBox(tr("logarithmical")+" "+NameY+" "+tr("Grid"), Tab2);
       gp->addMultiCellWidget(GridLogY, Row,Row,0,2);
       Row++;
 
-      GridLogZ = new QCheckBox(tr("logarithmical right Y Axis Grid"), Tab2);
+      GridLogZ = new QCheckBox(tr("logarithmical")+" "+NameZ+" "+tr("Grid"), Tab2);
       gp->addMultiCellWidget(GridLogZ, Row,Row,0,2);
       Row++;
 
@@ -271,9 +291,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       GridLogX->setChecked(Diag->xAxis.log);
       GridLogY->setChecked(Diag->yAxis.log);
       GridLogZ->setChecked(Diag->zAxis.log);
-    }
-    else {
-      GridLogX = GridLogY = GridLogZ = 0;
+
 
       if(Diag->Name == "Rect3D") {
 	gp->addWidget(new QLabel(tr("Rotation around x-Axis:"), Tab2), Row,0);
@@ -324,6 +342,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
         rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
       }
     }
+    else GridLogX = GridLogY = GridLogZ = 0;
 
     t->addTab(Tab2, tr("Properties"));
 
@@ -355,12 +374,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
 
     QHGroupBox *axisY;
-    if(Diag->Name == "PS")
-      axisY = new QHGroupBox(tr("Smith Axis"), Tab3);
-    else if(Diag->Name == "SP")
-      axisY = new QHGroupBox(tr("Polar Axis"), Tab3);
-    else
-      axisY = new QHGroupBox(tr("left y-Axis"), Tab3);
+    axisY = new QHGroupBox(NameY, Tab3);
 
     QVBox *VBox5 = new QVBox(axisY);
     VBox5->setStretchFactor(new QWidget(VBox5),5); // stretchable placeholder
@@ -386,12 +400,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
 
     QHGroupBox *axisZ;
-    if(Diag->Name == "PS")
-      axisZ = new QHGroupBox(tr("Polar Axis"), Tab3);
-    else if(Diag->Name == "SP")
-      axisZ = new QHGroupBox(tr("Smith Axis"), Tab3);
-    else
-      axisZ = new QHGroupBox(tr("right y-Axis"), Tab3);
+    axisZ = new QHGroupBox(NameZ, Tab3);
 
     QVBox *VBox9 = new QVBox(axisZ);
     VBox9->setStretchFactor(new QWidget(VBox9),5); // stretchable placeholder
@@ -701,8 +710,7 @@ void DiagramDialog::slotNewGraph()
 void DiagramDialog::slotOK()
 {
   slotApply();
-  if(changed) done(QDialog::Accepted);
-  else done(QDialog::Rejected);
+  slotCancel();
 }
 
 // --------------------------------------------------------------------------
@@ -724,16 +732,19 @@ void DiagramDialog::slotApply()
       Diag->yAxis.Label = ylLabel->text();
       changed = true;
     }
-    if(Diag->xAxis.GridOn != GridOn->isChecked()) {
+    
+    if(GridOn) if(Diag->xAxis.GridOn != GridOn->isChecked()) {
       Diag->xAxis.GridOn = GridOn->isChecked();
       Diag->yAxis.GridOn = GridOn->isChecked();
       changed = true;
     }
-    if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
+    if(GridColorButt)
+      if(Diag->GridPen.color() != GridColorButt->paletteBackgroundColor()) {
       Diag->GridPen.setColor(GridColorButt->paletteBackgroundColor());
       changed = true;
     }
-    if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentItem()+1)) {
+    if(GridStyleBox)
+      if(Diag->GridPen.style()!=(Qt::PenStyle)(GridStyleBox->currentItem()+1)) {
       Diag->GridPen.setStyle((Qt::PenStyle)(GridStyleBox->currentItem()+1));
       changed = true;
     }
@@ -852,6 +863,7 @@ void DiagramDialog::slotApply()
   Diag->loadGraphData(defaultDataSet);
   ((QucsView*)parent())->viewport()->repaint();
   copyDiagramGraphs();
+  if(changed) transfer = true;   // changes have been applied ?
 }
 
 
@@ -861,7 +873,8 @@ void DiagramDialog::slotCancel()
 {
 //  Diag->loadGraphData(defaultDataSet);
 //  ((QucsView*)parent())->viewport()->repaint();
-  reject();
+  if(transfer) done(QDialog::Accepted);
+  else done(QDialog::Rejected);
 }
 
 // --------------------------------------------------------------------------

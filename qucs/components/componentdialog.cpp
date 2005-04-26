@@ -575,7 +575,7 @@ void ComponentDialog::slotApplyInput()
 
   bool display;
   Property *pp = Comp->Props.first();
-  // apply all the new property values, i.e. rebuild the properties
+  // apply all the new property values
   if(editSim) {
     display = checkSim->isChecked();
     if(pp->display != display) {

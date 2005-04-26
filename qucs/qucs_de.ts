@@ -388,19 +388,19 @@
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation>linke y-Achsenbezeichnung:</translation>
+        <translation type="obsolete">linke y-Achsenbezeichnung:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation>rechte y-Achsenbezeichnung:</translation>
+        <translation type="obsolete">rechte y-Achsenbezeichnung:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation>logarithmische Y-Achseneinteilung links</translation>
+        <translation type="obsolete">logarithmische Y-Achseneinteilung links</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation>logarithmische Y-Achseneinteilung rechts</translation>
+        <translation type="obsolete">logarithmische Y-Achseneinteilung rechts</translation>
     </message>
     <message>
         <source>smith Axis</source>
@@ -420,11 +420,11 @@
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation>linke y-Achse</translation>
+        <translation type="obsolete">linke y-Achse</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation>rechte y-Achse</translation>
+        <translation type="obsolete">rechte y-Achse</translation>
     </message>
     <message>
         <source>Limits</source>
@@ -444,11 +444,11 @@
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation>Smith-Achse</translation>
+        <translation type="obsolete">Smith-Achse</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation>polare Achse</translation>
+        <translation type="obsolete">polare Achse</translation>
     </message>
     <message>
         <source>number</source>
@@ -477,6 +477,26 @@
     <message>
         <source>Rotation around x-Axis:</source>
         <translation>Drehung um die x-Achse:</translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished">Gitternetz</translation>
     </message>
 </context>
 <context>
