@@ -1390,20 +1390,20 @@ voltage transformation ratio (number of turns) $T_1$ and $T_2$,
 respectively, writes as follows.
 
 \begin{equation}
-denom = T_1^2+T_2^2+T_1^2\cdot T_2^2
+denom = 1+T_1^2+T_2^2
 \end{equation}
 \begin{eqnarray}
-S_{11} = S_{66} = \frac{T_2^2}{denom}  &  \qquad S_{16} = S_{61} = 1-S_{11} \\
-S_{44} = S_{55} = \frac{T_1^2}{denom}  &  \qquad S_{45} = S_{54} = 1-S_{44} \\
-S_{22} = S_{33} = \frac{T_1^2\cdot T_2^2}{denom}  &  \qquad S_{23} = S_{32} = 1-S_{22}
+S_{11} = S_{66} = \frac{T_1^2}{denom}  &  \qquad S_{16} = S_{61} = 1-S_{11} \\
+S_{44} = S_{55} = \frac{T_2^2}{denom}  &  \qquad S_{45} = S_{54} = 1-S_{44} \\
+S_{22} = S_{33} = \frac{1}{denom}  &  \qquad S_{23} = S_{32} = 1-S_{22}
 \end{eqnarray}
 \begin{equation}
 S_{12} = S_{21} = -S_{13} = -S_{31} = -S_{26} = -S_{62} = S_{36} = S_{63}
-       = \frac{T_1\cdot T_2^2}{denom}
+       = \frac{T_1}{denom}
 \end{equation}
 \begin{equation}
 -S_{24} = -S_{42} = S_{25} = S_{52} = S_{34} = S_{43} = -S_{35} = -S_{53}
-       = \frac{T_1^2\cdot T_2}{denom}
+       = \frac{T_2}{denom}
 \end{equation}
 \begin{equation}
 -S_{14} = -S_{41} = S_{15} = S_{51} = S_{46} = S_{64} = -S_{56} = -S_{65}
