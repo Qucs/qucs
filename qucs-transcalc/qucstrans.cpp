@@ -316,7 +316,7 @@ QucsTranscalc::QucsTranscalc() {
   QHGroupBox * physical = new QHGroupBox (tr("Physical Parameters"), vr);
   createPropItems (physical, TRANS_PHYSICAL);
 
-  // analyze/sythesize buttons
+  // analyze/synthesize buttons
   QHBox * h2 = new QHBox (vr);
   QPushButton * analyze = new QPushButton (tr("Analyze"), h2);
   QToolTip::add (analyze, tr("Derive Electrical Parameters"));
@@ -458,8 +458,7 @@ void QucsTranscalc::createPropItem (QVBox ** parentRows, TransValue * val,
   QLabel * l;
   QLineEdit * e;
   QComboBox * c;
-  QRegExp * rx = new QRegExp ("[0-9+\\-eE\\.]+", this);
-  QRegExpValidator * v = new QRegExpValidator (*rx, this);
+  QDoubleValidator * v = new QDoubleValidator (this);
 
   // name label
   l = new QLabel (val->name, parentRows[0]);

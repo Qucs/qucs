@@ -708,19 +708,15 @@
     </message>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter ist ein Programm zur Synthese von Filtern.  Um eine Filterstruktur zu erzeugen, müssen einfach die Parameter eingegeben werden und der grosse Knopf am unteren Ende des Hauptfensters gedrückt werden.  Danach wird der Filter sofort berechnet und in die Zwischenablage kopiert.  Jetzt wechselt man zu Qucs, öffnet ein leeres Dokument und drückt STRG-V (aus der Zwischenablage kopieren).  Der Filterschaltkreis kann jetzt eingefügt und simuliert werden.  Viel Spass dabei!</translation>
     </message>
     <message>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to sythesize physical parameters of the required transmission line.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die verfügbaren Leitungsarten sind: Mikrostreifenleitung, Hohlleiter, Koaxialkabel und gekoppelte Mikrostreifen.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -728,7 +724,11 @@
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsTranscalc ist ein Analyse- und Synthese-Werkzeug zur Berechnung der elektrischen und physikalischen Eigenschaften verschiedener Arten von HF- und Mikrowellen-Leitungen.</translation>
+    </message>
+    <message>
+        <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
+        <translation>Für jede Art von Leitung können - mit Hilfe von Dialogen - Werte für verschiedene Parameter eingegeben werden, und entweder deren elektrische Eigenschaften berechnet werden oder aus den elektrischen Vorgaben die physikalischen Parameter der ausgewählten Leitungsart synthetisiert werden.</translation>
     </message>
 </context>
 <context>

@@ -40,7 +40,7 @@ HelpDialog::HelpDialog(QWidget *parent)
        tr("For each type of transmission line, using dialog boxes, you can "
        "enter values for the various parameters, and either calculate its "
        "electrical properties, or use the given electrical requirements to "
-       "sythesize physical parameters of the required transmission line.")+
+       "synthesize physical parameters of the required transmission line.")+
        "\n\n"+
        tr("Available transmission lines are: Microstrip, Rectangular "
       "Waveguide, Coaxial Line and Coupled Microstrips."));

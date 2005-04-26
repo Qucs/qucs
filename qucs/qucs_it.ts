@@ -723,10 +723,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to sythesize physical parameters of the required transmission line.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -736,6 +732,10 @@
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
