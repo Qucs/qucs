@@ -106,7 +106,7 @@ public:
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;
   QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
-  bool changed, toTake;
+  bool changed, transfer, toTake;
   QPtrList<Graph>  Graphs;
 };
 

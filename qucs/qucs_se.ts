@@ -339,14 +339,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>left y-Axis Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>right y-Axis Label:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>show Grid</source>
         <translation type="unfinished"></translation>
     </message>
@@ -368,14 +360,6 @@
     </message>
     <message>
         <source>logarithmical X Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logarithmical left Y Axis Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>logarithmical right Y Axis Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -403,23 +387,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Smith Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polar Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>left y-Axis</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>right y-Axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -448,6 +416,26 @@
     </message>
     <message>
         <source>Rotation around x-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

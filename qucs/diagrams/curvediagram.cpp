@@ -27,9 +27,8 @@ CurveDiagram::CurveDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
 {
   x1 = 10;      // position of label text
   y1 = y3 = 33;
-  x2 = 240;    // initial size of diagram
-  y2 = 160;
-  x3 = 247;    // with some distance for right axes text
+  x2 = y2 = 200;    // initial size of diagram
+  x3 = 207;    // with some distance for right axes text
 
   Name = "Curve";
   calcDiagram();

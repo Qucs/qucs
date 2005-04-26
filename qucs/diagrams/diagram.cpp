@@ -420,20 +420,24 @@ void Diagram::calcData(Graph *g)
   if(g->Points != 0) { free(g->Points);  g->Points = 0; }
   if(Name[0] == 'T')  return;   // no graph within tabulars
 
+  double *px;
+  double *py = 0;
+  double *pz = g->cPointsY;
+  if(!pz)  return;
   if(g->cPointsX.count() < 1) return;
+
+  int dx, dy, xtmp, ytmp, tmp, i, z, Counter=2;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
   int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
   int *p_end;
   g->Points = p_end = p;
   p_end += Size - 5;   // limit of buffer
 
-  int dx, dy, xtmp, ytmp, tmp, i, z, Counter=2;
-  double *px;
-  double *py = 0;
-  double *pz = g->cPointsY;
-  if(!pz)  return;
-
-  if(g->countY > 1)  if(Name == "Rect3D")  py = g->cPointsX.at(1)->Points;
+  double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
+  if(Name == "Rect3D") {
+    if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
+    else  py = &Dummy;
+  }
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
@@ -458,23 +462,21 @@ void Diagram::calcData(Graph *g)
 	}
 	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
 	*(p++) = -10;
-//qDebug("s: %d/%d, %d/%d", *(p-4), *(p-3), *(p-2), *(p-1));
-
-//	if(py)  if(py - g->cPointsX.at(1)->Points) {
 	py++;   // because of Rect3D
-//	}
       }
 /*qDebug("\n****** p=%p", p);
 for(int zz=60; zz>0; zz-=2)
   qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
 
-      if(Name == "Rect3D") {
-	px = g->cPointsX.getFirst()->Points;
+      if(Name == "Rect3D") if(g->countY > 1) {
+	DataX *pD = g->cPointsX.first();
+	px = pD->Points;
 	pz = g->cPointsY;
-	dx = g->cPointsX.first()->count;
-	dy = g->cPointsX.next()->count;
+	dx = pD->count;
+	pD = g->cPointsX.next();
+	dy = pD->count;
 	for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
-	  py = g->cPointsX.at(1)->Points;
+	  py = pD->Points;
 	  calcCoordinate(px, pz, py, p, p+1, 0);
 	  p += 2;
 	  px--;  // back to the current x coordinate
@@ -482,7 +484,7 @@ for(int zz=60; zz>0; zz-=2)
 	  pz += 2*(dx-1);  // next z coordinate
 	  for(z=dy-1; z>0; z--) {  // every point
 	    FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	    calcCoordinate(px, pz, py, p, p+1, pa);
+	    calcCoordinate(px, pz, py, p, p+1, 0);
 	    p += 2;
 	    if(Counter >= 2)   // clipping only if an axis is manual
 	      rectClip(p);
@@ -525,6 +527,7 @@ for(int zz=120; zz>0; zz-=2)
 	  }
 	}
 	*(p++) = -10;
+	py++;   // because of Rect3D
       }
       *p = -100;
 /*qDebug("\n******");
@@ -588,7 +591,81 @@ for(int zz=0; zz<60; zz+=2)
     if(*(p-3) == -2)
       p -= 3;  // no single point after "no stroke"
     *(p++) = -10;
+    py++;   // because of Rect3D
   } // of y loop
+
+
+
+ if(Name == "Rect3D") if(g->countY > 1) {
+  DataX *pD = g->cPointsX.first();
+  px = pD->Points;
+  pz = g->cPointsY;
+  int xlen = pD->count;
+  pD = g->cPointsX.next();
+  for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+    Flag = 1;
+    dist = -Stroke;
+    py = pD->Points;
+    calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
+    *(p++) = xtmp;
+    *(p++) = ytmp;
+    Counter = 1;
+    px--;  // back to the current x coordinate
+    py++;  // next y coordinate
+    pz += 2*(xlen-1);  // next z coordinate
+    for(z=pD->count-1; z>0; z--) {  // every point
+      dx = xtmp;
+      dy = ytmp;
+      calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
+      px--;  // back to the current x coordinate
+      py++;  // next y coordinate
+      pz += 2*(xlen-1);  // next z coordinate
+
+      dx = xtmp - dx;
+      dy = ytmp - dy;
+      dist += sqrt(double(dx*dx + dy*dy)); // distance between points
+      if(Flag == 1) if(dist <= 0.0) {
+	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+
+	*(p++) = xtmp;    // if stroke then save points
+	*(p++) = ytmp;
+	if((++Counter) >= 2)  clip(p);
+	continue;
+      }
+      alpha = atan2(double(dy), double(dx));   // slope for interpolation
+      while(dist > 0) {   // stroke or space finished ?
+	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+
+	*(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
+	*(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+	if((++Counter) >= 2)  clip(p);
+
+        if(Flag == 0) {
+          dist -= Stroke;
+          if(dist <= 0) {
+	    *(p++) = xtmp;  // don't forget point after ...
+	    *(p++) = ytmp;  // ... interpolated point
+	    if((++Counter) >= 2)  clip(p);
+          }
+        }
+        else {
+	  dist -= Space;
+	  if(*(p-3) < 0)  p -= 2;
+	  else *(p++) = -2;  // value for interrupt stroke
+	  if(Counter < 0)  Counter = -50000;   // if auto-scale
+	  else  Counter = 0;
+        }
+        Flag ^= 1; // toggle between stroke and space
+      }
+    }
+    if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+    *(p++) = -10;
+
+    px++;   // next x coordinate
+    pz -= 2*xlen*pD->count - 2;  // next z coordinate
+  }
+ }
+
   *p = -100;
 }
 
@@ -1492,7 +1569,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 
   int phi, tPos;
   int tHeight = QucsSettings.font.pointSize() + 5;
-  if(!Below)  tPos = (y2>>1) + tHeight - 3;
+  if(!Below)  tPos = (y2>>1) + 3;
   else  tPos = (y2>>1) - tHeight + 3;
 
   int Prec;
