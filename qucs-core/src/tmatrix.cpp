@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.8 2005/02/28 09:28:45 raimi Exp $
+ * $Id: tmatrix.cpp,v 1.9 2005/04/26 06:27:33 raimi Exp $
  *
  */
 
@@ -137,7 +137,7 @@ void tmatrix<nr_type_t>::exchangeRows (int r1, int r2) {
   memcpy (s, &data[r1 * cols], len);
   memcpy (&data[r1 * cols], &data[r2 * cols], len);
   memcpy (&data[r2 * cols], s, len);
-  delete s;
+  delete[] s;
 }
 
 // The function swaps the given columns with each other.

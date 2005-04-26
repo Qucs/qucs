@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.20 2005/04/25 18:46:28 raimi Exp $
+ * $Id: matrix.cpp,v 1.21 2005/04/26 06:27:33 raimi Exp $
  *
  */
 
@@ -666,7 +666,7 @@ void matrix::exchangeRows (int r1, int r2) {
   memcpy (s, &data[r1 * cols], len);
   memcpy (&data[r1 * cols], &data[r2 * cols], len);
   memcpy (&data[r2 * cols], s, len);
-  delete s;
+  delete[] s;
 }
 
 // The function swaps the given columns with each other.
