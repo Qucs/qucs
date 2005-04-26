@@ -436,7 +436,7 @@ void QucsDoc::setComponentNumber(Component *c)
 
   // power sources and subcircuit ports have to be numbered
   int n=1;
-  QString s  = c->Props.getFirst()->Value;
+  QString s = c->Props.getFirst()->Value;
   QString cSign = c->Model;
   Component *pc;
   // First look, if the port number already exists.

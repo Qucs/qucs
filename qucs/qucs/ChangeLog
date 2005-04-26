@@ -1,3 +1,9 @@
+2005-04-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* edit component properties directly on the schematic
+	* many small bug fixes and improvements
+	* different line styles for 3D cartesian diagram
+
 2005-04-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new key: F2 -> Edit Subcircuit Symbol, CTRL-U -> Set on Grid

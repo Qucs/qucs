@@ -388,6 +388,7 @@ else {  // not logarithmical
   // Put axis labels into the text list.
 
   QSize s;
+  DataX *pD;
   Graph *pg;
   int x, y;
   int LineSpacing = metrics.lineSpacing();
@@ -408,7 +409,9 @@ else {  // not logarithmical
   if(xAxis.Label.isEmpty()) {
     // write all x labels ----------------------------------------
     for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      DataX *pD = pg->cPointsX.getFirst();
+      if(!pg->cPointsY)  continue;
+      if(!valid) continue;
+      pD = pg->cPointsX.getFirst();
       if(!pD) continue;
       x += int(double(LineSpacing)*sin_phi);
       y -= int(double(LineSpacing)*cos_phi);
@@ -441,23 +444,26 @@ else {  // not logarithmical
   x = coord[0] + int(double(y)*sin_phi);
   y = coord[1] - int(double(y)*cos_phi);
   if(yAxis.Label.isEmpty()) {
-    // draw left y-label for all graphs ------------------------------
+    // draw y-label for all graphs ------------------------------
     for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-      if(!pg->cPointsY)  continue;
       if(!valid) {
         delete[] pg->cPointsY;
         pg->cPointsY = 0;
-        continue;
       }
+      if(!pg->cPointsY)  continue;
+      pD = pg->cPointsX.at(1);
+      if(!pD) continue;
       x += int(double(LineSpacing)*sin_phi);
       y -= int(double(LineSpacing)*cos_phi);
-      s = metrics.size(0, pg->Var);
+      s = metrics.size(0, pD->Var);
       Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
                             y+int(double((z-s.width())>>1)*sin_phi),
-                            pg->Var, pg->Color, 12.0, cos_phi, sin_phi));
+                            pD->Var, pg->Color, 12.0, cos_phi, sin_phi));
     }
   }
   else {
+    x += int(double(LineSpacing)*sin_phi);
+    y -= int(double(LineSpacing)*cos_phi);
     s = metrics.size(0, yAxis.Label);
     Texts.append(new Text(x+int(double((z-s.width())>>1)*cos_phi),
                           y+int(double((z-s.width())>>1)*sin_phi),
@@ -478,7 +484,7 @@ else {  // not logarithmical
   x = coord[4] + int(double(y)*sin_phi);
   y = coord[5] - int(double(y)*cos_phi);
   if(zAxis.Label.isEmpty()) {
-    // draw right y-label for all graphs ------------------------------
+    // draw z-label for all graphs ------------------------------
     for(pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
       x += int(double(LineSpacing)*sin_phi);
       y -= int(double(LineSpacing)*cos_phi);

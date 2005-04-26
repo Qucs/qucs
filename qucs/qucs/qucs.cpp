@@ -228,8 +228,6 @@ void QucsApp::initCursorMenu()
 // It shows a menu.
 void QucsApp::slotShowContentMenu(QListViewItem *item, const QPoint& point, int)
 {
-  view->editText->setHidden(true); // disable text edit of component property
-
   if(item)
     if(item->parent() != 0)   // no component, but item "schematic", ...
       ContentMenu->popup(point);

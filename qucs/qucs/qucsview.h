@@ -100,6 +100,7 @@ public slots:
   void slotCursorUp();
   void slotCursorDown();
 
+  void slotHideEdit();
   void slotEditElement();
 
 public:

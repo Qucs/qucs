@@ -161,7 +161,7 @@ int Component::getTextSelected(int x_, int y_)
       // get width of text
       r = metrics.size(0, pp->Name+"="+pp->Value);
       if(x_ > r.width()) return -1;
-      return dy/r.height()-1;
+      return Props.at()+1;  // number the property
     }
   
   return -1;
