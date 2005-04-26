@@ -384,19 +384,19 @@
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation>Etiqueta del Eje Y izquierdo:</translation>
+        <translation type="obsolete">Etiqueta del Eje Y izquierdo:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation>Etiqueta del Eje Y derecho:</translation>
+        <translation type="obsolete">Etiqueta del Eje Y derecho:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation>Rejilla del Eje Y izquierdo logarítmico</translation>
+        <translation type="obsolete">Rejilla del Eje Y izquierdo logarítmico</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation>Rejilla del Eje Y derecho logarítmico</translation>
+        <translation type="obsolete">Rejilla del Eje Y derecho logarítmico</translation>
     </message>
     <message>
         <source>smith Axis</source>
@@ -416,11 +416,11 @@
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation>Eje Y izquierdo</translation>
+        <translation type="obsolete">Eje Y izquierdo</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation>Eje Y derecho</translation>
+        <translation type="obsolete">Eje Y derecho</translation>
     </message>
     <message>
         <source>Limits</source>
@@ -440,11 +440,11 @@
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation>Eje Smith</translation>
+        <translation type="obsolete">Eje Smith</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation>Eje Polar</translation>
+        <translation type="obsolete">Eje Polar</translation>
     </message>
     <message>
         <source>number</source>
@@ -473,6 +473,26 @@
     <message>
         <source>Rotation around x-Axis:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished">Rejilla</translation>
     </message>
 </context>
 <context>

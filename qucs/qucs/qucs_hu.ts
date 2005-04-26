@@ -404,19 +404,19 @@
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation>baloldali Y-tengely cimke:</translation>
+        <translation type="obsolete">baloldali Y-tengely cimke:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation>jobboldali Y-tengely cimke:</translation>
+        <translation type="obsolete">jobboldali Y-tengely cimke:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation>logaritmikus rácsozat a baloldali Y tengelyen</translation>
+        <translation type="obsolete">logaritmikus rácsozat a baloldali Y tengelyen</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation>logaritmikus rácsozat a jobboldali Y tengelyen</translation>
+        <translation type="obsolete">logaritmikus rácsozat a jobboldali Y tengelyen</translation>
     </message>
     <message>
         <source>x-Axis</source>
@@ -440,15 +440,15 @@
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation>Smith tengely</translation>
+        <translation type="obsolete">Smith tengely</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation>Poláris tengely</translation>
+        <translation type="obsolete">Poláris tengely</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation>baloldali Y-tengely</translation>
+        <translation type="obsolete">baloldali Y-tengely</translation>
     </message>
     <message>
         <source>number</source>
@@ -456,7 +456,7 @@
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation>baloldali Y-tengely</translation>
+        <translation type="obsolete">baloldali Y-tengely</translation>
     </message>
     <message>
         <source>Limits</source>
@@ -473,6 +473,26 @@
     <message>
         <source>Rotation around z-Axis:</source>
         <translation>Forgatás az Z-tengely körül:</translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished">Rács</translation>
     </message>
 </context>
 <context>

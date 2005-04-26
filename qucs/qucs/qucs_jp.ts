@@ -392,19 +392,19 @@
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation>左のY軸ラベル:</translation>
+        <translation type="obsolete">左のY軸ラベル:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation>右のY軸ラベル:</translation>
+        <translation type="obsolete">右のY軸ラベル:</translation>
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation>対数 Y軸グリッド(左)</translation>
+        <translation type="obsolete">対数 Y軸グリッド(左)</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation>対数 Y軸グリッド(右)</translation>
+        <translation type="obsolete">対数 Y軸グリッド(右)</translation>
     </message>
     <message>
         <source>x-Axis</source>
@@ -428,19 +428,19 @@
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation>スミス軸</translation>
+        <translation type="obsolete">スミス軸</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation>極座標</translation>
+        <translation type="obsolete">極座標</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation>左 Y軸</translation>
+        <translation type="obsolete">左 Y軸</translation>
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation>右 Y軸</translation>
+        <translation type="obsolete">右 Y軸</translation>
     </message>
     <message>
         <source>Limits</source>
@@ -473,6 +473,26 @@
     <message>
         <source>Rotation around x-Axis:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished">グリッド</translation>
     </message>
 </context>
 <context>

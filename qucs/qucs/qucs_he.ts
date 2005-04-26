@@ -341,11 +341,11 @@
     </message>
     <message>
         <source>left y-Axis Label:</source>
-        <translation>תוית ציר Y שמאלי:</translation>
+        <translation type="obsolete">תוית ציר Y שמאלי:</translation>
     </message>
     <message>
         <source>right y-Axis Label:</source>
-        <translation>תוית ציר Y ימני:</translation>
+        <translation type="obsolete">תוית ציר Y ימני:</translation>
     </message>
     <message>
         <source>show Grid</source>
@@ -373,11 +373,11 @@
     </message>
     <message>
         <source>logarithmical left Y Axis Grid</source>
-        <translation>רשת ציר Y שמאלי לוגריתמי</translation>
+        <translation type="obsolete">רשת ציר Y שמאלי לוגריתמי</translation>
     </message>
     <message>
         <source>logarithmical right Y Axis Grid</source>
-        <translation>רשת ציר Y ימני לוגריתמי</translation>
+        <translation type="obsolete">רשת ציר Y ימני לוגריתמי</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -405,15 +405,15 @@
     </message>
     <message>
         <source>Smith Axis</source>
-        <translation>ציר סמית&apos;</translation>
+        <translation type="obsolete">ציר סמית&apos;</translation>
     </message>
     <message>
         <source>Polar Axis</source>
-        <translation>ציר פולרי</translation>
+        <translation type="obsolete">ציר פולרי</translation>
     </message>
     <message>
         <source>left y-Axis</source>
-        <translation>ציר Y שמאלי</translation>
+        <translation type="obsolete">ציר Y שמאלי</translation>
     </message>
     <message>
         <source>number</source>
@@ -421,7 +421,7 @@
     </message>
     <message>
         <source>right y-Axis</source>
-        <translation>ציר Y ימני</translation>
+        <translation type="obsolete">ציר Y ימני</translation>
     </message>
     <message>
         <source>Limits</source>
@@ -450,6 +450,26 @@
     <message>
         <source>Rotation around x-Axis:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logarithmical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="unfinished">רשת</translation>
     </message>
 </context>
 <context>
