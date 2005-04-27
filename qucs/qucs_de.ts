@@ -480,23 +480,23 @@
     </message>
     <message>
         <source>y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>y-Achse</translation>
     </message>
     <message>
         <source>z-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>z-Achse</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschriftung:</translation>
     </message>
     <message>
         <source>logarithmical</source>
-        <translation type="unfinished"></translation>
+        <translation>logarithmisch</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished">Gitternetz</translation>
+        <translation>Gitternetz</translation>
     </message>
 </context>
 <context>
@@ -3652,7 +3652,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Fertig.</translation>
+        <translation>Bereit.</translation>
     </message>
     <message>
         <source>Open</source>
@@ -5668,7 +5668,7 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Fertig.</translation>
+        <translation>Bereit.</translation>
     </message>
     <message>
         <source>Toggle toolbar...</source>
@@ -6274,11 +6274,7 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation>Fertig.</translation>
-    </message>
-    <message>
-        <source>er_eff</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereit.</translation>
     </message>
     <message>
         <source>Conductor Losses</source>
@@ -6301,28 +6297,20 @@ Startet das Programm für die Leitungsberechnung</translation>
         <translation>TM-Moden</translation>
     </message>
     <message>
-        <source>er_eff_e</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>er_eff_o</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Conductor Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohmsche Verluste Gleichtakt</translation>
     </message>
     <message>
         <source>Conductor Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohmsche Verluste Gegentakt</translation>
     </message>
     <message>
         <source>Dielectric Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrische Verluste Gleichtakt</translation>
     </message>
     <message>
         <source>Dielectric Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Dielektrische Verluste Gegentakt</translation>
     </message>
     <message>
         <source>Relative Permittivity</source>
@@ -6414,11 +6402,11 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichtaktimpedanz</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Gegentaktimpedanz</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
@@ -6507,6 +6495,18 @@ Startet das Programm für die Leitungsberechnung</translation>
     <message>
         <source>Transmission line type not available.</source>
         <translation>Leitungstyp ist nicht verfügbar.</translation>
+    </message>
+    <message>
+        <source>ErEff</source>
+        <translation>Effektives Er</translation>
+    </message>
+    <message>
+        <source>ErEff Even</source>
+        <translation>Effektives Er Gleichtakt</translation>
+    </message>
+    <message>
+        <source>ErEff Odd</source>
+        <translation>Effektives Er Gegentakt</translation>
     </message>
 </context>
 <context>
