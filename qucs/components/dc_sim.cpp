@@ -64,7 +64,7 @@ DC_Sim::DC_Sim()
 		" [none, gMinStepping, SteepestDescent, LineSearch, Attenuation, SourceStepping]"));
   Props.append(new Property("Solver", "CroutLU", false,
 	QObject::tr("method for solving the circuit matrix")+
-	" [CroutLU, HouseholderQR, HouseholderLQ, DoolittleLU]"));
+	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ]"));
 }
 
 DC_Sim::~DC_Sim()
