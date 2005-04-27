@@ -367,12 +367,12 @@ QucsTranscalc::~QucsTranscalc()
    structures. */
 void QucsTranscalc::setupTranslations () {
   // calculated results
-  TransLineTypes[0].result[0].name = new QString(tr("er_eff"));
+  TransLineTypes[0].result[0].name = new QString(tr("ErEff"));
   TransLineTypes[0].result[1].name = new QString(tr("Conductor Losses"));
   TransLineTypes[0].result[2].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[0].result[3].name = new QString(tr("Skin Depth"));
 
-  TransLineTypes[1].result[0].name = new QString(tr("er_eff"));
+  TransLineTypes[1].result[0].name = new QString(tr("ErEff"));
   TransLineTypes[1].result[1].name = new QString(tr("Conductor Losses"));
   TransLineTypes[1].result[2].name = new QString(tr("Dielectric Losses"));
   TransLineTypes[1].result[3].name = new QString(tr("TE-Modes"));
@@ -383,8 +383,8 @@ void QucsTranscalc::setupTranslations () {
   TransLineTypes[2].result[2].name = new QString(tr("TE-Modes"));
   TransLineTypes[2].result[3].name = new QString(tr("TM-Modes"));
 
-  TransLineTypes[3].result[0].name = new QString(tr("er_eff_e"));
-  TransLineTypes[3].result[1].name = new QString(tr("er_eff_o"));
+  TransLineTypes[3].result[0].name = new QString(tr("ErEff Even"));
+  TransLineTypes[3].result[1].name = new QString(tr("ErEff Odd"));
   TransLineTypes[3].result[2].name = new QString(tr("Conductor Losses Even"));
   TransLineTypes[3].result[3].name = new QString(tr("Conductor Losses Odd"));
   TransLineTypes[3].result[4].name = new QString(tr("Dielectric Losses Even"));

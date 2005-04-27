@@ -4806,10 +4806,6 @@ Starts transmission line calculator</source>
         <translation type="unfinished">Prêt.</translation>
     </message>
     <message>
-        <source>er_eff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Conductor Losses</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4827,14 +4823,6 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>er_eff_e</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>er_eff_o</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5031,6 +5019,18 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Transmission line type not available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ErEff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ErEff Even</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ErEff Odd</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
