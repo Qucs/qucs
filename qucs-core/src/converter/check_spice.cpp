@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.11 2005-02-08 23:08:39 raimi Exp $
+ * $Id: check_spice.cpp,v 1.12 2005-04-29 06:49:08 raimi Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 
 #include "constants.h"
 #include "check_spice.h"
+#include "qucs_producer.h"
 
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
@@ -258,7 +259,7 @@ static struct define_t * spice_find_definition (char * n) {
 static struct node_t * spice_translate_node (char * node) {
   struct node_t * n = create_node ();
   if (!strcmp (node, "0")) { // translate ground node
-    n->node = strdup ("gnd");
+    n->node = strdup (qucs_gnd);
   }
   else {                     // translated other node than ground
     n->node = (char *) malloc (5 + strlen (node));
@@ -704,7 +705,7 @@ static void spice_translate_nodes (struct definition_t * def, int pass) {
     for (int n = spice_count_nodes (def); n < entry->nodes; n++) {
       node = create_node ();
       if (nodes->Default[n] == 0) { // default is the ground node
-	node->node = strdup ("gnd");
+	node->node = strdup (qucs_gnd);
       }
       else {                        // default is some other node
 	struct node_t * t = spice_get_node (def, nodes->Default[n]);
@@ -1326,6 +1327,25 @@ static void spice_free_values (struct definition_t * def) {
   }
 }
 
+/* Spice node lists. */
+struct node_t * spice_nodes = NULL;
+
+/* Collects the nodes specified in the PLOT and PRINT statement
+   marking them as potential "external" nodes. */
+static void spice_collect_external_nodes (struct definition_t * def) {
+  struct value_t * val;
+  foreach_value (def->values, val) {
+    if (val->hint & HINT_MSTART && val->next && val->ident[0] == 'V') {
+      struct node_t * n = spice_translate_node (val->next->ident);
+      if (!qucs_find_node (spice_nodes, n->node)) {
+	n->next = spice_nodes;
+	spice_nodes = n;
+      }
+      else spice_free_nodes (n);
+    }
+  }
+}
+
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
    resulting netlist. */
@@ -1480,6 +1500,11 @@ spice_post_translator (struct definition_t * root) {
       if ((val = spice_find_property (def->values, "ITL4")) != NULL) {
 	spice_add_property (root, "TR", "MaxIter", val->unit);
       }
+    }
+    // post-process print and plot statements
+    if (def->action && !strcmp (def->type, "PRINT") ||
+	!strcmp (def->type, "PLOT")) {
+      spice_collect_external_nodes (def);
     }
     // post-process untranslated netlist lines
     if (def->define == NULL) {

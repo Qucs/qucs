@@ -1,7 +1,7 @@
 /*
  * qucsconv.cpp - main converter program implementation
  *
- * Copyright (C) 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: qucsconv.cpp,v 1.4 2005-04-11 06:40:49 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.5 2005-04-29 06:49:08 raimi Exp $
  *
  */
 
@@ -74,6 +74,7 @@ int main (int argc, char ** argv) {
 	"  -if FORMAT      input data specification (e.g. spice)\n"
 	"  -of FORMAT      output data specification (e.g. qucs)\n"
 	"  -a, --noaction  do not include netlist actions in the output\n"
+	"  -g  GNDNODE     replace ground node\n"
 	"\nReport bugs to <" PACKAGE_BUGREPORT ">.\n", argv[0]);
       return 0;
     }
@@ -91,6 +92,9 @@ int main (int argc, char ** argv) {
     }
     else if (!strcmp (argv[i], "-a") || !strcmp (argv[i], "--noaction")) {
       qucs_actions = 0;
+    }
+    else if (!strcmp (argv[i], "-g")) {
+      if (argv[++i]) qucs_gnd = argv[i];
     }
   }
 
