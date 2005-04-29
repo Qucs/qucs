@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.h,v 1.5 2005/03/02 07:36:20 raimi Exp $
+ * $Id: check_spice.h,v 1.6 2005/04/29 06:49:08 raimi Exp $
  *
  */
 
@@ -45,6 +45,7 @@ __BEGIN_DECLS
 extern struct definition_t * definition_root;
 extern struct definition_t * subcircuit_root;
 extern char * spice_title;
+extern struct node_t * spice_nodes;
 
 /* Available functions of the checker. */
 int  spice_checker (void);

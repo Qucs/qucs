@@ -1,3 +1,14 @@
+2005-04-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Collecting potential external and overall
+	nodes in the netlist.
+
+	* qucs_producer.cpp: Printing node lists as comments.
+
+	* qucsconv.cpp: Added new command line option '-g' which can
+	be used to rename the 'gnd' node to some other name.  Useful
+	for subcircuit definitions.
+
 2005-03-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* Makefile.am:  Avoid re-generation of flex/bison files

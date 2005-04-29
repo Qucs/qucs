@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.h,v 1.3 2005/02/08 23:08:40 raimi Exp $
+ * $Id: qucs_producer.h,v 1.4 2005/04/29 06:49:08 raimi Exp $
  *
  */
 
@@ -28,8 +28,10 @@
 /* Externalize variables. */
 extern FILE * qucs_out;
 extern int    qucs_actions;
+extern char * qucs_gnd;
 
 /* Available functions of the checker. */
 void qucs_producer (void);
+int  qucs_find_node (struct node_t *, char *);
 
 #endif /* __QUCS_PRODUCER_H__ */
