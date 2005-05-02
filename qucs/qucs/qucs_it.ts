@@ -2625,6 +2625,34 @@ Usage:  qucsedit [-r] file
         <source>method for solving the circuit matrix</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>for transient simulation: inductance in Henry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>for transient simulation: capacitance in Farad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coplanar open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of gap at end of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coplanar short</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Short</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>

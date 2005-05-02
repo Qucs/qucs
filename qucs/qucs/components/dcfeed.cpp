@@ -43,6 +43,9 @@ dcFeed::dcFeed()
   ty = y2+4;
   Model = "DCFeed";
   Name  = "L";
+
+  Props.append(new Property("L", "1 uH", false,
+	QObject::tr("for transient simulation: inductance in Henry")));
 }
 
 dcFeed::~dcFeed()

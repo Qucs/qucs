@@ -1,6 +1,6 @@
 /***************************************************************************
                                 diagram.cpp
-                             -------------------
+                             -----------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003, 2004, 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -415,13 +415,12 @@ void Diagram::clip(int* &p)
   } \
 
 // ------------------------------------------------------------
+// g->Points must already be empty!!!
 void Diagram::calcData(Graph *g)
 {
-  if(g->Points != 0) { free(g->Points);  g->Points = 0; }
   if(Name[0] == 'T')  return;   // no graph within tabulars
 
   double *px;
-  double *py = 0;
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->cPointsX.count() < 1) return;
@@ -434,10 +433,9 @@ void Diagram::calcData(Graph *g)
   p_end += Size - 5;   // limit of buffer
 
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
-  if(Name == "Rect3D") {
+  double *py = &Dummy;
+  if(Name == "Rect3D")
     if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
-    else  py = &Dummy;
-  }
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
@@ -462,41 +460,47 @@ void Diagram::calcData(Graph *g)
 	}
 	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
 	*(p++) = -10;
-	py++;   // because of Rect3D
+	if(py != &Dummy) {   // more-dimensional Rect3D
+	  py++;
+	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
+	    py = g->cPointsX.at(1)->Points;
+	}
       }
 /*qDebug("\n****** p=%p", p);
 for(int zz=60; zz>0; zz-=2)
   qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
-
       if(Name == "Rect3D") if(g->countY > 1) {
-	DataX *pD = g->cPointsX.first();
-	px = pD->Points;
 	pz = g->cPointsY;
-	dx = pD->count;
-	pD = g->cPointsX.next();
-	dy = pD->count;
-	for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
-	  py = pD->Points;
-	  calcCoordinate(px, pz, py, p, p+1, 0);
-	  p += 2;
-	  px--;  // back to the current x coordinate
-	  py++;  // next y coordinate
-	  pz += 2*(dx-1);  // next z coordinate
-	  for(z=dy-1; z>0; z--) {  // every point
-	    FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
+	  DataX *pD = g->cPointsX.first();
+	  px = pD->Points;
+	  dx = pD->count;
+	  pD = g->cPointsX.next();
+	  dy = pD->count;
+	  for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+	    py = pD->Points;
 	    calcCoordinate(px, pz, py, p, p+1, 0);
 	    p += 2;
-	    if(Counter >= 2)   // clipping only if an axis is manual
-	      rectClip(p);
 	    px--;  // back to the current x coordinate
 	    py++;  // next y coordinate
 	    pz += 2*(dx-1);  // next z coordinate
-	  }
-	  if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-	  *(p++) = -10;
+	    for(z=dy-1; z>0; z--) {  // every point
+	      FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	      calcCoordinate(px, pz, py, p, p+1, 0);
+	      p += 2;
+	      if(Counter >= 2)   // clipping only if an axis is manual
+	        rectClip(p);
+	      px--;  // back to the current x coordinate
+	      py++;  // next y coordinate
+	      pz += 2*(dx-1);  // next z coordinate
+	    }
+	    if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+	    *(p++) = -10;
 
-	  px++;   // next x coordinate
-	  pz -= 2*dx*dy - 2;  // next z coordinate
+	    px++;   // next x coordinate
+	    pz -= 2*dx*dy - 2;  // next z coordinate
+	  }
+	  pz += 2*dx*(dy-1);
 	}
 /*qDebug("\n------ p=%p", p);
 for(int zz=120; zz>0; zz-=2)
@@ -527,7 +531,11 @@ for(int zz=120; zz>0; zz-=2)
 	  }
 	}
 	*(p++) = -10;
-	py++;   // because of Rect3D
+	if(py != &Dummy) {   // more-dimensional Rect3D
+	  py++;
+	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
+	    py = g->cPointsX.at(1)->Points;
+	}
       }
       *p = -100;
 /*qDebug("\n******");
@@ -591,78 +599,85 @@ for(int zz=0; zz<60; zz+=2)
     if(*(p-3) == -2)
       p -= 3;  // no single point after "no stroke"
     *(p++) = -10;
-    py++;   // because of Rect3D
+    if(py != &Dummy) {   // more-dimensional Rect3D
+      py++;
+      if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
+        py = g->cPointsX.at(1)->Points;
+    }
   } // of y loop
 
 
 
  if(Name == "Rect3D") if(g->countY > 1) {
-  DataX *pD = g->cPointsX.first();
-  px = pD->Points;
   pz = g->cPointsY;
-  int xlen = pD->count;
-  pD = g->cPointsX.next();
-  for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
-    Flag = 1;
-    dist = -Stroke;
-    py = pD->Points;
-    calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
-    *(p++) = xtmp;
-    *(p++) = ytmp;
-    Counter = 1;
-    px--;  // back to the current x coordinate
-    py++;  // next y coordinate
-    pz += 2*(xlen-1);  // next z coordinate
-    for(z=pD->count-1; z>0; z--) {  // every point
-      dx = xtmp;
-      dy = ytmp;
+  for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
+    DataX *pD = g->cPointsX.first();
+    px = pD->Points;
+    int xlen = pD->count;
+    pD = g->cPointsX.next();
+    for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+      Flag = 1;
+      dist = -Stroke;
+      py = pD->Points;
       calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
+      *(p++) = xtmp;
+      *(p++) = ytmp;
+      Counter = 1;
       px--;  // back to the current x coordinate
       py++;  // next y coordinate
       pz += 2*(xlen-1);  // next z coordinate
+      for(z=pD->count-1; z>0; z--) {  // every point
+        dx = xtmp;
+        dy = ytmp;
+        calcCoordinate(px, pz, py, &xtmp, &ytmp, 0);
+        px--;  // back to the current x coordinate
+        py++;  // next y coordinate
+        pz += 2*(xlen-1);  // next z coordinate
 
-      dx = xtmp - dx;
-      dy = ytmp - dy;
-      dist += sqrt(double(dx*dx + dy*dy)); // distance between points
-      if(Flag == 1) if(dist <= 0.0) {
-	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+        dx = xtmp - dx;
+        dy = ytmp - dy;
+        dist += sqrt(double(dx*dx + dy*dy)); // distance between points
+        if(Flag == 1) if(dist <= 0.0) {
+	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 
-	*(p++) = xtmp;    // if stroke then save points
-	*(p++) = ytmp;
-	if((++Counter) >= 2)  clip(p);
-	continue;
-      }
-      alpha = atan2(double(dy), double(dx));   // slope for interpolation
-      while(dist > 0) {   // stroke or space finished ?
-	FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	  *(p++) = xtmp;    // if stroke then save points
+	  *(p++) = ytmp;
+	  if((++Counter) >= 2)  clip(p);
+	  continue;
+        }
+        alpha = atan2(double(dy), double(dx));   // slope for interpolation
+        while(dist > 0) {   // stroke or space finished ?
+	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
 
-	*(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
-	*(p++) = ytmp - int(dist*sin(alpha) + 0.5);
-	if((++Counter) >= 2)  clip(p);
+	  *(p++) = xtmp - int(dist*cos(alpha) + 0.5); // linearly interpolate
+	  *(p++) = ytmp - int(dist*sin(alpha) + 0.5);
+	  if((++Counter) >= 2)  clip(p);
 
-        if(Flag == 0) {
-          dist -= Stroke;
-          if(dist <= 0) {
-	    *(p++) = xtmp;  // don't forget point after ...
-	    *(p++) = ytmp;  // ... interpolated point
-	    if((++Counter) >= 2)  clip(p);
+          if(Flag == 0) {
+            dist -= Stroke;
+            if(dist <= 0) {
+	      *(p++) = xtmp;  // don't forget point after ...
+	      *(p++) = ytmp;  // ... interpolated point
+	      if((++Counter) >= 2)  clip(p);
+            }
           }
+          else {
+	    dist -= Space;
+	    if(*(p-3) < 0)  p -= 2;
+	    else *(p++) = -2;  // value for interrupt stroke
+	    if(Counter < 0)  Counter = -50000;   // if auto-scale
+	    else  Counter = 0;
+          }
+          Flag ^= 1; // toggle between stroke and space
         }
-        else {
-	  dist -= Space;
-	  if(*(p-3) < 0)  p -= 2;
-	  else *(p++) = -2;  // value for interrupt stroke
-	  if(Counter < 0)  Counter = -50000;   // if auto-scale
-	  else  Counter = 0;
-        }
-        Flag ^= 1; // toggle between stroke and space
       }
-    }
-    if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-    *(p++) = -10;
+      if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+      *(p++) = -10;
 
-    px++;   // next x coordinate
-    pz -= 2*xlen*pD->count - 2;  // next z coordinate
+      px++;   // next x coordinate
+      pz -= 2*xlen*pD->count - 2;  // next z coordinate
+    }
+    pz += 2*xlen*(pD->count-1);
   }
  }
 
@@ -857,6 +872,7 @@ void Diagram::updateGraphData()
   int valid = calcDiagram();   // do not calculate graph data if invalid
 
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
+    if(pg->Points != 0) { free(pg->Points);  pg->Points = 0; }
     if((valid & (pg->yAxisNo+1)) != 0)
       calcData(pg);   // calculate screen coordinates
     else if(pg->cPointsY) { delete[] pg->cPointsY;  pg->cPointsY = 0; }

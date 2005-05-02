@@ -62,16 +62,28 @@ void Marker::initText(int n)
   Axis *pa;
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
-  double *num, *py = 0, *pz = pGraph->cPointsY + 2*n;
+  double *px, *py=0, *pz = pGraph->cPointsY + 2*n;
   Text = "";
   nVarPos = 0;
-  DataX *pD = pGraph->cPointsX.first();
 
+  int nn, m, x, y, d, dmin = INT_MAX;
+  DataX *pD = pGraph->cPointsX.first();
+  if(pGraph->cPointsX.next()) {   // only for 3D diagram
+    nn = pGraph->countY * pD->count;
+    if(n >= nn) {    // is on cross grid ?
+      n -= nn;
+      n /= pD->count;
+qDebug("n: %d", n);
+
+/*  px = pGraph->cPointsX.first()->Points;
+  py = pGraph->cPointsX.next()->Points;
+  pz = pGraph->cPointsY + 2*n
   // find exact marker position
-  int nn, x, y, d, dmin = INT_MAX;
   for(nn=0; nn<pD->count; nn++) {
-    num = pD->Points + nn;
-    Diag->calcCoordinate(num, pz, py, &x, &y, pa);
+    Diag->calcCoordinate(px, pz, py, &x, &y, pa);
+    px--;
+    py++;
+    pz += 2*(pD->count-1);
     x -= cx;
     y -= cy;
     d = x*x + y*y;
@@ -82,13 +94,38 @@ void Marker::initText(int n)
   }
   if(dmin == INT_MAX)
     n = n + nn - 1; // take last position
+*/
+
+    }
+    py = pGraph->cPointsX.current()->Points;
+    py += n / pD->count;
+  }
+
+  // find exact marker position
+  m  = pD->count-1;
+  px = pD->Points;
+  for(nn=0; nn<pD->count; nn++) {
+//    px = pD->Points + nn;
+    Diag->calcCoordinate(px, pz, py, &x, &y, pa);
+    x -= cx;
+    y -= cy;
+    d = x*x + y*y;
+    if(d < dmin) {
+      dmin = d;
+      m = nn;
+//      n = (n - n % pD->count) + nn;
+    }
+  }
+//  if(dmin == INT_MAX)
+//    n = n + nn - 1; // take last position
+  n += m;
 
   // gather text of all independent variables
   nn = n;
-  for(; pD!=0; pD = pGraph->cPointsX.next()) {
-    num = pD->Points + (nn % pD->count);
-    VarPos[nVarPos++] = *num;
-    Text += pD->Var + ": " + QString::number(*num,'g',Precision) + "\n";
+  for(pD = pGraph->cPointsX.first(); pD!=0; pD = pGraph->cPointsX.next()) {
+    px = pD->Points + (nn % pD->count);
+    VarPos[nVarPos++] = *px;
+    Text += pD->Var + ": " + QString::number(*px,'g',Precision) + "\n";
     nn /= pD->count;
   }
 
@@ -104,12 +141,12 @@ void Marker::initText(int n)
 	    break;
   }
 
-  num = VarPos;
-  Diag->calcCoordinate(num, pz, py, &cx, &cy, pa);
+  px = VarPos;
+  Diag->calcCoordinate(px, pz, py, &cx, &cy, pa);
 
   if(!Diag->insideDiagram(cx, cy))
     // if marker out of valid bounds, point to origin
-    if((Diag->Name != "Rect") && (Diag->Name != "Curve")) {
+    if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
       cx = Diag->x2 >> 1;
       cy = Diag->y2 >> 1;
     }
@@ -154,7 +191,13 @@ void Marker::createText()
   }
 
 
-  double *py = 0, *pz = (pGraph->cPointsY) + 2*n;
+  double *py=0, *pz = pGraph->cPointsY + 2*n;
+  pD = pGraph->cPointsX.first();
+  if(pGraph->cPointsX.next()) {
+    py = pGraph->cPointsX.current()->Points;   // only for 3D diagram
+    py += n / pD->count;
+  }
+
   Text += pGraph->Var + ": ";
   switch(numMode) {
     case 0: Text += complexRect(*pz, *(pz+1), Precision);
@@ -171,9 +214,10 @@ void Marker::createText()
   pp = &(VarPos[0]);
   Diag->calcCoordinate(pp, pz, py, &cx, &cy, pa);
 
+
   if(!Diag->insideDiagram(cx, cy))
     // if marker out of valid bounds, point to origin
-    if((Diag->Name != "Rect") && (Diag->Name != "Curve")) {
+    if((Diag->Name.left(4) != "Rect") && (Diag->Name != "Curve")) {
       cx = Diag->x2 >> 1;
       cy = Diag->y2 >> 1;
     }
@@ -190,7 +234,7 @@ void Marker::makeInvalid()
 {
   cx = 0;
   cy = 0;
-  if(Diag) if(Diag->Name != "Rect") if(Diag->Name != "Curve") {
+  if(Diag) if(Diag->Name.left(4) != "Rect") if(Diag->Name != "Curve") {
     cx = Diag->x2 >> 1;
     cy = Diag->y2 >> 1;
   }

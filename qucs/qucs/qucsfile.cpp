@@ -96,7 +96,7 @@ QString QucsFile::createClipboardFile()
   s += "<Paintings>\n";
   for(pp = Doc->Paints->first(); pp != 0; pp = Doc->Paints->next())
     if(pp->isSelected)
-      if(pp->Name != "PortSym ") {
+      if(pp->Name.at(0) != '.') {  // subcircuit specific -> do not copy
         s += "<"+pp->save()+">\n";  z++; }
   s += "</Paintings>\n";
 
