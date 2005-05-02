@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: capacitor.cpp,v 1.15 2005-02-21 20:52:48 raimi Exp $
+ * $Id: capacitor.cpp,v 1.16 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -47,10 +47,10 @@ capacitor::capacitor () : circuit (2) {
 void capacitor::calcSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C") * z0;
   complex y = 2 * rect (0, 2.0 * M_PI * frequency * c);
-  setS (1, 1, 1 / (1 + y));
-  setS (2, 2, 1 / (1 + y));
-  setS (1, 2, y / (1 + y));
-  setS (2, 1, y / (1 + y));
+  setS (NODE_1, NODE_1, 1 / (1 + y));
+  setS (NODE_2, NODE_2, 1 / (1 + y));
+  setS (NODE_1, NODE_2, y / (1 + y));
+  setS (NODE_2, NODE_1, y / (1 + y));
 }
 
 void capacitor::initDC (void) {
@@ -62,8 +62,8 @@ void capacitor::initDC (void) {
 void capacitor::calcAC (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("C");
   complex y = rect (0, 2.0 * M_PI * frequency * c);
-  setY (1, 1, +y); setY (2, 2, +y);
-  setY (1, 2, -y); setY (2, 1, -y);
+  setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
+  setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
 }
 
 void capacitor::initAC (void) {
@@ -86,12 +86,12 @@ void capacitor::calcTR (nr_double_t) {
 
   nr_double_t c = getPropertyDouble ("C");
   nr_double_t g, i;
-  nr_double_t v = real (getV (1) - getV (2));
+  nr_double_t v = real (getV (NODE_1) - getV (NODE_2));
 
   setState (qState, c * v);
   integrate (qState, c, g, i);
-  setY (1, 1, +g); setY (2, 2, +g);
-  setY (1, 2, -g); setY (2, 1, -g);
-  setI (1 , -i);
-  setI (2 , +i);
+  setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+  setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
+  setI (NODE_1 , -i);
+  setI (NODE_2 , +i);
 }

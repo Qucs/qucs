@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.16 2005-04-15 09:07:57 raimi Exp $
+ * $Id: qucsdefs.h,v 1.17 2005-05-02 06:50:59 raimi Exp $
  *
  */
 
@@ -100,17 +100,21 @@ struct define_t qucs_definition_available[] =
   /* bias tee */
   { "BiasT", 3, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* DC feed */
   { "DCFeed", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "L", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* DC block */
   { "DCBlock", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "C", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
   /* transformer */
   { "Tr", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
@@ -520,6 +524,25 @@ struct define_t qucs_definition_available[] =
     { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
       { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
       { "Approx", PROP_STR, { PROP_NO_VAL, "no" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  },
+  /* coplanar open */
+  { "COPEN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "G", PROP_REAL, { 5e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
+      PROP_NO_PROP }
+  },
+  /* coplanar short */
+  { "CSHORT", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
+      PROP_NO_PROP },
+    { { "Backside", PROP_STR, { PROP_NO_VAL, "Metal" }, PROP_NO_RANGE },
       PROP_NO_PROP }
   },
 

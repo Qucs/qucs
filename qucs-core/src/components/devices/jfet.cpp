@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: jfet.cpp,v 1.24 2005-04-25 18:46:32 raimi Exp $
+ * $Id: jfet.cpp,v 1.25 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -42,9 +42,9 @@
 #include "device.h"
 #include "jfet.h"
 
-#define NODE_G 1 /* gate node   */
-#define NODE_D 2 /* drain node  */
-#define NODE_S 3 /* source node */
+#define NODE_G 0 /* gate node   */
+#define NODE_D 1 /* drain node  */
+#define NODE_S 2 /* source node */
 
 jfet::jfet () : circuit (3) {
   rs = rd = NULL;

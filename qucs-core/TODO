@@ -23,6 +23,7 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Singular value decomposition (SVD) for solving linear equation systems.
 	- Automatic variable generation in equation solver (plotvs,
 	  circles).
 	- QR decomposition algorithm for solving linear equation systems.
@@ -33,13 +34,13 @@ unfixed) have a look at the file BUGS.
 - HEMT implementation.
 - Relative permeability of microstrip line substrate.
 - Cover height (shielding) of (coupled) microstrip line.
-- Coplanar short and open components.
+	- Coplanar short and open components.
 - Large signal S-parameter simulation based on harmonic balance.
 - Implement Zener diode model or extend the existing diode model.
 - Use Markowitz pivoting when solving equation systems with a sparse
   matrix.
 - Implement a sparse matrix template class.
-- Non-ideal transient models of bias-t, dc-block and dc-feed.
+	- Non-ideal transient models of bias-t, dc-block and dc-feed.
 	- Implement optional gmin-stepping algorithm.
 	- More S-parameter computation formulas, e.g. stability factors.
 	- Implementation of noise and stability circle formulas.

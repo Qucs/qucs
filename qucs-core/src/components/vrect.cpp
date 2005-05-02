@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vrect.cpp,v 1.2 2004-11-24 19:15:50 raimi Exp $
+ * $Id: vrect.cpp,v 1.3 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -46,10 +46,10 @@ vrect::vrect () : circuit (2) {
 
 void vrect::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
+  setS (NODE_1, NODE_1, 0.0);
+  setS (NODE_1, NODE_2, 1.0);
+  setS (NODE_2, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 0.0);
 }
 
 void vrect::initDC (void) {
@@ -57,13 +57,12 @@ void vrect::initDC (void) {
   nr_double_t tl = getPropertyDouble ("TL");
   nr_double_t u  = getPropertyDouble ("U") * th / (th + tl);
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
-  setE (1, u);
+  voltageSource (VSRC_1, NODE_1, NODE_2, u);
 }
 
 void vrect::initAC (void) {
   initDC ();
-  setE (1, 0);
+  setE (VSRC_1, 0);
 }
 
 void vrect::initTR (void) {
@@ -80,5 +79,5 @@ void vrect::calcTR (nr_double_t t) {
   if (t < th) { // high pulse
     ut = u;
   }
-  setE (1, ut);
+  setE (VSRC_1, ut);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msvia.cpp,v 1.7 2005-04-07 11:57:50 raimi Exp $
+ * $Id: msvia.cpp,v 1.8 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -52,8 +52,8 @@ void msvia::calcNoiseSP (nr_double_t) {
   // calculate noise correlation matrix
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) * 4.0 * real (Z) * z0 / norm (4.0 * z0 + Z) / T0;
-  setN (1, 1, +f); setN (2, 2, +f);
-  setN (1, 2, -f); setN (2, 1, -f);
+  setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
+  setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
 
 void msvia::initSP (void) {
@@ -65,10 +65,10 @@ void msvia::calcSP (nr_double_t frequency) {
   // calculate s-parameters
   Z = calcImpedance (frequency);
   complex z = Z / z0;
-  setS (1, 1, z / (z + 2));
-  setS (2, 2, z / (z + 2));
-  setS (1, 2, 2 / (z + 2));
-  setS (2, 1, 2 / (z + 2));
+  setS (NODE_1, NODE_1, z / (z + 2));
+  setS (NODE_2, NODE_2, z / (z + 2));
+  setS (NODE_1, NODE_2, 2 / (z + 2));
+  setS (NODE_2, NODE_1, 2 / (z + 2));
 }
 
 complex msvia::calcImpedance (nr_double_t frequency) {
@@ -112,8 +112,8 @@ void msvia::initDC (void) {
     nr_double_t g = 1.0 / r;
     setVoltageSources (0);
     allocMatrixMNA ();
-    setY (1, 1, +g); setY (2, 2, +g);
-    setY (1, 2, -g); setY (2, 1, -g);
+    setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+    setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
   }
   // for zero resistances create a zero voltage source
   else {
@@ -121,7 +121,7 @@ void msvia::initDC (void) {
     setInternalVoltageSource (1);
     allocMatrixMNA ();
     clearY ();
-    voltageSource (1, 1, 2);
+    voltageSource (VSRC_1, NODE_1, NODE_2);
   }
 }
 
@@ -133,8 +133,8 @@ void msvia::initAC (void) {
 
 void msvia::calcAC (nr_double_t frequency) {
   complex y = 1 / calcImpedance (frequency);
-  setY (1, 1, +y); setY (2, 2, +y);
-  setY (1, 2, -y); setY (2, 1, -y);
+  setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
+  setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
 }
 
 void msvia::calcNoiseAC (nr_double_t) {
@@ -142,6 +142,6 @@ void msvia::calcNoiseAC (nr_double_t) {
   nr_double_t y = real (1 / Z);
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) / T0 * 4.0 * y;
-  setN (1, 1, +f); setN (2, 2, +f);
-  setN (1, 2, -f); setN (2, 1, -f);
+  setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
+  setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vpulse.cpp,v 1.3 2004-11-24 19:15:50 raimi Exp $
+ * $Id: vpulse.cpp,v 1.4 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -45,21 +45,21 @@ vpulse::vpulse () : circuit (2) {
 
 void vpulse::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
+  setS (NODE_1, NODE_1, 0.0);
+  setS (NODE_1, NODE_2, 1.0);
+  setS (NODE_2, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 0.0);
 }
 
 void vpulse::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
-  setE (1, getPropertyDouble ("U1"));
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+  setE (VSRC_1, getPropertyDouble ("U1"));
 }
 
 void vpulse::initAC (void) {
   initDC ();
-  setE (1, 0);
+  setE (VSRC_1, 0);
 }
 
 void vpulse::initTR (void) {
@@ -90,5 +90,5 @@ void vpulse::calcTR (nr_double_t t) {
   else { // after pulse
     ut = u1;
   }
-  setE (1, ut);
+  setE (VSRC_1, ut);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spsolver.cpp,v 1.42 2005-02-14 19:56:44 raimi Exp $
+ * $Id: spsolver.cpp,v 1.43 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -129,8 +129,8 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
   int i1; // row index for S matrix
 
   // handle single S block only
-  i2 = j2 = 1;
-  for (j1 = 1; j1 <= s->getSize (); j1++) {
+  i2 = j2 = 0;
+  for (j1 = 0; j1 < s->getSize (); j1++) {
 
     // skip connected node
     if (j1 == k || j1 == l) continue;
@@ -139,7 +139,7 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
     result->setNode (j2, s->getNode(j1)->getName ());
 
     // inside S only
-    for (i1 = 1; i1 <= s->getSize (); i1++) {
+    for (i1 = 0; i1 < s->getSize (); i1++) {
 
       // skip connected node
       if (i1 == k || i1 == l) continue;
@@ -155,7 +155,7 @@ circuit * spsolver::interconnectJoin (node * n1, node * n2) {
     }
 
     // next column
-    j2++; i2 = 1;
+    j2++; i2 = 0;
   }
   return result;
 }
@@ -190,8 +190,8 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
   int i1; // row index for S matrix
 
   // handle S block
-  i2 = j2 = 1;
-  for (j1 = 1; j1 <= s->getSize (); j1++) {
+  i2 = j2 = 0;
+  for (j1 = 0; j1 < s->getSize (); j1++) {
 
     // skip connected node
     if (j1 == k) continue;
@@ -200,7 +200,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
     result->setNode (j2, s->getNode(j1)->getName());
 
     // inside S
-    for (i1 = 1; i1 <= s->getSize (); i1++) {
+    for (i1 = 0; i1 < s->getSize (); i1++) {
 
       // skip connected node
       if (i1 == k) continue;
@@ -212,7 +212,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
     }
 
     // across S and T
-    for (i1 = 1; i1 <= t->getSize (); i1++) {
+    for (i1 = 0; i1 < t->getSize (); i1++) {
 
       // skip connected node
       if (i1 == l) continue;
@@ -222,11 +222,11 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
       result->setS (i2++, j2, p);
     }
     // next column
-    j2++; i2 = 1;
+    j2++; i2 = 0;
   }
 
   // handle T block
-  for (j1 = 1; j1 <= t->getSize (); j1++) {
+  for (j1 = 0; j1 < t->getSize (); j1++) {
 
     // skip connected node
     if (j1 == l) continue;
@@ -235,7 +235,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
     result->setNode (j2, t->getNode(j1)->getName ());
 
     // across T and S
-    for (i1 = 1; i1 <= s->getSize (); i1++) {
+    for (i1 = 0; i1 < s->getSize (); i1++) {
 
       // skip connected node
       if (i1 == k) continue;
@@ -246,7 +246,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
     }
 
     // inside T
-    for (i1 = 1; i1 <= t->getSize (); i1++) {
+    for (i1 = 0; i1 < t->getSize (); i1++) {
 
       // skip connected node
       if (i1 == l) continue;
@@ -258,7 +258,7 @@ circuit * spsolver::connectedJoin (node * n1, node * n2) {
     }
 
     // next column
-    j2++; i2 = 1;
+    j2++; i2 = 0;
   }
 
   return result;
@@ -291,14 +291,14 @@ void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
   int i1; // row index for S matrix
 
   // handle single C block only
-  i2 = j2 = 1;
-  for (j1 = 1; j1 <= c->getSize (); j1++) {
+  i2 = j2 = 0;
+  for (j1 = 0; j1 < c->getSize (); j1++) {
 
     // skip connected node
     if (j1 == k || j1 == l) continue;
 
     // inside C only
-    for (i1 = 1; i1 <= c->getSize (); i1++) {
+    for (i1 = 0; i1 < c->getSize (); i1++) {
 
       // skip connected node
       if (i1 == k || i1 == l) continue;
@@ -326,7 +326,7 @@ void spsolver::noiseInterconnect (circuit * result, node * n1, node * n2) {
     }
 
     // next column
-    j2++; i2 = 1;
+    j2++; i2 = 0;
   }
 }
 
@@ -358,14 +358,14 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
   int i1; // row index for S matrix
 
   // handle C block
-  i2 = j2 = 1;
-  for (j1 = 1; j1 <= c->getSize (); j1++) {
+  i2 = j2 = 0;
+  for (j1 = 0; j1 < c->getSize (); j1++) {
 
     // skip connected node
     if (j1 == k) continue;
 
     // inside C
-    for (i1 = 1; i1 <= c->getSize (); i1++) {
+    for (i1 = 0; i1 < c->getSize (); i1++) {
 
       // skip connected node
       if (i1 == k) continue;
@@ -388,17 +388,17 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
        are missing here. */
 
     // next column
-    j2++; i2 = 1;
+    j2++; i2 = 0;
   }
 
   // handle D block
-  for (j1 = 1; j1 <= d->getSize (); j1++) {
+  for (j1 = 0; j1 < d->getSize (); j1++) {
 
     // skip connected node
     if (j1 == l) continue;
 
     // across D and C
-    for (i1 = 1; i1 <= c->getSize (); i1++) {
+    for (i1 = 0; i1 < c->getSize (); i1++) {
 
       // skip connected node
       if (i1 == k) continue;
@@ -415,7 +415,7 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
     }
 
     // inside D
-    for (i1 = 1; i1 <= d->getSize (); i1++) {
+    for (i1 = 0; i1 < d->getSize (); i1++) {
 
       // skip connected node
       if (i1 == l) continue;
@@ -433,7 +433,7 @@ void spsolver::noiseConnect (circuit * result, node * n1, node * n2) {
     }
 
     // next column
-    j2++; i2 = 1;
+    j2++; i2 = 0;
   }
 }
 
@@ -477,7 +477,7 @@ void spsolver::reduce (void) {
     if (c->getPort ()) continue;
 
     // and each node in the circuit
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
 
       // find duplicate node
       if ((cand = subnet->findConnectedCircuitNode (c->getNode (i))) != NULL) {
@@ -634,7 +634,7 @@ void spsolver::insertConnectors (node * n) {
   // go through list of circuit objects
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     // and each node in a circuit
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       _node = c->getNode (i);
       if (!strcmp (_node->getName (), _name)) {
 	if (_node != n) {
@@ -674,22 +674,22 @@ void spsolver::insertTee (node ** nodes, char * name) {
   // create a tee and assign its node names
   result = new tee ();
   subnet->insertedCircuit (result);
-  result->setNode (1, name);
+  result->setNode (0, name);
+  subnet->insertedNode (result->getNode (1));
   subnet->insertedNode (result->getNode (2));
-  subnet->insertedNode (result->getNode (3));
   // rename the nodes connected to the tee
-  nodes[1]->setName (result->getNode(2)->getName ());
-  nodes[2]->setName (result->getNode(3)->getName ());
+  nodes[1]->setName (result->getNode(1)->getName ());
+  nodes[2]->setName (result->getNode(2)->getName ());
   // complete the nodes of the tee
+  result->getNode(1)->setCircuit (result);
   result->getNode(2)->setCircuit (result);
-  result->getNode(3)->setCircuit (result);
+  result->getNode(1)->setPort (1);
   result->getNode(2)->setPort (2);
-  result->getNode(3)->setPort (3);
   // put the tee into the circuit list and initialize it
   subnet->insertCircuit (result);
   result->initSP (); if (noise) result->initNoiseSP ();
   // put the tee's first node into the node collection
-  nodes[1] = result->getNode (1);
+  nodes[1] = result->getNode (0);
   tees++;
 }
 
@@ -701,26 +701,26 @@ void spsolver::insertCross (node ** nodes, char * name) {
   // create a cross and assign its node names
   result = new cross ();
   subnet->insertedCircuit (result);
-  result->setNode (1, name);
+  result->setNode (0, name);
+  subnet->insertedNode (result->getNode (1));
   subnet->insertedNode (result->getNode (2));
   subnet->insertedNode (result->getNode (3));
-  subnet->insertedNode (result->getNode (4));
   // rename the nodes connected to the cross
-  nodes[1]->setName (result->getNode(2)->getName ());
-  nodes[2]->setName (result->getNode(3)->getName ());
-  nodes[3]->setName (result->getNode(4)->getName ());
+  nodes[1]->setName (result->getNode(1)->getName ());
+  nodes[2]->setName (result->getNode(2)->getName ());
+  nodes[3]->setName (result->getNode(3)->getName ());
   // complete the nodes of the cross
+  result->getNode(1)->setCircuit (result);
   result->getNode(2)->setCircuit (result);
   result->getNode(3)->setCircuit (result);
-  result->getNode(4)->setCircuit (result);
+  result->getNode(1)->setPort (1);
   result->getNode(2)->setPort (2);
   result->getNode(3)->setPort (3);
-  result->getNode(4)->setPort (4);
   // put the cross into the circuit list and initialize it
   subnet->insertCircuit (result);
   result->initSP (); if (noise) result->initNoiseSP ();
   // put the cross's first node into the node collection
-  nodes[1] = result->getNode (1);
+  nodes[1] = result->getNode (0);
   crosses++;
 }
 
@@ -729,9 +729,9 @@ void spsolver::insertCross (node ** nodes, char * name) {
 void spsolver::dropTee (circuit * c) {
   node * n;
   if (c->getType () == CIR_TEE) {
-    char * name = c->getNode(1)->getName ();
+    char * name = c->getNode(0)->getName ();
+    n = subnet->findConnectedNode (c->getNode (1)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
-    n = subnet->findConnectedNode (c->getNode (3)); n->setName (name);
     c->setOriginal (0);
     subnet->removeCircuit (c);
   }
@@ -742,10 +742,10 @@ void spsolver::dropTee (circuit * c) {
 void spsolver::dropCross (circuit * c) {
   node * n;
   if (c->getType () == CIR_CROSS) {
-    char * name = c->getNode(1)->getName ();
+    char * name = c->getNode(0)->getName ();
+    n = subnet->findConnectedNode (c->getNode (1)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (2)); n->setName (name);
     n = subnet->findConnectedNode (c->getNode (3)); n->setName (name);
-    n = subnet->findConnectedNode (c->getNode (4)); n->setName (name);
     c->setOriginal (0);
     subnet->removeCircuit (c);
   }
@@ -758,7 +758,7 @@ void spsolver::insertOpen (node * n) {
       subnet->findConnectedNode (n) == NULL) {
     circuit * result = new open ();
     subnet->insertedCircuit (result);
-    result->setNode (1, n->getName ());
+    result->setNode (0, n->getName ());
     subnet->insertCircuit (result);
     result->initSP (); if (noise) result->initNoiseSP ();
     opens++;
@@ -780,10 +780,10 @@ void spsolver::insertGround (node * n) {
       n->getCircuit()->getType () != CIR_GROUND) {
     circuit * result = new ground ();
     subnet->insertedCircuit (result);
-    subnet->insertedNode (result->getNode (1));
-    result->getNode(1)->setCircuit (result);
-    result->getNode(1)->setPort (1);
-    n->setName (result->getNode(1)->getName ());
+    subnet->insertedNode (result->getNode (0));
+    result->getNode(0)->setCircuit (result);
+    result->getNode(0)->setPort (0);
+    n->setName (result->getNode(0)->getName ());
     subnet->insertCircuit (result);
     result->initSP (); if (noise) result->initNoiseSP ();
     grounds++;
@@ -793,7 +793,7 @@ void spsolver::insertGround (node * n) {
 // This function removes an inserted ground from the netlist.
 void spsolver::dropGround (circuit * c) {
   if (c->getType () == CIR_GROUND) {
-    node * n = subnet->findConnectedNode (c->getNode (1));
+    node * n = subnet->findConnectedNode (c->getNode (0));
     n->setName ("gnd");
     c->setOriginal (0);
     subnet->removeCircuit (c);
@@ -827,7 +827,7 @@ void spsolver::insertConnections (void) {
   tees = crosses = opens = grounds = 0;
   root = subnet->getRoot ();
   for (c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       insertConnectors (c->getNode (i));
       insertOpen (c->getNode (i));
     }
@@ -840,7 +840,7 @@ void spsolver::insertConnections (void) {
   // insert grounds where necessary
   root = subnet->getRoot ();
   for (c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       insertGround (c->getNode (i));
     }
   }
@@ -910,17 +910,17 @@ void spsolver::insertDifferentialPorts (void) {
       // create an ideal transformer and assign its node names
       circuit * result = new itrafo ();
       subnet->insertedCircuit (result);
-      subnet->insertedNode (result->getNode (1));
+      subnet->insertedNode (result->getNode (0));
+      result->setNode (1, c->getNode(0)->getName ());
       result->setNode (2, c->getNode(1)->getName ());
-      result->setNode (3, c->getNode(2)->getName ());
 
       // rename the nodes connected to the trafo
-      c->getNode(1)->setName (result->getNode(1)->getName ());
-      c->getNode(2)->setName ("PacGround");
+      c->getNode(0)->setName (result->getNode(0)->getName ());
+      c->getNode(1)->setName ("PacGround");
 
       // complete the nodes of the trafo
-      result->getNode(1)->setCircuit (result);
-      result->getNode(1)->setPort (1);
+      result->getNode(0)->setCircuit (result);
+      result->getNode(0)->setPort (0);
 
       // pass the port impedance to the ideal trafo
       result->addProperty ("Z", c->getPropertyDouble ("Z"));
@@ -942,10 +942,10 @@ void spsolver::dropDifferentialPort (circuit * c) {
   circuit * pac;
   node * n;
   if (c->getType () == CIR_ITRAFO) {
-    n = subnet->findConnectedNode (c->getNode (1));
+    n = subnet->findConnectedNode (c->getNode (0));
     pac = n->getCircuit ();
+    pac->getNode(0)->setName (c->getNode(1)->getName ());
     pac->getNode(1)->setName (c->getNode(2)->getName ());
-    pac->getNode(2)->setName (c->getNode(3)->getName ());
     c->setOriginal (0);
     subnet->removeCircuit (c);
   }
@@ -977,8 +977,8 @@ void spsolver::saveResults (nr_double_t freq) {
     // skip signals
     if (!c->getPort ()) {
       // handle each s-parameter
-      for (int i = 1; i <= c->getSize (); i++) {
-	for (int j = 1; j <= c->getSize (); j++) {
+      for (int i = 0; i < c->getSize (); i++) {
+	for (int j = 0; j < c->getSize (); j++) {
 
 	  // generate the appropriate variable name
 	  sig_i = subnet->findConnectedNode (c->getNode (i));
@@ -1073,5 +1073,5 @@ void spsolver::saveVariable (char * n, complex z, vector * f) {
 
 // Create an appropriate variable name.
 char * spsolver::createSP (int i, int j) {
-  return matvec::createMatrixString ("S", i, j);
+  return matvec::createMatrixString ("S", i - 1, j - 1);
 }

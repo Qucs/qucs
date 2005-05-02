@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: acsolver.cpp,v 1.13 2005-04-15 09:07:54 raimi Exp $
+ * $Id: acsolver.cpp,v 1.14 2005-05-02 06:50:58 raimi Exp $
  *
  */
 
@@ -156,7 +156,7 @@ void acsolver::saveAllResults (nr_double_t freq) {
 void acsolver::saveNoiseResults (vector * f) {
   int N = countNodes ();
   int M = countVoltageSources ();
-  for (int r = 1; r <= N + M; r++) {
+  for (int r = 0; r < N + M; r++) {
     // renormalise the results
     x->set (r, xn->get (r) * sqrt (kB * T0));
   }
@@ -192,7 +192,7 @@ void acsolver::solve_noise (void) {
   eqnAlgo = ALGO_LU_SUBSTITUTION_CROUT;
 
   // compute noise voltage for each node (and voltage source)
-  for (int i = 1; i <= N + M; i++) {
+  for (int i = 0; i < N + M; i++) {
     z->set (0); z->set (i, -1); // modify right hand side appropriately
     runMNA ();                  // solve
     zn = *x;                    // save transimpedance vector

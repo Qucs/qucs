@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucs_producer.cpp,v 1.6 2005-04-29 06:49:08 raimi Exp $
+ * $Id: qucs_producer.cpp,v 1.7 2005-05-02 06:51:02 raimi Exp $
  *
  */
 
@@ -127,6 +127,44 @@ static void netlist_lister (struct definition_t * root, char * prefix) {
   }
 }
 
+/* Goes recursively through the netlist and applies additional
+   reference node modifications to subcircuits and their instances. */
+static void netlist_fix_reference (struct definition_t * root) {
+  struct definition_t * def;
+  struct node_t * n;
+
+  // go through definitions
+  for (def = root; def != NULL; def = def->next) {
+    if (!strcmp (def->type, "Sub")) { // subcircuit instances
+      n = create_node ();
+      n->node = strdup (qucs_gnd);
+      n->next = def->nodes;
+      def->nodes = n;
+    }
+    else if (def->sub != NULL) {     // subcircuit definitions
+      n = create_node ();
+      n->node = strdup (qucs_gnd);
+      n->next = def->nodes;
+      def->nodes = n;
+      netlist_fix_reference (def->sub);
+    }
+  }
+}
+
+/* Applies reference node modifications if necessary. */
+static void netlist_reference_ground (void) {
+  struct definition_t * def;
+
+  // return if nothing todo
+  if (qucs_gnd && !strcmp (qucs_gnd, "gnd")) return;
+
+  netlist_fix_reference (definition_root);
+  // go through subcircuits
+  for (def = subcircuit_root; def != NULL; def = def->next) {
+    netlist_fix_reference (def->sub);
+  }
+}
+
 /* Prints the overall netlist representation. */
 static void netlist_list (void) {
   struct node_t * n;
@@ -161,6 +199,7 @@ static void netlist_list (void) {
 /* This function is the overall Qucs netlist producer. */
 void qucs_producer (void) {
   if (qucs_out != NULL) {
+    netlist_reference_ground ();
     netlist_list ();
   }
 }

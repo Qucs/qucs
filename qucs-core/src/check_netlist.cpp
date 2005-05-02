@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_netlist.cpp,v 1.77 2005-04-15 09:07:55 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.78 2005-05-02 06:50:58 raimi Exp $
  *
  */
 
@@ -51,7 +51,7 @@ struct pair_t * pair_root = NULL;
 // List of available microstrip components.
 static char * strip_available[] = {
   "MLIN", "MCORN", "MMBEND", "MSTEP", "MOPEN", "MGAP", "MCOUPLED", "MTEE",
-  "MCROSS", "MVIA", "CLIN", NULL };
+  "MCROSS", "MVIA", "CLIN", "COPEN", "CSHORT", NULL };
 
 /* The function counts the nodes in a definition line. */
 static int checker_count_nodes (struct definition_t * def) {
@@ -212,6 +212,8 @@ static struct special_t checker_specials[] = {
   { "MLIN",   "Model",       { "Wheeler", "Schneider", "Hammerstad", NULL } },
   { "CLIN",   "Backside",    { "Metal", "Air", NULL } },
   { "CLIN",   "Approx",      { "yes", "no", NULL } },
+  { "COPEN",  "Backside",    { "Metal", "Air", NULL } },
+  { "CSHORT", "Backside",    { "Metal", "Air", NULL } },
   { "SW",     "Type",        { "lin", "log", "list", "const", NULL } },
   { "SPfile", "Data",        { "rectangular", "polar", NULL } },
   { "MSTEP",  "MSDispModel", { "Kirschning", "Kobayashi", "Yamashita",

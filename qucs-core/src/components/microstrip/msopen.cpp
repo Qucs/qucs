@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msopen.cpp,v 1.6 2004-11-24 19:15:54 raimi Exp $
+ * $Id: msopen.cpp,v 1.7 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -40,7 +40,6 @@
 #include "component_id.h"
 #include "substrate.h"
 #include "constants.h"
-#include "matrix.h"
 #include "msopen.h"
 #include "msline.h"
 
@@ -83,7 +82,7 @@ nr_double_t msopen::calcCend (nr_double_t frequency, nr_double_t W,
 }
 
 void msopen::calcSP (nr_double_t frequency) {
-  setS (1, 1, ztor (1 / calcY (frequency)));
+  setS (NODE_1, NODE_1, ztor (1 / calcY (frequency)));
 }
 
 complex msopen::calcY (nr_double_t frequency) {
@@ -135,9 +134,9 @@ complex msopen::calcY (nr_double_t frequency) {
 
 void msopen::initDC (void) {
   allocMatrixMNA ();
-  setY (1, 1, 0);
+  setY (NODE_1, NODE_1, 0);
 }
 
 void msopen::calcAC (nr_double_t frequency) {
-  setY (1, 1, calcY (frequency));
+  setY (NODE_1, NODE_1, calcY (frequency));
 }

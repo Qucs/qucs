@@ -1,39 +1,43 @@
 /*
- * dcfeed.h - DC feed class definitions
+ * cpwopen.h - coplanar waveguide open end class definitions
  *
- * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.  
+ * Boston, MA 02111-1307, USA.
  *
- * $Id: dcfeed.h,v 1.8 2005-05-02 06:51:00 raimi Exp $
+ * $Id: cpwopen.h,v 1.1 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
-#ifndef __DCFEED_H__
-#define __DCFEED_H__
+#ifndef __CPWOPEN_H__
+#define __CPWOPEN_H__
 
-class dcfeed : public circuit
+class cpwopen : public circuit
 {
  public:
-  dcfeed ();
+  cpwopen ();
   void initSP (void);
+  void calcSP (nr_double_t);
   void initDC (void);
   void initAC (void);
-  void initTR (void);
-  void calcTR (nr_double_t);
+  void calcAC (nr_double_t);
+
+  void checkProperties (void);
+  nr_double_t calcCend (nr_double_t);
+  complex calcY (nr_double_t);
 };
 
-#endif /* __DCFEED_H__ */
+#endif /* __CPWOPEN_H__ */

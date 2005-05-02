@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mscoupled.cpp,v 1.18 2005-03-14 21:59:09 raimi Exp $
+ * $Id: mscoupled.cpp,v 1.19 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -112,17 +112,17 @@ void mscoupled::calcSP (nr_double_t frequency) {
   Yo = zo * z0 / Do;
 
   // reflexion coefficients
-  setS (1, 1, Xe + Xo); setS (2, 2, Xe + Xo);
-  setS (3, 3, Xe + Xo); setS (4, 4, Xe + Xo);
+  setS (NODE_1, NODE_1, Xe + Xo); setS (NODE_2, NODE_2, Xe + Xo);
+  setS (NODE_3, NODE_3, Xe + Xo); setS (NODE_4, NODE_4, Xe + Xo);
   // through paths
-  setS (1, 2, Ye + Yo); setS (2, 1, Ye + Yo);
-  setS (3, 4, Ye + Yo); setS (4, 3, Ye + Yo);
+  setS (NODE_1, NODE_2, Ye + Yo); setS (NODE_2, NODE_1, Ye + Yo);
+  setS (NODE_3, NODE_4, Ye + Yo); setS (NODE_4, NODE_3, Ye + Yo);
   // coupled paths
-  setS (1, 4, Xe - Xo); setS (4, 1, Xe - Xo);
-  setS (2, 3, Xe - Xo); setS (3, 2, Xe - Xo);
+  setS (NODE_1, NODE_4, Xe - Xo); setS (NODE_4, NODE_1, Xe - Xo);
+  setS (NODE_2, NODE_3, Xe - Xo); setS (NODE_3, NODE_2, Xe - Xo);
   // isolated paths
-  setS (1, 3, Ye - Yo); setS (3, 1, Ye - Yo);
-  setS (2, 4, Ye - Yo); setS (4, 2, Ye - Yo);
+  setS (NODE_1, NODE_3, Ye - Yo); setS (NODE_3, NODE_1, Ye - Yo);
+  setS (NODE_2, NODE_4, Ye - Yo); setS (NODE_4, NODE_2, Ye - Yo);
 }
 
 void mscoupled::calcNoiseSP (nr_double_t) {
@@ -406,8 +406,10 @@ void mscoupled::initDC (void) {
     nr_double_t g = t * W / rho / l;
     setVoltageSources (0);
     allocMatrixMNA ();
-    setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
-    setY (3, 3, +g); setY (4, 4, +g); setY (3, 4, -g); setY (4, 3, -g);
+    setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+    setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
+    setY (NODE_3, NODE_3, +g); setY (NODE_4, NODE_4, +g);
+    setY (NODE_3, NODE_4, -g); setY (NODE_4, NODE_3, -g);
   }
   else {
     // DC shorts (voltage sources V = 0 volts)
@@ -415,9 +417,9 @@ void mscoupled::initDC (void) {
     setInternalVoltageSource (1);
     allocMatrixMNA ();
     clearY ();
-    voltageSource (1, 1, 2);
-    voltageSource (2, 3, 4);
-    setD (1, 2, 0.0); setD (2, 1, 0.0);
+    voltageSource (VSRC_1, NODE_1, NODE_2);
+    voltageSource (VSRC_2, NODE_3, NODE_4);
+    setD (VSRC_1, VSRC_2, 0.0); setD (VSRC_2, VSRC_1, 0.0);
   }
 }
 
@@ -447,10 +449,14 @@ void mscoupled::calcAC (nr_double_t frequency) {
   y4 = De - Do;
 
   // store Y-parameters
-  setY (1, 1, y1); setY (2, 2, y1); setY (3, 3, y1); setY (4, 4, y1);
-  setY (1, 2, y2); setY (2, 1, y2); setY (3, 4, y2); setY (4, 3, y2);
-  setY (1, 3, y3); setY (2, 4, y3); setY (3, 1, y3); setY (4, 2, y3);
-  setY (1, 4, y4); setY (2, 3, y4); setY (3, 2, y4); setY (4, 1, y4);
+  setY (NODE_1, NODE_1, y1); setY (NODE_2, NODE_2, y1);
+  setY (NODE_3, NODE_3, y1); setY (NODE_4, NODE_4, y1);
+  setY (NODE_1, NODE_2, y2); setY (NODE_2, NODE_1, y2);
+  setY (NODE_3, NODE_4, y2); setY (NODE_4, NODE_3, y2);
+  setY (NODE_1, NODE_3, y3); setY (NODE_2, NODE_4, y3);
+  setY (NODE_3, NODE_1, y3); setY (NODE_4, NODE_2, y3);
+  setY (NODE_1, NODE_4, y4); setY (NODE_2, NODE_3, y4);
+  setY (NODE_3, NODE_2, y4); setY (NODE_4, NODE_1, y4);
 }
 
 void mscoupled::calcNoiseAC (nr_double_t) {

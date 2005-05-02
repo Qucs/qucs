@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: ucs.cpp,v 1.18 2005-04-26 06:27:33 raimi Exp $
+ * $Id: ucs.cpp,v 1.19 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -120,7 +120,7 @@ int main (int argc, char ** argv) {
 
   // attach a ground to the netlist
   gnd = new ground ();
-  gnd->setNode (1, "gnd");
+  gnd->setNode (0, "gnd");
   gnd->setName ("GND");
   subnet->insertCircuit (gnd);
 

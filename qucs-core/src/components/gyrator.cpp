@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: gyrator.cpp,v 1.11 2005-01-24 19:37:16 raimi Exp $
+ * $Id: gyrator.cpp,v 1.12 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -51,31 +51,39 @@ void gyrator::initSP (void) {
   nr_double_t s1 = r * r / (r * r + 4.0);
   nr_double_t s2 = 2.0 * r / (r * r + 4.0);
   allocMatrixS ();
-  setS (1, 1, s1); setS (2, 2, s1); setS (3, 3, s1); setS (4, 4, s1);
-  setS (1, 4, 1.0 - s1);
-  setS (2, 3, 1.0 - s1);
-  setS (3, 2, 1.0 - s1);
-  setS (4, 1, 1.0 - s1);
-  setS (1, 2, +s2); setS (2, 4, +s2); setS (3, 1, +s2); setS (4, 3, +s2);
-  setS (1, 3, -s2); setS (2, 1, -s2); setS (3, 4, -s2); setS (4, 2, -s2);
+  setS (NODE_1, NODE_1, s1); setS (NODE_2, NODE_2, s1);
+  setS (NODE_3, NODE_3, s1); setS (NODE_4, NODE_4, s1);
+  setS (NODE_1, NODE_4, 1.0 - s1);
+  setS (NODE_2, NODE_3, 1.0 - s1);
+  setS (NODE_3, NODE_2, 1.0 - s1);
+  setS (NODE_4, NODE_1, 1.0 - s1);
+  setS (NODE_1, NODE_2, +s2); setS (NODE_2, NODE_4, +s2);
+  setS (NODE_3, NODE_1, +s2); setS (NODE_4, NODE_3, +s2);
+  setS (NODE_1, NODE_3, -s2); setS (NODE_2, NODE_1, -s2);
+  setS (NODE_3, NODE_4, -s2); setS (NODE_4, NODE_2, -s2);
 }
 
 void gyrator::initDC (void) {
   nr_double_t r = getPropertyDouble ("R");
   allocMatrixMNA ();
 #if AUGMENTED
-  setB (1, 1, +1.0); setB (2, 1, +0.0); setB (3, 1, +0.0); setB (4, 1, -1.0);
-  setB (2, 1, +0.0); setB (2, 2, +1.0); setB (3, 2, -1.0); setB (4, 2, +0.0);
-  setC (1, 1, +0.0); setC (1, 2, +1/r); setC (1, 3, -1/r); setC (1, 4, +0.0);
-  setC (2, 1, -1/r); setC (2, 2, +0.0); setC (2, 3, +0.0); setC (2, 4, +1/r);
-  setD (1, 1, -1.0); setD (2, 2, -1.0); setD (1, 2, +0.0); setD (2, 1, +0.0);
-  setE (1, +0.0);
-  setE (2, +0.0);
+  setB (NODE_1, VSRC_1, +1.0); setB (NODE_2, VSRC_1, +0.0);
+  setB (NODE_3, VSRC_1, +0.0); setB (NODE_4, VSRC_1, -1.0);
+  setB (NODE_2, VSRC_1, +0.0); setB (NODE_2, VSRC_2, +1.0);
+  setB (NODE_3, VSRC_2, -1.0); setB (NODE_4, VSRC_2, +0.0);
+  setC (VSRC_1, NODE_1, +0.0); setC (VSRC_1, NODE_2, +1/r);
+  setC (VSRC_1, NODE_3, -1/r); setC (VSRC_1, NODE_4, +0.0);
+  setC (VSRC_2, NODE_1, -1/r); setC (VSRC_2, NODE_2, +0.0);
+  setC (VSRC_2, NODE_3, +0.0); setC (VSRC_2, NODE_4, +1/r);
+  setD (VSRC_1, VSRC_1, -1.0); setD (VSRC_2, VSRC_2, -1.0);
+  setD (VSRC_1, VSRC_2, +0.0); setD (VSRC_2, VSRC_1, +0.0);
+  setE (VSRC_1, +0.0);
+  setE (VSRC_2, +0.0);
 #else
-  setY (1, 2, +1/r); setY (1, 3, -1/r);
-  setY (2, 1, -1/r); setY (2, 4, +1/r);
-  setY (3, 1, +1/r); setY (3, 4, -1/r);
-  setY (4, 2, -1/r); setY (4, 3, +1/r);
+  setY (NODE_1, NODE_2, +1/r); setY (NODE_1, NODE_3, -1/r);
+  setY (NODE_2, NODE_1, -1/r); setY (NODE_2, NODE_4, +1/r);
+  setY (NODE_3, NODE_1, +1/r); setY (NODE_3, NODE_4, -1/r);
+  setY (NODE_4, NODE_2, -1/r); setY (NODE_4, NODE_3, +1/r);
 #endif
 }
 

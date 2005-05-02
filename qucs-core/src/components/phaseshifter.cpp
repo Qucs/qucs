@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: phaseshifter.cpp,v 1.7 2004-11-24 19:15:49 raimi Exp $
+ * $Id: phaseshifter.cpp,v 1.8 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -50,17 +50,17 @@ void phaseshifter::initSP (void) {
   complex s11 = r * (polar (1, 2 * p) - 1.0) / d;
   complex s21 = (1.0 - r * r) * polar (1, p) / d;
   allocMatrixS ();
-  setS (1, 1, s11);
-  setS (2, 2, s11);
-  setS (1, 2, s21);
-  setS (2, 1, s21);
+  setS (NODE_1, NODE_1, s11);
+  setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21);
+  setS (NODE_2, NODE_1, s21);
 }
 
 void phaseshifter::initDC (void) {
   setVoltageSources (1);
   allocMatrixMNA ();
   clearY ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void phaseshifter::initAC (void) {
@@ -75,7 +75,7 @@ void phaseshifter::initAC (void) {
     nr_double_t z = getPropertyDouble ("Zref");
     nr_double_t y11 = -1 / z / tan (p);
     nr_double_t y21 = -1 / z / sin (p);
-    setY (1, 1, rect (0, y11)); setY (2, 2, rect (0, y11));
-    setY (1, 2, rect (0, y21)); setY (2, 1, rect (0, y21));
+    setY (NODE_1, NODE_1, rect (0, y11)); setY (NODE_2, NODE_2, rect (0, y11));
+    setY (NODE_1, NODE_2, rect (0, y21)); setY (NODE_2, NODE_1, rect (0, y21));
   }
 }

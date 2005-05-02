@@ -1,7 +1,7 @@
 /*
  * biastee.h - bias T class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: biastee.h,v 1.8 2004-11-24 19:15:47 raimi Exp $
+ * $Id: biastee.h,v 1.9 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -33,6 +33,7 @@ class biastee : public circuit
   void initDC (void);
   void initAC (void);
   void initTR (void);
+  void calcTR (nr_double_t);
 };
 
 #endif /* __BIASTEE_H__ */

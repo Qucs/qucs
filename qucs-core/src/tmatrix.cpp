@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.cpp,v 1.9 2005-04-26 06:27:33 raimi Exp $
+ * $Id: tmatrix.cpp,v 1.10 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -118,22 +118,21 @@ tmatrix<nr_type_t>::~tmatrix () {
 // Returns the tmatrix element at the given row and column.
 template <class nr_type_t>
 nr_type_t tmatrix<nr_type_t>::get (int r, int c) {
-  return data[(r - 1) * cols + c - 1];
+  return data[r * cols + c];
 }
 
 // Sets the tmatrix element at the given row and column.
 template <class nr_type_t>
 void tmatrix<nr_type_t>::set (int r, int c, nr_type_t z) {
-  data[(r - 1) * cols + c - 1] = z;
+  data[r * cols + c] = z;
 }
 
 // The function swaps the given rows with each other.
 template <class nr_type_t>
 void tmatrix<nr_type_t>::exchangeRows (int r1, int r2) {
-  assert (r1 >= 1 && r2 >= 1 && r1 <= rows && r2 <= rows);
+  assert (r1 >= 0 && r2 >= 0 && r1 < rows && r2 < rows);
   nr_type_t * s = new nr_type_t[cols];
   int len = sizeof (nr_type_t) * cols;
-  r1--; r2--;
   memcpy (s, &data[r1 * cols], len);
   memcpy (&data[r1 * cols], &data[r2 * cols], len);
   memcpy (&data[r2 * cols], s, len);
@@ -143,9 +142,8 @@ void tmatrix<nr_type_t>::exchangeRows (int r1, int r2) {
 // The function swaps the given columns with each other.
 template <class nr_type_t>
 void tmatrix<nr_type_t>::exchangeCols (int c1, int c2) {
-  assert (c1 >= 1 && c2 >= 1 && c1 <= cols && c2 <= cols);
+  assert (c1 >= 0 && c2 >= 0 && c1 < cols && c2 < cols);
   nr_type_t s;
-  c1--; c2--;
   for (int r = 0; r < rows * cols; r += cols) {
     s = data[r + c1];
     data[r + c1] = data[r + c2];
@@ -167,9 +165,9 @@ tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
   e = teye<nr_type_t> (n);
 
   // create the eye matrix in 'b' and the result in 'e'
-  for (i = 1; i <= n; i++) {
+  for (i = 0; i < n; i++) {
     // find maximum column value for pivoting
-    for (MaxPivot = 0, pivot = r = i; r <= n; r++) {
+    for (MaxPivot = 0, pivot = r = i; r < n; r++) {
       if (abs (b.get (r, i)) > MaxPivot) {
 	MaxPivot = abs (b.get (r, i));
 	pivot = r;
@@ -184,16 +182,16 @@ tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
 
     // compute current row
     f = b.get (i, i);
-    for (c = 1; c <= n; c++) {
+    for (c = 0; c < n; c++) {
       b.set (i, c, b.get (i, c) / f);
       e.set (i, c, e.get (i, c) / f);
     }
 
     // compute new rows and columns
-    for (r = 1; r <= n; r++) {
+    for (r = 0; r < n; r++) {
       if (r != i) {
 	f = b.get (r, i);
-	for (c = 1; c <= n; c++) {
+	for (c = 0; c < n; c++) {
 	  b.set (r, c, b.get (r, c) - f * b.get (i, c));
 	  e.set (r, c, e.get (r, c) - f * e.get (i, c));
 	}
@@ -207,7 +205,7 @@ tmatrix<nr_type_t> inverse (tmatrix<nr_type_t> a) {
 template <class nr_type_t>
 tmatrix<nr_type_t> teye (int n) {
   tmatrix<nr_type_t> res (n);
-  for (int r = 1; r <= n; r++) res.set (r, r, 1);
+  for (int r = 0; r < n; r++) res.set (r, r, 1);
   return res;
 }
 
@@ -218,9 +216,9 @@ tmatrix<nr_type_t> operator * (tmatrix<nr_type_t> a, tmatrix<nr_type_t> b) {
   int r, c, i, n = a.getCols ();
   nr_type_t z;
   tmatrix<nr_type_t> res (a.getRows (), b.getCols ());
-  for (r = 1; r <= a.getRows (); r++) {
-    for (c = 1; c <= b.getCols (); c++) {
-      for (i = 1, z = 0; i <= n; i++) z += a.get (r, i) * b.get (i, c);
+  for (r = 0; r < a.getRows (); r++) {
+    for (c = 0; c < b.getCols (); c++) {
+      for (i = 0, z = 0; i < n; i++) z += a.get (r, i) * b.get (i, c);
       res.set (r, c, z);
     }
   }
@@ -235,8 +233,8 @@ tvector<nr_type_t> operator * (tmatrix<nr_type_t> a, tvector<nr_type_t> b) {
   nr_type_t z;
   tvector<nr_type_t> res (n);
 
-  for (r = 1; r <= n; r++) {
-    for (c = 1, z = 0; c <= n; c++) z += a.get (r, c) * b.get (c);
+  for (r = 0; r < n; r++) {
+    for (c = 0, z = 0; c < n; c++) z += a.get (r, c) * b.get (c);
     res.set (r, z);
   }
   return res;
@@ -250,8 +248,8 @@ tvector<nr_type_t> operator * (tvector<nr_type_t> a, tmatrix<nr_type_t> b) {
   nr_type_t z;
   tvector<nr_type_t> res (n);
 
-  for (c = 1; c <= n; c++) {
-    for (r = 1, z = 0; r <= n; r++) z += a.get (r) * b.get (r, c);
+  for (c = 0; c < n; c++) {
+    for (r = 0, z = 0; r < n; r++) z += a.get (r) * b.get (r, c);
     res.set (c, z);
   }
   return res;
@@ -261,8 +259,8 @@ tvector<nr_type_t> operator * (tvector<nr_type_t> a, tmatrix<nr_type_t> b) {
 template <class nr_type_t>
 void tmatrix<nr_type_t>::transpose (void) {
   nr_type_t v;
-  for (int r = 1; r <= getRows (); r++)
-    for (int c = 1; c < r; c++) {
+  for (int r = 0; r < getRows (); r++)
+    for (int c = 0; c < r; c++) {
       v = get (r, c);
       set (r, c, get (c, r));
       set (c, r, v);
@@ -281,8 +279,8 @@ int tmatrix<nr_type_t>::isFinite (void) {
 // Debug function: Prints the matrix object.
 template <class nr_type_t>
 void tmatrix<nr_type_t>::print (void) {
-  for (int r = 1; r <= rows; r++) {
-    for (int c = 1; c <= cols; c++) {
+  for (int r = 0; r < rows; r++) {
+    for (int c = 0; c < cols; c++) {
       fprintf (stderr, "%+.2e ", (double) real (get (r, c)));
     }
     fprintf (stderr, "\n");

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.42 2005-03-14 21:59:09 raimi Exp $
+ * $Id: msline.cpp,v 1.43 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -106,8 +106,8 @@ void msline::calcSP (nr_double_t frequency) {
   complex n = 2 * cosh (g * l) + (z + y) * sinh (g * l);
   complex s11 = (z - y) * sinh (g * l) / n;
   complex s21 = 2 / n;
-  setS (1, 1, s11); setS (2, 2, s11);
-  setS (1, 2, s21); setS (2, 1, s21);
+  setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
 }
 
 /* This function calculates the quasi-static impedance of a microstrip
@@ -447,7 +447,8 @@ void msline::initDC (void) {
     nr_double_t g = t * W / rho / l;
     setVoltageSources (0);
     allocMatrixMNA ();
-    setY (1, 1, +g); setY (2, 2, +g); setY (1, 2, -g); setY (2, 1, -g);
+    setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+    setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
   }
   else {
     // a DC short (voltage source V = 0 volts)
@@ -455,7 +456,7 @@ void msline::initDC (void) {
     setInternalVoltageSource (1);
     allocMatrixMNA ();
     clearY ();
-    voltageSource (1, 1, 2);
+    voltageSource (VSRC_1, NODE_1, NODE_2);
   }
 }
 
@@ -474,8 +475,8 @@ void msline::calcAC (nr_double_t frequency) {
   complex g = rect (alpha, beta);
   complex y11 = coth (g * l) / zl;
   complex y21 = -cosech (g * l) / zl;
-  setY (1, 1, y11); setY (2, 2, y11);
-  setY (1, 2, y21); setY (2, 1, y21);
+  setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
+  setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
 }
 
 void msline::calcNoiseAC (nr_double_t) {

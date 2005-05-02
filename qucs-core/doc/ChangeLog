@@ -1,3 +1,8 @@
+2005-05-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* coplanar.tex (section{Coplanar waveguide open}): Documented
+	both the open and short circuit for coplanar waveguides.
+
 2005-04-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.tex (subsection{Depletion Capacitance}): Fixed tiny

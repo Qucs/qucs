@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: diode.cpp,v 1.22 2005-04-25 18:46:32 raimi Exp $
+ * $Id: diode.cpp,v 1.23 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -42,8 +42,8 @@
 #include "device.h"
 #include "diode.h"
 
-#define NODE_C 1 /* cathode node */
-#define NODE_A 2 /* anode node   */
+#define NODE_C 0 /* cathode node */
+#define NODE_A 1 /* anode node   */
 
 diode::diode () : circuit (2) {
   rs = NULL;

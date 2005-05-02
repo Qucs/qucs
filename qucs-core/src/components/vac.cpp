@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vac.cpp,v 1.12 2004-11-24 19:15:50 raimi Exp $
+ * $Id: vac.cpp,v 1.13 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -47,22 +47,22 @@ vac::vac () : circuit (2) {
 
 void vac::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
+  setS (NODE_1, NODE_1, 0.0);
+  setS (NODE_1, NODE_2, 1.0);
+  setS (NODE_2, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 0.0);
 }
 
 void vac::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void vac::initAC (void) {
   initDC ();
   nr_double_t a = getPropertyDouble ("U");
   nr_double_t p = getPropertyDouble ("Phase");
-  setE (1, polar (a, rad (p)));
+  setE (VSRC_1, polar (a, rad (p)));
 }
 
 void vac::initTR (void) {
@@ -73,5 +73,5 @@ void vac::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
   nr_double_t p = getPropertyDouble ("Phase");
   nr_double_t u = getPropertyDouble ("U") * sin (2 * M_PI * f * t + rad (p));
-  setE (1, u);
+  setE (VSRC_1, u);
 }

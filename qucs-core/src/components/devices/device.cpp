@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.cpp,v 1.16 2005-04-20 07:08:36 raimi Exp $
+ * $Id: device.cpp,v 1.17 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -57,13 +57,13 @@ circuit * splitResistance (circuit * base, circuit * res, net * subnet,
     char * name = circuit::createInternal (c, base->getName ());
     char * node = circuit::createInternal (n, base->getName ());
     res->setName (name);
-    res->setNode (1, base->getNode(internal)->getName ());
-    res->setNode (2, node, 1);
+    res->setNode (0, base->getNode(internal)->getName ());
+    res->setNode (1, node, 1);
     subnet->insertCircuit (res);
     free (name);
     free (node);
   }
-  base->setNode (internal, res->getNode(2)->getName (), 1);
+  base->setNode (internal, res->getNode(1)->getName (), 1);
   return res;
 }
 
@@ -88,8 +88,8 @@ circuit * splitCapacitance (circuit * base, circuit * cap, net * subnet,
     cap = new capacitor ();
     char * name = circuit::createInternal (c, base->getName ());
     cap->setName (name);
-    cap->setNode (1, n1->getName ());
-    cap->setNode (2, n2->getName ());
+    cap->setNode (0, n1->getName ());
+    cap->setNode (1, n2->getName ());
     free (name);
   }
   subnet->insertCircuit (cap);
@@ -137,7 +137,7 @@ nr_double_t pnVoltage (nr_double_t Ud, nr_double_t Uold,
   return Ud;
 }
 
-// Computes current and its derivative for a pn-junction.
+// Computes current and its derivative for a MOS pn-junction.
 void pnJunctionMOS (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
 		    nr_double_t& I, nr_double_t& g) {
   if (Upn <= 0) {
@@ -145,6 +145,22 @@ void pnJunctionMOS (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
     I = g * Upn;
   }
   else {
+    nr_double_t e = exp (MIN (Upn / Ute, 709));
+    I = Iss * (e - 1);
+    g = Iss * e / Ute;
+  }
+}
+
+// Computes current and its derivative for a bipolar pn-junction.
+void pnJunctionBIP (nr_double_t Upn, nr_double_t Iss, nr_double_t Ute,
+		    nr_double_t& I, nr_double_t& g) {
+  if (Upn < -3 * Ute) {
+    nr_double_t a = 3 * Ute / (Upn * M_E);
+    a = cubic (a);
+    I = -Iss * (1 + a);
+    g = +Iss * 3 * a / Upn;
+  }
+  else { 
     nr_double_t e = exp (MIN (Upn / Ute, 709));
     I = Iss * (e - 1);
     g = Iss * e / Ute;

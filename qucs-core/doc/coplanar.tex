@@ -290,3 +290,72 @@ The computation of the coplanar waveguide lines S- and Y-parameters is
 similiar to the microstrip line case (see section
 \ref{sec:ms_sparameter} on page \pageref{sec:ms_sparameter} and
 section \ref{sec:tl_yparameter} on page \pageref{sec:tl_yparameter}).
+
+\section{Coplanar waveguide open}
+%\addcontentsline{toc}{section}{Coplanar waveguide open}
+
+The behaviour of an open circuit as shown in fig. \ref{fig:CPWopen} is
+very similar to that in a microstrip line; that is, the open circuit
+is capacitive in nature.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{cpopen}
+\end{center}
+\caption{coplanar waveguide open-circuit}
+\label{fig:CPWopen}
+\end{figure}
+\FloatBarrier
+
+A very simple approximation for the equivalent length extension
+$\Delta l$ associated with the fringing fields is
+\begin{equation}
+\Delta l_{open} = \dfrac{C_{open}}{C'} \approx \dfrac{W + 2s}{4}
+\end{equation}
+
+For the open end, the value of $\Delta l$ is not influenced
+significantly by the metalization thickness and the gap width $g$
+when $g > W + 2s$.  Also, the effect of frequency and aspect ration $W
+/ (W + 2s)$ is relatively weak.  The above approximation is valid for
+$0.2 \le W / (W + 2s) \le 0.8$.
+
+\addvspace{12pt}
+
+The open end capacitance $C_{open}$ can be written in terms of the
+capacitance per unit length and the wave resistance.
+\begin{equation}
+C_{open} = C'\cdot \Delta l_{open} = \dfrac{\sqrt{\varepsilon_{r,eff}}}{c_0\cdot Z_L} \cdot \Delta l_{open}
+\end{equation}
+
+\section{Coplanar waveguide short}
+%\addcontentsline{toc}{section}{Coplanar waveguide short}
+
+There is a similar simple approximation for a coplanar waveguide
+short-circuit.  The short circuit is inductive in nature.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{cpshort}
+\end{center}
+\caption{coplanar waveguide short-circuit}
+\label{fig:CPWshort}
+\end{figure}
+\FloatBarrier
+
+The equivalent length extension $\Delta l$ associated with the
+fringing fields is
+\begin{equation}
+\label{eq:CPWshort}
+\Delta l_{short} = \dfrac{L_{short}}{L'} \approx \dfrac{W + 2s}{8}
+\end{equation}
+
+Equation \eqref{eq:CPWshort} is valid when the metalization thickness
+$t$ does not become too large ($t < s/3$).
+
+\addvspace{12pt}
+
+The short end inductance $L_{short}$ can be written in terms of the
+inductance per unit length and the wave resistance.
+\begin{equation}
+L_{short} = L'\cdot \Delta l_{short} = \dfrac{\sqrt{\varepsilon_{r,eff}}\cdot Z_L}{c_0} \cdot \Delta l_{short}
+\end{equation}

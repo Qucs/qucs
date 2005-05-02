@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.30 2005-04-18 13:41:03 raimi Exp $
+ * $Id: equation.cpp,v 1.31 2005-05-02 06:50:59 raimi Exp $
  *
  */
 
@@ -985,8 +985,8 @@ vector * solver::dataVector (node * eqn) {
       // convert matrix vector to a list of vectors
       matvec * mv = eqn->getResult()->mv;
       mv->setName (A(eqn)->result);
-      for (int r = 1; r <= mv->getRows (); r++) {
-	for (int c = 1; c <= mv->getCols (); c++) {
+      for (int r = 0; r < mv->getRows (); r++) {
+	for (int c = 0; c < mv->getCols (); c++) {
 	  // name gets automatically assigned
 	  vector * t = new vector (mv->get (r, c));
 	  // chain the vectors appropriately
@@ -999,8 +999,8 @@ vector * solver::dataVector (node * eqn) {
     {
       // convert matrix to a list of vectors
       matrix * m = eqn->getResult()->m;
-      for (int r = 1; r <= m->getRows (); r++) {
-	for (int c = 1; c <= m->getCols (); c++) {
+      for (int r = 0; r < m->getRows (); r++) {
+	for (int c = 0; c < m->getCols (); c++) {
 	  vector * t = new vector ();
 	  t->setName (matvec::createMatrixString (A(eqn)->result, r, c));
 	  t->add (m->get (r, c));
@@ -1057,7 +1057,7 @@ void solver::findMatrixVectors (vector * v) {
 
   // loop through the dataset vector until no more matrix vector is found
   do {
-    r = c = s = 0; cand = NULL; deps = NULL;
+    r = c = s = -1; cand = NULL; deps = NULL;
     // go through the dataset
     for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
       // skip detected vectors
@@ -1091,7 +1091,7 @@ void solver::findMatrixVectors (vector * v) {
     // new matrix vector detected
     if (cand != NULL) {
       // create a new matrix vector and set the appropriate name
-      matvec * mv = new matvec (s, r, c);
+      matvec * mv = new matvec (s, r + 1, c + 1);
       mv->setName (cand);
       // go through the dataset vector once again
       for (vec = v; vec != NULL; vec = (vector *) vec->getNext ()) {
@@ -1273,8 +1273,8 @@ int solver::findEquationResult (node * eqn) {
   // check each vector of a given matrix vector
   if (eqn->getType () == TAG_MATVEC) {
     matvec * mv = eqn->getResult()->mv;
-    for (int r = 1; r <= mv->getRows (); r++) {
-      for (int c = 1; c <= mv->getCols (); c++) {
+    for (int r = 0; r < mv->getRows (); r++) {
+      for (int c = 0; c < mv->getCols (); c++) {
 	char * str = matvec::createMatrixString (A(eqn)->result, r, c);
 	if (data->findDependency (str) || data->findVariable (str))
 	  return 1;

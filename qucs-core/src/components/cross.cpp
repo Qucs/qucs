@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cross.cpp,v 1.5 2004-11-24 19:15:47 raimi Exp $
+ * $Id: cross.cpp,v 1.6 2005-05-02 06:51:00 raimi Exp $
  *
  */
 
@@ -43,29 +43,29 @@ cross::cross () : circuit (4) {
 
 void cross::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, -1.0 / 2.0);
-  setS (1, 2,  1.0 / 2.0);
-  setS (1, 3,  1.0 / 2.0);
-  setS (1, 4,  1.0 / 2.0);
-  setS (2, 1,  1.0 / 2.0);
-  setS (2, 2, -1.0 / 2.0);
-  setS (2, 3,  1.0 / 2.0);
-  setS (2, 4,  1.0 / 2.0);
-  setS (3, 1,  1.0 / 2.0);
-  setS (3, 2,  1.0 / 2.0);
-  setS (3, 3, -1.0 / 2.0);
-  setS (3, 4,  1.0 / 2.0);
-  setS (4, 1,  1.0 / 2.0);
-  setS (4, 2,  1.0 / 2.0);
-  setS (4, 3,  1.0 / 2.0);
-  setS (4, 4, -1.0 / 2.0);
+  setS (NODE_1, NODE_1, -1.0 / 2.0);
+  setS (NODE_1, NODE_2,  1.0 / 2.0);
+  setS (NODE_1, NODE_3,  1.0 / 2.0);
+  setS (NODE_1, NODE_4,  1.0 / 2.0);
+  setS (NODE_2, NODE_1,  1.0 / 2.0);
+  setS (NODE_2, NODE_2, -1.0 / 2.0);
+  setS (NODE_2, NODE_3,  1.0 / 2.0);
+  setS (NODE_2, NODE_4,  1.0 / 2.0);
+  setS (NODE_3, NODE_1,  1.0 / 2.0);
+  setS (NODE_3, NODE_2,  1.0 / 2.0);
+  setS (NODE_3, NODE_3, -1.0 / 2.0);
+  setS (NODE_3, NODE_4,  1.0 / 2.0);
+  setS (NODE_4, NODE_1,  1.0 / 2.0);
+  setS (NODE_4, NODE_2,  1.0 / 2.0);
+  setS (NODE_4, NODE_3,  1.0 / 2.0);
+  setS (NODE_4, NODE_4, -1.0 / 2.0);
 }
 
 void cross::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
-  voltageSource (2, 1, 3);
-  voltageSource (3, 1, 4);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+  voltageSource (VSRC_2, NODE_1, NODE_3);
+  voltageSource (VSRC_3, NODE_1, NODE_4);
 }
 
 void cross::initAC (void) {

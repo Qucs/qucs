@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: bjt.cpp,v 1.29 2005-04-25 18:46:32 raimi Exp $
+ * $Id: bjt.cpp,v 1.30 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -44,10 +44,10 @@
 
 #define NEWSGP 0
 
-#define NODE_B 1 /* base node       */
-#define NODE_C 2 /* collector node  */
-#define NODE_E 3 /* emitter node    */
-#define NODE_S 4 /* substrate node  */
+#define NODE_B 0 /* base node       */
+#define NODE_C 1 /* collector node  */
+#define NODE_E 2 /* emitter node    */
+#define NODE_S 3 /* substrate node  */
 
 bjt::bjt () : circuit (4) {
   cbcx = rb = re = rc = NULL;
@@ -280,6 +280,7 @@ void bjt::calcDC (void) {
 
   // base-emitter diodes
   gtiny = Ube < - 10 * Ut * Nf ? (Is + Ise) : 0;
+#if 0
   If = pnCurrent (Ube, Is, Ut * Nf);
   Ibei = If / Bf;
   gif = pnConductance (Ube, Is, Ut * Nf);
@@ -288,9 +289,20 @@ void bjt::calcDC (void) {
   gben = pnConductance (Ube, Ise, Ut * Ne);
   Ibe = Ibei + Iben + gtiny * Ube;
   gbe = gbei + gben + gtiny;
+#else
+  pnJunctionBIP (Ube, Is, Ut * Nf, If, gif);
+  Ibei = If / Bf;
+  gbei = gif / Bf;
+  pnJunctionBIP (Ube, Ise, Ut * Ne, Iben, gben);
+  Iben += gtiny * Ube;
+  gben += gtiny;
+  Ibe = Ibei + Iben;
+  gbe = gbei + gben;
+#endif
 
   // base-collector diodes
   gtiny = Ubc < - 10 * Ut * Nr ? (Is + Isc) : 0;
+#if 0
   Ir = pnCurrent (Ubc, Is, Ut * Nr);
   Ibci = Ir / Br;
   gir = pnConductance (Ubc, Is, Ut * Nr);
@@ -299,6 +311,16 @@ void bjt::calcDC (void) {
   gbcn = pnConductance (Ubc, Isc, Ut * Nc);
   Ibc = Ibci + Ibcn + gtiny * Ubc;
   gbc = gbci + gbcn + gtiny;
+#else
+  pnJunctionBIP (Ubc, Is, Ut * Nr, Ir, gir);
+  Ibci = Ir / Br;
+  gbci = gir / Br;
+  pnJunctionBIP (Ubc, Isc, Ut * Nc, Ibcn, gbcn);
+  Ibcn += gtiny * Ubc;
+  gbcn += gtiny;
+  Ibc = Ibci + Ibcn;
+  gbc = gbci + gbcn;
+#endif
 
   // compute base charge quantities
   Q1 = 1 / (1 - Ubc * Vaf - Ube * Var);
@@ -487,7 +509,7 @@ void bjt::processCbcx (void) {
      collector node and external base node */
   if (Rbm != 0.0 && Cjc0 != 0.0 && Xcjc != 1.0) {
     if (!deviceEnabled (cbcx)) {
-      cbcx = splitCapacitance (this, cbcx, getNet (), "Cbcx", rb->getNode (1),
+      cbcx = splitCapacitance (this, cbcx, getNet (), "Cbcx", rb->getNode (0),
 			       getNode (NODE_C));
     }
     cbcx->setProperty ("C", getOperatingPoint ("Cbcx"));

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.h,v 1.37 2005-04-25 18:46:28 raimi Exp $
+ * $Id: circuit.h,v 1.38 2005-05-02 06:50:59 raimi Exp $
  *
  */
 
@@ -33,6 +33,16 @@ enum circuit_flag {
   CIRCUIT_ISOURCE     = 16,
   CIRCUIT_INTVSOURCE  = 32,
 };
+
+#define NODE_1 0
+#define NODE_2 1
+#define NODE_3 2
+#define NODE_4 3
+#define NODE_5 4
+#define NODE_6 5
+#define VSRC_1 0
+#define VSRC_2 1
+#define VSRC_3 2
 
 #define MODFLAG(val,bit) if (val) flag |= (bit); else flag &= ~(bit);
 #define RETFLAG(bit)     ((flag & (bit)) != 0)

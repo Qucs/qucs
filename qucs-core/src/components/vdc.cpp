@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vdc.cpp,v 1.13 2004-12-03 18:57:04 raimi Exp $
+ * $Id: vdc.cpp,v 1.14 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -45,20 +45,20 @@ vdc::vdc () : circuit (2) {
 
 void vdc::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
+  setS (NODE_1, NODE_1, 0.0);
+  setS (NODE_1, NODE_2, 1.0);
+  setS (NODE_2, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 0.0);
 }
 
 void vdc::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (1, 1, 2, getPropertyDouble ("U"));
+  voltageSource (VSRC_1, NODE_1, NODE_2, getPropertyDouble ("U"));
 }
 
 void vdc::calcDC (void) {
   nr_double_t f = getNet()->getSrcFactor ();
-  setE (1, f * getPropertyDouble ("U"));
+  setE (VSRC_1, f * getPropertyDouble ("U"));
 }
 
 void vdc::initTR (void) {
@@ -67,5 +67,5 @@ void vdc::initTR (void) {
 
 void vdc::initAC (void) {
   initDC ();
-  setE (1, 0.0);
+  setE (VSRC_1, 0.0);
 }

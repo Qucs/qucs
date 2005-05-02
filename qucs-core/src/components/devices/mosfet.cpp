@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mosfet.cpp,v 1.27 2005-04-25 18:46:32 raimi Exp $
+ * $Id: mosfet.cpp,v 1.28 2005-05-02 06:51:01 raimi Exp $
  *
  */
 
@@ -43,10 +43,10 @@
 #include "device.h"
 #include "mosfet.h"
 
-#define NODE_G 1 /* gate node   */
-#define NODE_D 2 /* drain node  */
-#define NODE_S 3 /* source node */
-#define NODE_B 4 /* bulk node   */
+#define NODE_G 0 /* gate node   */
+#define NODE_D 1 /* drain node  */
+#define NODE_S 2 /* source node */
+#define NODE_B 3 /* bulk node   */
 
 // silicon bandgap as function of T
 #define Egap(T) (1.16 - (7.02e-4 * sqr (T)) / ((T) + 1108))
