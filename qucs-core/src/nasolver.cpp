@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.33 2005/02/22 16:41:10 raimi Exp $
+ * $Id: nasolver.cpp,v 1.34 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -147,7 +147,7 @@ int nasolver<nr_type_t>::solve_once (void) {
   case EXCEPTION_PIVOT: case EXCEPTION_WRONG_VOLTAGE:
     e = new qucs::exception (EXCEPTION_NA_FAILED);
     d = top_exception()->getData (); pop_exception ();
-    if (d > countNodes ()) {
+    if (d >= countNodes ()) {
       d -= countNodes ();
       e->setText ("voltage source `%s' conflicts with some other voltage "
 		  "source", findVoltageSource(d)->getName ());
@@ -163,7 +163,7 @@ int nasolver<nr_type_t>::solve_once (void) {
   case EXCEPTION_SINGULAR:
     do {
       d = top_exception()->getData (); pop_exception ();
-      if (d <= countNodes ()) {
+      if (d < countNodes ()) {
 	logprint (LOG_ERROR, "WARNING: %s: inserted virtual resistance at "
 		  "node `%s' connected to [%s]\n", getName (), nlist->get (d),
 		  nlist->getNodeString (d));
@@ -225,7 +225,7 @@ void nasolver<nr_type_t>::applyNodeset (bool nokeep) {
   if (x == NULL || nlist == NULL) return;
 
   // set each solution to zero
-  if (nokeep) for (int i = 1; i <= x->getSize (); i++) x->set (i, 0);
+  if (nokeep) for (int i = 0; i < x->getSize (); i++) x->set (i, 0);
 
   // then apply the nodeset itself
   for (nodeset * n = subnet->getNodeset (); n; n = n->getNext ()) {
@@ -477,7 +477,7 @@ void nasolver<nr_type_t>::createMatrix (void) {
   if (convHelper == CONV_GMinStepping) {
     int N = countNodes ();
     int M = countVoltageSources ();
-    for (int n = 1; n <= N + M; n++) {
+    for (int n = 0; n < N + M; n++) {
       A->set (n, n, A->get (n, n) + gMin);
     }
   }
@@ -524,10 +524,10 @@ void nasolver<nr_type_t>::createBMatrix (void) {
   nr_type_t val;
 
   // go through each voltage sources (first dimension)
-  for (int c = 1; c <= M; c++) {
+  for (int c = 0; c < M; c++) {
     vs = findVoltageSource (c);
     // go through each node (second dimension)
-    for (int r = 1; r <= N; r++) {
+    for (int r = 0; r < N; r++) {
       val = 0.0;
       n = nlist->getNode (r);
       for (int i = 0; i < n->nNodes; i++) {
@@ -559,10 +559,10 @@ void nasolver<nr_type_t>::createCMatrix (void) {
   nr_type_t val;
 
   // go through each voltage sources (second dimension)
-  for (int r = 1; r <= M; r++) {
+  for (int r = 0; r < M; r++) {
     vs = findVoltageSource (r);
     // go through each node (first dimension)
-    for (int c = 1; c <= N; c++) {
+    for (int c = 0; c < N; c++) {
       val = 0.0;
       n = nlist->getNode (c);
       for (int i = 0; i < n->nNodes; i++) {
@@ -585,9 +585,9 @@ void nasolver<nr_type_t>::createDMatrix (void) {
   int N = countNodes ();
   circuit * vsr, * vsc;
   nr_type_t val;
-  for (int r = 1; r <= M; r++) {
+  for (int r = 0; r < M; r++) {
     vsr = findVoltageSource (r);
-    for (int c = 1; c <= M; c++) {
+    for (int c = 0; c < M; c++) {
       vsc = findVoltageSource (c);
       val = 0.0;
       if (vsr == vsc) {
@@ -615,10 +615,10 @@ void nasolver<nr_type_t>::createGMatrix (void) {
   circuit * ct;
 
   // go through each column of the G matrix
-  for (int c = 1; c <= N; c++) {
+  for (int c = 0; c < N; c++) {
     nc = nlist->getNode (c);
     // go through each row of the G matrix
-    for (int r = 1; r <= N; r++) {
+    for (int r = 0; r < N; r++) {
       nr = nlist->getNode (r);
       g = 0.0;
       // sum up the conductance of each connected circuit
@@ -650,10 +650,10 @@ void nasolver<nr_type_t>::createNoiseMatrix (void) {
   if (C != NULL) delete C; C = new tmatrix<nr_type_t> (N + M);
 
   // go through each column of the Cy matrix
-  for (int c = 1; c <= N; c++) {
+  for (int c = 0; c < N; c++) {
     nc = nlist->getNode (c);
     // go through each row of the Cy matrix
-    for (int r = 1; r <= N; r++) {
+    for (int r = 0; r < N; r++) {
       nr = nlist->getNode (r);
       n = 0.0;
       // sum up the noise-correlation of each connected circuit
@@ -673,9 +673,9 @@ void nasolver<nr_type_t>::createNoiseMatrix (void) {
   // go through each additional voltage source and put coefficients into
   // the noise current correlation matrix
   circuit * vsr, * vsc;
-  for (int r = 1; r <= M; r++) {
+  for (int r = 0; r < M; r++) {
     vsr = findVoltageSource (r);
-    for (int c = 1; c <= M; c++) {
+    for (int c = 0; c < M; c++) {
       vsc = findVoltageSource (c);
       n = 0.0;
       if (vsr == vsc) {
@@ -701,7 +701,7 @@ void nasolver<nr_type_t>::createIVector (void) {
   circuit * is;
 
   // go through each node
-  for (int r = 1; r <= N; r++) {
+  for (int r = 0; r < N; r++) {
     val = 0.0;
     n = nlist->getNode (r);
     // go through each circuit connected to the node
@@ -727,7 +727,7 @@ void nasolver<nr_type_t>::createEVector (void) {
   circuit * vs;
 
   // go through each voltage source
-  for (int r = 1; r <= M; r++) {
+  for (int r = 0; r < M; r++) {
     vs = findVoltageSource (r);
     val = MatVal (vs->getE (r));
     // put value into e vector
@@ -777,7 +777,7 @@ void nasolver<nr_type_t>::assignVoltageSources (void) {
   int nSources = 0;
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     if (c->getVoltageSources () > 0) {
-      c->setVoltageSource (nSources + 1);
+      c->setVoltageSource (nSources);
       nSources += c->getVoltageSources ();
     }
   }
@@ -921,7 +921,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
   nr_double_t v_abs, v_rel, i_abs, i_rel;
   int r;
 
-  for (r = 1; r <= N; r++) {
+  for (r = 0; r < N; r++) {
     v_abs = abs (x->get (r) - xprev->get (r));
     v_rel = abs (x->get (r));
     if (v_abs >= vntol + reltol * v_rel) return 0;
@@ -931,7 +931,7 @@ int nasolver<nr_type_t>::checkConvergence (void) {
       if (i_abs >= abstol + reltol * i_rel) return 0;
     }
   }
-  for (r = 1; r <= M; r++) {
+  for (r = 0; r < M; r++) {
     i_abs = abs (x->get (r + N) - xprev->get (r + N));
     i_rel = abs (x->get (r + N));
     if (i_abs >= abstol + reltol * i_rel) return 0;
@@ -966,14 +966,14 @@ void nasolver<nr_type_t>::saveNodeVoltages (void) {
   int N = countNodes ();
   struct nodelist_t * n;
   // save all nodes except reference node
-  for (int r = 1; r <= N; r++) {
+  for (int r = 0; r < N; r++) {
     n = nlist->getNode (r);
     for (int i = 0; i < n->nNodes; i++) {
       n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), x->get (r));
     }
   }
   // save reference node
-  n = nlist->getNode (0);
+  n = nlist->getNode (-1);
   for (int i = 0; i < n->nNodes; i++) {
     n->nodes[i]->getCircuit()->setV (n->nodes[i]->getPort (), 0.0);
   }
@@ -988,7 +988,7 @@ void nasolver<nr_type_t>::saveBranchCurrents (void) {
   int M = countVoltageSources ();
   circuit * vs;
   // save all branch currents of voltage sources
-  for (int r = 1; r <= M; r++) {
+  for (int r = 0; r < M; r++) {
     vs = findVoltageSource (r);
     vs->setJ (r, x->get (r + N));
   }
@@ -1012,7 +1012,7 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
 
   // add node voltage variables
   if (volts) {
-    for (int r = 1; r <= N; r++) {
+    for (int r = 0; r < N; r++) {
       if ((n = createV (r, volts, saveOPs)) != NULL) {
 	saveVariable (n, x->get (r), f);
 	free (n);
@@ -1022,7 +1022,7 @@ void nasolver<nr_type_t>::saveResults (char * volts, char * amps, int saveOPs,
 
   // add branch current variables
   if (amps) {
-    for (int r = 1; r <= M; r++) {
+    for (int r = 0; r < M; r++) {
       if ((n = createI (r, amps, saveOPs)) != NULL) {
 	saveVariable (n, x->get (r + N), f);
 	free (n);

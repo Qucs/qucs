@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: trsolver.cpp,v 1.34 2005/04/15 09:07:57 raimi Exp $
+ * $Id: trsolver.cpp,v 1.35 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -317,7 +317,7 @@ void trsolver::predictBashford (void) {
   nr_double_t xn, dd, hn;
 
   // go through each solution
-  for (int r = 1; r <= N + M; r++) {
+  for (int r = 0; r < N + M; r++) {
     xn = predCoeff[0] * SOL(1)->get (r); // a0 coefficient
     for (int o = 1; o <= predOrder; o++) {
       hn = getState (dState, o);         // previous time-step
@@ -337,7 +337,7 @@ void trsolver::predictEuler (void) {
   int M = countVoltageSources ();
   nr_double_t xn, dd, hn;
 
-  for (int r = 1; r <= N + M; r++) {
+  for (int r = 0; r < N + M; r++) {
     xn = predCoeff[0] * SOL(1)->get (r);
     hn = getState (dState, 1);
     dd = (SOL(1)->get (r) - SOL(2)->get (r)) / hn;
@@ -354,7 +354,7 @@ void trsolver::predictGear (void) {
   nr_double_t xn;
 
   // go through each solution
-  for (int r = 1; r <= N + M; r++) {
+  for (int r = 0; r < N + M; r++) {
     xn = 0;
     for (int o = 0; o <= predOrder; o++) {
       // a0, a1, ... coefficients
@@ -571,10 +571,10 @@ nr_double_t trsolver::checkDelta (void) {
   nr_double_t pec = getPredictorError (predType, predOrder);
 
   // go through each solution
-  for (int r = 1; r <= N + M; r++) {
+  for (int r = 0; r < N + M; r++) {
     
     // skip real voltage sources
-    if (r > N) {
+    if (r >= N) {
       if (findVoltageSource (r - N)->isVSource ())
 	continue;
     }

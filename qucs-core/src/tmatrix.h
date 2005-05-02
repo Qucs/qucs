@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tmatrix.h,v 1.10 2005/04/11 06:40:49 raimi Exp $
+ * $Id: tmatrix.h,v 1.11 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -71,10 +71,8 @@ class tmatrix
 #endif
 
   // easy accessor operators
-  nr_type_t  operator () (int r, int c) const {
-    return data[(r - 1) * cols + c - 1]; }
-  nr_type_t& operator () (int r, int c) { 
-    return data[(r - 1) * cols + c - 1]; }
+  nr_type_t  operator () (int r, int c) const { return data[r * cols + c]; }
+  nr_type_t& operator () (int r, int c) { return data[r * cols + c]; }
 
  private:
   int cols;

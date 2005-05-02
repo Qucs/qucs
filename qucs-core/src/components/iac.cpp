@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iac.cpp,v 1.8 2004/11/24 19:15:48 raimi Exp $
+ * $Id: iac.cpp,v 1.9 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -46,10 +46,10 @@ iac::iac () : circuit (2) {
 
 void iac::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
+  setS (NODE_2, NODE_2, 1.0);
 }
 
 void iac::initDC (void) {
@@ -62,12 +62,12 @@ void iac::initAC (void) {
   nr_double_t p = getPropertyDouble ("Phase");
   complex i = polar (a, rad (p));
   allocMatrixMNA ();
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }
 
 void iac::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
   nr_double_t p = getPropertyDouble ("Phase");
   nr_double_t i = getPropertyDouble ("I") * sin (2 * M_PI * f * t + rad (p));
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }

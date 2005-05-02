@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vccs.cpp,v 1.10 2005/01/24 19:37:17 raimi Exp $
+ * $Id: vccs.cpp,v 1.11 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -53,23 +53,29 @@ void vccs::calcSP (nr_double_t frequency) {
   complex z1 = polar (2.0 * g, M_PI - 2.0 * M_PI * frequency * t);
   complex z2 = polar (2.0 * g, - 2.0 * M_PI * frequency * t);
 
-  setS (1, 1, 1.0); setS (1, 2, 0.0); setS (1, 3, 0.0); setS (1, 4, 0.0);
-  setS (2, 1, z1);  setS (2, 2, 1.0); setS (2, 3, 0.0); setS (2, 4, z2);
-  setS (3, 1, z2);  setS (3, 2, 0.0); setS (3, 3, 1.0); setS (3, 4, z1);
-  setS (4, 1, 0.0); setS (4, 2, 0.0); setS (4, 3, 0.0); setS (4, 4, 1.0);
+  setS (NODE_1, NODE_1, 1.0); setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_1, NODE_3, 0.0); setS (NODE_1, NODE_4, 0.0);
+  setS (NODE_2, NODE_1, z1);  setS (NODE_2, NODE_2, 1.0);
+  setS (NODE_2, NODE_3, 0.0); setS (NODE_2, NODE_4, z2);
+  setS (NODE_3, NODE_1, z2);  setS (NODE_3, NODE_2, 0.0);
+  setS (NODE_3, NODE_3, 1.0); setS (NODE_3, NODE_4, z1);
+  setS (NODE_4, NODE_1, 0.0); setS (NODE_4, NODE_2, 0.0);
+  setS (NODE_4, NODE_3, 0.0); setS (NODE_4, NODE_4, 1.0);
 }
 
 void vccs::initDC (void) {
   allocMatrixMNA ();
 #if AUGMENTED
-  setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
-  setB (1, 1, +0.0); setB (2, 1, +1.0); setB (3, 1, -1.0); setB (4, 1, +0.0);
-  setD (1, 1, -1.0 / getPropertyDouble ("G"));
-  setE (1, +0.0);
+  setC (VSRC_1, NODE_1, +1.0); setC (VSRC_1, NODE_2, +0.0);
+  setC (VSRC_1, NODE_3, +0.0); setC (VSRC_1, NODE_4, -1.0);
+  setB (NODE_1, VSRC_1, +0.0); setB (NODE_2, VSRC_1, +1.0);
+  setB (NODE_3, VSRC_1, -1.0); setB (NODE_4, VSRC_1, +0.0);
+  setD (VSRC_1, VSRC_1, -1.0 / getPropertyDouble ("G"));
+  setE (VSRC_1, +0.0);
 #else
   nr_double_t g = getPropertyDouble ("G");
-  setY (2, 1, +g); setY (3, 4, +g);
-  setY (3, 1, -g); setY (2, 4, -g);
+  setY (NODE_2, NODE_1, +g); setY (NODE_3, NODE_4, +g);
+  setY (NODE_3, NODE_1, -g); setY (NODE_2, NODE_4, -g);
 #endif
 }
 
@@ -82,10 +88,10 @@ void vccs::calcAC (nr_double_t frequency) {
 #if AUGMENTED
   nr_double_t g = getPropertyDouble ("G");
   complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
-  setD (1, 1, -r);
+  setD (VSRC_1, 1, -r);
 #else
   complex g = polar (getPropertyDouble ("G"), - 2.0 * M_PI * frequency * t);
-  setY (2, 1, +g); setY (3, 4, +g);
-  setY (3, 1, -g); setY (2, 4, -g);
+  setY (NODE_2, NODE_1, +g); setY (NODE_3, NODE_4, +g);
+  setY (NODE_3, NODE_1, -g); setY (NODE_2, NODE_4, -g);
 #endif
 }

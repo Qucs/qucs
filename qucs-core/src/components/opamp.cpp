@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: opamp.cpp,v 1.3 2004/11/24 19:15:49 raimi Exp $
+ * $Id: opamp.cpp,v 1.4 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -38,9 +38,9 @@
 #include "constants.h"
 #include "opamp.h"
 
-#define NODE_INP 1
-#define NODE_INM 2
-#define NODE_OUT 3
+#define NODE_INP 0
+#define NODE_INM 1
+#define NODE_OUT 2
 
 opamp::opamp () : circuit (3) {
   type = CIR_OPAMP;
@@ -62,10 +62,10 @@ void opamp::initSP (void) {
 
 void opamp::initDC (void) {
   allocMatrixMNA ();
-  setB (NODE_INP, 1, 0);
-  setB (NODE_OUT, 1, 1);
-  setB (NODE_INM, 1, 0);
-  setC (1, NODE_OUT, -1); setD (1, 1, 0); setE (1, 0);
+  setB (NODE_INP, VSRC_1, 0);
+  setB (NODE_OUT, VSRC_1, 1);
+  setB (NODE_INM, VSRC_1, 0);
+  setC (VSRC_1, NODE_OUT, -1); setD (VSRC_1, VSRC_1, 0); setE (VSRC_1, 0);
   Uprev = 0; Uold = 0;
 }
 
@@ -80,9 +80,9 @@ void opamp::calcDC (void) {
   }
   Uprev = Uin; Uold = Uout;
   gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin));
-  setC (1, NODE_INP, +gv);
-  setC (1, NODE_INM, -gv);
-  setE (1, Uout - getV (NODE_OUT) * gv);
+  setC (VSRC_1, NODE_INP, +gv);
+  setC (VSRC_1, NODE_INM, -gv);
+  setE (VSRC_1, Uout - getV (NODE_OUT) * gv);
 }
 
 void opamp::calcOperatingPoints (void) {
@@ -91,8 +91,8 @@ void opamp::calcOperatingPoints (void) {
 
 void opamp::initAC (void) {
   initDC ();
-  setC (1, NODE_INP, +gv);
-  setC (1, NODE_INM, -gv);
+  setC (VSRC_1, NODE_INP, +gv);
+  setC (VSRC_1, NODE_INM, -gv);
 }
 
 void opamp::initTR (void) {

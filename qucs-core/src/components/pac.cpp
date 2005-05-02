@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: pac.cpp,v 1.9 2005/03/14 21:59:08 raimi Exp $
+ * $Id: pac.cpp,v 1.10 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -46,25 +46,25 @@ pac::pac () : circuit (2) {
 
 void pac::calcSP (nr_double_t) {
   nr_double_t z = getPropertyDouble ("Z") / z0;
-  setS (1, 1, z / (z + 2));
-  setS (2, 2, z / (z + 2));
-  setS (1, 2, 2 / (z + 2));
-  setS (2, 1, 2 / (z + 2));
+  setS (NODE_1, NODE_1, z / (z + 2));
+  setS (NODE_2, NODE_2, z / (z + 2));
+  setS (NODE_1, NODE_2, 2 / (z + 2));
+  setS (NODE_2, NODE_1, 2 / (z + 2));
 }
 
 void pac::calcNoiseSP (nr_double_t) {
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) * 4.0 * r * z0 / sqr (2.0 * z0 + r) / T0;
-  setN (1, 1, +f); setN (2, 2, +f);
-  setN (1, 2, -f); setN (2, 1, -f);
+  setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
+  setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
 
 void pac::calcDC (void) {
   nr_double_t g = 1.0 / getPropertyDouble ("Z");
   clearI ();
-  setY (1, 1, +g); setY (2, 2, +g);
-  setY (1, 2, -g); setY (2, 1, -g);
+  setY (NODE_1, NODE_1, +g); setY (NODE_2, NODE_2, +g);
+  setY (NODE_1, NODE_2, -g); setY (NODE_2, NODE_1, -g);
 }
 
 void pac::calcAC (nr_double_t) {
@@ -72,15 +72,15 @@ void pac::calcAC (nr_double_t) {
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t i = sqrt (8 * p / r);
   calcDC ();
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }
 
 void pac::calcNoiseAC (nr_double_t) {
   nr_double_t r = getPropertyDouble ("Z");
   nr_double_t T = getPropertyDouble ("Temp");
   nr_double_t f = kelvin (T) / T0 * 4.0 / r;
-  setN (1, 1, +f); setN (2, 2, +f);
-  setN (1, 2, -f); setN (2, 1, -f);
+  setN (NODE_1, NODE_1, +f); setN (NODE_2, NODE_2, +f);
+  setN (NODE_1, NODE_2, -f); setN (NODE_2, NODE_1, -f);
 }
 
 void pac::calcTR (nr_double_t t) {
@@ -89,5 +89,5 @@ void pac::calcTR (nr_double_t t) {
   nr_double_t f = getPropertyDouble ("f");
   nr_double_t i = sqrt (8 * p / r) * sin (2 * M_PI * f * t);
   calcDC ();
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }

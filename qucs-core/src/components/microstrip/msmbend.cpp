@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msmbend.cpp,v 1.11 2004/11/24 19:15:54 raimi Exp $
+ * $Id: msmbend.cpp,v 1.12 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -88,10 +88,10 @@ matrix msmbend::calcMatrixZ (nr_double_t frequency) {
   z21 = rect (0.0, -0.5e12 / (M_PI * frequency * C));
   z11 = rect (0.0, 2e-9 * M_PI * frequency * L) + z21;
   matrix z (2);
+  z.set (0, 0, z11);
+  z.set (0, 1, z21);
+  z.set (1, 0, z21);
   z.set (1, 1, z11);
-  z.set (1, 2, z21);
-  z.set (2, 1, z21);
-  z.set (2, 2, z11);
   return z;
 }
 

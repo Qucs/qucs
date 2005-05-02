@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.14 2005/04/18 13:41:04 raimi Exp $
+ * $Id: matvec.cpp,v 1.15 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -85,6 +85,7 @@ matvec::matvec (const matvec & m) {
 
 // Destructor deletes a matvec object.
 matvec::~matvec () {
+  if (name) free (name);
   if (data) delete[] data;
 }
 
@@ -103,7 +104,7 @@ char * matvec::getName (void) {
    appropriate matrix indices. */
 void matvec::set (vector v, int r, int c) {
   assert (v.getSize () == size && 
-	  r >= 1 && r <= rows && c >= 1 && c <= cols);
+	  r >= 0 && r < rows && c >= 0 && c < cols);
   for (int i = 0; i < size; i++) data[i].set (r, c, v.get (i));
 }
 
@@ -111,7 +112,7 @@ void matvec::set (vector v, int r, int c) {
    indices.  If the matrix vector has a valid name 'A' the returned
    vector gets the name 'A[r,c]'. */
 vector matvec::get (int r, int c) {
-  assert (r >= 1 && r <= rows && c >= 1 && c <= cols);
+  assert (r >= 0 && r < rows && c >= 0 && c < cols);
   vector res;
   for (int i = 0; i < size; i++) res.add (data[i].get (r, c));
   if (name != NULL) {
@@ -124,7 +125,7 @@ vector matvec::get (int r, int c) {
    'n[r,c]' scheme indicating a matrix (vector) entry. */
 char * matvec::createMatrixString (char * n, int r, int c) {
   static char str[256]; // hopefully enough
-  sprintf (str, "%s[%d,%d]", n, r, c);
+  sprintf (str, "%s[%d,%d]", n, r + 1, c + 1);
   return str;
 }
 
@@ -133,7 +134,7 @@ char * matvec::createMatrixString (char * n, int r, int c) {
    different arguments. */
 char * matvec::createMatrixString (char n, int r, int c) {
   static char str[256]; // hopefully enough
-  sprintf (str, "%c[%d,%d]", n, r, c);
+  sprintf (str, "%c[%d,%d]", n, r + 1, c + 1);
   return str;
 }
 
@@ -146,9 +147,9 @@ char * matvec::isMatrixVector (char * n, int& r, int& c) {
   char * p; int len;
   if (n == NULL) return NULL;              // nothing todo here
   if ((p = strchr (n, '[')) != NULL) {     // find first '['
-    r = atoi (p + 1);                      // get first index
+    r = atoi (p + 1) - 1;                  // get first index
     if ((p = strchr (p, ',')) != NULL) {   // find the ','
-      c = atoi (p + 1);                    // get second index
+      c = atoi (p + 1) - 1;                // get second index
       if ((p = strchr (p, ']')) != NULL) { // find trailing ']'
 	if (p[1] == '\0') {                // identifier must end in ']'
 	  // parse actual identifier

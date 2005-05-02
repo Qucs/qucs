@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.6 2005/02/14 19:56:45 raimi Exp $
+ * $Id: mstee.cpp,v 1.7 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -56,21 +56,21 @@ void mstee::initSP (void) {
 }
 
 void mstee::initLines (void) {
-  lineA = splitMicrostrip (this, lineA, getNet (), "LineA", "NodeA", 1);
+  lineA = splitMicrostrip (this, lineA, getNet (), "LineA", "NodeA", NODE_1);
   lineA->setProperty ("W", getPropertyDouble ("W1"));
   lineA->setProperty ("Temp", getPropertyDouble ("Temp"));
   lineA->setProperty ("Model", getPropertyString ("MSModel"));
   lineA->setProperty ("DispModel", getPropertyString ("MSDispModel"));
   lineA->setSubstrate (getSubstrate ());
 
-  lineB = splitMicrostrip (this, lineB, getNet (), "LineB", "NodeB", 2);
+  lineB = splitMicrostrip (this, lineB, getNet (), "LineB", "NodeB", NODE_2);
   lineB->setProperty ("W", getPropertyDouble ("W2"));
   lineB->setProperty ("Temp", getPropertyDouble ("Temp"));
   lineB->setProperty ("Model", getPropertyString ("MSModel"));
   lineB->setProperty ("DispModel", getPropertyString ("MSDispModel"));
   lineB->setSubstrate (getSubstrate ());
 
-  line2 = splitMicrostrip (this, line2, getNet (), "Line2", "Node2", 3);
+  line2 = splitMicrostrip (this, line2, getNet (), "Line2", "Node2", NODE_3);
   line2->setProperty ("W", getPropertyDouble ("W3"));
   line2->setProperty ("Temp", getPropertyDouble ("Temp"));
   line2->setProperty ("Model", getPropertyString ("MSModel"));
@@ -92,17 +92,17 @@ void mstee::calcSP (nr_double_t frequency) {
   complex n1 = Ta2 * rect (1 + 1 / Tb2, Bt * z0);
   complex n2 = Tb2 * rect (1 + 1 / Ta2, Bt * z0);
   complex n3 = rect (1 / Ta2 + 1 / Tb2, Bt * z0);
-  setS (1, 1, (1 - n1) / (1 + n1));
-  setS (2, 2, (1 - n2) / (1 + n2));
-  setS (3, 3, (1 - n3) / (1 + n3));
-  setS (1, 3, 2 * sqrt (Ta2) / (1 + n1));
-  setS (3, 1, 2 * sqrt (Ta2) / (1 + n1));
-  setS (2, 3, 2 * sqrt (Tb2) / (1 + n2));
-  setS (3, 2, 2 * sqrt (Tb2) / (1 + n2));
-  setS (1, 2, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
-		   sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
-  setS (2, 1, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
-		   sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
+  setS (NODE_1, NODE_1, (1 - n1) / (1 + n1));
+  setS (NODE_2, NODE_2, (1 - n2) / (1 + n2));
+  setS (NODE_3, NODE_3, (1 - n3) / (1 + n3));
+  setS (NODE_1, NODE_3, 2 * sqrt (Ta2) / (1 + n1));
+  setS (NODE_3, NODE_1, 2 * sqrt (Ta2) / (1 + n1));
+  setS (NODE_2, NODE_3, 2 * sqrt (Tb2) / (1 + n2));
+  setS (NODE_3, NODE_2, 2 * sqrt (Tb2) / (1 + n2));
+  setS (NODE_1, NODE_2, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
+			     sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
+  setS (NODE_2, NODE_1, 2 / (sqrt (Ta2 * Tb2) * rect (1, Bt * z0) +
+			     sqrt (Ta2 / Tb2) + sqrt (Tb2 / Ta2)));
 }
 
 void mstee::calcPropagation (nr_double_t f) {
@@ -194,13 +194,13 @@ circuit * splitMicrostrip (circuit * base, circuit * line, net * subnet,
     char * name = circuit::createInternal (c, base->getName ());
     char * node = circuit::createInternal (n, base->getName ());
     line->setName (name);
-    line->setNode (1, base->getNode(internal)->getName ());
-    line->setNode (2, node, 1);
+    line->setNode (0, base->getNode(internal)->getName ());
+    line->setNode (1, node, 1);
     subnet->insertCircuit (line);
     free (name);
     free (node);
   }
-  base->setNode (internal, line->getNode(2)->getName (), 1);
+  base->setNode (internal, line->getNode(1)->getName (), 1);
   return line;
 }
 
@@ -219,16 +219,16 @@ void mstee::initDC (void) {
   setVoltageSources (2);
   setInternalVoltageSource (1);
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
-  voltageSource (2, 1, 3);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
+  voltageSource (VSRC_2, NODE_1, NODE_3);
   if (deviceEnabled (lineA)) {
-    disableMicrostrip (this, lineA, getNet (), 1);
+    disableMicrostrip (this, lineA, getNet (), NODE_1);
   }
   if (deviceEnabled (lineB)) {
-    disableMicrostrip (this, lineB, getNet (), 2);
+    disableMicrostrip (this, lineB, getNet (), NODE_2);
   }
   if (deviceEnabled (line2)) {
-    disableMicrostrip (this, line2, getNet (), 3);
+    disableMicrostrip (this, line2, getNet (), NODE_3);
   }
 }
 
@@ -236,8 +236,10 @@ void mstee::initAC (void) {
   setVoltageSources (3);
   setInternalVoltageSource (1);
   allocMatrixMNA ();
-  setB (1, 1, +1); setB (2, 2, +1); setB (3, 3, +1);
-  setC (1, 1, -1); setC (2, 2, -1); setC (3, 3, -1);
+  setB (NODE_1, VSRC_1, +1); setB (NODE_2, VSRC_2, +1);
+  setB (NODE_3, VSRC_3, +1);
+  setC (VSRC_1, NODE_1, -1); setC (VSRC_2, NODE_2, -1);
+  setC (VSRC_3, NODE_3, -1);
   initLines ();
   lineA->initAC ();
   lineB->initAC ();
@@ -255,15 +257,15 @@ void mstee::calcAC (nr_double_t frequency) {
   line2->calcAC (frequency);
 
   // calculate Z-parameters
-  setD (1, 1, rect (0, -1 / Ta2 / Bt));
-  setD (1, 2, rect (0, -1 / sqrt (Ta2 * Tb2) / Bt));
-  setD (1, 3, rect (0, -1 / sqrt (Ta2) / Bt));
-  setD (2, 1, rect (0, -1 / sqrt (Ta2 * Tb2) / Bt));
-  setD (2, 2, rect (0, -1 / Tb2 / Bt));
-  setD (2, 3, rect (0, -1 / sqrt (Tb2) / Bt));
-  setD (3, 1, rect (0, -1 / sqrt (Ta2) / Bt));
-  setD (3, 2, rect (0, -1 / sqrt (Tb2) / Bt));
-  setD (3, 3, rect (0, -1 / Bt));
+  setD (VSRC_1, VSRC_1, rect (0, -1 / Ta2 / Bt));
+  setD (VSRC_1, VSRC_2, rect (0, -1 / sqrt (Ta2 * Tb2) / Bt));
+  setD (VSRC_1, VSRC_3, rect (0, -1 / sqrt (Ta2) / Bt));
+  setD (VSRC_2, VSRC_1, rect (0, -1 / sqrt (Ta2 * Tb2) / Bt));
+  setD (VSRC_2, VSRC_2, rect (0, -1 / Tb2 / Bt));
+  setD (VSRC_2, VSRC_3, rect (0, -1 / sqrt (Tb2) / Bt));
+  setD (VSRC_3, VSRC_1, rect (0, -1 / sqrt (Ta2) / Bt));
+  setD (VSRC_3, VSRC_2, rect (0, -1 / sqrt (Tb2) / Bt));
+  setD (VSRC_3, VSRC_3, rect (0, -1 / Bt));
 }
 
 void mstee::initTR (void) {

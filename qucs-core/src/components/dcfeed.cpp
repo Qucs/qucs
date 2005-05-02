@@ -1,7 +1,7 @@
 /*
  * dcfeed.cpp - DC feed class implementation
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2003, 2004, 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: dcfeed.cpp,v 1.8 2004/11/24 19:15:48 raimi Exp $
+ * $Id: dcfeed.cpp,v 1.9 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -42,16 +42,16 @@ dcfeed::dcfeed () : circuit (2) {
 
 void dcfeed::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1.0);
-  setS (2, 2, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
 }
 
 void dcfeed::initDC (void) {
   setVoltageSources (1);
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void dcfeed::initAC (void) {
@@ -59,6 +59,21 @@ void dcfeed::initAC (void) {
   allocMatrixMNA ();
 }
 
+#define fState 0 // flux state
+#define vState 1 // voltage state
+
 void dcfeed::initTR (void) {
   initDC ();
+  setStates (2);
+}
+
+void dcfeed::calcTR (nr_double_t) {
+  nr_double_t l = getPropertyDouble ("L");
+  nr_double_t r, v;
+  nr_double_t i = real (getJ (VSRC_1));
+
+  setState (fState, i * l);
+  integrate (fState, l, r, v);
+  setD (VSRC_1, VSRC_1, -r);
+  setE (VSRC_1, v);
 }

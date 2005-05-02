@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: attenuator.cpp,v 1.16 2005/01/25 20:49:03 raimi Exp $
+ * $Id: attenuator.cpp,v 1.17 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -50,10 +50,10 @@ void attenuator::initSP (void) {
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t s11 = r * (1 - a) / (a - r * r);
   nr_double_t s21 = sqrt (a) * (1 - r * r) / (a - r * r);
-  setS (1, 1, s11);
-  setS (2, 2, s11);
-  setS (1, 2, s21);
-  setS (2, 1, s21);
+  setS (NODE_1, NODE_1, s11);
+  setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21);
+  setS (NODE_2, NODE_1, s21);
 }
 
 void attenuator::calcNoiseSP (nr_double_t) {
@@ -62,10 +62,10 @@ void attenuator::calcNoiseSP (nr_double_t) {
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t r = (z - z0) / (z + z0);
   nr_double_t f = (l - 1) * (r * r - 1) / sqr (l - r * r) * kelvin (T) / T0;
-  setN (1, 1, -f * (r * r + l));
-  setN (2, 2, -f * (r * r + l));
-  setN (1, 2, +f * 2 * r * sqrt (l));
-  setN (2, 1, +f * 2 * r * sqrt (l));
+  setN (NODE_1, NODE_1, -f * (r * r + l));
+  setN (NODE_2, NODE_2, -f * (r * r + l));
+  setN (NODE_1, NODE_2, +f * 2 * r * sqrt (l));
+  setN (NODE_2, NODE_1, +f * 2 * r * sqrt (l));
 }
 
 void attenuator::calcNoiseAC (nr_double_t) {
@@ -73,10 +73,10 @@ void attenuator::calcNoiseAC (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t z = getPropertyDouble ("Zref");
   nr_double_t f = 4.0 * kelvin (T) / T0 / z / (l - 1);
-  setN (1, 1, +f * (l + 1));
-  setN (2, 2, +f * (l + 1));
-  setN (1, 2, -f * 2 * sqrt (l));
-  setN (2, 1, -f * 2 * sqrt (l));
+  setN (NODE_1, NODE_1, +f * (l + 1));
+  setN (NODE_2, NODE_2, +f * (l + 1));
+  setN (NODE_1, NODE_2, -f * 2 * sqrt (l));
+  setN (NODE_2, NODE_1, -f * 2 * sqrt (l));
 }
 
 void attenuator::initDC (void) {
@@ -84,7 +84,7 @@ void attenuator::initDC (void) {
   if (a == 1.0) { // no attenuation
     setVoltageSources (1);
     allocMatrixMNA ();
-    voltageSource (1, 1, 2);
+    voltageSource (VSRC_1, NODE_1, NODE_2);
   }
 #if AUGMENTED
   else { // compute Z-parameters
@@ -93,10 +93,13 @@ void attenuator::initDC (void) {
     nr_double_t zref = getPropertyDouble ("Zref");
     nr_double_t z11 = zref * (a + 1) / (a - 1);
     nr_double_t z21 = zref * (sqrt (a) * 2) / (a - 1);
-    setB (1, 1, +1.0); setB (1, 2, +0.0); setB (2, 1, +0.0); setB (2, 2, +1.0);
-    setC (1, 1, -1.0); setC (1, 2, +0.0); setC (2, 1, +0.0); setC (2, 2, -1.0);
-    setD (1, 1, +z11); setD (2, 2, +z11); setD (1, 2, +z21); setD (2, 1, +z21);
-    setE (1, +0.0); setE (2, +0.0);
+    setB (NODE_1, VSRC_1, +1.0); setB (NODE_1, VSRC_2, +0.0);
+    setB (NODE_2, VSRC_1, +0.0); setB (NODE_2, VSRC_2, +1.0);
+    setC (VSRC_1, NODE_1, -1.0); setC (VSRC_1, NODE_2, +0.0);
+    setC (VSRC_2, NODE_1, +0.0); setC (VSRC_2, NODE_2, -1.0);
+    setD (VSRC_1, VSRC_1, +z11); setD (VSRC_2, VSRC_2, +z11);
+    setD (VSRC_1, VSRC_2, +z21); setD (VSRC_2, VSRC_1, +z21);
+    setE (VSRC_1, +0.0); setE (VSRC_2, +0.0);
   }
   clearY ();
 #else
@@ -105,10 +108,10 @@ void attenuator::initDC (void) {
     allocMatrixMNA ();
     nr_double_t z = getPropertyDouble ("Zref");
     nr_double_t f = 1 / z / (a - 1);
-    setY (1, 1, f * (a + 1));
-    setY (2, 2, f * (a + 1));
-    setY (1, 2, -f * 2 * sqrt (a));
-    setY (2, 1, -f * 2 * sqrt (a));
+    setY (NODE_1, NODE_1, f * (a + 1));
+    setY (NODE_2, NODE_2, f * (a + 1));
+    setY (NODE_1, NODE_2, -f * 2 * sqrt (a));
+    setY (NODE_2, NODE_1, -f * 2 * sqrt (a));
   }
 #endif
 }
@@ -120,7 +123,7 @@ void attenuator::initAC (void) {
     setVoltageSources (1);
     allocMatrixMNA ();
     clearY ();
-    voltageSource (1, 1, 2);
+    voltageSource (VSRC_1, NODE_1, NODE_2);
   }
 #if AUGMENTED
   else { // compute Z-parameters
@@ -132,8 +135,8 @@ void attenuator::initAC (void) {
   
     // build Z-parameter matrix and convert it to Y-parameters
     matrix z (2);
-    z.set (1, 1, z11); z.set (2, 2, z11);
-    z.set (1, 2, z21); z.set (2, 1, z21);
+    z.set (NODE_1, NODE_1, z11); z.set (NODE_2, NODE_2, z11);
+    z.set (NODE_1, NODE_2, z21); z.set (NODE_2, NODE_1, z21);
     setMatrixY (ztoy (z));
   }
 #else
@@ -142,10 +145,10 @@ void attenuator::initAC (void) {
     allocMatrixMNA ();
     nr_double_t z = getPropertyDouble ("Zref");
     nr_double_t f = 1 / z / (a - 1);
-    setY (1, 1, f * (a + 1));
-    setY (2, 2, f * (a + 1));
-    setY (1, 2, -f * 2 * sqrt (a));
-    setY (2, 1, -f * 2 * sqrt (a));
+    setY (NODE_1, NODE_1, f * (a + 1));
+    setY (NODE_2, NODE_2, f * (a + 1));
+    setY (NODE_1, NODE_2, -f * 2 * sqrt (a));
+    setY (NODE_2, NODE_1, -f * 2 * sqrt (a));
   }
 #endif
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: vnoise.cpp,v 1.6 2005/02/14 19:56:45 raimi Exp $
+ * $Id: vnoise.cpp,v 1.7 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -45,10 +45,10 @@ vnoise::vnoise () : circuit (2) {
 
 void vnoise::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
+  setS (NODE_1, NODE_1, 0.0);
+  setS (NODE_1, NODE_2, 1.0);
+  setS (NODE_2, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 0.0);
 }
 
 void vnoise::calcNoiseSP (nr_double_t frequency) {
@@ -57,13 +57,13 @@ void vnoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
   nr_double_t vpsd = u / (a + c * pow (frequency, e)) / kB / T0 / 4 / z0;
-  setN (1, 1, +vpsd); setN (2, 2, +vpsd);
-  setN (1, 2, -vpsd); setN (2, 1, -vpsd);
+  setN (NODE_1, NODE_1, +vpsd); setN (NODE_2, NODE_2, +vpsd);
+  setN (NODE_1, NODE_2, -vpsd); setN (NODE_2, NODE_1, -vpsd);
 }
 
 void vnoise::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void vnoise::initTR (void) {
@@ -80,5 +80,5 @@ void vnoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
   nr_double_t ipsd = u / (a + c * pow (frequency, e)) / kB / T0;
-  setN (3, 3, +ipsd);
+  setN (NODE_3, NODE_3, +ipsd);
 }

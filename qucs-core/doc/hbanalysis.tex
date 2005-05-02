@@ -118,14 +118,16 @@ voltages $v_{0,1}...v_{K,N}$ are put into $i(t) = f_g(v_1, ..., v_P)$
 and $q(t) = f_q(v_1, ..., v_Q)$ again. Now, a Fourier transformation
 gives the vectors $\boldsymbol{Q}$ and $\boldsymbol{I}_G$ for the
 next iteration step. After repeating this several times, a simulation
-result has hopefully be found.\\
+result has hopefully be found.
+
+\addvspace{12pt}
+
 Having found this result means having got the voltages $v_1...v_N$ at
 the interconnections of the two subcircuits. With these values the
 voltages at all nodes can be calculated: Forget about the non-linear
 subcircuit, put voltage sources at the former interconnections (using
 the calculated values) and perform a normal AC simulation. After that
 the simulation is complete.
-
 
 \section{Going through each Step}
 
@@ -140,7 +142,10 @@ exciting one by one the port nodes of the MNA matrix with unity current.
 After that the transadmittance matrix is calculated by inverting the
 transimpedance matrix. Finally the matrices $[\tilde{Y}]$ and $[\hat{Y}]$
 are filled with the corresponding elements of the overall transadmittance
-matrix.\\
+matrix.
+
+\addvspace{12pt}
+
 Note: The MNA matrix of the linear subcircuit has $L$ nodes.
 Every node, that is connected to the non-linear subcircuit or/and is
 connected to a voltage source, is called "port" in the following text.
@@ -250,7 +255,10 @@ So, two Jacobian matrices have to be built, one for the current
 $\boldsymbol{I}_G$ and one for the charge $\boldsymbol{Q}$. Both resulted
 from a Fourier Transformation. The two operations (Fourier Transformation
 and differentiation) can be exchanged. Hence, the Jacobian matrices
-are built in time domain and transformed into frequency domain afterwards.\\
+are built in time domain and transformed into frequency domain afterwards.
+
+\addvspace{12pt}
+
 To obtain a practical algorithm of this procedure, the DFT is best written
 as matrix equation. By having a look at equation \ref{eqn:DFT} and
 \ref{eqn:IDFT}, it becomes clear how this works. The harmonic factors
@@ -330,7 +338,10 @@ They depend on the sample frequency $f_T$ and the number of samples $N$.
 \Delta f = \frac{1}{N\cdot\Delta t} = \frac{f_T}{N}
 \end{equation}
 Where $\Delta t$ is distance between time samples and $\Delta f$
-distance between frequency samples.\\
+distance between frequency samples.
+
+\addvspace{12pt}
+
 With DFT the $N$ time samples are transformed into $N$ frequency samples.
 This also holds if the time data are real numbers, as is always
 the case in "real life": The complex frequency samples are conjugate
@@ -342,7 +353,10 @@ complex symmetrical and so equalizing the score:
 \addvspace{12pt}
 
 That is, knowing the input data has no imaginary part, only half of
-the Fourier data must be computed. \\
+the Fourier data must be computed.
+
+\addvspace{12pt}
+
 As can be seen in equation \ref{eqn:DFT} the computing time of the
 DFT rises with $N^2$. This is really huge. Because this transformation
 must be performed many times during harmonic balance simulation, it is
@@ -350,7 +364,9 @@ very important to reduce the time consumption. Using a strongly
 optimized algorithm, the so-called Fast Fourier Transformation (FFT),
 the DFT is reduced to an $N\cdot\log_2 N$ time rise.
 The following information stems from \cite{Press},
-where the theoretical background is explained comprehensively.\\
+where the theoretical background is explained comprehensively.
+
+\addvspace{12pt}
 
 The fundamental trick of the FFT is to cut the DFT into two parts,
 one with data having even indexes and the other with odd indexes:
@@ -380,6 +396,7 @@ So finally, the FFT method performs $\log_2 N$ times the operation
 \label{eqn:FFTstep}
 u_{k1,even} + W_{n,x}\cdot u_{k2,odd}
 \end{equation}
+
 to get one data of $\underline{U}_n$. This is called the
 Danielson-Lanzcos algorithm.
 The question now arises which data values of $u_k$
@@ -388,17 +405,20 @@ The answer is quite easy. The data array must be reordered by the
 bit-reversal method. This means the value at index $k_1$ is swapped
 with the value at index $k_2$ where $k_2$ is obtained by mirroring
 the binary number $k_1$, i.e. the most significant bit becomes the
-least significant one and so on. Example for $N=8$:\\
+least significant one and so on. Example for $N=8$:
 
 \begin{tabular}{ccccccccccc}
 000 & $\leftrightarrow$ & 000  & \qquad\qquad &  011 & $\leftrightarrow$ & 110  & \qquad\qquad &  110 & $\leftrightarrow$ & 011 \\
 001 & $\leftrightarrow$ & 100  & \qquad\qquad &  100 & $\leftrightarrow$ & 001  & \qquad\qquad &  111 & $\leftrightarrow$ & 111 \\
 010 & $\leftrightarrow$ & 010  & \qquad\qquad &  101 & $\leftrightarrow$ & 101 \\
-\end{tabular}\\
+\end{tabular}
 
 Having this new indexing, the values to combine according to
 equation \ref{eqn:FFTstep} are the adjacent values. So, performing
-the Danielson-Lanzcos algorithm has now become very easy.\\
+the Danielson-Lanzcos algorithm has now become very easy.
+
+\addvspace{12pt}
+
 Figure \ref{fig:fft} illustrates the whole FFT algorithm starting with the
 input data $u_k$ and ending with one value of the output data
 $\underline{U}_n$.
@@ -428,7 +448,6 @@ Parameters:\\
 \end{tabular}
 
 \addvspace{12pt}
-
 
 \texttt{>\quad // bit reversal method} \\
 \texttt{>\quad int i, j, m, n;} \\
@@ -473,7 +492,7 @@ Parameters:\\
 \texttt{>\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi;} \\
 \texttt{>\quad \qquad \}} \\
 \texttt{>\quad \qquad mmax = istep;} \\
-\texttt{>\quad \}} \\
+\texttt{>\quad \}}
 
 \addvspace{12pt}
 
@@ -487,7 +506,10 @@ However, the algorithms are much more complex.
 A standard Fourier Transformation is not useful in harmonic balance
 methods, because with multi-tone excitation many mixing products appear.
 The best way to cope with this problem is to use multi-dimensional
-FFT.\\
+FFT.
+
+\addvspace{12pt}
+
 Fourier Transformations in more than one dimension soon become
 very time consuming. Using FFT mechanisms is therefore mandatory.
 A more-dimensional Fourier Transformation consists of many
@@ -588,7 +610,7 @@ Parameters:\\
 \texttt{>\quad \qquad\qquad ifp1 = ifp2;} \\
 \texttt{>\quad \qquad \}} \\
 \texttt{>\quad \qquad nprev *= n;} \\
-\texttt{>\quad \}} \\
+\texttt{>\quad \}}
 
 
 \section{Large-Signal S-Parameter Simulation}
@@ -628,4 +650,4 @@ An algorithm in symbolic language should describe the whole LSSP:
 \texttt{>\quad \qquad } \\
 \texttt{>\quad \qquad for m=1 to $NumberOfPorts$} \\
 \texttt{>\quad \qquad \qquad Calculate $\underline{S}_{mn}$ according to equation \ref{eqn:ui2s}.} \\
-\texttt{>\quad }\} \\
+\texttt{>\quad }\}

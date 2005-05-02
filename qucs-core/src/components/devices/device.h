@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: device.h,v 1.9 2005/04/18 13:41:04 raimi Exp $
+ * $Id: device.h,v 1.10 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -40,6 +40,8 @@ class device
   friend void disableCapacitance (circuit *, circuit *, net *);
   friend int deviceEnabled (circuit *);
   friend void pnJunctionMOS (nr_double_t, nr_double_t, nr_double_t,
+			     nr_double_t&, nr_double_t&);
+  friend void pnJunctionBIP (nr_double_t, nr_double_t, nr_double_t,
 			     nr_double_t&, nr_double_t&);
   friend nr_double_t pnVoltage (nr_double_t, nr_double_t, nr_double_t,
 				nr_double_t);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: spfile.cpp,v 1.17 2005/02/08 23:08:38 raimi Exp $
+ * $Id: spfile.cpp,v 1.18 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -82,9 +82,9 @@ matrix spfile::getInterpolMatrixS (nr_double_t frequency) {
 
   // first interpolate the matrix values
   matrix s (getSize () - 1);
-  for (int r = 1; r <= getSize () - 1; r++) {
-    for (int c = 1; c <= getSize () - 1; c++) {
-      int i = (r - 1) * getSize () + c - 1;
+  for (int r = 0; r < getSize () - 1; r++) {
+    for (int c = 0; c < getSize () - 1; c++) {
+      int i = r * getSize () + c;
       s.set (r, c, interpolate (sfreq, index[i].v, frequency));
     }
   }
@@ -138,9 +138,9 @@ complex spfile::fetch (int r, int c, int idx) {
 // Returns the matrix for the given frequency index.
 matrix spfile::fetch (int idx) {
   matrix res (getSize () - 1);
-  for (int r = 1; r <= getSize () - 1; r++) {
-    for (int c = 1; c <= getSize () - 1; c++) {
-      vector * v = index[(r - 1) * getSize () + c - 1].v;
+  for (int r = 0; r < getSize () - 1; r++) {
+    for (int c = 0; c < getSize () - 1; c++) {
+      vector * v = index[r * getSize () + c].v;
       res.set (r, c, v->get (idx));
     }
   }
@@ -164,28 +164,28 @@ matrix spfile::expandSParaMatrix (matrix s) {
   matrix res (ports);
 
   // compute S'mm
-  for (sa = 0, r = 1; r <= ports - 1; r++)
-    for (c = 1; c <= ports - 1; c++) sa += s.get (r, c);
+  for (sa = 0, r = 0; r < ports - 1; r++)
+    for (c = 0; c < ports - 1; c++) sa += s.get (r, c);
   ss = (2 - g - ports + sa) / (1 - ports * g - sa);
-  res.set (ports, ports, ss);
+  res.set (ports - 1, ports - 1, ss);
   fr = (1 - g * ss) / (1 - g);
     
   // compute S'im
-  for (r = 1; r <= ports - 1; r++) {
-    for (sc = 0, c = 1; c <= ports - 1; c++) sc += s.get (r, c);
-    res.set (r, ports, fr * (1 - sc));
+  for (r = 0; r < ports - 1; r++) {
+    for (sc = 0, c = 0; c < ports - 1; c++) sc += s.get (r, c);
+    res.set (r, ports - 1, fr * (1 - sc));
   }
 
   // compute S'mj
-  for (c = 1; c <= ports - 1; c++) {
-    for (sr = 0, r = 1; r <= ports - 1; r++) sr += s.get (r, c);
-    res.set (ports, c, fr * (1 - sr));
+  for (c = 0; c < ports - 1; c++) {
+    for (sr = 0, r = 0; r < ports - 1; r++) sr += s.get (r, c);
+    res.set (ports - 1, c, fr * (1 - sr));
   }
 
   // compute S'ij
-  for (r = 1; r <= ports - 1; r++) {
-    for (c = 1; c <= ports - 1; c++) {
-      fr = g * res.get (r, ports) * res.get (ports, c) / (1 - g * ss);
+  for (r = 0; r < ports - 1; r++) {
+    for (c = 0; c < ports - 1; c++) {
+      fr = g * res.get (r, ports - 1) * res.get (ports - 1, c) / (1 - g * ss);
       res.set (r, c, s.get (r, c) - fr);
     }
   }
@@ -203,10 +203,10 @@ matrix spfile::shrinkSParaMatrix (matrix s) {
   matrix res (ports - 1);
 
   // compute S'ij
-  for (r = 1; r <= ports - 1; r++) {
-    for (c = 1; c <= ports - 1; c++) {
-      res.set (r, c, s.get (r, c) + g * s.get (r, ports)  *
-	       s.get (ports, c) / (1 - g * s.get (ports, ports)));
+  for (r = 0; r < ports - 1; r++) {
+    for (c = 0; c < ports - 1; c++) {
+      res.set (r, c, s.get (r, c) + g * s.get (r, ports - 1)  *
+	       s.get (ports - 1, c) / (1 - g * s.get (ports - 1, ports - 1)));
     }
   }
   return res;
@@ -226,21 +226,21 @@ matrix spfile::expandNoiseMatrix (matrix n, matrix s) {
 
   // create K matrix
   matrix k (ports, ports - 1);
-  for (r = 1; r <= ports - 1; r++) {
-    for (c = 1; c <= ports - 1; c++) {
+  for (r = 0; r < ports - 1; r++) {
+    for (c = 0; c < ports - 1; c++) {
       if (r == c)
-	k.set (r, c, 1.0 + g * (s.get (r, ports) - 1));
+	k.set (r, c, 1.0 + g * (s.get (r, ports - 1) - 1));
       else
-	k.set (r, c, g * s.get (r, ports));
+	k.set (r, c, g * s.get (r, ports - 1));
     }
   }
-  for (c = 1; c <= ports - 1; c++)
-    k.set (ports, c, g * s.get (ports, ports) - 1.0);
+  for (c = 0; c < ports - 1; c++)
+    k.set (ports - 1, c, g * s.get (ports - 1, ports - 1) - 1.0);
 
   // create D vector
   matrix d (ports, 1);
-  for (r = 1; r <= ports - 1; r++) d.set (r, 1, s.get (r, ports));
-  d.set (ports, 1, s.get (ports, ports) - 1);
+  for (r = 0; r < ports - 1; r++) d.set (r, 0, s.get (r, ports - 1));
+  d.set (ports - 1, 0, s.get (ports - 1, ports - 1) - 1);
 
   // expand noise correlation matrix
   matrix res (ports);
@@ -263,18 +263,19 @@ matrix spfile::shrinkNoiseMatrix (matrix n, matrix s) {
 
   // create K' matrix
   matrix k (ports - 1, ports);
-  for (r = 1; r <= ports - 1; r++) k.set (r, r, 1);
-  for (r = 1; r <= ports - 1; r++)
-    k.set (r, ports, g * s.get (r, ports) / (1 - g * s.get (ports, ports)));
+  for (r = 0; r < ports - 1; r++) k.set (r, r, 1);
+  for (r = 0; r < ports - 1; r++)
+    k.set (r, ports - 1, g * s.get (r, ports - 1) /
+	   (1 - g * s.get (ports - 1, ports - 1)));
 
   // create D' vector
   matrix d (ports - 1, 1);
-  for (r = 1; r <= ports - 1; r++) d.set (r, 1, s.get (r, ports));
+  for (r = 0; r < ports - 1; r++) d.set (r, 0, s.get (r, ports - 1));
   
   // shrink noise correlation matrix
   matrix res (ports - 1);
   res = k * n * adjoint (k) + kelvin (T) / T0 * fabs (1 - norm (g)) /
-    norm (1 - g * s.get (ports, ports)) * d * adjoint (d);
+    norm (1 - g * s.get (ports - 1, ports - 1)) * d * adjoint (d);
   return res;
 }
 
@@ -310,7 +311,7 @@ void spfile::initSP (void) {
 /* The function creates an additional data vector for the given matrix
    entry and adds it to the dataset. */
 void spfile::createVector (int r, int c) {
-  int i = (r - 1) * getSize () + c - 1;
+  int i = r * getSize () + c;
   index[i].r = r;
   index[i].c = c;
   vector * v = new vector (matvec::createMatrixString ("S", r, c), 
@@ -337,7 +338,7 @@ void spfile::createIndex (void) {
   for (v = data->getVariables (); v != NULL; v = (vector *) v->getNext ()) {
     if ((n = matvec::isMatrixVector (v->getName (), r, c)) != NULL) {
       // save matrix vector indices
-      i = (r - 1) * s + c - 1;
+      i = r * s + c;
       index[i].r = r;
       index[i].c = c;
       index[i].v = v;
@@ -369,12 +370,12 @@ matrix spfile::correlationMatrix (nr_double_t Fmin, complex Sopt,
   assert (s.getCols () == s.getRows () && s.getCols () == 2);
   matrix c (2);
   complex Kx = 4 * Rn / z0 / norm (1 + Sopt);
-  c.set (1, 1, (Fmin - 1) * (norm (s.get (1, 1)) - 1) +
-	 Kx * norm (1 - s.get (1, 1) * Sopt));
-  c.set (2, 2, norm (s.get (2, 1)) * ((Fmin - 1) + Kx * norm (Sopt)));
-  c.set (1, 2, s.get (1, 1) / s.get (2, 1) * c.get (2, 2) -
-	 conj (s.get (2, 1)) * conj (Sopt) * Kx);
-  c.set (2, 1, conj (c.get (1, 2)));
+  c.set (0, 0, (Fmin - 1) * (norm (s.get (0, 0)) - 1) +
+	 Kx * norm (1 - s.get (0, 0) * Sopt));
+  c.set (1, 1, norm (s.get (1, 0)) * ((Fmin - 1) + Kx * norm (Sopt)));
+  c.set (0, 1, s.get (0, 0) / s.get (1, 0) * c.get (1, 1) -
+	 conj (s.get (1, 0)) * conj (Sopt) * Kx);
+  c.set (1, 0, conj (c.get (0, 1)));
   return c;
 }
 
@@ -385,11 +386,11 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
   assert (s.getCols () == s.getRows () && c.getCols () == c.getRows () &&
 	  s.getCols () == 2 && c.getCols () == 2);
   complex n1, n2;
-  n1 = c.get (1, 1) * norm (s.get (2, 1)) -
-    2 * real (c.get (1, 2) * s.get (2, 1) * conj (s.get (1, 1))) +
-    c.get (2, 2) * norm (s.get (1, 1));
-  n2 = 2 * (c.get (2, 2) * s.get (1, 1) -
-	    c.get (1, 2) * s.get (2, 1)) / (c.get (2, 2) + n1);
+  n1 = c.get (0, 0) * norm (s.get (1, 0)) -
+    2 * real (c.get (0, 1) * s.get (1, 0) * conj (s.get (0, 0))) +
+    c.get (1, 1) * norm (s.get (0, 0));
+  n2 = 2 * (c.get (1, 1) * s.get (0, 0) -
+	    c.get (0, 1) * s.get (1, 0)) / (c.get (1, 1) + n1);
 
   // optimal source reflection coefficient
   Sopt = 1 - norm (n2);
@@ -399,17 +400,17 @@ nr_double_t spfile::noiseFigure (matrix s, matrix c, nr_double_t& Fmin,
     Sopt = (1 - sqrt (Sopt)) / n2;
 
   // minimum noise figure
-  Fmin = real (1 + (c.get (2, 2) - n1 * norm (Sopt)) /
-	       norm (s.get (2, 1)) / (1 + norm (Sopt)));
+  Fmin = real (1 + (c.get (1, 1) - n1 * norm (Sopt)) /
+	       norm (s.get (1, 0)) / (1 + norm (Sopt)));
 
   // equivalent noise resistance
-  Rn = real ((c.get (1, 1) - 2 *
-	      real (c.get (1, 2) * conj ((1 + s.get (1, 1)) / s.get (2, 1))) +
-	      c.get (2, 2) * norm ((1 + s.get (1, 1)) / s.get (2, 1))) / 4);
+  Rn = real ((c.get (0, 0) - 2 *
+	      real (c.get (0, 1) * conj ((1 + s.get (0, 0)) / s.get (1, 0))) +
+	      c.get (1, 1) * norm ((1 + s.get (0, 0)) / s.get (1, 0))) / 4);
   Rn = Rn * z0;
 
   // noise figure itself
-  return real (1 + c.get (2, 2) / norm (s.get (2, 1)));
+  return real (1 + c.get (1, 1) / norm (s.get (1, 0)));
 }
 
 /* This function returns an interpolated value for f(x).  The

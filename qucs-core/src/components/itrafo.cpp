@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: itrafo.cpp,v 1.4 2004/11/24 19:15:49 raimi Exp $
+ * $Id: itrafo.cpp,v 1.5 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -45,13 +45,13 @@ void itrafo::initSP (void) {
   allocMatrixS ();
   nr_double_t z = getPropertyDouble ("Z");
   nr_double_t n = 2 * z0 + z;
-  setS (1, 1,  (2.0 * z0 - z) / n);
-  setS (1, 2,  (2.0 * sqrt (z0 * z)) / n);
-  setS (1, 3, -(2.0 * sqrt (z0 * z)) / n);
-  setS (2, 1,  (2.0 * sqrt (z0 * z)) / n);
-  setS (2, 2,  (z) / n);
-  setS (2, 3,  (2.0 * z0) / n);
-  setS (3, 1, -(2.0 * sqrt (z0 * z)) / n);
-  setS (3, 2,  (2.0 * z0) / n);
-  setS (3, 3,  (z) / n);
+  setS (NODE_1, NODE_1,  (2.0 * z0 - z) / n);
+  setS (NODE_1, NODE_2,  (2.0 * sqrt (z0 * z)) / n);
+  setS (NODE_1, NODE_3, -(2.0 * sqrt (z0 * z)) / n);
+  setS (NODE_2, NODE_1,  (2.0 * sqrt (z0 * z)) / n);
+  setS (NODE_2, NODE_2,  (z) / n);
+  setS (NODE_2, NODE_3,  (2.0 * z0) / n);
+  setS (NODE_3, NODE_1, -(2.0 * sqrt (z0 * z)) / n);
+  setS (NODE_3, NODE_2,  (2.0 * z0) / n);
+  setS (NODE_3, NODE_3,  (z) / n);
 }

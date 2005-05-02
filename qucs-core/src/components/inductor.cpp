@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inductor.cpp,v 1.12 2005/02/21 20:52:49 raimi Exp $
+ * $Id: inductor.cpp,v 1.13 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -47,14 +47,14 @@ inductor::inductor () : circuit (2) {
 void inductor::calcSP (nr_double_t frequency) {
   nr_double_t l = getPropertyDouble ("L") / z0;
   complex z = rect (0, 2.0 * M_PI * frequency * l);
-  setS (1, 1, z / (z + 2)); setS (2, 2, z / (z + 2));
-  setS (1, 2, 2 / (z + 2)); setS (2, 1, 2 / (z + 2));
+  setS (NODE_1, NODE_1, z / (z + 2)); setS (NODE_2, NODE_2, z / (z + 2));
+  setS (NODE_1, NODE_2, 2 / (z + 2)); setS (NODE_2, NODE_1, 2 / (z + 2));
 }
 
 void inductor::initDC (void) {
   setVoltageSources (1);  
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void inductor::calcDC (void) {
@@ -82,8 +82,8 @@ void inductor::calcAC (nr_double_t frequency) {
   // for non-zero inductance usual MNA entries
   if (l != 0.0) {
     complex y = rect (0, -1 / (2.0 * M_PI * frequency * l));
-    setY (1, 1, +y); setY (2, 2, +y);
-    setY (1, 2, -y); setY (2, 1, -y);
+    setY (NODE_1, NODE_1, +y); setY (NODE_2, NODE_2, +y);
+    setY (NODE_1, NODE_2, -y); setY (NODE_2, NODE_1, -y);
   }
 }
 
@@ -99,10 +99,10 @@ void inductor::initTR (void) {
 void inductor::calcTR (nr_double_t) {
   nr_double_t l = getPropertyDouble ("L");
   nr_double_t r, v;
-  nr_double_t i = real (getJ (1));
+  nr_double_t i = real (getJ (VSRC_1));
 
   setState (fState, i * l);
   integrate (fState, l, r, v);
-  setD (1, 1, -r);
-  setE (1, v);
+  setD (VSRC_1, VSRC_1, -r);
+  setE (VSRC_1, v);
 }

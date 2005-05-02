@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: irect.cpp,v 1.2 2004/11/24 19:15:49 raimi Exp $
+ * $Id: irect.cpp,v 1.3 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -44,10 +44,10 @@ irect::irect () : circuit (2) {
 
 void irect::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
+  setS (NODE_2, NODE_2, 1.0);
 }
 
 void irect::initDC (void) {
@@ -55,7 +55,7 @@ void irect::initDC (void) {
   nr_double_t tl = getPropertyDouble ("TL");
   nr_double_t i  = getPropertyDouble ("I") * th / (th + tl);
   allocMatrixMNA ();
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }
 
 void irect::initAC (void) {
@@ -77,5 +77,5 @@ void irect::calcTR (nr_double_t t) {
   if (t < th) { // high pulse
     it = i;
   }
-  setI (1, +it); setI (2, -it);
+  setI (NODE_1, +it); setI (NODE_2, -it);
 }

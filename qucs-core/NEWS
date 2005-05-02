@@ -26,6 +26,8 @@ files.
 Version 0.0.6
 -------------
 
+ * coplanar short and open components
+ * transient models of bias-t, dc-block and dc-feed added
  * gain circle formulas in equation solver available
  * improvements in the equation system solvers
  * implementation of noise and stability circle formulas

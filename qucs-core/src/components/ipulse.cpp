@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: ipulse.cpp,v 1.3 2004/11/24 19:15:49 raimi Exp $
+ * $Id: ipulse.cpp,v 1.4 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -43,16 +43,16 @@ ipulse::ipulse () : circuit (2) {
 
 void ipulse::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
+  setS (NODE_2, NODE_2, 1.0);
 }
 
 void ipulse::initDC (void) {
   nr_double_t i = getPropertyDouble ("I1");
   allocMatrixMNA ();
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }
 
 void ipulse::initAC (void) {
@@ -88,5 +88,5 @@ void ipulse::calcTR (nr_double_t t) {
   else { // after pulse
     it = i1;
   }
-  setI (1, +it); setI (2, -it);
+  setI (NODE_1, +it); setI (NODE_2, -it);
 }

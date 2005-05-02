@@ -1,3 +1,24 @@
+2005-04-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwline.cpp: Added static analyseQuasiStatic()
+	and analyseDispersion() function for use by other coplanar
+	components.
+
+	* devices/device.cpp: New pnJunctionBIP() function for
+	calculating current and conductance of bipolar pn-junction.
+
+	* microstrip/cpwopen.h (class cpwopen):  Implemented AC, DC
+	and S-parameter calculation for coplanar waveguide open	circuit.
+
+	* microstrip/cpwshort.h (class cpwshort): Implemented AC, DC
+	and S-parameter calculation for coplanar waveguide short
+	circuit.
+
+2005-04-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* biastee.cpp, dcblock.cpp, dcfeed.cpp: Implemented transient
+	models of these components using L and C equivalents.
+
 2005-04-23  Stefan Jahn  <stefan@lkcc.org>
 
 	* strafo.cpp: Fixed S-parameter calculation.  Thanks to Vincent

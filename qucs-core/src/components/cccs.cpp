@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: cccs.cpp,v 1.10 2004/11/24 19:15:47 raimi Exp $
+ * $Id: cccs.cpp,v 1.11 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -52,19 +52,25 @@ void cccs::calcSP (nr_double_t frequency) {
   complex z1 = polar (g, M_PI - 2.0 * M_PI * frequency * t);
   complex z2 = polar (g, - 2.0 * M_PI * frequency * t);
 
-  setS (1, 1, 0.0); setS (1, 2, 0.0); setS (1, 3, 0.0); setS (1, 4, 1.0);
-  setS (2, 1, z1);  setS (2, 2, 1.0); setS (2, 3, 0.0); setS (2, 4, z2);
-  setS (3, 1, z2);  setS (3, 2, 0.0); setS (3, 3, 1.0); setS (3, 4, z1);
-  setS (4, 1, 1.0); setS (4, 2, 0.0); setS (4, 3, 0.0); setS (4, 4, 0.0);
+  setS (NODE_1, NODE_1, 0.0); setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_1, NODE_3, 0.0); setS (NODE_1, NODE_4, 1.0);
+  setS (NODE_2, NODE_1, z1);  setS (NODE_2, NODE_2, 1.0);
+  setS (NODE_2, NODE_3, 0.0); setS (NODE_2, NODE_4, z2);
+  setS (NODE_3, NODE_1, z2);  setS (NODE_3, NODE_2, 0.0);
+  setS (NODE_3, NODE_3, 1.0); setS (NODE_3, NODE_4, z1);
+  setS (NODE_4, NODE_1, 1.0); setS (NODE_4, NODE_2, 0.0);
+  setS (NODE_4, NODE_3, 0.0); setS (NODE_4, NODE_4, 0.0);
 }
 
 void cccs::initDC (void) {
   nr_double_t g = getPropertyDouble ("G");
   allocMatrixMNA ();
-  setC (1, 1, +1.0); setC (1, 2, +0.0); setC (1, 3, +0.0); setC (1, 4, -1.0);
-  setB (1, 1, +1/g); setB (2, 1, +1.0); setB (3, 1, -1.0); setB (4, 1, -1/g);
-  setD (1, 1, 0.0);
-  setE (1, 0.0);
+  setC (VSRC_1, NODE_1, +1.0); setC (VSRC_1, NODE_2, +0.0);
+  setC (VSRC_1, NODE_3, +0.0); setC (VSRC_1, NODE_4, -1.0);
+  setB (NODE_1, VSRC_1, +1/g); setB (NODE_2, VSRC_1, +1.0);
+  setB (NODE_3, VSRC_1, -1.0); setB (NODE_4, VSRC_1, -1/g);
+  setD (VSRC_1, VSRC_1, 0.0);
+  setE (VSRC_1, 0.0);
 }
 
 void cccs::initAC (void) {
@@ -75,5 +81,5 @@ void cccs::calcAC (nr_double_t frequency) {
   nr_double_t g = getPropertyDouble ("G");
   nr_double_t t = getPropertyDouble ("T");
   complex r = polar (1.0 / g, - 2.0 * M_PI * frequency * t);
-  setB (1, 1, +r); setB (4, 1, -r);
+  setB (NODE_1, VSRC_1, +r); setB (NODE_4, VSRC_1, -r);
 }

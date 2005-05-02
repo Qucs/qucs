@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: idc.cpp,v 1.8 2004/12/03 18:57:04 raimi Exp $
+ * $Id: idc.cpp,v 1.9 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -44,22 +44,22 @@ idc::idc () : circuit (2) {
 
 void idc::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
+  setS (NODE_2, NODE_2, 1.0);
 }
 
 void idc::initDC (void) {
   nr_double_t i = getPropertyDouble ("I");
   allocMatrixMNA ();
-  setI (1, +i); setI (2, -i);
+  setI (NODE_1, +i); setI (NODE_2, -i);
 }
 
 void idc::calcDC (void) {
   nr_double_t i = getPropertyDouble ("I");
   nr_double_t f = getNet()->getSrcFactor ();
-  setI (1, +i * f); setI (2, -i * f);
+  setI (NODE_1, +i * f); setI (NODE_2, -i * f);
 }
 
 void idc::initAC (void) {

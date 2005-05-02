@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.h,v 1.13 2005/04/25 18:46:29 raimi Exp $
+ * $Id: matrix.h,v 1.14 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -99,10 +99,8 @@ class matrix
   friend nr_double_t rollet (matrix);
 
   // easy accessor operators
-  complex  operator () (int r, int c) const {
-    return data[(r - 1) * cols + c - 1]; }
-  complex& operator () (int r, int c) {
-    return data[(r - 1) * cols + c - 1]; }
+  complex  operator () (int r, int c) const { return data[r * cols + c]; }
+  complex& operator () (int r, int c) { return data[r * cols + c]; }
 
  private:
   int cols;

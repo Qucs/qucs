@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: transient.cpp,v 1.14 2004/10/14 13:28:25 ela Exp $
+ * $Id: transient.cpp,v 1.15 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -63,15 +63,15 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 #if FIXEDCOEFF
       int i, r, c;
       // right hand side vector
-      for (i = 1; i <= order + 1; i++) b.set (i, 1);
-      for (i = 2; i <= order + 1; i++) {
-	A.set (i, 1, i - 1); // first column
-	A.set (1, i, 1);     // first row
+      for (i = 0; i < order + 1; i++) b.set (i, 1);
+      for (i = 1; i < order + 1; i++) {
+	A.set (i, 0, i); // first column
+	A.set (0, i, 1); // first row
       }
       for (c = 1; c <= order - 1; c++) {
 	nr_double_t entry = -c;
 	for (r = 1; r <= order; r++) {
-	  A.set (r + 1, c + 2, entry);
+	  A.set (r, c + 1, entry);
 	  entry *= -c;
 	}
       }
@@ -81,33 +81,33 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
       // vector x consists of b_{-1}, a_{0}, a_{1} ... a_{k-1} right here
 #if COEFFDEBUG
       logprint (LOG_STATUS, "DEBUG: Gear order %d:", order);
-      for (i = 1; i <= x.getRows (); i++) {
+      for (i = 0; i < x.getRows (); i++) {
 	logprint (LOG_STATUS, " %g", x.get (i));
       }
       logprint (LOG_STATUS, "\n");
 #endif
-      nr_double_t k = x.get (1);
+      nr_double_t k = x.get (0);
       coefficients[COEFF_G] = 1 / delta[0] / k;
       for (i = 1; i <= order; i++) {
-	coefficients[i] = - 1 / delta[0] / k * x.get (i + 1);
+	coefficients[i] = - 1 / delta[0] / k * x.get (i);
       }
 #else /* !FIXEDCOEFF */
       int c, r;
       // right hand side vector
-      b.set (2, -1 / delta[0]);
+      b.set (1, -1 / delta[0]);
       // first row
-      for (c = 1; c <= order + 1; c++) A.set (1, c, 1); 
+      for (c = 0; c < order + 1; c++) A.set (0, c, 1); 
       nr_double_t f, a;
-      for (f = 0, c = 1; c <= order; c++) {
-	f += delta[c - 1];
-	for (a = 1, r = 1; r <= order; r++) {
+      for (f = 0, c = 0; c < order; c++) {
+	f += delta[c];
+	for (a = 1, r = 0; r < order; r++) {
 	  a *= f / delta[0];
 	  A.set (r + 1, c + 1, a);
 	}
       }
       e.passEquationSys (&A, &x, &b);
       e.solve ();
-      for (r = 0; r <= order; r++) coefficients[r] = x.get (r + 1);
+      for (r = 0; r <= order; r++) coefficients[r] = x.get (r);
 #endif /* !FIXEDCOEFF */
     }
     break;
@@ -123,16 +123,16 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
     {
       int i, r, c;
       // right hand side vector
-      for (i = 1; i <= order + 1; i++) b.set (i, 1);
-      for (i = 2; i <= order + 1; i++) {
-	A.set (i, 2, i - 1); // second column
-	A.set (2, i, 1);     // second row
+      for (i = 0; i < order + 1; i++) b.set (i, 1);
+      for (i = 1; i < order + 1; i++) {
+	A.set (i, 1, i); // second column
+	A.set (1, i, 1); // second row
       }
-      A.set (1, 1, 1);
+      A.set (0, 0, 1);
       for (c = 1; c <= order - 2; c++) {
 	nr_double_t entry = -c;
 	for (r = 2; r <= order; r++) {
-	  A.set (r + 1, c + 3, r * entry);
+	  A.set (r, c + 2, r * entry);
 	  entry *= -c;
 	}
       }
@@ -142,16 +142,16 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
       // vector x consists of a_{0}, b_{-1}, b_{0} ... b_{k-2} right here
 #if COEFFDEBUG
       logprint (LOG_STATUS, "DEBUG: Moulton order %d:", order);
-      for (i = 1; i <= x.getRows (); i++) {
+      for (i = 0; i < x.getRows (); i++) {
 	logprint (LOG_STATUS, " %g", x.get (i));
       }
       logprint (LOG_STATUS, "\n");
 #endif
-      nr_double_t k = x.get (2);
+      nr_double_t k = x.get (1);
       coefficients[COEFF_G] = 1 / delta[0] / k;
-      coefficients[1] = -x.get (1) / delta[0] / k;
+      coefficients[1] = -x.get (0) / delta[0] / k;
       for (i = 2; i <= order; i++) {
-	coefficients[i] = -x.get (i + 1) / k;
+	coefficients[i] = -x.get (i) / k;
       }
     }
     break;
@@ -175,33 +175,33 @@ void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
     {
       int c, r;
       // right hand side vector
-      b.set (1, 1);
+      b.set (0, 1);
       // first row
-      for (c = 1; c <= order + 1; c++) A.set (1, c, 1);
+      for (c = 0; c < order + 1; c++) A.set (0, c, 1);
       nr_double_t f, a;
-      for (f = 0, c = 1; c <= order + 1; c++) {
-	f += delta[c - 1];
-	for (a = 1, r = 1; r <= order; r++) {
+      for (f = 0, c = 0; c < order + 1; c++) {
+	f += delta[c];
+	for (a = 1, r = 0; r < order; r++) {
 	  a *= f / delta[0];
 	  A.set (r + 1, c, a);
 	}
       }
       e.passEquationSys (&A, &x, &b);
       e.solve ();
-      for (r = 0; r <= order; r++) coefficients[r] = x.get (r + 1);      
+      for (r = 0; r <= order; r++) coefficients[r] = x.get (r);      
     }
     break;
   case INTEGRATOR_ADAMSBASHFORD: // ADAMS-BASHFORD order 1 to 6
     {
       int i, r, c;
       // right hand side vector
-      for (i = 1; i <= order + 1; i++) b.set (i, 1);
-      for (i = 2; i <= order + 1; i++) A.set (2, i, 1); // second row
-      A.set (1, 1, 1);
+      for (i = 0; i < order + 1; i++) b.set (i, 1);
+      for (i = 1; i < order + 1; i++) A.set (1, i, 1); // second row
+      A.set (0, 0, 1);
       for (c = 1; c <= order - 1; c++) {
 	nr_double_t entry = -c;
 	for (r = 2; r <= order; r++) {
-	  A.set (r + 1, c + 2, r * entry);
+	  A.set (r, c + 1, r * entry);
 	  entry *= -c;
 	}
       }
@@ -211,14 +211,14 @@ void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
       // vector x consists of a_{0}, b_{0}, b_{1} ... b_{k-1} right here
 #if COEFFDEBUG
       logprint (LOG_STATUS, "DEBUG: Bashford order %d:", order);
-      for (i = 1; i <= x.getRows (); i++) {
+      for (i = 0; i < x.getRows (); i++) {
 	logprint (LOG_STATUS, " %g", x.get (i));
       }
       logprint (LOG_STATUS, "\n");
 #endif
-      coefficients[COEFF_G] = x.get (1);
+      coefficients[COEFF_G] = x.get (0);
       for (i = 1; i <= order; i++) {
-	coefficients[i] = x.get (i + 1) * delta[0];
+	coefficients[i] = x.get (i) * delta[0];
       }
 #if !FIXEDCOEFF
       if (order == 2) {

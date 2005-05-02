@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: inoise.cpp,v 1.5 2005/01/24 19:37:16 raimi Exp $
+ * $Id: inoise.cpp,v 1.6 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -44,10 +44,10 @@ inoise::inoise () : circuit (2) {
 
 void inoise::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1.0);
-  setS (1, 2, 0.0);
-  setS (2, 1, 0.0);
-  setS (2, 2, 1.0);
+  setS (NODE_1, NODE_1, 1.0);
+  setS (NODE_1, NODE_2, 0.0);
+  setS (NODE_2, NODE_1, 0.0);
+  setS (NODE_2, NODE_2, 1.0);
 }
 
 void inoise::calcNoiseSP (nr_double_t frequency) {
@@ -56,8 +56,8 @@ void inoise::calcNoiseSP (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
   nr_double_t ipsd = i / (a + c * pow (frequency, e)) / kB / T0 * z0;
-  setN (1, 1, +ipsd); setN (2, 2, +ipsd);
-  setN (1, 2, -ipsd); setN (2, 1, -ipsd);
+  setN (NODE_1, NODE_1, +ipsd); setN (NODE_2, NODE_2, +ipsd);
+  setN (NODE_1, NODE_2, -ipsd); setN (NODE_2, NODE_1, -ipsd);
 }
 
 void inoise::calcNoiseAC (nr_double_t frequency) {
@@ -66,6 +66,6 @@ void inoise::calcNoiseAC (nr_double_t frequency) {
   nr_double_t c = getPropertyDouble ("c");
   nr_double_t a = getPropertyDouble ("a");
   nr_double_t ipsd = i / (a + c * pow (frequency, e)) / kB / T0;
-  setN (1, 1, +ipsd); setN (2, 2, +ipsd);
-  setN (1, 2, -ipsd); setN (2, 1, -ipsd);
+  setN (NODE_1, NODE_1, +ipsd); setN (NODE_2, NODE_2, +ipsd);
+  setN (NODE_1, NODE_2, -ipsd); setN (NODE_2, NODE_1, -ipsd);
 }

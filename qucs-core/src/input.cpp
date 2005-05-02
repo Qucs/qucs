@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.43 2005/03/30 07:35:52 raimi Exp $
+ * $Id: input.cpp,v 1.44 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -235,8 +235,8 @@ void input::factory (void) {
 	c->setSize (def->ncount);
       }
       // add appropriate nodes to circuit
-      for (i = 1, nodes = def->nodes; nodes; nodes = nodes->next, i++)
-	if (i <= c->getSize ())
+      for (i = 0, nodes = def->nodes; nodes; nodes = nodes->next, i++)
+	if (i < c->getSize ())
 	  c->setNode (i, nodes->node);
 
       // add the properties to circuit
@@ -368,6 +368,10 @@ circuit * input::createCircuit (char * type) {
     return new msvia ();
   else if (!strcmp (type, "CLIN"))
     return new cpwline ();
+  else if (!strcmp (type, "COPEN"))
+    return new cpwopen ();
+  else if (!strcmp (type, "CSHORT"))
+    return new cpwshort ();
   else if (!strcmp (type, "IProbe"))
     return new iprobe ();
   else if (!strcmp (type, "JFET"))

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: iprobe.cpp,v 1.6 2004/11/24 19:15:49 raimi Exp $
+ * $Id: iprobe.cpp,v 1.7 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -44,15 +44,15 @@ iprobe::iprobe () : circuit (2) {
 
 void iprobe::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 0.0);
-  setS (1, 2, 1.0);
-  setS (2, 1, 1.0);
-  setS (2, 2, 0.0);
+  setS (NODE_1, NODE_1, 0.0);
+  setS (NODE_1, NODE_2, 1.0);
+  setS (NODE_2, NODE_1, 1.0);
+  setS (NODE_2, NODE_2, 0.0);
 }
 
 void iprobe::initDC (void) {
   allocMatrixMNA ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void iprobe::initAC (void) {

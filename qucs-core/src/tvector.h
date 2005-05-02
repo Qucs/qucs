@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.h,v 1.12 2005/04/11 06:40:49 raimi Exp $
+ * $Id: tvector.h,v 1.13 2005/05/02 06:51:00 raimi Exp $
  *
  */
 
@@ -112,8 +112,8 @@ class tvector
   tvector operator = (const nr_type_t);
 
   // easy accessor operators
-  nr_type_t  operator () (int i) const { return data[i - 1]; }
-  nr_type_t& operator () (int i) { return data[i - 1]; }
+  nr_type_t  operator () (int i) const { return data[i]; }
+  nr_type_t& operator () (int i) { return data[i]; }
 
  private:
   int size;

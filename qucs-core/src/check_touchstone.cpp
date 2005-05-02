@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_touchstone.cpp,v 1.9 2005/02/08 23:08:30 raimi Exp $
+ * $Id: check_touchstone.cpp,v 1.10 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -225,8 +225,8 @@ static void touchstone_create (void) {
   s = new strlist ();
   s->add (f->getName ());
   /* create variable vectors for the resulting dataset */
-  for (int r = 1; r <= ports; r++) {
-    for (int c = 1; c <= ports; c++) {
+  for (int r = 0; r < ports; r++) {
+    for (int c = 0; c < ports; c++) {
       v = new vector ();
       v->setName (touchstone_create_set (r, c));
       v->setDependencies (new strlist (*s));
@@ -327,8 +327,8 @@ static void touchstone_normalize_sp (void) {
   for (n = 0; n < len; n++) {
     v = touchstone_result->getVariables ();
     // save entries in a temporary matrix
-    for (i = 1; i <= ports; i++) {
-      for (j = 1; j <= ports; j++) {
+    for (i = 0; i < ports; i++) {
+      for (j = 0; j < ports; j++) {
 	s.set (i, j, v->get (n));
 	v = (vector *) v->getNext ();
       }
@@ -337,8 +337,8 @@ static void touchstone_normalize_sp (void) {
     s = stos (s, touchstone_options.resistance, circuit::z0);
     v = touchstone_result->getVariables ();
     // restore the results in the entries
-    for (i = 1; i <= ports; i++) {
-      for (j = 1; j <= ports; j++) {
+    for (i = 0; i < ports; i++) {
+      for (j = 0; j < ports; j++) {
 	v->set (s.get (i, j), n);
 	v = (vector *) v->getNext ();
       }

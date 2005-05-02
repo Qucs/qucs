@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: strafo.cpp,v 1.11 2005/04/25 18:46:32 raimi Exp $
+ * $Id: strafo.cpp,v 1.12 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -56,18 +56,24 @@ void strafo::initSP (void) {
 
   allocMatrixS ();
 
-  setS (1, 1,  z1);    setS (1, 2, z4);     setS (1, 3, -z4); 
-  setS (1, 4, -z6);    setS (1, 5, z6);     setS (1, 6, 1 - z1);
-  setS (2, 1,  z4);    setS (2, 2, z3);     setS (2, 3, 1 - z3); 
-  setS (2, 4, -z5);    setS (2, 5, z5);     setS (2, 6, -z4);
-  setS (3, 1, -z4);    setS (3, 2, 1 - z3); setS (3, 3, z3); 
-  setS (3, 4,  z5);    setS (3, 5, -z5);    setS (3, 6, z4);
-  setS (4, 1, -z6);    setS (4, 2, -z5);    setS (4, 3, z5); 
-  setS (4, 4,  z2);    setS (4, 5, 1 - z2); setS (4, 6, z6);
-  setS (5, 1,  z6);    setS (5, 2, z5);     setS (5, 3, -z5); 
-  setS (5, 4, 1 - z2); setS (5, 5, z2);     setS (5, 6, -z6);
-  setS (6, 1, 1 - z1); setS (6, 2, -z4);    setS (6, 3, z4); 
-  setS (6, 4, z6);     setS (6, 5, -z6);    setS (6, 6, z1);
+  setS (NODE_1, NODE_1,  z1);    setS (NODE_1, NODE_2, z4);
+  setS (NODE_1, NODE_3, -z4);    setS (NODE_1, NODE_4, -z6);
+  setS (NODE_1, NODE_5, z6);     setS (NODE_1, NODE_6, 1 - z1);
+  setS (NODE_2, NODE_1,  z4);    setS (NODE_2, NODE_2, z3);
+  setS (NODE_2, NODE_3, 1 - z3); setS (NODE_2, NODE_4, -z5);
+  setS (NODE_2, NODE_5, z5);     setS (NODE_2, NODE_6, -z4);
+  setS (NODE_3, NODE_1, -z4);    setS (NODE_3, NODE_2, 1 - z3);
+  setS (NODE_3, NODE_3, z3);     setS (NODE_3, NODE_4,  z5);
+  setS (NODE_3, NODE_5, -z5);    setS (NODE_3, NODE_6, z4);
+  setS (NODE_4, NODE_1, -z6);    setS (NODE_4, NODE_2, -z5);
+  setS (NODE_4, NODE_3, z5);     setS (NODE_4, NODE_4,  z2);
+  setS (NODE_4, NODE_5, 1 - z2); setS (NODE_4, NODE_6, z6);
+  setS (NODE_5, NODE_1,  z6);    setS (NODE_5, NODE_2, z5);
+  setS (NODE_5, NODE_3, -z5);    setS (NODE_5, NODE_4, 1 - z2);
+  setS (NODE_5, NODE_5, z2);     setS (NODE_5, NODE_6, -z6);
+  setS (NODE_6, NODE_1, 1 - z1); setS (NODE_6, NODE_2, -z4);
+  setS (NODE_6, NODE_3, z4);     setS (NODE_6, NODE_4, z6);
+  setS (NODE_6, NODE_5, -z6);    setS (NODE_6, NODE_6, z1);
 }
 
 void strafo::initDC (void) {
@@ -76,19 +82,24 @@ void strafo::initDC (void) {
 
   allocMatrixMNA ();
 
-  setB (1, 1, -1.0); setB (2, 1, + t1); setB (3, 1, - t1);
-  setB (4, 1, +0.0); setB (5, 1, +0.0); setB (6, 1, +1.0);
-  setB (1, 2, +0.0); setB (2, 2, + t2); setB (3, 2, - t2);
-  setB (4, 2, +1.0); setB (5, 2, -1.0); setB (6, 2, +0.0);
+  setB (NODE_1, VSRC_1, -1.0); setB (NODE_2, VSRC_1, + t1);
+  setB (NODE_3, VSRC_1, - t1); setB (NODE_4, VSRC_1, +0.0);
+  setB (NODE_5, VSRC_1, +0.0); setB (NODE_6, VSRC_1, +1.0);
+  setB (NODE_1, VSRC_2, +0.0); setB (NODE_2, VSRC_2, + t2);
+  setB (NODE_3, VSRC_2, - t2); setB (NODE_4, VSRC_2, +1.0);
+  setB (NODE_5, VSRC_2, -1.0); setB (NODE_6, VSRC_2, +0.0);
 
-  setC (1, 1, +1.0); setC (1, 2, - t1); setC (1, 3, + t1);
-  setC (1, 4, +0.0); setC (1, 5, +0.0); setC (1, 6, -1.0);
-  setC (2, 1, +0.0); setC (2, 2, - t2); setC (2, 3, + t2);
-  setC (2, 4, -1.0); setC (2, 5, +1.0); setC (2, 6, +0.0);
+  setC (VSRC_1, NODE_1, +1.0); setC (VSRC_1, NODE_2, - t1);
+  setC (VSRC_1, NODE_3, + t1); setC (VSRC_1, NODE_4, +0.0);
+  setC (VSRC_1, NODE_5, +0.0); setC (VSRC_1, NODE_6, -1.0);
+  setC (VSRC_2, NODE_1, +0.0); setC (VSRC_2, NODE_2, - t2);
+  setC (VSRC_2, NODE_3, + t2); setC (VSRC_2, NODE_4, -1.0);
+  setC (VSRC_2, NODE_5, +1.0); setC (VSRC_2, NODE_6, +0.0);
 
-  setD (1, 1, 0); setD (2, 2, 0); setD (1, 2, 0); setD (2, 1, 0);
-  setE (1, 0.0);
-  setE (2, 0.0);
+  setD (VSRC_1, VSRC_1, 0); setD (VSRC_2, VSRC_2, 0);
+  setD (VSRC_1, VSRC_2, 0); setD (VSRC_2, VSRC_1, 0);
+  setE (VSRC_1, 0.0);
+  setE (VSRC_2, 0.0);
 }
 
 void strafo::initAC (void) {

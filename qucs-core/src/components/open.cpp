@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: open.cpp,v 1.3 2004/11/24 19:15:49 raimi Exp $
+ * $Id: open.cpp,v 1.4 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -42,5 +42,5 @@ open::open () : circuit (1) {
 
 void open::initSP (void) {
   allocMatrixS ();
-  setS (1, 1, 1);
+  setS (NODE_1, NODE_1, 1);
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tline.cpp,v 1.8 2004/11/24 19:15:49 raimi Exp $
+ * $Id: tline.cpp,v 1.9 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -49,17 +49,17 @@ void tline::calcSP (nr_double_t frequency) {
   complex p = polar (1, - 2.0 * M_PI * frequency * l / C0);
   complex s11 = r * (1 - p * p) / (1 - p * p * r * r);
   complex s21 = p * (1 - r * r) / (1 - p * p * r * r);
-  setS (1, 1, s11);
-  setS (2, 2, s11);
-  setS (1, 2, s21);
-  setS (2, 1, s21);
+  setS (NODE_1, NODE_1, s11);
+  setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21);
+  setS (NODE_2, NODE_1, s21);
 }
 
 void tline::initDC (void) {
   setVoltageSources (1);
   allocMatrixMNA ();
   clearY ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void tline::initAC (void) {
@@ -73,6 +73,6 @@ void tline::calcAC (nr_double_t frequency) {
   nr_double_t b = 2 * M_PI * frequency / C0;
   nr_double_t y11 = -1 / z / tan (b * l);
   nr_double_t y21 = +1 / z / sin (b * l);
-  setY (1, 1, rect (0, y11)); setY (2, 2, rect (0, y11));
-  setY (1, 2, rect (0, y21)); setY (2, 1, rect (0, y21));
+  setY (NODE_1, NODE_1, rect (0, y11)); setY (NODE_2, NODE_2, rect (0, y11));
+  setY (NODE_1, NODE_2, rect (0, y21)); setY (NODE_2, NODE_1, rect (0, y21));
 }

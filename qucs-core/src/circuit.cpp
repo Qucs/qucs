@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: circuit.cpp,v 1.37 2005/02/14 19:56:43 raimi Exp $
+ * $Id: circuit.cpp,v 1.38 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -55,7 +55,7 @@ circuit::circuit () : object (), integrator () {
   pol = 1;
   flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
   subst = NULL;
-  vsource = 0;
+  vsource = -1;
   vsources = 0;
   nsources = 0;
   oper = NULL;
@@ -77,7 +77,7 @@ circuit::circuit (int s) : object (), integrator () {
   pol = 1;
   flag = CIRCUIT_ORIGINAL | CIRCUIT_LINEAR;
   subst = NULL;
-  vsource = 0;
+  vsource = -1;
   vsources = 0;
   nsources = 0;
   oper = NULL;
@@ -234,15 +234,15 @@ void circuit::freeMatrixMNA (void) {
    belongs to.  The optional 'intern' argument is used to mark a node
    to be for internal use only. */
 void circuit::setNode (int i, char * n, int intern) {
-  nodes[i - 1].setName (n);
-  nodes[i - 1].setCircuit (this);
-  nodes[i - 1].setPort (i);
-  nodes[i - 1].setInternal (intern);
+  nodes[i].setName (n);
+  nodes[i].setCircuit (this);
+  nodes[i].setPort (i);
+  nodes[i].setInternal (intern);
 }
 
 // Returns one of the circuit's nodes.
 node * circuit::getNode (int i) {
-  return &nodes[i - 1];
+  return &nodes[i];
 }
 
 // Sets the subcircuit reference for the circuit object.
@@ -254,8 +254,8 @@ void circuit::setSubcircuit (char * n) {
 #if DEBUG
 // DEBUG function:  Prints the S parameters of this circuit object.
 void circuit::print (void) {
-  for (int i = 1; i <= getSize (); i++) {
-    for (int j = 1; j <= getSize (); j++) {
+  for (int i = 0; i < getSize (); i++) {
+    for (int j = 0; j < getSize (); j++) {
       logprint (LOG_STATUS, "%s S%d%d(%+.3e,%+.3e) ", getName (), i, j, 
 		(double) real (getS (i, j)), (double) imag (getS (i, j)));
     }
@@ -278,25 +278,25 @@ void circuit::setSubstrate (substrate * s) {
 /* Returns the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
 complex circuit::getB (int port, int nr) {
-  return MatrixB[(nr - vsource) * size + port - 1];
+  return MatrixB[(nr - vsource) * size + port];
 }
 
 /* Sets the circuits B-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
 void circuit::setB (int port, int nr, complex z) {
-  MatrixB[(nr - 1) * size + port - 1] = z;
+  MatrixB[nr * size + port] = z;
 }
 
 /* Returns the circuits C-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
 complex circuit::getC (int nr, int port) {
-  return MatrixC[(nr - vsource) * size + port - 1];
+  return MatrixC[(nr - vsource) * size + port];
 }
 
 /* Sets the circuits C-MNA matrix value of the given voltage source
    built in the circuit depending on the port number. */
 void circuit::setC (int nr, int port, complex z) {
-  MatrixC[(nr - 1) * size + port - 1] = z;
+  MatrixC[nr * size + port] = z;
 }
 
 /* Returns the circuits D-MNA matrix value of the given voltage source
@@ -308,7 +308,7 @@ complex circuit::getD (int r, int c) {
 /* Sets the circuits D-MNA matrix value of the given voltage source
    built in the circuit. */
 void circuit::setD (int r, int c, complex z) {
-  MatrixD[(r - 1) * vsources + c - 1] = z;
+  MatrixD[r * vsources + c] = z;
 }
 
 /* Returns the circuits E-MNA matrix value of the given voltage source
@@ -320,31 +320,31 @@ complex circuit::getE (int nr) {
 /* Sets the circuits E-MNA matrix value of the given voltage source
    built in the circuit. */
 void circuit::setE (int nr, complex z) {
-  MatrixE[nr - 1] = z;
+  MatrixE[nr] = z;
 }
 
 /* Returns the circuits I-MNA matrix value of the current source built
    in the circuit. */
 complex circuit::getI (int port) {
-  return MatrixI[port - 1];
+  return MatrixI[port];
 }
 
 /* Sets the circuits I-MNA matrix value of the current source built in
    the circuit depending on the port number. */
 void circuit::setI (int port, complex z) {
-  MatrixI[port - 1] = z;
+  MatrixI[port] = z;
 }
 
 /* Modifies the circuits I-MNA matrix value of the current source
    built in the circuit depending on the port number. */
 void circuit::addI (int port, complex z) {
-  MatrixI[port - 1] += z;
+  MatrixI[port] += z;
 }
 
 /* Returns the circuits J-MNA matrix value of the given voltage source
    built in the circuit. */
 complex circuit::getJ (int nr) {
-  return MatrixJ[nr - 1];
+  return MatrixJ[nr];
 }
 
 /* Sets the circuits J-MNA matrix value of the given voltage source
@@ -355,42 +355,42 @@ void circuit::setJ (int nr, complex z) {
 
 // Returns the circuits voltage value at the given port.
 complex circuit::getV (int port) {
-  return MatrixV[port - 1];
+  return MatrixV[port];
 }
 
 // Sets the circuits voltage value at the given port.
 void circuit::setV (int port, complex z) {
-  MatrixV[port - 1] = z;
+  MatrixV[port] = z;
 }
 
 /* Returns the circuits G-MNA matrix value depending on the port
    numbers. */
 complex circuit::getY (int r, int c) {
-  return MatrixY[(r - 1) * size + c - 1];
+  return MatrixY[r * size + c];
 }
 
 /* Sets the circuits G-MNA matrix value depending on the port
    numbers. */
 void circuit::setY (int r, int c, complex y) {
-  MatrixY[(r - 1) * size + c - 1] = y;
+  MatrixY[r * size + c] = y;
 }
 
 /* Modifies the circuits G-MNA matrix value depending on the port
    numbers. */
 void circuit::addY (int r, int c, complex y) {
-  MatrixY[(r - 1) * size + c - 1] += y;
+  MatrixY[r * size + c] += y;
 }
 
 /* Returns the circuits G-MNA matrix value depending on the port
    numbers. */
 nr_double_t circuit::getG (int r, int c) {
-  return real (MatrixY[(r - 1) * size + c - 1]);
+  return real (MatrixY[r * size + c]);
 }
 
 /* Sets the circuits G-MNA matrix value depending on the port
    numbers. */
 void circuit::setG (int r, int c, nr_double_t y) {
-  MatrixY[(r - 1) * size + c - 1] = y;
+  MatrixY[r * size + c] = y;
 }
 
 /* This function adds a operating point consisting of a key and a
@@ -452,22 +452,22 @@ void circuit::deleteOperatingPoints (void) {
 
 // Returns the S-parameter at the given matrix position.
 complex circuit::getS (int x, int y) { 
-  return MatrixS[y - 1 + (x - 1) * size];
+  return MatrixS[y + x * size];
 }
 
 // Sets the S-parameter at the given matrix position.
 void circuit::setS (int x, int y, complex z) {
-  MatrixS[y - 1 + (x - 1) * size] = z;
+  MatrixS[y + x * size] = z;
 }
 
 // Returns the noise-correlation-parameter at the given matrix position.
 complex circuit::getN (int r, int c) { 
-  return MatrixN[c - 1 + (r - 1) * (size + nsources)];
+  return MatrixN[c + r * (size + nsources)];
 }
 
 // Sets the noise-correlation-parameter at the given matrix position.
 void circuit::setN (int r, int c, complex z) {
-  MatrixN[c - 1 + (r - 1) * (size + nsources)] = z;
+  MatrixN[c + r * (size + nsources)] = z;
 }
 
 // Returns the number of internal voltage sources for DC analysis.

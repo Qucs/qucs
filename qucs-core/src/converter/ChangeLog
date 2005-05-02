@@ -1,3 +1,9 @@
+2005-04-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp: Fixed reference node implementation in
+	order to pull the ground node outside the circuit definition
+	througout the subcircuits in the original netlist.
+
 2005-04-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Collecting potential external and overall

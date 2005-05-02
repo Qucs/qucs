@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nodelist.cpp,v 1.9 2004/12/20 18:41:17 raimi Exp $
+ * $Id: nodelist.cpp,v 1.10 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -61,7 +61,7 @@ nodelist::nodelist (net * subnet) {
   circuit * c;
   // go through circuit list and find unique nodes
   for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       node * n = c->getNode (i);
       if (contains (n->getName ()) == 0) {
 	add (n->getName (), n->getInternal ());
@@ -71,7 +71,7 @@ nodelist::nodelist (net * subnet) {
   // add circuit nodes to each unique node in the list
   for (struct nodelist_t * n = getRoot (); n != NULL; n = n->next) {
     for (c = subnet->getRoot (); c != NULL; c = (circuit *) c->getNext ()) {
-      for (int i = 1; i <= c->getSize (); i++) {
+      for (int i = 0; i < c->getSize (); i++) {
 	if (!strcmp (n->name, c->getNode(i)->getName ())) {
 	  addCircuitNode (n, c->getNode (i));
 	}
@@ -205,20 +205,20 @@ int nodelist::contains (char * str) {
 /* This function returns the node name positioned at the specified
    location in the node name list. */
 char * nodelist::get (int nr) {
-  return narray[nr]->name;
+  return narray[nr + 1]->name;
 }
 
 /* This function returns non-zero if the node positioned at the
    specified location in the node name list is marked internal and
    zero otherwise. */
 int nodelist::isInternal (int nr) {
-  return narray[nr]->internal;
+  return narray[nr + 1]->internal;
 }
 
 /* The function returns the nodelist structure at the specified
    location in the node name list. */
 struct nodelist_t * nodelist::getNode (int nr) {
-  return narray[nr];
+  return narray[nr + 1];
 }
 
 /* The function returns the nodelist structure with the given name in
@@ -379,7 +379,7 @@ void nodelist::insert (struct nodelist_t * n) {
    rearranged properly. */
 void nodelist::remove (circuit * c) {
   // go through each node of the circuit
-  for (int i = 1; i <= c->getSize (); i++) {
+  for (int i = 0; i < c->getSize (); i++) {
     node * n = c->getNode (i);
     struct nodelist_t * nl;
     if ((nl = getNode (n->getName ())) != NULL) {
@@ -403,7 +403,7 @@ void nodelist::remove (circuit * c) {
    the node list appropriately. */
 void nodelist::insert (circuit * c) {
   // go through each node of the circuit
-  for (int i = 1; i <= c->getSize (); i++) {
+  for (int i = 0; i < c->getSize (); i++) {
     struct nodelist_t * nl;
     node * n = c->getNode (i);
     // is this node already in the nodelist?

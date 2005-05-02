@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.28 2005/04/18 13:41:03 raimi Exp $
+ * $Id: evaluate.cpp,v 1.29 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -1616,7 +1616,14 @@ constant * evaluate::index_mv_2 (constant * args) {
   int r = INT (args->getResult (1));
   int c = INT (args->getResult (2));
   constant * res = new constant (TAG_VECTOR);
-  res->v = new vector (mv->get (r, c));
+  if (r < 1 || r > mv->getRows () || c < 1 || c > mv->getCols ()) {
+    char txt[256];
+    sprintf (txt, "matvec indices [%d,%d] out of bounds [1-%d,1-%d]",
+	     r, c, mv->getRows (), mv->getCols ());
+    THROW_MATH_EXCEPTION (txt);
+  } else {
+    res->v = new vector (mv->get (r - 1, c - 1));
+  }
   return res;
 }
 
@@ -1624,7 +1631,13 @@ constant * evaluate::index_mv_1 (constant * args) {
   matvec * mv = MV (args->getResult (0));
   int i = INT (args->getResult (1));
   constant * res = new constant (TAG_MATRIX);
-  res->m = new matrix (mv->get (i));
+  if (i < 1 || i > mv->getSize ()) {
+    char txt[256];
+    sprintf (txt, "matvec index [%d] out of bounds [1-%d]", i, mv->getSize ());
+    THROW_MATH_EXCEPTION (txt);
+  } else {
+    res->m = new matrix (mv->get (i - 1));
+  }
   return res;
 }
 
@@ -1707,7 +1720,14 @@ constant * evaluate::index_m_2 (constant * args) {
   int r = INT (args->getResult (1));
   int c = INT (args->getResult (2));
   constant * res = new constant (TAG_COMPLEX);
-  res->c = new complex (m->get (r, c));
+  if (r < 1 || r > m->getRows () || c < 1 || c > m->getCols ()) {
+    char txt[256];
+    sprintf (txt, "matrix indices [%d,%d] out of bounds [1-%d,1-%d]",
+	     r, c, m->getRows (), m->getCols ());
+    THROW_MATH_EXCEPTION (txt);
+  } else {
+    res->c = new complex (m->get (r - 1, c - 1));
+  }
   return res;
 }
 
@@ -1916,9 +1936,9 @@ constant * evaluate::mu1_m (constant * args) {
   matrix * m = M (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
   nr_double_t k;
-  k = (1 - norm (m->get (1, 1))) /
-    (abs (m->get (2, 2) - conj (m->get (1, 1)) * det (*m)) +
-     abs (m->get (1, 2) * m->get (2, 1)));
+  k = (1 - norm (m->get (0, 0))) /
+    (abs (m->get (1, 1) - conj (m->get (0, 0)) * det (*m)) +
+     abs (m->get (0, 1) * m->get (1, 0)));
   res->d = k;
   return res;
 }
@@ -1927,9 +1947,9 @@ constant * evaluate::mu1_mv (constant * args) {
   matvec * mv = MV (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   vector k;
-  k = (1 - norm (mv->get (1, 1))) /
-    (abs (mv->get (2, 2) - conj (mv->get (1, 1)) * det (*mv)) +
-     abs (mv->get (1, 2) * mv->get (2, 1)));
+  k = (1 - norm (mv->get (0, 0))) /
+    (abs (mv->get (1, 1) - conj (mv->get (0, 0)) * det (*mv)) +
+     abs (mv->get (0, 1) * mv->get (1, 0)));
   res->v = new vector (k);
   return res;
 }
@@ -1938,9 +1958,9 @@ constant * evaluate::mu2_m (constant * args) {
   matrix * m = M (args->getResult (0));
   constant * res = new constant (TAG_DOUBLE);
   nr_double_t k;
-  k = (1 - norm (m->get (2, 2))) /
-    (abs (m->get (1, 1) - conj (m->get (2, 2)) * det (*m)) +
-     abs (m->get (1, 2) * m->get (2, 1)));
+  k = (1 - norm (m->get (1, 1))) /
+    (abs (m->get (0, 0) - conj (m->get (1, 1)) * det (*m)) +
+     abs (m->get (0, 1) * m->get (1, 0)));
   res->d = k;
   return res;
 }
@@ -1949,9 +1969,9 @@ constant * evaluate::mu2_mv (constant * args) {
   matvec * mv = MV (args->getResult (0));
   constant * res = new constant (TAG_VECTOR);
   vector k;
-  k = (1 - norm (mv->get (2, 2))) /
-    (abs (mv->get (1, 1) - conj (mv->get (2, 2)) * det (*mv)) +
-     abs (mv->get (1, 2) * mv->get (2, 1)));
+  k = (1 - norm (mv->get (1, 1))) /
+    (abs (mv->get (0, 0) - conj (mv->get (1, 1)) * det (*mv)) +
+     abs (mv->get (0, 1) * mv->get (1, 0)));
   res->v = new vector (k);
   return res;
 }

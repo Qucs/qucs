@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwline.cpp,v 1.11 2005/04/20 07:08:36 raimi Exp $
+ * $Id: cpwline.cpp,v 1.12 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
@@ -289,8 +289,100 @@ void cpwline::calcSP (nr_double_t frequency) {
   complex s11 = (z - y) * sinh (g * len) / n;
   complex s21 = 2 / n;
 
-  setS (1, 1, s11); setS (2, 2, s11);
-  setS (1, 2, s21); setS (2, 1, s21);
+  setS (NODE_1, NODE_1, s11); setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21); setS (NODE_2, NODE_1, s21);
+}
+
+/* The function calculates the quasi-static impedance of a coplanar
+   waveguide line and the value of the effective dielectric constant
+   for the given coplanar line and substrate properties. */
+void cpwline::analyseQuasiStatic (nr_double_t W, nr_double_t s, nr_double_t h,
+				  nr_double_t t, nr_double_t er, int backMetal,
+				  nr_double_t& ZlEff, nr_double_t& ErEff) {
+
+  // local variables (quasi-static constants)
+  nr_double_t k1, k2, k3, q1, q2, q3 = 0, qz;
+  
+  ErEff = er;
+  ZlEff = 0;
+
+  // compute the necessary quasi-static approx. (K1, K3, er(0) and Z(0))
+  k1 = W / (W + s + s);
+  q1 = ellipk (k1) / ellipk (sqrt (1 - k1 * k1));
+
+  // backside is metal
+  if (backMetal) {
+    k3  = tanh ((M_PI / 4) * (W / h)) / tanh ((M_PI / 4) * (W + s + s) / h);
+    q3 = ellipk (k3) / ellipk (sqrt (1 - k3 * k3));
+    qz  = 1 / (q1 + q3);
+    ErEff = 1 + q3 * qz * (er - 1);
+    ZlEff = Z0 / 2 * qz;
+  }
+  // backside is air
+  else {
+    k2  = sinh ((M_PI / 4) * (W / h)) / sinh ((M_PI / 4) * (W + s + s) / h);
+    q2 = ellipk (k2) / ellipk (sqrt (1 - k2 * k2));
+    ErEff = 1 + (er - 1) / 2 * q2 / q1;
+    ZlEff = Z0 / 4 / q1;
+  }
+
+  // adds effect of strip thickness
+  if (t > 0) {
+    nr_double_t d, se, We, ke, qe;
+    d  = (t * 1.25 / M_PI) * (1 + log (4 * M_PI * W / t));
+    se = s - d;
+    We = W + d;
+
+    // modifies k1 accordingly (k1 = ke)
+    ke = We / (We + se + se); // ke = k1 + (1 - k1 * k1) * d / 2 / s;
+    qe = ellipk (ke) / ellipk (sqrt (1 - ke * ke));
+
+    // backside is metal
+    if (backMetal) {
+      qz  = 1 / (qe + q3);
+      ErEff = 1 + q3 * qz * (er - 1);
+      ZlEff = Z0 / 2 * qz;
+    }
+    // backside is air
+    else {
+      ZlEff = Z0 / 4 / qe;
+    }
+
+    // modifies ErEff as well
+    ErEff = ErEff - (0.7 * (ErEff - 1) * t / s) / (q1 + (0.7 * t / s));
+  }
+  ErEff = sqrt (ErEff);
+  ZlEff /= ErEff;
+}
+
+/* This function calculates the frequency dependent value of the
+   effective dielectric constant and the coplanar line impedance for
+   the given frequency. */
+void cpwline::analyseDispersion (nr_double_t W, nr_double_t s, nr_double_t h,
+				 nr_double_t er, nr_double_t ZlEff,
+				 nr_double_t ErEff, nr_double_t frequency,
+				 nr_double_t& ZlEffFreq,
+				 nr_double_t& ErEffFreq) {
+  // local variables
+  nr_double_t fte, G;
+
+  ErEffFreq = ErEff;
+  ZlEffFreq = ZlEff * ErEff;
+
+  // cut-off frequency of the TE0 mode
+  fte = (C0 / 4) / (h * sqrt (er - 1));
+
+  // dispersion factor G
+  nr_double_t p = log (W / h);
+  nr_double_t u = 0.54 - (0.64 - 0.015 * p) * p;
+  nr_double_t v = 0.43 - (0.86 - 0.54 * p) * p;
+  G = exp (u * log (W / s) + v);
+
+  // add the dispersive effects to er0
+  ErEffFreq += (sqrt (er) - ErEff) / (1 + G * pow (frequency / fte, -1.8));
+
+  // computes impedance
+  ZlEffFreq /= ErEffFreq;
 }
 
 void cpwline::calcNoiseSP (nr_double_t) {
@@ -307,7 +399,7 @@ void cpwline::initDC (void) {
   setInternalVoltageSource (1);
   allocMatrixMNA ();
   clearY ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void cpwline::initTR (void) {
@@ -333,8 +425,8 @@ void cpwline::calcAC (nr_double_t frequency) {
   complex y11 = coth (g * len) / zl;
   complex y21 = -cosech (g * len) / zl;
 
-  setY (1, 1, y11); setY (2, 2, y11);
-  setY (1, 2, y21); setY (2, 1, y21);
+  setY (NODE_1, NODE_1, y11); setY (NODE_2, NODE_2, y11);
+  setY (NODE_1, NODE_2, y21); setY (NODE_2, NODE_1, y21);
 }
 
 void cpwline::calcNoiseAC (nr_double_t) {

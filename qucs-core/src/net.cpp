@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: net.cpp,v 1.26 2005/03/14 21:59:06 raimi Exp $
+ * $Id: net.cpp,v 1.27 2005/05/02 06:50:59 raimi Exp $
  *
  */
 
@@ -120,7 +120,7 @@ void net::insertCircuit (circuit * c) {
   }
   // handle DC voltage sources
   if (c->getVoltageSources () > 0) {
-    if (!c->getVoltageSource ()) c->setVoltageSource (nSources + 1);
+    if (c->getVoltageSource () < 0) c->setVoltageSource (nSources);
     nSources += c->getVoltageSources ();
   }
 }
@@ -145,7 +145,7 @@ void net::removeCircuit (circuit * c, int dropping) {
   c->setEnabled (0);
   c->setNet (NULL);
   if (c->getPort ()) nPorts--;
-  if (c->getVoltageSource ()) nSources -= c->getVoltageSources ();
+  if (c->getVoltageSource () >= 0) nSources -= c->getVoltageSources ();
 
   // shift the circuit object to the drop list
   if (c->isOriginal ()) {
@@ -386,7 +386,7 @@ node * net::findConnectedCircuitNode (node * n) {
     // skip signal circuits
     if (c->getPort ()) continue;
     // through the list of nodes in a circuit
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       _node = c->getNode (i);
       if (!strcmp (_node->getName (), _name)) {
 	if (_node != n) {
@@ -407,7 +407,7 @@ node * net::findConnectedNode (node * n) {
   node * _node;
 
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       _node = c->getNode (i);
       if (!strcmp (_node->getName (), _name)) {
 	if (_node != n) {
@@ -523,10 +523,10 @@ void net::list (void) {
   for (circuit * c = root; c != NULL; c = (circuit *) c->getNext ()) {
     // list each circuit
     logprint (LOG_STATUS, "       %s[", c->getName ());
-    for (int i = 1; i <= c->getSize (); i++) {
+    for (int i = 0; i < c->getSize (); i++) {
       logprint (LOG_STATUS, "%s-%d", 
 		c->getNode(i)->getName (), c->getNode(i)->getNode ());
-      if (i != c->getSize ())
+      if (i < c->getSize () - 1)
 	logprint (LOG_STATUS, ",");
     }
     logprint (LOG_STATUS, "] { %s }\n", c->propertyList ());

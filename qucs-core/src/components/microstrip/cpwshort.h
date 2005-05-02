@@ -1,46 +1,43 @@
 /*
- * ground.cpp - ground class implementation
+ * cpwshort.h - coplanar waveguide short class definitions
  *
- * Copyright (C) 2003, 2004 Stefan Jahn <stefan@lkcc.org>
+ * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
  *
  * This is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
  * any later version.
- * 
+ *
  * This software is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.  
+ * Boston, MA 02111-1307, USA.
  *
- * $Id: ground.cpp,v 1.4 2005/05/02 06:51:00 raimi Exp $
+ * $Id: cpwshort.h,v 1.1 2005/05/02 06:51:01 raimi Exp $
  *
  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#ifndef __CPWSHORT_H__
+#define __CPWSHORT_H__
 
-#include <stdio.h>
-#include <stdlib.h>
+class cpwshort : public circuit
+{
+ public:
+  cpwshort ();
+  void initSP (void);
+  void calcSP (nr_double_t);
+  void initDC (void);
+  void initAC (void);
+  void calcAC (nr_double_t);
 
-#include "complex.h"
-#include "object.h"
-#include "node.h"
-#include "circuit.h"
-#include "ground.h"
-#include "component_id.h"
+  void checkProperties (void);
+  nr_double_t calcLend (nr_double_t);
+  complex calcZ (nr_double_t);
+};
 
-ground::ground () : circuit (1) {
-  type = CIR_GROUND;
-}
-
-void ground::initSP (void) {
-  allocMatrixS ();
-  setS (NODE_1, NODE_1, -1.0);
-}
+#endif /* __CPWSHORT_H__ */
