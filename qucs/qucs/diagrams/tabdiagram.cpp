@@ -141,12 +141,15 @@ int TabDiagram::calcDiagram()
 if(g) if(!g->cPointsX.isEmpty()) {
   // ................................................
   counting = g->cPointsX.getFirst()->count * g->countY;  // number of values
+  NumAll = counting;
 
   invisibleCount = counting - y/tHeight;
   if(invisibleCount <= 0)  xAxis.limit_min = 0.0;// height bigger than needed
-  else
+  else {
+    NumLeft = invisibleCount - int(xAxis.limit_min);
     if(invisibleCount < int(xAxis.limit_min))
       xAxis.limit_min = double(invisibleCount); // adjust limit of scroll bar
+  }
 
   for(DataX *pD = g->cPointsX.last(); pD!=0; pD = g->cPointsX.prev()) {
     colWidth = 0;
@@ -187,7 +190,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
   }
   Lines.current()->style = QPen(QPen::black,2);
 
-}  // of if no data in graphs
+}  // of "if no data in graphs"
 
 
   // ................................................

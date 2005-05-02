@@ -64,6 +64,8 @@
 #include "msgap.h"
 #include "msvia.h"
 #include "coplanar.h"
+#include "cpwopen.h"
+#include "cpwshort.h"
 #include "diode.h"
 #include "bjt.h"
 #include "bjtsub.h"

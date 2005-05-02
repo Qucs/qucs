@@ -762,6 +762,8 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "CVS") c = new CCVS();
 	else if(cstr == "irculator") c = new Circulator();
 	else if(cstr == "LIN") c = new Coplanar();
+	else if(cstr == "OPEN") c = new CPWopen();
+	else if(cstr == "SHORT") c = new CPWshort();
 	break;
   case 'L' : if(cstr.isEmpty()) c = new Inductor();
 	break;
