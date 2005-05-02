@@ -138,7 +138,7 @@ void Rect3DDiagram::calcLimits()
 
 // --------------------------------------------------------------
 int Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
-                                         int y, int yLen, bool Right)
+                                        int y, int yLen, bool Right)
 {
 //  int z;
   double GridStep, /*corr,*/ xD, yD, stepD, GridNum;
@@ -516,6 +516,12 @@ else {  // not logarithmical
 }  // of if(logarithmical) ... else ...
   
   return 3;
+}
+
+// ------------------------------------------------------------
+bool Rect3DDiagram::insideDiagram(int x, int y)
+{
+  return (regionCode(x, y) == 0);
 }
 
 // ------------------------------------------------------------

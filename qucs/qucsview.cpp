@@ -1236,9 +1236,10 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 	return;
 
     case isDiagramResize:  // resize diagram ?
-	if(((Diagram*)focusElement)->Name != "Rect")
+	if(((Diagram*)focusElement)->Name.left(4) != "Rect")
 	  if(((Diagram*)focusElement)->Name != "Tab")
-	    isMoveEqual = true;  // diagram must be square
+	    if(((Diagram*)focusElement)->Name != "Curve")
+	      isMoveEqual = true;  // diagram must be square
 
 	focusElement->Type = isDiagram;
 	MAx1 = focusElement->cx;

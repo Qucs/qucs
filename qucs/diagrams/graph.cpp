@@ -170,7 +170,7 @@ int Graph::getSelected(int x, int y)
   int *pp = Points;
   if(pp == 0) return -1;
 
-  int A, zi;
+  int A, z=0, zi;
   int dx, dx2, x1;
   int dy, dy2, y1;
 
@@ -182,7 +182,8 @@ int Graph::getSelected(int x, int y)
       if(*pp < -10)  return -1;   // not even one point ?
     }
   }
-  for(int z=0; z<countY; z++) {  // check every branch of curves
+//  for(int z=0; z<countY; z++) {  // check every branch of curves
+  while(*pp > -99) {
     zi = 0;
     do {
       x1 = *(pp++);  y1 = *(pp++);
@@ -223,6 +224,7 @@ int Graph::getSelected(int x, int y)
       if(A <= 0)  return z*countX;// + zi;  // lies x/y onto the graph line ?
     } while(true);
     pp++;
+    z++;
   }
 
   return -1;

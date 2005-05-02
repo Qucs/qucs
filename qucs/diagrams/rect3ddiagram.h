@@ -38,10 +38,11 @@ public:
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);
 
   void createAxisLabels() {};   // labels created during calcDiagram
+  bool insideDiagram(int, int);
   void clip(int* &);
 
 private:
-  void calcCoefficients();
+  void   calcCoefficients();
   double calcX_2D(double, double, double);
   double calcY_2D(double, double, double);
 

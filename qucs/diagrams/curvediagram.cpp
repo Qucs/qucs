@@ -187,12 +187,23 @@ else {  // not logarithmical
     zD += zDstep;
     z = int(zD);
   }
+  
+  if(xAxis.up >= 0.0) if(xAxis.low <= 0.0) {  // paint origin cross ?
+    z = int(double(x2) * fabs(xAxis.low / (xAxis.up-xAxis.low)));
+    Lines.append(new Line(z, 0, z, y2, QPen(QPen::black,0)));
+  }
 } // of "if(xlog) ... else ..."
 
 
   // ====  y grid  =======================================================
   if(zAxis.numGraphs > 0) if(calcYAxis(&zAxis, x2)) valid |= 2;
-  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0))  valid |= 1;
+  if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0)) {
+    valid |= 1;
+    if(yAxis.up >= 0.0) if(yAxis.low <= 0.0) {  // paint origin cross ?
+      z = int(double(y2) * fabs(yAxis.low / (yAxis.up-yAxis.low)));
+      Lines.append(new Line(0, z, x2, z, QPen(QPen::black,0)));
+    }
+  }
 
 
 Frame:
