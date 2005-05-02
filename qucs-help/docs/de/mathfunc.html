@@ -107,6 +107,14 @@ m&ouml;gliche Werte f&uuml;r <tt>von</tt> und <tt>nach</tt> sind "Y", "Z", "H", 
 <tr><td><tt>Rollet(x)</tt></td><td>Rollet Stabilit&auml;tsfaktor der Matrix x (Zweiport S-Parameter Matrix)</td></tr>
 <tr><td><tt>Mu(x)</tt></td><td>Mu Stabilit&auml;tsfaktor der Matrix x (Zweiport S-Parameter Matrix)</td></tr>
 <tr><td><tt>Mu2(x)</tt></td><td>Mu' Stabilit&auml;tsfaktor der Matrix x (Zweiport S-Parameter Matrix)</td></tr>
+<tr><td><tt>linspace(von,bis,n)</tt></td><td>Erzeugt einen Vektor mit <tt>n</tt> linear gleichverteilten Werten zwischen <tt>von</tt> und <tt>bis</tt>, beide Werte mit eingeschlossen</td></tr>
+<tr><td><tt>logspace(von,bis,n)</tt></td><td>Erzeugt einen Vektor mit <tt>n</tt> logarithmisch gleichverteilten Werten zwischen <tt>von</tt> und <tt>bis</tt>, beide Werte mit eingeschlossen</td></tr>
+<tr><td><tt>NoiseCircle(Sopt,<br>&nbsp;&nbsp;Fmin,Rn,F[,Winkel])</tt></td><td>Kreise mit konstanten Rauschzahlen <tt>F</tt> (kann eine Konstante oder ein Vektor sein), <tt>Winkel</tt> spezifiziert die Winkel in Grad, die z.B. mit <tt>linspace(0,360,100)</tt> erzeugt wurden, wenn <tt>Winkel</tt> eine Zahl ist, dann steht diese f&uuml;r die Anzahl der gleichverteilten Kreissegmente, wenn der Parameter weggelassen wurde, dann wird ein vern&uuml;nftiger Standardwert eingesetzt</td></tr>
+<tr><td><tt>StabCircleS(S[,Winkel])</tt></td><td>Stabilit&auml;tskreise in der Quellebene</td></tr>
+<tr><td><tt>StabCircleL(S[,Winkel])</tt></td><td>Stabilit&auml;tskreise in der Lastebene</td></tr>
+<tr><td><tt>GaCircle(S,Ga[,Winkel])</tt></td><td>Kreis(e) mit konstanter verf&uuml;gbarer Leistungsverst&auml;rkung <tt>Ga</tt> in der Quellebene</td></tr>
+<tr><td><tt>GpCircle(S,Gp[,Winkel])</tt></td><td>Kreis(e) mit konstanter Leistungsverst&auml;rkung <tt>Gp</tt> in der Lastebene</td></tr>
+<tr><td><tt>PlotVs(data,dep)</tt></td><td>Liefert Daten zur&uuml;ck, die auf <tt>data</tt> basieren (Vektor oder Matrizenvektor) mit der Abh&auml;ngigkeit von dem gegebenen <tt>dep</tt> Vektor, also z.B. <tt>PlotVs(Gain,frequency/1e9)</tt></td></tr>
 </table>
 <br>
 
