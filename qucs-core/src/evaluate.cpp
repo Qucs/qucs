@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.29 2005/05/02 06:50:59 raimi Exp $
+ * $Id: evaluate.cpp,v 1.30 2005/05/03 17:57:35 raimi Exp $
  *
  */
 
@@ -2360,14 +2360,9 @@ constant * evaluate::plot_vs_v (constant * args) {
   vector * a = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
   res->v = new vector (*v);
-  strlist * deps = strlist::join (args->getResult(0)->getDataDependencies (),
-				  args->getResult(1)->getDataDependencies ());
-  for (int i = 0; i < deps->length (); i++) {
-    res->addDropDependencies (deps->get (i));
-  }
-  delete deps;
   node * gen = args->get(1)->solvee->addGeneratedEquation (a, "Versus");
   res->addPrepDependencies (A(gen)->result);
+  res->dropdeps = 1;
   return res;
 }
 
@@ -2376,14 +2371,9 @@ constant * evaluate::plot_vs_mv (constant * args) {
   vector * a = V (args->getResult (1));
   constant * res = new constant (TAG_MATVEC);
   res->mv = new matvec (*mv);
-  strlist * deps = strlist::join (args->getResult(0)->getDataDependencies (),
-				  args->getResult(1)->getDataDependencies ());
-  for (int i = 0; i < deps->length (); i++) {
-    res->addDropDependencies (deps->get (i));
-  }
-  delete deps;
   node * gen = args->get(1)->solvee->addGeneratedEquation (a, "Versus");
   res->addPrepDependencies (A(gen)->result);
+  res->dropdeps = 1;
   return res;
 }
 

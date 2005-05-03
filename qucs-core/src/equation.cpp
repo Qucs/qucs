@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.31 2005/05/02 06:50:59 raimi Exp $
+ * $Id: equation.cpp,v 1.32 2005/05/03 17:57:34 raimi Exp $
  *
  */
 
@@ -394,7 +394,7 @@ constant * application::evaluate (void) {
 // Constructor creates an untyped instance of the equation node class.
 node::node () {
   tag = UNKNOWN;
-  output = evaluated = evalPossible = cycle = duplicate = 0;
+  dropdeps = output = evaluated = evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
@@ -409,7 +409,7 @@ node::node () {
 // This constructor creates an typed instance of the equation node class.
 node::node (int type) {
   tag = type;
-  output = evaluated = evalPossible = cycle = duplicate = 0;
+  dropdeps = output = evaluated = evalPossible = cycle = duplicate = 0;
   next = NULL;
   dependencies = NULL;
   dataDependencies = NULL;
@@ -1192,17 +1192,19 @@ int solver::dataSize (strlist * deps) {
    returns NULL if there are no such dependencies. */
 strlist * solver::collectDataDependencies (node * eqn) {
   strlist * sub, * datadeps = NULL;
-  strlist * deps = eqn->getDependencies ();
-  datadeps = eqn->getDataDependencies ();
-  datadeps = datadeps ? new strlist (*datadeps) : NULL;
-  for (int i = 0; deps && i < deps->length (); i++) {
-    char * var = deps->get (i);
-    node * n = checker::findEquation (eqn::equations, var);
-    sub = strlist::join (datadeps, n->getDataDependencies ());
-    sub->del (n->getResult()->getDropDependencies ());
-    sub->add (n->getResult()->getPrepDependencies ());
-    if (datadeps) delete datadeps;
-    datadeps = sub;
+  if (!eqn->getResult()->dropdeps) {
+    strlist * deps = eqn->getDependencies ();
+    datadeps = eqn->getDataDependencies ();
+    datadeps = datadeps ? new strlist (*datadeps) : NULL;
+    for (int i = 0; deps && i < deps->length (); i++) {
+      char * var = deps->get (i);
+      node * n = checker::findEquation (eqn::equations, var);
+      sub = strlist::join (datadeps, n->getDataDependencies ());
+      sub->del (n->getResult()->getDropDependencies ());
+      sub->add (n->getResult()->getPrepDependencies ());
+      if (datadeps) delete datadeps;
+      datadeps = sub;
+    }
   }
   if (datadeps) {
     datadeps->add (eqn->getResult()->getPrepDependencies ());

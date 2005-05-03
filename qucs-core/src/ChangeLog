@@ -1,3 +1,15 @@
+2005-05-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* tvector.cpp: Improved norm() calculation.
+
+	* qucsdefs.h (qucs_definition_available): Fixed number of
+	ports for coplanar open and short.
+
+	* matrix.cpp: Made twoport() transformations work on matrices
+	with >= (2,2) dimensions.
+
+	* evaluate.cpp: Fixed PlotVs() implementations.
+
 2005-04-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* matrix.cpp, tmatrix.cpp: Fixed yet another memory leak.
