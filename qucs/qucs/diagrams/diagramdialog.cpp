@@ -265,7 +265,11 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       if(!Diag->xAxis.GridOn) slotSetGridBox(QButton::Off);
       connect(GridOn, SIGNAL(stateChanged(int)), SLOT(slotSetGridBox(int)));
     }
-    else  (void*)GridOn = (void*)GridColorButt = (void*)GridStyleBox = 0;
+    else {
+      GridOn = 0;
+      GridColorButt = 0;
+      GridStyleBox = 0;
+    }
 
     // ...........................................................
     // transfer the diagram properties to the dialog
