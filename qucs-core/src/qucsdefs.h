@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.17 2005-05-02 06:50:59 raimi Exp $
+ * $Id: qucsdefs.h,v 1.18 2005-05-03 17:57:36 raimi Exp $
  *
  */
 
@@ -527,7 +527,7 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP }
   },
   /* coplanar open */
-  { "COPEN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+  { "COPEN", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "G", PROP_REAL, { 5e-3, PROP_NO_STR }, PROP_POS_RANGE },
@@ -537,7 +537,7 @@ struct define_t qucs_definition_available[] =
       PROP_NO_PROP }
   },
   /* coplanar short */
-  { "CSHORT", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+  { "CSHORT", 1, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "W", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },

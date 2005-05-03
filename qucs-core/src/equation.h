@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.19 2005-04-18 13:41:03 raimi Exp $
+ * $Id: equation.h,v 1.20 2005-05-03 17:57:35 raimi Exp $
  *
  */
 
@@ -103,6 +103,7 @@ public:
   int evaluated;
   char * instance;
   int output;
+  int dropdeps;
   solver * solvee;
 
 private:

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: tvector.cpp,v 1.9 2005-05-02 06:51:00 raimi Exp $
+ * $Id: tvector.cpp,v 1.10 2005-05-03 17:57:36 raimi Exp $
  *
  */
 
@@ -249,9 +249,40 @@ tvector<nr_type_t> operator + (tvector<nr_type_t> a, nr_type_t s) {
 // Mean square norm.
 template <class nr_type_t>
 nr_double_t norm (tvector<nr_type_t> a) {
-  nr_double_t n = 0;
-  for (int i = 0; i < a.getSize (); i++) n += norm (a.get (i));
+#if 0
+  nr_double_t k = 0;
+  for (int i = 0; i < a.getSize (); i++) k += norm (a.get (i));
   return n;
+#else
+  nr_double_t scale = 0, n = 1, x, ax;
+  for (int i = 0; i < a.getSize (); i++) {
+    if ((x = real (a (i))) != 0) {
+      ax = fabs (x);
+      if (scale < ax) {
+	x = scale / ax;
+	n = 1 + n * x * x;
+	scale = ax;
+      }
+      else {
+	x = ax / scale;
+	n += x * x;
+      }
+    }
+    if ((x = imag (a (i))) != 0) {
+      ax = fabs (x);
+      if (scale < ax) {
+	x = scale / ax;
+	n = 1 + n * x * x;
+	scale = ax;
+      }
+      else {
+	x = ax / scale;
+	n += x * x;
+      }
+    }
+  }
+  return scale * scale * n;
+#endif
 }
 
 // Maximum norm.

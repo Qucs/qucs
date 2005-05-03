@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matvec.cpp,v 1.15 2005-05-02 06:50:59 raimi Exp $
+ * $Id: matvec.cpp,v 1.16 2005-05-03 17:57:36 raimi Exp $
  *
  */
 
@@ -446,7 +446,7 @@ matvec ytoz (matvec y) {
    and Z) matrix vectors. */
 matvec twoport (matvec m, char in, char out) {
   assert (m.getCols () >= 2 && m.getRows () >= 2);
-  matvec res (m.getSize (), m.getCols (), m.getRows ());
+  matvec res (m.getSize (), 2, 2);
   for (int i = 0; i < m.getSize (); i++)
     res.set (twoport (m.get (i), in, out), i);
   return res;  

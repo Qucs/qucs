@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: logging.c,v 1.7 2005-04-11 06:40:49 raimi Exp $
+ * $Id: logging.c,v 1.8 2005-05-03 17:57:35 raimi Exp $
  *
  */
 
@@ -65,7 +65,7 @@ void logprogressbar (nr_double_t current, nr_double_t final, int points) {
   if (progressbar_enable) {
     if (((int) (current * 100 / final)) == progressbar_last && current)
       return;
-    progressbar_last = current * 100 / final;
+    progressbar_last = (int) (current * 100 / final);
     logprint (LOG_STATUS, "[");
     for (i = 0; i < (current  * points / final); i++)
       logprint (LOG_STATUS, "*");

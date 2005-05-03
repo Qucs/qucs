@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: matrix.cpp,v 1.22 2005-05-02 06:50:59 raimi Exp $
+ * $Id: matrix.cpp,v 1.23 2005-05-03 17:57:35 raimi Exp $
  *
  */
 
@@ -510,7 +510,7 @@ matrix ytos (matrix y, complex z0) {
 
 // Converts scattering parameters to chain matrix.
 matrix stoa (matrix s, complex z1) {
-  assert (s.getRows () == 2 && s.getCols () == 2);
+  assert (s.getRows () >= 2 && s.getCols () >= 2);
   complex z2 = z1;
   complex d = s (0, 0) * s (1, 1) - s (0, 1) * s (1, 0);
   complex n = 2.0 * s (1, 0) * sqrt (fabs (real (z1) * real (z2)));
@@ -527,7 +527,7 @@ matrix stoa (matrix s, complex z1) {
 
 // Converts chain matrix to scattering parameters.
 matrix atos (matrix a, complex z1) {
-  assert (a.getRows () == 2 && a.getCols () == 2);
+  assert (a.getRows () >= 2 && a.getCols () >= 2);
   complex z2 = z1;
   complex d = 2.0 * sqrt (fabs (real (z1) * real (z2)));
   complex n = a (0, 0) * z2 + a (0, 1) + 
@@ -545,7 +545,7 @@ matrix atos (matrix a, complex z1) {
 
 // Converts scattering parameters to hybrid matrix.
 matrix stoh (matrix s, complex z1) {
-  assert (s.getRows () == 2 && s.getCols () == 2);
+  assert (s.getRows () >= 2 && s.getCols () >= 2);
   complex z2 = z1;
   complex n = s (0, 1) * s (1, 0);
   complex d = (1.0 - s (0, 0)) * (1.0 + s (1, 1)) + n;
@@ -559,7 +559,7 @@ matrix stoh (matrix s, complex z1) {
 
 // Converts hybrid matrix to scattering parameters.
 matrix htos (matrix h, complex z1) {
-  assert (h.getRows () == 2 && h.getCols () == 2);
+  assert (h.getRows () >= 2 && h.getCols () >= 2);
   complex z2 = z1;
   complex n = h (0, 1) * h (1, 0);
   complex d = (1.0 + h (0, 0) / z1) * (1.0 + z2 * h (1, 1)) - n;
@@ -573,7 +573,7 @@ matrix htos (matrix h, complex z1) {
 
 // Converts scattering parameters to second hybrid matrix.
 matrix stog (matrix s, complex z1) {
-  assert (s.getRows () == 2 && s.getCols () == 2);
+  assert (s.getRows () >= 2 && s.getCols () >= 2);
   complex z2 = z1;
   complex n = s (0, 1) * s (1, 0);
   complex d = (1.0 + s (0, 0)) * (1.0 - s (1, 1)) + n;
@@ -587,7 +587,7 @@ matrix stog (matrix s, complex z1) {
 
 // Converts second hybrid matrix to scattering parameters.
 matrix gtos (matrix g, complex z1) {
-  assert (g.getRows () == 2 && g.getCols () == 2);
+  assert (g.getRows () >= 2 && g.getCols () >= 2);
   complex z2 = z1;
   complex n = g (0, 1) * g (1, 0);
   complex d = (1.0 + g (0, 0) * z1) * (1.0 + g (1, 1) / z2) - n;
