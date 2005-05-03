@@ -264,7 +264,7 @@ QucsTranscalc::QucsTranscalc() {
 
   // reserve space for menubar
   QWidget * Space = new QWidget (this);
-  Space->setFixedHeight (menuBar->height () + 2);
+  Space->setFixedSize(5, menuBar->height() + 2);
   v->addWidget (Space);
 
   // main layout
