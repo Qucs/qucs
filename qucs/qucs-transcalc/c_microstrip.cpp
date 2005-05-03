@@ -868,6 +868,7 @@ void c_microstrip::synthesize()
   synth_width();
   w_h = w / h;
   s_h = s / h;
+  f1 = f2 = 0;
 
   /* rather crude Newton-Rhapson */
   do {

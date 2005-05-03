@@ -2740,31 +2740,31 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>for transient simulation: inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>für die Transientensimulation: Induktivität in Henry</translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>für die Transientensimulation: Kapazität in Farad</translation>
     </message>
     <message>
         <source>coplanar open</source>
-        <translation type="unfinished"></translation>
+        <translation>offene Koplanarleitung</translation>
     </message>
     <message>
         <source>width of gap at end of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaltbreite am Ende der Leitung</translation>
     </message>
     <message>
         <source>Coplanar Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offene Koplanarleitung</translation>
     </message>
     <message>
         <source>coplanar short</source>
-        <translation type="unfinished"></translation>
+        <translation>kurzgeschlossene Koplanarleitung</translation>
     </message>
     <message>
         <source>Coplanar Short</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurzgeschlossene Koplanarleitung</translation>
     </message>
 </context>
 <context>
