@@ -1,3 +1,8 @@
+2005-05-03  Stefan Jahn  <stefan@lkcc.org>
+
+	* coplanar.tex (section{Coplanar waveguide gap}): Documented
+	coplanar series gap.
+
 2005-05-01  Stefan Jahn  <stefan@lkcc.org>
 
 	* coplanar.tex (section{Coplanar waveguide open}): Documented

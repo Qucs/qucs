@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: input.cpp,v 1.44 2005/05/02 06:50:59 raimi Exp $
+ * $Id: input.cpp,v 1.45 2005/05/04 20:15:38 raimi Exp $
  *
  */
 
@@ -372,6 +372,8 @@ circuit * input::createCircuit (char * type) {
     return new cpwopen ();
   else if (!strcmp (type, "CSHORT"))
     return new cpwshort ();
+  else if (!strcmp (type, "CGAP"))
+    return new cpwgap ();
   else if (!strcmp (type, "IProbe"))
     return new iprobe ();
   else if (!strcmp (type, "JFET"))
