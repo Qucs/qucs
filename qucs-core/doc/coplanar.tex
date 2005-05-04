@@ -308,7 +308,8 @@ is capacitive in nature.
 \FloatBarrier
 
 A very simple approximation for the equivalent length extension
-$\Delta l$ associated with the fringing fields is
+$\Delta l$ associated with the fringing fields has been given by
+K.Beilenhoff \cite{Beilenhoff}.
 \begin{equation}
 \Delta l_{open} = \dfrac{C_{open}}{C'} \approx \dfrac{W + 2s}{4}
 \end{equation}
@@ -331,7 +332,8 @@ C_{open} = C'\cdot \Delta l_{open} = \dfrac{\sqrt{\varepsilon_{r,eff}}}{c_0\cdot
 %\addcontentsline{toc}{section}{Coplanar waveguide short}
 
 There is a similar simple approximation for a coplanar waveguide
-short-circuit.  The short circuit is inductive in nature.
+short-circuit, also given in \cite{Beilenhoff}.  The short circuit is
+inductive in nature.
 
 \begin{figure}[ht]
 \begin{center}
@@ -358,4 +360,35 @@ The short end inductance $L_{short}$ can be written in terms of the
 inductance per unit length and the wave resistance.
 \begin{equation}
 L_{short} = L'\cdot \Delta l_{short} = \dfrac{\sqrt{\varepsilon_{r,eff}}\cdot Z_L}{c_0} \cdot \Delta l_{short}
+\end{equation}
+
+\section{Coplanar waveguide gap}
+%\addcontentsline{toc}{section}{Coplanar waveguide gap}
+
+According to W.J.Getsinger \cite{Getsinger5} a coplanar series gap
+(see fig. \ref{fig:CPWgap}) is supposed to be the dual problem of the
+inductance of a connecting strip between twin strip lines.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.45\linewidth]{cpgap}
+\end{center}
+\caption{coplanar waveguide series gap}
+\label{fig:CPWgap}
+\end{figure}
+\FloatBarrier
+
+The inductance of such a thin strip with a width $g$ and the length
+$W$ is given to a good approximation by
+\begin{equation}
+L = \dfrac{\mu_0\cdot W}{2\pi}\cdot\left(p - \sqrt{1 + p^2} + \ln{\left(\dfrac{1 + \sqrt{1 + p^2}}{p}\right)}\right)
+\end{equation}
+
+where $p = g/4W$ and $g,W \ll \lambda$.  Substituting this inductance
+by its equivalent capacitance of the gap in CPW yields
+\begin{equation}
+\begin{split}
+C &= L \cdot \dfrac{4\cdot \varepsilon_{r,eff}}{Z_{F0}^2}\\
+  &= \dfrac{2\cdot\varepsilon_0\cdot\varepsilon_{r,eff}\cdot W}{\pi}\cdot\left(p - \sqrt{1 + p^2} + \ln{\left(\dfrac{1 + \sqrt{1 + p^2}}{p}\right)}\right)
+\end{split}
 \end{equation}
