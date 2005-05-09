@@ -65,7 +65,7 @@ CPWopen::CPWopen()
 		QObject::tr("width of the line")));
   Props.append(new Property("S", "1 mm", true,
 		QObject::tr("width of a gap")));
-  Props.append(new Property("G", "1 mm", true,
+  Props.append(new Property("G", "5 mm", true,
 		QObject::tr("width of gap at end of line")));
   Props.append(new Property("Backside", "Air", false,
 		QObject::tr("material at the backside of the substrate")+
