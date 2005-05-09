@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsedit.cpp  -  description
-                             -------------------
+                               qucsedit.cpp
+                              --------------
     begin                : Mon Nov 17 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -107,7 +107,12 @@ void QucsEdit::slotLoad()
 // ************************************************************
 void QucsEdit::slotSave()
 {
-  if(FileName.isEmpty()) return;
+  if(FileName.isEmpty()) {
+    FileName = QFileDialog::getSaveFileName(".", QString::null,
+	this, "", tr("Enter a Document Name"));
+    if(FileName.isEmpty())  return;
+  }
+
   QFile file(FileName);
   if(!file.open(IO_WriteOnly)) {
     QMessageBox::critical(this, tr("Error"),
@@ -137,15 +142,9 @@ void QucsEdit::slotQuit()
 
 // ************************************************************
 // To get all close events.
-void QucsEdit::closeEvent(QCloseEvent *Event)
+void QucsEdit::closeEvent(QCloseEvent*)
 {
-  int tmp;
-  tmp = x();		// call size and position function in order to ...
-  tmp = y();		// ... set them correctly before closing the ...
-  tmp = width();	// dialog !!!  Otherwise the frame of the window ...
-  tmp = height();	// will not be recognized (a X11 problem).
-
-  Event->accept();
+  slotQuit();
 }
 
 // ************************************************************
@@ -178,8 +177,9 @@ bool QucsEdit::closeFile()
     switch(QMessageBox::warning(this,tr("Closing document"),
       tr("The text contains unsaved changes!\n")+
       tr("Do you want to save the changes?"),
-      tr("&Save"), tr("&Discard"), tr("Cancel"), 0, 2)) {
+      tr("&Save"), tr("&Discard"), tr("&Cancel"), 0, 2)) {
       case 0: slotSave();
+	      if(FileName.isEmpty()) return false;
 	      return true;
       case 2: return false;
     }

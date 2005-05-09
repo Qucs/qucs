@@ -2527,6 +2527,22 @@ Usage:  qucsedit [-r] file
         <source>Coplanar Short</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of gap between the two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5069,6 +5085,85 @@ Starts transmission line calculator</source>
     <message>
         <source>Close window</source>
         <translation>ウィンドウを閉じる</translation>
+    </message>
+</context>
+<context>
+    <name>SpiceDialog</name>
+    <message>
+        <source>Edit Spice Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">名前 :</translation>
+    </message>
+    <message>
+        <source>File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">参照</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編集</translation>
+    </message>
+    <message>
+        <source>Spice net nodes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;&lt; Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component ports:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished">適用</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation type="unfinished">全てのファイル</translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation type="unfinished">選択されたファイル</translation>
+    </message>
+    <message>
+        <source>show file name in schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">エラー</translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">情報</translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

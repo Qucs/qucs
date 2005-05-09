@@ -1,6 +1,6 @@
 /***************************************************************************
-                          sparamfile.cpp  -  description
-                             -------------------
+                               sparamfile.cpp
+                              ----------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -17,6 +17,10 @@
 
 #include "sparamfile.h"
 #include "main.h"
+
+#include <qfileinfo.h>
+
+extern QDir QucsWorkDir;
 
 
 SParamFile::SParamFile(int No)
@@ -81,4 +85,27 @@ Component* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne)  return new SParamFile(1);
   return 0;
+}
+
+// -------------------------------------------------------
+QString SParamFile::NetList()
+{
+  if(!isActive) return QString("");  // should it be simulated ?
+
+  QString s = Model.mid(1)+":"+Name;
+
+  // output all node names
+  for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
+    s += " "+p1->Connection->Name;   // node names
+
+  // output all properties
+  Property *p2 = Props.first();
+  QFileInfo info(p2->Value);
+  if(info.isRelative())  info.setFile(QucsWorkDir, p2->Value);
+  s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";
+
+  p2 = Props.next();
+  s += " "+p2->Name+"=\""+p2->Value+"\"";
+
+  return s;
 }

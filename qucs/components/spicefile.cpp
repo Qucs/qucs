@@ -18,49 +18,21 @@
 #include "spicefile.h"
 #include "main.h"
 
+#include <qregexp.h>
+#include <qprocess.h>
 
-SpiceFile::SpiceFile(int No)
+
+SpiceFile::SpiceFile()
 {
   Description = QObject::tr("SPICE netlist file");
+  // Property descriptions not needed, but must not be empty !
+  Props.append(new Property("File", "", true, QString("x")));
+  Props.append(new Property("Ports", "", false, QString("x")));
+  recreate();
 
-  int h = 30*((No-1)/2) + 15;
-  Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text(-11, -6,QObject::tr("spice")));
-
-
-  int i=0, y = 15-h;
-  while(i<No) {
-    i++;
-    Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
-    Texts.append(new Text(-25,y-14,QString::number(i)));
-
-    if(i == No) break;
-    i++;
-    Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
-    Texts.append(new Text( 19,y-14,QString::number(i)));
-    y += 60;
-  }
-
-  Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text( 4, h,"Ref"));
-  Ports.append(new Port( 0,h+15));    // 'Ref' port
-
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+15;
-
-  QFontMetrics  metrics(QucsSettings.font);   // get size of text
-  tx = x1+4;
-  ty = y1 - 2*metrics.lineSpacing() - 4;
   Model = "SPICE";
   Name  = "X";
-
-  Props.append(new Property("File", "test.inp", true,
-		QObject::tr("name of the s parameter file")));
+  withSim = false;
 }
 
 SpiceFile::~SpiceFile()
@@ -69,7 +41,7 @@ SpiceFile::~SpiceFile()
 
 Component* SpiceFile::newOne()
 {
-  return new SpiceFile(Ports.count()-1);
+  return new SpiceFile();
 }
 
 Component* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
@@ -77,10 +49,143 @@ Component* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
   Name = QObject::tr("SPICE netlist");
   BitmapFile = "spicefile";
 
-  if(getNewOne)  return new SpiceFile(1);
+  if(getNewOne)  return new SpiceFile();
   return 0;
 }
 
 void SpiceFile::recreate()
 {
+  Lines.clear();
+  Texts.clear();
+  Ports.clear();
+  QFontMetrics  metrics(QucsSettings.font);   // get size of text
+  int fHeight = metrics.lineSpacing();
+
+  int No = 0;
+  QString tmp, PortNames = Props.at(1)->Value;
+  if(!PortNames.isEmpty())  No = PortNames.contains(',') + 1;
+
+  int h = 30*((No-1)/2) + 15;
+  Lines.append(new Line(-16, -h, 16, -h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line( 16, -h, 16,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-16,  h, 16,  h,QPen(QPen::darkBlue,2)));
+  Lines.append(new Line(-16, -h,-16,  h,QPen(QPen::darkBlue,2)));
+
+  int i = fHeight/2;
+  if(withSim) {
+    i = fHeight - 2;
+    Texts.append(new Text(-10, 0, QObject::tr("sim"), Qt::red));
+  }
+  Texts.append(new Text(-15, -i, QObject::tr("spice")));
+
+
+  i = 0;
+  int w, y = 15-h;
+  while(i<No) {
+    Lines.append(new Line(-30,  y,-16,  y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port(-30,  y));
+    tmp = PortNames.section(',', i, i).mid(4);
+    w = metrics.width(tmp);
+    Texts.append(new Text(-19-w, y-fHeight-2, tmp));
+    i++;
+
+    if(i == No) break;
+    Lines.append(new Line( 16,  y, 30,  y,QPen(QPen::darkBlue,2)));
+    Ports.append(new Port( 30,  y));
+    tmp = PortNames.section(',', i, i).mid(4);
+    Texts.append(new Text( 20, y-fHeight-2, tmp));
+    y += 60;
+    i++;
+  }
+
+  if(No > 0) {
+    Lines.append(new Line( 0, h, 0,h+15,QPen(QPen::darkBlue,2)));
+    Texts.append(new Text( 4, h,"Ref"));
+    Ports.append(new Port( 0,h+15));    // 'Ref' port
+  }
+
+  x1 = -30; y1 = -h-2;
+  x2 =  30; y2 =  h+15;
+
+  tx = x1+4;
+  ty = y1 - fHeight - 4;
+  if(Props.first()->display) ty -= fHeight;
+
+  // rotate and mirror
+  bool mmir = mirroredX;
+  int  rrot = rotated;
+  if(mmir)  mirrorX();   // mirror
+  for(i=0; i<rrot; i++)  rotate(); // rotate
+
+
+  rotated = rrot;   // restore properties (were changed by rotate/mirror)
+  mirroredX = mmir;
+}
+
+// ---------------------------------------------------
+QString SpiceFile::NetList()
+{
+  if(!isActive) return QString("");       // should it be simulated ?
+
+  QString s = "Sub:"+Name;   // SPICE netlist is subcircuit
+  for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
+    s += " "+pp->Connection->Name;   // output all node names
+
+  QString Type = Props.getFirst()->Value;
+  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
+  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
+  s += " Type=\""+Type+"\"";   // type for SPICE subcircuit
+
+  return s;
+}
+
+// ---------------------------------------------------
+// Converts a spice netlist into Qucs format and outputs it.
+bool SpiceFile::convertSpiceNetlist(QTextStream *stream, QString& NS)
+{
+  QProcess *QucsConv = new QProcess(0);
+  QucsConv->addArgument(QucsSettings.BinDir + "qucsconv");
+  QucsConv->addArgument("-g");
+  QucsConv->addArgument("_ref");
+  QucsConv->addArgument("-if");
+  QucsConv->addArgument("spice");
+  QucsConv->addArgument("-of");
+  QucsConv->addArgument("qucs");
+  QucsConv->addArgument("-i");
+  QucsConv->addArgument(Props.getFirst()->Value);
+  if(!QucsConv->start())  return false;
+
+  while(QucsConv->isRunning()) {
+/*    QTime t;
+    t.start();
+    while(t.elapsed() < 100) ;*/
+    sleep(1);
+  }
+
+
+  QString Line = Props.first()->Value;
+  if(Line.at(0) <= '9') if(Line.at(0) >= '0') Line = '_' + Line;
+  Line.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
+  (*stream) << "\n.Def:" << Line << " ";
+  
+  Line = Props.next()->Value;
+  Line.replace(',', ' ');
+  (*stream) << Line;
+  if(!Line.isEmpty()) (*stream) << " _ref\n";
+  else (*stream) << "\n";
+
+  // then read converted netlist .......
+  for(;;) {
+    Line = QucsConv->readLineStdout();
+    if(Line == QString::null) break;
+    Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
+    if(Line.at(0) == '#') continue;
+    if(Line.at(0) == '.') NS += Line + '\n';  // insert simulations later
+    else (*stream) << "  " << Line << '\n';
+  }
+
+  (*stream) << ".Def:End\n\n";
+  delete QucsConv;
+  return true;
 }

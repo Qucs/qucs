@@ -32,6 +32,8 @@ Version 0.0.6
  * many small improvements
  * edit component properties directly on the schematic
  * translations into Swedish
+ * new components: coplanar open, short and gap
+ * nicer icons for simulation components
 
 Version 0.0.5
 -------------

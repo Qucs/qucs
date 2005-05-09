@@ -2566,6 +2566,22 @@ Folosire:  qucsedit [-r] file
         <source>Coplanar Short</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of gap between the two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5164,6 +5180,85 @@ Starts transmission line calculator</source>
     <message>
         <source>Close window</source>
         <translation>Închide fereastra</translation>
+    </message>
+</context>
+<context>
+    <name>SpiceDialog</name>
+    <message>
+        <source>Edit Spice Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">Nume:</translation>
+    </message>
+    <message>
+        <source>File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Căutare</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Editează</translation>
+    </message>
+    <message>
+        <source>Spice net nodes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;&lt; Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component ports:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished">Aplică</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Revocare</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation type="unfinished">Toate Fişierele</translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation type="unfinished">Selectează un fişier</translation>
+    </message>
+    <message>
+        <source>show file name in schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Eroare</translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Info</translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

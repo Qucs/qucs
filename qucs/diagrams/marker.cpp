@@ -62,62 +62,50 @@ void Marker::initText(int n)
   Axis *pa;
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);
   else  pa = &(Diag->zAxis);
-  double *px, *py=0, *pz = pGraph->cPointsY + 2*n;
+  double *px, *py=0, *pz;
   Text = "";
   nVarPos = 0;
 
-  int nn, m, x, y, d, dmin = INT_MAX;
+  bool isCross = false;
+  int nn, nnn, m, x, y, d, dmin = INT_MAX;
   DataX *pD = pGraph->cPointsX.first();
-  if(pGraph->cPointsX.next()) {   // only for 3D diagram
+  px  = pD->Points;
+  nnn = pD->count;
+  DataX *pDy = pGraph->cPointsX.next();
+  if(pDy) {   // only for 3D diagram
     nn = pGraph->countY * pD->count;
+    py  = pDy->Points;
     if(n >= nn) {    // is on cross grid ?
+      isCross = true;
       n -= nn;
-      n /= pD->count;
-qDebug("n: %d", n);
-
-/*  px = pGraph->cPointsX.first()->Points;
-  py = pGraph->cPointsX.next()->Points;
-  pz = pGraph->cPointsY + 2*n
-  // find exact marker position
-  for(nn=0; nn<pD->count; nn++) {
-    Diag->calcCoordinate(px, pz, py, &x, &y, pa);
-    px--;
-    py++;
-    pz += 2*(pD->count-1);
-    x -= cx;
-    y -= cy;
-    d = x*x + y*y;
-    if(d < dmin) {
-      dmin = d;
-      n = (n - n % pD->count) + nn;
+      n /= nnn;
+      px += (n % nnn);
+      if(pGraph->cPointsX.next())   // more than 2 indep variables ?
+        n  = (n % nnn) + (n / nnn) * nnn * pDy->count;
+      nnn = pDy->count;
     }
-  }
-  if(dmin == INT_MAX)
-    n = n + nn - 1; // take last position
-*/
-
-    }
-    py = pGraph->cPointsX.current()->Points;
-    py += n / pD->count;
+    else py += (n/pD->count) % pDy->count;
   }
 
   // find exact marker position
-  m  = pD->count-1;
-  px = pD->Points;
-  for(nn=0; nn<pD->count; nn++) {
-//    px = pD->Points + nn;
+  m  = nnn - 1;
+  pz = pGraph->cPointsY + 2*n;
+  for(nn=0; nn<nnn; nn++) {
     Diag->calcCoordinate(px, pz, py, &x, &y, pa);
+    if(isCross) {
+      px--;
+      py++;
+      pz += 2*(pD->count-1);
+    }
     x -= cx;
     y -= cy;
     d = x*x + y*y;
     if(d < dmin) {
       dmin = d;
       m = nn;
-//      n = (n - n % pD->count) + nn;
     }
   }
-//  if(dmin == INT_MAX)
-//    n = n + nn - 1; // take last position
+  if(isCross) m *= pD->count;
   n += m;
 
   // gather text of all independent variables
@@ -142,6 +130,7 @@ qDebug("n: %d", n);
   }
 
   px = VarPos;
+  py = VarPos + 1;
   Diag->calcCoordinate(px, pz, py, &cx, &cy, pa);
 
   if(!Diag->insideDiagram(cx, cy))
@@ -195,7 +184,7 @@ void Marker::createText()
   pD = pGraph->cPointsX.first();
   if(pGraph->cPointsX.next()) {
     py = pGraph->cPointsX.current()->Points;   // only for 3D diagram
-    py += n / pD->count;
+    py += (n / pD->count) % pGraph->cPointsX.current()->count;
   }
 
   Text += pGraph->Var + ": ";
@@ -326,7 +315,7 @@ bool Marker::moveUpDown(bool up)
 
     } while(px <= pD->Points);  // go to next dimension ?
 
-    px--;  // one position up
+    px--;  // one position down
     VarPos[i] = *px;
     while(i > 1) {
       pD = pGraph->cPointsX.prev();
