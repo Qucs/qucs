@@ -19,6 +19,7 @@
 #include "main.h"
 #include "node.h"
 #include "qucsview.h"
+#include "components/spicedialog.h"
 #include "components/componentdialog.h"
 #include "diagrams/diagramdialog.h"
 #include "diagrams/markerdialog.h"
@@ -2088,27 +2089,32 @@ void QucsView::editElement(QMouseEvent *Event)
 
   Component *c;
   Diagram *dia;
-  ComponentDialog *cd;
   DiagramDialog *ddia;
   MarkerDialog *mdia;
+  int x1, y1, x2, y2;
 
   switch(focusElement->Type) {
     case isComponent:
          c = (Component*)focusElement;
          if(c->Model == "GND") return;
-	 // ComponentDialog is WDestructiveClose
-         cd = new ComponentDialog(c, d, this);
-         if(cd->exec() == 1) {
-           int x1, y1, x2, y2;
-           x2 = d->Comps->findRef(c);
+
+	 if(c->Model == "SPICE") {
+	   SpiceDialog *sd = new SpiceDialog((SpiceFile*)c, d, this);
+           if(sd->exec() != 1) break;   // dialog is WDestructiveClose
+	 }
+	 else {
+	   ComponentDialog * cd = new ComponentDialog(c, d, this);
+	   if(cd->exec() != 1) break;   // dialog is WDestructiveClose
+
+           d->Comps->findRef(c);
            d->Comps->take();
            d->setComponentNumber(c); // for ports/power sources
            d->Comps->append(c);
+	 }
 
-           d->setChanged(true, true);
-           c->entireBounds(x1,y1,x2,y2);
-           enlargeView(x1,y1,x2,y2);
-         }
+         d->setChanged(true, true);
+         c->entireBounds(x1,y1,x2,y2);
+         enlargeView(x1,y1,x2,y2);
          break;
 
     case isDiagram :

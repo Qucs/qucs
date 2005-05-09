@@ -50,8 +50,13 @@ Component* Ground::newOne()
 Component* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ground");
-  BitmapFile = "ground";
+  BitmapFile = "gnd";
 
   if(getNewOne)  return new Ground();
   return 0;
+}
+
+QString Ground::NetList()
+{
+  return QString("");
 }

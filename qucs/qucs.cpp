@@ -1532,7 +1532,7 @@ pInfoFunc TransmissionLines[] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
    &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
    &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
-   &Coplanar::info, &CPWopen::info, &CPWshort::info, 0};
+   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info, 0};
 
 pInfoFunc nonlinearComps[] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
@@ -1555,21 +1555,21 @@ void QucsApp::slotSetCompView(int index)
   CompComps->clear();   // clear the IconView
   if((index+1) >= CompChoose->count()) {
     new QIconViewItem(CompComps, tr("Line"),
-		QImage(QucsSettings.BitmapDir + "line.xpm"));
+		QImage(QucsSettings.BitmapDir + "line.png"));
     new QIconViewItem(CompComps, tr("Arrow"),
-		QImage(QucsSettings.BitmapDir + "arrow.xpm"));
+		QImage(QucsSettings.BitmapDir + "arrow.png"));
     new QIconViewItem(CompComps, tr("Text"),
-		QImage(QucsSettings.BitmapDir + "text.xpm"));
+		QImage(QucsSettings.BitmapDir + "text.png"));
     new QIconViewItem(CompComps, tr("Ellipse"),
-		QImage(QucsSettings.BitmapDir + "ellipse.xpm"));
+		QImage(QucsSettings.BitmapDir + "ellipse.png"));
     new QIconViewItem(CompComps, tr("Rectangle"),
-		QImage(QucsSettings.BitmapDir + "rectangle.xpm"));
+		QImage(QucsSettings.BitmapDir + "rectangle.png"));
     new QIconViewItem(CompComps, tr("filled Ellipse"),
-		QImage(QucsSettings.BitmapDir + "filledellipse.xpm"));
+		QImage(QucsSettings.BitmapDir + "filledellipse.png"));
     new QIconViewItem(CompComps, tr("filled Rectangle"),
-		QImage(QucsSettings.BitmapDir + "filledrect.xpm"));
+		QImage(QucsSettings.BitmapDir + "filledrect.png"));
     new QIconViewItem(CompComps, tr("Elliptic Arc"),
-		QImage(QucsSettings.BitmapDir + "ellipsearc.xpm"));
+		QImage(QucsSettings.BitmapDir + "ellipsearc.png"));
     return;
   }
 
@@ -1580,47 +1580,47 @@ void QucsApp::slotSetCompView(int index)
     case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
     case COMBO_File:
       new QIconViewItem(CompComps, tr("SPICE netlist"),
-		QImage(QucsSettings.BitmapDir + "spicefile.xpm"));
+		QImage(QucsSettings.BitmapDir + "spicefile.png"));
       new QIconViewItem(CompComps, tr("1-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile1.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile1.png"));
       new QIconViewItem(CompComps, tr("2-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile2.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile2.png"));
       new QIconViewItem(CompComps, tr("3-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile3.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile3.png"));
       new QIconViewItem(CompComps, tr("4-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile4.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile4.png"));
       new QIconViewItem(CompComps, tr("5-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile5.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile5.png"));
       new QIconViewItem(CompComps, tr("6-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile6.xpm"));
+		QImage(QucsSettings.BitmapDir + "spfile6.png"));
       return;
     case COMBO_Sims:     Infos = &Simulations[0];  break;
     case COMBO_Diagrams:
       new QIconViewItem(CompComps, tr("Cartesian"),
-		QImage(QucsSettings.BitmapDir + "rect.xpm"));
+		QImage(QucsSettings.BitmapDir + "rect.png"));
       new QIconViewItem(CompComps, tr("Polar"),
-		QImage(QucsSettings.BitmapDir + "polar.xpm"));
+		QImage(QucsSettings.BitmapDir + "polar.png"));
       new QIconViewItem(CompComps, tr("Tabular"),
-		QImage(QucsSettings.BitmapDir + "tabular.xpm"));
+		QImage(QucsSettings.BitmapDir + "tabular.png"));
       new QIconViewItem(CompComps, tr("Smith Chart"),
-		QImage(QucsSettings.BitmapDir + "smith.xpm"));
+		QImage(QucsSettings.BitmapDir + "smith.png"));
       new QIconViewItem(CompComps, tr("Admittance Smith"),
-		QImage(QucsSettings.BitmapDir + "ysmith.xpm"));
+		QImage(QucsSettings.BitmapDir + "ysmith.png"));
       new QIconViewItem(CompComps, tr("Polar-Smith Combi"),
-		QImage(QucsSettings.BitmapDir + "polarsmith.xpm"));
+		QImage(QucsSettings.BitmapDir + "polarsmith.png"));
       new QIconViewItem(CompComps, tr("Smith-Polar Combi"),
-		QImage(QucsSettings.BitmapDir + "smithpolar.xpm"));
+		QImage(QucsSettings.BitmapDir + "smithpolar.png"));
       new QIconViewItem(CompComps, tr("3D-Cartesian"),
-		QImage(QucsSettings.BitmapDir + "rect3d.xpm"));
+		QImage(QucsSettings.BitmapDir + "rect3d.png"));
       new QIconViewItem(CompComps, tr("Locus Curve"),
-		QImage(QucsSettings.BitmapDir + "curve.xpm"));
+		QImage(QucsSettings.BitmapDir + "curve.png"));
       return;
   }
 
   while(*Infos != 0) {
     (**Infos) (Name, File, false);
     new QIconViewItem(CompComps, Name,
-		QImage(QucsSettings.BitmapDir+QString(File)+".xpm"));
+		QImage(QucsSettings.BitmapDir+QString(File)+".png"));
     Infos++;
   }
 }
@@ -1693,7 +1693,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	 break;
     case COMBO_File:
          if(CompComps->index(item) == 0)
-	   view->selComp = new SpiceFile(2);
+	   view->selComp = new SpiceFile();
 	 else
 	   view->selComp = new SParamFile(CompComps->index(item));
 	 break;

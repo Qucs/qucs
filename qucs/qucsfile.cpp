@@ -21,15 +21,18 @@
 
 #include "qucsfile.h"
 
-#include"node.h"
+#include "node.h"
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
+#include "components/spicefile.h"
 #include "qucsdoc.h"
+#include "main.h"
 
 #include <qmessagebox.h>
 #include <qdir.h>
 #include <qstringlist.h>
 #include <qregexp.h>
+#include <qprocess.h>
 
 
 extern QDir QucsWorkDir;
@@ -760,6 +763,15 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
 	     d->File.createSubNetlist(stream, countInit);
 	     delete d;
            }
+      else if(pc->Model == "SPICE") {
+	     s = pc->Props.getFirst()->Value;
+	     if(StringList.findIndex(s) >= 0)
+		continue;   // insert each spice component just one time
+
+	     StringList.append(s);
+	     if(!((SpiceFile*)pc)->convertSpiceNetlist(stream, NS))
+	       return false;
+	   }
 
 
   bool setName=false;
@@ -911,7 +923,7 @@ bool QucsFile::createNetlist(QFile *NetlistFile)
     StringList.clear();
     return false;
   }
-  stream << s;  // outputs the NodeSets (if any)
+  stream << s;  // outputs the NodeSets and SPICE simulations (if any)
 
   // .................................................
   // write all components with node names into the netlist file

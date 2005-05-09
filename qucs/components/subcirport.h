@@ -27,6 +27,7 @@ public:
   ~SubCirPort();
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
+  QString NetList();
 };
 
 #endif

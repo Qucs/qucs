@@ -1,28 +1,34 @@
+2005-05-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+ * qucsedit: warning about unsaved changes also if close rider pressed
+ * markers for 3D cartesian work
+ * new component works: SPICE netlist import
+
 2005-05-01  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
-	* fixed floating point error in tabular diagram
-	* fixed some bugs in 3D cartesian
-	* new components: coplanar open and short
+ * fixed floating point error in tabular diagram
+ * fixed some bugs in 3D cartesian
+ * new components: coplanar open and short
 
 2005-04-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
-	* edit component properties directly on the schematic
-	* many small bug fixes and improvements
-	* different line styles for 3D cartesian diagram
+ * edit component properties directly on the schematic
+ * many small bug fixes and improvements
+ * different line styles for 3D cartesian diagram
 
 2005-04-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
-	* new key: F2 -> Edit Subcircuit Symbol, CTRL-U -> Set on Grid
-	* in label dialog: '_' is now possible
-	* new property in coplanar line: Approx
-	* fixed small bug that always set changed-flag if "Set on Grid"
-	* right mouse button menu is now context sensitive
-	* added validators for all neccessary line edits
+ * new key: F2 -> Edit Subcircuit Symbol, CTRL-U -> Set on Grid
+ * in label dialog: '_' is now possible
+ * new property in coplanar line: Approx
+ * fixed small bug that always set changed-flag if "Set on Grid"
+ * right mouse button menu is now context sensitive
+ * added validators for all neccessary line edits
 
 2005-04-11  Stefan Jahn  <stefan@lkcc.org>
 
-	* qucsview.cpp, qucsdoc.cpp: Fixed int/pointer mismatch for
-	64bit architectures.  Reported by Debian build logs.
+ * qucsview.cpp, qucsdoc.cpp: Fixed int/pointer mismatch for
+ 64bit architectures.  Reported by Debian build logs.
 
 2005-04-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 

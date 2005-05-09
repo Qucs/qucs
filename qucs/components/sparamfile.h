@@ -26,6 +26,7 @@ public:
   SParamFile(int No);
   ~SParamFile();
   Component* newOne();
+  QString NetList();
   static Component* info(QString&, char* &, bool getNewOne=false);
 };
 

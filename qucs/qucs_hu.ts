@@ -2538,6 +2538,22 @@ Használat:  qucsedit [-r] fájl
         <source>Coplanar Short</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of gap between the two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -5211,6 +5227,85 @@ Rács megjelenítése</translation>
     <message>
         <source>Close window</source>
         <translation>Ablak bezárás</translation>
+    </message>
+</context>
+<context>
+    <name>SpiceDialog</name>
+    <message>
+        <source>Edit Spice Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished">Név:</translation>
+    </message>
+    <message>
+        <source>File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Kiválasztás</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Szerkesztés</translation>
+    </message>
+    <message>
+        <source>Spice net nodes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add &gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;&lt; Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component ports:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished">Alkalmaz</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>All Files</source>
+        <translation type="unfinished">Minden fájl</translation>
+    </message>
+    <message>
+        <source>Select a file</source>
+        <translation type="unfinished">Fájl kiválasztás</translation>
+    </message>
+    <message>
+        <source>show file name in schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hiba</translation>
+    </message>
+    <message>
+        <source>Cannot execute</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">Infó</translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
