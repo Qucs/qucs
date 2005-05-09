@@ -23,11 +23,15 @@
 
 class SpiceFile : public Component  {
 public:
-  SpiceFile(int No);
+  SpiceFile();
   ~SpiceFile();
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
   void recreate();
+  QString NetList();
+  bool convertSpiceNetlist(QTextStream*, QString&);
+
+  bool withSim;
 };
 
 #endif

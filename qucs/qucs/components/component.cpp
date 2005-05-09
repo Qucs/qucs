@@ -1,6 +1,6 @@
 /***************************************************************************
-                          component.cpp  -  description
-                             -------------------
+                               component.cpp
+                              ---------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,11 +26,7 @@
 #include <qpen.h>
 #include <qmessagebox.h>
 #include <qdir.h>
-#include <qfileinfo.h>
-#include <qregexp.h>
 
-
-extern QDir QucsWorkDir;
 
 // ***********************************************************************
 // **********                                                   **********
@@ -564,12 +560,9 @@ void Component::mirrorY()
 // -------------------------------------------------------
 QString Component::NetList()
 {
-  if(Name.isEmpty()) return QString("");  // dummy elements (e.g. ground)
   if(!isActive) return QString("");       // should it be simulated ?
-  if(Model == "Port") return QString("");  // do not mention subcircuit ports
 
   QString s = Model+":"+Name;
-  if(s.at(0) == '#')  s.remove(0,1);
 
   // output all node names
   for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
@@ -587,22 +580,7 @@ QString Component::NetList()
   // output all properties
   for(Property *p2 = Props.first(); p2 != 0; p2 = Props.next())
     if(p2->Name != "Symbol")
-      if(p2->Name == "File") {
-	if(Model == "Sub") {
-	  QString  Type = p2->Value;
-	  QFileInfo Info(Type);
-	  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
-	  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
-	  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-	  s += " Type=\""+Type+"\"";   // type for subcircuit
-	  continue;
-	}
-        QFileInfo info(p2->Value);
-	if(info.isRelative())  info.setFile(QucsWorkDir, p2->Value);
-	s += " "+p2->Name+"=\"{"+info.absFilePath()+"}\"";    // properties
-      }
-      else
-	s += " "+p2->Name+"=\""+p2->Value+"\"";    // properties *****
+      s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s;
 }
@@ -720,9 +698,9 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
     if(!ok) return false;
   }
 
-  if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
-  }
-  
+//  if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
+//  }
+
   return true;
 }
 
@@ -764,6 +742,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "LIN") c = new Coplanar();
 	else if(cstr == "OPEN") c = new CPWopen();
 	else if(cstr == "SHORT") c = new CPWshort();
+	else if(cstr == "GAP") c = new CPWgap();
 	break;
   case 'L' : if(cstr.isEmpty()) c = new Inductor();
 	break;
@@ -801,7 +780,7 @@ Component* getComponentFromName(QString& Line)
 	       c = new SParamFile(cstr.mid(5).toInt()); }
         else if(cstr == "ub")   c = new Subcircuit();
         else if(cstr == "UBST") c = new Substrate();
-        else if(cstr == "PICE") c = new SpiceFile(2);
+        else if(cstr == "PICE") c = new SpiceFile();
         break;
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
 	else if(cstr == "CFeed") c = new dcFeed();

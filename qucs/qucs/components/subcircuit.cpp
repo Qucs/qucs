@@ -1,6 +1,6 @@
 /***************************************************************************
-                          subcircuit.cpp  -  description
-                             -------------------
+                               subcircuit.cpp
+                              ----------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -25,6 +25,7 @@
 
 #include <qdir.h>
 #include <qfileinfo.h>
+#include <qregexp.h>
 
 #include <math.h>
 #include <limits.h>
@@ -472,4 +473,26 @@ bool Subcircuit::getBrush(const QString& s, QBrush& Brush, int i)
   if(!ok) return false;
 
   return true;
+}
+
+// -------------------------------------------------------
+QString Subcircuit::NetList()
+{
+  if(!isActive) return QString("");       // should it be simulated ?
+
+  QString s = Model+":"+Name;
+
+  // output all node names
+  for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
+    s += " "+p1->Connection->Name;   // node names
+
+  // output property
+  QString  Type = Props.getFirst()->Value;
+  QFileInfo Info(Type);
+  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
+  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
+  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
+  s += " Type=\""+Type+"\"";   // type for subcircuit
+
+  return s;
 }

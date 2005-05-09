@@ -40,6 +40,7 @@ public:
 
   virtual Component* newOne();
   virtual void recreate();
+  virtual QString NetList();
   void    paint(ViewPainter*);
   void    paintScheme(QPainter*);
   void    print(ViewPainter*);
@@ -53,7 +54,6 @@ public:
   void    rotate();
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
-  QString NetList();
   QString save();
   bool    load(const QString&);
 

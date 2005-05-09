@@ -26,6 +26,7 @@ public:
   Subcircuit();
   ~Subcircuit();
   Component* newOne();
+  QString NetList();
   void recreate();
 
 private:

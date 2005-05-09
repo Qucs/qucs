@@ -176,8 +176,10 @@ int Graph::getSelected(int x, int y)
 
   int countX = cPointsX.getFirst()->count;
   if(*pp < 0) {
+    if(*pp < -9) z++;
     pp++;
     if(*pp < -9) {
+      z++;
       pp++;
       if(*pp < -10)  return -1;   // not even one point ?
     }

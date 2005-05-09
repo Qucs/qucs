@@ -66,6 +66,7 @@
 #include "coplanar.h"
 #include "cpwopen.h"
 #include "cpwshort.h"
+#include "cpwgap.h"
 #include "diode.h"
 #include "bjt.h"
 #include "bjtsub.h"
