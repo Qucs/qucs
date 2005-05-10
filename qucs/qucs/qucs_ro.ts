@@ -3290,7 +3290,7 @@ Editează această schemă</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Revocare</translation>
+        <translation type="obsolete">Revocare</translation>
     </message>
     <message>
         <source>
@@ -3305,6 +3305,14 @@ Editor de text foarte simplu pentur Qucs
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 de Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Introdu un Nume de Document</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

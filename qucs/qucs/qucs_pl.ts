@@ -3339,7 +3339,7 @@ Edytuj schemat</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Porzuć</translation>
+        <translation type="obsolete">Porzuć</translation>
     </message>
     <message>
         <source>
@@ -3354,6 +3354,14 @@ Bardzo prosty edytor tekstowy programu Qucs
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Podaj nazwę dokumentu</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

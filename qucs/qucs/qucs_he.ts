@@ -3187,7 +3187,15 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Cancel</source>
-        <translation>בטל</translation>
+        <translation type="obsolete">בטל</translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">הכנס שם מסמך</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
