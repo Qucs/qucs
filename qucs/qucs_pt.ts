@@ -3207,13 +3207,21 @@ Very simple text editor for Qucs
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Entre um Nome para o Documento</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
