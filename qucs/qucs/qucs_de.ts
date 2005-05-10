@@ -4703,7 +4703,7 @@ Einfacher Texteditor für Qucs
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abbrechen</translation>
+        <translation type="obsolete">Abbrechen</translation>
     </message>
     <message>
         <source>
@@ -4718,6 +4718,14 @@ Einfacher Texteditor für Qucs
 </source>
         <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Geben Sie einen Dokumentennamen ein</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

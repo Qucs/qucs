@@ -15,12 +15,24 @@
  *                                                                         *
  ***************************************************************************/
 
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "spicefile.h"
 #include "main.h"
 
 #include <qregexp.h>
 #include <qprocess.h>
 
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+
+#ifdef __MINGW32__
+#include <windows.h>
+#define sleep(sec) (Sleep ((sec) * 1000), 0)
+#endif
 
 SpiceFile::SpiceFile()
 {

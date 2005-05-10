@@ -3269,7 +3269,7 @@ Modifie ce schéma</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Abandonner</translation>
+        <translation type="obsolete">Abandonner</translation>
     </message>
     <message>
         <source>
@@ -3284,6 +3284,14 @@ Un petit éditeur sans prétention pour Qucs
 </source>
         <translation>© Copyright 2003, 2004 par Michael Margraf
  {2004, 2005?}</translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Saisissez un nom de fichier</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

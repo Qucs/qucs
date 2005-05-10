@@ -58,23 +58,23 @@
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Salva</translation>
+        <translation>Salva</translation>
     </message>
     <message>
         <source>Save all</source>
-        <translation type="unfinished">Salva tutto</translation>
+        <translation>Salva tutto</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished">Abbandona</translation>
+        <translation>Abbandona</translation>
     </message>
     <message>
         <source>Discard all</source>
-        <translation type="unfinished">Abbandona tutto</translation>
+        <translation>Abbandona tutto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>Points per decade:</source>
-        <translation type="unfinished"></translation>
+        <translation>Punti per decade:</translation>
     </message>
 </context>
 <context>
@@ -476,35 +476,35 @@
     </message>
     <message>
         <source>Rotation around y-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotazione attorno all&apos;asse y:</translation>
     </message>
     <message>
         <source>Rotation around z-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotazione attorno all&apos;asse z:</translation>
     </message>
     <message>
         <source>Rotation around x-Axis:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotazione attorno all&apos;asse x:</translation>
     </message>
     <message>
         <source>y-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Asse y</translation>
     </message>
     <message>
         <source>z-Axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Asse z</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etichetta:</translation>
     </message>
     <message>
         <source>logarithmical</source>
-        <translation type="unfinished"></translation>
+        <translation>logaritmica</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation type="unfinished">Griglia</translation>
+        <translation>Griglia</translation>
     </message>
 </context>
 <context>
@@ -712,15 +712,15 @@
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Chiudi</translation>
+        <translation>Chiudi</translation>
     </message>
     <message>
         <source>QucsFilter is a filter synthesis program. To create a filter, simply enter all parameters and press the big button at the bottom of the main window. Immediatly, the schematic of the filter is calculated and put into the clipboard. Now go to Qucs, open an empty schematic and press CTRL-V (paste from clipboard). The filter schematic can now be inserted and  simulated. Have lots of fun!</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter è un programma di sintesi di filtri. Per creare un filtro, inserisci semplicemente tutti i parametri e premi il grande bottone in basso nella finestra principale. Lo schema del filtro è calcolato immediatamente e inserito negli appunti. Ora apri uno schema vuoto in Qucs e premi CTRL-V (incolla dagli appunti). Lo schema del filtro può ora essere inserito e simulato. Buon divertimento!</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aiuto</translation>
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
@@ -728,7 +728,7 @@
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbandona</translation>
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
@@ -736,7 +736,7 @@
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Per ogni tipo di linea di trasmissione, usando caselle di input, puoi inserire valori per i vari parametri e calcolare le sue caratteristiche elettriche, o usare i requisiti elettrici forniti per sintetizzare i parametri fisici della linea di trasmissione adatta.</translation>
     </message>
 </context>
 <context>
@@ -925,35 +925,35 @@
     <name>OptionsDialog</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni</translation>
     </message>
     <message>
         <source>Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unità</translation>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza</translation>
     </message>
     <message>
         <source>Resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>Resistenza</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Angolo</translation>
     </message>
     <message>
         <source>Save as Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva come Default</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbandona</translation>
     </message>
 </context>
 <context>
@@ -2682,31 +2682,31 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
-        <translation type="unfinished">Almeno due elementi devono essere selezionati!</translation>
+        <translation>Almeno due elementi devono essere selezionati!</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile lanciare editor di testo!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile lanciare il programma di sintesi dei filtri!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile lanciare il programma di calcolo!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation type="unfinished">Impossibile lanciare qucshelp!</translation>
+        <translation>Impossibile lanciare qucshelp!</translation>
     </message>
 </context>
 <context>
@@ -4099,7 +4099,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Data Display</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualizzazione dati</translation>
     </message>
     <message>
         <source>Qucs Documents</source>
@@ -4111,7 +4111,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Arco ellittico</translation>
     </message>
     <message>
         <source>Delete Group</source>
@@ -4185,7 +4185,7 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartesiano-3D</translation>
     </message>
     <message>
         <source>Locus Curve</source>
@@ -4260,7 +4260,7 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annulla</translation>
+        <translation type="obsolete">Annulla</translation>
     </message>
     <message>
         <source>
@@ -4273,55 +4273,63 @@ Editor di testo minimale per Qucs
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Inserire un Nome Documento</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QucsFilter</name>
     <message>
         <source>E&amp;xit</source>
-        <translation type="unfinished">&amp;Esci</translation>
+        <translation>&amp;Esci</translation>
     </message>
     <message>
         <source>Help...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aiuto...</translation>
     </message>
     <message>
         <source>&amp;About QucsFilter...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;A proposito di QucsFilter...</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>A proposito di Qt...</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Aiuto</translation>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <source>Filter type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di filtro:</translation>
     </message>
     <message>
         <source>Filter class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Classe filtro:</translation>
     </message>
     <message>
         <source>Low pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Passa basso</translation>
     </message>
     <message>
         <source>High pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Passa alto</translation>
     </message>
     <message>
         <source>Order:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordine:</translation>
     </message>
     <message>
         <source>Corner frequency:</source>
@@ -4337,46 +4345,49 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <source>Impedance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedenza:</translation>
     </message>
     <message>
         <source>Calculate and put into Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola e inserisci negli appunti</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>A proposito di...</translation>
     </message>
     <message>
         <source>QucsFilter Version </source>
-        <translation type="unfinished"></translation>
+        <translation>Versione QucsFilter</translation>
     </message>
     <message>
         <source>
 Filter synthesis program
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+Programma di sintesi dei filtri
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished">Informazioni su Qt</translation>
+        <translation>Informazioni su Qt</translation>
     </message>
     <message>
         <source>Result:</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato:</translation>
     </message>
     <message>
         <source>Result: --</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato: --</translation>
     </message>
     <message>
         <source>Successful</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5580,14 +5591,16 @@ Muove il testo del componente</translation>
     <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2003, 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>Special thanks to Jens Flucke and Raimund Jacob
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Un ringraziamento speciale a Jens Flucke e Raimund Jacob
+
+</translation>
     </message>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
@@ -5601,68 +5614,77 @@ Muove il testo del componente</translation>
     </message>
     <message>
         <source>About Qt...</source>
-        <translation type="unfinished"></translation>
+        <translation>A proposito di Qt...</translation>
     </message>
     <message>
         <source>Text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor di testo</translation>
     </message>
     <message>
         <source>Text Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor di testo</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancia l&apos;editor di testo di Qucs</translation>
     </message>
     <message>
         <source>Text editor
 
 Starts the Qucs text editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor di testo
+
+Lancia l&apos;editor di testo di Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
-        <translation type="unfinished"></translation>
+        <translation>Sintesi filtri</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancia QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
 
 Starts QucsFilter</source>
-        <translation type="unfinished"></translation>
+        <translation>Sintesi filtri
+
+Lancia QucsFilter</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Strumen&amp;ti</translation>
     </message>
     <message>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>QucsFilter di Toyoyuki Ishikawa e Michael Margraf
+
+</translation>
     </message>
     <message>
         <source>Line calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcolo linea</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancia QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
 
 Starts transmission line calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcolo linea
+
+Lancia il calcolatore delle linee di trasmissione</translation>
     </message>
     <message>
         <source>Swedish by Markus Gothe
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Svedese di Markus Gothe
+</translation>
     </message>
 </context>
 <context>
@@ -5716,83 +5738,83 @@ Starts transmission line calculator</source>
     <name>QucsTranscalc</name>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica</translation>
     </message>
     <message>
         <source>&amp;Load</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Carica</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Salva</translation>
+        <translation>Salva</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Salva</translation>
+        <translation>&amp;Salva</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opzioni</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">Esci</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Esci</translation>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia negli appunti</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Copia negli appunti</translation>
     </message>
     <message>
         <source>Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>Analizza</translation>
     </message>
     <message>
         <source>&amp;Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Analizza</translation>
     </message>
     <message>
         <source>Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>Sintetizza</translation>
     </message>
     <message>
         <source>&amp;Synthesize</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sintetizza</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aiuto</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Aiuto</translation>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Informazioni</translation>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <source>&amp;Execute</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Esegui</translation>
     </message>
     <message>
         <source>Transmission Line Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di linea di trasmissione</translation>
     </message>
     <message>
         <source>Microstrip</source>
@@ -5804,7 +5826,7 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea coassiale</translation>
     </message>
     <message>
         <source>Coupled Microstrip</source>
@@ -5812,15 +5834,15 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametri substrato</translation>
     </message>
     <message>
         <source>Component Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametri componente</translation>
     </message>
     <message>
         <source>Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametri fisici</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
@@ -5832,23 +5854,23 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametri elettrici</translation>
     </message>
     <message>
         <source>Calculated Results</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultati calcolati</translation>
     </message>
     <message>
         <source>Ready.</source>
-        <translation type="unfinished">Pronto.</translation>
+        <translation>Pronto.</translation>
     </message>
     <message>
         <source>Conductor Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdite conduttore</translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdite dielettrico</translation>
     </message>
     <message>
         <source>Skin Depth</source>
@@ -5880,15 +5902,15 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Relative Permittivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Permettività relativa</translation>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation type="unfinished"></translation>
+        <translation>Permeabilità relativa</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Altezza substrato</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
@@ -5912,19 +5934,19 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza</translation>
     </message>
     <message>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza linea</translation>
     </message>
     <message>
         <source>Line Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza linea</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedenza caratteristica</translation>
     </message>
     <message>
         <source>Electrical Length</source>
@@ -5932,7 +5954,7 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation type="unfinished"></translation>
+        <translation>Conduttività del metallo</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
@@ -5952,15 +5974,15 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Inner Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Diametro interno</translation>
     </message>
     <message>
         <source>Outer Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Diametro esterno</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza</translation>
     </message>
     <message>
         <source>Gap Width</source>
@@ -5976,7 +5998,7 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Selected for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezionato per il calcolo</translation>
     </message>
     <message>
         <source>Check item for Calculation</source>
@@ -5984,39 +6006,43 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>A proposito di...</translation>
     </message>
     <message>
         <source>Transmission Line Calculator for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Calcolatore linee di trasmissione di Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2001 by Gopal Narayanan
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2001 by Gopal Narayanan
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2002 by Claudio Girardi
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2002 by Claudio Girardi
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Stefan Jahn
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 by Stefan Jahn
+</translation>
     </message>
     <message>
         <source>Values are consistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>I valori sono consistenti.</translation>
     </message>
     <message>
         <source>Values are inconsistent.</source>
-        <translation type="unfinished"></translation>
+        <translation>I valori sono inconsistenti.</translation>
     </message>
     <message>
         <source>Loading file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Carico file...</translation>
     </message>
     <message>
         <source>Transcalc File</source>
@@ -6024,39 +6050,39 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Enter a Filename</source>
-        <translation type="unfinished">Inserisci nome del file</translation>
+        <translation>Inserisci nome del file</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Cannot load file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile caricare file:</translation>
     </message>
     <message>
         <source>Loading aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento annullato.</translation>
     </message>
     <message>
         <source>Saving file...</source>
-        <translation type="unfinished">Salvataggio file...</translation>
+        <translation>Salvataggio file...</translation>
     </message>
     <message>
         <source>Cannot save file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile salvare file:</translation>
     </message>
     <message>
         <source>Saving aborted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvataggio annullato.</translation>
     </message>
     <message>
         <source>Schematic copied into clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Schema copiato negli appunti.</translation>
     </message>
     <message>
         <source>Transmission line type not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo di linea di trasmissione non disponibile.</translation>
     </message>
     <message>
         <source>ErEff</source>
@@ -6087,7 +6113,7 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished">Modifica proprietà</translation>
+        <translation>Modifica proprietà</translation>
     </message>
 </context>
 <context>
@@ -6191,6 +6217,10 @@ Starts transmission line calculator</source>
         <translation type="unfinished">Modifica</translation>
     </message>
     <message>
+        <source>show file name in schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Spice net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6225,10 +6255,6 @@ Starts transmission line calculator</source>
     <message>
         <source>Select a file</source>
         <translation type="unfinished">Seleziona un file</translation>
-    </message>
-    <message>
-        <source>show file name in schematic</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error</source>
