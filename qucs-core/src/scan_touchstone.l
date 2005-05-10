@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_touchstone.l,v 1.3 2005-02-26 09:01:51 raimi Exp $
+ * $Id: scan_touchstone.l,v 1.4 2005-05-10 11:53:17 raimi Exp $
  *
  */
 
@@ -62,7 +62,7 @@ FLOAT2   [+-]?{DIGIT}*"."{DIGIT}+({EXPONENT})?
 SPACE    [ \t]
 
 %x COMMENT
-%option yylineno noyywrap nounput nounistd prefix="touchstone_"
+%option yylineno noyywrap nounput prefix="touchstone_"
 
 %%
 

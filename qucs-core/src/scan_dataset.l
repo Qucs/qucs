@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_dataset.l,v 1.5 2005-02-26 09:01:51 raimi Exp $
+ * $Id: scan_dataset.l,v 1.6 2005-05-10 11:53:17 raimi Exp $
  *
  */
 
@@ -76,7 +76,7 @@ IEND     "/indep"
 
 
 %x COMMENT DESCRIPTION
-%option yylineno noyywrap nounput nounistd prefix="dataset_"
+%option yylineno noyywrap nounput prefix="dataset_"
 
 %%
 
