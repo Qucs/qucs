@@ -3289,7 +3289,7 @@ editor de texto muy simple para Qucs
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
         <source>
@@ -3304,6 +3304,14 @@ Editor de texto muy simple para Qucs
 </source>
         <translation type="unfinished">Copyright (C) 2004, 2005 por Michael Margraf
 </translation>
+    </message>
+    <message>
+        <source>Enter a Document Name</source>
+        <translation type="unfinished">Escriba un nombre del documento</translation>
+    </message>
+    <message>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
