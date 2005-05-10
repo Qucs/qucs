@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: qucsdefs.h,v 1.19 2005/05/04 20:15:38 raimi Exp $
+ * $Id: qucsdefs.h,v 1.20 2005/05/10 11:53:17 raimi Exp $
  *
  */
 
@@ -551,7 +551,8 @@ struct define_t qucs_definition_available[] =
       { "G", PROP_REAL, { 5e-4, PROP_NO_STR }, PROP_POS_RANGE },
       { "Subst", PROP_STR, { PROP_NO_VAL, "Subst1" }, PROP_NO_RANGE },
       PROP_NO_PROP },
-    { PROP_NO_PROP }
+    { { "S", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
   },
 
   /* s-parameter analysis */

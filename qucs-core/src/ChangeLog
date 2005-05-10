@@ -1,3 +1,8 @@
+2005-05-09  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_netlist.l: Removed 'unistd' option from all scanners
+	files (scan_*.l).
+
 2005-05-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* tvector.cpp: Improved norm() calculation.

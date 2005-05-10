@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_netlist.l,v 1.14 2005/02/26 09:01:51 raimi Exp $
+ * $Id: scan_netlist.l,v 1.15 2005/05/10 11:53:17 raimi Exp $
  *
  */
 
@@ -89,7 +89,7 @@ UCOMPLEX {UCREAL}{UCIMAG}
 
 
 %x COMMENT STR EQN
-%option yylineno noyywrap nounput nounistd prefix="netlist_"
+%option yylineno noyywrap nounput prefix="netlist_"
 
 %%
 

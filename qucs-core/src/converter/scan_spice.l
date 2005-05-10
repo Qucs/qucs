@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: scan_spice.l,v 1.9 2005/02/26 09:01:57 raimi Exp $
+ * $Id: scan_spice.l,v 1.10 2005/05/10 11:53:17 raimi Exp $
  *
  */
 
@@ -111,7 +111,7 @@ MOS      ({MOS1}|{MOS2})
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
 %x STARTUP VSINGLE SWITCH
-%option yylineno noyywrap nounput nounistd prefix="spice_"
+%option yylineno noyywrap nounput prefix="spice_"
 
 %%
 
