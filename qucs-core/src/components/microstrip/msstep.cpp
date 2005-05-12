@@ -19,7 +19,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: msstep.cpp,v 1.8 2005-05-02 06:51:01 raimi Exp $
+ * $Id: msstep.cpp,v 1.9 2005-05-12 17:37:54 raimi Exp $
  *
  */
 
@@ -110,7 +110,7 @@ void msstep::initDC (void) {
   setInternalVoltageSource (1);
   allocMatrixMNA ();
   clearY ();
-  voltageSource (1, 1, 2);
+  voltageSource (VSRC_1, NODE_1, NODE_2);
 }
 
 void msstep::initAC (void) {

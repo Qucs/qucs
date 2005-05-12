@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: component.h,v 1.26 2005-05-04 20:15:38 raimi Exp $
+ * $Id: component.h,v 1.27 2005-05-12 17:37:54 raimi Exp $
  *
  */
 
@@ -92,5 +92,6 @@
 #include "microstrip/cpwopen.h"
 #include "microstrip/cpwshort.h"
 #include "microstrip/cpwgap.h"
+#include "microstrip/cpwstep.h"
 
 #endif /* __COMPONENT_H__ */

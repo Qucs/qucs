@@ -1,3 +1,10 @@
+2005-05-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsator.1: Updated manpages.
+
+	* coplanar.tex (section{Coplanar waveguide step}): Documented
+	coplanar waveguide impedance step.
+
 2005-05-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* coplanar.tex (section{Coplanar waveguide gap}): Documented

@@ -46,7 +46,7 @@ MATHFILES = mszl.m mscomparezl.m radius.m stabgear.m stabmoulton.m \
 MATHHELPS = zpoly.m econst.m Kapprox.m
 MPSFILES = $(MATHFILES:.m=.eps)
 FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
-  nconnect.fig Sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
+  nconnect.fig sparam.fig cccs.fig vccs.fig vcvs.fig ccvs.fig acstrafo.fig    \
   actrafo.fig opamp.fig gyrator.fig msline.fig newton.fig jfet.fig dcjfet.fig \
   newtondiode.fig dcdiode.fig diode.fig spdiode.fig spjfet.fig newtonbad.fig  \
   sconnectgraph.fig sconnectloop.fig sconnectpath.fig siconnectgraph.fig      \
@@ -60,7 +60,7 @@ FIGURES = differential.fig symtrafo.fig biast.fig trafo.fig xCCS.fig xCVS.fig \
   feuler.fig beuler.fig trapez.fig transind.fig stiffstable.fig convprob1.fig \
   convprob2.fig convprob3.fig msvia.fig cpline.fig cpscheme.fig cpconform.fig \
   mstee.fig mstee2.fig nitrafo.fig hb_concept.fig spsgp_spice.fig fft.fig     \
-  lssp.fig cpopen.fig cpshort.fig cpgap.fig
+  lssp.fig cpopen.fig cpshort.fig cpgap.fig cpstep.fig
 PSFILES = MNAexample.eps NLexample.eps CYexample.eps MNAnoise1.eps \
   MNAnoise2.eps Unoise.eps MNAsingular.eps
 EPSFILES = $(FIGURES:.fig=.eps)
