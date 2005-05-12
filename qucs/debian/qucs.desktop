@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Qucs
+Comment=A Universal Circuit Simulator
+Comment[es]=Un simulador universal de circuitos
+Exec=qucs %U
+Icon=/usr/share/pixmaps/big.qucs.xpm
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Electronics;
+StartupNotify=false

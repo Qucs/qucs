@@ -2768,19 +2768,19 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>coplanar gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplanarlücke</translation>
     </message>
     <message>
         <source>width of gap between the two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Abstand zwischen den Koplanarleitungsenden</translation>
     </message>
     <message>
         <source>Coplanar Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplanarlücke</translation>
     </message>
     <message>
         <source>sim</source>
-        <translation type="unfinished"></translation>
+        <translation>Sim</translation>
     </message>
 </context>
 <context>
@@ -4721,11 +4721,11 @@ Einfacher Texteditor für Qucs
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished">Geben Sie einen Dokumentennamen ein</translation>
+        <translation>Geben Sie einen Dokumentennamen ein</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -6666,79 +6666,79 @@ Startet das Programm für die Leitungsberechnung</translation>
     <name>SpiceDialog</name>
     <message>
         <source>Edit Spice Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE-Komponenteneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Name:</translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Durchsuchen</translation>
+        <translation>Durchsuchen</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Bearbeiten</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <source>Spice net nodes:</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE Netzknoten:</translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Hinzufügen &gt;&gt;</translation>
     </message>
     <message>
         <source>&lt;&lt; Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;&lt; Entfernen</translation>
     </message>
     <message>
         <source>Component ports:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenten-Tore:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Übernehmen</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished">Alle Dateien</translation>
+        <translation>Alle Dateien</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished">Datei auswählen</translation>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <source>show file name in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige des Dateinamens im Schaltplan</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht ausführen</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertiere ...</translation>
     </message>
 </context>
 </TS>

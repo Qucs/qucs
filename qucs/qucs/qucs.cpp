@@ -1046,8 +1046,8 @@ void QucsApp::slotShowAll()
   float xScale = float(view->visibleWidth()) / float(x2-x1);
   float yScale = float(view->visibleHeight()) / float(y2-y1);
   if(xScale > yScale) xScale = yScale;
-  if(xScale > 10.0) xScale = 10.0;
-  if(xScale < 0.01) xScale = 0.01;
+  if(xScale > 10.0) xScale = 10.0f;
+  if(xScale < 0.01) xScale = 0.01f;
   view->Docs.current()->Scale = xScale;
 
   view->Docs.current()->ViewX1 = x1;

@@ -1,0 +1,6 @@
+qucs (0.0.5-1) unstable; urgency=low
+
+  * Initial Debian release (Closes: #252450).
+ 
+ -- José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>  Wed, 30 Mar 2005 11:38:18 +0200
+
