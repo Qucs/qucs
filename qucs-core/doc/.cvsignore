@@ -12,5 +12,4 @@ Makefile.in
 *.out
 *.ps
 [a-z]*.eps
-Sparam.eps
 IEEEtran.bst

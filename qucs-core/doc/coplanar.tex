@@ -243,9 +243,11 @@ and $f_{TE}$ is the cut-off frequency of the ${TE}_{0}$ mode, defined by:
 f_{TE} = \dfrac{c}{4h\cdot\sqrt{\varepsilon_r - 1}}.
 \end{equation}
 
-The accuracy of this expression is claimed to be better than 5\% for
-$0.1 \le W/h \le 5$, $0.1 \le W/s
-\le 5$, $1.5 \le \varepsilon_r \le 50$ and $0 \le f/f_{TE} \le 10$.
+This dispersion expression was first reported by \cite{Frankel} and
+has been reused and extended in \cite{Gevorgian}.  The accuracy of
+this expression is claimed to be better than 5\% for $0.1 \le W/h \le
+5$, $0.1 \le W/s \le 5$, $1.5 \le \varepsilon_r \le 50$ and $0 \le
+f/f_{TE} \le 10$.
 
 \subsection{Evaluation of losses}
 %\addcontentsline{toc}{subsection}{Evaluation of losses}
@@ -271,8 +273,9 @@ conductors (see eq. \eqref{eq:HandJRs} on page \pageref{eq:HandJRs}).
 
 \addvspace{12pt}
 
-Through a direct approach evaluating the losses by conformal mapping of
-the current density, one obtains \cite{Gupta1}:
+Through a direct approach evaluating the losses by conformal mapping
+of the current density, one obtains \cite{Gupta1}, first reported in
+\cite{Owyang} and finally applied to coplanar lines by \cite{Ghione1}:
 \begin{equation}
 \begin{split}
 \alpha_c^{CW} = &\; \dfrac{R_s\cdot \sqrt{\varepsilon_{re}}}{480 \pi\cdot K(k_1)\cdot K'(k_1)\cdot \left(1 - k_1^2\right)} \cdot\\
@@ -367,7 +370,7 @@ L_{short} = L'\cdot \Delta l_{short} = \dfrac{\sqrt{\varepsilon_{r,eff}}\cdot Z_
 According to W.J.Getsinger \cite{Getsinger6} the CPW short-circuit
 inductance per unit length can also be modeled by
 \begin{equation}
-L' = \dfrac{2}{\pi}\cdot \varepsilon_0 \cdot \varepsilon_{r,eff} \cdot \left(W + s\right)\cdot Z_L^2\cdot \left(1 - \text{sech} \left(\dfrac{\pi\cdot Z_{F0}}{2\cdot Z_L\cdot \sqrt{\varepsilon_{r,eff}}}\right)\right)
+L_{short} = \dfrac{2}{\pi}\cdot \varepsilon_0 \cdot \varepsilon_{r,eff} \cdot \left(W + s\right)\cdot Z_L^2\cdot \left(1 - \text{sech} \left(\dfrac{\pi\cdot Z_{F0}}{2\cdot Z_L\cdot \sqrt{\varepsilon_{r,eff}}}\right)\right)
 \end{equation}
 
 based on his duality \cite{Getsinger5} theory.
@@ -402,3 +405,57 @@ C &= L \cdot \dfrac{4\cdot \varepsilon_{r,eff}}{Z_{F0}^2}\\
   &= \dfrac{2\cdot\varepsilon_0\cdot\varepsilon_{r,eff}\cdot W}{\pi}\cdot\left(p - \sqrt{1 + p^2} + \ln{\left(\dfrac{1 + \sqrt{1 + p^2}}{p}\right)}\right)
 \end{split}
 \end{equation}
+
+\section{Coplanar waveguide step}
+%\addcontentsline{toc}{section}{Coplanar waveguide step}
+
+The coplanar step discontinuity shown in figure \ref{fig:CPWstep} has
+been analysed by C. Sinclair \cite{Sinclair}.
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.8\linewidth]{cpstep}
+\end{center}
+\caption{coplanar waveguide impedance step and equivalent circuit}
+\label{fig:CPWstep}
+\end{figure}
+\FloatBarrier
+
+The symmetric step change in width of the centre conductor is
+considered to have a similar equivalent circuit as a step of a
+parallel plate guide - this is a reasonable approximation to the CPW
+step as in the CPW the majority of the field is between the inner and
+outer conductors with some fringing.
+
+\addvspace{12pt}
+
+The actual CPW capacitance can be expressed as
+\begin{equation}
+C = \overline{x}\cdot \dfrac{\varepsilon_0}{\pi}\cdot\left(\dfrac{\alpha^2 + 1}{\alpha}\cdot \ln{\left(\dfrac{1 + \alpha}{1 - \alpha}\right)} - 2\cdot \ln{\left(\dfrac{4\cdot \alpha}{1 - \alpha^2}\right)}\right)
+\end{equation}
+
+where
+\begin{equation}
+\alpha = \dfrac{s_1}{s_2}, \alpha < 1
+\;\;\;\; \textrm{ and } \;\;\;\;
+\overline{x} = \dfrac{x_1 + x_2}{2}
+\end{equation}
+
+The capacitance per unit length equivalence yields
+\begin{equation}
+x_1 = \dfrac{C'\left(W_1, s_1\right)\cdot s_1}{\varepsilon_0}
+\;\;\;\; \textrm{ and } \;\;\;\;
+x_2 = \dfrac{C'\left(W_2, s_2\right)\cdot s_2}{\varepsilon_0}
+\end{equation}
+
+with
+\begin{equation}
+C' = \dfrac{\sqrt{\varepsilon_{r,eff}}}{c_0\cdot Z_L}
+\end{equation}
+
+The average equivalent width $\overline{x}$ of the parallel plate
+guide can be adjusted with an expression that uses weighted average of
+the gaps $s_1$ and $s_2$.  The final expression has not been discussed
+in \cite{Sinclair}.  The given equations are validated over the
+following ranges: $2 < \varepsilon_r < 14$, $h > W + 2s$ and $f <
+40\giga\hertz$.

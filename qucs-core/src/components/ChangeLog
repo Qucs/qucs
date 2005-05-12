@@ -1,3 +1,12 @@
+2005-05-11  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwstep.h (class cpwstep): Added new coplanar
+	waveguide impedance step implementation.  S-parameters still
+	missing.
+
+	* microstrip/mscorner.cpp, microstrip/msmbend.cpp,
+	microstrip/msstep.cpp: Fixed DC voltage source.
+
 2005-05-03  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwgap.h (class cpwgap): Implemented coplanar
