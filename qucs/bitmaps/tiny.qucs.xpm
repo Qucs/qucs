@@ -1,7 +1,7 @@
 /* XPM */
 static char *tiny_qucs_xpm[] = {
 /* width height num_colors chars_per_pixel */
-"    21    18       38            1",
+"    16    16       38            1",
 /* colors */
 "  c None",
 "# c #a6a2a6",
@@ -42,22 +42,20 @@ static char *tiny_qucs_xpm[] = {
 "I c #383c41",
 "J c #aeaeae",
 /* pixels */
-"                     ",
-"                     ",
-"                     ",
-"     ghghiihiig#     ",
-"     idjfbklmbno#    ",
-"     idq#rehshao#    ",
-"     ibrtbluvwxy#    ",
-"     zhAfclBhdwou    ",
-"     g#kiC#DpECyu    ",
-"     gggFgggggGyh    ",
-"     ggggiigggiyh    ",
-"     ggggghgggiyh    ",
-"     gggggggggiyh    ",
-"     giiiiiiiiiyh    ",
-"     zHDDDDDDDDI#    ",
-"      tJtJJtJJC      ",
-"                     ",
-"                     "
+"                ",
+"                ",
+"  ghghiihiig#   ",
+"  idjfbklmbno#  ",
+"  idq#rehshao#  ",
+"  ibrtbluvwxy#  ",
+"  zhAfclBhdwou  ",
+"  g#kiC#DpECyu  ",
+"  gggFgggggGyh  ",
+"  ggggiigggiyh  ",
+"  ggggghgggiyh  ",
+"  gggggggggiyh  ",
+"  giiiiiiiiiyh  ",
+"  zHDDDDDDDDI#  ",
+"   tJtJJtJJC    ",
+"                "
 };

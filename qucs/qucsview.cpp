@@ -121,8 +121,8 @@ float QucsView::Zoom(float s)
   QucsDoc *d = Docs.current();
   float Scale = d->Scale;
   Scale *= s;
-  if(Scale > 10.0) Scale = 10.0;
-  if(Scale < 0.01) Scale = 0.01;
+  if(Scale > 10.0) Scale = 10.0f;
+  if(Scale < 0.01) Scale = 0.01f;
 
   d->Scale = Scale;
   resizeContents(int(Scale*float(d->ViewX2 - d->ViewX1)),
@@ -2048,8 +2048,8 @@ void QucsView::MReleaseZoomIn(QMouseEvent *Event)
     float xScale = float(visibleWidth())  / DX;
     float yScale = float(visibleHeight()) / DY;
     if(xScale > yScale) xScale = yScale;
-    if(xScale > 10.0) xScale = 10.0;
-    if(xScale < 0.01) xScale = 0.01;
+    if(xScale > 10.0) xScale = 10.0f;
+    if(xScale < 0.01) xScale = 0.01f;
 
     if(MAx2 > 0)  MAx1 -= int(float(MAx2)*d->Scale);
     if(MAy2 > 0)  MAy1 -= int(float(MAy2)*d->Scale);
