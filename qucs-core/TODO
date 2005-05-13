@@ -23,6 +23,9 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Spline interpolation for touchstone S-parameters.  Implement general
+  interpolation functionality for all kind of data.  Make this available
+  in equation solver as well.
 - Singular value decomposition (SVD) for solving linear equation systems.
 	- Automatic variable generation in equation solver (plotvs,
 	  circles).
@@ -59,7 +62,7 @@ unfixed) have a look at the file BUGS.
 - Transient noise analysis.
 	- Implement a real predictor for transient analysis.
 	- Use Milne's formula for local truncation error estimation.
-- Transient models of transmission lines.
+- Transient models of transmission lines (using convolution?).
 	- Transient models of non-linear devices.
 	- Implementation of transient models for capacitor, inductor and
 	  resistor.

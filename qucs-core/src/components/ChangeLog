@@ -1,3 +1,7 @@
+2005-05-12  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/cpwstep.cpp: Added correct S-parameter calculation.
+
 2005-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwstep.h (class cpwstep): Added new coplanar

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: cpwstep.cpp,v 1.1 2005/05/12 17:38:46 raimi Exp $
+ * $Id: cpwstep.cpp,v 1.2 2005/05/13 06:59:42 raimi Exp $
  *
  */
 
@@ -79,10 +79,13 @@ void cpwstep::initSP (void) {
 }
 
 void cpwstep::calcSP (nr_double_t frequency) {
-  setS (NODE_1, NODE_1, ztor (1 / calcY (frequency)));
-  setS (NODE_2, NODE_2, ztor (1 / calcY (frequency)));
-  setS (NODE_1, NODE_2, ztor (1 / calcY (frequency)));
-  setS (NODE_2, NODE_1, ztor (1 / calcY (frequency)));
+  complex z = 2 / calcY (frequency) / z0;
+  complex s11 = -1 / (z + 1);
+  complex s21 = +z / (z + 1);
+  setS (NODE_1, NODE_1, s11);
+  setS (NODE_2, NODE_2, s11);
+  setS (NODE_1, NODE_2, s21);
+  setS (NODE_2, NODE_1, s21);
 }
 
 void cpwstep::checkProperties (void) {

@@ -33,11 +33,17 @@ Fix:	     Found the appropriate publication by Kirschning.
 
 Bug:         B0002
 From:	     Stefan Jahn <stefan@lkcc.org>
-State:       unfixed
+State:       fixed (2005-05-12/stefan)
 Date:	     2005-03-01
 Description: Depending on the netlist input order it may occur that a DC
 	     analysis converges or does not converge (under-determined
 	     equation system?).
+Fix:	     The example netlists I had for this case are almostly
+	     rank-deficient MNA matrices.  Thus another, numerically more
+	     stable, matrix decomposition algorithm has been implemented:
+	     the QR decomposition using Householder transformations.  The
+	     solution algorithm can now be chosen.  The new algorithm is
+	     now able to solve the test-cases - LU decomposition was not.
 
 Bug:         B0003
 From:	     Stefan Jahn <stefan@lkcc.org>
