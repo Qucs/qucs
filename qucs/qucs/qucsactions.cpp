@@ -434,7 +434,8 @@ void QucsActions::slotSelectAll()
 void QucsActions::editFile(const QString& File)
 {
   QStringList com;
-  com << QucsSettings.Editor << File;
+  com << QucsSettings.Editor;
+  if (!File.isEmpty()) com << File;
   QProcess *QucsEditor = new QProcess(com);
   QucsEditor->setCommunication(0);
   if(!QucsEditor->start()) {

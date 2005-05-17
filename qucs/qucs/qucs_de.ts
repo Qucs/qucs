@@ -2802,6 +2802,14 @@ Verwendung:  qucsedit [-r] Datei
         <source>ERROR: No file name in SPICE component &quot;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>reverse breakdown voltage</source>
+        <translation>Durchbruchspannung rückwärts</translation>
+    </message>
+    <message>
+        <source>current at reverse breakdown voltage</source>
+        <translation>Strom bei der Durchbruchspannung im Rückwärtsbetrieb</translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -6776,7 +6784,7 @@ Fehler:
     <name>SpiceDialog</name>
     <message>
         <source>Edit Spice Component Properties</source>
-        <translation>SPICE-Komponenteneigenschaften bearbeiten</translation>
+        <translation type="obsolete">SPICE-Komponenteneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -6796,7 +6804,7 @@ Fehler:
     </message>
     <message>
         <source>Spice net nodes:</source>
-        <translation>SPICE Netzknoten:</translation>
+        <translation type="obsolete">SPICE Netzknoten:</translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
