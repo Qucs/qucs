@@ -459,3 +459,49 @@ the gaps $s_1$ and $s_2$.  The final expression has not been discussed
 in \cite{Sinclair}.  The given equations are validated over the
 following ranges: $2 < \varepsilon_r < 14$, $h > W + 2s$ and $f <
 40\giga\hertz$.
+
+\addvspace{12pt}
+
+The Z-parameters of the equivalent circuit depicted in
+fig. \ref{fig:CPWstep} are
+\begin{equation}
+Z_{11} = Z_{21} = Z_{12} = Z_{22} = \dfrac{1}{j\omega C}
+\end{equation}
+
+The MNA matrix representation for the AC analysis can be derived from
+the Z-parameters in the following way.
+\begin{equation}
+\begin{bmatrix}
+ . & .  & 1  & 0 \\
+ . & .  &  0 & 1 \\
+-1 &  0 & Z_{11} & Z_{12}\\
+ 0 & -1 & Z_{21} & Z_{22}
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+I_{in}\\
+I_{out}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+The above expanded representation using the Z-parameters is necessary
+because the Y-parameters are infinite.  During DC analysis the
+equivalent circuit is a voltage source between both terminals with
+zero voltage.
+
+\addvspace{12pt}
+
+The S-parameters of the topology are
+\begin{align}
+S_{11} = S_{22} &= -\dfrac{Z_0}{2 Z + Z_0}\\
+S_{12} = S_{21} &= 1 + S_{11} = \dfrac{2 Z}{2 Z + Z_0}
+\end{align}

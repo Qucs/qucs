@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.h,v 1.2 2005-02-01 22:56:55 raimi Exp $
+ * $Id: mstee.h,v 1.3 2005-05-17 09:35:08 raimi Exp $
  *
  */
 
@@ -35,7 +35,9 @@ class mstee : public circuit
   void initDC (void);
   void initAC (void);
   void calcAC (nr_double_t);
+  void initNoiseAC (void);
   void initSP (void);
+  void initNoiseSP (void);
   void calcSP (nr_double_t);
   void initTR (void);
 

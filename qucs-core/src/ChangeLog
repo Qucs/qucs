@@ -1,3 +1,11 @@
+2005-05-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* evaluate.cpp: Fixed circle formulas (off by one index
+	errors).
+
+	* nasolver.cpp: Fixed left-over bug in AC noise matrix
+	creation (indexing, off by one).
+
 2005-05-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* scan_netlist.l: Removed 'unistd' option from all scanners

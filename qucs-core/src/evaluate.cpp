@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.30 2005-05-03 17:57:35 raimi Exp $
+ * $Id: evaluate.cpp,v 1.31 2005-05-17 09:35:07 raimi Exp $
  *
  */
 
@@ -2122,9 +2122,9 @@ constant * evaluate::stab_circle_l_v (constant * args) {
   matvec * S = MV (args->getResult (0));
   vector * arc = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  vector D = norm (S->get (2, 2)) - norm (det (*S));
-  vector C = (conj (S->get (2, 2)) - S->get (1, 1) * conj (det (*S))) / D;
-  vector R = abs (S->get (1, 2)) * abs (S->get (2, 1)) / D;
+  vector D = norm (S->get (1, 1)) - norm (det (*S));
+  vector C = (conj (S->get (1, 1)) - S->get (0, 0) * conj (det (*S))) / D;
+  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
   vector * circle = new vector (S->getSize () * arc->getSize ());
   int a, d, i; complex v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
@@ -2153,9 +2153,9 @@ constant * evaluate::stab_circle_s_v (constant * args) {
   matvec * S = MV (args->getResult (0));
   vector * arc = V (args->getResult (1));
   constant * res = new constant (TAG_VECTOR);
-  vector D = norm (S->get (1, 1)) - norm (det (*S));
-  vector C = (conj (S->get (1, 1)) - S->get (2, 2) * conj (det (*S))) / D;
-  vector R = abs (S->get (1, 2)) * abs (S->get (2, 1)) / D;
+  vector D = norm (S->get (0, 0)) - norm (det (*S));
+  vector C = (conj (S->get (0, 0)) - S->get (1, 1) * conj (det (*S))) / D;
+  vector R = abs (S->get (0, 1)) * abs (S->get (1, 0)) / D;
   vector * circle = new vector (S->getSize () * arc->getSize ());
   int a, d, i; complex v;
   for (i = 0, d = 0; i < S->getSize (); i++) {
@@ -2189,11 +2189,11 @@ constant * evaluate::ga_circle_d_v (constant * args) {
   constant * res = new constant (TAG_VECTOR);
   vector g, D, c, s, k, C, R, d;
   D = det (*S);
-  c = S->get (1, 1) - conj (S->get (2, 2)) * D;
+  c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
-  s = S->get (1, 2) * S->get (2, 1);
-  g = G / norm (S->get (2, 1));
-  d = 1 + g * (norm (S->get (1, 1)) - norm (D));
+  s = S->get (0, 1) * S->get (1, 0);
+  g = G / norm (S->get (1, 0));
+  d = 1 + g * (norm (S->get (0, 0)) - norm (D));
   C = g * conj (c) / d;
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
@@ -2232,12 +2232,12 @@ constant * evaluate::ga_circle_v_v (constant * args) {
     new vector (S->getSize () * arc->getSize () * G->getSize ());
   int i, a, j, f; complex v; vector g, D, c, s, k, R, C, d;
   D = det (*S);
-  c = S->get (1, 1) - conj (S->get (2, 2)) * D;
+  c = S->get (0, 0) - conj (S->get (1, 1)) * D;
   k = rollet (*S);
-  s = S->get (1, 2) * S->get (2, 1);
+  s = S->get (0, 1) * S->get (1, 0);
   for (f = 0; f < G->getSize (); f++) {
-    g = G->get (f) / norm (S->get (2, 1));
-    d = 1 + g * (norm (S->get (1, 1)) - norm (D));
+    g = G->get (f) / norm (S->get (1, 0));
+    d = 1 + g * (norm (S->get (0, 0)) - norm (D));
     C = g * conj (c) / d;
     R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
     for (i = 0; i < C.getSize (); i++) {
@@ -2276,11 +2276,11 @@ constant * evaluate::gp_circle_d_v (constant * args) {
   constant * res = new constant (TAG_VECTOR);
   vector g, D, c, s, k, C, R, d;
   D = det (*S);
-  c = S->get (2, 2) - conj (S->get (1, 1)) * D;
+  c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
-  s = S->get (1, 2) * S->get (2, 1);
-  g = G / norm (S->get (2, 1));
-  d = 1 + g * (norm (S->get (2, 2)) - norm (D));
+  s = S->get (0, 1) * S->get (1, 0);
+  g = G / norm (S->get (1, 0));
+  d = 1 + g * (norm (S->get (1, 1)) - norm (D));
   C = g * conj (c) / d;
   R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
 
@@ -2319,12 +2319,12 @@ constant * evaluate::gp_circle_v_v (constant * args) {
     new vector (S->getSize () * arc->getSize () * G->getSize ());
   int i, a, j, f; complex v; vector g, D, c, s, k, R, C, d;
   D = det (*S);
-  c = S->get (2, 2) - conj (S->get (1, 1)) * D;
+  c = S->get (1, 1) - conj (S->get (0, 0)) * D;
   k = rollet (*S);
-  s = S->get (1, 2) * S->get (2, 1);
+  s = S->get (0, 1) * S->get (1, 0);
   for (f = 0; f < G->getSize (); f++) {
-    g = G->get (f) / norm (S->get (2, 1));
-    d = 1 + g * (norm (S->get (2, 2)) - norm (D));
+    g = G->get (f) / norm (S->get (1, 0));
+    d = 1 + g * (norm (S->get (1, 1)) - norm (D));
     C = g * conj (c) / d;
     R = sqrt (1 - 2 * k * g * abs (s) + g * g * norm (s)) / abs (d);
     for (i = 0; i < C.getSize (); i++) {

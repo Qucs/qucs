@@ -428,11 +428,15 @@ with the value at index $k_2$ where $k_2$ is obtained by mirroring
 the binary number $k_1$, i.e. the most significant bit becomes the
 least significant one and so on. Example for $N=8$:
 
+\addvspace{12pt}
+
 \begin{tabular}{ccccccccccc}
 000 & $\leftrightarrow$ & 000  & \qquad\qquad &  011 & $\leftrightarrow$ & 110  & \qquad\qquad &  110 & $\leftrightarrow$ & 011 \\
 001 & $\leftrightarrow$ & 100  & \qquad\qquad &  100 & $\leftrightarrow$ & 001  & \qquad\qquad &  111 & $\leftrightarrow$ & 111 \\
 010 & $\leftrightarrow$ & 010  & \qquad\qquad &  101 & $\leftrightarrow$ & 101 \\
 \end{tabular}
+
+\addvspace{12pt}
 
 Having this new indexing, the values to combine according to
 equation \ref{eqn:FFTstep} are the adjacent values. So, performing
