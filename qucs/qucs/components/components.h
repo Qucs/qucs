@@ -1,6 +1,6 @@
 /***************************************************************************
-                          components.h  -  description
-                             -------------------
+                               components.h
+                              --------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -67,6 +67,7 @@
 #include "cpwopen.h"
 #include "cpwshort.h"
 #include "cpwgap.h"
+#include "cpwstep.h"
 #include "diode.h"
 #include "bjt.h"
 #include "bjtsub.h"

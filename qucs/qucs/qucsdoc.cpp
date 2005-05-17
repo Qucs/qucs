@@ -1266,6 +1266,11 @@ Element* QucsDoc::selectElement(int x, int y, bool flag, int *index)
 {
   int n;
   Element *pe_1st=0, *pe_sel=0;
+  QFont Font = QucsSettings.font;
+  Font.setPointSizeFloat( Scale * float(Font.pointSize()) );
+  QFontMetrics  metrics(Font);
+  float Corr = Scale / float(metrics.lineSpacing()); // for selecting text
+
   // test all components
   for(Component *pc = Comps->last(); pc != 0; pc = Comps->prev())
     if(pc->getSelected(x, y)) {
@@ -1278,7 +1283,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag, int *index)
       if(pc->isSelected) pe_sel = pc;
     }
     else {
-      n = pc->getTextSelected(x, y);
+      n = pc->getTextSelected(x, y, Corr);
       if(n >= 0) {   // was property text clicked ?
         pc->Type = isComponentText;
         if(index)  *index = n;

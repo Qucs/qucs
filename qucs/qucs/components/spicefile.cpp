@@ -137,67 +137,19 @@ void SpiceFile::recreate()
 // ---------------------------------------------------
 QString SpiceFile::NetList()
 {
-  if(!isActive) return QString("");       // should it be simulated ?
+  if(!isActive) return QString("");   // should it be simulated ?
+
+  QString Type = Props.first()->Value;
+  if(Props.next()->Value.isEmpty())
+    return QString("");  // no ports, no subcircuit instance
 
   QString s = "Sub:"+Name;   // SPICE netlist is subcircuit
   for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
     s += " "+pp->Connection->Name;   // output all node names
 
-  QString Type = Props.getFirst()->Value;
   if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
   Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
   s += " Type=\""+Type+"\"";   // type for SPICE subcircuit
 
   return s;
-}
-
-// ---------------------------------------------------
-// Converts a spice netlist into Qucs format and outputs it.
-bool SpiceFile::convertSpiceNetlist(QTextStream *stream, QString& NS)
-{
-  QProcess *QucsConv = new QProcess(0);
-  QucsConv->addArgument(QucsSettings.BinDir + "qucsconv");
-  QucsConv->addArgument("-g");
-  QucsConv->addArgument("_ref");
-  QucsConv->addArgument("-if");
-  QucsConv->addArgument("spice");
-  QucsConv->addArgument("-of");
-  QucsConv->addArgument("qucs");
-  QucsConv->addArgument("-i");
-  QucsConv->addArgument(Props.getFirst()->Value);
-  if(!QucsConv->start())  return false;
-
-  while(QucsConv->isRunning()) {
-/*    QTime t;
-    t.start();
-    while(t.elapsed() < 100) ;*/
-    sleep(1);
-  }
-
-
-  QString Line = Props.first()->Value;
-  if(Line.at(0) <= '9') if(Line.at(0) >= '0') Line = '_' + Line;
-  Line.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-  (*stream) << "\n.Def:" << Line << " ";
-  
-  Line = Props.next()->Value;
-  Line.replace(',', ' ');
-  (*stream) << Line;
-  if(!Line.isEmpty()) (*stream) << " _ref\n";
-  else (*stream) << "\n";
-
-  // then read converted netlist .......
-  for(;;) {
-    Line = QucsConv->readLineStdout();
-    if(Line == QString::null) break;
-    Line = Line.stripWhiteSpace();
-    if(Line.isEmpty()) continue;
-    if(Line.at(0) == '#') continue;
-    if(Line.at(0) == '.') NS += Line + '\n';  // insert simulations later
-    else (*stream) << "  " << Line << '\n';
-  }
-
-  (*stream) << ".Def:End\n\n";
-  delete QucsConv;
-  return true;
 }

@@ -192,18 +192,18 @@ void QucsView::enlargeView(int x1, int y1, int x2, int y2)
   if(y2 > d->UsedY2) d->UsedY2 = y2;
 
   if(x1 < d->ViewX1) {
-    dx = int(d->Scale * double(d->ViewX1-x1+40));
+    dx = int(d->Scale * float(d->ViewX1-x1+40));
     d->ViewX1 = x1-40;
   }
   if(y1 < d->ViewY1) {
-    dy = int(d->Scale * double(d->ViewY1-y1+40));
+    dy = int(d->Scale * float(d->ViewY1-y1+40));
     d->ViewY1 = y1-40;
   }
   if(x2 > d->ViewX2) d->ViewX2 = x2+40;
   if(y2 > d->ViewY2) d->ViewY2 = y2+40;
 
-  resizeContents(int(d->Scale*double(d->ViewX2 - d->ViewX1)),
-		 int(d->Scale*double(d->ViewY2 - d->ViewY1)));
+  resizeContents(int(d->Scale*float(d->ViewX2 - d->ViewX1)),
+		 int(d->Scale*float(d->ViewY2 - d->ViewY1)));
 //  resizeContents(d->ViewX2-d->ViewX1,d->ViewY2-d->ViewY1);
   scrollBy(dx,dy);
 }
@@ -505,8 +505,8 @@ void QucsView::MMovePainting(QMouseEvent *Event)
 
   int x  = Event->pos().x();
   int y  = Event->pos().y();
-  int fx = int(x/d->Scale) + d->ViewX1;
-  int fy = int(y/d->Scale) + d->ViewY1;
+  int fx = int(float(x)/d->Scale) + d->ViewX1;
+  int fy = int(float(y)/d->Scale) + d->ViewY1;
   int gx = fx;
   int gy = fy;
   d->setOnGrid(gx, gy);
@@ -535,8 +535,8 @@ void QucsView::MMoveWire2(QMouseEvent *Event)
     }
   else drawn = true;
 
-  MAx2  = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy2  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx2  = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy2  = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   d->setOnGrid(MAx2, MAy2);
 
   if(MAx1 == 0) {
@@ -562,8 +562,8 @@ void QucsView::MMoveWire1(QMouseEvent *Event)
   }
   drawn = true;
 
-  MAx3  = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy3  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx3  = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy3  = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   d->setOnGrid(MAx3, MAy3);
 
   MAx1  = contentsX()+d->ViewX1;
@@ -584,8 +584,8 @@ void QucsView::MMoveComponent(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  int x=int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int y=int(Event->pos().y()/d->Scale) + d->ViewY1;
+  int x=int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int y=int(float(Event->pos().y())/d->Scale) + d->ViewY1;
 
   if(drawn) selComp->paintScheme(&painter); // erase old scheme
   drawn = true;
@@ -603,8 +603,8 @@ void QucsView::MMoveDiagram(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  int x=int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int y=int(Event->pos().y()/d->Scale) + d->ViewY1;
+  int x=int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int y=int(float(Event->pos().y())/d->Scale) + d->ViewY1;
 
   if(drawn) selDiag->paintScheme(&painter); // erase old scheme
   drawn = true;
@@ -623,8 +623,8 @@ void QucsView::MMoveSelect(QMouseEvent *Event)
 
   if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2); // erase old rectangle
   drawn = true;
-  MAx2 = int(Event->pos().x()/d->Scale) + d->ViewX1 - MAx1;
-  MAy2 = int(Event->pos().y()/d->Scale) + d->ViewY1 - MAy1;
+  MAx2 = int(float(Event->pos().x())/d->Scale) + d->ViewX1 - MAx1;
+  MAy2 = int(float(Event->pos().y())/d->Scale) + d->ViewY1 - MAy1;
   if(isMoveEqual)     // x and y size must be equal ?
     if(abs(MAx2) > abs(MAy2)) {
       if(MAx2<0) MAx2 = -abs(MAy2); else MAx2 = abs(MAy2);
@@ -640,8 +640,8 @@ void QucsView::MMoveResizePainting(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   Docs.current()->setOnGrid(MAx1, MAy1);
   ((Painting*)focusElement)->MouseResizeMoving(MAx1, MAy1, &painter);
 }
@@ -708,8 +708,8 @@ void QucsView::MMoveMoving2(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  MAx2 = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy2 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx2 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy2 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
 
   Element *pe;
   if(drawn) // erase old scheme
@@ -746,8 +746,8 @@ void QucsView::MMovePaste(QMouseEvent *Event)
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   d->setOnGrid(MAx1, MAy1);
 
   for(Element *pe=movingElements.first(); pe!=0; pe=movingElements.next()) {
@@ -1012,8 +1012,8 @@ void QucsView::MMoveMoveText(QMouseEvent *Event)
     painter.drawRect(MAx1, MAy1, MAx2, MAy2); // erase old
   drawn = true;
 
-  int newX = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int newY = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  int newX = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int newY = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   MAx1 += newX - MAx3;
   MAy1 += newY - MAy3;
   MAx3  = newX;
@@ -1060,8 +1060,8 @@ void QucsView::contentsMousePressEvent(QMouseEvent *Event)
 void QucsView::rightPressMenu(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
-  MAx1 = int(double(Event->pos().x())/d->Scale) + d->ViewX1;
-  MAy1 = int(double(Event->pos().y())/d->Scale) + d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   focusElement = d->selectElement(MAx1, MAy1, false);
 
   if(focusElement)  // remove special function (4 least significant bits)
@@ -1120,8 +1120,8 @@ void QucsView::MPressPainting(QMouseEvent *)
 void QucsView::PressLabel(QMouseEvent *Event)
 {
   QucsDoc *d = Docs.current();
-  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   Wire *pw = 0;
   WireLabel *pl=0;
   Node *pn = d->selectedNode(x, y);
@@ -1219,8 +1219,8 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 
   int No=0;
   QucsDoc *d = Docs.current();
-  MAx1 = int(double(Event->pos().x())/d->Scale) + d->ViewX1;
-  MAy1 = int(double(Event->pos().y())/d->Scale) + d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   focusElement = d->selectElement(MAx1, MAy1, Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
@@ -1317,9 +1317,9 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 
   QucsDoc *d = Docs.current();
 
-  Element *pe = d->selectElement(int(Event->pos().x()/d->Scale)+d->ViewX1,
-				 int(Event->pos().y()/d->Scale)+d->ViewY1,
-				 false);
+  Element *pe = d->selectElement(
+		int(float(Event->pos().x())/d->Scale)+d->ViewX1,
+		int(float(Event->pos().y())/d->Scale)+d->ViewY1, false);
   if(pe) {
     pe->isSelected = true;
     d->deleteElements();
@@ -1339,8 +1339,8 @@ void QucsView::MPressActivate(QMouseEvent *Event)
   }
 
   QucsDoc *d = Docs.current();
-  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   if(!d->activateComponent(MAx1, MAy1)) {
 //    if(Event->button() != Qt::LeftButton) return;
     MAx2 = 0;  // if not clicking on a component => open a rectangle
@@ -1362,8 +1362,8 @@ void QucsView::MPressMirrorX(QMouseEvent *Event)
   }
 
   QucsDoc *d = Docs.current();
-  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
 
   // no use in mirroring wires or diagrams
   Component *c = d->selectedComponent(x, y);
@@ -1392,8 +1392,8 @@ void QucsView::MPressMirrorY(QMouseEvent *Event)
   }
 
   QucsDoc *d = Docs.current();
-  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
 
   // no use in mirroring wires or diagrams
   Component *c = d->selectedComponent(x, y);
@@ -1423,8 +1423,8 @@ void QucsView::MPressRotate(QMouseEvent *Event)
 
   QucsDoc *d = Docs.current();
   Element *e = d->selectElement(
-	int(Event->pos().x()/d->Scale)+d->ViewX1,
-	int(Event->pos().y()/d->Scale)+d->ViewY1, false);
+	int(float(Event->pos().x())/d->Scale)+d->ViewX1,
+	int(float(Event->pos().y())/d->Scale)+d->ViewY1, false);
   if(e == 0) return;
   e->Type &= isSpecialMask;  // remove special functions
 
@@ -1631,8 +1631,8 @@ void QucsView::MPressWire2(QMouseEvent *Event)
       painter.drawLine(MAx2, MAy3, MAx2, MAy2); // erase old
     }
 
-    MAx2  = int(Event->pos().x()/d->Scale) + d->ViewX1;
-    MAy2  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+    MAx2  = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+    MAy2  = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
     d->setOnGrid(MAx2, MAy2);
 
     MAx1 ^= 1;    // change the painting direction of wire corner
@@ -1659,9 +1659,9 @@ void QucsView::MPressMarker(QMouseEvent *Event)
     return;
   }
 
-  MAx1 = int(double(Event->pos().x())/Docs.current()->Scale)
+  MAx1 = int(float(Event->pos().x())/Docs.current()->Scale)
 		+Docs.current()->ViewX1;
-  MAy1 = int(double(Event->pos().y())/Docs.current()->Scale)
+  MAy1 = int(float(Event->pos().y())/Docs.current()->Scale)
 		+Docs.current()->ViewY1;
   Marker *pm = Docs.current()->setMarker(MAx1, MAy1);
 
@@ -1683,9 +1683,9 @@ void QucsView::MPressOnGrid(QMouseEvent *Event)
   }
 
   QucsDoc *d = Docs.current();
-  Element *pe = d->selectElement(int(Event->pos().x()/d->Scale)+d->ViewX1,
-				 int(Event->pos().y()/d->Scale)+d->ViewY1,
-				 false);
+  Element *pe = d->selectElement(
+		int(float(Event->pos().x())/d->Scale)+d->ViewX1,
+		int(float(Event->pos().y())/d->Scale)+d->ViewY1, false);
   if(pe) {
     pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
     pe->isSelected = true;
@@ -1706,8 +1706,8 @@ void QucsView::MPressMoveText(QMouseEvent *Event)
   }
 
   QucsDoc *d = Docs.current();
-  MAx1 = int(Event->pos().x()/d->Scale)+d->ViewX1;
-  MAy1 = int(Event->pos().y()/d->Scale)+d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale)+d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale)+d->ViewY1;
   focusElement = d->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
   if(focusElement) {
@@ -1732,8 +1732,8 @@ void QucsView::MPressZoomIn(QMouseEvent *Event)
   }
 
   QucsDoc *d = Docs.current();
-  MAx1 = int(Event->pos().x()/d->Scale) + d->ViewX1;
-  MAy1 = int(Event->pos().y()/d->Scale) + d->ViewY1;
+  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   MAx2 = 0;  // rectangle size
   MAy2 = 0;
 
@@ -1974,8 +1974,8 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
         pe->paintScheme(&painter);
     drawn = true;
 
-    x1  = int(Event->pos().x()/d->Scale) + d->ViewX1;
-    y1  = int(Event->pos().y()/d->Scale) + d->ViewY1;
+    x1  = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+    y1  = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
     d->setOnGrid(x1, y1);
 
     for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
@@ -2375,7 +2375,7 @@ void QucsView::slotApplyCompText()
   QString s;
   QucsDoc *d = Docs.current();
   QFont f = QucsSettings.font;
-  f.setPointSizeFloat( float(d->Scale) * float(f.pointSize()) );
+  f.setPointSizeFloat( d->Scale * float(f.pointSize()) );
   editText->setFont(f);
 
   Property  *pp = 0;

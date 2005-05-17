@@ -50,7 +50,7 @@ public:
   void    Bounding(int&, int&, int&, int&);
   void    entireBounds(int&, int&, int&, int&);
   bool    getSelected(int, int);
-  int     getTextSelected(int, int);
+  int     getTextSelected(int, int, float);
   void    rotate();
   void    mirrorX();  // mirror about X axis
   void    mirrorY();  // mirror about Y axis
