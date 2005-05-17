@@ -240,7 +240,7 @@ do so is the Newton method:
                    \cdot \textbf{F} (\textbf{V}_n)
 \end{equation}
 with $\textbf{J}_F$ being the Jacobian matrix. DC and transient
-simulation also use this technique. but here a problem appears:
+simulation also use this technique, but here a problem appears:
 The derivatives of the component models are not given in frequency
 domain. Thus, the Jacobian must be calculated starting at the HB
 equation \ref{eqn:HBeqn}:
@@ -272,11 +272,32 @@ and frequency values, respectively. Now, it is possible to transform the
 desired Jacobian matrix into frequency domain:
 \begin{equation}
 \boldsymbol{J}_{F,IG} = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
-  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\boldsymbol{v}}
+  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
     \cdot\boldsymbol{\Gamma}^{-1}
 \end{equation}
 This formula seems to be quite clear, but it has to be pointed out how
-this works with FFT algorithm.
+this works with FFT algorithm. With
+$\boldsymbol{\Gamma}^{-1} = (\boldsymbol{\Gamma}^{-1})^T$
+(see equation \ref{eqn:IDFT}) and
+$(\boldsymbol{A}\cdot\boldsymbol{B})^T = \boldsymbol{B}^T\cdot \boldsymbol{A}^T$,
+it follows:
+\begin{equation}
+\boldsymbol{J}_{F,IG}
+  = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
+    \cdot\boldsymbol{\Gamma}^{-1}
+  = \left( \boldsymbol{\Gamma}^{-1}\cdot \left( \boldsymbol{\Gamma} \cdot
+    \frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}} \right)^T \right)^T
+\end{equation}
+So, there are two steps to perform an FFT-based transformation of the time
+domain Jacobian matrix into the frequency domain Jacobian:
+\begin{enumerate}
+\item Perform an FFT on every column of the Jacobian and build a new matrix
+      $\boldsymbol{A}$ with this result, i.e. the first column of
+      $\boldsymbol{A}$ is the FFTed first column of the Jacobian and so on.
+\item Perform an IFFT on every row of the matrix $\boldsymbol{A}$ and build
+      a new matrix $\boldsymbol{B}$ with this result, i.e. the first row of
+      $\boldsymbol{B}$ is the IFFTed first row of $\boldsymbol{A}$ and so on.
+\end{enumerate}
 
 
 \subsection{Termination Criteria}

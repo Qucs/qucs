@@ -39,7 +39,7 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   msmbend.cpp msopen.cpp ampere_ac.cpp bjt.cpp jfet.cpp mosfet.cpp            \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
-  cpwshort.cpp spicedialog.cpp cpwgap.cpp
+  cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -53,7 +53,7 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   iprobe.h volt_noise.h ampere_noise.h msmbend.h msopen.h ampere_ac.h bjt.h   \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h        \
-  cpwgap.h
+  cpwgap.h cpwstep.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

@@ -16,6 +16,9 @@
  ***************************************************************************/
 
 #include "simmessage.h"
+#include "main.h"
+#include "qucs.h"
+#include "qucsdoc.h"
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -26,12 +29,14 @@
 #include <qpushbutton.h>
 #include <qprogressbar.h>
 #include <qtextedit.h>
+#include <qdatetime.h>
+#include <qregexp.h>
 
 
-SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
+SimMessage::SimMessage(QucsDoc *Doc_, QWidget *parent)
 		: QDialog(parent, 0, FALSE, Qt::WDestructiveClose)
 {
-  DataDisplay = DataDpl;
+  Doc = Doc_;
   setCaption(tr("Qucs Simulation Messages"));
 
   all = new QVBoxLayout(this);
@@ -72,11 +77,6 @@ SimMessage::SimMessage(const QString& DataDpl, QWidget *parent)
 
   Abort = new QPushButton(tr("Abort simulation"), Butts);
   connect(Abort,SIGNAL(clicked()),SLOT(reject()));
-
-  // ........................................................
-  connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
-  connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
-  connect(&SimProcess, SIGNAL(processExited()), SLOT(slotSimEnded()));
 }
 
 SimMessage::~SimMessage()
@@ -86,18 +86,162 @@ SimMessage::~SimMessage()
 }
 
 // ------------------------------------------------------------------------
-bool SimMessage::startProcess(const QStringList& commands)
+bool SimMessage::startProcess()
 {
   Abort->setText(tr("Abort simulation"));
   Display->setDisabled(true);
 
+  ProgText->insert(tr("Starting new simulation on ")+
+                   QDate::currentDate().toString("ddd dd. MMM yyyy"));
+  ProgText->insert(tr(" at ")+
+                   QTime::currentTime().toString("hh:mm:ss")+"\n\n");
+
   SimProcess.blockSignals(false);
-  if(SimProcess.isRunning()) return false;
+  if(SimProcess.isRunning()) {
+    ErrText->insert(tr("ERROR: Simulator is still running!"));
+    FinishSimulation(-1);
+    return false;
+  }
 
-  SimProcess.setArguments(commands);
-  if(!SimProcess.start()) return false;
+  ProgText->insert(tr("creating netlist ...."));
+  NetlistFile.setName(QucsHomeDir.filePath("netlist.txt"));
+  if(!NetlistFile.open(IO_WriteOnly)) {
+    ErrText->insert(tr("ERROR: Cannot write netlist file!"));
+    FinishSimulation(-1);
+    return false;
+  }
 
+  Collect.clear();  // clear list for NodeSets, SPICE componenets etc.
+  Stream.setDevice(&NetlistFile);
+  if(!Doc->File.prepareNetlist(Stream, Collect, ErrText)) {
+    NetlistFile.close();
+    FinishSimulation(-1);
+    return false;
+  }
+  Collect.append("*");   // mark the end
+
+
+  disconnect(&SimProcess, 0, 0, 0);
+  connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
+  connect(&SimProcess, SIGNAL(readyReadStdout()),
+                       SLOT(slotReadSpiceNetlist()));
+  connect(&SimProcess, SIGNAL(processExited()),
+                       SLOT(slotFinishSpiceNetlist()));
+  nextSPICE();
   return true;
+}
+  
+// ---------------------------------------------------
+// Converts a spice netlist into Qucs format and outputs it.
+void SimMessage::nextSPICE()
+{
+  QString Line;
+  for(;;) {  // search for next SPICE component
+    Line = *(Collect.begin());
+    Collect.remove(Collect.begin());
+    if(Line == "*") {  // all components worked on ?
+      startSimulator();
+      return;
+    }
+    if(Line.left(6) == "SPICE ") break;
+    Collect.append(Line);
+  }
+
+
+  QString FileName = Line.section('"', 1,1);
+  Line = Line.section('"', 2);  // port nodes
+  if(Line.isEmpty())  makeSubcircuit = false;
+  else  makeSubcircuit = true;
+
+  QStringList com;
+  com << (QucsSettings.BinDir + "qucsconv");
+  if(makeSubcircuit)
+    com << "-g" << "_ref";
+  com << "-if" << "spice" << "-of" << "qucs" << "-i" << FileName;
+  SimProcess.setArguments(com);
+
+
+  if(makeSubcircuit) {
+    if(FileName.at(0) <= '9') if(FileName.at(0) >= '0')
+      FileName = '_' + FileName;
+    FileName.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
+    Stream << "\n.Def:" << FileName << " ";
+  
+    Line.replace(',', ' ');
+    Stream << Line;
+    if(!Line.isEmpty()) Stream << " _ref";
+  }
+  Stream << "\n";
+
+
+  ProgressText = "";
+  if(!SimProcess.start()) {
+    ErrText->insert(tr("ERROR: Cannot start QucsConv!"));
+    FinishSimulation(-1);
+    return;
+  }
+}
+
+// ------------------------------------------------------------------------
+void SimMessage::slotReadSpiceNetlist()
+{
+  int i;
+  QString s;
+  ProgressText += QString(SimProcess.readStdout());
+
+  while((i = ProgressText.find('\n')) >= 0) {
+
+    s = ProgressText.left(i);
+    ProgressText.remove(0, i+1);
+
+
+    s = s.stripWhiteSpace();
+    if(s.isEmpty()) continue;
+    if(s.at(0) == '#') continue;
+    if(s.at(0) == '.') if(s.left(5) != ".Def:") { // insert simulations later
+      Collect.append(s);
+      continue;
+    }
+    Stream << "  " << s << '\n';
+  }
+}
+
+
+// ------------------------------------------------------------------------
+void SimMessage::slotFinishSpiceNetlist()
+{
+  if(makeSubcircuit)
+    Stream << ".Def:End\n\n";
+
+  nextSPICE();
+}
+
+// ------------------------------------------------------------------------
+void SimMessage::startSimulator()
+{
+  // output NodeSets, SPICE simulations etc.
+  Stream << Collect.join("\n") << '\n';
+  Doc->File.createNetlist(Stream);
+  NetlistFile.close();
+  ProgText->insert(tr("done.\n"));
+
+  QStringList com;
+  com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
+      << QucsHomeDir.filePath("netlist.txt")
+      << "-o" << QucsWorkDir.filePath(Doc->DataSet);
+  SimProcess.setArguments(com);
+
+
+  disconnect(&SimProcess, 0, 0, 0);
+  connect(&SimProcess, SIGNAL(readyReadStderr()), SLOT(slotDisplayErr()));
+  connect(&SimProcess, SIGNAL(readyReadStdout()), SLOT(slotDisplayMsg()));
+  connect(&SimProcess, SIGNAL(processExited()), SLOT(slotSimEnded()));
+  ProgressText = "";
+  if(!SimProcess.start()) {
+    ErrText->insert(tr("ERROR: Cannot start simulator!"));
+    FinishSimulation(-1);
+    return;
+  }
 }
 
 // ------------------------------------------------------------------------
@@ -109,9 +253,8 @@ void SimMessage::slotDisplayMsg()
 //qDebug(s);
   while((i = s.find('\r')) >= 0) {
     if (s.find('\n') == i + 1) break; // necessary on Win32 platforms
-    if(wasLF) {
+    if(wasLF)
       ProgressText += s.left(i-1);
-    }
     else {
       int k = s.findRev('\n',i-s.length());
       if (k > 0) {
@@ -154,23 +297,49 @@ void SimMessage::slotDisplayErr()
 // Is called when the simulation process terminates.
 void SimMessage::slotSimEnded()
 {
-  Abort->setText(tr("Close window"));
-  Display->setDisabled(false);
-  SimProgress->setProgress(100, 100);   // progress bar to 100%
-
   int stat = (!SimProcess.normalExit()) ? -1 : SimProcess.exitStatus();
-  emit SimulationEnded(stat, this);
+  FinishSimulation(stat);
 }
 
 // ------------------------------------------------------------------------
 // Is called when the simulation ended with errors before starting simulator
 // process.
-void SimMessage::errorSimEnded()
+void SimMessage::FinishSimulation(int Status)
 {
   Abort->setText(tr("Close window"));
   Display->setDisabled(false);
+  SimProgress->setProgress(100, 100);   // progress bar to 100%
 
-  emit SimulationEnded(1, this);
+  QDate d = QDate::currentDate();   // get date of today
+  QTime t = QTime::currentTime();   // get time
+
+  if(Status == 0) {
+    ProgText->insert(tr("\nSimulation ended on ")+
+                     d.toString("ddd dd. MMM yyyy"));
+    ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
+    ProgText->insert(tr("Ready.\n"));
+  }
+  else {
+    ProgText->insert(tr("\nErrors occured during simulation on ")+
+                     d.toString("ddd dd. MMM yyyy"));
+    ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
+    ProgText->insert(tr("Aborted.\n"));
+  }
+
+  QFile file(QucsHomeDir.filePath("log.txt"));  // save simulator messages
+  if(file.open(IO_WriteOnly)) {
+    int z;
+    QTextStream stream(&file);
+    stream << tr("Output:\n----------\n\n");
+    for(z=0; z<=ProgText->paragraphs(); z++)
+      stream << ProgText->text(z) << "\n";
+    stream << tr("\n\n\nErrors:\n--------\n\n");
+    for(z=0; z<ErrText->paragraphs(); z++)
+      stream << ErrText->text(z) << "\n";
+    file.close();
+  }
+
+  emit SimulationEnded(Status, this);
 }
 
 // ------------------------------------------------------------------------
@@ -183,6 +352,6 @@ void SimMessage::slotClose()
 // ------------------------------------------------------------------------
 void SimMessage::slotDisplayButton()
 {
-  emit displayDataPage(DataDisplay);
+  emit displayDataPage(Doc->DataDisplay);
   accept();
 }

@@ -38,7 +38,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   pnpsub.png dmosfet_sub.png nmosfet_sub.png pmosfet_sub.png ellipsearc.png   \
   vpulse.png ipulse.png vrect.png irect.png msvia.png amplifier.png opamp.png \
   ysmith.png smithpolar.png polarsmith.png spicefile.png rect3d.png curve.png \
-  cpwopen.png  
+  cpwopen.png cpwshort.png cpwgap.png cpwstep.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \

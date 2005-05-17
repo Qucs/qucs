@@ -479,6 +479,7 @@ void ComponentDialog::slotApplyChange(const QString& Text)
 void ComponentDialog::slotApplyProperty()
 {
   QListViewItem *item = prop->currentItem();
+  if(!item) return;
 
   if(ComboEdit->isShown())   // take text from ComboBox ?
     edit->setText(ComboEdit->currentText());

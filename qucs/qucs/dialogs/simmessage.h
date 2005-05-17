@@ -20,11 +20,14 @@
 
 #include <qdialog.h>
 #include <qprocess.h>
+#include <qstringlist.h>
+#include <qfile.h>
 
 class QTextEdit;
 class QVBoxLayout;
 class QPushButton;
 class QProgressBar;
+class QucsDoc;
 
 /**
   *@author Michael Margraf
@@ -33,33 +36,48 @@ class QProgressBar;
 class SimMessage : public QDialog  {
    Q_OBJECT
 public:
-  SimMessage(const QString& DataDpl=0, QWidget *parent=0);
+  SimMessage(QucsDoc*, QWidget *parent=0);
   ~SimMessage();
 
-  bool startProcess(const QStringList&);
-  void errorSimEnded();
+  bool startProcess();
 
 signals:
   void SimulationEnded(int, SimMessage*);
   void displayDataPage(QString);
 
 public slots:
+  void slotClose();
+
+private slots:
   void slotDisplayMsg();
   void slotDisplayErr();
   void slotSimEnded();
-  void slotClose();
   void slotDisplayButton();
 
-public:
-  QProcess     SimProcess;
-  QTextEdit    *ProgText, *ErrText;
-  bool         wasLF;   // linefeed for "ProgText"
-  QPushButton  *Display, *Abort;
-  QString      DataDisplay;
-  QProgressBar *SimProgress;
-  QString      ProgressText;
+  void slotReadSpiceNetlist();
+  void slotFinishSpiceNetlist();
 
-  QVBoxLayout *all;
+private:
+  void FinishSimulation(int);
+  void nextSPICE();
+  void startSimulator();
+
+public:
+  QucsDoc *Doc;
+
+  QProcess      SimProcess;
+  QTextEdit    *ProgText, *ErrText;
+  bool          wasLF;   // linefeed for "ProgText"
+  QPushButton  *Display, *Abort;
+  QProgressBar *SimProgress;
+  QString       ProgressText;
+
+  bool          makeSubcircuit;
+  QStringList   Collect;
+  QFile         NetlistFile;
+  QTextStream   Stream;
+
+  QVBoxLayout  *all;
 };
 
 #endif

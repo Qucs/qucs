@@ -2582,6 +2582,26 @@ Folosire:  qucsedit [-r] file
         <source>sim</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2898,54 +2918,54 @@ Doriţi sa salvaţi modificările înaintea salvării? </translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Startul noii simulări la data </translation>
+        <translation type="obsolete">Startul noii simulări la data </translation>
     </message>
     <message>
         <source> at </source>
-        <translation>la ora</translation>
+        <translation type="obsolete">la ora</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>creare netlist ....</translation>
+        <translation type="obsolete">creare netlist ....</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation>Eroare: Fişierul netlist nu poate fi creat!
+        <translation type="obsolete">Eroare: Fişierul netlist nu poate fi creat!
 Renuntare.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation>Terminat.
+        <translation type="obsolete">Terminat.
 </translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>Eroare: Simularea nu poate fi pornită!</translation>
+        <translation type="obsolete">Eroare: Simularea nu poate fi pornită!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Simulare terminată la data</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Gata.
+        <translation type="obsolete">Gata.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Erori au avut loc în timpul simulării la data</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Renunţare.
+        <translation type="obsolete">Renunţare.
 </translation>
     </message>
     <message>
@@ -2953,7 +2973,7 @@ Erori au avut loc în timpul simulării la data</translation>
 ----------
 
 </source>
-        <translation>Rezultat:
+        <translation type="obsolete">Rezultat:
 ------------
 
 </translation>
@@ -2966,7 +2986,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Erori:
@@ -5189,13 +5209,99 @@ Starts transmission line calculator</source>
         <source>Close window</source>
         <translation>Închide fereastra</translation>
     </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished">Startul noii simulări la data </translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished">la ora</translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished">creare netlist ....</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create netlist file!
+Aborted.</source>
+        <translation type="obsolete">Eroare: Fişierul netlist nu poate fi creat!
+Renuntare.</translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished">Terminat.
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished">Eroare: Simularea nu poate fi pornită!</translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished">
+Simulare terminată la data</translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished">Gata.
+</translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished">
+Erori au avut loc în timpul simulării la data</translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished">Renunţare.
+</translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished">Rezultat:
+------------
+
+</translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished">
+
+
+Erori:
+-------
+
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
-    <message>
-        <source>Edit Spice Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name:</source>
         <translation type="unfinished">Nume:</translation>
@@ -5211,10 +5317,6 @@ Starts transmission line calculator</source>
     <message>
         <source>Edit</source>
         <translation type="unfinished">Editează</translation>
-    </message>
-    <message>
-        <source>Spice net nodes:</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
@@ -5266,6 +5368,22 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Converting ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

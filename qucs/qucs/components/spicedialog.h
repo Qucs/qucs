@@ -30,6 +30,7 @@ class QListBox;
 class QListBoxItem;
 class QCheckBox;
 class QVBoxLayout;
+class QProcess;
 class QRegExpValidator;
 
 
@@ -54,6 +55,9 @@ private slots:
   void slotAddPort(QListBoxItem*);
   void slotRemovePort(QListBoxItem*);
 
+  void slotGetNetlist();
+  void slotGetError();
+
 private:
   bool loadSpiceNetList(const QString&);
 
@@ -67,6 +71,10 @@ private:
   SpiceFile   *Comp;
   QucsDoc     *Doc;
   bool        changed;
+
+  QProcess *QucsConv;
+  QString Line, Error;  // to store the text read from QucsConv
+  int textStatus; // to store with text data QucsConv will sent next
 };
 
 #endif
