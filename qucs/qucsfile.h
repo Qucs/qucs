@@ -24,6 +24,8 @@
 #include "components/component.h"
 
 
+class QTextEdit;
+class QProcess;
 class QucsDoc;
 
 /**
@@ -45,8 +47,9 @@ public:
   QString createSymbolUndoString(char);
   bool    rebuildSymbol(QString *);
 
-  bool  createSubNetlist(QTextStream*, int&);
-  bool  createNetlist(QFile*);
+  bool  createSubNetlist(QTextStream*, int&, QStringList&, QTextEdit*);
+  bool  prepareNetlist(QTextStream&, QStringList&, QTextEdit*);
+  void  createNetlist(QTextStream&);
 
 
 private:
@@ -59,7 +62,7 @@ private:
   bool  loadPaintings(QTextStream*, QPtrList<Painting>*);
   bool  loadIntoNothing(QTextStream*);
 
-  bool  giveNodeNames(QTextStream*, QString&, int&);
+  bool  giveNodeNames(QTextStream*, int&, QStringList&, QTextEdit*);
 
   QucsDoc  *Doc;
   QPtrList<Wire>      *Wires;

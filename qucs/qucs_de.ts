@@ -2782,6 +2782,26 @@ Verwendung:  qucsedit [-r] Datei
         <source>sim</source>
         <translation>Sim</translation>
     </message>
+    <message>
+        <source>coplanar step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3912,54 +3932,54 @@ Qt universal circuit simulator
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Starte neue Simulation am </translation>
+        <translation type="obsolete">Starte neue Simulation am </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> um </translation>
+        <translation type="obsolete"> um </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>Erzeuge Netzliste... </translation>
+        <translation type="obsolete">Erzeuge Netzliste... </translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation>FEHLER: Netzlistendatei kann nicht erzeugt werden!
+        <translation type="obsolete">FEHLER: Netzlistendatei kann nicht erzeugt werden!
 Abgebrochen.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation>fertig.
+        <translation type="obsolete">fertig.
 </translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>FEHLER: Simulator kann nicht gestartet werden!</translation>
+        <translation type="obsolete">FEHLER: Simulator kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Simulation endete am </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Fertig.
+        <translation type="obsolete">Fertig.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Während der Simulation sind Fehler aufgetreten am </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Abgebrochen.
+        <translation type="obsolete">Abgebrochen.
 </translation>
     </message>
     <message>
@@ -3967,7 +3987,7 @@ Während der Simulation sind Fehler aufgetreten am </translation>
 ----------
 
 </source>
-        <translation>Ausgabe:
+        <translation type="obsolete">Ausgabe:
 ----------
 
 </translation>
@@ -3980,7 +4000,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Fehler:
@@ -6661,6 +6681,96 @@ Startet das Programm für die Leitungsberechnung</translation>
         <source>Close window</source>
         <translation>Fenster schließen</translation>
     </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished">Starte neue Simulation am </translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished"> um </translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished">Erzeuge Netzliste... </translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create netlist file!
+Aborted.</source>
+        <translation type="obsolete">FEHLER: Netzlistendatei kann nicht erzeugt werden!
+Abgebrochen.</translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished">fertig.
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished">FEHLER: Simulator kann nicht gestartet werden!</translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished">
+Simulation endete am </translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished">Fertig.
+</translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished">
+Während der Simulation sind Fehler aufgetreten am </translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished">Abgebrochen.
+</translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished">Ausgabe:
+----------
+
+</translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished">
+
+
+Fehler:
+--------
+
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
@@ -6739,6 +6849,22 @@ Startet das Programm für die Leitungsberechnung</translation>
     <message>
         <source>Converting ...</source>
         <translation>Konvertiere ...</translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished">SPICE Netzliste</translation>
+    </message>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

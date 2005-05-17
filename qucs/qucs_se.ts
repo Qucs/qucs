@@ -2385,6 +2385,26 @@ Usage:  qucsedit [-r] file
         <source>sim</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2722,69 +2742,6 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Copying selection to clipboard...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starting new simulation on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> at </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>creating netlist ....</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot create netlist file!
-Aborted.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>done.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Simulation ended on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Errors occured during simulation on </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aborted.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output:
-----------
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-
-
-Errors:
---------
-
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4770,13 +4727,79 @@ Starts transmission line calculator</source>
         <source>Close window</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
-    <message>
-        <source>Edit Spice Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name:</source>
         <translation type="unfinished"></translation>
@@ -4791,10 +4814,6 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spice net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4847,6 +4866,22 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Converting ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -133,7 +133,7 @@ void Component::getCenter(int& x, int& y)
 }
 
 // -------------------------------------------------------
-int Component::getTextSelected(int x_, int y_)
+int Component::getTextSelected(int x_, int y_, float Corr)
 {
   x_ -= cx;
   y_ -= cy;
@@ -143,24 +143,24 @@ int Component::getTextSelected(int x_, int y_)
   x_ -= tx;
   y_ -= ty;
   QFontMetrics  metrics(QucsSettings.font);
-  QSize r = metrics.size(0, Name);
-  int dy = r.height();
-  if(y_ < dy) {
-    if(x_ < r.width()) return 0;
+  int w  = metrics.width(Name);
+  int dy = int(float(y_) * Corr);  // correction for font scaling
+  if(dy < 1) {
+    if(x_ < w) return 0;
     return -1;
   }
 
-  for(Property *pp = Props.first(); pp != 0; pp = Props.next())
-    if(pp->display) {
-      dy += r.height();   // height is always the same
-      if(y_ > dy) continue;
-      // get width of text
-      r = metrics.size(0, pp->Name+"="+pp->Value);
-      if(x_ > r.width()) return -1;
-      return Props.at()+1;  // number the property
-    }
-  
-  return -1;
+  y_ = dy;
+  Property *pp;
+  for(pp = Props.first(); pp != 0; pp = Props.next())
+    if(pp->display)
+      if((--dy) < 1) break;
+  if(!pp) return -1;
+
+  // get width of text
+  w = metrics.width(pp->Name+"="+pp->Value);
+  if(x_ > w) return -1;
+  return y_;  // number the property
 }
 
 // -------------------------------------------------------
@@ -667,25 +667,24 @@ if(Model.at(0) != '.') {  // is simulation component (dc, ac, ...) ?
 
   tx = ttx; ty = tty; // restore text position (was changed by rotate/mirror)
 
-  int z=0;
-  unsigned int counts = s.contains('"') >> 1;
+  unsigned int z=0, counts = s.contains('"');
   // load all properties
   for(Property *p1 = Props.first(); p1 != 0; p1 = Props.next()) {
     z++;
     n = s.section('"',z,z);    // property value
+    z++;
     // not all properties have to be mentioned (backward compatible)
-    if(n.isEmpty()) {
+    if(z > counts) {
       if(p1->Description.isEmpty())
         Props.remove();    // remove if allocated in vain
       return true;
     }
 
-    z++;
     if(p1->Description.isEmpty()) {  // unknown number of properties ?
       p1->Name = n.section('=',0,0);
       n = n.section('=',1,1);
       // allocate memory for a new property (e.g. for equations)
-      if(Props.count() < counts) {
+      if(Props.count() < (counts>>1)) {
 	Props.insert(z >> 1, new Property("y", "1", true));
 	Props.prev();
       }
@@ -743,6 +742,7 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "OPEN") c = new CPWopen();
 	else if(cstr == "SHORT") c = new CPWshort();
 	else if(cstr == "GAP") c = new CPWgap();
+	else if(cstr == "STEP") c = new CPWstep();
 	break;
   case 'L' : if(cstr.isEmpty()) c = new Inductor();
 	break;

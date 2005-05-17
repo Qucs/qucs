@@ -33,7 +33,6 @@
 #include <qfiledialog.h>
 #include <qinputdialog.h>
 #include <qclipboard.h>
-#include <qdatetime.h>
 #include <qfont.h>
 #include <qtextedit.h>
 #include <qcheckbox.h>
@@ -105,6 +104,7 @@ QucsApp::QucsApp()
 
 QucsApp::~QucsApp()
 {
+  delete Printer;
 }
 
 
@@ -1104,7 +1104,7 @@ void QucsApp::slotSimulate()
   if(view->Docs.current()->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveCurrentFile()) return;            // ... save schematic before
 
-  SimMessage *sim = new SimMessage(view->Docs.current()->DataDisplay, this);
+  SimMessage *sim = new SimMessage(view->Docs.current(), this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
   connect(sim, SIGNAL(SimulationEnded(int, SimMessage*)), this,
@@ -1112,36 +1112,11 @@ void QucsApp::slotSimulate()
   connect(sim, SIGNAL(displayDataPage(QString)),
 		this, SLOT(slotChangePage(QString)));
 
-
   sim->show();
-
-  QDate d = QDate::currentDate();   // get date of today
-  QTime t = QTime::currentTime();   // get time
-  sim->ProgText->insert(tr("Starting new simulation on ")+
-                        d.toString("ddd dd. MMM yyyy"));
-  sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n\n");
-
-  sim->ProgText->insert(tr("creating netlist ...."));
-  QFile NetlistFile(QucsHomeDir.filePath("netlist.txt"));
-  if(!view->Docs.current()->File.createNetlist(&NetlistFile)) {
-    sim->ErrText->insert(tr("ERROR: Cannot create netlist file!\nAborted."));
-    sim->errorSimEnded();
-    return;
-  }
-  sim->ProgText->insert(tr("done.\n"));
-
-  QStringList com;
-  com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
-      << QucsHomeDir.filePath("netlist.txt")
-      << "-o" << QucsWorkDir.filePath(view->Docs.current()->DataSet);
-  if(!sim->startProcess(com)) {
-    sim->ErrText->insert(tr("ERROR: Cannot start simulator!"));
-    sim->errorSimEnded();
-    return;
-  }
+  if(!sim->startProcess()) return;
 
   // to kill it before qucs ends
-  connect(this, SIGNAL(signalKillEmAll()), &(sim->SimProcess), SLOT(kill()));
+  connect(this, SIGNAL(signalKillEmAll()), sim, SLOT(slotClose()));
 }
 
 // ------------------------------------------------------------------------
@@ -1149,18 +1124,11 @@ void QucsApp::slotSimulate()
 void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
   bool shouldClosed = false; // simulation window close after simualtion ?
-  QDate d = QDate::currentDate();   // get date of today
-  QTime t = QTime::currentTime();   // get time
 
-  if(Status == 0) {  // errors ocurred ?
-    sim->ProgText->insert(tr("\nSimulation ended on ")+
-                          d.toString("ddd dd. MMM yyyy"));
-    sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
-    sim->ProgText->insert(tr("Ready.\n"));
-
+  if(Status == 0) {  // no errors ocurred ?
     if(view->Docs.current()->SimOpenDpl) {
       shouldClosed = true;
-      slotChangePage(sim->DataDisplay);  // switch to data display
+      slotChangePage(sim->Doc->DataDisplay);  // switch to data display
       view->viewport()->update();
     }
     else {
@@ -1172,25 +1140,6 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 /*    QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
     for(it = Elements.begin(); it != Elements.end(); ++it)
       new QListViewItem(ConDatasets, (*it).ascii());*/
-  }
-  else {
-    sim->ProgText->insert(tr("\nErrors occured during simulation on ")+
-			  d.toString("ddd dd. MMM yyyy"));
-    sim->ProgText->insert(tr(" at ")+t.toString("hh:mm:ss")+"\n");
-    sim->ProgText->insert(tr("Aborted.\n"));
-  }
-
-  QFile file(QucsHomeDir.filePath("log.txt"));  // save simulator messages
-  if(file.open(IO_WriteOnly)) {
-    int z;
-    QTextStream stream(&file);
-    stream << tr("Output:\n----------\n\n");
-    for(z=0; z<=sim->ProgText->paragraphs(); z++)
-      stream << sim->ProgText->text(z) << "\n";
-    stream << tr("\n\n\nErrors:\n--------\n\n");
-    for(z=0; z<sim->ErrText->paragraphs(); z++)
-      stream << sim->ErrText->text(z) << "\n";
-    file.close();
   }
 
   if(shouldClosed) sim->slotClose();  // close and delete simulation window
@@ -1532,7 +1481,8 @@ pInfoFunc TransmissionLines[] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
    &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
    &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
-   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info, 0};
+   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info,
+   &CPWstep::info, 0};
 
 pInfoFunc nonlinearComps[] =
   {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,

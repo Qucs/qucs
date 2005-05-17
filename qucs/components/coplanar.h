@@ -1,6 +1,6 @@
 /***************************************************************************
-                          coplanar.h  -  description
-                             -------------------
+                               coplanar.h
+                              ------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
