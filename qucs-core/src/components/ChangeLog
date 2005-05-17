@@ -1,3 +1,11 @@
+2005-05-13  Stefan Jahn  <stefan@lkcc.org>
+
+	* microstrip/msline.cpp: Don't calculate noise for strip
+	lengths less than zero.
+
+	* microstrip/mstee.cpp: Fixed AC noise initialization of
+	accompanied microstrip lines.
+
 2005-05-12  Stefan Jahn  <stefan@lkcc.org>
 
 	* microstrip/cpwstep.cpp: Added correct S-parameter calculation.

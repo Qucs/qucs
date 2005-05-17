@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.12 2005/04/29 06:49:08 raimi Exp $
+ * $Id: check_spice.cpp,v 1.13 2005/05/17 09:35:08 raimi Exp $
  *
  */
 
@@ -45,6 +45,7 @@
 /* Global definitions for parser and checker. */
 struct definition_t * definition_root = NULL;
 struct definition_t * subcircuit_root = NULL;
+struct definition_t * device_root = NULL;
 int spice_errors = 0;
 char * spice_title = NULL;
 
@@ -709,7 +710,14 @@ static void spice_translate_nodes (struct definition_t * def, int pass) {
       }
       else {                        // default is some other node
 	struct node_t * t = spice_get_node (def, nodes->Default[n]);
-	node->node = strdup (t->node);
+	if (t != NULL)
+	  node->node = strdup (t->node);
+	else {
+	  // no node given, occurs in device descriptions
+	  char txt[16];
+	  sprintf (txt, "%s%d", "_node", n);
+	  node->node = strdup (txt);
+	}
       }
       def->nodes = netlist_append_nodes (def->nodes, node);
     }
@@ -771,7 +779,7 @@ static void spice_translate_units (struct definition_t * def) {
   }
 }
 
-/* This function append all the required Qucs properties not given in
+/* This function appends all the required Qucs properties not given in
    the Spice netlist. */
 static void spice_adjust_default_properties (struct definition_t * def) {
   struct define_t * entry = spice_get_qucs_definition (def);
@@ -780,6 +788,30 @@ static void spice_adjust_default_properties (struct definition_t * def) {
   // handle required properties only
   for (int i = 0; PROP_IS_PROP (entry->required[i]); i++) {
     struct property_t * prop = &entry->required[i];
+    if (spice_find_property (def, prop->key) == NULL) {
+      struct pair_t * pair = create_pair ();
+      pair->key = strdup (prop->key);
+      pair->value = create_value ();
+      if (PROP_IS_VAL (*prop)) {
+	pair->value->value = prop->defaultval.d;
+      }
+      else {
+	pair->value->ident = strdup (prop->defaultval.s);
+      }
+      def->pairs = netlist_append_pairs (def->pairs, pair);
+    }
+  }
+}
+
+/* This function appends the optional Qucs properties not given in the
+   Spice netlist. */
+static void spice_adjust_optional_properties (struct definition_t * def) {
+  struct define_t * entry = spice_get_qucs_definition (def);
+  if (entry == NULL) return;
+
+  // handle optional properties if requested
+  for (int i = 0; PROP_IS_PROP (entry->optional[i]); i++) {
+    struct property_t * prop = &entry->optional[i];
     if (spice_find_property (def, prop->key) == NULL) {
       struct pair_t * pair = create_pair ();
       pair->key = strdup (prop->key);
@@ -1346,6 +1378,40 @@ static void spice_collect_external_nodes (struct definition_t * def) {
   }
 }
 
+/* This function goes through the list of device descriptions and
+   checks whether the given model is already in the list.  Returns
+   NULL if there is no such model. */
+static struct definition_t * spice_find_Model (char * instance) {
+  struct definition_t * dev;
+  for (dev = device_root; dev; dev = dev->next) {
+    if (!strcmp (dev->instance, instance))
+      return dev;
+  }
+  return NULL;
+}
+
+/* The function appends a new device model.  It creates the actual
+   model description and adjusts the nodes and optional/required
+   properties. */
+static struct definition_t * spice_add_Model (struct definition_t * def) {
+  struct definition_t * Model;
+  if (strcasecmp (def->type, "MODEL"))
+    return NULL;
+  if (spice_find_Model (def->instance))
+    return NULL;
+  Model = create_definition ();
+  Model->action = PROP_COMPONENT;
+  Model->instance = strdup (def->instance);
+  Model->define = def->define;
+  spice_adjust_device (Model, def);
+  spice_translate_type (Model);
+  spice_fixup_definition (Model);
+  spice_adjust_optional_properties (Model);
+  Model->next = device_root;
+  device_root = Model;
+  return Model;
+}
+
 /* This function must be called after the actual Spice netlist
    translator in order to adjust some references or whatever in the
    resulting netlist. */
@@ -1705,7 +1771,10 @@ static struct definition_t * spice_translator (struct definition_t * root) {
       spice_fixup_definition (def);
     }
     else {
-      // skipped
+      // handle device description
+      if (!strcasecmp (def->type, "MODEL")) {
+	spice_add_Model (def);
+      }
     }
     // remove values if possible
     spice_free_values (def);

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: mstee.cpp,v 1.7 2005/05/02 06:51:01 raimi Exp $
+ * $Id: mstee.cpp,v 1.8 2005/05/17 09:35:08 raimi Exp $
  *
  */
 
@@ -53,6 +53,13 @@ void mstee::initSP (void) {
   lineA->initSP ();
   lineB->initSP ();
   line2->initSP ();
+}
+
+void mstee::initNoiseSP (void) {
+  allocMatrixN ();
+  lineA->initNoiseSP ();
+  lineB->initNoiseSP ();
+  line2->initNoiseSP ();
 }
 
 void mstee::initLines (void) {
@@ -244,6 +251,13 @@ void mstee::initAC (void) {
   lineA->initAC ();
   lineB->initAC ();
   line2->initAC ();
+}
+
+void mstee::initNoiseAC (void) {
+  allocMatrixN (getVoltageSources ());
+  lineA->initNoiseAC ();
+  lineB->initNoiseAC ();
+  line2->initNoiseAC ();
 }
 
 void mstee::calcAC (nr_double_t frequency) {

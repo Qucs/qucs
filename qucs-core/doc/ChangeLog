@@ -1,3 +1,8 @@
+2005-05-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* coplanar.tex (section{Coplanar waveguide step}): Added
+	S-, Y- and Z-parameters of coplanar step.
+
 2005-05-11  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsator.1: Updated manpages.

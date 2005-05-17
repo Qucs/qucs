@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.h,v 1.6 2005/04/29 06:49:08 raimi Exp $
+ * $Id: check_spice.h,v 1.7 2005/05/17 09:35:08 raimi Exp $
  *
  */
 
@@ -41,11 +41,12 @@ extern FILE * spice_in;
 
 __BEGIN_DECLS
 
-/* Externalize variables used by the scanner and parser. */
+/* Externalize variables used by the scanner, parser, checker and producer. */
 extern struct definition_t * definition_root;
 extern struct definition_t * subcircuit_root;
 extern char * spice_title;
 extern struct node_t * spice_nodes;
+extern struct definition_t * device_root;
 
 /* Available functions of the checker. */
 int  spice_checker (void);

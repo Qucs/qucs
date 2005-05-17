@@ -26,6 +26,7 @@ files.
 Version 0.0.6
 -------------
 
+ * converter tool also able to export device models as schematic entries
  * coplanar short, open, gap and step components
  * transient models of bias-t, dc-block and dc-feed added
  * gain circle formulas in equation solver available

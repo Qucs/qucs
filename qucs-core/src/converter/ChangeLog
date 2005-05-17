@@ -1,3 +1,13 @@
+2005-05-15  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_producer.cpp (qucslib_producer): New producer in the
+	converter tool implemented.  It outputs templates for device
+	models for diode, jfet, mosfet and bjt including a symbol.
+	The functionality can be used in future for device libraries.
+
+	* check_spice.cpp: The spice checker now also collects the
+	available .MODEL statements.
+
 2005-04-30  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp: Fixed reference node implementation in

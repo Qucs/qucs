@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: msline.cpp,v 1.43 2005/05/02 06:51:01 raimi Exp $
+ * $Id: msline.cpp,v 1.44 2005/05/17 09:35:08 raimi Exp $
  *
  */
 
@@ -48,6 +48,8 @@ msline::msline () : circuit (2) {
 }
 
 void msline::calcNoiseSP (nr_double_t) {
+  nr_double_t l = getPropertyDouble ("L");
+  if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
   matrix s = getMatrixS ();
@@ -480,6 +482,8 @@ void msline::calcAC (nr_double_t frequency) {
 }
 
 void msline::calcNoiseAC (nr_double_t) {
+  nr_double_t l = getPropertyDouble ("L");
+  if (l < 0) return;
   // calculate noise using Bosma's theorem
   nr_double_t T = getPropertyDouble ("Temp");
   setMatrixN (4 * kelvin (T) / T0 * real (getMatrixY ()));

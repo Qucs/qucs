@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  *
- * $Id: qucsconv.cpp,v 1.6 2005/05/02 06:51:02 raimi Exp $
+ * $Id: qucsconv.cpp,v 1.7 2005/05/17 09:35:08 raimi Exp $
  *
  */
 
@@ -38,7 +38,8 @@ FILE * open_file (char * file, char * flag) {
   FILE * fd = NULL;
   if (file) {
     if ((fd = fopen (file, flag)) == NULL) {
-      fprintf (stderr, "cannot open file `%s': %s\n", file, strerror (errno));
+      fprintf (stderr, "cannot open file `%s': %s, using %s instead\n",
+	       file, strerror (errno), flag[0] == 'r' ? "stdin" : "stdout");
       fd = flag[0] == 'r' ? stdin : stdout;
     }
   }
@@ -112,10 +113,13 @@ int main (int argc, char ** argv) {
     return -1;
   }
 
-  if (output && !strcmp (output, "qucs")) {
+  if (output && (!strcmp (output, "qucs") || !strcmp (output, "qucslib"))) {
     if ((qucs_out = open_file (outfile, "w")) == NULL)
       return -1;
-    qucs_producer ();
+    if (!strcmp (output, "qucs"))
+      qucs_producer ();
+    else
+      qucslib_producer ();
   }
   return 0;
 }

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: nasolver.cpp,v 1.34 2005/05/02 06:50:59 raimi Exp $
+ * $Id: nasolver.cpp,v 1.35 2005/05/17 09:35:07 raimi Exp $
  *
  */
 
@@ -679,8 +679,8 @@ void nasolver<nr_type_t>::createNoiseMatrix (void) {
       vsc = findVoltageSource (c);
       n = 0.0;
       if (vsr == vsc) {
-	int ri = vsr->getSize () + r - vsr->getVoltageSource () + 1;
-	int ci = vsc->getSize () + c - vsc->getVoltageSource () + 1;
+	int ri = vsr->getSize () + r - vsr->getVoltageSource ();
+	int ci = vsc->getSize () + c - vsc->getVoltageSource ();
 	n = MatVal (vsr->getN (ri, ci));
       }
       C->set (r + N, c + N, n);
