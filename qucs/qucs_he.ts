@@ -2517,6 +2517,14 @@ Usage:  qucsedit [-r] file
         <source>ERROR: No file name in SPICE component &quot;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>reverse breakdown voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current at reverse breakdown voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
