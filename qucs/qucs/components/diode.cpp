@@ -69,6 +69,10 @@ Diode::Diode()
 	QObject::tr("flicker noise exponent")));
   Props.append(new Property("Ffe", "1.0", false,
 	QObject::tr("flicker noise frequency exponent")));
+  Props.append(new Property("Bv", "0", false,
+	QObject::tr("reverse breakdown voltage")));
+  Props.append(new Property("Ibv", "1 mA", false,
+	QObject::tr("current at reverse breakdown voltage")));
 }
 
 Diode::~Diode()
