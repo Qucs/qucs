@@ -1,8 +1,8 @@
 /***************************************************************************
-                                 spicefile.h
-                                -------------
-    begin                : Tue Dec 28 2004
-    copyright            : (C) 2004 by Michael Margraf
+                               coplanar.h
+                              ------------
+    begin                : Fri May 13 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,22 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SPICEFILE_H
-#define SPICEFILE_H
+#ifndef CPWSTEP_H
+#define CPWSTEP_H
 
 #include "component.h"
 
 
-class SpiceFile : public Component  {
+class CPWstep : public Component  {
 public:
-  SpiceFile();
-  ~SpiceFile();
+  CPWstep();
+  ~CPWstep();
   Component* newOne();
   static Component* info(QString&, char* &, bool getNewOne=false);
-  void recreate();
-  QString NetList();
-
-  bool withSim;
 };
 
 #endif

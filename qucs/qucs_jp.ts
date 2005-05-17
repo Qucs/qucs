@@ -2543,6 +2543,26 @@ Usage:  qucsedit [-r] file
         <source>sim</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2889,68 +2909,51 @@ Do you want to save the changes before closing?</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>新しいシミュレーションを始めています</translation>
+        <translation type="obsolete">新しいシミュレーションを始めています</translation>
     </message>
     <message>
         <source> at </source>
-        <translation>at</translation>
+        <translation type="obsolete">at</translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>ネットリストを作成中...</translation>
+        <translation type="obsolete">ネットリストを作成中...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation>エラー:ネットリストファイルを作成できません!
+        <translation type="obsolete">エラー:ネットリストファイルを作成できません!
 中断しました.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation>完了.</translation>
+        <translation type="obsolete">完了.</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>エラー:シミュレータを開始できません!</translation>
+        <translation type="obsolete">エラー:シミュレータを開始できません!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>シミュレーション完了</translation>
+        <translation type="obsolete">シミュレーション完了</translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>準備完了.
+        <translation type="obsolete">準備完了.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>シミュレーションでのエラー</translation>
+        <translation type="obsolete">シミュレーションでのエラー</translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>中断しました.</translation>
-    </message>
-    <message>
-        <source>Output:
-----------
-
-</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>
-
-
-Errors:
---------
-
-</source>
-        <translation></translation>
+        <translation type="obsolete">中断しました.</translation>
     </message>
     <message>
         <source>Cannot start text editor!</source>
@@ -5094,13 +5097,86 @@ Starts transmission line calculator</source>
         <source>Close window</source>
         <translation>ウィンドウを閉じる</translation>
     </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished">新しいシミュレーションを始めています</translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished">at</translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished">ネットリストを作成中...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create netlist file!
+Aborted.</source>
+        <translation type="obsolete">エラー:ネットリストファイルを作成できません!
+中断しました.</translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished">完了.</translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished">エラー:シミュレータを開始できません!</translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished">シミュレーション完了</translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished">準備完了.
+</translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished">シミュレーションでのエラー</translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished">中断しました.</translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
-    <message>
-        <source>Edit Spice Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name:</source>
         <translation type="unfinished">名前 :</translation>
@@ -5116,10 +5192,6 @@ Starts transmission line calculator</source>
     <message>
         <source>Edit</source>
         <translation type="unfinished">編集</translation>
-    </message>
-    <message>
-        <source>Spice net nodes:</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
@@ -5171,6 +5243,22 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>Converting ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished">SPICEネットリスト</translation>
+    </message>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

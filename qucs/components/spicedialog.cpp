@@ -38,7 +38,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
 			: QDialog(parent, 0, TRUE, Qt::WDestructiveClose)
 {
   resize(400, 250);
-  setCaption(tr("Edit Spice Component Properties"));
+  setCaption(tr("Edit SPICE Component Properties"));
   Comp = c;
   Doc  = d;
 
@@ -52,7 +52,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
 
 
   // ...........................................................
-  QGridLayout *topGrid = new QGridLayout(0, 3,4,5,5);
+  QGridLayout *topGrid = new QGridLayout(0, 3,3,3,3);
   all->addLayout(topGrid);
 
   topGrid->addWidget(new QLabel(tr("Name:"), myParent), 0,0);
@@ -72,18 +72,18 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
   connect(ButtBrowse, SIGNAL(clicked()), SLOT(slotButtBrowse()));
 
   ButtEdit = new QPushButton(tr("Edit"), myParent);
-  topGrid->addWidget(ButtEdit, 1,3);
+  topGrid->addWidget(ButtEdit, 2,2);
   connect(ButtEdit, SIGNAL(clicked()), SLOT(slotButtEdit()));
 
   FileCheck = new QCheckBox(tr("show file name in schematic"), myParent);
-  topGrid->addMultiCellWidget(FileCheck, 2,2,1,3);
+  topGrid->addWidget(FileCheck, 2,1);
 
 
   // ...........................................................
   QGridLayout *midGrid = new QGridLayout(0, 2,3,5,5);
   all->addLayout(midGrid);
 
-  midGrid->addWidget(new QLabel(tr("Spice net nodes:"), myParent), 0,0);
+  midGrid->addWidget(new QLabel(tr("SPICE net nodes:"), myParent), 0,0);
   NodesList = new QListBox(myParent);
   midGrid->addWidget(NodesList, 1,0);
   connect(NodesList, SIGNAL(doubleClicked(QListBoxItem*)),
@@ -125,24 +125,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
   FileEdit->setText(pp->Value);
   FileCheck->setChecked(pp->display);
 
-  // load netlist nodes
-  loadSpiceNetList(pp->Value);
-  pp = Comp->Props.next();
-  if(!pp->Value.isEmpty()) {
-    PortsList->clear();
-    PortsList->insertStringList(QStringList::split(',', pp->Value));
-
-    QString tmp;
-    QListBoxItem *pi;
-    for(unsigned int i=0; i<PortsList->count(); i++) {
-      tmp = PortsList->text(i);
-      PortsList->changeItem(tmp.remove(0, 4), i);
-
-      pi = NodesList->findItem(tmp, Qt::CaseSensitive | Qt::ExactMatch);
-      if(pi) delete pi;
-      else PortsList->removeItem(i--);
-    }
-  }
+  loadSpiceNetList(pp->Value);  // load netlist nodes
 }
 
 SpiceDialog::~SpiceDialog()
@@ -211,25 +194,24 @@ void SpiceDialog::slotButtApply()
   }
 
 
-  if(changed) {
-    tmp = Comp->Name;    // is sometimes changed by "recreate"
+  if(changed || Comp->withSim) {  // because of "sim" text
     Doc->Comps->setAutoDelete(false);
     Doc->deleteComp(Comp);
     Comp->recreate(); // to apply changes to the schematic symbol
     Doc->insertRawComponent(Comp);
     Doc->Comps->setAutoDelete(true);
-    Comp->Name = tmp;
     ((QucsView*)parent())->viewport()->repaint();
   }
 }
 
+static QString lastDir;  // to remember last directory and file
 // -------------------------------------------------------------------------
 void SpiceDialog::slotButtBrowse()
 {
-  static QString lastDir;  // to remember last directory and file
   QString s = QFileDialog::getOpenFileName(
 		lastDir.isEmpty() ? QString(".") : lastDir,
-		tr("All Files")+" (*.*)", this, "", tr("Select a file"));
+		tr("SPICE netlist")+" (*.cir);;"+tr("All Files")+" (*.*)",
+		this, "", tr("Select a file"));
   if(s.isEmpty()) return;
 
   lastDir = s;   // remember last directory and file
@@ -240,16 +222,24 @@ void SpiceDialog::slotButtBrowse()
      QucsWorkDir.absPath() == FileInfo.dirPath(true)) s = FileInfo.fileName();
   FileEdit->setText(s);
 
+  Comp->Props.at(1)->Value = "";
   loadSpiceNetList(s);
 }
 
 // -------------------------------------------------------------------------
 bool SpiceDialog::loadSpiceNetList(const QString& s)
 {
+  Comp->withSim = false;
   if(s.isEmpty()) return false;
 
+  NodesList->clear();
+  PortsList->clear();
+  textStatus = 0;
+  Line = Error = "";
+
+
   // first call Qucsconv ............
-  QProcess *QucsConv = new QProcess(this);
+  QucsConv = new QProcess(this);
   QucsConv->addArgument(QucsSettings.BinDir + "qucsconv");
   QucsConv->addArgument("-if");
   QucsConv->addArgument("spice");
@@ -257,63 +247,104 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   QucsConv->addArgument("qucs");
   QucsConv->addArgument("-i");
   QucsConv->addArgument(s);
-  if(!QucsConv->start()) {
-    QMessageBox::critical(this, tr("Error"),
-                 tr("Cannot execute")+" "+QucsSettings.BinDir + "qucsconv.");
-    return false;
-  }
+  connect(QucsConv, SIGNAL(readyReadStdout()), SLOT(slotGetNetlist()));
+  connect(QucsConv, SIGNAL(readyReadStderr()), SLOT(slotGetError()));
 
   QMessageBox *MBox = new QMessageBox(tr("Info"), tr("Converting ..."),
                QMessageBox::NoIcon, QMessageBox::Abort,
                QMessageBox::NoButton, QMessageBox::NoButton, this, 0, true,
 	       Qt::WStyle_DialogBorder |  Qt::WDestructiveClose);
   connect(QucsConv, SIGNAL(processExited()), MBox, SLOT(close()));
+
+  if(!QucsConv->start()) {
+    QMessageBox::critical(this, tr("Error"),
+                 tr("Cannot execute")+" "+QucsSettings.BinDir + "qucsconv.");
+    return false;
+  }
+
   MBox->exec();
-  if(QucsConv->isRunning())  QucsConv->kill();
+  delete QucsConv;
+
+  if(!Error.isEmpty())
+    QMessageBox::critical(this, tr("QucsConv Error"), Error);
+
+  Property *pp = Comp->Props.at(1);
+  if(!pp->Value.isEmpty()) {
+    PortsList->clear();
+    PortsList->insertStringList(QStringList::split(',', pp->Value));
+  }
+
+  QString tmp;
+  QListBoxItem *pi;
+  for(unsigned int i=0; i<PortsList->count(); i++) {
+    tmp = PortsList->text(i).remove(0, 4);
+    PortsList->changeItem(tmp, i);
+
+    pi = NodesList->findItem(tmp, Qt::CaseSensitive | Qt::ExactMatch);
+    if(pi) delete pi;
+    else PortsList->removeItem(i--);
+  }
+  return true;
+}
+
+// -------------------------------------------------------------------------
+void SpiceDialog::slotGetError()
+{
+  Error += QString(QucsConv->readStderr());
+}
+
+// -------------------------------------------------------------------------
+void SpiceDialog::slotGetNetlist()
+{
+  int i;
+  QString s;
+  Line += QString(QucsConv->readStdout());
+
+  while((i = Line.find('\n')) >= 0) {
+
+    s = Line.left(i);
+    Line.remove(0, i+1);
 
 
-  // then read converted netlist .......
-  QString Line;
-  Comp->withSim = false;
-  NodesList->clear();
-  PortsList->clear();
-  for(;;) {
-    Line = QucsConv->readLineStdout();
-    if(Line == QString::null) break;
-    Line = Line.stripWhiteSpace();
-    if(Line.at(0) == '.') {
-      Comp->withSim = true;
+    s = s.stripWhiteSpace();
+    if(s.at(0) == '.') {
+      if(s.left(5) != ".Def:")  Comp->withSim = true;
       continue;
     }
 
-    if(Line == "### TOPLEVEL NODELIST BEGIN") {
-      for(;;) {
-	Line = QucsConv->readLineStdout();
-	if(Line == QString::null) break;
-	if(Line == "### TOPLEVEL NODELIST END") break;
-	if(Line.left(2) != "# ") continue;
-	Line.remove(0, 2);
+    switch(textStatus) {
+      case 0:
+	if(s == "### TOPLEVEL NODELIST BEGIN")
+	  textStatus = 1;
+	else if(s == "### SPICE OUTPUT NODELIST BEGIN")
+	  textStatus = 2;
+	break;
 
-	if(Line.left(4) == "_net")
-	  NodesList->insertItem(Line.remove(0, 4));
-      }
-    }
-    else if(Line == "### SPICE OUTPUT NODELIST BEGIN") {
-      for(;;) {
-	Line = QucsConv->readLineStdout();
-	if(Line == QString::null) break;
-	if(Line == "### SPICE OUTPUT NODELIST END") break;
-	if(Line.left(2) != "# ") continue;
-	Line.remove(0, 2);
+      case 1:
+	if(s == "### TOPLEVEL NODELIST END") {
+	  textStatus = 0;
+	  break;
+	}
+	if(s.left(2) != "# ") break;
+	s.remove(0, 2);
 
-	if(Line.left(4) == "_net")
-	  PortsList->insertItem(Line.remove(0, 4));
-      }
+	if(s.left(4) == "_net")
+	  NodesList->insertItem(s.remove(0, 4));
+	break;
+
+      case 2:
+	if(s == "### SPICE OUTPUT NODELIST END") {
+	  textStatus = 0;
+	  break;
+	}
+	if(s.left(2) != "# ") break;
+	s.remove(0, 2);
+
+	if(s.left(4) == "_net")
+	  PortsList->insertItem(s); // prefix "_net" is removed later on
+	break;
     }
   }
-
-  delete QucsConv;
-  return true;
 }
 
 // -------------------------------------------------------------------------

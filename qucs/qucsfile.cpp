@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsfile.cpp  -  description
-                             -------------------
+                                qucsfile.cpp
+                               --------------
     begin                : Sat Mar 27 2004
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -33,6 +33,7 @@
 #include <qstringlist.h>
 #include <qregexp.h>
 #include <qprocess.h>
+#include <qtextedit.h>
 
 
 extern QDir QucsWorkDir;
@@ -728,7 +729,8 @@ bool QucsFile::rebuildSymbol(QString *s)
 // ---------------------------------------------------
 // Follows the wire lines in order to determine the node names for
 // each component. Output into "stream", NodeSets are collected in "NS".
-bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
+bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
+                             QStringList& Collect, QTextEdit *ErrText)
 {
   Node *p1, *p2;
   Wire *pw;
@@ -757,20 +759,27 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
 	     QucsDoc *d = new QucsDoc(0, QucsWorkDir.filePath(s));
              if(!d->File.load()) {  // load document if possible
                delete d;
+               ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"")+s+"\".");
                return false;
              }
 	     d->DocName = s;
-	     d->File.createSubNetlist(stream, countInit);
+	     bool r = d->File.createSubNetlist(
+				stream, countInit, Collect, ErrText);
 	     delete d;
+	     if(!r) return false;
            }
       else if(pc->Model == "SPICE") {
-	     s = pc->Props.getFirst()->Value;
+	     s = pc->Props.first()->Value;
+	     if(s.isEmpty()) {
+               ErrText->insert(QObject::tr("ERROR: No file name in SPICE component \"")+
+	                     pc->Name+"\".");
+	       return false;
+	     }
 	     if(StringList.findIndex(s) >= 0)
 		continue;   // insert each spice component just one time
 
 	     StringList.append(s);
-	     if(!((SpiceFile*)pc)->convertSpiceNetlist(stream, NS))
-	       return false;
+	     Collect.append("SPICE \""+s+'"'+pc->Props.next()->Value);
 	   }
 
 
@@ -781,8 +790,8 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
     if(p1->Name.isEmpty()) continue;
     if(p1->Label)
       if(!p1->Label->initValue.isEmpty())
-	NS += "NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
-	      " U=\"" + p1->Label->initValue + "\"\n";
+	Collect.append("NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
+	      " U=\"" + p1->Label->initValue + "\"");
 
     Cons.append(p1);
     for(p2 = Cons.first(); p2 != 0; p2 = Cons.next())
@@ -807,8 +816,8 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
 	    Cons.findRef(p2);   // back to current Connection
 	    if(pw->Label)
 	      if(!pw->Label->initValue.isEmpty())
-		NS += "NodeSet:NS" + QString::number(countInit++) + " " +
-		      p1->Name + " U=\"" + pw->Label->initValue + "\"\n";
+		Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
+		      p1->Name + " U=\"" + pw->Label->initValue + "\"");
 	    setName = false;
 	  }
         }
@@ -823,8 +832,8 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
     p1->Name = "_net" + QString::number(z++);   // create node name
     if(p1->Label)
       if(!p1->Label->initValue.isEmpty())
-	NS += "NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
-	      " U=\"" + p1->Label->initValue + "\"\n";
+	Collect.append("NodeSet:NS" + QString::number(countInit++) + " " + p1->Name +
+			" U=\"" + p1->Label->initValue + "\"");
 
     Cons.append(p1);
     // create list with connections to the node
@@ -850,8 +859,8 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
 	    Cons.findRef(p2);   // back to current Connection
 	    if(pw->Label)
 	      if(!pw->Label->initValue.isEmpty())
-		NS += "NodeSet:Nb" + QString::number(countInit++) + " " +
-		      p1->Name + " U=\"" + pw->Label->initValue + "\"\n";
+		Collect.append("NodeSet:Nb" + QString::number(countInit++) + " " +
+		      p1->Name + " U=\"" + pw->Label->initValue + "\"");
 	    setName = false;
 	  }
         }
@@ -863,12 +872,13 @@ bool QucsFile::giveNodeNames(QTextStream *stream, QString& NS, int& countInit)
 
 // ---------------------------------------------------
 // Write the netlist as subcircuit to the text stream 'NetlistFile'.
-bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit)
+bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
+                                QStringList& Collect, QTextEdit *Error)
 {
-  QString s;
-  if(!giveNodeNames(stream, s, countInit)) return false;
-
   int i, z;
+  QString s;
+  if(!giveNodeNames(stream, countInit, Collect, Error)) return false;
+
   QStringList sl;
   QStringList::Iterator it;
   Component *pc;
@@ -905,35 +915,29 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit)
 }
 
 // ---------------------------------------------------
-// Creates the file "netlist.net" in the project directory. Returns "true"
-// if successful.
-bool QucsFile::createNetlist(QFile *NetlistFile)
+// Determines the node names and writes subcircuits into netlist file.
+bool QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
+                              QTextEdit *Error)
 {
-  if(!NetlistFile->open(IO_WriteOnly)) return false;
-
-  QTextStream stream(NetlistFile);
   // first line is documentation
   stream << "# Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
 
-
-  QString s;
   int countInit = 0;
-  if(!giveNodeNames(&stream, s, countInit)) {
-    NetlistFile->close();
-    StringList.clear();
+  StringList.clear();
+  if(!giveNodeNames(&stream, countInit, Collect, Error))
     return false;
-  }
-  stream << s;  // outputs the NodeSets and SPICE simulations (if any)
+  
+  return true;
+}
 
-  // .................................................
-  // write all components with node names into the netlist file
+// .................................................
+// write all components with node names into the netlist file
+void QucsFile::createNetlist(QTextStream& stream)
+{
+  QString s;
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next()) {
     s = pc->NetList();
     if(!s.isEmpty())  // not inserted: subcircuit ports, disabled components
       stream << s << "\n";
   }
-  NetlistFile->close();
-
-  StringList.clear();
-  return true;
 }

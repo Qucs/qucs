@@ -2669,6 +2669,26 @@ Usage:  qucsedit [-r] file
         <source>sim</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3707,54 +3727,54 @@ Simulator by Stefan Jahn
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Inizio nuova simulazione ore </translation>
+        <translation type="obsolete">Inizio nuova simulazione ore </translation>
     </message>
     <message>
         <source> at </source>
-        <translation> a </translation>
+        <translation type="obsolete"> a </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>creo netlist...</translation>
+        <translation type="obsolete">creo netlist...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation>ERRORE: Impossibile creare file netlist!
+        <translation type="obsolete">ERRORE: Impossibile creare file netlist!
 Abbandonato.</translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation>fatto.
+        <translation type="obsolete">fatto.
 </translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>ERRORE: Impossibile avviare il simulatore!</translation>
+        <translation type="obsolete">ERRORE: Impossibile avviare il simulatore!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Simulazione conclusa ore </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Pronto.
+        <translation type="obsolete">Pronto.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Errori durante la simulazione ora </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Annullato.
+        <translation type="obsolete">Annullato.
 </translation>
     </message>
     <message>
@@ -3762,7 +3782,7 @@ Errori durante la simulazione ora </translation>
 ----------
 
 </source>
-        <translation>Output:
+        <translation type="obsolete">Output:
 ----------
 
 </translation>
@@ -3775,7 +3795,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Errori:
@@ -6193,13 +6213,99 @@ Lancia il calcolatore delle linee di trasmissione</translation>
         <source>Close window</source>
         <translation>Chiudi finestra</translation>
     </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished">Inizio nuova simulazione ore </translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished"> a </translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished">creo netlist...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create netlist file!
+Aborted.</source>
+        <translation type="obsolete">ERRORE: Impossibile creare file netlist!
+Abbandonato.</translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished">fatto.
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished">ERRORE: Impossibile avviare il simulatore!</translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished">
+Simulazione conclusa ore </translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished">Pronto.
+</translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished">
+Errori durante la simulazione ora </translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished">Annullato.
+</translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished">Output:
+----------
+
+</translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished">
+
+
+Errori:
+--------
+
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
-    <message>
-        <source>Edit Spice Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name:</source>
         <translation type="unfinished">Nome:</translation>
@@ -6270,6 +6376,22 @@ Lancia il calcolatore delle linee di trasmissione</translation>
     </message>
     <message>
         <source>Converting ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished">netlist SPICE</translation>
+    </message>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

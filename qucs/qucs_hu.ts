@@ -2554,6 +2554,26 @@ Használat:  qucsedit [-r] fájl
         <source>sim</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>coplanar step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance between ground planes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Step</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2911,55 +2931,55 @@ Szeretnéd menteni a változásakat bezárás előtt?
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation>Új szimuláció indulása </translation>
+        <translation type="obsolete">Új szimuláció indulása </translation>
     </message>
     <message>
         <source> at </source>
-        <translation>,  </translation>
+        <translation type="obsolete">,  </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation>kötéslista készítés...</translation>
+        <translation type="obsolete">kötéslista készítés...</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
 Aborted.</source>
-        <translation>HIBA: Nem lehet létrehozni a kötéslista fájlt!
+        <translation type="obsolete">HIBA: Nem lehet létrehozni a kötéslista fájlt!
 Megszakítva.
 </translation>
     </message>
     <message>
         <source>done.
 </source>
-        <translation>befejezve.
+        <translation type="obsolete">befejezve.
 </translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation>HIBA: Szimuláció nem indítható!</translation>
+        <translation type="obsolete">HIBA: Szimuláció nem indítható!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation>
+        <translation type="obsolete">
 Szimuláció befejezése </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation>Kész.
+        <translation type="obsolete">Kész.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation>
+        <translation type="obsolete">
 Hibák a szimuláció alatt </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation>Megszakítva.
+        <translation type="obsolete">Megszakítva.
 </translation>
     </message>
     <message>
@@ -2967,7 +2987,7 @@ Hibák a szimuláció alatt </translation>
 ----------
 
 </source>
-        <translation>Kimenet:
+        <translation type="obsolete">Kimenet:
 -------------
 
 </translation>
@@ -2980,7 +3000,7 @@ Errors:
 --------
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 
 Hibák:
@@ -5236,13 +5256,100 @@ Rács megjelenítése</translation>
         <source>Close window</source>
         <translation>Ablak bezárás</translation>
     </message>
+    <message>
+        <source>Starting new simulation on </source>
+        <translation type="unfinished">Új szimuláció indulása </translation>
+    </message>
+    <message>
+        <source> at </source>
+        <translation type="unfinished">,  </translation>
+    </message>
+    <message>
+        <source>creating netlist ....</source>
+        <translation type="unfinished">kötéslista készítés...</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot create netlist file!
+Aborted.</source>
+        <translation type="obsolete">HIBA: Nem lehet létrehozni a kötéslista fájlt!
+Megszakítva.
+</translation>
+    </message>
+    <message>
+        <source>done.
+</source>
+        <translation type="unfinished">befejezve.
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start simulator!</source>
+        <translation type="unfinished">HIBA: Szimuláció nem indítható!</translation>
+    </message>
+    <message>
+        <source>
+Simulation ended on </source>
+        <translation type="unfinished">
+Szimuláció befejezése </translation>
+    </message>
+    <message>
+        <source>Ready.
+</source>
+        <translation type="unfinished">Kész.
+</translation>
+    </message>
+    <message>
+        <source>
+Errors occured during simulation on </source>
+        <translation type="unfinished">
+Hibák a szimuláció alatt </translation>
+    </message>
+    <message>
+        <source>Aborted.
+</source>
+        <translation type="unfinished">Megszakítva.
+</translation>
+    </message>
+    <message>
+        <source>Output:
+----------
+
+</source>
+        <translation type="unfinished">Kimenet:
+-------------
+
+</translation>
+    </message>
+    <message>
+        <source>
+
+
+Errors:
+--------
+
+</source>
+        <translation type="unfinished">
+
+
+Hibák:
+---------
+
+</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
-    <message>
-        <source>Edit Spice Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name:</source>
         <translation type="unfinished">Név:</translation>
@@ -5258,10 +5365,6 @@ Rács megjelenítése</translation>
     <message>
         <source>Edit</source>
         <translation type="unfinished">Szerkesztés</translation>
-    </message>
-    <message>
-        <source>Spice net nodes:</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
@@ -5313,6 +5416,22 @@ Rács megjelenítése</translation>
     </message>
     <message>
         <source>Converting ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsConv Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished">SPICE kötéslista</translation>
+    </message>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
