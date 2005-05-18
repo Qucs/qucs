@@ -2784,23 +2784,23 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>coplanar step</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplanarabsatz</translation>
     </message>
     <message>
         <source>distance between ground planes</source>
-        <translation type="unfinished"></translation>
+        <translation>Abstand zwischen den Masseebenen</translation>
     </message>
     <message>
         <source>Coplanar Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Koplanarabsatz</translation>
     </message>
     <message>
         <source>ERROR: Cannot load subcircuit &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">FEHLER: Die Unterschaltung kann nicht geladen werden &quot;</translation>
     </message>
     <message>
         <source>ERROR: No file name in SPICE component &quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">FEHLER: Kein Dateiname in der SPICE-Komponente angegeben &quot;</translation>
     </message>
     <message>
         <source>reverse breakdown voltage</source>
@@ -2809,6 +2809,14 @@ Verwendung:  qucsedit [-r] Datei
     <message>
         <source>current at reverse breakdown voltage</source>
         <translation>Strom bei der Durchbruchspannung im Rückwärtsbetrieb</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
+        <translation>FEHLER: Die Unterschaltung &quot;%1&quot; kann nicht geladen werden.</translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
+        <translation>FEHLER: In der SPICE-Komponente &quot;%1&quot; ist kein Dateiname angegeben.</translation>
     </message>
 </context>
 <context>
@@ -6691,15 +6699,15 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished">Starte neue Simulation am </translation>
+        <translation>Starte neue Simulation am </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished"> um </translation>
+        <translation> um </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished">Erzeuge Netzliste... </translation>
+        <translation>Erzeuge Netzliste... </translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -6710,39 +6718,39 @@ Abgebrochen.</translation>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished">fertig.
+        <translation>fertig.
 </translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Der Simulator läuft noch!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished">FEHLER: Simulator kann nicht gestartet werden!</translation>
+        <translation>FEHLER: Simulator kann nicht gestartet werden!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished">
+        <translation>
 Simulation endete am </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished">Fertig.
+        <translation>Fertig.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished">
+        <translation>
 Während der Simulation sind Fehler aufgetreten am </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished">Abgebrochen.
+        <translation>Abgebrochen.
 </translation>
     </message>
     <message>
@@ -6750,7 +6758,7 @@ Während der Simulation sind Fehler aufgetreten am </translation>
 ----------
 
 </source>
-        <translation type="unfinished">Ausgabe:
+        <translation>Ausgabe:
 ----------
 
 </translation>
@@ -6763,7 +6771,7 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished">
+        <translation>
 
 
 Fehler:
@@ -6773,11 +6781,11 @@ Fehler:
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Netzlistendatei kann nicht geschrieben werden!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Das Programm QucsConv kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -6860,19 +6868,19 @@ Fehler:
     </message>
     <message>
         <source>QucsConv Error</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsConv Fehler</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished">SPICE Netzliste</translation>
+        <translation>SPICE Netzliste</translation>
     </message>
     <message>
         <source>Edit SPICE Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE-Komponenteneigenschaften bearbeiten</translation>
     </message>
     <message>
         <source>SPICE net nodes:</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE Netzknoten:</translation>
     </message>
 </context>
 </TS>

@@ -759,7 +759,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 	     QucsDoc *d = new QucsDoc(0, QucsWorkDir.filePath(s));
              if(!d->File.load()) {  // load document if possible
                delete d;
-               ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"")+s+"\".");
+               ErrText->insert(QObject::tr("ERROR: Cannot load subcircuit \"%1\".").arg(s));
                return false;
              }
 	     d->DocName = s;
@@ -771,8 +771,8 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
       else if(pc->Model == "SPICE") {
 	     s = pc->Props.first()->Value;
 	     if(s.isEmpty()) {
-               ErrText->insert(QObject::tr("ERROR: No file name in SPICE component \"")+
-	                     pc->Name+"\".");
+               ErrText->insert(QObject::tr("ERROR: No file name in SPICE component \"%1\".").
+			       arg(pc->Name));
 	       return false;
 	     }
 	     if(StringList.findIndex(s) >= 0)
