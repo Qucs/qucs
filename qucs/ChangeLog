@@ -1,3 +1,8 @@
+2005-05-16  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsactions.cpp (editFile): Do not pass empty command line 
+	arguments.
+
 2005-05-15  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* complete rework of netlist creation, especially concerning

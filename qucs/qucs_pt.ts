@@ -423,18 +423,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotation around y-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation around z-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation around x-Axis:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>y-Axis</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,6 +441,18 @@
     <message>
         <source>Grid</source>
         <translation type="unfinished">Grade</translation>
+    </message>
+    <message>
+        <source>Rotation around x-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation around y-Axis:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation around z-Axis:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -620,19 +620,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dismiss</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1388,19 +1388,19 @@ Formato da linha &apos;componente&apos; errado!</translation>
     </message>
     <message>
         <source>dc block</source>
-        <translation>bloco cc</translation>
+        <translation>dc block</translation>
     </message>
     <message>
         <source>dc Block</source>
-        <translation>Bloco cc</translation>
+        <translation>dc Block</translation>
     </message>
     <message>
         <source>dc feed</source>
-        <translation>semente cc</translation>
+        <translation>dc feed</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation>Semente cc</translation>
+        <translation>dc Feed</translation>
     </message>
     <message>
         <source>diode</source>
@@ -2455,19 +2455,27 @@ Usage:  qucsedit [-r] file
 </translation>
     </message>
     <message>
-        <source>use approximation instead of precise equation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>method for solving the circuit matrix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>for transient simulation: inductance in Henry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>use approximation instead of precise equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coplanar gap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>width of gap between the two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coplanar Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2491,22 +2499,6 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>coplanar gap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>width of gap between the two lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Coplanar Gap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sim</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>coplanar step</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2519,11 +2511,7 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: Cannot load subcircuit &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: No file name in SPICE component &quot;</source>
+        <source>method for solving the circuit matrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2532,6 +2520,18 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>current at reverse breakdown voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2602,11 +2602,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>content of the project directory</source>
-        <translation>contéudo do diretório do projeto</translation>
+        <translation>conteúdo do diretório do projeto</translation>
     </message>
     <message>
         <source>Content of</source>
-        <translation>Contéudo de</translation>
+        <translation>Conteúdo de</translation>
     </message>
     <message>
         <source>Note</source>
@@ -2626,11 +2626,11 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Content</source>
-        <translation>Contéudo</translation>
+        <translation>Conteúdo</translation>
     </message>
     <message>
         <source>content of the open project</source>
-        <translation>contéudo do projeto aberto</translation>
+        <translation>conteúdo do projeto aberto</translation>
     </message>
     <message>
         <source>Components</source>
@@ -2796,7 +2796,7 @@ Você desenha salvar as mudanças antes de fechar?</translation>
     </message>
     <message>
         <source>will appear in the content browser! Continue?</source>
-        <translation>irão aparecer no contéudo do navegador! Continuar?</translation>
+        <translation>irão aparecer no conteúdo do navegador! Continuar?</translation>
     </message>
     <message>
         <source>Info</source>
@@ -2968,7 +2968,7 @@ Erros:
     </message>
     <message>
         <source>Content of &apos;</source>
-        <translation>Contéudo de &apos;</translation>
+        <translation>Conteúdo de &apos;</translation>
     </message>
     <message>
         <source>&apos;</source>
@@ -3088,7 +3088,7 @@ Erros:
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot delete the open file: </source>
@@ -3346,11 +3346,11 @@ Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Result: --</source>
+        <source>Successful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Successful</source>
+        <source>Result: --</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3755,7 +3755,7 @@ Copie a secção selecionada para a área de tranferência</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents to the cursor position</source>
-        <translation>Cole o contéudo da área de tranferência para a posição do cursor</translation>
+        <translation>Cole o conteúdo da área de tranferência para a posição do cursor</translation>
     </message>
     <message>
         <source>Paste
@@ -3763,7 +3763,7 @@ Copie a secção selecionada para a área de tranferência</translation>
 Pastes the clipboard contents to the cursor position</source>
         <translation>Colar
 
-Cole o contéudo da área de tranferência para a posição do cursor</translation>
+Cole o conteúdo da área de tranferência para a posição do cursor</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -3919,7 +3919,7 @@ Feche o projeto atual</translation>
 Shows the whole page content</source>
         <translation>Visuzalizar Todos
 
-Moste o contéudo inteiro da página</translation>
+Moste o conteúdo inteiro da página</translation>
     </message>
     <message>
         <source>View 1:1</source>
@@ -3935,7 +3935,7 @@ Moste o contéudo inteiro da página</translation>
 Shows the page content without magnification</source>
         <translation>Visão 1:1
 
-Mostre o contéudo da página sem magnificação</translation>
+Mostre o conteúdo da página sem magnificação</translation>
     </message>
     <message>
         <source>Zoom in</source>
@@ -4552,10 +4552,6 @@ Moves the property text of components</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About Qt...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Text editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4588,16 +4584,6 @@ Starts QucsFilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Line calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4609,6 +4595,20 @@ Starts QucsFilter</source>
         <source>Line calculation
 
 Starts transmission line calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
+
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4791,6 +4791,10 @@ Starts transmission line calculator</source>
         <translation type="unfinished">Pronto.</translation>
     </message>
     <message>
+        <source>ErEff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Conductor Losses</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4808,6 +4812,14 @@ Starts transmission line calculator</source>
     </message>
     <message>
         <source>TM-Modes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ErEff Even</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ErEff Odd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5006,18 +5018,6 @@ Starts transmission line calculator</source>
         <source>Transmission line type not available.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>ErEff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ErEff Even</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ErEff Odd</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsView</name>
@@ -5128,24 +5128,26 @@ Starts transmission line calculator</source>
         <translation type="unfinished">em</translation>
     </message>
     <message>
+        <source>ERROR: Simulator is still running!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>creating netlist ....</source>
         <translation type="unfinished">criando netlist ....</translation>
     </message>
     <message>
-        <source>ERROR: Cannot create netlist file!
-Aborted.</source>
-        <translation type="obsolete">ERRO: Não é possível criar o arquivo de netlist! 
-Abortado.</translation>
+        <source>ERROR: Cannot write netlist file!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start QucsConv!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>done.
 </source>
         <translation type="unfinished">Feito.
 </translation>
-    </message>
-    <message>
-        <source>ERROR: Simulator is still running!</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
@@ -5201,17 +5203,13 @@ Erros:
 
 </translation>
     </message>
-    <message>
-        <source>ERROR: Cannot write netlist file!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SpiceDialog</name>
+    <message>
+        <source>Edit SPICE Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Name:</source>
         <translation type="unfinished">Nome:</translation>
@@ -5227,6 +5225,14 @@ Erros:
     <message>
         <source>Edit</source>
         <translation type="unfinished">Editar</translation>
+    </message>
+    <message>
+        <source>show file name in schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SPICE net nodes:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
@@ -5253,6 +5259,10 @@ Erros:
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
+        <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>All Files</source>
         <translation type="unfinished">Todos os arquivos</translation>
     </message>
@@ -5261,7 +5271,11 @@ Erros:
         <translation type="unfinished">Selecionar um arquivo</translation>
     </message>
     <message>
-        <source>show file name in schematic</source>
+        <source>Info</source>
+        <translation type="unfinished">Informação</translation>
+    </message>
+    <message>
+        <source>Converting ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5273,27 +5287,7 @@ Erros:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation type="unfinished">Informação</translation>
-    </message>
-    <message>
-        <source>Converting ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>QucsConv Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SPICE netlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit SPICE Component Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
