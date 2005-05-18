@@ -2398,19 +2398,19 @@ Usage:  qucsedit [-r] file
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: Cannot load subcircuit &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERROR: No file name in SPICE component &quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>reverse breakdown voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>current at reverse breakdown voltage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
