@@ -5245,5 +5245,9 @@ Errors:
         <source>SPICE net nodes:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>include SPICE simulations</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

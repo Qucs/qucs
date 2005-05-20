@@ -66,9 +66,9 @@ CPWstep::CPWstep()
 		QObject::tr("name of substrate definition")));
   Props.append(new Property("W1", "1 mm", true,
 		QObject::tr("width of line 1")));
-  Props.append(new Property("W2", "1 mm", true,
+  Props.append(new Property("W2", "2 mm", true,
 		QObject::tr("width of line 2")));
-  Props.append(new Property("S", "1 mm", true,
+  Props.append(new Property("S", "3 mm", true,
 		QObject::tr("distance between ground planes")));
   Props.append(new Property("Backside", "Air", false,
 		QObject::tr("material at the backside of the substrate")+
