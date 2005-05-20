@@ -65,7 +65,7 @@ private:
   QRegExpValidator  *Validator, *ValRestrict;
   QRegExp     Expr;
   QListBox    *NodesList, *PortsList;
-  QCheckBox   *FileCheck;
+  QCheckBox   *FileCheck, *SimCheck;
   QLineEdit   *FileEdit, *CompNameEdit;
   QPushButton *ButtBrowse, *ButtEdit, *ButtAdd, *ButtRemove;
   SpiceFile   *Comp;

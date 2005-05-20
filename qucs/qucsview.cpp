@@ -88,6 +88,8 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   editText->setValidator(Validator);
   editText->setFrame(false);
   editText->setHidden(true);
+  editText->setPaletteBackgroundColor(QucsSettings.BGColor);
+//  editText->setEraseColor(QucsSettings.BGColor);
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
 }
@@ -2384,7 +2386,7 @@ void QucsView::slotApplyCompText()
   MAx1 = pc->cx + pc->tx;
   MAy1 = pc->cy + pc->ty;
 
-  int z, n=0;  // "n" is number of property on screnn
+  int z, n=0;  // "n" is number of property on screen
   pp = pc->Props.first();
   for(z=MAx3; z>0; z--) {  // calculate "n"
     if(!pp) {  // should never happen
@@ -2399,7 +2401,6 @@ void QucsView::slotApplyCompText()
   if(MAx3 > 0)  pp = pc->Props.at(MAx3-1);   // current property
   else s = pc->Name;
 
-  
   if(!editText->isHidden()) {   // is called the first time ?
     // no -> apply value to current property
     if(MAx3 == 0) {   // component name ?

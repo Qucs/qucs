@@ -150,7 +150,6 @@ int Component::getTextSelected(int x_, int y_, float Corr)
     return -1;
   }
 
-  y_ = dy;
   Property *pp;
   for(pp = Props.first(); pp != 0; pp = Props.next())
     if(pp->display)
@@ -160,7 +159,7 @@ int Component::getTextSelected(int x_, int y_, float Corr)
   // get width of text
   w = metrics.width(pp->Name+"="+pp->Value);
   if(x_ > w) return -1;
-  return y_;  // number the property
+  return Props.at()+1;  // number the property
 }
 
 // -------------------------------------------------------
