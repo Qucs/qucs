@@ -139,11 +139,15 @@ void SimMessage::nextSPICE()
   for(;;) {  // search for next SPICE component
     Line = *(Collect.begin());
     Collect.remove(Collect.begin());
-    if(Line == "*") {  // all components worked on ?
+    if(Line == "*") {  // worked on all components ?
       startSimulator();
       return;
     }
-    if(Line.left(6) == "SPICE ") break;
+    if(Line.left(5) == "SPICE") {
+      if(Line.at(5) != 'o') insertSim = true;
+      else insertSim = false;
+      break;
+    }
     Collect.append(Line);
   }
 
@@ -199,7 +203,7 @@ void SimMessage::slotReadSpiceNetlist()
     if(s.isEmpty()) continue;
     if(s.at(0) == '#') continue;
     if(s.at(0) == '.') if(s.left(5) != ".Def:") { // insert simulations later
-      Collect.append(s);
+      if(insertSim) Collect.append(s);
       continue;
     }
     Stream << "  " << s << '\n';

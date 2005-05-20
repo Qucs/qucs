@@ -29,10 +29,6 @@
 # include <unistd.h>
 #endif
 
-#ifdef __MINGW32__
-#include <windows.h>
-#define sleep(sec) (Sleep ((sec) * 1000), 0)
-#endif
 
 SpiceFile::SpiceFile()
 {
@@ -40,6 +36,7 @@ SpiceFile::SpiceFile()
   // Property descriptions not needed, but must not be empty !
   Props.append(new Property("File", "", true, QString("x")));
   Props.append(new Property("Ports", "", false, QString("x")));
+  Props.append(new Property("Sim", "yes", false, QString("x")));
   recreate();
 
   Model = "SPICE";

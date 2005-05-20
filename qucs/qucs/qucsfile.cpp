@@ -779,7 +779,10 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
 		continue;   // insert each spice component just one time
 
 	     StringList.append(s);
-	     Collect.append("SPICE \""+s+'"'+pc->Props.next()->Value);
+	     s += '"'+pc->Props.next()->Value;
+	     if(pc->Props.next()->Value == "yes")  s = "SPICE \""+s;
+	     else  s = "SPICEo\""+s;
+	     Collect.append(s);
 	   }
 
 

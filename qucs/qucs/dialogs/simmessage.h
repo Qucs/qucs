@@ -72,7 +72,7 @@ public:
   QProgressBar *SimProgress;
   QString       ProgressText;
 
-  bool          makeSubcircuit;
+  bool          makeSubcircuit, insertSim;
   QStringList   Collect;
   QFile         NetlistFile;
   QTextStream   Stream;

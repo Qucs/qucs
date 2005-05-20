@@ -52,7 +52,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
 
 
   // ...........................................................
-  QGridLayout *topGrid = new QGridLayout(0, 3,3,3,3);
+  QGridLayout *topGrid = new QGridLayout(0, 4,3,3,3);
   all->addLayout(topGrid);
 
   topGrid->addWidget(new QLabel(tr("Name:"), myParent), 0,0);
@@ -77,6 +77,9 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
 
   FileCheck = new QCheckBox(tr("show file name in schematic"), myParent);
   topGrid->addWidget(FileCheck, 2,1);
+
+  SimCheck = new QCheckBox(tr("include SPICE simulations"), myParent);
+  topGrid->addWidget(SimCheck, 3,1);
 
 
   // ...........................................................
@@ -124,6 +127,7 @@ SpiceDialog::SpiceDialog(SpiceFile *c, QucsDoc *d, QWidget *parent)
   Property *pp = Comp->Props.first();
   FileEdit->setText(pp->Value);
   FileCheck->setChecked(pp->display);
+  SimCheck->setChecked(Comp->Props.at(2)->Value == "yes");
 
   loadSpiceNetList(pp->Value);  // load netlist nodes
 }
@@ -192,7 +196,13 @@ void SpiceDialog::slotButtApply()
     pp->Value = tmp;
     changed = true;
   }
-
+  pp = Comp->Props.next();
+  if((pp->Value=="yes") != SimCheck->isChecked()) {
+    if(SimCheck->isChecked()) pp->Value = "yes";
+    else pp->Value = "no";
+    changed = true;
+  }
+  if(pp->Value != "yes")  Comp->withSim = false;
 
   if(changed || Comp->withSim) {  // because of "sim" text
     Doc->Comps->setAutoDelete(false);
