@@ -146,6 +146,12 @@ void QucsSettingsDialog::slotApply()
 		BGColorButton->paletteBackgroundColor());
     changed = true;
   }
+  if(App->view->editText->paletteBackgroundColor() !=
+		BGColorButton->paletteBackgroundColor()) {
+    App->view->editText->setPaletteBackgroundColor(
+		BGColorButton->paletteBackgroundColor());
+    changed = true;
+  }
 
   if(savingFont != Font) {
     savingFont = Font;
