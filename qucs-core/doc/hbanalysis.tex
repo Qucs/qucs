@@ -248,7 +248,7 @@ equation \ref{eqn:HBeqn}:
 \boldsymbol{J}_F (\boldsymbol{V}_n) = \frac{d\boldsymbol{F} (\boldsymbol{V})}{d\boldsymbol{V}}
     = \boldsymbol{\hat{Y}}_{N \times N} + \frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
      + j\cdot \boldsymbol{\Omega}\frac{\partial \boldsymbol{I}_G}{\partial \boldsymbol{V}}
-    = \boldsymbol{\hat{Y}}_{N \times N} + \boldsymbol{J}_{F,IG}
+    = \boldsymbol{\hat{Y}}_{N \times N} + \boldsymbol{J}_{F,G}
      + j\cdot \boldsymbol{\Omega}\cdot\boldsymbol{F}_{F,Q}
 \end{equation}
 So, two Jacobian matrices have to be built, one for the current
@@ -271,7 +271,7 @@ with $\boldsymbol{u}$ and $\boldsymbol{U}$ being the vectors of the time
 and frequency values, respectively. Now, it is possible to transform the
 desired Jacobian matrix into frequency domain:
 \begin{equation}
-\boldsymbol{J}_{F,IG} = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
+\boldsymbol{J}_{F,G} = \frac{\partial\boldsymbol{I}_G}{\partial\boldsymbol{V}}
   = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
     \cdot\boldsymbol{\Gamma}^{-1}
 \end{equation}
@@ -282,7 +282,7 @@ $\boldsymbol{\Gamma}^{-1} = (\boldsymbol{\Gamma}^{-1})^T$
 $(\boldsymbol{A}\cdot\boldsymbol{B})^T = \boldsymbol{B}^T\cdot \boldsymbol{A}^T$,
 it follows:
 \begin{equation}
-\boldsymbol{J}_{F,IG}
+\boldsymbol{J}_{F,G}
   = \boldsymbol{\Gamma}\cdot\frac{\partial\boldsymbol{i}}{\partial\boldsymbol{v}}
     \cdot\boldsymbol{\Gamma}^{-1}
   = \left( \boldsymbol{\Gamma}^{-1}\cdot \left( \boldsymbol{\Gamma} \cdot
@@ -474,50 +474,52 @@ Parameters:\\
 
 \addvspace{12pt}
 
-\texttt{>\quad // bit reversal method} \\
-\texttt{>\quad int i, j, m, n;} \\
-\texttt{>\quad n = 2*num;} \\
-\texttt{>\quad j = 0;} \\
-\texttt{>\quad for (i=0; i<n; i+=2) \{} \\
-\texttt{>\quad \qquad if(j > i) \{   // was index already swapped ?} \\
-\texttt{>\quad \qquad\qquad SWAP(data[j], data[i]);   // swap real part} \\
-\texttt{>\quad \qquad\qquad SWAP(data[j+1], data[i+1]);   // swap imaginary part} \\
-\texttt{>\quad \qquad \}} \\
-\texttt{>\quad \qquad m = n/2;} \\
-\texttt{>\quad \qquad while (m >= 2 \&\& j >= m) \{  // calculate next swap index} \\
-\texttt{>\quad \qquad\qquad j -= m;} \\
-\texttt{>\quad \qquad\qquad m >>= 1;} \\
-\texttt{>\quad \qquad \}} \\
-\texttt{>\quad \qquad j += m;} \\
-\texttt{>\quad \}} \\
-\texttt{>\quad } \\
-\texttt{>\quad // Danielson-Lanzcos algorithm} \\
-\texttt{>\quad int mmax, istep;} \\
-\texttt{>\quad double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr;} \\
-\texttt{>\quad mmax = 2;} \\
-\texttt{>\quad while (n > mmax) \{} \\
-\texttt{>\quad \qquad istep = mmax << 1;} \\
-\texttt{>\quad \qquad theta = isign * (2*pi/mmax);} \\
-\texttt{>\quad \qquad wtemp = sin(0.5*theta);} \\
-\texttt{>\quad \qquad wpr = -2.0*wtemp*wtemp;} \\
-\texttt{>\quad \qquad wpi = sin(theta);} \\
-\texttt{>\quad \qquad wr = 1.0;} \\
-\texttt{>\quad \qquad wi = 0.0;} \\
-\texttt{>\quad \qquad for (m=1; m<mmax; m+=2) \{} \\
-\texttt{>\quad \qquad\qquad for (i=m; i<=n; i+=istep) \{} \\
-\texttt{>\quad \qquad\qquad\qquad j = i+mmax;} \\
-\texttt{>\quad \qquad\qquad\qquad tempr = wr*data[j-1] - wi*data[j];} \\
-\texttt{>\quad \qquad\qquad\qquad tempi = wr*data[j] + wi*data[j-1];} \\
-\texttt{>\quad \qquad\qquad\qquad data[j-1] = data[i-1] - tempr;} \\
-\texttt{>\quad \qquad\qquad\qquad data[j] = data[i] - tempi;} \\
-\texttt{>\quad \qquad\qquad\qquad data[i-1] += tempr;} \\
-\texttt{>\quad \qquad\qquad\qquad data[i] += tempi;} \\
-\texttt{>\quad \qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad wr = (wtemp=wr)*wpr - wi*wpi + wr;} \\
-\texttt{>\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi;} \\
-\texttt{>\quad \qquad \}} \\
-\texttt{>\quad \qquad mmax = istep;} \\
-\texttt{>\quad \}}
+\texttt{ \\
+>\quad // bit reversal method \\
+>\quad int i, j, m, n; \\
+>\quad n = 2*num; \\
+>\quad j = 0; \\
+>\quad for (i=0; i<n; i+=2) \{ \\
+>\quad \qquad if(j > i) \{   // was index already swapped ? \\
+>\quad \qquad\qquad SWAP(data[j], data[i]);   // swap real part \\
+>\quad \qquad\qquad SWAP(data[j+1], data[i+1]);   // swap imaginary part \\
+>\quad \qquad \} \\
+>\quad \qquad m = n/2; \\
+>\quad \qquad while (m >= 2 \&\& j >= m) \{  // calculate next swap index \\
+>\quad \qquad\qquad j -= m; \\
+>\quad \qquad\qquad m >>= 1; \\
+>\quad \qquad \} \\
+>\quad \qquad j += m; \\
+>\quad \} \\
+>\quad \\
+>\quad // Danielson-Lanzcos algorithm \\
+>\quad int mmax, istep; \\
+>\quad double wtemp, theta, wr, wi, wpr, wpi, tempi, tempr; \\
+>\quad mmax = 2; \\
+>\quad while (n > mmax) \{ \\
+>\quad \qquad istep = mmax << 1; \\
+>\quad \qquad theta = isign * (2*pi/mmax); \\
+>\quad \qquad wtemp = sin(0.5*theta); \\
+>\quad \qquad wpr = -2.0*wtemp*wtemp; \\
+>\quad \qquad wpi = sin(theta); \\
+>\quad \qquad wr = 1.0; \\
+>\quad \qquad wi = 0.0; \\
+>\quad \qquad for (m=1; m<mmax; m+=2) \{ \\
+>\quad \qquad\qquad for (i=m; i<=n; i+=istep) \{ \\
+>\quad \qquad\qquad\qquad j = i+mmax; \\
+>\quad \qquad\qquad\qquad tempr = wr*data[j-1] - wi*data[j]; \\
+>\quad \qquad\qquad\qquad tempi = wr*data[j] + wi*data[j-1]; \\
+>\quad \qquad\qquad\qquad data[j-1] = data[i-1] - tempr; \\
+>\quad \qquad\qquad\qquad data[j] = data[i] - tempi; \\
+>\quad \qquad\qquad\qquad data[i-1] += tempr; \\
+>\quad \qquad\qquad\qquad data[i] += tempi; \\
+>\quad \qquad\qquad \} \\
+>\quad \qquad\qquad wr = (wtemp=wr)*wpr - wi*wpi + wr; \\
+>\quad \qquad\qquad wi = wi*wpr + wtemp*wpi + wi; \\
+>\quad \qquad \} \\
+>\quad \qquad mmax = istep; \\
+>\quad \}
+}
 
 \addvspace{12pt}
 
@@ -574,68 +576,102 @@ Parameters:\\
 
 \addvspace{12pt}
 
-\texttt{>\quad int idim, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2;} \\
-\texttt{>\quad int ibit, k1, k2, n, nprev, nrem, ntot;} \\
-\texttt{>\quad double tempi, tempr, wtemp, theta, wr, wi, wpi, wpr;} \\
-\texttt{>\quad } \\
-\texttt{>\quad ntot = 1;} \\
-\texttt{>\quad for (idim=1; idim<=ndim; idim++) // compute total number of complex values} \\
-\texttt{>\quad \qquad ntot *= num[idim];} \\
-\texttt{>\quad } \\
-\texttt{>\quad nprev = 1;} \\
-\texttt{>\quad for (idim=ndim; idim>=1; idim--) \{ // main loop over the dimensions} \\
-\texttt{>\quad \qquad n = num[idim];} \\
-\texttt{>\quad \qquad nrem = ntot/(n*nprev);} \\
-\texttt{>\quad \qquad ip1 = nprev << 1;} \\
-\texttt{>\quad \qquad ip2 = ip1*n;} \\
-\texttt{>\quad \qquad ip3 = ip2*nrem;} \\
-\texttt{>\quad \qquad i2rev = 1;} \\
-\texttt{>\quad } \\
-\texttt{>\quad \qquad for (i2=1; i2<=ip2; i2+=ip1) \{ // bit-reversal method} \\
-\texttt{>\quad \qquad\qquad if (i2 < i2rev) \{} \\
-\texttt{>\quad \qquad\qquad\qquad for (i1=i2; i1<=i2+ip1-2; i1+=2) \{} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad for (i3=i1; i3<=ip3; i3+=ip2) \{} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad i3rev = i2rev+i3-i2;} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3],data[i3rev]);} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3+1],data[i3rev+1]);} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad ibit=ip2 >> 1;} \\
-\texttt{>\quad \qquad\qquad while (ibit >= ip1 \&\& i2rev > ibit) \{} \\
-\texttt{>\quad \qquad\qquad\qquad i2rev -= ibit;} \\
-\texttt{>\quad \qquad\qquad\qquad ibit >>= 1;} \\
-\texttt{>\quad \qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad i2rev += ibit;} \\
-\texttt{>\quad \qquad \}} \\
-\texttt{>\quad } \\
-\texttt{>\quad \qquad ifp1 = ip1;} \\
-\texttt{>\quad \qquad while (ifp1 < ip2) \{ // Danielson-Lanzcos algorithm} \\
-\texttt{>\quad \qquad\qquad ifp2 = ifp1 << 1;} \\
-\texttt{>\quad \qquad\qquad theta = isign*2*pi/(ifp2/ip1);} \\
-\texttt{>\quad \qquad\qquad wtemp = sin(0.5*theta);} \\
-\texttt{>\quad \qquad\qquad wpr = -2.0*wtemp*wtemp;} \\
-\texttt{>\quad \qquad\qquad wpi = sin(theta);} \\
-\texttt{>\quad \qquad\qquad wr = 1.0; wi = 0.0;} \\
-\texttt{>\quad \qquad\qquad for (i3=1; i3<=ifp1; i3+=ip1) \{} \\
-\texttt{>\quad \qquad\qquad\qquad for (i1=i3; i1<=i3+ip1-2; i1+=2) \{} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad for (i2=i1; i2<=ip3; i2+=ifp2) \{} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad k1 = i2;} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad k2 = k1+ifp1;} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad tempr = wr*data[k2] - wi*data[k2+1];} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad tempi = wr*data[k2+1] + wi*data[k2];} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad data[k2] = data[k1] - tempr;} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad data[k2+1] = data[k1+1] - tempi;} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad\qquad data[k1] += tempr; data[k1+1] += tempi;} \\
-\texttt{>\quad \qquad\qquad\qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad\qquad wr = (wtemp=wr)*wpr-wi*wpi+wr;} \\
-\texttt{>\quad \qquad\qquad\qquad wi = wi*wpr+wtemp*wpi+wi;} \\
-\texttt{>\quad \qquad\qquad \}} \\
-\texttt{>\quad \qquad\qquad ifp1 = ifp2;} \\
-\texttt{>\quad \qquad \}} \\
-\texttt{>\quad \qquad nprev *= n;} \\
-\texttt{>\quad \}}
+\texttt{ \\
+>\quad int idim, i1, i2, i3, i2rev, i3rev, ip1, ip2, ip3, ifp1, ifp2; \\
+>\quad int ibit, k1, k2, n, nprev, nrem, ntot; \\
+>\quad double tempi, tempr, wtemp, theta, wr, wi, wpi, wpr; \\
+>\quad \\
+>\quad ntot = 1; \\
+>\quad for (idim=1; idim<=ndim; idim++) // compute total number of complex values \\
+>\quad \qquad ntot *= num[idim]; \\
+>\quad \\
+>\quad nprev = 1; \\
+>\quad for (idim=ndim; idim>=1; idim--) \{ // main loop over the dimensions \\
+>\quad \qquad n = num[idim]; \\
+>\quad \qquad nrem = ntot/(n*nprev); \\
+>\quad \qquad ip1 = nprev << 1; \\
+>\quad \qquad ip2 = ip1*n; \\
+>\quad \qquad ip3 = ip2*nrem; \\
+>\quad \qquad i2rev = 1; \\
+>\quad \\
+>\quad \qquad for (i2=1; i2<=ip2; i2+=ip1) \{ // bit-reversal method \\
+>\quad \qquad\qquad if (i2 < i2rev) \{ \\
+>\quad \qquad\qquad\qquad for (i1=i2; i1<=i2+ip1-2; i1+=2) \{ \\
+>\quad \qquad\qquad\qquad\qquad for (i3=i1; i3<=ip3; i3+=ip2) \{ \\
+>\quad \qquad\qquad\qquad\qquad\qquad i3rev = i2rev+i3-i2; \\
+>\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3],data[i3rev]); \\
+>\quad \qquad\qquad\qquad\qquad\qquad SWAP(data[i3+1],data[i3rev+1]); \\
+>\quad \qquad\qquad\qquad\qquad \} \\
+>\quad \qquad\qquad\qquad \} \\
+>\quad \qquad\qquad \} \\
+>\quad \qquad\qquad ibit=ip2 >> 1; \\
+>\quad \qquad\qquad while (ibit >= ip1 \&\& i2rev > ibit) \{ \\
+>\quad \qquad\qquad\qquad i2rev -= ibit; \\
+>\quad \qquad\qquad\qquad ibit >>= 1; \\
+>\quad \qquad\qquad \} \\
+>\quad \qquad\qquad i2rev += ibit; \\
+>\quad \qquad \} \\
+>\quad \\
+>\quad \qquad ifp1 = ip1; \\
+>\quad \qquad while (ifp1 < ip2) \{ // Danielson-Lanzcos algorithm \\
+>\quad \qquad\qquad ifp2 = ifp1 << 1; \\
+>\quad \qquad\qquad theta = isign*2*pi/(ifp2/ip1); \\
+>\quad \qquad\qquad wtemp = sin(0.5*theta); \\
+>\quad \qquad\qquad wpr = -2.0*wtemp*wtemp; \\
+>\quad \qquad\qquad wpi = sin(theta); \\
+>\quad \qquad\qquad wr = 1.0; wi = 0.0; \\
+>\quad \qquad\qquad for (i3=1; i3<=ifp1; i3+=ip1) \{ \\
+>\quad \qquad\qquad\qquad for (i1=i3; i1<=i3+ip1-2; i1+=2) \{ \\
+>\quad \qquad\qquad\qquad\qquad for (i2=i1; i2<=ip3; i2+=ifp2) \{ \\
+>\quad \qquad\qquad\qquad\qquad\qquad k1 = i2; \\
+>\quad \qquad\qquad\qquad\qquad\qquad k2 = k1+ifp1; \\
+>\quad \qquad\qquad\qquad\qquad\qquad tempr = wr*data[k2] - wi*data[k2+1]; \\
+>\quad \qquad\qquad\qquad\qquad\qquad tempi = wr*data[k2+1] + wi*data[k2]; \\
+>\quad \qquad\qquad\qquad\qquad\qquad data[k2] = data[k1] - tempr; \\
+>\quad \qquad\qquad\qquad\qquad\qquad data[k2+1] = data[k1+1] - tempi; \\
+>\quad \qquad\qquad\qquad\qquad\qquad data[k1] += tempr; data[k1+1] += tempi; \\
+>\quad \qquad\qquad\qquad\qquad \} \\
+>\quad \qquad\qquad\qquad \} \\
+>\quad \qquad\qquad\qquad wr = (wtemp=wr)*wpr-wi*wpi+wr; \\
+>\quad \qquad\qquad\qquad wi = wi*wpr+wtemp*wpi+wi; \\
+>\quad \qquad\qquad \} \\
+>\quad \qquad\qquad ifp1 = ifp2; \\
+>\quad \qquad \} \\
+>\quad \qquad nprev *= n; \\
+>\quad \}
+}
+
+
+\section{A Symbolic HB Algorithm}
+
+In this final section, a harmonic balance algorithm in symbolic language is
+presented.
+
+\addvspace{12pt}
+
+\texttt{ \\
+\begin{tabular}{ll}
+>\quad init();                    & // separate linear and non-linear devices \\
+>\quad Y = calcTransMatrix();     & // transimpedance matrix of linear circuit \\
+>\quad I = calcSourceCurrent();   & // source current of linear subcircuit \\
+>\quad (v, i, q) = calculateDC(); & // DC simulation as initial HB estimate \\
+>\quad V = FFT(v);                & // transform voltage into frequency domain \\
+>\quad & \\
+>\quad loop: & \\
+>\quad\quad I = FFT(i);                       & // current into frequency domain \\
+>\quad\quad Q = FFT(q);                       & // charge into frequency domain \\
+>\quad\quad Error = I + Y*V + j*Omega*Q + I;  & // HB equation \\
+>\quad\quad if (abs(Error) < Eterm)  return;  & // convergence reached ? \\
+>\quad\quad JG = mFFT(GJacobian(v, i));       & // create Jacobians and transform... \\
+>\quad\quad JQ = mFFT(QJacobian(v, i));       & // ... them into frequency domain \\
+>\quad\quad J = Y + j*Omega*JQ + JG;          & // calculate overall Jacobian \\
+>\quad\quad V = V - invert(J) * Error;        & // Newton Raphson iteration step \\
+>\quad\quad v = IFFT(V);                      & // voltage into time domain \\
+>\quad\quad i = nonlinearCurrent(v);          & // use component models to get... \\
+>\quad\quad q = nonlinearCharge(v);           & // ... values for next iteration \\
+>\quad\quad goto loop; \\
+\end{tabular}
+}
 
 
 \section{Large-Signal S-Parameter Simulation}
