@@ -977,8 +977,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     g->countY = 1;
     g->cPointsX.current()->Points = p;
     for(int z=1; z<=counting; z++)  *(p++) = double(z);
-    xAxis.min = 1.0;
-    xAxis.max = double(counting);
+    if(xAxis.min > 1.0)  xAxis.min = 1.0;
+    if(xAxis.max < double(counting))  xAxis.max = double(counting);
   }
   else {  // ...................................
     // get independent variables from data file
