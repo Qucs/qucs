@@ -40,7 +40,8 @@ qucsator_SOURCES = ucs.cpp circuit.cpp check_netlist.cpp operatingpoint.cpp  \
 	parse_netlist.cpp scan_netlist.cpp node.cpp net.cpp input.cpp        \
 	analysis.cpp spsolver.cpp dcsolver.cpp nodelist.cpp environment.cpp  \
 	parasweep.cpp equation.cpp evaluate.cpp sweep.cpp acsolver.cpp       \
-	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp
+	trsolver.cpp transient.cpp integrator.cpp nodeset.cpp hbsolver.cpp   \
+	spline.cpp
 
 noinst_TEMPLATES = tmatrix.cpp eqnsys.cpp nasolver.cpp states.cpp tvector.cpp \
 	ptrlist.cpp
@@ -53,7 +54,8 @@ noinst_HEADERS = $(noinst_TEMPLATES) check_netlist.h complex.h input.h net.h  \
 	operatingpoint.h libqucsator.h equation.h evaluate.h exception.h      \
 	exceptionstack.h matvec.h constants.h consts.h nasolver.h tmatrix.h   \
 	circuit.h acsolver.h trsolver.h transient.h integrator.h states.h     \
-	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h
+	tvector.h nodeset.h netdefs.h qucsdefs.h ptrlist.h hbsolver.h poly.h  \
+	spline.h
 
 noinst_LIBRARIES = libqucsator.a
 

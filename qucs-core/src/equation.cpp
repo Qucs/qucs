@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.cpp,v 1.32 2005/05/03 17:57:34 raimi Exp $
+ * $Id: equation.cpp,v 1.33 2005/05/23 19:49:49 raimi Exp $
  *
  */
 
@@ -40,6 +40,7 @@
 #include "dataset.h"
 #include "strlist.h"
 #include "equation.h"
+#include "evaluate.h"
 #include "constants.h"
 #include "exception.h"
 #include "exceptionstack.h"

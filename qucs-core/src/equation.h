@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: equation.h,v 1.20 2005/05/03 17:57:35 raimi Exp $
+ * $Id: equation.h,v 1.21 2005/05/23 19:49:49 raimi Exp $
  *
  */
 
@@ -30,7 +30,6 @@
 #include "vector.h"
 #include "matrix.h"
 #include "matvec.h"
-#include "evaluate.h"
 
 class strlist;
 class dataset;
@@ -188,6 +187,9 @@ public:
   char * result;
   node * body;
 };
+
+// Type of application function.
+typedef constant * (* evaluator_t) (constant *);
 
 /* The application class represents any kind of operation (unary,
    binary and n-ary ones) containing the appropriate argument list. */
