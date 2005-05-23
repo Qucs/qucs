@@ -271,6 +271,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
                  tr("Cannot execute")+" "+QucsSettings.BinDir + "qucsconv.");
     return false;
   }
+  QucsConv->closeStdin();
 
   MBox->exec();
   delete QucsConv;

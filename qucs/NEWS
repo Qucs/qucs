@@ -26,13 +26,14 @@ files.
 Version 0.0.6
 -------------
 
+ * finished SPICE component
  * transmission line calculator
  * filter synthesis application
  * new diagrams: 3-dimensional cartesian, locus curve
  * many small improvements
  * edit component properties directly on the schematic
  * translations into Swedish
- * new components: coplanar open, short and gap
+ * new components: coplanar open, short, gap and step
  * nicer icons for simulation components
 
 Version 0.0.5

@@ -1,3 +1,8 @@
+2005-05-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* spicedialog.cpp (loadSpiceNetList): Closing stdin of
+	qucsconv process.
+
 2005-05-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* diode.cpp (Diode): Added 'Bv' and 'Ibv' properties.

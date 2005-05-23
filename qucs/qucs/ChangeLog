@@ -14,35 +14,36 @@
 
 2005-05-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
- * qucsedit: warning about unsaved changes also if close rider pressed
- * markers for 3D cartesian work
- * new component works: SPICE netlist import
+	* qucsedit: warning about unsaved changes also if close rider
+	pressed
+	* markers for 3D cartesian work
+	* new component works: SPICE netlist import
 
 2005-05-01  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
- * fixed floating point error in tabular diagram
- * fixed some bugs in 3D cartesian
- * new components: coplanar open and short
+	* fixed floating point error in tabular diagram
+	* fixed some bugs in 3D cartesian
+	* new components: coplanar open and short
 
 2005-04-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
- * edit component properties directly on the schematic
- * many small bug fixes and improvements
- * different line styles for 3D cartesian diagram
+	* edit component properties directly on the schematic
+	* many small bug fixes and improvements
+	* different line styles for 3D cartesian diagram
 
 2005-04-16  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
- * new key: F2 -> Edit Subcircuit Symbol, CTRL-U -> Set on Grid
- * in label dialog: '_' is now possible
- * new property in coplanar line: Approx
- * fixed small bug that always set changed-flag if "Set on Grid"
- * right mouse button menu is now context sensitive
- * added validators for all neccessary line edits
+	* new key: F2 -> Edit Subcircuit Symbol, CTRL-U -> Set on Grid
+	* in label dialog: '_' is now possible
+	* new property in coplanar line: Approx
+	* fixed small bug that always set changed-flag if "Set on Grid"
+	* right mouse button menu is now context sensitive
+	* added validators for all neccessary line edits
 
 2005-04-11  Stefan Jahn  <stefan@lkcc.org>
 
- * qucsview.cpp, qucsdoc.cpp: Fixed int/pointer mismatch for
- 64bit architectures.  Reported by Debian build logs.
+	* qucsview.cpp, qucsdoc.cpp: Fixed int/pointer mismatch for
+	64bit architectures.  Reported by Debian build logs.
 
 2005-04-07  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
@@ -73,14 +74,6 @@
 2005-02-28  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsview.cpp (drawContents): Fixed two more segfault bugs.
-
-	* docs/de/*.html: Fixed loads of typos.  Anyway, great
-	translation this.  Thanks a lot, Jens!
-
-2005-02-28  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
-
-	* docs/de/index.html: Committed german documentation translated
-	by Jens Flucke.
 
 2005-02-26  Stefan Jahn  <stefan@lkcc.org>
 
@@ -209,9 +202,6 @@
 	* qucs_es.ts, qucs_pl.ts: Updated Polosh and Spanish
 	translations.
 
-	* docs/en/index.html, docs/es/index.html: Added links to online
-	technical documentation and examples.
-
 	* qucsinit.cpp (slotHelpAbout): Added proper copyright notice.
 
 2004-10-23  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
@@ -269,24 +259,15 @@
 
 2004-10-01  Stefan Jahn  <stefan@lkcc.org>
 
-	* docs/es/index.html: Updated spanish documentation pages.
-
 	* qucs_es.ts: Applied spanish translation updates.
 
 2004-09-30  Stefan Jahn  <stefan@lkcc.org>
-
-	* docs/Makefile.am (SUBDIRS): Added the es/ directory
-	supplied by Jose L. Redrejo Rodriguez.  Thanks a lot!
 
 	* qucsinit.cpp (slotHelpAbout): Mentioned Jose as Spanish
 	translator in the About.. box.
 
 	* qucs_es.ts: Applied the spanish translation.  Thanks to
 	Jose L. Redrejo Rodriguez.
-
-2004-09-29  Stefan Jahn  <stefan@lkcc.org>
-
-	* docs/Makefile.am (dist_man_MANS): Added simple man page.
 
 2004-09-26  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
@@ -305,9 +286,6 @@
 
 	* paintings/painting.h: Made 'Name' a QString in order to
 	allow the '==' comparisons.
-
-	* docs/en/Makefile.am (HTML): Added missing 'programs.html'
-	file to the list of installed files.
 
 2004-09-19  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
@@ -336,11 +314,6 @@
 2004-09-12  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added new painting: Elliptic Arc
-
-2004-09-01  Stefan Jahn  <stefan@lkcc.org>
-
-	* docs/en/mathfunc.html: Documented some new mathematical
-	operations for equations.
 
 2004-08-31  Stefan Jahn  <jahn@mwt.ee.tu-berlin.de>
 
@@ -418,10 +391,6 @@
 	* fixed bug in showing smith chart with r>1
 	* resize of setting dialogs a little nicer
 	* menu: align
-
-2004-07-21  Stefan Jahn  <stefan@lkcc.org>
-
-	* docs/en/Makefile.am (HTML): Added missing files.
 
 2004-07-18  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
@@ -608,11 +577,6 @@
 	* improved marker handling
 	* "graphictext" can be rotated
 
-2004-04-26  Stefan Jahn  <stefan@lkcc.org>
-
-	* docs/en/Makefile.am (PIC): Added 'mathfunc.html' and
-	'contab.png' files to be installable files.
-
 2004-04-21  Michael Margraf  <michael.margraf@alumni.tu-berlin.de>
 
 	* added document for equation functions in help system
@@ -727,17 +691,6 @@
 
 	* Makefile.am (TRANSLATIONS): Adjusted paths for translation 
 	files to make 'make distcheck' working again.
-
-2004-01-19  Stefan Jahn  <stefan@lkcc.org>
-
-	* helpdialog.cpp (HelpDialog): Added a FIXME.  Possible use
-	of translated documentation.
-
-	* docs/Makefile.am, docs/en/Makefile.am: Corrected these.
-	Made documentation installable.
-
-	* Makefile.am (SUBDIRS): Added docs sub directory and fixed
-	Michael's additions.
 
 2004-01-14  Stefan Jahn  <stefan@lkcc.org>
 
