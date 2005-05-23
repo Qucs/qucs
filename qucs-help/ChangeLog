@@ -1,0 +1,62 @@
+2005-05-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html, docs/de/mathfunc.html: Documented
+	interpolate() function.
+
+2005-02-28  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/de/*.html: Fixed loads of typos.  Anyway, great
+	translation this.  Thanks a lot, Jens!
+
+2005-02-28  Raimund 'Raimi' Jacob  <raimi@lkcc.org>
+
+	* docs/de/index.html: Committed german documentation translated
+	by Jens Flucke.
+
+2004-10-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/index.html, docs/es/index.html: Added links to online
+	technical documentation and examples.
+
+2004-10-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/es/index.html: Updated spanish documentation pages.
+
+2004-09-30  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/Makefile.am (SUBDIRS): Added the es/ directory
+	supplied by Jose L. Redrejo Rodriguez.  Thanks a lot!
+
+2004-09-29  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/Makefile.am (dist_man_MANS): Added simple man page.
+
+2004-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/Makefile.am (HTML): Added missing 'programs.html'
+	file to the list of installed files.
+
+2004-09-01  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/mathfunc.html: Documented some new mathematical
+	operations for equations.
+
+2004-07-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/Makefile.am (HTML): Added missing files.
+
+2004-04-26  Stefan Jahn  <stefan@lkcc.org>
+
+	* docs/en/Makefile.am (PIC): Added 'mathfunc.html' and
+	'contab.png' files to be installable files.
+
+2004-01-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* helpdialog.cpp (HelpDialog): Added a FIXME.  Possible use
+	of translated documentation.
+
+	* docs/Makefile.am, docs/en/Makefile.am: Corrected these.
+	Made documentation installable.
+
+	* Makefile.am (SUBDIRS): Added docs sub directory and fixed
+	Michael's additions.
