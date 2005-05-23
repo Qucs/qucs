@@ -6884,7 +6884,7 @@ Fehler:
     </message>
     <message>
         <source>include SPICE simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>SPICE-Simulationen mit einbeziehen</translation>
     </message>
 </context>
 </TS>

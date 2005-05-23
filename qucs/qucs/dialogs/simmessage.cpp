@@ -111,7 +111,7 @@ bool SimMessage::startProcess()
     return false;
   }
 
-  Collect.clear();  // clear list for NodeSets, SPICE componenets etc.
+  Collect.clear();  // clear list for NodeSets, SPICE components etc.
   Stream.setDevice(&NetlistFile);
   if(!Doc->File.prepareNetlist(Stream, Collect, ErrText)) {
     NetlistFile.close();
@@ -184,6 +184,7 @@ void SimMessage::nextSPICE()
     FinishSimulation(-1);
     return;
   }
+  SimProcess.closeStdin();
 }
 
 // ------------------------------------------------------------------------
