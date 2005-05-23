@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.h,v 1.16 2005-04-18 13:41:03 raimi Exp $
+ * $Id: evaluate.h,v 1.17 2005-05-23 19:49:56 raimi Exp $
  *
  */
 
@@ -391,6 +391,9 @@ public:
   static constant * gp_circle_v_v (constant *);
   static constant * plot_vs_v  (constant *);
   static constant * plot_vs_mv (constant *);
+
+  static constant * interpolate_v_v_d (constant *);
+  static constant * interpolate_v_v (constant *);
 };
 
 // Type of application function.

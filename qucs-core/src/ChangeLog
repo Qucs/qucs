@@ -1,3 +1,14 @@
+2005-05-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* spline.h (class spline): Cubic spline class.  Generates
+	spline coeeficients from data vectors.  Very useful for
+	interpolations.
+
+	* poly.h (class poly): New polynom class defined by function
+	value and the derivatives.
+
+	* evaluate.cpp: Added interpolation functions.
+
 2005-05-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* evaluate.cpp: Fixed circle formulas (off by one index

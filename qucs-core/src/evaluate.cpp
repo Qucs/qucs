@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: evaluate.cpp,v 1.31 2005-05-17 09:35:07 raimi Exp $
+ * $Id: evaluate.cpp,v 1.32 2005-05-23 19:49:49 raimi Exp $
  *
  */
 
@@ -37,6 +37,8 @@
 #include "object.h"
 #include "vector.h"
 #include "matrix.h"
+#include "poly.h"
+#include "spline.h"
 #include "constants.h"
 #include "circuit.h"
 #include "equation.h"
@@ -1739,6 +1741,50 @@ constant * evaluate::index_s_1 (constant * args) {
   return res;
 }
 
+// Interpolator helper macro without number of points given.
+#define INTERPOL_HELPER()                     \
+  constant * arg = new constant (TAG_DOUBLE); \
+  arg->d = 64;                                \
+  arg->solvee = args->getResult(0)->solvee;   \
+  arg->evaluate ();                           \
+  args->append (arg);
+
+// ***************** interpolation *****************
+constant * evaluate::interpolate_v_v (constant * args) {
+  INTERPOL_HELPER();
+  return interpolate_v_v_d (args);
+}
+
+constant * evaluate::interpolate_v_v_d (constant * args) {
+  vector * v1 = V (args->getResult (0));
+  vector * v2 = V (args->getResult (1));
+  int n  = INT (args->getResult (2));
+  constant * res = new constant (TAG_VECTOR);
+  if (v1->getSize () < 3) {
+    THROW_MATH_EXCEPTION ("interpolate: number of datapoints must be greater "
+			  "than 2");
+    res->v = new vector ();
+    return res;
+  }
+  nr_double_t last  = real (v2->get (v2->getSize () - 1));
+  nr_double_t first = real (v2->get (0));
+  constant * arg = new constant (TAG_VECTOR);
+  arg->v = new vector (::linspace (first, last, n));
+  arg->solvee = args->getResult(0)->solvee;
+  arg->evaluate ();
+  vector * val = new vector (n);
+  spline s (v1, v2);
+  for (int k = 0; k < arg->v->getSize (); k++) {
+    val->set (s.evaluate(real (arg->v->get (k))).f0, k);
+  }
+  res->v = val;
+  node * gen =
+    args->get(0)->solvee->addGeneratedEquation (arg->v, "Interpolate");
+  res->addPrepDependencies (A(gen)->result);
+  res->dropdeps = 1;
+  return res;
+}
+
 // ***************** matrix conversions *****************
 constant * evaluate::stoy_m (constant * args) {
   matrix * m = M (args->getResult (0));
@@ -2780,6 +2826,11 @@ struct application_t eqn::applications[] = {
     { TAG_VECTOR, TAG_VECTOR } },
   { "PlotVs", TAG_MATVEC, evaluate::plot_vs_mv, 2,
     { TAG_MATVEC, TAG_VECTOR } },
+
+  { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v_d, 3,
+    { TAG_VECTOR, TAG_VECTOR, TAG_DOUBLE } },
+  { "interpolate", TAG_VECTOR, evaluate::interpolate_v_v, 2,
+    { TAG_VECTOR, TAG_VECTOR } },
 
   { NULL, 0, NULL, 0, { 0 } /* end of list */ }
 };

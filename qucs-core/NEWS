@@ -26,6 +26,7 @@ files.
 Version 0.0.6
 -------------
 
+ * new interpolate() function in equation solver
  * converter tool also able to export device models as schematic entries
  * coplanar short, open, gap and step components
  * transient models of bias-t, dc-block and dc-feed added
