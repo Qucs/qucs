@@ -2,6 +2,15 @@
 
 	* fixed bug scaling independent x axis in Cartesian diagram
 
+2005-05-21  Stefan Jahn  <stefan@lkcc.org>
+
+	* dialogs/simmessage.cpp (nextSPICE): Closing stdin of
+	qucsconv process for immediate error reports if there is
+	no such file to convert.
+
+	* dialogs/qucssettingsdialog.cpp (slotApply): Applying change
+	in background color to editable properties on schematic.
+
 2005-05-16  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsactions.cpp (editFile): Do not pass empty command line 
