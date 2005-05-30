@@ -1,3 +1,8 @@
+2005-05-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_spice.cpp: Fixed a segfault bug occurring if there is
+	an untranslatable device model.
+
 2005-05-15  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_producer.cpp (qucslib_producer): New producer in the

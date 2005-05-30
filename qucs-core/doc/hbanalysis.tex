@@ -660,8 +660,8 @@ presented.
 >\quad loop: & \\
 >\quad\quad I = FFT(i);                       & // current into frequency domain \\
 >\quad\quad Q = FFT(q);                       & // charge into frequency domain \\
->\quad\quad Error = I + Y*V + j*Omega*Q + I;  & // HB equation \\
->\quad\quad if (abs(Error) < Eterm)  return;  & // convergence reached ? \\
+>\quad\quad E = I + Y*V + j*Omega*Q + I;      & // HB equation \\
+>\quad\quad if (abs(E) < Eterm)  return;      & // convergence reached ? \\
 >\quad\quad JG = mFFT(GJacobian(v, i));       & // create Jacobians and transform... \\
 >\quad\quad JQ = mFFT(QJacobian(v, i));       & // ... them into frequency domain \\
 >\quad\quad J = Y + j*Omega*JQ + JG;          & // calculate overall Jacobian \\
@@ -669,7 +669,7 @@ presented.
 >\quad\quad v = IFFT(V);                      & // voltage into time domain \\
 >\quad\quad i = nonlinearCurrent(v);          & // use component models to get... \\
 >\quad\quad q = nonlinearCharge(v);           & // ... values for next iteration \\
->\quad\quad goto loop; \\
+>\quad\quad goto loop; & \\
 \end{tabular}
 }
 
