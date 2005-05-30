@@ -523,6 +523,13 @@ void QucsInit::initActions()
 		tr("Line calculation\n\nStarts transmission line calculator"));
   connect(Acts->callLine, SIGNAL(activated()), Acts, SLOT(slotCallLine()));
 
+  Acts->callLib = new QAction(tr("Component Library"), tr("Component Library"),
+				CTRL+Key_4, App);
+  Acts->callLib->setStatusTip(tr("Starts QucsLib"));
+  Acts->callLib->setWhatsThis(
+		tr("Component Library\n\nStarts component library program"));
+  connect(Acts->callLib, SIGNAL(activated()), Acts, SLOT(slotCallLibrary()));
+
   App->simulate =
     new QAction(tr("Simulate"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "gear.png")),
@@ -681,6 +688,7 @@ void QucsInit::initMenuBar()
   Acts->callEditor->addTo(toolMenu);
   Acts->callFilter->addTo(toolMenu);
   Acts->callLine->addTo(toolMenu);
+  Acts->callLib->addTo(toolMenu);
 
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);
