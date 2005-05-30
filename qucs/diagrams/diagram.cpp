@@ -61,6 +61,10 @@ Diagram::Diagram(int _cx, int _cy)
   xAxis.step = yAxis.step = zAxis.step = 1.0;
   xAxis.autoScale = yAxis.autoScale = zAxis.autoScale = true;
 
+  rotX = 315;  // for 3D diagram
+  rotY = 0;
+  rotZ = 225;
+
   Type = isDiagram;
   isSelected = false;
   GridPen = QPen(QPen::lightGray,0);

@@ -45,7 +45,7 @@ public:
           *editActivate, *wire, *editDelete, *setMarker, *onGrid, *moveText,
           *helpIndex, *helpGetStart, *callEditor, *callFilter, *callLine,
           *showMsg, *showNet, *alignTop, *alignBottom, *alignLeft, *alignRight,
-          *distrHor, *distrVert, *selectAll;
+          *distrHor, *distrVert, *selectAll, *callLib;
 
 public slots:
   void slotEditRotate(bool);  // rotate the selected items
@@ -78,6 +78,7 @@ public slots:
   void slotCallEditor();
   void slotCallFilter();
   void slotCallLine();
+  void slotCallLibrary();
   void slotHelpIndex();       // shows a HTML docu: Help Index
   void slotGettingStarted();  // shows a HTML docu: Getting started
 

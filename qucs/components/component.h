@@ -18,7 +18,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include "element.h"
+#include "../element.h"
 
 #include <qptrlist.h>
 #include <qpen.h>
@@ -27,10 +27,6 @@
 
 class ViewPainter;
 class QString;
-
-/**
-  *@author Michael Margraf
-  */
 
 
 class Component : public Element {

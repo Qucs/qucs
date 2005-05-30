@@ -1,8 +1,8 @@
 /***************************************************************************
-                               subcircuit.cpp
-                              ----------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+                               symbolwidget.cpp
+                              ------------------
+    begin                : Sat May 28 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,183 +15,92 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "symbolwidget.h"
+#include "qucslib.h"
 
-#include "subcircuit.h"
-#include "qucs.h"
-#include "main.h"
-
-#include <qdir.h>
-#include <qfileinfo.h>
-#include <qregexp.h>
-
-#include <math.h>
-#include <limits.h>
-
-extern QDir QucsWorkDir;
+#include <qpainter.h>
+#include <qtextstream.h>
 
 
-Subcircuit::Subcircuit()
+SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
 {
-  Description = QObject::tr("subcircuit");
+  Arcs.setAutoDelete(true);
+  Lines.setAutoDelete(true);
+  Rects.setAutoDelete(true);
+  Ellips.setAutoDelete(true);
+  Texts.setAutoDelete(true);
 
-  Ports.append(new Port(0,  0));  // dummy port because of being device
+  PaintText = tr("Symbol:");
+  QFont Font(QucsSettings.font);
+  QFontMetrics  metrics(Font);
+  TextWidth = metrics.width(PaintText) + 4;    // get size of text
 
-  Model = "Sub";
-  Name  = "SUB";
-
-  Props.append(new Property("File", "", true,
-		QObject::tr("name of qucs schematic file")));
+  setPaletteBackgroundColor(Qt::white);
+  setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
-Subcircuit::~Subcircuit()
+SymbolWidget::~SymbolWidget()
 {
 }
 
-// ---------------------------------------------------------------------
-Component* Subcircuit::newOne()
+// ************************************************************
+void SymbolWidget::paintEvent(QPaintEvent*)
 {
-  Subcircuit *p = new Subcircuit();
-  p->Props.getFirst()->Value = Props.getFirst()->Value;
-//  p->remakeSymbol(Ports.count());
-  p->recreate();
-  return p;
-}
+  QPainter Painter(this);
+  Painter.drawText(2, 2, 0, 0, Qt::AlignAuto | Qt::DontClip, PaintText);
 
-// ---------------------------------------------------------------------
-// Makes the schematic symbol subcircuit with the correct number
-// of ports.
-void Subcircuit::recreate()
-{
-  int No;
-  QString FileName;
-
-  QFileInfo Info(Props.getFirst()->Value);
-  if(Info.isRelative())
-    FileName = QucsWorkDir.filePath(Props.getFirst()->Value);
-  else
-    FileName = Props.getFirst()->Value;
-
-  tx = INT_MIN;
-  ty = INT_MIN;
-  if(loadSymbol(FileName) > 0) {
-    if(tx == INT_MIN)  tx = x1+4;
-    if(ty == INT_MIN)  ty = y2+4;
-    performModification();
-    return;
+  // paint all lines
+  for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
+    Painter.setPen(pl->style);
+    Painter.drawLine(cx+pl->x1, cy+pl->y1, cx+pl->x2, cy+pl->y2);
   }
 
-  No = QucsApp::testFile(FileName);
-  if(No < 0)  No = 0;
-
-  remakeSymbol(No);
-}
-
-// ---------------------------------------------------------------------
-void Subcircuit::remakeSymbol(int No)
-{
-  Arcs.clear();
-  Lines.clear();
-  Rects.clear();
-  Ellips.clear();
-  Texts.clear();
-  Ports.clear();
-
-  int h = 30*((No-1)/2) + 15;
-  Lines.append(new Line(-15, -h, 15, -h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( 15, -h, 15,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15,  h, 15,  h,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line(-15, -h,-15,  h,QPen(QPen::darkBlue,2)));
-  Texts.append(new Text(-10, -6,"sub"));
-
-  int i=0, y = 15-h;
-  while(i<No) {
-    i++;
-    Lines.append(new Line(-30,  y,-15,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port(-30,  y));
-    Texts.append(new Text(-25,y-14,QString::number(i)));
-
-    if(i == No) break;
-    i++;
-    Lines.append(new Line( 15,  y, 30,  y,QPen(QPen::darkBlue,2)));
-    Ports.append(new Port( 30,  y));
-    Texts.append(new Text( 19,y-14,QString::number(i)));
-    y += 60;
+  // paint all arcs
+  for(Arc *pc = Arcs.first(); pc != 0; pc = Arcs.next()) {
+    Painter.setPen(pc->style);
+    Painter.drawArc(cx+pc->x, cy+pc->y, pc->w, pc->h, pc->angle, pc->arclen);
   }
 
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+2;
+  // paint all rectangles
+  Area *pa;
+  for(pa = Rects.first(); pa != 0; pa = Rects.next()) {
+    Painter.setPen(pa->Pen);
+    Painter.setBrush(pa->Brush);
+    Painter.drawRect(cx+pa->x, cy+pa->y, pa->w, pa->h);
+  }
 
-  tx = x1+4;
-  ty = y2+4;
+  // paint all ellipses
+  for(pa = Ellips.first(); pa != 0; pa = Ellips.next()) {
+    Painter.setPen(pa->Pen);
+    Painter.setBrush(pa->Brush);
+    Painter.drawEllipse(cx+pa->x, cy+pa->y, pa->w, pa->h);
+  }
 
-  performModification();
+  Painter.setPen(QPen(QPen::black,1));
+  QFont Font = Painter.font();   // save current font
+  Font.setWeight(QFont::Light);
+  // write all text
+  for(Text *pt = Texts.first(); pt != 0; pt = Texts.next()) {
+    Font.setPointSizeFloat(pt->Size);
+    Painter.setFont(Font);
+    Painter.setPen(pt->Color);
+    Painter.drawText(cx+pt->x, cy+pt->y, pt->s);
+  }
 }
 
-// ---------------------------------------------------------------------
-void Subcircuit::performModification()
-{
-  bool mmir = mirroredX;
-  int  rrot = rotated;
-  if(mmir)  mirrorX();   // mirror
-  for(int z=0; z<rrot; z++)  rotate(); // rotate
-
-
-  rotated = rrot;   // restore properties (were changed by rotate/mirror)
-  mirroredX = mmir;
-}
-
-// ---------------------------------------------------------------------
-// Loads the symbol for the subcircuit from the schematic file and
+// ************************************************************
+// Loads the symbol for the component from the symbol field and
 // returns the number of painting elements.
-int Subcircuit::loadSymbol(const QString& DocName)
+int SymbolWidget::setSymbol(const QString& SymbolString)
 {
   Arcs.clear();
   Lines.clear();
   Rects.clear();
   Ellips.clear();
   Texts.clear();
-  Ports.clear();
-
-  QFile file(DocName);
-  if(!file.open(IO_ReadOnly)) {
-    return -1;
-  }
 
   QString Line;
-  // *****************************************************************
-  // To strongly speed up the file read operation the whole file is
-  // read into the memory in one piece.
-  QTextStream ReadWhole(&file);
-  QString FileString = ReadWhole.read();
-  file.close();
-  QTextStream stream(&FileString, IO_ReadOnly);
-
-
-  // read header **************************
-  do {
-    if(stream.atEnd()) return -2;
-    Line = stream.readLine();
-    Line = Line.stripWhiteSpace();
-  } while(Line.isEmpty());
-
-  if(Line.left(16) != "<Qucs Schematic ")  // wrong file type ?
-    return -3;
-
-  QString s = PACKAGE_VERSION;
-  s.remove('.');
-  Line = Line.mid(16, Line.length()-17);
-  Line.remove('.');
-  if(Line > s)   // wrong version number ? (only backward compatible)
-    return -4;
-
-  // read content *************************
-  while(!stream.atEnd()) {
-    Line = stream.readLine();
-    if(Line == "<Symbol>") break;
-  }
+  QTextIStream stream(&SymbolString);
 
   x1 = y1 = INT_MAX;
   x2 = y2 = INT_MIN;
@@ -199,15 +108,9 @@ int Subcircuit::loadSymbol(const QString& DocName)
   int z=0, Result;
   while(!stream.atEnd()) {
     Line = stream.readLine();
-    if(Line == "</Symbol>") {
-      x1 -= 4;   // enlarge component boundings a little
-      x2 += 4;
-      y1 -= 4;
-      y2 += 4;
-      return z;      // return number of ports
-    }
-
     Line = Line.stripWhiteSpace();
+    if(Line.isEmpty()) continue;
+
     if(Line.at(0) != '<') return -1;
     if(Line.at(Line.length()-1) != '>') return -1;
     Line = Line.mid(1, Line.length()-2); // cut off start and end character
@@ -216,11 +119,22 @@ int Subcircuit::loadSymbol(const QString& DocName)
     z += Result;
   }
 
-  return -5;   // field not closed
+  x1 -= 4;   // enlarge component boundings a little
+  x2 += 4;
+  y1 -= 4;
+  y2 += 4;
+  cx  = -x1 + TextWidth;
+  cy  = -y1;
+  int dx = x2-x1 + TextWidth;
+  setMinimumSize(dx, y2-y1);
+  if(width() > dx)  dx = width();
+  resize(dx, y2-y1);
+  update();
+  return z;      // return number of ports
 }
 
 // ---------------------------------------------------------------------
-int Subcircuit::analyseLine(const QString& Row)
+int SymbolWidget::analyseLine(const QString& Row)
 {
   QPen Pen;
   QBrush Brush;
@@ -229,18 +143,15 @@ int Subcircuit::analyseLine(const QString& Row)
   int i1, i2, i3, i4, i5, i6;
 
   s = Row.section(' ',0,0);    // component type
-  if((s == "PortSym") || (s == ".PortSym")) {  // backward compatible
+  if(s == ".PortSym") {  // here: ports are open nodes
     if(!getIntegers(Row, &i1, &i2, &i3))  return -1;
-    for(i6 = Ports.count(); i6<i3; i6++)  // if ports not in numerical order
-      Ports.append(new Port(0, 0));
+    Arcs.append(new struct Arc(i1-4, i2-4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
 
-    Ports.at(i3-1)->x  = i1;
-    Ports.current()->y = i2;
-
-    if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i1 > x2)  x2 = i1;
-    if(i2 < y1)  y1 = i2;
-    if(i2 > y2)  y2 = i2;
+    if((i1-4) < x1)  x1 = i1-4;  // keep track of component boundings
+    if((i1+4) > x2)  x2 = i1+4;
+    if((i2-4) < y1)  y1 = i2-4;
+    if((i2+4) > y2)  y2 = i2+4;
     return 0;   // do not count Ports
   }
   else if(s == "Line") {
@@ -272,11 +183,6 @@ int Subcircuit::analyseLine(const QString& Row)
     return 1;
   }
   else if(s == ".ID") {
-    if(!getIntegers(Row, &i1, &i2))  return -1;
-    tx = i1;
-    ty = i2;
-    Name = Row.section(' ',3,3);
-    if(Name.isEmpty())  Name = "SUB";
     return 0;   // do not count IDs
   }
   else if(s == "Arrow") {
@@ -382,7 +288,7 @@ int Subcircuit::analyseLine(const QString& Row)
 }
 
 // ---------------------------------------------------------------------
-bool Subcircuit::getIntegers(const QString& s, int *i1, int *i2, int *i3,
+bool SymbolWidget::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 			     int *i4, int *i5, int *i6)
 {
   bool ok;
@@ -422,7 +328,7 @@ bool Subcircuit::getIntegers(const QString& s, int *i1, int *i2, int *i3,
 }
 
 // ---------------------------------------------------------------------
-bool Subcircuit::getPen(const QString& s, QPen& Pen, int i)
+bool SymbolWidget::getPen(const QString& s, QPen& Pen, int i)
 {
   bool ok;
   QString n;
@@ -447,7 +353,7 @@ bool Subcircuit::getPen(const QString& s, QPen& Pen, int i)
 }
 
 // ---------------------------------------------------------------------
-bool Subcircuit::getBrush(const QString& s, QBrush& Brush, int i)
+bool SymbolWidget::getBrush(const QString& s, QBrush& Brush, int i)
 {
   bool ok;
   QString n;
@@ -469,26 +375,4 @@ bool Subcircuit::getBrush(const QString& s, QBrush& Brush, int i)
   if(!ok) return false;
 
   return true;
-}
-
-// -------------------------------------------------------
-QString Subcircuit::NetList()
-{
-  if(!isActive) return QString("");       // should it be simulated ?
-
-  QString s = Model+":"+Name;
-
-  // output all node names
-  for(Port *p1 = Ports.first(); p1 != 0; p1 = Ports.next())
-    s += " "+p1->Connection->Name;   // node names
-
-  // output property
-  QString  Type = Props.getFirst()->Value;
-  QFileInfo Info(Type);
-  if(Info.extension() == "sch")  Type = Type.left(Type.length()-4);
-  if(Type.at(0) <= '9') if(Type.at(0) >= '0') Type = '_' + Type;
-  Type.replace(QRegExp("\\W"), "_"); // none [a-zA-Z0-9] into "_"
-  s += " Type=\""+Type+"\"";   // type for subcircuit
-
-  return s;
 }
