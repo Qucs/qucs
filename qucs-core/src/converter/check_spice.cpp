@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.  
  *
- * $Id: check_spice.cpp,v 1.13 2005/05/17 09:35:08 raimi Exp $
+ * $Id: check_spice.cpp,v 1.14 2005/05/30 18:51:33 raimi Exp $
  *
  */
 
@@ -590,15 +590,19 @@ spice_device_table[] = {
 
 /* This little function translates the Spice type definitions into Qucs
    types. */
-static void spice_translate_type (struct definition_t * def) {
+static int spice_translate_type (struct definition_t * def) {
   struct spice_device_table_t * tran;
-  for (tran = spice_device_table; tran->type; tran++) {
+  int found = 0;
+  for (tran = spice_device_table; tran->type && def->type; tran++) {
+    found = 1;
     if (!strcasecmp (tran->type, def->type)) {
       free (def->type);
       def->type = strdup (tran->trans);
+      found++;
       break;
     }
   }
+  return found;
 }
 
 // Helper structure for node translations.
@@ -1404,11 +1408,17 @@ static struct definition_t * spice_add_Model (struct definition_t * def) {
   Model->instance = strdup (def->instance);
   Model->define = def->define;
   spice_adjust_device (Model, def);
-  spice_translate_type (Model);
-  spice_fixup_definition (Model);
-  spice_adjust_optional_properties (Model);
-  Model->next = device_root;
-  device_root = Model;
+  if (spice_translate_type (Model)) {
+    spice_fixup_definition (Model);
+    spice_adjust_optional_properties (Model);
+    Model->next = device_root;
+    device_root = Model;
+  }
+  else {
+    free (Model->instance);
+    free (Model);
+    Model = NULL;
+  }
   return Model;
 }
 
