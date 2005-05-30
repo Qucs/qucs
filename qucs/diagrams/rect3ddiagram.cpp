@@ -29,10 +29,6 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
 
-  rotX = 315;
-  rotY = 0;
-  rotZ = 225;
-
   Name = "Rect3D";
   // symbolic diagram painting
   Lines.append(new Line(0, 0, cx,  0, QPen(QPen::black,0)));
