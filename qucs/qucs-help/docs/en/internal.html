@@ -42,7 +42,7 @@ The following text shows a short example of a schematic file.
   &nbsp;&nbsp;&#060;120 100 180 100 "Input" 170 70 21 ""&#062; <br>
 &#060;/Wires&#062; <br>
 &#060;Diagrams&#062; <br>
-  &nbsp;&nbsp;&#060;Polar 300 250 200 200 1 #c0c0c0 1 00 1 0 1 1 1 0 5 15 1 0 1 1 137745832 137024436 137024432 "" "" ""&#062; <br>
+  &nbsp;&nbsp;&#060;Polar 300 250 200 200 1 #c0c0c0 1 00 1 0 1 1 1 0 5 15 1 0 1 1 315 0 225 "" "" ""&#062; <br>
     &nbsp;&nbsp;&nbsp;&nbsp;&#060;"acnoise2:S[2,1]" #0000ff 0 3 0 0 0&#062; <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#060;Mkr 6e+09 118 -195 3 0 0&#062; <br>
   &nbsp;&nbsp;&#060;/Polar&#062; <br>
@@ -147,6 +147,21 @@ a node set for this wire.</li>
 This section starts with "&#060;Diagrams&#062;" and ends with
 "&#060;/Diagrams&#062;". It contains the diagrams with their graphs
 and their markers.
+<br>
+<em>&#060;x y width height grid gridcolor gridstyle log xAutoscale xmin xstep xmax
+          yAutoscale ymin ystep ymax zAutoscale zmin zstep zmax xrotate yrotate zrotate
+	  "xlabel" "ylabel" "zlabel"&#062;</em>
+<br>
+<ul>
+<li>The first two numbers are x and y coordinate of lower left corner.</li>
+<li>The next two numbers are width and height of diagram boundings.</li>
+<li>The fifth number is 1 if grid is on and 0 if grid is off.</li>
+<li>The next is grid color in 24 bit hexadecimal RGB value, e.g.
+#FF0000 is red.</li>
+<li>The next number determines the style of the grid.</li>
+<li>The next number determines which axes have logarithmical scale.</li>
+<li></li>
+</ul>
 
 <br>
 <h3>Paintings</h3>

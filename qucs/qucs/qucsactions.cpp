@@ -503,6 +503,23 @@ void QucsActions::slotCallLine()
   connect(App, SIGNAL(signalKillEmAll()), QucsLine, SLOT(kill()));
 }
 
+// ------------------------------------------------------------------------
+// Is called to start the component library program.
+void QucsActions::slotCallLibrary()
+{
+  QProcess *QucsLibrary =
+    new QProcess(QString(QucsSettings.BinDir + "qucslib"));
+  if(!QucsLibrary->start()) {
+    QMessageBox::critical(App, tr("Error"),
+                          tr("Cannot start library program!"));
+    delete QucsLibrary;
+    return;
+  }
+
+  // to kill it before qucs ends
+  connect(App, SIGNAL(signalKillEmAll()), QucsLibrary, SLOT(kill()));
+}
+
 // ########################################################################
 void QucsActions::slotHelpIndex()
 {

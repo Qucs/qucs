@@ -497,6 +497,13 @@
     </message>
 </context>
 <context>
+    <name>DisplayDialog</name>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
+    </message>
+</context>
+<context>
     <name>FillDialog</name>
     <message>
         <source>OK</source>
@@ -2626,6 +2633,10 @@ Invocation :  qucsedit [-r] fichier
         <source>Cannot start qucshelp!</source>
         <translation type="unfinished">Ne peut lancer l&apos;aide !</translation>
     </message>
+    <message>
+        <source>Cannot start library program!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsApp</name>
@@ -4709,6 +4720,102 @@ Lance QucsFilter</translation>
         <source>Line calculation
 
 Starts transmission line calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starts QucsLib</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Library
+
+Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QucsLib</name>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished">Terminer</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="unfinished">&amp;Aide</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="unfinished">&amp;Fichier</translation>
+    </message>
+    <message>
+        <source>Component Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Library Manager for Qucs
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by Michael Margraf
+</source>
+        <translation type="unfinished">© Copyright 2003, 2004 par Michael Margraf
+ {2005?}</translation>
+    </message>
+    <message>
+        <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <source>Cannot open &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot find component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -204,6 +204,10 @@ LANG_PATH="$prefix/share/qucs/lang/"
 AC_DEFINE_UNQUOTED([LANGUAGEDIR], ["$LANG_PATH"],
   [Where the language files go.])
 unset LANG_PATH
+LIBRARY_PATH="$prefix/share/qucs/library/"
+AC_DEFINE_UNQUOTED([LIBRARYDIR], ["$LIBRARY_PATH"],
+  [Where the component library files go.])
+unset LIBRARY_PATH
 DOC_PATH="$prefix/share/qucs/docs/"
 AC_DEFINE_UNQUOTED([DOCDIR], ["$DOC_PATH"],
   [Where the documentation files go.])
@@ -241,6 +245,8 @@ AC_CONFIG_FILES([Makefile
 		 qucs-filter/Makefile
 		 qucs-transcalc/Makefile
 		 qucs-transcalc/bitmaps/Makefile
+		 qucs-lib/Makefile
+		 qucs-lib/library/Makefile
 		 qucs/Makefile
 		 qucs/bitmaps/Makefile
 		 qucs/components/Makefile

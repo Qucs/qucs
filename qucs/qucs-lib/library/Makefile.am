@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 # 
-# Makefile.am
+# qucs-lib/library/Makefile.am
 #
 # Automake input file.
 #
@@ -22,14 +22,13 @@
 # Boston, MA 02111-1307, USA.  
 #
 
-SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-lib
+COMPLIBS = Transistors.lib Substrates.lib
 
-# Release specific. Remove the above SUBDIRS line and uncomment this one.
-# SUBDIRS = qucs qucs-edit qucs-help qucs-transcalc qucs-filter qucs-core
+EXTRA_DIST = $(COMPLIBS)
 
-EXTRA_DIST = autogen.sh depcomp PLATFORMS RELEASE
+# installation of component libraries
+librarydir = ${prefix}/share/qucs/library
+library_DATA = $(EXTRA_DIST)
 
 CLEANFILES = *~
-MAINTAINERCLEANFILES = aclocal.m4 config.h.in configure Makefile.in \
-        stamp-h.in stamp-h[0-9].in
-DISTCLEANFILES = config.cache config.log
+MAINTAINERCLEANFILES = Makefile.in
