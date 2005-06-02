@@ -24,6 +24,7 @@
 #include <qbrush.h>
 #include <qcolor.h>
 #include <qstring.h>
+#include <qptrlist.h>
 
 class QPaintEvent;
 class QSizePolicy;
