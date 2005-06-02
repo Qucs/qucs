@@ -15,10 +15,10 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.  
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.  
  *
- * $Id: spfile.cpp,v 1.18 2005-05-02 06:51:01 raimi Exp $
+ * $Id: spfile.cpp,v 1.19 2005-06-02 18:17:52 raimi Exp $
  *
  */
 

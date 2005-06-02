@@ -15,10 +15,10 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this package; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.  
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.  
  *
- * $Id: net.h,v 1.14 2005-03-14 21:59:07 raimi Exp $
+ * $Id: net.h,v 1.15 2005-06-02 18:17:51 raimi Exp $
  *
  */
 
