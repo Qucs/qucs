@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <math.h>
+
 #include "symbolwidget.h"
 #include "qucslib.h"
 
