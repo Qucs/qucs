@@ -5561,4 +5561,11 @@ Błędy:
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>SymbolWidget</name>
+    <message>
+        <source>Symbol:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
