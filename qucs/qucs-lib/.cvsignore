@@ -1,0 +1,6 @@
+Makefile
+Makefile.in
+.deps
+*.moc.cpp
+*.qm
+qucslib
