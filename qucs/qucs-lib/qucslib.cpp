@@ -272,18 +272,6 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
   }
 
 
-  Start = CompString.find("<Symbol>");
-  if(Start > 0) {
-    Start += 8;
-    End = CompString.find("</Symbol>", Start);
-    if(End < 0) {
-      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-      return;
-    }
-    Symbol->setSymbol(CompString.mid(Start, End-Start));
-  }
-
-
   Start = CompString.find("<Model>");
   if(Start > 0) {
     Start += 7;
@@ -294,5 +282,20 @@ void QucsLib::slotShowComponent(QListBoxItem *Item)
     }
     ModelString =
       CompString.mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
+
+    if(ModelString.contains('\n') < 2)
+      Symbol->createSymbol(ModelString);
+  }
+
+
+  Start = CompString.find("<Symbol>");
+  if(Start > 0) {
+    Start += 8;
+    End = CompString.find("</Symbol>", Start);
+    if(End < 0) {
+      QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+      return;
+    }
+    Symbol->setSymbol(CompString.mid(Start, End-Start));
   }
 }

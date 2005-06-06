@@ -38,10 +38,6 @@ class QVBoxLayout;
 class QIntValidator;
 class QRegExpValidator;
 
-/**
-  *@author Michael Margraf
-  */
-
 extern QDir QucsWorkDir;
 
 
@@ -77,6 +73,9 @@ private slots:
   void slotStopEntered();
   void slotStepEntered();
   void slotNumberEntered();
+
+protected slots:
+    void reject();
 
 private:
   void correctDesc(QString &desc, QStringList *clst = 0);

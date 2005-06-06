@@ -58,6 +58,9 @@ private slots:
   void slotGetNetlist();
   void slotGetError();
 
+protected slots:
+    void reject();
+
 private:
   bool loadSpiceNetList(const QString&);
 

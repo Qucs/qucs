@@ -189,7 +189,7 @@ else {  // not logarithmical
   }
   
   if(xAxis.up >= 0.0) if(xAxis.low <= 0.0) {  // paint origin cross ?
-    z = int(double(x2) * fabs(xAxis.low / (xAxis.up-xAxis.low)));
+    z = int(double(x2) * fabs(xAxis.low / (xAxis.up-xAxis.low)) + 0.5);
     Lines.append(new Line(z, 0, z, y2, QPen(QPen::black,0)));
   }
 } // of "if(xlog) ... else ..."
@@ -200,7 +200,7 @@ else {  // not logarithmical
   if(yAxis.numGraphs > 0) if(calcYAxis(&yAxis, 0)) {
     valid |= 1;
     if(yAxis.up >= 0.0) if(yAxis.low <= 0.0) {  // paint origin cross ?
-      z = int(double(y2) * fabs(yAxis.low / (yAxis.up-yAxis.low)));
+      z = int(double(y2) * fabs(yAxis.low / (yAxis.up-yAxis.low)) + 0.5);
       Lines.append(new Line(0, z, x2, z, QPen(QPen::black,0)));
     }
   }
