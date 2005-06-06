@@ -48,8 +48,8 @@ static const QRgb DefaultColors[]
 
 
 DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
-                             QWidget *parent, const char *name )
-                    : QDialog(parent, name, TRUE, Qt::WDestructiveClose)
+                             QWidget *parent, Graph *currentGraph)
+                    : QDialog(parent, "", TRUE, Qt::WDestructiveClose)
 {
   Diag = d;
   Graphs.setAutoDelete(true);
@@ -157,7 +157,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     Property2->setText("0");
 
     if((Diag->Name=="Rect") || (Diag->Name=="PS") || (Diag->Name=="SP") ||
-       (Diag->Name=="Curve")){
+       (Diag->Name=="Curve")) {
       QHBox *Box3 = new QHBox(InputGroup);
       Box3->setSpacing(5);
 
@@ -500,14 +500,21 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   }
   slotReadVars(0);  // put variables into the ListView
 
-  // ...........................................................
-  // put all graphs into the ListBox
-  for(Graph *pg = Diag->Graphs.first(); pg != 0; pg = Diag->Graphs.next())
-    GraphList->insertItem(pg->Var);
-
   if(Diag->Name != "Tab")
     ColorButt->setPaletteBackgroundColor
 	(QColor(DefaultColors[GraphList->count()]));
+
+  // ...........................................................
+  // put all graphs into the ListBox
+  Row = 0;
+  for(Graph *pg = Diag->Graphs.first(); pg != 0; pg = Diag->Graphs.next()) {
+    GraphList->insertItem(pg->Var);
+    if(pg == currentGraph) {
+      GraphList->setCurrentItem(Row);   // select current graph
+      SelectGraph(currentGraph);
+    }
+    Row++;
+  }
 }
 
 DiagramDialog::~DiagramDialog()
@@ -611,7 +618,7 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
 }
 
 // --------------------------------------------------------------------------
-// Puts the text of the selected graph into the line edit.
+// Is called if a graph text is clicked in the BistBox.
 void DiagramDialog::slotSelectGraph(QListBoxItem *item)
 {
   if(item == 0) {
@@ -619,12 +626,17 @@ void DiagramDialog::slotSelectGraph(QListBoxItem *item)
     return;
   }
 
-  int index = GraphList->index(item);
+  SelectGraph (Graphs.at (GraphList->index(item)));
+}
+
+// --------------------------------------------------------------------------
+// Puts the text of the selected graph into the line edit.
+void DiagramDialog::SelectGraph(Graph *g)
+{
   GraphInput->blockSignals(true);
-  GraphInput->setText(GraphList->text(index));
+  GraphInput->setText(g->Var);
   GraphInput->blockSignals(false);
 
-  Graph *g = Graphs.at(index);
   if(Diag->Name != "Tab") {
     Property2->setText(QString::number(g->Thick));
     ColorButt->setPaletteBackgroundColor(g->Color);
@@ -762,7 +774,7 @@ void DiagramDialog::slotApply()
       }
     }
 
-    if(Diag->Name == "Rect") {
+    if(Diag->Name.left(4) == "Rect") {
       if(Diag->xAxis.log != GridLogX->isChecked()) {
         Diag->xAxis.log = GridLogX->isChecked();
         changed = true;
@@ -879,6 +891,13 @@ void DiagramDialog::slotCancel()
 //  ((QucsView*)parent())->viewport()->repaint();
   if(transfer) done(QDialog::Accepted);
   else done(QDialog::Rejected);
+}
+
+//-----------------------------------------------------------------
+// To get really all close events (even <Escape> key).
+void DiagramDialog::reject()
+{
+  slotCancel();
 }
 
 // --------------------------------------------------------------------------
@@ -1004,7 +1023,7 @@ void DiagramDialog::slotSetYAxis(int axis)
 void DiagramDialog::slotManualX(int state)
 {
   if(state == QButton::On) {
-    if((Diag->Name == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
       startX->setEnabled(true);
     stopX->setEnabled(true);
     if(GridLogX) if(GridLogX->isChecked())  return;
@@ -1021,7 +1040,7 @@ void DiagramDialog::slotManualX(int state)
 void DiagramDialog::slotManualY(int state)
 {
   if(state == QButton::On) {
-    if((Diag->Name == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
       startY->setEnabled(true);
     stopY->setEnabled(true);
     if(GridLogY) if(GridLogY->isChecked())  return;
@@ -1038,7 +1057,7 @@ void DiagramDialog::slotManualY(int state)
 void DiagramDialog::slotManualZ(int state)
 {
   if(state == QButton::On) {
-    if((Diag->Name == "Rect") || (Diag->Name == "Curve"))
+    if((Diag->Name.left(4) == "Rect") || (Diag->Name == "Curve"))
       startZ->setEnabled(true);
     stopZ->setEnabled(true);
     if(GridLogZ) if(GridLogZ->isChecked())  return;

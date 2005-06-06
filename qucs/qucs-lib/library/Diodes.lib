@@ -1,0 +1,199 @@
+<Qucs Library "Diodes" 0.0.7>
+
+<Component 1N4148>
+  <Description>
+    universal silicon switching diode
+    75V, 300mA, 4.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4148_ 1 0 0 -26 13 0 0 "222p" 1 "1.65" 1 "4p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "68.6m" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component 1N4148W>
+  <Description>
+    universal silicon switching diode
+    75V, 300mA, 4.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4148W_ 1 0 0 -26 13 0 0 "10.4n" 1 "2.07" 1 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "51.5m" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component 1N4148WS>
+  <Description>
+    universal silicon switching diode
+    75V, 300mA, 4.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4148WS_ 1 0 0 -26 13 0 0 "10.4n" 1 "2.07" 1 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "51.5m" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "75" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component 1N4148WT>
+  <Description>
+    universal silicon switching diode
+    80V, 125mA, 4.0ns
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4148WT_ 1 0 0 -26 13 0 0 "111n" 1 "1.7" 1 "2p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "0.628" 0 "5.76n" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "80" 0 "1u" 0>
+  </Model>
+</Component>
+
+<Component 1N4001>
+  <Description>
+    universal silicon rectifier diode
+    50V, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4001_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "39.8p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "50" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N4002>
+  <Description>
+    universal silicon rectifier diode
+    100V, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4002_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "39.8p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N4003>
+  <Description>
+    universal silicon rectifier diode
+    200V, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4003_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "39.8p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N4004>
+  <Description>
+    universal silicon rectifier diode
+    400V, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4004_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "39.8p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "400" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N4005>
+  <Description>
+    universal silicon rectifier diode
+    600V, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4005_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "26.5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "600" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N4006>
+  <Description>
+    universal silicon rectifier diode
+    800V, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4006_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "26.5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "800" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N4007>
+  <Description>
+    universal silicon rectifier diode
+    1kV, 1.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N4007_ 1 0 0 -26 13 0 0 "76.9p" 1 "1.45" 1 "26.5p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "42m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "1k" 0 "5u" 0>
+  </Model>
+</Component>
+
+<Component 1N5400>
+  <Description>
+    universal silicon rectifier diode
+    50V, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5400_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "125p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "50" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component 1N5401>
+  <Description>
+    universal silicon rectifier diode
+    100V, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5401_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "125p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component 1N5402>
+  <Description>
+    universal silicon rectifier diode
+    200V, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5402_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "125p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component 1N5404>
+  <Description>
+    universal silicon rectifier diode
+    400V, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5404_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "125p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "400" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component 1N5406>
+  <Description>
+    universal silicon rectifier diode
+    600V, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5406_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "53p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "600" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component 1N5407>
+  <Description>
+    universal silicon rectifier diode
+    800V, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5407_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "53p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "800" 0 "10u" 0>
+  </Model>
+</Component>
+
+<Component 1N5408>
+  <Description>
+    universal silicon rectifier diode
+    1kV, 3.0A, 3.0us
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <Diode D_1N5408_ 1 0 0 -26 13 0 0 "63n" 1 "1.7" 1 "53p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "14.1m" 0 "4.32u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "1k" 0 "10u" 0>
+  </Model>
+</Component>

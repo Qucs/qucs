@@ -144,8 +144,7 @@ SpiceDialog::~SpiceDialog()
 void SpiceDialog::slotButtOK()
 {
   slotButtApply();
-  if(changed) done(1);
-  else done(0);
+  slotButtCancel();
 }
 
 // -------------------------------------------------------------------------
@@ -154,6 +153,13 @@ void SpiceDialog::slotButtCancel()
 {
   if(changed) done(1);	// changed could have been done before
   else done(0);		// (by "Apply"-button)
+}
+
+//-----------------------------------------------------------------
+// To get really all close events (even <Escape> key).
+void SpiceDialog::reject()
+{
+  slotButtCancel();
 }
 
 // -------------------------------------------------------------------------

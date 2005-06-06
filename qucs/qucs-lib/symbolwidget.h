@@ -73,6 +73,7 @@ public:
  ~SymbolWidget();
 
   int setSymbol(const QString&);
+  int createSymbol(const QString&);
 
 private:
   void  paintEvent(QPaintEvent*);

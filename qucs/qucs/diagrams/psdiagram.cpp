@@ -95,7 +95,7 @@ int PSDiagram::calcDiagram()
   }
 
   // x line
-  Lines.append(new Line(0, y2>>1, x2, y2>>1, QPen(QPen::black,0)));
+  Lines.append(new Line(0, y2>>1, x2, y2>>1, GridPen));
   return 3;
 }
 
