@@ -114,6 +114,7 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
   d->paintGrid(&Painter, contentsX(), contentsY(),
 			visibleWidth(), visibleHeight());
   d->paint(&Painter);
+//p->drawText(20, 20, "*\xEA*");  // which character ?
 //  drawn = false;
 }
 
@@ -1080,15 +1081,27 @@ void QucsView::rightPressMenu(QMouseEvent *Event)
 
       if(focusElement->Type != isComponent) break;
     }
+    else {
+      QucsMain->symEdit->addTo(ComponentMenu);
+      QucsMain->fileSettings->addTo(ComponentMenu);
+    }
     QucsMain->Acts.moveText->addTo(ComponentMenu);
     break;
   }
-  QucsMain->Acts.onGrid->addTo(ComponentMenu);
-  QucsMain->editCopy->addTo(ComponentMenu);
-  QucsMain->Acts.editPaste->addTo(ComponentMenu);
+  while(true) {
+    if(focusElement)
+      if(focusElement->Type == isGraph) break;
+    QucsMain->Acts.onGrid->addTo(ComponentMenu);
+    QucsMain->editCopy->addTo(ComponentMenu);
+    QucsMain->Acts.editPaste->addTo(ComponentMenu);
+    break;
+  }
   QucsMain->Acts.editDelete->addTo(ComponentMenu);
   while(true) {
-    if(focusElement) if(focusElement->Type == isDiagram) break;
+    if(focusElement) {
+      if(focusElement->Type == isDiagram) break;
+      if(focusElement->Type == isGraph) break;
+    }
     ComponentMenu->insertSeparator();
     if(focusElement) if(focusElement->Type == isComponent)
       QucsMain->Acts.editActivate->addTo(ComponentMenu);
@@ -1212,6 +1225,7 @@ void QucsView::MPressSelect(QMouseEvent *Event)
   
   if(Event->button() != Qt::LeftButton) {
     rightPressMenu(Event);
+    MReleaseSelect(Event); // is not called at release because menu has focus
     return;
   }
 
@@ -2089,6 +2103,7 @@ void QucsView::editElement(QMouseEvent *Event)
   if(focusElement == 0) return;
   QucsDoc *d = Docs.current();
 
+  Graph *pg;
   Component *c;
   Diagram *dia;
   DiagramDialog *ddia;
@@ -2132,6 +2147,20 @@ void QucsView::editElement(QMouseEvent *Event)
          ddia = new DiagramDialog(dia, d->DataSet, this);
          if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
            d->setChanged(true, true);
+         break;
+
+    case isGraph :
+	 pg = (Graph*)focusElement;
+	 // searching diagram for this graph
+	 for(dia = d->Diags->last(); dia != 0; dia = d->Diags->prev())
+	   if(dia->Graphs.findRef(pg) >= 0)
+	     break;
+	 if(!dia) break;
+
+	 
+	 ddia = new DiagramDialog(dia, d->DataSet, this, pg);
+	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
+	   d->setChanged(true, true);
          break;
 
     case isWire:
@@ -2445,8 +2474,8 @@ void QucsView::slotApplyCompText()
   }
 
 
-  contentsToViewport(int(d->Scale * double(MAx1 - d->ViewX1)),
-			 int(d->Scale * double(MAy1 - d->ViewY1)),
+  contentsToViewport(int(d->Scale * float(MAx1 - d->ViewX1)),
+			 int(d->Scale * float(MAy1 - d->ViewY1)),
 			 MAx2, MAy2);
   editText->setReadOnly(false);
   if(pp) {

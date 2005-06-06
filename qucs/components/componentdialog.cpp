@@ -543,8 +543,7 @@ void ComponentDialog::slotApplyState(int State)
 void ComponentDialog::slotButtOK()
 {
   slotApplyInput();
-  if(changed) done(1);
-  else done(0);
+  slotButtCancel();
 }
 
 // -------------------------------------------------------------------------
@@ -553,6 +552,13 @@ void ComponentDialog::slotButtCancel()
 {
   if(changed) done(1);	// changed could have been done before
   else done(0);		// (by "Apply"-button)
+}
+
+//-----------------------------------------------------------------
+// To get really all close events (even <Escape> key).
+void ComponentDialog::reject()
+{
+  slotButtCancel();
 }
 
 // -------------------------------------------------------------------------

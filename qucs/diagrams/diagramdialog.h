@@ -1,6 +1,6 @@
 /***************************************************************************
-                          diagramdialog.h  -  description
-                             -------------------
+                              diagramdialog.h
+                             -----------------
     begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -37,15 +37,12 @@ class QIntValidator;
 class QRegExpValidator;
 class QSlider;
 
-/**
-  *@author Michael Margraf
-  */
 
 class DiagramDialog : public QDialog  {
 Q_OBJECT
 public:
   DiagramDialog(Diagram *d, const QString& _DataSet, QWidget *parent=0,
-		const char *name=0);
+		Graph *currentGraph=0);
   ~DiagramDialog();
 
   bool loadVarData(const QString&);
@@ -81,7 +78,12 @@ private slots:
   void slotEditRotY(const QString&);
   void slotEditRotZ(const QString&);
 
-public:
+protected slots:
+    void reject();
+
+private:
+  void SelectGraph(Graph*);
+
   Diagram *Diag;
   QString defaultDataSet;
 

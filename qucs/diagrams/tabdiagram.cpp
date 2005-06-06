@@ -169,7 +169,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
 	    y += tHeight*startWriting;
 	    startWriting = 0;
 	    if(y < tHeight) break;  // no room for more rows ?
-	    Str = StringNum(*px);
+	    Str = StringNum(*px, 'g', g->Precision);
 	    colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
 	    if(colWidth < 0)  goto funcEnd;
 

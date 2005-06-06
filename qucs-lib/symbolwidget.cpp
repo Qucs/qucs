@@ -91,6 +91,103 @@ void SymbolWidget::paintEvent(QPaintEvent*)
 }
 
 // ************************************************************
+// Creates a symbol from the model name of a component.
+int SymbolWidget::createSymbol(const QString& ModelString)
+{
+  Arcs.clear();
+  Lines.clear();
+  Rects.clear();
+  Ellips.clear();
+  Texts.clear();
+
+  int PortNo = 0;
+  QString Comp = ModelString.section(' ', 0,0);
+  Comp.remove(0, 1);  // remove '<'
+
+  if(Comp == "_BJT") {
+    Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
+    Lines.append(new Line(-30,  0,-10,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10, -5,  0,-15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,-15,  0,-30,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10,  5,  0, 15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0, 15,  0, 30,QPen(QPen::darkBlue,2)));
+
+    Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
+
+    Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(-4, -34, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(-4, 26, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+
+    PortNo = 3;
+    x1 = -34; y1 = -34;
+    x2 =   4; y2 =  34;
+  }
+  else if(Comp == "Diode") {
+    Lines.append(new Line(-30,  0, 30,  0,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -6, -9, -6,  9,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  6, -9,  6,  9,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -6,  0,  6, -9,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( -6,  0,  6,  9,QPen(QPen::darkBlue,2)));
+
+    Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(26, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+
+    PortNo = 2;
+    x1 = -34; y1 = -9;
+    x2 =  34; y2 =  9;
+  }
+  else if(Comp == "SUBST") {
+    Lines.append(new Line(-30,-16, 30,-16,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-30,-12, 30,-12,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-30, 16, 30, 16,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-30, 12, 30, 12,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-30,-16,-30, 16,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 30,-16, 30, 16,QPen(QPen::darkBlue,2)));
+
+    Lines.append(new Line(-30,-16, 16,-40,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 30,-16, 80,-40,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 30,-12, 80,-36,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 30, 12, 80,-16,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 30, 16, 80,-12,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 16,-40, 80,-40,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 80,-40, 80,-12,QPen(QPen::darkBlue,2)));
+  
+    Lines.append(new Line(-30,  0,-18,-12,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line(-22, 12,  2,-12,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( -2, 12, 22,-12,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( 18, 12, 30,  0,QPen(QPen::darkBlue,1)));
+
+    Lines.append(new Line( 30,  1, 37,  8,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( 37,-15, 52,  0,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( 52,-22, 66, -8,QPen(QPen::darkBlue,1)));
+    Lines.append(new Line( 66,-30, 80,-16,QPen(QPen::darkBlue,1)));
+
+    PortNo = 0;
+    x1 = -34; y1 =-44;
+    x2 =  84; y2 = 20;
+  }
+  
+  x1 -= 4;   // enlarge component boundings a little
+  x2 += 4;
+  y1 -= 4;
+  y2 += 4;
+  cx  = -x1 + TextWidth;
+  cy  = -y1;
+  int dx = x2-x1 + TextWidth;
+  setMinimumSize(dx, y2-y1);
+  if(width() > dx)  dx = width();
+  resize(dx, y2-y1);
+  update();
+  return PortNo;
+}
+
+// ************************************************************
 // Loads the symbol for the component from the symbol field and
 // returns the number of painting elements.
 int SymbolWidget::setSymbol(const QString& SymbolString)
