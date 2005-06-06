@@ -82,16 +82,16 @@ Diagram::~Diagram()
 // Paint function for most diagrams (cartesian, smith, polar, ...)
 void Diagram::paint(ViewPainter *p)
 {
-  // paint all arcs (1 pixel larger to compensate for strange Qt circles)
-  for(struct Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
-    p->Painter->setPen(pa->style);
-    p->drawArc(cx+pa->x, cy-pa->y, pa->w+1, pa->h+1, pa->angle, pa->arclen);
-  }
-
   // paint all lines
   for(Line *pl = Lines.first(); pl != 0; pl = Lines.next()) {
     p->Painter->setPen(pl->style);
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
+  }
+
+  // paint all arcs (1 pixel larger to compensate for strange Qt circles)
+  for(struct Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
+    p->Painter->setPen(pa->style);
+    p->drawArc(cx+pa->x, cy-pa->y, pa->w+1, pa->h+1, pa->angle, pa->arclen);
   }
 
   Graph *pg;
@@ -1645,7 +1645,6 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
 // parameters:   Axis - pointer to the axis to scale
 //               Dist - length of axis in pixel on the screen
 // return value: "true" if axis runs from largest to smallest value
-//               (only used for logarithmical axes)
 //
 //               GridNum  - number where the first numbered grid is placed
 //               GridStep - distance from one grid to the next
@@ -1741,9 +1740,18 @@ else {   // user defined limits
 }
 
 // --------------------------------------------------------------
-// Calculations for Cartesian diagrams (RectDiagram and Rect3DDiagram).
+// Calculations for logarithmical Cartesian diagrams (RectDiagram and
+//  Rect3DDiagram).
+// parameters:   Axis - pointer to the axis to scale
+//               Dist - length of axis in pixel on the screen
+// return value: "true" if axis runs from largest to smallest value
+//
+//               z      - screen coordinate where the first grid is placed
+//               zD     - number where the first grid is placed
+//               zDstep - number increment from one grid to the next
+//               coor   - scale factor for calculate screen coordinate
 bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
-				   double& zDstep, double& corr, int len)
+				double& zDstep, double& corr, int len)
 {
   if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
     Axis->max += fabs(Axis->max);
@@ -1839,10 +1847,9 @@ bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
 // --------------------------------------------------------------
 bool Diagram::calcYAxis(Axis *Axis, int x0)
 {
-  int z;
+  int z, w;
   double GridStep, corr, zD, zDstep, GridNum;
 
-  QSize r;
   QString tmp;
   QFontMetrics  metrics(QucsSettings.font);
   int maxWidth = 0;
@@ -1868,12 +1875,12 @@ if(Axis->log) {
       else  tmp = StringNum(zD, 'e', 1);
       if(Axis->up < 0.0)  tmp = '-'+tmp;
 
-      r = metrics.size(0, tmp);  // width of text
-      if(maxWidth < r.width()) maxWidth = r.width();
+      w = metrics.width(tmp);  // width of text
+      if(maxWidth < w) maxWidth = w;
       if(x0 > 0)
         Texts.append(new Text(x0+7, z-6, tmp)); // text aligned left
       else
-        Texts.append(new Text(-r.width()-7, z-6, tmp)); // text aligned right
+        Texts.append(new Text(-w-7, z-6, tmp)); // text aligned right
 
       // y marks
       Lines.append(new Line(x0-5, z, x0+5, z, QPen(QPen::black,0)));
@@ -1904,12 +1911,12 @@ else {  // not logarithmical
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
     tmp = StringNum(GridNum, form, Prec);
 
-    r = metrics.size(0, tmp);  // width of text
-    if(maxWidth < r.width()) maxWidth = r.width();
+    w = metrics.width(tmp);  // width of text
+    if(maxWidth < w) maxWidth = w;
     if(x0 > 0)
       Texts.append(new Text(x0+8, z-6, tmp));  // text aligned left
     else
-      Texts.append(new Text(-r.width()-7, z-6, tmp));  // text aligned right
+      Texts.append(new Text(-w-7, z-6, tmp));  // text aligned right
     GridNum += GridStep;
 
     if(Axis->GridOn)  if(z < y2)  if(z > 0)

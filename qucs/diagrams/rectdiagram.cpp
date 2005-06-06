@@ -46,19 +46,23 @@ void RectDiagram::calcCoordinate(double* &xD, double* &yD, double* &,
   double x  = *(xD++);
   double yr = *(yD++);
   double yi = *(yD++);
-  if(xAxis.log)
-    *px = int(log10(x / xAxis.low)/log10(xAxis.up / xAxis.low)
-		*double(x2) + 0.5);
+  if(xAxis.log) {
+    x /= xAxis.low;
+    if(x <= 0.0)  *px = -100000;   // "negative infinity"
+    else  *px = int(log10(x)/log10(xAxis.up / xAxis.low) * double(x2) + 0.5);
+  }
   else  *px = int((x-xAxis.low)/(xAxis.up-xAxis.low)*double(x2) + 0.5);
 
-  if(pa->log)
-    *py = int(log10(sqrt(yr*yr + yi*yi)/fabs(pa->low)) /
+  if(pa->log) {
+    yr = sqrt(yr*yr + yi*yi);
+    if(yr <= 0.0)  *py = -100000;   // "negative infinity"
+    else *py = int(log10(yr/fabs(pa->low)) /
 		log10(pa->up/pa->low) * double(y2) + 0.5);
+  }
   else {
-    if(fabs(yi) < 1e-250)  // preserve negative values if not complex number
-      *py = int((yr-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
-    else   // calculate magnitude of complex number
-      *py = int((sqrt(yr*yr + yi*yi)-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
+    if(fabs(yi) > 1e-250)  // preserve negative values if not complex number
+      yr = sqrt(yr*yr + yi*yi);
+    *py = int((yr-pa->low)/(pa->up-pa->low)*double(y2) + 0.5);
   }
 }
 
