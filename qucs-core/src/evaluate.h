@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.h,v 1.18 2005-06-02 18:17:50 raimi Exp $
+ * $Id: evaluate.h,v 1.19 2005-06-07 07:49:06 raimi Exp $
  *
  */
 
@@ -175,6 +175,16 @@ public:
   static constant * arg_v (constant *);
   static constant * arg_m (constant *);
   static constant * arg_mv (constant *);
+
+  static constant * unwrap_v_1 (constant *);
+  static constant * unwrap_v_2 (constant *);
+
+  static constant * deg2rad_d (constant *);
+  static constant * deg2rad_c (constant *);
+  static constant * deg2rad_v (constant *);
+  static constant * rad2deg_d (constant *);
+  static constant * rad2deg_c (constant *);
+  static constant * rad2deg_v (constant *);
 
   static constant * dB_d (constant *);
   static constant * dB_c (constant *);

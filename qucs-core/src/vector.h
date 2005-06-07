@@ -18,12 +18,14 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.h,v 1.16 2005-06-02 18:17:51 raimi Exp $
+ * $Id: vector.h,v 1.17 2005-06-07 07:49:06 raimi Exp $
  *
  */
 
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
+
+#include "consts.h"
 
 #ifdef log2
 #undef log2
@@ -69,22 +71,23 @@ class vector : public object
   friend vector logspace (nr_double_t, nr_double_t, int);
 
   // vector manipulations
-  friend vector real  (vector);  // the real part
-  friend vector imag  (vector);  // the imaginary part
-  friend vector conj  (vector);  // the complex conjugate
-  friend vector norm  (vector);  // the square of the magnitude
-  friend vector arg   (vector);  // the angle in the plane
-  friend vector dB    (vector);
-  friend vector ln    (vector);
-  friend vector log2  (vector);
-  friend vector pow   (vector, const complex);
-  friend vector pow   (vector, const nr_double_t);
-  friend vector pow   (const complex, vector);
-  friend vector pow   (const nr_double_t, vector);
-  friend vector pow   (vector, vector);
-  friend vector ztor  (vector, nr_double_t zref = 50.0);
-  friend vector rtoz  (vector, nr_double_t zref = 50.0);
-  friend vector diff  (vector, vector, int n = 1);
+  friend vector real   (vector);  // the real part
+  friend vector imag   (vector);  // the imaginary part
+  friend vector conj   (vector);  // the complex conjugate
+  friend vector norm   (vector);  // the square of the magnitude
+  friend vector arg    (vector);  // the angle in the plane
+  friend vector dB     (vector);
+  friend vector ln     (vector);
+  friend vector log2   (vector);
+  friend vector pow    (vector, const complex);
+  friend vector pow    (vector, const nr_double_t);
+  friend vector pow    (const complex, vector);
+  friend vector pow    (const nr_double_t, vector);
+  friend vector pow    (vector, vector);
+  friend vector ztor   (vector, nr_double_t zref = 50.0);
+  friend vector rtoz   (vector, nr_double_t zref = 50.0);
+  friend vector diff   (vector, vector, int n = 1);
+  friend vector unwrap (vector, nr_double_t tol = M_PI);
 
   // overloaded math functions
   friend vector abs    (vector);
