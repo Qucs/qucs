@@ -1,3 +1,10 @@
+2005-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* vector.cpp: New unwrap() function implemented.
+
+	* evaluate.cpp: Added unwrap(), rad2deg() and deg2rad()
+	functions.
+
 2005-05-21  Stefan Jahn  <stefan@lkcc.org>
 
 	* spline.h (class spline): Cubic spline class.  Generates

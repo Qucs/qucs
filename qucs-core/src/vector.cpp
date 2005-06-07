@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: vector.cpp,v 1.20 2005/06/02 18:17:51 raimi Exp $
+ * $Id: vector.cpp,v 1.21 2005/06/07 07:49:06 raimi Exp $
  *
  */
 
@@ -196,6 +196,24 @@ nr_double_t vector::minimum (void) {
     if (d < min_D) min_D = d;
   }
   return min_D;
+}
+
+/* Unwraps a phase vector in radians.  Adds +/- 2*Pi if consecutive
+   values jump about |Pi|. */
+vector unwrap (vector v, nr_double_t tol) {
+  vector result (v.getSize ());
+  nr_double_t add = 0;
+  result (0) = v (0);
+  for (int i = 1; i < v.getSize (); i++) {
+    nr_double_t diff = real (v (i) - v (i-1));
+    if (diff > +tol) {
+      add -= 2 * M_PI;
+    } else if (diff < -tol) {
+      add += 2 * M_PI;
+    }
+    result (i) = v (i) + add;
+  }
+  return result;
 }
 
 complex sum (vector v) {

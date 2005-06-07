@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: evaluate.cpp,v 1.33 2005/06/02 18:17:49 raimi Exp $
+ * $Id: evaluate.cpp,v 1.34 2005/06/07 07:49:06 raimi Exp $
  *
  */
 
@@ -1051,6 +1051,69 @@ constant * evaluate::arg_mv (constant * args) {
   matvec *    v1 = MV (args->getResult (0));
   constant * res = new constant (TAG_MATVEC);
   res->mv = new matvec (arg (*v1));
+  return res;
+}
+
+// ******* unwrap phase in radians ************
+constant * evaluate::unwrap_v_1 (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (unwrap (*v1));
+  return res;
+}
+
+constant * evaluate::unwrap_v_2 (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  nr_double_t d1 = D (args->getResult (1));
+  constant * res = new constant (TAG_VECTOR);
+  res->v = new vector (unwrap (*v1, fabs (d1)));
+  return res;
+}
+
+// ******** radian/degree conversion **********
+constant * evaluate::deg2rad_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = rad (d1);
+  return res;
+}
+
+constant * evaluate::deg2rad_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->c = new complex (rad (real (*c1)));
+  return res;
+}
+
+constant * evaluate::deg2rad_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  vector *     v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) v->add (rad (real (v1->get (i))));
+  res->v = new vector (*v);
+  return res;
+}
+
+constant * evaluate::rad2deg_d (constant * args) {
+  nr_double_t d1 = D (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->d = deg (d1);
+  return res;
+}
+
+constant * evaluate::rad2deg_c (constant * args) {
+  complex *   c1 = C (args->getResult (0));
+  constant * res = new constant (TAG_DOUBLE);
+  res->c = new complex (deg (real (*c1)));
+  return res;
+}
+
+constant * evaluate::rad2deg_v (constant * args) {
+  vector *    v1 = V (args->getResult (0));
+  constant * res = new constant (TAG_VECTOR);
+  vector *     v = new vector ();
+  for (int i = 0; i < v1->getSize (); i++) v->add (deg (real (v1->get (i))));
+  res->v = new vector (*v);
   return res;
 }
 
@@ -2576,6 +2639,17 @@ struct application_t eqn::applications[] = {
   { "arg", TAG_VECTOR,  evaluate::arg_v, 1, { TAG_VECTOR  } },
   { "arg", TAG_MATRIX,  evaluate::arg_m,  1, { TAG_MATRIX } },
   { "arg", TAG_MATVEC,  evaluate::arg_mv, 1, { TAG_MATVEC } },
+
+  { "unwrap", TAG_VECTOR,  evaluate::unwrap_v_1, 1, { TAG_VECTOR  } },
+  { "unwrap", TAG_VECTOR,  evaluate::unwrap_v_2, 2,
+    { TAG_VECTOR, TAG_DOUBLE } },
+
+  { "deg2rad", TAG_DOUBLE,  evaluate::deg2rad_d, 1, { TAG_DOUBLE  } },
+  { "deg2rad", TAG_DOUBLE,  evaluate::deg2rad_c, 1, { TAG_COMPLEX } },
+  { "deg2rad", TAG_VECTOR,  evaluate::deg2rad_v, 1, { TAG_VECTOR  } },
+  { "rad2deg", TAG_DOUBLE,  evaluate::rad2deg_d, 1, { TAG_DOUBLE  } },
+  { "rad2deg", TAG_DOUBLE,  evaluate::rad2deg_c, 1, { TAG_COMPLEX } },
+  { "rad2deg", TAG_VECTOR,  evaluate::rad2deg_v, 1, { TAG_VECTOR  } },
 
   { "dB", TAG_DOUBLE,  evaluate::dB_d, 1, { TAG_DOUBLE  } },
   { "dB", TAG_DOUBLE,  evaluate::dB_c, 1, { TAG_COMPLEX } },

@@ -26,6 +26,7 @@ files.
 Version 0.0.7
 -------------
 
+ * new unwrap(), rad2deg() and deg2rad() functions in equation solver
 
 Version 0.0.6
 -------------
