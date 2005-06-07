@@ -15,8 +15,9 @@
  * General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA, 02110-1301, USA
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.  
  *
  */
 
@@ -519,7 +520,7 @@ void c_microstrip::attenuation()
 void c_microstrip::line_angle()
 {
   double e_r_eff_e, e_r_eff_o;
-  double v_e, v_o, lambda_g_e, lambda_g_o, ang_l_e, ang_l_o;
+  double v_e, v_o, lambda_g_e, lambda_g_o;
 
   e_r_eff_e = er_eff_e;
   e_r_eff_o = er_eff_o;
@@ -535,9 +536,6 @@ void c_microstrip::line_angle()
   /* electrical angles */
   ang_l_e = 2.0 * M_PI * l / lambda_g_e;	/* in radians */
   ang_l_o = 2.0 * M_PI * l / lambda_g_o;	/* in radians */
-
-  ang_l_e = ang_l_e;
-  ang_l_o = ang_l_o;
 }
 
 
@@ -771,6 +769,7 @@ void c_microstrip::get_c_microstrip_elec()
   Z0e = getProperty ("Z0e", UNIT_RES, RES_OHM);
   Z0o = getProperty ("Z0o", UNIT_RES, RES_OHM);
   ang_l_e = getProperty ("Ang_l", UNIT_ANG, ANG_RAD);
+  ang_l_o = getProperty ("Ang_l", UNIT_ANG, ANG_RAD);
 }
 
 
@@ -791,7 +790,7 @@ void c_microstrip::show_results()
 {
   setProperty ("Z0e", Z0e, UNIT_RES, RES_OHM);
   setProperty ("Z0o", Z0o, UNIT_RES, RES_OHM);
-  setProperty ("Ang_l", ang_l_e, UNIT_ANG, ANG_RAD);
+  setProperty ("Ang_l", sqrt (ang_l_e * ang_l_o), UNIT_ANG, ANG_RAD);
 
   setResult (0, er_eff_e, "");
   setResult (1, er_eff_o, "");
@@ -844,7 +843,7 @@ void c_microstrip::synthesize()
   double Z0_e, Z0_o;
   double f1, f2, ft1, ft2, j11, j12, j21, j22, d_s_h, d_w_h, err;
   double eps = 1e-04;
-  double w_h, s_h;
+  double w_h, s_h, le, lo;
 
   /* Get and assign substrate parameters */
   get_c_microstrip_sub();
@@ -900,6 +899,14 @@ void c_microstrip::synthesize()
 
   setProperty ("W", w, UNIT_LENGTH, LENGTH_M);
   setProperty ("S", s, UNIT_LENGTH, LENGTH_M);
+
+  /* calculate physical length */
+  ang_l_e = getProperty ("Ang_l", UNIT_ANG, ANG_RAD);
+  ang_l_o = getProperty ("Ang_l", UNIT_ANG, ANG_RAD);
+  le = C0 / f / sqrt(er_eff_e * mur_eff) * ang_l_e / 2.0 / M_PI;
+  lo = C0 / f / sqrt(er_eff_o * mur_eff) * ang_l_o / 2.0 / M_PI;
+  l = sqrt (le * lo);
+  setProperty ("L", l, UNIT_LENGTH, LENGTH_M);
 
   calc();
   /* print results in the subwindow */

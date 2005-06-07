@@ -1,3 +1,8 @@
+2005-06-06  Stefan Jahn  <stefan@lkcc.org>
+
+	* c_microstrip.cpp (show_results): Added computation of
+	electrical and physical length.
+
 2005-04-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucstrans.cpp (slotCopyToClipBoard): Added schematic creation
