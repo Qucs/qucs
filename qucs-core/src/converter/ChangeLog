@@ -1,3 +1,9 @@
+2005-06-10  Stefan Jahn  <stefan@lkcc.org>
+
+	* scan_spice.l: Skipping the .control -> .endc interactive
+	section in SPICE files.  Also handling the optional 0x1a
+	character at the end of SPICE netlists.
+
 2005-05-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* check_spice.cpp: Fixed a segfault bug occurring if there is
