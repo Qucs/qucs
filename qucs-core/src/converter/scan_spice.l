@@ -21,7 +21,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: scan_spice.l,v 1.11 2005-06-02 18:17:56 raimi Exp $
+ * $Id: scan_spice.l,v 1.12 2005-06-13 11:58:54 raimi Exp $
  *
  */
 
@@ -110,7 +110,7 @@ MOS2     ([rR][gG][eE][oO][mM][oO][dD]|[tT][sSdD])
 MOS      ({MOS1}|{MOS2})
 
 %x COMMENT IVREF DEVPROP LREF MODREF1 MODREF2 IGNORE FUNREF FILEREF VREF
-%x STARTUP VSINGLE SWITCH
+%x STARTUP VSINGLE SWITCH CONTROL
 %option yylineno noyywrap nounput prefix="spice_"
 
 %%
@@ -128,6 +128,21 @@ MOS      ({MOS1}|{MOS2})
 <STARTUP,INITIAL>^"*" { /* ignored region begins here */
     BEGIN(COMMENT);
   }
+
+<STARTUP,INITIAL>^"."[cC][oO][nN][tT][rR][oO][lL] {
+    /* control (interactive) region start */
+    BEGIN(CONTROL);
+}
+
+<CONTROL>. { /* skip any character in here */ }
+
+<CONTROL>^"."[eE][nN][dD][cC] {
+    BEGIN(STARTUP);
+}
+
+<STARTUP,INITIAL>\x1a {
+  /* skip EOF character */
+}
 
 <STARTUP,INITIAL>^"."[sS][uU][bB][cC][kK][tT] {
     /* subcircuit definition start */
