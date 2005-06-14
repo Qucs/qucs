@@ -242,6 +242,8 @@ AC_CONFIG_FILES([Makefile
 		 qucs-help/docs/de/Makefile
                  qucs-help/docs/es/Makefile
                  qucs-help/docs/fr/Makefile
+                 qucs-help/docs/tutorial/Makefile
+                 qucs-help/docs/tutorial/pics/Makefile
 		 qucs-filter/Makefile
 		 qucs-transcalc/Makefile
 		 qucs-transcalc/bitmaps/Makefile
