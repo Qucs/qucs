@@ -1,3 +1,10 @@
+2005-06-19  Stefan Jahn  <stefan@lkcc.org>
+
+	* tridiag.h (class tridiag): New class implementing solution of
+	tridiagonal (symmetric/non-symmetric and cyclic/non-cyclic)
+	equation systems.  The cyclic matrices are going to be used for
+	periodic cubic splines.
+
 2005-06-06  Stefan Jahn  <stefan@lkcc.org>
 
 	* vector.cpp: New unwrap() function implemented.
