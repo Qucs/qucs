@@ -135,6 +135,7 @@ signals:
 public:
   QucsView  *view; // the working area with schematics, data displays etc.
   QTabBar   *WorkView;
+  QIconView *CompComps;
 
   // menu appearing by right mouse button click on content listview
   QPopupMenu *ContentMenu;
@@ -149,39 +150,37 @@ public:
   QucsActions  Acts;    // contains most of the toggle actions
 
 private:
-    QPrinter  *Printer; // printer is global (to remember the user settings)
-    QucsInit   Init;    // initializes toolbars, menubar, actions ...
+  QPrinter  *Printer; // printer is global (to remember the user settings)
+  QucsInit   Init;    // initializes toolbars, menubar, actions ...
 
 // ********* Widgets on the main area **********************************
-    QTabWidget    *TabView;
+  QTabWidget    *TabView;
 
-    QListBox      *Projects;
-    QListView     *Content;
-    QListViewItem *ConSchematics, *ConDisplays, *ConDatasets;
+  QListBox      *Projects;
+  QListView     *Content;
+  QListViewItem *ConSchematics, *ConDisplays, *ConDatasets;
 
-    QComboBox     *CompChoose;
-    QIconView     *CompComps;
+  QComboBox     *CompChoose;
 
 // ********** Properties ************************************************
-    QString       ProjName;   // name of the project, that is open
-    QPtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
+  QString       ProjName;   // name of the project, that is open
+  QPtrList<QString> HierarchyHistory; // keeps track of "go into subcircuit"
 
-    QString       QucsFileFilter;
+  QString       QucsFileFilter;
 
-    QPtrList<QProcess> Programs;    // list of programs started by qucs
+  QPtrList<QProcess> Programs;    // list of programs started by qucs
 
 // ********** Methods ***************************************************
-    bool saveCurrentFile();
-    bool saveAs();
-    void readProjects();
-    void OpenProject(const QString&, const QString&);
-    bool DeleteProject(const QString&, const QString&);
-    void updatePortNumber(int);
-    bool gotoPage(const QString&);
-    void nextDocument(bool);
-    void fillComboBox(bool);
-    void switchEditMode(bool);
-    void changeSchematicSymbolMode(QucsDoc*);
+  bool saveCurrentFile();
+  bool saveAs();
+  void readProjects();
+  void OpenProject(const QString&, const QString&);
+  bool DeleteProject(const QString&, const QString&);
+  void updatePortNumber(int);
+  bool gotoPage(const QString&);
+  void nextDocument(bool);
+  void fillComboBox(bool);
+  void switchEditMode(bool);
+  void changeSchematicSymbolMode(QucsDoc*);
 };
 #endif
-

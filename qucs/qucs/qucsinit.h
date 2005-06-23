@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsinit.h  -  description
-                             -------------------
+                                qucsinit.h
+                               ------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,19 +26,18 @@
 
 class QucsApp;
 class QucsActions;
+class QLabel;
 
-
-/**
-  *@author Michael Margraf
-  */
 
 class QucsInit : public QObject {
   Q_OBJECT
 public:
   QucsInit();
-  ~QucsInit();
+ ~QucsInit();
 
   void perform(QucsApp *p_);
+
+  QLabel *WarningLabel;
 
 public slots:
   void slotViewToolBar(bool toggle);    // toggle the toolbar
@@ -46,6 +45,8 @@ public slots:
 
   void slotHelpAbout();       // shows an about dialog
   void slotHelpAboutQt();     // shows the standard about dialog for Qt
+
+  void slotShowWarnings();
 
 private:
   void initActions();    // initializes all QActions of the application

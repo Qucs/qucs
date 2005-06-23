@@ -494,6 +494,14 @@
         <source>Grid</source>
         <translation type="unfinished">Rács</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -650,6 +658,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>Forgatási szög:</translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2589,6 +2601,94 @@ Használat:  qucsedit [-r] fájl
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">Poláris</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished">Poláris-Smith kombinált</translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished">Smith-Poláris kombinált</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished">3D-Derékszögű</translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">Derékszögű</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">Smith Diagram</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished">Belépő Smith</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">Táblázatos</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">Nyíl</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">Körív</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Elipszis</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">Kitöltött ellipszis</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Vonal</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">Szöveg</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Téglalap</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">Kitöltött téglalap</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3065,35 +3165,35 @@ Hibák:
     </message>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation type="obsolete">Vonal</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>Körív</translation>
+        <translation type="obsolete">Körív</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>Nyíl</translation>
+        <translation type="obsolete">Nyíl</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Szöveg</translation>
+        <translation type="obsolete">Szöveg</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Elipszis</translation>
+        <translation type="obsolete">Elipszis</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Téglalap</translation>
+        <translation type="obsolete">Téglalap</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>Kitöltött ellipszis</translation>
+        <translation type="obsolete">Kitöltött ellipszis</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>Kitöltött téglalap</translation>
+        <translation type="obsolete">Kitöltött téglalap</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -3121,19 +3221,19 @@ Hibák:
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>Derékszögű</translation>
+        <translation type="obsolete">Derékszögű</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>Poláris</translation>
+        <translation type="obsolete">Poláris</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>Táblázatos</translation>
+        <translation type="obsolete">Táblázatos</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>Smith Diagram</translation>
+        <translation type="obsolete">Smith Diagram</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -3209,15 +3309,15 @@ Szerkeszti a kapcsolási rajzot</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation>Belépő Smith</translation>
+        <translation type="obsolete">Belépő Smith</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation>Poláris-Smith kombinált</translation>
+        <translation type="obsolete">Poláris-Smith kombinált</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation>Smith-Poláris kombinált</translation>
+        <translation type="obsolete">Smith-Poláris kombinált</translation>
     </message>
     <message>
         <source>Edit Properties</source>
@@ -3237,10 +3337,10 @@ Nem indítható a tápvonal tervező program!
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation>3D-Derékszögű</translation>
+        <translation type="obsolete">3D-Derékszögű</translation>
     </message>
     <message>
-        <source>Locus Curve</source>
+        <source>no warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4749,7 +4849,7 @@ QucsTrans indítása</translation>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
 </source>
-        <translation>QucsFiltert Toyoyuki Ishikawa és Michael Margraf írta
+        <translation type="obsolete">QucsFiltert Toyoyuki Ishikawa és Michael Margraf írta
 
 
 
@@ -4774,6 +4874,14 @@ QucsTrans indítása</translation>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4851,11 +4959,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5291,6 +5407,31 @@ Starts component library program</source>
     <message>
         <source>Edit Properties</source>
         <translation type="unfinished">Tulajdonságok beállítása</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Bezár</translation>
+    </message>
+    <message>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

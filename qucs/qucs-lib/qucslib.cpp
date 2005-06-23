@@ -38,6 +38,7 @@
 #include "qucslib.h"
 #include "displaydialog.h"
 #include "symbolwidget.h"
+#include "searchdialog.h"
 
 
 /* Constructor setups the GUI. */
@@ -103,7 +104,7 @@ QucsLib::QucsLib()
 
 
   // component display
-  CompGroup = new QVGroupBox (tr("Component"), h);
+  QVGroupBox *CompGroup = new QVGroupBox (tr("Component"), h);
   CompDescr = new QTextEdit(CompGroup);
   CompDescr->setTextFormat(Qt::PlainText);
   CompDescr->setReadOnly(true);
@@ -190,8 +191,14 @@ void QucsLib::slotHelp()
 void QucsLib::slotCopyToClipBoard()
 {
   QString s = "<Qucs Schematic " PACKAGE_VERSION ">\n";
-  s += "<Components>\n";
-  s += "  " + ModelString + "\n";
+  s += "<Components>\n  ";
+  if(ModelString.contains('\n') < 2)
+    s += ModelString;
+  else
+    s += "<Lib " + Symbol->Prefix + " 1 0 0 " +
+         QString::number(Symbol->Text_x) + " " +
+         QString::number(Symbol->Text_y) + " 0 0 \"" +
+         Symbol->LibraryName + "\" 0 \"" + Symbol->ComponentName + "\" 0>\n";
   s += "</Components>\n";
 
   // put resulting schematic into clipboard
@@ -211,7 +218,16 @@ void QucsLib::slotShowModel()
 
 void QucsLib::slotSelectLibrary(int Index)
 {
+  int Start, End, NameStart, NameEnd;
+  End = Library->count()-1;
+  if(Library->text(End) == tr("Search result"))
+    if(Index < End)
+      Library->removeItem(End); // if search result still there -> remove it
+    else  return;
+
+
   CompList->clear();
+  LibraryComps.clear();
 
   QFile file(QucsSettings.LibDir + Library->text(Index) + ".lib");
   if(!file.open(IO_ReadOnly)) {
@@ -222,80 +238,94 @@ void QucsLib::slotSelectLibrary(int Index)
   }
 
   QTextStream ReadWhole(&file);
-  LibraryString = ReadWhole.read();
+  QString LibraryString = ReadWhole.read();
   file.close();
-  
-  int Start=0, End;
-  while((Start=LibraryString.find("\n<Component ", Start)) > 0) {
-    Start += 12;
-    End = LibraryString.find('>', Start);
-    if(End > 0)
-      CompList->insertItem(LibraryString.mid(Start, End-Start));
+
+  Start = LibraryString.find("<Qucs Library ");
+  if(Start < 0) {
+    QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+    return;
   }
-  file.close();
+  End = LibraryString.find('>', Start);
+  if(End < 0) {
+    QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
+    return;
+  }
+  QString LibName = LibraryString.mid(Start, End-Start).section('"', 1, 1);
+
+  while((Start=LibraryString.find("\n<Component ", Start)) > 0) {
+    Start++;
+    NameStart = Start + 11;
+    NameEnd = LibraryString.find('>', NameStart);
+    if(NameEnd < 0)  continue;
+
+    End = LibraryString.find("\n</Component>", NameEnd);
+    if(End < 0)  continue;
+    End += 13;
+
+    CompList->insertItem(LibraryString.mid(NameStart, NameEnd-NameStart));
+    LibraryComps.append(LibName+'\n'+LibraryString.mid(Start, End-Start));
+    Start = End;
+  }
 }
 
 void QucsLib::slotSearchComponent()
 {
+  SearchDialog *d = new SearchDialog(this);
+  if(d->exec() != QDialog::Accepted)
+    QMessageBox::information(this, tr("Result"),
+                             tr("No appropriate component found."));
 }
 
 void QucsLib::slotShowComponent(QListBoxItem *Item)
 {
   if(!Item) return;
 
-  int Start = LibraryString.find("<Component " + Item->text() + ">");
-  if(Start < 0) {
-    QMessageBox::critical(this, tr("Error"),
-        tr("Cannot find component \"%1\".").arg(Item->text()));
-    return;
-  }
+  QStringList::Iterator CompString = LibraryComps.at(CompList->index(Item));
+  CompDescr->setText("Name: " + Item->text());
+  CompDescr->append("Library: " + (*CompString).section('\n', 0, 0));
+  CompDescr->append("----------------------------");
 
-  int End = LibraryString.find("</Component>", Start);
-  if(End < 0) {
-    QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
-    return;
-  }
-  QString CompString = LibraryString.mid(Start, End-Start);
-  CompGroup->setTitle(Item->text());
-
-  CompDescr->clear();
-  Start = CompString.find("<Description>");
+  int Start, End;
+  Start = (*CompString).find("<Description>");
   if(Start > 0) {
     Start += 13;
-    End = CompString.find("</Description>", Start);
+    End = (*CompString).find("</Description>", Start);
     if(End < 0) {
       QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
       return;
     }
-    CompDescr->setText(
-      CompString.mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1));
+    CompDescr->append(
+      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1));
   }
 
 
-  Start = CompString.find("<Model>");
+  Start = (*CompString).find("<Model>");
   if(Start > 0) {
     Start += 7;
-    End = CompString.find("</Model>", Start);
+    End = (*CompString).find("</Model>", Start);
     if(End < 0) {
       QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
       return;
     }
     ModelString =
-      CompString.mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
+      (*CompString).mid(Start, End-Start).replace(QRegExp("\\n\\x20+"), "\n").remove(0, 1);
 
     if(ModelString.contains('\n') < 2)
-      Symbol->createSymbol(ModelString);
+      Symbol->createSymbol(ModelString,
+                           (*CompString).section('\n', 0, 0), Item->text());
   }
 
 
-  Start = CompString.find("<Symbol>");
+  Start = (*CompString).find("<Symbol>");
   if(Start > 0) {
     Start += 8;
-    End = CompString.find("</Symbol>", Start);
+    End = (*CompString).find("</Symbol>", Start);
     if(End < 0) {
       QMessageBox::critical(this, tr("Error"), tr("Library is corrupt."));
       return;
     }
-    Symbol->setSymbol(CompString.mid(Start, End-Start));
+    Symbol->setSymbol((*CompString).mid(Start, End-Start),
+                      (*CompString).section('\n', 0, 0), Item->text());
   }
 }

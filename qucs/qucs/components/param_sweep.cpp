@@ -62,7 +62,7 @@ Component* Param_Sweep::newOne()
   return new Param_Sweep();
 }
 
-Component* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Param_Sweep::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Parameter sweep");
   BitmapFile = "sweep";

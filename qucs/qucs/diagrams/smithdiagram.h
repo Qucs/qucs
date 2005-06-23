@@ -1,6 +1,6 @@
 /***************************************************************************
-                          smithdiagram.h  -  description
-                             -------------------
+                               smithdiagram.h
+                              ----------------
     begin                : Sat Oct 18 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,10 +21,6 @@
 #include "diagram.h"
 
 
-/**
-  *@author Michael Margraf
-  */
-
 class SmithDiagram : public Diagram  {
 public: 
   SmithDiagram(int _cx=0, int _cy=0, bool ImpMode=true);
@@ -32,6 +28,8 @@ public:
 
 
   Diagram* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_y(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);

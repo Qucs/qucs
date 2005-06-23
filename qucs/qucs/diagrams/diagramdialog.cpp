@@ -1,5 +1,5 @@
 /***************************************************************************
-                          diagramdialog.cpp  -  description
+                              diagramdialog.cpp
                              -------------------
     begin                : Sun Oct 5 2003
     copyright            : (C) 2003 by Michael Margraf
@@ -38,6 +38,55 @@
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qslider.h>
+
+
+#define CROSS3D_SIZE   30
+#define WIDGET3D_SIZE  2*CROSS3D_SIZE
+// This widget class paints a small 3-dimensional coordinate cross.
+class Cross3D : public QWidget  {
+public:
+  Cross3D(float rx_, float ry_, float rz_, QWidget *parent = 0)
+          : QWidget(parent) {
+    rotX = rx_;
+    rotY = ry_;
+    rotZ = rz_;
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    setMinimumSize(WIDGET3D_SIZE, WIDGET3D_SIZE);
+    resize(WIDGET3D_SIZE, WIDGET3D_SIZE);
+  };
+ ~Cross3D() {};
+
+  double rotX, rotY, rotZ;   // in radians !!!!
+
+private:
+  void  paintEvent(QPaintEvent*) {
+    QPainter Painter(this);
+    float cxx = cos(rotZ);
+    float cxy = sin(rotZ);
+    float cxz = sin(rotY);
+    float cyz = sin(rotX);
+    float cyy = cos(rotX);
+    float cyx = cyy * cxy + cyz * cxz * cxx;
+    cyy = cyy * cxx - cyz * cxz * cxy;
+    cyz *= cos(rotY);
+    cxx *= cos(rotY);
+    cxy *= cos(rotY);
+
+    Painter.setPen(QPen(QPen::red,2));
+    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
+		     int(CROSS3D_SIZE * (1.0+cxx)),
+		     int(CROSS3D_SIZE * (1.0-cyx)));
+    Painter.setPen(QPen(QPen::green,2));
+    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
+		     int(CROSS3D_SIZE * (1.0-cxy)),
+		     int(CROSS3D_SIZE * (1.0-cyy)));
+    Painter.setPen(QPen(QPen::blue,2));
+    Painter.drawLine(CROSS3D_SIZE, CROSS3D_SIZE,
+		     int(CROSS3D_SIZE * (1.0+cxz)),
+		     int(CROSS3D_SIZE * (1.0+cyz)));
+  };
+};
+
 
 
 // standard colors: blue, red, magenta, green, cyan, yellow, black
@@ -190,9 +239,6 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   ChooseVars->addColumn(tr("Name"));
   ChooseVars->addColumn(tr("Status"));
   ChooseVars->addColumn(tr("Size"));
-// QT 3.2
-//  connect(Content, SIGNAL(doubleClicked(QListViewItem*, const QPoint &,int)),
-//                   SLOT(slotTakeVar(QListViewItem*, const QPoint &,int)));
   connect(ChooseVars, SIGNAL(doubleClicked(QListViewItem*)),
 		      SLOT(slotTakeVar(QListViewItem*)));
 
@@ -212,7 +258,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   int Row = 0;
   if(Diag->Name != "Tab") {
     QWidget *Tab2 = new QWidget(t);
-    QGridLayout *gp = new QGridLayout(Tab2,12,3,5,5);
+    QGridLayout *gp = new QGridLayout(Tab2,13,3,5,5);
 
     gp->addMultiCellWidget(new QLabel(tr("x-Axis Label:"), Tab2), Row,Row,0,0);
     xLabel = new QLineEdit(Tab2);
@@ -235,6 +281,11 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
       gp->addMultiCellWidget(yrLabel, Row,Row,1,2);
       Row++;
     }
+
+    gp->addMultiCellWidget(new QLabel(
+        tr("<b>Label text</b>: Use LaTeX style for special characters, e.g. \\tau"),
+        Tab2),  Row,Row,0,2);
+    Row++;
 
     if(Diag->Name != "Rect3D") {
       GridOn = new QCheckBox(tr("show Grid"), Tab2);
@@ -298,7 +349,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 
 
       if(Diag->Name == "Rect3D") {
-	gp->addWidget(new QLabel(tr("Rotation around x-Axis:"), Tab2), Row,0);
+	QLabel *LabelRotX = new QLabel(tr("Rotation around x-Axis:"), Tab2);
+	LabelRotX->setPaletteForegroundColor(Qt::red);
+	gp->addWidget(LabelRotX, Row,0);
 	SliderRotX = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotX,
 				 Qt::Horizontal, Tab2);
 	gp->addWidget(SliderRotX, Row,1);
@@ -312,7 +365,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 			   SLOT(slotEditRotX(const QString&)));
 	Row++;
 
-	gp->addWidget(new QLabel(tr("Rotation around y-Axis:"), Tab2), Row,0);
+	QLabel *LabelRotY = new QLabel(tr("Rotation around y-Axis:"), Tab2);
+	LabelRotY->setPaletteForegroundColor(Qt::green);
+	gp->addWidget(LabelRotY, Row,0);
 	SliderRotY = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotY,
 				 Qt::Horizontal, Tab2);
 	gp->addWidget(SliderRotY, Row,1);
@@ -326,7 +381,9 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 			   SLOT(slotEditRotY(const QString&)));
 	Row++;
 
-	gp->addWidget(new QLabel(tr("Rotation around z-Axis:"), Tab2), Row,0);
+	QLabel *LabelRotZ = new QLabel(tr("Rotation around z-Axis:"), Tab2);
+	LabelRotZ->setPaletteForegroundColor(Qt::blue);
+	gp->addWidget(LabelRotZ, Row,0);
 	SliderRotZ = new QSlider(0,360,20, ((Rect3DDiagram*)Diag)->rotZ,
 				 Qt::Horizontal, Tab2);
 	gp->addWidget(SliderRotZ, Row,1);
@@ -340,10 +397,17 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
 			   SLOT(slotEditRotZ(const QString&)));
 	Row++;
 
-        // transfer the diagram properties to the dialog
-        rotationX->setText(QString::number(((Rect3DDiagram*)Diag)->rotX));
-        rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
-        rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
+	gp->addWidget(new QLabel(tr("2D-projection:"), Tab2), Row,0);
+	DiagCross = new Cross3D(((Rect3DDiagram*)Diag)->rotX,
+				((Rect3DDiagram*)Diag)->rotY,
+				((Rect3DDiagram*)Diag)->rotZ, Tab2);
+	gp->addWidget(DiagCross, Row,1);
+
+	// transfer the diagram properties to the dialog
+	rotationX->setText(QString::number(((Rect3DDiagram*)Diag)->rotX));
+	rotationY->setText(QString::number(((Rect3DDiagram*)Diag)->rotY));
+	rotationZ->setText(QString::number(((Rect3DDiagram*)Diag)->rotZ));
+
       }
     }
     else GridLogX = GridLogY = GridLogZ = 0;
@@ -1094,6 +1158,8 @@ void DiagramDialog::slotChangeTab(QWidget*)
 void DiagramDialog::slotNewRotX(int Value)
 {
   rotationX->setText(QString::number(Value));
+  DiagCross->rotX = float(Value) * M_PI/180.0;
+  DiagCross->update();
 }
 
 // --------------------------------------------------------------------------
@@ -1101,6 +1167,8 @@ void DiagramDialog::slotNewRotX(int Value)
 void DiagramDialog::slotNewRotY(int Value)
 {
   rotationY->setText(QString::number(Value));
+  DiagCross->rotY = float(Value) * M_PI/180.0;
+  DiagCross->update();
 }
 
 // --------------------------------------------------------------------------
@@ -1108,6 +1176,8 @@ void DiagramDialog::slotNewRotY(int Value)
 void DiagramDialog::slotNewRotZ(int Value)
 {
   rotationZ->setText(QString::number(Value));
+  DiagCross->rotZ = float(Value) * M_PI/180.0;
+  DiagCross->update();
 }
 
 // --------------------------------------------------------------------------
@@ -1115,6 +1185,8 @@ void DiagramDialog::slotNewRotZ(int Value)
 void DiagramDialog::slotEditRotX(const QString& Text)
 {
   SliderRotX->setValue(Text.toInt());
+  DiagCross->rotX = Text.toFloat() * M_PI/180.0;
+  DiagCross->update();
 }
 
 // --------------------------------------------------------------------------
@@ -1122,6 +1194,8 @@ void DiagramDialog::slotEditRotX(const QString& Text)
 void DiagramDialog::slotEditRotY(const QString& Text)
 {
   SliderRotY->setValue(Text.toInt());
+  DiagCross->rotY = Text.toFloat() * M_PI/180.0;
+  DiagCross->update();
 }
 
 // --------------------------------------------------------------------------
@@ -1129,4 +1203,6 @@ void DiagramDialog::slotEditRotY(const QString& Text)
 void DiagramDialog::slotEditRotZ(const QString& Text)
 {
   SliderRotZ->setValue(Text.toInt());
+  DiagCross->rotZ = Text.toFloat() * M_PI/180.0;
+  DiagCross->update();
 }

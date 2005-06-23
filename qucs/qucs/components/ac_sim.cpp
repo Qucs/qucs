@@ -66,7 +66,7 @@ Component* AC_Sim::newOne()
   return new AC_Sim();
 }
 
-Component* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* AC_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac simulation");
   BitmapFile = "ac";

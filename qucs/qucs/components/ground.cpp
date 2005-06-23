@@ -47,7 +47,7 @@ Component* Ground::newOne()
   return new Ground();
 }
 
-Component* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Ground::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Ground");
   BitmapFile = "gnd";

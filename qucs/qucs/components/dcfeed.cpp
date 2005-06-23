@@ -57,7 +57,7 @@ Component* dcFeed::newOne()
   return new dcFeed();
 }
 
-Component* dcFeed::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* dcFeed::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("dc Feed");
   BitmapFile = "dcfeed";

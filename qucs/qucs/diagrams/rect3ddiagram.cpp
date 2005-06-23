@@ -54,6 +54,9 @@ void Rect3DDiagram::calcCoefficients()
   cyx =  sin(rX) * sin(rY) * cos(rZ) + cos(rX) * sin(rZ);
   cyy = -sin(rX) * sin(rY) * sin(rZ) + cos(rX) * cos(rZ);
   cyz = -sin(rX) * cos(rY);
+  czx = -cos(rX) * sin(rY) * cos(rZ) + sin(rX) * sin(rZ);
+  czy =  cos(rX) * sin(rY) * sin(rZ) + sin(rX) * cos(rZ);
+  czz =  cos(rX) * cos(rY);
 }
 
 // ------------------------------------------------------------
@@ -66,6 +69,12 @@ double Rect3DDiagram::calcX_2D(double x, double y, double z)
 double Rect3DDiagram::calcY_2D(double x, double y, double z)
 {
   return cyx * x + cyy * y + cyz * z;
+}
+
+// ------------------------------------------------------------
+double Rect3DDiagram::calcZ_2D(double x, double y, double z)
+{
+  return czx * x + czy * y + czz * z;
 }
 
 // ------------------------------------------------------------
@@ -115,6 +124,88 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 }
 
 // --------------------------------------------------------------
+void Rect3DDiagram::removeLines()
+{
+//  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
+//  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
+
+
+/*
+      for(i=g->countY; i>0; i--) {  // every branch of curves
+	px = g->cPointsX.getFirst()->Points;
+	calcCoordinate(px, pz, py, p, p+1, pa);
+	p += 2;
+	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
+//	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	  calcCoordinate(px, pz, py, p, p+1, pa);
+	  p += 2;
+	  if(Counter >= 2)   // clipping only if an axis is manual
+	    clip(p);
+	}
+	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+	*(p++) = -10;
+	if(py != &Dummy) {   // more-dimensional Rect3D
+	  py++;
+	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
+	    py = g->cPointsX.at(1)->Points;
+	}
+      }
+*/
+
+
+/*
+  // line algorithm
+  int x1_ = 80, y1_ = 40;
+  int x2_ = 10, y2_ = 10;
+
+  int ax_ = 0, ay_ = 0;
+  int ix_, iy_, dx_, dy_, of_;
+
+  if(x2_ >= x1_) {
+    dx_ = x2_ - x1_;
+    ix_ = 1;
+  }
+  else {
+    dx_ = x1_ - x2_;
+    ix_ = -1;
+  }
+
+  if(y2_ >= y1_) {
+    dy_ = y2_ - y1_;
+    iy_ = 1;
+  }
+  else {
+    dy_ = y1_ - y2_;
+    iy_ = -1;
+  }
+
+  if(dx_ < dy_) {
+    of_ = dx_;   // exchange dx and dy
+    dx_ = dy_;
+    dy_ = of_;
+
+    ax_ = iy_;
+    ay_ = ix_;
+    ix_ = iy_ = 0;
+  }
+
+  of_ = dx_ >> 1;
+  p->drawPoint(x1_, y1_);
+  for(int i=dx_; i>0; i--) {
+    x1_ += ix_;
+    y1_ += ax_;
+    of_ += dy_;
+    if(of_ > dx_) {
+      of_ -= dx_;
+      x1_ += ay_;
+      y1_ += iy_;
+    }
+    p->drawPoint(x1_, y1_);
+  }
+*/
+}
+
+// --------------------------------------------------------------
 void Rect3DDiagram::calcLimits()
 {
   int i;
@@ -161,8 +252,7 @@ int Rect3DDiagram::calcAxis(Axis *Axis, int x, int xLen,
   QString tmp;
   QFontMetrics  metrics(QucsSettings.font);
   int maxWidth = 0;
-  int Prec, count, gx, gy, w;
-  char form;
+  int count, gx, gy, w;
 
   double xD = sqrt(double(xLen*xLen + yLen*yLen));
   double phi = atan2(double(yLen), double(xLen));
@@ -182,13 +272,13 @@ if(Axis->log) {
   if(back) {
     upD  = Axis->low;
     phi += M_PI;
+    xD   = 0.0;
   }
 
   ystepD = corr * log10(yD / fabs(Axis->low));
   while(ystepD <= xD) {  // create all grid lines
 
-    if(fabs(log10(yD)) < 3.0)  tmp = StringNum(yD);
-    else  tmp = StringNum(yD, 'e', 1);
+    tmp = StringNiceNum(yD);
     if(Axis->up < 0.0)  tmp = '-'+tmp;
     w = metrics.width(tmp);  // width of text
     if(maxWidth < w) maxWidth = w;
@@ -219,14 +309,12 @@ else {  // not logarithmical
 
   if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
   else  Expo = log10(fabs(Axis->up));
-  if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
-  else  { form = 'e';  Prec = 0; }
 
   for(; count>0; count--) {
     x = int(xD);
     y = int(yD);
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0; // make 0 really 0
-    tmp = StringNum(GridNum, form, Prec);
+    tmp = StringNiceNum(GridNum);
 
     w = metrics.width(tmp);  // width of text
     if(maxWidth < w) maxWidth = w;
@@ -529,4 +617,14 @@ void Rect3DDiagram::clip(int* &p)
 Diagram* Rect3DDiagram::newOne()
 {
   return new Rect3DDiagram();
+}
+
+// ------------------------------------------------------------
+Element* Rect3DDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("3D-Cartesian");
+  BitmapFile = "rect3d";
+
+  if(getNewOne)  return new Rect3DDiagram();
+  return 0;
 }

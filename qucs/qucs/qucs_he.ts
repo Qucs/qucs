@@ -471,6 +471,14 @@
         <source>Grid</source>
         <translation type="unfinished">רשת</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -627,6 +635,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>זוית סיבוב:</translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2532,6 +2544,94 @@ Usage:  qucsedit [-r] file
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">פולרי</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished">Polar-Smith Combi</translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished">Smith-Polar Combi</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">קרטזי</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">תרשים סמית&apos;</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished">Admittance Smith</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">טבולרי</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">חץ</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">קשת אליפטית</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">אליפסה</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">אליפסה מלאה</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">קו</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">טקסט</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">מלבן</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">מלבן מלא</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2992,35 +3092,35 @@ Errors:
     </message>
     <message>
         <source>Line</source>
-        <translation>קו</translation>
+        <translation type="obsolete">קו</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>חץ</translation>
+        <translation type="obsolete">חץ</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>טקסט</translation>
+        <translation type="obsolete">טקסט</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>אליפסה</translation>
+        <translation type="obsolete">אליפסה</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>מלבן</translation>
+        <translation type="obsolete">מלבן</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>אליפסה מלאה</translation>
+        <translation type="obsolete">אליפסה מלאה</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>מלבן מלא</translation>
+        <translation type="obsolete">מלבן מלא</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>קשת אליפטית</translation>
+        <translation type="obsolete">קשת אליפטית</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -3052,31 +3152,31 @@ Errors:
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>קרטזי</translation>
+        <translation type="obsolete">קרטזי</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>פולרי</translation>
+        <translation type="obsolete">פולרי</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>טבולרי</translation>
+        <translation type="obsolete">טבולרי</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>תרשים סמית&apos;</translation>
+        <translation type="obsolete">תרשים סמית&apos;</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation>Admittance Smith</translation>
+        <translation type="obsolete">Admittance Smith</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation>Polar-Smith Combi</translation>
+        <translation type="obsolete">Polar-Smith Combi</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation>Smith-Polar Combi</translation>
+        <translation type="obsolete">Smith-Polar Combi</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -3145,11 +3245,7 @@ Edits the schematic</source>
         <translation>ערוך סכימה עורך את הסכימה</translation>
     </message>
     <message>
-        <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locus Curve</source>
+        <source>no warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4567,12 +4663,6 @@ Starts QucsFilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Line calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4603,6 +4693,14 @@ Starts transmission line calculator</source>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4680,11 +4778,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5104,6 +5210,31 @@ Starts component library program</source>
     <message>
         <source>Edit Properties</source>
         <translation type="unfinished">מאפייני עריכה</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">סגור</translation>
+    </message>
+    <message>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

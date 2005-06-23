@@ -1,6 +1,6 @@
 /***************************************************************************
-                          id_text.h  -  description
-                             -------------------
+                                id_text.h
+                               -----------
     begin                : Thu Oct 14 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -20,10 +20,6 @@
 
 #include "painting.h"
 
-
-/**
-  *@author Michael Margraf
-  */
 
 class ID_Text : public Painting  {
 public:

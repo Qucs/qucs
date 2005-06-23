@@ -494,6 +494,14 @@
         <source>Grid</source>
         <translation type="unfinished">Rejilla</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -650,6 +658,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>Ángulo de rotación:</translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2614,6 +2626,94 @@ Use:  qucsedit [-r] archivo
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">Polar</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished">Combi Polar-Smith</translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished">Combi Smith-Polar</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">Cartesiano</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">Carta de Smith</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished">Admitancia Smith</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">Tabular</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">Flecha</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">Arco elíptico</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Elipse</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">Elipse rellena</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Línea</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">Texto</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Rectángulo</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">Rectángulo relleno</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3085,35 +3185,35 @@ Errores:
     </message>
     <message>
         <source>Line</source>
-        <translation>Línea</translation>
+        <translation type="obsolete">Línea</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>Arco elíptico</translation>
+        <translation type="obsolete">Arco elíptico</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>Flecha</translation>
+        <translation type="obsolete">Flecha</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Texto</translation>
+        <translation type="obsolete">Texto</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Elipse</translation>
+        <translation type="obsolete">Elipse</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rectángulo</translation>
+        <translation type="obsolete">Rectángulo</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>Elipse rellena</translation>
+        <translation type="obsolete">Elipse rellena</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>Rectángulo relleno</translation>
+        <translation type="obsolete">Rectángulo relleno</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -3141,19 +3241,19 @@ Errores:
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>Cartesiano</translation>
+        <translation type="obsolete">Cartesiano</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>Polar</translation>
+        <translation type="obsolete">Polar</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>Tabular</translation>
+        <translation type="obsolete">Tabular</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>Carta de Smith</translation>
+        <translation type="obsolete">Carta de Smith</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -3225,15 +3325,15 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation>Combi Polar-Smith</translation>
+        <translation type="obsolete">Combi Polar-Smith</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation>Combi Smith-Polar</translation>
+        <translation type="obsolete">Combi Smith-Polar</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation>Admitancia Smith</translation>
+        <translation type="obsolete">Admitancia Smith</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -3244,11 +3344,7 @@ Edita el esquema</translation>
         <translation type="obsolete">Editar Propiedades</translation>
     </message>
     <message>
-        <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locus Curve</source>
+        <source>no warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4712,12 +4808,6 @@ Starts QucsFilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Line calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4748,6 +4838,14 @@ Starts transmission line calculator</source>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4825,11 +4923,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5256,6 +5362,31 @@ Starts component library program</source>
     <message>
         <source>Edit Properties</source>
         <translation type="unfinished">Editar Propiedades</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
+    </message>
+    <message>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

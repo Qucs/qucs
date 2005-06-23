@@ -1,6 +1,6 @@
 /***************************************************************************
-                          component.h  -  description
-                             -------------------
+                               component.h
+                              -------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -44,7 +44,7 @@ public:
   void    getCenter(int&, int&);
   void    TextSize(int&, int&);
   void    Bounding(int&, int&, int&, int&);
-  void    entireBounds(int&, int&, int&, int&);
+  void    entireBounds(int&, int&, int&, int&, float);
   bool    getSelected(int, int);
   int     getTextSelected(int, int, float);
   void    rotate();
@@ -69,6 +69,15 @@ public:
   int      tx, ty;   // upper left corner of text (position)
   QString  Description;
   QString  Model, Name;
+
+protected:
+  int  analyseLine(const QString&);
+  bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
+		   int *i4=0, int *i5=0, int *i6=0);
+  bool getPen(const QString&, QPen&, int);
+  bool getBrush(const QString&, QBrush&, int);
+  void performModification();
+
 };
 
 

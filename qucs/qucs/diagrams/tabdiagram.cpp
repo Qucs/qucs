@@ -1,6 +1,6 @@
 /***************************************************************************
-                          tabdiagram.cpp  -  description
-                             -------------------
+                               tabdiagram.cpp
+                              ----------------
     begin                : Fri Oct 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -96,6 +96,25 @@ void TabDiagram::paint(ViewPainter *p)
 }
 
 // ------------------------------------------------------------
+// Checks if the two graphs have the same independent variables.
+bool TabDiagram::sameDependencies(Graph *g1, Graph *g2)
+{
+  if(g1 == g2)  return true;
+
+  DataX *g1Data = g1->cPointsX.first();
+  DataX *g2Data = g2->cPointsX.first();
+  while(g1Data && g2Data) {
+    if(g1Data->Var != g2Data->Var)  return false;
+    g1Data = g1->cPointsX.next();
+    g2Data = g2->cPointsX.next();
+  }
+
+  if(g1Data)  return false;  // Is there more data ?
+  if(g2Data)  return false;  // Is there more data ?
+  return true;
+}
+
+// ------------------------------------------------------------
 // calculates the text in the tabular
 int TabDiagram::calcDiagram()
 {
@@ -117,6 +136,7 @@ int TabDiagram::calcDiagram()
   Lines.append(new Line(0, 0, x2, 0, QPen(QPen::black,0)));
   Lines.append(new Line(0, y+2, x2, y+2, QPen(QPen::black,2)));
 
+  Graph *firstGraph;
   Graph *g = Graphs.first();
   if(g == 0) {  // no variables specified in diagram ?
     Str = QObject::tr("no variables");
@@ -193,6 +213,7 @@ if(g) if(!g->cPointsX.isEmpty()) {
 }  // of "if no data in graphs"
 
 
+  firstGraph = g;
   // ................................................
   for(g = Graphs.first(); g!=0; g = Graphs.next()) {// all dependent variables
     y = y2-tHeight-5;
@@ -207,25 +228,34 @@ if(g) if(!g->cPointsX.isEmpty()) {
     startWriting = int(xAxis.limit_min);  // when to reach visible area
     py = g->cPointsY - 2;
     if(g->cPointsX.getFirst()) {
-      int z=g->cPointsX.getFirst()->count * g->countY;
-      if(z > NumAll)  NumAll = z;
-      for(; z>0; z--) {
-        py += 2;
-        if(startWriting-- > 0) continue; // reached visible area ?
-        if(y < tHeight) break;           // no room for more rows ?
-        switch(g->numMode) {
-          case 0: Str = complexRect(*py, *(py+1), g->Precision); break;
-          case 1: Str = complexDeg (*py, *(py+1), g->Precision); break;
-          case 2: Str = complexRad (*py, *(py+1), g->Precision); break;
-        }
 
+      if(sameDependencies(g, firstGraph)) {
+        int z=g->cPointsX.getFirst()->count * g->countY;
+        if(z > NumAll)  NumAll = z;
+        for(; z>0; z--) {
+          py += 2;
+          if(startWriting-- > 0) continue; // reached visible area ?
+          if(y < tHeight) break;           // no room for more rows ?
+          switch(g->numMode) {
+            case 0: Str = complexRect(*py, *(py+1), g->Precision); break;
+            case 1: Str = complexDeg (*py, *(py+1), g->Precision); break;
+            case 2: Str = complexRad (*py, *(py+1), g->Precision); break;
+          }
+
+          colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
+          if(colWidth < 0)  goto funcEnd;
+
+          Texts.append(new Text(x, y, Str));
+          y -= tHeight;
+        }
+        if(z > NumLeft)  NumLeft = z;
+      }  // of "if(sameDeps)"
+      else {
+        Str = QObject::tr("wrong dependency");
         colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
         if(colWidth < 0)  goto funcEnd;
-
         Texts.append(new Text(x, y, Str));
-        y -= tHeight;
       }
-      if(z > NumLeft)  NumLeft = z;
     }
     else {   // no data in graph
       Str = QObject::tr("no data");
@@ -316,4 +346,14 @@ bool TabDiagram::scroll(int clickPos)
 Diagram* TabDiagram::newOne()
 {
   return new TabDiagram();
+}
+
+// ------------------------------------------------------------
+Element* TabDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Tabular");
+  BitmapFile = "tabular";
+
+  if(getNewOne)  return new TabDiagram();
+  return 0;
 }

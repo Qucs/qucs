@@ -1,4 +1,4 @@
-<Qucs Library "Transistors" 0.0.7>
+<Qucs Library 0.0.7 "Transistors">
 
 <Component BC847A>
   <Description>

@@ -506,6 +506,14 @@
         <source>Grid</source>
         <translation>Griglia</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -705,6 +713,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>Angolo di rotazione: </translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2704,6 +2716,94 @@ Usage:  qucsedit [-r] file
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">Polare</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished">Cartesiano-3D</translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">Cartesiano</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">Grafico Smith</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">Tabella</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">Freccia</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">Arco ellittico</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Ellisse</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">Ellisse riempita</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Linea</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">Testo</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Rettangolo</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">Rettangolo riempito</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3980,39 +4080,39 @@ Errori:
     </message>
     <message>
         <source>Line</source>
-        <translation>Linea</translation>
+        <translation type="obsolete">Linea</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>Freccia</translation>
+        <translation type="obsolete">Freccia</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Testo</translation>
+        <translation type="obsolete">Testo</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Ellisse</translation>
+        <translation type="obsolete">Ellisse</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rettangolo</translation>
+        <translation type="obsolete">Rettangolo</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>Cartesiano</translation>
+        <translation type="obsolete">Cartesiano</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>Polare</translation>
+        <translation type="obsolete">Polare</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>Tabella</translation>
+        <translation type="obsolete">Tabella</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>Grafico Smith</translation>
+        <translation type="obsolete">Grafico Smith</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -4106,11 +4206,11 @@ Continuare ?</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>Ellisse riempita</translation>
+        <translation type="obsolete">Ellisse riempita</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>Rettangolo riempito</translation>
+        <translation type="obsolete">Rettangolo riempito</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
@@ -4150,7 +4250,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>Arco ellittico</translation>
+        <translation type="obsolete">Arco ellittico</translation>
     </message>
     <message>
         <source>Delete Group</source>
@@ -4203,18 +4303,6 @@ Modifica lo schema</translation>
         <translation>permanentemente! Continuare?</translation>
     </message>
     <message>
-        <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SPICE netlist</source>
         <translation>netlist SPICE</translation>
     </message>
@@ -4224,10 +4312,10 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation>Cartesiano-3D</translation>
+        <translation type="obsolete">Cartesiano-3D</translation>
     </message>
     <message>
-        <source>Locus Curve</source>
+        <source>no warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5699,7 +5787,7 @@ Lancia QucsFilter</translation>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
 </source>
-        <translation>QucsFilter di Toyoyuki Ishikawa e Michael Margraf
+        <translation type="obsolete">QucsFilter di Toyoyuki Ishikawa e Michael Margraf
 
 </translation>
     </message>
@@ -5737,6 +5825,14 @@ Lancia il calcolatore delle linee di trasmissione</translation>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5814,11 +5910,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6249,6 +6353,31 @@ Starts component library program</source>
     <message>
         <source>Edit Properties</source>
         <translation>Modifica proprietà</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Chiudi</translation>
+    </message>
+    <message>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

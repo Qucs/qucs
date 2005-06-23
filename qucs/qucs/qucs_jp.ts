@@ -494,6 +494,14 @@
         <source>Grid</source>
         <translation type="unfinished">グリッド</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -650,6 +658,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>回転角度 :</translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2578,6 +2590,94 @@ Usage:  qucsedit [-r] file
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">極座標</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished">極座標-スミス混合</translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished">スミス-極座標混合</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">直交座標</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">スミスチャート</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished">アドミッタンスチャート</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">表</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">矢印</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">弧</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">楕円</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">塗りつぶし楕円</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">線</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">テキスト</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">長方形</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">塗りつぶし長方形</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3012,35 +3112,35 @@ Errors occured during simulation on </source>
     </message>
     <message>
         <source>Line</source>
-        <translation>線</translation>
+        <translation type="obsolete">線</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>弧</translation>
+        <translation type="obsolete">弧</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>矢印</translation>
+        <translation type="obsolete">矢印</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>テキスト</translation>
+        <translation type="obsolete">テキスト</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>楕円</translation>
+        <translation type="obsolete">楕円</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>長方形</translation>
+        <translation type="obsolete">長方形</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>塗りつぶし楕円</translation>
+        <translation type="obsolete">塗りつぶし楕円</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>塗りつぶし長方形</translation>
+        <translation type="obsolete">塗りつぶし長方形</translation>
     </message>
     <message>
         <source>1-port S parameter file</source>
@@ -3068,19 +3168,19 @@ Errors occured during simulation on </source>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>直交座標</translation>
+        <translation type="obsolete">直交座標</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>極座標</translation>
+        <translation type="obsolete">極座標</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>表</translation>
+        <translation type="obsolete">表</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>スミスチャート</translation>
+        <translation type="obsolete">スミスチャート</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -3152,15 +3252,15 @@ Edits the schematic</source>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation>アドミッタンスチャート</translation>
+        <translation type="obsolete">アドミッタンスチャート</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation>極座標-スミス混合</translation>
+        <translation type="obsolete">極座標-スミス混合</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation>スミス-極座標混合</translation>
+        <translation type="obsolete">スミス-極座標混合</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -3171,11 +3271,7 @@ Edits the schematic</source>
         <translation type="obsolete">プロパティ編集</translation>
     </message>
     <message>
-        <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locus Curve</source>
+        <source>no warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4589,12 +4685,6 @@ Starts QucsFilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Line calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4625,6 +4715,14 @@ Starts transmission line calculator</source>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4701,11 +4799,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5132,6 +5238,31 @@ Starts component library program</source>
     <message>
         <source>Edit Properties</source>
         <translation type="unfinished">プロパティ編集</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">閉じる</translation>
+    </message>
+    <message>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

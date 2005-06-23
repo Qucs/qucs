@@ -26,8 +26,8 @@ public:
   BJT();
   ~BJT();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
-  static Component* info_pnp(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_pnp(QString&, char* &, bool getNewOne=false);
   void recreate();
 };
 

@@ -25,6 +25,7 @@
 #include "diagrams/diagrams.h"
 #include "paintings/paintings.h"
 #include "components/spicefile.h"
+#include "components/libcomp.h"
 #include "qucsdoc.h"
 #include "main.h"
 
@@ -745,6 +746,7 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
   for(pw = Wires->first(); pw != 0; pw = Wires->next())
     if(pw->Label != 0) pw->Port1->Name = pw->Label->Name;
 
+  bool r;
   QString s;
   // give the ground nodes the name "gnd", and insert subcircuits
   for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
@@ -763,11 +765,25 @@ bool QucsFile::giveNodeNames(QTextStream *stream, int& countInit,
                return false;
              }
 	     d->DocName = s;
-	     bool r = d->File.createSubNetlist(
+	     r = d->File.createSubNetlist(
 				stream, countInit, Collect, ErrText);
 	     delete d;
 	     if(!r) return false;
            }
+      else if(pc->Model == "Lib") {
+	     s  = pc->Props.first()->Value + "_";
+	     s += pc->Props.next()->Value;
+	     if(StringList.findIndex(s) >= 0)
+		continue;   // insert each subcircuit just one time
+
+	     StringList.append(s);
+	     r = ((LibComp*)pc)->outputSubNetlist(stream);
+	     if(!r) {
+               ErrText->insert(
+	         QObject::tr("ERROR: Cannot load library component \"%1\".").arg(pc->Name));
+	       return false;
+	     }
+      }
       else if(pc->Model == "SPICE") {
 	     s = pc->Props.first()->Value;
 	     if(s.isEmpty()) {

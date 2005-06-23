@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ellipse.cpp  -  description
-                             -------------------
+                               ellipse.cpp
+                              -------------
     begin                : Sun Nov 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -89,6 +89,26 @@ void Ellipse::setCenter(int x, int y, bool relative)
 Painting* Ellipse::newOne()
 {
   return new Ellipse();
+}
+
+// --------------------------------------------------------------------------
+Element* Ellipse::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Ellipse");
+  BitmapFile = "ellipse";
+
+  if(getNewOne)  return new Ellipse();
+  return 0;
+}
+
+// --------------------------------------------------------------------------
+Element* Ellipse::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("filled Ellipse");
+  BitmapFile = "filledellipse";
+
+  if(getNewOne)  return new Ellipse(true);
+  return 0;
 }
 
 // --------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /***************************************************************************
-                          ac_sim.h  -  description
-                             -------------------
+                                ac_sim.h
+                               ----------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,7 +26,7 @@ public:
   AC_Sim();
   ~AC_Sim();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate();
 };
 

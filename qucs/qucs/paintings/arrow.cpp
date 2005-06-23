@@ -97,6 +97,16 @@ Painting* Arrow::newOne()
 }
 
 // --------------------------------------------------------------------------
+Element* Arrow::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Arrow");
+  BitmapFile = "arrow";
+
+  if(getNewOne)  return new Arrow();
+  return 0;
+}
+
+// --------------------------------------------------------------------------
 bool Arrow::load(const QString& s)
 {
   bool ok;

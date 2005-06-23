@@ -1,6 +1,6 @@
 /***************************************************************************
-                        portsymbol.h  -  description
-                             -------------------
+                               portsymbol.h
+                              --------------
     begin                : Sun Sep 5 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,14 +21,11 @@
 #include "painting.h"
 
 
-/**
-  *@author Michael Margraf
-  */
-
 class PortSymbol : public Painting  {
 public:
-  PortSymbol(int cx_=0, int cy_=0, int number_=1);
-  ~PortSymbol();
+  PortSymbol(int cx_=0, int cy_=0, const QString& numberStr_="1",
+                                   const QString& nameStr_="");
+ ~PortSymbol();
 
   void paintScheme(QPainter*);
   void getCenter(int&, int&);
@@ -44,7 +41,8 @@ public:
   void mirrorX();
   void mirrorY();
 
-  QString numberStr;
+  int Angel;
+  QString numberStr, nameStr;
 };
 
 #endif
