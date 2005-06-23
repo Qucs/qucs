@@ -26,7 +26,7 @@ public:
   DC_Sim();
   ~DC_Sim();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

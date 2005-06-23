@@ -19,21 +19,23 @@
 #include "portsymbol.h"
 
 
-PortSymbol::PortSymbol(int cx_, int cy_, int number_)
+PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
+                                         const QString& nameStr_)
 {
   Name = ".PortSym ";
   isSelected = false;
   cx = cx_;
   cy = cy_;
-  y1 = 8;
 
-  numberStr = QString::number(number_);
+  Angel = 0;
+  nameStr = nameStr_;
+  numberStr = numberStr_;
   QFontMetrics  metrics(QucsSettings.font);
-  QSize r = metrics.size(0, numberStr);
-  x2 = r.width() + 10;
-  x1 = x2 >> 1;
-  if(x1 < 8)  x1 = 8;
-  y2 = r.height() + 20;
+  QSize r = metrics.size(0, nameStr);
+  x1 = -r.width() - 8;
+  y1 = -((r.height() + 8) >> 1);
+  x2 = 8 - x1;
+  y2 = r.height() + 8;
 }
 
 PortSymbol::~PortSymbol()
@@ -46,14 +48,63 @@ void PortSymbol::paint(ViewPainter *p)
   p->Painter->setPen(QPen(QPen::red,1));  // like open node
   p->drawEllipse(cx-4, cy-4, 8, 8);
 
-  p->Painter->setPen(QPen(QPen::lightGray,1));
-  p->drawRect(cx-x1, cy-y1, x2, y2);
 
-  p->drawText(numberStr, cx-x1+5, cy+7);
+  QFontMetrics  metrics(p->Painter->font());
+  QSize r = metrics.size(0, nameStr);
+  int Unit = int(8.0 * p->Scale);
+  x1 = -r.width() - Unit;
+  y1 = -((r.height() + Unit) >> 1);
+  x2 = Unit - x1;
+  y2 = r.height() + Unit;
+
+  QWMatrix wm = p->Painter->worldMatrix();
+  QWMatrix Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
+				   p->DY + float(cy) * p->Scale);
+  p->Painter->setWorldMatrix(Mat);
+
+  int tmp, tx, ty;
+  tx = x1 + (Unit >> 1);
+  ty = y1 + (Unit >> 1);
+  switch(Angel) {
+    case 0:
+      tx = x1 + (Unit >> 1);
+      ty = y1 + (Unit >> 1);
+      break;
+    case 90:
+      x1 = y1;
+      y1 = -Unit;
+      tmp = x2;  x2 = y2;  y2 = tmp;
+      p->Painter->rotate(-90.0); // automatically enables transformation
+      break;
+    case 180:
+      x1 = -Unit;
+      tx = Unit >> 1;
+      break;
+    case 270:
+      tx = Unit >> 1;
+      tmp = x1;  x1 = y1;  y1 = tmp;
+      tmp = x2;  x2 = y2;  y2 = tmp;
+      p->Painter->rotate(-90.0); // automatically enables transformation
+      break;
+  }
+
+  p->Painter->setPen(Qt::black);
+  p->Painter->drawText(tx, ty, 0, 0, Qt::DontClip, nameStr);
+
+
+  p->Painter->setWorldMatrix(wm);
+  p->Painter->setWorldXForm(false);
+  x1 = int(float(x1) / p->Scale);
+  x2 = int(float(x2) / p->Scale);
+  y1 = int(float(y1) / p->Scale);
+  y2 = int(float(y2) / p->Scale);
+
+  p->Painter->setPen(Qt::lightGray);
+  p->drawRect(cx+x1, cy+y1, x2, y2);
 
   if(isSelected) {
     p->Painter->setPen(QPen(QPen::darkGray,3));
-    p->drawRoundRect(cx-x1-4, cy-y1-4, x2+8, y2+8);
+    p->drawRoundRect(cx+x1-4, cy+y1-4, x2+8, y2+8);
   }
 }
 
@@ -61,7 +112,7 @@ void PortSymbol::paint(ViewPainter *p)
 void PortSymbol::paintScheme(QPainter *p)
 {
   p->drawEllipse(cx-4, cy-4, 8, 8);
-  p->drawRect(cx-x1, cy-y1, x2, y2);
+  p->drawRect(cx+x1, cy+y1, x2, y2);
 }
 
 // --------------------------------------------------------------------------
@@ -96,6 +147,11 @@ bool PortSymbol::load(const QString& s)
   numberStr  = s.section(' ',3,3);    // number
   if(numberStr.isEmpty()) return false;
 
+  n  = s.section(' ',4,4);      // Angel
+  if(n.isEmpty()) return true;  // be backward-compatible
+  Angel = n.toInt(&ok);
+  if(!ok) return false;
+
   return true;
 }
 
@@ -103,7 +159,7 @@ bool PortSymbol::load(const QString& s)
 QString PortSymbol::save()
 {
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" ";
-  s += numberStr;
+  s += numberStr+" "+QString::number(Angel);
   return s;
 }
 
@@ -111,10 +167,10 @@ QString PortSymbol::save()
 // Checks if the coordinates x/y point to the painting.
 bool PortSymbol::getSelected(int x, int y)
 {
-  if(x < cx-x1)  return false;
-  if(y < cy-y1)  return false;
-  if(x > cx-x1+x2)  return false;
-  if(y > cy-y1+y2)  return false;
+  if(x < cx+x1)  return false;
+  if(y < cy+y1)  return false;
+  if(x > cx+x1+x2)  return false;
+  if(y > cy+y1+y2)  return false;
 
   return true;
 }
@@ -122,24 +178,30 @@ bool PortSymbol::getSelected(int x, int y)
 // --------------------------------------------------------------------------
 void PortSymbol::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx-x1;     _y1 = cy-y1;
-  _x2 = cx-x1+x2;  _y2 = cy-y1+y2;
+  _x1 = cx+x1;     _y1 = cy+y1;
+  _x2 = cx+x1+x2;  _y2 = cy+y1+y2;
 }
 
 // --------------------------------------------------------------------------
 // Rotates around the center.
 void PortSymbol::rotate()
 {
+  if(Angel < 270)  Angel += 90;
+  else  Angel = 0;
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
 void PortSymbol::mirrorX()
 {
+  if(Angel == 0)  Angel = 180;
+  else  if(Angel == 180)  Angel = 0;
 }
 
 // --------------------------------------------------------------------------
 // Mirrors about center line.
 void PortSymbol::mirrorY()
 {
+  if(Angel == 90)  Angel = 270;
+  else  if(Angel == 270)  Angel = 90;
 }

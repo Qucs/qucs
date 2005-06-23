@@ -81,7 +81,7 @@ Component* CPWopen::newOne()
   return new CPWopen();
 }
 
-Component* CPWopen::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* CPWopen::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coplanar Open");
   BitmapFile = "cpwopen";

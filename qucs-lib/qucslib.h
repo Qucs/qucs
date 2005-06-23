@@ -21,6 +21,7 @@
 #include <qdialog.h>
 #include <qfont.h>
 #include <qstring.h>
+#include <qstringlist.h>
 
 class SymbolWidget;
 class QTextEdit;
@@ -49,6 +50,10 @@ public:
   QucsLib();
  ~QucsLib();
 
+  QListBox     *CompList;
+  QStringList   LibraryComps;
+  QComboBox    *Library;
+
 private slots:
   void slotAbout();
   void slotQuit();
@@ -63,12 +68,9 @@ private:
   void closeEvent(QCloseEvent*);
 
   SymbolWidget *Symbol;
-  QVGroupBox   *CompGroup;
-  QComboBox    *Library;
-  QListBox     *CompList;
   QTextEdit    *CompDescr;
   QVBoxLayout  *all;
-  QString       LibraryString, ModelString;
+  QString       ModelString;
 };
 
 #endif /* QUCSLIB_H */

@@ -1,6 +1,6 @@
 /***************************************************************************
-                         ellipsearc.cpp  -  description
-                             -------------------
+                               ellipsearc.cpp
+                              ----------------
     begin                : Thu Sep 9 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -83,6 +83,16 @@ void EllipseArc::setCenter(int x, int y, bool relative)
 Painting* EllipseArc::newOne()
 {
   return new EllipseArc();
+}
+
+// --------------------------------------------------------------------------
+Element* EllipseArc::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Elliptic Arc");
+  BitmapFile = "ellipsearc";
+
+  if(getNewOne)  return new EllipseArc();
+  return 0;
 }
 
 // --------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsinit.cpp  -  description
-                             -------------------
+                               qucsinit.cpp
+                              --------------
     begin                : Sat May 1 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -22,11 +22,14 @@
 #include <qaction.h>
 #include <qaccel.h>
 #include <qmenubar.h>
+#include <qlabel.h>
+#include <qtimer.h>
 
 #include "qucs.h"
 #include "qucsview.h"
 #include "qucsinit.h"
 #include "qucsactions.h"
+
 
 QucsInit::QucsInit()
 {
@@ -772,10 +775,38 @@ void QucsInit::initToolBar()
 }
 
 // #########################################################################
-// Statusbar
 void QucsInit::initStatusBar()
 {
+  // To reserve enough space, insert the longest text and rewrite it afterwards.
+  WarningLabel =
+    new QLabel(tr("Warnings in last simulation! Press F5"), App->statusBar());
+  App->statusBar()->addWidget(WarningLabel, 0, true);
+  WarningLabel->setText(tr("no warnings"));
   App->statusBar()->message(tr("Ready."), 2000);
+}
+
+// #########################################################################
+void QucsInit::slotShowWarnings()
+{
+  static int ResultState = 0;
+
+  if(ResultState == 0) {
+    QFont f = WarningLabel->font();
+    f.setWeight(QFont::DemiBold);
+    WarningLabel->setFont(f);
+    WarningLabel->setText(tr("Warnings in last simulation! Press F5"));
+  }
+
+  ResultState++;
+  if(ResultState & 1)
+    WarningLabel->setPaletteForegroundColor(Qt::red);
+  else
+    WarningLabel->setPaletteForegroundColor(Qt::black);
+
+  if(ResultState < 9)
+    QTimer::singleShot(500, this, SLOT(slotShowWarnings()));
+  else 
+    ResultState = 0;
 }
 
 // ######################################################################
@@ -824,7 +855,6 @@ void QucsInit::slotHelpAbout()
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n"+
     tr("Simulator by Stefan Jahn\n")+
     tr("Special thanks to Jens Flucke and Raimund Jacob\n\n")+
-    tr("QucsFilter by Toyoyuki Ishikawa and Michael Margraf\n\n")+
     tr("Translations:\n")+
     tr("German by Stefan Jahn\n")+
     tr("Polish by Dariusz Pienkowski\n")+

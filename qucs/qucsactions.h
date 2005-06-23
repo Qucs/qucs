@@ -29,6 +29,7 @@ class QucsView;
 
 typedef bool (QucsDoc::*pToggleFunc) (); // pointer to toggle action
 typedef void (QucsView::*pMouseFunc) (QMouseEvent*);
+typedef void (QucsView::*pMouseFunc2) (QMouseEvent*, QucsDoc*, int, int);
 
 
 class QucsActions : public QObject {
@@ -84,7 +85,7 @@ public slots:
 
 private:
   void showHTML(const QString&);
-  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc);
+  bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
 
   // copies of variables in QucsApps
   QucsApp  *App;

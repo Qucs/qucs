@@ -78,7 +78,7 @@ Component* SParamFile::newOne()
   return new SParamFile(Ports.count()-1);
 }
 
-Component* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* SParamFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("1-port S parameter file");
   BitmapFile = "spfile1";

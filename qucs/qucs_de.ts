@@ -498,6 +498,14 @@
         <source>Grid</source>
         <translation>Gitternetz</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -697,6 +705,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>Drehwinkel: </translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2825,6 +2837,94 @@ Verwendung:  qucsedit [-r] Datei
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation>FEHLER: In der SPICE-Komponente &quot;%1&quot; ist kein Dateiname angegeben.</translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished">Ortskurve</translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">Polar</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished">Polar-Smith Kombi</translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished">Smith-Polar Kombi</translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished">3D-Kartesisch</translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">Kartesisch</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">Smith-Diagramm</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished">Smith-Diagramm (Admittanz)</translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">Tabelle</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">Pfeil</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">Ellipsenbogen</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Ellipse</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">gefüllte Ellipse</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Linie</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">Text</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Rechteck</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">gefülltes Rechteck</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4253,39 +4353,39 @@ Fehler:
     </message>
     <message>
         <source>Line</source>
-        <translation>Linie</translation>
+        <translation type="obsolete">Linie</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>Pfeil</translation>
+        <translation type="obsolete">Pfeil</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="obsolete">Text</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation type="obsolete">Ellipse</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rechteck</translation>
+        <translation type="obsolete">Rechteck</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>Kartesisch</translation>
+        <translation type="obsolete">Kartesisch</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>Polar</translation>
+        <translation type="obsolete">Polar</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>Tabelle</translation>
+        <translation type="obsolete">Tabelle</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>Smith-Diagramm</translation>
+        <translation type="obsolete">Smith-Diagramm</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -4541,11 +4641,11 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>gefüllte Ellipse</translation>
+        <translation type="obsolete">gefüllte Ellipse</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>gefülltes Rechteck</translation>
+        <translation type="obsolete">gefülltes Rechteck</translation>
     </message>
     <message>
         <source>ac Current Source</source>
@@ -4585,7 +4685,7 @@ Setzt eine Markierung auf einen Graphen im Diagramm</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>Ellipsenbogen</translation>
+        <translation type="obsolete">Ellipsenbogen</translation>
     </message>
     <message>
         <source>Delete Group</source>
@@ -4639,15 +4739,15 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation>Polar-Smith Kombi</translation>
+        <translation type="obsolete">Polar-Smith Kombi</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation>Smith-Polar Kombi</translation>
+        <translation type="obsolete">Smith-Polar Kombi</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation>Smith-Diagramm (Admittanz)</translation>
+        <translation type="obsolete">Smith-Diagramm (Admittanz)</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
@@ -4663,7 +4763,7 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation>3D-Kartesisch</translation>
+        <translation type="obsolete">3D-Kartesisch</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
@@ -4671,7 +4771,11 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>Locus Curve</source>
-        <translation>Ortskurve</translation>
+        <translation type="obsolete">Ortskurve</translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6167,7 +6271,7 @@ Startet das QucsFilter Programm</translation>
         <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
 
 </source>
-        <translation>QucsFilter von Toyoyuki Ishikawa und Michael Margraf
+        <translation type="obsolete">QucsFilter von Toyoyuki Ishikawa und Michael Margraf
 
 </translation>
     </message>
@@ -6205,6 +6309,14 @@ Startet das Programm für die Leitungsberechnung</translation>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6282,11 +6394,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6725,6 +6845,31 @@ Starts component library program</source>
     <message>
         <source>Edit Properties</source>
         <translation>Eigenschaften bearbeiten</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Schließen</translation>
+    </message>
+    <message>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

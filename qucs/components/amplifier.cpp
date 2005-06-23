@@ -57,7 +57,7 @@ Component* Amplifier::newOne()
   return new Amplifier();
 }
 
-Component* Amplifier::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Amplifier::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Amplifier");
   BitmapFile = "amplifier";

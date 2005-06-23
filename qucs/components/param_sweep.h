@@ -26,7 +26,7 @@ public:
   Param_Sweep();
   ~Param_Sweep();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
   void recreate();
 };
 

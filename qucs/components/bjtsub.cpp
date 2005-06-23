@@ -149,7 +149,7 @@ Component* BJTsub::newOne()
   return p;
 }
 
-Component* BJTsub::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* BJTsub::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("npn transistor");
   BitmapFile = "npnsub";
@@ -158,7 +158,7 @@ Component* BJTsub::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-Component* BJTsub::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* BJTsub::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("pnp transistor");
   BitmapFile = "pnpsub";

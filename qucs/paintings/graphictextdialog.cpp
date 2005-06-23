@@ -36,7 +36,12 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   setCaption(tr("Edit Text Properties"));
 
   vert = new QVBoxLayout(this);
-  vert->setSpacing(5);
+  vert->setMargin(3);
+  vert->setSpacing(3);
+
+  vert->addWidget(
+        new QLabel(tr("Use LaTeX style for special characters, e.g. \\tau"),
+        this));
 
   text = new QTextEdit(this);
   text->setTextFormat(Qt::PlainText);

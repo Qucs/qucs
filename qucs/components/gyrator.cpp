@@ -66,7 +66,7 @@ Component* Gyrator::newOne()
   return new Gyrator();
 }
 
-Component* Gyrator::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Gyrator::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Gyrator");
   BitmapFile = "gyrator";

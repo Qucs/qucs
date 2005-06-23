@@ -45,15 +45,15 @@ void QucsActions::init(QucsApp *p_)
 // -----------------------------------------------------------------------
 // This function is called from all toggle actions.
 bool QucsActions::performToggleAction(bool on, QAction *Action,
-	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc MousePress)
+	pToggleFunc Function, pMouseFunc MouseMove, pMouseFunc2 MousePress)
 {
   view->editText->setHidden(true); // disable text edit of component property
 
   if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = 0;
+    view->MousePressAction = 0;
+    view->MouseReleaseAction = 0;
+    view->MouseDoubleClickAction = 0;
     App->activeAction = 0;   // no action active
     return false;
   }
@@ -75,8 +75,8 @@ bool QucsActions::performToggleAction(bool on, QAction *Action,
 
     view->MouseMoveAction = MouseMove;
     view->MousePressAction = MousePress;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    view->MouseReleaseAction = 0;
+    view->MouseDoubleClickAction = 0;
 
   } while(false);   // to perform "break"
 
@@ -175,8 +175,7 @@ void QucsActions::slotZoomIn(bool on)
 // Is called when the select toolbar button is pressed.
 void QucsActions::slotSelect(bool on)
 {
-  if(performToggleAction(on, select, 0,
-		&QucsView::MouseDoNothing, &QucsView::MPressSelect)) {
+  if(performToggleAction(on, select, 0, 0, &QucsView::MPressSelect)) {
     view->MouseReleaseAction = &QucsView::MReleaseSelect;
     view->MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
   }
@@ -188,10 +187,10 @@ void QucsActions::slotEditPaste(bool on)
   view->editText->setHidden(true); // disable text edit of component property
 
   if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = 0;
+    view->MousePressAction = 0;
+    view->MouseReleaseAction = 0;
+    view->MouseDoubleClickAction = 0;
     App->activeAction = 0;   // no action active
     if(view->drawn) view->viewport()->repaint();
     return;
@@ -213,9 +212,9 @@ void QucsActions::slotEditPaste(bool on)
 
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMovePaste;
-  view->MousePressAction = &QucsView::MouseDoNothing;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  view->MousePressAction = 0;
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
 }
 
 // -----------------------------------------------------------------------
@@ -223,12 +222,12 @@ void QucsActions::slotEditPaste(bool on)
 void QucsActions::slotInsertEquation(bool on)
 {
   view->editText->setHidden(true); // disable text edit of component property
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
 
   if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = 0;
+    view->MousePressAction = 0;
     App->activeAction = 0;   // no action active
     return;
   }
@@ -239,17 +238,15 @@ void QucsActions::slotInsertEquation(bool on)
   }
   App->activeAction = insEquation;
 
-  if(view->selComp)
-    delete view->selComp;  // delete previously selected component
+  if(view->selElem)
+    delete view->selElem;  // delete previously selected component
 
-  view->selComp = new Equation();
+  view->selElem = new Equation();
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveComponent;
-  view->MousePressAction = &QucsView::MPressComponent;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  view->MouseMoveAction = &QucsView::MMoveElement;
+  view->MousePressAction = &QucsView::MPressElement;
 }
 
 // -----------------------------------------------------------------------
@@ -257,12 +254,12 @@ void QucsActions::slotInsertEquation(bool on)
 void QucsActions::slotInsertGround(bool on)
 {
   view->editText->setHidden(true); // disable text edit of component property
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
 
   if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = 0;
+    view->MousePressAction = 0;
     App->activeAction = 0;   // no action active
     return;
   }
@@ -273,17 +270,15 @@ void QucsActions::slotInsertGround(bool on)
   }
   App->activeAction = insGround;
 
-  if(view->selComp)
-    delete view->selComp;  // delete previously selected component
+  if(view->selElem)
+    delete view->selElem;  // delete previously selected component
 
-  view->selComp = new Ground();
+  view->selElem = new Ground();
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveComponent;
-  view->MousePressAction = &QucsView::MPressComponent;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  view->MouseMoveAction = &QucsView::MMoveElement;
+  view->MousePressAction = &QucsView::MPressElement;
 }
 
 // -----------------------------------------------------------------------
@@ -291,12 +286,12 @@ void QucsActions::slotInsertGround(bool on)
 void QucsActions::slotInsertPort(bool on)
 {
   view->editText->setHidden(true); // disable text edit of component property
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
 
   if(!on) {
-    view->MouseMoveAction = &QucsView::MouseDoNothing;
-    view->MousePressAction = &QucsView::MouseDoNothing;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    view->MouseMoveAction = 0;
+    view->MousePressAction = 0;
     App->activeAction = 0;   // no action active
     return;
   }
@@ -307,17 +302,15 @@ void QucsActions::slotInsertPort(bool on)
   }
   App->activeAction = insPort;
 
-  if(view->selComp)
-    delete view->selComp;  // delete previously selected component
+  if(view->selElem)
+    delete view->selElem;  // delete previously selected component
 
-  view->selComp = new SubCirPort();
+  view->selElem = new SubCirPort();
 
   if(view->drawn) view->viewport()->repaint();
   view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveComponent;
-  view->MousePressAction = &QucsView::MPressComponent;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  view->MouseMoveAction = &QucsView::MMoveElement;
+  view->MousePressAction = &QucsView::MPressElement;
 }
 
 // #######################################################################

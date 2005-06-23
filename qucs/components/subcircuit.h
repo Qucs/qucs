@@ -1,6 +1,6 @@
 /***************************************************************************
-                          subcircuit.h  -  description
-                             -------------------
+                               subcircuit.h
+                              --------------
     begin                : Sat Aug 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -32,13 +32,6 @@ public:
 private:
   void remakeSymbol(int No);
   int  loadSymbol(const QString&);
-
-  void performModification();
-  int  analyseLine(const QString&);
-  bool getIntegers(const QString&, int *i1=0, int *i2=0, int *i3=0,
-		   int *i4=0, int *i5=0, int *i6=0);
-  bool Subcircuit::getPen(const QString&, QPen&, int);
-  bool Subcircuit::getBrush(const QString&, QBrush&, int);
 };
 
 #endif

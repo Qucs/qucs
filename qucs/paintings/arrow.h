@@ -1,6 +1,6 @@
 /***************************************************************************
-                          arrow.h  -  description
-                             -------------------
+                                arrow.h
+                               ---------
     begin                : Sun Nov 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -23,10 +23,6 @@
 #include <qpen.h>
 
 
-/**
-  *@author Michael Margraf
-  */
-
 class Arrow : public Painting  {
 public:
   Arrow();
@@ -38,6 +34,7 @@ public:
   void setCenter(int, int, bool relative=false);
 
   Painting* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
   QString save();
   void MouseMoving(QPainter*, int, int, int, int, QPainter*, int, int, bool);

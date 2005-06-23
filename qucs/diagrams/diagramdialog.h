@@ -23,6 +23,7 @@
 #include <qdialog.h>
 #include <qregexp.h>
 
+class Cross3D;
 class QLabel;
 class QListBox;
 class QLineEdit;
@@ -108,6 +109,7 @@ private:
   QComboBox   *PropertyBox, *GridStyleBox, *yAxisBox;
   QPushButton *ColorButt, *GridColorButt;
   QSlider     *SliderRotX, *SliderRotY, *SliderRotZ;
+  Cross3D     *DiagCross;
   bool changed, transfer, toTake;
   QPtrList<Graph>  Graphs;
 };

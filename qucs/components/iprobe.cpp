@@ -62,7 +62,7 @@ Component* iProbe::newOne()
   return new iProbe();
 }
 
-Component* iProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* iProbe::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Current Probe");
   BitmapFile = "iprobe";

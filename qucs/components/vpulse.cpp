@@ -69,7 +69,7 @@ Component* vPulse::newOne()
   return new vPulse();
 }
 
-Component* vPulse::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* vPulse::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Voltage Pulse");
   BitmapFile = "vpulse";

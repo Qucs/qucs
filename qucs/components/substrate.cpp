@@ -78,7 +78,7 @@ Component* Substrate::newOne()
   return new Substrate();
 }
 
-Component* Substrate::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Substrate::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Substrate");
   BitmapFile = "substrate";
