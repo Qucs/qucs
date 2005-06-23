@@ -1,3 +1,26 @@
+2005-06-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new tool: library manager
+	* ports in schematic symbol show their names instead of their
+	numbers, they also can now be rotated
+	* diagram labels and grafik text can now contain special
+	characters (e.g. greek letters)
+	* some work for re-structure
+	* avoid selections of graph and marker during printing
+	* speed up loading datasets
+	* fixed bug at splitting labeled wires
+	* fixed bug that cut off digits in scientific numbers
+	* error message for variable in tabular if other indep
+	variables then the first
+	* fixed bug in printing reversed logarithmic axis in 3D
+	diagram
+	* search dialog for QucsLib
+	* correct size for simulation component schemes
+	* precise component text boundings
+	* text in statusbar if warnings in simulation
+	* 3D diagram dialog: show 2D projection preview
+	* little gap between graph and diagram boundings for Cartesian
+
 2005-05-21  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug scaling independent x axis in Cartesian diagram

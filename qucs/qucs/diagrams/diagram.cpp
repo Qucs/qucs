@@ -35,6 +35,7 @@
 #include "diagram.h"
 #include "qucs.h"
 #include "main.h"
+#include "mnemo.h"
 
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
@@ -135,9 +136,9 @@ void Diagram::paint(ViewPainter *p)
 // Put axis labels into the text list.
 void Diagram::createAxisLabels()
 {
-  QSize s;
   Graph *pg;
-  int   x, y;
+  int   x, y, w;
+  QString Str;
   QFont f = QucsSettings.font;
   f.setPointSizeFloat(10.0);
   QFontMetrics  metrics(f);
@@ -153,20 +154,20 @@ void Diagram::createAxisLabels()
 	if(!pD) continue;
 	y -= LineSpacing;
 	if(Name[0] != 'C') {   // location curve ?
-          s = metrics.size(0, pD->Var);
-          Texts.append(new Text(x-(s.width()>>1), y, pD->Var, pg->Color, 12.0));
+          w = metrics.width(pD->Var) >> 1;
+          Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
 	}
 	else {
-          s = metrics.size(0, "real("+pg->Var+")");
-          Texts.append(new Text(x-(s.width()>>1), y, "real("+pg->Var+")",
+          w = metrics.width("real("+pg->Var+")") >> 1;
+          Texts.append(new Text(x-w, y, "real("+pg->Var+")",
                                 pg->Color, 12.0));
 	}
     }
   }
   else {
-    s = metrics.size(0, xAxis.Label);
-    Texts.append(new Text(x-(s.width()>>1), y-LineSpacing, xAxis.Label,
-                          Qt::black, 12.0));
+    encode_String(xAxis.Label, Str);
+    w = metrics.width(Str) >> 1;
+    Texts.append(new Text(x-w, y-LineSpacing, Str, Qt::black, 12.0));
   }
 
 
@@ -178,28 +179,27 @@ void Diagram::createAxisLabels()
       if(pg->yAxisNo != 0)  continue;
       if(pg->cPointsY) {
 	if(Name[0] != 'C') {   // location curve ?
-          s = metrics.size(0, pg->Var);
-          Texts.append(new Text(x, y-(s.width()>>1), pg->Var,
-                                pg->Color, 12.0, 0.0, 1.0));
+          w = metrics.width(pg->Var) >> 1;
+          Texts.append(new Text(x, y-w, pg->Var, pg->Color, 12.0, 0.0, 1.0));
 	}
 	else {
-          s = metrics.size(0, "imag("+pg->Var+")");
-          Texts.append(new Text(x, y-(s.width()>>1), "imag("+pg->Var+")",
+          w = metrics.width("imag("+pg->Var+")") >> 1;
+          Texts.append(new Text(x, y-w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, 1.0));
 	}
       }
       else {     // if no data => <invalid>
-        s = metrics.size(0, pg->Var+INVALID_STR);
-        Texts.append(new Text(x, y-(s.width()>>1), pg->Var+INVALID_STR,
+        w = metrics.width(pg->Var+INVALID_STR) >> 1;
+        Texts.append(new Text(x, y-w, pg->Var+INVALID_STR,
                               pg->Color, 12.0, 0.0, 1.0));
       }
       x -= LineSpacing;
     }
   }
   else {
-    s = metrics.size(0, yAxis.Label);
-    Texts.append(new Text(x, y-(s.width()>>1), yAxis.Label,
-                          Qt::black, 12.0, 0.0, 1.0));
+    encode_String(yAxis.Label, Str);
+    w = metrics.width(Str) >> 1;
+    Texts.append(new Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
   }
 
 
@@ -211,28 +211,28 @@ void Diagram::createAxisLabels()
       if(pg->yAxisNo != 1)  continue;
       if(pg->cPointsY) {
 	if(Name[0] != 'C') {   // location curve ?
-          s = metrics.size(0, pg->Var);
-          Texts.append(new Text(x, y+(s.width()>>1), pg->Var,
+          w = metrics.width(pg->Var) >> 1;
+          Texts.append(new Text(x, y+w, pg->Var,
                                 pg->Color, 12.0, 0.0, -1.0));
 	}
 	else {
-          s = metrics.size(0, "imag("+pg->Var+")");
-          Texts.append(new Text(x, y+(s.width()>>1), "imag("+pg->Var+")",
+          w = metrics.width("imag("+pg->Var+")") >> 1;
+          Texts.append(new Text(x, y+w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, -1.0));
 	}
       }
       else {     // if no data => <invalid>
-        s = metrics.size(0, pg->Var+INVALID_STR);
-        Texts.append(new Text(x, y+(s.width()>>1), pg->Var+INVALID_STR,
+        w = metrics.width(pg->Var+INVALID_STR) >> 1;
+        Texts.append(new Text(x, y+w, pg->Var+INVALID_STR,
                               pg->Color, 12.0, 0.0, -1.0));
       }
       x += LineSpacing;
     }
   }
   else {
-    s = metrics.size(0, zAxis.Label);
-    Texts.append(new Text(x, y+(s.width()>>1), zAxis.Label,
-                          Qt::black, 12.0, 0.0, -1.0));
+    encode_String(zAxis.Label, Str);
+    w = metrics.width(Str) >> 1;
+    Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
   }
 }
 
@@ -471,8 +471,9 @@ void Diagram::calcData(Graph *g)
 	}
       }
 /*qDebug("\n****** p=%p", p);
-for(int zz=60; zz>0; zz-=2)
+for(int zz=10; zz>0; zz-=2)
   qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
+
       if(Name == "Rect3D") if(g->countY > 1) {
 	pz = g->cPointsY;
 	for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
@@ -513,6 +514,11 @@ for(int zz=120; zz>0; zz-=2)
 
       
       *p = -100;
+/*p = g->Points;
+qDebug("\n****** p=%p", p);
+for(int zz=0; zz<10; zz+=2)
+  qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
+
       return;
 
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
@@ -766,18 +772,13 @@ void Diagram::loadGraphData(const QString& defaultDataSet)
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next())
     loadVarData(defaultDataSet, pg);  // load data, determine max/min values
 
-  if(xAxis.min > xAxis.max) {
-    xAxis.min = 0.0;
-    xAxis.max = 1.0;
-  }
-  if(yAxis.min > yAxis.max) {
-    yAxis.min = 0.0;
-    yAxis.max = 1.0;
-  }
-  if(zAxis.min > zAxis.max) {
-    zAxis.min = 0.0;
-    zAxis.max = 1.0;
-  }
+  if(xAxis.min > xAxis.max)
+    xAxis.min = xAxis.max = 0.0;
+  if(yAxis.min > yAxis.max)
+    yAxis.min = yAxis.max = 0.0;
+  if(zAxis.min > zAxis.max) 
+    zAxis.min = zAxis.max = 0.0;
+
 /*  if((Name == "Polar") || (Name == "Smith")) {  // one axis only
     if(yAxis.min > zAxis.min)  yAxis.min = zAxis.min;
     if(yAxis.max < zAxis.max)  yAxis.max = zAxis.max;
@@ -909,73 +910,67 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   }
 
   file.setName(QucsWorkDir.filePath(file.name()));
-  if(!file.open(IO_ReadOnly)) {
-//    QMessageBox::critical(0, QObject::tr("Error"),
-//                 QObject::tr("Cannot load dataset: ")+file.name());
-    return false;
-  }
+  if(!file.open(IO_ReadOnly))  return false;
 
   // *****************************************************************
   // To strongly speed up the file read operation the whole file is
   // read into the memory in one piece.
-  QTextStream ReadWhole(&file);
-  QString FileString = ReadWhole.read();
+  QByteArray FileContent;
+  FileContent = file.readAll();
   file.close();
+  char *FileString = FileContent.data();
+  char *pPos = FileString+FileContent.size()-1;
+  if(*pPos > ' ')  if(*pPos != '>')  return false;
+  *pPos = 0;
 
 
-  QString Line, tmp, Var;
   // *****************************************************************
   // look for variable name in data file  ****************************
-  int i=0, j=0, k=0;   // i and j must not be used temporarily !!!
-  i = FileString.find('<')+1;
-  while(i > 0) {
-    j = FileString.find('>', i);
-    Line = FileString.mid(i, j-i);
-    i = FileString.find('<', j)+1;
-    if(Line.left(3) == "dep") {
-      tmp = Line.section(' ', 1, 1);
-      if(Variable != tmp) continue; // found variable with name sought for ?
-
-      k = 2;
-      tmp = Line.section(' ',k,k);
-      while(!tmp.isEmpty()) {
-        g->cPointsX.append(new DataX(tmp));  // name of independet variable
-        k++;
-        tmp = Line.section(' ',k,k);
-      }
+  bool isIndep = false;
+  Variable = "dep "+Variable+" ";
+  // "pFile" is used through-out the whole function and must NOT used
+  // for other purposes!
+  char *pFile = strstr(FileString, Variable.latin1());
+  while(pFile) {
+    if(*(pFile-1) == '<')     // is dependent variable ?
+      break;
+    else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
+      isIndep = true;
       break;
     }
-    if(Line.left(5) == "indep") {
-      tmp = Line.section(' ', 1, 1);
-      if(Variable != tmp) continue;  // found variable with name sought for ?
-      break;
-    }
+    pFile = strstr(pFile+4, Variable.latin1());
   }
 
-  if(i <= 0) {
-//    QMessageBox::critical(0, QObject::tr("Error"),
-//                 QObject::tr("Cannot find variable: ")+Variable);
-    return false;   // return if data name was not found
+  if(!pFile)  return false;   // data not found
+
+  QString Line, tmp;
+  pFile += Variable.length();
+  pPos = strchr(pFile, '>');
+  if(!pPos)  return false;   // file corrupt
+  *pPos = 0;
+  Line = QString(pFile);
+  *pPos = '>';
+  pFile = pPos+1;
+  if(!isIndep) {
+    pos = 0;
+    tmp = Line.section(' ', pos, pos);
+    while(!tmp.isEmpty()) {
+      g->cPointsX.append(new DataX(tmp));  // name of independet variable
+      pos++;
+      tmp = Line.section(' ', pos, pos);
+    }
   }
 
   Axis *pa;
   // *****************************************************************
   // get independent variable ****************************************
-  bool ok=true, ok2=true;
+  bool ok=true;
   double *p;
   int counting = 0;
-  if(g->cPointsX.isEmpty()) {    // create independent variable by myself ?
-    tmp = Line.section(' ', 2, 2);  // get number of points
-    counting = tmp.toInt(&ok);
+  if(isIndep) {    // create independent variable by myself ?
+    counting = Line.toInt(&ok);  // get number of values
     g->cPointsX.append(new DataX("number", 0, counting));
-    if(!ok) {
-//      QMessageBox::critical(0, QObject::tr("Error"),
-//                   QObject::tr("Cannot get size of independent data \"")+
-//		   Variable+"\"");
-      // do not clear cPointX, but show it as invalid
-//      g->cPointsX.clear();
-      return false;
-    }
+    if(!ok)  return false;
 
     p = new double[counting];  // memory of new independent variable
     g->countY = 1;
@@ -999,11 +994,8 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
       }
       else if(pD == bLast)  pa = &yAxis;   // y axis for Rect3D
       counting = loadIndepVarData(pD->Var, FileString, pa, g);
-      if(counting <= 0) {     // failed to load independent variable ?
-        // do not clear cPointX, but show it as invalid
-//	g->cPointsX.clear();
-        return false;  // error message was already created
-      }
+      if(counting <= 0)  return false;
+
       g->countY *= counting;
     }
     g->countY /= counting;
@@ -1019,32 +1011,28 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   else  pa = &zAxis;
   (pa->numGraphs)++;    // count graphs
 
+  char *pEnd;
   double x, y;
-  QRegExp WhiteSpace("\\s");
-  QRegExp noWhiteSpace("\\S");
-  i = FileString.find(noWhiteSpace, j+1);
-  j = FileString.find(WhiteSpace, i);
-  Line = FileString.mid(i, j-i);
+  pPos = pFile;
+  // find first position containing no whitespace
+  while((*pPos) && (*pPos <= ' '))  pPos++;
+
   for(int z=counting; z>0; z--) {
-    k = Line.find('j');
-    if(k < 0) {
-      x = Line.toDouble(&ok);
+    pEnd = 0;
+    x = strtod(pPos, &pEnd);  // real part
+    pPos = pEnd + 1;
+    if(*pEnd < ' ')   // is there an imaginary part ?
       y = 0.0;
-    }
     else {
-      tmp = Line.mid(k);  // imaginary part
-      tmp.at(0) = Line.at(k-1);   // copy sign over "j"
-      y = tmp.toDouble(&ok);
-      Line = Line.left(k-1);  // real part
-      x = Line.toDouble(&ok2);
-    }
-    if((!ok) || (!ok2)) {
-//      QMessageBox::critical(0, QObject::tr("Error"),
-//		QObject::tr("Too few dependent data \"") + Variable+"\"");
-      // do not clear cPointX, but show it as invalid
-//      g->cPointsX.clear();
-      delete[] g->cPointsY;  g->cPointsY = 0;
-      return false;
+      if(((*pEnd != '+') && (*pEnd != '-')) || (*pPos != 'j')) {
+        delete[] g->cPointsY;  g->cPointsY = 0;
+        return false;
+      }
+      *pPos = *pEnd;  // overwrite 'j' with sign
+      pEnd = 0;
+      y = strtod(pPos, &pEnd); // imaginary part
+      *pPos = 'j';   // write back old character
+      pPos = pEnd;
     }
     *(p++) = x;
     *(p++) = y;
@@ -1066,9 +1054,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
       }
     }
 
-    i = FileString.find(noWhiteSpace, j);
-    j = FileString.find(WhiteSpace, i);
-    Line = FileString.mid(i, j-i);
+    while((*pPos) && (*pPos <= ' '))  pPos++; // find start of next number
   }
 
   return true;
@@ -1076,80 +1062,81 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
 
 // --------------------------------------------------------------------------
 // Reads the data of an independent variable. Returns the number of points.
-int Diagram::loadIndepVarData(const QString& var,
-			      const QString& FileString, Axis *pa, Graph *pg)
+int Diagram::loadIndepVarData(const QString& Variable,
+			      char *FileString, Axis *pa, Graph *pg)
 {
+  bool isIndep = false;
   QString Line, tmp;
-
-  int i=0, j=0;
-  i = FileString.find('<')+1;
-  if(i > 0)
-  do {    // look for variable name in data file
-    j = FileString.find('>', i);
-    Line = FileString.mid(i, j-i);
-    i = FileString.find('<', j)+1;
-    if(Line.left(5) == "indep") {
-      tmp = Line.section(' ', 1, 1);
-      if(var == tmp) break;     // found variable with name sought for ?
+  Line = "dep "+Variable+" ";
+  // "pFile" is used through-out the whole function and must NOT used
+  // for other purposes!
+  char *pFile = strstr(FileString, Line.latin1());
+  while(pFile) {
+    if(*(pFile-1) == '<')     // is dependent variable ?
+      break;
+    else if(strncmp(pFile-3, "<in", 3) == 0) {  // is independent variable ?
+      isIndep = true;
+      break;
     }
-    else if(Line.left(3) == "dep")   // dependent variable can also be used...
-      if(Line.section(' ', 3, 3).isEmpty()) {   // ...if only one dependency
-	tmp = Line.section(' ', 1, 1);
-	if(var == tmp) {     // found variable with name sought for ?
-	  int z = FileString.find("<indep "+Line.section(' ', 2, 2)+" ");
-	  if(z <= 0) { i = -1; break; }
-	  tmp = FileString.mid(z, FileString.find('>', z)-z);
-	  Line = Line.section(' ', 0, 1)+" "+tmp.section(' ', 2, 2);
-	  break;
-	}
-      }
-
-  } while(i > 0);
-
-  if(i <= 0) {
-//    QMessageBox::critical(0, QObject::tr("Error"),
-//	QObject::tr("Independent data \"")+var+QObject::tr("\" not found"));
-    return -1;
+    pFile = strstr(pFile+4, Line.latin1());
   }
+
+  if(!pFile)  return -1;   // data not found
+
+  pFile += Line.length();
+  char *pPos = strchr(pFile, '>');
+  if(!pPos)  return -1;   // file corrupt
+  *pPos = 0;
+  Line = QString(pFile);
+  *pPos = '>';
+  pFile = pPos+1;
+  char *pEnd;
+  if(!isIndep) {           // dependent variable can also be used...
+    if(Line.find(' ') >= 0)  return -1; // ...if only one dependency
+    Line = "<indep "+Line+" ";
+    pPos = strstr(FileString, Line.latin1());
+    if(!pPos)  return -1;
+    pPos += Line.length();
+    pEnd = strchr(pPos, '>');
+    if(!pEnd)  return -1;   // file corrupt
+    *pEnd = 0;
+    Line = QString(pPos);
+    *pEnd = '>';
+  }
+
 
   bool ok;
-  tmp = Line.section(' ', 2, 2);  // get number of points
-  int n = tmp.toInt(&ok);
-  if(!ok) {
-//    QMessageBox::critical(0, QObject::tr("Error"),
-//	QObject::tr("Cannot get size of independent data \"")+var+"\"");
-    return -1;
-  }
+  int n = Line.toInt(&ok);  // number of values
+  if(!ok)  return -1;
 
   double *p = new double[n];     // memory for new independent variable
   DataX *pD = pg->cPointsX.current();
   pD->Points = p;
   pD->count  = n;
 
+
   double x;
-  QRegExp WhiteSpace("\\s");
-  QRegExp noWhiteSpace("\\S");
-  i = FileString.find(noWhiteSpace, j+1);
-  j = FileString.find(WhiteSpace, i);
-  Line = FileString.mid(i, j-i);
+  pPos = pFile;
+  // find first position containing no whitespace
+  while((*pPos) && (*pPos <= ' '))  pPos++;
+
   for(int z=0; z<n; z++) {
-    x = Line.toDouble(&ok);  // get number
-    if(!ok) {
-//      QMessageBox::critical(0, QObject::tr("Error"),
-//		 QObject::tr("Too few independent data \"") + var + "\"");
+    pEnd = 0;
+    x = strtod(pPos, &pEnd);  // real part
+    if(pPos == pEnd) {
       delete[] pD->Points;  pD->Points = 0;
       return -1;
     }
+    
     *(p++) = x;
     if(Name[0] != 'C')   // not for location curves
       if(finite(x)) {
         if(x > pa->max) pa->max = x;
         if(x < pa->min) pa->min = x;
       }
-
-    i = FileString.find(noWhiteSpace, j);
-    j = FileString.find(WhiteSpace, i);
-    Line = FileString.mid(i, j-i);
+    
+    pPos = pEnd;
+    while((*pPos) && (*pPos <= ' '))  pPos++;  // find start of next number
   }
 
   return n;   // return number of independent data
@@ -1524,11 +1511,9 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     if(!Below)  y = 0;
     Lines.append(new Line(x, dx2+m, x, dx2-y, GridPen));
 
-    if(Below)
-      Texts.append(new Text(0, 4, StringNum(Axis->up)));
-    else
-      Texts.append(
-        new Text(0, y2-4-QucsSettings.font.pointSize(), StringNum(Axis->up)));
+    if(Below)  y = 4;
+    else  y = y2-4-QucsSettings.font.pointSize();
+    Texts.append(new Text(0, y, StringNum(Axis->up)));
   }
 
 }
@@ -1592,23 +1577,16 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   if(!Below)  tPos = (y2>>1) + 3;
   else  tPos = (y2>>1) - tHeight + 3;
 
-  int Prec;
-  char form;
   double Expo, Base, numGrids, GridStep, zD;
   if(xAxis.GridOn) {
     calcPolarAxisScale(Axis, numGrids, GridStep, zD);
-
-    if(fabs(log10(Axis->up)) < 3.0)  { form = 'g';  Prec = 3; }
-    else  { form = 'e';  Prec = 0; }
-
 
     double zDstep = zD;
     double GridNum  = 0.0;
     for(i=int(numGrids); i>1; i--) {    // create all grid circles
       z = int(zD);
       GridNum += GridStep;
-      Texts.append(new Text(((x2+z)>>1)-10, tPos,
-			    StringNum(GridNum, form, Prec)));
+      Texts.append(new Text(((x2+z)>>1)-10, tPos, StringNiceNum(GridNum)));
 
       phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/zD));
       if(!Below)  tmp = beta + phi;
@@ -1625,10 +1603,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   }
 
   // create outer circle
-  if(fabs(log10(Axis->up)) < 3.0)
-    Texts.append(new Text(x2-8, tPos, StringNum(Axis->up)));
-  else
-    Texts.append(new Text(x2-8, tPos, StringNum(Axis->up, 'e', 0)));
+  Texts.append(new Text(x2-8, tPos, StringNiceNum(Axis->up)));
   phi = int(16.0*180.0/M_PI*atan(double(2*tHeight)/double(x2)));
   if(!Below)  tmp = phi;
   else  tmp = 0;
@@ -1654,21 +1629,33 @@ bool Diagram::calcAxisScale(Axis *Axis, double& GridNum, double& zD,
 				double& zDstep, double& GridStep, double Dist)
 {
   bool back=false;
-  if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
-    Axis->max += fabs(Axis->max);
-    Axis->min -= fabs(Axis->min);
-  }
-  if(Axis->max == 0) if(Axis->min == 0) {
-    Axis->max = 1;
-    Axis->min = -1;
-  }
-  Axis->low = Axis->min; Axis->up = Axis->max;
-
   double numGrids, Base, Expo, corr;
 if(Axis->autoScale) {
+
+  if(fabs(Axis->max-Axis->min) < 1e-200) {
+    if((Axis->max == 0.0) && (Axis->min == 0.0)) {
+      Axis->up  =  1.0;
+      Axis->low = -1.0;
+    }
+    else {   // if max = min, double difference
+      Axis->up  = Axis->max + fabs(Axis->max);
+      Axis->low = Axis->min - fabs(Axis->min);
+    }
+  }
+  else if(Axis != &xAxis) {
+    // keep a small bounding between graph and  diagram limit
+    Axis->up  = Axis->max + 0.1*(Axis->max-Axis->min);
+    Axis->low = Axis->min - 0.1*(Axis->max-Axis->min);
+  }
+  else {
+    Axis->up  = Axis->max;   // normal case for x axis
+    Axis->low = Axis->min;
+  }
+
+
   numGrids = floor(Dist/60.0);   // minimal grid is 60 pixel
-  if(numGrids < 1.0) Base = Axis->max-Axis->min;
-  else Base = (Axis->max-Axis->min)/numGrids;
+  if(numGrids < 1.0) Base = Axis->up-Axis->low;
+  else Base = (Axis->up-Axis->low)/numGrids;
   Expo = floor(log10(Base));
   Base = Base/pow(10.0,Expo);        // separate first significant digit
   if(Base < 3.5) {     // use only 1, 2 and 5, which ever is best fitted
@@ -1680,16 +1667,16 @@ if(Axis->autoScale) {
     else { Base = 1.0; Expo++; }
   }
   GridStep = Base * pow(10.0,Expo);   // grid distance in real coordinates
-  corr = floor((Axis->max-Axis->min)/GridStep - numGrids);
+  corr = floor((Axis->up-Axis->low)/GridStep - numGrids);
   if(corr < 0.0) corr++;
   numGrids += corr;     // correct rounding faults
 
 
   // upper y boundery ...........................
-  zD = fabs(fmod(Axis->max, GridStep));// expand grid to upper diagram edge ?
+  zD = fabs(fmod(Axis->up, GridStep));// expand grid to upper diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) GridNum = 0.0;  // fix rounding errors
-  if(Axis->max <= 0.0) {
+  if(Axis->up <= 0.0) {
     if(GridNum < 0.3) { Axis->up += zD;  zD = 0.0; }
   }
   else  if(GridNum > 0.7)  Axis->up += GridStep-zD;
@@ -1699,10 +1686,10 @@ if(Axis->autoScale) {
 
 
   // lower y boundery ...........................
-  zD = fabs(fmod(Axis->min, GridStep));// expand grid to lower diagram edge ?
+  zD = fabs(fmod(Axis->low, GridStep));// expand grid to lower diagram edge ?
   GridNum = zD/GridStep;
   if((1.0-GridNum) < 1e-10) zD = GridNum = 0.0;  // fix rounding errors
-  if(Axis->min <= 0.0) {
+  if(Axis->low <= 0.0) {
     if(GridNum > 0.7) { Axis->low -= GridStep-zD;  zD = 0.0; }
     else if(GridNum < 0.1)
 	   if(GridNum*Dist >= 1.0) { // more than 1 pixel above ?
@@ -1754,12 +1741,8 @@ bool Diagram::calcAxisLogScale(Axis *Axis, int& z, double& zD,
 				double& zDstep, double& corr, int len)
 {
   if(fabs(Axis->max-Axis->min) < 1e-200) { // if max = min, double difference
-    Axis->max += fabs(Axis->max);
-    Axis->min -= fabs(Axis->min);
-  }
-  if(Axis->max == 0) if(Axis->min == 0) {
-    Axis->max = 1;
-    Axis->min = -1;
+    Axis->max *= 10.0;
+    Axis->min /= 10.0;
   }
   Axis->low = Axis->min; Axis->up = Axis->max;
 
@@ -1853,8 +1836,6 @@ bool Diagram::calcYAxis(Axis *Axis, int x0)
   QString tmp;
   QFontMetrics  metrics(QucsSettings.font);
   int maxWidth = 0;
-  int Prec;
-  char form;
 
   bool back = false;
 if(Axis->log) {
@@ -1871,8 +1852,7 @@ if(Axis->log) {
       Lines.prepend(new Line(0, z, x2, z, GridPen));  // y grid
 
     if((zD < 1.5*zDstep) || (z == 0)) {
-      if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
-      else  tmp = StringNum(zD, 'e', 1);
+      tmp = StringNiceNum(zD);
       if(Axis->up < 0.0)  tmp = '-'+tmp;
 
       w = metrics.width(tmp);  // width of text
@@ -1902,14 +1882,12 @@ else {  // not logarithmical
   double Expo;
   if(Axis->up == 0.0)  Expo = log10(fabs(Axis->up-Axis->low));
   else  Expo = log10(fabs(Axis->up));
-  if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
-  else  { form = 'e';  Prec = 0; }
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
   while((z <= y2) && (z >= 0)) {  // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
-    tmp = StringNum(GridNum, form, Prec);
+    tmp = StringNiceNum(GridNum);
 
     w = metrics.width(tmp);  // width of text
     if(maxWidth < w) maxWidth = w;

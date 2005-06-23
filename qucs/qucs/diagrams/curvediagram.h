@@ -1,6 +1,6 @@
 /***************************************************************************
                                curvediagram.h
-                             -------------------
+                              -----------------
     begin                : Sat Apr 9 2005
     copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -20,9 +20,6 @@
 
 #include "diagram.h"
 
-/**
-  *@author Michael Margraf
-  */
 
 class CurveDiagram : public Diagram  {
 public: 
@@ -31,6 +28,7 @@ public:
 
 
   Diagram* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
   void calcData(Graph *g);

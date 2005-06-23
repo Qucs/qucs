@@ -1,6 +1,6 @@
 /***************************************************************************
-                          rectangle.cpp  -  description
-                             -------------------
+                              rectangle.cpp
+                             ---------------
     begin                : Sat Nov 22 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -88,6 +88,26 @@ void Rectangle::setCenter(int x, int y, bool relative)
 Painting* Rectangle::newOne()
 {
   return new Rectangle();
+}
+
+// --------------------------------------------------------------------------
+Element* Rectangle::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Rectangle");
+  BitmapFile = "rectangle";
+
+  if(getNewOne)  return new Rectangle();
+  return 0;
+}
+
+// --------------------------------------------------------------------------
+Element* Rectangle::info_filled(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("filled Rectangle");
+  BitmapFile = "filledrect";
+
+  if(getNewOne)  return new Rectangle(true);
+  return 0;
 }
 
 // --------------------------------------------------------------------------

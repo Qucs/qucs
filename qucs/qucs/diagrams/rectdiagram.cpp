@@ -110,8 +110,6 @@ int RectDiagram::calcDiagram()
   Texts.clear();
   Arcs.clear();
 
-  int z;
-  QSize  r;
   double GridStep, corr, zD, zDstep, GridNum;
   QFontMetrics  metrics(QucsSettings.font);
   y1 = QucsSettings.font.pointSize() + 6;
@@ -120,8 +118,7 @@ int RectDiagram::calcDiagram()
   x3 = x2 + 7;
   QString tmp;
   bool back = false;
-  int  Prec, valid = 0;
-  char form;
+  int  z, w, valid = 0;
 
   // =====  give "step" the right sign (if user made it wrong)  ==============
   xAxis.step = fabs(xAxis.step);
@@ -140,9 +137,9 @@ int RectDiagram::calcDiagram()
   // ====  x grid  =======================================================
 if(xAxis.log) {
   if(xAxis.autoScale) {
-    if(xAxis.max*xAxis.min <= 0.0)  goto Frame;  // invalid
+    if(xAxis.max*xAxis.min < 1e-200)  goto Frame;  // invalid
   }
-  else  if(xAxis.limit_min*xAxis.limit_max <= 0.0)  goto Frame;  // invalid
+  else  if(xAxis.limit_min*xAxis.limit_max < 1e-200)  goto Frame;  // invalid
 
   back = calcAxisLogScale(&xAxis, z, zD, zDstep, corr, x2);
 
@@ -152,15 +149,11 @@ if(xAxis.log) {
       Lines.prepend(new Line(z, y2, z, 0, GridPen));  // x grid
 
     if((zD < 1.5*zDstep) || (z == 0) || (z == x2)) {
-      if(fabs(log10(zD)) < 3.0)  tmp = StringNum(zD);
-      else  tmp = StringNum(zD, 'e', 1);
-      r = metrics.size(0, tmp);  // width of text
+      tmp = StringNiceNum(zD);
+      if(xAxis.up < 0.0)  tmp = '-'+tmp;
+      w = metrics.width(tmp);  // width of text
 
-      if(xAxis.up < 0.0)
-        Texts.append(new Text(z-(r.width()>>1), -y1, '-'+tmp));
-      else
-        Texts.append(new Text(z-(r.width()>>1), -y1, tmp));
-
+      Texts.append(new Text(z-(w>>1), -y1, tmp));
       Lines.append(new Line(z, 5, z, -5, QPen(QPen::black,0)));  // x marks
     }
 
@@ -180,16 +173,14 @@ else {  // not logarithmical
   double Expo;
   if(xAxis.up == 0.0)  Expo = log10(fabs(xAxis.up-xAxis.low));
   else  Expo = log10(fabs(xAxis.up));
-  if(fabs(Expo) < 3.0)  { form = 'g';  Prec = 3; }
-  else  { form = 'e';  Prec = 1; }
 
   zD += 0.5;     // perform rounding
   z = int(zD);   //  "int(...)" implies "floor(...)"
   while((z <= x2) && (z >= 0)) {    // create all grid lines
     if(fabs(GridNum) < 0.01*pow(10.0, Expo)) GridNum = 0.0;// make 0 really 0
-    tmp = StringNum(GridNum, form, Prec);
-    r = metrics.size(0, tmp);  // width of text
-    Texts.append(new Text(z-(r.width()>>1), -y1, tmp));
+    tmp = StringNiceNum(GridNum);
+    w = metrics.width(tmp);  // width of text
+    Texts.append(new Text(z-(w>>1), -y1, tmp));
     GridNum += GridStep;
 
     if(xAxis.GridOn)  if(z < x2)  if(z > 0)
@@ -231,4 +222,14 @@ void RectDiagram::clip(int* &p)
 Diagram* RectDiagram::newOne()
 {
   return new RectDiagram();
+}
+
+// ------------------------------------------------------------
+Element* RectDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Cartesian");
+  BitmapFile = "rect";
+
+  if(getNewOne)  return new RectDiagram();
+  return 0;
 }

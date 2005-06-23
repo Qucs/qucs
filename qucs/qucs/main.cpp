@@ -1,7 +1,7 @@
 /***************************************************************************
-                          main.cpp  -  description
-                             -------------------
-    begin                : Thu Aug 28 18:17:41 CEST 2003
+                                 main.cpp
+                                ----------
+    begin                : Thu Aug 28 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
@@ -161,7 +161,6 @@ QString StringNum(double num, char form, int Precision)
 {
   int a = 0;
   char *p, Buffer[512], Format[6] = "%.00g";
-  QString s;
 
   if(Precision < 0) {
     Format[1]  = form;
@@ -184,8 +183,42 @@ QString StringNum(double num, char form, int Precision)
       } while(*(p++) != 0);    // override characters not needed
   }
 
-  s = Buffer;
-  return s;
+  return QString(Buffer);
+}
+
+// #########################################################################
+QString StringNiceNum(double num)
+{
+  char Format[6] = "%.8e";
+  if(fabs(num) < 1e-250)  return QString("0");  // avoid many problems
+  if(fabs(log10(fabs(num))) < 3.0)  Format[3] = 'g';
+
+  int a = 0;
+  char *p, *pe, Buffer[512];
+
+  sprintf(Buffer, Format, num);
+  p = pe = strchr(Buffer, 'e');
+  if(p) {
+    if(*(++p) == '+') { a = 1; }    // remove '+' of exponent
+    if(*(++p) == '0') { a++; p++; } // remove leading zeros of exponent
+    if(a > 0)
+      do {
+        *(p-a) = *p;
+      } while(*(p++) != 0);  // override characters not needed
+
+    // In 'g' format, trailing zeros are already cut off !!!
+    p = strchr(Buffer, '.');
+    if(p) {
+      if(!pe)  pe = Buffer + strlen(Buffer);
+      p = pe-1;
+      while(*p == '0')   // looking for unneccessary zero characters
+        if((--p) <= Buffer)  break;
+      if(*p != '.')  p++;  // no digit after decimal point ?
+      while( (*(p++) = *(pe++)) != 0 ) ;  // overwrite zero characters
+    }
+  }
+
+  return QString(Buffer);
 }
 
 // #########################################################################
@@ -245,121 +278,42 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
 // ##########                                                     ##########
 // #########################################################################
 
-#include <qregexp.h>
 int main(int argc, char *argv[])
 {
 #if 0
-  double zD = 1.0e5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.1e5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.12e5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.123e5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.1234567e5;
-  qDebug(StringNum(zD, 'e', -1));
+  double zD;
+  zD = 0.0;
+  qDebug(StringNiceNum(zD));
+  zD = 112e8;
+  qDebug(StringNiceNum(zD));
   qDebug(" ");
 
   zD = 1.0e5;
-  qDebug(StringNum(zD, 'f', -1));
+  qDebug(StringNiceNum(zD));
 
   zD = 1.1e5;
-  qDebug(StringNum(zD, 'f', -1));
+  qDebug(StringNiceNum(zD));
 
   zD = 1.12e5;
-  qDebug(StringNum(zD, 'f', -1));
+  qDebug(StringNiceNum(zD));
 
   zD = 1.123e5;
-  qDebug(StringNum(zD, 'f', -1));
+  qDebug(StringNiceNum(zD));
 
   zD = 1.1234567e5;
-  qDebug(StringNum(zD, 'f', -1));
-  qDebug(" ");
-
-  zD = 1.0e5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.1e5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.12e5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.123e5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.1234567e5;
-  qDebug(StringNum(zD, 'g', -1));
-  qDebug(" ");
-
-  // ------------------------------------
-
-  zD = 1.0e-5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.1e-5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.12e-5;
-  qDebug(StringNum(zD, 'e', -1));
-
-  zD = 1.123e-5;
-  qDebug(StringNum(zD, 'e', -1));
- 
-  zD = 1.1234567e-5;
-  qDebug(StringNum(zD, 'e', -1));
-  qDebug("\n");
-
-  zD = 1.0e-5;
-  qDebug(StringNum(zD, 'f', -1));
-
-  zD = 1.1e-5;
-  qDebug(StringNum(zD, 'f', -1));
-
-  zD = 1.12e-5;
-  qDebug(StringNum(zD, 'f', -1));
-
-  zD = 1.123e-5;
-  qDebug(StringNum(zD, 'f', -1));
-
-  zD = 1.1234567e-5;
-  qDebug(StringNum(zD, 'f', -1));
-  qDebug(" ");
-
-  zD = 1.0e-5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.1e-5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.12e-5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.123e-5;
-  qDebug(StringNum(zD, 'g', -1));
-
-  zD = 1.1234567e-5;
-  qDebug(StringNum(zD, 'g', -1));
-  qDebug(" ");
+  qDebug(StringNiceNum(zD));
 
   return 0;
 #endif
-#if 0
-  double d, Factor;
-  QString Unit, s("-2.9E+02eco");
-  str2num(s, d, Unit, Factor);
-  qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
-	 s.latin1(), d, Unit.latin1(), Factor);
 
-  s = "2.5eco";
-  str2num(s, d, Unit, Factor);
-  qDebug("String: %s, Zahl: %g, Einheit: %s, Faktor: %g",
-	 s.latin1(), d, Unit.latin1(), Factor);
+#if 0
+  char Zahl1[32] = "12.34e2+j56.7";
+  char Zahl2[32] = "12.56e2";
+  char *p = 0;
+  double z1 = strtod(Zahl1, &p);
+  qDebug("%p -> %g -> %p", &Zahl1[0], z1, p);
+  double z2 = strtod(Zahl2, &p);
+  qDebug("%p -> %g -> %p", &Zahl2[0], z2, p);
   return 0;
 #endif
 

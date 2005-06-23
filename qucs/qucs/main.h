@@ -58,8 +58,9 @@ bool saveApplSettings(QucsApp*);
 QString complexRect(double, double, int Precision=3);
 QString complexDeg (double, double, int Precision=3);
 QString complexRad (double, double, int Precision=3);
-QString StringNum  (double num, char form='g', int Precision=3);
+QString StringNum  (double, char form='g', int Precision=3);
 void    str2num    (const QString&, double&, QString&, double&);
+QString StringNiceNum(double);
 
 // just dummies for empty lists
 extern QPtrList<Wire>      SymbolWires;

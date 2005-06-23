@@ -42,15 +42,14 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   setHScrollBarMode(QScrollView::AlwaysOn);
   viewport()->setPaletteBackgroundColor(QucsSettings.BGColor);
   viewport()->setMouseTracking(true);
+  viewport()->setAcceptDrops(true);  // enable drag'n drop
 
-  MouseMoveAction = &QucsView::MouseDoNothing;
-  MousePressAction = &QucsView::MouseDoNothing;
-  MouseReleaseAction = &QucsView::MouseDoNothing;
-  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  MouseMoveAction = 0;
+  MousePressAction = 0;
+  MouseReleaseAction = 0;
+  MouseDoubleClickAction = 0;
 
-  selComp  = 0;  // no component is selected
-  selDiag  = 0;  // no diagram is selected
-  selPaint = 0;  // no painting is selected
+  selElem  = 0;  // no component/diagram is selected
   isMoveEqual = false;  // mouse cursor move x and y the same way
   focusElement = 0;
 
@@ -114,8 +113,85 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
   d->paintGrid(&Painter, contentsX(), contentsY(),
 			visibleWidth(), visibleHeight());
   d->paint(&Painter);
-//p->drawText(20, 20, "*\xEA*");  // which character ?
 //  drawn = false;
+
+/*
+p->setPen(QPen(QPen::red, 0));
+p->drawLine(30, 0, 30, 60);
+p->drawLine(60, 0, 60, 60);
+p->setPen(QPen(QPen::blue, 0));
+p->drawLine(60, 30, 30, 30);
+
+p->setPen(QPen(QPen::red, 0));
+p->drawLine(90, 30, 120, 30);
+p->drawLine(90, 70, 120, 70);
+p->setPen(QPen(QPen::blue, 0));
+p->drawLine(110, 70, 110, 30);
+
+p->setPen(QPen(QPen::red, 0));
+p->drawPoint(150, 30);
+p->drawPoint(130, 50);
+p->setPen(QPen(QPen::blue, 0));
+p->drawLine(150, 30, 130, 50);
+
+p->setPen(QPen(QPen::red, 0));
+p->drawLine(170, 0, 170, 50);
+p->drawLine(170, 50, 210, 50);
+p->drawLine(210, 0, 210, 50);
+p->drawLine(170, 10, 210, 10);
+p->setPen(QPen(QPen::blue, 2));
+p->drawEllipse(170, 10, 40, 40);
+*/
+/*
+  // line algorithm
+  int x1_ = 80, y1_ = 40;
+  int x2_ = 10, y2_ = 10;
+
+  int ax_ = 0, ay_ = 0;
+  int ix_, iy_, dx_, dy_, of_;
+
+  if(x2_ >= x1_) {
+    dx_ = x2_ - x1_;
+    ix_ = 1;
+  }
+  else {
+    dx_ = x1_ - x2_;
+    ix_ = -1;
+  }
+
+  if(y2_ >= y1_) {
+    dy_ = y2_ - y1_;
+    iy_ = 1;
+  }
+  else {
+    dy_ = y1_ - y2_;
+    iy_ = -1;
+  }
+
+  if(dx_ < dy_) {
+    of_ = dx_;   // exchange dx and dy
+    dx_ = dy_;
+    dy_ = of_;
+
+    ax_ = iy_;
+    ay_ = ix_;
+    ix_ = iy_ = 0;
+  }
+
+  of_ = dx_ >> 1;
+  p->drawPoint(x1_, y1_);
+  for(int i=dx_; i>0; i--) {
+    x1_ += ix_;
+    y1_ += ax_;
+    of_ += dy_;
+    if(of_ > dx_) {
+      of_ -= dx_;
+      x1_ += ay_;
+      y1_ += iy_;
+    }
+    p->drawPoint(x1_, y1_);
+  }
+*/
 }
 
 // -----------------------------------------------------------
@@ -375,10 +451,6 @@ void QucsView::editLabel(WireLabel *pl)
   QString Name  = Dia->NodeName->text();
   QString Value = Dia->InitValue->text();
   delete Dia;
-/*  bool OK;
-  QString Name = QInputDialog::getText(tr("Insert Nodename"),
-	tr("Enter the label:"), QLineEdit::Normal, pl->Name, &OK, this);
-  if(!OK) return;*/
 
   if(Name.isEmpty() && Value.isEmpty()) { // if nothing entered, delete label
     if(pl->pWire) pl->pWire->setName("", "");   // delete name of wire
@@ -483,10 +555,6 @@ void QucsView::MovingElements()
   }
 }
 
-// -----------------------------------------------------------
-void QucsView::MouseDoNothing(QMouseEvent*)
-{
-}
 
 // ***********************************************************************
 // **********                                                   **********
@@ -495,17 +563,16 @@ void QucsView::MouseDoNothing(QMouseEvent*)
 // ***********************************************************************
 void QucsView::contentsMouseMoveEvent(QMouseEvent *Event)
 {
-  (this->*MouseMoveAction)(Event);
+  if(MouseMoveAction)
+    (this->*MouseMoveAction)(Event);
 }
 
 // -----------------------------------------------------------
-void QucsView::MMovePainting(QMouseEvent *Event)
+void QucsView::MMoveElement(QMouseEvent *Event)
 {
-  QucsDoc *d = Docs.current();
-  QPainter painter(viewport()), paintScale(viewport());
-  painter.setRasterOp(Qt::NotROP);  // background should not be erased
-  setPainter(&paintScale, d);
+  if(selElem == 0) return;
 
+  QucsDoc *d = Docs.current();
   int x  = Event->pos().x();
   int y  = Event->pos().y();
   int fx = int(float(x)/d->Scale) + d->ViewX1;
@@ -513,11 +580,29 @@ void QucsView::MMovePainting(QMouseEvent *Event)
   int gx = fx;
   int gy = fy;
   d->setOnGrid(gx, gy);
+  
 
-  x -= contentsX();
-  y -= contentsY();
-  selPaint->MouseMoving(&paintScale, fx, fy, gx, gy, &painter, x, y, drawn);
+  QPainter painter(viewport());
+  setPainter(&painter, d);
+
+  if(selElem->Type == isPainting) {
+    QPainter paintUnscaled(viewport());
+    paintUnscaled.setRasterOp(Qt::NotROP); // not erasing background
+
+    x -= contentsX();
+    y -= contentsY();
+    ((Painting*)selElem)->MouseMoving(&painter, fx, fy, gx, gy,
+                                       &paintUnscaled, x, y, drawn);
+    drawn = true;
+    return;
+  }  // of "if(isPainting)"
+
+
+  // ********** it is a component or diagram
+  if(drawn) selElem->paintScheme(&painter); // erase old scheme
   drawn = true;
+  selElem->setCenter(gx, gy);
+  selElem->paintScheme(&painter); // paint scheme at new position
 }
 
 // -----------------------------------------------------------
@@ -576,44 +661,6 @@ void QucsView::MMoveWire1(QMouseEvent *Event)
 
   painter.drawLine(MAx1, MAy3, MAx2, MAy3); // paint
   painter.drawLine(MAx3, MAy1, MAx3, MAy2);
-}
-
-// -----------------------------------------------------------
-void QucsView::MMoveComponent(QMouseEvent *Event)
-{
-  if(selComp == 0) return;
-
-  QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
-
-  int x=int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  int y=int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-
-  if(drawn) selComp->paintScheme(&painter); // erase old scheme
-  drawn = true;
-  d->setOnGrid(x, y);
-  selComp->setCenter(x, y);
-  selComp->paintScheme(&painter); // paint scheme at new position
-}
-
-// -----------------------------------------------------------
-void QucsView::MMoveDiagram(QMouseEvent *Event)
-{
-  if(selDiag == 0) return;
-
-  QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
-
-  int x=int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  int y=int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-
-  if(drawn) selDiag->paintScheme(&painter); // erase old scheme
-  drawn = true;
-  d->setOnGrid(x, y);
-  selDiag->setCenter(x, y);
-  selDiag->paintScheme(&painter); // paint scheme at new position
 }
 
 // -----------------------------------------------------------
@@ -1055,17 +1102,36 @@ void QucsView::MMoveZoomIn(QMouseEvent *Event)
 // ************************************************************************
 void QucsView::contentsMousePressEvent(QMouseEvent *Event)
 {
-  (this->*MousePressAction)(Event);
+  editText->setHidden(true); // disable text edit of component property
+  
+  QucsDoc *d = Docs.current();
+  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
+  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
+
+  if(Event->button() != Qt::LeftButton) {
+    if(MousePressAction == &QucsView::MPressElement)
+      MPressElement(Event, d, x, y);
+    else if(MousePressAction == &QucsView::MPressWire2)
+      MPressWire2(Event, d, x, y);
+    else {
+      rightPressMenu(Event, d, x, y);   // show menu on right mouse button
+      if(MouseReleaseAction)
+        (this->*MouseReleaseAction)(Event, d); // not called (menu has focus)
+    }
+    return;
+  }
+
+  if(MousePressAction)
+    (this->*MousePressAction)(Event, d, x, y);
 }
 
 // -----------------------------------------------------------
 // Is called from several MousePress functions to show right button menu.
-void QucsView::rightPressMenu(QMouseEvent *Event)
+void QucsView::rightPressMenu(QMouseEvent *Event, QucsDoc *d, int x, int y)
 {
-  QucsDoc *d = Docs.current();
-  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-  focusElement = d->selectElement(MAx1, MAy1, false);
+  MAx1 = x;
+  MAy1 = y;
+  focusElement = d->selectElement(x, y, false);
 
   if(focusElement)  // remove special function (4 least significant bits)
     focusElement->Type &= isSpecialMask;
@@ -1085,18 +1151,22 @@ void QucsView::rightPressMenu(QMouseEvent *Event)
       QucsMain->symEdit->addTo(ComponentMenu);
       QucsMain->fileSettings->addTo(ComponentMenu);
     }
-    QucsMain->Acts.moveText->addTo(ComponentMenu);
+    if(!QucsMain->Acts.moveText->isOn())
+      QucsMain->Acts.moveText->addTo(ComponentMenu);
     break;
   }
   while(true) {
     if(focusElement)
       if(focusElement->Type == isGraph) break;
-    QucsMain->Acts.onGrid->addTo(ComponentMenu);
+    if(!QucsMain->Acts.onGrid->isOn())
+      QucsMain->Acts.onGrid->addTo(ComponentMenu);
     QucsMain->editCopy->addTo(ComponentMenu);
-    QucsMain->Acts.editPaste->addTo(ComponentMenu);
+    if(!QucsMain->Acts.editPaste->isOn())
+      QucsMain->Acts.editPaste->addTo(ComponentMenu);
     break;
   }
-  QucsMain->Acts.editDelete->addTo(ComponentMenu);
+  if(!QucsMain->Acts.editDelete->isOn())
+    QucsMain->Acts.editDelete->addTo(ComponentMenu);
   while(true) {
     if(focusElement) {
       if(focusElement->Type == isDiagram) break;
@@ -1104,10 +1174,14 @@ void QucsView::rightPressMenu(QMouseEvent *Event)
     }
     ComponentMenu->insertSeparator();
     if(focusElement) if(focusElement->Type == isComponent)
-      QucsMain->Acts.editActivate->addTo(ComponentMenu);
-    QucsMain->Acts.editRotate->addTo(ComponentMenu);
-    QucsMain->Acts.editMirror->addTo(ComponentMenu);
-    QucsMain->Acts.editMirrorY->addTo(ComponentMenu);
+      if(!QucsMain->Acts.editActivate->isOn())
+        QucsMain->Acts.editActivate->addTo(ComponentMenu);
+    if(!QucsMain->Acts.editRotate->isOn())
+      QucsMain->Acts.editRotate->addTo(ComponentMenu);
+    if(!QucsMain->Acts.editMirror->isOn())
+      QucsMain->Acts.editMirror->addTo(ComponentMenu);
+    if(!QucsMain->Acts.editMirrorY->isOn())
+      QucsMain->Acts.editMirrorY->addTo(ComponentMenu);
     break;
   }
 
@@ -1119,24 +1193,8 @@ void QucsView::rightPressMenu(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressPainting(QMouseEvent *)
+void QucsView::MPressLabel(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(selPaint->MousePressing()) {
-    Docs.current()->Paints->append(selPaint);
-    selPaint = selPaint->newOne();
-
-    drawn = false;
-    viewport()->repaint();
-    Docs.current()->setChanged(true, true);
-  }
-}
-
-// -----------------------------------------------------------
-void QucsView::PressLabel(QMouseEvent *Event)
-{
-  QucsDoc *d = Docs.current();
-  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
   Wire *pw = 0;
   WireLabel *pl=0;
   Node *pn = d->selectedNode(x, y);
@@ -1204,40 +1262,20 @@ void QucsView::PressLabel(QMouseEvent *Event)
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true, true);
+  d->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressLabel(QMouseEvent *Event)
+void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  PressLabel(Event);
-}
-
-// -----------------------------------------------------------
-void QucsView::MPressSelect(QMouseEvent *Event)
-{
-  editText->setHidden(true); // disable text edit of component property
-  
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);
-    MReleaseSelect(Event); // is not called at release because menu has focus
-    return;
-  }
-
   bool Ctrl;
   if(Event->state() & ControlButton) Ctrl = true;
   else Ctrl = false;
 
   int No=0;
-  QucsDoc *d = Docs.current();
-  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-  focusElement = d->selectElement(MAx1, MAy1, Ctrl, &No);
+  MAx1 = x;
+  MAy1 = y;
+  focusElement = d->selectElement(x, y, Ctrl, &No);
   isMoveEqual = false;   // moving not neccessarily square
 
 
@@ -1247,8 +1285,8 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 	focusElement->Type = isPainting;
 	MouseReleaseAction = &QucsView::MReleaseResizePainting;
 	MouseMoveAction = &QucsView::MMoveResizePainting;
-	MousePressAction = &QucsView::MouseDoNothing;
-	MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	MousePressAction = 0;
+	MouseDoubleClickAction = 0;
 	this->grabKeyboard();  // no keyboard inputs during move actions
 	return;
 
@@ -1275,8 +1313,8 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 //	Docs.current()->setOnGrid(MAx1, MAy1);
 	MouseReleaseAction = &QucsView::MReleaseResizeDiagram;
 	MouseMoveAction = &QucsView::MMoveSelect;
-	MousePressAction = &QucsView::MouseDoNothing;
-	MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	MousePressAction = 0;
+	MouseDoubleClickAction = 0;
 	this->grabKeyboard(); // no keyboard inputs during move actions
 	return;
 
@@ -1300,8 +1338,8 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 
 
 
-  MousePressAction = &QucsView::MouseDoNothing;
-  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  MousePressAction = 0;
+  MouseDoubleClickAction = 0;
   this->grabKeyboard();  // no keyboard inputs during move actions
   viewport()->repaint();
   drawn = false;
@@ -1324,18 +1362,9 @@ void QucsView::MPressSelect(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressDelete(QMouseEvent *Event)
+void QucsView::MPressDelete(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-
-  Element *pe = d->selectElement(
-		int(float(Event->pos().x())/d->Scale)+d->ViewX1,
-		int(float(Event->pos().y())/d->Scale)+d->ViewY1, false);
+  Element *pe = d->selectElement(x, y, false);
   if(pe) {
     pe->isSelected = true;
     d->deleteElements();
@@ -1347,21 +1376,15 @@ void QucsView::MPressDelete(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressActivate(QMouseEvent *Event)
+void QucsView::MPressActivate(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-  if(!d->activateComponent(MAx1, MAy1)) {
+  MAx1 = x;
+  MAy1 = y;
+  if(!d->activateComponent(x, y)) {
 //    if(Event->button() != Qt::LeftButton) return;
     MAx2 = 0;  // if not clicking on a component => open a rectangle
     MAy2 = 0;
-    MousePressAction = &QucsView::MouseDoNothing;
+    MousePressAction = 0;
     MouseReleaseAction = &QucsView::MReleaseActivate;
     MouseMoveAction = &QucsView::MMoveSelect;
   }
@@ -1370,17 +1393,8 @@ void QucsView::MPressActivate(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressMirrorX(QMouseEvent *Event)
+void QucsView::MPressMirrorX(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-
   // no use in mirroring wires or diagrams
   Component *c = d->selectedComponent(x, y);
   if(c) {
@@ -1400,17 +1414,8 @@ void QucsView::MPressMirrorX(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressMirrorY(QMouseEvent *Event)
+void QucsView::MPressMirrorY(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  int y = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
-
   // no use in mirroring wires or diagrams
   Component *c = d->selectedComponent(x, y);
   if(c) {
@@ -1430,17 +1435,9 @@ void QucsView::MPressMirrorY(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressRotate(QMouseEvent *Event)
+void QucsView::MPressRotate(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  Element *e = d->selectElement(
-	int(float(Event->pos().x())/d->Scale)+d->ViewX1,
-	int(float(Event->pos().y())/d->Scale)+d->ViewY1, false);
+  Element *e = d->selectElement(x, y, false);
   if(e == 0) return;
   e->Type &= isSpecialMask;  // remove special functions
 
@@ -1449,34 +1446,41 @@ void QucsView::MPressRotate(QMouseEvent *Event)
   int x1, y1, x2, y2;
 //  e->isSelected = false;
   switch(e->Type) {
-    case isComponent: if(((Component*)e)->Ports.count() < 1)
-                        break;  // do not rotate components without ports
-                      ((Component*)e)->rotate();
-                      d->setCompPorts((Component*)e);
-                      // enlarge viewarea if component lies outside the view
-                      ((Component*)e)->entireBounds(x1,y1,x2,y2);
-                      enlargeView(x1, y1, x2, y2);
-                      break;
-    case isWire:      pl = ((Wire*)e)->Label;
-                      ((Wire*)e)->Label = 0;    // prevent label to be deleted
-                      d->Wires->setAutoDelete(false);
-                      d->deleteWire((Wire*)e);
-                      ((Wire*)e)->Label = pl;
-                      ((Wire*)e)->rotate();
-                      d->setOnGrid(e->x1, e->y1);
-                      d->setOnGrid(e->x2, e->y2);
-                      if(pl) d->setOnGrid(pl->cx, pl->cy);
-                      d->insertWire((Wire*)e);
-                      d->Wires->setAutoDelete(true);
-                      if (d->Wires->containsRef ((Wire*)e))
-			enlargeView(e->x1, e->y1, e->x2, e->y2);
-                      break;
-    case isPainting:  ((Painting*)e)->rotate();
-                      // enlarge viewarea if component lies outside the view
-                      ((Painting*)e)->Bounding(x1,y1,x2,y2);
-                      enlargeView(x1, y1, x2, y2);
-                      break;
-    default:          return;
+    case isComponent:
+      if(((Component*)e)->Ports.count() < 1)
+        break;  // do not rotate components without ports
+      ((Component*)e)->rotate();
+      d->setCompPorts((Component*)e);
+      // enlarge viewarea if component lies outside the view
+      ((Component*)e)->entireBounds(x1,y1,x2,y2, d->textCorr());
+      enlargeView(x1, y1, x2, y2);
+      break;
+
+    case isWire:
+      pl = ((Wire*)e)->Label;
+      ((Wire*)e)->Label = 0;    // prevent label to be deleted
+      d->Wires->setAutoDelete(false);
+      d->deleteWire((Wire*)e);
+      ((Wire*)e)->Label = pl;
+      ((Wire*)e)->rotate();
+      d->setOnGrid(e->x1, e->y1);
+      d->setOnGrid(e->x2, e->y2);
+      if(pl) d->setOnGrid(pl->cx, pl->cy);
+      d->insertWire((Wire*)e);
+      d->Wires->setAutoDelete(true);
+      if (d->Wires->containsRef ((Wire*)e))
+        enlargeView(e->x1, e->y1, e->x2, e->y2);
+      break;
+
+    case isPainting:
+      ((Painting*)e)->rotate();
+      // enlarge viewarea if component lies outside the view
+      ((Painting*)e)->Bounding(x1,y1,x2,y2);
+      enlargeView(x1, y1, x2, y2);
+      break;
+
+    default:
+      return;
   }
   viewport()->repaint();
   drawn = false;
@@ -1484,82 +1488,87 @@ void QucsView::MPressRotate(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressComponent(QMouseEvent *Event)
+void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
 {
-  QucsDoc *d = Docs.current();
+  if(selElem == 0) return;
   QPainter painter(viewport());
   setPainter(&painter, d);
 
-  int x1, y1, x2, y2;
-  switch(Event->button()) {
-  case Qt::LeftButton :
-    // left mouse button inserts component into the schematic
-    if(selComp == 0) break;
-    selComp->TextSize(x1, y1);
-    d->insertComponent(selComp);
-    selComp->TextSize(x2, y2);
-    if(selComp->tx < selComp->x1) selComp->tx -= x2 - x1;
+  
+  if(selElem->Type == isComponent) {
+    Component *Comp = (Component*)selElem;
+    int x1, y1, x2, y2;
+    switch(Event->button()) {
+      case Qt::LeftButton :
+	// left mouse button inserts component into the schematic
+	Comp->TextSize(x1, y1);
+	d->insertComponent(Comp);
+	Comp->TextSize(x2, y2);
+	if(Comp->tx < Comp->x1) Comp->tx -= x2 - x1;
 
-    // enlarge viewarea if component lies outside the view
-    selComp->entireBounds(x1,y1,x2,y2);
-    enlargeView(x1, y1, x2, y2);
+	// enlarge viewarea if component lies outside the view
+	Comp->entireBounds(x1,y1,x2,y2, d->textCorr());
+	enlargeView(x1, y1, x2, y2);
 
+	viewport()->repaint();
+	d->setChanged(true, true);
+	Comp = Comp->newOne(); // component is used, so create a new one
+	Comp->paintScheme(&painter);
+	break;
+
+      case Qt::RightButton :  // right mouse button rotates the component
+	if(Comp->Ports.count() == 0)
+	  break;  // do not rotate components without ports
+	Comp->paintScheme(&painter); // erase old component scheme
+	Comp->rotate();
+	Comp->paintScheme(&painter); // paint new component scheme
+	break;
+
+      default: ;   // avoids compiler warnings
+    }
+    selElem = Comp;
+    return;
+
+  }  // of "if(isComponent)"
+  else if(selElem->Type == isDiagram) {
+    if(Event->button() != Qt::LeftButton) return;
+
+    Diagram *Diag = (Diagram*)selElem;
+    // dialog is Qt::WDestructiveClose !!!
+    DiagramDialog *dia = new DiagramDialog(Diag, d->DataSet, this);
+    if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
+      viewport()->repaint();
+      drawn = false;
+      return;
+    }
+
+    d->Diags->append(Diag);
+    enlargeView(Diag->cx, Diag->cy-Diag->y2, Diag->cx+Diag->x2, Diag->cy);
+    d->setChanged(true, true);   // document has been changed
+
+    viewport()->repaint();
+    Diag = Diag->newOne(); // the component is used, so create a new one
+    Diag->paintScheme(&painter);
+    selElem = Diag;
+    return;
+  }  // of "if(isDiagram)"
+
+
+  // ***********  it is a painting !!!
+  if(((Painting*)selElem)->MousePressing()) {
+    Docs.current()->Paints->append((Painting*)selElem);
+    selElem = ((Painting*)selElem)->newOne();
+
+    drawn = false;
     viewport()->repaint();
     d->setChanged(true, true);
-    selComp = selComp->newOne(); // component is used, so create a new one
-    selComp->paintScheme(&painter);
-    break;
-
-  case Qt::RightButton :  // right mouse button rotates the component
-    if(selComp == 0) break;
-    if(selComp->Ports.count() == 0)
-      break;  // do not rotate components without ports
-    selComp->paintScheme(&painter); // erase old component scheme
-    selComp->rotate();
-    selComp->paintScheme(&painter); // paint new component scheme
-    break;
-
-  default: ;   // avoids compiler warnings
   }
-}
-
-// -----------------------------------------------------------
-void QucsView::MPressDiagram(QMouseEvent *Event)
-{
-  QucsDoc *d = Docs.current();
-  QPainter painter(viewport());
-  setPainter(&painter, d);
-
-  if(selDiag == 0) return;
-  if(Event->button() != Qt::LeftButton) return;
-
-  // dialog is Qt::WDestructiveClose !!!
-  DiagramDialog *dia = new DiagramDialog(selDiag, d->DataSet, this);
-  if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
-    viewport()->repaint();
-    drawn = false;
-    return;
-  }
-
-  d->Diags->append(selDiag);
-  enlargeView(selDiag->cx, selDiag->cy-selDiag->y2,
-	      selDiag->cx+selDiag->x2, selDiag->cy);
-  d->setChanged(true, true);   // document has been changed
-
-  viewport()->repaint();
-  selDiag = selDiag->newOne(); // the component is used, so create a new one
-  selDiag->paintScheme(&painter);
 }
 
 // -----------------------------------------------------------
 // Is called if starting point of wire is pressed
-void QucsView::MPressWire1(QMouseEvent *Event)
+void QucsView::MPressWire1(QMouseEvent*, QucsDoc*, int, int)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
   QPainter painter(viewport());
   setPainter(&painter, Docs.current());
 
@@ -1579,9 +1588,8 @@ void QucsView::MPressWire1(QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Is called if ending point of wire is pressed
-void QucsView::MPressWire2(QMouseEvent *Event)
+void QucsView::MPressWire2(QMouseEvent *Event, QucsDoc *d, int x, int y)
 {
-  QucsDoc *d = Docs.current();
   QPainter painter(viewport());
   setPainter(&painter, d);
 
@@ -1595,7 +1603,7 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 	  // if last port is connected, then start a new wire
 	  MouseMoveAction = &QucsView::MMoveWire1;
 	  MousePressAction = &QucsView::MPressWire1;
-	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	  MouseDoubleClickAction = 0;
 	}
 	if(MAy2 != MAy3)
 	  set |= d->insertWire(new Wire(MAx3, MAy3, MAx3, MAy2));
@@ -1606,7 +1614,7 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 	  // if last port is connected, then start a new wire
 	  MouseMoveAction = &QucsView::MMoveWire1;
 	  MousePressAction = &QucsView::MPressWire1;
-	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	  MouseDoubleClickAction = 0;
 	} }
     }
     else {
@@ -1616,7 +1624,7 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 	  // if last port is connected, then start a new wire
 	  MouseMoveAction = &QucsView::MMoveWire1;
 	  MousePressAction = &QucsView::MPressWire1;
-	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	  MouseDoubleClickAction = 0;
 	}
 	if(MAx2 != MAx3)
 	  set |= d->insertWire(new Wire(MAx3, MAy3, MAx2, MAy3));
@@ -1627,7 +1635,7 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 	  // if last port is connected, then start a new wire
 	  MouseMoveAction = &QucsView::MMoveWire1;
 	  MousePressAction = &QucsView::MPressWire1;
-	  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+	  MouseDoubleClickAction = 0;
 	} }
     }
     viewport()->repaint();
@@ -1647,8 +1655,8 @@ void QucsView::MPressWire2(QMouseEvent *Event)
       painter.drawLine(MAx2, MAy3, MAx2, MAy2); // erase old
     }
 
-    MAx2  = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-    MAy2  = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
+    MAx2  = x;
+    MAy2  = y;
     d->setOnGrid(MAx2, MAy2);
 
     MAx1 ^= 1;    // change the painting direction of wire corner
@@ -1668,18 +1676,11 @@ void QucsView::MPressWire2(QMouseEvent *Event)
 
 // -----------------------------------------------------------
 // Is called for setting a marker on a diagram's graph
-void QucsView::MPressMarker(QMouseEvent *Event)
+void QucsView::MPressMarker(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  MAx1 = int(float(Event->pos().x())/Docs.current()->Scale)
-		+Docs.current()->ViewX1;
-  MAy1 = int(float(Event->pos().y())/Docs.current()->Scale)
-		+Docs.current()->ViewY1;
-  Marker *pm = Docs.current()->setMarker(MAx1, MAy1);
+  MAx1 = x;
+  MAy1 = y;
+  Marker *pm = d->setMarker(MAx1, MAy1);
 
   if(pm) {
     int x0 = pm->Diag->cx;
@@ -1691,17 +1692,9 @@ void QucsView::MPressMarker(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressOnGrid(QMouseEvent *Event)
+void QucsView::MPressOnGrid(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  Element *pe = d->selectElement(
-		int(float(Event->pos().x())/d->Scale)+d->ViewX1,
-		int(float(Event->pos().y())/d->Scale)+d->ViewY1, false);
+  Element *pe = d->selectElement(x, y, false);
   if(pe) {
     pe->Type &= isSpecialMask;  // remove special functions (4 lowest bits)
     pe->isSelected = true;
@@ -1714,16 +1707,10 @@ void QucsView::MPressOnGrid(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressMoveText(QMouseEvent *Event)
+void QucsView::MPressMoveText(QMouseEvent*, QucsDoc *d, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  MAx1 = int(float(Event->pos().x())/d->Scale)+d->ViewX1;
-  MAy1 = int(float(Event->pos().y())/d->Scale)+d->ViewY1;
+  MAx1 = x;
+  MAy1 = y;
   focusElement = d->selectCompText(MAx1, MAy1, MAx2, MAy2);
 
   if(focusElement) {
@@ -1740,16 +1727,10 @@ void QucsView::MPressMoveText(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MPressZoomIn(QMouseEvent *Event)
+void QucsView::MPressZoomIn(QMouseEvent*, QucsDoc*, int x, int y)
 {
-  if(Event->button() != Qt::LeftButton) {
-    rightPressMenu(Event);   // show menu on right mouse button
-    return;
-  }
-
-  QucsDoc *d = Docs.current();
-  MAx1 = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
-  MAy1 = int(float(Event->pos().y())/d->Scale) + d->ViewY1;
+  MAx1 = x;
+  MAy1 = y;
   MAx2 = 0;  // rectangle size
   MAy2 = 0;
 
@@ -1768,45 +1749,41 @@ void QucsView::MPressZoomIn(QMouseEvent *Event)
 // ***********************************************************************
 void QucsView::contentsMouseReleaseEvent(QMouseEvent *Event)
 {
-  (this->*MouseReleaseAction)(Event);
+  if(MouseReleaseAction) {
+    QucsDoc *d = Docs.current();
+    (this->*MouseReleaseAction)(Event, d);
+  }
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleaseSelect(QMouseEvent *Event)
+void QucsView::MReleaseSelect(QMouseEvent *Event, QucsDoc *d)
 {
   bool ctrl;
   if(Event->state() & ControlButton) ctrl = true;
   else ctrl = false;
 
-  if(!ctrl) Docs.current()->deselectElements(focusElement);
+  if(!ctrl)  d->deselectElements(focusElement);
 
-  if(focusElement)
-    if(Event->button() == LeftButton)
-      if(focusElement->Type == isWire) {
-        Docs.current()->selectWireLine(focusElement,
-				((Wire*)focusElement)->Port1, ctrl);
-        Docs.current()->selectWireLine(focusElement,
-				((Wire*)focusElement)->Port2, ctrl);
-      }
+  if(focusElement)  if(Event->button() == LeftButton)
+    if(focusElement->Type == isWire) {
+      d->selectWireLine(focusElement, ((Wire*)focusElement)->Port1, ctrl);
+      d->selectWireLine(focusElement, ((Wire*)focusElement)->Port2, ctrl);
+    }
 
   this->releaseKeyboard();  // allow keyboard inputs again
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
-  MouseMoveAction = &QucsView::MouseDoNothing;   // no element moving
+  MouseMoveAction = 0;   // no element moving
   viewport()->repaint();
   drawn = false;
 }
 
 // -----------------------------------------------------------
 // Is called after the rectangle for selection is released.
-void QucsView::MReleaseSelect2(QMouseEvent *Event)
+void QucsView::MReleaseSelect2(QMouseEvent *Event, QucsDoc *d)
 {
   if(Event->button() != Qt::LeftButton) return;
-
-  QucsDoc *d = Docs.current();
-//  QPainter painter(viewport());
-//  setPainter(&painter, d);
 
   bool Ctrl;
   if(Event->state() & ControlButton) Ctrl = true;
@@ -1816,7 +1793,7 @@ void QucsView::MReleaseSelect2(QMouseEvent *Event)
   d->selectElements(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2, Ctrl);
 
   this->releaseKeyboard();  // allow keyboard inputs again
-  MouseMoveAction = &QucsView::MouseDoNothing;
+  MouseMoveAction = 0;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
@@ -1825,44 +1802,37 @@ void QucsView::MReleaseSelect2(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleaseActivate(QMouseEvent *Event)
+void QucsView::MReleaseActivate(QMouseEvent *Event, QucsDoc *d)
 {
   if(Event->button() != Qt::LeftButton) return;
-
-  QucsDoc *d = Docs.current();
-//  QPainter painter(viewport());
-//  setPainter(&painter, d);
-
-//  if(drawn) painter.drawRect(MAx1, MAy1, MAx2, MAy2);  // erase old rectangle
-//  drawn = false;
 
   // activates all components within the rectangle
   d->activateComps(MAx1, MAy1, MAx1+MAx2, MAy1+MAy2);
 
   MouseMoveAction = &QucsView::MMoveActivate;
   MousePressAction = &QucsView::MPressActivate;
-  MouseReleaseAction = &QucsView::MouseDoNothing;
-  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+  MouseReleaseAction = 0;
+  MouseDoubleClickAction = 0;
   viewport()->repaint();
   drawn = false;
 }
 
 // -----------------------------------------------------------
 // Is called after moving selected elements.
-void QucsView::MReleaseMoving(QMouseEvent *Event)
+void QucsView::MReleaseMoving(QMouseEvent *Event, QucsDoc*)
 {
   if(Event->button() != Qt::LeftButton) return;
   endElementMoving();
   this->releaseKeyboard();  // allow keyboard inputs again
 
-  MouseMoveAction = &QucsView::MouseDoNothing;
+  MouseMoveAction = 0;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
+void QucsView::MReleaseResizeDiagram(QMouseEvent *Event, QucsDoc *d)
 {
   if(Event->button() != Qt::LeftButton) return;
 
@@ -1899,7 +1869,7 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
       pm->y1 += MAy3;
     }
 
-  MouseMoveAction = &QucsView::MouseDoNothing;
+  MouseMoveAction = 0;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
@@ -1907,16 +1877,15 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true, true);
+  d->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleaseResizePainting(QMouseEvent *Event)
+void QucsView::MReleaseResizePainting(QMouseEvent *Event, QucsDoc *d)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-
-  MouseMoveAction = &QucsView::MouseDoNothing;
+  MouseMoveAction = 0;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
@@ -1924,14 +1893,13 @@ void QucsView::MReleaseResizePainting(QMouseEvent *Event)
 
   viewport()->repaint();
   drawn = false;
-  Docs.current()->setChanged(true, true);
+  d->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleasePaste(QMouseEvent *Event)
+void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
 {
   int x1, y1, x2, y2, tmp;
-  QucsDoc *d = Docs.current();
   QPainter painter(viewport());
 
   Element *pe;
@@ -1964,7 +1932,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 	  break;
 	case isComponent:
 	  d->insertComponent((Component*)pe);
-	  ((Component*)pe)->entireBounds(x1,y1,x2,y2);
+	  ((Component*)pe)->entireBounds(x1,y1,x2,y2, d->textCorr());
 	  enlargeView(x1, y1, x2, y2);
 	  break;
       }
@@ -1972,9 +1940,9 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 
     pasteElements();
     MouseMoveAction = &QucsView::MMovePaste;
-    MousePressAction = &QucsView::MouseDoNothing;
-    MouseReleaseAction = &QucsView::MouseDoNothing;
-    MouseDoubleClickAction = &QucsView::MouseDoNothing;
+    MousePressAction = 0;
+    MouseReleaseAction = 0;
+    MouseDoubleClickAction = 0;
 
     drawn = false;
     viewport()->repaint();
@@ -2010,7 +1978,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
           pe->y2 = x1 - x2 + y1;
           break;
         case isPainting:
-	  ((Painting*)pe)->rotate();  // rotate !before! rotating the center
+	  ((Painting*)pe)->rotate(); // rotate !before! rotating the center
           ((Painting*)pe)->getCenter(x2, y2);
           tmp = x1 - x2;
           pe->setCenter(y2 - y1 + x1, tmp + y1);
@@ -2029,12 +1997,12 @@ void QucsView::MReleasePaste(QMouseEvent *Event)
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleaseMoveText(QMouseEvent *Event)
+void QucsView::MReleaseMoveText(QMouseEvent *Event, QucsDoc *d)
 {
   if(Event->button() != Qt::LeftButton) return;
 
   MouseMoveAction = &QucsView::MMoveMoveTextB;
-  MouseReleaseAction = &QucsView::MouseDoNothing;
+  MouseReleaseAction = 0;
   this->releaseKeyboard();  // allow keyboard inputs again
 
   ((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx;
@@ -2042,15 +2010,14 @@ void QucsView::MReleaseMoveText(QMouseEvent *Event)
   viewport()->repaint();
   drawn = false;
 
-  Docs.current()->setChanged(true, true);
+  d->setChanged(true, true);
 }
 
 // -----------------------------------------------------------
-void QucsView::MReleaseZoomIn(QMouseEvent *Event)
+void QucsView::MReleaseZoomIn(QMouseEvent *Event, QucsDoc *d)
 {
   if(Event->button() != Qt::LeftButton) return;
 
-  QucsDoc *d = Docs.current();
   MAx1 = Event->pos().x();
   MAy1 = Event->pos().y();
   float DX = float(abs(MAx2));
@@ -2064,22 +2031,19 @@ void QucsView::MReleaseZoomIn(QMouseEvent *Event)
     float xScale = float(visibleWidth())  / DX;
     float yScale = float(visibleHeight()) / DY;
     if(xScale > yScale) xScale = yScale;
-    if(xScale > 10.0) xScale = 10.0f;
-    if(xScale < 0.01) xScale = 0.01f;
+    yScale  = d->Scale;
+    xScale /= yScale;
+    Zoom(xScale);    
 
-    if(MAx2 > 0)  MAx1 -= int(float(MAx2)*d->Scale);
-    if(MAy2 > 0)  MAy1 -= int(float(MAy2)*d->Scale);
-    MAx1 = int(float(MAx1) * xScale / d->Scale) - contentsX();
-    MAy1 = int(float(MAy1) * xScale / d->Scale) - contentsY();
-
-    d->Scale = xScale;
-    resizeContents(int(xScale*float(d->ViewX2 - d->ViewX1)),
-		   int(xScale*float(d->ViewY2 - d->ViewY1)));
+    if(MAx2 > 0)  MAx1 -= int(float(MAx2)*yScale);
+    if(MAy2 > 0)  MAy1 -= int(float(MAy2)*yScale);
+    MAx1 = int(float(MAx1) * xScale) - contentsX();
+    MAy1 = int(float(MAy1) * xScale) - contentsY();
   }
   scrollBy(MAx1, MAy1);
 
   MouseMoveAction = &QucsView::MMoveZoomIn;
-  MouseReleaseAction = &QucsView::MouseDoNothing;
+  MouseReleaseAction = 0;
   this->releaseKeyboard();  // allow keyboard inputs again
 
   viewport()->repaint();
@@ -2094,14 +2058,14 @@ void QucsView::MReleaseZoomIn(QMouseEvent *Event)
 // ***********************************************************************
 void QucsView::contentsMouseDoubleClickEvent(QMouseEvent *Event)
 {
-  (this->*MouseDoubleClickAction)(Event);
+  if(MouseDoubleClickAction)
+    (this->*MouseDoubleClickAction)(Event);
 }
 
 // -----------------------------------------------------------
 void QucsView::editElement(QMouseEvent *Event)
 {
   if(focusElement == 0) return;
-  QucsDoc *d = Docs.current();
 
   Graph *pg;
   Component *c;
@@ -2109,6 +2073,10 @@ void QucsView::editElement(QMouseEvent *Event)
   DiagramDialog *ddia;
   MarkerDialog *mdia;
   int x1, y1, x2, y2;
+
+  QucsDoc *d = Docs.current();
+  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
 
   switch(focusElement->Type) {
     case isComponent:
@@ -2130,15 +2098,14 @@ void QucsView::editElement(QMouseEvent *Event)
 	 }
 
          d->setChanged(true, true);
-         c->entireBounds(x1,y1,x2,y2);
+         c->entireBounds(x1,y1,x2,y2, d->textCorr());
          enlargeView(x1,y1,x2,y2);
          break;
 
     case isDiagram :
          dia = (Diagram*)focusElement;
          if(dia->Name == "Tab") { // don't open dialog on scrollbar of tabular
-           int x_ = int(Event->pos().x()/d->Scale) + d->ViewX1;
-           if(dia->cx > x_) {
+           if(dia->cx > x) {
 	     if(((TabDiagram*)focusElement)->scroll(MAy1))
 	       d->setChanged(true, true, 'm'); // 'm' = only the first time
 	     break;
@@ -2164,7 +2131,7 @@ void QucsView::editElement(QMouseEvent *Event)
          break;
 
     case isWire:
-         PressLabel(Event);
+         MPressLabel(Event, d, x, y);
          break;
 
     case isNodeLabel:
@@ -2206,12 +2173,16 @@ void QucsView::slotEditElement()
 // -----------------------------------------------------------
 void QucsView::MDoubleClickWire2(QMouseEvent *Event)
 {
-  MPressWire2(Event);
+  QucsDoc *d = Docs.current();
+  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  MPressWire2(Event, d, x, y);
 
   MouseMoveAction = &QucsView::MMoveWire1;
   MousePressAction = &QucsView::MPressWire1;
-//  MouseReleaseAction = &QucsView::MouseDoNothing;
-  MouseDoubleClickAction = &QucsView::MouseDoNothing;
+//  MouseReleaseAction = 0;
+  MouseDoubleClickAction = 0;
 }
 
 // *************************************************************************
@@ -2397,6 +2368,60 @@ void QucsView::slotScrollRight()
   ScrollRight(-horizontalScrollBar()->lineStep());
   viewport()->repaint();   // because QScrollView thinks nothing has changed
   drawn = false;
+}
+
+
+// *************************************************************************
+// **********                                                     **********
+// **********          Function for serving drag'n drop           **********
+// **********                                                     **********
+// *************************************************************************
+
+// Is called if an object is dropped (after drag'n drop).
+void QucsView::contentsDropEvent(QDropEvent *Event)
+{
+  QMouseEvent e(QEvent::MouseButtonPress, Event->pos(),
+                Qt::LeftButton, Qt::NoButton);
+  QucsDoc *d = Docs.current();
+  int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
+  int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
+
+  MPressElement(&e, d, x, y);
+
+  if(selElem) delete selElem;
+  selElem = 0;  // no component selected
+}
+
+void QucsView::contentsDragEnterEvent(QDragEnterEvent *Event)
+{
+//if(Event->provides("text/uri-list")) {  // file dragged in ?
+  if(Event->format(1) == 0)   // only one MIME type ?
+    if(Event->provides("application/x-qiconlist")) {
+//    if(Event->source() == QucsMain->CompComps) {
+      QIconViewItem *Item = QucsMain->CompComps->currentItem();
+      if(Item) {
+	QucsMain->slotSelectComponent(Item);
+	MouseMoveAction = 0;
+	MousePressAction = 0;
+    
+	Event->accept();
+	return;
+      }
+    }
+
+  Event->ignore();
+}
+
+void QucsView::contentsDragMoveEvent(QDragMoveEvent *Event)
+{
+  if(selElem == 0) {
+    Event->ignore();
+    return;
+  }
+
+  QMouseEvent e(QEvent::MouseMove, Event->pos(), Qt::NoButton, Qt::NoButton);
+  MMoveElement(&e);
+  Event->accept();
 }
 
 // -----------------------------------------------------------

@@ -458,6 +458,14 @@
         <source>Grid</source>
         <translation type="unfinished">Reţea</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DisplayDialog</name>
@@ -614,6 +622,10 @@
     <message>
         <source>Rotation angle: </source>
         <translation>Unghiul de rotaţie:</translation>
+    </message>
+    <message>
+        <source>Use LaTeX style for special characters, e.g. \tau</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2617,6 +2629,94 @@ Folosire:  qucsedit [-r] file
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Component taken from Qucs library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of qucs library file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>name of component in library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locus Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polar</source>
+        <translation type="unfinished">Polar</translation>
+    </message>
+    <message>
+        <source>Polar-Smith Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smith-Polar Combi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D-Cartesian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cartesian</source>
+        <translation type="unfinished">Cartezian</translation>
+    </message>
+    <message>
+        <source>Smith Chart</source>
+        <translation type="unfinished">Diagramă Smith</translation>
+    </message>
+    <message>
+        <source>Admittance Smith</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabular</source>
+        <translation type="unfinished">Tabular</translation>
+    </message>
+    <message>
+        <source>Arrow</source>
+        <translation type="unfinished">Sageată</translation>
+    </message>
+    <message>
+        <source>Elliptic Arc</source>
+        <translation type="unfinished">Arc Eliptic</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">Elipsă</translation>
+    </message>
+    <message>
+        <source>filled Ellipse</source>
+        <translation type="unfinished">Elipsa plină</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Linie</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished">Text</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">Dreptunghi</translation>
+    </message>
+    <message>
+        <source>filled Rectangle</source>
+        <translation type="unfinished">Dreptunghi plin</translation>
+    </message>
+    <message>
+        <source>wrong dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3067,39 +3167,39 @@ Erori:
     </message>
     <message>
         <source>Line</source>
-        <translation>Linie</translation>
+        <translation type="obsolete">Linie</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation>Sageată</translation>
+        <translation type="obsolete">Sageată</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="obsolete">Text</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation>Elipsă</translation>
+        <translation type="obsolete">Elipsă</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Dreptunghi</translation>
+        <translation type="obsolete">Dreptunghi</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation>Cartezian</translation>
+        <translation type="obsolete">Cartezian</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation>Polar</translation>
+        <translation type="obsolete">Polar</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation>Tabular</translation>
+        <translation type="obsolete">Tabular</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation>Diagramă Smith</translation>
+        <translation type="obsolete">Diagramă Smith</translation>
     </message>
     <message>
         <source>No project is selected !</source>
@@ -3139,11 +3239,11 @@ Erori:
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation>Elipsa plină</translation>
+        <translation type="obsolete">Elipsa plină</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation>Dreptunghi plin</translation>
+        <translation type="obsolete">Dreptunghi plin</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
@@ -3183,7 +3283,7 @@ Erori:
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation>Arc Eliptic</translation>
+        <translation type="obsolete">Arc Eliptic</translation>
     </message>
     <message>
         <source>Delete Group</source>
@@ -3236,27 +3336,11 @@ Editează această schemă</translation>
         <translation>definitiv! Continuaţi?</translation>
     </message>
     <message>
-        <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SPICE netlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>3D-Cartesian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locus Curve</source>
+        <source>no warnings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4701,12 +4785,6 @@ Starts QucsFilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>QucsFilter by Toyoyuki Ishikawa and Michael Margraf
-
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Line calculation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4737,6 +4815,14 @@ Starts transmission line calculator</source>
         <source>Component Library
 
 Starts component library program</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings in last simulation! Press F5</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4814,11 +4900,19 @@ Starts component library program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot find component &quot;%1&quot;.</source>
+        <source>Library is corrupt.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Library is corrupt.</source>
+        <source>Search result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No appropriate component found.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5244,6 +5338,31 @@ Starts component library program</source>
     </message>
     <message>
         <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <source>The search result contains all components whose
+name contains the search string. All libraries
+are included in the search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search string:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Închide</translation>
+    </message>
+    <message>
+        <source>Search result</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

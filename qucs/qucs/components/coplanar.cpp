@@ -81,7 +81,7 @@ Component* Coplanar::newOne()
   return new Coplanar();
 }
 
-Component* Coplanar::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Coplanar::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Coplanar Line");
   BitmapFile = "coplanar";

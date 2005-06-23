@@ -58,9 +58,7 @@ public:
   void   eraseCross();
   void   editLabel(WireLabel*);
 
-  Component *selComp;   // component selected in IconView
-  Diagram   *selDiag;   // diagram selected in IconView
-  Painting  *selPaint;  // painting selected in IconView
+  Element  *selElem;  // component/diagram/painting selected in IconView
 
   bool    drawn;  // indicates whether the scheme element was drawn last time
   QString ProjName;
@@ -81,6 +79,9 @@ protected:
   void contentsMouseDoubleClickEvent(QMouseEvent*);
   void contentsMouseReleaseEvent(QMouseEvent*);
   void contentsWheelEvent(QWheelEvent*);
+  void contentsDropEvent(QDropEvent*);
+  void contentsDragEnterEvent(QDragEnterEvent*);
+  void contentsDragMoveEvent(QDragMoveEvent*);
 
   bool ScrollUp(int);
   bool ScrollDown(int);
@@ -104,16 +105,13 @@ public slots:
   void slotEditElement();
 
 public:
-  void MouseDoNothing(QMouseEvent*);
   void MMoveSelect(QMouseEvent*);
-  void MMoveComponent(QMouseEvent*);
-  void MMoveDiagram(QMouseEvent*);
+  void MMoveElement(QMouseEvent*);
   void MMoveWire1(QMouseEvent*);
   void MMoveWire2(QMouseEvent*);
   void MMoveMoving(QMouseEvent*);
   void MMoveMoving2(QMouseEvent*);
   void MMovePaste(QMouseEvent*);
-  void MMovePainting(QMouseEvent*);
   void MMoveDelete(QMouseEvent*);
   void MMoveLabel(QMouseEvent*);
   void MMoveMarker(QMouseEvent*);
@@ -128,46 +126,44 @@ public:
   void MMoveZoomIn(QMouseEvent*);
   void (QucsView::*MouseMoveAction) (QMouseEvent*);// current mouse move method
 
-  void MPressSelect(QMouseEvent*);
-  void MPressDelete(QMouseEvent*);
-  void MPressActivate(QMouseEvent*);
-  void MPressMirrorX(QMouseEvent*);
-  void MPressMirrorY(QMouseEvent*);
-  void MPressRotate(QMouseEvent*);
-  void MPressComponent(QMouseEvent*);
-  void MPressDiagram(QMouseEvent*);
-  void MPressLabel(QMouseEvent*);
-  void MPressWire1(QMouseEvent*);
-  void MPressWire2(QMouseEvent*);
-  void MPressPainting(QMouseEvent*);
-  void MPressMarker(QMouseEvent*);
-  void MPressOnGrid(QMouseEvent*);
-  void MPressMoveText(QMouseEvent*);
-  void MPressZoomIn(QMouseEvent*);
-  void (QucsView::*MousePressAction) (QMouseEvent*); // mouse press method
+  void MPressSelect(QMouseEvent*, QucsDoc*, int, int);
+  void MPressDelete(QMouseEvent*, QucsDoc*, int, int);
+  void MPressActivate(QMouseEvent*, QucsDoc*, int, int);
+  void MPressMirrorX(QMouseEvent*, QucsDoc*, int, int);
+  void MPressMirrorY(QMouseEvent*, QucsDoc*, int, int);
+  void MPressRotate(QMouseEvent*, QucsDoc*, int, int);
+  void MPressElement(QMouseEvent*, QucsDoc*, int, int);
+  void MPressLabel(QMouseEvent*, QucsDoc*, int, int);
+  void MPressWire1(QMouseEvent*, QucsDoc*, int, int);
+  void MPressWire2(QMouseEvent*, QucsDoc*, int, int);
+  void MPressPainting(QMouseEvent*, QucsDoc*, int, int);
+  void MPressMarker(QMouseEvent*, QucsDoc*, int, int);
+  void MPressOnGrid(QMouseEvent*, QucsDoc*, int, int);
+  void MPressMoveText(QMouseEvent*, QucsDoc*, int, int);
+  void MPressZoomIn(QMouseEvent*, QucsDoc*, int, int);
+  void (QucsView::*MousePressAction) (QMouseEvent*, QucsDoc*, int, int);
 
   void MDoubleClickSelect(QMouseEvent*);
   void MDoubleClickWire2(QMouseEvent*);
   void (QucsView::*MouseDoubleClickAction) (QMouseEvent*);
 
-  void MReleaseSelect(QMouseEvent*);
-  void MReleaseSelect2(QMouseEvent*);
-  void MReleaseActivate(QMouseEvent*);
-  void MReleaseMoving(QMouseEvent*);
-  void MReleaseResizeDiagram(QMouseEvent*);
-  void MReleasePaste(QMouseEvent*);
-  void MReleaseResizePainting(QMouseEvent*);
-  void MReleaseMoveText(QMouseEvent*);
-  void MReleaseZoomIn(QMouseEvent*);
-  void (QucsView::*MouseReleaseAction) (QMouseEvent*);
+  void MReleaseSelect(QMouseEvent*, QucsDoc*);
+  void MReleaseSelect2(QMouseEvent*, QucsDoc*);
+  void MReleaseActivate(QMouseEvent*, QucsDoc*);
+  void MReleaseMoving(QMouseEvent*, QucsDoc*);
+  void MReleaseResizeDiagram(QMouseEvent*, QucsDoc*);
+  void MReleasePaste(QMouseEvent*, QucsDoc*);
+  void MReleaseResizePainting(QMouseEvent*, QucsDoc*);
+  void MReleaseMoveText(QMouseEvent*, QucsDoc*);
+  void MReleaseZoomIn(QMouseEvent*, QucsDoc*);
+  void (QucsView::*MouseReleaseAction) (QMouseEvent*, QucsDoc*);
 
   void MovingElements();
   void endElementMoving();
 
 private:
   void editElement(QMouseEvent*);
-  void rightPressMenu(QMouseEvent*);
-  void PressLabel(QMouseEvent*);
+  void rightPressMenu(QMouseEvent*, QucsDoc*, int, int);
 
   int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   bool isMoveEqual;

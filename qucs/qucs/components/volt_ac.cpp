@@ -59,7 +59,7 @@ Component* Volt_ac::newOne()
   return new Volt_ac();
 }
 
-Component* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Volt_ac::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("ac Voltage Source");
   BitmapFile = "ac_voltage";

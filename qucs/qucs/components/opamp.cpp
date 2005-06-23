@@ -61,7 +61,7 @@ Component* OpAmp::newOne()
   return new OpAmp();
 }
 
-Component* OpAmp::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* OpAmp::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("OpAmp");
   BitmapFile = "opamp";

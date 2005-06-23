@@ -26,8 +26,8 @@ public:
   JFET();
   ~JFET();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
-  static Component* info_p(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_p(QString&, char* &, bool getNewOne=false);
   void recreate();
 };
 

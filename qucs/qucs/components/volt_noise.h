@@ -26,7 +26,7 @@ public:
   Volt_noise();
   ~Volt_noise();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

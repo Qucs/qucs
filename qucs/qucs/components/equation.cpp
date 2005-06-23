@@ -58,7 +58,7 @@ Component* Equation::newOne()
   return new Equation();
 }
 
-Component* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Equation::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Equation");
   BitmapFile = "";

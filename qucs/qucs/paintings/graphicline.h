@@ -1,6 +1,6 @@
 /***************************************************************************
-                          graphicline.h  -  description
-                             -------------------
+                               graphicline.h
+                              ---------------
     begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,10 +21,6 @@
 #include "painting.h"
 
 
-/**
-  *@author Michael Margraf
-  */
-
 class GraphicLine : public Painting  {
 public:
   GraphicLine(int cx_=0, int cy_=0, int x2_=0, int y2_=0,
@@ -36,6 +32,7 @@ public:
   void setCenter(int, int, bool relative=false);
 
   Painting* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
   QString save();
   void paint(ViewPainter*);

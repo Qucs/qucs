@@ -88,6 +88,7 @@
 #include "vrect.h"
 #include "irect.h"
 #include "spicefile.h"
+#include "libcomp.h"
 
 
 #endif

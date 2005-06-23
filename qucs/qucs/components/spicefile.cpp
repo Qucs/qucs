@@ -53,7 +53,7 @@ Component* SpiceFile::newOne()
   return new SpiceFile();
 }
 
-Component* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* SpiceFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("SPICE netlist");
   BitmapFile = "spicefile";

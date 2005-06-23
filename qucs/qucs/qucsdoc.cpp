@@ -287,12 +287,34 @@ void QucsDoc::print(QPainter *p_, bool printAll)
       }
   }
 
+  Graph  *pg;
+  Marker *pm;
   for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
     if(pd->isSelected || printAll) {
+      // if graph or marker is selected, deselect during printing
+      for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
+	if(pg->isSelected)  pg->Type |= 1;  // remember selection
+	pg->isSelected = false;
+	for(pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next()) {
+	  if(pm->isSelected)  pm->Type |= 1;  // remember selection
+	  pm->isSelected = false;
+	}
+      }
+
       selected = pd->isSelected;
       pd->isSelected = false;
-      pd->paint(&p);   // paint all selected diagrams
+      pd->paint(&p);  // paint all selected diagrams with graphs and markers
       pd->isSelected = selected;
+
+      // revert selection of graphs and markers
+      for(pg = pd->Graphs.first(); pg != 0; pg = pd->Graphs.next()) {
+	if(pg->Type & 1)  pg->isSelected = true;
+	pg->Type &= -2;
+	for(pm = pg->Markers.first(); pm != 0; pm = pg->Markers.next()) {
+	  if(pm->Type & 1)  pm->isSelected = true;
+	  pm->Type &= -2;
+	}
+      }
     }
 
   for(Painting *pp = Paints->first(); pp != 0; pp = Paints->next())
@@ -369,6 +391,32 @@ void QucsDoc::paintGrid(ViewPainter *p, int cX, int cY, int Width, int Height)
 }
 
 // ---------------------------------------------------
+// Splits the wire "*pw" into two pieces by the node "*pn".
+Wire* QucsDoc::splitWire(Wire *pw, Node *pn)
+{
+  Wire *newWire = new Wire(pn->cx, pn->cy, pw->x2, pw->y2, pn, pw->Port2);
+
+  pw->x2 = pn->cx;
+  pw->y2 = pn->cy;
+  pw->Port2 = pn;
+
+  newWire->Port2->Connections.prepend(newWire);
+  pn->Connections.prepend(pw);
+  pn->Connections.prepend(newWire);
+  newWire->Port2->Connections.removeRef(pw);
+  Wires->append(newWire);
+
+  if(pw->Label)
+    if((pw->Label->cx > pn->cx) || (pw->Label->cy > pn->cy)) {
+      newWire->Label = pw->Label;   // label goes to the new wire
+      pw->Label = 0;
+      newWire->Label->pWire = newWire;
+    }
+
+  return newWire;
+}
+
+// ---------------------------------------------------
 // Inserts a port into the schematic and connects it to another node if
 // the coordinates are identical. The node is returned.
 Node* QucsDoc::insertNode(int x, int y, Element *e)
@@ -389,7 +437,6 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
   else return pn;   // return, if node is not new
 
   // check if the new node lies upon an existing wire
-  Wire *nw;
   for(Wire *pw = Wires->first(); pw != 0; pw = Wires->next()) {
     if(pw->x1 == x) {
       if(pw->y1 > y) continue;
@@ -402,24 +449,7 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
     else continue;
 
     // split the wire into two wires
-    nw = new Wire(x, y, pw->x2, pw->y2, pn, pw->Port2);
-
-    pw->x2 = x;
-    pw->y2 = y;
-    pw->Port2 = pn;
-
-    nw->Port2->Connections.append(nw);
-    pn->Connections.append(pw);
-    pn->Connections.append(nw);
-    nw->Port2->Connections.removeRef(pw);
-    Wires->append(nw);
-
-    if(pw->Label)
-      if((pw->Label->cx > x) || (pw->Label->cy > y)) {
-	nw->Label = pw->Label;   // label goes to the new wire
-	pw->Label = 0;
-	nw->Label->pWire = nw;
-      }
+    splitWire(pw, pn);
     return pn;
   }
 
@@ -577,7 +607,6 @@ int QucsDoc::insertWireNode1(Wire *w)
 
 
 
-  Wire *pw;
   // check if the new node lies upon an existing wire
   for(Wire *ptr2 = Wires->first(); ptr2 != 0; ptr2 = Wires->next()) {
     if(ptr2->x1 == w->x1) {
@@ -650,17 +679,7 @@ int QucsDoc::insertWireNode1(Wire *w)
     w->Port1 = pn;
 
     // split the wire into two wires
-    pw = new Wire(w->x1, w->y1, ptr2->x2, ptr2->y2, pn, ptr2->Port2);
-
-    ptr2->x2 = w->x1;
-    ptr2->y2 = w->y1;
-    ptr2->Port2 = pn;
-
-    pw->Port2->Connections.prepend(pw);  // new connections not at end !!!
-    pn->Connections.prepend(ptr2);
-    pn->Connections.prepend(pw);
-    pw->Port2->Connections.removeRef(ptr2);
-    Wires->append(pw);
+    splitWire(ptr2, pn);
     return 2;
   }
 
@@ -792,7 +811,6 @@ int QucsDoc::insertWireNode2(Wire *w)
 
 
 
-  Wire *pw;
   // check if the new node lies upon an existing wire
   for(Wire *ptr2 = Wires->first(); ptr2 != 0; ptr2 = Wires->next()) {
     if(ptr2->x1 == w->x2) {
@@ -859,17 +877,7 @@ int QucsDoc::insertWireNode2(Wire *w)
     w->Port2 = pn;
 
     // split the wire into two wires
-    pw = new Wire(w->x2, w->y2, ptr2->x2, ptr2->y2, pn, ptr2->Port2);
-
-    ptr2->x2 = w->x2;
-    ptr2->y2 = w->y2;
-    ptr2->Port2 = pn;
-
-    pw->Port2->Connections.prepend(pw);   // add new connections not at the end !!!
-    pn->Connections.prepend(ptr2);
-    pn->Connections.prepend(pw);
-    pw->Port2->Connections.removeRef(ptr2);
-    Wires->append(pw);
+    splitWire(ptr2, pn);
     return 2;
   }
 
@@ -1266,10 +1274,7 @@ Element* QucsDoc::selectElement(int x, int y, bool flag, int *index)
 {
   int n;
   Element *pe_1st=0, *pe_sel=0;
-  QFont Font = QucsSettings.font;
-  Font.setPointSizeFloat( Scale * float(Font.pointSize()) );
-  QFontMetrics  metrics(Font);
-  float Corr = Scale / float(metrics.lineSpacing()); // for selecting text
+  float Corr = textCorr(); // for selecting text
 
   // test all components
   for(Component *pc = Comps->last(); pc != 0; pc = Comps->prev())
@@ -1982,6 +1987,16 @@ Element* QucsDoc::getWireLabel(Node *pn_)
 }
 
 // ---------------------------------------------------
+// Correction factor for unproportional font scaling.
+float QucsDoc::textCorr()
+{
+  QFont Font = QucsSettings.font;
+  Font.setPointSizeFloat( Scale * float(Font.pointSize()) );
+  QFontMetrics  metrics(Font);
+  return (Scale / float(metrics.lineSpacing()));
+}
+
+// ---------------------------------------------------
 void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
 {
   xmin=INT_MAX;
@@ -2003,10 +2018,12 @@ void QucsDoc::sizeOfAll(int& xmin, int& ymin, int& xmax, int& ymax)
           return;
         }
 
+
+  float Corr = textCorr();
   int x1, y1, x2, y2;
   // find boundings of all components
   for(pc = Comps->first(); pc != 0; pc = Comps->next()) {
-    pc->entireBounds(x1, y1, x2, y2);
+    pc->entireBounds(x1, y1, x2, y2, Corr);
     if(x1 < xmin) xmin = x1;
     if(x2 > xmax) xmax = x2;
     if(y1 < ymin) ymin = y1;
@@ -2238,7 +2255,6 @@ bool QucsDoc::rotateElements()
   Wires->setAutoDelete(false);
   Comps->setAutoDelete(false);
 
-  int tmp;
   int x1=INT_MAX, y1=INT_MAX;
   int x2=INT_MIN, y2=INT_MIN;
   copyLabels(x1, y1, x2, y2);   // must be first of all !
@@ -2265,8 +2281,7 @@ bool QucsDoc::rotateElements()
       case isComponent:
            pc = (Component*)pe;
            pc->rotate();   //rotate component !before! rotating its center
-           x2 = x1 - pc->cx;
-           pc->setCenter(pc->cy - y1 + x1, x2 + y1);
+           pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
            insertRawComponent(pc);
            break;
 
@@ -2312,8 +2327,7 @@ bool QucsDoc::rotateElements()
            pp = (Painting*)pe;
            pp->rotate();   // rotate painting !before! rotating its center
            pp->getCenter(x2, y2);
-           tmp = x1 - x2;
-           pp->setCenter(y2 - y1 + x1, tmp + y1);
+           pp->setCenter(y2-y1 + x1, x1-x2 + y1);
            Paints->append(pp);
            break;
       default: ;
@@ -2700,52 +2714,64 @@ int QucsDoc::save()
 // equal add or remove some in the symbol.
 int QucsDoc::adjustPortNumbers()
 {
+  int x1, x2, y1, y2;
+  // get size of whole symbol to know where to place new ports
+  if(symbolMode)  sizeOfAll(x1, y1, x2, y2);
+  else {
+    Comps  = &SymbolComps;
+    Wires  = &SymbolWires;
+    Nodes  = &SymbolNodes;
+    Diags  = &SymbolDiags;
+    Paints = &SymbolPaints;
+    sizeOfAll(x1, y1, x2, y2);
+    Comps  = &DocComps;
+    Wires  = &DocWires;
+    Nodes  = &DocNodes;
+    Diags  = &DocDiags;
+    Paints = &DocPaints;
+  }
+  x1 += 40;
+  y2 += 20;
+  setOnGrid(x1, y2);
+
+
+  Painting *pp;
+  // delete all port names in symbol
+  for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+    if(pp->Name == ".PortSym ")
+      ((PortSymbol*)pp)->nameStr = "";
+
+  QString Str;
   int countPort = 0;
   for(Component *pc = DocComps.first(); pc!=0; pc = DocComps.next())
-    if(pc->Model == "Port")  countPort++;
+    if(pc->Model == "Port") {
+      countPort++;
 
-  int countSymPort = countPort;
-  Painting *pp;
-  for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
-    if(pp->Name == ".PortSym ")  countSymPort--;
+      Str = pc->Props.getFirst()->Value;
+      // search for matching port symbol
+      for(pp = SymbolPaints.first(); pp!=0; pp = SymbolPaints.next())
+        if(pp->Name == ".PortSym ")
+          if(((PortSymbol*)pp)->numberStr == Str)  break;
 
-
-  if(countSymPort < 0) {  // remove ports
-    QString num;
-    for(int z=-countSymPort; z>0; z--) {
-      num = QString::number(countPort + z);
-      for(pp = SymbolPaints.last(); pp!=0; pp = SymbolPaints.prev())
-	if(pp->Name == ".PortSym ")
-	  if(((PortSymbol*)pp)->numberStr == num) {
-	    SymbolPaints.remove();
-	    break;
-	  }
+      if(pp)  ((PortSymbol*)pp)->nameStr = pc->Name;
+      else {
+        SymbolPaints.append(new PortSymbol(x1, y2, Str, pc->Name));
+        y2 += 40;
+      }
     }
+
+
+  // delete not accounted port symbols
+  for(pp = SymbolPaints.first(); pp!=0; ) {
+    if(pp->Name == ".PortSym ")
+      if(((PortSymbol*)pp)->nameStr.isEmpty()) {
+        SymbolPaints.remove();
+        pp = SymbolPaints.current();
+        continue;
+      }
+    pp = SymbolPaints.next();
   }
-  else if(countSymPort > 0) {  // add ports
-    int x1, x2, y1, y2;
-    if(symbolMode)  sizeOfAll(x1, y1, x2, y2);
-    else {
-      Comps  = &SymbolComps;
-      Wires  = &SymbolWires;
-      Nodes  = &SymbolNodes;
-      Diags  = &SymbolDiags;
-      Paints = &SymbolPaints;
-      sizeOfAll(x1, y1, x2, y2);
-      Comps  = &DocComps;
-      Wires  = &DocWires;
-      Nodes  = &DocNodes;
-      Diags  = &DocDiags;
-      Paints = &DocPaints;
-    }
-    x1 += 10;
-    y2 += 10;
-    setOnGrid(x1, y2);
-    for(int z=countSymPort-1; z>=0; z--) {
-      SymbolPaints.append(new PortSymbol(x1, y2, countPort-z));
-      x1 += 20;
-    }
-  }
+
   return countPort;
 }
 

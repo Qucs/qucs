@@ -1034,10 +1034,11 @@ void QucsApp::slotShowAll()
 {
   view->editText->setHidden(true); // disable text edit of component property
 
-  int x1 = view->Docs.current()->UsedX1;
-  int y1 = view->Docs.current()->UsedY1;
-  int x2 = view->Docs.current()->UsedX2;
-  int y2 = view->Docs.current()->UsedY2;
+  QucsDoc *d = view->Docs.current();
+  int x1 = d->UsedX1;
+  int y1 = d->UsedY1;
+  int x2 = d->UsedX2;
+  int y2 = d->UsedY2;
 
   if(x2==0) if(y2==0) if(x1==0) if(y1==0) return;
   x1 -= 40;  y1 -= 40;
@@ -1046,15 +1047,13 @@ void QucsApp::slotShowAll()
   float xScale = float(view->visibleWidth()) / float(x2-x1);
   float yScale = float(view->visibleHeight()) / float(y2-y1);
   if(xScale > yScale) xScale = yScale;
-  if(xScale > 10.0) xScale = 10.0f;
-  if(xScale < 0.01) xScale = 0.01f;
-  view->Docs.current()->Scale = xScale;
+  xScale /= d->Scale;
 
-  view->Docs.current()->ViewX1 = x1;
-  view->Docs.current()->ViewY1 = y1;
-  view->Docs.current()->ViewX2 = x2;
-  view->Docs.current()->ViewY2 = y2;
-  view->resizeContents(int(xScale*float(x2-x1)), int(xScale*float(y2-y1)));
+  d->ViewX1 = x1;
+  d->ViewY1 = y1;
+  d->ViewX2 = x2;
+  d->ViewY2 = y2;
+  view->Zoom(xScale);
 
   view->viewport()->repaint();
   view->drawn = false;
@@ -1126,6 +1125,17 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   bool shouldClosed = false; // simulation window close after simualtion ?
 
   if(Status == 0) {  // no errors ocurred ?
+
+    if(sim->ErrText->lines() > 1)
+      Init.slotShowWarnings();
+    else {
+      QFont f = Init.WarningLabel->font();
+      f.setWeight(QFont::Normal);
+      Init.WarningLabel->setFont(f);
+      Init.WarningLabel->setPaletteForegroundColor(Qt::black);
+      Init.WarningLabel->setText(tr("no warnings"));
+    }
+
     if(view->Docs.current()->SimOpenDpl) {
       shouldClosed = true;
       slotChangePage(sim->Doc->DataDisplay);  // switch to data display
@@ -1136,13 +1146,13 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
       view->viewport()->update();
     }
 
+    if(shouldClosed) sim->slotClose();  // close and delete simulation window
+
     // put all dataset files into "Content"-ListView (update)
 /*    QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
     for(it = Elements.begin(); it != Elements.end(); ++it)
       new QListViewItem(ConDatasets, (*it).ascii());*/
   }
-
-  if(shouldClosed) sim->slotClose();  // close and delete simulation window
 }
 
 // ------------------------------------------------------------------------
@@ -1220,7 +1230,6 @@ void QucsApp::slotToPage()
 
 // #######################################################################
 // Is called when a double click is made in the content ListView.
-//void QucsApp::slotOpenContent(QListViewItem *item, const QPoint &, int column)   // QT 3.2
 void QucsApp::slotOpenContent(QListViewItem *item)
 {
   view->editText->setHidden(true); // disable text edit of component property
@@ -1456,278 +1465,6 @@ void QucsApp::slotProjNewButt()
                     tr("Cannot create project directory !"));
 }
 
-// ######################################################################
-// The following arrays contains the components that appear in the
-// component listview.
-typedef Component*  (*pInfoFunc) (QString&, char* &, bool);
-pInfoFunc Simulations[] =
-  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
-   &HB_Sim::info, &Param_Sweep::info, 0};
-
-pInfoFunc lumpedComponents[] =
-  {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
-   &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
-   &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
-   &Amplifier::info, &Isolator::info, &Circulator::info,
-   &Gyrator::info, &Phaseshifter::info, &iProbe::info, 0};
-
-pInfoFunc Sources[] =
-  {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
-   &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
-   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
-   &vRect::info, &iRect::info, 0};
-
-pInfoFunc TransmissionLines[] =
-  {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
-   &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
-   &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
-   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info,
-   &CPWstep::info, 0};
-
-pInfoFunc nonlinearComps[] =
-  {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
-   &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
-   &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
-   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
-   &OpAmp::info, 0};
-
-// #######################################################################
-// Whenever the Component Library ComboBox is changed, this slot fills the
-// Component IconView with the appropriat components.
-void QucsApp::slotSetCompView(int index)
-{
-  view->editText->setHidden(true); // disable text edit of component property
-
-  char *File;
-  QString Name;
-  pInfoFunc *Infos = 0;
-
-  CompComps->clear();   // clear the IconView
-  if((index+1) >= CompChoose->count()) {
-    new QIconViewItem(CompComps, tr("Line"),
-		QImage(QucsSettings.BitmapDir + "line.png"));
-    new QIconViewItem(CompComps, tr("Arrow"),
-		QImage(QucsSettings.BitmapDir + "arrow.png"));
-    new QIconViewItem(CompComps, tr("Text"),
-		QImage(QucsSettings.BitmapDir + "text.png"));
-    new QIconViewItem(CompComps, tr("Ellipse"),
-		QImage(QucsSettings.BitmapDir + "ellipse.png"));
-    new QIconViewItem(CompComps, tr("Rectangle"),
-		QImage(QucsSettings.BitmapDir + "rectangle.png"));
-    new QIconViewItem(CompComps, tr("filled Ellipse"),
-		QImage(QucsSettings.BitmapDir + "filledellipse.png"));
-    new QIconViewItem(CompComps, tr("filled Rectangle"),
-		QImage(QucsSettings.BitmapDir + "filledrect.png"));
-    new QIconViewItem(CompComps, tr("Elliptic Arc"),
-		QImage(QucsSettings.BitmapDir + "ellipsearc.png"));
-    return;
-  }
-
-  switch(index) {
-    case COMBO_passive:   Infos = &lumpedComponents[0];  break;
-    case COMBO_Sources:   Infos = &Sources[0];           break;
-    case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
-    case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
-    case COMBO_File:
-      new QIconViewItem(CompComps, tr("SPICE netlist"),
-		QImage(QucsSettings.BitmapDir + "spicefile.png"));
-      new QIconViewItem(CompComps, tr("1-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile1.png"));
-      new QIconViewItem(CompComps, tr("2-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile2.png"));
-      new QIconViewItem(CompComps, tr("3-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile3.png"));
-      new QIconViewItem(CompComps, tr("4-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile4.png"));
-      new QIconViewItem(CompComps, tr("5-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile5.png"));
-      new QIconViewItem(CompComps, tr("6-port S parameter file"),
-		QImage(QucsSettings.BitmapDir + "spfile6.png"));
-      return;
-    case COMBO_Sims:     Infos = &Simulations[0];  break;
-    case COMBO_Diagrams:
-      new QIconViewItem(CompComps, tr("Cartesian"),
-		QImage(QucsSettings.BitmapDir + "rect.png"));
-      new QIconViewItem(CompComps, tr("Polar"),
-		QImage(QucsSettings.BitmapDir + "polar.png"));
-      new QIconViewItem(CompComps, tr("Tabular"),
-		QImage(QucsSettings.BitmapDir + "tabular.png"));
-      new QIconViewItem(CompComps, tr("Smith Chart"),
-		QImage(QucsSettings.BitmapDir + "smith.png"));
-      new QIconViewItem(CompComps, tr("Admittance Smith"),
-		QImage(QucsSettings.BitmapDir + "ysmith.png"));
-      new QIconViewItem(CompComps, tr("Polar-Smith Combi"),
-		QImage(QucsSettings.BitmapDir + "polarsmith.png"));
-      new QIconViewItem(CompComps, tr("Smith-Polar Combi"),
-		QImage(QucsSettings.BitmapDir + "smithpolar.png"));
-      new QIconViewItem(CompComps, tr("3D-Cartesian"),
-		QImage(QucsSettings.BitmapDir + "rect3d.png"));
-      new QIconViewItem(CompComps, tr("Locus Curve"),
-		QImage(QucsSettings.BitmapDir + "curve.png"));
-      return;
-  }
-
-  while(*Infos != 0) {
-    (**Infos) (Name, File, false);
-    new QIconViewItem(CompComps, Name,
-		QImage(QucsSettings.BitmapDir+QString(File)+".png"));
-    Infos++;
-  }
-}
-
-// ----------------------------------------------------------------------
-// Is called when the mouse is clicked within the Component QIconView.
-void QucsApp::slotSelectComponent(QIconViewItem *item)
-{
-  view->editText->setHidden(true); // disable text edit of component property
-
-  // delete previously selected elements
-  if(view->selComp != 0)  delete view->selComp;
-  if(view->selDiag != 0)  delete view->selDiag;
-  if(view->selPaint != 0) delete view->selDiag;
-  view->selComp  = 0;   // no component selected
-  view->selDiag  = 0;   // no diagram selected
-  view->selPaint = 0;   // no painting selected
-
-  if(item == 0) {   // mouse button pressed not over an item ?
-//    CompComps->setSelected(CompComps->currentItem(), false);  // deselect component in ViewList
-    CompComps->clearSelection();  // deselect component in ViewList
-    if(view->drawn) view->viewport()->repaint();
-    view->drawn = false;
-    return;
-  }
-
-  // toggle last toolbar button off
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = 0;
-
-
-  if((CompChoose->currentItem()+1) >= CompChoose->count()) {
-    switch(CompComps->index(item)) { // in normal ("edit schematic") mode
-	case 0: view->selPaint = new GraphicLine();   break;
-	case 1: view->selPaint = new Arrow();         break;
-	case 2: view->selPaint = new GraphicText();   break;
-	case 3: view->selPaint = new class Ellipse();       break;
-	case 4: view->selPaint = new class Rectangle();     break;
-	case 5: view->selPaint = new class Ellipse(true);   break;
-	case 6: view->selPaint = new class Rectangle(true); break;
-	case 7: view->selPaint = new EllipseArc();    break;
-    }
-
-    if(view->drawn) view->viewport()->repaint();
-    view->drawn = false;
-    view->MouseMoveAction = &QucsView::MMovePainting;
-    view->MousePressAction = &QucsView::MPressPainting;
-    view->MouseReleaseAction = &QucsView::MouseDoNothing;
-    view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-    return;
-  }
-
-  pInfoFunc Infos = 0;
-  switch(CompChoose->currentItem()) {
-    case COMBO_passive:
-	 Infos = lumpedComponents[CompComps->index(item)];
-	 break;
-    case COMBO_Sources:
-	 Infos = Sources[CompComps->index(item)];
-	 break;
-    case COMBO_TLines:
-	 Infos = TransmissionLines[CompComps->index(item)];
-	 break;
-    case COMBO_nonlinear:
-	 Infos = nonlinearComps[CompComps->index(item)];
-	 break;
-    case COMBO_File:
-         if(CompComps->index(item) == 0)
-	   view->selComp = new SpiceFile();
-	 else
-	   view->selComp = new SParamFile(CompComps->index(item));
-	 break;
-    case COMBO_Sims:
-	 Infos = Simulations[CompComps->index(item)];
-	 break;
-    case COMBO_Diagrams:
-          switch(CompComps->index(item)) {
-              case 0: view->selDiag = new RectDiagram();  break;
-              case 1: view->selDiag = new PolarDiagram(); break;
-              case 2: view->selDiag = new TabDiagram();   break;
-              case 3: view->selDiag = new SmithDiagram(); break;
-              case 4: view->selDiag = new SmithDiagram(0,0,false); break;
-              case 5: view->selDiag = new PSDiagram();  break;
-              case 6: view->selDiag = new PSDiagram(0,0,false); break;
-              case 7: view->selDiag = new Rect3DDiagram(); break;
-              case 8: view->selDiag = new CurveDiagram();  break;
-          }
-
-          if(view->drawn) view->viewport()->repaint();
-          view->drawn = false;
-          view->MouseMoveAction = &QucsView::MMoveDiagram;
-          view->MousePressAction = &QucsView::MPressDiagram;
-          view->MouseReleaseAction = &QucsView::MouseDoNothing;
-          view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-          return;
-  }
-
-  char *Dummy2;
-  QString Dummy1;
-  if(Infos) view->selComp = (*Infos) (Dummy1, Dummy2, true);
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveComponent;
-  view->MousePressAction = &QucsView::MPressComponent;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
-// -----------------------------------------------------------------------
-// Is called when the mouse is clicked within the Content QListView.
-void QucsApp::slotSelectSubcircuit(QListViewItem *item)
-{
-  view->editText->setHidden(true); // disable text edit of component property
-
-  if(item == 0) {   // mouse button pressed not over an item ?
-    Content->clearSelection();  // deselect component in ListView
-    if(view->drawn) view->viewport()->repaint();
-    view->drawn = false;
-    return;
-  }
-
-  if(item->parent() == 0) return;
-  if(item->parent()->text(0) != tr("Schematics"))
-    return;   // return, if not clicked on schematic
-  if(item->text(1).isEmpty()) return;   // return, if not a subcircuit
-
-  // delete previously selected elements
-  if(view->selComp != 0)  delete view->selComp;
-  if(view->selDiag != 0)  delete view->selDiag;
-  view->selComp = 0;   // no component selected
-  view->selDiag = 0;   // no diagram selected
-
-  // toggle last toolbar button off
-  if(activeAction) {
-    activeAction->blockSignals(true); // do not call toggle slot
-    activeAction->setOn(false);       // set last toolbar button off
-    activeAction->blockSignals(false);
-  }
-  activeAction = 0;
-
-  view->selComp = new Subcircuit();
-  view->selComp->Props.first()->Value = item->text(0);
-  view->selComp->recreate();
-
-  if(view->drawn) view->viewport()->repaint();
-  view->drawn = false;
-  view->MouseMoveAction = &QucsView::MMoveComponent;
-  view->MousePressAction = &QucsView::MPressComponent;
-  view->MouseReleaseAction = &QucsView::MouseDoNothing;
-  view->MouseDoubleClickAction = &QucsView::MouseDoNothing;
-}
-
 // #######################################################################
 // Is called, when "Open Project"-Button is pressed.
 void QucsApp::slotProjOpenButt()
@@ -1814,6 +1551,211 @@ void QucsApp::slotProjDelButt()
   if(!DeleteProject(QucsHomeDir.filePath(item->text()+"_prj"),
 	item->text()))  return;
   Projects->removeItem(Projects->currentItem());  // remove from project list
+}
+
+// ######################################################################
+// The following arrays contains the components that appear in the
+// component listview.
+//typedef Component*  (*pInfoFunc) (QString&, char* &, bool);
+typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
+pInfoFunc Simulations[] =
+  {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
+   &HB_Sim::info, &Param_Sweep::info, 0};
+
+pInfoFunc lumpedComponents[] =
+  {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
+   &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
+   &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
+   &Amplifier::info, &Isolator::info, &Circulator::info,
+   &Gyrator::info, &Phaseshifter::info, &iProbe::info, 0};
+
+pInfoFunc Sources[] =
+  {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
+   &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
+   &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
+   &vRect::info, &iRect::info, 0};
+
+pInfoFunc TransmissionLines[] =
+  {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,
+   &MScorner::info, &MSmbend::info, &MSstep::info, &MStee::info,
+   &MScross::info, &MSopen::info, &MSgap::info, &MSvia::info,
+   &Coplanar::info, &CPWopen::info, &CPWshort::info, &CPWgap::info,
+   &CPWstep::info, 0};
+
+pInfoFunc nonlinearComps[] =
+  {&Diode::info, &BJT::info, &BJT::info_pnp, &BJTsub::info,
+   &BJTsub::info_pnp, &JFET::info, &JFET::info_p,
+   &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
+   &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
+   &OpAmp::info, 0};
+
+pInfoFunc Diagrams[] =
+  {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
+   &SmithDiagram::info, &SmithDiagram::info_y, &PSDiagram::info,
+   &PSDiagram::info_sp, &Rect3DDiagram::info, &CurveDiagram::info, 0};
+
+pInfoFunc Paintings[] =
+  {&GraphicLine::info, &Arrow::info, &GraphicText::info,
+   &Ellipse::info, &Rectangle::info, &Ellipse::info_filled,
+   &Rectangle::info_filled, &EllipseArc::info, 0};
+
+// #######################################################################
+// Whenever the Component Library ComboBox is changed, this slot fills the
+// Component IconView with the appropriat components.
+void QucsApp::slotSetCompView(int index)
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  char *File;
+  QString Name;
+  pInfoFunc *Infos = 0;
+
+  CompComps->clear();   // clear the IconView
+  if((index+1) >= CompChoose->count())  // because of symbol edit mode
+    Infos = &Paintings[0];
+  else
+  switch(index) {
+    case COMBO_passive:   Infos = &lumpedComponents[0];  break;
+    case COMBO_Sources:   Infos = &Sources[0];           break;
+    case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
+    case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
+    case COMBO_File:
+      new QIconViewItem(CompComps, tr("SPICE netlist"),
+		QImage(QucsSettings.BitmapDir + "spicefile.png"));
+      new QIconViewItem(CompComps, tr("1-port S parameter file"),
+		QImage(QucsSettings.BitmapDir + "spfile1.png"));
+      new QIconViewItem(CompComps, tr("2-port S parameter file"),
+		QImage(QucsSettings.BitmapDir + "spfile2.png"));
+      new QIconViewItem(CompComps, tr("3-port S parameter file"),
+		QImage(QucsSettings.BitmapDir + "spfile3.png"));
+      new QIconViewItem(CompComps, tr("4-port S parameter file"),
+		QImage(QucsSettings.BitmapDir + "spfile4.png"));
+      new QIconViewItem(CompComps, tr("5-port S parameter file"),
+		QImage(QucsSettings.BitmapDir + "spfile5.png"));
+      new QIconViewItem(CompComps, tr("6-port S parameter file"),
+		QImage(QucsSettings.BitmapDir + "spfile6.png"));
+      return;
+    case COMBO_Sims:     Infos = &Simulations[0]; break;
+    case COMBO_Diagrams: Infos = &Diagrams[0];    break;
+  }
+
+  while(*Infos != 0) {
+    (**Infos) (Name, File, false);
+    new QIconViewItem(CompComps, Name,
+		QImage(QucsSettings.BitmapDir+QString(File)+".png"));
+    Infos++;
+  }
+}
+
+// ----------------------------------------------------------------------
+// Is called when the mouse is clicked within the Component QIconView.
+void QucsApp::slotSelectComponent(QIconViewItem *item)
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  // delete previously selected elements
+  if(view->selElem != 0)  delete view->selElem;
+  view->selElem  = 0;   // no component/diagram/painting selected
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+
+  if(item == 0) {   // mouse button pressed not over an item ?
+    CompComps->clearSelection();  // deselect component in ViewList
+    return;
+  }
+
+  // toggle last toolbar button off
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = 0;
+
+
+  view->MouseMoveAction = &QucsView::MMoveElement;
+  view->MousePressAction = &QucsView::MPressElement;
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
+
+  pInfoFunc Infos = 0;
+  if((CompChoose->currentItem()+1) >= CompChoose->count())
+    Infos = Paintings[CompComps->index(item)];
+  else
+  switch(CompChoose->currentItem()) {
+    case COMBO_passive:
+	 Infos = lumpedComponents[CompComps->index(item)];
+	 break;
+    case COMBO_Sources:
+	 Infos = Sources[CompComps->index(item)];
+	 break;
+    case COMBO_TLines:
+	 Infos = TransmissionLines[CompComps->index(item)];
+	 break;
+    case COMBO_nonlinear:
+	 Infos = nonlinearComps[CompComps->index(item)];
+	 break;
+    case COMBO_File:
+         if(CompComps->index(item) == 0)
+	   view->selElem = new SpiceFile();
+	 else
+	   view->selElem = new SParamFile(CompComps->index(item));
+	 break;
+    case COMBO_Sims:
+	 Infos = Simulations[CompComps->index(item)];
+	 break;
+    case COMBO_Diagrams:
+	 Infos = Diagrams[CompComps->index(item)];
+	 break;
+  }
+
+  char *Dummy2;
+  QString Dummy1;
+  if(Infos) view->selElem = (*Infos) (Dummy1, Dummy2, true);
+}
+
+// -----------------------------------------------------------------------
+// Is called when the mouse is clicked within the Content QListView.
+void QucsApp::slotSelectSubcircuit(QListViewItem *item)
+{
+  view->editText->setHidden(true); // disable text edit of component property
+
+  if(item == 0) {   // mouse button pressed not over an item ?
+    Content->clearSelection();  // deselect component in ListView
+    if(view->drawn) view->viewport()->repaint();
+    view->drawn = false;
+    return;
+  }
+
+  if(item->parent() == 0) return;
+  if(item->parent()->text(0) != tr("Schematics"))
+    return;   // return, if not clicked on schematic
+  if(item->text(1).isEmpty()) return;   // return, if not a subcircuit
+
+  // delete previously selected elements
+  if(view->selElem != 0)  delete view->selElem;
+  view->selElem = 0;
+
+  // toggle last toolbar button off
+  if(activeAction) {
+    activeAction->blockSignals(true); // do not call toggle slot
+    activeAction->setOn(false);       // set last toolbar button off
+    activeAction->blockSignals(false);
+  }
+  activeAction = 0;
+
+  Component *Comp = new Subcircuit();
+  Comp->Props.first()->Value = item->text(0);
+  Comp->recreate();
+  view->selElem = Comp;
+
+  if(view->drawn) view->viewport()->repaint();
+  view->drawn = false;
+  view->MouseMoveAction = &QucsView::MMoveElement;
+  view->MousePressAction = &QucsView::MPressElement;
+  view->MouseReleaseAction = 0;
+  view->MouseDoubleClickAction = 0;
 }
 
 // #######################################################################

@@ -1,6 +1,6 @@
 /***************************************************************************
-                          tabdiagram.h  -  description
-                             -------------------
+                               tabdiagram.h
+                              --------------
     begin                : Fri Oct 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -20,9 +20,6 @@
 
 #include "diagram.h"
 
-/**
-  *@author Michael Margraf
-  */
 
 class TabDiagram : public Diagram  {
 public: 
@@ -30,6 +27,7 @@ public:
   ~TabDiagram();
 
   Diagram* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   void paint(ViewPainter*);
   int  calcDiagram();
   bool scroll(int);
@@ -38,6 +36,7 @@ public:
 
 private:
   int  checkColumnWidth(const QString&, const QFontMetrics&, int, int, int);
+  bool sameDependencies(Graph*, Graph*);
 };
 
 #endif

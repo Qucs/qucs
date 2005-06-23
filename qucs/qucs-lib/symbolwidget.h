@@ -72,8 +72,12 @@ public:
   SymbolWidget(QWidget *parent = 0);
  ~SymbolWidget();
 
-  int setSymbol(const QString&);
-  int createSymbol(const QString&);
+  int setSymbol(const QString&, const QString&, const QString&);
+  int createSymbol(const QString&, const QString&, const QString&);
+
+  // component properties
+  int Text_x, Text_y;
+  QString Prefix, LibraryName, ComponentName;
 
 private:
   void  paintEvent(QPaintEvent*);
