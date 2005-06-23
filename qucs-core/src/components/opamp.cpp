@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: opamp.cpp,v 1.5 2005/06/02 18:17:52 raimi Exp $
+ * $Id: opamp.cpp,v 1.6 2005/06/23 06:06:47 margraf Exp $
  *
  */
 
@@ -74,15 +74,16 @@ void opamp::calcDC (void) {
   nr_double_t uMax = getPropertyDouble ("Umax");
   nr_double_t Uin  = real (getV (NODE_INP) - getV (NODE_INM));
   nr_double_t Uout = uMax * M_2_PI * atan (M_PI_2 / uMax * g * Uin);
-  if (fabs (Uin) < uMax && Uin != 0) {
+/*  if (fabs (Uin) < uMax && Uin != 0) {
     // iterate in the controlling voltage and not in the output voltage
     Uin = Uprev + tan ((Uout - Uold) / uMax / M_2_PI) / M_PI_2 * uMax / g;
   }
-  Uprev = Uin; Uold = Uout;
+  Uprev = Uin; Uold = Uout;*/
   gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin));
   setC (VSRC_1, NODE_INP, +gv);
   setC (VSRC_1, NODE_INM, -gv);
-  setE (VSRC_1, Uout - getV (NODE_OUT) * gv);
+//  setE (VSRC_1, Uout - getV (NODE_OUT) * gv);
+  setE (VSRC_1, Uout - Uin * gv);
 }
 
 void opamp::calcOperatingPoints (void) {
