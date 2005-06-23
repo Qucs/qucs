@@ -19,6 +19,7 @@
 #include "graphictextdialog.h"
 #include "main.h"
 #include "viewpainter.h"
+#include "mnemo.h"
 
 #include <qwidget.h>
 #include <qpainter.h>
@@ -113,6 +114,16 @@ Painting* GraphicText::newOne()
   return new GraphicText();
 }
 
+// --------------------------------------------------------------------------
+Element* GraphicText::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Text");
+  BitmapFile = "text";
+
+  if(getNewOne)  return new GraphicText();
+  return 0;
+}
+
 // -----------------------------------------------------------------------
 bool GraphicText::load(const QString& s)
 {
@@ -140,9 +151,17 @@ bool GraphicText::load(const QString& s)
   if(!ok) return false;
 
   Text = s.mid(s.find('"')+1);    // Text (can contain " !!!)
-  Text = Text.left(Text.length()-1);
+  Text.truncate(Text.length()-1);
   if(Text.isEmpty()) return false;
 
+  int i = 0;
+  unsigned short ch;
+  while((i=Text.find("\\x", i)) >= 0) {
+    n = Text.mid(i, 5);
+    ch = n.mid(2).toUShort(&ok, 16);
+    if(!ok) return false;
+    Text.replace(n, QChar(ch));
+  }
   Text.replace("\\n", "\n");
   Text.replace("\\\\", "\\");
   QFontMetrics  metrics(Font);
@@ -159,6 +178,16 @@ QString GraphicText::save()
   QString t = Text;
   t.replace('\\', "\\\\");
   t.replace('\n', "\\n");
+
+  int i = 0;
+  QChar ch;
+  char Str[8];
+  while((ch=t.at(i++)) != QChar(0)) {  // convert special characters
+    if(ch > QChar(0x7F)) {
+      sprintf(Str, "\\x%03X", ch.unicode());
+      t.replace(ch, Str);
+    }
+  }
 
   // the 'Text' property has to be the last within the line !
   QString s = Name+QString::number(cx)+" "+QString::number(cy)+" "
@@ -271,7 +300,9 @@ bool GraphicText::Dialog()
   d->ColorButt->setPaletteBackgroundColor(Color);
   d->TextSize->setText(QString::number(Font.pointSize()));
   d->Angle->setText(QString::number(Angle));
-  d->text->setText(Text);
+  QString _Text = Text;
+  decode_String(_Text);  // replace special characters with LaTeX commands
+  d->text->setText(_Text);
 
   if(d->exec() == QDialog::Rejected) {
     delete d;
@@ -293,8 +324,7 @@ bool GraphicText::Dialog()
     changed = true;
   }
 
-  QString _Text = "";
-  _Text = d->text->text();
+  encode_String(d->text->text(), _Text);  // create special characters
   if(!_Text.isEmpty())
     if(_Text != Text) {
       Text = _Text;

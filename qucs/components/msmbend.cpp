@@ -60,7 +60,7 @@ Component* MSmbend::newOne()
   return new MSmbend();
 }
 
-Component* MSmbend::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* MSmbend::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Mitered Bend");
   BitmapFile = "msmbend";

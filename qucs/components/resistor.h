@@ -26,8 +26,8 @@ public:
   Resistor(bool european=true);
   ~Resistor();
   Component* newOne();
-  static Component* info(QString&, char* &, bool getNewOne=false);
-  static Component* info_us(QString&, char* &, bool getNewOne=false);
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_us(QString&, char* &, bool getNewOne=false);
   void recreate();
 
 private:

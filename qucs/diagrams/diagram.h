@@ -1,6 +1,6 @@
 /***************************************************************************
-                          diagram.h  -  description
-                             -------------------
+                               diagram.h
+                              -----------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -66,7 +66,7 @@ public:
   void loadGraphData(const QString&);
   void recalcGraphData();
   bool loadVarData(const QString&, Graph*);
-  int  loadIndepVarData(const QString&, const QString&, Axis*, Graph*);
+  int  loadIndepVarData(const QString&, char*, Axis*, Graph*);
 
   virtual bool insideDiagram(int, int);
 

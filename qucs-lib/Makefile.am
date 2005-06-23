@@ -26,10 +26,11 @@ SUBDIRS = library
 
 bin_PROGRAMS = qucslib
 
-MOCHEADERS = qucslib.h displaydialog.h symbolwidget.h
+MOCHEADERS = qucslib.h displaydialog.h symbolwidget.h searchdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucslib_SOURCES = main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp
+qucslib_SOURCES = main.cpp qucslib.cpp displaydialog.cpp symbolwidget.cpp \
+       searchdialog.cpp
 
 nodist_qucslib_SOURCES = $(MOCFILES)
 

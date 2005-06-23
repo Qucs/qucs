@@ -20,17 +20,15 @@
 
 #include "diagram.h"
 
-/**
-  *@author Michael Margraf
-  */
 
 class Rect3DDiagram : public Diagram  {
 public:
   Rect3DDiagram(int _cx=0, int _cy=0);
-  ~Rect3DDiagram();
+ ~Rect3DDiagram();
 
 
   Diagram* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
   int  calcAxis(Axis*, int, int, int, int, bool);
@@ -41,13 +39,16 @@ public:
   bool insideDiagram(int, int);
   void clip(int* &);
 
+  void removeLines();
+
 private:
   void   calcCoefficients();
   double calcX_2D(double, double, double);
   double calcY_2D(double, double, double);
+  double calcZ_2D(double, double, double);
 
   int xorig, yorig;    // where is the 3D origin with respect to cx/cy
-  double cxx, cxy, cxz, cyx, cyy, cyz; // coefficients 3D -> 2D transformation
+  double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
   double scaleX, scaleY;
 };
 

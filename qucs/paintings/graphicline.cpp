@@ -1,6 +1,6 @@
 /***************************************************************************
-                          graphicline.cpp  -  description
-                             -------------------
+                              graphicline.cpp
+                             -----------------
     begin                : Mon Nov 24 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -84,6 +84,16 @@ void GraphicLine::setCenter(int x, int y, bool relative)
 Painting* GraphicLine::newOne()
 {
   return new GraphicLine();
+}
+
+// --------------------------------------------------------------------------
+Element* GraphicLine::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Line");
+  BitmapFile = "line";
+
+  if(getNewOne)  return new GraphicLine();
+  return 0;
 }
 
 // --------------------------------------------------------------------------

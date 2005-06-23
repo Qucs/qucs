@@ -32,6 +32,7 @@ SymbolWidget::SymbolWidget(QWidget *parent) : QWidget(parent)
   Ellips.setAutoDelete(true);
   Texts.setAutoDelete(true);
 
+  Text_x = Text_y = 0;
   PaintText = tr("Symbol:");
   QFont Font(QucsSettings.font);
   QFontMetrics  metrics(Font);
@@ -92,17 +93,22 @@ void SymbolWidget::paintEvent(QPaintEvent*)
 
 // ************************************************************
 // Creates a symbol from the model name of a component.
-int SymbolWidget::createSymbol(const QString& ModelString)
+int SymbolWidget::createSymbol(const QString& ModelString,
+                               const QString& Lib_, const QString& Comp_)
 {
   Arcs.clear();
   Lines.clear();
   Rects.clear();
   Ellips.clear();
   Texts.clear();
+  LibraryName = Lib_;
+  ComponentName = Comp_;
 
   int PortNo = 0;
   QString Comp = ModelString.section(' ', 0,0);
   Comp.remove(0, 1);  // remove '<'
+
+  QString FirstProp = ModelString.section('"', 1,1);
 
   if(Comp == "_BJT") {
     Lines.append(new Line(-10,-15,-10, 15,QPen(QPen::darkBlue,3)));
@@ -112,8 +118,54 @@ int SymbolWidget::createSymbol(const QString& ModelString)
     Lines.append(new Line(-10,  5,  0, 15,QPen(QPen::darkBlue,2)));
     Lines.append(new Line(  0, 15,  0, 30,QPen(QPen::darkBlue,2)));
 
-    Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
-    Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
+    if(FirstProp == "npn") {
+      Lines.append(new Line( -6, 15,  0, 15,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line(  0,  9,  0, 15,QPen(QPen::darkBlue,2)));
+    }
+    else {
+      Lines.append(new Line( -5, 10, -5, 16,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line( -5, 10,  1, 10,QPen(QPen::darkBlue,2)));
+    }
+
+    Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(-4, -34, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+    Arcs.append(new struct Arc(-4, 26, 8, 8, 0, 16*360,
+                               QPen(QPen::red,1)));
+
+    PortNo = 3;
+    x1 = -34; y1 = -34;
+    x2 =   4; y2 =  34;
+  }
+  else if(Comp == "_MOSFET") {
+    Lines.append(new Line(-14,-13,-14, 13,QPen(QPen::darkBlue,3)));
+    Lines.append(new Line(-30,  0,-14,  0,QPen(QPen::darkBlue,2)));
+
+    Lines.append(new Line(-10,-11,  0,-11,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,-11,  0,-30,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10, 11,  0, 11,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(  0,  0,  0, 30,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-10,  0,  0,  0,QPen(QPen::darkBlue,2)));
+
+    Lines.append(new Line(-10,-16,-10, -7,QPen(QPen::darkBlue,3)));
+    Lines.append(new Line(-10,  7,-10, 16,QPen(QPen::darkBlue,3)));
+
+    if(FirstProp == "nfet") {
+      Lines.append(new Line( -9,  0, -4, -5,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line( -9,  0, -4,  5,QPen(QPen::darkBlue,2)));
+    }
+    else {
+      Lines.append(new Line( -1,  0, -6, -5,QPen(QPen::darkBlue,2)));
+      Lines.append(new Line( -1,  0, -6,  5,QPen(QPen::darkBlue,2)));
+    }
+
+    // depletion or enhancement MOSFET ?
+    if((ModelString.section('"', 3,3).stripWhiteSpace().at(0) == '-') ==
+       (FirstProp == "nfet"))
+      Lines.append(new Line(-10, -8,-10,  8,QPen(QPen::darkBlue,3)));
+    else
+      Lines.append(new Line(-10, -4,-10,  4,QPen(QPen::darkBlue,3)));
 
     Arcs.append(new struct Arc(-34, -4, 8, 8, 0, 16*360,
                                QPen(QPen::red,1)));
@@ -190,13 +242,16 @@ int SymbolWidget::createSymbol(const QString& ModelString)
 // ************************************************************
 // Loads the symbol for the component from the symbol field and
 // returns the number of painting elements.
-int SymbolWidget::setSymbol(const QString& SymbolString)
+int SymbolWidget::setSymbol(const QString& SymbolString,
+                            const QString& Lib_, const QString& Comp_)
 {
   Arcs.clear();
   Lines.clear();
   Rects.clear();
   Ellips.clear();
   Texts.clear();
+  LibraryName = Lib_;
+  ComponentName = Comp_;
 
   QString Line;
   QTextIStream stream(&SymbolString);
@@ -282,6 +337,11 @@ int SymbolWidget::analyseLine(const QString& Row)
     return 1;
   }
   else if(s == ".ID") {
+    if(!getIntegers(Row, &i1, &i2))  return -1;
+    Text_x = i1;
+    Text_y = i2;
+    Prefix = Row.section(' ',3,3);
+    if(Prefix.isEmpty())  Prefix = "X";
     return 0;   // do not count IDs
   }
   else if(s == "Arrow") {

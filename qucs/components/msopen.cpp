@@ -64,7 +64,7 @@ Component* MSopen::newOne()
   return new MSopen();
 }
 
-Component* MSopen::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* MSopen::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Open");
   BitmapFile = "msopen";

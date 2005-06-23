@@ -1,6 +1,6 @@
 /***************************************************************************
-                          polardiagram.h  -  description
-                             -------------------
+                              polardiagram.h
+                             ----------------
     begin                : Fri Oct 17 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,10 +21,6 @@
 #include "diagram.h"
 
 
-/**
-  *@author Michael Margraf
-  */
-
 class PolarDiagram : public Diagram  {
 public: 
   PolarDiagram(int _cx=0, int _cy=0);
@@ -32,6 +28,7 @@ public:
 
 
   Diagram* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);

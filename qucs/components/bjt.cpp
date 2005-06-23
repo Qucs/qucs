@@ -145,7 +145,7 @@ Component* BJT::newOne()
   return p;
 }
 
-Component* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("npn transistor");
   BitmapFile = "npn";
@@ -154,7 +154,7 @@ Component* BJT::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-Component* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("pnp transistor");
   BitmapFile = "pnp";

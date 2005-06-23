@@ -1,4 +1,4 @@
-<Qucs Library "Diodes" 0.0.7>
+<Qucs Library 0.0.7 "Diodes">
 
 <Component 1N4148>
   <Description>

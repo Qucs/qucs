@@ -81,7 +81,7 @@ Component* Resistor::newOne()
   return p;
 }
 
-Component* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor");
   BitmapFile = "resistor";
@@ -90,7 +90,7 @@ Component* Resistor::info(QString& Name, char* &BitmapFile, bool getNewOne)
   return 0;
 }
 
-Component* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Resistor::info_us(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Resistor US");
   BitmapFile = "resistor_us";

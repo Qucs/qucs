@@ -104,3 +104,23 @@ Diagram* PSDiagram::newOne()
 {
   return new PSDiagram();
 }
+
+// ------------------------------------------------------------
+Element* PSDiagram::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Polar-Smith Combi");
+  BitmapFile = "polarsmith";
+
+  if(getNewOne)  return new PSDiagram();
+  return 0;
+}
+
+// ------------------------------------------------------------
+Element* PSDiagram::info_sp(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("Smith-Polar Combi");
+  BitmapFile = "smithpolar";
+
+  if(getNewOne)  return new PSDiagram(0, 0, false);
+  return 0;
+}

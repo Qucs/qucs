@@ -1,0 +1,45 @@
+<Qucs Library 0.0.7 "MOSFETs">
+
+<Component BSS123>
+  <Description>
+    enhancement n-channel MOSFET
+    100V, 170mA, 1.0 Ohm (L=100um, W=100um)
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <_MOSFET T_BSS123_ 1 0 0 8 -26 0 0 "nfet" 0 "1" 1 "6.37m" 0 "1.24" 0 "0.75" 0 "625u" 0 "0.14" 0 "0.14" 0 "0" 0 "85f" 0 "1" 0 "0.0001" 0 "0.0001" 0 "0" 0 "1e-07" 0 "36n" 0 "30n" 0 "124n" 0 "19.8p" 0 "23.7p" 0 "0.8" 0 "0.46" 0 "0.5" 0 "0" 0 "0.33" 0 "0" 0 "0" 0 "0" 0 "1" 0 "600" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component BSS123W>
+  <Description>
+    enhancement n-channel MOSFET
+    100V, 170mA, 1.0 Ohm (L=100um, W=100um)
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <_MOSFET T_BSS123W_ 1 0 0 8 -26 0 0 "nfet" 0 "1.4" 1 "0.805" 0 "1.74" 0 "0.75" 0 "41.8u" 0 "0.14" 0 "0.14" 0 "0" 0 "85f" 0 "1" 0 "0.0001" 0 "0.0001" 0 "0" 0 "1e-07" 0 "24n" 0 "20n" 0 "246n" 0 "39.5p" 0 "47.4p" 0 "0.8" 0 "0.46" 0 "0.5" 0 "0" 0 "0.33" 0 "0" 0 "0" 0 "0" 0 "1" 0 "600" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component BSS84>
+  <Description>
+    enhancement p-channel MOSFET
+    50V, 130mA, 6.0 Ohm (L=100um, W=100um)
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <_MOSFET T_BSS84_ 1 0 0 8 -26 0 0 "pfet" 0 "-1.6" 1 "4.87m" 0 "1.98" 0 "0.75" 0 "1.25m" 0 "0.84" 0 "0.84" 0 "0" 0 "65f" 0 "1" 0 "0.0001" 0 "0.0001" 0 "0" 0 "1e-07" 0 "50.7n" 0 "42.2n" 0 "69.5n" 0 "46.6p" 0 "55.9p" 0 "0.8" 0 "0.46" 0 "0.5" 0 "0" 0 "0.33" 0 "0" 0 "0" 0 "0" 0 "1" 0 "600" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>
+
+<Component BSS84W>
+  <Description>
+    enhancement p-channel MOSFET
+    50V, 130mA, 6.0 Ohm (L=100um, W=100um)
+    Manufacturer: Diodes Inc.
+  </Description>
+  <Model>
+    <_MOSFET T_BSS84W_ 1 0 0 8 -26 0 0 "pfet" 0 "-1.6" 1 "25m" 0 "1.98" 0 "0.75" 0 "108u" 0 "0.84" 0 "0.84" 0 "0" 0 "65f" 0 "1" 0 "0.0001" 0 "0.0001" 0 "0" 0 "1e-07" 0 "144n" 0 "120n" 0 "341n" 0 "64.2p" 0 "77.1p" 0 "0.8" 0 "0.46" 0 "0.5" 0 "0" 0 "0.33" 0 "0" 0 "0" 0 "0" 0 "1" 0 "600" 0 "0" 0 "1" 0 "1" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "0" 0 "1" 0 "1" 0 "26.85" 0>
+  </Model>
+</Component>

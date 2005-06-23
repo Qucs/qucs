@@ -1,6 +1,6 @@
 /***************************************************************************
-                        psdiagram.h  -  description
-                             -------------------
+                                psdiagram.h
+                               -------------
     begin                : Sat Nov 6 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -21,10 +21,6 @@
 #include "diagram.h"
 
 
-/**
-  *@author Michael Margraf
-  */
-
 // mixed polar and smith diagram
 class PSDiagram : public Diagram  {
 public:
@@ -33,6 +29,8 @@ public:
 
 
   Diagram* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  static Element* info_sp(QString&, char* &, bool getNewOne=false);
   int  calcDiagram();
   void calcLimits();
   void calcCoordinate(double* &, double* &, double* &, int*, int*, Axis*);

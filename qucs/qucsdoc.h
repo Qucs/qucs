@@ -46,6 +46,8 @@ public:
   void paintGrid(ViewPainter*, int, int, int, int);
   void print(QPainter*, bool);
 
+  float textCorr();
+  Wire *splitWire(Wire*, Node*);
   int   insertWireNode1(Wire*);
   bool  connectHWires1(Wire*);
   bool  connectVWires1(Wire*);

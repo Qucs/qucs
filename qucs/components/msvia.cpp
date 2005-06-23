@@ -57,7 +57,7 @@ Component* MSvia::newOne()
   return new MSvia();
 }
 
-Component* MSvia::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* MSvia::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
   Name = QObject::tr("Microstrip Via");
   BitmapFile = "msvia";

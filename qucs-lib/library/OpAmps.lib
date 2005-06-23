@@ -1,0 +1,64 @@
+<Qucs Library 0.0.7 "OpAmps">
+
+<Component uA741>
+  <Description>
+    universal BJT operational amplifier
+    Manufacturer: ???
+  </Description>
+  <Model>
+    .Def:OpAmps_uA741 _net3 _net22 _net0 _net11 _net14
+    BJT:T1 _net0 _net1 _net2 _net1 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T3 _net3 _net1 _net4 _net1 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T4 _net5 _net6 _net4 _net6 Type="pnp" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="20" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T5 _net7 _net8 _net9 _net8 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T6 _net7 _net6 _net10 _net6 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T8 _net1 _net1 _net11 _net1 Type="pnp" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="20" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T7 _net8 _net11 _net7 _net11 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T2 _net5 _net8 _net2 _net8 Type="pnp" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="20" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T10 _net12 _net5 _net13 _net5 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T11 _net12 _net12 _net14 _net12 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T12 _net15 _net15 _net11 _net15 Type="pnp" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="20" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    R:R3 _net14 _net10 R="1k" Temp="26.85"
+    R:R4 _net14 _net13 R="5k" Temp="26.85"
+    R:R5 _net12 _net15 R="39k" Temp="26.85"
+    BJT:T9 _net1 _net5 _net11 _net5 Type="pnp" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="20" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T14 _net6 _net16 _net17 _net16 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T16 _net18 _net19 _net16 _net19 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T17 _net17 _net16 _net20 _net16 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    R:R6 _net19 _net18 R="4.5k" Temp="26.85"
+    BJT:T13 _net20 _net6 _net14 _net6 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    R:R8 _net17 _net14 R="50k" Temp="26.85"
+    R:R9 _net20 _net14 R="50" Temp="26.85"
+    R:R7 _net16 _net18 R="7.5k" Temp="26.85"
+    BJT:T18 _net21 _net19 _net22 _net19 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T19 _net19 _net11 _net21 _net11 Type="npn" Is="2p" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T15 _net15 _net19 _net11 _net19 Type="pnp" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="20" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    BJT:T21 _net22 _net22 _net18 _net22 Type="npn" Is="1e-16" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="100" Cje="3p" Vje="0.75" Mje="0.33" Cjc="2p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="2p" Vjs="0.75" Mjs="0" Fc="0.5" Tf="0.3n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="6n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    R:R10 _net21 _net22 R="25" Temp="26.85"
+    R:R11 _net22 _net23 R="50" Temp="26.85"
+    BJT:T20 _net16 _net14 _net23 _net14 Type="pnp" Is="2p" Nf="1" Nr="1" Ikf="0" Ikr="0" Vaf="100" Var="0" Ise="0" Ne="1.5" Isc="0" Nc="2" Bf="160" Br="1" Rbm="0" Irb="0" Rc="0" Re="0" Rb="20" Cje="6p" Vje="0.75" Mje="0.33" Cjc="4p" Vjc="0.75" Mjc="0.33" Xcjc="1.0" Cjs="0" Vjs="0.75" Mjs="0" Fc="0.5" Tf="1n" Xtf="0.0" Vtf="0.0" Itf="0.0" Tr="20n" Temp="26.85" Kf="0.0" Af="1.0" Ffe="1.0" Kb="0.0" Ab="1.0" Fb="1.0" Ptf="0.0"
+    R:R2 _net14 _net7 R="50k" Temp="26.85"
+    R:R1 _net14 _net9 R="1k" Temp="26.85"
+    C:C1 _net6 _net19 C="30 pF"
+    .Def:End
+  </Model>
+  <Symbol>
+    <.ID 25 20 OP>
+    <Line -20 -40 0 80 #000080 2 1>
+    <Line -20 -40 60 40 #000080 2 1>
+    <Line -20 40 60 -40 #000080 2 1>
+    <Line 40 0 20 0 #000080 2 1>
+    <Line -40 -20 20 0 #000080 2 1>
+    <Line -40 20 20 0 #000080 2 1>
+    <Line -15 20 10 0 #000000 2 1>
+    <Line -10 -25 0 10 #ff0000 0 1>
+    <Line -15 -20 10 0 #ff0000 0 1>
+    <Line 10 -20 0 -20 #000080 2 1>
+    <Line 10 20 0 20 #000080 2 1>
+    <.PortSym -40 20 1 0>
+    <.PortSym 60 0 2 180>
+    <.PortSym -40 -20 3 0>
+    <.PortSym 10 -40 4 270>
+    <.PortSym 10 40 5 90>
+  </Symbol>
+</Component>
