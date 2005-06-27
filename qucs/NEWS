@@ -26,6 +26,8 @@ files.
 Version 0.0.7
 -------------
 
+ * Latex-like mnemonics (e.g. \tau) in graphic texts and diagram labels
+ * library manager including transistor, diode, substrate, etc. libraries
 
 Version 0.0.6
 -------------

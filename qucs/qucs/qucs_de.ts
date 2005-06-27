@@ -500,18 +500,18 @@
     </message>
     <message>
         <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Achsenbezeichnung&lt;/b&gt;: Verwendung von speziellen Zeichen im LaTeX-Stil, z.B. \tau</translation>
     </message>
     <message>
         <source>2D-projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>2D-Projektion:</translation>
     </message>
 </context>
 <context>
     <name>DisplayDialog</name>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -708,7 +708,7 @@
     </message>
     <message>
         <source>Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwendung von speziellen Zeichen im LaTeX-Stil, z.B. \tau</translation>
     </message>
 </context>
 <context>
@@ -2839,91 +2839,91 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Component taken from Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponente aus der Qucs-Bibliothek</translation>
     </message>
     <message>
         <source>name of qucs library file</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Qucs Bibliotheksdatei</translation>
     </message>
     <message>
         <source>name of component in library</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Komponente in der Bibliothek</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>FEHLER: Die Bibliothekskomponente &quot;%1&quot; kann nicht geladen werden.</translation>
     </message>
     <message>
         <source>Locus Curve</source>
-        <translation type="unfinished">Ortskurve</translation>
+        <translation>Ortskurve</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation type="unfinished">Polar</translation>
+        <translation>Polar</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished">Polar-Smith Kombi</translation>
+        <translation>Polar-Smith Kombi</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished">Smith-Polar Kombi</translation>
+        <translation>Smith-Polar Kombi</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation type="unfinished">3D-Kartesisch</translation>
+        <translation>3D-Kartesisch</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation type="unfinished">Kartesisch</translation>
+        <translation>Kartesisch</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation type="unfinished">Smith-Diagramm</translation>
+        <translation>Smith-Diagramm</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished">Smith-Diagramm (Admittanz)</translation>
+        <translation>Smith-Diagramm (Admittanz)</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation type="unfinished">Tabelle</translation>
+        <translation>Tabelle</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation type="unfinished">Pfeil</translation>
+        <translation>Pfeil</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="unfinished">Ellipsenbogen</translation>
+        <translation>Ellipsenbogen</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellipse</translation>
+        <translation>Ellipse</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="unfinished">gefüllte Ellipse</translation>
+        <translation>gefüllte Ellipse</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Linie</translation>
+        <translation>Linie</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Rechteck</translation>
+        <translation>Rechteck</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished">gefülltes Rechteck</translation>
+        <translation>gefülltes Rechteck</translation>
     </message>
     <message>
         <source>wrong dependency</source>
-        <translation type="unfinished"></translation>
+        <translation>falsche Abhängigkeit</translation>
     </message>
 </context>
 <context>
@@ -2966,7 +2966,7 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Bibliotheksprogramm kann nicht gestartet werden!</translation>
     </message>
 </context>
 <context>
@@ -4775,7 +4775,7 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>keine Warnungen</translation>
     </message>
 </context>
 <context>
@@ -6299,115 +6299,119 @@ Startet das Programm für die Leitungsberechnung</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentenbibliothek</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished"></translation>
+        <translation>Startet QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentenbibliothek
+
+Startet das Komponentenbibliotheksprogramm</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>keine Warnungen</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished"></translation>
+        <translation>In der letzten Simulation sind Warnungen aufgetreten! Drücken Sie F5</translation>
     </message>
 </context>
 <context>
     <name>QucsLib</name>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">Beenden</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Beenden</translation>
+        <translation>&amp;Beenden</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished">Hilfe</translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Hilfe</translation>
+        <translation>&amp;Hilfe</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Über</translation>
+        <translation>Über</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Datei</translation>
+        <translation>&amp;Datei</translation>
     </message>
     <message>
         <source>Component Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentenauswahl</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen...</translation>
     </message>
     <message>
         <source>Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponente</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Show Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modell anzeigen</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished">Über...</translation>
+        <translation>Über...</translation>
     </message>
     <message>
         <source>Library Manager for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliotheksverwaltung für Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2005 by Michael Margraf
+        <translation>Copyright (C) 2005 von Michael Margraf
+
 </translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib ist ein Programm zur Verwaltung von Qucs Komponentenbibliotheken.  Auf der linken Seite des Applikationsfensters können die verfügbaren Bibliotheken nach einer Komponente durchsucht werden.  Durch Klicken auf den Komponentennamen wird dessen Beschreibung auf der rechten Seite angezeigt.  Die so ausgewählte Komponente kann durch Drücken des &quot;In die Zwischenablage kopieren&quot;-Knopfes in die Qucs Applikation übertragen werden.  Zurück in dem Schaltplanfenster kann die Komponente durch Drücken von STRG-V (aus der Zwischenablage einfügen) dort eingefügt werden.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <source>Library is corrupt.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Bibliotheksdatei ist beschädigt.</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchergebnis</translation>
     </message>
     <message>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Ergebnis</translation>
     </message>
     <message>
         <source>No appropriate component found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine entsprechende Komponente gefunden.</translation>
     </message>
 </context>
 <context>
@@ -6853,23 +6857,25 @@ Starts component library program</source>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Suchergebnis enthält alle Komponenten, deren
+Name den Suchbegriff beinhalten.  Alle Bibliotheken
+werden in die Suche mit einbezogen.</translation>
     </message>
     <message>
         <source>Search string:</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchbegriff:</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchergebnis</translation>
     </message>
 </context>
 <context>
@@ -7143,7 +7149,7 @@ Fehler:
     <name>SymbolWidget</name>
     <message>
         <source>Symbol:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol:</translation>
     </message>
 </context>
 </TS>
