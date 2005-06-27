@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.cpp,v 1.11 2005/06/02 18:17:51 raimi Exp $
+ * $Id: tvector.cpp,v 1.12 2005/06/27 14:18:08 raimi Exp $
  *
  */
 
@@ -46,6 +46,7 @@
 // Constructor creates an unnamed instance of the tvector class.
 template <class nr_type_t>
 tvector<nr_type_t>::tvector () {
+  external = 0;
   size = 0;
   data = NULL;
 }
@@ -54,6 +55,7 @@ tvector<nr_type_t>::tvector () {
    certain length. */
 template <class nr_type_t>
 tvector<nr_type_t>::tvector (int s)  {
+  external = 0;
   size = s;
   if (s > 0) {
     data = new nr_type_t[s];
@@ -66,6 +68,7 @@ tvector<nr_type_t>::tvector (int s)  {
    tvector object. */
 template <class nr_type_t>
 tvector<nr_type_t>::tvector (const tvector & v) {
+  external = 0;
   size = v.size;
   data = NULL;
 
@@ -83,7 +86,8 @@ const tvector<nr_type_t>&
 tvector<nr_type_t>::operator=(const tvector<nr_type_t> & v) {
   if (&v != this) {
     size = v.size;
-    if (data) { delete[] data; data = NULL; }
+    if (data && !external) { delete[] data; data = NULL; }
+    external = 0;
     if (size > 0) {
       data = new nr_type_t[size];
       memcpy (data, v.data, sizeof (nr_type_t) * size);
@@ -95,7 +99,7 @@ tvector<nr_type_t>::operator=(const tvector<nr_type_t> & v) {
 // Destructor deletes a tvector object.
 template <class nr_type_t>
 tvector<nr_type_t>::~tvector () {
-  if (data) delete[] data;
+  if (data && !external) delete[] data;
 }
 
 // Returns the tvector element at the given position.
@@ -126,6 +130,15 @@ void tvector<nr_type_t>::set (nr_type_t z, int start, int stop) {
 template <class nr_type_t>
 void tvector<nr_type_t>::set (tvector<nr_type_t> a, int start, int stop) {
   for (int i = start; i < stop; i++) data[i] = a.get (i);
+}
+
+// Applies external data vector to the vector.
+template <class nr_type_t>
+void tvector<nr_type_t>::setData (nr_type_t * d, int len) {
+  if (data && !external) delete[] data;
+  external = 1;
+  data = d;
+  size = len;
 }
 
 // The function swaps the given rows with each other.
