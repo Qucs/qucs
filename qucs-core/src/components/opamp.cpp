@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: opamp.cpp,v 1.6 2005-06-23 06:06:47 margraf Exp $
+ * $Id: opamp.cpp,v 1.7 2005-06-27 14:18:09 raimi Exp $
  *
  */
 
@@ -38,8 +38,8 @@
 #include "constants.h"
 #include "opamp.h"
 
-#define NODE_INP 0
-#define NODE_INM 1
+#define NODE_INM 0
+#define NODE_INP 1
 #define NODE_OUT 2
 
 opamp::opamp () : circuit (3) {
@@ -66,24 +66,17 @@ void opamp::initDC (void) {
   setB (NODE_OUT, VSRC_1, 1);
   setB (NODE_INM, VSRC_1, 0);
   setC (VSRC_1, NODE_OUT, -1); setD (VSRC_1, VSRC_1, 0); setE (VSRC_1, 0);
-  Uprev = 0; Uold = 0;
 }
 
 void opamp::calcDC (void) {
   nr_double_t g    = getPropertyDouble ("G");
   nr_double_t uMax = getPropertyDouble ("Umax");
   nr_double_t Uin  = real (getV (NODE_INP) - getV (NODE_INM));
-  nr_double_t Uout = uMax * M_2_PI * atan (M_PI_2 / uMax * g * Uin);
-/*  if (fabs (Uin) < uMax && Uin != 0) {
-    // iterate in the controlling voltage and not in the output voltage
-    Uin = Uprev + tan ((Uout - Uold) / uMax / M_2_PI) / M_PI_2 * uMax / g;
-  }
-  Uprev = Uin; Uold = Uout;*/
-  gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin));
+  nr_double_t Uout = uMax * M_2_PI * atan (Uin * g * M_PI_2 / uMax);
+  gv = g / (1 + sqr (M_PI_2 / uMax * g * Uin)) + 1e-12;
   setC (VSRC_1, NODE_INP, +gv);
   setC (VSRC_1, NODE_INM, -gv);
-//  setE (VSRC_1, Uout - getV (NODE_OUT) * gv);
-  setE (VSRC_1, Uout - Uin * gv);
+  setE (VSRC_1, Uin * gv - Uout);
 }
 
 void opamp::calcOperatingPoints (void) {

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: tvector.h,v 1.14 2005-06-02 18:17:51 raimi Exp $
+ * $Id: tvector.h,v 1.15 2005-06-27 14:18:08 raimi Exp $
  *
  */
 
@@ -76,6 +76,7 @@ class tvector
   void set (tvector, int, int);
   int  getSize (void) { return size; }
   nr_type_t * getData (void) { return data; }
+  void setData (nr_type_t *, int);
   void exchangeRows (int, int);
   int  isFinite (void);
   void print (void);
@@ -116,6 +117,7 @@ class tvector
   nr_type_t& operator () (int i) { return data[i]; }
 
  private:
+  int external;
   int size;
   nr_type_t * data;
 };
