@@ -4885,6 +4885,12 @@ Starts component library program</source>
         <source>Starts the Qucs text editor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>
+Quite Universal Circuit Simulator
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsLib</name>
