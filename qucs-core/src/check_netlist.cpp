@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.81 2005/06/02 18:17:49 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.82 2005/07/04 08:33:58 raimi Exp $
  *
  */
 
@@ -978,6 +978,7 @@ checker_copy_subcircuit (struct definition_t * sub) {
   copy->nodeset = sub->nodeset;
   copy->define = sub->define;
   copy->pairs = sub->pairs;
+  copy->ncount = sub->ncount;
   copy->type = strdup (sub->type);
   copy->copy = 1;
   return copy;

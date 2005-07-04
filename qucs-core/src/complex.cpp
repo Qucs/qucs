@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: complex.cpp,v 1.21 2005/06/02 18:17:49 raimi Exp $
+ * $Id: complex.cpp,v 1.22 2005/07/04 08:33:58 raimi Exp $
  *
  */
 
@@ -91,7 +91,7 @@ nr_double_t conj (nr_double_t r) {
 }
 
 nr_double_t dB (const complex z) {
-  return 10.0 * log10 (z.r * z.r + z.i * z.i);
+  return 10.0 * log10 (norm (z));
 }
 
 // returns the first result of square root z
