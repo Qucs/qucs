@@ -45,13 +45,15 @@ struct tSpecialChar SpecialChars[] = {
      {"nabla", 0x2207}, {"infty", 0x221E}, {"int", 0x222B},
      {"approx", 0x2248}, {"neq", 0x2260}, {"in", 0x220A},
      {"leq", 0x2264}, {"geq", 0x2265}, {"sim", 0x223C},
-     {"propto", 0x221D}, 
+     {"propto", 0x221D}, {"onehalf", 0x00BD}, {"onequarter", 0x00BC},
+     {"twosuperior", 0x00B2}, {"threesuperior", 0x00B3},
+     {"diameter", 0x00F8}, {"ohm", 0x03A9},
 
      {"", 0}  // end mark
 };
 
 
-// This function replaces the LaTeX commands for special characters
+// This function replaces the LaTeX tags for special characters
 // into its unicode value.
 void encode_String(const QString& Input, QString& Output)
 {
@@ -76,7 +78,7 @@ void encode_String(const QString& Input, QString& Output)
 }
 
 // This function replaces the unicode of special characters
-// into its LaTeX commands.
+// by its LaTeX tags.
 void decode_String(QString& Output)
 {
   struct tSpecialChar *p = SpecialChars;

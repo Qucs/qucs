@@ -34,8 +34,8 @@ http://qucs.sourceforge.net
 Requirements
 ============
 
-Qucs needs Qt <http://www.trolltech.com>.  This current version is
-known to work with Qt 3.1 and later.
+Qucs needs Qt(R) by Trolltech(R) <http://www.trolltech.com>.
+This current version is known to work with Qt 3.1 and later.
 
 
 Installation
