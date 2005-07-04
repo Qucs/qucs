@@ -1,3 +1,13 @@
+2005-06-25  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* some more LaTeX tags for texts
+	* simulation warning reset before simulation starts
+	* save 4 digits for unicode in text painting
+	* QucsLib: change component with cursor up/down
+	* repaint after return in property line edit
+	* fixed bug that erases port names at undo/redo
+	* fixed bug placing menu on right mouse click during paste
+
 2005-06-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* new tool: library manager

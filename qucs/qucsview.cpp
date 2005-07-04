@@ -1103,6 +1103,8 @@ void QucsView::MMoveZoomIn(QMouseEvent *Event)
 void QucsView::contentsMousePressEvent(QMouseEvent *Event)
 {
   editText->setHidden(true); // disable text edit of component property
+  if(MouseReleaseAction == &QucsView::MReleasePaste)
+    return;
   
   QucsDoc *d = Docs.current();
   int x = int(float(Event->pos().x())/d->Scale) + d->ViewX1;
@@ -2466,7 +2468,7 @@ void QucsView::slotApplyCompText()
               break;  // found component with the same name ?
           if(!pc2) {
             pc->Name = editText->text();
-            d->setChanged(true, true, 'p');  // only one undo state
+            d->setChanged(true, true);  // only one undo state
           }
         }
     }
@@ -2474,7 +2476,7 @@ void QucsView::slotApplyCompText()
       if(pp->Value != editText->text()) {
         pp->Value = editText->text();
         if(MAx3 == 1)  d->setComponentNumber(pc); // number for sources, ports
-        d->setChanged(true, true, 'p');  // only one undo state
+        d->setChanged(true, true);  // only one undo state
       }
     }
 
@@ -2484,6 +2486,8 @@ void QucsView::slotApplyCompText()
 
     if(!pp) {     // was already last property ?
       editText->setHidden(true);
+      viewport()->repaint();  // maybe text is now longer
+      drawn = false;
       return;
     }
 
@@ -2493,6 +2497,8 @@ void QucsView::slotApplyCompText()
       pp = pc->Props.next();
       if(!pp) {     // was already last property ?
         editText->setHidden(true);
+        viewport()->repaint();  // maybe text is now longer
+        drawn = false;
         return;
       }
     }

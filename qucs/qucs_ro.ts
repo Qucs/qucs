@@ -4434,12 +4434,6 @@ Despre Qt la Trolltech</translation>
         <translation>Versiunea Qucs </translation>
     </message>
     <message>
-        <source>
-Qt universal circuit simulator
-</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
         <translation type="obsolete">Copyright (C) 2003,2004 de Michael Margraf
@@ -4823,6 +4817,12 @@ Starts component library program</source>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Quite Universal Circuit Simulator
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

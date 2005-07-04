@@ -89,7 +89,7 @@ void Diagram::paint(ViewPainter *p)
     p->drawLine(cx+pl->x1, cy-pl->y1, cx+pl->x2, cy-pl->y2);
   }
 
-  // paint all arcs (1 pixel larger to compensate for strange Qt circles)
+  // paint all arcs (1 pixel larger to compensate for strange circle method)
   for(struct Arc *pa = Arcs.first(); pa != 0; pa = Arcs.next()) {
     p->Painter->setPen(pa->style);
     p->drawArc(cx+pa->x, cy-pa->y, pa->w+1, pa->h+1, pa->angle, pa->arclen);

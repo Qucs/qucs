@@ -4051,10 +4051,10 @@ Wollen Sie die Änderungen vor dem Schließen speichern?</translation>
     </message>
     <message>
         <source>
-Qt universal circuit simulator
+Quite Universal Circuit Simulator
 </source>
         <translation type="obsolete">
-Qt universal circuit simulator
+Quite universal circuit simulator
 </translation>
     </message>
     <message>
@@ -5891,10 +5891,10 @@ About Qt by Trolltech</source>
     </message>
     <message>
         <source>
-Qt universal circuit simulator
+Quite Universal Circuit Simulator
 </source>
-        <translation>
-Qt universal circuit simulator
+        <translation type="unfinished">
+Quite universal circuit simulator
 </translation>
     </message>
     <message>

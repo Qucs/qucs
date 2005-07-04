@@ -3800,10 +3800,10 @@ Vuoi salvare i cambiamenti prima di chiuderlo?</translation>
     </message>
     <message>
         <source>
-Qt universal circuit simulator
+Quite Universal Circuit Simulator
 </source>
         <translation type="obsolete">
-Qt universal circuit simulator
+Quite Universal Circuit Simulator
 </translation>
     </message>
     <message>
@@ -5424,10 +5424,10 @@ Informazioni su Qt by Trolltech</translation>
     </message>
     <message>
         <source>
-Qt universal circuit simulator
+Quite Universal Circuit Simulator
 </source>
-        <translation>
-Qt universal circuit simulator
+        <translation type="unfinished">
+Quite Universal Circuit Simulator
 </translation>
     </message>
     <message>

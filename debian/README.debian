@@ -9,7 +9,7 @@ large-signal, small-signal and noise behaviour of the circuit.  After
 that simulation has finished you can view the simulation results on a
 presentation page or window.
 
-    * Qucs, briefly for Qt Universal Circuit Simulator, is a 
+    * Qucs, briefly for Quite Universal Circuit Simulator, is a 
 	circuit simulator with graphical user interface.  The 
 	software aims to support all kinds of circuit simulation 
 	types, e.g. DC, AC, S-parameter, harmonic balance analysis, 
