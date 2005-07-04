@@ -94,7 +94,7 @@ QucsLib::QucsLib()
   Library = new QComboBox (LibGroup);
   connect(Library, SIGNAL(activated(int)), SLOT(slotSelectLibrary(int)));
   CompList = new QListBox(LibGroup);
-  connect(CompList, SIGNAL(clicked(QListBoxItem*)),
+  connect(CompList, SIGNAL(highlighted(QListBoxItem*)),
 	SLOT(slotShowComponent(QListBoxItem*)));
 
   QHBox * h1 = new QHBox (LibGroup);
@@ -128,8 +128,6 @@ QucsLib::QucsLib()
     Library->insertItem((*it).left((*it).length()-4));
 
   slotSelectLibrary(0);
-  CompList->setCurrentItem(0);
-  slotShowComponent(CompList->selectedItem());
 }
 
 /* Destructor destroys the application. */
@@ -267,6 +265,8 @@ void QucsLib::slotSelectLibrary(int Index)
     LibraryComps.append(LibName+'\n'+LibraryString.mid(Start, End-Start));
     Start = End;
   }
+
+  CompList->setSelected(0, true);  // select first item
 }
 
 void QucsLib::slotSearchComponent()

@@ -1,6 +1,6 @@
 /***************************************************************************
-                        viewpainter.h  -  description
-                             -------------------
+                               viewpainter.h
+                              ---------------
     begin                : Tue Oct 05 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -20,11 +20,8 @@
 
 #include <qpainter.h>
 
-/**
-  *@author Michael Margraf
-  */
 
-/* This class is neccessary because Qt scaled Fonts looks very ungly.
+/* This class is neccessary because scaled fonts looks very ungly.
    Avoiding this is unfortunately not easy.
    This class scales the font point size instead of the font glyphes.
    But this has the disadvantage, that the text size does not increase
@@ -35,7 +32,7 @@
 class ViewPainter {
 public:
   ViewPainter(QPainter *p=0);
-  ~ViewPainter();
+ ~ViewPainter();
 
   void init(QPainter*, float, int, int, int, int);
   void map(int, int, int*, int*);

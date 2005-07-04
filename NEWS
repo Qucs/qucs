@@ -26,6 +26,8 @@ files.
 Version 0.0.7
 -------------
 
+ * renamed Qucs. New name is "Quite Universal Circuit Simulator"
+ * several small improvements and bug fixes
  * Latex-like mnemonics (e.g. \tau) in graphic texts and diagram labels
  * library manager including transistor, diode, substrate, etc. libraries
 

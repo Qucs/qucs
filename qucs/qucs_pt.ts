@@ -4526,11 +4526,9 @@ Sobre Qt por Trolltech</translation>
     </message>
     <message>
         <source>
-Qt universal circuit simulator
+Quite Universal Circuit Simulator
 </source>
-        <translation>
-Qt universal circuit simulator
-</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf

@@ -4674,14 +4674,6 @@ Qt a Trolltech-től</translation>
         <translation>Qucs verzió </translation>
     </message>
     <message>
-        <source>
-Qt universal circuit simulator
-</source>
-        <translation>
-Qt univerzális áramkör szimuláció
-</translation>
-    </message>
-    <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
         <translation type="obsolete">Copyright (C) 2003,2004 by Michael Margraf
@@ -4882,6 +4874,12 @@ Starts component library program</source>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Quite Universal Circuit Simulator
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

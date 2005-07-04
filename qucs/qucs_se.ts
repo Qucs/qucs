@@ -4147,12 +4147,6 @@ About Qt by Trolltech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>
-Qt universal circuit simulator
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyright (C) 2003, 2004, 2005 by Michael Margraf
 </source>
         <translation type="unfinished"></translation>
@@ -4301,6 +4295,12 @@ Starts component library program</source>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+Quite Universal Circuit Simulator
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -848,7 +848,7 @@ void QucsInit::slotHelpAbout()
 {
   QMessageBox::about(App, tr("About..."),
     tr("Qucs Version ")+PACKAGE_VERSION+
-    tr("\nQt universal circuit simulator\n")+
+    tr("\nQuite Universal Circuit Simulator\n")+
     tr("Copyright (C) 2003, 2004, 2005 by Michael Margraf\n")+
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "

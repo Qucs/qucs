@@ -1103,6 +1103,12 @@ void QucsApp::slotSimulate()
   if(view->Docs.current()->DocName.isEmpty()) // if document 'untitled' ...
     if(!saveCurrentFile()) return;            // ... save schematic before
 
+  QFont f = Init.WarningLabel->font();   // reset warning label
+  f.setWeight(QFont::Normal);
+  Init.WarningLabel->setFont(f);
+  Init.WarningLabel->setPaletteForegroundColor(Qt::black);
+  Init.WarningLabel->setText(tr("no warnings"));
+
   SimMessage *sim = new SimMessage(view->Docs.current(), this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
@@ -1126,15 +1132,8 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 
   if(Status == 0) {  // no errors ocurred ?
 
-    if(sim->ErrText->lines() > 1)
+    if(sim->ErrText->lines() > 1)   // were there warnings ?
       Init.slotShowWarnings();
-    else {
-      QFont f = Init.WarningLabel->font();
-      f.setWeight(QFont::Normal);
-      Init.WarningLabel->setFont(f);
-      Init.WarningLabel->setPaletteForegroundColor(Qt::black);
-      Init.WarningLabel->setText(tr("no warnings"));
-    }
 
     if(view->Docs.current()->SimOpenDpl) {
       shouldClosed = true;
