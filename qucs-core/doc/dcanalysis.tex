@@ -2409,6 +2409,66 @@ well when voltage sources are in place a likely convergence criteria
 as defined in eq. (\ref{eq:NLconvergence}) must be defined for the
 currents.
 
+\addvspace{12pt}
+
+Having understood the one-dimensional example, it is now only a
+small step to the general multi-dimensional algorithm: The node
+voltage becomes a vector $\boldsymbol{V}^{(m)}$, factors become
+the corresponding matrices and differentiations become Jacobian
+matrices.\\
+The function whose zero must be found is the transformed MNA
+equation \ref{eq:NLmatrix}:
+
+\begin{equation}
+\boldsymbol{f}( \boldsymbol{V}^{(m)} ) =
+    \boldsymbol{G}\cdot \boldsymbol{V}^{(m)} - \boldsymbol{I}_{0}
+\end{equation}
+
+In addition to the linear case, the vector $\boldsymbol{I}_{0}$
+contains the currents flowing into the non-linear components.
+The iteration formula of the Newton-Raphson method writes:
+
+\begin{equation}
+\boldsymbol{V}^{(m+1)} = \boldsymbol{V}^{(m)} -
+  \left( \left.\frac{\partial\boldsymbol{f}( \boldsymbol{V} )}
+                    {\partial\boldsymbol{V}}\right|_{V^{(m)}} \right)^{-1}
+  \cdot \boldsymbol{f}( \boldsymbol{V}^{(m)} )
+\label{eq:ndimNewton}
+\end{equation}
+
+Note that the Jacobian matrix is nothing else but the real
+part of the MNA matrix for the AC analysis:
+
+\begin{equation}
+\boldsymbol{J}^{(m)}
+  = \left.\frac{\partial\boldsymbol{f}( \boldsymbol{V} )}
+               {\partial\boldsymbol{V}}\right|_{\boldsymbol{V}^{(m)}}
+  = \text{Re}(\boldsymbol{G}_{AC})
+\end{equation}
+
+The disadvantage of the formula \ref{eq:ndimNewton} is the fact
+that for each iteration the matrix $\boldsymbol{f}( \boldsymbol{V}^{(m)} )$
+has to be built even with the constant values of the linear
+components. This can be avoided. Multiplying equation
+\ref{eq:ndimNewton} with the Jacobian leads to
+
+\begin{equation}
+\boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m+1)}
+  = \boldsymbol{J}^{(m)} \cdot \boldsymbol{V}^{(m)} -
+    \boldsymbol{f}( \boldsymbol{V}^{(m)} )
+\end{equation}
+
+As can be seen, the linear terms on the right side cancel
+each other. So, bringing the Jacobian back to the right side
+results in the new iteration formula:
+\begin{equation}
+\boldsymbol{V}^{(m+1)} = \left( \boldsymbol{J}^{(m)} \right)^{-1} -
+  \left( \boldsymbol{J}_{nl}^{(m)}\cdot \boldsymbol{V}^{(m)} - \boldsymbol{I}_{nl}^{(m)} \right)
+\end{equation}
+
+where the index $nl$ denotes only the non-linear terms.
+
+
 \subsection{Convergence}
 %\addcontentsline{toc}{subsection}{Convergence}
 \label{sec:convergenceDC}

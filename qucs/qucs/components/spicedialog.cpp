@@ -247,6 +247,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 {
   Comp->withSim = false;
   if(s.isEmpty()) return false;
+  QFileInfo FileInfo(QucsWorkDir, s);
 
   NodesList->clear();
   PortsList->clear();
@@ -262,7 +263,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
   QucsConv->addArgument("-of");
   QucsConv->addArgument("qucs");
   QucsConv->addArgument("-i");
-  QucsConv->addArgument(s);
+  QucsConv->addArgument(FileInfo.filePath());
   connect(QucsConv, SIGNAL(readyReadStdout()), SLOT(slotGetNetlist()));
   connect(QucsConv, SIGNAL(readyReadStderr()), SLOT(slotGetError()));
 

@@ -4491,14 +4491,6 @@ O bibliotece QT firmy Trolltech</translation>
         <translation>Wersja programu Qucs</translation>
     </message>
     <message>
-        <source>
-Qt universal circuit simulator
-</source>
-        <translation>
-Qt uniwersalny symulator obwodów
-Qt universal circuit simulator</translation>
-    </message>
-    <message>
         <source>Copyright (C) 2003,2004 by Michael Margraf
 </source>
         <translation type="obsolete">Copyright (C) 2003,2004 by Michael Margraf

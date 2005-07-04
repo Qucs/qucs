@@ -201,7 +201,7 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
     while(Curr != UndoStack.last())
       UndoStack.remove();   // remove "Redo" items
 
-    if((Op == 'm') || (Op == 'p')) // only one for move marker or edit property
+    if(Op == 'm')   // only one for move marker
       if(UndoStack.current()->at(0) == Op)
         UndoStack.remove();
 
@@ -2782,6 +2782,7 @@ bool QucsDoc::undo()
     if(UndoSymbol.current() == UndoSymbol.getFirst())  return false;
 
     File.rebuildSymbol(UndoSymbol.prev());
+    adjustPortNumbers();  // set port names
 
     QString *ps = UndoSymbol.current();
     if(ps != UndoSymbol.getFirst())  App->undo->setEnabled(true);
@@ -2833,6 +2834,7 @@ bool QucsDoc::redo()
     if(UndoSymbol.current() == UndoSymbol.getLast())  return false;
 
     File.rebuildSymbol(UndoSymbol.next());
+    adjustPortNumbers();  // set port names
 
     QString *ps = UndoSymbol.current();
     if(ps != UndoSymbol.getFirst())  App->undo->setEnabled(true);

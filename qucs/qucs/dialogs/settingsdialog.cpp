@@ -75,14 +75,12 @@ SettingsDialog::SettingsDialog(QucsDoc *d, QWidget *parent, const char *name)
   gp2->addWidget(l3,1,0);
   Input_GridX = new QLineEdit(Tab2);
   Input_GridX->setValidator(valExpr);
-//  Input_GridX->setInputMask("000");   // for Qt 3.2
   gp2->addWidget(Input_GridX,1,1);
 
   QLabel *l4 = new QLabel(tr("vertical Grid:"), Tab2);
   gp2->addWidget(l4,2,0);
   Input_GridY = new QLineEdit(Tab2);
   Input_GridY->setValidator(valExpr);
-//  Input_GridY->setInputMask("000");   // for Qt 3.2
   gp2->addWidget(Input_GridY,2,1);
 
   t->addTab(Tab2, tr("Grid"));

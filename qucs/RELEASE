@@ -33,7 +33,7 @@ Distribution process:
   - Maintainance currently requires the following software packages:
      + Autoconf version 2.57 (at least)
      + GNU automake 1.7.0 (at least)
-     + Qt installation >= version 3.1
+     + Qt installation >= version 3.1 (by Trolltech)
   - Get latest `config.guess' and `config.sub' from GNU servers or run the
     command `automake -a -f -c' with latest automake version installed.
   - Run `make distclean', `sh autogen.sh' and `make all'.
@@ -69,7 +69,7 @@ the tarballs created using `make distcheck'.
   - a LaTeX installation (including IEEEtran bibstyle)
   - GNU Octave
   - epsTk 2.0.1 (at least)
-  - Qt installation >= version 3.1
+  - Qt installation >= version 3.1 (by Trolltech)
 
 * Unpack the packages in a temporary directory.
   - mkdir /temporary-dir and cd /temporary-dir

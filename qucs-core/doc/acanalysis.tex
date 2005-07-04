@@ -338,8 +338,8 @@ figure \ref{fig:nitrafo}.  The values are calculated as follows.
 \begin{align}
 \textrm{turn ratio:} & \qquad  T = \sqrt{\frac{L_1}{L_2}}\\
 \textrm{mutual inductance:}  & \qquad M = k\cdot L_1\\
-\textrm{primary inductance:}  & \qquad L_{1,new} = L_1 - M\\
-\textrm{secondary inductance:}  & \qquad L_{2,new} = L_2 - \frac{M}{N^2}
+\textrm{primary inductance:}  & \qquad L_{1,new} = L_1 - M = L_1\cdot (1-k)\\
+\textrm{secondary inductance:}  & \qquad L_{2,new} = L_2 - \frac{M}{N^2} = L_2\cdot (1-k)
 \end{align}
 
 \begin{figure}[ht]
@@ -351,3 +351,24 @@ figure \ref{fig:nitrafo}.  The values are calculated as follows.
 \end{figure}
 \FloatBarrier
 
+The Y-parameters of this component are:
+\begin{align}
+Y_{11} = Y_{44} = -Y_{41} = -Y_{14} &= \frac{1}{j\omega\cdot L_1\cdot (1-k^2)}\\
+Y_{22} = Y_{33} = -Y_{23} = -Y_{32} &= \frac{1}{j\omega\cdot L_2\cdot (1-k^2)}\\
+Y_{13} = Y_{31} = Y_{24} = Y_{42} = -Y_{12} = -Y_{21} = -Y_{34} = -Y_{43} &=
+  \frac{k}{j\omega\cdot\sqrt{L_1\cdot L_2}\cdot (1-k^2)}
+\end{align}
+
+Also including an ohmic resistance $R_1$ and $R_2$ for each coil,
+leads to the following Y-parameters:
+\begin{align}
+Y_{11} = Y_{44} = -Y_{41} = -Y_{14} &
+  = \dfrac{1}{j\omega\cdot L_1\cdot \left(1-k^2\cdot\dfrac{j\omega L_2}{j\omega L_2 + R_2}\right) + R_1}\\
+Y_{22} = Y_{33} = -Y_{23} = -Y_{32} &
+  = \dfrac{1}{j\omega\cdot L_2\cdot \left(1-k^2\cdot\dfrac{j\omega L_1}{j\omega L_1 + R_1}\right) + R_2}\\
+Y_{13} = Y_{31} = Y_{24} = Y_{42} = -Y_{12} &= -Y_{21} = -Y_{34} = -Y_{43} =
+  k\cdot\frac{j\omega\sqrt{L_1\cdot L_2}}{j\omega\cdot L_2 + R_2}\cdot Y_{11}
+\end{align}
+
+Building the S-parameters leads to too large equations. Converting the
+Y-parameters into S-parameters is therefore recommended.

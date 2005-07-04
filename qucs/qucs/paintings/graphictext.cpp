@@ -157,7 +157,7 @@ bool GraphicText::load(const QString& s)
   int i = 0;
   unsigned short ch;
   while((i=Text.find("\\x", i)) >= 0) {
-    n = Text.mid(i, 5);
+    n = Text.mid(i, 6);
     ch = n.mid(2).toUShort(&ok, 16);
     if(!ok) return false;
     Text.replace(n, QChar(ch));
@@ -184,7 +184,7 @@ QString GraphicText::save()
   char Str[8];
   while((ch=t.at(i++)) != QChar(0)) {  // convert special characters
     if(ch > QChar(0x7F)) {
-      sprintf(Str, "\\x%03X", ch.unicode());
+      sprintf(Str, "\\x%04X", ch.unicode());
       t.replace(ch, Str);
     }
   }

@@ -123,40 +123,20 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 //qDebug("%g, %g, %g -> %d, %d", *(xD-1), *yD, *(zD-2), *px, *py);
 }
 
+
+struct tPointData3D {
+  int   x, y;
+  float z;
+  int   PointNo;
+};
+
+/*
 // --------------------------------------------------------------
-void Rect3DDiagram::removeLines()
+// Calculate all 3D points of the line between point "p" and "EndPoint".
+void Rect3DDiagram::calcLine(tPointData3D *p, tPointData3D *EndPoint)
 {
-//  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
-//  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
-
-
-/*
-      for(i=g->countY; i>0; i--) {  // every branch of curves
-	px = g->cPointsX.getFirst()->Points;
-	calcCoordinate(px, pz, py, p, p+1, pa);
-	p += 2;
-	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
-//	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	  calcCoordinate(px, pz, py, p, p+1, pa);
-	  p += 2;
-	  if(Counter >= 2)   // clipping only if an axis is manual
-	    clip(p);
-	}
-	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-	*(p++) = -10;
-	if(py != &Dummy) {   // more-dimensional Rect3D
-	  py++;
-	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
-	    py = g->cPointsX.at(1)->Points;
-	}
-      }
-*/
-
-
-/*
-  // line algorithm
-  int x1_ = 80, y1_ = 40;
-  int x2_ = 10, y2_ = 10;
+  int x1_ = p->x, y1_ = p->y;
+  int x2_ = EndPoint->x, y2_ = EndPoint->y;
 
   int ax_ = 0, ay_ = 0;
   int ix_, iy_, dx_, dy_, of_;
@@ -190,7 +170,9 @@ void Rect3DDiagram::removeLines()
   }
 
   of_ = dx_ >> 1;
-  p->drawPoint(x1_, y1_);
+  float z1_ = p->z;
+  float dz_ = (EndPoint->z - z1_) / float(dx_); // interpolate z coordinate
+  // first point is already in list !!!
   for(int i=dx_; i>0; i--) {
     x1_ += ix_;
     y1_ += ax_;
@@ -200,9 +182,44 @@ void Rect3DDiagram::removeLines()
       x1_ += ay_;
       y1_ += iy_;
     }
-    p->drawPoint(x1_, y1_);
+    p->x = x1_;    // store point coordinate
+    p->y = y1_;
+    z1_ += dz_;
+    p->z = z1_;
+    p++;
+//    FIT_MEMORY_SIZE;
   }
+}
 */
+// --------------------------------------------------------------
+void Rect3DDiagram::removeLines()
+{
+//  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
+//  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
+
+
+/*
+      for(i=g->countY; i>0; i--) {  // every branch of curves
+	px = g->cPointsX.getFirst()->Points;
+	calcCoordinate(px, pz, py, p, p+1, pa);
+	p += 2;
+	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
+//	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	  calcCoordinate(px, pz, py, p, p+1, pa);
+	  p += 2;
+	  if(Counter >= 2)   // clipping only if an axis is manual
+	    clip(p);
+	}
+	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+	*(p++) = -10;
+	if(py != &Dummy) {   // more-dimensional Rect3D
+	  py++;
+	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
+	    py = g->cPointsX.at(1)->Points;
+	}
+      }
+*/
+
 }
 
 // --------------------------------------------------------------
