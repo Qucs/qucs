@@ -2415,7 +2415,10 @@ Having understood the one-dimensional example, it is now only a
 small step to the general multi-dimensional algorithm: The node
 voltage becomes a vector $\boldsymbol{V}^{(m)}$, factors become
 the corresponding matrices and differentiations become Jacobian
-matrices.\\
+matrices.
+
+\addvspace{12pt}
+
 The function whose zero must be found is the transformed MNA
 equation \ref{eq:NLmatrix}:
 
@@ -2443,7 +2446,7 @@ part of the MNA matrix for the AC analysis:
 \boldsymbol{J}^{(m)}
   = \left.\frac{\partial\boldsymbol{f}( \boldsymbol{V} )}
                {\partial\boldsymbol{V}}\right|_{\boldsymbol{V}^{(m)}}
-  = \text{Re}(\boldsymbol{G}_{AC})
+  = \text{Re}\left(\boldsymbol{G}_{AC}\right)
 \end{equation}
 
 The disadvantage of the formula \ref{eq:ndimNewton} is the fact
