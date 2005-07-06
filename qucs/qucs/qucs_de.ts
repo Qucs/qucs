@@ -5893,8 +5893,9 @@ About Qt by Trolltech</source>
         <source>
 Quite Universal Circuit Simulator
 </source>
-        <translation type="unfinished">
-Quite universal circuit simulator
+        <translation>
+Ziemlich Universeller Schaltungssimulator
+
 </translation>
     </message>
     <message>

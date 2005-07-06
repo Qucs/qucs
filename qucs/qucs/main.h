@@ -46,6 +46,7 @@ struct tQucsSettings {
   QString BinDir;
   QString BitmapDir;
   QString LangDir;
+  QString LibDir;
 };
 
 extern tQucsSettings QucsSettings;  // extern because nearly everywhere used
