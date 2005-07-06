@@ -108,7 +108,7 @@ void LibComp::remakeSymbol()
 // Loads the section with name "Name" from library file into "Section".
 int LibComp::loadSection(const QString& Name, QString& Section)
 {
-  QFile file(LIBRARYDIR + Props.first()->Value + ".lib");
+  QFile file(QucsSettings.LibDir + Props.first()->Value + ".lib");
   if(!file.open(IO_ReadOnly))
     return -1;
 
