@@ -154,16 +154,7 @@ bool GraphicText::load(const QString& s)
   Text.truncate(Text.length()-1);
   if(Text.isEmpty()) return false;
 
-  int i = 0;
-  unsigned short ch;
-  while((i=Text.find("\\x", i)) >= 0) {
-    n = Text.mid(i, 6);
-    ch = n.mid(2).toUShort(&ok, 16);
-    if(!ok) return false;
-    Text.replace(n, QChar(ch));
-  }
-  Text.replace("\\n", "\n");
-  Text.replace("\\\\", "\\");
+  convert2Unicode(Text);
   QFontMetrics  metrics(Font);
   QSize r = metrics.size(0, Text);    // get size of text
   x2 = r.width();
@@ -274,6 +265,8 @@ void GraphicText::rotate()
 {
   Angle += 90;
   Angle %= 360;
+  cx -= x2 >> 1;
+  cy -= y2 >> 1;
 }
 
 // -----------------------------------------------------------------------

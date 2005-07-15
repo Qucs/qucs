@@ -271,6 +271,23 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
   return;
 }
 
+// #########################################################################
+void convert2Unicode(QString& Text)
+{
+  bool ok;
+  int i = 0;
+  QString n;
+  unsigned short ch;
+  while((i=Text.find("\\x", i)) >= 0) {
+    n = Text.mid(i, 6);
+    ch = n.mid(2).toUShort(&ok, 16);
+    if(ok)  Text.replace(n, QChar(ch));
+    i++;
+  }
+  Text.replace("\\n", "\n");
+  Text.replace("\\\\", "\\");
+}
+
 
 // #########################################################################
 // ##########                                                     ##########

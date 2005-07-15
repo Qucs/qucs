@@ -21,6 +21,14 @@
 #include "diagram.h"
 
 
+struct tPoint3D {
+  int   x, y;
+  float z;
+  int   No;
+};
+
+//#define HIDDENLINE
+
 class Rect3DDiagram : public Diagram  {
 public:
   Rect3DDiagram(int _cx=0, int _cy=0);
@@ -39,13 +47,18 @@ public:
   bool insideDiagram(int, int);
   void clip(int* &);
 
-  void removeLines();
+  tPoint3D *Mem;   // memory for all points during hidden line algorithm
+  tPoint3D *pMem;  // current position in "Mem"
+  void removeHiddenLines();
 
 private:
   void   calcCoefficients();
   double calcX_2D(double, double, double);
   double calcY_2D(double, double, double);
   double calcZ_2D(double, double, double);
+
+  void calcLine(tPoint3D* &, tPoint3D*, tPoint3D* &, tPoint3D* &);
+  void calcCoordinate3D(double, double, double, double, tPoint3D*);
 
   int xorig, yorig;    // where is the 3D origin with respect to cx/cy
   double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
