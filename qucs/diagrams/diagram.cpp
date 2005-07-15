@@ -37,6 +37,8 @@
 #include "main.h"
 #include "mnemo.h"
 
+#include "rect3ddiagram.h"
+
 #ifdef __MINGW32__
 # define finite(x) _finite(x)
 #endif
@@ -436,17 +438,19 @@ void Diagram::calcData(Graph *g)
   g->Points = p_end = p;
   p_end += Size - 5;   // limit of buffer
 
+  if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
+    Counter = -50000;
+
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
   double *py = &Dummy;
-  if(Name == "Rect3D")
+  if(Name == "Rect3D") {
     if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
+    Counter = 2;
+  }
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
   else  pa = &zAxis;
-
-  if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
-    Counter = -50000;
 
   double Stroke=10.0, Space=10.0; // length of strokes and spaces in pixel
   switch(g->Style) {
@@ -474,7 +478,39 @@ void Diagram::calcData(Graph *g)
 for(int zz=10; zz>0; zz-=2)
   qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
 
+#ifdef HIDDENLINE
+      if(Name == "Rect3D") {
+        if(g->countY > 1) {
+	  // px, py, pz are nor used !!!
+	  for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
+	    DataX *pD = g->cPointsX.first();
+	    dx = pD->count;
+	    pD = g->cPointsX.next();
+	    dy = pD->count;
+	    for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+	      calcCoordinate(px, pz, py, p, p+1, 0);
+	      p += 2;
+	      for(z=dy-1; z>0; z--) {  // every point
+	        FIT_MEMORY_SIZE;  // need to enlarge memory block ?
+	        calcCoordinate(px, pz, py, p, p+1, 0);
+	        p += 2;
+	        clip(p);
+	      }
+	      if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
+	      *(p++) = -10;
+	    }
+/*qDebug("\n------ p=%p", p);
+for(int zz=120; zz>0; zz-=2)
+  qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
+	  }
+	}
+	delete ((Rect3DDiagram*)this)->Mem;
+	((Rect3DDiagram*)this)->Mem  = 0;
+	((Rect3DDiagram*)this)->pMem = 0;
+      }
+#else
       if(Name == "Rect3D") if(g->countY > 1) {
+	// create cross lines
 	pz = g->cPointsY;
 	for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
 	  DataX *pD = g->cPointsX.first();
@@ -511,12 +547,14 @@ for(int zz=10; zz>0; zz-=2)
 for(int zz=120; zz>0; zz-=2)
   qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
       }
+#endif
 
       
       *p = -100;
-/*p = g->Points;
+/*z = p-g->Points+1;
+p = g->Points;
 qDebug("\n****** p=%p", p);
-for(int zz=0; zz<10; zz+=2)
+for(int zz=0; zz<z; zz+=2)
   qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
 
       return;
@@ -896,6 +934,7 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
   g->cPointsX.clear();
   if(g->cPointsY) { delete[] g->cPointsY;  g->cPointsY = 0; }
   if(g->Var.isEmpty()) return false;
+  if(fileName.isEmpty()) return false;
 
   QFile file;
   QString Variable;

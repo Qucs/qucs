@@ -1901,7 +1901,7 @@ void QucsView::MReleaseResizePainting(QMouseEvent *Event, QucsDoc *d)
 // -----------------------------------------------------------
 void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
 {
-  int x1, y1, x2, y2, tmp;
+  int x1, y1, x2, y2;
   QPainter painter(viewport());
 
   Element *pe;
@@ -1982,8 +1982,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
         case isPainting:
 	  ((Painting*)pe)->rotate(); // rotate !before! rotating the center
           ((Painting*)pe)->getCenter(x2, y2);
-          tmp = x1 - x2;
-          pe->setCenter(y2 - y1 + x1, tmp + y1);
+          pe->setCenter(y2 - y1 + x1, x1 - x2 + y1);
           break;
         default:
 	  x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
