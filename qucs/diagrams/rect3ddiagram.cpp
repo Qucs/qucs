@@ -29,6 +29,8 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
 
+  Mem = pMem = 0;
+
   Name = "Rect3D";
   // symbolic diagram painting
   Lines.append(new Line(0, 0, cx,  0, QPen(QPen::black,0)));
@@ -81,9 +83,12 @@ double Rect3DDiagram::calcZ_2D(double x, double y, double z)
 void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 				   int *px, int *py, Axis*)
 {
+  if(Mem == 0) {
+  // needed for marker
+
   double x3D = *(zD++);
   double y3D = *(zD++);
-  double z3D;;
+  double z3D;
   if(zAxis.log) {
     z3D = sqrt(x3D*x3D + y3D*y3D);
 /*    if(z3D <= 0.0)  clipping not yet correct implemented
@@ -120,21 +125,98 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 
   *px = int(calcX_2D(x3D, y3D, z3D) * scaleX + 0.5) + xorig;
   *py = int(calcY_2D(x3D, y3D, z3D) * scaleY + 0.5) + yorig;
-//qDebug("%g, %g, %g -> %d, %d", *(xD-1), *yD, *(zD-2), *px, *py);
+
+  }  // of "if(Mem == 0)"
+  else {
+  // used in "calcData"
+
+  *px = pMem->x;
+  *py = pMem->y;
+  pMem++;
+//qDebug("calc: %p: %d, %d", pMem, *px, *py);
+
+  }
 }
 
+// ------------------------------------------------------------
+// For this diagram, this function is actual not for clipping, but
+// for sorting out unnesseccary and invisible points.
+void Rect3DDiagram::clip(int* &)
+//void Rect3DDiagram::clip(int* &p)
+{
+#ifdef HIDDENLINE
+  while(((pMem-1)->No - (pMem-2)->No) <= 1)
+    pMem++;
 
-struct tPointData3D {
-  int   x, y;
-  float z;
-  int   PointNo;
-};
+  *(p-2) = (pMem-1)->x;
+  *(p-1) = (pMem-1)->y;
+//qDebug("new calc: %p: %d, %d", pMem, *(p-2), *(p-1));
+#endif
+}
 
-/*
+// ------------------------------------------------------------
+void Rect3DDiagram::calcCoordinate3D(double x, double y, double zr, double zi,
+					tPoint3D *p)
+{
+  if(zAxis.log) {
+    zr = sqrt(zr*zr + zi*zi);
+/*    if(zr <= 0.0)  clipping not yet correct implemented
+      zr = -1e5;   // "negative infinity"
+    else*/
+      zr = log10(zr / fabs(zAxis.low)) / log10(zAxis.up / zAxis.low);
+  }
+  else {
+    if(fabs(zi) > 1e-250) // preserve negative values if no complex number
+      zr = sqrt(zr*zr + zi*zi);
+    zr = (zr - zAxis.low) / (zAxis.up - zAxis.low);
+  }
+
+  if(xAxis.log) {
+    x /= xAxis.low;
+/*    if(x <= 0.0)  clipping not yet correct implemented
+      x = -1e5;   // "negative infinity"
+    else*/
+      x = log10(x) / log10(xAxis.up / xAxis.low);
+  }
+  else
+    x = (x - xAxis.low) / (xAxis.up - xAxis.low);
+
+  if(yAxis.log) {
+    y = y / yAxis.low;
+/*    if(y <= 0.0)  clipping not yet correct implemented
+      y = -1e5;   // "negative infinity"
+    else*/
+      y = log10(y) / log10(yAxis.up / yAxis.low);
+  }
+  else
+    y = (y - yAxis.low) / (yAxis.up - yAxis.low);
+
+  p->x = int(calcX_2D(x, y, zr) * scaleX + 0.5) + xorig;
+  p->y = int(calcY_2D(x, y, zr) * scaleY + 0.5) + yorig;
+  p->z = float(calcY_2D(x, y, zr));
+}
+
+// Enlarge memory block if neccessary.
+#define  FIT_MEMORY_SIZE \
+  if(p >= MemEnd) { \
+    int Size = MemEnd - Mem + 256; \
+    MemEnd = Mem; \
+    Mem = (tPoint3D*)realloc(Mem, Size*sizeof(tPoint3D)); \
+    p = Mem + (p - MemEnd); \
+    MemEnd = Mem + Size - 9; \
+  } \
+
+
 // --------------------------------------------------------------
 // Calculate all 3D points of the line between point "p" and "EndPoint".
-void Rect3DDiagram::calcLine(tPointData3D *p, tPointData3D *EndPoint)
+// Parameters:   p        - pointer on 3D coordinate of line start point
+//               EndPoint - pointer on 3D coordinate of line end point
+//               Mem      - pointer on memory block (for resizing)
+//               MemEnd   - pointer where memory block ends
+void Rect3DDiagram::calcLine(tPoint3D* &p, tPoint3D *EndPoint,
+				tPoint3D* &Mem, tPoint3D* &MemEnd)
 {
+  int No_ = p->No;  // all points get new number
   int x1_ = p->x, y1_ = p->y;
   int x2_ = EndPoint->x, y2_ = EndPoint->y;
 
@@ -182,44 +264,152 @@ void Rect3DDiagram::calcLine(tPointData3D *p, tPointData3D *EndPoint)
       x1_ += ay_;
       y1_ += iy_;
     }
-    p->x = x1_;    // store point coordinate
-    p->y = y1_;
-    z1_ += dz_;
-    p->z = z1_;
     p++;
-//    FIT_MEMORY_SIZE;
+    p->No = ++No_;
+    p->x  = x1_;    // store point coordinate
+    p->y  = y1_;
+    z1_  += dz_;
+    p->z  = z1_;
+    FIT_MEMORY_SIZE;
   }
 }
-*/
+
 // --------------------------------------------------------------
-void Rect3DDiagram::removeLines()
+void Rect3DDiagram::removeHiddenLines()
 {
-//  int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
-//  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
+  Graph *g = Graphs.getFirst();
+  if(!g) return;
+
+  double *px;
+  double *pz = g->cPointsY;
+  if(!pz)  return;
+  if(g->cPointsX.count() < 1) return;
+
+  int Size = ((g->cPointsX.getFirst()->count + 1) * g->countY) + 8;
+  Mem = (tPoint3D*)malloc( Size*sizeof(tPoint3D) );
+
+  tPoint3D v3D, *p = Mem;
+  tPoint3D *MemEnd = Mem + Size - 5;   // limit of buffer
+
+  double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
+  double *py = &Dummy;
+  if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
 
 
-/*
-      for(i=g->countY; i>0; i--) {  // every branch of curves
-	px = g->cPointsX.getFirst()->Points;
-	calcCoordinate(px, pz, py, p, p+1, pa);
-	p += 2;
-	for(z=g->cPointsX.getFirst()->count-1; z>0; z--) {  // every point
-//	  FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	  calcCoordinate(px, pz, py, p, p+1, pa);
-	  p += 2;
-	  if(Counter >= 2)   // clipping only if an axis is manual
-	    clip(p);
-	}
-	if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-	*(p++) = -10;
-	if(py != &Dummy) {   // more-dimensional Rect3D
-	  py++;
-	  if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
-	    py = g->cPointsX.at(1)->Points;
-	}
+  // calculate coordinates of all points of all lines
+  int i, j, z;
+  p->No = 0;
+  z = g->cPointsX.at(1)->count;
+  for(i=g->countY-1; i>=0; i--) {   // y coordinates
+    px = g->cPointsX.getFirst()->Points;
+    calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), p);
+    
+    for(j=g->cPointsX.getFirst()->count-1; j>0; j--) {  // x coordinates
+      calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), &v3D);
+      calcLine(p, &v3D, Mem, MemEnd);
+      p->No++;
+    }
+    py++;
+    (p+1)->No = p->No + 2;
+    p++;
+//    if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
+    if((i % z) == 0)
+      py = g->cPointsX.at(1)->Points;
+  }
+
+
+  // calculate points of cross lines
+  int dx, dy;
+  if(g->countY > 1) {
+    pz = g->cPointsY;
+    for(j=g->countY/g->cPointsX.at(1)->count; j>0; j--) { // every plane
+      DataX *pD = g->cPointsX.first();
+      px = pD->Points;
+      dx = pD->count;
+      pD = g->cPointsX.next();
+      dy = pD->count;
+      for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
+        py = pD->Points;
+        calcCoordinate3D(*px, *(py++), *pz, *(pz+1), p);
+        pz += 2*dx;  // next z coordinate
+        for(z=dy-1; z>0; z--) {  // every point
+          calcCoordinate3D(*px, *(py++), *pz, *(pz+1), &v3D);
+          calcLine(p, &v3D, Mem, MemEnd);
+          pz += 2*dx;  // next z coordinate
+          p->No++;
+        }
+        px++;   // next x coordinate
+        pz -= 2*dx*dy - 2;  // next z coordinate
+        (p+1)->No = p->No + 2;
+        p++;
       }
-*/
+      pz += 2*dx*(dy-1);
+    }
+  }
+  Size = p - Mem;
+  pMem = Mem;
 
+
+  // bubble sort algorithm -> sort z coordinates (greatest first)
+  for(i=1; i<=Size; i++) {
+    p = Mem;
+    for(j=0; j<(Size-i); j++) {
+      if(p->z < (p+1)->z) {
+	v3D = *p;
+	*p = *(p+1);
+	*(p+1) = v3D;
+      }
+      p++;
+    }
+  }
+
+
+  // to store max and min values for hidden coordinates
+  int *Ymax = (int*)malloc(x2 * sizeof(int));
+  for(i=x2-1; i>=0; i--)  *(Ymax+i) = INT_MIN;
+  int *Ymin = (int*)malloc(x2 * sizeof(int));
+  for(i=x2-1; i>=0; i--)  *(Ymin+i) = INT_MAX;
+
+  // mark hidden points with x = -100
+  p = Mem;
+  for(i=0; i<Size; i++) {
+    j = p->x;
+qDebug("hide: %d, %d, %g, %d -> %d, %d", j, p->y, p->z, p->No, Ymax[j], Ymin[j]);
+    if(p->y >= Ymax[j])      Ymax[j] = p->y;
+    else if(p->y <= Ymin[j]) Ymin[j] = p->y;
+    else  p->x = -100;
+    
+    p++;
+  }
+  free(Ymax);
+  free(Ymin);
+
+
+  // bubble sort algorithm -> sort "No" (least first)
+  for(i=1; i<=Size; i++) {
+    p = Mem;
+    for(j=0; j<(Size-i); j++) {
+      if(p->No > (p+1)->No) {
+	v3D = *p;
+	*p = *(p+1);
+	*(p+1) = v3D;
+      }
+      p++;
+    }
+  }
+
+for(i=0; i<Size; i++)
+  qDebug("Punkt: %d, %d, %g -> %d",
+         (Mem+i)->x, (Mem+i)->y, (Mem+i)->z, (Mem+i)->No);
+
+
+  // reconstruct all new lines and count them
+/*  p = MemEnd = Mem;
+  for(i=0; i<Size; i++) {
+    if((p++)->x > 0)
+      if((p->x < 0) || (p->No))
+        *(MemEnd++) = *(p-1);
+  }*/
 }
 
 // --------------------------------------------------------------
@@ -607,6 +797,10 @@ int Rect3DDiagram::calcDiagram()
                           cos_phi, sin_phi));
   }
 
+
+#ifdef HIDDENLINE
+  removeHiddenLines();
+#endif
   return 3;
 
 
@@ -622,12 +816,6 @@ Frame:   // jump here if error occurred (e.g. impossible log boundings)
 bool Rect3DDiagram::insideDiagram(int x, int y)
 {
   return (regionCode(x, y) == 0);
-}
-
-// ------------------------------------------------------------
-void Rect3DDiagram::clip(int* &p)
-{
-  rectClip(p);
 }
 
 // ------------------------------------------------------------
