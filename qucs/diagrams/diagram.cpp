@@ -141,9 +141,7 @@ void Diagram::createAxisLabels()
   Graph *pg;
   int   x, y, w;
   QString Str;
-  QFont f = QucsSettings.font;
-  f.setPointSizeFloat(10.0);
-  QFontMetrics  metrics(f);
+  QFontMetrics  metrics(QucsSettings.font);
   int LineSpacing = metrics.lineSpacing();
 
 
@@ -760,14 +758,14 @@ void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
   for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
 
     if(pg->yAxisNo == 0) {   // used with left axis ?
-      if(xLabelHide)
+      if(yLabelHide)
         _x1 -= metrics.lineSpacing();   // expand bounding with text size
     }
     else {
       if(zLabelHide)
         _x2 += metrics.lineSpacing();
     }
-    if(yLabelHide) _y2 += metrics.lineSpacing();
+    if(xLabelHide) _y2 += metrics.lineSpacing();
 
   }
 }
