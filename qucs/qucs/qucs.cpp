@@ -679,6 +679,7 @@ void QucsApp::updatePortNumber(int No)
   if(No == 0) return;
 
   // update all occurencies of subcircuit in all open documents
+  int x, y;
   QucsDoc *d;
   int DocNo = view->Docs.at();
   for(d = view->Docs.first(); d!=0; d = view->Docs.next())
@@ -688,9 +689,13 @@ void QucsApp::updatePortNumber(int No)
 	if((File == pathName) || (File == Name)) {
 	  d->Comps->setAutoDelete(false);
 	  d->deleteComp(pc);
+	  x = pc->tx;
+	  y = pc->ty;
 	  tmpStr = pc->Name;
 	  ((Subcircuit*)pc)->recreate();
 	  pc->Name = tmpStr;
+	  pc->tx = x;
+	  pc->ty = y;
 	  d->insertRawComponent(pc);
 	  d->Comps->setAutoDelete(true);
 	}

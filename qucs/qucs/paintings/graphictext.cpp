@@ -58,6 +58,7 @@ void GraphicText::paint(ViewPainter *p)
   int Size = Font.pointSize();
   Font.setPointSizeFloat( p->Scale * float(Size) );
 
+  QFont f = p->Painter->font();
   p->Painter->setPen(Color);
   p->Painter->setFont(Font);
   QRect r;
@@ -77,6 +78,7 @@ void GraphicText::paint(ViewPainter *p)
   p->Painter->setWorldXForm(false);
   x2 = int(float(r.width())  / p->Scale);
   y2 = int(float(r.height()) / p->Scale);
+  p->Painter->setFont(f);
 }
 
 // -----------------------------------------------------------------------
