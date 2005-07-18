@@ -991,6 +991,86 @@ become flues, capacitances become inductances and finally voltages
 become currents and the other way around.  Everything else (especially
 the coeffcients in the integration formulas) can be reused.
 
+
+\subsection{Coupled Inductors}
+
+In a non-ideal transformer, there are two (or more) coupled inductors.
+The model for the transient simulation is not very different from the
+one of a single inductor. In addition to each coil, the mutal inductance
+has to be counted for.
+
+\begin{align}
+ & V_{L1} = L_1\cdot\dfrac{d I_{L1}}{d t} + M_{12}\cdot\dfrac{d I_{L2}}{d t}
+            + I_{L1}\cdot R_1 \\
+\text{with}\qquad & M_{12} = k\cdot\sqrt{L_1\cdot L_2} \\
+\text{and}\qquad  & R_1 \quad\text{ohmic resistance of coil 1}
+\end{align}
+
+So it is:
+
+\begin{equation}
+V_{L1}^{n+1} = r_{eq11}\cdot I_{L1}^{n+1} + r_{eq12}\cdot I_{L2}^{n+1}
+             + V_{eq}(I_{L1}^n, I_{L2}^n, ...)
+\end{equation}
+
+Note that $r_{eq11}$ includes the ohmic resistance $R_1$. For backward
+Euler, it therefore follows:
+
+\begin{equation}
+V_{L1}^{n+1} = \left(\dfrac{L_1}{h^n} + R_1 \right)\cdot I_{L1}^{n+1}
+             + \dfrac{k\cdot\sqrt{L_1\cdot L_2}}{h^n}\cdot I_{L2}^{n+1}
+             - \dfrac{L_1}{h^n}\cdot I_{L1}^n
+             - \dfrac{k\cdot\sqrt{L_1\cdot L_2}}{h^n}\cdot I_{L2}^n
+\end{equation}
+
+The voltage across the secondary coil $V_{L2}^{n+1}$ goes likewise
+by just changing the indeces. Finally, the MNA matrix writes
+(port numbers are according to figure \ref{fig:trafo}):
+
+\begin{equation}
+\begin{bmatrix}
+0 & 0 & 0 & 0 & +1 &  0\\
+0 & 0 & 0 & 0 &  0 & +1\\
+0 & 0 & 0 & 0 &  0 & -1\\
+0 & 0 & 0 & 0 & -1 &  0\\
++1 & -1 & 0 & 0 & -r_{eq11} & -r_{eq12}\\
+0 & 0 & +1 & -1 & -r_{eq21} & -r_{eq22}\\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_1^{n+1}\\
+V_2^{n+1}\\
+V_3^{n+1}\\
+V_4^{n+1}\\
+I_{L1}^{n+1}\\
+I_{L2}^{n+1}\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0\\
+0\\
+0\\
+0\\
+V_{eq1}\\
+V_{eq2}\\
+\end{bmatrix}
+\end{equation}
+
+These equations can also give an idea on how to model more than two
+coupled inductors. For three coupled inductors, the voltage across
+coil 1 writes:
+
+\begin{align}
+ & V_{L1} = L_1\cdot\dfrac{d I_{L1}}{d t} + M_{12}\cdot\dfrac{d I_{L2}}{d t}
+          + M_{13}\cdot\dfrac{d I_{L3}}{d t} + I_{L1}\cdot R_1 \\
+\text{with}\qquad & M_{12} = k_{12}\cdot\sqrt{L_1\cdot L_2} \\
+\text{and}\qquad  & M_{13} = k_{13}\cdot\sqrt{L_1\cdot L_3} \\
+\end{align}
+
+This can be easily extended to an arbitrary number of coupled
+inductors.
+
+
 \subsection{Depletion Capacitance}
 %\addcontentsline{toc}{subsection}{Depletion Capacitance}
 

@@ -339,7 +339,7 @@ figure \ref{fig:nitrafo}.  The values are calculated as follows.
 \textrm{turn ratio:} & \qquad  T = \sqrt{\frac{L_1}{L_2}}\\
 \textrm{mutual inductance:}  & \qquad M = k\cdot L_1\\
 \textrm{primary inductance:}  & \qquad L_{1,new} = L_1 - M = L_1\cdot (1-k)\\
-\textrm{secondary inductance:}  & \qquad L_{2,new} = L_2 - \frac{M}{N^2} = L_2\cdot (1-k)
+\textrm{secondary inductance:}  & \qquad L_{2,new} = L_2 - \frac{M}{T^2} = L_2\cdot (1-k)
 \end{align}
 
 \begin{figure}[ht]
@@ -372,3 +372,23 @@ Y_{13} = Y_{31} = Y_{24} = Y_{42} = -Y_{12} &= -Y_{21} = -Y_{34} = -Y_{43} =
 
 Building the S-parameters leads to too large equations. Converting the
 Y-parameters into S-parameters is therefore recommended.
+
+\addvspace{12pt}
+
+A transformer with three coupled inductors has three coupling
+factors $k_{12}$, $k_{13}$ and $k_{23}$. Its y-parameters writes
+as follows (port numbers are according to figure
+\ref{fig:symtrafo}).
+
+\begin{gather}
+A = j\omega\cdot (1 - k_{12}^2 - k_{13}^2 - k_{23}^2 + 2\cdot k_{12}\cdot k_{13}\cdot k_{23} ) \\
+Y_{11} = Y_{66} = -Y_{16} = -Y_{61} = \dfrac{1-k_{23}^2}{L_1\cdot A} \qquad
+Y_{22} = Y_{33} = -Y_{23} = -Y_{32} = \dfrac{1-k_{12}^2}{L_3\cdot A} \qquad
+Y_{44} = Y_{55} = -Y_{45} = -Y_{54} = \dfrac{1-k_{13}^2}{L_2\cdot A} \\
+Y_{12} = Y_{21} = Y_{36} = Y_{63} = -Y_{13} = -Y_{31} = -Y_{26} = -Y_{62}
+   = \dfrac{k_{12}\cdot k_{23} - k_{13}}{\sqrt{L_1\cdot L_3}\cdot A} \\
+Y_{15} = Y_{51} = Y_{46} = Y_{64} = -Y_{14} = -Y_{41} = -Y_{56} = -Y_{65}
+   = \dfrac{k_{13}\cdot k_{23} - k_{12}}{\sqrt{L_1\cdot L_2}\cdot A} \\
+Y_{25} = Y_{52} = Y_{43} = Y_{34} = -Y_{24} = -Y_{42} = -Y_{53} = -Y_{35}
+   = \dfrac{k_{12}\cdot k_{13} - k_{23}}{\sqrt{L_2\cdot L_3}\cdot A}
+\end{gather}
