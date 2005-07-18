@@ -1569,7 +1569,7 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
 
 // -----------------------------------------------------------
 // Is called if starting point of wire is pressed
-void QucsView::MPressWire1(QMouseEvent*, QucsDoc*, int, int)
+void QucsView::MPressWire1(QMouseEvent*, QucsDoc *d, int x, int y)
 {
   QPainter painter(viewport());
   setPainter(&painter, Docs.current());
@@ -1581,8 +1581,11 @@ void QucsView::MPressWire1(QMouseEvent*, QucsDoc*, int, int)
   drawn = false;
 
   MAx1 = 0;   // paint wire corner first up, then left/right
-  MAx2 = MAx3;
-  MAy2 = MAy3;
+  MAx3 = x;
+  MAy3 = y;
+  d->setOnGrid(MAx3, MAy3);
+//  MAx2 = MAx3;
+//  MAy2 = MAy3;
   MouseMoveAction = &QucsView::MMoveWire2;
   MousePressAction = &QucsView::MPressWire2;
   MouseDoubleClickAction = &QucsView::MDoubleClickWire2;

@@ -693,15 +693,11 @@ void ComponentDialog::slotApplyInput()
  if(item != 0) {
 
   item = prop->currentItem();
-  if(item->text(1) != edit->text()) {
+  if(item->text(1) != edit->text())
     item->setText(1, edit->text());    // apply edit line
-    changed = true;
-  }
   if(NameEdit->isShown())	// also apply property name ?
-    if(item->text(0) != NameEdit->text()) {
+    if(item->text(0) != NameEdit->text())
       item->setText(0, NameEdit->text());  // apply property name
-      changed = true;
-    }
 
 
   // apply all the new property values in the ListView
@@ -716,7 +712,10 @@ void ComponentDialog::slotApplyInput()
         pp->Value = item->text(1);
         changed = true;
       }
-      pp->Name = item->text(0);   // override if previous one was removed
+      if(pp->Name != item->text(0)) {
+        pp->Name = item->text(0);   // override if previous one was removed
+        changed = true;
+      }
       pp->Description = item->text(3);
     }
     else {  // if less properties than in ListView -> create new
