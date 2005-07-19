@@ -49,6 +49,10 @@ using namespace std;
 Diagram::Diagram(int _cx, int _cy)
 {
   cx = _cx;  cy = _cy;
+  
+  // x1, x2, y1, y2 are the selectable boundings of the diagram, but these
+  // are the real boundings. They are set in "createAxisLabels()".
+  Bounding_x1 = Bounding_x2 = Bounding_y1 = Bounding_y2 = 0;
 
   xAxis.numGraphs = yAxis.numGraphs = zAxis.numGraphs = 0;
   xAxis.min = xAxis.low =
@@ -139,7 +143,7 @@ void Diagram::paint(ViewPainter *p)
 void Diagram::createAxisLabels()
 {
   Graph *pg;
-  int   x, y, w;
+  int   x, y, w, wmax = 0;
   QString Str;
   QFontMetrics  metrics(QucsSettings.font);
   int LineSpacing = metrics.lineSpacing();
@@ -153,24 +157,34 @@ void Diagram::createAxisLabels()
 	DataX *pD = pg->cPointsX.getFirst();
 	if(!pD) continue;
 	y -= LineSpacing;
-	if(Name[0] != 'C') {   // location curve ?
-          w = metrics.width(pD->Var) >> 1;
-          Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
+	if(Name[0] != 'C') {   // locus curve ?
+	  w = metrics.width(pD->Var) >> 1;
+	  if(w > wmax)  wmax = w;
+	  Texts.append(new Text(x-w, y, pD->Var, pg->Color, 12.0));
 	}
 	else {
           w = metrics.width("real("+pg->Var+")") >> 1;
+	  if(w > wmax)  wmax = w;
           Texts.append(new Text(x-w, y, "real("+pg->Var+")",
                                 pg->Color, 12.0));
 	}
     }
   }
   else {
+    y -= LineSpacing;
     encode_String(xAxis.Label, Str);
     w = metrics.width(Str) >> 1;
-    Texts.append(new Text(x-w, y-LineSpacing, Str, Qt::black, 12.0));
+    if(w > wmax)  wmax = w;
+    Texts.append(new Text(x-w, y, Str, Qt::black, 12.0));
   }
+  Bounding_y2 = 0;
+  Bounding_y1 = y - LineSpacing;
+  Bounding_x2 = wmax - (x2 >> 1);
+  if(Bounding_x2 < 0) Bounding_x2 = 0;
+  Bounding_x1 = Bounding_x2;
 
 
+  wmax = 0;
   x = -x1;
   y = y2>>1;
   if(yAxis.Label.isEmpty()) {
@@ -180,16 +194,19 @@ void Diagram::createAxisLabels()
       if(pg->cPointsY) {
 	if(Name[0] != 'C') {   // location curve ?
           w = metrics.width(pg->Var) >> 1;
+          if(w > wmax)  wmax = w;
           Texts.append(new Text(x, y-w, pg->Var, pg->Color, 12.0, 0.0, 1.0));
 	}
 	else {
           w = metrics.width("imag("+pg->Var+")") >> 1;
+          if(w > wmax)  wmax = w;
           Texts.append(new Text(x, y-w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, 1.0));
 	}
       }
       else {     // if no data => <invalid>
         w = metrics.width(pg->Var+INVALID_STR) >> 1;
+        if(w > wmax)  wmax = w;
         Texts.append(new Text(x, y-w, pg->Var+INVALID_STR,
                               pg->Color, 12.0, 0.0, 1.0));
       }
@@ -199,8 +216,11 @@ void Diagram::createAxisLabels()
   else {
     encode_String(yAxis.Label, Str);
     w = metrics.width(Str) >> 1;
+    if(w > wmax)  wmax = w;
     Texts.append(new Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
+    x -= LineSpacing;
   }
+  if(Bounding_x1 < -x) Bounding_x1 = -x;
 
 
   x = x3;
@@ -212,17 +232,20 @@ void Diagram::createAxisLabels()
       if(pg->cPointsY) {
 	if(Name[0] != 'C') {   // location curve ?
           w = metrics.width(pg->Var) >> 1;
+          if(w > wmax)  wmax = w;
           Texts.append(new Text(x, y+w, pg->Var,
                                 pg->Color, 12.0, 0.0, -1.0));
 	}
 	else {
           w = metrics.width("imag("+pg->Var+")") >> 1;
+          if(w > wmax)  wmax = w;
           Texts.append(new Text(x, y+w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, -1.0));
 	}
       }
       else {     // if no data => <invalid>
         w = metrics.width(pg->Var+INVALID_STR) >> 1;
+        if(w > wmax)  wmax = w;
         Texts.append(new Text(x, y+w, pg->Var+INVALID_STR,
                               pg->Color, 12.0, 0.0, -1.0));
       }
@@ -232,7 +255,15 @@ void Diagram::createAxisLabels()
   else {
     encode_String(zAxis.Label, Str);
     w = metrics.width(Str) >> 1;
+    if(w > wmax)  wmax = w;
     Texts.append(new Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
+  }
+  if(Bounding_x2 < x) Bounding_x2 = x;
+
+  wmax -= y2 >> 1;
+  if(wmax > 0) {
+    Bounding_y2 = wmax;
+    if(wmax > Bounding_y1) Bounding_y1 = wmax;
   }
 }
 
@@ -733,41 +764,10 @@ for(int zz=0; zz<60; zz+=2)
 // -------------------------------------------------------
 void Diagram::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 {
-  _x1 = cx-x1;
-  _y1 = cy-y2;
-  _x2 = cx+x3;
-  _y2 = cy+y1;
-
-  if(Name == "Tab") return;
-
-  bool xLabelHide=true, yLabelHide=true, zLabelHide=true;
-  QFontMetrics  metrics(QucsSettings.font);
-  if(!xAxis.Label.isEmpty()) {
-    xLabelHide = false;
-    _x1 -= metrics.lineSpacing();
-  }
-  if(!yAxis.Label.isEmpty()) {
-    yLabelHide = false;
-    _y2 += metrics.lineSpacing();
-  }
-  if(!zAxis.Label.isEmpty()) {
-    zLabelHide = false;
-    _x2 += metrics.lineSpacing();
-  }
-
-  for(Graph *pg = Graphs.first(); pg != 0; pg = Graphs.next()) {
-
-    if(pg->yAxisNo == 0) {   // used with left axis ?
-      if(yLabelHide)
-        _x1 -= metrics.lineSpacing();   // expand bounding with text size
-    }
-    else {
-      if(zLabelHide)
-        _x2 += metrics.lineSpacing();
-    }
-    if(xLabelHide) _y2 += metrics.lineSpacing();
-
-  }
+  _x1 = cx - Bounding_x1;
+  _y1 = cy - y2 - Bounding_y2;
+  _x2 = cx + x2 + Bounding_x2;
+  _y2 = cy + Bounding_y1;
 }
 
 // -------------------------------------------------------
