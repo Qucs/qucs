@@ -1874,6 +1874,10 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event, QucsDoc *d)
       pm->y1 += MAy3;
     }
 
+  int x1, x2, y1, y2;
+  pd->Bounding(x1, x2, y1, y2);
+  enlargeView(x1, x2, y1, y2);
+
   MouseMoveAction = 0;
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
@@ -2118,7 +2122,10 @@ void QucsView::editElement(QMouseEvent *Event)
          ddia = new DiagramDialog(dia, d->DataSet, this);
          if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
            d->setChanged(true, true);
-         break;
+
+	 dia->Bounding(x1, x2, y1, y2);
+	 enlargeView(x1, x2, y1, y2);
+	 break;
 
     case isGraph :
 	 pg = (Graph*)focusElement;

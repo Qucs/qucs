@@ -102,6 +102,8 @@ protected:
 
 private:
   void calcData(Graph*);
+
+  int Bounding_x1, Bounding_x2, Bounding_y1, Bounding_y2;
 };
 
 #endif
