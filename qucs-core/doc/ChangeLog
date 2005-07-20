@@ -1,3 +1,8 @@
+2005-07-18  Stefan Jahn  <stefan@lkcc.org>
+
+	* acanalysis.tex (subsection{Non-ideal transformer}): Fixed
+	conversion formula for non-ideal transformer.
+
 2005-06-19  Stefan Jahn  <stefan@lkcc.org>
 
 	* literature.bib: Added some more books and articles.

@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.22 2005/06/02 18:17:51 raimi Exp $
+ * $Id: qucsdefs.h,v 1.23 2005/07/20 16:49:51 raimi Exp $
  *
  */
 
@@ -205,7 +205,7 @@ struct define_t qucs_definition_available[] =
   /* ideal transmission line */
   { "TLIN", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "Z", PROP_REAL, { 50, PROP_NO_STR }, PROP_POS_RANGE }, 
-      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_POS_RANGE },
+      { "L", PROP_REAL, { 1e-3, PROP_NO_STR }, PROP_NO_RANGE },
       PROP_NO_PROP },
     { PROP_NO_PROP }
   },
