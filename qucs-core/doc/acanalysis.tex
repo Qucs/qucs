@@ -370,20 +370,19 @@ Y_{13} = Y_{31} = Y_{24} = Y_{42} = -Y_{12} &= -Y_{21} = -Y_{34} = -Y_{43} =
   k\cdot\frac{j\omega\sqrt{L_1\cdot L_2}}{j\omega\cdot L_2 + R_2}\cdot Y_{11}
 \end{align}
 
-Building the S-parameters leads to too large equations. Converting the
-Y-parameters into S-parameters is therefore recommended.
+Building the S-parameters leads to too large equations. Converting
+the Y-parameters into S-parameters is therefore recommended.
 
 \addvspace{12pt}
 
-A transformer with three coupled inductors has three coupling
-factors $k_{12}$, $k_{13}$ and $k_{23}$. Its y-parameters writes
-as follows (port numbers are according to figure
-\ref{fig:symtrafo}).
+A transformer with three coupled inductors has three coupling factors
+$k_{12}$, $k_{13}$ and $k_{23}$.  Its Y-parameters write as follows
+(port numbers are according to figure \ref{fig:symtrafo}).
 
 \begin{gather}
 A = j\omega\cdot (1 - k_{12}^2 - k_{13}^2 - k_{23}^2 + 2\cdot k_{12}\cdot k_{13}\cdot k_{23} ) \\
-Y_{11} = Y_{66} = -Y_{16} = -Y_{61} = \dfrac{1-k_{23}^2}{L_1\cdot A} \qquad
-Y_{22} = Y_{33} = -Y_{23} = -Y_{32} = \dfrac{1-k_{12}^2}{L_3\cdot A} \qquad
+Y_{11} = Y_{66} = -Y_{16} = -Y_{61} = \dfrac{1-k_{23}^2}{L_1\cdot A} \\
+Y_{22} = Y_{33} = -Y_{23} = -Y_{32} = \dfrac{1-k_{12}^2}{L_3\cdot A} \\
 Y_{44} = Y_{55} = -Y_{45} = -Y_{54} = \dfrac{1-k_{13}^2}{L_2\cdot A} \\
 Y_{12} = Y_{21} = Y_{36} = Y_{63} = -Y_{13} = -Y_{31} = -Y_{26} = -Y_{62}
    = \dfrac{k_{12}\cdot k_{23} - k_{13}}{\sqrt{L_1\cdot L_3}\cdot A} \\

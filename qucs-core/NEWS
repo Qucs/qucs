@@ -26,6 +26,8 @@ files.
 Version 0.0.7
 -------------
 
+ * started chapter about harmonic balance and its noise
+ * documentation of mutual inductors
  * fixed bug in non-linear operational amplifier model
  * new unwrap(), rad2deg() and deg2rad() functions in equation solver
 
