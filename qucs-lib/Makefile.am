@@ -26,6 +26,8 @@ SUBDIRS = library
 
 bin_PROGRAMS = qucslib
 
+dist_man_MANS = qucslib.1
+
 MOCHEADERS = qucslib.h displaydialog.h symbolwidget.h searchdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 

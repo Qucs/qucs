@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(qucs,0.0.7,qucs-bugs@lists.sourceforge.net)
+AC_INIT(qucs,0.0.8,qucs-bugs@lists.sourceforge.net)
 AC_CONFIG_SRCDIR([qucs/qucs.cpp])
 AC_CONFIG_HEADERS([config.h])
 
@@ -127,10 +127,10 @@ AC_ARG_ENABLE([mt],
    fi])
 if test "$enable_mt" = yes; then
   QT_LIB="-lqt-mt"
-  case $host_os in
+  [case $host_os in
     *freebsd4* ) QT_LIB="$QT_LIB -pthread" ;;
     *freebsd[567]* ) QT_LIB="$QT_LIB -lpthread" ;;
-  esac
+  esac]
   QT_INC="$QT_DEF -DQT_THREAD_SUPPORT -D_REENTRANT"
   QT_MTS="multi-threaded"
 else
