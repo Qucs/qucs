@@ -1,3 +1,15 @@
+2005-07-23  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs-lib/qucslib.1: Added manpage for the QucsLib library
+	manager program.
+
+	* configure.ac: Finally fixed freebsd[456]* detection.
+
+2005-07-22  Stefan Jahn  <stefan@lkcc.org>
+
+	* configure.ac: Released version 0.0.7 and bumped up to version
+	0.0.8.
+
 2005-05-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* configure.ac: Released version 0.0.6 and bumped up to version

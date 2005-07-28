@@ -18,6 +18,7 @@
 #include "rect3ddiagram.h"
 #include "main.h"
 
+#include <stdlib.h>
 #include <math.h>
 
 

@@ -539,7 +539,7 @@ void QucsView::MovingElements()
       else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
               if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
-      if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
+      if(((unsigned long)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
       else {  if(long(pw->Port2) & 1) pw->x2 += MAx1;
               if(long(pw->Port2) & 2) pw->y2 += MAy1; }
 
@@ -725,7 +725,7 @@ void QucsView::MMoveMoving(QMouseEvent *Event)
       else {  if(long(pw->Port1) & 1) { pw->x1 += MAx1; }
               if(long(pw->Port1) & 2) { pw->y1 += MAy1; } }
 
-      if(int(pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
+      if(((unsigned long)pw->Port2) > 3) { pw->x2 += MAx1;  pw->y2 += MAy1; }
       else {  if(long(pw->Port2) & 1) pw->x2 += MAx1;
               if(long(pw->Port2) & 2) pw->y2 += MAy1; }
 
