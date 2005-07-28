@@ -1,3 +1,12 @@
+2005-07-27  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucs_es.ts: Applied new Spanish translations by Jose.
+
+	* qucsview.cpp: Applied amd64-patch.
+
+	* diagrams/rect3ddiagram.cpp: Include <stdlib.h> for
+	malloc/realloc/free.
+
 2005-07-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug cutting off diagram labels on printings
