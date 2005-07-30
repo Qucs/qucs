@@ -1,3 +1,8 @@
+qucs (0.0.7-1) unstable; urgency=low
+
+  * New upstream release (Closes: #303863).
+  * Modified name from Qt Universal... to Quite Universal to comply Trolltech indications.
+
 qucs (0.0.5-1) unstable; urgency=low
 
   * Initial Debian release (Closes: #252450).
