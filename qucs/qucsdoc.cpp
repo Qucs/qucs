@@ -36,7 +36,7 @@
 
 
 // icon for unsaved files (diskette)
-static const char *smallsave_xpm[] = {
+const char *smallsave_xpm[] = {
 "16 17 66 1", " 	c None",
 ".	c #595963","+	c #E6E6F1","@	c #465460","#	c #FEFEFF",
 "$	c #DEDEEE","%	c #43535F","&	c #D1D1E6","*	c #5E5E66",
@@ -73,6 +73,10 @@ static const char *smallsave_xpm[] = {
 "      0x9y      ",
 "       zA       "};
 
+const char *empty_xpm[] = {  // provides same height than "smallsave_xpm"
+"1 17 1 1", "  c None", " ", " ", " ", " ", " ",
+" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "};
+
 
 QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
 {
@@ -94,6 +98,7 @@ QucsDoc::QucsDoc(QucsApp *App_, const QString& _Name) : File(this)
   else {
     QFileInfo Info(DocName);
     Tab = new QTab(Info.fileName());
+    Tab->setIconSet(QIconSet(QPixmap(empty_xpm)));   // no icon in TabBar
     DataSet = Info.baseName()+".dat";   // name of the default dataset
     if(Info.extension(false) == "sch")
       DataDisplay = Info.baseName()+".dpl"; // name of default data display
@@ -167,7 +172,7 @@ void QucsDoc::setChanged(bool c, bool fillStack, char Op)
     }
   }
   else if(DocChanged && (!c)) {
-    Tab->setIconSet(QIconSet(0));   // no icon in TabBar
+    Tab->setIconSet(QIconSet(QPixmap(empty_xpm)));   // no icon in TabBar
     if(Bar) {
       Bar->layoutTabs();
       Bar->repaint();
@@ -1235,17 +1240,18 @@ Marker* QucsDoc::setMarker(int x, int y)
 bool QucsDoc::MarkerLeftRight(bool left)
 {
   bool acted = false;
+  bool selected = false;
   for(Diagram *pd = Diags->last(); pd != 0; pd = Diags->prev())
     for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
       // test all markers of the graph
       for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
 	if(pm->isSelected) {
-	  pm->moveLeftRight(left);
-	  acted = true;  // even though marker is not neccessarily moved
+	  selected = true;
+	  if(pm->moveLeftRight(left))  acted = true;
 	}
 
   if(acted)  setChanged(true, true, 'm');
-  return acted;
+  return selected;
 }
 
 // ---------------------------------------------------
@@ -1253,17 +1259,18 @@ bool QucsDoc::MarkerLeftRight(bool left)
 bool QucsDoc::MarkerUpDown(bool up)
 {
   bool acted = false;
+  bool selected = false;
   for(Diagram *pd = Diags->last(); pd != 0; pd = Diags->prev())
     for(Graph *pg = pd->Graphs.last(); pg != 0; pg = pd->Graphs.prev())
       // test all markers of the graph
       for(Marker *pm = pg->Markers.first(); pm!=0; pm = pg->Markers.next())
 	if(pm->isSelected) {
-	  pm->moveUpDown(up);
-	  acted = true;  // even though marker is not neccessarily moved
+	  selected = true;
+	  if(pm->moveUpDown(up))  acted = true;
 	}
 
   if(acted)  setChanged(true, true, 'm');
-  return acted;
+  return selected;
 }
 
 // ---------------------------------------------------

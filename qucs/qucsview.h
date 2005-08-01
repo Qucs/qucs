@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsview.h  -  description
-                             -------------------
+                               qucsview.h
+                              ------------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -46,17 +46,16 @@ class QPopupMenu;
 class QucsView : public QScrollView
 {
   Q_OBJECT
-
 public:
   QucsView(QWidget *parent=0);
-  ~QucsView();
+ ~QucsView();
 
   float Zoom(float);
-  bool   pasteElements();
-  void   enlargeView(int, int, int, int);
-  void   setPainter(QPainter*, QucsDoc*);
-  void   eraseCross();
-  void   editLabel(WireLabel*);
+  bool  pasteElements();
+  void  enlargeView(int, int, int, int);
+  void  setPainter(QPainter*, QucsDoc*);
+  void  eraseCross();
+  void  editLabel(WireLabel*);
 
   Element  *selElem;  // component/diagram/painting selected in IconView
 
@@ -103,6 +102,7 @@ public slots:
 
   void slotHideEdit();
   void slotEditElement();
+  void slotPowerMatching();
 
 public:
   void MMoveSelect(QMouseEvent*);
@@ -165,7 +165,7 @@ private:
   void editElement(QMouseEvent*);
   void rightPressMenu(QMouseEvent*, QucsDoc*, int, int);
 
-  int MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
+  int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
   bool isMoveEqual;
   Element *focusElement;
   QMouseEvent *focusMEvent;

@@ -49,8 +49,8 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   Expr.setPattern("[\\w_]+");  // valid expression for property 'NameEdit' etc
   ValRestrict = new QRegExpValidator(Expr, this);
 
-  checkSim  = 0;  editSim   = 0;  comboType = 0;  checkParam = 0;
-  editStart = 0;  editStop  = 0;  editNumber = 0;
+  checkSim  = 0;  editSim  = 0;  comboType  = 0;  checkParam = 0;
+  editStart = 0;  editStop = 0;  editNumber = 0;
 
   Property *pp = 0;   // last property not to put in ListView
   // ...........................................................
