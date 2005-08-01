@@ -128,6 +128,8 @@ void Marker::initText(int n)
     case 2: Text += complexRad(*pz, *(pz+1), Precision);
 	    break;
   }
+  VarPos[nVarPos] = *pz;
+  VarPos[nVarPos+1] = *(pz+1);
 
   px = VarPos;
   py = VarPos + 1;
@@ -196,6 +198,8 @@ void Marker::createText()
     case 2: Text += complexRad(*pz, *(pz+1), Precision);
 	    break;
   }
+  VarPos[nVarPos] = *pz;
+  VarPos[nVarPos+1] = *(pz+1);
 
   Axis *pa;
   if(pGraph->yAxisNo == 0)  pa = &(Diag->yAxis);

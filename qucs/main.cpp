@@ -272,6 +272,31 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
 }
 
 // #########################################################################
+QString num2str(double Num)
+{
+  int Expo = int(log10(Num) / 3.0);
+  if(Expo < 0) Expo--;
+
+  char c = 0;
+  if(Expo >= -4) if(Expo <= 3)
+    switch(Expo) {
+      case -4: c = 'p'; break;
+      case -3: c = 'n'; break;
+      case -2: c = 'u'; break;
+      case -1: c = 'm'; break;
+      case  1: c = 'k'; break;
+      case  2: c = 'M'; break;
+      case  3: c = 'G'; break;
+    }
+
+  if(c)  Num /= pow(10.0, double(3*Expo));
+  QString Str = QString::number(Num);
+  if(c)  Str += c;
+  
+  return Str;
+}
+
+// #########################################################################
 void convert2Unicode(QString& Text)
 {
   bool ok;
@@ -323,16 +348,6 @@ int main(int argc, char *argv[])
   return 0;
 #endif
 
-#if 0
-  char Zahl1[32] = "12.34e2+j56.7";
-  char Zahl2[32] = "12.56e2";
-  char *p = 0;
-  double z1 = strtod(Zahl1, &p);
-  qDebug("%p -> %g -> %p", &Zahl1[0], z1, p);
-  double z2 = strtod(Zahl2, &p);
-  qDebug("%p -> %g -> %p", &Zahl2[0], z2, p);
-  return 0;
-#endif
 
   // apply default settings
   QucsSettings.x = 0;
