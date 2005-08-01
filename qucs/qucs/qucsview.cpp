@@ -25,6 +25,7 @@
 #include "diagrams/markerdialog.h"
 #include "diagrams/tabdiagram.h"
 #include "dialogs/labeldialog.h"
+#include "dialogs/matchdialog.h"
 
 #include <qinputdialog.h>
 #include <qclipboard.h>
@@ -114,84 +115,6 @@ void QucsView::drawContents(QPainter *p, int, int, int, int)
 			visibleWidth(), visibleHeight());
   d->paint(&Painter);
 //  drawn = false;
-
-/*
-p->setPen(QPen(QPen::red, 0));
-p->drawLine(30, 0, 30, 60);
-p->drawLine(60, 0, 60, 60);
-p->setPen(QPen(QPen::blue, 0));
-p->drawLine(60, 30, 30, 30);
-
-p->setPen(QPen(QPen::red, 0));
-p->drawLine(90, 30, 120, 30);
-p->drawLine(90, 70, 120, 70);
-p->setPen(QPen(QPen::blue, 0));
-p->drawLine(110, 70, 110, 30);
-
-p->setPen(QPen(QPen::red, 0));
-p->drawPoint(150, 30);
-p->drawPoint(130, 50);
-p->setPen(QPen(QPen::blue, 0));
-p->drawLine(150, 30, 130, 50);
-
-p->setPen(QPen(QPen::red, 0));
-p->drawLine(170, 0, 170, 50);
-p->drawLine(170, 50, 210, 50);
-p->drawLine(210, 0, 210, 50);
-p->drawLine(170, 10, 210, 10);
-p->setPen(QPen(QPen::blue, 2));
-p->drawEllipse(170, 10, 40, 40);
-*/
-/*
-  // line algorithm
-  int x1_ = 80, y1_ = 40;
-  int x2_ = 10, y2_ = 10;
-
-  int ax_ = 0, ay_ = 0;
-  int ix_, iy_, dx_, dy_, of_;
-
-  if(x2_ >= x1_) {
-    dx_ = x2_ - x1_;
-    ix_ = 1;
-  }
-  else {
-    dx_ = x1_ - x2_;
-    ix_ = -1;
-  }
-
-  if(y2_ >= y1_) {
-    dy_ = y2_ - y1_;
-    iy_ = 1;
-  }
-  else {
-    dy_ = y1_ - y2_;
-    iy_ = -1;
-  }
-
-  if(dx_ < dy_) {
-    of_ = dx_;   // exchange dx and dy
-    dx_ = dy_;
-    dy_ = of_;
-
-    ax_ = iy_;
-    ay_ = ix_;
-    ix_ = iy_ = 0;
-  }
-
-  of_ = dx_ >> 1;
-  p->drawPoint(x1_, y1_);
-  for(int i=dx_; i>0; i--) {
-    x1_ += ix_;
-    y1_ += ax_;
-    of_ += dy_;
-    if(of_ > dx_) {
-      of_ -= dx_;
-      x1_ += ay_;
-      y1_ += iy_;
-    }
-    p->drawPoint(x1_, y1_);
-  }
-*/
 }
 
 // -----------------------------------------------------------
@@ -217,8 +140,6 @@ bool QucsView::pasteElements()
   QTextStream stream(&s, IO_ReadOnly);
   movingElements.clear();
   if(!Docs.current()->paste(&stream, &movingElements)) return false;
-
-//  viewport()->repaint();
 
   Element *pe;
   int xmax, xmin, ymax, ymin;
@@ -1169,6 +1090,13 @@ void QucsView::rightPressMenu(QMouseEvent *Event, QucsDoc *d, int x, int y)
   }
   if(!QucsMain->Acts.editDelete->isOn())
     QucsMain->Acts.editDelete->addTo(ComponentMenu);
+  if(focusElement) if(focusElement->Type == isMarker) {
+    ComponentMenu->insertSeparator();
+    QString s = tr("power matching");
+    if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
+      s = tr("noise matching");
+    ComponentMenu->insertItem(s, this, SLOT(slotPowerMatching()));
+  }
   while(true) {
     if(focusElement) {
       if(focusElement->Type == isDiagram) break;
@@ -2539,4 +2467,26 @@ void QucsView::slotApplyCompText()
 void QucsView::slotHideEdit()
 {
   editText->setHidden(true);
+}
+
+// -----------------------------------------------------------
+void QucsView::slotPowerMatching()
+{
+  if(!focusElement) return;
+  if(focusElement->Type != isMarker) return;
+  Marker *pm = (Marker*)focusElement;
+
+  double Z0 = 50.0;
+  QString Var = pm->pGraph->Var;
+  double Imag = pm->VarPos[pm->nVarPos+1];
+  if(Var == "Sopt")  // noise matching ?
+    Imag *= -1.0;
+
+  MatchDialog *Dia =
+       new MatchDialog(this, pm->VarPos[pm->nVarPos], Imag, pm->VarPos[0], Z0);
+
+  if(Dia->exec() != QDialog::Accepted)
+    return;
+
+  QucsMain->slotToPage();
 }

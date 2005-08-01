@@ -22,6 +22,8 @@
 #include "components/ground.h"
 #include "components/subcirport.h"
 #include "components/equation.h"
+#include "dialogs/changedialog.h"
+#include "dialogs/matchdialog.h"
 
 #include <qprocess.h>
 #include <qmessagebox.h>
@@ -513,6 +515,14 @@ void QucsActions::slotCallLibrary()
   connect(App, SIGNAL(signalKillEmAll()), QucsLibrary, SLOT(kill()));
 }
 
+// ------------------------------------------------------------------------
+// Is called to show a dialog for creating matching circuits.
+void QucsActions::slotCallMatch()
+{
+  MatchDialog *d = new MatchDialog(App);
+  d->exec();
+}
+
 // ########################################################################
 void QucsActions::slotHelpIndex()
 {
@@ -540,4 +550,14 @@ void QucsActions::showHTML(const QString& Page)
 
   // to kill it before qucs ends
   connect(App, SIGNAL(signalKillEmAll()), QucsHelp, SLOT(kill()));
+}
+
+// ########################################################################
+void QucsActions::slotChangeProps()
+{
+  ChangeDialog *d = new ChangeDialog(view->Docs.current(), App);
+  if(d->exec() == QDialog::Accepted) {
+    App->view->Docs.current()->setChanged(true, true);
+    App->view->viewport()->repaint();
+  }
 }

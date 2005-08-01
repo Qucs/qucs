@@ -61,6 +61,7 @@ QString complexDeg (double, double, int Precision=3);
 QString complexRad (double, double, int Precision=3);
 QString StringNum  (double, char form='g', int Precision=3);
 void    str2num    (const QString&, double&, QString&, double&);
+QString num2str    (double);
 QString StringNiceNum(double);
 void    convert2Unicode(QString&);
 
