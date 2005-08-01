@@ -23,7 +23,7 @@
 #
 
 HTML = index.html short.html start.html mathfunc.html subcircuit.html \
-  programs.html internal.html characters.html
+  programs.html internal.html characters.html matching.html
 PIC  = qucsmain.png paste.png wire.png select.png contab.png subcircuit.png
 
 EXTRA_DIST = $(HTML) $(PIC)

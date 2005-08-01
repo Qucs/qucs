@@ -228,6 +228,15 @@ void QucsInit::initActions()
   connect(Acts->moveText, SIGNAL(toggled(bool)),
 	  Acts, SLOT(slotMoveText(bool)));
 
+  Acts->changeProps =
+    new QAction(tr("Change Property Values..."),
+		tr("Change Property Values.."), Key_F7, App);
+  Acts->changeProps->setStatusTip(tr("Change Property Values"));
+  Acts->changeProps->setWhatsThis(
+	tr("Change Property Values\n\nChange Property Value of Components"));
+  connect(Acts->changeProps, SIGNAL(activated()),
+	  Acts, SLOT(slotChangeProps()));
+
   App->editCut =
     new QAction(tr("Cut"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "editcut.png")),
@@ -533,6 +542,13 @@ void QucsInit::initActions()
 		tr("Component Library\n\nStarts component library program"));
   connect(Acts->callLib, SIGNAL(activated()), Acts, SLOT(slotCallLibrary()));
 
+  Acts->callMatch = new QAction(tr("Matching Circuit"), tr("Matching Circuit"),
+				CTRL+Key_5, App);
+  Acts->callMatch->setStatusTip(tr("Creates Matching Circuit"));
+  Acts->callMatch->setWhatsThis(
+		tr("Matching Circuit\n\nDialog for Creating Matching Circuit"));
+  connect(Acts->callMatch, SIGNAL(activated()), Acts, SLOT(slotCallMatch()));
+
   App->simulate =
     new QAction(tr("Simulate"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "gear.png")),
@@ -666,6 +682,7 @@ void QucsInit::initMenuBar()
   Acts->editMirror->addTo(editMenu);
   Acts->editMirrorY->addTo(editMenu);
   Acts->editActivate->addTo(editMenu);
+  Acts->changeProps->addTo(editMenu);
   editMenu->insertItem(tr("Align"), alignMenu);
   Acts->onGrid->addTo(editMenu);
   Acts->moveText->addTo(editMenu);
@@ -692,6 +709,7 @@ void QucsInit::initMenuBar()
   Acts->callFilter->addTo(toolMenu);
   Acts->callLine->addTo(toolMenu);
   Acts->callLib->addTo(toolMenu);
+  Acts->callMatch->addTo(toolMenu);
 
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);

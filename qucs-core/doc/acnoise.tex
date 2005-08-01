@@ -99,6 +99,16 @@ j \\
  & v_{noise,i} = \sqrt{\left[v\right]^T \cdot \left( \underline{C}_Y \right) \cdot \left[v\right]^*}
 \end{alignat}
 
+If the correlation between several noise voltages is also wanted, the
+procedure is straight forward: Perform step 1 for every desired node,
+put the results into a matrix and replace the vector $[v]$ in step 3
+by this matrix. This results in the complete correlation matrix.
+Indeed, the above-mentioned algorithm is only a specialisation of
+transforming the noise correlation matrices (see section
+\ref{sec:noiseTrans}).
+
+\addvspace{12pt}
+
 If the normal AC analysis has already be done with LU decomposition,
 then the most time consuming work of step 1 has already be done.
 \begin{equation}
@@ -398,6 +408,22 @@ Noise current source with a current power spectral density of $cPSD$:
 -1 &  1 \\
 \end{pmatrix}
 \end{equation}
+
+For two correlated noise current sources the correlation coefficient $K$
+must be known. If the first noise source has the current power spectral
+density of $S_{i1}$ and is connected to node 1 and 2, and if furthermore
+the second noise source has the spectral density $S_{i2}$ and is connected
+to node 3 and 4, then the correlation matrix writes:
+\begin{equation}
+(\underline{C}_Y) =
+\begin{pmatrix}
+ S_{i1} & -S_{i1} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -K\cdot\sqrt{S_{i1}\cdot S_{i2}} \\
+-S_{i1} &  S_{i1} & -K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} \\
+ K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  S_{i2} & -S_{i2} \\
+-K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -S_{i2} &  S_{i2} \\
+\end{pmatrix}
+\end{equation}
+
 
 \subsection{Noise voltage source}
 %\addcontentsline{toc}{subsection}{Noise voltage source}

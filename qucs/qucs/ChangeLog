@@ -7,6 +7,13 @@
 	* diagrams/rect3ddiagram.cpp: Include <stdlib.h> for
 	malloc/realloc/free.
 
+2005-07-23  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* dialog for changing properties of many components
+	* set not changed if move marker is at end
+	* new feature: create matching circuit
+	* keep height of document tabbar constant
+
 2005-07-18  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* fixed bug cutting off diagram labels on printings

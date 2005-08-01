@@ -55,6 +55,74 @@
     </message>
 </context>
 <context>
+    <name>ChangeDialog</name>
+    <message>
+        <source>Change Component Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Components:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Component Names:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Property Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>all components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>capacitors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transistors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Found Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change properties of
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>these components ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Ja</translation>
+    </message>
+    <message>
+        <source>inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloseMessageBox</name>
     <message>
         <source>Save</source>
@@ -880,6 +948,49 @@
     <message>
         <source>transparent</source>
         <translation>durchsichtig</translation>
+    </message>
+</context>
+<context>
+    <name>MatchDialog</name>
+    <message>
+        <source>Create Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reference Impedance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ohm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance:</source>
+        <translation type="unfinished">Impedanz:</translation>
+    </message>
+    <message>
+        <source>Reflexion Coefficient:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Erstellen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Fehler</translation>
+    </message>
+    <message>
+        <source>Real part of impedance must be greater zero.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6322,6 +6433,38 @@ Startet das Komponentenbibliotheksprogramm</translation>
         <source>Warnings in last simulation! Press F5</source>
         <translation>In der letzten Simulation sind Warnungen aufgetreten! Drücken Sie F5</translation>
     </message>
+    <message>
+        <source>Change Property Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values
+
+Change Property Value of Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creates Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Matching Circuit
+
+Dialog for Creating Matching Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change Property Values..</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsLib</name>
@@ -6850,6 +6993,18 @@ Startet das Komponentenbibliotheksprogramm</translation>
     <message>
         <source>Edit Properties</source>
         <translation>Eigenschaften bearbeiten</translation>
+    </message>
+    <message>
+        <source>power matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="obsolete">Fehler</translation>
+    </message>
+    <message>
+        <source>noise matching</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
