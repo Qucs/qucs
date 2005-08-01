@@ -127,7 +127,7 @@ result has hopefully be found.
 Having found this result means having got the voltages $v_1...v_N$ at
 the interconnections of the two subcircuits. With these values the
 voltages at all nodes can be calculated: Forget about the non-linear
-subcircuit, put voltage sources at the former interconnections (using
+subcircuit, put current sources at the former interconnections (using
 the calculated values) and perform a normal AC simulation. After that
 the simulation is complete.
 
@@ -653,25 +653,25 @@ presented.
 
 \texttt{ \\
 \begin{tabular}{ll}
->\quad init();                    & // separate linear and non-linear devices \\
->\quad Y = calcTransMatrix();     & // transimpedance matrix of linear circuit \\
->\quad I = calcSourceCurrent();   & // source current of linear subcircuit \\
->\quad (v, i, q) = calculateDC(); & // DC simulation as initial HB estimate \\
->\quad V = FFT(v);                & // transform voltage into frequency domain \\
->\quad & \\
->\quad loop: & \\
->\quad\quad I = FFT(i);                       & // current into frequency domain \\
->\quad\quad Q = FFT(q);                       & // charge into frequency domain \\
->\quad\quad E = I + Y*V + j*Omega*Q + I;      & // HB equation \\
->\quad\quad if (abs(E) < Eterm)  return;      & // convergence reached ? \\
->\quad\quad JG = mFFT(GJacobian(v, i));       & // create Jacobians and transform... \\
->\quad\quad JQ = mFFT(QJacobian(v, i));       & // ... them into frequency domain \\
->\quad\quad J = Y + j*Omega*JQ + JG;          & // calculate overall Jacobian \\
->\quad\quad V = V - invert(J) * Error;        & // Newton Raphson iteration step \\
->\quad\quad v = IFFT(V);                      & // voltage into time domain \\
->\quad\quad i = nonlinearCurrent(v);          & // use component models to get... \\
->\quad\quad q = nonlinearCharge(v);           & // ... values for next iteration \\
->\quad\quad goto loop; & \\
+ init();                    & // separate linear and non-linear devices \\
+ Y = calcTransMatrix();     & // transimpedance matrix of linear circuit \\
+ Is = calcSourceCurrent();  & // source current of linear subcircuit \\
+ (v, i, q) = calculateDC(); & // DC simulation as initial HB estimate \\
+ V = FFT(v);                & // transform voltage into frequency domain \\
+ & \\
+ loop: & \\
+\quad I = FFT(i);                       & // current into frequency domain \\
+\quad Q = FFT(q);                       & // charge into frequency domain \\
+\quad E = Is + Y*V + j*Omega*Q + I;     & // HB equation \\
+\quad if (abs(E) < Eterm)  return;      & // convergence reached ? \\
+\quad JG = mFFT(GJacobian(v, i));       & // create Jacobians and transform... \\
+\quad JQ = mFFT(QJacobian(v, i));       & // ... them into frequency domain \\
+\quad J = Y + j*Omega*JQ + JG;          & // calculate overall Jacobian \\
+\quad V = V - invert(J) * Error;        & // Newton Raphson iteration step \\
+\quad v = IFFT(V);                      & // voltage into time domain \\
+\quad i = nonlinearCurrent(v);          & // use component models to get... \\
+\quad q = nonlinearCharge(v);           & // ... values for next iteration \\
+\quad goto loop; & \\
 \end{tabular}
 }
 
