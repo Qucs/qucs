@@ -45,5 +45,16 @@ stemming from the non-linear subcircuit.
 
 First, the noise stemming from the linear subcircuit has to be
 calculated. This results in the noise correlation matrix of the
-nodes connected to the non-linear subcircuit. The method is quite
-similar to the AC noise analysis.
+nodes connected to the non-linear subcircuit. The method is the
+same as in the AC noise analysis (see section
+\ref{sec:acnoise_algo}) and is not described here any
+further.
+
+
+\section{The Non-Linear Subcircuit}
+
+The noise in the non-linear part of the circuit is calculated
+by using the quasi-static approach, i.e. for every moment in
+time the voltages and currents are regarded as a time-dependend
+bias point. The noise properties of these bias points are
+used for the noise calculation.
