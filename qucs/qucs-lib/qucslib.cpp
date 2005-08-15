@@ -272,7 +272,7 @@ void QucsLib::slotSelectLibrary(int Index)
 void QucsLib::slotSearchComponent()
 {
   SearchDialog *d = new SearchDialog(this);
-  if(d->exec() != QDialog::Accepted)
+  if(d->exec() == QDialog::Accepted)
     QMessageBox::information(this, tr("Result"),
                              tr("No appropriate component found."));
 }

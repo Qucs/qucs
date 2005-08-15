@@ -1,6 +1,6 @@
 /***************************************************************************
-                          wirelabel.h  -  description
-                             -------------------
+                                wirelabel.h
+                               -------------
     begin                : Sun Feb 29 2004
     copyright            : (C) 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -28,10 +28,6 @@
 class Wire;
 class Node;
 
-/**
-  *@author Michael Margraf
-  */
-
 
 class WireLabel : public Element {
 public:
@@ -44,8 +40,7 @@ public:
   bool getSelected(int, int);
   void setName(const QString& Name_);
 
-  Wire    *pWire;
-  Node    *pNode;
+  Conductor *pOwner;  // Wire or Node where label belongs to
   QString Name, initValue;
 
   void    paint(ViewPainter*);

@@ -87,16 +87,11 @@ GraphicTextDialog::GraphicTextDialog(QWidget *parent, const char *name)
   h2->setStretchFactor(place2,5);
 
   val360 = new QIntValidator(0, 359, this);
-  QLabel *l1 = new QLabel(tr("Rotation angle: "), h2);
+  new QLabel(tr("Rotation angle: "), h2);
   Angle = new QLineEdit(h2);
   Angle->setValidator(val360);
   Angle->setMaximumWidth(35);
   Angle->setText("0");
-
-  if(QucsMain->view->Docs.current()->symbolMode) {
-    l1->setEnabled(false);
-    Angle->setEnabled(false);
-  }
 
   text->setFocus();
 }

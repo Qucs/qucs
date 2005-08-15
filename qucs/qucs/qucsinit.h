@@ -47,6 +47,7 @@ public slots:
   void slotHelpAboutQt();     // shows the standard about dialog for Qt
 
   void slotShowWarnings();
+  void slotResetWarnings();
 
 private:
   void initActions();    // initializes all QActions of the application

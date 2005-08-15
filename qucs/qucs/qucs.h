@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucs.h  -  description
-                             -------------------
+                                   qucs.h
+                                  --------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -65,7 +65,7 @@ class QucsApp : public QMainWindow
   Q_OBJECT
 public:
     QucsApp();
-    ~QucsApp();
+   ~QucsApp();
 
     void initView();       // setup the mainview
     void initCursorMenu();
@@ -114,7 +114,6 @@ public slots:
     void slotOpenProject(QListBoxItem*);
     void slotMenuCloseProject();
     void slotSelectComponent(QIconViewItem*);
-//    void slotOpenContent(QListViewItem *item, const QPoint &, int column);  // Qt3.2
     void slotSelectSubcircuit(QListViewItem*);
     void slotOpenContent(QListViewItem*);
     void slotSetCompView(int);
@@ -125,6 +124,7 @@ public slots:
     void slotChangeView(int);
     void slotSimulate();
     void slotAfterSimulation(int, SimMessage*);
+    void slotDCbias();
     void slotChangePage(QString);
     void slotToPage();
     void slotNextTab();
@@ -144,7 +144,7 @@ public:
           *fileSaveAll, *fileClose, *fileSettings, *filePrint, *fileQuit,
           *projNew, *projOpen, *projDel, *projClose, *applSettings,
           *editCut, *editCopy, *magAll, *magOne, *magMinus, *filePrintSel,
-          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo;
+          *symEdit, *intoH, *popH, *simulate, *dpl_sch, *undo, *redo, *dcbias;
 
   QAction *activeAction;    // pointer to the action selected by the user
   QucsActions  Acts;    // contains most of the toggle actions

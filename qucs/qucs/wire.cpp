@@ -139,8 +139,7 @@ void Wire::setName(const QString& Name_, const QString& Value_, int delta_, int 
       Label = new WireLabel(Name_, x1+delta_, y1, x_, y_, isHWireLabel);
     else
       Label = new WireLabel(Name_, x1, y1+delta_, x_, y_, isVWireLabel);
-    Label->pNode = 0;
-    Label->pWire = this;
+    Label->pOwner = this;
     Label->initValue = Value_;
   }
   else Label->setName(Name_);

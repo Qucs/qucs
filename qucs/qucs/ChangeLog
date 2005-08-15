@@ -1,3 +1,13 @@
+2005-06-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* ChangeDialog with post-select of components
+	* component text in subcircuits can be rotated
+	* fixed small bug showing wrong default graph color in dialog
+	* added new function for concurrent 2-port matching
+	* small bux fix in library search dialog
+	* fixed bug for negative values in num2str()
+	* new feature: show DC bias in schematic
+
 2005-07-27  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucs_es.ts: Applied new Spanish translations by Jose.

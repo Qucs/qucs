@@ -256,7 +256,6 @@ void Component::paint(ViewPainter *p)
       p->Painter->setFont(newFont);
       p->Painter->setPen(pt->Color);
       p->Painter->drawText(0, 0, 0, 0, Qt::DontClip, pt->s);
-//      p->Painter->drawText(0, 0, pt->s);
     }
     p->Painter->setWorldMatrix(wm);
     p->Painter->setWorldXForm(false);
@@ -865,7 +864,7 @@ int Component::analyseLine(const QString& Row)
     return 1;
   }
   else if(s == "Text") {  // must be last in order to reuse "s" *********
-    if(!getIntegers(Row, &i1, &i2, &i3))  return -1;
+    if(!getIntegers(Row, &i1, &i2, &i3, 0, &i4))  return -1;
     Color.setNamedColor(Row.section(' ',4,4));
     if(!Color.isValid()) return -1;
 
@@ -874,18 +873,27 @@ int Component::analyseLine(const QString& Row)
     if(s.isEmpty()) return -1;
     convert2Unicode(s);
 
-    Texts.append(new Text(i1, i2, s, Color, float(i3)));
+    Texts.append(new Text(i1, i2, s, Color, float(i3),
+                          float(cos(float(i4)*M_PI/180.0)),
+                          float(sin(float(i4)*M_PI/180.0))));
 
     QFont Font(QucsSettings.font);
     Font.setPointSizeFloat(float(i3));
     QFontMetrics  metrics(Font);
     QSize r = metrics.size(0, s);    // get size of text
-    i3 = i1 + r.width();
-    i4 = i2 + r.height();
+    i3 = i1 + int(float(r.width())  * Texts.current()->mCos)
+            + int(float(r.height()) * Texts.current()->mSin);
+    i4 = i2 + int(float(r.width())  * -Texts.current()->mSin)
+            + int(float(r.height()) * Texts.current()->mCos);
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
-    if(i3 > x2)  x2 = i3;
     if(i2 < y1)  y1 = i2;
+    if(i1 > x2)  x2 = i1;
+    if(i2 > y2)  y2 = i2;
+    
+    if(i3 < x1)  x1 = i3;
+    if(i4 < y1)  y1 = i4;
+    if(i3 > x2)  x2 = i3;
     if(i4 > y2)  y2 = i4;
   }
 
@@ -914,10 +922,11 @@ bool Component::getIntegers(const QString& s, int *i1, int *i2, int *i3,
   *i3 = n.toInt(&ok);
   if(!ok) return false;
 
-  if(!i4) return true;
-  n  = s.section(' ',4,4);
-  *i4 = n.toInt(&ok);
-  if(!ok) return false;
+  if(i4) {
+    n  = s.section(' ',4,4);
+    *i4 = n.toInt(&ok);
+    if(!ok) return false;
+  }
 
   if(!i5) return true;
   n  = s.section(' ',5,5);
