@@ -82,7 +82,7 @@ bool QucsActions::performToggleAction(bool on, QAction *Action,
 
   } while(false);   // to perform "break"
 
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
   return true;
 }
@@ -194,7 +194,7 @@ void QucsActions::slotEditPaste(bool on)
     view->MouseReleaseAction = 0;
     view->MouseDoubleClickAction = 0;
     App->activeAction = 0;   // no action active
-    if(view->drawn) view->viewport()->repaint();
+    if(view->drawn) view->viewport()->update();
     return;
   }
 
@@ -245,7 +245,7 @@ void QucsActions::slotInsertEquation(bool on)
 
   view->selElem = new Equation();
 
-  if(view->drawn) view->viewport()->repaint();
+  if(view->drawn) view->viewport()->update();
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMoveElement;
   view->MousePressAction = &QucsView::MPressElement;
@@ -277,7 +277,7 @@ void QucsActions::slotInsertGround(bool on)
 
   view->selElem = new Ground();
 
-  if(view->drawn) view->viewport()->repaint();
+  if(view->drawn) view->viewport()->update();
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMoveElement;
   view->MousePressAction = &QucsView::MPressElement;
@@ -309,7 +309,7 @@ void QucsActions::slotInsertPort(bool on)
 
   view->selElem = new SubCirPort();
 
-  if(view->drawn) view->viewport()->repaint();
+  if(view->drawn) view->viewport()->update();
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMoveElement;
   view->MousePressAction = &QucsView::MPressElement;
@@ -322,7 +322,7 @@ void QucsActions::slotEditUndo()
   view->editText->setHidden(true); // disable text edit of component property
   
   view->Docs.current()->undo();
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -333,7 +333,7 @@ void QucsActions::slotEditRedo()
   view->editText->setHidden(true); // disable text edit of component property
   
   view->Docs.current()->redo();
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -346,7 +346,7 @@ void QucsActions::slotAlignTop()
   if(!view->Docs.current()->aligning(0))
     QMessageBox::information(App, tr("Info"),
 		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -359,7 +359,7 @@ void QucsActions::slotAlignBottom()
   if(!view->Docs.current()->aligning(1))
     QMessageBox::information(App, tr("Info"),
 		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -372,7 +372,7 @@ void QucsActions::slotAlignLeft()
   if(!view->Docs.current()->aligning(2))
     QMessageBox::information(App, tr("Info"),
 		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -385,7 +385,7 @@ void QucsActions::slotAlignRight()
   if(!view->Docs.current()->aligning(3))
     QMessageBox::information(App, tr("Info"),
 		      tr("At least two elements must be selected !"));
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -396,7 +396,7 @@ void QucsActions::slotDistribHoriz()
   view->editText->setHidden(true); // disable text edit of component property
 
   view->Docs.current()->distribHoriz();
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -407,7 +407,7 @@ void QucsActions::slotDistribVert()
   view->editText->setHidden(true); // disable text edit of component property
 
   view->Docs.current()->distribVert();
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -419,7 +419,7 @@ void QucsActions::slotSelectAll()
 
   view->Docs.current()->selectElements(INT_MIN, INT_MIN,
 				INT_MAX, INT_MAX, true);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -558,6 +558,6 @@ void QucsActions::slotChangeProps()
   ChangeDialog *d = new ChangeDialog(view->Docs.current(), App);
   if(d->exec() == QDialog::Accepted) {
     App->view->Docs.current()->setChanged(true, true);
-    App->view->viewport()->repaint();
+    App->view->viewport()->update();
   }
 }

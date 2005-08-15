@@ -25,7 +25,9 @@
 #include <qcombobox.h>
 #include <qvalidator.h>
 #include <qpushbutton.h>
-#include <qlistbox.h>
+#include <qscrollview.h>
+#include <qvbox.h>
+#include <qcheckbox.h>
 #include <qmessagebox.h>
 
 
@@ -35,9 +37,6 @@ ChangeDialog::ChangeDialog(QucsDoc *d, QWidget *parent)
   setCaption(tr("Change Component Properties"));
   Doc = d;
 
-  all = new QVBoxLayout(this); // to provide neccessary size
-  QWidget *myParent = this;
-
   Expr.setPattern("[^\"=]+");  // valid expression for property value
   Validator = new QRegExpValidator(Expr, this);
   Expr.setPattern("[\\w_]+");  // valid expression for property name
@@ -45,46 +44,45 @@ ChangeDialog::ChangeDialog(QucsDoc *d, QWidget *parent)
 
 
   // ...........................................................
-  QGridLayout *topGrid = new QGridLayout(0, 4,2,3,3);
-  all->addLayout(topGrid);
+  all = new QGridLayout(this, 5,2,3,3);
 
-  topGrid->addWidget(new QLabel(tr("Components:"), myParent), 0,0);
-  CompTypeEdit = new QComboBox(myParent);
+  all->addWidget(new QLabel(tr("Components:"), this), 0,0);
+  CompTypeEdit = new QComboBox(this);
   CompTypeEdit->insertItem(tr("all components"));
   CompTypeEdit->insertItem(tr("resistors"));
   CompTypeEdit->insertItem(tr("capacitors"));
   CompTypeEdit->insertItem(tr("inductors"));
   CompTypeEdit->insertItem(tr("transistors"));
-  topGrid->addWidget(CompTypeEdit, 0,1);
+  all->addWidget(CompTypeEdit, 0,1);
 
-  topGrid->addWidget(new QLabel(tr("Component Names:"), myParent), 1,0);
-  CompNameEdit = new QLineEdit(myParent);
+  all->addWidget(new QLabel(tr("Component Names:"), this), 1,0);
+  CompNameEdit = new QLineEdit(this);
   CompNameEdit->setValidator(Validator);
   CompNameEdit->setText("*");
-  topGrid->addWidget(CompNameEdit, 1,1);
+  all->addWidget(CompNameEdit, 1,1);
 //  connect(CompNameEdit, SIGNAL(returnPressed()), SLOT(slotButtReplace()));
 
-  topGrid->addWidget(new QLabel(tr("Property Name:"), myParent), 2,0);
-  PropNameEdit = new QComboBox(myParent);
+  all->addWidget(new QLabel(tr("Property Name:"), this), 2,0);
+  PropNameEdit = new QComboBox(this);
   PropNameEdit->setEditable(true);
   PropNameEdit->setValidator(ValRestrict);
   PropNameEdit->insertItem("Temp");
   PropNameEdit->insertItem("Subst");
   PropNameEdit->insertItem("Model");
-  topGrid->addWidget(PropNameEdit, 2,1);
+  all->addWidget(PropNameEdit, 2,1);
 //  connect(PropNameEdit, SIGNAL(activated(int)), SLOT(slotButtReplace()));
 
-  topGrid->addWidget(new QLabel(tr("New Value:"), myParent), 3,0);
-  NewValueEdit = new QLineEdit(myParent);
+  all->addWidget(new QLabel(tr("New Value:"), this), 3,0);
+  NewValueEdit = new QLineEdit(this);
   NewValueEdit->setValidator(Validator);
   NewValueEdit->setText("-273.15");
-  topGrid->addWidget(NewValueEdit, 3,1);
+  all->addWidget(NewValueEdit, 3,1);
 //  connect(NewValueEdit, SIGNAL(returnPressed()), SLOT(slotButtReplace()));
 
   // ...........................................................
   QHBox *h0 = new QHBox(this);
   h0->setSpacing(5);
-  all->addWidget(h0);
+  all->addMultiCellWidget(h0, 4,4, 0,1);
   connect(new QPushButton(tr("Replace"),h0), SIGNAL(clicked()),
 	  SLOT(slotButtReplace()));
   connect(new QPushButton(tr("Cancel"),h0), SIGNAL(clicked()),
@@ -136,13 +134,17 @@ void ChangeDialog::slotButtReplace()
 
 
   // create dialog showing all found components
-  QDialog     *Dia = new QDialog(this, 0, TRUE, Qt::WDestructiveClose);
+  QDialog *Dia = new QDialog(this);
   Dia->setCaption(tr("Found Components"));
   QVBoxLayout *Dia_All = new QVBoxLayout(Dia);
-  QListBox    *Dia_Box = new QListBox(Dia);
-  Dia_All->addWidget(Dia_Box);
-  QLabel      *Dia_Label = new QLabel(tr("Change properties of\n")
-                                    + tr("these components ?"), Dia);
+  Dia_All->setSpacing(3);
+  QScrollView *Dia_Scroll = new QScrollView(Dia);
+  Dia_Scroll->setMargin(5);
+  Dia_All->addWidget(Dia_Scroll);
+  QVBox *Dia_Box = new QVBox(Dia_Scroll->viewport());
+  Dia_Scroll->addChild(Dia_Box);
+  QLabel *Dia_Label = new QLabel(tr("Change properties of\n")
+                               + tr("these components ?"), Dia);
   Dia_All->addWidget(Dia_Label);
   
   QHBox       *Dia_h = new QHBox(Dia);
@@ -154,36 +156,49 @@ void ChangeDialog::slotButtReplace()
 	  Dia, SLOT(reject()));
 
 
+  QPtrList<QCheckBox> pList;
   // search through all components
   for(Component *pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
     if(matches(pc->Model)) {
       if(Expr.search(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
           if(pp->Name == PropNameEdit->currentText()) {
-            Dia_Box->insertItem(pc->Name);
+            pList.append(new QCheckBox(pc->Name, Dia_Box));
+            pList.current()->setChecked(true);
             break;
           }
     }
   }
+  Dia_Scroll->viewport()->setPaletteBackgroundColor(
+      pList.current()->paletteBackgroundColor());
+  Dia->resize(50, 300);
 
 
   // show user all components found
   int Result = Dia->exec();
-//  delete Dia_All;
   if(Result != QDialog::Accepted) return;
 
 
+  bool changed = false;
   // change property values
+  pList.first();
   for(Component *pc = Doc->Comps->first(); pc!=0; pc = Doc->Comps->next()) {
     if(matches(pc->Model)) {
       if(Expr.search(pc->Name) >= 0)
         for(Property *pp = pc->Props.first(); pp!=0; pp = pc->Props.next())
-          if(pp->Name == PropNameEdit->currentText()) {
-            pp->Value = NewValueEdit->text();
-            break;
-          }
+          if(pp->Name == PropNameEdit->currentText())
+            if(pList.current()->isChecked()) {
+              pp->Value = NewValueEdit->text();
+              pList.next();
+              changed = true;
+              break;
+            }
+            else pList.next();
     }
   }
 
-  accept();
+  delete Dia_All;
+  delete Dia;
+  if(changed) accept();
+  else reject();
 }

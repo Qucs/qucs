@@ -40,9 +40,9 @@ void Node::paint(ViewPainter *p)
   switch(Connections.count()) {
     case 1:  p->Painter->setPen(QPen(QPen::red,1));  // node is open
              p->drawEllipse(cx-4, cy-4, 8, 8);
-             break;
+             return;
     case 2:  if(Connections.getFirst()->Type == isWire)
-               if(Connections.getLast()->Type == isWire) break;
+               if(Connections.getLast()->Type == isWire) return;
              p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue);
              break;
     default: p->Painter->setBrush(Qt::darkBlue);  // more than 2 connections
@@ -73,7 +73,6 @@ void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
 
   if(!Label) Label = new WireLabel(Name_, cx, cy, x_, y_, isNodeLabel);
   else Label->setName(Name_);
-  Label->pNode = this;
-  Label->pWire = 0;
+  Label->pOwner = this;
   Label->initValue = Value_;
 }

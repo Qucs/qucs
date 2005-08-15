@@ -1,6 +1,6 @@
 /***************************************************************************
-                          element.h  -  description
-                             -------------------
+                                 element.h
+                                -----------
     begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -23,10 +23,8 @@
 
 class Node;
 class QPainter;
+class WireLabel;
 
-/**
-  *@author Michael Margraf
-  */
 
 struct Line {
   Line(int _x1, int _y1, int _x2, int _y2, QPen _style)
@@ -123,6 +121,13 @@ public:
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
   int  cx, cy, x1, y1, x2, y2;  // center and relative boundings
+};
+
+
+// label for Node and Wire classes
+class Conductor : public Element {
+public:
+  WireLabel *Label;
 };
 
 #endif

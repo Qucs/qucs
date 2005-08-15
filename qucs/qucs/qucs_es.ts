@@ -872,7 +872,7 @@
     </message>
     <message>
         <source>Impedance:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Impedancia:</translation>
     </message>
     <message>
         <source>Reflexion Coefficient:</source>
@@ -891,7 +891,8 @@
         <translation type="unfinished">Error</translation>
     </message>
     <message>
-        <source>Real part of impedance must be greater zero.</source>
+        <source>Real part of impedance must be greater zero,
+but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3456,7 +3457,7 @@ Edita el esquema</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation>sin avisos</translation>
+        <translation type="obsolete">sin avisos</translation>
     </message>
 </context>
 <context>
@@ -5005,6 +5006,20 @@ Dialog for Creating Matching Circuit</source>
         <source>Change Property Values..</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate DC bias
+
+Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsLib</name>
@@ -5531,10 +5546,34 @@ Dialog for Creating Matching Circuit</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Error</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>noise matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong depency!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,2].</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5823,6 +5862,17 @@ Errores:
     <message>
         <source>include SPICE simulations</source>
         <translation>incluir simulaciones SPICE</translation>
+    </message>
+</context>
+<context>
+    <name>SweepDialog</name>
+    <message>
+        <source>Bias Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Cerrar</translation>
     </message>
 </context>
 <context>

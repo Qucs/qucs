@@ -274,22 +274,29 @@ void str2num(const QString& s_, double& Number, QString& Unit, double& Factor)
 // #########################################################################
 QString num2str(double Num)
 {
-  int Expo = int(log10(Num) / 3.0);
-  if(Expo < 0) Expo--;
-
   char c = 0;
-  if(Expo >= -4) if(Expo <= 3)
-    switch(Expo) {
-      case -4: c = 'p'; break;
-      case -3: c = 'n'; break;
-      case -2: c = 'u'; break;
-      case -1: c = 'm'; break;
-      case  1: c = 'k'; break;
-      case  2: c = 'M'; break;
-      case  3: c = 'G'; break;
-    }
+  double cal = fabs(Num);
+  if(cal > 1e-20) {
+    cal = log10(cal) / 3.0;
+    if(cal < -0.2)  cal -= 0.98;
+    int Expo = int(cal);
 
-  if(c)  Num /= pow(10.0, double(3*Expo));
+    if(Expo >= -5) if(Expo <= 4)
+      switch(Expo) {
+        case -5: c = 'f'; break;
+        case -4: c = 'p'; break;
+        case -3: c = 'n'; break;
+        case -2: c = 'u'; break;
+        case -1: c = 'm'; break;
+        case  1: c = 'k'; break;
+        case  2: c = 'M'; break;
+        case  3: c = 'G'; break;
+        case  4: c = 'T'; break;
+      }
+
+    if(c)  Num /= pow(10.0, double(3*Expo));
+  }
+
   QString Str = QString::number(Num);
   if(c)  Str += c;
   
@@ -322,33 +329,6 @@ void convert2Unicode(QString& Text)
 
 int main(int argc, char *argv[])
 {
-#if 0
-  double zD;
-  zD = 0.0;
-  qDebug(StringNiceNum(zD));
-  zD = 112e8;
-  qDebug(StringNiceNum(zD));
-  qDebug(" ");
-
-  zD = 1.0e5;
-  qDebug(StringNiceNum(zD));
-
-  zD = 1.1e5;
-  qDebug(StringNiceNum(zD));
-
-  zD = 1.12e5;
-  qDebug(StringNiceNum(zD));
-
-  zD = 1.123e5;
-  qDebug(StringNiceNum(zD));
-
-  zD = 1.1234567e5;
-  qDebug(StringNiceNum(zD));
-
-  return 0;
-#endif
-
-
   // apply default settings
   QucsSettings.x = 0;
   QucsSettings.y = 0;
