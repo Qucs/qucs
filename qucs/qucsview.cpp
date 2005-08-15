@@ -66,9 +66,9 @@ QucsView::QucsView(QWidget *parent) : QScrollView(parent)
   // .......................................................................
   // to repair some strange  scrolling artefacts
   connect(this, SIGNAL(horizontalSliderReleased()),
-		viewport(), SLOT(repaint()));
+		viewport(), SLOT(update()));
   connect(this, SIGNAL(verticalSliderReleased()),
-		viewport(), SLOT(repaint()));
+		viewport(), SLOT(update()));
 
   // to prevent user from editing something that he doesn't see
   connect(this, SIGNAL(horizontalSliderPressed()), SLOT(slotHideEdit()));
@@ -226,7 +226,7 @@ void QucsView::slotCursorLeft()
 
   QucsDoc *d = Docs.current();
   if(d->MarkerLeftRight(true)) {
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;   // if marker selected, do not move other elements
   }
@@ -235,7 +235,7 @@ void QucsView::slotCursorLeft()
   if(movingElements.isEmpty()) {
     if(ScrollLeft(horizontalScrollBar()->lineStep()))
       scrollBy(-horizontalScrollBar()->lineStep(), 0);
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;
   }
@@ -252,7 +252,7 @@ void QucsView::slotCursorRight()
 
   QucsDoc *d = Docs.current();
   if(d->MarkerLeftRight(false)) {
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;   // if marker selected, do not move other elements
   }
@@ -261,7 +261,7 @@ void QucsView::slotCursorRight()
   if(movingElements.isEmpty()) {
     if(ScrollRight(-horizontalScrollBar()->lineStep()))
       scrollBy(horizontalScrollBar()->lineStep(), 0);
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;
   }
@@ -296,7 +296,7 @@ void QucsView::slotCursorUp()
 
   QucsDoc *d = Docs.current();
   if(d->MarkerUpDown(true)) {
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;   // if marker selected, do not move other elements
   }
@@ -305,7 +305,7 @@ void QucsView::slotCursorUp()
   if(movingElements.isEmpty()) {
     if(ScrollUp(verticalScrollBar()->lineStep()))
       scrollBy(0, -verticalScrollBar()->lineStep());
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;
   }
@@ -342,7 +342,7 @@ void QucsView::slotCursorDown()
 
   QucsDoc *d = Docs.current();
   if(d->MarkerUpDown(false)) {
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;   // if marker selected, do not move other elements
   }
@@ -351,7 +351,7 @@ void QucsView::slotCursorDown()
   if(movingElements.isEmpty()) {
     if(ScrollDown(-verticalScrollBar()->lineStep()))
       scrollBy(0, verticalScrollBar()->lineStep());
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     return;
   }
@@ -374,8 +374,8 @@ void QucsView::editLabel(WireLabel *pl)
   delete Dia;
 
   if(Name.isEmpty() && Value.isEmpty()) { // if nothing entered, delete label
-    if(pl->pWire) pl->pWire->setName("", "");   // delete name of wire
-    else pl->pNode->setName("", "");
+    pl->pOwner->Label = 0;   // delete name of wire
+    delete pl;
   }
   else {
 /*    Name.replace(' ', '_');	// label must not contain spaces
@@ -393,7 +393,7 @@ void QucsView::editLabel(WireLabel *pl)
 
   QucsDoc *d = Docs.current();
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   Docs.current()->setChanged(true, true);
 }
@@ -439,7 +439,7 @@ void QucsView::endElementMoving()
   // enlarge viewarea if components lie outside the view
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
   enlargeView(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1096,6 +1096,9 @@ void QucsView::rightPressMenu(QMouseEvent *Event, QucsDoc *d, int x, int y)
     if( ((Marker*)focusElement)->pGraph->Var == "Sopt" )
       s = tr("noise matching");
     ComponentMenu->insertItem(s, this, SLOT(slotPowerMatching()));
+    if( ((Marker*)focusElement)->pGraph->Var.left(2) == "S[" )
+      ComponentMenu->insertItem(tr("2-port matching"), this,
+                                SLOT(slot2PortMatching()));
   }
   while(true) {
     if(focusElement) {
@@ -1118,7 +1121,7 @@ void QucsView::rightPressMenu(QMouseEvent *Event, QucsDoc *d, int x, int y)
 
   *focusMEvent = *Event;  // remember event for "edit component" action
   ComponentMenu->popup(Event->globalPos());
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1144,10 +1147,7 @@ void QucsView::MPressLabel(QMouseEvent*, QucsDoc *d, int x, int y)
 			tr("The ground potential cannot be labeled!"));
       return;
     }
-    if(pe->Type == isNode) pl = ((Node*)pe)->Label;
-    else pl = ((Wire*)pe)->Label;
-//    Name  = pl->Name;
-//    Value = pl->initValue;
+    pl = ((Conductor*)pe)->Label;
   }
 
   LabelDialog *Dia = new LabelDialog(pl, this);
@@ -1156,15 +1156,12 @@ void QucsView::MPressLabel(QMouseEvent*, QucsDoc *d, int x, int y)
   Name  = Dia->NodeName->text();
   Value = Dia->InitValue->text();
   delete Dia;
-//  bool OK;
-//  Name = QInputDialog::getText(tr("Insert Nodename"),
-//		tr("Enter the label:"), QLineEdit::Normal, Name, &OK, this);
-//  if(!OK) return;
 
   if(Name.isEmpty() && Value.isEmpty() ) { // if nothing entered, delete name
     if(pe) {
-      if(pe->Type == isWire) ((Wire*)pe)->setName("", ""); // delete old name
-      else ((Node*)pe)->setName("", "");
+      if(((Conductor*)pe)->Label)
+        delete ((Conductor*)pe)->Label; // delete old name
+      ((Conductor*)pe)->Label = 0;
     }
     else {
       if(pw) pw->setName("", "");   // delete name of wire
@@ -1177,8 +1174,9 @@ void QucsView::MPressLabel(QMouseEvent*, QucsDoc *d, int x, int y)
     if(Name.isEmpty()) return;
 */
     if(pe) {
-      if(pe->Type == isWire) ((Wire*)pe)->setName("", "");  // delete old name
-      else ((Node*)pe)->setName("", "");
+      if(((Conductor*)pe)->Label)
+        delete ((Conductor*)pe)->Label; // delete old name
+      ((Conductor*)pe)->Label = 0;
     }
 
     int xl = x+30;
@@ -1190,7 +1188,7 @@ void QucsView::MPressLabel(QMouseEvent*, QucsDoc *d, int x, int y)
   }
 
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   d->setChanged(true, true);
 }
@@ -1253,7 +1251,7 @@ void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
 
 	if(((TabDiagram*)focusElement)->scroll(MAy1))
 	  d->setChanged(true, true, 'm'); // 'm' = only the first time
-	viewport()->repaint();
+	viewport()->update();
 	drawn = false;
 //	focusElement = 0;  // avoid double-click on diagram scrollbar
 	return;
@@ -1271,7 +1269,7 @@ void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
   MousePressAction = 0;
   MouseDoubleClickAction = 0;
   this->grabKeyboard();  // no keyboard inputs during move actions
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 
   if(focusElement == 0) {
@@ -1300,7 +1298,7 @@ void QucsView::MPressDelete(QMouseEvent*, QucsDoc *d, int x, int y)
     d->deleteElements();
 
     d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
   }
 }
@@ -1318,7 +1316,7 @@ void QucsView::MPressActivate(QMouseEvent*, QucsDoc *d, int x, int y)
     MouseReleaseAction = &QucsView::MReleaseActivate;
     MouseMoveAction = &QucsView::MMoveSelect;
   }
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1338,7 +1336,7 @@ void QucsView::MPressMirrorX(QMouseEvent*, QucsDoc *d, int x, int y)
     p->mirrorX();
   }
 
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   d->setChanged(true, true);
 }
@@ -1359,7 +1357,7 @@ void QucsView::MPressMirrorY(QMouseEvent*, QucsDoc *d, int x, int y)
     p->mirrorY();
   }
 
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   d->setChanged(true, true);
 }
@@ -1412,7 +1410,7 @@ void QucsView::MPressRotate(QMouseEvent*, QucsDoc *d, int x, int y)
     default:
       return;
   }
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   Docs.current()->setChanged(true, true);
 }
@@ -1467,7 +1465,7 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
     // dialog is Qt::WDestructiveClose !!!
     DiagramDialog *dia = new DiagramDialog(Diag, d->DataSet, this);
     if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
-      viewport()->repaint();
+      viewport()->update();
       drawn = false;
       return;
     }
@@ -1490,7 +1488,7 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
     selElem = ((Painting*)selElem)->newOne();
 
     drawn = false;
-    viewport()->repaint();
+    viewport()->update();
     d->setChanged(true, true);
   }
 }
@@ -1571,7 +1569,7 @@ void QucsView::MPressWire2(QMouseEvent *Event, QucsDoc *d, int x, int y)
 	  MouseDoubleClickAction = 0;
 	} }
     }
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     if(set) d->setChanged(true, true);
     MAx3 = MAx2;
@@ -1620,7 +1618,7 @@ void QucsView::MPressMarker(QMouseEvent*, QucsDoc *d, int x, int y)
     int y0 = pm->Diag->cy;
     enlargeView(x0+pm->x1, y0-pm->y1-pm->y2, x0+pm->x1+pm->x2, y0-pm->y1);
   }
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1634,7 +1632,7 @@ void QucsView::MPressOnGrid(QMouseEvent*, QucsDoc *d, int x, int y)
     Docs.current()->elementsOnGrid();
 
     d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
   }
 }
@@ -1651,7 +1649,7 @@ void QucsView::MPressMoveText(QMouseEvent*, QucsDoc *d, int x, int y)
     MAy3 = MAy1;
     MAx1 = ((Component*)focusElement)->cx + ((Component*)focusElement)->tx;
     MAy1 = ((Component*)focusElement)->cy + ((Component*)focusElement)->ty;
-    viewport()->repaint();
+    viewport()->update();
     drawn = false;
     MouseMoveAction = &QucsView::MMoveMoveText;
     MouseReleaseAction = &QucsView::MReleaseMoveText;
@@ -1670,7 +1668,7 @@ void QucsView::MPressZoomIn(QMouseEvent*, QucsDoc*, int x, int y)
   MouseMoveAction = &QucsView::MMoveSelect;
   MouseReleaseAction = &QucsView::MReleaseZoomIn;
   this->grabKeyboard();  // no keyboard inputs during move actions
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1708,7 +1706,7 @@ void QucsView::MReleaseSelect(QMouseEvent *Event, QucsDoc *d)
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
   MouseMoveAction = 0;   // no element moving
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1730,7 +1728,7 @@ void QucsView::MReleaseSelect2(QMouseEvent *Event, QucsDoc *d)
   MousePressAction = &QucsView::MPressSelect;
   MouseReleaseAction = &QucsView::MReleaseSelect;
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1746,7 +1744,7 @@ void QucsView::MReleaseActivate(QMouseEvent *Event, QucsDoc *d)
   MousePressAction = &QucsView::MPressActivate;
   MouseReleaseAction = 0;
   MouseDoubleClickAction = 0;
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -1812,7 +1810,7 @@ void QucsView::MReleaseResizeDiagram(QMouseEvent *Event, QucsDoc *d)
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
   this->releaseKeyboard();  // allow keyboard inputs again
 
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   d->setChanged(true, true);
 }
@@ -1828,7 +1826,7 @@ void QucsView::MReleaseResizePainting(QMouseEvent *Event, QucsDoc *d)
   MouseDoubleClickAction = &QucsView::MDoubleClickSelect;
   this->releaseKeyboard();  // allow keyboard inputs again
 
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
   d->setChanged(true, true);
 }
@@ -1882,7 +1880,7 @@ void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
     MouseDoubleClickAction = 0;
 
     drawn = false;
-    viewport()->repaint();
+    viewport()->update();
     d->setChanged(true, true);
     break;
 
@@ -1943,7 +1941,7 @@ void QucsView::MReleaseMoveText(QMouseEvent *Event, QucsDoc *d)
 
   ((Component*)focusElement)->tx = MAx1 - ((Component*)focusElement)->cx;
   ((Component*)focusElement)->ty = MAy1 - ((Component*)focusElement)->cy;
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 
   d->setChanged(true, true);
@@ -1982,7 +1980,7 @@ void QucsView::MReleaseZoomIn(QMouseEvent *Event, QucsDoc *d)
   MouseReleaseAction = 0;
   this->releaseKeyboard();  // allow keyboard inputs again
 
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -2090,7 +2088,7 @@ void QucsView::editElement(QMouseEvent *Event)
          break;
   }
 
-  viewport()->repaint();
+  viewport()->update();
   drawn = false;
 }
 
@@ -2139,7 +2137,7 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
      (Event->orientation() == Horizontal)) { // scroll horizontally ?
       if(delta > 0) { if(ScrollLeft(delta)) scrollBy(-delta, 0); }
       else { if(ScrollRight(delta)) scrollBy(-delta, 0); }
-      viewport()->repaint(); // because QScrollView thinks nothing has changed
+      viewport()->update(); // because QScrollView thinks nothing has changed
       drawn = false;
   }
   // .....................................................................
@@ -2149,14 +2147,14 @@ void QucsView::contentsWheelEvent(QWheelEvent *Event)
       else Scaling = 1.1*60.0/float(delta);
       Scaling = Zoom(Scaling);
 //      center(Event->x(), Event->y());
-      viewport()->repaint();
+      viewport()->update();
       drawn = false;
   }
   // .....................................................................
   else {     // scroll vertically !
       if(delta > 0) { if(ScrollUp(delta)) scrollBy(0, -delta); }
       else { if(ScrollDown(delta)) scrollBy(0, -delta); }
-      viewport()->repaint(); // because QScrollView thinks nothing has changed
+      viewport()->update(); // because QScrollView thinks nothing has changed
       drawn = false;
   }
 
@@ -2275,7 +2273,7 @@ void QucsView::slotScrollUp()
 {
   editText->setHidden(true);  // disable edit of component property
   ScrollUp(verticalScrollBar()->lineStep());
-  viewport()->repaint();   // because QScrollView thinks nothing has changed
+  viewport()->update();   // because QScrollView thinks nothing has changed
   drawn = false;
 }
 
@@ -2285,7 +2283,7 @@ void QucsView::slotScrollDown()
 {
   editText->setHidden(true);  // disable edit of component property
   ScrollDown(-verticalScrollBar()->lineStep());
-  viewport()->repaint();   // because QScrollView thinks nothing has changed
+  viewport()->update();   // because QScrollView thinks nothing has changed
   drawn = false;
 }
 
@@ -2295,7 +2293,7 @@ void QucsView::slotScrollLeft()
 {
   editText->setHidden(true);  // disable edit of component property
   ScrollLeft(horizontalScrollBar()->lineStep());
-  viewport()->repaint();   // because QScrollView thinks nothing has changed
+  viewport()->update();   // because QScrollView thinks nothing has changed
   drawn = false;
 }
 
@@ -2305,7 +2303,7 @@ void QucsView::slotScrollRight()
 {
   editText->setHidden(true);  // disable edit of component property
   ScrollRight(-horizontalScrollBar()->lineStep());
-  viewport()->repaint();   // because QScrollView thinks nothing has changed
+  viewport()->update();   // because QScrollView thinks nothing has changed
   drawn = false;
 }
 
@@ -2423,7 +2421,7 @@ void QucsView::slotApplyCompText()
 
     if(!pp) {     // was already last property ?
       editText->setHidden(true);
-      viewport()->repaint();  // maybe text is now longer
+      viewport()->update();  // maybe text is now longer
       drawn = false;
       return;
     }
@@ -2434,7 +2432,7 @@ void QucsView::slotApplyCompText()
       pp = pc->Props.next();
       if(!pp) {     // was already last property ?
         editText->setHidden(true);
-        viewport()->repaint();  // maybe text is now longer
+        viewport()->update();  // maybe text is now longer
         drawn = false;
         return;
       }
@@ -2488,5 +2486,85 @@ void QucsView::slotPowerMatching()
   if(Dia->exec() != QDialog::Accepted)
     return;
 
+  QucsMain->slotToPage();
+}
+
+// -----------------------------------------------------------
+void QucsView::slot2PortMatching()
+{
+  if(!focusElement) return;
+  if(focusElement->Type != isMarker) return;
+  Marker *pm = (Marker*)focusElement;
+
+  double Z0 = 50.0;
+  QString DataSet;
+  int z = pm->pGraph->Var.find(':');
+  if(z <= 0)  DataSet = Docs.current()->DataSet;
+  else  DataSet = pm->pGraph->Var.mid(z+1);
+  double Freq = pm->VarPos[0];
+
+  Diagram *Diag = new Diagram();
+
+  Graph *pg = new Graph("S[1,1]");
+  Diag->Graphs.append(pg);
+  if(!Diag->loadVarData(DataSet, pg)) {
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[1,1]."));
+    return;
+  }
+
+  pg = new Graph("S[1,2]");
+  Diag->Graphs.append(pg);
+  if(!Diag->loadVarData(DataSet, pg)) {
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[1,2]."));
+    return;
+  }
+
+  pg = new Graph("S[2,1]");
+  Diag->Graphs.append(pg);
+  if(!Diag->loadVarData(DataSet, pg)) {
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[2,1]."));
+    return;
+  }
+
+  pg = new Graph("S[2,2]");
+  Diag->Graphs.append(pg);
+  if(!Diag->loadVarData(DataSet, pg)) {
+    QMessageBox::critical(0, tr("Error"), tr("Could not load S[2,2]."));
+    return;
+  }
+
+  DataX *Data = Diag->Graphs.getFirst()->cPointsX.first();
+  if(Data->Var != "frequency") {
+    QMessageBox::critical(0, tr("Error"), tr("Wrong depency!"));
+    return;
+  }
+
+  double *Value = Data->Points;
+  // search for values for chosen frequency
+  for(z=0; z<Data->count; z++)
+    if(*(Value++) == Freq) break;
+
+  // get S-parameters
+  double S11real = *(Diag->Graphs.first()->cPointsY + 2*z);
+  double S11imag = *(Diag->Graphs.current()->cPointsY + 2*z + 1);
+  double S12real = *(Diag->Graphs.next()->cPointsY + 2*z);
+  double S12imag = *(Diag->Graphs.current()->cPointsY + 2*z + 1);
+  double S21real = *(Diag->Graphs.next()->cPointsY + 2*z);
+  double S21imag = *(Diag->Graphs.current()->cPointsY + 2*z + 1);
+  double S22real = *(Diag->Graphs.next()->cPointsY + 2*z);
+  double S22imag = *(Diag->Graphs.current()->cPointsY + 2*z + 1);
+
+  delete Diag;
+
+  // determinante of S-parameter matrix
+  double DetReal = S11real*S22real - S11imag*S22imag
+                 - S12real*S21real + S12imag*S21imag;
+  double DetImag = S11real*S22imag + S11imag*S22real
+                 - S12real*S21imag - S12imag*S21real;
+
+  if(!MatchDialog::calc2PortMatch(S11real, S11imag, S22real, S22imag,
+                                  DetReal, DetImag, Z0, Freq))  return;
+
+  QucsMain->Acts.slotEditPaste(true);
   QucsMain->slotToPage();
 }

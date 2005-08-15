@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucsdoc.h  -  description
-                             -------------------
+                                 qucsdoc.h
+                                -----------
     begin                : Wed Sep 3 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -37,7 +37,7 @@ class QucsApp;
 class QucsDoc {
 public: 
   QucsDoc(QucsApp*, const QString&);
-  ~QucsDoc();
+ ~QucsDoc();
 
   void setName(const QString&);
   void setChanged(bool, bool fillStack=false, char Op='*');
@@ -118,6 +118,8 @@ public:
   void    setOnGrid(int&, int&);
   Component* selectCompText(int, int, int&, int&);
 
+  int    showBias;  // -1=no, 0=calculation running, >0=show DC bias points
+  Graph* setBiasPoints();
 
   QucsFile  File;   // class to perform  load, save, copy, paste
 

@@ -568,6 +568,13 @@ void QucsInit::initActions()
 	tr("Changes to data display or schematic page"));
   connect(App->dpl_sch, SIGNAL(activated()), App, SLOT(slotToPage()));
 
+  App->dcbias =
+    new QAction(tr("Calculate DC bias"), tr("Calculate DC bias"), Key_F8, App);
+  App->dcbias->setStatusTip(tr("Calculates DC bias and shows it"));
+  App->dcbias->setWhatsThis(
+	tr("Calculate DC bias\n\nCalculates DC bias and shows it"));
+  connect(App->dcbias, SIGNAL(activated()), App, SLOT(slotDCbias()));
+
   Acts->setMarker =
     new QAction(tr("Set Marker"),
 		QIconSet(QImage(QucsSettings.BitmapDir + "marker.png")),
@@ -714,6 +721,7 @@ void QucsInit::initMenuBar()
   simMenu = new QPopupMenu();  // menuBar entry simMenu
   App->simulate->addTo(simMenu);
   App->dpl_sch->addTo(simMenu);
+  App->dcbias->addTo(simMenu);
   Acts->showMsg->addTo(simMenu);
   Acts->showNet->addTo(simMenu);
 
@@ -825,6 +833,16 @@ void QucsInit::slotShowWarnings()
     QTimer::singleShot(500, this, SLOT(slotShowWarnings()));
   else 
     ResultState = 0;
+}
+
+// #########################################################################
+void QucsInit::slotResetWarnings()
+{
+  QFont f = WarningLabel->font();   // reset warning label
+  f.setWeight(QFont::Normal);
+  WarningLabel->setFont(f);
+  WarningLabel->setPaletteForegroundColor(Qt::black);
+  WarningLabel->setText(tr("no warnings"));
 }
 
 // ######################################################################

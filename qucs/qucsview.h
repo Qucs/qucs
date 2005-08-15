@@ -103,6 +103,7 @@ public slots:
   void slotHideEdit();
   void slotEditElement();
   void slotPowerMatching();
+  void slot2PortMatching();
 
 public:
   void MMoveSelect(QMouseEvent*);

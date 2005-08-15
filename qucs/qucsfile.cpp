@@ -392,9 +392,8 @@ void QucsFile::simpleInsertWire(Wire *pw)
   if(pw->x1 == pw->x2) if(pw->y1 == pw->y2) {
     pn->Label = pw->Label;   // wire with length zero are just node labels
     if (pn->Label) {
-      pn->Label->Type  = isNodeLabel;
-      pn->Label->pNode = pn;
-      pn->Label->pWire = 0;
+      pn->Label->Type = isNodeLabel;
+      pn->Label->pOwner = pn;
     }
     delete pw;           // delete wire because this is not a wire
     return;
@@ -938,6 +937,8 @@ bool QucsFile::createSubNetlist(QTextStream *stream, int& countInit,
 bool QucsFile::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QTextEdit *Error)
 {
+  if(Doc->showBias > 0)  Doc->showBias = -1;  // do not show DC bias anymore
+
   // first line is documentation
   stream << "# Qucs " << PACKAGE_VERSION << "  " << Doc->DocName << "\n";
 

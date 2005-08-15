@@ -891,7 +891,8 @@
         <translation type="unfinished">エラー</translation>
     </message>
     <message>
-        <source>Real part of impedance must be greater zero.</source>
+        <source>Real part of impedance must be greater zero,
+but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3381,10 +3382,6 @@ Edits the schematic</source>
         <source>Edit Properties</source>
         <translation type="obsolete">プロパティ編集</translation>
     </message>
-    <message>
-        <source>no warnings</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4866,6 +4863,20 @@ Dialog for Creating Matching Circuit</source>
         <source>Change Property Values..</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate DC bias
+
+Calculates DC bias and shows it</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsLib</name>
@@ -5386,10 +5397,34 @@ Dialog for Creating Matching Circuit</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">エラー</translation>
+        <translation type="unfinished">エラー</translation>
     </message>
     <message>
         <source>noise matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong depency!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[1,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,1].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not load S[2,2].</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5662,6 +5697,17 @@ Errors:
     <message>
         <source>include SPICE simulations</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SweepDialog</name>
+    <message>
+        <source>Bias Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">閉じる</translation>
     </message>
 </context>
 <context>
