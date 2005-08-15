@@ -49,6 +49,7 @@
 #include "dialogs/settingsdialog.h"
 #include "dialogs/qucssettingsdialog.h"
 #include "dialogs/simmessage.h"
+#include "dialogs/sweepdialog.h"
 
 
 
@@ -491,7 +492,7 @@ void QucsApp::nextDocument(bool loadDiagrams)
 
   if(loadDiagrams)
     view->Docs.current()->reloadGraphs();  // load recent simulation data
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 
   QString *ps = d->UndoStack.current();
@@ -524,7 +525,7 @@ void QucsApp::slotChangeView(int id)
     changeSchematicSymbolMode(d);
 
   view->Docs.current()->reloadGraphs();  // load recent simulation data
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 
 
@@ -565,7 +566,7 @@ bool QucsApp::gotoPage(const QString& Name)
   if(!d->load()) {    // load document if possible
     view->Docs.remove();
     view->Docs.at(No);
-    view->viewport()->repaint();
+    view->viewport()->update();
     view->drawn = false;
     return false;
   }
@@ -583,7 +584,7 @@ bool QucsApp::gotoPage(const QString& Name)
         view->Docs.removeRef(view->Docs.getFirst());
 
   d->sizeOfAll(d->UsedX1, d->UsedY1, d->UsedX2, d->UsedY2);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
   return true;
 }
@@ -598,7 +599,7 @@ void QucsApp::slotNextTab()
 
   // make new document the current (calls "slotChangeView()" indirectly)
   WorkView->setCurrentTab(WorkView->tabAt(No));
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -609,7 +610,7 @@ void QucsApp::slotFileSettings()
 
   SettingsDialog *d = new SettingsDialog(view->Docs.current(), this);
   d->exec();
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -620,7 +621,7 @@ void QucsApp::slotApplSettings()
 
   QucsSettingsDialog *d = new QucsSettingsDialog(this);
   d->exec();
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -977,7 +978,7 @@ void QucsApp::slotEditCut()
   QString s = view->Docs.current()->copySelected(true);
   if(!s.isEmpty()) {
     cb->setText(s, QClipboard::Clipboard);
-    view->viewport()->repaint();
+    view->viewport()->update();
   }
 
   statusBar()->message(tr("Ready."));
@@ -1060,7 +1061,7 @@ void QucsApp::slotShowAll()
   d->ViewY2 = y2;
   view->Zoom(xScale);
 
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -1086,7 +1087,7 @@ void QucsApp::slotShowOne()
   d->ViewX2 = x2+40;
   d->ViewY2 = y2+40;
   view->resizeContents(x2-x1+80, y2-y1+80);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -1095,7 +1096,7 @@ void QucsApp::slotZoomOut()
   view->editText->setHidden(true); // disable text edit of component property
   
   view->Zoom(0.5);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }
 
@@ -1104,16 +1105,12 @@ void QucsApp::slotZoomOut()
 void QucsApp::slotSimulate()
 {
   view->editText->setHidden(true); // disable text edit of component property
-  
-  if(view->Docs.current()->DocName.isEmpty()) // if document 'untitled' ...
-    if(!saveCurrentFile()) return;            // ... save schematic before
 
-  QFont f = Init.WarningLabel->font();   // reset warning label
-  f.setWeight(QFont::Normal);
-  Init.WarningLabel->setFont(f);
-  Init.WarningLabel->setPaletteForegroundColor(Qt::black);
-  Init.WarningLabel->setText(tr("no warnings"));
+  QucsDoc *d = view->Docs.current();
+  if(d->DocName.isEmpty())         // if document 'untitled' ...
+    if(!saveCurrentFile()) return; // ... save schematic before
 
+  Init.slotResetWarnings();
   SimMessage *sim = new SimMessage(view->Docs.current(), this);
   // disconnect is automatically performed, if one of the involved objects
   // is destroyed !
@@ -1133,30 +1130,40 @@ void QucsApp::slotSimulate()
 // Is called after the simulation process terminates.
 void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
 {
-  bool shouldClosed = false; // simulation window close after simualtion ?
+  if(Status != 0) return;  // errors ocurred ?
 
-  if(Status == 0) {  // no errors ocurred ?
+  if(sim->ErrText->lines() > 1)   // were there warnings ?
+    Init.slotShowWarnings();
 
-    if(sim->ErrText->lines() > 1)   // were there warnings ?
-      Init.slotShowWarnings();
+  if(sim->Doc->showBias == 0) {
+    sim->slotClose();   // close and delete simulation window
+    Graph *pg = sim->Doc->setBiasPoints();
 
-    if(view->Docs.current()->SimOpenDpl) {
-      shouldClosed = true;
-      slotChangePage(sim->Doc->DataDisplay);  // switch to data display
-      view->viewport()->update();
+    // if simulation has sweeps, show dialog to choose bias point
+    if((pg->cPointsX.count() > 1) || (pg->cPointsX.getFirst()->count > 1)) {
+      SweepDialog *Dia = new SweepDialog(sim->Doc, pg);
+      Dia->show();
     }
-    else {
-      view->Docs.current()->reloadGraphs();  // load recent simulation data
-      view->viewport()->update();
-    }
-
-    if(shouldClosed) sim->slotClose();  // close and delete simulation window
-
-    // put all dataset files into "Content"-ListView (update)
-/*    QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
-    for(it = Elements.begin(); it != Elements.end(); ++it)
-      new QListViewItem(ConDatasets, (*it).ascii());*/
   }
+  else if(sim->Doc->SimOpenDpl) {
+    slotChangePage(sim->Doc->DataDisplay);  // switch to data display
+    sim->slotClose();   // close and delete simulation window
+  }
+  else sim->Doc->reloadGraphs();  // load recent simulation data
+
+  view->viewport()->update();
+
+  // put all dataset files into "Content"-ListView (update)
+/*  QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
+  for(it = Elements.begin(); it != Elements.end(); ++it)
+    new QListViewItem(ConDatasets, (*it).ascii());*/
+}
+
+// ------------------------------------------------------------------------
+void QucsApp::slotDCbias()
+{
+  view->Docs.current()->showBias = 0;
+  slotSimulate();
 }
 
 // ------------------------------------------------------------------------
@@ -1197,7 +1204,7 @@ void QucsApp::slotChangePage(QString Name)
     if(!d->load()) {
       view->Docs.remove();
       view->Docs.findRef(Doc);
-      view->viewport()->repaint();
+      view->viewport()->update();
       view->drawn = false;
       return;
     }
@@ -1278,7 +1285,7 @@ void QucsApp::slotMenuCloseProject()
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 
   setCaption("Qucs " PACKAGE_VERSION + tr(" - Project: "));
@@ -1399,7 +1406,7 @@ void QucsApp::OpenProject(const QString& Path, const QString& Name)
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 
   QDir ProjDir(QDir::cleanDirPath(Path));
@@ -1661,7 +1668,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   if(view->selElem != 0)  delete view->selElem;
   view->selElem  = 0;   // no component/diagram/painting selected
 
-  if(view->drawn) view->viewport()->repaint();
+  if(view->drawn) view->viewport()->update();
   view->drawn = false;
 
   if(item == 0) {   // mouse button pressed not over an item ?
@@ -1727,7 +1734,7 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
 
   if(item == 0) {   // mouse button pressed not over an item ?
     Content->clearSelection();  // deselect component in ListView
-    if(view->drawn) view->viewport()->repaint();
+    if(view->drawn) view->viewport()->update();
     view->drawn = false;
     return;
   }
@@ -1754,7 +1761,7 @@ void QucsApp::slotSelectSubcircuit(QListViewItem *item)
   Comp->recreate();
   view->selElem = Comp;
 
-  if(view->drawn) view->viewport()->repaint();
+  if(view->drawn) view->viewport()->update();
   view->drawn = false;
   view->MouseMoveAction = &QucsView::MMoveElement;
   view->MousePressAction = &QucsView::MPressElement;
@@ -1886,6 +1893,6 @@ void QucsApp::slotSymbolEdit()
   view->resizeContents(int(d->Scale*double(d->ViewX2-d->ViewX1)),
                        int(d->Scale*double(d->ViewY2-d->ViewY1)));
   view->setContentsPos(d->PosX, d->PosY);
-  view->viewport()->repaint();
+  view->viewport()->update();
   view->drawn = false;
 }

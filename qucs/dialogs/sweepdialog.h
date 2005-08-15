@@ -1,8 +1,8 @@
 /***************************************************************************
-                                  wire.h
-                                 --------
-    begin                : Wed Sep 3 2003
-    copyright            : (C) 2003 by Michael Margraf
+                              sweepdialog.h
+                             ---------------
+    begin                : Sat Aug 13 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,37 +15,37 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef WIRE_H
-#define WIRE_H
+#ifndef SWEEPDIALOG_H
+#define SWEEPDIALOG_H
 
-#include "viewpainter.h"
-#include "element.h"
-#include "components/component.h"    // because of struct Port
-#include "wirelabel.h"
-
-#include <qpainter.h>
-#include <qstring.h>
+#include <qdialog.h>
+#include <qregexp.h>
 #include <qptrlist.h>
 
+class QucsDoc;
+class Graph;
+class QGridLayout;
+class QRegExpValidator;
+class QSpinBox;
 
-class Wire : public Conductor {
+
+class SweepDialog : public QDialog {
+   Q_OBJECT
 public:
-  Wire(int _x1=0, int _y1=0, int _x2=0, int _y2=0, Node *n1=0, Node *n2=0);
- ~Wire();
+  SweepDialog(QucsDoc*, Graph*, QWidget *parent=0);
+ ~SweepDialog();
 
-  void paint(ViewPainter*);
-  void paintScheme(QPainter*);
-  void setCenter(int, int, bool relative=false);
-  void getCenter(int&, int&);
-  bool getSelected(int, int);
-  void setName(const QString&, const QString&, int delta_=0, int x_=0, int y_=0);
+private slots:
+  void slotNewValue(int);
 
-  Node      *Port1, *Port2;
+private:
+  QGridLayout *all;   // the mother of all widgets
+  QRegExpValidator  *Validator;
+  QRegExp     Expr;
+  QPtrList<QSpinBox> BoxList;
 
-  void    rotate();
-  QString save();
-  bool    load(const QString&);
-  bool    isHorizontal();
+  QucsDoc *Doc;
+  Graph   *pGraph;
 };
 
 #endif

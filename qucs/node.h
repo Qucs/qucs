@@ -1,6 +1,6 @@
 /***************************************************************************
-                          node.h  -  description
-                             -------------------
+                                 node.h
+                                --------
     begin                : Sat Sep 20 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -26,22 +26,17 @@ class ViewPainter;
 class WireLabel;
 class QPainter;
 
-/**
-  *@author Michael Margraf
-  */
 
-class Node : public Element {
+class Node : public Conductor {
 public:
   Node(int, int);
-  ~Node();
+ ~Node();
 
   void  paint(ViewPainter*);
   bool  getSelected(int, int);
   void  setName(const QString&, const QString&, int x_=0, int y_=0);
 
   QPtrList<Element> Connections;
-
-  WireLabel *Label;     // label for node name
   QString Name;   // node name used by creation of netlist
   int State;	// remember some things during some operations
 };

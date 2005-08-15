@@ -24,7 +24,7 @@
 class Element;
 class QLineEdit;
 class QComboBox;
-class QVBoxLayout;
+class QGridLayout;
 class QDoubleValidator;
 
 
@@ -37,7 +37,12 @@ public:
 
   static void r2z(double&, double&, double);
   static void z2r(double&, double&, double);
-  static int  calcMatchingCircuit(double, double, double, double);
+  static QString calcMatching(double, double, double, double);
+  static bool calcMatchingCircuit(double, double, double, double);
+  static QString calcBiMatch(double, double, double, double, double, double,
+                             double, double);
+  static bool calc2PortMatch(double, double, double, double, double, double,
+                             double, double);
 
 private slots:
   void slotButtCreate();
@@ -45,7 +50,7 @@ private slots:
   void slotReflexionChanged(const QString&);
 
 private:
-  QVBoxLayout *all;   // the mother of all widgets
+  QGridLayout *all;   // the mother of all widgets
   QDoubleValidator  *DoubleVal;
   QLineEdit   *ReferenceEdit, *FrequencyEdit, *ImpedanceRealEdit,
               *ImpedanceImagEdit, *ReflexionRealEdit, *ReflexionImagEdit;

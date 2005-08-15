@@ -24,7 +24,7 @@
 class QucsDoc;
 class QLineEdit;
 class QComboBox;
-class QVBoxLayout;
+class QGridLayout;
 class QRegExpValidator;
 
 
@@ -40,7 +40,7 @@ private slots:
 private:
   bool matches(const QString&);
 
-  QVBoxLayout *all;   // the mother of all widgets
+  QGridLayout *all;   // the mother of all widgets
   QRegExpValidator  *Validator, *ValRestrict;
   QRegExp     Expr;
   QLineEdit   *CompNameEdit, *NewValueEdit;

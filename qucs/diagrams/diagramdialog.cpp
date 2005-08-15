@@ -564,10 +564,6 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   }
   slotReadVars(0);  // put variables into the ListView
 
-  if(Diag->Name != "Tab")
-    ColorButt->setPaletteBackgroundColor
-	(QColor(DefaultColors[GraphList->count()]));
-
   // ...........................................................
   // put all graphs into the ListBox
   Row = 0;
@@ -579,6 +575,10 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
     }
     Row++;
   }
+
+  if(Diag->Name != "Tab")
+    ColorButt->setPaletteBackgroundColor
+	(QColor(DefaultColors[GraphList->count()]));
 }
 
 DiagramDialog::~DiagramDialog()

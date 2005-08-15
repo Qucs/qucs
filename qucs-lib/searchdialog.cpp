@@ -64,6 +64,8 @@ SearchDialog::SearchDialog(QucsLib *parent)
   QPushButton *ButtonClose = new QPushButton(tr("Close"), h2);
   connect(ButtonClose, SIGNAL(clicked()), SLOT(slotClose()));
   ButtonSearch->setFocus();
+
+  SearchEdit->setFocus();
 }
 
 SearchDialog::~SearchDialog()
@@ -80,6 +82,11 @@ void SearchDialog::slotClose()
 // ************************************************************
 void SearchDialog::slotSearch()
 {
+  if(SearchEdit->text().isEmpty()) {
+    reject();
+    return;
+  }
+
   bool findComponent = false;
   QDir LibDir(QucsSettings.LibDir);
   QStringList LibFiles = LibDir.entryList("*.lib", QDir::Files, QDir::Name);
@@ -88,6 +95,7 @@ void SearchDialog::slotSearch()
   QTextStream ReadWhole;
   QString LibraryString, LibName, CompName;
   QStringList::iterator it;
+  int Start, End, NameStart, NameEnd;
   for(it = LibFiles.begin(); it != LibFiles.end(); it++) { // all library files
     File.setName(QucsSettings.LibDir + (*it));
     if(!File.open(IO_ReadOnly))  continue;
@@ -96,7 +104,6 @@ void SearchDialog::slotSearch()
     LibraryString = ReadWhole.read();
     File.close();
 
-    int Start, End, NameStart, NameEnd;
     Start = LibraryString.find("<Qucs Library ");
     if(Start < 0)  continue;
     End = LibraryString.find('>', Start);
@@ -131,9 +138,11 @@ void SearchDialog::slotSearch()
   }
 
   if(findComponent) {
-    ParentDialog->Library->insertItem(tr("Search result"));
-    ParentDialog->Library->setCurrentItem(ParentDialog->Library->count()-1);
-    accept();
+    End = ParentDialog->Library->count() - 1;
+    if(ParentDialog->Library->text(End) != tr("Search result"))
+      ParentDialog->Library->insertItem(tr("Search result"));
+    ParentDialog->Library->setCurrentItem(End);
+    reject();
   }
-  else  reject();
+  else  accept();
 }
