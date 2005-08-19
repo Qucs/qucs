@@ -23,6 +23,13 @@ unfixed) have a look at the file BUGS.
 
 (completed tasks are indented one tab)
 
+- Use minimum noise figure for noise circles as default.
+- Use maximum gain for gain circles as default.
+- Allow impedances other than 50ohms in rtoz(), ztor(), stoy(), ytos(),
+  stoz(), ztos(), ztoy(), ytoz() and alike.
+- QucsConv: Redefine qucslib format.
+- QucsConv: Find a solution for three and more mutual inductors conversion
+  from spice to qucs.
 - Implementation of non-ideal transformers (mutual inductances).
 - Spline interpolation for touchstone S-parameters.  Implement general
   interpolation functionality for all kind of data.  Make this available
