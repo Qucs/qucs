@@ -3,7 +3,7 @@
     <name>ArrowDialog</name>
     <message>
         <source>Edit Arrow Properties</source>
-        <translation>Modifica Propriet� Freccia</translation>
+        <translation>Modifica Proprietà Freccia</translation>
     </message>
     <message>
         <source>Head Length: </source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Line color: </source>
@@ -58,68 +58,69 @@
     <name>ChangeDialog</name>
     <message>
         <source>Change Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Proprietà Componente</translation>
     </message>
     <message>
         <source>Components:</source>
-        <translation type="unfinished"></translation>
+        <translation>Componenti:</translation>
     </message>
     <message>
         <source>Component Names:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomi Componenti:</translation>
     </message>
     <message>
         <source>Property Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome Proprietà:</translation>
     </message>
     <message>
         <source>New Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo Valore:</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Sostituisci</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>all components</source>
-        <translation type="unfinished"></translation>
+        <translation>tutti i componenti</translation>
     </message>
     <message>
         <source>resistors</source>
-        <translation type="unfinished"></translation>
+        <translation>resistore</translation>
     </message>
     <message>
         <source>capacitors</source>
-        <translation type="unfinished"></translation>
+        <translation>condensatore</translation>
     </message>
     <message>
         <source>transistors</source>
-        <translation type="unfinished"></translation>
+        <translation>transistor</translation>
     </message>
     <message>
         <source>Found Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Trovati Componenti</translation>
     </message>
     <message>
         <source>Change properties of
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia proprietà di
+</translation>
     </message>
     <message>
         <source>these components ?</source>
-        <translation type="unfinished"></translation>
+        <translation>questi componenti ?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Sì</translation>
+        <translation>Sì</translation>
     </message>
     <message>
         <source>inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>induttori</translation>
     </message>
 </context>
 <context>
@@ -149,7 +150,7 @@
     <name>ComponentDialog</name>
     <message>
         <source>Edit Component Properties</source>
-        <translation>Modifica Propriet� Componente</translation>
+        <translation>Modifica Proprietà Componente</translation>
     </message>
     <message>
         <source>OK</source>
@@ -161,7 +162,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Name</source>
@@ -233,7 +234,7 @@
     </message>
     <message>
         <source>Sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Sweep</translation>
     </message>
     <message>
         <source>Simulation:</source>
@@ -249,7 +250,7 @@
     </message>
     <message>
         <source>Sweep Parameter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametro Scansione:</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -304,7 +305,7 @@
     <name>DiagramDialog</name>
     <message>
         <source>Edit Diagram Properties</source>
-        <translation>Modifica Propriet� Diagramma</translation>
+        <translation>Modifica Proprietà Diagramma</translation>
     </message>
     <message>
         <source>Graph Input</source>
@@ -364,7 +365,7 @@
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriet�</translation>
+        <translation>Proprietà</translation>
     </message>
     <message>
         <source>OK</source>
@@ -376,7 +377,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Function Help</source>
@@ -384,7 +385,7 @@
     </message>
     <message>
         <source>Number Notation: </source>
-        <translation>Notazione numerica:</translation>
+        <translation>Notazione Numerica:</translation>
     </message>
     <message>
         <source>real/imaginary</source>
@@ -392,11 +393,11 @@
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation>magnitudo/angolo (gradi)</translation>
+        <translation>modulo/angolo (gradi)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation>magnitudo/angolo (radianti)</translation>
+        <translation>modulo/angolo (radianti)</translation>
     </message>
     <message>
         <source>Precision:</source>
@@ -576,18 +577,18 @@
     </message>
     <message>
         <source>&lt;b&gt;Label text&lt;/b&gt;: Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Testo etichettat&lt;/b&gt;: Usa stile LaTeX per i caratteri speciali, p.es. \tau</translation>
     </message>
     <message>
         <source>2D-projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>proiezione 2D:</translation>
     </message>
 </context>
 <context>
     <name>DisplayDialog</name>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Chiudi</translation>
+        <translation>Chiudi</translation>
     </message>
 </context>
 <context>
@@ -613,7 +614,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Line Color: </source>
@@ -705,15 +706,15 @@
     </message>
     <message>
         <source>hatched backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>linee inclinate //</translation>
     </message>
     <message>
         <source>hatched forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>linee inclinate \\</translation>
     </message>
     <message>
         <source>diagonal crossed</source>
-        <translation type="unfinished"></translation>
+        <translation>linee incrociate</translation>
     </message>
     <message>
         <source>Line Width: </source>
@@ -756,7 +757,7 @@
     <name>GraphicTextDialog</name>
     <message>
         <source>Edit Text Properties</source>
-        <translation>Modifica Propriet� Testo</translation>
+        <translation>Modifica Proprietà Testo</translation>
     </message>
     <message>
         <source>OK</source>
@@ -764,7 +765,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Text color: </source>
@@ -784,7 +785,7 @@
     </message>
     <message>
         <source>Use LaTeX style for special characters, e.g. \tau</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa stile LaTeX per i caratteri speciali, p.es. \tau</translation>
     </message>
 </context>
 <context>
@@ -811,7 +812,7 @@
     </message>
     <message>
         <source>Available transmission lines are: Microstrip, Rectangular Waveguide, Coaxial Line and Coupled Microstrips.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le linee di trasmissione disponibili sono: Microstrip, Guida d&apos;onda rettangolare  Linea Coassiale and Microstrip accoppiate.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -819,7 +820,7 @@
     </message>
     <message>
         <source>QucsTranscalc is an analysis and synthesis tool for calculating the electrical and physical properties of different kinds of RF and microwave transmission lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsTranscalc è un&apos;applicazione di analisi e sintesi per il calcolo delle proprietà elettriche e fisiche di vari tipi di linee di trasmissione RF e a microonde.</translation>
     </message>
     <message>
         <source>For each type of transmission line, using dialog boxes, you can enter values for the various parameters, and either calculate its electrical properties, or use the given electrical requirements to synthesize physical parameters of the required transmission line.</source>
@@ -842,7 +843,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
@@ -873,7 +874,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
@@ -935,7 +936,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Number Notation: </source>
@@ -947,11 +948,11 @@
     </message>
     <message>
         <source>magnitude/angle (degree)</source>
-        <translation>magnitudo/angolo (gradi)</translation>
+        <translation>modulo/angolo (gradi)</translation>
     </message>
     <message>
         <source>magnitude/angle (radian)</source>
-        <translation>magnitudo/angolo (radianti)</translation>
+        <translation>modulo/angolo (radianti)</translation>
     </message>
     <message>
         <source>transparent</source>
@@ -962,39 +963,43 @@
     <name>MatchDialog</name>
     <message>
         <source>Create Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea Rete di Adattamento</translation>
     </message>
     <message>
         <source>Reference Impedance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedenza di Riferimento:</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>Frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza:</translation>
     </message>
     <message>
         <source>Impedance:</source>
-        <translation type="unfinished">Impedenza:</translation>
+        <translation>Impedenza:</translation>
     </message>
     <message>
         <source>Reflexion Coefficient:</source>
-        <translation type="unfinished"></translation>
+        <translation>Coefficiente di Riflessione:</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crea</translation>
+        <translation>Crea</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <source>Real part of impedance must be greater zero.</source>
+        <translation type="obsolete">La parte reale dell&apos;impedenza deve essere maggiore di zero.</translation>
     </message>
     <message>
         <source>Real part of impedance must be greater zero,
@@ -1049,7 +1054,7 @@ but is %1 !</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
@@ -1114,67 +1119,80 @@ Campo sconosciuto!</translation>
     <message>
         <source>Format Error:
 Wrong property field limiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Delimitatore del campo della proprietà errato!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown property: </source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Proprietà sconosciuta:</translation>
     </message>
     <message>
         <source>Format Error:
 Number expected in property field!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Si attendeva un numero nel campo della proprietà!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Property&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Il campo &apos;Property&apos; non è chiuso!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Component&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Il campo &apos;Component&apos; non è chiuso!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;wire&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Formato della linea &apos;wire&apos; errato!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Wire&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Il campo &apos;Wire&apos; non è chiuso!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown diagram!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Diagramma sconosciuto!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;diagram&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Formato della linea &apos;diagram&apos; errato!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Diagram&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Il campo &apos;Diagram&apos; non è chiuso!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown painting!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Disegno sconosciuto!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Formato della linea &apos;painting&apos; errato!</translation>
     </message>
     <message>
         <source>Format Error:
 &apos;Painting&apos; field is not closed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Il campo &apos;Painting&apos; non è chiuso!</translation>
     </message>
     <message>
         <source>Cannot load document: </source>
@@ -1192,15 +1210,15 @@ Campo sconosciuto!</translation>
     </message>
     <message>
         <source>Edit Ellipse Properties</source>
-        <translation>Modifica Propriet� Ellisse</translation>
+        <translation>Modifica Proprietà Ellisse</translation>
     </message>
     <message>
         <source>Edit Line Properties</source>
-        <translation>Modifica Propriet� Linea</translation>
+        <translation>Modifica Proprietà Linea</translation>
     </message>
     <message>
         <source>Edit Rectangle Properties</source>
-        <translation>Modifica Propriet� Rettangolo</translation>
+        <translation>Modifica Proprietà Rettangolo</translation>
     </message>
     <message>
         <source>Cannot load dataset: </source>
@@ -1276,7 +1294,7 @@ Campo sconosciuto!</translation>
     </message>
     <message>
         <source>bias t</source>
-        <translation type="unfinished"></translation>
+        <translation>bias T</translation>
     </message>
     <message>
         <source>capacitor</source>
@@ -1321,17 +1339,20 @@ Campo sconosciuto!</translation>
     <message>
         <source>Format Error:
 Wrong line start!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Inizio linea errato!</translation>
     </message>
     <message>
         <source>Format Error:
 Unknown component!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Componente sconosciuto!</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;component&apos; line format!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Formato della linea &apos;component&apos; errato!</translation>
     </message>
     <message>
         <source>coplanar line</source>
@@ -1347,7 +1368,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>width of a gap</source>
-        <translation>larghezza del gap</translation>
+        <translation>larghezza di un&apos;interruzione</translation>
     </message>
     <message>
         <source>length of the line</source>
@@ -1363,7 +1384,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>dc feed</source>
-        <translation type="unfinished"></translation>
+        <translation>dc feed</translation>
     </message>
     <message>
         <source>diode</source>
@@ -1395,7 +1416,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Harmonic balance simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulazione Harmonic Balance</translation>
     </message>
     <message>
         <source>frequency in Hertz</source>
@@ -1431,7 +1452,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip corner</source>
-        <translation type="unfinished"></translation>
+        <translation>angolo microstrip</translation>
     </message>
     <message>
         <source>substrate</source>
@@ -1447,7 +1468,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>coupled microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea microstrip accoppiata</translation>
     </message>
     <message>
         <source>spacing between the lines</source>
@@ -1455,7 +1476,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip cross</source>
-        <translation type="unfinished"></translation>
+        <translation>incrocio microstrip</translation>
     </message>
     <message>
         <source>width of line 3</source>
@@ -1467,19 +1488,19 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip line</source>
-        <translation type="unfinished"></translation>
+        <translation>linea microstrip</translation>
     </message>
     <message>
         <source>microstrip mitered bend</source>
-        <translation type="unfinished"></translation>
+        <translation>angolo smussato microstrip</translation>
     </message>
     <message>
         <source>microstrip open</source>
-        <translation type="unfinished"></translation>
+        <translation>circuito aperto microstrip</translation>
     </message>
     <message>
         <source>microstrip impedance step</source>
-        <translation type="unfinished"></translation>
+        <translation>salto di impedenza microstrip</translation>
     </message>
     <message>
         <source>width 1 of the line</source>
@@ -1491,35 +1512,35 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip tee</source>
-        <translation type="unfinished"></translation>
+        <translation>microstrip T</translation>
     </message>
     <message>
         <source>Parameter sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametro sweep</translation>
     </message>
     <message>
         <source>simulation to perform parameter sweep on</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione sulla quale effettuare la variazione di parametro</translation>
     </message>
     <message>
         <source>parameter to sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro da variare</translation>
     </message>
     <message>
         <source>start value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>valore iniziale</translation>
     </message>
     <message>
         <source>stop value for sweep</source>
-        <translation type="unfinished"></translation>
+        <translation>valore finale</translation>
     </message>
     <message>
         <source>phase shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>sfasatore</translation>
     </message>
     <message>
         <source>phase shift in degree</source>
-        <translation type="unfinished"></translation>
+        <translation>sfasamento in gradi</translation>
     </message>
     <message>
         <source>resistor</source>
@@ -1551,11 +1572,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>S parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione parametri S</translation>
     </message>
     <message>
         <source>S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S</translation>
     </message>
     <message>
         <source>file</source>
@@ -1563,7 +1584,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>name of the s parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>nome del file dei parametri S</translation>
     </message>
     <message>
         <source>subcircuit</source>
@@ -1587,7 +1608,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>relative permittivity</source>
-        <translation>permittivit� relativa</translation>
+        <translation>permittivit�relativa</translation>
     </message>
     <message>
         <source>thickness in meters</source>
@@ -1599,7 +1620,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>loss tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore di dissipazione (tan d)</translation>
     </message>
     <message>
         <source>ideal symmetrical transformer</source>
@@ -1607,11 +1628,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>voltage transformation ratio of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>rapporto di trasformazione tensione per l&apos;induttore 1</translation>
     </message>
     <message>
         <source>voltage transformation ratio of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>rapporto di trasformazione tensione per l&apos;induttore 2</translation>
     </message>
     <message>
         <source>ideal transmission line</source>
@@ -1711,11 +1732,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>zero-bias junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità giunzione con polarizzazione zero</translation>
     </message>
     <message>
         <source>grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di gradualità</translation>
     </message>
     <message>
         <source>junction potential</source>
@@ -1727,7 +1748,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>rms substrate roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>rugosità efficace substrato</translation>
     </message>
     <message>
         <source>Too few independent data &quot;</source>
@@ -1751,7 +1772,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>polarity (npn,pnp)</source>
-        <translation type="obsolete">polarit� (npn,pnp)</translation>
+        <translation type="obsolete">polarit�(npn,pnp)</translation>
     </message>
     <message>
         <source>junction field-effect transistor</source>
@@ -1763,11 +1784,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Harmonic balance</source>
-        <translation type="unfinished"></translation>
+        <translation>Harmonic balance</translation>
     </message>
     <message>
         <source>S-parameter simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>simulazione parametri S</translation>
     </message>
     <message>
         <source>Transient simulation</source>
@@ -1791,7 +1812,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Bias T</source>
-        <translation type="unfinished"></translation>
+        <translation>Bias T</translation>
     </message>
     <message>
         <source>npn transistor</source>
@@ -1819,11 +1840,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>dc Block</source>
-        <translation>Blocco dc</translation>
+        <translation>dc Block</translation>
     </message>
     <message>
         <source>dc Feed</source>
-        <translation type="unfinished"></translation>
+        <translation>dc Feed</translation>
     </message>
     <message>
         <source>Diode</source>
@@ -1843,7 +1864,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Current Probe</source>
-        <translation type="unfinished"></translation>
+        <translation>sonda di corrente</translation>
     </message>
     <message>
         <source>Isolator</source>
@@ -1859,39 +1880,39 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>Microstrip Corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Angolo Microstrip</translation>
     </message>
     <message>
         <source>Coupled Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea Microstrip Accoppiata</translation>
     </message>
     <message>
         <source>Microstrip Cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Incrocio Microstrip</translation>
     </message>
     <message>
         <source>Microstrip Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linea Microstrip</translation>
     </message>
     <message>
         <source>Microstrip Mitered Bend</source>
-        <translation type="unfinished"></translation>
+        <translation>Angolo Smussato Microstrip</translation>
     </message>
     <message>
         <source>Microstrip Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Circuito Aperto Microstrip</translation>
     </message>
     <message>
         <source>Microstrip Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Salto di Impedenza Microstrip</translation>
     </message>
     <message>
         <source>Microstrip Tee</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip T</translation>
     </message>
     <message>
         <source>Phase Shifter</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfasatore</translation>
     </message>
     <message>
         <source>Resistor</source>
@@ -1907,7 +1928,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 1 porta</translation>
     </message>
     <message>
         <source>Subcircuit Port</source>
@@ -1967,7 +1988,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>ohmic series resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica serie</translation>
     </message>
     <message>
         <source>transit time</source>
@@ -1983,7 +2004,7 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>channel-length modulation parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro di modulazione della lunghezza di canale</translation>
     </message>
     <message>
         <source>parasitic drain resistance</source>
@@ -1995,51 +2016,51 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>gate-junction saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di saturazione della giunzione di gate</translation>
     </message>
     <message>
         <source>gate-junction emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione della giunzione di gate</translation>
     </message>
     <message>
         <source>zero-bias gate-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità giunzione gate-source con polarizzazione zero</translation>
     </message>
     <message>
         <source>zero-bias gate-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità giunzione gate-drain con polarizzazione zero</translation>
     </message>
     <message>
         <source>gate-junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale giunzione di gate</translation>
     </message>
     <message>
         <source>forward-bias junction capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente capacità giunzione con polarizzazione diretta</translation>
     </message>
     <message>
         <source>gate P-N grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di gradualità P-N di gate</translation>
     </message>
     <message>
         <source>polarity (nfet,pfet)</source>
-        <translation type="obsolete">polarit� (nfet,pfet)</translation>
+        <translation type="obsolete">polarit�(nfet,pfet)</translation>
     </message>
     <message>
         <source>gate-junction recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro della corrente di ricombinazione della giunzione di gate</translation>
     </message>
     <message>
         <source>Isr emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione Isr</translation>
     </message>
     <message>
         <source>simulation temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura di simulazione in gradi Celsius</translation>
     </message>
     <message>
         <source>relative tolerance for convergence</source>
-        <translation type="unfinished"></translation>
+        <translation>tolleranza relativa per la convergenza</translation>
     </message>
     <message>
         <source>absolute tolerance for currents</source>
@@ -2063,11 +2084,11 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>input port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>porta di ingresso per il fattore di rumore</translation>
     </message>
     <message>
         <source>output port for noise figure</source>
-        <translation type="unfinished"></translation>
+        <translation>porta di uscita per il fattore di rumore</translation>
     </message>
     <message>
         <source>number of simulation steps</source>
@@ -2075,444 +2096,445 @@ Wrong &apos;component&apos; line format!</source>
     </message>
     <message>
         <source>microstrip gap</source>
-        <translation type="unfinished"></translation>
+        <translation>interruzione microstrip</translation>
     </message>
     <message>
         <source>width of the line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea 1</translation>
     </message>
     <message>
         <source>width of the line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea 2</translation>
     </message>
     <message>
         <source>Microstrip Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Interruzione Microstrip</translation>
     </message>
     <message>
         <source>width of line</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza della linea</translation>
     </message>
     <message>
         <source>forward emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione diretto</translation>
     </message>
     <message>
         <source>reverse emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione inverso</translation>
     </message>
     <message>
         <source>high current corner for forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>angolo di alta corrente per beta diretto</translation>
     </message>
     <message>
         <source>high current corner for reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>angolo di alta corrente per beta inverso</translation>
     </message>
     <message>
         <source>forward early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione di Early diretta</translation>
     </message>
     <message>
         <source>reverse early voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione di Early inversa</translation>
     </message>
     <message>
         <source>base-emitter leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di saturazione per il leakage base-emettitore</translation>
     </message>
     <message>
         <source>base-emitter leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione per il leakage base-emettitore</translation>
     </message>
     <message>
         <source>base-collector leakage saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di saturazione per il leakage base-collettore</translation>
     </message>
     <message>
         <source>base-collector leakage emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione per il leakage base-collettore</translation>
     </message>
     <message>
         <source>forward beta</source>
-        <translation type="unfinished"></translation>
+        <translation>beta diretto</translation>
     </message>
     <message>
         <source>reverse beta</source>
-        <translation type="unfinished"></translation>
+        <translation>beta inverso</translation>
     </message>
     <message>
         <source>minimum base resistance for high currents</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza di base minima per correnti elevate</translation>
     </message>
     <message>
         <source>current for base resistance midpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente per resistenza di base media</translation>
     </message>
     <message>
         <source>collector ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica collettore</translation>
     </message>
     <message>
         <source>emitter ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica emettitore</translation>
     </message>
     <message>
         <source>zero-bias base resistance (may be high-current dependent)</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza di base con polarizzazione zero (può variare a corrente elevata)</translation>
     </message>
     <message>
         <source>base-emitter zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità di svuotamento base-emettitore con polarizzazione zero</translation>
     </message>
     <message>
         <source>base-emitter junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale di built-in della giunzione base-emettitore</translation>
     </message>
     <message>
         <source>base-emitter junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore dell&apos;esponenziale per la giunzione base-emettitore</translation>
     </message>
     <message>
         <source>base-collector zero-bias depletion capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità di svuotamento base-collettore con polarizzazione zero</translation>
     </message>
     <message>
         <source>base-collector junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale di built-in della giunzione base-collettore</translation>
     </message>
     <message>
         <source>base-collector junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore dell&apos;esponenziale per la giunzione base-collettore</translation>
     </message>
     <message>
         <source>fraction of Cjc that goes to internal base pin</source>
-        <translation type="unfinished"></translation>
+        <translation>frazione di Cjc che va al nodo di base interno</translation>
     </message>
     <message>
         <source>zero-bias collector-substrate capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità collettore-substrato con polarizzazione zero</translation>
     </message>
     <message>
         <source>substrate junction built-in potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale di built-in della giunzione di substrato</translation>
     </message>
     <message>
         <source>substrate junction exponential factor</source>
-        <translation type="unfinished"></translation>
+        <translation>fattore dell&apos;esponenziale per la giunzione di substrato</translation>
     </message>
     <message>
         <source>forward-bias depletion capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente capacità di svuotamento con polarizzazione diretta</translation>
     </message>
     <message>
         <source>ideal forward transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di transito diretto ideale</translation>
     </message>
     <message>
         <source>coefficient of bias-dependence for Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente della dipendenza dalla polarizzazione per Tf</translation>
     </message>
     <message>
         <source>voltage dependence of Tf on base-collector voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>dipendenza di Tf dalla tensione base-collettore</translation>
     </message>
     <message>
         <source>high-current effect on Tf</source>
-        <translation type="unfinished"></translation>
+        <translation>effetto corrente elevata su Tf</translation>
     </message>
     <message>
         <source>ideal reverse transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di transito inverso ideale</translation>
     </message>
     <message>
         <source>flicker noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente rumore flicker</translation>
     </message>
     <message>
         <source>flicker noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente rumore flicker</translation>
     </message>
     <message>
         <source>flicker noise frequency exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente frequenziale rumore flicker</translation>
     </message>
     <message>
         <source>burst noise coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente rumore burst</translation>
     </message>
     <message>
         <source>burst noise exponent</source>
-        <translation type="unfinished"></translation>
+        <translation>esponente rumore burst</translation>
     </message>
     <message>
         <source>burst noise corner frequency in Hertz</source>
-        <translation type="unfinished"></translation>
+        <translation>corner frequency in Hertz per il rumore burst</translation>
     </message>
     <message>
         <source>current power spectral density in A^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>densità spettrale di potenza per la corrente in A^2/Hz</translation>
     </message>
     <message>
         <source>voltage power spectral density in V^2/Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>densità spettrale di potenza per la tensione in A^2/Hz</translation>
     </message>
     <message>
         <source>linear capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità lineare</translation>
     </message>
     <message>
         <source>recombination current parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro della corrente di ricombinazione</translation>
     </message>
     <message>
         <source>emission coefficient for Isr</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione per Isr</translation>
     </message>
     <message>
         <source>spacing between the microstrip ends</source>
-        <translation type="unfinished"></translation>
+        <translation>spazio tra le estremità della microstrip</translation>
     </message>
     <message>
         <source>zero-bias threshold voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione di soglia con polarizzazione zero</translation>
     </message>
     <message>
         <source>bulk threshold in sqrt(V)</source>
-        <translation type="unfinished"></translation>
+        <translation>soglia bulk in sqrt(V)</translation>
     </message>
     <message>
         <source>surface potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale di superfice</translation>
     </message>
     <message>
         <source>drain ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica drain</translation>
     </message>
     <message>
         <source>source ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica source</translation>
     </message>
     <message>
         <source>gate ohmic resistance</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza ohmica gate</translation>
     </message>
     <message>
         <source>bulk junction saturation current</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di saturazione della giunzione di bulk</translation>
     </message>
     <message>
         <source>bulk junction emission coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di emissione della giunzione di bulk</translation>
     </message>
     <message>
         <source>channel width</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza canale</translation>
     </message>
     <message>
         <source>channel length</source>
-        <translation type="unfinished"></translation>
+        <translation>lunghezza canale</translation>
     </message>
     <message>
         <source>lateral diffusion length</source>
-        <translation type="unfinished"></translation>
+        <translation>lunghezza diffusione laterale</translation>
     </message>
     <message>
         <source>oxide thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>spessore ossido</translation>
     </message>
     <message>
         <source>gate-source overlap capacitance per meter of channel width in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità di sovrapposizione gate-source per metro di larghezza di canale in F/m</translation>
     </message>
     <message>
         <source>gate-drain overlap capacitance per meter of channel width in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità di sovrapposizione gate-drain per metro di larghezza di canale in F/m</translation>
     </message>
     <message>
         <source>gate-bulk overlap capacitance per meter of channel length in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità di sovrapposizione gate-bulk per metro di lunghezza di canale in F/m</translation>
     </message>
     <message>
         <source>zero-bias bulk-drain junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità giunzione bulk-drain con polarizzazione zero</translation>
     </message>
     <message>
         <source>zero-bias bulk-source junction capacitance</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità giunzione bulk-source con polarizzazione zero</translation>
     </message>
     <message>
         <source>bulk junction potential</source>
-        <translation type="unfinished"></translation>
+        <translation>potenziale giunzione di bulk</translation>
     </message>
     <message>
         <source>bulk junction bottom grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di gradualità della giunzione di bulk inferiore</translation>
     </message>
     <message>
         <source>bulk junction forward-bias depletion capacitance coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente capacità di svuotamento della giunzione di bulk con polarizzazione diretta</translation>
     </message>
     <message>
         <source>zero-bias bulk junction periphery capacitance per meter of junction perimeter in F/m</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità del perimetro della giunzione di bulk per metro di perimetro con polarizzazione zero in F/m</translation>
     </message>
     <message>
         <source>bulk junction periphery grading coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente di gradualità della giunzione di bulk di periferia</translation>
     </message>
     <message>
         <source>bulk transit time</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di transito di bulk</translation>
     </message>
     <message>
         <source>substrate bulk doping density in 1/cm^3</source>
-        <translation type="unfinished"></translation>
+        <translation>densità drogaggio bulk substrato in 1/cm^3</translation>
     </message>
     <message>
         <source>surface state density in 1/cm^2</source>
-        <translation type="unfinished"></translation>
+        <translation>densità stati superficiali in 1/cm^2</translation>
     </message>
     <message>
         <source>gate material type: 0 = alumina; -1 = same as bulk; 1 = opposite to bulk</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo materiale gate: 0 = allumina; -1 = stesso del bulk; 1 = opposito del bulk</translation>
     </message>
     <message>
         <source>surface mobility in cm^2/Vs</source>
-        <translation type="unfinished"></translation>
+        <translation>mobilità superficiale in cm^2/Vs</translation>
     </message>
     <message>
         <source>drain and source diffusion sheet resistance in Ohms/square</source>
-        <translation type="unfinished"></translation>
+        <translation>resistenza di diffusione drain e source in Ohm/square</translation>
     </message>
     <message>
         <source>number of equivalent drain squares</source>
-        <translation type="unfinished"></translation>
+        <translation>numero di quadrati equivalenti drain</translation>
     </message>
     <message>
         <source>number of equivalent source squares</source>
-        <translation type="unfinished"></translation>
+        <translation>numero di quadrati equivalenti source</translation>
     </message>
     <message>
         <source>zero-bias bulk junction bottom capacitance per square meter of junction area in F/m^2</source>
-        <translation type="unfinished"></translation>
+        <translation>capacità inferiore della giunzione di bulk con polarizzazione zero per metro quadro di area di giunzione in F/m^2</translation>
     </message>
     <message>
         <source>bulk junction saturation current per square meter of junction area in A/m^2</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente di saturazione della giunzione di bulk per metro quadro di area di giunzione in A/m^2</translation>
     </message>
     <message>
         <source>drain diffusion area in m^2</source>
-        <translation type="unfinished"></translation>
+        <translation>area diffusione drain in m^2</translation>
     </message>
     <message>
         <source>source diffusion area in m^2</source>
-        <translation type="unfinished"></translation>
+        <translation>area diffusione source in m^2</translation>
     </message>
     <message>
         <source>drain junction perimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>perimetro giunzione di drain</translation>
     </message>
     <message>
         <source>source junction perimeter</source>
-        <translation type="unfinished"></translation>
+        <translation>perimetro giunzione di source</translation>
     </message>
     <message>
         <source>channel-length modulation parameter in 1/V</source>
-        <translation type="unfinished"></translation>
+        <translation>parametro di modulazione della lunghezza di canale in 1/V</translation>
     </message>
     <message>
         <source>bipolar junction transistor</source>
-        <translation type="unfinished"></translation>
+        <translation>transistore a giunzione bipolare</translation>
     </message>
     <message>
         <source>bipolar junction transistor with substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>transistore a giunzione bipolare con substrato</translation>
     </message>
     <message>
         <source>excess phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>sfasamento aggiuntivo in gradi</translation>
     </message>
     <message>
         <source>microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>modello microstrip</translation>
     </message>
     <message>
         <source>microstrip dispersion model</source>
-        <translation type="unfinished"></translation>
+        <translation>modello dispersione microstrip</translation>
     </message>
     <message>
         <source>sweep type</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo scansione</translation>
     </message>
     <message>
         <source>polarity</source>
-        <translation type="unfinished"></translation>
+        <translation>polarità</translation>
     </message>
     <message>
         <source>put operating points into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>metti punti di lavoro nell insieme dati</translation>
     </message>
     <message>
         <source>put result into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>metti risultato nell&apos;insieme dati</translation>
     </message>
     <message>
         <source>quasi-static microstrip model</source>
-        <translation type="unfinished"></translation>
+        <translation>modello microstrip quasi statico</translation>
     </message>
     <message>
         <source>microstrip open end model</source>
-        <translation type="unfinished"></translation>
+        <translation>modello estremità aperta microstrip</translation>
     </message>
     <message>
         <source>schematic symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>simbolo schema</translation>
     </message>
     <message>
         <source>interpolation type</source>
-        <translation type="unfinished"></translation>
+        <translation>tipo interpolazione</translation>
     </message>
     <message>
         <source>calculate noise parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>calcola parametri di rumore</translation>
     </message>
     <message>
         <source>Edit Arc Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Proprietà Arco</translation>
     </message>
     <message>
         <source>Format Error:
 Wrong &apos;painting&apos; line delimiter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore di formato:
+Delimitatore linea &apos;painting&apos; errato!</translation>
     </message>
     <message>
         <source>save subcircuit nodes into dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>salva nodi sottorcuito nell&apos;insieme dati</translation>
     </message>
     <message>
         <source>number of simulation time steps</source>
-        <translation type="unfinished"></translation>
+        <translation>numero passi temporali della simulazione</translation>
     </message>
     <message>
         <source>integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>metodo di integrazione</translation>
     </message>
     <message>
         <source>order of integration method</source>
-        <translation type="unfinished"></translation>
+        <translation>ordine del metodo di integrazione</translation>
     </message>
     <message>
         <source>initial step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>passo iniziale in secondi</translation>
     </message>
     <message>
         <source>minimum step size in seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>passo minimo in secondi</translation>
     </message>
     <message>
         <source>Qucs Editor Version </source>
-        <translation type="unfinished">Versione Editor Qucs</translation>
+        <translation>Versione Editor Qucs</translation>
     </message>
     <message>
         <source>Copyright (C) 2004 by Michael Margraf
@@ -2523,111 +2545,117 @@ Wrong &apos;painting&apos; line delimiter!</source>
     <message>
         <source>    -r  open file read-only
 </source>
-        <translation type="unfinished"></translation>
+        <translation>-r apri file in sola lettura</translation>
     </message>
     <message>
         <source>Too long command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Parametro linea di comando troppo lungo!
+
+</translation>
     </message>
     <message>
         <source>Wrong command line argument!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Parametro linea di comando errato!
+
+</translation>
     </message>
     <message>
         <source>Only one filename allowed!
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ammesso un solo nome di file!
+
+</translation>
     </message>
     <message>
         <source>ideal current pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore impulsivo di corrente ideale</translation>
     </message>
     <message>
         <source>current before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente prima e dopo l&apos;impulso</translation>
     </message>
     <message>
         <source>current of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente dell&apos;impulso</translation>
     </message>
     <message>
         <source>start time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di inizio dell&apos;impulso</translation>
     </message>
     <message>
         <source>ending time of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di fine dell&apos;impulso</translation>
     </message>
     <message>
         <source>rise time of the leading edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di salita del fronte ascendente</translation>
     </message>
     <message>
         <source>fall time of the trailing edge</source>
-        <translation type="unfinished"></translation>
+        <translation>tempo di discesa del fronte discendente</translation>
     </message>
     <message>
         <source>Current Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Impulso di Corrente</translation>
     </message>
     <message>
         <source>ideal voltage pulse source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore impulsivo di tensione ideale</translation>
     </message>
     <message>
         <source>voltage before and after the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione prima e dopo l&apos;impulso</translation>
     </message>
     <message>
         <source>voltage of the pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione dell&apos;impulso</translation>
     </message>
     <message>
         <source>Voltage Pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>Impulso di Tensione</translation>
     </message>
     <message>
         <source>ideal rectangle current source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di corrente rettangolare ideale</translation>
     </message>
     <message>
         <source>current at high pulse</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente durante l&apos;impulso alto</translation>
     </message>
     <message>
         <source>duration of high pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>durata degli impulsi alti</translation>
     </message>
     <message>
         <source>duration of low pulses</source>
-        <translation type="unfinished"></translation>
+        <translation>durata degli impulsi bassi</translation>
     </message>
     <message>
         <source>Rectangle Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Corrente Rettangolare</translation>
     </message>
     <message>
         <source>ideal rectangle voltage source</source>
-        <translation type="unfinished"></translation>
+        <translation>Generatore di tensione rettangolare ideale</translation>
     </message>
     <message>
         <source>voltage of high signal</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione dell&apos;impulso alto</translation>
     </message>
     <message>
         <source>Rectangle Voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>Tensione Rettangolare</translation>
     </message>
     <message>
         <source>
 Very simple text editor for Qucs
 </source>
-        <translation type="unfinished">
+        <translation>
 Editor di testo minimale per Qucs
 </translation>
     </message>
@@ -2635,72 +2663,74 @@ Editor di testo minimale per Qucs
         <source>
 Usage:  qucsedit [-r] file
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Uso:  qucsedit [-r] file
+</translation>
     </message>
     <message>
         <source>    -h  display this help and exit
 </source>
-        <translation type="unfinished"></translation>
+        <translation>    -h  mostra questo aiuto ed esce
+</translation>
     </message>
     <message>
         <source>initial phase in degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>fase iniziale in gradi</translation>
     </message>
     <message>
         <source>relative tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>tolleranza relativa dell&apos;errore di troncamento locale</translation>
     </message>
     <message>
         <source>absolute tolerance of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>tolleranza assoluta dell&apos;errore di troncamento locale</translation>
     </message>
     <message>
         <source>overestimation of local truncation error</source>
-        <translation type="unfinished"></translation>
+        <translation>sovrastima dell&apos;errore di troncamento locale</translation>
     </message>
     <message>
         <source>ideal amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>amplificatore ideale</translation>
     </message>
     <message>
         <source>voltage gain</source>
-        <translation type="unfinished"></translation>
+        <translation>guadagno di tensione</translation>
     </message>
     <message>
         <source>Amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Amplificatore</translation>
     </message>
     <message>
         <source>microstrip via</source>
-        <translation type="unfinished"></translation>
+        <translation>foro passante microstrip</translation>
     </message>
     <message>
         <source>diameter of round via conductor</source>
-        <translation type="unfinished"></translation>
+        <translation>diametro del conduttore nel foro passante</translation>
     </message>
     <message>
         <source>Microstrip Via</source>
-        <translation type="unfinished"></translation>
+        <translation>Foro Passante Microstrip</translation>
     </message>
     <message>
         <source>transconductance coefficient in A/V^2</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficiente transconduttanza in A/V^2</translation>
     </message>
     <message>
         <source>operational amplifier</source>
-        <translation type="unfinished"></translation>
+        <translation>amplificatore operazionale</translation>
     </message>
     <message>
         <source>OpAmp</source>
-        <translation type="unfinished"></translation>
+        <translation>Amplificatore Operazionale</translation>
     </message>
     <message>
         <source>absolute value of maximum and minimum output voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>valore assoluto della tensione di uscita minima e massima</translation>
     </message>
     <message>
         <source>Wrong document type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo do documento errato:</translation>
     </message>
     <message>
         <source>Enter the label:</source>
@@ -2708,213 +2738,213 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>preferred convergence algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>algoritmo di convergenza preferito</translation>
     </message>
     <message>
         <source>SPICE netlist file</source>
-        <translation type="unfinished"></translation>
+        <translation>file netlist SPICE</translation>
     </message>
     <message>
         <source>spice</source>
-        <translation type="unfinished"></translation>
+        <translation>spice</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished">netlist SPICE</translation>
+        <translation>netlist SPICE</translation>
     </message>
     <message>
         <source>no variables</source>
-        <translation type="unfinished"></translation>
+        <translation>nessuna variabile</translation>
     </message>
     <message>
         <source>no data</source>
-        <translation type="unfinished"></translation>
+        <translation>nessun dato</translation>
     </message>
     <message>
         <source>calculate noise voltages</source>
-        <translation type="unfinished"></translation>
+        <translation>calcola tensioni di rumore</translation>
     </message>
     <message>
         <source>material at the backside of the substrate</source>
-        <translation type="unfinished"></translation>
+        <translation>materiale sul retro del substrato</translation>
     </message>
     <message>
         <source>temperature in degree Celsius</source>
-        <translation type="unfinished"></translation>
+        <translation>temperatura in gradi Celsius</translation>
     </message>
     <message>
         <source>Copyright (C) 2004, 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2004, 2005 by Michael Margraf
+        <translation>Copyright (C) 2004, 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>use approximation instead of precise equation</source>
-        <translation type="unfinished"></translation>
+        <translation>usa un&apos;approssimazione invece dell&apos;equazione esatta</translation>
     </message>
     <message>
         <source>method for solving the circuit matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>metodo per risolvere la matrice del circuito</translation>
     </message>
     <message>
         <source>for transient simulation: inductance in Henry</source>
-        <translation type="unfinished"></translation>
+        <translation>per simulazione transitorio: induttanza in Henry</translation>
     </message>
     <message>
         <source>for transient simulation: capacitance in Farad</source>
-        <translation type="unfinished"></translation>
+        <translation>per simulazione transitorio: capacità in Farad</translation>
     </message>
     <message>
         <source>coplanar open</source>
-        <translation type="unfinished"></translation>
+        <translation>circuito aperto coplanare</translation>
     </message>
     <message>
         <source>width of gap at end of line</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza interruzione a fine linea</translation>
     </message>
     <message>
         <source>Coplanar Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Circuito Aperto Coplanare</translation>
     </message>
     <message>
         <source>coplanar short</source>
-        <translation type="unfinished"></translation>
+        <translation>corto circuito coplanare</translation>
     </message>
     <message>
         <source>Coplanar Short</source>
-        <translation type="unfinished"></translation>
+        <translation>Corto Circuito Coplanare</translation>
     </message>
     <message>
         <source>coplanar gap</source>
-        <translation type="unfinished"></translation>
+        <translation>interruzione coplanare</translation>
     </message>
     <message>
         <source>width of gap between the two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>larghezza dell&apos;interruzione tra le due linee</translation>
     </message>
     <message>
         <source>Coplanar Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Interruzione Coplanare</translation>
     </message>
     <message>
         <source>sim</source>
-        <translation type="unfinished"></translation>
+        <translation>sim</translation>
     </message>
     <message>
         <source>coplanar step</source>
-        <translation type="unfinished"></translation>
+        <translation>salto impedenza coplanare</translation>
     </message>
     <message>
         <source>distance between ground planes</source>
-        <translation type="unfinished"></translation>
+        <translation>distanza tra piani di massa</translation>
     </message>
     <message>
         <source>Coplanar Step</source>
-        <translation type="unfinished"></translation>
+        <translation>Salto Impedenza Coplanare</translation>
     </message>
     <message>
         <source>reverse breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>tensione di rottura inversa</translation>
     </message>
     <message>
         <source>current at reverse breakdown voltage</source>
-        <translation type="unfinished"></translation>
+        <translation>corrente alla tensione di rottura inversa</translation>
     </message>
     <message>
         <source>ERROR: Cannot load subcircuit &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Impossibile caricare sottocircuito &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>ERROR: No file name in SPICE component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Nome file assente nel componente SPICE &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Component taken from Qucs library</source>
-        <translation type="unfinished"></translation>
+        <translation>Componente preso dalla libreria Qucs</translation>
     </message>
     <message>
         <source>name of qucs library file</source>
-        <translation type="unfinished"></translation>
+        <translation>nome del file di libreria qucs</translation>
     </message>
     <message>
         <source>name of component in library</source>
-        <translation type="unfinished"></translation>
+        <translation>nome del componente nella libreria</translation>
     </message>
     <message>
         <source>ERROR: Cannot load library component &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Impossibile caricare il componente di libreria &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Locus Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Luogo nel piano complesso</translation>
     </message>
     <message>
         <source>Polar</source>
-        <translation type="unfinished">Polare</translation>
+        <translation>Polare</translation>
     </message>
     <message>
         <source>Polar-Smith Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Combinazione Polare-Smith</translation>
     </message>
     <message>
         <source>Smith-Polar Combi</source>
-        <translation type="unfinished"></translation>
+        <translation>Combinazione Smith-Polare</translation>
     </message>
     <message>
         <source>3D-Cartesian</source>
-        <translation type="unfinished">Cartesiano-3D</translation>
+        <translation>Cartesiano 3D</translation>
     </message>
     <message>
         <source>Cartesian</source>
-        <translation type="unfinished">Cartesiano</translation>
+        <translation>Cartesiano</translation>
     </message>
     <message>
         <source>Smith Chart</source>
-        <translation type="unfinished">Grafico Smith</translation>
+        <translation>Carta di Smith</translation>
     </message>
     <message>
         <source>Admittance Smith</source>
-        <translation type="unfinished"></translation>
+        <translation>Carta di Smith dell&apos;ammettenza</translation>
     </message>
     <message>
         <source>Tabular</source>
-        <translation type="unfinished">Tabella</translation>
+        <translation>Tabella</translation>
     </message>
     <message>
         <source>Arrow</source>
-        <translation type="unfinished">Freccia</translation>
+        <translation>Freccia</translation>
     </message>
     <message>
         <source>Elliptic Arc</source>
-        <translation type="unfinished">Arco ellittico</translation>
+        <translation>Arco ellittico</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellisse</translation>
+        <translation>Ellisse</translation>
     </message>
     <message>
         <source>filled Ellipse</source>
-        <translation type="unfinished">Ellisse riempita</translation>
+        <translation>Ellisse riempita</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Linea</translation>
+        <translation>Linea</translation>
     </message>
     <message>
         <source>Text</source>
-        <translation type="unfinished">Testo</translation>
+        <translation>Testo</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Rettangolo</translation>
+        <translation>Rettangolo</translation>
     </message>
     <message>
         <source>filled Rectangle</source>
-        <translation type="unfinished">Rettangolo riempito</translation>
+        <translation>Rettangolo riempito</translation>
     </message>
     <message>
         <source>wrong dependency</source>
-        <translation type="unfinished"></translation>
+        <translation>dipendenza errata</translation>
     </message>
 </context>
 <context>
@@ -2941,23 +2971,23 @@ Usage:  qucsedit [-r] file
     </message>
     <message>
         <source>Cannot start text editor!</source>
-        <translation>Impossibile lanciare editor di testo!</translation>
+        <translation>Impossibile avviare editor di testo!</translation>
     </message>
     <message>
         <source>Cannot start filter synthesis program!</source>
-        <translation>Impossibile lanciare il programma di sintesi dei filtri!</translation>
+        <translation>Impossibile avviare il programma di sintesi dei filtri!</translation>
     </message>
     <message>
         <source>Cannot start line calculation program!</source>
-        <translation>Impossibile lanciare il programma di calcolo!</translation>
+        <translation>Impossibile avviare il programma di calcolo!</translation>
     </message>
     <message>
         <source>Cannot start qucshelp!</source>
-        <translation>Impossibile lanciare qucshelp!</translation>
+        <translation>Impossibile avviare qucshelp!</translation>
     </message>
     <message>
         <source>Cannot start library program!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile avviare il programma di libreria!</translation>
     </message>
 </context>
 <context>
@@ -3096,7 +3126,7 @@ Chiude il documento corrente</translation>
 Sets properties of the file</source>
         <translation type="obsolete">Impostazioni
 
-Imposta le propriet� del file</translation>
+Imposta le propriet�del file</translation>
     </message>
     <message>
         <source>Print File</source>
@@ -3392,7 +3422,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation type="obsolete">Modalit� selezione</translation>
+        <translation type="obsolete">Modalit�selezione</translation>
     </message>
     <message>
         <source>Select
@@ -3400,7 +3430,7 @@ Rimpicciolisce la vista corrente</translation>
 Select mode</source>
         <translation type="obsolete">Seleziona
 
-Modalit� selezione</translation>
+Modalit�selezione</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -3724,7 +3754,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>lumped components</source>
-        <translation type="unfinished"></translation>
+        <translation>componenti discreti</translation>
     </message>
     <message>
         <source>sources</source>
@@ -3784,7 +3814,7 @@ Breve introduzione a Qucs</translation>
     </message>
     <message>
         <source>This will delete the file permanently! Continue ?</source>
-        <translation>Questo canceller� definitivamente il file! Continuare?</translation>
+        <translation>Questo canceller�definitivamente il file! Continuare?</translation>
     </message>
     <message>
         <source>No</source>
@@ -3868,11 +3898,11 @@ Vuoi salvare i cambiamenti prima di chiuderlo?</translation>
     </message>
     <message>
         <source>&amp;Discard</source>
-        <translation>&amp;Annulla</translation>
+        <translation>&amp;Abbandona</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Printing...</source>
@@ -4156,27 +4186,27 @@ Errori:
     </message>
     <message>
         <source>1-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 1 porta</translation>
     </message>
     <message>
         <source>2-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 2 porte</translation>
     </message>
     <message>
         <source>3-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 3 porte</translation>
     </message>
     <message>
         <source>4-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 4 porte</translation>
     </message>
     <message>
         <source>5-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 5 porte</translation>
     </message>
     <message>
         <source>6-port S parameter file</source>
-        <translation type="unfinished"></translation>
+        <translation>file parametri S a 6 porte</translation>
     </message>
     <message>
         <source>dc simulation</source>
@@ -4238,7 +4268,7 @@ Errori:
         <source>This will destroy all the project
 files permanently !
 Go on ?</source>
-        <translation type="obsolete">Questo canceller� definitivamente
+        <translation type="obsolete">Questo canceller�definitivamente
 tutti i file del progetto !
 Continuare ?</translation>
     </message>
@@ -4277,12 +4307,12 @@ Continuare ?</translation>
     <message>
         <source>&apos; already exists!
 </source>
-        <translation>&apos; esiste gi�!
+        <translation>&apos; esiste gi�
 </translation>
     </message>
     <message>
         <source>Saving will overwrite the old one! Continue?</source>
-        <translation>Il salvataggio sovrascriver� il vecchio file! Continuare?</translation>
+        <translation>Il salvataggio sovrascriver�il vecchio file! Continuare?</translation>
     </message>
     <message>
         <source>Only the extensions &apos;.sch&apos; and &apos;.dpl&apos;
@@ -4334,7 +4364,7 @@ Continuare ?</translation>
     </message>
     <message>
         <source>This will destroy all the project files permanently ! Continue ?</source>
-        <translation>Questo distrugger� tutti i file del progetto permanentemente! Continuare?</translation>
+        <translation>Questo distrugger�tutti i file del progetto permanentemente! Continuare?</translation>
     </message>
     <message>
         <source>At least two elements must be selected !</source>
@@ -4426,6 +4456,10 @@ Modifica lo schema</translation>
         <source>3D-Cartesian</source>
         <translation type="obsolete">Cartesiano-3D</translation>
     </message>
+    <message>
+        <source>no warnings</source>
+        <translation type="obsolete">nessun avvertimento</translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -4513,11 +4547,11 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <source>Enter a Document Name</source>
-        <translation type="unfinished">Inserire un Nome Documento</translation>
+        <translation>Inserire un Nome Documento</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Annulla</translation>
     </message>
 </context>
 <context>
@@ -4568,15 +4602,15 @@ Editor di testo minimale per Qucs
     </message>
     <message>
         <source>Corner frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza di taglio:</translation>
     </message>
     <message>
         <source>Stop frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza di arresto:</translation>
     </message>
     <message>
         <source>Pass band ripple:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ondulazione in banda passante:</translation>
     </message>
     <message>
         <source>Impedance:</source>
@@ -4622,7 +4656,7 @@ Programma di sintesi dei filtri
     </message>
     <message>
         <source>Successful</source>
-        <translation></translation>
+        <translation>Successo</translation>
     </message>
 </context>
 <context>
@@ -4776,7 +4810,7 @@ Chiude il documento corrente</translation>
 Sets properties of the file</source>
         <translation>Impostazioni
 
-Imposta le propriet� del file</translation>
+Imposta le proprietà del file</translation>
     </message>
     <message>
         <source>Print File</source>
@@ -5072,7 +5106,7 @@ Rimpicciolisce la vista corrente</translation>
     </message>
     <message>
         <source>Select mode</source>
-        <translation>Modalit� selezione</translation>
+        <translation>Modalit�selezione</translation>
     </message>
     <message>
         <source>Select
@@ -5080,7 +5114,7 @@ Rimpicciolisce la vista corrente</translation>
 Select mode</source>
         <translation>Seleziona
 
-Modalit� selezione</translation>
+Modalit�selezione</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -5534,7 +5568,7 @@ Informazioni su Qt by Trolltech</translation>
         <source>
 Quite Universal Circuit Simulator
 </source>
-        <translation type="unfinished">
+        <translation>
 Quite Universal Circuit Simulator
 </translation>
     </message>
@@ -5604,7 +5638,7 @@ Quite Universal Circuit Simulator
 Sets properties of the application</source>
         <translation>Impostazioni Qucs
 
-Imposta le propriet� dell&apos;applicazione</translation>
+Imposta le proprietà dell&apos;applicazione</translation>
     </message>
     <message>
         <source>Document Settings</source>
@@ -5840,12 +5874,14 @@ Muove il testo del componente</translation>
     <message>
         <source>Japanese by Toyoyuki Ishikawa
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Giapponese di Toyoyuki Ishikawa
+</translation>
     </message>
     <message>
         <source>Hebrew by Dotan Nahum
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Ebraico di Dotan Nahum
+</translation>
     </message>
     <message>
         <source>About Qt...</source>
@@ -5861,7 +5897,7 @@ Muove il testo del componente</translation>
     </message>
     <message>
         <source>Starts the Qucs text editor</source>
-        <translation>Lancia l&apos;editor di testo di Qucs</translation>
+        <translation>Avvia l&apos;editor di testo di Qucs</translation>
     </message>
     <message>
         <source>Text editor
@@ -5869,7 +5905,7 @@ Muove il testo del componente</translation>
 Starts the Qucs text editor</source>
         <translation>Editor di testo
 
-Lancia l&apos;editor di testo di Qucs</translation>
+Avvia l&apos;editor di testo di Qucs</translation>
     </message>
     <message>
         <source>Filter synthesis</source>
@@ -5877,7 +5913,7 @@ Lancia l&apos;editor di testo di Qucs</translation>
     </message>
     <message>
         <source>Starts QucsFilter</source>
-        <translation>Lancia QucsFilter</translation>
+        <translation>Avvia QucsFilter</translation>
     </message>
     <message>
         <source>Filter synthesis
@@ -5885,7 +5921,7 @@ Lancia l&apos;editor di testo di Qucs</translation>
 Starts QucsFilter</source>
         <translation>Sintesi filtri
 
-Lancia QucsFilter</translation>
+Avvia QucsFilter</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -5905,7 +5941,7 @@ Lancia QucsFilter</translation>
     </message>
     <message>
         <source>Starts QucsTrans</source>
-        <translation>Lancia QucsTrans</translation>
+        <translation>Avvia QucsTrans</translation>
     </message>
     <message>
         <source>Line calculation
@@ -5913,7 +5949,7 @@ Lancia QucsFilter</translation>
 Starts transmission line calculator</source>
         <translation>Calcolo linea
 
-Lancia il calcolatore delle linee di trasmissione</translation>
+Avvia il calcolatore delle linee di trasmissione</translation>
     </message>
     <message>
         <source>Swedish by Markus Gothe
@@ -5923,64 +5959,70 @@ Lancia il calcolatore delle linee di trasmissione</translation>
     </message>
     <message>
         <source>Component Library</source>
-        <translation type="unfinished"></translation>
+        <translation>Libreria Componenti</translation>
     </message>
     <message>
         <source>Starts QucsLib</source>
-        <translation type="unfinished"></translation>
+        <translation>Avvia QucsLib</translation>
     </message>
     <message>
         <source>Component Library
 
 Starts component library program</source>
-        <translation type="unfinished"></translation>
+        <translation>Libreria Componenti 
+
+Avvia il programma di libreria componenti</translation>
     </message>
     <message>
         <source>no warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>nessun avvertimento</translation>
     </message>
     <message>
         <source>Warnings in last simulation! Press F5</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi di avviso nell&apos;ultima simulazione! Premere F5</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Valori Proprietà</translation>
     </message>
     <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Valori Proprietà
+
+Modifica Valore Proprietà dei Componenti</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rete di Adattamento</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea Rete di Adattamento</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Rete di Adattamento
+
+Finestra per la creazione di Reti di Adattamento</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Valori Proprietà...</translation>
     </message>
     <message>
         <source>Change Property Values..</source>
+        <translation>Modifica Valori Proprietà..</translation>
+    </message>
+    <message>
+        <source>Calculate DC bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculate DC bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5994,97 +6036,98 @@ Calculates DC bias and shows it</source>
     <name>QucsLib</name>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">Esci</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Esci</translation>
+        <translation>&amp;Esci</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished">Aiuto</translation>
+        <translation>Aiuto</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp;Aiuto</translation>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Informazioni</translation>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <source>Component Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezione Componente</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <source>Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Componente</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia negli appunti</translation>
     </message>
     <message>
         <source>Show Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra modello</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni...</translation>
     </message>
     <message>
         <source>Library Manager for Qucs
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Gestore Libreria per Qucs
+</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by Michael Margraf
 </source>
-        <translation type="unfinished">Copyright (C) 2005 by Michael Margraf
+        <translation>Copyright (C) 2005 by Michael Margraf
 </translation>
     </message>
     <message>
         <source>QucsLib is a program to manage Qucs component libraries. On the left side of the application window the available libraries can be browsed to find the wanted component. By clicking on the component name its description can be seen on the right side. The selected component is transported to the Qucs application by clicking on the button &quot;Copy to Clipboard&quot;. Being back in the schematic window the component can be inserted by pressing CTRL-V  (paste from clipboard).</source>
-        <translation type="unfinished"></translation>
+        <translation>QucsLib è un programma di gestione delle librerie di componenti di Qucs. Sul lato sinistro della finestra del&apos;applicazione si possono scorrere le librerie per ricercare i componenti desiderati. Cliccando sul nome di un componente si può vedere la sua descrizione sul lato destro. Il componente selezionato può essere trasportato nell&apos;applicazione Qucs cliccando sul bottone &quot;Copia negli Appunti&quot;. Tornando nella finestra dello schema il componente può essere inserito premendo CTRL-V  (copia dagli appunti).</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Cannot open &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile aprire &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Library is corrupt.</source>
-        <translation type="unfinished"></translation>
+        <translation>La Libreria è danneggiata.</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato ricerca</translation>
     </message>
     <message>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato</translation>
     </message>
     <message>
         <source>No appropriate component found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun componente adatto è stato trovato.</translation>
     </message>
 </context>
 <context>
     <name>QucsSettingsDialog</name>
     <message>
         <source>Edit Qucs Properties</source>
-        <translation>Modifica propriet� di Qucs</translation>
+        <translation>Modifica proprietà di Qucs</translation>
     </message>
     <message>
         <source>Document Background Color:</source>
@@ -6104,7 +6147,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Default Values</source>
@@ -6163,11 +6206,11 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Copy to Clipboard</source>
-        <translation>Copia negli appunti</translation>
+        <translation>Copia negli Appunti</translation>
     </message>
     <message>
         <source>&amp;Copy to Clipboard</source>
-        <translation>&amp;Copia negli appunti</translation>
+        <translation>&amp;Copia negli Appunti</translation>
     </message>
     <message>
         <source>Analyze</source>
@@ -6207,51 +6250,51 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Transmission Line Type</source>
-        <translation>Tipo di linea di trasmissione</translation>
+        <translation>Tipo di Linea di Trasmissione</translation>
     </message>
     <message>
         <source>Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip</translation>
     </message>
     <message>
         <source>Rectangular Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Guida d&apos;onda Rettangolare</translation>
     </message>
     <message>
         <source>Coaxial Line</source>
-        <translation>Linea coassiale</translation>
+        <translation>Linea Coassiale</translation>
     </message>
     <message>
         <source>Coupled Microstrip</source>
-        <translation type="unfinished"></translation>
+        <translation>Microstrip Accoppiate</translation>
     </message>
     <message>
         <source>Substrate Parameters</source>
-        <translation>Parametri substrato</translation>
+        <translation>Parametri Substrato</translation>
     </message>
     <message>
         <source>Component Parameters</source>
-        <translation>Parametri componente</translation>
+        <translation>Parametri Componente</translation>
     </message>
     <message>
         <source>Physical Parameters</source>
-        <translation>Parametri fisici</translation>
+        <translation>Parametri Fisici</translation>
     </message>
     <message>
         <source>Derive Electrical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricava Parametri Elettrici</translation>
     </message>
     <message>
         <source>Compute Physical Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola Parametri Fisici</translation>
     </message>
     <message>
         <source>Electrical Parameters</source>
-        <translation>Parametri elettrici</translation>
+        <translation>Parametri Elettrici</translation>
     </message>
     <message>
         <source>Calculated Results</source>
-        <translation>Risultati calcolati</translation>
+        <translation>Risultati Calcolati</translation>
     </message>
     <message>
         <source>Ready.</source>
@@ -6259,39 +6302,39 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Conductor Losses</source>
-        <translation>Perdite conduttore</translation>
+        <translation>Perdite Conduttore</translation>
     </message>
     <message>
         <source>Dielectric Losses</source>
-        <translation>Perdite dielettrico</translation>
+        <translation>Perdite Dielettrico</translation>
     </message>
     <message>
         <source>Skin Depth</source>
-        <translation type="unfinished"></translation>
+        <translation>Spessore Pelle</translation>
     </message>
     <message>
         <source>TE-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>Modi TE</translation>
     </message>
     <message>
         <source>TM-Modes</source>
-        <translation type="unfinished"></translation>
+        <translation>Modi TM</translation>
     </message>
     <message>
         <source>Conductor Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdite nel Conduttore Pari</translation>
     </message>
     <message>
         <source>Conductor Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdite nel Conduttore Dispari</translation>
     </message>
     <message>
         <source>Dielectric Losses Even</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdite nel Dielettrico Pari</translation>
     </message>
     <message>
         <source>Dielectric Losses Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdite nel Dielettrico Dispari</translation>
     </message>
     <message>
         <source>Relative Permittivity</source>
@@ -6299,31 +6342,31 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Relative Permeability</source>
-        <translation>Permeabilità relativa</translation>
+        <translation>Permeabilità Relativa</translation>
     </message>
     <message>
         <source>Height of Substrate</source>
-        <translation>Altezza substrato</translation>
+        <translation>Altezza Substrato</translation>
     </message>
     <message>
         <source>Height of Box Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Altezza del Coperchio superiore</translation>
     </message>
     <message>
         <source>Strip Thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Spessore Striscia</translation>
     </message>
     <message>
         <source>Strip Conductivity</source>
-        <translation type="unfinished"></translation>
+        <translation>Conduttività Striscia</translation>
     </message>
     <message>
         <source>Dielectric Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fattore di Dissipazione del Dielettrico</translation>
     </message>
     <message>
         <source>Conductor Roughness</source>
-        <translation type="unfinished"></translation>
+        <translation>Rugosità Conduttore</translation>
     </message>
     <message>
         <source>Frequency</source>
@@ -6331,47 +6374,47 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Line Width</source>
-        <translation>Larghezza linea</translation>
+        <translation>Larghezza Linea</translation>
     </message>
     <message>
         <source>Line Length</source>
-        <translation>Lunghezza linea</translation>
+        <translation>Lunghezza Linea</translation>
     </message>
     <message>
         <source>Characteristic Impedance</source>
-        <translation>Impedenza caratteristica</translation>
+        <translation>Impedenza Caratteristica</translation>
     </message>
     <message>
         <source>Electrical Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza Elettrica</translation>
     </message>
     <message>
         <source>Conductivity of Metal</source>
-        <translation>Conduttività del metallo</translation>
+        <translation>Conduttività del Metallo</translation>
     </message>
     <message>
         <source>Magnetic Loss Tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Fattore di Dissipazione Magnetico</translation>
     </message>
     <message>
         <source>Width of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza Guida d&apos;onda</translation>
     </message>
     <message>
         <source>Height of Waveguide</source>
-        <translation type="unfinished"></translation>
+        <translation>Altezza Guida d&apos;onda</translation>
     </message>
     <message>
         <source>Waveguide Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza Guida d&apos;onda</translation>
     </message>
     <message>
         <source>Inner Diameter</source>
-        <translation>Diametro interno</translation>
+        <translation>Diametro Interno</translation>
     </message>
     <message>
         <source>Outer Diameter</source>
-        <translation>Diametro esterno</translation>
+        <translation>Diametro Esterno</translation>
     </message>
     <message>
         <source>Length</source>
@@ -6379,15 +6422,15 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Gap Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza interruzione</translation>
     </message>
     <message>
         <source>Even-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedenza Pari</translation>
     </message>
     <message>
         <source>Odd-Mode Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedenza Dispari</translation>
     </message>
     <message>
         <source>Selected for Calculation</source>
@@ -6395,7 +6438,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Check item for Calculation</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona elemento per il Calcolo</translation>
     </message>
     <message>
         <source>About...</source>
@@ -6439,7 +6482,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Transcalc File</source>
-        <translation type="unfinished"></translation>
+        <translation>File Transcalc</translation>
     </message>
     <message>
         <source>Enter a Filename</source>
@@ -6479,15 +6522,15 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>ErEff</source>
-        <translation type="unfinished"></translation>
+        <translation>ErEff</translation>
     </message>
     <message>
         <source>ErEff Even</source>
-        <translation type="unfinished"></translation>
+        <translation>ErEff Pari</translation>
     </message>
     <message>
         <source>ErEff Odd</source>
-        <translation type="unfinished"></translation>
+        <translation>ErEff Dispari</translation>
     </message>
 </context>
 <context>
@@ -6510,7 +6553,7 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation>adattamento in potenza</translation>
     </message>
     <message>
         <source>Error</source>
@@ -6518,14 +6561,10 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished"></translation>
+        <translation>adattamento in rumore</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wrong depency!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6544,6 +6583,10 @@ Calculates DC bias and shows it</source>
         <source>Could not load S[2,2].</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Wrong depency!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchDialog</name>
@@ -6551,30 +6594,32 @@ Calculates DC bias and shows it</source>
         <source>The search result contains all components whose
 name contains the search string. All libraries
 are included in the search.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il risultato della ricerca contiene tutti i componenti il cui
+nome contiene la stringa cercata. Tutte le librerie
+sono incluse nella ricerca.</translation>
     </message>
     <message>
         <source>Search string:</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca stringa:</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Chiudi</translation>
+        <translation>Chiudi</translation>
     </message>
     <message>
         <source>Search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultato ricerca</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Edit File Properties</source>
-        <translation>Modifica Propriet� File</translation>
+        <translation>Modifica Proprietà File</translation>
     </message>
     <message>
         <source>Data Display:</source>
@@ -6582,7 +6627,7 @@ are included in the search.</source>
     </message>
     <message>
         <source>Data Set:</source>
-        <translation type="unfinished"></translation>
+        <translation>Insieme Dati:</translation>
     </message>
     <message>
         <source>open data display after simulation</source>
@@ -6618,7 +6663,7 @@ are included in the search.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancella</translation>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
@@ -6649,15 +6694,15 @@ are included in the search.</source>
     </message>
     <message>
         <source>Starting new simulation on </source>
-        <translation type="unfinished">Inizio nuova simulazione ore </translation>
+        <translation> alle </translation>
     </message>
     <message>
         <source> at </source>
-        <translation type="unfinished"> a </translation>
+        <translation>alle </translation>
     </message>
     <message>
         <source>creating netlist ....</source>
-        <translation type="unfinished">creo netlist...</translation>
+        <translation>creazione netlist ....</translation>
     </message>
     <message>
         <source>ERROR: Cannot create netlist file!
@@ -6668,39 +6713,39 @@ Abbandonato.</translation>
     <message>
         <source>done.
 </source>
-        <translation type="unfinished">fatto.
+        <translation>fatto.
 </translation>
     </message>
     <message>
         <source>ERROR: Simulator is still running!</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Il simulatore sta ancora lavorando!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start simulator!</source>
-        <translation type="unfinished">ERRORE: Impossibile avviare il simulatore!</translation>
+        <translation>ERRORE: Impossibile avviare il simulatore!</translation>
     </message>
     <message>
         <source>
 Simulation ended on </source>
-        <translation type="unfinished">
-Simulazione conclusa ore </translation>
+        <translation>
+Simulazione conclusa </translation>
     </message>
     <message>
         <source>Ready.
 </source>
-        <translation type="unfinished">Pronto.
+        <translation>Pronto.
 </translation>
     </message>
     <message>
         <source>
 Errors occured during simulation on </source>
-        <translation type="unfinished">
-Errori durante la simulazione ora </translation>
+        <translation>
+Errori durante la simulazione </translation>
     </message>
     <message>
         <source>Aborted.
 </source>
-        <translation type="unfinished">Annullato.
+        <translation>Annullato.
 </translation>
     </message>
     <message>
@@ -6708,7 +6753,7 @@ Errori durante la simulazione ora </translation>
 ----------
 
 </source>
-        <translation type="unfinished">Output:
+        <translation>Output:
 ----------
 
 </translation>
@@ -6721,7 +6766,7 @@ Errors:
 --------
 
 </source>
-        <translation type="unfinished">
+        <translation>
 
 
 Errori:
@@ -6731,102 +6776,102 @@ Errori:
     </message>
     <message>
         <source>ERROR: Cannot write netlist file!</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Impossibile scrivere file netlist!</translation>
     </message>
     <message>
         <source>ERROR: Cannot start QucsConv!</source>
-        <translation type="unfinished"></translation>
+        <translation>ERRORE: Impossibile avviare QucsConv!</translation>
     </message>
 </context>
 <context>
     <name>SpiceDialog</name>
     <message>
         <source>Name:</source>
-        <translation type="unfinished">Nome:</translation>
+        <translation>Nome:</translation>
     </message>
     <message>
         <source>File:</source>
-        <translation type="unfinished"></translation>
+        <translation>File:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Sfoglia</translation>
+        <translation>Sfoglia</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Modifica</translation>
+        <translation>Modifica</translation>
     </message>
     <message>
         <source>show file name in schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>mostra nome file nello schema</translation>
     </message>
     <message>
         <source>Add &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi &gt;&gt;</translation>
     </message>
     <message>
         <source>&lt;&lt; Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;&lt; Togli</translation>
     </message>
     <message>
         <source>Component ports:</source>
-        <translation type="unfinished"></translation>
+        <translation>Porte Componente:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished">Applica</translation>
+        <translation>Applica</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished">Tutti i file</translation>
+        <translation>Tutti i file</translation>
     </message>
     <message>
         <source>Select a file</source>
-        <translation type="unfinished">Seleziona un file</translation>
+        <translation>Seleziona un file</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Cannot execute</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile eseguire</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <source>Converting ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Conversione...</translation>
     </message>
     <message>
         <source>QucsConv Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore QucsConv</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
-        <translation type="unfinished">netlist SPICE</translation>
+        <translation>netlist SPICE</translation>
     </message>
     <message>
         <source>Edit SPICE Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica Proprietà Componente SPICE</translation>
     </message>
     <message>
         <source>SPICE net nodes:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nodi net SPICE:</translation>
     </message>
     <message>
         <source>include SPICE simulations</source>
-        <translation type="unfinished"></translation>
+        <translation>Includi simulazioni SPICE</translation>
     </message>
 </context>
 <context>
@@ -6844,7 +6889,7 @@ Errori:
     <name>SymbolWidget</name>
     <message>
         <source>Symbol:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbolo:</translation>
     </message>
 </context>
 </TS>
