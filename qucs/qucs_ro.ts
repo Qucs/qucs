@@ -2829,6 +2829,82 @@ Folosire:  qucsedit [-r] file
         <source>wrong dependency</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>three mutual inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductance of coil 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductance of coil 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inductance of coil 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coupling factor between coil 1 and 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coupling factor between coil 1 and 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>coupling factor between coil 2 and 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>two mutual inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance of coil 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resistance of coil 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mutual Inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3 Mutual Inductors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>correlated current sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current power spectral density of source 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>current power spectral density of source 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>normalized correlation coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Correlated Noise Sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage power spectral density of source 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage power spectral density of source 1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -2945,7 +3021,7 @@ Folosire:  qucsedit [-r] file
     </message>
     <message>
         <source>file data</source>
-        <translation>date din fişier</translation>
+        <translation type="obsolete">date din fişier</translation>
     </message>
     <message>
         <source>simulations</source>
@@ -3449,6 +3525,10 @@ Editează această schemă</translation>
     </message>
     <message>
         <source>SPICE netlist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>file components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

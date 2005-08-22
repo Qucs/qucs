@@ -201,7 +201,7 @@ void QucsApp::fillComboBox(bool setAll)
     CompChoose->insertItem(tr("sources"));
     CompChoose->insertItem(tr("transmission lines"));
     CompChoose->insertItem(tr("nonlinear components"));
-    CompChoose->insertItem(tr("file data"));
+    CompChoose->insertItem(tr("file components"));
     CompChoose->insertItem(tr("simulations"));
     CompChoose->insertItem(tr("diagrams"));
   }
@@ -1135,15 +1135,10 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
   if(sim->ErrText->lines() > 1)   // were there warnings ?
     Init.slotShowWarnings();
 
-  if(sim->Doc->showBias == 0) {
+  if(sim->Doc->showBias == 0) {  // paint dc bias into schematic ?
     sim->slotClose();   // close and delete simulation window
-    Graph *pg = sim->Doc->setBiasPoints();
-
-    // if simulation has sweeps, show dialog to choose bias point
-    if((pg->cPointsX.count() > 1) || (pg->cPointsX.getFirst()->count > 1)) {
-      SweepDialog *Dia = new SweepDialog(sim->Doc, pg);
-      Dia->show();
-    }
+    SweepDialog *Dia = new SweepDialog(sim->Doc);
+    Dia->show();
   }
   else if(sim->Doc->SimOpenDpl) {
     slotChangePage(sim->Doc->DataDisplay);  // switch to data display
@@ -1578,13 +1573,15 @@ pInfoFunc lumpedComponents[] =
    &Ground::info, &SubCirPort::info, &Transformer::info, &symTrafo::info,
    &dcBlock::info, &dcFeed::info, &BiasT::info, &Attenuator::info,
    &Amplifier::info, &Isolator::info, &Circulator::info,
-   &Gyrator::info, &Phaseshifter::info, &iProbe::info, 0};
+   &Gyrator::info, &Phaseshifter::info, &iProbe::info, &Mutual::info,
+   &Mutual2::info, 0};
 
 pInfoFunc Sources[] =
   {&Volt_dc::info, &Ampere_dc::info, &Volt_ac::info, &Ampere_ac::info,
    &Source_ac::info, &Volt_noise::info, &Ampere_noise::info, &VCCS::info,
    &CCCS::info, &VCVS::info, &CCVS::info, &vPulse::info, &iPulse::info,
-   &vRect::info, &iRect::info, 0};
+   &vRect::info, &iRect::info, &Noise_ii::info, &Noise_vv::info,
+   &Noise_iv::info, 0};
 
 pInfoFunc TransmissionLines[] =
   {&TLine::info, &Substrate::info, &MSline::info, &MScoupled::info,

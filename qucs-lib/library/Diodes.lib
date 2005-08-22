@@ -1,4 +1,4 @@
-<Qucs Library 0.0.7 "Diodes">
+<Qucs Library 0.0.8 "Diodes">
 
 <Component 1N4148>
   <Description>
@@ -209,64 +209,64 @@
   </Model>
 </Component>
 
-<Component 6A1>
+<Component 6A01>
   <Description>
-    universal silicon rectifier diode, added by Leandro DArchivio
+    universal silicon rectifier diode, added by Leandro D'Archivio <morti667@hotmail.com>
     100V, 6.0A, 2.0us
     Manufacturer: Diodes Inc.
   </Description>
   <Model>
-    <Diode D_6A1_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "10u" 0>
+    <Diode D_6A01_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "100" 0 "10u" 0>
   </Model>
 </Component>
 
-<Component 6A2>
+<Component 6A02>
   <Description>
-    universal silicon rectifier diode, added by Leandro DArchivio
+    universal silicon rectifier diode, added by Leandro D'Archivio <morti667@hotmail.com>
     200V, 6.0A, 2.0us
     Manufacturer: Diodes Inc.
   </Description>
   <Model>
-    <Diode D_6A2_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "10u" 0>
+    <Diode D_6A02_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "200" 0 "10u" 0>
   </Model>
 </Component>
 
-<Component 6A4>
+<Component 6A04>
   <Description>
-    universal silicon rectifier diode, added by Leandro DArchivio
+    universal silicon rectifier diode, added by Leandro D'Archivio <morti667@hotmail.com>
     400V, 6.0A, 2.0us
     Manufacturer: Diodes Inc.
   </Description>
   <Model>
-    <Diode D_6A4_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "400" 0 "10u" 0>
+    <Diode D_6A04_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "400" 0 "10u" 0>
   </Model>
 </Component>
 
-<Component 6A6>
+<Component 6A06>
   <Description>
-    universal silicon rectifier diode, added by Leandro DArchivio
+    universal silicon rectifier diode, added by Leandro D'Archivio <morti667@hotmail.com>
     600V, 6.0A, 2us
     Manufacturer: Diodes Inc.
   </Description>
   <Model>
-    <Diode D_6A6_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "600" 0 "10u" 0>
+    <Diode D_6A06_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "600" 0 "10u" 0>
   </Model>
 </Component>
 
-<Component 6A8>
+<Component 6A08>
   <Description>
-    universal silicon rectifier diode, added by Leandro DArchivio
+    universal silicon rectifier diode, added by Leandro D'Archivio <morti667@hotmail.com>
     800V, 6.0A, 2us
     Manufacturer: Diodes Inc.
   </Description>
   <Model>
-    <Diode D_6A8_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "800" 0 "10u" 0>
+    <Diode D_6A08_ 1 0 0 -26 13 0 0 "52.4n" 1 "1.7" 1 "60p" 0 "0.333" 0 "0.7" 0 "0.5" 0 "0" 0 "0" 0 "2" 0 "7m" 0 "2.88u" 0 "26.85" 0 "0" 0 "1" 0 "1" 0 "800" 0 "10u" 0>
   </Model>
 </Component>
 
 <Component 6A10>
   <Description>
-    universal silicon rectifier diode, added by Leandro DArchivio
+    universal silicon rectifier diode, added by Leandro D'Archivio <morti667@hotmail.com>
     1KV, 6.0A, 2.0us
     Manufacturer: Diodes Inc.
   </Description>
