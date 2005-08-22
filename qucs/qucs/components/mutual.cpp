@@ -1,8 +1,8 @@
 /***************************************************************************
-                          transformer.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+                                mutual.cpp
+                               ------------
+    begin                : Sat Aug 20 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,12 +15,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "transformer.h"
+#include "mutual.h"
 
 
-Transformer::Transformer()
+Mutual::Mutual()
 {
-  Description = QObject::tr("ideal transformer");
+  Description = QObject::tr("two mutual inductors");
 
   Arcs.append(new Arc(-16,-18,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16, -6,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
@@ -36,12 +36,10 @@ Transformer::Transformer()
   Lines.append(new Line(-10, 30,-30, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10, 18, 10, 30,QPen(QPen::darkBlue,2)));
   Lines.append(new Line( 10, 30, 30, 30,QPen(QPen::darkBlue,2)));
-  Lines.append(new Line( -1,-20, -1, 20,QPen(QPen::darkBlue,1)));
-  Lines.append(new Line(  1,-20,  1, 20,QPen(QPen::darkBlue,1)));
 
-  Texts.append(new Text(-21, -18,"T"));
-  Arcs.append(new Arc(-21,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Texts.append(new Text(-21, -22, "1"));
+  Texts.append(new Text( 15, -22, "2"));
+  Arcs.append(new Arc(-14,-40, 28, 20, 16*30, 16*120,QPen(QPen::darkBlue,2)));
 
 
   Ports.append(new Port(-30,-30));
@@ -49,32 +47,40 @@ Transformer::Transformer()
   Ports.append(new Port( 30, 30));
   Ports.append(new Port(-30, 30));
 
-  x1 = -33; y1 = -34;
+  x1 = -33; y1 = -43;
   x2 =  33; y2 =  34;
 
   tx = x1+4;
   ty = y2+4;
-  Model = "Tr";
+  Model = "M";
   Name  = "Tr";
 
-  Props.append(new Property("T", "1", true,
-		QObject::tr("voltage transformation ratio")));
+  Props.append(new Property("L1", "1 mH", false,
+		QObject::tr("inductance of coil 1")));
+  Props.append(new Property("L2", "1 mH", false,
+		QObject::tr("inductance of coil 2")));
+  Props.append(new Property("R1", "0.1 Ohm", false,
+		QObject::tr("resistance of coil 1")));
+  Props.append(new Property("R2", "0.1 Ohm", false,
+		QObject::tr("resistance of coil 2")));
+  Props.append(new Property("k", "0.9", false,
+		QObject::tr("coupling factor between coil 1 and 2")));
 }
 
-Transformer::~Transformer()
+Mutual::~Mutual()
 {
 }
 
-Component* Transformer::newOne()
+Component* Mutual::newOne()
 {
-  return new Transformer();
+  return new Mutual();
 }
 
-Element* Transformer::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Mutual::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("Transformer");
-  BitmapFile = "transformer";
+  Name = QObject::tr("Mutual Inductors");
+  BitmapFile = "mutual";
 
-  if(getNewOne)  return new Transformer();
+  if(getNewOne)  return new Mutual();
   return 0;
 }

@@ -1,6 +1,6 @@
 /***************************************************************************
                                 qucsdoc.cpp
-                              ---------------
+                               -------------
     begin                : Wed Sep 3 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -3263,91 +3263,4 @@ Component* QucsDoc::selectCompText(int x_, int y_, int& w, int& h)
   }
 
   return 0;
-}
-
-// ---------------------------------------------------
-Graph* QucsDoc::setBiasPoints()
-{
-  // When this function is entered, a simulation was performed.
-  // Thus, the node names are still in "node->Name".
-
-  bool hasNoComp;
-  Graph *pg = new Graph("");
-  Diagram *Diag = new Diagram();
-
-  Node *pn;
-  Element *pe;
-  // create DC voltage for all nodes
-  for(pn = Nodes->first(); pn != 0; pn = Nodes->next()) {
-    if(pn->Name.isEmpty()) continue;
-
-    pn->x1 = 0;
-    if(pn->Connections.count() < 2) {
-      pn->Name = "";  // no text at open nodes
-      continue;
-    }
-    else {
-      hasNoComp = true;
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
-        if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
-        }
-        else {
-          if( ((Component*)pe)->Model == "GND" ) {
-            hasNoComp = true;   // no text at ground symbol
-            break;
-          }
-
-          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
-          hasNoComp = false;
-        }
-      if(hasNoComp) {  // text only were a component is connected
-        pn->Name = "";
-        continue;
-      }
-    }
-
-    pg->Var = pn->Name + ".V";
-    if(Diag->loadVarData(DataSet, pg))
-      pn->Name = num2str(*(pg->cPointsY)) + "V";
-    else
-      pn->Name = "0V";
-
-
-    for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
-      if(pe->Type == isWire) {
-        if( ((Wire*)pe)->Port1 != pn )  // no text at next node
-          ((Wire*)pe)->Port1->Name = "";
-        else  ((Wire*)pe)->Port2->Name = "";
-      }
-  }
-
-
-  // create DC current through each probe
-  for(Component *pc = Comps->first(); pc != 0; pc = Comps->next())
-    if(pc->Model == "IProbe") {
-      pn = pc->Ports.first()->Connection;
-      if(!pn->Name.isEmpty())   // preserve node voltage ?
-        pn = pc->Ports.next()->Connection;
-
-      pn->x1 = 0x10;   // mark current
-      pg->Var = pc->Name + ".I";
-      if(Diag->loadVarData(DataSet, pg))
-        pn->Name = num2str(*(pg->cPointsY)) + "A";
-      else
-        pn->Name = "0A";
-
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
-        if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
-        }
-        else {
-          if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
-        }
-    }
-
-
-  showBias = 1;
-  delete Diag;
-  return pg;
 }

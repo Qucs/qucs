@@ -119,7 +119,6 @@ public:
   Component* selectCompText(int, int, int&, int&);
 
   int    showBias;  // -1=no, 0=calculation running, >0=show DC bias points
-  Graph* setBiasPoints();
 
   QucsFile  File;   // class to perform  load, save, copy, paste
 

@@ -1057,6 +1057,8 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "solator") c = new Isolator();
         else if(cstr == "pulse") c = new iPulse();
         else if(cstr == "rect") c = new iRect();
+        else if(cstr == "Inoise") c = new Noise_ii();
+        else if(cstr == "Vnoise") c = new Noise_iv();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
         break;
@@ -1067,6 +1069,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "noise") c = new Volt_noise();
         else if(cstr == "pulse") c = new vPulse();
         else if(cstr == "rect") c = new vRect();
+        else if(cstr == "Vnoise") c = new Noise_vv();
         break;
   case 'T' : if(cstr == "r") c = new Transformer();
         else if(cstr == "LIN") c = new TLine();
@@ -1093,7 +1096,9 @@ Component* getComponentFromName(QString& Line)
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
 	else if(cstr == "mp") c = new Amplifier();
         break;
-  case 'M' : if(cstr == "LIN") c = new MSline();
+  case 'M' : if(cstr.isEmpty()) c = new Mutual();
+	else if(cstr == "2") c = new Mutual2();
+	else if(cstr == "LIN") c = new MSline();
 	else if(cstr == "OSFET") c = new MOSFET_sub();
 	else if(cstr == "STEP") c = new MSstep();
 	else if(cstr == "CORN") c = new MScorner();
