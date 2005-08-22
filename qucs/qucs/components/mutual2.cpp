@@ -1,8 +1,8 @@
 /***************************************************************************
-                          symtrafo.cpp  -  description
-                             -------------------
-    begin                : Sat Aug 23 2003
-    copyright            : (C) 2003 by Michael Margraf
+                               symtrafo.cpp
+                              --------------
+    begin                : Sat Aug 20 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,12 +15,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "symtrafo.h"
+#include "mutual2.h"
 
 
-symTrafo::symTrafo()
+Mutual2::Mutual2()
 {
-  Description = QObject::tr("ideal symmetrical transformer");
+  Description = QObject::tr("three mutual inductors");
 
   Arcs.append(new Arc(-16,-58,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
   Arcs.append(new Arc(-16,-46,13,13, 16*270,16*180, QPen(QPen::darkBlue,2)));
@@ -44,17 +44,12 @@ symTrafo::symTrafo()
   Lines.append(new Line(-10, 10,-30, 10,QPen(QPen::darkBlue,2)));
   Lines.append(new Line(-10, 10,-10, 22,QPen(QPen::darkBlue,2)));
 
-  // core lines
-  Lines.append(new Line( -1,-57, -1, 57,QPen(QPen::darkBlue,1)));
-  Lines.append(new Line(  1,-57,  1, 57,QPen(QPen::darkBlue,1)));
+  Texts.append(new Text(-20,-61,"1"));
+  Texts.append(new Text(-20, 18,"2"));
+  Texts.append(new Text( 15,-22,"3"));
 
-  Texts.append(new Text(-23,-57,"T1"));
-  Texts.append(new Text(-23, 22,"T2"));
-
-  // mark the turn direction
-  Arcs.append(new Arc(-21,-64,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc(-21, 15,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
-  Arcs.append(new Arc( 15,-24,  6,  6,  0, 16*360,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-25,-65, 50,100, 16*29, 16*61,QPen(QPen::darkBlue,2)));
+  Arcs.append(new Arc(-25,-35, 50,100,16*270, 16*61,QPen(QPen::darkBlue,2)));
 
   Ports.append(new Port(-30,-70));
   Ports.append(new Port( 30,-30));
@@ -68,29 +63,37 @@ symTrafo::symTrafo()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "sTr";
+  Model = "M2";
   Name  = "Tr";
 
-  Props.append(new Property("T1", "1", true,
-		QObject::tr("voltage transformation ratio of coil 1")));
-  Props.append(new Property("T2", "1", true,
-		QObject::tr("voltage transformation ratio of coil 2")));
+  Props.append(new Property("L1", "1 mH", false,
+		QObject::tr("inductance of coil 1")));
+  Props.append(new Property("L2", "1 mH", false,
+		QObject::tr("inductance of coil 2")));
+  Props.append(new Property("L3", "1 mH", false,
+		QObject::tr("inductance of coil 3")));
+  Props.append(new Property("k12", "0.9", false,
+		QObject::tr("coupling factor between coil 1 and 2")));
+  Props.append(new Property("k13", "0.9", false,
+		QObject::tr("coupling factor between coil 1 and 3")));
+  Props.append(new Property("k23", "0.9", false,
+		QObject::tr("coupling factor between coil 2 and 3")));
 }
 
-symTrafo::~symTrafo()
+Mutual2::~Mutual2()
 {
 }
 
-Component* symTrafo::newOne()
+Component* Mutual2::newOne()
 {
-  return new symTrafo();
+  return new Mutual2();
 }
 
-Element* symTrafo::info(QString& Name, char* &BitmapFile, bool getNewOne)
+Element* Mutual2::info(QString& Name, char* &BitmapFile, bool getNewOne)
 {
-  Name = QObject::tr("symmetric Transformer");
-  BitmapFile = "symtrans";
+  Name = QObject::tr("3 Mutual Inductors");
+  BitmapFile = "mutual2";
 
-  if(getNewOne)  return new symTrafo();
+  if(getNewOne)  return new Mutual2();
   return 0;
 }

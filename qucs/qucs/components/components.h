@@ -83,12 +83,16 @@
 #include "iprobe.h"
 #include "volt_noise.h"
 #include "ampere_noise.h"
+#include "noise_ii.h"
+#include "noise_iv.h"
+#include "noise_vv.h"
 #include "vpulse.h"
 #include "ipulse.h"
 #include "vrect.h"
 #include "irect.h"
 #include "spicefile.h"
 #include "libcomp.h"
-
+#include "mutual.h"
+#include "mutual2.h"
 
 #endif
