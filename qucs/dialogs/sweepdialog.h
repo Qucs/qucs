@@ -21,31 +21,50 @@
 #include <qdialog.h>
 #include <qregexp.h>
 #include <qptrlist.h>
+#include <qspinbox.h>
 
 class QucsDoc;
 class Graph;
+class Node;
 class QGridLayout;
 class QRegExpValidator;
-class QSpinBox;
+
+
+class mySpinBox : public QSpinBox {
+   Q_OBJECT
+public:
+  mySpinBox(int, int, int, double*, QWidget*);
+
+protected:
+  QString mapValueToText(int);
+
+private:
+  double *Values;
+};
+
 
 
 class SweepDialog : public QDialog {
    Q_OBJECT
 public:
-  SweepDialog(QucsDoc*, Graph*, QWidget *parent=0);
+  SweepDialog(QucsDoc*, QWidget *parent=0);
  ~SweepDialog();
 
 private slots:
   void slotNewValue(int);
 
 private:
+  Graph* setBiasPoints();
+  
   QGridLayout *all;   // the mother of all widgets
+  QRegExp Expr;
   QRegExpValidator  *Validator;
-  QRegExp     Expr;
-  QPtrList<QSpinBox> BoxList;
+  QPtrList<mySpinBox> BoxList;
 
   QucsDoc *Doc;
   Graph   *pGraph;
+  QPtrList<Node> NodeList;
+  QPtrList<double> ValueList;
 };
 
 #endif

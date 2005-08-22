@@ -1,3 +1,10 @@
+2005-20-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new components: mutual indoctors (2 and 3), correlated
+	noise sources
+	* fixed bug: crash after "calc DC bias" with S-parameter
+	* show DC bias for sweeps
+
 2005-06-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* ChangeDialog with post-select of components
