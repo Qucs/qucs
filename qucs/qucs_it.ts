@@ -4536,6 +4536,10 @@ Modifica lo schema</translation>
         <source>no warnings</source>
         <translation type="obsolete">nessun avvertimento</translation>
     </message>
+    <message>
+        <source>file components</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
