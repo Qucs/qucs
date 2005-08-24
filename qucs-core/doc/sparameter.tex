@@ -1897,22 +1897,21 @@ R_L     & = \frac{\sqrt{1 - 2\cdot K\cdot g_P\cdot|S_{12}S_{21}| + g_P^2\cdot|S_
 \end{align}
 with $C_2 = S_{22} - S_{11}^*\cdot\Delta$, $g_P = G_P / |S_{21}|^2$ and $K$ Rollet stability factor.
 
-
 \subsection{Two-Port Matching}
 
-Reaching concurrent power matching of input and output in a bilateral
-circuit is not such simple, due to backward transmission $S_{12}$.
+Obtaining concurrent power matching of input and output in a bilateral
+circuit is not such simple, due to the backward transmission $S_{12}$.
 However, in linear circuits, this task can be easily solved by the
 following equations:
-
 \begin{align}
 \Delta & = S_{11}\cdot S_{22} - S_{12}\cdot S_{21} \\
 B      & = 1 + |S_{11}|^2 - |S_{22}|^2 - |\Delta|^2 \\
 C      & = S_{11} - S_{22}^* \cdot \Delta \\
-r_S    & = \frac{C^*}{2\cdot |C|^2} \cdot \left( B - \sqrt{B^2 - 4\cdot |C|^2 } \right)
+r_S    & = \frac{1}{2\cdot C} \cdot \left( B - \sqrt{B^2 - |2\cdot C|^2 } \right)
 \end{align}
 
 Here $r_S$ is the reflexion coefficient that the circuit needs to see
-at the input port in order to reach concurrently matched in- and output.
-For the reflexion coefficient at the output $r_L$ the same equations
-hold by simply changing the indeces (exchange 1 by 2 and vice versa).
+at the input port in order to reach concurrently matched in- and
+output.  For the reflexion coefficient at the output $r_L$ the same
+equations hold by simply changing the indices (exchange 1 by 2 and
+vice versa).
