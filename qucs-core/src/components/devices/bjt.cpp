@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: bjt.cpp,v 1.31 2005-06-02 18:17:55 raimi Exp $
+ * $Id: bjt.cpp,v 1.32 2005-08-24 07:10:46 raimi Exp $
  *
  */
 
@@ -133,8 +133,8 @@ void bjt::calcNoiseSP (nr_double_t frequency) {
 matrix bjt::calcMatrixCy (nr_double_t frequency) {
 
   // fetch computed operating points
-  nr_double_t Ibe = getOperatingPoint ("Ibe");
-  nr_double_t Ice = getOperatingPoint ("Ice");
+  nr_double_t Ibe = fabs (getOperatingPoint ("Ibe"));
+  nr_double_t Ice = fabs (getOperatingPoint ("Ice"));
 
   // get model properties
   nr_double_t Kf  = getPropertyDouble ("Kf");

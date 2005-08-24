@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: diode.cpp,v 1.24 2005-06-02 18:17:55 raimi Exp $
+ * $Id: diode.cpp,v 1.25 2005-08-24 07:10:46 raimi Exp $
  *
  */
 
@@ -95,7 +95,7 @@ matrix diode::calcMatrixCy (nr_double_t frequency) {
   // build noise current correlation matrix
   matrix cy = matrix (2);
   nr_double_t i = 2 * (Id + 2 * Is) * QoverkB / T0 +    // shot noise
-    Kf * pow (Id, Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
+    Kf * pow (fabs (Id), Af) / pow (frequency, Ffe) / kB / T0; // flicker noise
   cy.set (NODE_C, NODE_C, +i); cy.set (NODE_A, NODE_A, +i);
   cy.set (NODE_A, NODE_C, -i); cy.set (NODE_C, NODE_A, -i);
   return cy;
