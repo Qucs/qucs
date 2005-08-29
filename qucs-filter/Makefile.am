@@ -29,14 +29,14 @@ dist_man_MANS = qucsfilter.1
 MOCHEADERS = qucsfilter.h helpdialog.h
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp bwfilter.cpp
+qucsfilter_SOURCES = main.cpp qucsfilter.cpp helpdialog.cpp lc_filter.cpp
 
 nodist_qucsfilter_SOURCES = $(MOCFILES)
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES)
 qucsfilter_LDFLAGS = $(X11_LDFLAGS) $(QT_LDFLAGS)
 
-noinst_HEADERS = $(MOCHEADERS) bwfilter.h
+noinst_HEADERS = $(MOCHEADERS) lc_filter.h
 
 %.moc.cpp: %.h
 	$(MOC) -o $@ $<

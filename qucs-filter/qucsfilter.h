@@ -27,9 +27,6 @@ class QLabel;
 class QIntValidator;
 class QDoubleValidator;
 
-/**
-  *@author Michael Margraf
-  */
 
 struct tQucsSettings {
   int x, y;      // position of main window
@@ -63,7 +60,7 @@ private:
   QGridLayout *gbox;
   QComboBox *ComboType, *ComboClass, *ComboCorner, *ComboStop;
   QLineEdit *EditOrder, *EditCorner, *EditStop, *EditRipple, *EditImpedance;
-  QLabel *LabelRipple, *Label_dB, *LabelStop, *LabelResult;
+  QLabel *LabelRipple, *Label_dB, *LabelStart, *LabelStop, *LabelResult;
   QIntValidator *IntVal;
   QDoubleValidator *DoubleVal;
 };
