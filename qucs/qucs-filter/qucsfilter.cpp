@@ -21,7 +21,7 @@
 
 #include "qucsfilter.h"
 #include "helpdialog.h"
-#include "bwfilter.h"
+#include "lc_filter.h"
 
 #include <qmenubar.h>
 #include <qpopupmenu.h>
@@ -84,8 +84,8 @@ QucsFilter::QucsFilter()
   ComboClass = new QComboBox(this);
   ComboClass->insertItem(tr("Low pass"));
   ComboClass->insertItem(tr("High pass"));
-//  ComboClass->insertItem(tr("Band pass"));
-//  ComboClass->insertItem(tr("Band stop"));
+  ComboClass->insertItem(tr("Band pass"));
+  ComboClass->insertItem(tr("Band stop"));
   gbox->addWidget(ComboClass, 2,1);
   connect(ComboClass, SIGNAL(activated(int)), SLOT(slotClassChanged(int)));
 
@@ -98,8 +98,8 @@ QucsFilter::QucsFilter()
   EditOrder->setValidator(IntVal);
   gbox->addWidget(EditOrder, 3,1);
 
-  QLabel *Label4 = new QLabel(tr("Corner frequency:"), this);
-  gbox->addWidget(Label4, 4,0);
+  LabelStart = new QLabel(tr("Corner frequency:"), this);
+  gbox->addWidget(LabelStart, 4,0);
   EditCorner = new QLineEdit("1", this);
   EditCorner->setValidator(DoubleVal);
   gbox->addWidget(EditCorner, 4,1);
@@ -220,16 +220,8 @@ void QucsFilter::slotCalculate()
   // call appropriate filter synthesis function
   switch(ComboType->currentItem()) {
     case TYPE_BUTTERWORTH :
-	switch(ComboClass->currentItem()) {
-	  case CLASS_LOWPASS :
-		s = bwfilter::createSchematic(CLASS_LOWPASS, Impedance,
-						Order, CornerFreq);
-		break;
-	  case CLASS_HIGHPASS :
-		s = bwfilter::createSchematic(CLASS_HIGHPASS, Impedance,
-						Order, CornerFreq);
-		break;
-	}
+	s = LC_Filter::createSchematic(ComboClass->currentItem(), Impedance,
+					Order, CornerFreq, StopFreq);
 	break;
   }
   if(!s) return;
@@ -289,6 +281,14 @@ void QucsFilter::slotClassChanged(int index)
 	LabelStop->setEnabled(false);
 	EditStop->setEnabled(false);
 	ComboStop->setEnabled(false);
+	LabelStart->setText(tr("Corner frequency:"));
+	break;
+    case CLASS_BANDPASS :
+    case CLASS_BANDSTOP :
+	LabelStop->setEnabled(true);
+	EditStop->setEnabled(true);
+	ComboStop->setEnabled(true);
+	LabelStart->setText(tr("Start frequency:"));
 	break;
   }
 }
