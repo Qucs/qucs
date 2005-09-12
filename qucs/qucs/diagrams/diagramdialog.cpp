@@ -237,7 +237,7 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   connect(ChooseData, SIGNAL(activated(int)), SLOT(slotReadVars(int)));
   ChooseVars = new QListView(DataGroup);
   ChooseVars->addColumn(tr("Name"));
-  ChooseVars->addColumn(tr("Status"));
+  ChooseVars->addColumn(tr("Type"));
   ChooseVars->addColumn(tr("Size"));
   connect(ChooseVars, SIGNAL(doubleClicked(QListViewItem*)),
 		      SLOT(slotTakeVar(QListViewItem*)));
@@ -545,20 +545,19 @@ DiagramDialog::DiagramDialog(Diagram *d, const QString& _DataSet,
   connect(ApplyButt, SIGNAL(clicked()), SLOT(slotApply()));
   QPushButton *CancelButt = new QPushButton(tr("Cancel"), Butts);
   connect(CancelButt, SIGNAL(clicked()), SLOT(slotCancel()));
-//  QPushButton *HelpButt = new QPushButton(tr("Function Help"), Butts);
-//  connect(HelpButt, SIGNAL(clicked()), SLOT(slotFuncHelp()));
 
   OkButt->setDefault(true);
 
 
   // ...........................................................
   // put all data files into ComboBox
-  QDir ProjDir(QucsWorkDir);
+  QFileInfo Info(defaultDataSet);
+  QDir ProjDir(Info.dirPath());
   QStringList Elements = ProjDir.entryList("*.dat", QDir::Files, QDir::Name);
   QStringList::iterator it;
   for(it = Elements.begin(); it != Elements.end(); ++it) {
     ChooseData->insertItem((*it).left((*it).length()-4));
-    if((*it) == defaultDataSet)
+    if((*it) == Info.fileName())
       // default dataset should be the current
       ChooseData->setCurrentItem(ChooseData->count()-1);
   }
@@ -592,9 +591,10 @@ DiagramDialog::~DiagramDialog()
 // --------------------------------------------------------------------------
 void DiagramDialog::slotReadVars(int)
 {
+  QFileInfo Info(defaultDataSet);
   QString DocName = ChooseData->currentText()+".dat";
 
-  QFile file(QucsWorkDir.filePath(DocName));
+  QFile file(Info.dirPath() + QDir::separator() + DocName);
   if(!file.open(IO_ReadOnly)) {
     return;
   }
@@ -637,7 +637,8 @@ void DiagramDialog::slotTakeVar(QListViewItem *Item)
   int     i  = GraphInput->cursorPosition();
   QString s  = GraphInput->text();
   QString s1 = Item->text(0);
-  if(ChooseData->currentText() != defaultDataSet.section('.',0,0))
+  QFileInfo Info(defaultDataSet);
+  if(ChooseData->currentText() != Info.baseName())
     s1 = ChooseData->currentText() + ":" + s1;
   GraphInput->setText(s.left(i) + s1 + s.right(s.length()-i));
 

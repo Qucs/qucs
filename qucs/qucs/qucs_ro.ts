@@ -316,7 +316,7 @@
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation type="obsolete">Status</translation>
     </message>
     <message>
         <source>Size</source>
@@ -532,6 +532,10 @@
     </message>
     <message>
         <source>2D-projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -823,23 +827,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Reference Impedance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ohm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Frequency:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Impedance:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reflexion Coefficient:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -855,8 +843,68 @@
         <translation type="unfinished">Eroare</translation>
     </message>
     <message>
+        <source>Reference Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mag/deg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>real/imag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S21</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate two-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reflexion Coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance (ohms)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3707,11 +3755,6 @@ Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About Qt</source>
         <translation type="unfinished">Despre Qt</translation>
     </message>
@@ -3725,6 +3768,34 @@ Filter synthesis program
     </message>
     <message>
         <source>Successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Band pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Band stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Eroare</translation>
+    </message>
+    <message>
+        <source>Stop frequency must be greater than start frequency.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter order must not be less than two.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5591,10 +5662,6 @@ Calculates DC bias and shows it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wrong depency!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Could not load S[1,1].</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5608,6 +5675,10 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong dependency!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

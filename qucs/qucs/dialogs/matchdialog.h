@@ -22,19 +22,22 @@
 #include <qptrlist.h>
 
 class Element;
+class QLabel;
 class QLineEdit;
 class QComboBox;
-class QGridLayout;
+class QCheckBox;
+class QVBoxLayout;
 class QDoubleValidator;
 
 
 class MatchDialog : public QDialog {
    Q_OBJECT
 public:
-  MatchDialog(QWidget *parent=0, double Rreal_=0.5, double Rimag_=0.0,
-		double Freq_=1e9, double Z0_=50.0);
+  MatchDialog(QWidget *parent=0);
  ~MatchDialog();
 
+  static void c2p(double&, double&);
+  static void p2c(double&, double&);
   static void r2z(double&, double&, double);
   static void z2r(double&, double&, double);
   static QString calcMatching(double, double, double, double);
@@ -42,19 +45,31 @@ public:
   static QString calcBiMatch(double, double, double, double, double, double,
                              double, double);
   static bool calc2PortMatch(double, double, double, double, double, double,
-                             double, double);
+                             double, double, double);
+  void setFrequency(double);
 
-private slots:
+  QLineEdit *Ref1Edit, *Ref2Edit, *FrequencyEdit,
+            *S11magEdit,*S11degEdit, *S21magEdit,*S21degEdit,
+            *S12magEdit,*S12degEdit, *S22magEdit,*S22degEdit;
+  QCheckBox *TwoCheck;
+
+public slots:
   void slotButtCreate();
   void slotImpedanceChanged(const QString&);
   void slotReflexionChanged(const QString&);
+  void slotSetTwoPort(bool);
+  void slotChangeMode(int);
 
 private:
-  QGridLayout *all;   // the mother of all widgets
+  QVBoxLayout *all;   // the mother of all widgets
   QDoubleValidator  *DoubleVal;
-  QLineEdit   *ReferenceEdit, *FrequencyEdit, *ImpedanceRealEdit,
-              *ImpedanceImagEdit, *ReflexionRealEdit, *ReflexionImagEdit;
-  QComboBox   *UnitCombo;
+  QLabel      *Port1Label, *Port2Label, *Ohm1Label, *Ohm2Label,
+              *FormatLabel, *FrequencyLabel,
+              *S11Label, *S11sLabel, *S11uLabel,
+              *S21Label, *S21sLabel, *S21uLabel,
+              *S12Label, *S12sLabel, *S12uLabel,
+              *S22Label, *S22sLabel, *S22uLabel;
+  QComboBox   *FormatCombo, *UnitCombo;
 };
 
 #endif

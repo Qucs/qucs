@@ -55,6 +55,8 @@ private slots:
   void slotShowResult();
 
 private:
+  void setError(const QString&);
+
   int ResultState;
 
   QGridLayout *gbox;

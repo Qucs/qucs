@@ -26,6 +26,11 @@ files.
 Version 0.0.8
 -------------
 
+ * dialog for changing properties of several components
+ * creating matching circuits
+ * more filters supported by filter synthese tool
+ * many more models in component library
+
 Version 0.0.7
 -------------
 

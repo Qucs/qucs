@@ -942,11 +942,11 @@ bool Diagram::loadVarData(const QString& fileName, Graph *g)
     Variable = g->Var;
   }
   else {
-    file.setName(g->Var.left(pos)+".dat");
+    QFileInfo Info(fileName);
+    file.setName(Info.dirPath()+QDir::separator() + g->Var.left(pos)+".dat");
     Variable = g->Var.mid(pos+1);
   }
 
-  file.setName(QucsWorkDir.filePath(file.name()));
   if(!file.open(IO_ReadOnly))  return false;
 
   // *****************************************************************
