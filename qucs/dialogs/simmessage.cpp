@@ -161,7 +161,11 @@ void SimMessage::nextSPICE()
   com << (QucsSettings.BinDir + "qucsconv");
   if(makeSubcircuit)
     com << "-g" << "_ref";
-  com << "-if" << "spice" << "-of" << "qucs" << "-i" << FileName;
+  com << "-if" << "spice" << "-of" << "qucs" << "-i";
+  if(FileName.find(QDir::separator()) < 0)  // add path ?
+    com << QucsWorkDir.path() + QDir::separator() + FileName;
+  else
+    com << FileName;
   SimProcess.setArguments(com);
 
 
@@ -231,9 +235,10 @@ void SimMessage::startSimulator()
   ProgText->insert(tr("done.\n"));
 
   QStringList com;
+  QFileInfo Info(Doc->DocName);
   com << QucsSettings.BinDir + "qucsator" << "-b" << "-i"
-      << QucsHomeDir.filePath("netlist.txt")
-      << "-o" << QucsWorkDir.filePath(Doc->DataSet);
+      << QucsHomeDir.filePath("netlist.txt") << "-o"
+      << Info.dirPath() + QDir::separator() + Doc->DataSet;
   SimProcess.setArguments(com);
 
 
@@ -357,6 +362,8 @@ void SimMessage::slotClose()
 // ------------------------------------------------------------------------
 void SimMessage::slotDisplayButton()
 {
-  emit displayDataPage(Doc->DataDisplay);
+  QFileInfo Info(Doc->DocName);
+  emit displayDataPage(Info.dirPath() + QDir::separator() +
+                       Doc->DataDisplay);
   accept();
 }

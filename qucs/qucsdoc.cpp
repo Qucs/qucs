@@ -2659,7 +2659,7 @@ void QucsDoc::reloadGraphs()
 {
   QFileInfo Info(DocName);
   for(Diagram *pd = Diags->first(); pd != 0; pd = Diags->next())
-    pd->loadGraphData(Info.dirPath()+QDir::convertSeparators ("/")+DataSet);
+    pd->loadGraphData(Info.dirPath()+QDir::separator()+DataSet);
 }
 
 // ---------------------------------------------------

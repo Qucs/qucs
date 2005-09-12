@@ -1438,10 +1438,11 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
 	Comp->entireBounds(x1,y1,x2,y2, d->textCorr());
 	enlargeView(x1, y1, x2, y2);
 
-	viewport()->repaint();
+	drawn = false;
+	viewport()->update();
 	d->setChanged(true, true);
 	Comp = Comp->newOne(); // component is used, so create a new one
-	Comp->paintScheme(&painter);
+//	Comp->paintScheme(&painter);
 	break;
 
       case Qt::RightButton :  // right mouse button rotates the component
@@ -1462,8 +1463,11 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
     if(Event->button() != Qt::LeftButton) return;
 
     Diagram *Diag = (Diagram*)selElem;
+    QFileInfo Info(d->DocName);
     // dialog is Qt::WDestructiveClose !!!
-    DiagramDialog *dia = new DiagramDialog(Diag, d->DataSet, this);
+    DiagramDialog *dia =
+       new DiagramDialog(Diag,
+           Info.dirPath() + QDir::separator() + d->DataSet, this);
     if(dia->exec() == QDialog::Rejected) {  // don't insert if dialog canceled
       viewport()->update();
       drawn = false;
@@ -1835,6 +1839,7 @@ void QucsView::MReleaseResizePainting(QMouseEvent *Event, QucsDoc *d)
 void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
 {
   int x1, y1, x2, y2;
+  QFileInfo Info(d->DocName);
   QPainter painter(viewport());
 
   Element *pe;
@@ -1853,7 +1858,8 @@ void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
 	  break;
 	case isDiagram:
 	  d->Diags->append((Diagram*)pe);
-	  ((Diagram*)pe)->loadGraphData(d->DataSet);
+	  ((Diagram*)pe)->loadGraphData(Info.dirPath() + QDir::separator() + 
+					d->DataSet);
 	  enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
 	  break;
 	case isPainting:
@@ -2009,6 +2015,7 @@ void QucsView::editElement(QMouseEvent *Event)
   int x1, y1, x2, y2;
 
   QucsDoc *d = Docs.current();
+  QFileInfo Info(d->DocName);
   int x = int(Event->pos().x()/d->Scale) + d->ViewX1;
   int y = int(Event->pos().y()/d->Scale) + d->ViewY1;
 
@@ -2045,7 +2052,8 @@ void QucsView::editElement(QMouseEvent *Event)
 	     break;
            }
 	 }
-         ddia = new DiagramDialog(dia, d->DataSet, this);
+	ddia = new DiagramDialog(dia,
+		Info.dirPath() + QDir::separator() + d->DataSet, this);
          if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
            d->setChanged(true, true);
 
@@ -2062,7 +2070,8 @@ void QucsView::editElement(QMouseEvent *Event)
 	 if(!dia) break;
 
 	 
-	 ddia = new DiagramDialog(dia, d->DataSet, this, pg);
+	 ddia = new DiagramDialog(dia,
+	 	Info.dirPath() + QDir::separator() + d->DataSet, this, pg);
 	 if(ddia->exec() != QDialog::Rejected)   // is WDestructiveClose
 	   d->setChanged(true, true);
          break;
@@ -2317,6 +2326,18 @@ void QucsView::slotScrollRight()
 // Is called if an object is dropped (after drag'n drop).
 void QucsView::contentsDropEvent(QDropEvent *Event)
 {
+  if(dragIsOkay) {
+    QStrList List;
+    QUriDrag::decode(Event, List);
+
+    // URI:  file:/home/linuxuser/Desktop/example.sch
+    for(unsigned int i=0; i < List.count(); i++)
+      QucsMain->gotoPage(QString(List.at(i)).section(':',1));
+
+    return;
+  }
+
+
   QMouseEvent e(QEvent::MouseButtonPress, Event->pos(),
                 Qt::LeftButton, Qt::NoButton);
   QucsDoc *d = Docs.current();
@@ -2327,20 +2348,31 @@ void QucsView::contentsDropEvent(QDropEvent *Event)
 
   if(selElem) delete selElem;
   selElem = 0;  // no component selected
+
+  if(labeledWire)
+    ((QAction*)labeledWire)->setOn(true);  // restore old action
 }
 
 void QucsView::contentsDragEnterEvent(QDragEnterEvent *Event)
 {
-//if(Event->provides("text/uri-list")) {  // file dragged in ?
+  dragIsOkay = false;
+  if(Event->provides("text/uri-list"))  // file dragged in ?
+    if(QUriDrag::canDecode(Event)) {
+      dragIsOkay = true;
+      Event->accept();
+      return;
+    }
+
+
   if(Event->format(1) == 0)   // only one MIME type ?
     if(Event->provides("application/x-qiconlist")) {
-//    if(Event->source() == QucsMain->CompComps) {
       QIconViewItem *Item = QucsMain->CompComps->currentItem();
       if(Item) {
-	QucsMain->slotSelectComponent(Item);
+	(QAction*)labeledWire = QucsMain->activeAction; // misuse variable
+	QucsMain->slotSelectComponent(Item);  // also sets drawn=false
 	MouseMoveAction = 0;
 	MousePressAction = 0;
-    
+
 	Event->accept();
 	return;
       }
@@ -2349,15 +2381,35 @@ void QucsView::contentsDragEnterEvent(QDragEnterEvent *Event)
   Event->ignore();
 }
 
+void QucsView::contentsDragLeaveEvent(QDragLeaveEvent*)
+{
+  if(selElem)
+    if(selElem->Type == isComponent)
+      if(drawn) {
+
+        QucsDoc *d = Docs.current();
+        QPainter painter(viewport());
+        setPainter(&painter, d);
+        ((Component*)selElem)->paintScheme(&painter);
+        drawn = false;
+      }
+
+  if(labeledWire)
+    ((QAction*)labeledWire)->setOn(true);  // restore old action
+}
+
 void QucsView::contentsDragMoveEvent(QDragMoveEvent *Event)
 {
-  if(selElem == 0) {
-    Event->ignore();
-    return;
+  if(!dragIsOkay) {
+    if(selElem == 0) {
+      Event->ignore();
+      return;
+    }
+
+    QMouseEvent e(QEvent::MouseMove, Event->pos(), Qt::NoButton, Qt::NoButton);
+    MMoveElement(&e);
   }
 
-  QMouseEvent e(QEvent::MouseMove, Event->pos(), Qt::NoButton, Qt::NoButton);
-  MMoveElement(&e);
   Event->accept();
 }
 
@@ -2474,14 +2526,19 @@ void QucsView::slotPowerMatching()
   if(focusElement->Type != isMarker) return;
   Marker *pm = (Marker*)focusElement;
 
-  double Z0 = 50.0;
+//  double Z0 = 50.0;
   QString Var = pm->pGraph->Var;
   double Imag = pm->VarPos[pm->nVarPos+1];
   if(Var == "Sopt")  // noise matching ?
     Imag *= -1.0;
 
-  MatchDialog *Dia =
-       new MatchDialog(this, pm->VarPos[pm->nVarPos], Imag, pm->VarPos[0], Z0);
+  MatchDialog *Dia = new MatchDialog(this);
+  Dia->TwoCheck->setChecked(false);
+  Dia->TwoCheck->setEnabled(false);
+//  Dia->Ref1Edit->setText(QString::number(Z0));
+  Dia->S11magEdit->setText(QString::number(pm->VarPos[pm->nVarPos]));
+  Dia->S11degEdit->setText(QString::number(Imag));
+  Dia->setFrequency(pm->VarPos[0]);
 
   if(Dia->exec() != QDialog::Accepted)
     return;
@@ -2496,7 +2553,6 @@ void QucsView::slot2PortMatching()
   if(focusElement->Type != isMarker) return;
   Marker *pm = (Marker*)focusElement;
 
-  double Z0 = 50.0;
   QString DataSet;
   int z = pm->pGraph->Var.find(':');
   if(z <= 0)  DataSet = Docs.current()->DataSet;
@@ -2535,7 +2591,7 @@ void QucsView::slot2PortMatching()
 
   DataX *Data = Diag->Graphs.getFirst()->cPointsX.first();
   if(Data->Var != "frequency") {
-    QMessageBox::critical(0, tr("Error"), tr("Wrong depency!"));
+    QMessageBox::critical(0, tr("Error"), tr("Wrong dependency!"));
     return;
   }
 
@@ -2556,15 +2612,20 @@ void QucsView::slot2PortMatching()
 
   delete Diag;
 
-  // determinante of S-parameter matrix
-  double DetReal = S11real*S22real - S11imag*S22imag
-                 - S12real*S21real + S12imag*S21imag;
-  double DetImag = S11real*S22imag + S11imag*S22real
-                 - S12real*S21imag - S12imag*S21real;
+  MatchDialog *Dia = new MatchDialog(this);
+  Dia->TwoCheck->setEnabled(false);
+  Dia->setFrequency(Freq);
+  Dia->S11magEdit->setText(QString::number(S11real));
+  Dia->S11degEdit->setText(QString::number(S11imag));
+  Dia->S12magEdit->setText(QString::number(S12real));
+  Dia->S12degEdit->setText(QString::number(S12imag));
+  Dia->S21magEdit->setText(QString::number(S21real));
+  Dia->S21degEdit->setText(QString::number(S21imag));
+  Dia->S22magEdit->setText(QString::number(S22real));
+  Dia->S22degEdit->setText(QString::number(S22imag));
 
-  if(!MatchDialog::calc2PortMatch(S11real, S11imag, S22real, S22imag,
-                                  DetReal, DetImag, Z0, Freq))  return;
+  if(Dia->exec() != QDialog::Accepted)
+    return;
 
-  QucsMain->Acts.slotEditPaste(true);
   QucsMain->slotToPage();
 }
