@@ -80,6 +80,7 @@ protected:
   void contentsWheelEvent(QWheelEvent*);
   void contentsDropEvent(QDropEvent*);
   void contentsDragEnterEvent(QDragEnterEvent*);
+  void contentsDragLeaveEvent(QDragLeaveEvent*);
   void contentsDragMoveEvent(QDragMoveEvent*);
 
   bool ScrollUp(int);
@@ -167,7 +168,7 @@ private:
   void rightPressMenu(QMouseEvent*, QucsDoc*, int, int);
 
   int  MAx1, MAy1,MAx2, MAy2, MAx3, MAy3;  // cache for mouse movements
-  bool isMoveEqual;
+  bool isMoveEqual, dragIsOkay;
   Element *focusElement;
   QMouseEvent *focusMEvent;
   Wire *labeledWire;     // remember the wire whose label is moving

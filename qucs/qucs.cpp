@@ -1,6 +1,6 @@
 /***************************************************************************
-                          qucs.cpp  -  description
-                             -------------------
+                                 qucs.cpp
+                                ----------
     begin                : Thu Aug 28 18:17:41 CEST 2003
     copyright            : (C) 2003, 2004 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -62,8 +62,37 @@
 #define  COMBO_Diagrams  6
 #define  COMBO_Paints    7   // must be the last one
 
-QDir QucsWorkDir;
-QDir QucsHomeDir;
+QDir QucsWorkDir;  // current project path
+QDir QucsHomeDir;  // Qucs user directory where all projects are located
+
+
+// IconView without dragging icon bitmap
+class myIconView : public QIconView
+{
+public:
+  myIconView(QWidget* parent_) : QIconView(parent_, 0, 0) {};
+ ~myIconView() {};
+
+protected:
+  QDragObject *dragObject() {
+    QIconViewItem *Item = currentItem();
+    if(!Item) return 0;
+
+    // no picture during dragging, but bounding rectangles in QListView
+    QIconDrag *DragPic = new QIconDrag( viewport() );
+    DragPic->setPixmap( QPixmap(empty_xpm), QPoint(0, 0) );
+    DragPic->append( QIconDragItem(),
+        QRect( Item->pixmapRect().width() / -2,
+               Item->pixmapRect().height() / -2,
+               Item->pixmapRect().width(), Item->pixmapRect().height() ),
+        QRect( Item->textRect().width() / -2,
+               Item->pixmapRect().height() / 2 + 5,
+               Item->textRect().width(), Item->textRect().height() ) );
+    return DragPic;
+  };
+};
+
+
 
 QucsApp::QucsApp()
 {
@@ -166,8 +195,6 @@ void QucsApp::initView()
   TabView->addTab(Content,tr("Content"));
   TabView->setTabToolTip(TabView->page(1), tr("content of the open project"));
 
-// QT 3.2
-//  connect(Content, SIGNAL(doubleClicked(QListViewItem*, const QPoint &,int)), SLOT(slotOpenContent(QListViewItem*, const QPoint &,int)));
   connect(Content, SIGNAL(doubleClicked(QListViewItem*)),
 		   SLOT(slotOpenContent(QListViewItem*)));
   connect(Content, SIGNAL(clicked(QListViewItem*)),
@@ -177,7 +204,7 @@ void QucsApp::initView()
   // "Component Tab" of the left QTabWidget
   QVBox *CompGroup  = new QVBox(this);
   CompChoose = new QComboBox(CompGroup);
-  CompComps  = new QIconView(CompGroup);
+  CompComps  = new myIconView(CompGroup);
   TabView->addTab(CompGroup,tr("Components"));
   TabView->setTabToolTip(TabView->page(2), tr("components and diagrams"));
   fillComboBox(true);
@@ -1141,7 +1168,9 @@ void QucsApp::slotAfterSimulation(int Status, SimMessage *sim)
     Dia->show();
   }
   else if(sim->Doc->SimOpenDpl) {
-    slotChangePage(sim->Doc->DataDisplay);  // switch to data display
+    QFileInfo Info(sim->Doc->DocName);
+    // switch to data display
+    slotChangePage(Info.dirPath() + QDir::separator() + sim->Doc->DataDisplay);
     sim->slotClose();   // close and delete simulation window
   }
   else sim->Doc->reloadGraphs();  // load recent simulation data
@@ -1172,10 +1201,8 @@ void QucsApp::slotChangePage(QString Name)
   QucsDoc   *Doc = view->Docs.current();
 
   // search, if page is already loaded
-  for(d = view->Docs.first(); d!=0; d = view->Docs.next()) {
-    Info.setFile(d->DocName);
-    if(Info.fileName() == Name) break;
-  }
+  for(d = view->Docs.first(); d!=0; d = view->Docs.next())
+    if(d->DocName == Name) break;
 
   if(d == 0) {   // no open page found ?
     Info.setFile(Name);
@@ -1187,7 +1214,7 @@ void QucsApp::slotChangePage(QString Name)
         view->Docs.findRef(Doc);
         QMessageBox::critical(this, tr("Error"),
 			tr("Cannot create ")+Info.dirPath(true)+
-			QDir::convertSeparators ("/")+Name);
+			QDir::separator()+Name);
         return;
       }
       else new QListViewItem(ConDisplays, Info.fileName()); // add new name
@@ -1231,7 +1258,8 @@ void QucsApp::slotToPage()
     return;
   }
 
-  slotChangePage(Name);
+  QFileInfo Info(view->Docs.current()->DocName);
+  slotChangePage(Info.dirPath() + QDir::separator() + Name);
 }
 
 // #######################################################################
@@ -1249,7 +1277,7 @@ void QucsApp::slotOpenContent(QListViewItem *item)
   if(!QucsWorkDir.cd(p)) {
     QMessageBox::critical(this, tr("Error"),
                           tr("Cannot access project directory: ")+
-			  QucsWorkDir.path()+QDir::convertSeparators ("/")+p);
+			  QucsWorkDir.path()+QDir::separator()+p);
     return;
   }
 
@@ -1665,7 +1693,7 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
   if(view->selElem != 0)  delete view->selElem;
   view->selElem  = 0;   // no component/diagram/painting selected
 
-  if(view->drawn) view->viewport()->update();
+  if(view->drawn) view->viewport()->repaint();  // don't use update() here !!!
   view->drawn = false;
 
   if(item == 0) {   // mouse button pressed not over an item ?

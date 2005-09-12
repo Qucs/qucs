@@ -24,6 +24,21 @@
 #define CLASS_BANDPASS  2
 #define CLASS_BANDSTOP  3
 
+#define TYPE_BESSEL         0
+#define TYPE_BUTTERWORTH    1
+#define TYPE_TSCHEBYSCHEFF  2
+
+
+typedef struct tFilter {
+   int Type;
+   int Class;
+   int Order;
+   double Ripple;  // in dB
+   double Impedance;
+   double Frequency;
+   double Frequency2;
+};
+
 
 class QString;
 
@@ -32,12 +47,13 @@ public:
   LC_Filter();
  ~LC_Filter();
 
-  static QString* createSchematic(int, double, int, double, double Frequency2=0.0);
+  static QString* createSchematic(tFilter*);
 
 private:
   static QString num2str(double);
+  static double  BesselValue(int, int);
   static double  ButterworthValue(int, int);
-  static double  ChebichevValue(int, int, double);
+  static double  TschebyscheffValue(int, int, double);
 };
 
 #endif

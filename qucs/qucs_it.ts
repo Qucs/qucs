@@ -329,7 +329,7 @@
     </message>
     <message>
         <source>Status</source>
-        <translation>Stato</translation>
+        <translation type="obsolete">Stato</translation>
     </message>
     <message>
         <source>Size</source>
@@ -582,6 +582,10 @@
     <message>
         <source>2D-projection:</source>
         <translation>proiezione 2D:</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -967,11 +971,11 @@
     </message>
     <message>
         <source>Reference Impedance:</source>
-        <translation>Impedenza di Riferimento:</translation>
+        <translation type="obsolete">Impedenza di Riferimento:</translation>
     </message>
     <message>
         <source>Ohm</source>
-        <translation>Ohm</translation>
+        <translation type="obsolete">Ohm</translation>
     </message>
     <message>
         <source>Frequency:</source>
@@ -979,11 +983,11 @@
     </message>
     <message>
         <source>Impedance:</source>
-        <translation>Impedenza:</translation>
+        <translation type="obsolete">Impedenza:</translation>
     </message>
     <message>
         <source>Reflexion Coefficient:</source>
-        <translation>Coefficiente di Riflessione:</translation>
+        <translation type="obsolete">Coefficiente di Riflessione:</translation>
     </message>
     <message>
         <source>Create</source>
@@ -995,15 +999,75 @@
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation type="unfinished">Errore</translation>
     </message>
     <message>
         <source>Real part of impedance must be greater zero.</source>
         <translation type="obsolete">La parte reale dell&apos;impedenza deve essere maggiore di zero.</translation>
     </message>
     <message>
+        <source>Reference Impedance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ohms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S Parameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mag/deg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>real/imag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S21</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate two-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reflexion Coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impedance (ohms)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4719,7 +4783,7 @@ Programma di sintesi dei filtri
     <message>
         <source>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
 </source>
-        <translation>Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
+        <translation type="obsolete">Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf
 </translation>
     </message>
     <message>
@@ -4737,6 +4801,34 @@ Programma di sintesi dei filtri
     <message>
         <source>Successful</source>
         <translation>Successo</translation>
+    </message>
+    <message>
+        <source>Band pass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Band stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright (C) 2005 by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Errore</translation>
+    </message>
+    <message>
+        <source>Stop frequency must be greater than start frequency.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start frequency:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter order must not be less than two.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6664,7 +6756,7 @@ Calculates DC bias and shows it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wrong depency!</source>
+        <source>Wrong dependency!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

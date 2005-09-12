@@ -74,8 +74,9 @@ QucsFilter::QucsFilter()
   QLabel *Label1 = new QLabel(tr("Filter type:"), this);
   gbox->addWidget(Label1, 1,0);
   ComboType = new QComboBox(this);
-  #define TYPE_BUTTERWORTH  0
+  ComboType->insertItem("Bessel");
   ComboType->insertItem("Butterworth");
+  ComboType->insertItem("Tschebyscheff");
   gbox->addWidget(ComboType, 1,1);
   connect(ComboType, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
 
@@ -183,7 +184,8 @@ void QucsFilter::slotHelpAbout()
   QMessageBox::about(this, tr("About..."),
     tr("QucsFilter Version ")+PACKAGE_VERSION+
     tr("\nFilter synthesis program\n")+
-    tr("Copyright (C) 2005 by Toyoyuki Ishikawa and Michael Margraf\n")+
+    tr("Copyright (C) 2005 by")+
+    "\n     Toyoyuki Ishikawa, Vincent Habchi, Michael Margraf\n"
     "\nThis is free software; see the source for copying conditions."
     "\nThere is NO warranty; not even for MERCHANTABILITY or "
     "\nFITNESS FOR A PARTICULAR PURPOSE.\n\n");
@@ -203,27 +205,44 @@ void QucsFilter::slotHelpIntro()
 }
 
 // ************************************************************
+void QucsFilter::setError(const QString& Message)
+{
+  LabelResult->setText(tr("Result:") + "<font color=\"#FF0000\"><b>  " +
+                       tr("Error") + "</b></font>");
+  QMessageBox::critical(this, tr("Error"), Message);
+}
+
+// ************************************************************
 void QucsFilter::slotCalculate()
 {
   // get numerical values from input widgets
-  int Order = EditOrder->text().toInt();
   double CornerFreq = EditCorner->text().toDouble();
   double StopFreq   = EditStop->text().toDouble();
-//  double Ripple_dB  = EditRipple->text().toDouble();
-  double Impedance  = EditImpedance->text().toDouble();
 
   CornerFreq *= pow(10, double(3*ComboCorner->currentItem())); // add exponent
   StopFreq   *= pow(10, double(3*ComboStop->currentItem()));
 
+  tFilter Filter;
+  Filter.Type = ComboType->currentItem();
+  Filter.Class = ComboClass->currentItem();
+  Filter.Order = EditOrder->text().toInt();
+  Filter.Ripple = EditRipple->text().toDouble();
+  Filter.Impedance = EditImpedance->text().toDouble();
+  Filter.Frequency = CornerFreq;
+  Filter.Frequency2 = StopFreq;
 
-  QString *s = 0;
-  // call appropriate filter synthesis function
-  switch(ComboType->currentItem()) {
-    case TYPE_BUTTERWORTH :
-	s = LC_Filter::createSchematic(ComboClass->currentItem(), Impedance,
-					Order, CornerFreq, StopFreq);
-	break;
+  if(EditStop->isEnabled())
+    if(Filter.Frequency >= Filter.Frequency2) {
+      setError(tr("Stop frequency must be greater than start frequency."));
+      return;
+    }
+
+  if(Filter.Order < 2) {
+    setError(tr("Filter order must not be less than two."));
+    return;
   }
+
+  QString *s = LC_Filter::createSchematic(&Filter);
   if(!s) return;
 
 
@@ -264,10 +283,16 @@ void QucsFilter::slotShowResult()
 void QucsFilter::slotTypeChanged(int index)
 {
   switch(index) {
+    case TYPE_BESSEL :
     case TYPE_BUTTERWORTH :
 	LabelRipple->setEnabled(false);
 	EditRipple->setEnabled(false);
 	Label_dB->setEnabled(false);
+	break;
+    case TYPE_TSCHEBYSCHEFF :
+	LabelRipple->setEnabled(true);
+	EditRipple->setEnabled(true);
+	Label_dB->setEnabled(true);
 	break;
   }
 }
