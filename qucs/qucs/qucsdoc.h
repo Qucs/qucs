@@ -33,6 +33,8 @@
 
 class QucsApp;
 
+extern const char *empty_xpm[];
+
 
 class QucsDoc {
 public: 
@@ -160,6 +162,5 @@ public:
   QPtrList<QString> UndoStack;
   QPtrList<QString> UndoSymbol;    // undo stack for circuit symbol
 };
-
 
 #endif

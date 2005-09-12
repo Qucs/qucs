@@ -72,6 +72,7 @@ public:
 
     bool closeAllFiles();
     static int testFile(const QString&);
+    bool gotoPage(const QString&);   // to load a document
 
 
 protected:
@@ -177,7 +178,6 @@ private:
   void OpenProject(const QString&, const QString&);
   bool DeleteProject(const QString&, const QString&);
   void updatePortNumber(int);
-  bool gotoPage(const QString&);
   void nextDocument(bool);
   void fillComboBox(bool);
   void switchEditMode(bool);
