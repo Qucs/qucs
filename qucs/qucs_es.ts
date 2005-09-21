@@ -883,6 +883,15 @@
         <translation type="unfinished">Error</translation>
     </message>
     <message>
+        <source>Real part of impedance must be greater zero,
+but is %1 !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate two-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Reference Impedance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -907,11 +916,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mag/deg</source>
+        <source>real/imag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>real/imag</source>
+        <source>mag/deg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -928,15 +937,6 @@
     </message>
     <message>
         <source>S22</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate two-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real part of impedance must be greater zero,
-but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3817,11 +3817,11 @@ Programa de síntexis de filtros</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start frequency:</source>
+        <source>Filter order must not be less than two.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter order must not be less than two.</source>
+        <source>Start frequency:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

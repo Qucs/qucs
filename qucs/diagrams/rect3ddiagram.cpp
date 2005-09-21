@@ -303,10 +303,12 @@ void Rect3DDiagram::removeHiddenLines()
   z = g->cPointsX.at(1)->count;
   for(i=g->countY-1; i>=0; i--) {   // y coordinates
     px = g->cPointsX.getFirst()->Points;
-    calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), p);
+    calcCoordinate3D(*(px++), *py, *(pz), *(pz+1), p);
+    pz += 2;
     
     for(j=g->cPointsX.getFirst()->count-1; j>0; j--) {  // x coordinates
-      calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), &v3D);
+      calcCoordinate3D(*(px++), *py, *(pz), *(pz+1), &v3D);
+      pz += 2;
       calcLine(p, &v3D, Mem, MemEnd);
       p->No++;
     }
