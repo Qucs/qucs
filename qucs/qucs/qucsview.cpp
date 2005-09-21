@@ -2368,7 +2368,7 @@ void QucsView::contentsDragEnterEvent(QDragEnterEvent *Event)
     if(Event->provides("application/x-qiconlist")) {
       QIconViewItem *Item = QucsMain->CompComps->currentItem();
       if(Item) {
-	(QAction*)labeledWire = QucsMain->activeAction; // misuse variable
+	labeledWire = (Wire*)QucsMain->activeAction; // misuse variable
 	QucsMain->slotSelectComponent(Item);  // also sets drawn=false
 	MouseMoveAction = 0;
 	MousePressAction = 0;
