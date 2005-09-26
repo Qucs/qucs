@@ -3,7 +3,7 @@ Section: electronics
 Priority: optional
 Maintainer: José L. Redrejo Rodríguez <jredrejo@edu.juntaextremadura.net>
 Build-Depends: debhelper (>> 4.2.0), libqt3-compat-headers, libqt3-mt-dev
-Standards-Version: 3.6.1
+Standards-Version: 3.6.2
 
 Package: qucs
 Architecture: any

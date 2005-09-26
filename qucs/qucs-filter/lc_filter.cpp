@@ -97,9 +97,9 @@ double LC_Filter::ButterworthValue(int No, int Order)
 }
 
 
-// Calculate normalized component value for Tschebyscheff filter
+// Calculate normalized component value for Chebyshev filter
 // "Ripple" is in dB !
-double LC_Filter::TschebyscheffValue(int No, int Order, double Ripple)
+double LC_Filter::ChebyshevValue(int No, int Order, double Ripple)
 {
   // We must define static variables since g(k+1) is tied to g(k)
   static double ak, gk ;
@@ -171,8 +171,8 @@ QString* LC_Filter::createSchematic(tFilter *Filter)
       case TYPE_BUTTERWORTH:
         Value = ButterworthValue(i, Filter->Order);
         break;
-      case TYPE_TSCHEBYSCHEFF:
-        Value = TschebyscheffValue(i, Filter->Order, Filter->Ripple);
+      case TYPE_CHEBYSHEV:
+        Value = ChebyshevValue(i, Filter->Order, Filter->Ripple);
         break;
       default:
         Value = 0.0;
@@ -308,9 +308,9 @@ QString* LC_Filter::createSchematic(tFilter *Filter)
 
   *s += QString("<Text 400 %1 12 #000000 0 \"").arg(yc+10);
   switch(Filter->Type) {
-    case TYPE_BESSEL:        *s += QString("Bessel "); break;
-    case TYPE_BUTTERWORTH:   *s += QString("Butterworth "); break;
-    case TYPE_TSCHEBYSCHEFF: *s += QString("Tschebyscheff "); break;
+    case TYPE_BESSEL:      *s += QString("Bessel "); break;
+    case TYPE_BUTTERWORTH: *s += QString("Butterworth "); break;
+    case TYPE_CHEBYSHEV:   *s += QString("Chebyshev "); break;
   }
 
   switch(Filter->Class) {

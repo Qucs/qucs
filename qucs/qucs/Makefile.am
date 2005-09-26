@@ -72,7 +72,8 @@ qucs_%.ts: $(qucs_SOURCES)
 	  cp -f $$qucsfile $$tmpfile; \
 	fi; \
 	echo "$(LRELEASE) $$qucsfile"; \
-	$(LRELEASE) $$tmpfile; mv -f tmp.qm $@; rm -f $$tmpfile
+	$(LRELEASE) $$tmpfile; test -f tmp.qm && mv -f tmp.qm $@; \
+	rm -f $$tmpfile
 
 # installation of translations
 langdatadir = ${prefix}/share/qucs/lang

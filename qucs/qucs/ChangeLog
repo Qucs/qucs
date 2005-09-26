@@ -1,3 +1,8 @@
+2005-09-25  Stefan Jahn  <stefan@lkcc.org>
+
+	* qucsfilter.cpp (QucsFilter): Renamed Tschebyscheff (German)
+	into Chebyshev (English).
+
 2005-10-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* bugfix: add path to SPICE files in work directory
@@ -6,7 +11,7 @@
 2005-30-08  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 
 	* mark input and output of matching circuits
-	* qucs-filter: Tschebyscheff filter,  band pass, band stop
+	* qucs-filter: Chebyshev filter - band pass, band stop
 	* drag'n'drop now works correctly
 	* drag'n'drop of schematic files into the document area
 
