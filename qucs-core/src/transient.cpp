@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: transient.cpp,v 1.16 2005-06-02 18:17:51 raimi Exp $
+ * $Id: transient.cpp,v 1.17 2005-09-26 08:06:23 raimi Exp $
  *
  */
 
@@ -47,7 +47,7 @@
 
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Gear (order 1-6),
-   Trapezoidal, forward Euler and Adams-Moulton (order 1-6). */
+   Trapezoidal, backward Euler and Adams-Moulton (order 1-6). */
 void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 			 nr_double_t * delta) {
 
@@ -111,7 +111,7 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 #endif /* !FIXEDCOEFF */
     }
     break;
-  case INTEGRATOR_EULER: // FORWARD EULER
+  case INTEGRATOR_EULER: // BACKWARD EULER
     coefficients[COEFF_G] = 1 / delta[0];
     coefficients[1] = - 1 / delta[0];
     break;
@@ -160,7 +160,7 @@ void calcCorrectorCoeff (int Method, int order, nr_double_t * coefficients,
 
 /* The function calculates the integration coefficient for numerical
    integration methods.  Supported methods are: Adams-Bashford (order
-   1-6), backward Euler and explicit Gear (order 1-6). */
+   1-6), forward Euler and explicit Gear (order 1-6). */
 void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
 			 nr_double_t * delta) {
 
@@ -230,7 +230,7 @@ void calcPredictorCoeff (int Method, int order, nr_double_t * coefficients,
 #endif
     }
     break;
-  case INTEGRATOR_EULER: // BACKWARD EULER
+  case INTEGRATOR_EULER: // FORWARD EULER
     coefficients[COEFF_G] = 1;
     coefficients[1] = delta[0];
     break;
