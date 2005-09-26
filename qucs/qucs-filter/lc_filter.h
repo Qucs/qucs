@@ -24,9 +24,9 @@
 #define CLASS_BANDPASS  2
 #define CLASS_BANDSTOP  3
 
-#define TYPE_BESSEL         0
-#define TYPE_BUTTERWORTH    1
-#define TYPE_TSCHEBYSCHEFF  2
+#define TYPE_BESSEL      0
+#define TYPE_BUTTERWORTH 1
+#define TYPE_CHEBYSHEV   2
 
 
 typedef struct tFilter {
@@ -53,7 +53,7 @@ private:
   static QString num2str(double);
   static double  BesselValue(int, int);
   static double  ButterworthValue(int, int);
-  static double  TschebyscheffValue(int, int, double);
+  static double  ChebyshevValue(int, int, double);
 };
 
 #endif
