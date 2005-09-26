@@ -76,7 +76,7 @@ QucsFilter::QucsFilter()
   ComboType = new QComboBox(this);
   ComboType->insertItem("Bessel");
   ComboType->insertItem("Butterworth");
-  ComboType->insertItem("Tschebyscheff");
+  ComboType->insertItem("Chebyshev");
   gbox->addWidget(ComboType, 1,1);
   connect(ComboType, SIGNAL(activated(int)), SLOT(slotTypeChanged(int)));
 
@@ -289,7 +289,7 @@ void QucsFilter::slotTypeChanged(int index)
 	EditRipple->setEnabled(false);
 	Label_dB->setEnabled(false);
 	break;
-    case TYPE_TSCHEBYSCHEFF :
+    case TYPE_CHEBYSHEV :
 	LabelRipple->setEnabled(true);
 	EditRipple->setEnabled(true);
 	Label_dB->setEnabled(true);
