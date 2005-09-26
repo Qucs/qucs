@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: trsolver.cpp,v 1.36 2005/06/02 18:17:51 raimi Exp $
+ * $Id: trsolver.cpp,v 1.37 2005/09/26 08:06:23 raimi Exp $
  *
  */
 
@@ -292,7 +292,7 @@ int trsolver::predictor (void) {
   case INTEGRATOR_ADAMSBASHFORD: // ADAMS-BASHFORD
     predictBashford ();
     break;
-  case INTEGRATOR_EULER: // BACKWARD EULER
+  case INTEGRATOR_EULER: // FORWARD EULER
     predictEuler ();
     break;
   default:
@@ -330,7 +330,7 @@ void trsolver::predictBashford (void) {
 }
 
 /* The function predicts the successive solution vector using the
-   explicit backward Euler integration formula.  Actually this is
+   explicit forward Euler integration formula.  Actually this is
    Adams-Bashford order 1. */
 void trsolver::predictEuler (void) {
   int N = countNodes ();

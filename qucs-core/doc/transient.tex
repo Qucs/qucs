@@ -129,13 +129,13 @@ methods.
 %\addcontentsline{toc}{subsubsection}{Backward Euler}
 
 In the implicit Euler method the right hand side of
-eq. \eqref{eq:IntEquation} is substituted by $f(x^n, t^n)$ which
-yields
+eq. \eqref{eq:IntEquation} is substituted by $f(x^{n+1}, t^{n+1})$
+which yields
 \begin{equation}
 \label{eq:BEInt}
-f(x,t) = f(x^n, t^n)
+f(x,t) = f(x^{n+1}, t^{n+1})
 \;\;\;\; \rightarrow \;\;\;\;
-x^{n+1} = x^n + h^n\cdot f(x^n, t^n)
+x^{n+1} = x^n + h^n\cdot f(x^{n+1}, t^{n+1})
 \end{equation}
 
 The backward euler integration method is a first order single-step
@@ -145,12 +145,12 @@ method.
 %\addcontentsline{toc}{subsubsection}{Forward Euler}
 
 In the explicit Euler method the right hand side of
-eq. \eqref{eq:IntEquation} is substituted by $f(x^{n+1}, t^{n+1})$ which
+eq. \eqref{eq:IntEquation} is substituted by $f(x^{n}, t^{n})$ which
 yields
 \begin{equation}
-f(x,t) = f(x^{n+1}, t^{n+1})
+f(x,t) = f(x^n, t^n)
 \;\;\;\; \rightarrow \;\;\;\;
-x^{n+1} = x^n + h^n\cdot f(x^{n+1}, t^{n+1})
+x^{n+1} = x^n + h^n\cdot f(x^n, t^n)
 \end{equation}
 
 The explicit Euler method has stability problems.  The step size is
@@ -350,8 +350,8 @@ x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{0}\cdot f^{n} + h\cdot b_{1}\cdot f^{n-1} 
 \end{split}
 \end{equation}
 
-The Adams-Bashford formula of order 1 yields the backward Euler
-integration method.
+The Adams-Bashford formula of order 1 yields the (explicit) forward
+Euler integration method.
 
 \subsubsection{Adams-Moulton}
 %\addcontentsline{toc}{subsubsection}{Adams-Moulton}
@@ -402,9 +402,9 @@ x^{n+1} &= a_0\cdot x^{n} + h\cdot b_{-1}\cdot f^{n+1} + h\cdot b_{0}\cdot f^{n}
 \end{split}
 \end{equation}
 
-The Adams-Moulton formula of order 1 yields the forward Euler
-integration method and the formula of order 2 yields the trapezoidal
-rule.
+The Adams-Moulton formula of order 1 yields the (implicit) backward
+Euler integration method and the formula of order 2 yields the
+trapezoidal rule.
 
 \subsection{Stability considerations}
 %\addcontentsline{toc}{subsection}{Stability considerations}
@@ -543,10 +543,11 @@ The figures \ref{fig:StabGear}, \ref{fig:StabMoulton} and
 \ref{fig:StabBashford} visualize the evaluation of
 eq. \eqref{eq:StabArea} for the discussed integration methods.  All of
 the implicit formulae are zero-stable, thus principally usable.  The
-forward Euler, Gear order 2 and the trapezoidal integration methods
-are A-stable.  Fig. \ref{fig:StabGear} shows why the Gear formulae are
-of such great importance for the transient analysis of electrical
-networks.  With least restrictions for $\mu$ they can be stabilized.
+(implicit) backward Euler, Gear order 2 and the trapezoidal
+integration methods are A-stable.  Fig. \ref{fig:StabGear} shows why
+the Gear formulae are of such great importance for the transient
+analysis of electrical networks.  With least restrictions for $\mu$
+they can be stabilized.
 
 \section{Predictor-corrector methods}
 %\addcontentsline{toc}{section}{Predictor-corrector methods}
