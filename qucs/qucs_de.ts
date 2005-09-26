@@ -58,68 +58,69 @@
     <name>ChangeDialog</name>
     <message>
         <source>Change Component Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenteneigenschaften ändern</translation>
     </message>
     <message>
         <source>Components:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenten:</translation>
     </message>
     <message>
         <source>Component Names:</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponentennamen:</translation>
     </message>
     <message>
         <source>Property Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name der Eigenschaft:</translation>
     </message>
     <message>
         <source>New Value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Wert:</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>all components</source>
-        <translation type="unfinished"></translation>
+        <translation>alle Komponenten</translation>
     </message>
     <message>
         <source>resistors</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstände</translation>
     </message>
     <message>
         <source>capacitors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kondensatoren</translation>
     </message>
     <message>
         <source>transistors</source>
-        <translation type="unfinished"></translation>
+        <translation>Transistoren</translation>
     </message>
     <message>
         <source>Found Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Gefundene Komponenten</translation>
     </message>
     <message>
         <source>Change properties of
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Die Eigenschaften dieser
+</translation>
     </message>
     <message>
         <source>these components ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponenten ändern ?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>Spulen</translation>
     </message>
 </context>
 <context>
@@ -576,7 +577,7 @@
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ</translation>
     </message>
 </context>
 <context>
@@ -958,11 +959,11 @@
     <name>MatchDialog</name>
     <message>
         <source>Create Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassnetzwerk erstellen</translation>
     </message>
     <message>
         <source>Frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenz:</translation>
     </message>
     <message>
         <source>Impedance:</source>
@@ -970,80 +971,81 @@
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Erstellen</translation>
+        <translation>Erstellen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Real part of impedance must be greater zero,
 but is %1 !</source>
-        <translation type="unfinished"></translation>
+        <translation>Realteil der Impedance muss größer Null sein,
+ist aber %1 !</translation>
     </message>
     <message>
         <source>calculate two-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>Zweitor-Anpassung berechnen</translation>
     </message>
     <message>
         <source>Reference Impedance</source>
-        <translation type="unfinished"></translation>
+        <translation>Referenzimpedanz</translation>
     </message>
     <message>
         <source>Port 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tor 1</translation>
     </message>
     <message>
         <source>ohms</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohm</translation>
     </message>
     <message>
         <source>Port 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tor 2</translation>
     </message>
     <message>
         <source>S Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>S-Parameter</translation>
     </message>
     <message>
         <source>Input format</source>
-        <translation type="unfinished"></translation>
+        <translation>EIngabeformat</translation>
     </message>
     <message>
         <source>real/imag</source>
-        <translation type="unfinished"></translation>
+        <translation>Realteil/Imaginärteil</translation>
     </message>
     <message>
         <source>mag/deg</source>
-        <translation type="unfinished"></translation>
+        <translation>Betrag/Winkel</translation>
     </message>
     <message>
         <source>S11</source>
-        <translation type="unfinished"></translation>
+        <translation>S11</translation>
     </message>
     <message>
         <source>S21</source>
-        <translation type="unfinished"></translation>
+        <translation>S21</translation>
     </message>
     <message>
         <source>S12</source>
-        <translation type="unfinished"></translation>
+        <translation>S12</translation>
     </message>
     <message>
         <source>S22</source>
-        <translation type="unfinished"></translation>
+        <translation>S22</translation>
     </message>
     <message>
         <source>Reflexion Coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>Reflektionsfaktor</translation>
     </message>
     <message>
         <source>Impedance (ohms)</source>
-        <translation type="unfinished"></translation>
+        <translation>Impedanz (Ohm)</translation>
     </message>
 </context>
 <context>
@@ -3091,79 +3093,79 @@ Verwendung:  qucsedit [-r] Datei
     </message>
     <message>
         <source>three mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>drei gekoppelte Induktivitäten</translation>
     </message>
     <message>
         <source>inductance of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivität der Spule 1</translation>
     </message>
     <message>
         <source>inductance of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivität der Spule 2</translation>
     </message>
     <message>
         <source>inductance of coil 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Induktivität der Spule 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppelfaktor zwischen Spule 1 und 2</translation>
     </message>
     <message>
         <source>coupling factor between coil 1 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppelfaktor zwischen Spule 1 und 3</translation>
     </message>
     <message>
         <source>coupling factor between coil 2 and 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppelfaktor zwischen Spule 2 und 3</translation>
     </message>
     <message>
         <source>two mutual inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>zwei gekoppelte Induktivitäten</translation>
     </message>
     <message>
         <source>resistance of coil 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand der Spule 1</translation>
     </message>
     <message>
         <source>resistance of coil 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Widerstand der Spule 2</translation>
     </message>
     <message>
         <source>Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>Gekoppelte Induktivitäten</translation>
     </message>
     <message>
         <source>3 Mutual Inductors</source>
-        <translation type="unfinished"></translation>
+        <translation>3 Gekoppelte Induktivitäten</translation>
     </message>
     <message>
         <source>correlated current sources</source>
-        <translation type="unfinished"></translation>
+        <translation>korrelierte Stromquellen</translation>
     </message>
     <message>
         <source>current power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>spektrale Rauschstromleistungsdichte der Quelle 1</translation>
     </message>
     <message>
         <source>current power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>spektrale Rauschstromleistungsdichte der Quelle 2</translation>
     </message>
     <message>
         <source>normalized correlation coefficient</source>
-        <translation type="unfinished"></translation>
+        <translation>normierter Korrelationskoeffizient</translation>
     </message>
     <message>
         <source>Correlated Noise Sources</source>
-        <translation type="unfinished"></translation>
+        <translation>Korrelierte Rauschquellen</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 2</source>
-        <translation type="unfinished"></translation>
+        <translation>spektrale Rauschspannungsleistungsdichte der Quelle 2</translation>
     </message>
     <message>
         <source>voltage power spectral density of source 1</source>
-        <translation type="unfinished"></translation>
+        <translation>spektrale Rauschspannungsleistungsdichte der Quelle 1</translation>
     </message>
 </context>
 <context>
@@ -5019,7 +5021,7 @@ Bearbeitet den Schaltplan</translation>
     </message>
     <message>
         <source>file components</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateikomponenten</translation>
     </message>
 </context>
 <context>
@@ -5229,31 +5231,31 @@ Filtersynthese-Programm
     </message>
     <message>
         <source>Band pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandpass</translation>
     </message>
     <message>
         <source>Band stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandsperre</translation>
     </message>
     <message>
         <source>Copyright (C) 2005 by</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (C) 2005 von</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Stop frequency must be greater than start frequency.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Stopfrequenz muss größer als die Startfrequenz sein.</translation>
     </message>
     <message>
         <source>Filter order must not be less than two.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die FIlterordnung darf nicht kleiner als zwei sein.</translation>
     </message>
     <message>
         <source>Start frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Startfrequenz:</translation>
     </message>
 </context>
 <context>
@@ -6596,49 +6598,55 @@ Startet das Komponentenbibliotheksprogramm</translation>
     </message>
     <message>
         <source>Change Property Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaftswerte ändern</translation>
     </message>
     <message>
         <source>Change Property Values
 
 Change Property Value of Components</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaftswerte ändern
+
+Ändert die Eigenschaftswerte von Komponenten</translation>
     </message>
     <message>
         <source>Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassnetzwerk</translation>
     </message>
     <message>
         <source>Creates Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeugt Anpassnetzwerk</translation>
     </message>
     <message>
         <source>Matching Circuit
 
 Dialog for Creating Matching Circuit</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassnetzwerk
+
+Dialog zum Erstellen eines Anpassnetzwerkes</translation>
     </message>
     <message>
         <source>Change Property Values...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaftswerte ändern...</translation>
     </message>
     <message>
         <source>Change Property Values..</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaftswerte ändern..</translation>
     </message>
     <message>
         <source>Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnet DC-Arbeitspunkt und zeigt diesen an</translation>
     </message>
     <message>
         <source>Calculate DC bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung des DC-Arbeitspunktes</translation>
     </message>
     <message>
         <source>Calculate DC bias
 
 Calculates DC bias and shows it</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung des DC-Arbeitspunktes
+
+Berechnet den DC-Arbeitspunkt und zeigt diesen an</translation>
     </message>
 </context>
 <context>
@@ -7171,39 +7179,39 @@ Calculates DC bias and shows it</source>
     </message>
     <message>
         <source>power matching</source>
-        <translation type="unfinished"></translation>
+        <translation>Leistungsanpassung</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>noise matching</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauschanpassung</translation>
     </message>
     <message>
         <source>2-port matching</source>
-        <translation type="unfinished"></translation>
+        <translation>Zweitoranpassung</translation>
     </message>
     <message>
         <source>Could not load S[1,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Datensatz S[1,1] kann nicht geladen werden.</translation>
     </message>
     <message>
         <source>Could not load S[1,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Datensatz S[1,2] kann nicht geladen werden.</translation>
     </message>
     <message>
         <source>Could not load S[2,1].</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Datensatz S[2,1] kann nicht geladen werden.</translation>
     </message>
     <message>
         <source>Could not load S[2,2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Datensatz S[2,2] kann nicht geladen werden.</translation>
     </message>
     <message>
         <source>Wrong dependency!</source>
-        <translation type="unfinished"></translation>
+        <translation>Falsche Abhängigkeit!</translation>
     </message>
 </context>
 <context>
@@ -7504,11 +7512,11 @@ Fehler:
     <name>SweepDialog</name>
     <message>
         <source>Bias Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeitspunkte</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
