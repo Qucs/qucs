@@ -1,6 +1,6 @@
 /***************************************************************************
-                          arrowdialog.cpp  -  description
-                             -------------------
+                              arrowdialog.cpp
+                             -----------------
     begin                : Fri Nov 28 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -33,60 +33,40 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   setCaption(tr("Edit Arrow Properties"));
   val100 = new QIntValidator(0, 100, this);
 
-  vert = new QVBoxLayout(this);
-  vert->setSpacing(5);
-  vert->setMargin(5);
+  all = new QGridLayout(this, 5,4,3,3);
+  all->setMargin(3);
 
-  QHBox *h0 = new QHBox(this);
-  h0->setSpacing(5);
-  vert->addWidget(h0);
-
-  new QLabel(tr("Head Length: "), h0);
-  HeadLength = new QLineEdit(h0);
+  all->addWidget(new QLabel(tr("Head Length: "), this), 0,0);
+  HeadLength = new QLineEdit(this);
   HeadLength->setValidator(val100);
   HeadLength->setMaximumWidth(35);
   HeadLength->setText("10");
+  all->addWidget(HeadLength, 0,1);
 
-  new QLabel(tr("      Head Width: "), h0);
-  HeadWidth = new QLineEdit(h0);
+  all->addWidget(new QLabel(tr("      Head Width: "), this), 0,2);
+  HeadWidth = new QLineEdit(this);
   HeadWidth->setValidator(val100);
   HeadWidth->setMaximumWidth(35);
   HeadWidth->setText("10");
+  all->addWidget(HeadWidth, 0,3);
 
 
-  QHBox *h1 = new QHBox(this);
-  h1->setSpacing(5);
-  vert->addWidget(h1);
-
-  QHBox *h2 = new QHBox(this);
-  h2->setSpacing(5);
-  vert->addWidget(h2);
-
-  QHBox *h3 = new QHBox(this);
-  h3->setSpacing(5);
-  vert->addWidget(h3);
-
-  // must be first button => press RETURN
-  QPushButton *ButtOK = new QPushButton(tr("OK"),h3);
-  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
-  QPushButton *ButtCancel = new QPushButton(tr("Cancel"),h3);
-  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
-
-
-  new QLabel(tr("Line color: "), h1);
-  ColorButt = new QPushButton("      ",h1);
+  all->addWidget(new QLabel(tr("Line color: "), this), 1,0);
+  ColorButt = new QPushButton("    ",this);
   ColorButt->setPaletteBackgroundColor(QColor(0,0,0));
   connect(ColorButt, SIGNAL(clicked()), SLOT(slotSetColor()));
+  all->addWidget(ColorButt, 1,1);
 
-  new QLabel(tr("      Line Width: "), h1);
-  LineWidth = new QLineEdit(h1);
+  all->addWidget(new QLabel(tr("      Line Width: "), this), 1,2);
+  LineWidth = new QLineEdit(this);
   LineWidth->setValidator(val100);
   LineWidth->setMaximumWidth(35);
   LineWidth->setText("0");
+  all->addWidget(LineWidth, 1,3);
 
 
-  new QLabel(tr("Line style: "), h2);
-  StyleBox = new QComboBox(h2);
+  all->addWidget(new QLabel(tr("Line style: "), this), 2,0);
+  StyleBox = new QComboBox(this);
   StyleBox->insertItem(tr("solid line"));
   StyleBox->insertItem(tr("dash line"));
   StyleBox->insertItem(tr("dot line"));
@@ -94,13 +74,28 @@ ArrowDialog::ArrowDialog(QWidget *parent, const char *name)
   StyleBox->insertItem(tr("dash dot dot line"));
   connect(StyleBox, SIGNAL(activated(int)), SLOT(slotSetStyle(int)));
   LineStyle = Qt::SolidLine;
+  all->addMultiCellWidget(StyleBox, 2,2,1,2);
 
+  all->addWidget(new QLabel(tr("Arrow head: "), this), 3,0);
+  ArrowStyleBox = new QComboBox(this);
+  ArrowStyleBox->insertItem(tr("two lines"));
+  ArrowStyleBox->insertItem(tr("filled"));
+  all->addMultiCellWidget(ArrowStyleBox, 3,3,1,2);
+
+
+  QHBox *h1 = new QHBox(this);
+  all->addMultiCellWidget(h1, 4,4,0,3);
+  QPushButton *ButtOK = new QPushButton(tr("OK"), h1);
+  connect(ButtOK, SIGNAL(clicked()), SLOT(accept()));
+  QPushButton *ButtCancel = new QPushButton(tr("Cancel"), h1);
+  connect(ButtCancel, SIGNAL(clicked()), SLOT(reject()));
+  
   ButtOK->setFocus();
 }
 
 ArrowDialog::~ArrowDialog()
 {
-  delete vert;
+  delete all;
   delete val100;
 }
 

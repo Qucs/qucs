@@ -52,6 +52,7 @@ public:
   void calcArrowHead();
   
   QPen   Pen;
+  int    Style;
   double Height, Width;  // size of the arrow head
   double Length, beta;
   int    xp1, yp1, xp2, yp2;   // coordinates to paint the arrow head

@@ -80,6 +80,13 @@ protected:
 
 };
 
+class GateComponent : public Component {
+public:
+  GateComponent();
+  QString NetList();
+  void recreate();
+  void createSymbol();
+};
 
 // prototype of independent function
 Component* getComponentFromName(QString&);

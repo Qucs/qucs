@@ -57,10 +57,13 @@
 #define  COMBO_Sources   1
 #define  COMBO_TLines    2
 #define  COMBO_nonlinear 3
-#define  COMBO_File      4
-#define  COMBO_Sims      5
-#define  COMBO_Diagrams  6
-#define  COMBO_Paints    7   // must be the last one
+#define  COMBO_digital   4
+#define  COMBO_File      5
+#define  COMBO_Sims      6
+#define  COMBO_Diagrams  7
+
+// must be the last one
+#define  COMBO_Paints    8
 
 QDir QucsWorkDir;  // current project path
 QDir QucsHomeDir;  // Qucs user directory where all projects are located
@@ -228,6 +231,7 @@ void QucsApp::fillComboBox(bool setAll)
     CompChoose->insertItem(tr("sources"));
     CompChoose->insertItem(tr("transmission lines"));
     CompChoose->insertItem(tr("nonlinear components"));
+    CompChoose->insertItem(tr("digital components"));
     CompChoose->insertItem(tr("file components"));
     CompChoose->insertItem(tr("simulations"));
     CompChoose->insertItem(tr("diagrams"));
@@ -1594,7 +1598,7 @@ void QucsApp::slotProjDelButt()
 typedef Element*  (*pInfoFunc) (QString&, char* &, bool);
 pInfoFunc Simulations[] =
   {&DC_Sim::info, &TR_Sim::info, &AC_Sim::info, &SP_Sim::info,
-   &HB_Sim::info, &Param_Sweep::info, 0};
+   &HB_Sim::info, &Param_Sweep::info, &Digi_Sim::info, 0};
 
 pInfoFunc lumpedComponents[] =
   {&Resistor::info, &Resistor::info_us, &Capacitor::info, &Inductor::info,
@@ -1624,6 +1628,11 @@ pInfoFunc nonlinearComps[] =
    &MOSFET::info, &MOSFET::info_p, &MOSFET::info_depl,
    &MOSFET_sub::info, &MOSFET_sub::info_p, &MOSFET_sub::info_depl,
    &OpAmp::info, 0};
+
+pInfoFunc digitalComps[] =
+  {&Digi_Source::info, &Logical_Inv::info, &Logical_OR::info,
+   &Logical_NOR::info, &Logical_AND::info, &Logical_NAND::info,
+   &Logical_XOR::info, &Logical_XNOR::info, 0};
 
 pInfoFunc Diagrams[] =
   {&RectDiagram::info, &PolarDiagram::info, &TabDiagram::info,
@@ -1655,6 +1664,7 @@ void QucsApp::slotSetCompView(int index)
     case COMBO_Sources:   Infos = &Sources[0];           break;
     case COMBO_TLines:    Infos = &TransmissionLines[0]; break;
     case COMBO_nonlinear: Infos = &nonlinearComps[0];    break;
+    case COMBO_digital:   Infos = &digitalComps[0];      break;
     case COMBO_File:
       new QIconViewItem(CompComps, tr("SPICE netlist"),
 		QImage(QucsSettings.BitmapDir + "spicefile.png"));
@@ -1731,6 +1741,9 @@ void QucsApp::slotSelectComponent(QIconViewItem *item)
 	 break;
     case COMBO_nonlinear:
 	 Infos = nonlinearComps[CompComps->index(item)];
+	 break;
+    case COMBO_digital:
+	 Infos = digitalComps[CompComps->index(item)];
 	 break;
     case COMBO_File:
          if(CompComps->index(item) == 0)

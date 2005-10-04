@@ -1,8 +1,8 @@
 /***************************************************************************
-                               arrowdialog.h
+                               logical_inv.h
                               ---------------
-    begin                : Fri Nov 28 2003
-    copyright            : (C) 2003 by Michael Margraf
+    begin                : Wed Sep 28 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,38 +15,22 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ARROWDIALOG_H
-#define ARROWDIALOG_H
+#ifndef LOGICAL_INV_H
+#define LOGICAL_INV_H
 
-#include <qdialog.h>
-
-class QLineEdit;
-class QGridLayout;
-class QPushButton;
-class QComboBox;
-class QIntValidator;
+#include "component.h"
 
 
-class ArrowDialog : public QDialog  {
-Q_OBJECT
+class Logical_Inv : public Component  {
 public:
-  ArrowDialog(QWidget *parent=0, const char *name=0);
- ~ArrowDialog();
+  Logical_Inv();
+ ~Logical_Inv() {};
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
+  void recreate();
 
-  void SetComboBox(Qt::PenStyle);
-
-private slots:
-  void slotSetColor();
-  void slotSetStyle(int);
-
-public:
-  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
-  QPushButton  *ColorButt;
-  QComboBox    *StyleBox, *ArrowStyleBox;
-  Qt::PenStyle LineStyle;
-
-  QGridLayout   *all;
-  QIntValidator *val100;
+private:
+  void createSymbol();
 };
 
 #endif

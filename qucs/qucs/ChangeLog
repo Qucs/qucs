@@ -1,7 +1,17 @@
-2005-09-25  Stefan Jahn  <stefan@lkcc.org>
+2005-30-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* new components: boolean algebra
+	* renamed all Swedish translation files from *_se to *_sv
+
+2005-25-09  Stefan Jahn  <stefan@lkcc.org>
 
 	* qucsfilter.cpp (QucsFilter): Renamed Tschebyscheff (German)
 	into Chebyshev (English).
+
+2005-22-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
+
+	* bugfix: two-port matching now finds the dataset
+	* option for arrow head: filled or not
 
 2005-10-09  Michael Margraf   <michael.margraf@alumni.tu-berlin.de>
 

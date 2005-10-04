@@ -84,28 +84,30 @@ struct Property {
 #define isDummy           0
 #define isSpecialMask    -16
 
-#define isComponent       0x0010
-#define isComponentText   0x0012
+#define isComponent        0x30000
+#define isComponentText    0x30002
+#define isAnalogComponent  0x10000
+#define isDigitalComponent 0x20000
 
-#define isGraph           0x0020
-#define isNode            0x0040
-#define isMarker          0x0080
-#define isWire            0x0100
+#define isGraph            0x0020
+#define isNode             0x0040
+#define isMarker           0x0080
+#define isWire             0x0100
 
-#define isPainting        0x2000
-#define isPaintingResize  0x2001
+#define isPainting         0x2000
+#define isPaintingResize   0x2001
 
-#define isLabel           0x4000
-#define isHWireLabel      0x4002
-#define isVWireLabel      0x4004
-#define isNodeLabel       0x4008
-#define isMovingLabel     0x4010
-#define isHMovingLabel    0x4020
-#define isVMovingLabel    0x4040
+#define isLabel            0x4000
+#define isHWireLabel       0x4002
+#define isVWireLabel       0x4004
+#define isNodeLabel        0x4008
+#define isMovingLabel      0x4010
+#define isHMovingLabel     0x4020
+#define isVMovingLabel     0x4040
 
-#define isDiagram         0x8000
-#define isDiagramResize   0x8001
-#define isDiagramScroll   0x8002
+#define isDiagram          0x8000
+#define isDiagramResize    0x8001
+#define isDiagramScroll    0x8002
 
 
 

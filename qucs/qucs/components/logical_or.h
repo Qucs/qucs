@@ -1,8 +1,8 @@
 /***************************************************************************
-                               arrowdialog.h
-                              ---------------
-    begin                : Fri Nov 28 2003
-    copyright            : (C) 2003 by Michael Margraf
+                               logical_or.h
+                              --------------
+    begin                : Sun Sep 25 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,38 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ARROWDIALOG_H
-#define ARROWDIALOG_H
+#ifndef LOGICAL_OR_H
+#define LOGICAL_OR_H
 
-#include <qdialog.h>
-
-class QLineEdit;
-class QGridLayout;
-class QPushButton;
-class QComboBox;
-class QIntValidator;
+#include "component.h"
 
 
-class ArrowDialog : public QDialog  {
-Q_OBJECT
+class Logical_OR : public GateComponent  {
 public:
-  ArrowDialog(QWidget *parent=0, const char *name=0);
- ~ArrowDialog();
-
-  void SetComboBox(Qt::PenStyle);
-
-private slots:
-  void slotSetColor();
-  void slotSetStyle(int);
-
-public:
-  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
-  QPushButton  *ColorButt;
-  QComboBox    *StyleBox, *ArrowStyleBox;
-  Qt::PenStyle LineStyle;
-
-  QGridLayout   *all;
-  QIntValidator *val100;
+  Logical_OR();
+ ~Logical_OR();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

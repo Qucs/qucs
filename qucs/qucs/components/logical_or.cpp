@@ -1,8 +1,8 @@
 /***************************************************************************
-                               arrowdialog.h
-                              ---------------
-    begin                : Fri Nov 28 2003
-    copyright            : (C) 2003 by Michael Margraf
+                               logical_or.cpp
+                              ----------------
+    begin                : Sun Sep 25 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,38 +15,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ARROWDIALOG_H
-#define ARROWDIALOG_H
+#include "logical_or.h"
 
-#include <qdialog.h>
+Logical_OR::Logical_OR()
+{
+  Description = QObject::tr("logical OR");
+  Model = "OR";
 
-class QLineEdit;
-class QGridLayout;
-class QPushButton;
-class QComboBox;
-class QIntValidator;
+  createSymbol();
+  tx = x1+4;
+  ty = y2+4;
+}
 
+Logical_OR::~Logical_OR()
+{
+}
 
-class ArrowDialog : public QDialog  {
-Q_OBJECT
-public:
-  ArrowDialog(QWidget *parent=0, const char *name=0);
- ~ArrowDialog();
+Component* Logical_OR::newOne()
+{
+  Logical_OR* p = new Logical_OR();
+  p->Props.getFirst()->Value = Props.getFirst()->Value;
+  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->recreate();
+  return p;
+}
 
-  void SetComboBox(Qt::PenStyle);
+Element* Logical_OR::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("n-port OR");
+  BitmapFile = "or";
 
-private slots:
-  void slotSetColor();
-  void slotSetStyle(int);
-
-public:
-  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
-  QPushButton  *ColorButt;
-  QComboBox    *StyleBox, *ArrowStyleBox;
-  Qt::PenStyle LineStyle;
-
-  QGridLayout   *all;
-  QIntValidator *val100;
-};
-
-#endif
+  if(getNewOne)  return new Logical_OR();
+  return 0;
+}

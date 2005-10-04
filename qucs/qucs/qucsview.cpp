@@ -419,6 +419,8 @@ void QucsView::endElementMoving()
 	d->Paints->append((Painting*)pe);
 	break;
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
 	d->insertRawComponent((Component*)pe);
 	break;
       case isMovingLabel:
@@ -1068,7 +1070,7 @@ void QucsView::rightPressMenu(QMouseEvent *Event, QucsDoc *d, int x, int y)
       ComponentMenu->insertItem(
                tr("Edit Properties"), this, SLOT(slotEditElement()));
 
-      if(focusElement->Type != isComponent) break;
+      if((focusElement->Type & isComponent) == 0) break;
     }
     else {
       QucsMain->symEdit->addTo(ComponentMenu);
@@ -1106,7 +1108,7 @@ void QucsView::rightPressMenu(QMouseEvent *Event, QucsDoc *d, int x, int y)
       if(focusElement->Type == isGraph) break;
     }
     ComponentMenu->insertSeparator();
-    if(focusElement) if(focusElement->Type == isComponent)
+    if(focusElement) if(focusElement->Type & isComponent)
       if(!QucsMain->Acts.editActivate->isOn())
         QucsMain->Acts.editActivate->addTo(ComponentMenu);
     if(!QucsMain->Acts.editRotate->isOn())
@@ -1142,7 +1144,7 @@ void QucsView::MPressLabel(QMouseEvent*, QucsDoc *d, int x, int y)
   if(pw) pe = d->getWireLabel(pw->Port1);
   else pe = d->getWireLabel(pn);
   if(pe) {
-    if(pe->Type == isComponent) {
+    if(pe->Type & isComponent) {
       QMessageBox::information(0, tr("Info"),
 			tr("The ground potential cannot be labeled!"));
       return;
@@ -1257,7 +1259,7 @@ void QucsView::MPressSelect(QMouseEvent *Event, QucsDoc *d, int x, int y)
 	return;
 
     case isComponentText:  // property text of component ?
-	focusElement->Type = isComponent;
+	focusElement->Type &= (~isComponentText) | isComponent;
 
 	MAx3 = No;
 	slotApplyCompText();
@@ -1375,6 +1377,8 @@ void QucsView::MPressRotate(QMouseEvent*, QucsDoc *d, int x, int y)
 //  e->isSelected = false;
   switch(e->Type) {
     case isComponent:
+    case isAnalogComponent:
+    case isDigitalComponent:
       if(((Component*)e)->Ports.count() < 1)
         break;  // do not rotate components without ports
       ((Component*)e)->rotate();
@@ -1423,7 +1427,7 @@ void QucsView::MPressElement(QMouseEvent *Event, QucsDoc *d, int, int)
   setPainter(&painter, d);
 
   
-  if(selElem->Type == isComponent) {
+  if(selElem->Type & isComponent) {
     Component *Comp = (Component*)selElem;
     int x1, y1, x2, y2;
     switch(Event->button()) {
@@ -1872,6 +1876,8 @@ void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
 	  d->placeNodeLabel((WireLabel*)pe);
 	  break;
 	case isComponent:
+	case isAnalogComponent:
+	case isDigitalComponent:
 	  d->insertComponent((Component*)pe);
 	  ((Component*)pe)->entireBounds(x1,y1,x2,y2, d->textCorr());
 	  enlargeView(x1, y1, x2, y2);
@@ -1906,6 +1912,8 @@ void QucsView::MReleasePaste(QMouseEvent *Event, QucsDoc *d)
     for(pe = movingElements.first(); pe != 0; pe = movingElements.next()) {
       switch(pe->Type) {
         case isComponent:
+        case isAnalogComponent:
+        case isDigitalComponent:
 	  ((Component*)pe)->rotate(); // rotate !before! rotating the center
           x2 = x1 - pe->cx;
           pe->setCenter(pe->cy - y1 + x1, x2 + y1);
@@ -2021,6 +2029,8 @@ void QucsView::editElement(QMouseEvent *Event)
 
   switch(focusElement->Type) {
     case isComponent:
+    case isAnalogComponent:
+    case isDigitalComponent:
          c = (Component*)focusElement;
          if(c->Model == "GND") return;
 
@@ -2384,7 +2394,7 @@ void QucsView::contentsDragEnterEvent(QDragEnterEvent *Event)
 void QucsView::contentsDragLeaveEvent(QDragLeaveEvent*)
 {
   if(selElem)
-    if(selElem->Type == isComponent)
+    if(selElem->Type & isComponent)
       if(drawn) {
 
         QucsDoc *d = Docs.current();
@@ -2558,6 +2568,9 @@ void QucsView::slot2PortMatching()
   if(z <= 0)  DataSet = Docs.current()->DataSet;
   else  DataSet = pm->pGraph->Var.mid(z+1);
   double Freq = pm->VarPos[0];
+
+  QFileInfo Info(Docs.current()->DocName);
+  DataSet = Info.dirPath()+QDir::separator()+DataSet;
 
   Diagram *Diag = new Diagram();
 

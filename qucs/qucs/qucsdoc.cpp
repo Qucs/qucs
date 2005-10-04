@@ -487,16 +487,16 @@ Node* QucsDoc::insertNode(int x, int y, Element *e)
 }
 
 // ---------------------------------------------------
-// Finds the correct number for power sources and subcircuit ports and
-// sets them accordingly.
+// Finds the correct number for power sources, subcircuit ports and
+// digital sources and sets them accordingly.
 void QucsDoc::setComponentNumber(Component *c)
 {
-  if(c->Model != "Port")
-    if(c->Model != "Pac") return;  // number ports and power sources only
+  Property *pp = c->Props.getFirst();
+  if(pp->Name != "Num")  return;
 
   // power sources and subcircuit ports have to be numbered
   int n=1;
-  QString s = c->Props.getFirst()->Value;
+  QString s = pp->Value;
   QString cSign = c->Model;
   Component *pc;
   // First look, if the port number already exists.
@@ -514,8 +514,8 @@ void QucsDoc::setComponentNumber(Component *c)
         if(pc->Props.getFirst()->Value == s) break;
 
     n++;
-  } while(pc);     // found not used component number
-  c->Props.getFirst()->Value = s; // set new number
+  } while(pc);   // found not used component number
+  pp->Value = s; // set new number
 }
 
 // ---------------------------------------------------
@@ -561,7 +561,7 @@ void QucsDoc::insertRawComponent(Component *c, bool num)
   if(c->Model == "GND") {
     c->Model = "x";    // prevent that this ground is found as label
     Element *pe = getWireLabel(c->Ports.getFirst()->Connection);
-    if(pe) if(pe->Type != isComponent) {
+    if(pe) if((pe->Type & isComponent) == 0) {
       delete ((Conductor*)pe)->Label;
       ((Conductor*)pe)->Label = 0;
     }
@@ -583,7 +583,7 @@ void QucsDoc::insertComponent(Component *c)
     if(c->Model == "GND") {
       c->Model = "x";    // prevent that this ground is found as label
       Element *pe = getWireLabel(c->Ports.getFirst()->Connection);
-      if(pe) if(pe->Type != isComponent) {
+      if(pe) if((pe->Type & isComponent) == 0) {
         delete ((Conductor*)pe)->Label;
         ((Conductor*)pe)->Label = 0;
       }
@@ -1747,21 +1747,18 @@ void QucsDoc::copySelectedElements(QPtrList<Element> *p)
   // Inserts wires, if a connection to a not moving element is found.
   // Go backwards in order not to test the new insertions.
   for(pe = p->last(); pe!=0; pe = p->prev())
-    switch(pe->Type) {
-      case isComponent:
-          pc = (Component*)pe;
-          for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
-            NewMovingWires(p, pp->Connection);
+    if(pe->Type & isComponent) {
+      pc = (Component*)pe;
+      for(pp = pc->Ports.first(); pp!=0; pp = pc->Ports.next())
+         NewMovingWires(p, pp->Connection);
 
-          p->findRef(pe);   // back to the real current pointer
-          break;
-      case isWire:
-          pw = (Wire*)pe;
-          NewMovingWires(p, pw->Port1);
-          NewMovingWires(p, pw->Port2);
-          p->findRef(pe);   // back to the real current pointer
-          break;
-      default:   ;  // avoid compiler warning
+      p->findRef(pe);   // back to the real current pointer
+    }
+    else if(pe->Type == isWire) {
+      pw = (Wire*)pe;
+      NewMovingWires(p, pw->Port1);
+      NewMovingWires(p, pw->Port2);
+      p->findRef(pe);   // back to the real current pointer
     }
 
 
@@ -1947,7 +1944,7 @@ int QucsDoc::placeNodeLabel(WireLabel *pl)
 
   Element *pe = getWireLabel(pn);
   if(pe) {    // name found ?
-    if(pe->Type == isComponent)  return -2;  // ground potential
+    if(pe->Type & isComponent)  return -2;  // ground potential
 
     delete ((Conductor*)pe)->Label;
     ((Conductor*)pe)->Label = 0;
@@ -2289,6 +2286,8 @@ bool QucsDoc::rotateElements()
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
            pc = (Component*)pe;
            pc->rotate();   //rotate component !before! rotating its center
            pc->setCenter(pc->cy - y1 + x1, x1 - pc->cx + y1);
@@ -2373,6 +2372,8 @@ bool QucsDoc::mirrorXComponents()
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
 	pc = (Component*)pe;
 	pc->mirrorX();   // mirror component !before! mirroring its center
 	pc->setCenter(pc->cx, (y1<<1) - pc->cy);
@@ -2436,6 +2437,8 @@ bool QucsDoc::mirrorYComponents()
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
 	pc = (Component*)pe;
 	pc->mirrorY();   // mirror component !before! mirroring its center
 	pc->setCenter((x1<<1) - pc->cx, pc->cy);
@@ -2970,6 +2973,8 @@ bool QucsDoc::aligning(int Mode)
   for(Element *pe = ElementCache.first(); pe != 0; pe = ElementCache.next())
     switch(pe->Type) {
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
 	pc = (Component*)pe;
 	pc->Bounding(bx1, by1, bx2, by2);
 	pc->setCenter(x1-(*bx), y1-(*by), true);
@@ -3040,6 +3045,8 @@ if(count > 1)
   for(pe = ElementCache.first(); pe!=0; pe = ElementCache.next()) {
     switch(pe->Type) {
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
 	((Component*)pe)->cx = x;
 	insertRawComponent((Component*)pe);
 	break;
@@ -3110,6 +3117,8 @@ if(count > 1)
   for(pe = ElementCache.first(); pe!=0; pe = ElementCache.next()) {
     switch(pe->Type) {
       case isComponent:
+      case isAnalogComponent:
+      case isDigitalComponent:
 	pe->cy = y;
 	insertRawComponent((Component*)pe);
 	break;
