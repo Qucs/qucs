@@ -2230,6 +2230,60 @@ I_{3}\\
 \end{bmatrix}
 \end{equation}
 
+
+\subsection{Models for logical devices}
+
+Logical (boolean) funtions (OR, AND, XOR etc.) can be modeled using
+macro models. Here, each input gets the transfer characteristic and
+its derivative described as follows:
+\begin{align}
+u_i  & = \tanh (10\cdot (u_{in} - 0.5)) \\
+u_i' & = 10\cdot \left( 1+ \tanh^2 (10\cdot (u_{in} - 0.5)) \right)
+\end{align}
+
+The resulting voltages $u_i$ for each input are combined to create
+the wanted function for a device with $N$ inputs:
+\begin{align}
+\text{Inverter:} \qquad & u_{out} = 0.5\cdot(1 - u_i) \\
+\text{NOR:}      \qquad & u_{out} = \dfrac{N}{\sum\limits_m \dfrac{2}{1 - u_{i,m}}} \\
+\text{OR:}       \qquad & u_{out} = 1 - \dfrac{N}{\sum\limits_m \dfrac{2}{1 - u_{i,m}}} \\
+\text{AND:}      \qquad & u_{out} = \dfrac{N}{\sum\limits_m \dfrac{2}{1 + u_{i,m}}} \\
+\text{NAND:}     \qquad & u_{out} = 1 - \dfrac{N}{\sum\limits_m \dfrac{2}{1 + u_{i,m}}} \\
+\text{XOR:}      \qquad & u_{out} = 0.5\cdot\left( 1 - \prod_m u_{i,m} \right) \\
+\text{XNOR:}     \qquad & u_{out} = 0.5\cdot\left( 1 + \prod_m u_{i,m} \right)
+\end{align}
+
+The above-mentioned functions model devices with 0V as logical low-level
+and 1V as logical high-level. Of course, they can be easily transformed
+into higher voltage levels by multiplying the desired high-level voltage
+to the output voltage $u_{out}$.
+
+\addvspace{12pt}
+
+To perform a simulation on these devices, the first derivatives are also
+needed:
+\begin{align}
+\text{Inverter:} \quad & \dfrac{\partial u_{out}}{\partial u_{in}}
+        =  -0.5\cdot u_{i,n}' \\
+\text{NOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
+     = \dfrac{-N\cdot u_{i,n}'}{\left( (1-u_{in,n})\cdot\sum\limits_m \dfrac{2}{1-u_{i,m}} \right)^2} \\
+\text{OR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
+     = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{NOR}} \\
+\text{AND:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
+     = \dfrac{N\cdot u_{i,n}'}{\left( (1+u_{in,n})\cdot\sum_n \dfrac{2}{1+u_{i,n}} \right)^2} \\
+\text{NAND:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
+     = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{AND}} \\
+\text{XOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,1/2}}
+     = -0.5\cdot u_{i,n}' \cdot\prod_{m\ne n} u_{i,m} \\
+\text{XNOR:} \quad & \dfrac{\partial u_{out}}{\partial u_{in,n}}
+     = - \left.\dfrac{\partial u_{out}}{\partial u_{in,n}}\right|_{\text{XOR}}
+\end{align}
+
+A problem of these macro models are the numbers of input ports.
+The output voltage levels worsen with increasing number of ports.
+The practical limit lies around eight input ports.
+
+
 \section{Non-linear DC Analysis}
 %\addcontentsline{toc}{section}{Non-linear DC Analysis}
 

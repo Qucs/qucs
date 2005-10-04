@@ -53,6 +53,18 @@
         <source>dash dot dot line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Arrow head: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChangeDialog</name>
@@ -815,19 +827,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real part of impedance must be greater zero,
-but is %1 !</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate two-port matching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reference Impedance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -852,11 +851,11 @@ but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>real/imag</source>
+        <source>mag/deg</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mag/deg</source>
+        <source>real/imag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -873,6 +872,19 @@ but is %1 !</source>
     </message>
     <message>
         <source>S22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate two-port matching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real part of impedance must be greater zero,
+but is %1 !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2752,6 +2764,90 @@ Usage:  qucsedit [-r] file
         <source>voltage power spectral density of source 1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>logical OR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of input ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of high level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical NOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port OR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical AND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port AND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical NAND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port NAND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port NOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical XNOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port XNOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical inverter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>list of times for changing output value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -3215,6 +3311,10 @@ Edits the schematic</source>
         <source>file components</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>digital components</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsEdit</name>
@@ -3412,11 +3512,11 @@ Filter synthesis program
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter order must not be less than two.</source>
+        <source>Start frequency:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start frequency:</source>
+        <source>Filter order must not be less than two.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

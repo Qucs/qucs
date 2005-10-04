@@ -410,6 +410,10 @@ Noise current source with a current power spectral density of $cPSD$:
 \end{pmatrix}
 \end{equation}
 
+The MNA matrix entries for DC and AC analysis are all zero.
+
+\addvspace{12pt}
+
 For two correlated noise current sources the correlation coefficient $K$
 must be known. If the first noise source has the current power spectral
 density of $S_{i1}$ and is connected to node 1 and 2, and if furthermore
@@ -424,6 +428,8 @@ to node 3 and 4, then the correlation matrix writes:
 -K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -S_{i2} &  S_{i2} \\
 \end{pmatrix}
 \end{equation}
+
+Again the MNA matrix entries for DC and AC analysis are all zero.
 
 
 \subsection{Noise voltage source}
@@ -478,6 +484,99 @@ The appropriate noise current correlation matrix yields:
  0 & 0 & 1\\
 \end{pmatrix}
 \end{equation}
+
+For two correlated noise voltage sources the procedure has
+to made two times. The MNA matrix entries are as follows.
+\begin{equation}
+\begin{bmatrix}
+.&.&.&.& -1 &  0 \\
+.&.&.&.&  1 &  0 \\
+.&.&.&.&  0 & -1 \\
+.&.&.&.&  0 &  1 \\
+1 & -1 & 0 &  0 & 0 & 0 \\
+0 &  0 & 1 & -1 & 0 & 0 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_{x1}\\
+I_{x2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0\\
+0
+\end{bmatrix}
+\end{equation}
+
+The appropriate noise current correlation matrix (with the noise
+voltage power spectral densities $S_{v1}$ and $S_{v2}$ and the
+korrelation coefficient $K$) yields:
+\begin{equation}
+(\underline{C}_Y) =
+\begin{pmatrix}
+ 0 & 0 & 0 & 0 & 0 & 0\\
+ 0 & 0 & 0 & 0 & 0 & 0\\
+ 0 & 0 & 0 & 0 & 0 & 0\\
+ 0 & 0 & 0 & 0 & 0 & 0\\
+ 0 & 0 & 0 & 0 & S_{v1} & K\cdot\sqrt{S_{v1}\cdot S_{v2}}\\
+ 0 & 0 & 0 & 0 & K\cdot\sqrt{S_{v1}\cdot S_{v2}} & S_{v2}\\
+\end{pmatrix}
+\end{equation}
+
+
+If a noise current source (ports 1 and 2) and a noise voltage
+source (ports 3 and 4) are correlated, the MNA matrix entries
+are as follows.
+\begin{equation}
+\begin{bmatrix}
+.&.&.&.&  0 \\
+.&.&.&.&  0 \\
+.&.&.&.& -1 \\
+.&.&.&.&  1 \\
+0 &  0 & 1 & -1 & 0 \\
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+V_{1}\\
+V_{2}\\
+V_{3}\\
+V_{4}\\
+I_x
+\end{bmatrix}
+=
+\begin{bmatrix}
+I_{1}\\
+I_{2}\\
+I_{3}\\
+I_{4}\\
+0
+\end{bmatrix}
+\end{equation}
+
+The appropriate noise current correlation matrix (with the noise
+power spectral densities $S_{i1}$ and $S_{v2}$ and the
+korrelation coefficient $K$) yields:
+\begin{equation}
+(\underline{C}_Y) =
+\begin{pmatrix}
+ S_{i1} & -S_{i1} & 0 & 0 & K\cdot\sqrt{S_{i1}\cdot S_{v2}}\\
+-S_{i1} & S_{i1} & 0 & 0 & 0\\
+ 0 & 0 & 0 & 0 & 0\\
+ 0 & 0 & 0 & 0 & 0\\
+ K\cdot\sqrt{S_{i1}\cdot S_{v2}} & 0 & 0 & 0 & S_{v2}\\
+\end{pmatrix}
+\end{equation}
+Note: Because the gyrator factor (It is unity.) has been omitted
+in the above matrix the units are not correct. This can be ignored.
+
 
 \subsection{Attenuator}
 %\addcontentsline{toc}{subsection}{Attenuator}

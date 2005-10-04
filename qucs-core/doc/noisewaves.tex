@@ -631,7 +631,8 @@ output) writes as follows.
 %\addcontentsline{toc}{subsection}{Noise sources}
 
 The noise wave correlation matrix of a noise voltage source with
-voltage power spectral density $vPSD$ writes as follows.
+voltage power spectral density $vPSD$ and its S parameter matrix
+write as follows.
 
 \begin{equation}
 (\underline{C}) = \frac{vPSD}{4\cdot Z_0}\cdot
@@ -639,16 +640,99 @@ voltage power spectral density $vPSD$ writes as follows.
    1 & -1\\
   -1 &  1\\
 \end{pmatrix}
+\qquad
+(\underline{S}) =
+\begin{pmatrix}
+   0 &  1\\
+   1 &  0\\
+\end{pmatrix}
+\end{equation}
+
+The noise wave correlation matrix of a two correlated noise voltage
+sources with voltage power spectral densities $S_{v1}$ and $S_{v2}$
+and correlation coefficient $K$ and its S parameter matrix write as
+follows.
+
+\begin{equation}
+(\underline{C}) = \frac{1}{4\cdot Z_0}\cdot
+\begin{pmatrix}
+ S_{v1} & -S_{v1} &  K\cdot\sqrt{S_{v1}\cdot S_{v2}} & -K\cdot\sqrt{S_{v1}\cdot S_{v2}} \\
+-S_{v1} &  S_{v1} & -K\cdot\sqrt{S_{v1}\cdot S_{v2}} &  K\cdot\sqrt{S_{v1}\cdot S_{v2}} \\
+ K\cdot\sqrt{S_{v1}\cdot S_{v2}} & -K\cdot\sqrt{S_{v1}\cdot S_{v2}} &  S_{v2} & -S_{v2} \\
+-K\cdot\sqrt{S_{v1}\cdot S_{v2}} &  K\cdot\sqrt{S_{v1}\cdot S_{v2}} & -S_{v2} &  S_{v2} \\
+\end{pmatrix}
+\end{equation}
+\begin{equation}
+(\underline{S}) =
+\begin{pmatrix}
+ 0 & 1 & 0 & 0 \\
+ 1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 \\
+ 0 & 0 & 1 & 0 \\
+\end{pmatrix}
 \end{equation}
 
 The noise wave correlation matrix of a noise current source with
-current power spectral density $cPSD$ writes as follows.
+current power spectral density $cPSD$ and its S parameter matrix
+write as follows.
 
 \begin{equation}
 (\underline{C}) = cPSD\cdot Z_0\cdot
 \begin{pmatrix}
    1 & -1\\
   -1 &  1\\
+\end{pmatrix}
+\qquad
+(\underline{S}) =
+\begin{pmatrix}
+   1 &  0\\
+   0 &  1\\
+\end{pmatrix}
+\end{equation}
+
+The noise wave correlation matrix of a two correlated noise current
+sources with current power spectral densities $S_{i1}$ and $S_{i2}$
+and correlation coefficient $K$ writes as follows.
+
+\begin{equation}
+(\underline{C}) = Z_0\cdot
+\begin{pmatrix}
+ S_{i1} & -S_{i1} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -K\cdot\sqrt{S_{i1}\cdot S_{i2}} \\
+-S_{i1} &  S_{i1} & -K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} \\
+ K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  S_{i2} & -S_{i2} \\
+-K\cdot\sqrt{S_{i1}\cdot S_{i2}} &  K\cdot\sqrt{S_{i1}\cdot S_{i2}} & -S_{i2} &  S_{i2} \\
+\end{pmatrix}
+\end{equation}
+\begin{equation}
+(\underline{S}) =
+\begin{pmatrix}
+ 1 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+ 0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\end{equation}
+
+The noise wave correlation matrix of one correlated noise current
+source $S_{i1}$ and one noise voltage source $S_{v2}$ with
+correlation coefficient $K$ writes as follows.
+
+\begin{equation}
+(\underline{C}) =
+\begin{pmatrix}
+ Z_0\cdot S_{i1} & -Z_0\cdot S_{i1} &  0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} & -0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} \\
+-Z_0\cdot S_{i1} &  Z_0\cdot S_{i1} & -0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} &  0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} \\
+ 0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} & -0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} &  S_{v2}/4/Z_0 & -S_{v2}/4/Z_0 \\
+-0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} &  0.5\cdot K\cdot\sqrt{S_{i1}\cdot S_{v2}} & -S_{v2}/4/Z_0 &  S_{v2}/4/Z_0 \\
+\end{pmatrix}
+\end{equation}
+\begin{equation}
+(\underline{S}) =
+\begin{pmatrix}
+ 1 & 0 & 0 & 0 \\
+ 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 1 \\
+ 0 & 0 & 1 & 0 \\
 \end{pmatrix}
 \end{equation}
 

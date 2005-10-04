@@ -1,6 +1,6 @@
 /***************************************************************************
-                          arrow.cpp  -  description
-                             -------------------
+                                arrow.cpp
+                               -----------
     begin                : Sun Nov 23 2003
     copyright            : (C) 2003 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -20,6 +20,7 @@
 
 #include <qlineedit.h>
 #include <qpushbutton.h>
+#include <qcombobox.h>
 
 #include <math.h>
 
@@ -35,6 +36,7 @@ Arrow::Arrow()
 
   Height = 20.0;
   Width  =  8.0;
+  Style  = 0;   // arrow head not filled
   beta   = atan2(double(Width), double(Height));
   Length = sqrt(Width*Width + Height*Height);
 }
@@ -51,10 +53,23 @@ void Arrow::paint(ViewPainter *p)
     p->drawLine(cx, cy, cx+x2, cy+y2);
     p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
     p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
-    p->Painter->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
-    p->drawLine(cx, cy, cx+x2, cy+y2);
-    p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-    p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+    if(Style == 0) {
+      p->Painter->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
+      p->drawLine(cx, cy, cx+x2, cy+y2);
+      p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
+      p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+    }
+    else {   // filled arrow head
+      p->drawLine(cx+xp1, cy+yp1, cx+xp2, cy+yp2);
+      p->Painter->setPen(QPen(QPen::white, Pen.width(), Pen.style()));
+      p->drawLine(cx, cy, cx+x2, cy+y2);
+
+      p->Painter->setBrush(QPen::white);
+      QPointArray Points;
+      Points.setPoints(3, cx+xp1, cy+yp1, cx+x2, cy+y2, cx+xp2, cy+yp2);
+      p->Painter->drawConvexPolygon(Points);
+      p->Painter->setBrush(QBrush::NoBrush); // no filling for next paintings
+    }
 
     p->Painter->setPen(QPen(QPen::darkRed,2));
     p->drawResizeRect(cx, cy);  // markers for changing the size
@@ -63,8 +78,17 @@ void Arrow::paint(ViewPainter *p)
   }
   p->Painter->setPen(Pen);
   p->drawLine(cx, cy, cx+x2, cy+y2);
-  p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
-  p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+  if(Style == 0) {
+    p->drawLine(cx+x2, cy+y2, cx+xp1, cy+yp1);
+    p->drawLine(cx+x2, cy+y2, cx+xp2, cy+yp2);
+  }
+  else {   // filled arrow head
+    p->Painter->setBrush(Pen.color());
+    QPointArray Points;
+    Points.setPoints(3, cx+xp1, cy+yp1, cx+x2, cy+y2, cx+xp2, cy+yp2);
+    p->Painter->drawConvexPolygon(Points);
+    p->Painter->setBrush(QBrush::NoBrush); // no filling for next paintings
+  }
 }
 
 // --------------------------------------------------------------------------
@@ -150,6 +174,12 @@ bool Arrow::load(const QString& s)
   Pen.setStyle((Qt::PenStyle)n.toInt(&ok));
   if(!ok) return false;
 
+  n  = s.section(' ',10,10);    // arrow style
+  if(!n.isEmpty()) {            // backward compatible
+    Style = n.toInt(&ok);
+    if(!ok) return false;
+  }
+
   beta   = atan2(double(Width), double(Height));
   Length = sqrt(Width*Width + Height*Height);
   calcArrowHead();
@@ -163,7 +193,7 @@ QString Arrow::save()
   s += QString::number(x2)+" "+QString::number(y2)+" ";
   s += QString::number(int(Height))+" "+QString::number(int(Width))+" ";
   s += Pen.color().name()+" "+QString::number(Pen.width())+" ";
-  s += QString::number(Pen.style());
+  s += QString::number(Pen.style()) + " " + QString::number(Style);
   return s;
 }
 
@@ -376,17 +406,18 @@ bool Arrow::Dialog()
   d->ColorButt->setPaletteBackgroundColor(Pen.color());
   d->LineWidth->setText(QString::number(Pen.width()));
   d->SetComboBox(Pen.style());
+  d->ArrowStyleBox->setCurrentItem(Style);
 
   if(d->exec() == QDialog::Rejected) {
     delete d;
     return false;
   }
 
-  if(Width  != d->HeadWidth->text().toDouble()) {
+  if(Width != d->HeadWidth->text().toDouble()) {
     Width = d->HeadWidth->text().toDouble();
     changed = true;
   }
-  if(Height  != d->HeadLength->text().toDouble()) {
+  if(Height != d->HeadLength->text().toDouble()) {
     Height = d->HeadLength->text().toDouble();
     changed = true;
   }
@@ -394,12 +425,16 @@ bool Arrow::Dialog()
     Pen.setColor(d->ColorButt->paletteBackgroundColor());
     changed = true;
   }
-  if(Pen.width()  != d->LineWidth->text().toUInt()) {
+  if(Pen.width() != d->LineWidth->text().toUInt()) {
     Pen.setWidth(d->LineWidth->text().toUInt());
     changed = true;
   }
-  if(Pen.style()  != d->LineStyle) {
+  if(Pen.style() != d->LineStyle) {
     Pen.setStyle(d->LineStyle);
+    changed = true;
+  }
+  if(Style != d->ArrowStyleBox->currentItem()) {
+    Style = d->ArrowStyleBox->currentItem();
     changed = true;
   }
 

@@ -1018,10 +1018,10 @@ Note that $r_{eq11}$ includes the ohmic resistance $R_1$. For backward
 Euler, it therefore follows:
 
 \begin{equation}
-V_{L1}^{n+1} = \left(\dfrac{L_1}{h^n} + R_1 \right)\cdot I_{L1}^{n+1}
-             + \dfrac{k\cdot\sqrt{L_1\cdot L_2}}{h^n}\cdot I_{L2}^{n+1}
-             - \dfrac{L_1}{h^n}\cdot I_{L1}^n
-             - \dfrac{k\cdot\sqrt{L_1\cdot L_2}}{h^n}\cdot I_{L2}^n
+V_{L1}^{n+1} = \underbrace{\left(\dfrac{L_1}{h^n} + R_1 \right)}_{r_{eq11}}\cdot I_{L1}^{n+1}
+             + \underbrace{\dfrac{k\cdot\sqrt{L_1\cdot L_2}}{h^n}}_{r_{eq12}}\cdot I_{L2}^{n+1}
+             \underbrace{- \left(\dfrac{L_1}{h^n} + R_1 \right)\cdot I_{L1}^n
+             - \dfrac{k\cdot\sqrt{L_1\cdot L_2}}{h^n}\cdot I_{L2}^n}_{V_{eq1}}
 \end{equation}
 
 The voltage across the secondary coil $V_{L2}^{n+1}$ goes likewise by
@@ -1034,8 +1034,8 @@ numbers are according to figure \ref{fig:trafo}):
 0 & 0 & 0 & 0 &  0 & +1\\
 0 & 0 & 0 & 0 &  0 & -1\\
 0 & 0 & 0 & 0 & -1 &  0\\
-+1 & -1 & 0 & 0 & -r_{eq11} & -r_{eq12}\\
-0 & 0 & +1 & -1 & -r_{eq21} & -r_{eq22}\\
++1 & 0 & 0 & -1 & -r_{eq11} & -r_{eq12}\\
+0 & +1 & -1 & 0 & -r_{eq21} & -r_{eq22}\\
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
@@ -1064,8 +1064,13 @@ coil 1 writes:
 \begin{align}
  & V_{L1} = L_1\cdot\dfrac{d I_{L1}}{d t} + M_{12}\cdot\dfrac{d I_{L2}}{d t}
           + M_{13}\cdot\dfrac{d I_{L3}}{d t} + I_{L1}\cdot R_1 \\
+ & V_{L2} = L_2\cdot\dfrac{d I_{L2}}{d t} + M_{12}\cdot\dfrac{d I_{L1}}{d t}
+          + M_{23}\cdot\dfrac{d I_{L3}}{d t} + I_{L2}\cdot R_2 \\
+ & V_{L3} = L_3\cdot\dfrac{d I_{L3}}{d t} + M_{13}\cdot\dfrac{d I_{L1}}{d t}
+          + M_{23}\cdot\dfrac{d I_{L2}}{d t} + I_{L3}\cdot R_3 \\
 \text{with}\qquad & M_{12} = k_{12}\cdot\sqrt{L_1\cdot L_2} \\
 \text{and}\qquad  & M_{13} = k_{13}\cdot\sqrt{L_1\cdot L_3} \\
+\text{and}\qquad  & M_{23} = k_{23}\cdot\sqrt{L_2\cdot L_3}
 \end{align}
 
 This can be easily extended to an arbitrary number of coupled

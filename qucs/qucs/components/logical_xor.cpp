@@ -1,8 +1,8 @@
 /***************************************************************************
-                               arrowdialog.h
-                              ---------------
-    begin                : Fri Nov 28 2003
-    copyright            : (C) 2003 by Michael Margraf
+                               logical_xor.cpp
+                              -----------------
+    begin                : Sun Sep 25 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,38 +15,36 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ARROWDIALOG_H
-#define ARROWDIALOG_H
+#include "logical_xor.h"
 
-#include <qdialog.h>
+Logical_XOR::Logical_XOR()
+{
+  Description = QObject::tr("logical XOR");
+  Model = "XOR";
 
-class QLineEdit;
-class QGridLayout;
-class QPushButton;
-class QComboBox;
-class QIntValidator;
+  createSymbol();
+  tx = x1+4;
+  ty = y2+4;
+}
 
+Logical_XOR::~Logical_XOR()
+{
+}
 
-class ArrowDialog : public QDialog  {
-Q_OBJECT
-public:
-  ArrowDialog(QWidget *parent=0, const char *name=0);
- ~ArrowDialog();
+Component* Logical_XOR::newOne()
+{
+  Logical_XOR* p = new Logical_XOR();
+  p->Props.getFirst()->Value = Props.getFirst()->Value;
+  p->Props.getLast()->Value = Props.getLast()->Value;
+  p->recreate();
+  return p;
+}
 
-  void SetComboBox(Qt::PenStyle);
+Element* Logical_XOR::info(QString& Name, char* &BitmapFile, bool getNewOne)
+{
+  Name = QObject::tr("n-port XOR");
+  BitmapFile = "xor";
 
-private slots:
-  void slotSetColor();
-  void slotSetStyle(int);
-
-public:
-  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
-  QPushButton  *ColorButt;
-  QComboBox    *StyleBox, *ArrowStyleBox;
-  Qt::PenStyle LineStyle;
-
-  QGridLayout   *all;
-  QIntValidator *val100;
-};
-
-#endif
+  if(getNewOne)  return new Logical_XOR();
+  return 0;
+}
