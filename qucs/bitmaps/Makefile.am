@@ -39,7 +39,7 @@ XPMS = ac_voltage.png arrow.png capacitor.png dc_current.png dc_voltage.png   \
   vpulse.png ipulse.png vrect.png irect.png msvia.png amplifier.png opamp.png \
   ysmith.png smithpolar.png polarsmith.png spicefile.png rect3d.png curve.png \
   cpwopen.png cpwstep.png mutual.png mutual2.png noise_ii.png noise_vv.png    \
-  noise_iv.png
+  noise_iv.png or.png nor.png and.png nand.png xor.png xnor.png digi.png
 
 # toolbar pictures
 PNGS = fileopen.png filesave.png editdelete.png editcut.png editcopy.png      \

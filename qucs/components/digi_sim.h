@@ -1,8 +1,8 @@
 /***************************************************************************
-                               arrowdialog.h
-                              ---------------
-    begin                : Fri Nov 28 2003
-    copyright            : (C) 2003 by Michael Margraf
+                                 hb_sim.h
+                                ----------
+    begin                : Mon Oct 3 2005
+    copyright            : (C) 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
  ***************************************************************************/
 
@@ -15,38 +15,18 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef ARROWDIALOG_H
-#define ARROWDIALOG_H
+#ifndef DIGI_SIM_H
+#define DIGI_SIM_H
 
-#include <qdialog.h>
-
-class QLineEdit;
-class QGridLayout;
-class QPushButton;
-class QComboBox;
-class QIntValidator;
+#include "component.h"
 
 
-class ArrowDialog : public QDialog  {
-Q_OBJECT
+class Digi_Sim : public Component  {
 public:
-  ArrowDialog(QWidget *parent=0, const char *name=0);
- ~ArrowDialog();
-
-  void SetComboBox(Qt::PenStyle);
-
-private slots:
-  void slotSetColor();
-  void slotSetStyle(int);
-
-public:
-  QLineEdit    *LineWidth, *HeadWidth, *HeadLength;
-  QPushButton  *ColorButt;
-  QComboBox    *StyleBox, *ArrowStyleBox;
-  Qt::PenStyle LineStyle;
-
-  QGridLayout   *all;
-  QIntValidator *val100;
+  Digi_Sim();
+ ~Digi_Sim();
+  Component* newOne();
+  static Element* info(QString&, char* &, bool getNewOne=false);
 };
 
 #endif

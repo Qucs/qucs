@@ -56,7 +56,8 @@ ComponentDialog::ComponentDialog(Component *c, QucsDoc *d, QWidget *parent)
   // ...........................................................
   // if simulation component
   if((Comp->Model[0] == '.') &&
-     (Comp->Model != ".DC") && (Comp->Model != ".HB")) {
+     (Comp->Model != ".DC") && (Comp->Model != ".HB") &&
+     (Comp->Model != ".Digi")) {
     QTabWidget *t = new QTabWidget(this);
     all->addWidget(t);
 

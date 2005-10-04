@@ -37,7 +37,7 @@
 // ***********************************************************************
 Component::Component()
 {
-  Type = isComponent;
+  Type = isAnalogComponent;
 
   mirroredX = false;
   rotated = 0;
@@ -1007,6 +1007,163 @@ void Component::performModification()
 
 // ***********************************************************************
 // ********                                                       ********
+// ********            Functions of class GateComponent           ********
+// ********                                                       ********
+// ***********************************************************************
+GateComponent::GateComponent()
+{
+  Type = isComponent;   // both analog and digital
+  Name  = "Y";
+
+  // this must be the first property in the list !!!
+  Props.append(new Property("in", "2", false,
+		QObject::tr("number of input ports")));
+  Props.append(new Property("V", "1 V", false,
+		QObject::tr("voltage of high level")));
+  Props.append(new Property("t", "0", false,
+		QObject::tr("delay time")));
+
+  // this must be the last property in the list !!!
+  Props.append(new Property("Symbol", "old", false,
+		QObject::tr("schematic symbol")+" [old, DIN40900]"));
+}
+
+QString GateComponent::NetList()
+{
+  if(!isActive) return QString("");   // should it be simulated ?
+
+  QString s = Model+":"+Name;
+
+  // output all node names
+  for(Port *pp = Ports.first(); pp != 0; pp = Ports.next())
+    s += " "+pp->Connection->Name;   // node names
+
+  // output all properties
+  Property *p = Props.next();
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  p = Props.next();
+  s += " " + p->Name + "=\"" + p->Value + "\"";
+  return s;
+}
+
+void GateComponent::createSymbol()
+{
+  int Num = Props.getFirst()->Value.toInt();
+  if(Num < 2) Num = 2;
+  else if(Num > 8) Num = 8;
+  Props.getFirst()->Value = QString::number(Num);
+
+  int xl, xr, y = 10*Num, z;
+  x1 = -30; y1 = -y-3;
+  x2 =  30; y2 =  y+3;
+
+  tx = x1+4;
+  ty = y2+4;
+
+  z = 0;
+  if(Model.at(0) == 'N')  z = 1;
+
+  if(Props.getLast()->Value.at(0) == 'D') {  // DIN symbol
+    xl = -15;
+    xr =  15;
+    Lines.append(new Line( 15,-y, 15, y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-15,-y, 15,-y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-15, y, 15, y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line(-15,-y,-15, y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 15, 0, 30, 0,QPen(QPen::darkBlue,2)));
+
+    if(Model.at(z) == 'O') {
+      Lines.append(new Line(-11, 6-y,-6, 9-y,QPen(QPen::darkBlue,0)));
+      Lines.append(new Line(-11,12-y,-6, 9-y,QPen(QPen::darkBlue,0)));
+      Lines.append(new Line(-11,14-y,-6,14-y,QPen(QPen::darkBlue,0)));
+      Lines.append(new Line(-11,16-y,-6,16-y,QPen(QPen::darkBlue,0)));
+      Texts.append(new Text( -4, 3-y, "1", QPen::darkBlue, 15.0));
+    }
+    else if(Model.at(z) == 'A')
+      Texts.append(new Text( -10, 3-y, "&", QPen::darkBlue, 15.0));
+    else if(Model.at(0) == 'X') {
+      if(Model.at(1) == 'N')
+        Texts.append(new Text( -11, 3-y, "=", QPen::darkBlue, 15.0));
+      else
+        Texts.append(new Text( -12, 3-y, "=1", QPen::darkBlue, 15.0));
+    }
+
+    z = 0;
+  }
+  else {   // old symbol
+
+    if(Model.at(z) == 'O')  xl = 10;
+    else  xl = -10;
+    xr = 10;
+    Lines.append(new Line(-10,-y,-10, y,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 10, 0, 30, 0,QPen(QPen::darkBlue,2)));
+    Arcs.append(new Arc(-30,-y, 40, 30, 0, 16*90,QPen(QPen::darkBlue,2)));
+    Arcs.append(new Arc(-30,y-30, 40, 30, 0,-16*90,QPen(QPen::darkBlue,2)));
+    Lines.append(new Line( 10,15-y, 10, y-15,QPen(QPen::darkBlue,2)));
+
+    z = 0;
+    if(Model.at(0) == 'X') {
+      z = 1;
+      Arcs.append(new Arc(-6,-6, 12, 12, 0, 16*360,QPen(QPen::darkBlue,1)));
+      Lines.append(new Line(-5, 0, 5, 0,QPen(QPen::darkBlue,1)));
+      Lines.append(new Line( 0,-5, 0, 5,QPen(QPen::darkBlue,1)));
+    }
+  }
+
+  if(Model.at(z) == 'N')
+    Ellips.append(new Area(xr,-4, 8, 8,
+                  QPen(QPen::darkBlue,0), QBrush(QPen::darkBlue)));
+
+  y += 10;
+  for(z=0; z<Num; z++) {
+    y -= 20;
+    Ports.append(new Port(-30, y));
+    if(xl == 10) if((z == 0) || (z == Num-1)) {
+      Lines.append(new Line(-30, y, 9, y,QPen(QPen::darkBlue,2)));
+      continue;
+    }
+    Lines.append(new Line(-30, y, xl, y,QPen(QPen::darkBlue,2)));
+  }
+  
+  Ports.append(new Port( 30,  0));
+}
+
+void GateComponent::recreate()
+{
+  Ellips.clear();
+  Ports.clear();
+  Lines.clear();
+  Texts.clear();
+  Arcs.clear();
+  createSymbol();
+
+  Line *p1;
+  bool mmir = mirroredX;
+  int  tmp, rrot = rotated;
+  if(mmir)  // mirror all lines
+    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
+      p1->y1 = -p1->y1;
+      p1->y2 = -p1->y2;
+    }
+
+  for(int z=0; z<rrot; z++)    // rotate all lines
+    for(p1 = Lines.first(); p1 != 0; p1 = Lines.next()) {
+      tmp = -p1->x1;
+      p1->x1 = p1->y1;
+      p1->y1 = tmp;
+      tmp = -p1->x2;
+      p1->x2 = p1->y2;
+      p1->y2 = tmp;
+    }
+
+
+  rotated = rrot;  // restore properties (were changed by rotate/mirror)
+  mirroredX = mmir;
+}
+
+
+// ***********************************************************************
+// ********                                                       ********
 // ******** The following function does not below to any class.   ********
 // ******** It creates a component by getting the identification  ********
 // ******** string used in the schematic file and for copy/paste. ********
@@ -1059,6 +1216,7 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "rect") c = new iRect();
         else if(cstr == "Inoise") c = new Noise_ii();
         else if(cstr == "Vnoise") c = new Noise_iv();
+        else if(cstr == "nv") c = new Logical_Inv();
         break;
   case 'J' : if(cstr == "FET") c = new JFET();
         break;
@@ -1089,12 +1247,14 @@ Component* getComponentFromName(QString& Line)
   case 'D' : if(cstr == "CBlock") c = new dcBlock();
 	else if(cstr == "CFeed") c = new dcFeed();
 	else if(cstr == "iode") c = new Diode();
+	else if(cstr == "igiSource") c = new Digi_Source();
 	break;
   case 'B' : if(cstr == "iasT") c = new BiasT();
 	else if(cstr == "JT") c = new BJTsub();
 	break;
   case 'A' : if(cstr == "ttenuator") c = new Attenuator();
 	else if(cstr == "mp") c = new Amplifier();
+        else if(cstr == "ND") c = new Logical_AND();
         break;
   case 'M' : if(cstr.isEmpty()) c = new Mutual();
 	else if(cstr == "2") c = new Mutual2();
@@ -1113,6 +1273,10 @@ Component* getComponentFromName(QString& Line)
   case 'E' : if(cstr == "qn") c = new Equation();
         break;
   case 'O' : if(cstr == "pAmp") c = new OpAmp();
+        else if(cstr == "R") c = new Logical_OR();
+        break;
+  case 'N' : if(cstr == "OR") c = new Logical_NOR();
+        else if(cstr == "AND") c = new Logical_NAND();
         break;
   case '.' : if(cstr == "DC") c = new DC_Sim();
         else if(cstr == "AC") c = new AC_Sim();
@@ -1120,9 +1284,13 @@ Component* getComponentFromName(QString& Line)
         else if(cstr == "SP") c = new SP_Sim();
         else if(cstr == "HB") c = new HB_Sim();
         else if(cstr == "SW") c = new Param_Sweep();
+        else if(cstr == "Digi") c = new Digi_Sim();
         break;
   case '_' : if(cstr == "BJT") c = new BJT();
 	else if(cstr == "MOSFET") c = new MOSFET();
+        break;
+  case 'X' : if(cstr == "OR") c = new Logical_XOR();
+        else if(cstr == "NOR") c = new Logical_XNOR();
         break;
   }
   if(!c) {
