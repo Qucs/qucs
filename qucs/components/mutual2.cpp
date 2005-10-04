@@ -1,5 +1,5 @@
 /***************************************************************************
-                               symtrafo.cpp
+                               mutual2.cpp
                               --------------
     begin                : Sat Aug 20 2005
     copyright            : (C) 2005 by Michael Margraf
@@ -63,7 +63,7 @@ Mutual2::Mutual2()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "M2";
+  Model = "MUT2";
   Name  = "Tr";
 
   Props.append(new Property("L1", "1 mH", false,

@@ -2902,14 +2902,6 @@ Használat:  qucsedit [-r] fájl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>resistance of coil 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>resistance of coil 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mutual Inductors</source>
         <translation type="unfinished"></translation>
     </message>
