@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component_id.h,v 1.26 2005/06/02 18:17:51 raimi Exp $
+ * $Id: component_id.h,v 1.27 2005/10/04 10:52:29 raimi Exp $
  *
  */
 
@@ -38,6 +38,8 @@ enum circuit_type {
   CIR_RESISTOR,
   CIR_CAPACITOR,
   CIR_INDUCTOR,
+  CIR_MUTUAL,
+  CIR_MUTUAL2,
   CIR_VCCS,
   CIR_CCCS,
   CIR_CCVS,
@@ -60,14 +62,18 @@ enum circuit_type {
   CIR_TLINE,
   CIR_IPROBE,
   CIR_SPFILE,
-  CIR_VNOISE,
-  CIR_INOISE,
   CIR_VPULSE,
   CIR_IPULSE,
   CIR_VRECT,
   CIR_IRECT,
   CIR_AMPLIFIER,
-  CIR_OPAMP,
+
+  // noise sources
+  CIR_VNOISE,
+  CIR_INOISE,
+  CIR_IINOISE,
+  CIR_IVNOISE,
+  CIR_VVNOISE,
 
   // microstrip components
   CIR_MSLINE,
@@ -89,6 +95,7 @@ enum circuit_type {
   CIR_CPWSTEP,
 
   // non-linear components
+  CIR_OPAMP,
   CIR_DIODE,
   CIR_JFET,
   CIR_BJT,

@@ -1,3 +1,8 @@
+2005-10-02  Stefan Jahn  <stefan@lkcc.org>
+
+	* check_netlist.cpp: Property range specification now also
+	including interval boundary conditions.
+
 2005-09-25  Stefan Jahn  <stefan@lkcc.org>
 
 	* transient.cpp, trsolver.cpp: Fixed forward/backward Euler

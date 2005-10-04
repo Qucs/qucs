@@ -1,0 +1,126 @@
+/*
+ * mutual.cpp - two mutual inductors class implementation
+ *
+ * Copyright (C) 2005 Stefan Jahn <stefan@lkcc.org>
+ *
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this package; see the file COPYING.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
+ * Boston, MA 02110-1301, USA.  
+ *
+ * $Id: mutual.cpp,v 1.1 2005/10/04 10:52:29 raimi Exp $
+ *
+ */
+
+#if HAVE_CONFIG_H
+# include <config.h>
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "complex.h"
+#include "object.h"
+#include "node.h"
+#include "circuit.h"
+#include "constants.h"
+#include "matrix.h"
+#include "component_id.h"
+#include "mutual.h"
+
+mutual::mutual () : circuit (4) {
+  type = CIR_MUTUAL;
+}
+
+void mutual::calcSP (nr_double_t frequency) {
+  setMatrixS (ytos (calcMatrixY (frequency)));
+}
+
+matrix mutual::calcMatrixY (nr_double_t frequency) {
+  nr_double_t l1 = getPropertyDouble ("L1");
+  nr_double_t l2 = getPropertyDouble ("L2");
+  nr_double_t k  = getPropertyDouble ("k");
+  nr_double_t o  = 2 * M_PI * frequency;
+  complex z1 = rect (0, o * l1 * (1 - k * k));
+  complex z2 = rect (0, o * l2 * (1 - k * k));
+  complex y3 = rect (0, k / (o * sqrt (l1 * l2) * (1 - k * k)));
+  
+  matrix y = matrix (4);
+  y.set (NODE_1, NODE_1, +1 / z1); y.set (NODE_4, NODE_4, +1 / z1);
+  y.set (NODE_1, NODE_4, -1 / z1); y.set (NODE_4, NODE_1, -1 / z1);
+  y.set (NODE_2, NODE_2, +1 / z2); y.set (NODE_3, NODE_3, +1 / z2);
+  y.set (NODE_2, NODE_3, -1 / z2); y.set (NODE_3, NODE_2, -1 / z2);
+  y.set (NODE_1, NODE_3, +y3); y.set (NODE_3, NODE_1, +y3);
+  y.set (NODE_2, NODE_4, +y3); y.set (NODE_4, NODE_2, +y3);
+  y.set (NODE_1, NODE_2, -y3); y.set (NODE_2, NODE_1, -y3);
+  y.set (NODE_3, NODE_4, -y3); y.set (NODE_4, NODE_3, -y3);
+  return y;
+}
+
+void mutual::initAC (void) {
+  setVoltageSources (0);
+  allocMatrixMNA ();
+}
+
+void mutual::calcAC (nr_double_t frequency) {
+  setMatrixY (calcMatrixY (frequency));
+}
+
+void mutual::initDC (void) {
+  setVoltageSources (2);
+  allocMatrixMNA ();
+  voltageSource (VSRC_1, NODE_1, NODE_4);
+  voltageSource (VSRC_2, NODE_2, NODE_3);
+}
+
+void mutual::initTR (void) {
+  initDC ();
+  setStates (8);
+}
+
+#define fState11 0 // flux state
+#define vState11 1 // voltage state
+#define fState22 2
+#define vState22 3
+#define fState12 4
+#define vState12 5
+#define fState21 6
+#define vState21 7
+
+void mutual::calcTR (nr_double_t) {
+  nr_double_t k  = getPropertyDouble ("k");
+  nr_double_t l1 = getPropertyDouble ("L1");
+  nr_double_t l2 = getPropertyDouble ("L2");
+  nr_double_t i1 = real (getJ (VSRC_1));
+  nr_double_t i2 = real (getJ (VSRC_2));
+  nr_double_t r11, r12, r21, r22, v11, v22, v12, v21;
+  nr_double_t M12 = k * sqrt (l1 * l2);
+
+  // self inductances
+  setState  (fState11, i1 * l1);
+  integrate (fState11, l1, r11, v11);
+  setState  (fState22, i2 * l2);
+  integrate (fState22, l2, r22, v22);
+
+  // mutual inductances
+  setState  (fState12, i2 * M12);
+  integrate (fState12, M12, r12, v12);
+  setState  (fState21, i1 * M12);
+  integrate (fState21, M12, r21, v21);
+
+  setD (VSRC_1, VSRC_1, -r11); setD (VSRC_1, VSRC_2, -r12);
+  setD (VSRC_2, VSRC_2, -r22); setD (VSRC_2, VSRC_1, -r21);
+  setE (VSRC_1, v11 + v12);
+  setE (VSRC_2, v22 + v21);
+}

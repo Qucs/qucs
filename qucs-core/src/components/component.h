@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.28 2005/06/02 18:17:51 raimi Exp $
+ * $Id: component.h,v 1.29 2005/10/04 10:52:29 raimi Exp $
  *
  */
 
@@ -39,6 +39,8 @@
 #include "resistor.h"
 #include "capacitor.h"
 #include "inductor.h"
+#include "mutual.h"
+#include "mutual2.h"
 #include "vccs.h"
 #include "cccs.h"
 #include "ccvs.h"
@@ -61,14 +63,16 @@
 #include "tline.h"
 #include "iprobe.h"
 #include "spfile.h"
-#include "vnoise.h"
-#include "inoise.h"
 #include "vpulse.h"
 #include "ipulse.h"
 #include "vrect.h"
 #include "irect.h"
 #include "amplifier.h"
 #include "opamp.h"
+
+#include "vnoise.h"
+#include "inoise.h"
+#include "iinoise.h"
 
 #include "devices/diode.h"
 #include "devices/jfet.h"

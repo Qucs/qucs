@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_spice.cpp,v 1.15 2005/06/02 18:17:56 raimi Exp $
+ * $Id: check_spice.cpp,v 1.16 2005/10/04 10:52:29 raimi Exp $
  *
  */
 
@@ -55,7 +55,7 @@ struct define_t spice_definition_available[] =
   /* resistor */
   { "R", 2, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR, 
     { { "R", PROP_REAL, { 50, PROP_NO_STR }, PROP_NO_RANGE }, PROP_NO_PROP },
-    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, { K, PROP_VAL_MAX } },
+    { { "Temp", PROP_REAL, { 26.85, PROP_NO_STR }, PROP_MIN_VAL (K) },
       PROP_NO_PROP }
   },
   /* inductor */
