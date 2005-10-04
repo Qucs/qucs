@@ -94,5 +94,14 @@
 #include "libcomp.h"
 #include "mutual.h"
 #include "mutual2.h"
+#include "logical_or.h"
+#include "logical_nor.h"
+#include "logical_and.h"
+#include "logical_nand.h"
+#include "logical_xor.h"
+#include "logical_xnor.h"
+#include "logical_inv.h"
+#include "digi_sim.h"
+#include "digi_source.h"
 
 #endif

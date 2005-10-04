@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 
 Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
@@ -30,7 +31,9 @@ Rect3DDiagram::Rect3DDiagram(int _cx, int _cy) : Diagram(_cx, _cy)
   y2 = 200;
   x3 = 207;    // with some distance for right axes text
 
+#ifdef HIDDENLINE
   Mem = pMem = 0;
+#endif
 
   Name = "Rect3D";
   // symbolic diagram painting
@@ -84,8 +87,11 @@ double Rect3DDiagram::calcZ_2D(double x, double y, double z)
 void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
 				   int *px, int *py, Axis*)
 {
-  if(Mem == 0) {
+#ifdef HIDDENLINE
+//qDebug("calcCoordinate ENTER");
+  if(pMem == 0) {
   // needed for marker
+#endif
 
   double x3D = *(zD++);
   double y3D = *(zD++);
@@ -127,37 +133,77 @@ void Rect3DDiagram::calcCoordinate(double* &xD, double* &zD, double* &yD,
   *px = int(calcX_2D(x3D, y3D, z3D) * scaleX + 0.5) + xorig;
   *py = int(calcY_2D(x3D, y3D, z3D) * scaleY + 0.5) + yorig;
 
+#ifdef HIDDENLINE
   }  // of "if(Mem == 0)"
   else {
   // used in "calcData"
 
+//qDebug("calc: %p: %d, %d", pMem, pMem->x, pMem->y);
   *px = pMem->x;
   *py = pMem->y;
   pMem++;
-//qDebug("calc: %p: %d, %d", pMem, *px, *py);
-
   }
+//qDebug("calcCoordinate LEAVE");
+#endif
 }
 
 // ------------------------------------------------------------
 // For this diagram, this function is actual not for clipping, but
 // for sorting out unnesseccary and invisible points.
-void Rect3DDiagram::clip(int* &)
-//void Rect3DDiagram::clip(int* &p)
+void Rect3DDiagram::clip(int* &p)
 {
 #ifdef HIDDENLINE
-  while(((pMem-1)->No - (pMem-2)->No) <= 1)
+//qDebug("NEU");
+//qDebug("NEU %p: %d, %d, %d, %d", p, *(p-3), *(p-2), *(p-1), *p);
+  p -= 4;
+  pMem -= 2;
+  int No = pMem->No + 1;
+  if(*(p+1) < 0) {  // only one point accessible ?
+    p += 2;
     pMem++;
+  }
 
-  *(p-2) = (pMem-1)->x;
-  *(p-1) = (pMem-1)->y;
-//qDebug("new calc: %p: %d, %d", pMem, *(p-2), *(p-1));
+  pMem--;
+  do {  // are there more points for this line ?
+    pMem++;
+//qDebug("   calc %d: %d, %d", pMem->No, pMem->x, pMem->y);
+    if(pMem->done & 11) {   // point is grid point ?
+//qDebug("   0");
+      if(pMem->done & 4) { // point invisible ?
+        if(pMem > Mem) if(((pMem-1)->done & 12) == 0) { //if( *(p-1) >= 0 ) {
+          *(p++) = pMem->x;
+          *(p++) = pMem->y;
+          *(p++) = -2;
+//qDebug("   1");
+        }
+//qDebug("   2");
+        continue;
+      }
+    }
+
+//qDebug("   3");
+    *(p++) = pMem->x;
+    *(p++) = pMem->y;
+    if(pMem->done & 4) {   // point invisible ?
+      *(p++) = -2;
+//qDebug("   4");
+    }
+
+  } while(pMem->No < No);
+
+  if(pMem->done & 8)   // last point of branch ?
+    if(*(p-1) == -2)  p--;
+//qDebug("   ende %p: %d, %d, %d, %d", p, *(p-3), *(p-2), *(p-1), *p);
+  pMem++;
+#else
+  rectClip(p);
 #endif
 }
 
+#ifdef HIDDENLINE
 // ------------------------------------------------------------
 void Rect3DDiagram::calcCoordinate3D(double x, double y, double zr, double zi,
-					tPoint3D *p)
+					tPoint3D *p, tPointZ *pz, int& No)
 {
   if(zAxis.log) {
     zr = sqrt(zr*zr + zi*zi);
@@ -192,34 +238,63 @@ void Rect3DDiagram::calcCoordinate3D(double x, double y, double zr, double zi,
   else
     y = (y - yAxis.low) / (yAxis.up - yAxis.low);
 
-  p->x = int(calcX_2D(x, y, zr) * scaleX + 0.5) + xorig;
-  p->y = int(calcY_2D(x, y, zr) * scaleY + 0.5) + yorig;
-  p->z = float(calcY_2D(x, y, zr));
+  p->x  = int(calcX_2D(x, y, zr) * scaleX + 0.5) + xorig;
+  p->y  = int(calcY_2D(x, y, zr) * scaleY + 0.5) + yorig;
+  p->No = pz->No = No++;
+  p->done = 0;
+  pz->z = float(calcZ_2D(x, y, zr));
 }
 
-// Enlarge memory block if neccessary.
-#define  FIT_MEMORY_SIZE \
-  if(p >= MemEnd) { \
-    int Size = MemEnd - Mem + 256; \
-    MemEnd = Mem; \
-    Mem = (tPoint3D*)realloc(Mem, Size*sizeof(tPoint3D)); \
-    p = Mem + (p - MemEnd); \
-    MemEnd = Mem + Size - 9; \
-  } \
+// --------------------------------------------------------------
+bool Rect3DDiagram::isHidden(int x, int y, tBound *Bounds)
+{
+  if( ((Bounds+x)->max >= y) && ((Bounds+x)->min <= y) )
+    return true;
+  else {
+    if( (Bounds+x)->max < y )  (Bounds+x)->max = y;
+    if( (Bounds+x)->min > y )  (Bounds+x)->min = y;
+  }
 
+  return false;
+}
+
+// --------------------------------------------------------------
+// Enlarge memory block if neccessary.
+void Rect3DDiagram::enlargeMemoryBlock(tPoint3D* &MemEnd)
+{
+  if(pMem >= MemEnd) {
+//qDebug("1: %p -> %p", pMem, MemEnd);
+    int Size = MemEnd - Mem + 256;
+//qDebug("2: %d", Size);
+    MemEnd = Mem;
+//qDebug("3: %p", Mem);
+    Mem  = (tPoint3D*)realloc(Mem, Size*sizeof(tPoint3D));
+//qDebug("4: %p", Mem);
+    pMem += Mem - MemEnd;
+//qDebug("5");
+    MemEnd = Mem + Size - 5;
+  }
+}
 
 // --------------------------------------------------------------
 // Calculate all 3D points of the line between point "p" and "EndPoint".
 // Parameters:   p        - pointer on 3D coordinate of line start point
 //               EndPoint - pointer on 3D coordinate of line end point
-//               Mem      - pointer on memory block (for resizing)
+//               Bounds   - pointer on memory block for occupied area
 //               MemEnd   - pointer where memory block ends
-void Rect3DDiagram::calcLine(tPoint3D* &p, tPoint3D *EndPoint,
-				tPoint3D* &Mem, tPoint3D* &MemEnd)
+void Rect3DDiagram::calcLine(tPoint3D* p, tPoint3D *EndPoint,
+				tBound *Bounds, tPoint3D* &MemEnd)
 {
-  int No_ = p->No;  // all points get new number
+  int No_ = p->No;  // needed because "p" may change (realloc)
   int x1_ = p->x, y1_ = p->y;
   int x2_ = EndPoint->x, y2_ = EndPoint->y;
+//qDebug("enter: %d/%d -> %d/%d, No: %d", x1_, y1_, x2_, y2_, p->No);
+
+  bool wasHidden = isHidden(x1_, y1_, Bounds);
+  if(wasHidden) {
+    p->done |= 4;   // mark as hidden
+//    qDebug("first hidden");
+  }
 
   int ax_ = 0, ay_ = 0;
   int ix_, iy_, dx_, dy_, of_;
@@ -253,10 +328,7 @@ void Rect3DDiagram::calcLine(tPoint3D* &p, tPoint3D *EndPoint,
   }
 
   of_ = dx_ >> 1;
-  float z1_ = p->z;
-  float dz_ = (EndPoint->z - z1_) / float(dx_); // interpolate z coordinate
-  // first point is already in list !!!
-  for(int i=dx_; i>0; i--) {
+  for(int i=dx_; i>1; i--) {   // calculate each point of the line
     x1_ += ix_;
     y1_ += ax_;
     of_ += dy_;
@@ -265,64 +337,84 @@ void Rect3DDiagram::calcLine(tPoint3D* &p, tPoint3D *EndPoint,
       x1_ += ay_;
       y1_ += iy_;
     }
-    p++;
-    p->No = ++No_;
-    p->x  = x1_;    // store point coordinate
-    p->y  = y1_;
-    z1_  += dz_;
-    p->z  = z1_;
-    FIT_MEMORY_SIZE;
+    
+    if( isHidden(x1_, y1_, Bounds) != wasHidden ) {
+      wasHidden = !wasHidden;
+      if(i == dx_) if(!wasHidden) { // start point often hidden uneccessarily
+        // here "p" can be used as it is only executed once before "realloc"
+        p->done &= -5;   // mark as not hidden
+        continue;
+      }
+//qDebug("  hidden split: %d/%d  (%d, %d)", x1_, y1_, (Bounds+x1_)->min, (Bounds+x1_)->max);
+      pMem->x  = x1_;
+      pMem->y  = y1_;
+      pMem->No = No_;
+      pMem->done = 0;
+      if(wasHidden) pMem->done = 4;   // mark as hidden
+      pMem++;
+//qDebug("weiter");
+      // Enlarge memory block if neccessary.
+      enlargeMemoryBlock(MemEnd);   // this may make "p" invalid
+//qDebug("weiter2");
+    }
+  }
+
+//  if(isHidden(EndPoint->x, EndPoint->y, Bounds)) {
+    isHidden(EndPoint->x, EndPoint->y, Bounds);   // set hidden buffer
+    if(wasHidden) {  // last point same as second last
+//qDebug("Line No: %d", p->No);
+      if((EndPoint->done & 1) == 0) {
+        EndPoint->done |= 4;   // mark as hidden
+//qDebug("yes");
+      }
+/*      pMem->x  = x1_;
+      pMem->y  = y1_;
+      pMem->No = p->No;
+      pMem->done = 4;   // mark as hidden
+      pMem++;
+    }*/
   }
 }
 
 // --------------------------------------------------------------
-void Rect3DDiagram::removeHiddenLines()
+// Removes the invisible parts of the graph.
+void Rect3DDiagram::removeHiddenLines(Graph *g, tBound *Bounds)
 {
-  Graph *g = Graphs.getFirst();
-  if(!g) return;
-
+qDebug("removeHiddenLines ANFANG");
   double *px;
   double *pz = g->cPointsY;
   if(!pz)  return;
   if(g->cPointsX.count() < 1) return;
 
-  int Size = ((g->cPointsX.getFirst()->count + 1) * g->countY) + 8;
-  Mem = (tPoint3D*)malloc( Size*sizeof(tPoint3D) );
+  int Size = g->cPointsX.getFirst()->count * g->countY;
+  tPointZ *zMem = (tPointZ*)malloc( (Size+2)*sizeof(tPointZ) );
+  Mem = (tPoint3D*)malloc( 2*(Size+2)*sizeof(tPoint3D) );
 
-  tPoint3D v3D, *p = Mem;
-  tPoint3D *MemEnd = Mem + Size - 5;   // limit of buffer
+  pMem = Mem;
+  tPointZ *zp = zMem;
 
   double Dummy = 0.0;  // number for 1-dimensional data in 3D cartesian
   double *py = &Dummy;
   if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
 
-
-  // calculate coordinates of all points of all lines
-  int i, j, z;
-  p->No = 0;
-  z = g->cPointsX.at(1)->count;
+  // calculate coordinates of all lines
+  int i, j, z, dx, dy, No=0;
+  dy = g->cPointsX.at(1)->count;
   for(i=g->countY-1; i>=0; i--) {   // y coordinates
     px = g->cPointsX.getFirst()->Points;
-    calcCoordinate3D(*(px++), *py, *(pz), *(pz+1), p);
-    pz += 2;
+    calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), pMem++, zp++, No);
     
-    for(j=g->cPointsX.getFirst()->count-1; j>0; j--) {  // x coordinates
-      calcCoordinate3D(*(px++), *py, *(pz), *(pz+1), &v3D);
-      pz += 2;
-      calcLine(p, &v3D, Mem, MemEnd);
-      p->No++;
-    }
+    for(j=g->cPointsX.getFirst()->count-1; j>0; j--)   // x coordinates
+      calcCoordinate3D(*(px++), *py, *(pz++), *(pz++), pMem++, zp++, No);
+
+    (pMem-1)->done |= 8;  // mark as "last in line"
     py++;
-    (p+1)->No = p->No + 2;
-    p++;
-//    if(py >= (g->cPointsX.at(1)->Points + g->cPointsX.at(1)->count))
-    if((i % z) == 0)
+    if((i % dy) == 0)
       py = g->cPointsX.at(1)->Points;
   }
 
-
   // calculate points of cross lines
-  int dx, dy;
+  // "zp" points to unused memory, the values are ignored
   if(g->countY > 1) {
     pz = g->cPointsY;
     for(j=g->countY/g->cPointsX.at(1)->count; j>0; j--) { // every plane
@@ -333,62 +425,130 @@ void Rect3DDiagram::removeHiddenLines()
       dy = pD->count;
       for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
         py = pD->Points;
-        calcCoordinate3D(*px, *(py++), *pz, *(pz+1), p);
+        calcCoordinate3D(*px, *(py++), *pz, *(pz+1), pMem++, zp, No);
         pz += 2*dx;  // next z coordinate
         for(z=dy-1; z>0; z--) {  // every point
-          calcCoordinate3D(*px, *(py++), *pz, *(pz+1), &v3D);
-          calcLine(p, &v3D, Mem, MemEnd);
+          calcCoordinate3D(*px, *(py++), *pz, *(pz+1), pMem++, zp, No);
           pz += 2*dx;  // next z coordinate
-          p->No++;
         }
+        (pMem-1)->done |= 8;  // mark as "last in line"
         px++;   // next x coordinate
         pz -= 2*dx*dy - 2;  // next z coordinate
-        (p+1)->No = p->No + 2;
-        p++;
       }
       pz += 2*dx*(dy-1);
     }
   }
-  Size = p - Mem;
-  pMem = Mem;
+qDebug("Size 1: %d, %d, %d", Size, pMem-Mem, zp-zMem);
 
 
-  // bubble sort algorithm -> sort z coordinates (greatest first)
-  for(i=1; i<=Size; i++) {
-    p = Mem;
-    for(j=0; j<(Size-i); j++) {
-      if(p->z < (p+1)->z) {
-	v3D = *p;
-	*p = *(p+1);
-	*(p+1) = v3D;
+#if 1
+  qDebug("##########################################");
+  for(tPoint3D *p=Mem; p<pMem; p++)
+    qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
+  qDebug("------------------------------------------");
+  for(tPointZ *p=zMem; p-zMem<Size; p++)
+    qDebug("zPoints:   %g - %d", p->z, p->No);
+#endif
+
+
+  // Calculate the z-coordinate of all polygons by building the
+  // sum of the z-coordinates of all of its 4 corners.
+  zp = zMem;
+  dx = g->cPointsX.getFirst()->count;
+  dy = g->cPointsX.at(1)->count;
+  for(i=g->countY-1; i>=0; i--) {   // all branches
+    if(i % dy) {
+      for(j=dx-1; j>0; j--) {   // x coordinates
+        zp->z += (zp+1)->z + (zp+dx)->z + (zp+dx+1)->z;
+        zp++;
       }
-      p++;
+      zp->z = -FLT_MAX;  // last one not needed
+      zp++;
+    }
+    else   // last line not needed
+      for(j=dx; j>0; j--) {   // x coordinates
+        zp->z = -FLT_MAX;  // last one not needed
+        zp++;
+      }
+  }
+qDebug("Size 2: %d, %d, %d", Size, pMem-Mem, zp-zMem);
+
+#if 0
+  qDebug("-------------------------- 4 z addition");
+  for(tPointZ *p=zMem; p-zMem<Size; p++)
+    qDebug("zPoints:   %g - %d", p->z, p->No);
+#endif
+
+
+  // bubble sort algorithm -> sort z-coordinates (greatest first)
+  tPointZ vPZ;
+  for(i=1; i<=Size; i++) {
+    zp = zMem;
+    for(j=0; j<(Size-i); j++) {
+      if(zp->z < (zp+1)->z) {
+	vPZ = *zp;
+	*zp = *(zp+1);
+	*(zp+1) = vPZ;
+      }
+      zp++;
     }
   }
 
+#if 0
+  qDebug("--------------------------- z sorting");
+  for(tPointZ *p=zMem; p-zMem<Size; p++)
+    qDebug("zPoints:   %g - %d", p->z, p->No);
+#endif
 
-  // to store max and min values for hidden coordinates
-  int *Ymax = (int*)malloc(x2 * sizeof(int));
-  for(i=x2-1; i>=0; i--)  *(Ymax+i) = INT_MIN;
-  int *Ymin = (int*)malloc(x2 * sizeof(int));
-  for(i=x2-1; i>=0; i--)  *(Ymin+i) = INT_MAX;
+  tPoint3D *p, *MemEnd = Mem + 2*Size - 5;   // limit of buffer
+//  enlargeMemoryBlock(MemEnd);
+  // look for hidden lines
+  zp = zMem;
+  dx = g->cPointsX.getFirst()->count;
+  dy = g->cPointsX.at(1)->count;
+  do {
 
-  // mark hidden points with x = -100
-  p = Mem;
-  for(i=0; i<Size; i++) {
-    j = p->x;
-qDebug("hide: %d, %d, %g, %d -> %d, %d", j, p->y, p->z, p->No, Ymax[j], Ymin[j]);
-    if(p->y >= Ymax[j])      Ymax[j] = p->y;
-    else if(p->y <= Ymin[j]) Ymin[j] = p->y;
-    else  p->x = -100;
-    
-    p++;
-  }
-  free(Ymax);
-  free(Ymin);
+    // go through all 4 lines of polygon
+    p  = Mem + zp->No;  // polygon corner coordinates
+    if((p->done & 1) == 0) {
+      p->done |= 1;
+      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
+    }
+    p += dx;  // polygon corner coordinates
+    if((p->done & 1) == 0) {
+      p->done |= 1;
+      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
+    }
+
+    // now the cross grid lines
+    p  = Mem + Size;  // polygon corner coordinates
+    z  = zp->No % (dx * dy);
+    p += (z % dx) * dy + (z / dx) + (zp->No - z);  // map from xy to yx
+    if((p->done & 1) == 0) {
+      p->done |= 1;
+      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
+    }
+    p += dy;       // polygon corner coordinates
+    if((p->done & 1) == 0) {
+      p->done |= 1;
+      calcLine(p, p+1, Bounds, MemEnd);  // may make "p" invalid (realloc)
+    }
+
+    zp++;   // next polygon
+  } while(zp->z > -FLT_MAX);
 
 
-  // bubble sort algorithm -> sort "No" (least first)
+#if 1
+  qDebug("--------------------------- hidden lines %d", pMem-Mem);
+  for(tPoint3D *p=Mem; p<pMem; p++)
+    qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
+#endif
+
+  free(zMem);
+
+  // bubble sort algorithm -> sort "No" (least one first)
+  Size = pMem - Mem;
+  tPoint3D v3D;
   for(i=1; i<=Size; i++) {
     p = Mem;
     for(j=0; j<(Size-i); j++) {
@@ -401,19 +561,16 @@ qDebug("hide: %d, %d, %g, %d -> %d, %d", j, p->y, p->z, p->No, Ymax[j], Ymin[j])
     }
   }
 
-for(i=0; i<Size; i++)
-  qDebug("Punkt: %d, %d, %g -> %d",
-         (Mem+i)->x, (Mem+i)->y, (Mem+i)->z, (Mem+i)->No);
 
-
-  // reconstruct all new lines and count them
-/*  p = MemEnd = Mem;
-  for(i=0; i<Size; i++) {
-    if((p++)->x > 0)
-      if((p->x < 0) || (p->No))
-        *(MemEnd++) = *(p-1);
-  }*/
+#if 1
+  qDebug("--------------------------- last sorting %d", pMem-Mem);
+  for(tPoint3D *p=Mem; p<pMem; p++)
+    qDebug("xyPoints:  %d/%d - %d - %d", p->x, p->y, p->No, p->done);
+  qDebug("\n");
+#endif
+qDebug("removeHiddenLines ENDE");
 }
+#endif
 
 // --------------------------------------------------------------
 void Rect3DDiagram::calcLimits()
@@ -559,6 +716,9 @@ int Rect3DDiagram::calcDiagram()
   QString tmp;
   int valid = 0;
   int x, y, w, LineSpacing;
+#ifdef HIDDENLINE
+  tBound *Bounds;
+#endif
 
   // =====  calculate transformation coefficients from rotation angles ===
   calcCoefficients();
@@ -802,7 +962,17 @@ int Rect3DDiagram::calcDiagram()
 
 
 #ifdef HIDDENLINE
-  removeHiddenLines();
+  // to store max and min values for hidden coordinates
+  Bounds = (tBound*)malloc(x2 * sizeof(tBound));
+  for(w=x2-1; w>=0; w--) {
+    (Bounds+w)->max = INT_MIN;
+    (Bounds+w)->min = INT_MAX;
+  }
+
+  for(Graph *pg = Graphs.first(); pg!=0; pg = Graphs.next())
+    removeHiddenLines(pg, Bounds);
+
+  free(Bounds);
 #endif
   return 3;
 

@@ -30,6 +30,9 @@ Version 0.0.8
  * creating matching circuits
  * more filters supported by filter synthese tool
  * many more models in component library
+ * new components: digital gates, correlated noise sources,
+   mutual inductors
+ * printing DC bias into schematic
 
 Version 0.0.7
 -------------

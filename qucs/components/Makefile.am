@@ -40,7 +40,9 @@ libcomponents_a_SOURCES = phaseshifter.cpp gyrator.cpp componentdialog.cpp    \
   msgap.cpp bjtsub.cpp mosfet_sub.cpp vpulse.cpp ipulse.cpp vrect.cpp         \
   irect.cpp msvia.cpp amplifier.cpp opamp.cpp spicefile.cpp cpwopen.cpp       \
   cpwshort.cpp spicedialog.cpp cpwgap.cpp cpwstep.cpp libcomp.cpp mutual.cpp  \
-  mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp
+  mutual2.cpp noise_ii.cpp noise_iv.cpp noise_vv.cpp logical_or.cpp           \
+  logical_nor.cpp logical_and.cpp logical_nand.cpp logical_xor.cpp            \
+  logical_xnor.cpp logical_inv.cpp digi_sim.cpp digi_source.cpp
 
 nodist_libcomponents_a_SOURCES = $(MOCFILES)
 
@@ -55,7 +57,8 @@ noinst_HEADERS = $(MOCHEADERS) resistor.h components.h capacitor.h vccs.h     \
   jfet.h mosfet.h msgap.h bjtsub.h mosfet_sub.h vpulse.h ipulse.h vrect.h     \
   irect.h msvia.h amplifier.h opamp.h spicefile.h cpwopen.h cpwshort.h        \
   cpwgap.h cpwstep.h libcomp.h mutual.h mutual2.h noise_ii.h noise_iv.h       \
-  noise_vv.h
+  noise_vv.h logical_or.h logical_nor.h logical_and.h logical_nand.h          \
+  logical_xor.h logical_xnor.h logical_inv.h digi_sim.h digi_source.h
 
 INCLUDES = $(X11_INCLUDES) $(QT_INCLUDES) -I$(top_srcdir)/qucs
 

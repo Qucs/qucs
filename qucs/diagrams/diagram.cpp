@@ -1,6 +1,6 @@
 /***************************************************************************
                                 diagram.cpp
-                             -----------------
+                               -------------
     begin                : Thu Oct 2 2003
     copyright            : (C) 2003, 2004, 2005 by Michael Margraf
     email                : michael.margraf@alumni.tu-berlin.de
@@ -462,11 +462,7 @@ void Diagram::calcData(Graph *g)
 
   int dx, dy, xtmp, ytmp, tmp, i, z, Counter=2;
   int Size = ((2*(g->cPointsX.getFirst()->count) + 1) * g->countY) + 8;
-  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
-  int *p_end;
-  g->Points = p_end = p;
-  p_end += Size - 5;   // limit of buffer
-
+  
   if(xAxis.autoScale)  if(yAxis.autoScale)  if(zAxis.autoScale)
     Counter = -50000;
 
@@ -475,7 +471,25 @@ void Diagram::calcData(Graph *g)
   if(Name == "Rect3D") {
     if(g->countY > 1)  py = g->cPointsX.at(1)->Points;
     Counter = 2;
+#ifdef HIDDENLINE
+    Size = ((Rect3DDiagram*)this)->pMem - ((Rect3DDiagram*)this)->Mem;
+    ((Rect3DDiagram*)this)->pMem = ((Rect3DDiagram*)this)->Mem;
+    if(Size) { // hidden line ?
+qDebug("calcData Size: %d", Size);
+      Size = 3*Size - (g->cPointsX.getFirst()->count - 1) * g->countY + 32;
+    }
+    else
+#endif
+      Size *= 2;  // memory for cross grid lines
   }
+
+  int *p = (int*)malloc( Size*sizeof(int) );  // create memory for points
+  int *p_end;
+  g->Points = p_end = p;
+  p_end += Size - 5;   // limit of buffer
+
+  if(Name == "Rect3D")
+    *(p++) = -2;
 
   Axis *pa;
   if(g->yAxisNo == 0)  pa = &yAxis;
@@ -504,40 +518,9 @@ void Diagram::calcData(Graph *g)
 	}
       }
 /*qDebug("\n****** p=%p", p);
-for(int zz=10; zz>0; zz-=2)
-  qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
+for(int *zz=g->Points; zz<p; zz+=2)
+  qDebug("c: %d/%d", *(zz), *(zz+1));*/
 
-#ifdef HIDDENLINE
-      if(Name == "Rect3D") {
-        if(g->countY > 1) {
-	  // px, py, pz are nor used !!!
-	  for(int j=g->countY/g->cPointsX.at(1)->count; j>0; j--) {
-	    DataX *pD = g->cPointsX.first();
-	    dx = pD->count;
-	    pD = g->cPointsX.next();
-	    dy = pD->count;
-	    for(i=g->cPointsX.getFirst()->count; i>0; i--) {  // every branch
-	      calcCoordinate(px, pz, py, p, p+1, 0);
-	      p += 2;
-	      for(z=dy-1; z>0; z--) {  // every point
-	        FIT_MEMORY_SIZE;  // need to enlarge memory block ?
-	        calcCoordinate(px, pz, py, p, p+1, 0);
-	        p += 2;
-	        clip(p);
-	      }
-	      if(*(p-3) == -2)  p -= 3;  // no single point after "no stroke"
-	      *(p++) = -10;
-	    }
-/*qDebug("\n------ p=%p", p);
-for(int zz=120; zz>0; zz-=2)
-  qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
-	  }
-	}
-	delete ((Rect3DDiagram*)this)->Mem;
-	((Rect3DDiagram*)this)->Mem  = 0;
-	((Rect3DDiagram*)this)->pMem = 0;
-      }
-#else
       if(Name == "Rect3D") if(g->countY > 1) {
 	// create cross lines
 	pz = g->cPointsY;
@@ -559,7 +542,7 @@ for(int zz=120; zz>0; zz-=2)
 	      calcCoordinate(px, pz, py, p, p+1, 0);
 	      p += 2;
 	      if(Counter >= 2)   // clipping only if an axis is manual
-	        rectClip(p);
+	        clip(p);
 	      px--;  // back to the current x coordinate
 	      py++;  // next y coordinate
 	      pz += 2*(dx-1);  // next z coordinate
@@ -575,8 +558,14 @@ for(int zz=120; zz>0; zz-=2)
 /*qDebug("\n------ p=%p", p);
 for(int zz=120; zz>0; zz-=2)
   qDebug("c: %d/%d", *(p-zz), *(p-zz+1));*/
-      }
+#ifdef HIDDENLINE
+	if(((Rect3DDiagram*)this)->Mem) {
+	  delete ((Rect3DDiagram*)this)->Mem;
+	  ((Rect3DDiagram*)this)->Mem  = 0;
+	  ((Rect3DDiagram*)this)->pMem = 0;
+	}
 #endif
+      }
 
       
       *p = -100;
@@ -585,7 +574,7 @@ p = g->Points;
 qDebug("\n****** p=%p", p);
 for(int zz=0; zz<z; zz+=2)
   qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
-
+qDebug("calcData ENDE");
       return;
 
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line

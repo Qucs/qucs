@@ -53,6 +53,18 @@
         <source>dash dot dot line</source>
         <translation>linea tratteggio punto punto</translation>
     </message>
+    <message>
+        <source>Arrow head: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>two lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChangeDialog</name>
@@ -3086,6 +3098,90 @@ Usage:  qucsedit [-r] file
         <source>voltage power spectral density of source 1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>logical OR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>number of input ports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>voltage of high level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical NOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port OR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical AND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port AND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical NAND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port NAND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port NOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical XNOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port XNOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n-port XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logical inverter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type of simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initial output value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>list of times for changing output value</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QucsActions</name>
@@ -4602,6 +4698,10 @@ Modifica lo schema</translation>
     </message>
     <message>
         <source>file components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>digital components</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

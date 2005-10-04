@@ -23,8 +23,16 @@
 
 struct tPoint3D {
   int   x, y;
+  int   No, done;
+};
+
+struct tPointZ {
   float z;
   int   No;
+};
+
+struct tBound {
+  int min, max;
 };
 
 //#define HIDDENLINE
@@ -47,9 +55,11 @@ public:
   bool insideDiagram(int, int);
   void clip(int* &);
 
+#ifdef HIDDENLINE
   tPoint3D *Mem;   // memory for all points during hidden line algorithm
   tPoint3D *pMem;  // current position in "Mem"
-  void removeHiddenLines();
+  void removeHiddenLines(Graph*, tBound*);
+#endif
 
 private:
   void   calcCoefficients();
@@ -57,8 +67,12 @@ private:
   double calcY_2D(double, double, double);
   double calcZ_2D(double, double, double);
 
-  void calcLine(tPoint3D* &, tPoint3D*, tPoint3D* &, tPoint3D* &);
-  void calcCoordinate3D(double, double, double, double, tPoint3D*);
+#ifdef HIDDENLINE
+  bool isHidden(int, int, tBound*);
+  void enlargeMemoryBlock(tPoint3D* &);
+  void calcLine(tPoint3D*, tPoint3D*, tBound*, tPoint3D* &);
+  void calcCoordinate3D(double, double, double, double, tPoint3D*, tPointZ*, int&);
+#endif
 
   int xorig, yorig;    // where is the 3D origin with respect to cx/cy
   double cxx, cxy, cxz, cyx, cyy, cyz, czx, czy, czz; // coefficients 3D -> 2D
