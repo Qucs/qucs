@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: netdefs.h,v 1.5 2005-06-02 18:17:51 raimi Exp $
+ * $Id: netdefs.h,v 1.6 2005-10-04 10:52:29 raimi Exp $
  *
  */
 
@@ -83,8 +83,10 @@ struct property_t {
     char * s;       // default string
   } defaultval;
   struct {
+    char il;        // interval boundary
     nr_double_t l;  // lower bound of the value
     nr_double_t h;  // upper bound of the value
+    char ih;        // interval boundary
   } range;
 };
 
@@ -113,11 +115,18 @@ struct define_t {
                             PROP_NO_RANGE }
 #define PROP_NO_VAL       0.0
 #define PROP_NO_STR       ((char *) -1)
-#define PROP_NO_RANGE     { 0, 0 }
+#define PROP_NO_RANGE     { '.', 0, 0, '.' }
 #define PROP_VAL_MAX      DBL_MAX
 #define PROP_VAL_MIN      DBL_MIN
-#define PROP_POS_RANGE    { 0, +PROP_VAL_MAX }
-#define PROP_NEG_RANGE    { -PROP_VAL_MAX, 0 }
+#define PROP_POS_RANGE    { '[', 0, 0, '.' }
+#define PROP_NEG_RANGE    { '.', 0, 0, ']' }
+#define PROP_POS_RANGEX   { ']', 0, 0, '.' }
+#define PROP_NEG_RANGEX   { '.', 0, 0, '[' }
+#define PROP_MIN_VAL(k)   { '[', k, 0, '.' }
+#define PROP_MAX_VAL(k)   { '.', 0, k, ']' }
+#define PROP_MIN_VALX(k)  { ']', k, 0, '.' }
+#define PROP_MAX_VALX(k)  { '.', 0, k, '[' }
+#define PROP_RNG_X01I     { ']', 0, 1, ']' }
 #define PROP_INT          0
 #define PROP_REAL         1
 #define PROP_STR          2
@@ -128,7 +137,8 @@ struct define_t {
 #define PROP_IS_INT(prop)    ((prop).type == PROP_INT)
 #define PROP_IS_STR(prop)    (!PROP_IS_VAL (prop))
 #define PROP_IS_LST(prop)    ((prop).type == PROP_LIST)
-#define PROP_HAS_RANGE(prop) ((prop).range.l != 0 || (prop).range.h != 0)
+#define PROP_HAS_RANGE(prop) ((prop).range.l != 0 || (prop).range.h != 0 || \
+                              (prop).range.il != '.' || (prop).range.ih != '.')
 
 #define create_definition() \
   ((struct definition_t *) calloc (sizeof (struct definition_t), 1))

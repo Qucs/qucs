@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: check_netlist.cpp,v 1.82 2005-07-04 08:33:58 raimi Exp $
+ * $Id: check_netlist.cpp,v 1.83 2005-10-04 10:52:28 raimi Exp $
  *
  */
 
@@ -883,12 +883,21 @@ static int checker_value_in_prop_range (char * instance, struct define_t * def,
     if (PROP_HAS_RANGE (*prop)) {
       struct value_t * val = pair->value;
       for (; val != NULL; val = val->next) {
-	if (val->value < prop->range.l || val->value > prop->range.h) {
+	int rerror = 0;
+	if (prop->range.il == '[' &&  (val->value < prop->range.l))
+	  rerror++;
+	if (prop->range.il == ']' && !(val->value > prop->range.l))
+	  rerror++;
+	if (prop->range.ih == '[' && !(val->value < prop->range.h))
+	  rerror++;
+	if (prop->range.ih == ']' &&  (val->value > prop->range.h))
+	  rerror++;
+	if (rerror) {
 	  logprint (LOG_ERROR, 
 		    "checker error, value of `%s' (%g) is out of "
-		    "range [%g,%g] in `%s:%s'\n",
-		    pair->key, val->value, prop->range.l,
-		    prop->range.h, def->type, instance);
+		    "range `%c%g,%g%c' in `%s:%s'\n",
+		    pair->key, val->value, prop->range.il, prop->range.l,
+		    prop->range.h, prop->range.ih, def->type, instance);
 	  errors++;
 	}
       }

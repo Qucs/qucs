@@ -26,6 +26,9 @@ files.
 Version 0.0.8
 -------------
 
+ * new components: correlated noise sources
+ * implementation of mutual inductors
+
 Version 0.0.7
 -------------
 
