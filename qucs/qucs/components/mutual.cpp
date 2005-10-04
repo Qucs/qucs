@@ -52,17 +52,13 @@ Mutual::Mutual()
 
   tx = x1+4;
   ty = y2+4;
-  Model = "M";
+  Model = "MUT";
   Name  = "Tr";
 
   Props.append(new Property("L1", "1 mH", false,
 		QObject::tr("inductance of coil 1")));
   Props.append(new Property("L2", "1 mH", false,
 		QObject::tr("inductance of coil 2")));
-  Props.append(new Property("R1", "0.1 Ohm", false,
-		QObject::tr("resistance of coil 1")));
-  Props.append(new Property("R2", "0.1 Ohm", false,
-		QObject::tr("resistance of coil 2")));
   Props.append(new Property("k", "0.9", false,
 		QObject::tr("coupling factor between coil 1 and 2")));
 }

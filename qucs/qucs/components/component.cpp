@@ -1256,8 +1256,8 @@ Component* getComponentFromName(QString& Line)
 	else if(cstr == "mp") c = new Amplifier();
         else if(cstr == "ND") c = new Logical_AND();
         break;
-  case 'M' : if(cstr.isEmpty()) c = new Mutual();
-	else if(cstr == "2") c = new Mutual2();
+  case 'M' : if(cstr == "UT") c = new Mutual();
+	else if(cstr == "UT2") c = new Mutual2();
 	else if(cstr == "LIN") c = new MSline();
 	else if(cstr == "OSFET") c = new MOSFET_sub();
 	else if(cstr == "STEP") c = new MSstep();
