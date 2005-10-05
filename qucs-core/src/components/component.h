@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: component.h,v 1.29 2005-10-04 10:52:29 raimi Exp $
+ * $Id: component.h,v 1.30 2005-10-05 11:22:42 raimi Exp $
  *
  */
 
@@ -73,6 +73,8 @@
 #include "vnoise.h"
 #include "inoise.h"
 #include "iinoise.h"
+#include "ivnoise.h"
+#include "vvnoise.h"
 
 #include "devices/diode.h"
 #include "devices/jfet.h"

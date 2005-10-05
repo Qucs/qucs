@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: qucsdefs.h,v 1.24 2005-10-04 10:52:29 raimi Exp $
+ * $Id: qucsdefs.h,v 1.25 2005-10-05 11:22:42 raimi Exp $
  *
  */
 
@@ -278,6 +278,28 @@ struct define_t qucs_definition_available[] =
   { "IInoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
     { { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "i2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 1, ']' } }, 
+      PROP_NO_PROP },
+    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* correlated noise voltage sources */
+  { "VVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "v1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 1, ']' } }, 
+      PROP_NO_PROP },
+    { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      { "c", PROP_REAL, { 1, PROP_NO_STR }, PROP_POS_RANGE },
+      { "e", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },
+      PROP_NO_PROP }
+  },
+  /* correlated noise sources */
+  { "IVnoise", 4, PROP_COMPONENT, PROP_NO_SUBSTRATE, PROP_LINEAR,
+    { { "i1", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
+      { "v2", PROP_REAL, { 1e-6, PROP_NO_STR }, PROP_POS_RANGE }, 
       { "C", PROP_REAL, { 0.5, PROP_NO_STR }, { '[', 0, 1, ']' } }, 
       PROP_NO_PROP },
     { { "a", PROP_REAL, { 0, PROP_NO_STR }, PROP_POS_RANGE },

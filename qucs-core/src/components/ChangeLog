@@ -1,3 +1,9 @@
+2005-10-04  Stefan Jahn  <stefan@lkcc.org>
+
+	* ivnoise.h (class ivnoise), vvnoise.h (class vvnoise): New
+	components: correlated noise current-voltage and voltage-
+	voltage sources.
+
 2005-10-02  Stefan Jahn  <stefan@lkcc.org>
 
 	* mutual.h (class mutual), mutual2.h (class mutual2): New

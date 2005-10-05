@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: nasolver.cpp,v 1.36 2005-06-02 18:17:50 raimi Exp $
+ * $Id: nasolver.cpp,v 1.37 2005-10-05 11:22:42 raimi Exp $
  *
  */
 
@@ -642,7 +642,9 @@ template <class nr_type_t>
 void nasolver<nr_type_t>::createNoiseMatrix (void) {
   int pr, pc, N = countNodes ();
   int M = countVoltageSources ();
-  nr_type_t n;
+  struct nodelist_t * n;
+  nr_type_t val;
+  int r, c, a, b, ri, ci, i;
   struct nodelist_t * nr, * nc;
   circuit * ct;
 
@@ -650,42 +652,83 @@ void nasolver<nr_type_t>::createNoiseMatrix (void) {
   if (C != NULL) delete C; C = new tmatrix<nr_type_t> (N + M);
 
   // go through each column of the Cy matrix
-  for (int c = 0; c < N; c++) {
+  for (c = 0; c < N; c++) {
     nc = nlist->getNode (c);
     // go through each row of the Cy matrix
-    for (int r = 0; r < N; r++) {
+    for (r = 0; r < N; r++) {
       nr = nlist->getNode (r);
-      n = 0.0;
+      val = 0.0;
       // sum up the noise-correlation of each connected circuit
-      for (int a = 0; a < nc->nNodes; a++)
-	for (int b = 0; b < nr->nNodes; b++)
+      for (a = 0; a < nc->nNodes; a++)
+	for (b = 0; b < nr->nNodes; b++)
 	  if (nc->nodes[a]->getCircuit () == nr->nodes[b]->getCircuit ()) {
 	    ct = nc->nodes[a]->getCircuit ();
 	    pc = nc->nodes[a]->getPort ();
 	    pr = nr->nodes[b]->getPort ();
-	    n += MatVal (ct->getN (pr, pc));
+	    val += MatVal (ct->getN (pr, pc));
 	  }
       // put value into Cy matrix
-      C->set (r, c, n);
+      C->set (r, c, val);
     }
   }
 
   // go through each additional voltage source and put coefficients into
   // the noise current correlation matrix
   circuit * vsr, * vsc;
-  for (int r = 0; r < M; r++) {
+  for (r = 0; r < M; r++) {
     vsr = findVoltageSource (r);
-    for (int c = 0; c < M; c++) {
+    for (c = 0; c < M; c++) {
       vsc = findVoltageSource (c);
-      n = 0.0;
+      val = 0.0;
       if (vsr == vsc) {
-	int ri = vsr->getSize () + r - vsr->getVoltageSource ();
-	int ci = vsc->getSize () + c - vsc->getVoltageSource ();
-	n = MatVal (vsr->getN (ri, ci));
+	ri = vsr->getSize () + r - vsr->getVoltageSource ();
+	ci = vsc->getSize () + c - vsc->getVoltageSource ();
+	val = MatVal (vsr->getN (ri, ci));
       }
-      C->set (r + N, c + N, n);
+      C->set (r + N, c + N, val);
     }
   }
+
+  // go through each additional voltage source
+  for (r = 0; r < M; r++) {
+    vsr = findVoltageSource (r);
+    // go through each node
+    for (c = 0; c < N; c++) {
+      val = 0.0;
+      n = nlist->getNode (c);
+      for (i = 0; i < n->nNodes; i++) {
+	// is voltage source connected to node ?
+	if (n->nodes[i]->getCircuit () == vsr) {
+	  ri = vsr->getSize () + r - vsr->getVoltageSource ();
+	  ci = n->nodes[i]->getPort ();
+	  val += MatVal (vsr->getN (ri, ci));
+	}
+      }
+      // put value into Cy matrix
+      C->set (r + N, c, val);
+    }
+  }  
+
+  // go through each voltage source
+  for (c = 0; c < M; c++) {
+    vsc = findVoltageSource (c);
+    // go through each node
+    for (r = 0; r < N; r++) {
+      val = 0.0;
+      n = nlist->getNode (r);
+      for (i = 0; i < n->nNodes; i++) {
+	// is voltage source connected to node ?
+	if (n->nodes[i]->getCircuit () == vsc) {
+	  ci = vsc->getSize () + c - vsc->getVoltageSource ();
+	  ri = n->nodes[i]->getPort ();
+	  val += MatVal (vsc->getN (ri, ci));
+	}
+      }
+      // put value into Cy matrix
+      C->set (r, c + N, val);
+    }
+  }  
+
 }
 
 /* The i matrix is an 1xN matrix with each element of the matrix

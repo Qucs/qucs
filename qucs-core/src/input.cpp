@@ -18,7 +18,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
  * Boston, MA 02110-1301, USA.  
  *
- * $Id: input.cpp,v 1.48 2005-10-04 10:52:29 raimi Exp $
+ * $Id: input.cpp,v 1.49 2005-10-05 11:22:42 raimi Exp $
  *
  */
 
@@ -400,6 +400,10 @@ circuit * input::createCircuit (char * type) {
     return new mutual ();
   else if (!strcmp (type, "MUT2"))
     return new mutual2 ();
+  else if (!strcmp (type, "IVnoise"))
+    return new ivnoise ();
+  else if (!strcmp (type, "VVnoise"))
+    return new vvnoise ();
 
   logprint (LOG_ERROR, "no such circuit type `%s'\n", type);
   return NULL;
