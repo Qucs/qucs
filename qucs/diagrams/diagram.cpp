@@ -574,7 +574,6 @@ p = g->Points;
 qDebug("\n****** p=%p", p);
 for(int zz=0; zz<z; zz+=2)
   qDebug("c: %d/%d", *(p+zz), *(p+zz+1));*/
-qDebug("calcData ENDE");
       return;
 
     case 1: Stroke = 10.0; Space =  6.0;  break;   // dash line
